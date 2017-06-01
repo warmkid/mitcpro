@@ -1,0 +1,36 @@
+digraph ui_whole_diagram {
+    rankdir=TB;
+    lt1 [label="", style=invisible];
+    connSQL [label="连接 SQLServer", shape=box];
+    lt3 [label="", style=invisible];
+    lt4 [label="", style=invisible];
+    {
+        rank="same";
+        lt1;
+        start [label="开始", shape=diamond];
+    }
+    {
+        rank="same";
+        connSQL;
+        inputSQL [label="输入 SQLServer 服务器信息", shape=box];
+    }
+    {
+        rank="same";
+        lt3;
+        inputUserPwd [label="输入用户名密码", shape=box];
+    }
+    {
+        rank="same";
+        lt4;
+        main [label="进入主界面", shape=box]
+    }
+    lt1 -> connSQL -> lt3 -> lt4[style=invis];
+    start -> inputSQL -> inputUserPwd -> main[style=invis];
+    start -> connSQL;
+    connSQL -> inputSQL[label="No"];
+    connSQL -> inputUserPwd[label="Yes"];
+    inputSQL -> inputSQL[label="No"];
+    inputSQL -> inputUserPwd[label="Yes"];
+    inputUserPwd -> inputUserPwd[label="No"];
+    inputUserPwd -> main[label="Yes"];
+}
