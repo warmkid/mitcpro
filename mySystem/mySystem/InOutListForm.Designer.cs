@@ -159,7 +159,7 @@
             // 
             // SearchStockCheckBtn
             // 
-            this.SearchStockCheckBtn.Location = new System.Drawing.Point(354, 11);
+            this.SearchStockCheckBtn.Location = new System.Drawing.Point(359, 8);
             this.SearchStockCheckBtn.Name = "SearchStockCheckBtn";
             this.SearchStockCheckBtn.Size = new System.Drawing.Size(75, 23);
             this.SearchStockCheckBtn.TabIndex = 21;
@@ -168,7 +168,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(440, 10);
+            this.button1.Location = new System.Drawing.Point(439, 8);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 22;
@@ -184,14 +184,14 @@
             "物品编号",
             "时间",
             "经手人"});
-            this.comboBox1.Location = new System.Drawing.Point(167, 12);
+            this.comboBox1.Location = new System.Drawing.Point(161, 10);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(63, 20);
+            this.comboBox1.Size = new System.Drawing.Size(70, 20);
             this.comboBox1.TabIndex = 23;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(230, 11);
+            this.textBox1.Location = new System.Drawing.Point(234, 10);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(121, 21);
             this.textBox1.TabIndex = 24;

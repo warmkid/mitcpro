@@ -38,7 +38,6 @@
             System.Windows.Forms.Label label2;
             System.Windows.Forms.Label label1;
             System.Windows.Forms.Label label3;
-            this.商品信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.商品编号TextBox = new System.Windows.Forms.TextBox();
             this.商品名称TextBox = new System.Windows.Forms.TextBox();
             this.规格型号TextBox = new System.Windows.Forms.TextBox();
@@ -59,6 +58,7 @@
             this.单位DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.订单组件信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.myDataSet = new mySystem.myDataSet();
+            this.商品信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             商品编号Label = new System.Windows.Forms.Label();
             商品名称Label = new System.Windows.Forms.Label();
             规格型号Label = new System.Windows.Forms.Label();
@@ -68,10 +68,10 @@
             label2 = new System.Windows.Forms.Label();
             label1 = new System.Windows.Forms.Label();
             label3 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.商品信息BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.订单组件信息BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.商品信息BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // 商品编号Label
@@ -158,15 +158,10 @@
             label3.TabIndex = 30;
             label3.Text = "产品数量:";
             // 
-            // 商品信息BindingSource
-            // 
-            this.商品信息BindingSource.DataMember = "商品信息";
-            // 
             // 商品编号TextBox
             // 
             this.商品编号TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.商品编号TextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.商品信息BindingSource, "商品编号", true));
             this.商品编号TextBox.Location = new System.Drawing.Point(69, 2);
             this.商品编号TextBox.Name = "商品编号TextBox";
             this.商品编号TextBox.Size = new System.Drawing.Size(307, 21);
@@ -176,7 +171,6 @@
             // 
             this.商品名称TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.商品名称TextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.商品信息BindingSource, "商品名称", true));
             this.商品名称TextBox.Location = new System.Drawing.Point(69, 29);
             this.商品名称TextBox.Name = "商品名称TextBox";
             this.商品名称TextBox.Size = new System.Drawing.Size(307, 21);
@@ -186,7 +180,6 @@
             // 
             this.规格型号TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.规格型号TextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.商品信息BindingSource, "规格型号", true));
             this.规格型号TextBox.Location = new System.Drawing.Point(69, 56);
             this.规格型号TextBox.Name = "规格型号TextBox";
             this.规格型号TextBox.Size = new System.Drawing.Size(202, 21);
@@ -196,7 +189,6 @@
             // 
             this.生产厂商TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.生产厂商TextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.商品信息BindingSource, "生产厂商", true));
             this.生产厂商TextBox.Location = new System.Drawing.Point(342, 55);
             this.生产厂商TextBox.Name = "生产厂商TextBox";
             this.生产厂商TextBox.Size = new System.Drawing.Size(194, 21);
@@ -205,7 +197,6 @@
             // 单位TextBox
             // 
             this.单位TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.单位TextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.商品信息BindingSource, "单位", true));
             this.单位TextBox.Location = new System.Drawing.Point(434, 2);
             this.单位TextBox.Name = "单位TextBox";
             this.单位TextBox.ReadOnly = true;
@@ -216,7 +207,6 @@
             // 
             this.说明TextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.说明TextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.商品信息BindingSource, "说明", true));
             this.说明TextBox.Location = new System.Drawing.Point(6, 364);
             this.说明TextBox.Multiline = true;
             this.说明TextBox.Name = "说明TextBox";
@@ -253,7 +243,6 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.商品信息BindingSource, "单位", true));
             this.textBox1.Location = new System.Drawing.Point(285, 84);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(91, 21);
@@ -262,7 +251,6 @@
             // textBox2
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.商品信息BindingSource, "单位", true));
             this.textBox2.Location = new System.Drawing.Point(451, 29);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(85, 21);
@@ -332,6 +320,10 @@
             this.myDataSet.DataSetName = "myDataSet";
             this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
+            // 商品信息BindingSource
+            // 
+            this.商品信息BindingSource.DataMember = "商品信息";
+            // 
             // AddOrderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -361,10 +353,10 @@
             this.Name = "AddOrderForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "添加订单";
-            ((System.ComponentModel.ISupportInitialize)(this.商品信息BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.订单组件信息BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.商品信息BindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -373,7 +365,6 @@
         #endregion
 
         //private MySaleDataSet mySaleDataSet;
-        private System.Windows.Forms.BindingSource 商品信息BindingSource;
         //private mySystem.MySaleDataSetTableAdapters.商品信息TableAdapter 商品信息TableAdapter;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -405,6 +396,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 单位DataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource 订单组件信息BindingSource;
         private myDataSet myDataSet;
+        private System.Windows.Forms.BindingSource 商品信息BindingSource;
 
 
     }
