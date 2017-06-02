@@ -45,25 +45,29 @@
             this.PrintStockBtn = new System.Windows.Forms.ToolStripButton();
             this.RefreshStockBtn = new System.Windows.Forms.ToolStripButton();
             this.StockCheckdataGrid = new System.Windows.Forms.DataGridView();
-            this.物品代码DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.物品名称DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.单位DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.总库存DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.预警库存DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.物品类别DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.物品状态DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.缺货数量DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.库存信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.myDataSet = new mySystem.myDataSet();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.库存信息BindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.物品类别DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.物品代码DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.物品名称DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.总库存DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.单位DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.预警库存DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.缺货数量DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.物品状态DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StockChecktoolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // SearchStockCheckBtn
             // 
-            this.SearchStockCheckBtn.Location = new System.Drawing.Point(366, 59);
+            this.SearchStockCheckBtn.Location = new System.Drawing.Point(433, 59);
             this.SearchStockCheckBtn.Name = "SearchStockCheckBtn";
             this.SearchStockCheckBtn.Size = new System.Drawing.Size(75, 23);
             this.SearchStockCheckBtn.TabIndex = 17;
@@ -72,9 +76,9 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(70, 58);
+            this.textBox2.Location = new System.Drawing.Point(264, 58);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(155, 21);
+            this.textBox2.Size = new System.Drawing.Size(147, 21);
             this.textBox2.TabIndex = 16;
             // 
             // label1
@@ -84,19 +88,19 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 15;
-            this.label1.Text = "物品编号：";
+            this.label1.Text = "物品状态：";
             // 
             // textBox
             // 
-            this.textBox.Location = new System.Drawing.Point(277, 31);
+            this.textBox.Location = new System.Drawing.Point(262, 31);
             this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(164, 21);
+            this.textBox.Size = new System.Drawing.Size(246, 21);
             this.textBox.TabIndex = 14;
             // 
             // 物品名称
             // 
             this.物品名称.AutoSize = true;
-            this.物品名称.Location = new System.Drawing.Point(211, 34);
+            this.物品名称.Location = new System.Drawing.Point(198, 34);
             this.物品名称.Name = "物品名称";
             this.物品名称.Size = new System.Drawing.Size(65, 12);
             this.物品名称.TabIndex = 13;
@@ -112,7 +116,7 @@
             "组件"});
             this.comboBox1.Location = new System.Drawing.Point(48, 30);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(129, 20);
+            this.comboBox1.Size = new System.Drawing.Size(136, 20);
             this.comboBox1.TabIndex = 12;
             // 
             // 类别
@@ -193,20 +197,58 @@
             this.StockCheckdataGrid.AutoGenerateColumns = false;
             this.StockCheckdataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.StockCheckdataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.物品类别DataGridViewTextBoxColumn,
             this.物品代码DataGridViewTextBoxColumn,
             this.物品名称DataGridViewTextBoxColumn,
-            this.单位DataGridViewTextBoxColumn,
             this.总库存DataGridViewTextBoxColumn,
+            this.单位DataGridViewTextBoxColumn,
             this.预警库存DataGridViewTextBoxColumn,
-            this.物品类别DataGridViewTextBoxColumn,
-            this.物品状态DataGridViewTextBoxColumn,
-            this.缺货数量DataGridViewTextBoxColumn});
-            this.StockCheckdataGrid.DataSource = this.库存信息BindingSource;
-            this.StockCheckdataGrid.Location = new System.Drawing.Point(3, 111);
+            this.缺货数量DataGridViewTextBoxColumn,
+            this.物品状态DataGridViewTextBoxColumn});
+            this.StockCheckdataGrid.DataSource = this.库存信息BindingSource1;
+            this.StockCheckdataGrid.Location = new System.Drawing.Point(3, 88);
             this.StockCheckdataGrid.Name = "StockCheckdataGrid";
             this.StockCheckdataGrid.RowTemplate.Height = 23;
-            this.StockCheckdataGrid.Size = new System.Drawing.Size(515, 349);
+            this.StockCheckdataGrid.Size = new System.Drawing.Size(515, 372);
             this.StockCheckdataGrid.TabIndex = 18;
+            // 
+            // 库存信息BindingSource
+            // 
+            this.库存信息BindingSource.DataMember = "库存信息";
+            this.库存信息BindingSource.DataSource = this.myDataSet;
+            // 
+            // myDataSet
+            // 
+            this.myDataSet.DataSetName = "myDataSet";
+            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(70, 58);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(114, 20);
+            this.comboBox2.TabIndex = 20;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(199, 62);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 12);
+            this.label2.TabIndex = 19;
+            this.label2.Text = "物品编号：";
+            // 
+            // 库存信息BindingSource1
+            // 
+            this.库存信息BindingSource1.DataMember = "库存信息";
+            this.库存信息BindingSource1.DataSource = this.myDataSet;
+            // 
+            // 物品类别DataGridViewTextBoxColumn
+            // 
+            this.物品类别DataGridViewTextBoxColumn.DataPropertyName = "物品类别";
+            this.物品类别DataGridViewTextBoxColumn.HeaderText = "物品类别";
+            this.物品类别DataGridViewTextBoxColumn.Name = "物品类别DataGridViewTextBoxColumn";
             // 
             // 物品代码DataGridViewTextBoxColumn
             // 
@@ -220,17 +262,17 @@
             this.物品名称DataGridViewTextBoxColumn.HeaderText = "物品名称";
             this.物品名称DataGridViewTextBoxColumn.Name = "物品名称DataGridViewTextBoxColumn";
             // 
-            // 单位DataGridViewTextBoxColumn
-            // 
-            this.单位DataGridViewTextBoxColumn.DataPropertyName = "单位";
-            this.单位DataGridViewTextBoxColumn.HeaderText = "单位";
-            this.单位DataGridViewTextBoxColumn.Name = "单位DataGridViewTextBoxColumn";
-            // 
             // 总库存DataGridViewTextBoxColumn
             // 
             this.总库存DataGridViewTextBoxColumn.DataPropertyName = "总库存";
             this.总库存DataGridViewTextBoxColumn.HeaderText = "总库存";
             this.总库存DataGridViewTextBoxColumn.Name = "总库存DataGridViewTextBoxColumn";
+            // 
+            // 单位DataGridViewTextBoxColumn
+            // 
+            this.单位DataGridViewTextBoxColumn.DataPropertyName = "单位";
+            this.单位DataGridViewTextBoxColumn.HeaderText = "单位";
+            this.单位DataGridViewTextBoxColumn.Name = "单位DataGridViewTextBoxColumn";
             // 
             // 预警库存DataGridViewTextBoxColumn
             // 
@@ -238,11 +280,11 @@
             this.预警库存DataGridViewTextBoxColumn.HeaderText = "预警库存";
             this.预警库存DataGridViewTextBoxColumn.Name = "预警库存DataGridViewTextBoxColumn";
             // 
-            // 物品类别DataGridViewTextBoxColumn
+            // 缺货数量DataGridViewTextBoxColumn
             // 
-            this.物品类别DataGridViewTextBoxColumn.DataPropertyName = "物品类别";
-            this.物品类别DataGridViewTextBoxColumn.HeaderText = "物品类别";
-            this.物品类别DataGridViewTextBoxColumn.Name = "物品类别DataGridViewTextBoxColumn";
+            this.缺货数量DataGridViewTextBoxColumn.DataPropertyName = "缺货数量";
+            this.缺货数量DataGridViewTextBoxColumn.HeaderText = "缺货数量";
+            this.缺货数量DataGridViewTextBoxColumn.Name = "缺货数量DataGridViewTextBoxColumn";
             // 
             // 物品状态DataGridViewTextBoxColumn
             // 
@@ -250,27 +292,13 @@
             this.物品状态DataGridViewTextBoxColumn.HeaderText = "物品状态";
             this.物品状态DataGridViewTextBoxColumn.Name = "物品状态DataGridViewTextBoxColumn";
             // 
-            // 缺货数量DataGridViewTextBoxColumn
-            // 
-            this.缺货数量DataGridViewTextBoxColumn.DataPropertyName = "缺货数量";
-            this.缺货数量DataGridViewTextBoxColumn.HeaderText = "缺货数量";
-            this.缺货数量DataGridViewTextBoxColumn.Name = "缺货数量DataGridViewTextBoxColumn";
-            // 
-            // 库存信息BindingSource
-            // 
-            this.库存信息BindingSource.DataMember = "库存信息";
-            this.库存信息BindingSource.DataSource = this.myDataSet;
-            // 
-            // myDataSet
-            // 
-            this.myDataSet.DataSetName = "myDataSet";
-            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
             // StockCheckForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(524, 464);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.StockCheckdataGrid);
             this.Controls.Add(this.SearchStockCheckBtn);
             this.Controls.Add(this.textBox2);
@@ -288,6 +316,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,15 +339,18 @@
         private System.Windows.Forms.ToolStripButton PrintStockBtn;
         private System.Windows.Forms.ToolStripButton RefreshStockBtn;
         private System.Windows.Forms.DataGridView StockCheckdataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 物品代码DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 物品名称DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 单位DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 总库存DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 预警库存DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 物品类别DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 物品状态DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 缺货数量DataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource 库存信息BindingSource;
         private myDataSet myDataSet;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 物品类别DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 物品代码DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 物品名称DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 总库存DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 单位DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 预警库存DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 缺货数量DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 物品状态DataGridViewTextBoxColumn;
+        private System.Windows.Forms.BindingSource 库存信息BindingSource1;
     }
 }

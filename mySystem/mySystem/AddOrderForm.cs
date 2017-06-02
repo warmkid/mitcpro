@@ -14,15 +14,6 @@ namespace mySystem
         {
             InitializeComponent();
         }
-        private void MerchandiseForm_Load(object sender, EventArgs e)
-        {
-        
-        }
-
-        private void 商品信息DataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void SaveBtn_Click(object sender, EventArgs e)
         {

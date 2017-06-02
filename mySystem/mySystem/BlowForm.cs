@@ -16,9 +16,5 @@ namespace mySystem
             InitializeComponent();
         }
 
-        private void BlowForm_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

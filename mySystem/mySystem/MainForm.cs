@@ -14,6 +14,7 @@ namespace mySystem
         public MainForm()
         {
             InitializeComponent();
+            //DeleteOrderBtn.Image = Image.FromFile("D:\\C Sharp\\mitcpro\\mySystem\\mySystem\\pic\\delete.png");
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -90,6 +91,17 @@ namespace mySystem
             myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
             myDlg.FormBorderStyle = FormBorderStyle.None;
             StockPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
+        }
+
+        private void SystemSetBtn_Click(object sender, EventArgs e)
+        {
+            SystemPanelRight.Controls.Clear();
+            SystemForm myDlg = new SystemForm();
+            myDlg.TopLevel = false;
+            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            SystemPanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
 

@@ -9,18 +9,21 @@ using System.Windows.Forms;
 
 namespace mySystem
 {
-    public partial class PlanForm : Form
+    public partial class AddPlanForm : Form
     {
-        public PlanForm()
+        public AddPlanForm()
         {
             InitializeComponent();
         }
 
-        private void AddPlanBtn_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
-            AddPlanForm addplanDlg = new AddPlanForm();
-            addplanDlg.Show();
+            this.Close();
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -32,9 +32,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.HelpPage = new System.Windows.Forms.TabPage();
             this.SystemPage = new System.Windows.Forms.TabPage();
-            this.SystemtoolStrip = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.SystemPanelLeft = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.UserManageBtn = new System.Windows.Forms.Button();
+            this.SystemSetBtn = new System.Windows.Forms.Button();
+            this.SystemPanelRight = new System.Windows.Forms.Panel();
             this.StorePage = new System.Windows.Forms.TabPage();
             this.StockPanelLeft = new System.Windows.Forms.Panel();
             this.BuyBtn = new System.Windows.Forms.Button();
@@ -44,9 +51,11 @@
             this.StockPanelRight = new System.Windows.Forms.Panel();
             this.OrderPage = new System.Windows.Forms.TabPage();
             this.OrderdataGrid = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.订单日期DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.订单详情 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.订单号DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.订单详情DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.预计交货日期DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.订单状态DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.订单信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.myDataSet = new mySystem.myDataSet();
@@ -80,8 +89,10 @@
             this.BlowBtn = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.PlanBtn = new System.Windows.Forms.Button();
+            this.库存信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.SystemPage.SuspendLayout();
-            this.SystemtoolStrip.SuspendLayout();
+            this.SystemPanelLeft.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.StorePage.SuspendLayout();
             this.StockPanelLeft.SuspendLayout();
             this.OrderPage.SuspendLayout();
@@ -94,6 +105,7 @@
             this.ProducePage.SuspendLayout();
             this.ProducePanelLeft.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // HelpPage
@@ -108,7 +120,8 @@
             // 
             // SystemPage
             // 
-            this.SystemPage.Controls.Add(this.SystemtoolStrip);
+            this.SystemPage.Controls.Add(this.SystemPanelLeft);
+            this.SystemPage.Controls.Add(this.SystemPanelRight);
             this.SystemPage.Location = new System.Drawing.Point(4, 22);
             this.SystemPage.Name = "SystemPage";
             this.SystemPage.Padding = new System.Windows.Forms.Padding(3);
@@ -117,33 +130,100 @@
             this.SystemPage.Text = "系统设置";
             this.SystemPage.UseVisualStyleBackColor = true;
             // 
-            // SystemtoolStrip
+            // SystemPanelLeft
             // 
-            this.SystemtoolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton1,
-            this.toolStripButton2});
-            this.SystemtoolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.SystemtoolStrip.Location = new System.Drawing.Point(3, 3);
-            this.SystemtoolStrip.Name = "SystemtoolStrip";
-            this.SystemtoolStrip.Size = new System.Drawing.Size(686, 23);
-            this.SystemtoolStrip.TabIndex = 0;
-            this.SystemtoolStrip.Text = "toolStrip1";
+            this.SystemPanelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SystemPanelLeft.Controls.Add(this.panel2);
+            this.SystemPanelLeft.Controls.Add(this.UserManageBtn);
+            this.SystemPanelLeft.Controls.Add(this.SystemSetBtn);
+            this.SystemPanelLeft.Location = new System.Drawing.Point(2, 3);
+            this.SystemPanelLeft.Name = "SystemPanelLeft";
+            this.SystemPanelLeft.Size = new System.Drawing.Size(159, 464);
+            this.SystemPanelLeft.TabIndex = 6;
             // 
-            // toolStripButton1
+            // panel2
             // 
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(73, 20);
-            this.toolStripButton1.Text = "系统设置";
+            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.button7);
+            this.panel2.Controls.Add(this.button8);
+            this.panel2.Controls.Add(this.button9);
+            this.panel2.Controls.Add(this.button10);
+            this.panel2.Location = new System.Drawing.Point(8, 64);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(140, 143);
+            this.panel2.TabIndex = 4;
             // 
-            // toolStripButton2
+            // button1
             // 
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(73, 20);
-            this.toolStripButton2.Text = "用户管理";
+            this.button1.Location = new System.Drawing.Point(12, 114);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(118, 27);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "操作员";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(12, 30);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(118, 27);
+            this.button7.TabIndex = 1;
+            this.button7.Text = "订单管理员";
+            this.button7.UseVisualStyleBackColor = true;
+            // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(12, 2);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(118, 27);
+            this.button8.TabIndex = 0;
+            this.button8.Text = "系统管理员";
+            this.button8.UseVisualStyleBackColor = true;
+            // 
+            // button9
+            // 
+            this.button9.Location = new System.Drawing.Point(12, 86);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(118, 27);
+            this.button9.TabIndex = 6;
+            this.button9.Text = "生产计划员";
+            this.button9.UseVisualStyleBackColor = true;
+            // 
+            // button10
+            // 
+            this.button10.Location = new System.Drawing.Point(12, 58);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(118, 27);
+            this.button10.TabIndex = 5;
+            this.button10.Text = "仓库管理员";
+            this.button10.UseVisualStyleBackColor = true;
+            // 
+            // UserManageBtn
+            // 
+            this.UserManageBtn.Location = new System.Drawing.Point(3, 34);
+            this.UserManageBtn.Name = "UserManageBtn";
+            this.UserManageBtn.Size = new System.Drawing.Size(153, 30);
+            this.UserManageBtn.TabIndex = 3;
+            this.UserManageBtn.Text = "用户管理";
+            this.UserManageBtn.UseVisualStyleBackColor = true;
+            // 
+            // SystemSetBtn
+            // 
+            this.SystemSetBtn.Location = new System.Drawing.Point(3, 4);
+            this.SystemSetBtn.Name = "SystemSetBtn";
+            this.SystemSetBtn.Size = new System.Drawing.Size(153, 30);
+            this.SystemSetBtn.TabIndex = 2;
+            this.SystemSetBtn.Text = "系统设置";
+            this.SystemSetBtn.UseVisualStyleBackColor = true;
+            this.SystemSetBtn.Click += new System.EventHandler(this.SystemSetBtn_Click);
+            // 
+            // SystemPanelRight
+            // 
+            this.SystemPanelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SystemPanelRight.Location = new System.Drawing.Point(167, 3);
+            this.SystemPanelRight.Name = "SystemPanelRight";
+            this.SystemPanelRight.Size = new System.Drawing.Size(524, 464);
+            this.SystemPanelRight.TabIndex = 5;
             // 
             // StorePage
             // 
@@ -171,9 +251,9 @@
             // 
             // BuyBtn
             // 
-            this.BuyBtn.Location = new System.Drawing.Point(3, 109);
+            this.BuyBtn.Location = new System.Drawing.Point(3, 95);
             this.BuyBtn.Name = "BuyBtn";
-            this.BuyBtn.Size = new System.Drawing.Size(153, 34);
+            this.BuyBtn.Size = new System.Drawing.Size(153, 30);
             this.BuyBtn.TabIndex = 5;
             this.BuyBtn.Text = "采购计划";
             this.BuyBtn.UseVisualStyleBackColor = true;
@@ -181,9 +261,9 @@
             // 
             // InOutListBtn
             // 
-            this.InOutListBtn.Location = new System.Drawing.Point(3, 74);
+            this.InOutListBtn.Location = new System.Drawing.Point(3, 65);
             this.InOutListBtn.Name = "InOutListBtn";
-            this.InOutListBtn.Size = new System.Drawing.Size(153, 34);
+            this.InOutListBtn.Size = new System.Drawing.Size(153, 30);
             this.InOutListBtn.TabIndex = 4;
             this.InOutListBtn.Text = "出/入库记录";
             this.InOutListBtn.UseVisualStyleBackColor = true;
@@ -191,9 +271,9 @@
             // 
             // StockOrderBtn
             // 
-            this.StockOrderBtn.Location = new System.Drawing.Point(3, 39);
+            this.StockOrderBtn.Location = new System.Drawing.Point(3, 34);
             this.StockOrderBtn.Name = "StockOrderBtn";
-            this.StockOrderBtn.Size = new System.Drawing.Size(153, 34);
+            this.StockOrderBtn.Size = new System.Drawing.Size(153, 30);
             this.StockOrderBtn.TabIndex = 3;
             this.StockOrderBtn.Text = "出库计划";
             this.StockOrderBtn.UseVisualStyleBackColor = true;
@@ -203,7 +283,7 @@
             // 
             this.StockCheckBtn.Location = new System.Drawing.Point(3, 4);
             this.StockCheckBtn.Name = "StockCheckBtn";
-            this.StockCheckBtn.Size = new System.Drawing.Size(153, 34);
+            this.StockCheckBtn.Size = new System.Drawing.Size(153, 30);
             this.StockCheckBtn.TabIndex = 2;
             this.StockCheckBtn.Text = "库存盘点";
             this.StockCheckBtn.UseVisualStyleBackColor = true;
@@ -238,16 +318,25 @@
             this.OrderdataGrid.AutoGenerateColumns = false;
             this.OrderdataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.OrderdataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
             this.订单日期DataGridViewTextBoxColumn,
-            this.订单详情,
             this.订单号DataGridViewTextBoxColumn,
+            this.订单详情DataGridViewTextBoxColumn,
+            this.预计交货日期DataGridViewTextBoxColumn,
             this.订单状态DataGridViewTextBoxColumn});
             this.OrderdataGrid.DataSource = this.订单信息BindingSource;
-            this.OrderdataGrid.Location = new System.Drawing.Point(11, 117);
+            this.OrderdataGrid.Location = new System.Drawing.Point(3, 92);
             this.OrderdataGrid.Name = "OrderdataGrid";
             this.OrderdataGrid.RowTemplate.Height = 23;
-            this.OrderdataGrid.Size = new System.Drawing.Size(673, 352);
+            this.OrderdataGrid.Size = new System.Drawing.Size(681, 377);
             this.OrderdataGrid.TabIndex = 3;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "订单日期";
+            this.Column1.HeaderText = ".";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 30;
             // 
             // 订单日期DataGridViewTextBoxColumn
             // 
@@ -255,17 +344,25 @@
             this.订单日期DataGridViewTextBoxColumn.HeaderText = "订单日期";
             this.订单日期DataGridViewTextBoxColumn.Name = "订单日期DataGridViewTextBoxColumn";
             // 
-            // 订单详情
-            // 
-            this.订单详情.DataPropertyName = "订单详情";
-            this.订单详情.HeaderText = "订单详情";
-            this.订单详情.Name = "订单详情";
-            // 
             // 订单号DataGridViewTextBoxColumn
             // 
             this.订单号DataGridViewTextBoxColumn.DataPropertyName = "订单号";
             this.订单号DataGridViewTextBoxColumn.HeaderText = "订单号";
             this.订单号DataGridViewTextBoxColumn.Name = "订单号DataGridViewTextBoxColumn";
+            // 
+            // 订单详情DataGridViewTextBoxColumn
+            // 
+            this.订单详情DataGridViewTextBoxColumn.DataPropertyName = "订单详情";
+            this.订单详情DataGridViewTextBoxColumn.HeaderText = "订单详情";
+            this.订单详情DataGridViewTextBoxColumn.Name = "订单详情DataGridViewTextBoxColumn";
+            this.订单详情DataGridViewTextBoxColumn.Width = 200;
+            // 
+            // 预计交货日期DataGridViewTextBoxColumn
+            // 
+            this.预计交货日期DataGridViewTextBoxColumn.DataPropertyName = "预计交货日期";
+            this.预计交货日期DataGridViewTextBoxColumn.HeaderText = "预计交货日期";
+            this.预计交货日期DataGridViewTextBoxColumn.Name = "预计交货日期DataGridViewTextBoxColumn";
+            this.预计交货日期DataGridViewTextBoxColumn.Width = 130;
             // 
             // 订单状态DataGridViewTextBoxColumn
             // 
@@ -296,7 +393,7 @@
             this.OrderPanelTop.Controls.Add(this.日期);
             this.OrderPanelTop.Location = new System.Drawing.Point(1, 29);
             this.OrderPanelTop.Name = "OrderPanelTop";
-            this.OrderPanelTop.Size = new System.Drawing.Size(693, 87);
+            this.OrderPanelTop.Size = new System.Drawing.Size(693, 57);
             this.OrderPanelTop.TabIndex = 2;
             // 
             // OrderStateBox
@@ -305,7 +402,7 @@
             this.OrderStateBox.Items.AddRange(new object[] {
             "未完成",
             "已完成"});
-            this.OrderStateBox.Location = new System.Drawing.Point(74, 31);
+            this.OrderStateBox.Location = new System.Drawing.Point(73, 31);
             this.OrderStateBox.Name = "OrderStateBox";
             this.OrderStateBox.Size = new System.Drawing.Size(124, 20);
             this.OrderStateBox.TabIndex = 8;
@@ -313,7 +410,7 @@
             // 订单状态
             // 
             this.订单状态.AutoSize = true;
-            this.订单状态.Location = new System.Drawing.Point(8, 35);
+            this.订单状态.Location = new System.Drawing.Point(7, 35);
             this.订单状态.Name = "订单状态";
             this.订单状态.Size = new System.Drawing.Size(65, 12);
             this.订单状态.TabIndex = 7;
@@ -321,7 +418,7 @@
             // 
             // SearchOrderBtn
             // 
-            this.SearchOrderBtn.Location = new System.Drawing.Point(609, 59);
+            this.SearchOrderBtn.Location = new System.Drawing.Point(608, 28);
             this.SearchOrderBtn.Name = "SearchOrderBtn";
             this.SearchOrderBtn.Size = new System.Drawing.Size(75, 23);
             this.SearchOrderBtn.TabIndex = 6;
@@ -332,7 +429,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(362, 5);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(167, 21);
+            this.textBox1.Size = new System.Drawing.Size(185, 21);
             this.textBox1.TabIndex = 5;
             // 
             // 订单号
@@ -511,7 +608,7 @@
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.BlowBtn);
-            this.panel1.Location = new System.Drawing.Point(9, 73);
+            this.panel1.Location = new System.Drawing.Point(9, 65);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(140, 115);
             this.panel1.TabIndex = 2;
@@ -555,9 +652,9 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(3, 39);
+            this.button2.Location = new System.Drawing.Point(3, 35);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(153, 34);
+            this.button2.Size = new System.Drawing.Size(153, 30);
             this.button2.TabIndex = 1;
             this.button2.Text = "生产工序";
             this.button2.UseVisualStyleBackColor = true;
@@ -566,11 +663,16 @@
             // 
             this.PlanBtn.Location = new System.Drawing.Point(3, 4);
             this.PlanBtn.Name = "PlanBtn";
-            this.PlanBtn.Size = new System.Drawing.Size(153, 34);
+            this.PlanBtn.Size = new System.Drawing.Size(153, 30);
             this.PlanBtn.TabIndex = 0;
             this.PlanBtn.Text = "生产计划";
             this.PlanBtn.UseVisualStyleBackColor = true;
             this.PlanBtn.Click += new System.EventHandler(this.PlanBtn_Click);
+            // 
+            // 库存信息BindingSource
+            // 
+            this.库存信息BindingSource.DataMember = "库存信息";
+            this.库存信息BindingSource.DataSource = this.myDataSet;
             // 
             // MainForm
             // 
@@ -582,9 +684,8 @@
             this.Text = "欢迎使用管理系统";
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.SystemPage.ResumeLayout(false);
-            this.SystemPage.PerformLayout();
-            this.SystemtoolStrip.ResumeLayout(false);
-            this.SystemtoolStrip.PerformLayout();
+            this.SystemPanelLeft.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.StorePage.ResumeLayout(false);
             this.StockPanelLeft.ResumeLayout(false);
             this.OrderPage.ResumeLayout(false);
@@ -600,6 +701,7 @@
             this.ProducePage.ResumeLayout(false);
             this.ProducePanelLeft.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -608,9 +710,6 @@
 
         private System.Windows.Forms.TabPage HelpPage;
         private System.Windows.Forms.TabPage SystemPage;
-        private System.Windows.Forms.ToolStrip SystemtoolStrip;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.TabPage StorePage;
         private System.Windows.Forms.TabPage OrderPage;
         private System.Windows.Forms.ToolStrip OrdertoolStrip;
@@ -647,15 +746,28 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.BindingSource 订单信息BindingSource;
         private myDataSet myDataSet;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 订单日期DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 订单详情;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 订单号DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 订单状态DataGridViewTextBoxColumn;
         private System.Windows.Forms.Panel StockPanelLeft;
         private System.Windows.Forms.Button BuyBtn;
         private System.Windows.Forms.Button InOutListBtn;
         private System.Windows.Forms.Button StockOrderBtn;
         private System.Windows.Forms.Button StockCheckBtn;
+        private System.Windows.Forms.BindingSource 库存信息BindingSource;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 订单日期DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 订单号DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 订单详情DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 预计交货日期DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 订单状态DataGridViewTextBoxColumn;
+        private System.Windows.Forms.Panel SystemPanelLeft;
+        private System.Windows.Forms.Button UserManageBtn;
+        private System.Windows.Forms.Button SystemSetBtn;
+        private System.Windows.Forms.Panel SystemPanelRight;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button10;
 
 
     }
