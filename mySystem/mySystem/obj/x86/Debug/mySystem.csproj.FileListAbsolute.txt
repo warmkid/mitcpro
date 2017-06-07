@@ -37,3 +37,5 @@ D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resou
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.SystemForm.resources
+D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.exe
+D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.pdb

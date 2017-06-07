@@ -56,6 +56,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blow\Process\ExtructionCheckBeforePowerStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionCheckBeforePowerStep2.Designer.cs">
+      <DependentUpon>ExtructionCheckBeforePowerStep2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionFeedRecordStep5.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionFeedRecordStep5.Designer.cs">
+      <DependentUpon>ExtructionFeedRecordStep5.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionPreheatParameterRecordStep3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionPreheatParameterRecordStep3.Designer.cs">
+      <DependentUpon>ExtructionPreheatParameterRecordStep3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionpRoductionAndRestRecordStep6.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionpRoductionAndRestRecordStep6.Designer.cs">
+      <DependentUpon>ExtructionpRoductionAndRestRecordStep6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionTransportRecordStep4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Blow\Process\ExtructionTransportRecordStep4.Designer.cs">
+      <DependentUpon>ExtructionTransportRecordStep4.cs</DependentUpon>
+    </Compile>
     <Compile Include="Plan\AddPlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +174,21 @@
     <Compile Include="SystemForm.Designer.cs">
       <DependentUpon>SystemForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Blow\Process\ExtructionCheckBeforePowerStep2.resx">
+      <DependentUpon>ExtructionCheckBeforePowerStep2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Blow\Process\ExtructionFeedRecordStep5.resx">
+      <DependentUpon>ExtructionFeedRecordStep5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Blow\Process\ExtructionPreheatParameterRecordStep3.resx">
+      <DependentUpon>ExtructionPreheatParameterRecordStep3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Blow\Process\ExtructionpRoductionAndRestRecordStep6.resx">
+      <DependentUpon>ExtructionpRoductionAndRestRecordStep6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Blow\Process\ExtructionTransportRecordStep4.resx">
+      <DependentUpon>ExtructionTransportRecordStep4.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Plan\AddPlanForm.resx">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,7 +261,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Blow\Chart\" />
-    <Folder Include="Blow\Process\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
