@@ -1,44 +1,3 @@
-<style type="text/css">
-        /* automatic heading numbering */
-    
-    h1 {
-        counter-reset: h2counter;
-    }
-    h2 {
-        counter-reset: h3counter;
-    }
-    h3 {
-        counter-reset: h4counter;
-    }
-    h4 {
-        counter-reset: h5counter;
-    }
-    h5 {
-        counter-reset: h6counter;
-    }
-    h6 {} h2:before {
-        counter-increment: h2counter;
-        content: counter(h2counter) ".\0000a0\0000a0";
-    }
-    h3:before {
-        counter-increment: h3counter;
-        content: counter(h2counter) "." counter(h3counter) ".\0000a0\0000a0";
-    }
-    h4:before {
-        counter-increment: h4counter;
-        content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ".\0000a0\0000a0";
-    }
-    h5:before {
-        counter-increment: h5counter;
-        content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) ".\0000a0\0000a0";
-    }
-    h6:before {
-        counter-increment: h6counter;
-        content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) "." counter(h5counter) "." counter(h6counter) ".\0000a0\0000a0";
-    }
-</style>
-
-[toc]
 # mitcpro
 ## 整体设计
 整个系统分为三层：用户界面层，后台逻辑层，数据层。
@@ -52,7 +11,7 @@
 第一层和第二层部分全部使用 C# 编写，体现为多个类。其中界面类是本系统的主程序，它拥有后台逻辑层各类的实例，当用户在界面进行某些操作后，通过这些实例调用对应的接口完成功能。
 
 
-![ss](proj_diagram.png)
+![ss](pics/proj_diagram.png)
 
 ## 用户界面层
 
@@ -60,7 +19,7 @@
 进入主界面前的流程如图所示：
 
 
-![ss](ui_whole.png)
+![ss](pics/ui_whole.png)
 
 
 进入主界面后，根据用户的角色跳转到指定界面，并确定该用户可以访问的界面。
