@@ -56,22 +56,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AddPlanForm.cs">
+    <Compile Include="Plan\AddPlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddPlanForm.Designer.cs">
+    <Compile Include="Plan\AddPlanForm.Designer.cs">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BlowForm.cs">
+    <Compile Include="Blow\BlowForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BlowForm.Designer.cs">
+    <Compile Include="Blow\BlowForm.Designer.cs">
       <DependentUpon>BlowForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BuyForm.cs">
+    <Compile Include="Stock\BuyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="BuyForm.Designer.cs">
+    <Compile Include="Stock\BuyForm.Designer.cs">
       <DependentUpon>BuyForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Connect2SqlForm.cs">
@@ -80,10 +80,10 @@
     <Compile Include="Connect2SqlForm.designer.cs">
       <DependentUpon>Connect2SqlForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="InOutListForm.cs">
+    <Compile Include="Stock\InOutListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InOutListForm.Designer.cs">
+    <Compile Include="Stock\InOutListForm.Designer.cs">
       <DependentUpon>InOutListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginForm.cs">
@@ -92,10 +92,10 @@
     <Compile Include="LoginForm.designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AddOrderForm.cs">
+    <Compile Include="Order\AddOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AddOrderForm.designer.cs">
+    <Compile Include="Order\AddOrderForm.designer.cs">
       <DependentUpon>AddOrderForm.cs</DependentUpon>
     </Compile>
     <Compile Include="myDataSet.cs">
@@ -107,10 +107,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>myDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="PlanForm.cs">
+    <Compile Include="Plan\PlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PlanForm.Designer.cs">
+    <Compile Include="Plan\PlanForm.Designer.cs">
       <DependentUpon>PlanForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -126,16 +126,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="StockOrderForm.cs">
+    <Compile Include="Stock\StockOrderForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StockOrderForm.designer.cs">
+    <Compile Include="Stock\StockOrderForm.designer.cs">
       <DependentUpon>StockOrderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="StockCheckForm.cs">
+    <Compile Include="Stock\StockCheckForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="StockCheckForm.Designer.cs">
+    <Compile Include="Stock\StockCheckForm.Designer.cs">
       <DependentUpon>StockCheckForm.cs</DependentUpon>
     </Compile>
     <Compile Include="SystemForm.cs">
@@ -144,28 +144,28 @@
     <Compile Include="SystemForm.Designer.cs">
       <DependentUpon>SystemForm.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AddPlanForm.resx">
+    <EmbeddedResource Include="Plan\AddPlanForm.resx">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BlowForm.resx">
+    <EmbeddedResource Include="Blow\BlowForm.resx">
       <DependentUpon>BlowForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BuyForm.resx">
+    <EmbeddedResource Include="Stock\BuyForm.resx">
       <DependentUpon>BuyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Connect2SqlForm.resx">
       <DependentUpon>Connect2SqlForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InOutListForm.resx">
+    <EmbeddedResource Include="Stock\InOutListForm.resx">
       <DependentUpon>InOutListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AddOrderForm.resx">
+    <EmbeddedResource Include="Order\AddOrderForm.resx">
       <DependentUpon>AddOrderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PlanForm.resx">
+    <EmbeddedResource Include="Plan\PlanForm.resx">
       <DependentUpon>PlanForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -184,10 +184,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="StockOrderForm.resx">
+    <EmbeddedResource Include="Stock\StockOrderForm.resx">
       <DependentUpon>StockOrderForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="StockCheckForm.resx">
+    <EmbeddedResource Include="Stock\StockCheckForm.resx">
       <DependentUpon>StockCheckForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SystemForm.resx">
@@ -213,6 +213,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Blow\Chart\" />
+    <Folder Include="Blow\Process\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
