@@ -1,0 +1,3 @@
+material_repository_id(int)  create_time(datetime)  modify_time(datetime)  material_repository_name(varchar)
+1                                20170607              20170607                 外中内层（A、B1、C）
+2                                20170607              20170607                    中层（B2）

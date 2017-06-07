@@ -1,0 +1,2 @@
+id(int)  create_time(datetime)  modify_time(datetime)  clean_date(datetime)  number_of_flights(varchar)  check_date(datetime)  clean_region(varchar)  clean_item(varchar)                        is_qualified(bit)  cleaner_id(int)  checker_id(int)
+1             20170607                20170607              20170607                  早班                    20170607              四层旋转牵引      设备表面、气垫辊、展平辊的缝隙、地面清洁         Y                   1                2

@@ -1,0 +1,3 @@
+﻿material_id(int)  create_time(datetime)  modify_time(datetime)  material_name(varchar)  material_price(int)  supplier(varchar)  material_batch_number(int)
+1                      20170607               20170607               SPM-PE-04                   1                  某某某          2017033101
+2                      20170607               20170607               SPM-PE-06                   1                  某某某          2017040701

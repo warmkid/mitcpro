@@ -1,0 +1,6 @@
+user_id(int)  create_time(datetime)  modify_time(datetime)  user_name(varchar)  user_password(varchar)  last_login_time(datetime)  sign(bit)  role_id(int)   department_id(int) 
+1               20170607                20170607                 ’‘                     1                   20170607                   Y            3              1
+2               20170607                20170607                 «Æ                     1                   20170607                   N            1              1
+3               20170607                20170607                 ÀÔ                     1                   20170607                   Y            2              1
+4               20170607                20170607                 ¿Ó                     1                   20170607                   N            1              1
+5               20170607                20170607                 ÷‹                     1                   20170607                   Y            1              1

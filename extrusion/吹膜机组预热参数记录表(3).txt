@@ -1,0 +1,2 @@
+id(int)  create_time(datetime)  modify_time(datetime)  record(?)  check(?)  core_specifications(int)  preheat_part_id(int)  set_preheat_parameter(int)  start_time_of_preheating(datetime)  heating_and_heating_time(int)  insulation_end_time(datetime)  
+1           20170607               20170607                                         1*1                     1                        120                    20170607                                   60                       20170607    

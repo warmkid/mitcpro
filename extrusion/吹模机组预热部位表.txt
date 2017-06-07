@@ -1,0 +1,11 @@
+preheat_part_id(int)  create_time(datetime)  modify_time(datetime)  preheat_part_name(varchar)
+1                           20170607                20170607               I区
+2                                                                          II区
+3                                                                          III区
+4                                                                          IV区
+5                                                                          换网
+6                                                                          流道
+7                                                                          模颈
+8                                                                          机头1
+9                                                                          机头2
+10                                                                         口模

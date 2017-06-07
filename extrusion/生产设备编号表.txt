@@ -1,0 +1,3 @@
+machine_id(int)  create_time(datetime)  modify_time(datetime)   machine_name(varchar)
+1                     20170607              20170607               AA-EQM-032
+2                     20170607              20170607               AA-EQU-071

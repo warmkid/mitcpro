@@ -1,0 +1,6 @@
+right_id(int)    create_time(datetime)  modify_time(datetime)  right_description(varchar)
+1                      20170607               20170607              可以操作本工序界面
+2                      20170607               20170607              可以操作所有工序
+3                      20170607               20170607              可以下达计划指令
+4                      20170607               20170607              输入用户ID
+5                      20170607               20170607              输入用户密码

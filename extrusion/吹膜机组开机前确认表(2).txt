@@ -1,0 +1,2 @@
+id(int)  create_time(datetime)  modify_time(datetime)  confirm_item(varchar)  confirm_detail(varchar)                 confirm_result(bit)  confirmor_id(int)  confirm_date(datetime)  checker_id(int)  check_date(datetime)
+1             20170607               20170607               环境卫生          确认车间环境、设备卫生符合生产工艺要求         Y                    1               20170607                   2               20170607

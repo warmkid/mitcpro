@@ -1,0 +1,4 @@
+role_id(int)    create_time(datatime)  modify_time(datatime)  role_name(varchar)  create_time(datetime)  right_id1_status(bit)  right_id2_status(bit)  right_id3_status(bit)  right_id4_status(bit)  right_id5_status(bit)
+1                    20170607               20170607               操作员                20170607                 Y                       N                       N                     N                      N
+2                    20170607               20170607               计划员                20170607                 Y                       Y                       N                     N                      N
+3                    20170607               20170607               管理员                20170607                 Y                       Y                       Y                     Y                      Y
