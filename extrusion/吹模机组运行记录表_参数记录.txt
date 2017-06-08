@@ -1,0 +1,3 @@
+id(int)  create_time(datetime)  modify_time(datetime)  machine_name(varchar)  set_frequency(int)  actual_frequency(int)  set_tension(int)  actual_tension(int)  electric_current(int)  torque(int)
+1             20170607               20170607                 µÚÒ»Ç£Òý              120                 118                     30              28                      20                 33
+

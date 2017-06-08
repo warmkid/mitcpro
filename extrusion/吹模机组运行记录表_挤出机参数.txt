@@ -1,0 +1,2 @@
+id(int)  create_time(datetime)  modify_time(datetime)  layet_name(varchar)  actual_frequency(int)  electric_current(int)  melt_temperature(int)  pre_melt(int)  after_melt(int)  screw_speed(int)
+1             20170607               201070607               A²ã                   40                     20                      20                  100                120          30       

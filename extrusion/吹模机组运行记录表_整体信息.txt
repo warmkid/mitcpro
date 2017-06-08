@@ -1,0 +1,2 @@
+id(int)  create_time(datetime)  modify_time(datetime)  good_id(int)  production_batch(varchar)  production_date(datetime)  record_time(datetime)  recorder_id(int)  reviewer_id(int)
+1            20170607                20170607               1              201703331                 20170607                 20170607                   1                  2  

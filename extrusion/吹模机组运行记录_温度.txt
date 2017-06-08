@@ -1,0 +1,4 @@
+material_repository__id(int)  create_time(datetime)  modify_time(datetime)  region(varchar)  temperature(int)
+1                                 20170607                20170607              Ò»Çø               30
+2                                 20170607                20170607              »»Íø               20
+3                                 20170607                20170607              Ä£¾±               20

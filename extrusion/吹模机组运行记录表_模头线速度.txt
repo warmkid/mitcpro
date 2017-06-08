@@ -1,0 +1,2 @@
+id(int)  create_time(datetime)  modify_time(datetime)   line_speed(int) 
+1             20170607             20170607                 10            
