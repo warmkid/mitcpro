@@ -28,17 +28,6 @@ namespace mySystem
             orderDlg.Show();
         }
 
-        private void BlowBtn_Click(object sender, EventArgs e)
-        {
-            ProducePanelRight.Controls.Clear();
-            BlowForm myDlg = new BlowForm();
-            myDlg.TopLevel = false;
-            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            ProducePanelRight.Controls.Add(myDlg);
-            myDlg.Show();
-        }
-
         private void PlanBtn_Click(object sender, EventArgs e)
         {
             ProducePanelRight.Controls.Clear();
@@ -102,6 +91,17 @@ namespace mySystem
             myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
             myDlg.FormBorderStyle = FormBorderStyle.None;
             SystemPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
+        }
+
+        private void ExtructionBtn_Click(object sender, EventArgs e)
+        {
+            ProducePanelRight.Controls.Clear();
+            ExtructionForm myDlg = new ExtructionForm();
+            myDlg.TopLevel = false;
+            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            ProducePanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
 

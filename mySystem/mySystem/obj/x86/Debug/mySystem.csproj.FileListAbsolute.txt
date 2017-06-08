@@ -22,7 +22,6 @@ D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
 D:\C Sharp\mitcpro\mySystem\mySystem\bin\Debug\mySystem.exe
 D:\C Sharp\mitcpro\mySystem\mySystem\bin\Debug\mySystem.pdb
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.csprojResolveAssemblyReference.cache
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.BlowForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.BuyForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Connect2SqlForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.InOutListForm.resources
@@ -39,3 +38,9 @@ D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resource
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.SystemForm.resources
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.exe
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionCheckBeforePowerStep2.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionFeedRecordStep5.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionPreheatParameterRecordStep3.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionpRoductionAndRestRecordStep6.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionTransportRecordStep4.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.ExtructionForm.resources

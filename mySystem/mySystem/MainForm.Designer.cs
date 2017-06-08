@@ -86,7 +86,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.BlowBtn = new System.Windows.Forms.Button();
+            this.ExtructionBtn = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.PlanBtn = new System.Windows.Forms.Button();
             this.库存信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -607,7 +607,7 @@
             this.panel1.Controls.Add(this.button6);
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button4);
-            this.panel1.Controls.Add(this.BlowBtn);
+            this.panel1.Controls.Add(this.ExtructionBtn);
             this.panel1.Location = new System.Drawing.Point(9, 65);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(140, 115);
@@ -640,15 +640,15 @@
             this.button4.Text = "清洁分切";
             this.button4.UseVisualStyleBackColor = true;
             // 
-            // BlowBtn
+            // ExtructionBtn
             // 
-            this.BlowBtn.Location = new System.Drawing.Point(11, 3);
-            this.BlowBtn.Name = "BlowBtn";
-            this.BlowBtn.Size = new System.Drawing.Size(118, 27);
-            this.BlowBtn.TabIndex = 0;
-            this.BlowBtn.Text = "吹膜";
-            this.BlowBtn.UseVisualStyleBackColor = true;
-            this.BlowBtn.Click += new System.EventHandler(this.BlowBtn_Click);
+            this.ExtructionBtn.Location = new System.Drawing.Point(11, 3);
+            this.ExtructionBtn.Name = "ExtructionBtn";
+            this.ExtructionBtn.Size = new System.Drawing.Size(118, 27);
+            this.ExtructionBtn.TabIndex = 0;
+            this.ExtructionBtn.Text = "吹膜";
+            this.ExtructionBtn.UseVisualStyleBackColor = true;
+            this.ExtructionBtn.Click += new System.EventHandler(this.ExtructionBtn_Click);
             // 
             // button2
             // 
@@ -738,7 +738,7 @@
         private System.Windows.Forms.Panel ProducePanelRight;
         private System.Windows.Forms.Panel ProducePanelLeft;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button BlowBtn;
+        private System.Windows.Forms.Button ExtructionBtn;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button PlanBtn;
         private System.Windows.Forms.Button button6;
