@@ -14,7 +14,7 @@ namespace mySystem
         public MainForm()
         {
             InitializeComponent();
-            //DeleteOrderBtn.Image = Image.FromFile("D:\\C Sharp\\mitcpro\\mySystem\\mySystem\\pic\\delete.png");
+
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -28,12 +28,21 @@ namespace mySystem
             orderDlg.Show();
         }
 
+        private void ExtructionBtn_Click(object sender, EventArgs e)
+        {
+            ProducePanelRight.Controls.Clear();
+            ExtructionForm myDlg = new ExtructionForm();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            ProducePanelRight.Controls.Add(myDlg);
+            myDlg.Show();
+        }
+
         private void PlanBtn_Click(object sender, EventArgs e)
         {
             ProducePanelRight.Controls.Clear();
             PlanForm myDlg = new PlanForm();
             myDlg.TopLevel = false;
-            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
             myDlg.FormBorderStyle = FormBorderStyle.None;
             ProducePanelRight.Controls.Add(myDlg);
             myDlg.Show();
@@ -44,7 +53,6 @@ namespace mySystem
             StockPanelRight.Controls.Clear();
             StockCheckForm myDlg = new StockCheckForm();
             myDlg.TopLevel = false;
-            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
             myDlg.FormBorderStyle = FormBorderStyle.None;
             StockPanelRight.Controls.Add(myDlg);
             myDlg.Show();
@@ -55,7 +63,6 @@ namespace mySystem
             StockPanelRight.Controls.Clear();
             StockOrderForm myDlg = new StockOrderForm();
             myDlg.TopLevel = false;
-            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
             myDlg.FormBorderStyle = FormBorderStyle.None;
             StockPanelRight.Controls.Add(myDlg);
             myDlg.Show();
@@ -66,7 +73,6 @@ namespace mySystem
             StockPanelRight.Controls.Clear();
             InOutListForm myDlg = new InOutListForm();
             myDlg.TopLevel = false;
-            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
             myDlg.FormBorderStyle = FormBorderStyle.None;
             StockPanelRight.Controls.Add(myDlg);
             myDlg.Show();
@@ -77,7 +83,6 @@ namespace mySystem
             StockPanelRight.Controls.Clear();
             BuyForm myDlg = new BuyForm();
             myDlg.TopLevel = false;
-            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
             myDlg.FormBorderStyle = FormBorderStyle.None;
             StockPanelRight.Controls.Add(myDlg);
             myDlg.Show();
@@ -86,22 +91,10 @@ namespace mySystem
         private void SystemSetBtn_Click(object sender, EventArgs e)
         {
             SystemPanelRight.Controls.Clear();
-            SystemForm myDlg = new SystemForm();
+            SettingForm myDlg = new SettingForm();
             myDlg.TopLevel = false;
-            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
             myDlg.FormBorderStyle = FormBorderStyle.None;
             SystemPanelRight.Controls.Add(myDlg);
-            myDlg.Show();
-        }
-
-        private void ExtructionBtn_Click(object sender, EventArgs e)
-        {
-            ProducePanelRight.Controls.Clear();
-            ExtructionForm myDlg = new ExtructionForm();
-            myDlg.TopLevel = false;
-            myDlg.Dock = DockStyle.Fill;//把子窗体设置为控件
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            ProducePanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
 

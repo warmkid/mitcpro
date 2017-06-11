@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace mySystem.Extruction.Process
 {
     partial class Record_extrusSiteClean
     {

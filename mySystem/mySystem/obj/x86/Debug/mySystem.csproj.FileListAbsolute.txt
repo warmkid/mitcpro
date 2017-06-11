@@ -35,12 +35,116 @@ D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.StockOrderForm.resou
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resources
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.SystemForm.resources
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.exe
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionCheckBeforePowerStep2.resources
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionFeedRecordStep5.resources
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionPreheatParameterRecordStep3.resources
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionpRoductionAndRestRecordStep6.resources
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionTransportRecordStep4.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.exe
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
+D:\Github\mySystem\mySystem\bin\Debug\mySystem.exe
+D:\Github\mySystem\mySystem\bin\Debug\mySystem.pdb
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.csprojResolveAssemblyReference.cache
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionCheckBeforePowerStep2.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionFeedRecordStep5.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionPreheatParameterRecordStep3.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionpRoductionAndRestRecordStep6.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Chart.ExtructionTransportRecordStep4.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.BlowForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.BuyForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Connect2SqlForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.InOutListForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.LoginForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.AddOrderForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.PlanForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Properties.Resources.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.MainForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Resource.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.StockOrderForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.SystemForm.resources
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
+D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.Blow.Process.ExtructionProcess.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.exe
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
+D:\mySystem\mySystem\bin\Debug\mySystem.exe
+D:\mySystem\mySystem\bin\Debug\mySystem.pdb
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.csprojResolveAssemblyReference.cache
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.BuyForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Connect2SqlForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.InOutListForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.LoginForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.AddOrderForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.PlanForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Properties.Resources.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.MainForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Resource.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.StockOrderForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.SystemForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.ExtructionForm.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.HandoverRecordofExtrusionProcess.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.MaterialBalenceofExtrusionProcess.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.RunningRecordofExtrusionUnit.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.RunningRecordofFeedingUnit.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.WastingRecordofExtrusionUnit.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.ExtructionCheckBeforePowerStep2.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.ExtructionFeedRecordStep5.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.ExtructionPreheatParameterRecordStep3.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionProcess.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.ExtructionpRoductionAndRestRecordStep6.resources
+D:\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Chart.ExtructionTransportRecordStep4.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.exe
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
+D:\C Sharp\HeAndYue\mySystem\mySystem\bin\Debug\mySystem.exe
+D:\C Sharp\HeAndYue\mySystem\mySystem\bin\Debug\mySystem.pdb
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.csprojResolveAssemblyReference.cache
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionProcess.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.ExtructionForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.BuyForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Connect2SqlForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.InOutListForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.LoginForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.AddOrderForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.PlanForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Properties.Resources.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.MainForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Resource.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.StockOrderForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.CleanArea_add.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.HandoverRecordofExtrusionProcess.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.ProdctDaily_extrus.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.RunningRecordofExtrusionUnit.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.RunningRecordofFeedingUnit.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Setting_CleanArea.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.WastingRecordofExtrusionUnit.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionTransportRecordStep4.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Record_extrusClean.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.Record_extrusSiteClean.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.Record_extrusSupply.resources
+D:\C Sharp\HeAndYue\mySystem\mySystem\obj\x86\Debug\mySystem.SettingForm.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.CleanArea_add.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.HandoverRecordofExtrusionProcess.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.ProdctDaily_extrus.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.RunningRecordofExtrusionUnit.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.RunningRecordofFeedingUnit.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Setting_CleanArea.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.WastingRecordofExtrusionUnit.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionProcess.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionTransportRecordStep4.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Record_extrusClean.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.Record_extrusSiteClean.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Record_extrusSupply.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.ExtructionForm.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.SettingForm.resources

@@ -7,19 +7,24 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using mySystem.Extruction.Process;
 
-namespace WindowsFormsApplication1
+namespace mySystem
 {
     public partial class Record_extrusClean : Form
     {
-        public Record_extrusClean()
+        private ExtructionProcess extructionformfather = null;
+
+        public Record_extrusClean(ExtructionProcess winMain)
         {
             InitializeComponent();
+            this.extructionformfather = winMain;
             Init();
             connToServer();
             qury();
 
         }
+
         private void Init()
         {
             strCon = @"server=10.105.223.19,56625;database=wyttest;Uid=sa;Pwd=mitc";
@@ -68,11 +73,6 @@ namespace WindowsFormsApplication1
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         string cleantime;//清洁日期
         string classes;//班次
         string checker;//复核人
@@ -92,7 +92,9 @@ namespace WindowsFormsApplication1
             public cont() { cleanstat = true; cleaner = ""; cleanchecker = ""; }
         }
         cont cont_clean;
-        private void button1_Click(object sender, EventArgs e)
+        private mySystem.Extruction.Process.ExtructionProcess extructionProcess;
+
+        public void DataSave()
         {
             cleantime = dateTimePicker1.Text.ToString();
             //textBox1.Text = cleantime;
@@ -102,7 +104,7 @@ namespace WindowsFormsApplication1
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                cont_clean.cleanstat = dataGridView1.Rows[i].Cells[2].Value.ToString()=="是"?true:false;
+                cont_clean.cleanstat = dataGridView1.Rows[i].Cells[2].Value.ToString() == "是" ? true : false;
                 if (null == dataGridView1.Rows[i].Cells[3].Value)
                     cont_clean.cleaner = "";
                 else cont_clean.cleaner = dataGridView1.Rows[i].Cells[3].Value.ToString();

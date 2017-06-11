@@ -585,6 +585,9 @@
             // 
             // ProducePanelRight
             // 
+            this.ProducePanelRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.ProducePanelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ProducePanelRight.Location = new System.Drawing.Point(170, 4);
             this.ProducePanelRight.Name = "ProducePanelRight";
@@ -593,6 +596,9 @@
             // 
             // ProducePanelLeft
             // 
+            this.ProducePanelLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.ProducePanelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ProducePanelLeft.Controls.Add(this.panel1);
             this.ProducePanelLeft.Controls.Add(this.button2);

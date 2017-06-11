@@ -28,47 +28,53 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.Chart2Btn = new System.Windows.Forms.Button();
+            this.Chart4Btn = new System.Windows.Forms.Button();
+            this.Chart1Btn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.Chart5Btn = new System.Windows.Forms.Button();
+            this.Chart6Btn = new System.Windows.Forms.Button();
+            this.Chart3Btn = new System.Windows.Forms.Button();
+            this.Chart7Btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // button3
+            // Chart2Btn
             // 
-            this.button3.Location = new System.Drawing.Point(172, 12);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(143, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "吹膜供料系统运行记录";
-            this.button3.UseVisualStyleBackColor = true;
+            this.Chart2Btn.Location = new System.Drawing.Point(172, 12);
+            this.Chart2Btn.Name = "Chart2Btn";
+            this.Chart2Btn.Size = new System.Drawing.Size(143, 23);
+            this.Chart2Btn.TabIndex = 3;
+            this.Chart2Btn.Text = "吹膜供料系统运行记录";
+            this.Chart2Btn.UseVisualStyleBackColor = true;
+            this.Chart2Btn.Click += new System.EventHandler(this.Chart2Btn_Click);
             // 
-            // button2
+            // Chart4Btn
             // 
-            this.button2.Location = new System.Drawing.Point(14, 41);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(120, 23);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "吹膜工序废品记录";
-            this.button2.UseVisualStyleBackColor = true;
+            this.Chart4Btn.Location = new System.Drawing.Point(14, 41);
+            this.Chart4Btn.Name = "Chart4Btn";
+            this.Chart4Btn.Size = new System.Drawing.Size(120, 23);
+            this.Chart4Btn.TabIndex = 2;
+            this.Chart4Btn.Text = "吹膜工序废品记录";
+            this.Chart4Btn.UseVisualStyleBackColor = true;
+            this.Chart4Btn.Click += new System.EventHandler(this.Chart4Btn_Click);
             // 
-            // button1
+            // Chart1Btn
             // 
-            this.button1.Location = new System.Drawing.Point(14, 12);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "吹膜生产日报表";
-            this.button1.UseVisualStyleBackColor = true;
+            this.Chart1Btn.Location = new System.Drawing.Point(14, 12);
+            this.Chart1Btn.Name = "Chart1Btn";
+            this.Chart1Btn.Size = new System.Drawing.Size(120, 23);
+            this.Chart1Btn.TabIndex = 1;
+            this.Chart1Btn.Text = "吹膜生产日报表";
+            this.Chart1Btn.UseVisualStyleBackColor = true;
+            this.Chart1Btn.Click += new System.EventHandler(this.Chart1Btn_Click);
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.Location = new System.Drawing.Point(2, 108);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(522, 356);
@@ -91,58 +97,63 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(257, 20);
             this.comboBox1.TabIndex = 6;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // button4
+            // Chart5Btn
             // 
-            this.button4.Location = new System.Drawing.Point(172, 41);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(143, 23);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "吹膜工序清场记录";
-            this.button4.UseVisualStyleBackColor = true;
+            this.Chart5Btn.Location = new System.Drawing.Point(172, 41);
+            this.Chart5Btn.Name = "Chart5Btn";
+            this.Chart5Btn.Size = new System.Drawing.Size(143, 23);
+            this.Chart5Btn.TabIndex = 7;
+            this.Chart5Btn.Text = "吹膜工序清场记录";
+            this.Chart5Btn.UseVisualStyleBackColor = true;
+            this.Chart5Btn.Click += new System.EventHandler(this.Chart5Btn_Click);
             // 
-            // button5
+            // Chart6Btn
             // 
-            this.button5.Location = new System.Drawing.Point(360, 41);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(140, 23);
-            this.button5.TabIndex = 8;
-            this.button5.Text = "吹膜工序物料平衡记录";
-            this.button5.UseVisualStyleBackColor = true;
+            this.Chart6Btn.Location = new System.Drawing.Point(360, 41);
+            this.Chart6Btn.Name = "Chart6Btn";
+            this.Chart6Btn.Size = new System.Drawing.Size(140, 23);
+            this.Chart6Btn.TabIndex = 8;
+            this.Chart6Btn.Text = "吹膜工序物料平衡记录";
+            this.Chart6Btn.UseVisualStyleBackColor = true;
+            this.Chart6Btn.Click += new System.EventHandler(this.Chart6Btn_Click);
             // 
-            // button6
+            // Chart3Btn
             // 
-            this.button6.Location = new System.Drawing.Point(360, 12);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(140, 23);
-            this.button6.TabIndex = 9;
-            this.button6.Text = "吹膜机组运行记录";
-            this.button6.UseVisualStyleBackColor = true;
+            this.Chart3Btn.Location = new System.Drawing.Point(360, 12);
+            this.Chart3Btn.Name = "Chart3Btn";
+            this.Chart3Btn.Size = new System.Drawing.Size(140, 23);
+            this.Chart3Btn.TabIndex = 9;
+            this.Chart3Btn.Text = "吹膜机组运行记录";
+            this.Chart3Btn.UseVisualStyleBackColor = true;
+            this.Chart3Btn.Click += new System.EventHandler(this.Chart3Btn_Click);
             // 
-            // button7
+            // Chart7Btn
             // 
-            this.button7.Location = new System.Drawing.Point(14, 70);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(135, 23);
-            this.button7.TabIndex = 10;
-            this.button7.Text = "吹膜岗位交接班记录";
-            this.button7.UseVisualStyleBackColor = true;
+            this.Chart7Btn.Location = new System.Drawing.Point(14, 70);
+            this.Chart7Btn.Name = "Chart7Btn";
+            this.Chart7Btn.Size = new System.Drawing.Size(135, 23);
+            this.Chart7Btn.TabIndex = 10;
+            this.Chart7Btn.Text = "吹膜岗位交接班记录";
+            this.Chart7Btn.UseVisualStyleBackColor = true;
+            this.Chart7Btn.Click += new System.EventHandler(this.Chart7Btn_Click);
             // 
             // ExtructionForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(524, 464);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
+            this.Controls.Add(this.Chart7Btn);
+            this.Controls.Add(this.Chart3Btn);
+            this.Controls.Add(this.Chart6Btn);
+            this.Controls.Add(this.Chart5Btn);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.Chart2Btn);
+            this.Controls.Add(this.Chart4Btn);
+            this.Controls.Add(this.Chart1Btn);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ExtructionForm";
             this.Text = "ExtructionForm";
@@ -154,15 +165,15 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button Chart2Btn;
+        private System.Windows.Forms.Button Chart4Btn;
+        private System.Windows.Forms.Button Chart1Btn;
+        public System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button Chart5Btn;
+        private System.Windows.Forms.Button Chart6Btn;
+        private System.Windows.Forms.Button Chart3Btn;
+        private System.Windows.Forms.Button Chart7Btn;
     }
 }

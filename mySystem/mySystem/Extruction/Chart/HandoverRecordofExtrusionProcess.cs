@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 
 //this form is about the 13th picture of the extrusion step 
-namespace mySystem.Extruction.Chart
+namespace mySystem.Extruction.Process
 {
     public partial class HandoverRecordofExtrusionProcess : Form
     {

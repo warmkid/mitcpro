@@ -6,11 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using mySystem.Extruction.Process;
 
-namespace WindowsFormsApplication1
+namespace mySystem
 {
     public partial class Record_extrusSupply : Form
     {
+        private ExtructionProcess extructionformfather = null;
+        
         string product_code;//产品代码
         string product_num;//产品批号
         string product_instrnum;//生产指令编号
@@ -33,6 +36,7 @@ namespace WindowsFormsApplication1
         float use;//物料使用量
         float left;//余料
         string checker;//复核人
+
 
         private void Init()
         {
@@ -69,8 +73,9 @@ namespace WindowsFormsApplication1
             //textBox1.ReadOnly = true;
         }
 
-        public Record_extrusSupply()
+        public Record_extrusSupply(ExtructionProcess winMain)
         {
+            this.extructionformfather = winMain;
             InitializeComponent();
             Init();
             Setup();

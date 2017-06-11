@@ -9,7 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
 
-namespace WindowsFormsApplication1
+namespace mySystem
 {
     /// <summary>
     ///  吹膜生产日报表

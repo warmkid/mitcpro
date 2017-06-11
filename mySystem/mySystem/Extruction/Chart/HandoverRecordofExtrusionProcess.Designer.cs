@@ -1,4 +1,4 @@
-﻿namespace mySystem.Extruction.Chart
+﻿namespace mySystem.Extruction.Process
 {
     partial class HandoverRecordofExtrusionProcess
     {

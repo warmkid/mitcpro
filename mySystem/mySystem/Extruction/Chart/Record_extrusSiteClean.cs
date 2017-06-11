@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace mySystem.Extruction.Process
 {
     /// <summary>
     /// 吹膜工序清场记录
