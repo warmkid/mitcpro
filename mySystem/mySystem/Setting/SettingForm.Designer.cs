@@ -54,10 +54,10 @@
             this.Column3,
             this.Column4,
             this.Column6});
-            this.dataGridView1.Location = new System.Drawing.Point(21, 292);
+            this.dataGridView1.Location = new System.Drawing.Point(21, 490);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(486, 128);
+            this.dataGridView1.Size = new System.Drawing.Size(505, 128);
             this.dataGridView1.TabIndex = 13;
             // 
             // Column5
@@ -88,18 +88,18 @@
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(432, 426);
+            this.button11.Location = new System.Drawing.Point(1071, 627);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
+            this.button11.Size = new System.Drawing.Size(81, 33);
             this.button11.TabIndex = 12;
             this.button11.Text = "取消";
             this.button11.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(345, 426);
+            this.button3.Location = new System.Drawing.Point(969, 627);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(82, 33);
             this.button3.TabIndex = 11;
             this.button3.Text = "保存设置";
             this.button3.UseVisualStyleBackColor = true;
@@ -107,7 +107,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 267);
+            this.label3.Location = new System.Drawing.Point(19, 465);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 10;
@@ -115,7 +115,7 @@
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(88, 235);
+            this.textBox2.Location = new System.Drawing.Point(88, 433);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(100, 21);
             this.textBox2.TabIndex = 9;
@@ -124,7 +124,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 238);
+            this.label2.Location = new System.Drawing.Point(19, 436);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 8;
@@ -133,7 +133,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(20, 212);
+            this.label1.Location = new System.Drawing.Point(20, 410);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(149, 12);
             this.label1.TabIndex = 7;
@@ -152,7 +152,7 @@
             // 
             this.panel1.Location = new System.Drawing.Point(21, 30);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(486, 171);
+            this.panel1.Size = new System.Drawing.Size(505, 356);
             this.panel1.TabIndex = 15;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -160,7 +160,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 464);
+            this.ClientSize = new System.Drawing.Size(1180, 672);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.dataGridView1);

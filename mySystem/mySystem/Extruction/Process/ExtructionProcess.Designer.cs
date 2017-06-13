@@ -36,7 +36,7 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Location = new System.Drawing.Point(12, 328);
+            this.SaveBtn.Location = new System.Drawing.Point(831, 529);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(75, 23);
             this.SaveBtn.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // BackBtn
             // 
-            this.BackBtn.Location = new System.Drawing.Point(352, 328);
+            this.BackBtn.Location = new System.Drawing.Point(997, 529);
             this.BackBtn.Name = "BackBtn";
             this.BackBtn.Size = new System.Drawing.Size(75, 23);
             this.BackBtn.TabIndex = 1;
@@ -56,7 +56,7 @@
             // 
             // NextBtn
             // 
-            this.NextBtn.Location = new System.Drawing.Point(435, 328);
+            this.NextBtn.Location = new System.Drawing.Point(1080, 529);
             this.NextBtn.Name = "NextBtn";
             this.NextBtn.Size = new System.Drawing.Size(75, 23);
             this.NextBtn.TabIndex = 2;
@@ -72,14 +72,14 @@
             this.StepViewPanel.AutoScroll = true;
             this.StepViewPanel.Location = new System.Drawing.Point(0, 0);
             this.StepViewPanel.Name = "StepViewPanel";
-            this.StepViewPanel.Size = new System.Drawing.Size(522, 326);
+            this.StepViewPanel.Size = new System.Drawing.Size(1178, 523);
             this.StepViewPanel.TabIndex = 3;
             // 
             // ExtructionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 356);
+            this.ClientSize = new System.Drawing.Size(1178, 564);
             this.Controls.Add(this.StepViewPanel);
             this.Controls.Add(this.NextBtn);
             this.Controls.Add(this.BackBtn);

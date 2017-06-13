@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using mySystem;
+using WindowsFormsApplication1;
 
 namespace mySystem.Extruction.Process
 {
@@ -26,6 +27,8 @@ namespace mySystem.Extruction.Process
         {
             InitializeComponent();
             blowformfather = Mainform;
+            StepViewPanel.Size = new Size(1180, 523);
+
             StepState = stepcurrent;
             ShowView(stepcurrent);
         }
@@ -87,7 +90,7 @@ namespace mySystem.Extruction.Process
                     step4form.Show();
                     break;
                 case 5:
-                    this.NextBtn.Enabled = true;
+                    this.NextBtn.Text = "下一页";
                     step5form = new Record_extrusSupply(this);
                     step5form.FormBorderStyle = FormBorderStyle.None;
                     step5form.TopLevel = false;
@@ -96,7 +99,7 @@ namespace mySystem.Extruction.Process
                     step5form.Show();
                     break;
                 case 6:
-                    this.NextBtn.Enabled = false;
+                    this.NextBtn.Text = "完成";
                     step6form = new ExtructionpRoductionAndRestRecordStep6(this);
                     step6form.FormBorderStyle = FormBorderStyle.None;
                     step6form.TopLevel = false;

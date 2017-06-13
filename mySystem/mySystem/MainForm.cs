@@ -14,12 +14,17 @@ namespace mySystem
         public MainForm()
         {
             InitializeComponent();
+            //Rectangle ScreenArea = Screen.GetWorkingArea(this);
+            //ProducePanelLeft.Size = new Size(160, ScreenArea.Height - 260);
+            //ProducePanelRight.Size = new Size(ScreenArea.Width - 184, ScreenArea.Height - 260);
+            //StockPanelLeft.Size = SystemPanelLeft.Size = ProducePanelLeft.Size;
+            //StockPanelRight.Size = SystemPanelRight.Size = ProducePanelRight.Size;
+            //this.textBox1.Text = ProducePanelRight.Size.Height.ToString();
 
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
+            ProducePanelLeft.Size = new Size(160, 672);
+            ProducePanelRight.Size = new Size(1180, 672);
+            StockPanelLeft.Size = SystemPanelLeft.Size = ProducePanelLeft.Size;
+            StockPanelRight.Size = SystemPanelRight.Size = ProducePanelRight.Size;
         }
  
         private void AddOrderBtn_Click(object sender, EventArgs e)
@@ -34,6 +39,7 @@ namespace mySystem
             ExtructionForm myDlg = new ExtructionForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
             ProducePanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
@@ -44,6 +50,7 @@ namespace mySystem
             PlanForm myDlg = new PlanForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
             ProducePanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
@@ -54,6 +61,7 @@ namespace mySystem
             StockCheckForm myDlg = new StockCheckForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = StockPanelRight.Size;
             StockPanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
@@ -64,6 +72,7 @@ namespace mySystem
             StockOrderForm myDlg = new StockOrderForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = StockPanelRight.Size;
             StockPanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
@@ -74,6 +83,7 @@ namespace mySystem
             InOutListForm myDlg = new InOutListForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = StockPanelRight.Size;
             StockPanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
@@ -84,6 +94,7 @@ namespace mySystem
             BuyForm myDlg = new BuyForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = StockPanelRight.Size;
             StockPanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }
@@ -94,6 +105,7 @@ namespace mySystem
             SettingForm myDlg = new SettingForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = SystemPanelRight.Size;
             SystemPanelRight.Controls.Add(myDlg);
             myDlg.Show();
         }

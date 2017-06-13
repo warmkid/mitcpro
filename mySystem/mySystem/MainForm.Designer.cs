@@ -136,9 +136,9 @@
             this.SystemPanelLeft.Controls.Add(this.panel2);
             this.SystemPanelLeft.Controls.Add(this.UserManageBtn);
             this.SystemPanelLeft.Controls.Add(this.SystemSetBtn);
-            this.SystemPanelLeft.Location = new System.Drawing.Point(2, 3);
+            this.SystemPanelLeft.Location = new System.Drawing.Point(5, 4);
             this.SystemPanelLeft.Name = "SystemPanelLeft";
-            this.SystemPanelLeft.Size = new System.Drawing.Size(159, 464);
+            this.SystemPanelLeft.Size = new System.Drawing.Size(160, 464);
             this.SystemPanelLeft.TabIndex = 6;
             // 
             // panel2
@@ -220,7 +220,7 @@
             // SystemPanelRight
             // 
             this.SystemPanelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SystemPanelRight.Location = new System.Drawing.Point(167, 3);
+            this.SystemPanelRight.Location = new System.Drawing.Point(170, 4);
             this.SystemPanelRight.Name = "SystemPanelRight";
             this.SystemPanelRight.Size = new System.Drawing.Size(524, 464);
             this.SystemPanelRight.TabIndex = 5;
@@ -246,7 +246,7 @@
             this.StockPanelLeft.Controls.Add(this.StockCheckBtn);
             this.StockPanelLeft.Location = new System.Drawing.Point(5, 4);
             this.StockPanelLeft.Name = "StockPanelLeft";
-            this.StockPanelLeft.Size = new System.Drawing.Size(159, 464);
+            this.StockPanelLeft.Size = new System.Drawing.Size(160, 464);
             this.StockPanelLeft.TabIndex = 4;
             // 
             // BuyBtn
@@ -558,12 +558,14 @@
             // 
             this.订单管理.AccessibleDescription = "";
             this.订单管理.AccessibleName = "";
+            this.订单管理.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.订单管理.Controls.Add(this.OrderPage);
             this.订单管理.Controls.Add(this.StorePage);
             this.订单管理.Controls.Add(this.ProducePage);
             this.订单管理.Controls.Add(this.SystemPage);
             this.订单管理.Controls.Add(this.HelpPage);
-            this.订单管理.Dock = System.Windows.Forms.DockStyle.Fill;
             this.订单管理.Location = new System.Drawing.Point(0, 0);
             this.订单管理.Name = "订单管理";
             this.订单管理.SelectedIndex = 0;
@@ -585,9 +587,6 @@
             // 
             // ProducePanelRight
             // 
-            this.ProducePanelRight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.ProducePanelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ProducePanelRight.Location = new System.Drawing.Point(170, 4);
             this.ProducePanelRight.Name = "ProducePanelRight";
@@ -596,16 +595,13 @@
             // 
             // ProducePanelLeft
             // 
-            this.ProducePanelLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.ProducePanelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ProducePanelLeft.Controls.Add(this.panel1);
             this.ProducePanelLeft.Controls.Add(this.button2);
             this.ProducePanelLeft.Controls.Add(this.PlanBtn);
             this.ProducePanelLeft.Location = new System.Drawing.Point(5, 4);
             this.ProducePanelLeft.Name = "ProducePanelLeft";
-            this.ProducePanelLeft.Size = new System.Drawing.Size(159, 464);
+            this.ProducePanelLeft.Size = new System.Drawing.Size(160, 464);
             this.ProducePanelLeft.TabIndex = 0;
             // 
             // panel1
@@ -688,7 +684,7 @@
             this.Controls.Add(this.订单管理);
             this.Name = "MainForm";
             this.Text = "欢迎使用管理系统";
-            this.Load += new System.EventHandler(this.MainForm_Load);
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.SystemPage.ResumeLayout(false);
             this.SystemPanelLeft.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

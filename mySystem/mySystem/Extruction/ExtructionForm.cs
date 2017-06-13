@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using mySystem.Extruction.Process;
 using mySystem;
+using WindowsFormsApplication1;
 
 namespace mySystem
 {
@@ -19,7 +20,8 @@ namespace mySystem
         public ExtructionForm()
         {
             InitializeComponent();
-
+            this.panel1.Size = new Size(1180, 564);
+           
             //将内容列表添加到comboBox1中
             DataTable table = ProductionPlanDataTable();
             comboBox1.DataSource = table;
