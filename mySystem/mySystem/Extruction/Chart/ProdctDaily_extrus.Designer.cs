@@ -1,4 +1,4 @@
-﻿namespace mySystem
+﻿namespace WindowsFormsApplication1
 {
     partial class ProdctDaily_extrus
     {

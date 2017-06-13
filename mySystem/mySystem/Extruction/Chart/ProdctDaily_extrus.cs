@@ -9,7 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
 
-namespace mySystem
+namespace WindowsFormsApplication1
 {
     /// <summary>
     ///  吹膜生产日报表
@@ -55,6 +55,7 @@ namespace mySystem
             prodCode = "0x34222fds";
             isOk = false;
             lastRow= new List<object[]>();
+            dataGridView1.AllowUserToAddRows = false;
         }
         /*仅用来来测试，实际早已在上一步登陆*/
         private void connToServer()
@@ -82,7 +83,7 @@ namespace mySystem
             //da.Fill(dt);
 
             ///添加一列
-            DataColumn col = new DataColumn("id");
+            DataColumn col = new DataColumn("编号");
             dt.Columns.Add(col);
             da.Fill(dt);
             for (int row = 0; row < dt.Rows.Count; row++)
