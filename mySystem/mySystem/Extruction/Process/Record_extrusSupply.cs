@@ -6,14 +6,11 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using mySystem.Extruction.Process;
 
-namespace mySystem
+namespace WindowsFormsApplication1
 {
     public partial class Record_extrusSupply : Form
     {
-        private ExtructionProcess extructionformfather = null;
-        
         string product_code;//产品代码
         string product_num;//产品批号
         string product_instrnum;//生产指令编号
@@ -36,7 +33,6 @@ namespace mySystem
         float use;//物料使用量
         float left;//余料
         string checker;//复核人
-
 
         private void Init()
         {
@@ -73,9 +69,8 @@ namespace mySystem
             //textBox1.ReadOnly = true;
         }
 
-        public Record_extrusSupply(ExtructionProcess winMain)
+        public Record_extrusSupply()
         {
-            this.extructionformfather = winMain;
             InitializeComponent();
             Init();
             Setup();
@@ -93,14 +88,30 @@ namespace mySystem
  
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {   
+            float temp;
+            //if(dateTimePicker1.Text==""||!float.TryParse(Serve_out.Text,out temp)||)
+
+            checkout = Serve_checkresult.Text.ToString();
+            server = Serve_person.Text.ToString();
+            if (checkout == "" || server == "")
+            {
+                MessageBox.Show("原料抽查结果、供料人均不能为空");
+                return;
+            }
+
             date = dateTimePicker1.Text.ToString();
+
+            if (!float.TryParse(Serve_out.Text, out temp) || !float.TryParse(Serve_in.Text, out temp) || !float.TryParse(Serve_mid.Text, out temp))
+            {
+                MessageBox.Show("供料量必须为数值类型");
+                return;  
+            }
             serve_out = (float)Convert.ToSingle(Serve_out.Text.ToString());
             serve_in = (float)Convert.ToSingle(Serve_in.Text.ToString());
             serve_mid = (float)Convert.ToSingle(Serve_mid.Text.ToString());
 
-            checkout = Serve_checkresult.Text.ToString();
-            server = Serve_person.Text.ToString();
+
 
             //填数据
             DataGridViewRow dr = new DataGridViewRow();
@@ -119,10 +130,24 @@ namespace mySystem
 
         private void button2_Click(object sender, EventArgs e)
         {
+            
             bunker_use = comboBox1.Text.ToString();
+            checker = textBox10.Text.ToString();
+            if (bunker_use == "" || checker == "")
+            {
+                MessageBox.Show("料仓、复核人均不能为空");
+                return;
+            }
+
+            float temp;
+            if (!float.TryParse(textBox11.Text, out temp) || !float.TryParse(textBox12.Text, out temp))
+            {
+                MessageBox.Show("用料、余料必须为数值类型");
+                return;
+            }
             use = (float)Convert.ToSingle(textBox11.Text.ToString());
             left = (float)Convert.ToSingle(textBox12.Text.ToString());
-            checker = textBox10.Text.ToString();
+            
 
             DataGridViewRow dr = new DataGridViewRow();
             foreach (DataGridViewColumn c in dataGridView2.Columns)
@@ -139,14 +164,24 @@ namespace mySystem
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if(dataGridView1.SelectedRows[0].Index<dataGridView1.Rows.Count-1)
+            if(dataGridView1.SelectedRows.Count==0)
+                return;
+            if (dataGridView1.SelectedRows[0].Index < dataGridView1.Rows.Count - 1 )
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (dataGridView2.SelectedRows[0].Index<dataGridView2.Rows.Count-1)
+            if (dataGridView2.SelectedRows.Count== 0)
+                return;
+            if (dataGridView2.SelectedRows[0].Index < dataGridView2.Rows.Count - 1 )
                 dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
         }
+
+        private void Serve_out_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+        
     }
 }
