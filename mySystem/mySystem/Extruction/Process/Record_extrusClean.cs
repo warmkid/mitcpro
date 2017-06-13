@@ -7,24 +7,19 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using mySystem.Extruction.Process;
 
-namespace mySystem
+namespace WindowsFormsApplication1
 {
     public partial class Record_extrusClean : Form
     {
-        private ExtructionProcess extructionformfather = null;
-
-        public Record_extrusClean(ExtructionProcess winMain)
+        public Record_extrusClean()
         {
             InitializeComponent();
-            this.extructionformfather = winMain;
             Init();
             connToServer();
             qury();
 
         }
-
         private void Init()
         {
             strCon = @"server=10.105.223.19,56625;database=wyttest;Uid=sa;Pwd=mitc";
@@ -64,11 +59,17 @@ namespace mySystem
                 }
                 dr.Cells[0].Value = dt.Rows[i][0].ToString();
                 dr.Cells[1].Value = dt.Rows[i][1].ToString();
-                dr.Cells[2].Value = "是".ToString();
+                dr.Cells[2].Value = true;
+                //dr.Cells[2].Value = "是".ToString();
                 dataGridView1.Rows.Add(dr);
             }
         }
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
         {
 
         }
@@ -92,9 +93,7 @@ namespace mySystem
             public cont() { cleanstat = true; cleaner = ""; cleanchecker = ""; }
         }
         cont cont_clean;
-        private mySystem.Extruction.Process.ExtructionProcess extructionProcess;
-
-        public void DataSave()
+        private void button1_Click(object sender, EventArgs e)
         {
             cleantime = dateTimePicker1.Text.ToString();
             //textBox1.Text = cleantime;
@@ -104,7 +103,7 @@ namespace mySystem
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                cont_clean.cleanstat = dataGridView1.Rows[i].Cells[2].Value.ToString() == "是" ? true : false;
+                cont_clean.cleanstat = dataGridView1.Rows[i].Cells[2].Value.ToString()=="True";
                 if (null == dataGridView1.Rows[i].Cells[3].Value)
                     cont_clean.cleaner = "";
                 else cont_clean.cleaner = dataGridView1.Rows[i].Cells[3].Value.ToString();
