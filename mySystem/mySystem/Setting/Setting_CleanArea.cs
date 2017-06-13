@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace mySystem
+namespace WindowsFormsApplication1
 {
 
     public partial class Setting_CleanArea : Form
@@ -34,6 +34,7 @@ namespace mySystem
             strCon = @"server=10.105.223.19,56625;database=wyttest;Uid=sa;Pwd=mitc";
             sql = "select * from CleanArea_table";
             isOk = false;
+            dataGridView1.AllowUserToAddRows = false;
         }
         /*仅用来来测试，实际早已在上一步登陆*/
         public void connToServer()
@@ -75,6 +76,16 @@ namespace mySystem
         private void del_Click(object sender, EventArgs e)
         {
             DataRowView drv = dataGridView1.SelectedRows[0].DataBoundItem as DataRowView;
+            //System.Console.WriteLine(drv[1].ToString());
+            string id=drv[0].ToString().Trim();
+            string strsql = "delete from CleanArea_table where 名称=" + "'"+id+"'";
+            SqlCommand Cmd = new SqlCommand(strsql, conn);
+            int i = Cmd.ExecuteNonQuery();
+            if(i<0)
+            {
+                MessageBox.Show("删除失败，请重试");
+                return;
+            }       
             drv.Row.Delete();
         }
     }

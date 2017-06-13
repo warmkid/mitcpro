@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace mySystem
+namespace WindowsFormsApplication1
 {
     public partial class CleanArea_add : Form
     {
@@ -24,7 +24,7 @@ namespace mySystem
             string strCon = @"server=10.105.223.19,56625;database=wyttest;Uid=sa;Pwd=mitc";
             SqlConnection conn = new SqlConnection(strCon);
 
-            string sql = "insert into CleanArea_table (name,cont) values("+"'"+name+"'"+","+"'"+content+"'"+");";
+            string sql = "insert into CleanArea_table (名称,内容) values("+"'"+name+"'"+","+"'"+content+"'"+");";
             System.Console.WriteLine(sql+"*************************************************************************");
             int result = 0;
             using (SqlCommand comm = new SqlCommand(sql, conn))
@@ -35,9 +35,9 @@ namespace mySystem
             this.Close();
             if (result > 0)
             {
-                MessageBox.Show("ok");
+                MessageBox.Show("添加成功");
             }
-            else { MessageBox.Show("error"); }
+            else { MessageBox.Show("错误"); }
         }
     }
 }
