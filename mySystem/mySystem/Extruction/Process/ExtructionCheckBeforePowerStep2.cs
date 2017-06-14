@@ -15,6 +15,21 @@ namespace mySystem.Extruction.Process
         private ExtructionProcess extructionformfather = null;
         private DataTable dt = new DataTable();
 
+        private string confirmer = ""; //确认人
+        private string confirmdate = ""; //确认日期
+        private string checker = "";  //复核人
+        private string checkdate = "";  //复核日期
+
+        private class check
+        {
+            public bool[] checkstate;  //14个确认结果
+            public check()
+            {
+                checkstate = new bool[14] { true, true, true, true, true, true, true, true, true, true, true, true, true, true };
+            }
+        }
+        private check checkdata = new check();
+
         public ExtructionCheckBeforePowerStep2(ExtructionProcess winMain)
         {
             InitializeComponent();
@@ -23,14 +38,21 @@ namespace mySystem.Extruction.Process
             DataTabelInitialize();
 
             PSLabel.Text = "注：正常或符合打“√”，不正常或不符合取消勾选。";
-            Confirm.Text = "A";
-            ConfirmDate.Text = "X年X月X日";
-            Check.Text = "B";
-            CheckDate.Text = "X年X月X日";           
+                      
         }
 
         private void DataTabelInitialize()
         {
+            ///***********************表头数据初始化************************///
+            confirmer = "确认姓名";
+            confirmdate = DateTime.Now.ToLongDateString().ToString();
+            checker = "复核姓名";
+            checkdate = DateTime.Now.ToLongDateString().ToString();
+            this.Confirm.Text = confirmer;
+            this.ConfirmDate.Text = confirmdate;
+            this.Check.Text = checker;
+            this.CheckDate.Text = checkdate;
+            ///***********************表格数据初始化************************///            
             //添加四列
             dt.Columns.Add("序号", typeof(String));
             dt.Columns.Add("确认项目", typeof(String));
@@ -63,21 +85,25 @@ namespace mySystem.Extruction.Process
             {
                 this.CheckBeforePowerView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
                 this.CheckBeforePowerView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                this.CheckBeforePowerView.Columns[i].MinimumWidth = 80;
             }
+            this.CheckBeforePowerView.Columns[0].MinimumWidth = 80;
+            this.CheckBeforePowerView.Columns[1].MinimumWidth = 160;
+            this.CheckBeforePowerView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.CheckBeforePowerView.Columns[3].MinimumWidth = 80;
             for (int i = 0; i < this.CheckBeforePowerView.Columns.Count-1; i++)
             {
                 this.CheckBeforePowerView.Columns[i].ReadOnly = true;
-            }          
-            this.CheckBeforePowerView.Columns[0].MinimumWidth = 40;
+            }                      
             this.CheckBeforePowerView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.CheckBeforePowerView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
         }
 
         public void DataSave()
         {
-
+            for (int i = 0; i < 14; i++)
+            {
+                checkdata.checkstate[i] = this.CheckBeforePowerView.Rows[i].Cells["确认结果"].Value.ToString() == "是" ? true : false;
+            }
         }
-
     }
 }

@@ -45,7 +45,7 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Location = new System.Drawing.Point(201, 6);
+            this.Title.Location = new System.Drawing.Point(502, 9);
             this.Title.Name = "Title";
             this.Title.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Title.Size = new System.Drawing.Size(125, 12);
@@ -58,16 +58,16 @@
             this.CheckBeforePowerView.AllowUserToAddRows = false;
             this.CheckBeforePowerView.AllowUserToDeleteRows = false;
             this.CheckBeforePowerView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CheckBeforePowerView.Location = new System.Drawing.Point(12, 23);
+            this.CheckBeforePowerView.Location = new System.Drawing.Point(27, 30);
             this.CheckBeforePowerView.Name = "CheckBeforePowerView";
             this.CheckBeforePowerView.RowTemplate.Height = 23;
-            this.CheckBeforePowerView.Size = new System.Drawing.Size(498, 268);
+            this.CheckBeforePowerView.Size = new System.Drawing.Size(1123, 435);
             this.CheckBeforePowerView.TabIndex = 1;
             // 
             // StaticLabel2
             // 
             this.StaticLabel2.AutoSize = true;
-            this.StaticLabel2.Location = new System.Drawing.Point(12, 313);
+            this.StaticLabel2.Location = new System.Drawing.Point(24, 497);
             this.StaticLabel2.Name = "StaticLabel2";
             this.StaticLabel2.Size = new System.Drawing.Size(53, 12);
             this.StaticLabel2.TabIndex = 5;
@@ -76,7 +76,7 @@
             // 
             // PSLabel
             // 
-            this.PSLabel.Location = new System.Drawing.Point(12, 295);
+            this.PSLabel.Location = new System.Drawing.Point(25, 477);
             this.PSLabel.Name = "PSLabel";
             this.PSLabel.Size = new System.Drawing.Size(498, 15);
             this.PSLabel.TabIndex = 6;
@@ -85,7 +85,7 @@
             // StaticLabel3
             // 
             this.StaticLabel3.AutoSize = true;
-            this.StaticLabel3.Location = new System.Drawing.Point(140, 312);
+            this.StaticLabel3.Location = new System.Drawing.Point(395, 497);
             this.StaticLabel3.Name = "StaticLabel3";
             this.StaticLabel3.Size = new System.Drawing.Size(41, 12);
             this.StaticLabel3.TabIndex = 7;
@@ -94,7 +94,7 @@
             // StaticLabel4
             // 
             this.StaticLabel4.AutoSize = true;
-            this.StaticLabel4.Location = new System.Drawing.Point(272, 312);
+            this.StaticLabel4.Location = new System.Drawing.Point(666, 496);
             this.StaticLabel4.Name = "StaticLabel4";
             this.StaticLabel4.Size = new System.Drawing.Size(53, 12);
             this.StaticLabel4.TabIndex = 8;
@@ -103,7 +103,7 @@
             // StaticLabel5
             // 
             this.StaticLabel5.AutoSize = true;
-            this.StaticLabel5.Location = new System.Drawing.Point(388, 313);
+            this.StaticLabel5.Location = new System.Drawing.Point(1042, 497);
             this.StaticLabel5.Name = "StaticLabel5";
             this.StaticLabel5.Size = new System.Drawing.Size(41, 12);
             this.StaticLabel5.TabIndex = 9;
@@ -112,7 +112,7 @@
             // Confirm
             // 
             this.Confirm.AutoSize = true;
-            this.Confirm.Location = new System.Drawing.Point(59, 313);
+            this.Confirm.Location = new System.Drawing.Point(83, 497);
             this.Confirm.Name = "Confirm";
             this.Confirm.Size = new System.Drawing.Size(11, 12);
             this.Confirm.TabIndex = 10;
@@ -121,7 +121,7 @@
             // ConfirmDate
             // 
             this.ConfirmDate.AutoSize = true;
-            this.ConfirmDate.Location = new System.Drawing.Point(176, 313);
+            this.ConfirmDate.Location = new System.Drawing.Point(431, 498);
             this.ConfirmDate.Name = "ConfirmDate";
             this.ConfirmDate.Size = new System.Drawing.Size(59, 12);
             this.ConfirmDate.TabIndex = 11;
@@ -130,7 +130,7 @@
             // Check
             // 
             this.Check.AutoSize = true;
-            this.Check.Location = new System.Drawing.Point(320, 313);
+            this.Check.Location = new System.Drawing.Point(714, 497);
             this.Check.Name = "Check";
             this.Check.Size = new System.Drawing.Size(11, 12);
             this.Check.TabIndex = 12;
@@ -139,7 +139,7 @@
             // CheckDate
             // 
             this.CheckDate.AutoSize = true;
-            this.CheckDate.Location = new System.Drawing.Point(424, 312);
+            this.CheckDate.Location = new System.Drawing.Point(1078, 496);
             this.CheckDate.Name = "CheckDate";
             this.CheckDate.Size = new System.Drawing.Size(59, 12);
             this.CheckDate.TabIndex = 13;
@@ -149,7 +149,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(522, 326);
+            this.ClientSize = new System.Drawing.Size(1178, 523);
             this.Controls.Add(this.CheckDate);
             this.Controls.Add(this.Check);
             this.Controls.Add(this.ConfirmDate);

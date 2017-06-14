@@ -16,6 +16,50 @@ namespace mySystem.Extruction.Process
         private DataTable dtInformation = new DataTable();
         private DataTable dtRecord = new DataTable();
         private int Recordnum = 0;
+        private string productname = "";  //产品名称
+        private string productnumber = "";  //产品批号
+        private string temperature = "";  //环境温度
+        private string humidity = "";  //相对湿度
+
+        private string date = "";  //生产日期
+        private bool spot = true;  //班次；true白班；false夜班
+        private string checkername = "";  //复核人
+
+        private class record
+        {
+            public string time; //时间
+            public string number; //膜卷编号
+            public string length;  //膜卷长度
+            public string weight;  //膜卷重量
+            public string recorder;  //记录人
+            public string outward;   //外观
+            public string width;  //宽度
+            public string maxthickness;  //最大厚度
+            public string minthickness;  //最小厚度
+            public string avethickness;  //平均厚度
+            public string marginthickness;  //厚度公差
+            public string checker;  //检查人
+            public string judge;  //判定
+
+            public record()
+            {
+                time = DateTime.Now.ToLongDateString().ToString();
+                number = "";
+                length = "";
+                weight = "";
+                recorder = "";
+                outward = "";
+                width = "";
+                maxthickness = "";
+                minthickness = "";
+                avethickness = "";
+                marginthickness = "";
+                checker = "";
+                judge = "";
+            }
+        }
+        private record recorddata = new record();
+        private record[] recordlist = null;
 
         public ExtructionpRoductionAndRestRecordStep6(ExtructionProcess winMain)
         {
@@ -27,33 +71,14 @@ namespace mySystem.Extruction.Process
 
         private void InformationViewInitialize()
         {
-            //添加六列
-            dtInformation.Columns.Add("1", typeof(String));
-            dtInformation.Columns.Add("2", typeof(String));
-            dtInformation.Columns.Add("3", typeof(String));
-            dtInformation.Columns.Add("4", typeof(String));
-            dtInformation.Columns.Add("5", typeof(String));
-            //添加具体元素
-            dtInformation.Rows.Add("产品名称：", " ", "产品批号：", "", "依据工艺：吹膜工艺规程");
-            dtInformation.Rows.Add("环境温度(°C)：", " ", "相对湿度(%)：", "", "生产设备：AA-EQM-032");
-            this.InformationView.DataSource = dtInformation;
-            //设置
-            this.InformationView.RowHeadersVisible = false;
-            this.InformationView.ColumnHeadersVisible = false;
-            this.InformationView.AllowUserToResizeColumns = false;
-            this.InformationView.AllowUserToResizeRows = false;
-            this.InformationView.AllowUserToAddRows = false;
-            for (int i = 0; i < this.InformationView.Columns.Count; i++)
-            {
-                this.InformationView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.InformationView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                this.InformationView.Columns[i].MinimumWidth = 40;
-            }
-            this.InformationView.Columns[0].ReadOnly = true;
-            this.InformationView.Columns[1].ReadOnly = false;
-            this.InformationView.Columns[2].ReadOnly = true;
-            this.InformationView.Columns[3].ReadOnly = false;
-            this.InformationView.Columns[4].ReadOnly = true;
+            ///***********************表头数据初始化************************///
+            date = DateTime.Now.ToLongDateString().ToString();
+            spot = true;
+            checkername = "复核人姓名";
+            this.Datelabel.Text = "生产日期：" + date;
+            this.CheckNameLabel.Text = "复核人:" + checkername;
+            this.DatecheckBox.Checked = spot;
+            this.NeightcheckBox.Checked = !spot;            
         }
 
         private void RecordViewInitialize()
@@ -66,16 +91,23 @@ namespace mySystem.Extruction.Process
             dtRecord.Columns.Add("膜卷重量\r(kg)", typeof(String));
             dtRecord.Columns.Add("记录人", typeof(String));
             dtRecord.Columns.Add("外观", typeof(String));
-            dtRecord.Columns.Add("宽度(mm)", typeof(String));
-            dtRecord.Columns.Add("最大厚度（μm）", typeof(String));
-            dtRecord.Columns.Add("最小厚度（μm）", typeof(String));
-            dtRecord.Columns.Add("平均厚度（μm）", typeof(String));
-            dtRecord.Columns.Add("厚度公差(%)", typeof(String));
+            dtRecord.Columns.Add("宽度\r(mm)", typeof(String));
+            dtRecord.Columns.Add("最大厚度\r（μm）", typeof(String));
+            dtRecord.Columns.Add("最小厚度\r（μm）", typeof(String));
+            dtRecord.Columns.Add("平均厚度\r（μm）", typeof(String));
+            dtRecord.Columns.Add("厚度公差\r(%)", typeof(String));
             dtRecord.Columns.Add("检查人", typeof(String));
             dtRecord.Columns.Add("判定", typeof(String));
             //添加内容
             AddRecordRowLine(); 
             this.RecordView.DataSource = dtRecord;
+            this.RecordView.AllowUserToAddRows = false;
+            //添加按钮列
+            DataGridViewButtonColumn MyButtonColumn = new DataGridViewButtonColumn();
+            MyButtonColumn.Name = "删除该条记录";
+            MyButtonColumn.UseColumnTextForButtonValue = true;
+            MyButtonColumn.Text = "删除";
+            this.RecordView.Columns.Add(MyButtonColumn);
             this.RecordView.AllowUserToAddRows = false;
             //设置对齐
             this.RecordView.RowHeadersVisible = false;
@@ -84,8 +116,10 @@ namespace mySystem.Extruction.Process
             {
                 this.RecordView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
                 this.RecordView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                this.RecordView.Columns[i].MinimumWidth = 40;
+                this.RecordView.Columns[i].MinimumWidth = 75;
             }
+            this.RecordView.Columns[0].MinimumWidth = 40;
+            this.RecordView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.RecordView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.RecordView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.RecordView.ColumnHeadersHeight = 40;
@@ -103,11 +137,11 @@ namespace mySystem.Extruction.Process
             rowline["膜卷重量\r(kg)"] = "";
             rowline["记录人"] = "";
             rowline["外观"] = "";
-            rowline["宽度(mm)"] = "";
-            rowline["最大厚度（μm）"] = "";
-            rowline["最小厚度（μm）"] = "";
-            rowline["平均厚度（μm）"] = "";
-            rowline["厚度公差(%)"] = "";
+            rowline["宽度\r(mm)"] = "";
+            rowline["最大厚度\r（μm）"] = "";
+            rowline["最小厚度\r（μm）"] = "";
+            rowline["平均厚度\r（μm）"] = "";
+            rowline["厚度公差\r(%)"] = "";
             rowline["检查人"] = "";
             rowline["判定"] = "";
             //添加行
@@ -119,19 +153,7 @@ namespace mySystem.Extruction.Process
             Recordnum = Recordnum + 1;
         }
 
-        private void DeleteRecordRowLine()
-        {
-            if (Recordnum > 0)
-            {
-                this.RecordView.Rows.RemoveAt(Recordnum-1);//删除行
-                Recordnum = Recordnum - 1;
-                if (Recordnum == 0)
-                {
-                    this.RecordView.Rows.RemoveAt(Recordnum);//删除行();
-                }
-            }           
-        }
-
+        //添加最后一行
         private void AddTotalLine()
         {
             //添加行模板
@@ -144,17 +166,50 @@ namespace mySystem.Extruction.Process
             rowline["膜卷重量\r(kg)"] = "";
             rowline["记录人"] = "";
             rowline["外观"] = "";
-            rowline["宽度(mm)"] = "";
-            rowline["最大厚度（μm）"] = "";
-            rowline["最小厚度（μm）"] = "";
-            rowline["平均厚度（μm）"] = "";
-            rowline["厚度公差(%)"] = "";
+            rowline["宽度\r(mm)"] = "";
+            rowline["最大厚度\r（μm）"] = "";
+            rowline["最小厚度\r（μm）"] = "";
+            rowline["平均厚度\r（μm）"] = "";
+            rowline["厚度公差\r(%)"] = "";
             rowline["检查人"] = "";
             rowline["判定"] = "";
             //添加行
             dtRecord.Rows.Add(rowline);
         }
 
+        //删除单条记录
+        private void RecordView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (RecordView.Columns[e.ColumnIndex].Name == "删除该条记录")
+            {
+                if (e.RowIndex != Recordnum)
+                {
+                    if (Recordnum > 1)
+                    {
+                        this.RecordView.Rows.RemoveAt(e.RowIndex);//删除行
+                        Recordnum = Recordnum - 1;
+                    }
+                    else if (Recordnum > 0)
+                    {
+                        this.RecordView.Rows.RemoveAt(e.RowIndex);//删除行
+                        this.RecordView.Rows.RemoveAt(0);//删除行
+                        Recordnum = Recordnum - 1;
+                    }
+                    RefreshNum();
+                }                
+            }
+        }        
+
+        //更新序号
+        private void RefreshNum()
+        {
+            for (int i = 0; i < RecordView.Rows.Count-1; i++)
+            {
+                RecordView.Rows[i].Cells["序号"].Value = (i+1).ToString();
+            }
+        }
+
+        //日班改变时，夜班也随之改变
         private void DatecheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (DatecheckBox.Checked)
@@ -164,6 +219,7 @@ namespace mySystem.Extruction.Process
             }
         }
 
+        //夜班改变时，夜班也随之改变
         private void NeightcheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (NeightcheckBox.Checked)
@@ -173,19 +229,38 @@ namespace mySystem.Extruction.Process
             }
         }
 
+        //添加行按钮
         private void AddLineBtn_Click_1(object sender, EventArgs e)
         {
             AddRecordRowLine();
         }
 
-        private void DeleteLineBtn_Click_1(object sender, EventArgs e)
-        {
-            DeleteRecordRowLine();
-        }
-
+        //保存数据
         public void DataSave()
         {
-
-        }
+            productname = productnameBox.Text;  //产品名称
+            productnumber = productnumberBox.Text;  //产品批号
+            temperature = temperatureBox.Text;  //环境温度
+            humidity = "";  //相对湿度
+            recordlist = new record[RecordView.Rows.Count];
+            for (int i = 0; i < RecordView.Rows.Count; i++)
+            {
+                recorddata.time = RecordView.Rows[i].Cells[1].Value.ToString();
+                recorddata.number = RecordView.Rows[i].Cells[2].Value.ToString();
+                recorddata.length = RecordView.Rows[i].Cells[3].Value.ToString();
+                recorddata.weight = RecordView.Rows[i].Cells[4].Value.ToString();
+                recorddata.recorder = RecordView.Rows[i].Cells[5].Value.ToString();
+                recorddata.outward = RecordView.Rows[i].Cells[6].Value.ToString();
+                recorddata.width = RecordView.Rows[i].Cells[7].Value.ToString();
+                recorddata.maxthickness = RecordView.Rows[i].Cells[8].Value.ToString();
+                recorddata.minthickness = RecordView.Rows[i].Cells[9].Value.ToString();
+                recorddata.avethickness = RecordView.Rows[i].Cells[10].Value.ToString();
+                recorddata.marginthickness = RecordView.Rows[i].Cells[11].Value.ToString();
+                recorddata.checker = RecordView.Rows[i].Cells[12].Value.ToString();
+                recorddata.judge = RecordView.Rows[i].Cells[13].Value.ToString();
+                recordlist[i] = recorddata;
+            }
+            //最后一行是合计 
+        }        
     }
 }

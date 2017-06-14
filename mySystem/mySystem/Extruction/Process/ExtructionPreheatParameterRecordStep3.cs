@@ -13,63 +13,56 @@ namespace mySystem.Extruction.Process
     public partial class ExtructionPreheatParameterRecordStep3 : Form
     {
         private ExtructionProcess extructionformfather = null;
-        private DataTable dtInformation = new DataTable();
-        private DataTable dtRecord = new DataTable();
+        private string recorder; //记录人
+        private string checker; //复核人
+        private string date; //日期
+
+        private class record
+        {
+
+            public string sizephi; //模芯规格 phi
+            public string sizegap; //模芯规格 gap
+            public string time1;   //预热开始时间
+            public string time2;   //保温结束时间
+            public string time3;   //保温开始时间
+            public string time4;   //保温结束时间
+            public string time5;   //保温结束时间
+            public string PS;
+            public record()
+            {
+                sizephi = "";
+                sizegap = "";
+                time1 = "";
+                time2 = "";
+                time3 = "";
+                time4 = "";
+                time5 = "";
+                PS = "";
+            }
+        }
+        private record recorddata = new record();
 
         public ExtructionPreheatParameterRecordStep3(ExtructionProcess winMain)
         {
             InitializeComponent();
             extructionformfather = winMain;
 
-            InformationViewInitialize();
-            RecordViewInitialize();
+            InformationInitialize();
             //TabelPaint();
         }
 
-        private void InformationViewInitialize()
+        private void InformationInitialize()
         {
-            //添加列
-            dtInformation.Columns.Add("1", typeof(String));
-            dtInformation.Columns.Add("2", typeof(String));
-            dtInformation.Columns.Add("3", typeof(String));
-            dtInformation.Columns.Add("4", typeof(String));
-            //添加内容
-            dtInformation.Rows.Add("日期：", "  年  月  日", "记录人：", "");
-            dtInformation.Rows.Add("模芯规格：", "（φ     × Gap   ）", "复核人：", "");
-            this.InformationView.DataSource = dtInformation;
-            //设置
-            this.InformationView.ColumnHeadersVisible = false;
-            this.InformationView.RowHeadersVisible = false;
-            this.InformationView.AllowUserToResizeRows = false;
-            this.InformationView.AllowUserToResizeColumns = false;
-            this.InformationView.AllowUserToAddRows = false;
-            for (int i = 0; i < this.InformationView.Columns.Count; i++)
-            {
-                this.InformationView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.InformationView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                this.InformationView.Columns[i].MinimumWidth = 80;
-                this.InformationView.Columns[i].ReadOnly = true;
-            }
-            this.InformationView.Columns[1].ReadOnly = false;
-            this.InformationView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            //this.InformationView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.DisplayedCells;
-            //this.InformationView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders; 
-            //this.InformationView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            this.InformationView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.InformationView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-        }
-
-        private void RecordViewInitialize()
-        {
-            //添加列
-            dtRecord.Columns.Add("1", typeof(String));
-            dtRecord.Columns.Add("2", typeof(String));
-            dtRecord.Columns.Add("3", typeof(String));
-            dtRecord.Columns.Add("4", typeof(String));
-            //添加内容
-            dtRecord.Rows.Add("日期：", "  年  月  日", "记录人：", "");
-            dtRecord.Rows.Add("模芯规格：", "（φ     × Gap   ）", "复核人：", "");
-        }
+            ///***********************表头数据初始化************************///
+            recorder = "记录人员";
+            checker = "复核人员";
+            date = DateTime.Now.ToLongDateString().ToString();
+            this.recorderlabel.Text = recorder;
+            this.checkerlabel.Text = checker;
+            this.datelabel.Text = date;
+            this.PSbox.AutoSize = false;
+            this.PSbox.Height = 32;
+        }       
 
         private void TabelPaint()
         {
@@ -88,8 +81,14 @@ namespace mySystem.Extruction.Process
 
         public void DataSave()
         {
-
+            recorddata.sizephi = this.phiBox.Text;
+            recorddata.sizegap = this.gapBox.Text;
+            recorddata.time1 = this.timeBox1.Text;
+            recorddata.time2 = this.timeBox1.Text;
+            recorddata.time3 = this.timeBox1.Text;
+            recorddata.time4 = this.timeBox1.Text;
+            recorddata.time5 = this.timeBox1.Text;
+            recorddata.PS = this.PSbox.Text;
         }
-
     }
 }
