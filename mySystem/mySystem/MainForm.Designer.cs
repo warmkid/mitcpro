@@ -305,7 +305,7 @@
             this.OrderPage.Location = new System.Drawing.Point(4, 22);
             this.OrderPage.Name = "OrderPage";
             this.OrderPage.Padding = new System.Windows.Forms.Padding(3);
-            this.OrderPage.Size = new System.Drawing.Size(692, 470);
+            this.OrderPage.Size = new System.Drawing.Size(1350, 673);
             this.OrderPage.TabIndex = 0;
             this.OrderPage.Text = "订单管理";
             this.OrderPage.UseVisualStyleBackColor = true;
@@ -328,7 +328,7 @@
             this.OrderdataGrid.Location = new System.Drawing.Point(3, 92);
             this.OrderdataGrid.Name = "OrderdataGrid";
             this.OrderdataGrid.RowTemplate.Height = 23;
-            this.OrderdataGrid.Size = new System.Drawing.Size(681, 377);
+            this.OrderdataGrid.Size = new System.Drawing.Size(1339, 580);
             this.OrderdataGrid.TabIndex = 3;
             // 
             // Column1
@@ -488,7 +488,7 @@
             this.OrdertoolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.OrdertoolStrip.Location = new System.Drawing.Point(3, 3);
             this.OrdertoolStrip.Name = "OrdertoolStrip";
-            this.OrdertoolStrip.Size = new System.Drawing.Size(686, 23);
+            this.OrdertoolStrip.Size = new System.Drawing.Size(1344, 23);
             this.OrdertoolStrip.TabIndex = 1;
             this.OrdertoolStrip.Text = "toolStrip2";
             // 
@@ -569,7 +569,7 @@
             this.订单管理.Location = new System.Drawing.Point(0, 0);
             this.订单管理.Name = "订单管理";
             this.订单管理.SelectedIndex = 0;
-            this.订单管理.Size = new System.Drawing.Size(700, 496);
+            this.订单管理.Size = new System.Drawing.Size(1358, 699);
             this.订单管理.TabIndex = 0;
             this.订单管理.Tag = "";
             // 
@@ -680,11 +680,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(700, 496);
+            this.ClientSize = new System.Drawing.Size(1358, 699);
             this.Controls.Add(this.订单管理);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "欢迎使用管理系统";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.SystemPage.ResumeLayout(false);
             this.SystemPanelLeft.ResumeLayout(false);
             this.panel2.ResumeLayout(false);

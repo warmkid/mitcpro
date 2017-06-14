@@ -22,7 +22,6 @@ D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
 D:\C Sharp\mitcpro\mySystem\mySystem\bin\Debug\mySystem.exe
 D:\C Sharp\mitcpro\mySystem\mySystem\bin\Debug\mySystem.pdb
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.csprojResolveAssemblyReference.cache
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.BlowForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.BuyForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Connect2SqlForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.InOutListForm.resources
@@ -36,7 +35,6 @@ D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.StockOrderForm.resou
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resources
-D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.SystemForm.resources
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.exe
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
 D:\Github\mySystem\mySystem\obj\x86\Debug\mySystem.exe
@@ -212,3 +210,21 @@ D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.StockOrderForm.r
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resources
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.SettingForm.resources
 D:\Github\hzkx\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\WindowsFormsApplication1.CleanArea_add.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.HandoverRecordofExtrusionProcess.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\WindowsFormsApplication1.ProdctDaily_extrus.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.RunningRecordofExtrusionUnit.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.RunningRecordofFeedingUnit.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\WindowsFormsApplication1.Setting_CleanArea.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.WastingRecordofExtrusionUnit.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionProcess.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.Extruction.Process.ExtructionTransportRecordStep4.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\WindowsFormsApplication1.Record_extrusClean.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\WindowsFormsApplication1.Record_extrusSiteClean.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\WindowsFormsApplication1.Record_extrusSupply.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.ExtructionForm.resources
+D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.SettingForm.resources
