@@ -37,3 +37,23 @@ D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resou
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resources
 D:\C Sharp\mitcpro\mySystem\mySystem\obj\x86\Debug\mySystem.SystemForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.exe
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.pdb
+C:\management_system_kr\mySystem\mySystem\bin\Debug\mySystem.exe
+C:\management_system_kr\mySystem\mySystem\bin\Debug\mySystem.pdb
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.csprojResolveAssemblyReference.cache
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.AddPlanForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.BlowForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.BuyForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.Connect2SqlForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.InOutListForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.LoginForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.AddOrderForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.PlanForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.Properties.Resources.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.MainForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.Resource.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.StockOrderForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.StockCheckForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.SystemForm.resources
+C:\management_system_kr\mySystem\mySystem\obj\x86\Debug\mySystem.csproj.GenerateResource.Cache
