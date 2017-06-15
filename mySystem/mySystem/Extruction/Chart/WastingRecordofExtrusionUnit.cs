@@ -51,6 +51,12 @@ namespace mySystem.Extruction.Process
             this.ltbShow.Items.Remove(this.ltbShow.SelectedItem);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoginForm check = new LoginForm();
+            check.ShowDialog();
+        }
+
         
     }
 }

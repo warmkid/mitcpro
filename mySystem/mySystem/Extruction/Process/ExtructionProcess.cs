@@ -16,40 +16,125 @@ namespace mySystem.Extruction.Process
     {
         private ExtructionForm blowformfather = null;
         private int StepState = 1;
+        public bool step4checked = false;
         Record_extrusClean step1form = null;
         ExtructionCheckBeforePowerStep2 step2form = null;
         ExtructionPreheatParameterRecordStep3 step3form = null;
         ExtructionTransportRecordStep4 step4form = null;
         Record_extrusSupply step5form = null;
         ExtructionpRoductionAndRestRecordStep6 step6form = null;
+        ExtructionCheck stepcheckform = null;
 
         public ExtructionProcess(ExtructionForm Mainform, int stepcurrent)
         {
             InitializeComponent();
             blowformfather = Mainform;
-            StepViewPanel.Size = new Size(1180, 523);
 
             StepState = stepcurrent;
             ShowView(stepcurrent);
+            CheckBtn.Enabled = false;
+            NextBtn.Enabled = false;
         }
 
+        //上一页按钮
         private void BackBtn_Click(object sender, EventArgs e)
         {
-            if ((StepState > 1) && (StepState< 7 ))
+            if ((StepState > 1) && (StepState< 8 ))
             {
                 StepState = StepState - 1;
                 ShowView(StepState);
+                SaveBtn.Enabled = true;
+                CheckBtn.Enabled = false;
+                NextBtn.Enabled = false;
             }
         }
 
+        //下一页按钮
         private void NextBtn_Click(object sender, EventArgs e)
         {
-            if ((StepState > 0) && (StepState < 6))
+            if ((StepState > 0) && (StepState < 7))
             {
                 StepState = StepState + 1;
                 ShowView(StepState);
+                SaveBtn.Enabled = true;
+                CheckBtn.Enabled = false;
+                if (StepState == 7)
+                { NextBtn.Enabled = true; }
+                else
+                { NextBtn.Enabled = false; }                
+            }            
+        }
+
+        //确认按钮
+        private void SaveBtn_Click(object sender, EventArgs e)
+        {
+            switch (StepState)
+            {
+                case 1:
+                    step1form.DataSave();
+                    CheckBtn.Enabled = true;
+                    break;
+                case 2:
+                    step2form.DataSave();
+                    CheckBtn.Enabled = true;
+                    break;
+                case 3:
+                    step3form.DataSave();
+                    CheckBtn.Enabled = true;
+                    break;
+                case 4:
+                    step4form.DataSave();
+                    CheckBtn.Enabled = true;
+                    break;
+                case 5:
+                    step5form.DataSave();
+                    CheckBtn.Enabled = true;
+                    break;
+                case 6:
+                    step6form.DataSave();
+                    CheckBtn.Enabled = true;          
+                    break;
+                default:
+                    break;
             }
         }
+
+        //审核通过按钮
+        private void CheckBtn_Click(object sender, EventArgs e)
+        {
+            LoginForm check = new LoginForm();
+            check.ShowDialog();
+            switch (StepState)
+            {
+                case 1:
+                    SaveBtn.Enabled = false;
+                    NextBtn.Enabled = true;
+                    break;
+                case 2:
+                    SaveBtn.Enabled = false;
+                    NextBtn.Enabled = true;
+                    break;
+                case 3:
+                    SaveBtn.Enabled = false;
+                    NextBtn.Enabled = true;
+                    break;
+                case 4:
+                    SaveBtn.Enabled = false;
+                    NextBtn.Enabled = true;
+                    step4checked = true;
+                    break;
+                case 5:
+                    SaveBtn.Enabled = false;
+                    NextBtn.Enabled = true;
+                    break;
+                case 6:
+                    SaveBtn.Enabled = false;
+                    NextBtn.Enabled = true;                  
+                    break;
+                default:
+                    break;
+            }
+        } 
 
         private void ShowView(int ProcessState)
         {
@@ -100,6 +185,9 @@ namespace mySystem.Extruction.Process
                     break;
                 case 6:
                     this.NextBtn.Text = "完成";
+                    this.BackBtn.Text = "上一页";
+                    this.SaveBtn.Visible = true;
+                    this.CheckBtn.Visible = true;
                     step6form = new ExtructionpRoductionAndRestRecordStep6(this);
                     step6form.FormBorderStyle = FormBorderStyle.None;
                     step6form.TopLevel = false;
@@ -107,42 +195,21 @@ namespace mySystem.Extruction.Process
                     this.StepViewPanel.Controls.Add(step6form);
                     step6form.Show();
                     break;
-                default:
-                    break;
-            }
-        }
-
-        private void SaveBtn_Click(object sender, EventArgs e)
-        {
-            switch (StepState)
-            {
-                case 1:
-                    step1form.DataSave();
-                    MessageBox.Show(this, "保存成功！");
-                    break;
-                case 2:                    
-                    step2form.DataSave();
-                    //MessageBox.Show(this, "成功向文件中写入内容！");
-                    break;
-                case 3:
-                    step3form.DataSave();
-                    //MessageBox.Show(this, "成功向文件中写入内容！");
-                    break;
-                case 4:
-                    step4form.DataSave();
-                    //MessageBox.Show(this, "成功向文件中写入内容！");
-                    break;
-                case 5:
-                    //step5form.DataSave();
-                    //MessageBox.Show(this, "成功向文件中写入内容！");
-                    break;
-                case 6:
-                    step6form.DataSave();
-                    //MessageBox.Show(this, "成功向文件中写入内容！");                    
+                case 7:
+                    this.BackBtn.Text = "返回";
+                    this.SaveBtn.Visible = false;
+                    this.CheckBtn.Visible = false;
+                    this.NextBtn.Text = "确认打印";
+                    stepcheckform = new ExtructionCheck(this);
+                    stepcheckform.FormBorderStyle = FormBorderStyle.None;
+                    stepcheckform.TopLevel = false;
+                    this.StepViewPanel.Controls.Clear();
+                    this.StepViewPanel.Controls.Add(stepcheckform);
+                    stepcheckform.Show();
                     break;
                 default:
                     break;
             }
-        }    
+        }               
     }
 }

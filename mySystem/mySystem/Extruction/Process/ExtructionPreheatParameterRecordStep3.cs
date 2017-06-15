@@ -13,9 +13,9 @@ namespace mySystem.Extruction.Process
     public partial class ExtructionPreheatParameterRecordStep3 : Form
     {
         private ExtructionProcess extructionformfather = null;
-        private string recorder; //记录人
-        private string checker; //复核人
-        private string date; //日期
+        public string recorder; //记录人
+        public string checker; //复核人
+        public string date; //日期
 
         private class record
         {
@@ -57,9 +57,11 @@ namespace mySystem.Extruction.Process
             recorder = "记录人员";
             checker = "复核人员";
             date = DateTime.Now.ToLongDateString().ToString();
+            /*
             this.recorderlabel.Text = recorder;
             this.checkerlabel.Text = checker;
             this.datelabel.Text = date;
+             * */
             this.PSbox.AutoSize = false;
             this.PSbox.Height = 32;
         }       

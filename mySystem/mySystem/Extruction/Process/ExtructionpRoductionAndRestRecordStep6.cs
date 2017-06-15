@@ -15,15 +15,18 @@ namespace mySystem.Extruction.Process
         private ExtructionProcess extructionformfather = null;
         private DataTable dtInformation = new DataTable();
         private DataTable dtRecord = new DataTable();
+
         private int Recordnum = 0;
         private string productname = "";  //产品名称
         private string productnumber = "";  //产品批号
         private string temperature = "";  //环境温度
         private string humidity = "";  //相对湿度
-
-        private string date = "";  //生产日期
         private bool spot = true;  //班次；true白班；false夜班
-        private string checkername = "";  //复核人
+
+
+        public string date = "";  //生产日期        
+        public string recorder;  //记录人
+        public string checker;  //检查人
 
         private class record
         {
@@ -31,31 +34,27 @@ namespace mySystem.Extruction.Process
             public string number; //膜卷编号
             public string length;  //膜卷长度
             public string weight;  //膜卷重量
-            public string recorder;  //记录人
-            public string outward;   //外观
+            public bool outward;   //外观
             public string width;  //宽度
             public string maxthickness;  //最大厚度
             public string minthickness;  //最小厚度
             public string avethickness;  //平均厚度
             public string marginthickness;  //厚度公差
-            public string checker;  //检查人
-            public string judge;  //判定
+            public bool judge;  //判定
 
             public record()
             {
-                time = DateTime.Now.ToLongDateString().ToString();
+                time = "";
                 number = "";
                 length = "";
                 weight = "";
-                recorder = "";
-                outward = "";
+                outward = true;
                 width = "";
                 maxthickness = "";
                 minthickness = "";
                 avethickness = "";
                 marginthickness = "";
-                checker = "";
-                judge = "";
+                judge = true;
             }
         }
         private record recorddata = new record();
@@ -74,11 +73,14 @@ namespace mySystem.Extruction.Process
             ///***********************表头数据初始化************************///
             date = DateTime.Now.ToLongDateString().ToString();
             spot = true;
-            checkername = "复核人姓名";
+            recorder = "";  //记录人
+            checker = "";  //检查人
+            /*
             this.Datelabel.Text = "生产日期：" + date;
             this.CheckNameLabel.Text = "复核人:" + checkername;
+             * */
             this.DatecheckBox.Checked = spot;
-            this.NeightcheckBox.Checked = !spot;            
+            this.NeightcheckBox.Checked = !spot;
         }
 
         private void RecordViewInitialize()
@@ -86,21 +88,21 @@ namespace mySystem.Extruction.Process
             //添加列
             dtRecord.Columns.Add("序号", typeof(String));
             dtRecord.Columns.Add("时间", typeof(String));
+            dtRecord.Columns["时间"].ReadOnly = true;
             dtRecord.Columns.Add("膜卷编号\r(卷)", typeof(String));
             dtRecord.Columns.Add("膜卷长度\r(m)", typeof(String));
             dtRecord.Columns.Add("膜卷重量\r(kg)", typeof(String));
-            dtRecord.Columns.Add("记录人", typeof(String));
-            dtRecord.Columns.Add("外观", typeof(String));
+            dtRecord.Columns.Add("外观", typeof(bool));
             dtRecord.Columns.Add("宽度\r(mm)", typeof(String));
             dtRecord.Columns.Add("最大厚度\r（μm）", typeof(String));
             dtRecord.Columns.Add("最小厚度\r（μm）", typeof(String));
             dtRecord.Columns.Add("平均厚度\r（μm）", typeof(String));
             dtRecord.Columns.Add("厚度公差\r(%)", typeof(String));
-            dtRecord.Columns.Add("检查人", typeof(String));
-            dtRecord.Columns.Add("判定", typeof(String));
+            dtRecord.Columns.Add("判定", typeof(bool));
             //添加内容
             AddRecordRowLine(); 
             this.RecordView.DataSource = dtRecord;
+            this.RecordView.Font = new Font("宋体", 12, FontStyle.Regular);
             this.RecordView.AllowUserToAddRows = false;
             //添加按钮列
             DataGridViewButtonColumn MyButtonColumn = new DataGridViewButtonColumn();
@@ -116,7 +118,7 @@ namespace mySystem.Extruction.Process
             {
                 this.RecordView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
                 this.RecordView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                this.RecordView.Columns[i].MinimumWidth = 75;
+                this.RecordView.Columns[i].MinimumWidth = 87;
             }
             this.RecordView.Columns[0].MinimumWidth = 40;
             this.RecordView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -131,19 +133,17 @@ namespace mySystem.Extruction.Process
             DataRow rowline;
             rowline = dtRecord.NewRow();
             rowline["序号"] = (Recordnum+1).ToString();
-            rowline["时间"] = "";
+            rowline["时间"] = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();            
             rowline["膜卷编号\r(卷)"] = "";
             rowline["膜卷长度\r(m)"] = "";
             rowline["膜卷重量\r(kg)"] = "";
-            rowline["记录人"] = "";
-            rowline["外观"] = "";
+            rowline["外观"] = true;
             rowline["宽度\r(mm)"] = "";
             rowline["最大厚度\r（μm）"] = "";
             rowline["最小厚度\r（μm）"] = "";
             rowline["平均厚度\r（μm）"] = "";
             rowline["厚度公差\r(%)"] = "";
-            rowline["检查人"] = "";
-            rowline["判定"] = "";
+            rowline["判定"] = true;
             //添加行
             dtRecord.Rows.InsertAt(rowline, Recordnum); 
             if (Recordnum==0)
@@ -164,15 +164,13 @@ namespace mySystem.Extruction.Process
             rowline["膜卷编号\r(卷)"] = "";
             rowline["膜卷长度\r(m)"] = "";
             rowline["膜卷重量\r(kg)"] = "";
-            rowline["记录人"] = "";
-            rowline["外观"] = "";
+            rowline["外观"] = true;
             rowline["宽度\r(mm)"] = "";
             rowline["最大厚度\r（μm）"] = "";
             rowline["最小厚度\r（μm）"] = "";
             rowline["平均厚度\r（μm）"] = "";
             rowline["厚度公差\r(%)"] = "";
-            rowline["检查人"] = "";
-            rowline["判定"] = "";
+            rowline["判定"] = true;
             //添加行
             dtRecord.Rows.Add(rowline);
         }
@@ -216,6 +214,7 @@ namespace mySystem.Extruction.Process
             {
                 NeightcheckBox.Checked = false;
                 DatecheckBox.Checked = true;
+                spot = true;
             }
         }
 
@@ -226,6 +225,7 @@ namespace mySystem.Extruction.Process
             {
                 DatecheckBox.Checked = false;
                 NeightcheckBox.Checked = true;
+                spot = false;
             }
         }
 
@@ -241,7 +241,7 @@ namespace mySystem.Extruction.Process
             productname = productnameBox.Text;  //产品名称
             productnumber = productnumberBox.Text;  //产品批号
             temperature = temperatureBox.Text;  //环境温度
-            humidity = "";  //相对湿度
+            humidity = humidityBox.Text;  //相对湿度
             recordlist = new record[RecordView.Rows.Count];
             for (int i = 0; i < RecordView.Rows.Count; i++)
             {
@@ -249,15 +249,13 @@ namespace mySystem.Extruction.Process
                 recorddata.number = RecordView.Rows[i].Cells[2].Value.ToString();
                 recorddata.length = RecordView.Rows[i].Cells[3].Value.ToString();
                 recorddata.weight = RecordView.Rows[i].Cells[4].Value.ToString();
-                recorddata.recorder = RecordView.Rows[i].Cells[5].Value.ToString();
-                recorddata.outward = RecordView.Rows[i].Cells[6].Value.ToString();
-                recorddata.width = RecordView.Rows[i].Cells[7].Value.ToString();
-                recorddata.maxthickness = RecordView.Rows[i].Cells[8].Value.ToString();
-                recorddata.minthickness = RecordView.Rows[i].Cells[9].Value.ToString();
-                recorddata.avethickness = RecordView.Rows[i].Cells[10].Value.ToString();
-                recorddata.marginthickness = RecordView.Rows[i].Cells[11].Value.ToString();
-                recorddata.checker = RecordView.Rows[i].Cells[12].Value.ToString();
-                recorddata.judge = RecordView.Rows[i].Cells[13].Value.ToString();
+                recorddata.outward = RecordView.Rows[i].Cells[5].Value.ToString() == "是"? true : false;
+                recorddata.width = RecordView.Rows[i].Cells[6].Value.ToString();
+                recorddata.maxthickness = RecordView.Rows[i].Cells[7].Value.ToString();
+                recorddata.minthickness = RecordView.Rows[i].Cells[8].Value.ToString();
+                recorddata.avethickness = RecordView.Rows[i].Cells[9].Value.ToString();
+                recorddata.marginthickness = RecordView.Rows[i].Cells[10].Value.ToString();
+                recorddata.judge = RecordView.Rows[i].Cells[11].Value.ToString() == "是" ? true : false;
                 recordlist[i] = recorddata;
             }
             //最后一行是合计 

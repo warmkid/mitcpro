@@ -31,14 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PlanForm));
             this.StockCheckdataGrid = new System.Windows.Forms.DataGridView();
-            this.生产计划信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.myDataSet = new mySystem.myDataSet();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.AddPlanBtn = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.开始日期DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.结束日期DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,6 +42,14 @@
             this.人员数量DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.要求DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.备注DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.生产计划信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.myDataSet = new mySystem.myDataSet();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.AddPlanBtn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.生产计划信息BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
@@ -81,71 +81,6 @@
             this.StockCheckdataGrid.RowTemplate.Height = 23;
             this.StockCheckdataGrid.Size = new System.Drawing.Size(515, 432);
             this.StockCheckdataGrid.TabIndex = 19;
-            // 
-            // 生产计划信息BindingSource
-            // 
-            this.生产计划信息BindingSource.DataMember = "生产计划信息";
-            this.生产计划信息BindingSource.DataSource = this.myDataSet;
-            // 
-            // myDataSet
-            // 
-            this.myDataSet.DataSetName = "myDataSet";
-            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AddPlanBtn,
-            this.toolStripButton2,
-            this.toolStripButton6,
-            this.toolStripButton3,
-            this.toolStripButton4});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(524, 25);
-            this.toolStrip1.TabIndex = 23;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // AddPlanBtn
-            // 
-            this.AddPlanBtn.Image = ((System.Drawing.Image)(resources.GetObject("AddPlanBtn.Image")));
-            this.AddPlanBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.AddPlanBtn.Name = "AddPlanBtn";
-            this.AddPlanBtn.Size = new System.Drawing.Size(97, 22);
-            this.AddPlanBtn.Text = "新建生产计划";
-            this.AddPlanBtn.Click += new System.EventHandler(this.AddPlanBtn_Click);
-            // 
-            // toolStripButton2
-            // 
-            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton2.Text = "修改";
-            // 
-            // toolStripButton6
-            // 
-            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton6.Text = "保存";
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton3.Text = "删除";
-            // 
-            // toolStripButton4
-            // 
-            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(49, 22);
-            this.toolStripButton4.Text = "打印";
             // 
             // Column1
             // 
@@ -213,6 +148,76 @@
             this.备注DataGridViewTextBoxColumn.DataPropertyName = "备注";
             this.备注DataGridViewTextBoxColumn.HeaderText = "备注";
             this.备注DataGridViewTextBoxColumn.Name = "备注DataGridViewTextBoxColumn";
+            // 
+            // 生产计划信息BindingSource
+            // 
+            this.生产计划信息BindingSource.DataMember = "生产计划信息";
+            this.生产计划信息BindingSource.DataSource = this.myDataSet;
+            // 
+            // myDataSet
+            // 
+            this.myDataSet.DataSetName = "myDataSet";
+            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AddPlanBtn,
+            this.toolStripButton2,
+            this.toolStripButton6,
+            this.toolStripButton3,
+            this.toolStripButton4});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(524, 25);
+            this.toolStrip1.TabIndex = 23;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // AddPlanBtn
+            // 
+            this.AddPlanBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.AddPlanBtn.Image = ((System.Drawing.Image)(resources.GetObject("AddPlanBtn.Image")));
+            this.AddPlanBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.AddPlanBtn.Name = "AddPlanBtn";
+            this.AddPlanBtn.Size = new System.Drawing.Size(124, 22);
+            this.AddPlanBtn.Text = "新建生产计划";
+            this.AddPlanBtn.Click += new System.EventHandler(this.AddPlanBtn_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton2.Text = "修改";
+            // 
+            // toolStripButton6
+            // 
+            this.toolStripButton6.Font = new System.Drawing.Font("SimSun", 12F);
+            this.toolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton6.Image")));
+            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton6.Name = "toolStripButton6";
+            this.toolStripButton6.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton6.Text = "保存";
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton3.Text = "删除";
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.Font = new System.Drawing.Font("SimSun", 12F);
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(60, 22);
+            this.toolStripButton4.Text = "打印";
             // 
             // PlanForm
             // 

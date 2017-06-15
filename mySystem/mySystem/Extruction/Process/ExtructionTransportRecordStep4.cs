@@ -14,11 +14,14 @@ namespace mySystem.Extruction.Process
     {
         private ExtructionProcess extructionformfather = null;
         private DataTable dt = new DataTable();
-        private int Recordnum = 0;        
+
+        private int Recordnum = 0;
+        public string date; //传料日期   
+        public string recorder; //操作人
+        public string checker; //复核人
 
         private class transport
         {
-            public string date; //传料日期            
             public string time; //时间
             public string material; //物料代码
             public string num;  //数量
@@ -26,12 +29,9 @@ namespace mySystem.Extruction.Process
             public string numperkg; //数量/kg
             public bool wetherbag;   //是否包装完好
             public bool wetherclean;   //是否清洁合格
-            public string recorder; //操作人
-            public string checker; //复核人
 
             public transport()
             {
-                date = "";
                 time = "";
                 material = "SPM-PE";
                 num = "";
@@ -39,8 +39,6 @@ namespace mySystem.Extruction.Process
                 numperkg = "";
                 wetherbag = true;
                 wetherclean = true;
-                recorder = "";
-                checker = "";
             }
         }
         private transport transportdata = new transport();
@@ -57,23 +55,23 @@ namespace mySystem.Extruction.Process
 
         private void DataTabelInitialize()
         {
+            ///***********************表头数据初始化************************///
+            recorder = "记录人员";
+            checker = "复核人员";            
+            date = DateTime.Now.ToLongDateString().ToString();
             ///***********************表格数据初始化************************///
             //添加列
-            dt.Columns.Add("传料日期", typeof(String));
-            dt.Columns["传料日期"].ReadOnly = true;
             dt.Columns.Add("时间", typeof(String));
+            dt.Columns["时间"].ReadOnly = true;
             dt.Columns.Add("物料代码", typeof(String));
             dt.Columns.Add("数量(件)", typeof(String));
             dt.Columns.Add("kg/件", typeof(String));
             dt.Columns.Add("数量/kg", typeof(String));
             dt.Columns.Add("包装是否完好", typeof(bool));
-            dt.Columns.Add("是否清洁合格", typeof(bool));
-            dt.Columns.Add("操作人", typeof(String));
-            dt.Columns["操作人"].ReadOnly = true;
-            dt.Columns.Add("复核人", typeof(String));
-            dt.Columns["复核人"].ReadOnly = true;            
+            dt.Columns.Add("是否清洁合格", typeof(bool));        
             AddRowLine();
             this.TransportRecordView.DataSource = dt;
+            this.TransportRecordView.Font = new Font("宋体", 12, FontStyle.Regular);
             //添加按钮列
             DataGridViewButtonColumn MyButtonColumn = new DataGridViewButtonColumn();
             MyButtonColumn.Name = "删除该条记录";
@@ -88,7 +86,7 @@ namespace mySystem.Extruction.Process
             {
                 this.TransportRecordView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
                 this.TransportRecordView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                this.TransportRecordView.Columns[i].MinimumWidth = 100;
+                this.TransportRecordView.Columns[i].MinimumWidth = 120;
             }
             this.TransportRecordView.Columns["物料代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.TransportRecordView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
@@ -103,17 +101,16 @@ namespace mySystem.Extruction.Process
         {
             //添加行模板
             DataRow rowline;
-            rowline = dt.NewRow();
-            rowline["传料日期"] = DateTime.Now.ToLongDateString().ToString();
-            rowline["时间"] = "";
+            rowline = dt.NewRow();            
+            rowline["时间"] = DateTime.Now.Hour.ToString() + ":" + DateTime.Now.Minute.ToString() + ":" + DateTime.Now.Second.ToString();
+            //rowline["时间"] = DateTime.Now.TimeOfDay.ToString();
+            //rowline["时间"] = DateTime.Now.ToLongDateString().ToString();
             rowline["物料代码"] = "SPM-PE";
             rowline["数量(件)"] = "";
             rowline["kg/件"] = "";
             rowline["数量/kg"] = "";
             rowline["包装是否完好"] = true;
             rowline["是否清洁合格"] = true;
-            rowline["操作人"] = "";
-            rowline["复核人"] = "";
             //添加行
             dt.Rows.Add(rowline);
             Recordnum = Recordnum + 1;       
@@ -143,16 +140,13 @@ namespace mySystem.Extruction.Process
             transportlist = new transport[TransportRecordView.Rows.Count];
             for (int i = 0; i < TransportRecordView.Rows.Count; i++)
             {
-                transportdata.date = TransportRecordView.Rows[i].Cells[0].Value.ToString();
-                transportdata.time = TransportRecordView.Rows[i].Cells[1].Value.ToString();
-                transportdata.material = TransportRecordView.Rows[i].Cells[2].Value.ToString();
-                transportdata.num = TransportRecordView.Rows[i].Cells[3].Value.ToString();
-                transportdata.weight = TransportRecordView.Rows[i].Cells[4].Value.ToString();
-                transportdata.numperkg = TransportRecordView.Rows[i].Cells[5].Value.ToString();
-                transportdata.wetherbag = TransportRecordView.Rows[i].Cells[6].Value.ToString() == "是" ? true : false;
-                transportdata.wetherclean = TransportRecordView.Rows[i].Cells[7].Value.ToString() == "是" ? true : false;
-                transportdata.recorder = TransportRecordView.Rows[i].Cells[8].Value.ToString();
-                transportdata.checker = TransportRecordView.Rows[i].Cells[9].Value.ToString();
+                transportdata.time = TransportRecordView.Rows[i].Cells[0].Value.ToString();
+                transportdata.material = TransportRecordView.Rows[i].Cells[1].Value.ToString();
+                transportdata.num = TransportRecordView.Rows[i].Cells[2].Value.ToString();
+                transportdata.weight = TransportRecordView.Rows[i].Cells[3].Value.ToString();
+                transportdata.numperkg = TransportRecordView.Rows[i].Cells[4].Value.ToString();
+                transportdata.wetherbag = TransportRecordView.Rows[i].Cells[5].Value.ToString() == "是" ? true : false;
+                transportdata.wetherclean = TransportRecordView.Rows[i].Cells[6].Value.ToString() == "是" ? true : false;
                 //transportlist.Add(transportdata);
                 transportlist[i] = transportdata;
             }                      

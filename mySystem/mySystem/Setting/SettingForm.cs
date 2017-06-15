@@ -26,5 +26,11 @@ namespace mySystem
             panel1.Controls.Add(setcleanDlg);
             setcleanDlg.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

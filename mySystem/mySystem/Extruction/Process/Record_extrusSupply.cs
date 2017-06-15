@@ -13,6 +13,7 @@ namespace WindowsFormsApplication1
     public partial class Record_extrusSupply : Form
     {
         private ExtructionProcess extructionformfather = null;
+
         string product_code;//产品代码
         string product_num;//产品批号
         string product_instrnum;//生产指令编号
@@ -53,7 +54,8 @@ namespace WindowsFormsApplication1
             bunker2_batch = "rw2cws3";
 
             //string date;//供料日期
-
+            dataGridView1.Font = new Font("宋体", 12);
+            dataGridView2.Font = new Font("宋体", 12);
         }
 
         private void Setup()
@@ -69,6 +71,8 @@ namespace WindowsFormsApplication1
             textBox9.Text = bunker2_batch;
 
             //textBox1.ReadOnly = true;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToAddRows = false;
         }
 
         public Record_extrusSupply(ExtructionProcess winMain)
@@ -169,22 +173,36 @@ namespace WindowsFormsApplication1
         {
             if(dataGridView1.SelectedRows.Count==0)
                 return;
-            if (dataGridView1.SelectedRows[0].Index < dataGridView1.Rows.Count - 1 )
-                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
+            //if (dataGridView1.SelectedRows[0].Index < dataGridView1.Rows.Count - 1 )
+            //    dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
+            dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             if (dataGridView2.SelectedRows.Count== 0)
                 return;
-            if (dataGridView2.SelectedRows[0].Index < dataGridView2.Rows.Count - 1 )
-                dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
+            //if (dataGridView2.SelectedRows[0].Index < dataGridView2.Rows.Count - 1 )
+            //    dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
+            dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
         }
 
         private void Serve_out_TextChanged(object sender, EventArgs e)
         {
 
         }
-        
+
+        public void DataSave()
+        { }
+
+        private void groupBox6_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

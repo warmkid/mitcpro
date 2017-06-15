@@ -56,6 +56,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extruction\Process\ExtructionCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionCheck.Designer.cs">
+      <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProcessMainForm.Designer.cs">
+      <DependentUpon>ProcessMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\QueryExtruForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\QueryExtruForm.Designer.cs">
+      <DependentUpon>QueryExtruForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\QueryMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\QueryMainForm.Designer.cs">
+      <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\CleanArea_add.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,6 +115,12 @@
     </Compile>
     <Compile Include="Extruction\Chart\RunningRecordofFeedingUnit.designer.cs">
       <DependentUpon>RunningRecordofFeedingUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\SettingMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\SettingMainForm.Designer.cs">
+      <DependentUpon>SettingMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\Setting_CleanArea.cs">
       <SubType>Form</SubType>
@@ -240,6 +270,18 @@
     <Compile Include="Setting\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Extruction\Process\ExtructionCheck.resx">
+      <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProcessMainForm.resx">
+      <DependentUpon>ProcessMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\QueryExtruForm.resx">
+      <DependentUpon>QueryExtruForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\QueryMainForm.resx">
+      <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Setting\CleanArea_add.resx">
       <DependentUpon>CleanArea_add.cs</DependentUpon>
     </EmbeddedResource>
@@ -257,6 +299,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Chart\RunningRecordofFeedingUnit.resx">
       <DependentUpon>RunningRecordofFeedingUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\SettingMainForm.resx">
+      <DependentUpon>SettingMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\Setting_CleanArea.resx">
       <DependentUpon>Setting_CleanArea.cs</DependentUpon>
@@ -362,6 +407,7 @@
   <ItemGroup>
     <Content Include="Extruction\Chart\readme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

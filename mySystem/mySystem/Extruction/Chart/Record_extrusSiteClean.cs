@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace mySystem.Extruction.Process
 {
     /// <summary>
     /// 吹膜工序清场记录
@@ -45,14 +45,16 @@ namespace WindowsFormsApplication1
             "设备和工位器具是否已清洁"};
 
             dataGridView1.AllowUserToAddRows = false;
-            ischecked_1=new List<bool>();
+            ischecked_1 = new List<bool>();
             ischecked_2 = new List<bool>();
 
             for (int i = 0; i < unit_serve.Length; i++)
                 ischecked_1.Add(true);
             for (int i = 0; i < unit_exstru.Length; i++)
                 ischecked_2.Add(true);
-                
+
+            comboBox1.Text = "合格";
+            dataGridView1.Font = new Font("宋体", 12);
         }
 
         private void AddtoGridView()
@@ -102,11 +104,15 @@ namespace WindowsFormsApplication1
         }
         private void Datagrid_del()
         {
-            System.Console.WriteLine(dataGridView1.Rows.Count+"********************************************************");
+            //System.Console.WriteLine(dataGridView1.Rows.Count+"********************************************************");
             //if (dataGridView1.Rows.Count == 0)
             //    return;
-            for (int i = dataGridView1.Rows.Count-1; i >=0;i-- )
+            //for (int i = dataGridView1.Rows.Count-2; i >0;i-- )
+            //    dataGridView1.Rows.RemoveAt(i);
+
+            for (int i = dataGridView1.Rows.Count - 1; i >= 0; i--)
                 dataGridView1.Rows.RemoveAt(i);
+
         }
         public Record_extrusSiteClean()
         {
@@ -127,17 +133,15 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < unit_exstru.Length; i++)
+            cleaner = textBox4.Text;
+            checkout = comboBox1.Text == "合格";
+            checker = textBox5.Text;
+            extr = textBox3.Text;
+
+            if (cleaner == "" || checker == "")
             {
-                DataGridViewRow dr = new DataGridViewRow();
-                foreach (DataGridViewColumn c in dataGridView1.Columns)
-                {
-                    dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-                }
-                dr.Cells[0].Value = i + 1;
-                dr.Cells[1].Value = unit_exstru[i];
-                dr.Cells[2].Value = true;
-                dataGridView1.Rows.Add(dr);
+                MessageBox.Show("清场人和复核人均不能为空");
+                return;
             }
         }
 
@@ -148,10 +152,35 @@ namespace WindowsFormsApplication1
             else
                 k=1;
         }
-
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            //System.Console.WriteLine(e.ColumnIndex.ToString() + "," + e.RowIndex.ToString());
+            //cleanorder = comboBox2.Text.ToString();
+            switch (cleanorder)
+            {
+                case "供料工序":
+                    {
+                        //System.Console.WriteLine("供料工序");
+                        bool v = dataGridView1.Rows[e.RowIndex].Cells[2].EditedFormattedValue.ToString() == "True";
+                        //System.Console.WriteLine(dataGridView1.Rows[e.RowIndex].Cells[2].EditedFormattedValue.ToString());
+                        ischecked_1[e.RowIndex] = v;
+                    }
+                    break;
+                case "吹膜工序":
+                    {
+                        //System.Console.WriteLine("吹膜工序");
+                        bool v = dataGridView1.Rows[e.RowIndex].Cells[2].EditedFormattedValue.ToString() == "True";
+                        ischecked_2[e.RowIndex] = v;
+                    }
+                    break;
+            }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            LoginForm lf = new LoginForm();
+            lf.Show();
         }
     }
 }

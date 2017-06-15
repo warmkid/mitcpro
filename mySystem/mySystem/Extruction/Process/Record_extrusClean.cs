@@ -30,6 +30,9 @@ namespace WindowsFormsApplication1
             isOk = false;
             cleancont = new List<cont>();
             cont_clean = new cont();
+
+            //dataGridView1.RowsDefaultCellStyle.Font = new Font("宋体", 12);  
+            dataGridView1.Font = new Font("宋体", 12);
         }
         public void connToServer()
         {
@@ -100,19 +103,24 @@ namespace WindowsFormsApplication1
             checker = textBox2.Text.ToString();
             checktime = dateTimePicker2.Text.ToString();
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                cont_clean.cleanstat = dataGridView1.Rows[i].Cells[2].Value.ToString() == "True";
-                if (null == dataGridView1.Rows[i].Cells[3].Value)
-                    cont_clean.cleaner = "";
-                else cont_clean.cleaner = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                if (null == dataGridView1.Rows[i].Cells[4].Value)
-                    cont_clean.cleanchecker = "";
-                else cont_clean.cleanchecker = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                cleancont.Add(cont_clean);
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //{
+            //    cont_clean.cleanstat = dataGridView1.Rows[i].Cells[2].Value.ToString() == "True";
+            //    if (null == dataGridView1.Rows[i].Cells[3].Value)
+            //        cont_clean.cleaner = "";
+            //    else cont_clean.cleaner = dataGridView1.Rows[i].Cells[3].Value.ToString();
+            //    if (null == dataGridView1.Rows[i].Cells[4].Value)
+            //        cont_clean.cleanchecker = "";
+            //    else cont_clean.cleanchecker = dataGridView1.Rows[i].Cells[4].Value.ToString();
+            //    cleancont.Add(cont_clean);
 
-                System.Console.WriteLine(cleancont[i].cleanstat.ToString() + cleancont[i].cleaner.ToString() + cleancont[i].cleanchecker.ToString());
-            }
+            //    System.Console.WriteLine(cleancont[i].cleanstat.ToString() + cleancont[i].cleaner.ToString() + cleancont[i].cleanchecker.ToString());
+            //}
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
 
     }

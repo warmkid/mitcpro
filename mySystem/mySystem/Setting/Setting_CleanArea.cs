@@ -35,6 +35,7 @@ namespace WindowsFormsApplication1
             sql = "select * from CleanArea_table";
             isOk = false;
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.Font=new Font("宋体",12);
         }
         /*仅用来来测试，实际早已在上一步登陆*/
         public void connToServer()
