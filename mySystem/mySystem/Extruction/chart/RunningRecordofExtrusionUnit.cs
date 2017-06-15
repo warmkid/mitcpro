@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 
 //this form is about the 8th picture of the extrusion step 
-namespace mySystem.Extruction.Chart
+namespace mySystem.Extruction.Process
 {
     public partial class RunningRecordofExtrusionUnit : Form
     {
@@ -22,5 +22,15 @@ namespace mySystem.Extruction.Chart
         {
             MessageBox.Show("data has benn collecteed and more operarion is under developmen");
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoginForm check = new LoginForm();
+			check.LoginButton.Text = "审核通过";
+			check.ExitButton.Text = "取消";
+            check.ShowDialog();
+        }
+
+       
     }
 }

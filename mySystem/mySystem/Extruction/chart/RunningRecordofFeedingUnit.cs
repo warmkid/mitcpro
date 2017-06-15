@@ -10,42 +10,51 @@ using System.Windows.Forms;
 
 
 //this form is about the 7th picture of the extrusion step 
-namespace mySystem.Extruction.Chart
+namespace mySystem.Extruction.Process
 {
     public partial class RunningRecordofFeedingUnit : Form
     {
+        private DataTable datatab = new DataTable();
+        public int id = 0;
         public RunningRecordofFeedingUnit()
         {
             InitializeComponent();
 
             //this part add items to the cmblist
-            this.cmbEngine.Items.Add("yes");
-            this.cmbEngine.Items.Add("reason 1");
-            this.cmbEngine.Items.Add("reasin 2");
-            this.cmbValve.Items.Add("yes");
-            this.cmbValve.Items.Add("reason 1");
-            this.cmbValve.Items.Add("reason 2");
-            this.cmbMaterial.Items.Add("yes");
-            this.cmbMaterial.Items.Add("reason 1");
-            this.cmbMaterial.Items.Add("reason 2");
-            this.cmbAlert.Items.Add("no");
-            this.cmbAlert.Items.Add("yes");
-            this.cmbSolve.Items.Add("yes");
-            this.cmbSolve.Items.Add("no");
+            this.cmbEngine.Items.Add("是");
+            this.cmbEngine.Items.Add("原因一");
+            this.cmbEngine.Items.Add("原因二");
+            this.cmbValve.Items.Add("是");
+            this.cmbValve.Items.Add("原因一");
+            this.cmbValve.Items.Add("原因二");
+            this.cmbMaterial.Items.Add("是");
+            this.cmbMaterial.Items.Add("原因一");
+            this.cmbMaterial.Items.Add("原因二");
+            this.cmbAlert.Items.Add("否");
+            this.cmbAlert.Items.Add("是");
+            this.cmbSolve.Items.Add("是");
+            this.cmbSolve.Items.Add("否");
 
-            //this part initialize the listbox
-            this.ltbShow.Items.Add("Date\t\t"+"kind\t\t"+"Time\t\t"+"Engine"+"\t\t"+"Valve"+"\t\t"+"Material"+"\t\t"+"Alert"+"\t\t"+"Solve");
-
+            datatab.Columns.Add("序号", typeof(String));
+            datatab.Columns.Add("生产日期", typeof(String));
+            datatab.Columns.Add("班次", typeof(String));
+            datatab.Columns.Add("检查时间", typeof(String));
+            datatab.Columns.Add("电机工作正常", typeof(String));
+            datatab.Columns.Add("气动阀工作正常", typeof(String));
+            datatab.Columns.Add("供料运行正常", typeof(String));
+            datatab.Columns.Add("有报警显示", typeof(String));
+            datatab.Columns.Add("解除报警", typeof(String));
+            this.dataGridView1.DataSource = datatab;
 
         }
 
         private void brnDefault_Click(object sender, EventArgs e)
         {
-            this.cmbEngine.Text = "yes";
-            this.cmbValve.Text = "yes";
-            this.cmbMaterial.Text = "yes";
-            this.cmbAlert.Text = "no";
-            this.cmbSolve.Text = "no";
+            this.cmbEngine.Text = "是";
+            this.cmbValve.Text = "是";
+            this.cmbMaterial.Text = "是";
+            this.cmbAlert.Text = "否";
+            this.cmbSolve.Text = "否";
             this.dtpDate.CustomFormat = "yyyy-MM-dd";
             this.dtpDate.Format = DateTimePickerFormat.Custom;
             this.dtpDate.ShowUpDown = true;
@@ -57,39 +66,44 @@ namespace mySystem.Extruction.Chart
 
             this.txbCheckman.Text = "wang";
             this.txbRecheckman.Text = "li";
-            this.rdbDay.Checked = true;
-            this.rdbNight.Checked = false;
+            
         }
+
+        
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            /*this.dtpDate.CustomFormat = "yyyy-MM-dd";
-            this.dtpDate.Format = DateTimePickerFormat.Short;
-            this.dtpDate.ShowUpDown = true;
-            this.dtpHour.CustomFormat = "HH:mm:ss";
-            this.dtpHour.Format = DateTimePickerFormat.Time;
-            this.dtpHour.ShowUpDown = true;*/
-            
-            //this.ltbShow.Items.Add(this.cmbEngine.SelectedItem.ToString());
-            int workflag = new int();
-            string workflag1 = "";
-            if (this.rdbDay.Checked)
-            {
-                workflag = 0;
-                workflag1 = "day work";
-            }
-            else if (this.rdbNight.Checked)
-            {
-                workflag = 1;
-                workflag1 = "night work";
-            }
-            this.ltbShow.Items.Add(this.dtpDate.Value.ToShortDateString()+"\t"+workflag1+"\t"+this.dtpHour.Value.ToShortTimeString()+"\t\t"+ this.cmbEngine.SelectedItem.ToString()+"\t\t"+this.cmbValve.SelectedItem.ToString()+"\t\t"+this.cmbMaterial.SelectedItem.ToString()+"\t\t"+this.cmbAlert.SelectedItem.ToString()+"\t\t"+this.cmbSolve.SelectedItem.ToString());
+            id++;
 
+            datatab.Rows.Add(id.ToString(), dtpDate.Value.ToShortDateString(), ckbDy.Checked == true ? "白班" : "夜班", dtpHour.Value.ToShortTimeString(), cmbEngine.Text, cmbValve.Text, cmbMaterial.Text, cmbAlert.Text, cmbSolve.Text);
+            this.dataGridView1.DataSource = datatab;
         }
 
-        private void btnrRemoveItem_Click(object sender, EventArgs e)
+        private void ckbDy_CheckedChanged(object sender, EventArgs e)
         {
-            this.ltbShow.Items.Remove(this.ltbShow.SelectedItem);
+            if (ckbDy.Checked)
+            {
+                ckbNt.Checked = false;
+            }
         }
+
+        private void ckbNt_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckbNt.Checked)
+            {
+                ckbDy.Checked = false;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoginForm check = new LoginForm();
+			check.LoginButton.Text = "审核通过";
+			check.ExitButton.Text = "取消";
+            check.ShowDialog();
+        }
+
+       
+
     }
 }

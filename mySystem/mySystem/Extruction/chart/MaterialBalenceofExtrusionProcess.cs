@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 
 //this form is about the 12th picture of the extrusion step 
-namespace mySystem.Extruction.Chart
+namespace mySystem.Extruction.Process
 {
     public partial class MaterialBalenceofExtrusionProcess : Form
     {
@@ -41,6 +41,14 @@ namespace mySystem.Extruction.Chart
         private void btnAdd_Click(object sender, EventArgs e)
         {
             MessageBox.Show("date has benn collected and further operate is under development ");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoginForm check = new LoginForm();
+			check.LoginButton.Text = "审核通过";
+			check.ExitButton.Text = "取消";
+            check.ShowDialog();
         }
 
     }
