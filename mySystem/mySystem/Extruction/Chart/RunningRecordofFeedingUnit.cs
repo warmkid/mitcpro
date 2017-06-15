@@ -33,10 +33,6 @@ namespace mySystem.Extruction.Process
             this.cmbSolve.Items.Add("yes");
             this.cmbSolve.Items.Add("no");
 
-            //this part initialize the listbox
-            this.ltbShow.Items.Add("Date\t\t"+"kind\t\t"+"Time\t\t"+"Engine"+"\t\t"+"Valve"+"\t\t"+"Material"+"\t\t"+"Alert"+"\t\t"+"Solve");
-
-
         }
 
         private void brnDefault_Click(object sender, EventArgs e)
@@ -57,40 +53,39 @@ namespace mySystem.Extruction.Process
 
             this.txbCheckman.Text = "wang";
             this.txbRecheckman.Text = "li";
-            this.rdbDay.Checked = true;
-            this.rdbNight.Checked = false;
+            
         }
+
+        
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            /*this.dtpDate.CustomFormat = "yyyy-MM-dd";
-            this.dtpDate.Format = DateTimePickerFormat.Short;
-            this.dtpDate.ShowUpDown = true;
-            this.dtpHour.CustomFormat = "HH:mm:ss";
-            this.dtpHour.Format = DateTimePickerFormat.Time;
-            this.dtpHour.ShowUpDown = true;*/
             
-            //this.ltbShow.Items.Add(this.cmbEngine.SelectedItem.ToString());
-            int workflag = new int();
-            string workflag1 = "";
-            if (this.rdbDay.Checked)
-            {
-                workflag = 0;
-                workflag1 = "day work";
-            }
-            else if (this.rdbNight.Checked)
-            {
-                workflag = 1;
-                workflag1 = "night work";
-            }
-            this.ltbShow.Items.Add(this.dtpDate.Value.ToShortDateString()+"\t"+workflag1+"\t"+this.dtpHour.Value.ToShortTimeString()+"\t\t"+ this.cmbEngine.SelectedItem.ToString()+"\t\t"+this.cmbValve.SelectedItem.ToString()+"\t\t"+this.cmbMaterial.SelectedItem.ToString()+"\t\t"+this.cmbAlert.SelectedItem.ToString()+"\t\t"+this.cmbSolve.SelectedItem.ToString());
-
         }
 
-        private void btnrRemoveItem_Click(object sender, EventArgs e)
+        private void ckbDy_CheckedChanged(object sender, EventArgs e)
         {
-            this.ltbShow.Items.Remove(this.ltbShow.SelectedItem);
+            if (ckbDy.Checked)
+            {
+                ckbNt.Checked = false;
+            }
         }
+
+        private void ckbNt_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckbNt.Checked)
+            {
+                ckbDy.Checked = false;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LoginForm check = new LoginForm();
+            check.ShowDialog();
+        }
+
+       
 
     }
 }

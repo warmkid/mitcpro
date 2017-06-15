@@ -13,6 +13,7 @@ namespace WindowsFormsApplication1
     public partial class Record_extrusSupply : Form
     {
         private ExtructionProcess extructionformfather = null;
+
         string product_code;//产品代码
         string product_num;//产品批号
         string product_instrnum;//生产指令编号
@@ -185,6 +186,8 @@ namespace WindowsFormsApplication1
         {
 
         }
-        
+
+        public void DataSave()
+        { }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace mySystem.Extruction.Process
 {
     /// <summary>
     /// 吹膜工序清场记录
@@ -29,9 +29,6 @@ namespace WindowsFormsApplication1
         string[] unit_serve;//供料工序
         string[] unit_exstru;//吹膜工序
 
-        List<bool> ischecked_1;//供料工序 检查结果是否合格列表
-        List<bool> ischecked_2;//吹膜工序 检查结果是否合格列表
-
         static int k = 0;
         private void Init()
         {
@@ -43,16 +40,6 @@ namespace WindowsFormsApplication1
             unit_serve = new string[] {"填写供料记录是否已归档","使用剩余的原料是否称重退库","设备是否按程序开机，并切断电源" };
             unit_exstru = new string[]{"填写的记录是否已归档","使用的文件，设备运行参数是否已经归档","设备是否已按程序关机，并切断电源",
             "设备和工位器具是否已清洁"};
-
-            dataGridView1.AllowUserToAddRows = false;
-            ischecked_1=new List<bool>();
-            ischecked_2 = new List<bool>();
-
-            for (int i = 0; i < unit_serve.Length; i++)
-                ischecked_1.Add(true);
-            for (int i = 0; i < unit_exstru.Length; i++)
-                ischecked_2.Add(true);
-                
         }
 
         private void AddtoGridView()
@@ -73,7 +60,7 @@ namespace WindowsFormsApplication1
                             }
                             dr.Cells[0].Value = i + 1;
                             dr.Cells[1].Value = unit_serve[i];
-                            dr.Cells[2].Value = ischecked_1[i];
+
                             dataGridView1.Rows.Add(dr);
                         }
                     }
@@ -91,7 +78,7 @@ namespace WindowsFormsApplication1
                             }
                             dr.Cells[0].Value = i + 1;
                             dr.Cells[1].Value = unit_exstru[i];
-                            dr.Cells[2].Value = ischecked_2[i];
+
                             dataGridView1.Rows.Add(dr);
                         }
                     }
@@ -103,9 +90,9 @@ namespace WindowsFormsApplication1
         private void Datagrid_del()
         {
             System.Console.WriteLine(dataGridView1.Rows.Count+"********************************************************");
-            //if (dataGridView1.Rows.Count == 0)
-            //    return;
-            for (int i = dataGridView1.Rows.Count-1; i >=0;i-- )
+            if (dataGridView1.Rows.Count == 0)
+                return;
+            for (int i = dataGridView1.Rows.Count-2; i >0;i-- )
                 dataGridView1.Rows.RemoveAt(i);
         }
         public Record_extrusSiteClean()
@@ -127,18 +114,7 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < unit_exstru.Length; i++)
-            {
-                DataGridViewRow dr = new DataGridViewRow();
-                foreach (DataGridViewColumn c in dataGridView1.Columns)
-                {
-                    dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-                }
-                dr.Cells[0].Value = i + 1;
-                dr.Cells[1].Value = unit_exstru[i];
-                dr.Cells[2].Value = true;
-                dataGridView1.Rows.Add(dr);
-            }
+
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -147,11 +123,6 @@ namespace WindowsFormsApplication1
                 AddtoGridView();
             else
                 k=1;
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }

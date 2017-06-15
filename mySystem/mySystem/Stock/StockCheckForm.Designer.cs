@@ -67,64 +67,71 @@
             // 
             // SearchStockCheckBtn
             // 
-            this.SearchStockCheckBtn.Location = new System.Drawing.Point(433, 59);
+            this.SearchStockCheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.SearchStockCheckBtn.Location = new System.Drawing.Point(632, 63);
             this.SearchStockCheckBtn.Name = "SearchStockCheckBtn";
-            this.SearchStockCheckBtn.Size = new System.Drawing.Size(75, 23);
+            this.SearchStockCheckBtn.Size = new System.Drawing.Size(75, 30);
             this.SearchStockCheckBtn.TabIndex = 17;
             this.SearchStockCheckBtn.Text = "查询";
             this.SearchStockCheckBtn.UseVisualStyleBackColor = true;
             // 
             // textBox2
             // 
-            this.textBox2.Location = new System.Drawing.Point(264, 58);
+            this.textBox2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.textBox2.Location = new System.Drawing.Point(324, 63);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(147, 21);
+            this.textBox2.Size = new System.Drawing.Size(147, 26);
             this.textBox2.TabIndex = 16;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 61);
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label1.Location = new System.Drawing.Point(8, 65);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.Size = new System.Drawing.Size(88, 16);
             this.label1.TabIndex = 15;
             this.label1.Text = "物品状态：";
             // 
             // textBox
             // 
-            this.textBox.Location = new System.Drawing.Point(262, 31);
+            this.textBox.Font = new System.Drawing.Font("SimSun", 12F);
+            this.textBox.Location = new System.Drawing.Point(324, 31);
             this.textBox.Name = "textBox";
-            this.textBox.Size = new System.Drawing.Size(246, 21);
+            this.textBox.Size = new System.Drawing.Size(246, 26);
             this.textBox.TabIndex = 14;
             // 
             // 物品名称
             // 
             this.物品名称.AutoSize = true;
-            this.物品名称.Location = new System.Drawing.Point(198, 34);
+            this.物品名称.Font = new System.Drawing.Font("SimSun", 12F);
+            this.物品名称.Location = new System.Drawing.Point(236, 34);
             this.物品名称.Name = "物品名称";
-            this.物品名称.Size = new System.Drawing.Size(65, 12);
+            this.物品名称.Size = new System.Drawing.Size(88, 16);
             this.物品名称.TabIndex = 13;
             this.物品名称.Text = "物品名称：";
             // 
             // comboBox1
             // 
+            this.comboBox1.Font = new System.Drawing.Font("SimSun", 12F);
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
             "原材料",
             "半成品",
             "成品",
             "组件"});
-            this.comboBox1.Location = new System.Drawing.Point(48, 30);
+            this.comboBox1.Location = new System.Drawing.Point(73, 30);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(136, 20);
+            this.comboBox1.Size = new System.Drawing.Size(136, 24);
             this.comboBox1.TabIndex = 12;
             // 
             // 类别
             // 
             this.类别.AutoSize = true;
+            this.类别.Font = new System.Drawing.Font("SimSun", 12F);
             this.类别.Location = new System.Drawing.Point(9, 34);
             this.类别.Name = "类别";
-            this.类别.Size = new System.Drawing.Size(41, 12);
+            this.类别.Size = new System.Drawing.Size(56, 16);
             this.类别.TabIndex = 11;
             this.类别.Text = "类别：";
             // 
@@ -140,24 +147,26 @@
             this.StockChecktoolStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.StockChecktoolStrip.Location = new System.Drawing.Point(0, 0);
             this.StockChecktoolStrip.Name = "StockChecktoolStrip";
-            this.StockChecktoolStrip.Size = new System.Drawing.Size(524, 23);
+            this.StockChecktoolStrip.Size = new System.Drawing.Size(1032, 23);
             this.StockChecktoolStrip.TabIndex = 10;
             this.StockChecktoolStrip.Text = "toolStrip2";
             // 
             // NewItemBtn
             // 
+            this.NewItemBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.NewItemBtn.Image = ((System.Drawing.Image)(resources.GetObject("NewItemBtn.Image")));
             this.NewItemBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.NewItemBtn.Name = "NewItemBtn";
-            this.NewItemBtn.Size = new System.Drawing.Size(73, 20);
+            this.NewItemBtn.Size = new System.Drawing.Size(92, 20);
             this.NewItemBtn.Text = "新建种类";
             // 
             // SortStockBtn
             // 
+            this.SortStockBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.SortStockBtn.Image = ((System.Drawing.Image)(resources.GetObject("SortStockBtn.Image")));
             this.SortStockBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.SortStockBtn.Name = "SortStockBtn";
-            this.SortStockBtn.Size = new System.Drawing.Size(49, 20);
+            this.SortStockBtn.Size = new System.Drawing.Size(60, 20);
             this.SortStockBtn.Text = "排序";
             // 
             // toolStripSeparator2
@@ -167,26 +176,29 @@
             // 
             // ExcelStockBtn
             // 
+            this.ExcelStockBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.ExcelStockBtn.Image = ((System.Drawing.Image)(resources.GetObject("ExcelStockBtn.Image")));
             this.ExcelStockBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.ExcelStockBtn.Name = "ExcelStockBtn";
-            this.ExcelStockBtn.Size = new System.Drawing.Size(79, 20);
+            this.ExcelStockBtn.Size = new System.Drawing.Size(100, 20);
             this.ExcelStockBtn.Text = "Excel导出";
             // 
             // PrintStockBtn
             // 
+            this.PrintStockBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.PrintStockBtn.Image = ((System.Drawing.Image)(resources.GetObject("PrintStockBtn.Image")));
             this.PrintStockBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.PrintStockBtn.Name = "PrintStockBtn";
-            this.PrintStockBtn.Size = new System.Drawing.Size(49, 20);
+            this.PrintStockBtn.Size = new System.Drawing.Size(60, 20);
             this.PrintStockBtn.Text = "打印";
             // 
             // RefreshStockBtn
             // 
+            this.RefreshStockBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.RefreshStockBtn.Image = ((System.Drawing.Image)(resources.GetObject("RefreshStockBtn.Image")));
             this.RefreshStockBtn.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.RefreshStockBtn.Name = "RefreshStockBtn";
-            this.RefreshStockBtn.Size = new System.Drawing.Size(49, 20);
+            this.RefreshStockBtn.Size = new System.Drawing.Size(60, 20);
             this.RefreshStockBtn.Text = "刷新";
             // 
             // StockCheckdataGrid
@@ -206,10 +218,10 @@
             this.缺货数量DataGridViewTextBoxColumn,
             this.物品状态DataGridViewTextBoxColumn});
             this.StockCheckdataGrid.DataSource = this.库存信息BindingSource1;
-            this.StockCheckdataGrid.Location = new System.Drawing.Point(3, 88);
+            this.StockCheckdataGrid.Location = new System.Drawing.Point(3, 107);
             this.StockCheckdataGrid.Name = "StockCheckdataGrid";
             this.StockCheckdataGrid.RowTemplate.Height = 23;
-            this.StockCheckdataGrid.Size = new System.Drawing.Size(515, 372);
+            this.StockCheckdataGrid.Size = new System.Drawing.Size(1161, 504);
             this.StockCheckdataGrid.TabIndex = 18;
             // 
             // 物品类别DataGridViewTextBoxColumn
@@ -277,18 +289,20 @@
             // 
             // comboBox2
             // 
+            this.comboBox2.Font = new System.Drawing.Font("SimSun", 12F);
             this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(70, 58);
+            this.comboBox2.Location = new System.Drawing.Point(95, 62);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(114, 20);
+            this.comboBox2.Size = new System.Drawing.Size(114, 24);
             this.comboBox2.TabIndex = 20;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(199, 62);
+            this.label2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label2.Location = new System.Drawing.Point(237, 66);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 12);
+            this.label2.Size = new System.Drawing.Size(88, 16);
             this.label2.TabIndex = 19;
             this.label2.Text = "物品编号：";
             // 
@@ -296,7 +310,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(524, 464);
+            this.ClientSize = new System.Drawing.Size(1032, 585);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.StockCheckdataGrid);

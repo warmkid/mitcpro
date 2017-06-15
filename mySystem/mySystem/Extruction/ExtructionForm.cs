@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
-using mySystem.Extruction.Process;
 using mySystem;
 using WindowsFormsApplication1;
 
@@ -16,11 +15,10 @@ namespace mySystem
     public partial class ExtructionForm : Form
     {
         int ProcessStep = 0;
-       
+               
         public ExtructionForm()
         {
-            InitializeComponent();
-            this.panel1.Size = new Size(1180, 564);
+            InitializeComponent();            
            
             //将内容列表添加到comboBox1中
             DataTable table = ProductionPlanDataTable();

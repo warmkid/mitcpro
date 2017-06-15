@@ -37,9 +37,10 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Location = new System.Drawing.Point(515, 8);
+            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
+            this.Title.Location = new System.Drawing.Point(511, 8);
             this.Title.Name = "Title";
-            this.Title.Size = new System.Drawing.Size(101, 12);
+            this.Title.Size = new System.Drawing.Size(169, 19);
             this.Title.TabIndex = 3;
             this.Title.Text = "吹膜工序传料记录";
             // 
@@ -49,15 +50,16 @@
             this.TransportRecordView.Location = new System.Drawing.Point(22, 35);
             this.TransportRecordView.Name = "TransportRecordView";
             this.TransportRecordView.RowTemplate.Height = 23;
-            this.TransportRecordView.Size = new System.Drawing.Size(1123, 442);
+            this.TransportRecordView.Size = new System.Drawing.Size(1123, 384);
             this.TransportRecordView.TabIndex = 4;
             this.TransportRecordView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TransportRecordView_CellContentClick);
             // 
             // AddLineBtn
             // 
-            this.AddLineBtn.Location = new System.Drawing.Point(1080, 488);
+            this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.AddLineBtn.Location = new System.Drawing.Point(1068, 425);
             this.AddLineBtn.Name = "AddLineBtn";
-            this.AddLineBtn.Size = new System.Drawing.Size(75, 23);
+            this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 6;
             this.AddLineBtn.Text = "添加记录";
             this.AddLineBtn.UseVisualStyleBackColor = true;
@@ -67,7 +69,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1178, 523);
+            this.ClientSize = new System.Drawing.Size(1168, 464);
             this.Controls.Add(this.AddLineBtn);
             this.Controls.Add(this.TransportRecordView);
             this.Controls.Add(this.Title);

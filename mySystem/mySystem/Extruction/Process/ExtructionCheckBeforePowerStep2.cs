@@ -15,10 +15,10 @@ namespace mySystem.Extruction.Process
         private ExtructionProcess extructionformfather = null;
         private DataTable dt = new DataTable();
 
-        private string confirmer = ""; //确认人
-        private string confirmdate = ""; //确认日期
-        private string checker = "";  //复核人
-        private string checkdate = "";  //复核日期
+        public string confirmer = ""; //确认人
+        public string confirmdate = ""; //确认日期
+        public string checker = "";  //复核人
+        public string checkdate = "";  //复核日期
 
         private class check
         {
@@ -48,10 +48,12 @@ namespace mySystem.Extruction.Process
             confirmdate = DateTime.Now.ToLongDateString().ToString();
             checker = "复核姓名";
             checkdate = DateTime.Now.ToLongDateString().ToString();
+            /*
             this.Confirm.Text = confirmer;
             this.ConfirmDate.Text = confirmdate;
             this.Check.Text = checker;
             this.CheckDate.Text = checkdate;
+            */
             ///***********************表格数据初始化************************///            
             //添加四列
             dt.Columns.Add("序号", typeof(String));
@@ -74,6 +76,7 @@ namespace mySystem.Extruction.Process
             dt.Rows.Add("13", "吸尘器", "已清洁干净且运行正常。", true);
             dt.Rows.Add("14", "供料系统", "设备卫生符合要求，供料系统各部件运行正常。", true);            
             this.CheckBeforePowerView.DataSource = dt;
+            this.CheckBeforePowerView.Font = new Font("宋体", 12, FontStyle.Regular);
 
             //设置
             this.CheckBeforePowerView.RowHeadersVisible = false;
