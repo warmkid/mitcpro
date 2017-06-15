@@ -56,17 +56,143 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extruction\Process\ExtructionCheck.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionCheck.Designer.cs">
+      <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProcessMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProcessMainForm.Designer.cs">
+      <DependentUpon>ProcessMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\QueryExtruForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\QueryExtruForm.Designer.cs">
+      <DependentUpon>QueryExtruForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\QueryMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\QueryMainForm.Designer.cs">
+      <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\CleanArea_add.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\CleanArea_add.designer.cs">
+      <DependentUpon>CleanArea_add.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Chart\HandoverRecordofExtrusionProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\HandoverRecordofExtrusionProcess.designer.cs">
+      <DependentUpon>HandoverRecordofExtrusionProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Chart\MaterialBalenceofExtrusionProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\MaterialBalenceofExtrusionProcess.designer.cs">
+      <DependentUpon>MaterialBalenceofExtrusionProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Chart\ProdctDaily_extrus.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\ProdctDaily_extrus.Designer.cs">
+      <DependentUpon>ProdctDaily_extrus.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Chart\RunningRecordofExtrusionUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\RunningRecordofExtrusionUnit.designer.cs">
+      <DependentUpon>RunningRecordofExtrusionUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Chart\RunningRecordofFeedingUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\RunningRecordofFeedingUnit.designer.cs">
+      <DependentUpon>RunningRecordofFeedingUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\SettingMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\SettingMainForm.Designer.cs">
+      <DependentUpon>SettingMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\Setting_CleanArea.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\Setting_CleanArea.designer.cs">
+      <DependentUpon>Setting_CleanArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Chart\WastingRecordofExtrusionUnit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\WastingRecordofExtrusionUnit.designer.cs">
+      <DependentUpon>WastingRecordofExtrusionUnit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionCheckBeforePowerStep2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionCheckBeforePowerStep2.Designer.cs">
+      <DependentUpon>ExtructionCheckBeforePowerStep2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionPreheatParameterRecordStep3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionPreheatParameterRecordStep3.Designer.cs">
+      <DependentUpon>ExtructionPreheatParameterRecordStep3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionProcess.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionProcess.Designer.cs">
+      <DependentUpon>ExtructionProcess.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionpRoductionAndRestRecordStep6.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionpRoductionAndRestRecordStep6.Designer.cs">
+      <DependentUpon>ExtructionpRoductionAndRestRecordStep6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionTransportRecordStep4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionTransportRecordStep4.Designer.cs">
+      <DependentUpon>ExtructionTransportRecordStep4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\Record_extrusClean.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\Record_extrusClean.designer.cs">
+      <DependentUpon>Record_extrusClean.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Chart\Record_extrusSiteClean.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\Record_extrusSiteClean.Designer.cs">
+      <DependentUpon>Record_extrusSiteClean.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\Record_extrusSupply.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\Record_extrusSupply.designer.cs">
+      <DependentUpon>Record_extrusSupply.cs</DependentUpon>
+    </Compile>
     <Compile Include="Plan\AddPlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Plan\AddPlanForm.Designer.cs">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Blow\BlowForm.cs">
+    <Compile Include="Extruction\ExtructionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Blow\BlowForm.Designer.cs">
-      <DependentUpon>BlowForm.cs</DependentUpon>
+    <Compile Include="Extruction\ExtructionForm.Designer.cs">
+      <DependentUpon>ExtructionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Stock\BuyForm.cs">
       <SubType>Form</SubType>
@@ -138,18 +264,80 @@
     <Compile Include="Stock\StockCheckForm.Designer.cs">
       <DependentUpon>StockCheckForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SystemForm.cs">
+    <Compile Include="Setting\SettingForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SystemForm.Designer.cs">
-      <DependentUpon>SystemForm.cs</DependentUpon>
+    <Compile Include="Setting\SettingForm.Designer.cs">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="common.cs" />
+    <EmbeddedResource Include="Extruction\Process\ExtructionCheck.resx">
+      <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProcessMainForm.resx">
+      <DependentUpon>ProcessMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\QueryExtruForm.resx">
+      <DependentUpon>QueryExtruForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\QueryMainForm.resx">
+      <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\CleanArea_add.resx">
+      <DependentUpon>CleanArea_add.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\HandoverRecordofExtrusionProcess.resx">
+      <DependentUpon>HandoverRecordofExtrusionProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\MaterialBalenceofExtrusionProcess.resx">
+      <DependentUpon>MaterialBalenceofExtrusionProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\ProdctDaily_extrus.resx">
+      <DependentUpon>ProdctDaily_extrus.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\RunningRecordofExtrusionUnit.resx">
+      <DependentUpon>RunningRecordofExtrusionUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\RunningRecordofFeedingUnit.resx">
+      <DependentUpon>RunningRecordofFeedingUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\SettingMainForm.resx">
+      <DependentUpon>SettingMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\Setting_CleanArea.resx">
+      <DependentUpon>Setting_CleanArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\WastingRecordofExtrusionUnit.resx">
+      <DependentUpon>WastingRecordofExtrusionUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ExtructionCheckBeforePowerStep2.resx">
+      <DependentUpon>ExtructionCheckBeforePowerStep2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ExtructionPreheatParameterRecordStep3.resx">
+      <DependentUpon>ExtructionPreheatParameterRecordStep3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ExtructionProcess.resx">
+      <DependentUpon>ExtructionProcess.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ExtructionpRoductionAndRestRecordStep6.resx">
+      <DependentUpon>ExtructionpRoductionAndRestRecordStep6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ExtructionTransportRecordStep4.resx">
+      <DependentUpon>ExtructionTransportRecordStep4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\Record_extrusClean.resx">
+      <DependentUpon>Record_extrusClean.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\Record_extrusSiteClean.resx">
+      <DependentUpon>Record_extrusSiteClean.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\Record_extrusSupply.resx">
+      <DependentUpon>Record_extrusSupply.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Plan\AddPlanForm.resx">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Blow\BlowForm.resx">
-      <DependentUpon>BlowForm.cs</DependentUpon>
+    <EmbeddedResource Include="Extruction\ExtructionForm.resx">
+      <DependentUpon>ExtructionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Stock\BuyForm.resx">
       <DependentUpon>BuyForm.cs</DependentUpon>
@@ -191,9 +379,10 @@
     <EmbeddedResource Include="Stock\StockCheckForm.resx">
       <DependentUpon>StockCheckForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SystemForm.resx">
-      <DependentUpon>SystemForm.cs</DependentUpon>
+    <EmbeddedResource Include="Setting\SettingForm.resx">
+      <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="myDataSet.xsc">
       <DependentUpon>myDataSet.xsd</DependentUpon>
     </None>
@@ -216,9 +405,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Blow\Chart\" />
-    <Folder Include="Blow\Process\" />
+    <Content Include="Extruction\Chart\readme.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

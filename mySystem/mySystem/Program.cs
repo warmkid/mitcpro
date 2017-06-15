@@ -15,7 +15,7 @@ namespace mySystem
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Connect2SqlForm());
+            Application.Run(new LoginForm());
         }
     }
 }

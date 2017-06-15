@@ -25,10 +25,5 @@ namespace mySystem
             this.Close();
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }
