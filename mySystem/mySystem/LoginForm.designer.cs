@@ -123,9 +123,9 @@
             this.label1.Font = new System.Drawing.Font("SimHei", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(110, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(184, 21);
+            this.label1.Size = new System.Drawing.Size(194, 21);
             this.label1.TabIndex = 25;
-            this.label1.Text = "颇尔奥星ERP系统";
+            this.label1.Text = "颇尔奥星管理系统";
             // 
             // LoginForm
             // 
@@ -155,13 +155,13 @@
 
         #endregion
 
-        private System.Windows.Forms.Button ExitButton;
-        private System.Windows.Forms.Button LoginButton;
-        private System.Windows.Forms.TextBox UserPWTextBox;
         private System.Windows.Forms.Label 用户密码;
         public System.Windows.Forms.TextBox UserIDTextBox;
         private System.Windows.Forms.Label 用户ID;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.TextBox UserPWTextBox;
+        public System.Windows.Forms.Button LoginButton;
+        public System.Windows.Forms.Button ExitButton;
     }
 }

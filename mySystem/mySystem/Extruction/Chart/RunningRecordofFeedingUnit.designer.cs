@@ -239,10 +239,10 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(292, 183);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 342);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(479, 173);
+            this.dataGridView1.Size = new System.Drawing.Size(983, 182);
             this.dataGridView1.TabIndex = 25;
             // 
             // ckbDy
@@ -269,16 +269,17 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(175, 369);
+            this.btnAdd.Location = new System.Drawing.Point(407, 154);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 28;
             this.btnAdd.Text = "添加";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // brnDefault
             // 
-            this.brnDefault.Location = new System.Drawing.Point(80, 369);
+            this.brnDefault.Location = new System.Drawing.Point(312, 154);
             this.brnDefault.Name = "brnDefault";
             this.brnDefault.Size = new System.Drawing.Size(75, 23);
             this.brnDefault.TabIndex = 29;
@@ -288,7 +289,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(281, 369);
+            this.button1.Location = new System.Drawing.Point(513, 154);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 30;

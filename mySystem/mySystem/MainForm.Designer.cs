@@ -62,7 +62,7 @@
             // 
             this.MainProduceBtn.FlatAppearance.BorderSize = 0;
             this.MainProduceBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MainProduceBtn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainProduceBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainProduceBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainProduceBtn.Location = new System.Drawing.Point(3, 9);
             this.MainProduceBtn.Name = "MainProduceBtn";
@@ -77,7 +77,7 @@
             // 
             this.MainSettingBtn.FlatAppearance.BorderSize = 0;
             this.MainSettingBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MainSettingBtn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainSettingBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainSettingBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainSettingBtn.Location = new System.Drawing.Point(78, 9);
             this.MainSettingBtn.Name = "MainSettingBtn";
@@ -92,11 +92,11 @@
             // 
             this.MainQueryBtn.FlatAppearance.BorderSize = 0;
             this.MainQueryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MainQueryBtn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainQueryBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainQueryBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainQueryBtn.Location = new System.Drawing.Point(153, 9);
             this.MainQueryBtn.Name = "MainQueryBtn";
-            this.MainQueryBtn.Size = new System.Drawing.Size(96, 63);
+            this.MainQueryBtn.Size = new System.Drawing.Size(114, 63);
             this.MainQueryBtn.TabIndex = 3;
             this.MainQueryBtn.Text = "台帐/查询";
             this.MainQueryBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -135,7 +135,7 @@
             this.MinimizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "欢迎使用颇尔奥星ERP系统";
+            this.Text = "欢迎使用颇尔奥星管理系统";
             ((System.ComponentModel.ISupportInitialize)(this.订单信息BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).EndInit();
