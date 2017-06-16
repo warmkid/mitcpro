@@ -139,7 +139,7 @@ namespace WindowsFormsApplication1
         {
             
             bunker_use = comboBox1.Text.ToString();
-            //checker = textBox10.Text.ToString();
+            checker = textBox10.Text.ToString();
             if (bunker_use == "" || checker == "")
             {
                 MessageBox.Show("料仓、复核人均不能为空");
@@ -164,7 +164,7 @@ namespace WindowsFormsApplication1
             dr.Cells[0].Value = bunker_use;
             dr.Cells[1].Value = use;
             dr.Cells[2].Value = left;
-            //dr.Cells[3].Value = checker;
+            dr.Cells[3].Value = checker;
 
             dataGridView2.Rows.Add(dr);
         }

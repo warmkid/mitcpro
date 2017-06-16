@@ -103,33 +103,41 @@ namespace mySystem.Extruction.Process
         private void CheckBtn_Click(object sender, EventArgs e)
         {
             LoginForm check = new LoginForm();
+            check.LoginButton.Text = "审核通过";
+            check.ExitButton.Text = "取消";
             check.ShowDialog();
             switch (StepState)
             {
                 case 1:
                     SaveBtn.Enabled = false;
                     NextBtn.Enabled = true;
+                    CheckBtn.Enabled = false;
                     break;
                 case 2:
                     SaveBtn.Enabled = false;
                     NextBtn.Enabled = true;
+                    CheckBtn.Enabled = false;
                     break;
                 case 3:
                     SaveBtn.Enabled = false;
                     NextBtn.Enabled = true;
+                    CheckBtn.Enabled = false;
                     break;
                 case 4:
                     SaveBtn.Enabled = false;
                     NextBtn.Enabled = true;
+                    CheckBtn.Enabled = false;
                     step4checked = true;
                     break;
                 case 5:
                     SaveBtn.Enabled = false;
                     NextBtn.Enabled = true;
+                    CheckBtn.Enabled = false;
                     break;
                 case 6:
                     SaveBtn.Enabled = false;
-                    NextBtn.Enabled = true;                  
+                    NextBtn.Enabled = true;
+                    CheckBtn.Enabled = false;
                     break;
                 default:
                     break;
