@@ -88,7 +88,34 @@ namespace mySystem.Extruction.Process
             items[13] = "确认电动叉车运行正常。";
 
 
-            int x0 = 30, y0 = 100, w = 360, d = 20, margin=5; 
+            int x0 = 30, y0 = 150, w = 360, d = 20, margin=55;
+            Label num = new Label();
+            num.Top = y0 - d;
+            num.Left = x0;
+            num.Height = d;
+            num.Width = 360;
+            num.Visible = true;
+            num.Text = "序号" + "    " + "确认项目";
+            num.Font = new Font("宋体", 12);
+            this.Controls.Add(num);
+
+            /*Label[] DN = new Label[TN];
+            Label D = new Label();
+            D.Top = y0 - d;
+            D.Left = 2 * x0 + w;
+            D.Height = d;
+            D.Width = 2*d;
+            D.Visible = true;
+            D.Font = new Font("宋体", 12);
+            D.Text = "";
+            DN[0] = DN[1] = D;
+            DN[0].Text = "白班";
+            DN[1].Text = "夜班";
+            DN[1].Left = DN[0].Left + margin;
+            this.Controls.Add(DN[0]);
+            this.Controls.Add(DN[1]);*/
+
+
             Label[] labels = new Label[quiz];
             CheckBox[,] checkboxes = new CheckBox[quiz,TN];
             for (int r = 0; r < quiz; r++)
@@ -100,7 +127,7 @@ namespace mySystem.Extruction.Process
                 lb.Width = w;
                 lb.Height = d;
                 lb.Visible = true;
-                lb.Text = (r+1).ToString()+" . "+items[r];
+                lb.Text = (r+1).ToString()+"       "+items[r];
                 lb.Font = new Font("宋体", 12);
  
                 labels[r] = lb;
@@ -110,7 +137,7 @@ namespace mySystem.Extruction.Process
                     CheckBox ckb = new CheckBox();
                     ckb.Name="ckbCheck"+Convert.ToString(turn)+Convert.ToString(turn);
                     ckb.Top = y0 + r * d;
-                    ckb.Left = 2 * x0 + lb.Width+turn*d;
+                    ckb.Left = 2 * x0 + lb.Width+turn*margin;
                     ckb.Width = d;
                     ckb.Height = d;
                     ckb.Visible = true;
@@ -132,6 +159,8 @@ namespace mySystem.Extruction.Process
         private void button1_Click(object sender, EventArgs e)
         {
             LoginForm check = new LoginForm();
+			//check.LoginButton.Text = "审核通过";
+			//check.ExitButton.Text = "取消";
             check.ShowDialog();
         }
 
