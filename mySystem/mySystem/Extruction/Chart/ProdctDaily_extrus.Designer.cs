@@ -84,9 +84,10 @@
             // label3
             // 
             this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.Location = new System.Drawing.Point(975, 71);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(5, 12);
+            this.label3.Size = new System.Drawing.Size(8, 16);
             this.label3.TabIndex = 3;
             this.label3.Text = "\r\n";
             // 
