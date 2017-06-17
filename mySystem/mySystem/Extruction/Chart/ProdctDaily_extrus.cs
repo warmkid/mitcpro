@@ -243,7 +243,6 @@ namespace mySystem
                 return;
             }
 
-            System.Console.WriteLine(delt.TotalDays);
             ddan = comboBox1.Text.Trim();
             instr = comboBox2.Text.Trim();
             writer = comboBox3.Text.Trim();

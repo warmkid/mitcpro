@@ -44,13 +44,13 @@
             this.lbRecheckMan = new System.Windows.Forms.Label();
             this.txbRecheckMan = new System.Windows.Forms.TextBox();
             this.lbProductDate = new System.Windows.Forms.Label();
+            this.btnDefault = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
+            this.ltbShow = new System.Windows.Forms.ListBox();
             this.lbTitle = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // lbIdtxt
@@ -75,7 +75,7 @@
             // dtpProductDate
             // 
             this.dtpProductDate.Location = new System.Drawing.Point(116, 64);
-            this.dtpProductDate.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpProductDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dtpProductDate.Name = "dtpProductDate";
             this.dtpProductDate.Size = new System.Drawing.Size(161, 26);
             this.dtpProductDate.TabIndex = 2;
@@ -83,7 +83,7 @@
             // txbWorkTurn
             // 
             this.txbWorkTurn.Location = new System.Drawing.Point(116, 117);
-            this.txbWorkTurn.Margin = new System.Windows.Forms.Padding(4);
+            this.txbWorkTurn.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbWorkTurn.Name = "txbWorkTurn";
             this.txbWorkTurn.Size = new System.Drawing.Size(132, 26);
             this.txbWorkTurn.TabIndex = 3;
@@ -111,7 +111,7 @@
             // txbProductCode
             // 
             this.txbProductCode.Location = new System.Drawing.Point(116, 162);
-            this.txbProductCode.Margin = new System.Windows.Forms.Padding(4);
+            this.txbProductCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbProductCode.Name = "txbProductCode";
             this.txbProductCode.Size = new System.Drawing.Size(132, 26);
             this.txbProductCode.TabIndex = 6;
@@ -129,7 +129,7 @@
             // txbWasteWeight
             // 
             this.txbWasteWeight.Location = new System.Drawing.Point(116, 210);
-            this.txbWasteWeight.Margin = new System.Windows.Forms.Padding(4);
+            this.txbWasteWeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbWasteWeight.Name = "txbWasteWeight";
             this.txbWasteWeight.Size = new System.Drawing.Size(132, 26);
             this.txbWasteWeight.TabIndex = 8;
@@ -147,7 +147,7 @@
             // txbReason
             // 
             this.txbReason.Location = new System.Drawing.Point(116, 258);
-            this.txbReason.Margin = new System.Windows.Forms.Padding(4);
+            this.txbReason.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbReason.Name = "txbReason";
             this.txbReason.Size = new System.Drawing.Size(132, 26);
             this.txbReason.TabIndex = 10;
@@ -165,7 +165,7 @@
             // txbRecordMan
             // 
             this.txbRecordMan.Location = new System.Drawing.Point(116, 304);
-            this.txbRecordMan.Margin = new System.Windows.Forms.Padding(4);
+            this.txbRecordMan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbRecordMan.Name = "txbRecordMan";
             this.txbRecordMan.Size = new System.Drawing.Size(132, 26);
             this.txbRecordMan.TabIndex = 12;
@@ -183,7 +183,7 @@
             // txbRecheckMan
             // 
             this.txbRecheckMan.Location = new System.Drawing.Point(116, 346);
-            this.txbRecheckMan.Margin = new System.Windows.Forms.Padding(4);
+            this.txbRecheckMan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txbRecheckMan.Name = "txbRecheckMan";
             this.txbRecheckMan.Size = new System.Drawing.Size(132, 26);
             this.txbRecheckMan.TabIndex = 14;
@@ -198,16 +198,37 @@
             this.lbProductDate.TabIndex = 15;
             this.lbProductDate.Text = "生产日期";
             // 
+            // btnDefault
+            // 
+            this.btnDefault.Location = new System.Drawing.Point(348, 100);
+            this.btnDefault.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnDefault.Name = "btnDefault";
+            this.btnDefault.Size = new System.Drawing.Size(100, 31);
+            this.btnDefault.TabIndex = 16;
+            this.btnDefault.Text = "默认";
+            this.btnDefault.UseVisualStyleBackColor = true;
+            this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
+            // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(123, 544);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAdd.Location = new System.Drawing.Point(348, 159);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 31);
             this.btnAdd.TabIndex = 17;
             this.btnAdd.Text = "添加";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // ltbShow
+            // 
+            this.ltbShow.FormattingEnabled = true;
+            this.ltbShow.ItemHeight = 16;
+            this.ltbShow.Location = new System.Drawing.Point(491, 37);
+            this.ltbShow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ltbShow.Name = "ltbShow";
+            this.ltbShow.Size = new System.Drawing.Size(651, 260);
+            this.ltbShow.TabIndex = 19;
             // 
             // lbTitle
             // 
@@ -245,40 +266,30 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(123, 618);
+            this.button1.Location = new System.Drawing.Point(348, 233);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 33);
             this.button1.TabIndex = 22;
             this.button1.Text = "复核";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(300, 116);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(656, 354);
-            this.dataGridView1.TabIndex = 23;
             // 
             // WastingRecordofExtrusionUnit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1016, 741);
-            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lbTitle);
+            this.Controls.Add(this.ltbShow);
             this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnDefault);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "WastingRecordofExtrusionUnit";
             this.Text = "WastingRecordofExtrusionUnit";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -302,10 +313,11 @@
         private System.Windows.Forms.Label lbRecheckMan;
         private System.Windows.Forms.TextBox txbRecheckMan;
         private System.Windows.Forms.Label lbProductDate;
+        private System.Windows.Forms.Button btnDefault;
         private System.Windows.Forms.Button btnAdd;
+        private System.Windows.Forms.ListBox ltbShow;
         private System.Windows.Forms.Label lbTitle;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

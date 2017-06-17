@@ -16,8 +16,7 @@ namespace mySystem.Extruction.Process
     public partial class ExtructionProcess : Form
     {
         private ExtructionForm blowformfather = null;
-        private int StepState = 1;
-        public bool step4checked = false;
+        private int StepState = 1; public bool[] stepchecked = { false, false, false, false, false, false };
         Record_extrusClean step1form = null;
         ExtructionCheckBeforePowerStep2 step2form = null;
         ExtructionPreheatParameterRecordStep3 step3form = null;
@@ -30,6 +29,7 @@ namespace mySystem.Extruction.Process
         {
             InitializeComponent();
             blowformfather = Mainform;
+
             StepState = stepcurrent;
             ShowView(stepcurrent);
             CheckBtn.Enabled = false;
@@ -39,13 +39,22 @@ namespace mySystem.Extruction.Process
         //上一页按钮
         private void BackBtn_Click(object sender, EventArgs e)
         {
-            if ((StepState > 1) && (StepState< 8 ))
+            if ((StepState > 1) && (StepState < 8))
             {
                 StepState = StepState - 1;
                 ShowView(StepState);
-                SaveBtn.Enabled = true;
-                CheckBtn.Enabled = false;
-                NextBtn.Enabled = false;
+                if (stepchecked[StepState - 1])
+                {
+                    SaveBtn.Enabled = false;
+                    CheckBtn.Enabled = false;
+                    NextBtn.Enabled = true;
+                }
+                else
+                {
+                    SaveBtn.Enabled = true;
+                    CheckBtn.Enabled = false;
+                    NextBtn.Enabled = false;
+                }
             }
         }
 
@@ -56,91 +65,82 @@ namespace mySystem.Extruction.Process
             {
                 StepState = StepState + 1;
                 ShowView(StepState);
-                SaveBtn.Enabled = true;
-                CheckBtn.Enabled = false;
                 if (StepState == 7)
-                { NextBtn.Enabled = true; }
+                {
+                    NextBtn.Enabled = true;
+                    SaveBtn.Enabled = false;
+                    CheckBtn.Enabled = false;
+                }
                 else
-                { NextBtn.Enabled = false; }                
-            }            
+                {
+                    if (stepchecked[StepState - 1])
+                    {
+                        SaveBtn.Enabled = false;
+                        CheckBtn.Enabled = false;
+                        NextBtn.Enabled = true;
+                    }
+                    else
+                    {
+                        SaveBtn.Enabled = true;
+                        CheckBtn.Enabled = false;
+                        NextBtn.Enabled = false;
+                    }
+                }
+            }       
         }
 
         //确认按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            switch (StepState)
+            if ((StepState > 0) && (StepState < 7))
             {
-                case 1:
-                    step1form.DataSave();
-                    CheckBtn.Enabled = true;
-                    break;
-                case 2:
-                    step2form.DataSave();
-                    CheckBtn.Enabled = true;
-                    break;
-                case 3:
-                    step3form.DataSave();
-                    CheckBtn.Enabled = true;
-                    break;
-                case 4:
-                    step4form.DataSave();
-                    CheckBtn.Enabled = true;
-                    break;
-                case 5:
-                    step5form.DataSave();
-                    CheckBtn.Enabled = true;
-                    break;
-                case 6:
-                    step6form.DataSave();
-                    CheckBtn.Enabled = true;          
-                    break;
-                default:
-                    break;
-            }
+                switch (StepState)
+                {
+                    case 1:
+                        step1form.DataSave();
+                        CheckBtn.Enabled = true;
+                        break;
+                    case 2:
+                        step2form.DataSave();
+                        CheckBtn.Enabled = true;
+                        break;
+                    case 3:
+                        step3form.DataSave();
+                        CheckBtn.Enabled = true;
+                        break;
+                    case 4:
+                        step4form.DataSave();
+                        CheckBtn.Enabled = true;
+                        break;
+                    case 5:
+                        step5form.DataSave();
+                        CheckBtn.Enabled = true;
+                        break;
+                    case 6:
+                        step6form.DataSave();
+                        CheckBtn.Enabled = true;
+                        break;
+                    default:
+                        break;
+                }
+            }  
         }
 
         //审核通过按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            /*LoginForm check = new LoginForm();
+            /*
+            LoginForm check = new LoginForm();
             check.LoginButton.Text = "审核通过";
             check.ExitButton.Text = "取消";
-            check.ShowDialog();*/
-            switch (StepState)
+            check.ShowDialog();
+            */
+            if ((StepState > 0) && (StepState < 7))
             {
-                case 1:
-                    SaveBtn.Enabled = false;
-                    NextBtn.Enabled = true;
-                    CheckBtn.Enabled = false;
-                    break;
-                case 2:
-                    SaveBtn.Enabled = false;
-                    NextBtn.Enabled = true;
-                    CheckBtn.Enabled = false;
-                    break;
-                case 3:
-                    SaveBtn.Enabled = false;
-                    NextBtn.Enabled = true;
-                    CheckBtn.Enabled = false;
-                    break;
-                case 4:
-                    SaveBtn.Enabled = false;
-                    NextBtn.Enabled = true;
-                    CheckBtn.Enabled = false;
-                    step4checked = true;
-                    break;
-                case 5:
-                    SaveBtn.Enabled = false;
-                    NextBtn.Enabled = true;
-                    CheckBtn.Enabled = false;
-                    break;
-                case 6:
-                    SaveBtn.Enabled = false;
-                    NextBtn.Enabled = true;
-                    CheckBtn.Enabled = false;
-                    break;
-                default:
-                    break;
+                SaveBtn.Enabled = false;
+                CheckBtn.Enabled = false;
+                NextBtn.Enabled = true;
+                stepchecked[StepState - 1] = true;
             }
         } 
 
@@ -160,10 +160,11 @@ namespace mySystem.Extruction.Process
                 case 2:
                     this.BackBtn.Enabled = true;
                     step2form = new ExtructionCheckBeforePowerStep2(this);
-                    step2form.FormBorderStyle = FormBorderStyle.None; 
+                    step2form.FormBorderStyle = FormBorderStyle.None;
                     step2form.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();
                     this.StepViewPanel.Controls.Add(step2form);
+                    //step2form.Disabled();
                     step2form.Show();
                     break;
                 case 3:
@@ -172,6 +173,7 @@ namespace mySystem.Extruction.Process
                     step3form.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();
                     this.StepViewPanel.Controls.Add(step3form);
+                    //step3form.Disabled();
                     step3form.Show();
                     break;
                 case 4:
@@ -180,6 +182,7 @@ namespace mySystem.Extruction.Process
                     step4form.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();
                     this.StepViewPanel.Controls.Add(step4form);
+                    //step4form.Disabled();
                     step4form.Show();
                     break;
                 case 5:
@@ -201,6 +204,7 @@ namespace mySystem.Extruction.Process
                     step6form.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();
                     this.StepViewPanel.Controls.Add(step6form);
+                    //step6form.Disabled();
                     step6form.Show();
                     break;
                 case 7:
@@ -218,6 +222,6 @@ namespace mySystem.Extruction.Process
                 default:
                     break;
             }
-        }               
+        }             
     }
 }
