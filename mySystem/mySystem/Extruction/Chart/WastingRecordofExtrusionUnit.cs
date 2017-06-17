@@ -13,51 +13,70 @@ namespace mySystem.Extruction.Process
 {
     public partial class WastingRecordofExtrusionUnit : Form
     {
-        public int items = 0;
+        public int items = 1;
+        private DataTable datatab = new DataTable();
         public WastingRecordofExtrusionUnit()
         {
             InitializeComponent();
-            //public int items =1;
+            this.Default();
+            //int items =1;
             //items = this.ltbShow.Items.Count+1;
             //items = 1;
         }
 
-        private void btnDefault_Click(object sender, EventArgs e)
+        private void Default()
         {
             
             this.lbId.Text = Convert.ToString(1);
+            this.lbIdtxt.Visible = false;
+            this.lbId.Visible = false;
             this.dtpProductDate.Format = DateTimePickerFormat.Short;
-            this.txbWorkTurn.Text = "day";
+            this.txbWorkTurn.Text = "白班";
+            this.txbWorkTurn.Visible = false;
+            this.lbWorkTurn.Visible = false;
             this.txbProductCode.Text = "000";
+            this.txbProductCode.Visible = false;
+            this.lbProductCode.Visible = false;
             this.txbWasteWeight.Text = "0";
-            this.txbReason.Text = "unknow";
-            this.txbRecordMan.Text = "wang";
-            this.txbRecheckMan.Text = "li";
+            this.txbWasteWeight.Visible = false;
+            this.lbWasteWeight.Visible = false;
+            this.txbReason.Text = "";
+            this.txbReason.Visible = false;
+            this.lbReason.Visible = false;
+            this.txbRecordMan.Text = "";
+            this.txbRecordMan.Visible = false;
+            this.lbRecordMan.Visible = false;
+            this.txbRecheckMan.Text = "";
+            this.txbRecheckMan.Visible = false;
+            this.lbRecheckMan.Visible = false;
+            datatab.Columns.Add("序号", typeof(String));
+            datatab.Columns.Add("生产日期", typeof(String));
+            datatab.Columns.Add("班次", typeof(String));
+            datatab.Columns.Add("生产代码", typeof(String));
+            datatab.Columns.Add("废品重量", typeof(String));
+            datatab.Columns.Add("原因", typeof(String));
+            this.dataGridView1.DataSource = datatab;
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            //int items;  //why can the items not increase automacally
-            //items = this.ltbShow.Items.Count+1;
-            items=items+1;
-            this.lbId.Update();
-            this.lbId.Text = Convert.ToString(items);
-            this.lbId.Update();
-            this.ltbShow.Items.Add(this.lbId.Text + "\t" + this.dtpProductDate.Value.ToShortDateString() + "\t" + this.txbWorkTurn.Text + "\t" + this.txbProductCode.Text + "\t" + this.txbWasteWeight.Text + "\t" + this.txbReason.Text + "\t" + this.txbRecordMan.Text + "\t" + this.txbRecheckMan.Text);
+            this.lbId.Text = items.ToString();
+            datatab.Rows.Add(lbId.Text, dtpProductDate.Value.ToShortDateString(), txbWorkTurn.Text, txbProductCode.Text, txbWasteWeight.Text, txbReason.Text);
+            items++;
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            this.ltbShow.Items.Remove(this.ltbShow.SelectedItem);
+            //this.ltbShow.Items.Remove(this.ltbShow.SelectedItem);
         }
 
-        /*private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             LoginForm check = new LoginForm();
-			check.LoginButton.Text = "审核通过";
-			check.ExitButton.Text = "取消";
+			//check.LoginButton.Text = "审核通过";
+			//check.ExitButton.Text = "取消";
             check.ShowDialog();
-        }*/
+        }
 
         
     }
