@@ -46,17 +46,40 @@ namespace mySystem
         string sql;
 
         SqlConnection conn;
+        DataTable dt;
+        DataRow[] dr;
+        
+
+        //针对查询
+        DateTime date1;//起始时间
+        DateTime date2;//结束时间
+        string ddan;//订单号
+        string instr;//生产指令
+        string writer;//填报人
+        string checker;//审核人
+
 
         //自定义函数
         private void Init()
         {
-            strCon = @"server=10.105.223.19,56625;database=wyttest;Uid=sa;Pwd=mitc";
-            sql = "select * from ProduceDaily_table";
+            strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+            sql = "select * from test_2";
             prodCode = "0x34222fds";
             isOk = false;
             lastRow= new List<object[]>();
 
             dataGridView1.Font = new Font("宋体",12);
+
+            comboBox1.Items.Add("(空)".Trim());
+            comboBox2.Items.Add("(空)".Trim());
+            comboBox3.Items.Add("(空)".Trim());
+            comboBox4.Items.Add("(空)".Trim());
+
+            comboBox1.Text = "(空)".Trim();
+            comboBox2.Text = "(空)".Trim();
+            comboBox3.Text = "(空)".Trim();
+            comboBox4.Text = "(空)".Trim();
+            date1 = DateTime.Parse("2016/10/20");
         }
         /*仅用来来测试，实际早已在上一步登陆*/
         private void connToServer()
@@ -73,14 +96,14 @@ namespace mySystem
                 return;
             }
             //显示生产指令
-            label3.Text = prodCode;
+            //label3.Text = prodCode;
 
             //查询
             SqlCommand comm = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(comm);
 
             //DataSet ds = new DataSet();
-            DataTable dt = new DataTable();
+            dt = new DataTable();
             //da.Fill(dt);
 
             ///添加一列
@@ -91,16 +114,43 @@ namespace mySystem
             {
                 dt.Rows[row][0] = (row+1).ToString();
             }
+
+
+            //统计列值
             
+            
+            DataView dv = dt.DefaultView;
+            DataTable tempdt=dv.ToTable(true, "订单");
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+            {
+                comboBox1.Items.Add(tempdt.Rows[i]["订单"].ToString().Trim());
+            }
+            tempdt = dv.ToTable(true, "生产指令");
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+            {
+                comboBox2.Items.Add(tempdt.Rows[i]["生产指令"].ToString().Trim());
+            }
+            tempdt = dv.ToTable(true, "填报人");
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+            {
+                comboBox3.Items.Add(tempdt.Rows[i]["填报人"].ToString().Trim());
+            }
+            tempdt = dv.ToTable(true, "复核人");
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+            {
+                comboBox4.Items.Add(tempdt.Rows[i]["复核人"].ToString().Trim());
+            }
+
             ///添加合计
-            DataRow row1;
-            row1=dt.NewRow();
-            row1[0] = "合计";
-            row1[5] = dt.Compute("sum("+dt.Columns[5].ColumnName+")", "TRUE");
-            row1[6] = dt.Compute("sum(" + dt.Columns[6].ColumnName + ")", "TRUE");
-            row1[7] = dt.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
-            dt.Rows.Add(row1);
-         
+            //DataRow row1;
+            //row1=dt.NewRow();
+            //row1[0] = "合计";
+            //row1[5] = dt.Compute("sum("+dt.Columns[5].ColumnName+")", "TRUE");
+            //row1[6] = dt.Compute("sum(" + dt.Columns[6].ColumnName + ")", "TRUE");
+            //row1[7] = dt.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
+            //dt.Rows.Add(row1);
+
             dataGridView1.DataSource = dt;
             
 
@@ -143,6 +193,86 @@ namespace mySystem
         }
         List<object[]> lastRow;
         int colindex;
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            //date1 = dateTimePicker1.Value.Date;
+            ////System.Console.WriteLine(date1);
+            //date2 = dateTimePicker2.Value.Date;
+            //System.Console.WriteLine(date2);
+            //TimeSpan delt = date2 - date1;
+            //if (delt.TotalDays < 0)
+            //{
+            //    MessageBox.Show("起止时间有误，请重新输入");
+            //    return;
+            //}
+            ////DataTable temp;
+            ////dataGridView1.Rows.Clear();//清空
+            //string select="生产时间>="+"'"+date1+"'"+" and "+"生产时间<"+"'"+date2+"'";
+            //System.Console.WriteLine(select);
+            //dr = dt.Select(select);
+            
+            //DataTable temp = dr.CopyToDataTable();
+            //dataGridView1.DataSource = temp;
+
+            ////DataRow[] tempdr = temp.Select("distict 订单");
+            //comboBox1.Items.Clear();
+            //for(int i=0;i<dr.Length;i++)
+            //{
+            //    //tempdr[i][2]
+            //    comboBox1.Items.Add(dr[i][2]);
+            //}
+            
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //string s=comboBox2.SelectedValue.ToString();
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            date1 = dateTimePicker1.Value.Date;
+            //System.Console.WriteLine(date1);
+            date2 = dateTimePicker2.Value.Date;
+            System.Console.WriteLine(date2);
+            TimeSpan delt = date2 - date1;
+            if (delt.TotalDays < 0)
+            {
+                MessageBox.Show("起止时间有误，请重新输入");
+                return;
+            }
+
+            ddan = comboBox1.Text.Trim();
+            instr = comboBox2.Text.Trim();
+            writer = comboBox3.Text.Trim();
+            checker = comboBox4.Text.Trim();
+
+            string sql = "生产时间>=" + "'" + date1 + "'" + " and " + "生产时间<=" + "'" + date2 + "'";
+
+            if (ddan != "(空)")
+                sql += " and " + "订单=" + "'" + ddan + "'";
+            if (instr != "(空)")
+                sql += " and " + "生产指令=" + "'" + instr + "'";
+
+            if (writer != "(空)")
+                sql += " and " + "填报人 like" + "'%" + writer + "%'";
+            if (checker != "(空)")
+                sql += " and " + "复核人 like" + "'%" + checker + "%'";
+
+
+            dr = dt.Select(sql);
+            if (dr.Length == 0)
+            {               
+                dataGridView1.DataSource = null;
+                return;
+            }
+                
+            
+            DataTable temp = dr.CopyToDataTable();
+            dataGridView1.DataSource = temp;
+
+        }
 
     }
 }
