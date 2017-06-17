@@ -17,6 +17,8 @@ namespace mySystem.Extruction.Process
     {
         private ExtructionForm blowformfather = null;
         private int StepState = 1; public bool[] stepchecked = { false, false, false, false, false, false };
+        private SqlConnection conn = null;
+        
         Record_extrusClean step1form = null;
         ExtructionCheckBeforePowerStep2 step2form = null;
         ExtructionPreheatParameterRecordStep3 step3form = null;
@@ -25,10 +27,11 @@ namespace mySystem.Extruction.Process
         ExtructionpRoductionAndRestRecordStep6 step6form = null;
         ExtructionCheck stepcheckform = null;
 
-        public ExtructionProcess(ExtructionForm Mainform, int stepcurrent)
+        public ExtructionProcess(ExtructionForm Mainform, int stepcurrent, SqlConnection Formconn)
         {
             InitializeComponent();
             blowformfather = Mainform;
+            conn = Formconn;
 
             StepState = stepcurrent;
             ShowView(stepcurrent);

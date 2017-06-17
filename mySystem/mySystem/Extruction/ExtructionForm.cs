@@ -48,7 +48,7 @@ namespace mySystem
                     this.panel1.Controls.Clear();
                     break;
                 case 1:
-                    ExtructionProcess stepform = new ExtructionProcess(this, 1);
+                    ExtructionProcess stepform = new ExtructionProcess(this, 1, this.conn);
                     stepform.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小化，最大化，关闭等按钮）
                     stepform.TopLevel = false; //指示子窗体非顶级窗体
                     this.panel1.Controls.Clear();
