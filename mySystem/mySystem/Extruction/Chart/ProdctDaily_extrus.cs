@@ -142,14 +142,14 @@ namespace mySystem
                 comboBox4.Items.Add(tempdt.Rows[i]["复核人"].ToString().Trim());
             }
 
-            ///添加合计
-            //DataRow row1;
-            //row1=dt.NewRow();
-            //row1[0] = "合计";
-            //row1[5] = dt.Compute("sum("+dt.Columns[5].ColumnName+")", "TRUE");
-            //row1[6] = dt.Compute("sum(" + dt.Columns[6].ColumnName + ")", "TRUE");
-            //row1[7] = dt.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
-            //dt.Rows.Add(row1);
+            //添加合计
+            DataRow row1;
+            row1=dt.NewRow();
+            row1[0] = "合计";
+            row1[7] = dt.Compute("sum("+dt.Columns[7].ColumnName+")", "TRUE");
+            row1[8] = dt.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
+            row1[9] = dt.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
+            dt.Rows.Add(row1);
 
             dataGridView1.DataSource = dt;
             
@@ -248,12 +248,15 @@ namespace mySystem
             writer = comboBox3.Text.Trim();
             checker = comboBox4.Text.Trim();
 
+            //删除合计行
+            dt.Rows.RemoveAt(dt.Rows.Count - 1);
+
             string sql = "生产时间>=" + "'" + date1 + "'" + " and " + "生产时间<=" + "'" + date2 + "'";
 
             if (ddan != "(空)")
-                sql += " and " + "订单=" + "'" + ddan + "'";
+                sql += " and " + "订单 like" + "'%" + ddan + "%'";
             if (instr != "(空)")
-                sql += " and " + "生产指令=" + "'" + instr + "'";
+                sql += " and " + "生产指令 like" + "'%" + instr + "%'";
 
             if (writer != "(空)")
                 sql += " and " + "填报人 like" + "'%" + writer + "%'";
@@ -262,14 +265,35 @@ namespace mySystem
 
 
             dr = dt.Select(sql);
+            //添加合计行
+            DataRow rowtemp;
+            rowtemp = dt.NewRow();
+            rowtemp[0] = "合计";
+            rowtemp[7] = dt.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
+            rowtemp[8] = dt.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
+            rowtemp[9] = dt.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
+            dt.Rows.Add(rowtemp);
+
             if (dr.Length == 0)
             {               
                 dataGridView1.DataSource = null;
                 return;
             }
                 
-            
             DataTable temp = dr.CopyToDataTable();
+            //改变序号
+            for (int row = 0; row < temp.Rows.Count; row++)
+            {
+                temp.Rows[row][0] = (row + 1).ToString();
+            }
+            DataRow row1;
+            row1 = temp.NewRow();
+            row1[0] = "合计";
+            row1[7] = temp.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
+            row1[8] = temp.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
+            row1[9] = temp.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
+            temp.Rows.Add(row1);
+
             dataGridView1.DataSource = temp;
 
         }
