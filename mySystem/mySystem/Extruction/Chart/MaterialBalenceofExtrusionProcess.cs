@@ -43,13 +43,13 @@ namespace mySystem.Extruction.Process
             MessageBox.Show("date has benn collected and further operate is under development ");
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        /*private void button1_Click(object sender, EventArgs e)
         {
             LoginForm check = new LoginForm();
 			check.LoginButton.Text = "审核通过";
 			check.ExitButton.Text = "取消";
             check.ShowDialog();
-        }
+        }*/
 
     }
 }

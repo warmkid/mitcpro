@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using mySystem;
 using WindowsFormsApplication1;
+using System.Data.SqlClient;
 
 namespace mySystem.Extruction.Process
 {
@@ -29,7 +30,6 @@ namespace mySystem.Extruction.Process
         {
             InitializeComponent();
             blowformfather = Mainform;
-
             StepState = stepcurrent;
             ShowView(stepcurrent);
             CheckBtn.Enabled = false;
@@ -102,10 +102,10 @@ namespace mySystem.Extruction.Process
         //审核通过按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            LoginForm check = new LoginForm();
+            /*LoginForm check = new LoginForm();
             check.LoginButton.Text = "审核通过";
             check.ExitButton.Text = "取消";
-            check.ShowDialog();
+            check.ShowDialog();*/
             switch (StepState)
             {
                 case 1:
