@@ -37,14 +37,16 @@
             this.txbNote = new System.Windows.Forms.TextBox();
             this.dtpRecord = new System.Windows.Forms.DateTimePicker();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.lbRecordMan = new System.Windows.Forms.Label();
             this.txbRecordMan = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.lbRecheckMan = new System.Windows.Forms.Label();
             this.txbRecheckMan = new System.Windows.Forms.TextBox();
             this.btnDefault = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.dtpRecheck = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
             this.txbGoodWeight = new System.Windows.Forms.TextBox();
@@ -61,8 +63,18 @@
             this.label14 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.button2 = new System.Windows.Forms.Button();
+            this.dtpRecodTo = new System.Windows.Forms.DateTimePicker();
+            this.dtpRecheckTo = new System.Windows.Forms.DateTimePicker();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txbProduce2 = new System.Windows.Forms.TextBox();
+            this.dtpProduce = new System.Windows.Forms.DateTimePicker();
+            this.label15 = new System.Windows.Forms.Label();
+            this.dtpProduceTo = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // lbTitle
@@ -127,72 +139,71 @@
             this.txbNote.Margin = new System.Windows.Forms.Padding(4);
             this.txbNote.Multiline = true;
             this.txbNote.Name = "txbNote";
-            this.txbNote.Size = new System.Drawing.Size(940, 115);
+            this.txbNote.Size = new System.Drawing.Size(940, 47);
             this.txbNote.TabIndex = 18;
             // 
             // dtpRecord
             // 
-            this.dtpRecord.Location = new System.Drawing.Point(313, 527);
+            this.dtpRecord.Location = new System.Drawing.Point(528, 652);
             this.dtpRecord.Margin = new System.Windows.Forms.Padding(4);
             this.dtpRecord.Name = "dtpRecord";
             this.dtpRecord.Size = new System.Drawing.Size(162, 26);
             this.dtpRecord.TabIndex = 22;
+            this.dtpRecord.Value = new System.DateTime(2017, 1, 17, 18, 13, 0, 0);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(233, 534);
+            this.label10.Location = new System.Drawing.Point(448, 655);
             this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(72, 16);
             this.label10.TabIndex = 21;
             this.label10.Text = "记录日期";
             // 
-            // label11
+            // lbRecordMan
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(17, 533);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(56, 16);
-            this.label11.TabIndex = 20;
-            this.label11.Text = "记录人";
+            this.lbRecordMan.AutoSize = true;
+            this.lbRecordMan.Location = new System.Drawing.Point(243, 589);
+            this.lbRecordMan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbRecordMan.Name = "lbRecordMan";
+            this.lbRecordMan.Size = new System.Drawing.Size(56, 16);
+            this.lbRecordMan.TabIndex = 20;
+            this.lbRecordMan.Text = "记录人";
             // 
             // txbRecordMan
             // 
-            this.txbRecordMan.Location = new System.Drawing.Point(81, 530);
+            this.txbRecordMan.Location = new System.Drawing.Point(307, 586);
             this.txbRecordMan.Margin = new System.Windows.Forms.Padding(4);
             this.txbRecordMan.Name = "txbRecordMan";
-            this.txbRecordMan.ReadOnly = true;
             this.txbRecordMan.Size = new System.Drawing.Size(132, 26);
             this.txbRecordMan.TabIndex = 19;
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(734, 530);
+            this.label12.Location = new System.Drawing.Point(698, 655);
             this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(72, 16);
             this.label12.TabIndex = 25;
             this.label12.Text = "复核日期";
             // 
-            // label13
+            // lbRecheckMan
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(509, 533);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(56, 16);
-            this.label13.TabIndex = 24;
-            this.label13.Text = "复核人";
+            this.lbRecheckMan.AutoSize = true;
+            this.lbRecheckMan.Location = new System.Drawing.Point(508, 589);
+            this.lbRecheckMan.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbRecheckMan.Name = "lbRecheckMan";
+            this.lbRecheckMan.Size = new System.Drawing.Size(56, 16);
+            this.lbRecheckMan.TabIndex = 24;
+            this.lbRecheckMan.Text = "复核人";
             // 
             // txbRecheckMan
             // 
-            this.txbRecheckMan.Location = new System.Drawing.Point(573, 527);
+            this.txbRecheckMan.Location = new System.Drawing.Point(572, 586);
             this.txbRecheckMan.Margin = new System.Windows.Forms.Padding(4);
             this.txbRecheckMan.Name = "txbRecheckMan";
-            this.txbRecheckMan.ReadOnly = true;
             this.txbRecheckMan.Size = new System.Drawing.Size(132, 26);
             this.txbRecheckMan.TabIndex = 23;
             // 
@@ -216,10 +227,13 @@
             this.btnAdd.TabIndex = 28;
             this.btnAdd.Text = "添加";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Visible = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.btnAdd);
             this.panel1.Controls.Add(this.btnDefault);
             this.panel1.Controls.Add(this.dtpProductDate);
@@ -231,13 +245,32 @@
             this.panel1.Size = new System.Drawing.Size(958, 67);
             this.panel1.TabIndex = 30;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(-6, 553);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(72, 16);
+            this.label11.TabIndex = 30;
+            this.label11.Text = "生产指令";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(74, 550);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(172, 26);
+            this.textBox1.TabIndex = 29;
+            // 
             // dtpRecheck
             // 
-            this.dtpRecheck.Location = new System.Drawing.Point(821, 524);
+            this.dtpRecheck.Location = new System.Drawing.Point(773, 652);
             this.dtpRecheck.Margin = new System.Windows.Forms.Padding(4);
             this.dtpRecheck.Name = "dtpRecheck";
             this.dtpRecheck.Size = new System.Drawing.Size(162, 26);
             this.dtpRecheck.TabIndex = 26;
+            this.dtpRecheck.Value = new System.DateTime(2017, 1, 17, 18, 13, 0, 0);
             // 
             // label3
             // 
@@ -377,14 +410,14 @@
             this.panel2.Controls.Add(this.txbBalence);
             this.panel2.Controls.Add(this.txbGoodWeight);
             this.panel2.Controls.Add(this.label3);
-            this.panel2.Location = new System.Drawing.Point(23, 196);
+            this.panel2.Location = new System.Drawing.Point(23, 144);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(960, 235);
+            this.panel2.Size = new System.Drawing.Size(960, 162);
             this.panel2.TabIndex = 31;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(63, 610);
+            this.button1.Location = new System.Drawing.Point(17, 704);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(92, 30);
             this.button1.TabIndex = 32;
@@ -392,21 +425,110 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(30, 323);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(953, 196);
+            this.dataGridView1.TabIndex = 33;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(117, 704);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(92, 30);
+            this.button2.TabIndex = 34;
+            this.button2.Text = "查询";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // dtpRecodTo
+            // 
+            this.dtpRecodTo.Location = new System.Drawing.Point(528, 692);
+            this.dtpRecodTo.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpRecodTo.Name = "dtpRecodTo";
+            this.dtpRecodTo.Size = new System.Drawing.Size(162, 26);
+            this.dtpRecodTo.TabIndex = 35;
+            // 
+            // dtpRecheckTo
+            // 
+            this.dtpRecheckTo.Location = new System.Drawing.Point(773, 692);
+            this.dtpRecheckTo.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpRecheckTo.Name = "dtpRecheckTo";
+            this.dtpRecheckTo.Size = new System.Drawing.Size(162, 26);
+            this.dtpRecheckTo.TabIndex = 36;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(17, 589);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(72, 16);
+            this.label13.TabIndex = 38;
+            this.label13.Text = "生产指令";
+            // 
+            // txbProduce2
+            // 
+            this.txbProduce2.Location = new System.Drawing.Point(97, 586);
+            this.txbProduce2.Margin = new System.Windows.Forms.Padding(4);
+            this.txbProduce2.Name = "txbProduce2";
+            this.txbProduce2.Size = new System.Drawing.Size(118, 26);
+            this.txbProduce2.TabIndex = 37;
+            // 
+            // dtpProduce
+            // 
+            this.dtpProduce.Location = new System.Drawing.Point(289, 648);
+            this.dtpProduce.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpProduce.Name = "dtpProduce";
+            this.dtpProduce.Size = new System.Drawing.Size(151, 26);
+            this.dtpProduce.TabIndex = 40;
+            this.dtpProduce.Value = new System.DateTime(2017, 1, 17, 18, 14, 0, 0);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(205, 653);
+            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(72, 16);
+            this.label15.TabIndex = 39;
+            this.label15.Text = "生产日期";
+            // 
+            // dtpProduceTo
+            // 
+            this.dtpProduceTo.Location = new System.Drawing.Point(289, 692);
+            this.dtpProduceTo.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpProduceTo.Name = "dtpProduceTo";
+            this.dtpProduceTo.Size = new System.Drawing.Size(151, 26);
+            this.dtpProduceTo.TabIndex = 41;
+            // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1016, 741);
+            this.Controls.Add(this.dtpProduceTo);
+            this.Controls.Add(this.dtpProduce);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.txbProduce2);
+            this.Controls.Add(this.dtpRecheckTo);
+            this.Controls.Add(this.dtpRecodTo);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dtpRecheck);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.label13);
+            this.Controls.Add(this.lbRecheckMan);
             this.Controls.Add(this.txbRecheckMan);
             this.Controls.Add(this.dtpRecord);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.label11);
+            this.Controls.Add(this.lbRecordMan);
             this.Controls.Add(this.txbRecordMan);
             this.Controls.Add(this.lbTitle);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -416,6 +538,7 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -432,10 +555,10 @@
         private System.Windows.Forms.TextBox txbNote;
         private System.Windows.Forms.DateTimePicker dtpRecord;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lbRecordMan;
         private System.Windows.Forms.TextBox txbRecordMan;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lbRecheckMan;
         private System.Windows.Forms.TextBox txbRecheckMan;
         private System.Windows.Forms.Button btnDefault;
         private System.Windows.Forms.Button btnAdd;
@@ -456,5 +579,16 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.DateTimePicker dtpRecodTo;
+        private System.Windows.Forms.DateTimePicker dtpRecheckTo;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txbProduce2;
+        private System.Windows.Forms.DateTimePicker dtpProduce;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.DateTimePicker dtpProduceTo;
     }
 }

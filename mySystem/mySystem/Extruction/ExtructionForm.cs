@@ -9,17 +9,19 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using mySystem;
 using WindowsFormsApplication1;
+using System.Data.SqlClient;
 
 namespace mySystem
 {
     public partial class ExtructionForm : Form
     {
-        int ProcessStep = 0;
-               
-        public ExtructionForm()
+        SqlConnection conn = null;
+        int ProcessStep = 0;     
+        public ExtructionForm(SqlConnection myConnection)
         {
-            InitializeComponent();            
-           
+            InitializeComponent();
+            conn = myConnection;
+
             //将内容列表添加到comboBox1中
             DataTable table = ProductionPlanDataTable();
             comboBox1.DataSource = table;
@@ -115,7 +117,6 @@ namespace mySystem
             Record_extrusSiteClean myDlg = new Record_extrusSiteClean();
             myDlg.Show();
         }
-
 
 
     }
