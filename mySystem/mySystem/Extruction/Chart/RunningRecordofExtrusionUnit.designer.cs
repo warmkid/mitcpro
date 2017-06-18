@@ -250,6 +250,7 @@
             this.txbRecheckMan.Name = "txbRecheckMan";
             this.txbRecheckMan.Size = new System.Drawing.Size(109, 26);
             this.txbRecheckMan.TabIndex = 12;
+            this.txbRecheckMan.Visible = false;
             // 
             // lbRecheckMan
             // 
@@ -260,6 +261,7 @@
             this.lbRecheckMan.Size = new System.Drawing.Size(56, 16);
             this.lbRecheckMan.TabIndex = 11;
             this.lbRecheckMan.Text = "复核人";
+            this.lbRecheckMan.Visible = false;
             // 
             // txbRecordMan
             // 
@@ -268,6 +270,7 @@
             this.txbRecordMan.Name = "txbRecordMan";
             this.txbRecordMan.Size = new System.Drawing.Size(113, 26);
             this.txbRecordMan.TabIndex = 10;
+            this.txbRecordMan.Visible = false;
             // 
             // lbRecordMan
             // 
@@ -278,6 +281,7 @@
             this.lbRecordMan.Size = new System.Drawing.Size(56, 16);
             this.lbRecordMan.TabIndex = 9;
             this.lbRecordMan.Text = "记录人";
+            this.lbRecordMan.Visible = false;
             // 
             // txbTemp11
             // 
@@ -1213,7 +1217,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(634, 532);
+            this.btnAdd.Location = new System.Drawing.Point(527, 468);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 31);
@@ -1321,7 +1325,7 @@
             this.panel2.Controls.Add(this.txbSta12);
             this.panel2.Controls.Add(this.txbSta11);
             this.panel2.Controls.Add(this.label17);
-            this.panel2.Location = new System.Drawing.Point(519, 129);
+            this.panel2.Location = new System.Drawing.Point(455, 129);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(639, 323);
             this.panel2.TabIndex = 123;
@@ -1355,7 +1359,7 @@
             this.panel3.Controls.Add(this.txbConf12);
             this.panel3.Controls.Add(this.txbConf11);
             this.panel3.Controls.Add(this.lbLayera2);
-            this.panel3.Location = new System.Drawing.Point(5, 422);
+            this.panel3.Location = new System.Drawing.Point(3, 408);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(477, 216);
             this.panel3.TabIndex = 124;
@@ -1381,7 +1385,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(771, 529);
+            this.button1.Location = new System.Drawing.Point(664, 465);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(102, 34);
             this.button1.TabIndex = 126;
@@ -1393,7 +1397,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1355, 753);
+            this.ClientSize = new System.Drawing.Size(1102, 640);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
@@ -1403,6 +1407,8 @@
             this.Controls.Add(this.lbTitle);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "RunningRecordofExtrusionUnit";
             this.Text = "RunningRecordofExtrusionUnit";
             this.panel1.ResumeLayout(false);

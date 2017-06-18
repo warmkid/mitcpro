@@ -46,9 +46,9 @@
             this.btnAdd = new System.Windows.Forms.Button();
             this.lbTitle = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dtpProductDate = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dtpProductDate = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -192,7 +192,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(123, 544);
+            this.btnAdd.Location = new System.Drawing.Point(680, 46);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 31);
@@ -235,9 +235,18 @@
             this.panel1.Size = new System.Drawing.Size(287, 466);
             this.panel1.TabIndex = 21;
             // 
+            // dtpProductDate
+            // 
+            this.dtpProductDate.Location = new System.Drawing.Point(116, 64);
+            this.dtpProductDate.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpProductDate.Name = "dtpProductDate";
+            this.dtpProductDate.Size = new System.Drawing.Size(161, 26);
+            this.dtpProductDate.TabIndex = 2;
+            this.dtpProductDate.Visible = false;
+            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(123, 618);
+            this.button1.Location = new System.Drawing.Point(680, 120);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 33);
             this.button1.TabIndex = 22;
@@ -248,27 +257,18 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(300, 52);
+            this.dataGridView1.Location = new System.Drawing.Point(7, 46);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(656, 354);
             this.dataGridView1.TabIndex = 23;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // dtpProductDate
-            // 
-            this.dtpProductDate.Location = new System.Drawing.Point(116, 64);
-            this.dtpProductDate.Margin = new System.Windows.Forms.Padding(4);
-            this.dtpProductDate.Name = "dtpProductDate";
-            this.dtpProductDate.Size = new System.Drawing.Size(161, 26);
-            this.dtpProductDate.TabIndex = 2;
-            this.dtpProductDate.Visible = false;
-            // 
             // WastingRecordofExtrusionUnit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 741);
+            this.ClientSize = new System.Drawing.Size(792, 467);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
@@ -276,6 +276,8 @@
             this.Controls.Add(this.btnAdd);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "WastingRecordofExtrusionUnit";
             this.Text = "WastingRecordofExtrusionUnit";
             this.panel1.ResumeLayout(false);

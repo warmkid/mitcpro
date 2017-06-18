@@ -535,6 +535,8 @@
             this.Controls.Add(this.lbTitle);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MaterialBalenceofExtrusionProcess";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
