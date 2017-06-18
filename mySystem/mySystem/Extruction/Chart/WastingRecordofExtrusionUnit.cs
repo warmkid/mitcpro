@@ -62,6 +62,7 @@ namespace mySystem.Extruction.Process
             datatab.Columns.Add("废品重量", typeof(String));
             datatab.Columns.Add("原因", typeof(String));
             this.dataGridView1.DataSource = datatab;
+            dataGridView1.Columns[1].Width=155; 
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -105,8 +106,9 @@ namespace mySystem.Extruction.Process
             dtp.Size = dataGridView1.CurrentCell.Size;
             //dtp.Top = dataGridView1.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true).Top + dataGridView1.Top;
             //dtp.Left = dataGridView1.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true).Left + dataGridView1.Left;
-            dtp.Top = 0;
-            dtp.Left = 0;
+            dtp.Top = dataGridView1.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true).Top; 
+            dtp.Left = dataGridView1.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true).Left;
+            dtp.BringToFront();
             dtp.Visible = true;
             if (!(object.Equals(Convert.ToString(dataGridView1.CurrentCell.Value), "")))
             {
@@ -115,6 +117,7 @@ namespace mySystem.Extruction.Process
             
             dtp.Visible = true;
             this.Controls.Add(dtp);
+            dataGridView1.Controls.Add(dtp);
             //dtp.Show();
 
             //DateTimePicker dateTimePicker1 = new System.Windows.Forms.DateTimePicker();

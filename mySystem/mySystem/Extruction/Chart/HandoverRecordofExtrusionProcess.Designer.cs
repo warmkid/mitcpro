@@ -357,24 +357,25 @@
             // btnDefault
             // 
             this.btnDefault.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnDefault.Location = new System.Drawing.Point(28, 519);
+            this.btnDefault.Location = new System.Drawing.Point(36, 519);
             this.btnDefault.Margin = new System.Windows.Forms.Padding(4);
             this.btnDefault.Name = "btnDefault";
             this.btnDefault.Size = new System.Drawing.Size(100, 31);
             this.btnDefault.TabIndex = 47;
             this.btnDefault.Text = "默认";
             this.btnDefault.UseVisualStyleBackColor = true;
+            this.btnDefault.Visible = false;
             this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
             // 
             // btnAdd
             // 
             this.btnAdd.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnAdd.Location = new System.Drawing.Point(144, 519);
+            this.btnAdd.Location = new System.Drawing.Point(362, 517);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 31);
             this.btnAdd.TabIndex = 48;
-            this.btnAdd.Text = "添加";
+            this.btnAdd.Text = "保存";
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
@@ -439,7 +440,6 @@
             this.groupBox1.Size = new System.Drawing.Size(507, 397);
             this.groupBox1.TabIndex = 63;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "hello";
             // 
             // HandoverRecordofExtrusionProcess
             // 

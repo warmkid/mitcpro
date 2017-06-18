@@ -72,6 +72,7 @@
             this.dtpProduce = new System.Windows.Forms.DateTimePicker();
             this.label15 = new System.Windows.Forms.Label();
             this.dtpProduceTo = new System.Windows.Forms.DateTimePicker();
+            this.btnSave = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -150,6 +151,7 @@
             this.dtpRecord.Size = new System.Drawing.Size(162, 26);
             this.dtpRecord.TabIndex = 22;
             this.dtpRecord.Value = new System.DateTime(2017, 1, 17, 18, 13, 0, 0);
+            this.dtpRecord.Visible = false;
             // 
             // label10
             // 
@@ -160,6 +162,7 @@
             this.label10.Size = new System.Drawing.Size(72, 16);
             this.label10.TabIndex = 21;
             this.label10.Text = "记录日期";
+            this.label10.Visible = false;
             // 
             // lbRecordMan
             // 
@@ -188,6 +191,7 @@
             this.label12.Size = new System.Drawing.Size(72, 16);
             this.label12.TabIndex = 25;
             this.label12.Text = "复核日期";
+            this.label12.Visible = false;
             // 
             // lbRecheckMan
             // 
@@ -272,6 +276,7 @@
             this.dtpRecheck.Size = new System.Drawing.Size(162, 26);
             this.dtpRecheck.TabIndex = 26;
             this.dtpRecheck.Value = new System.DateTime(2017, 1, 17, 18, 13, 0, 0);
+            this.dtpRecheck.Visible = false;
             // 
             // label3
             // 
@@ -453,6 +458,7 @@
             this.dtpRecodTo.Name = "dtpRecodTo";
             this.dtpRecodTo.Size = new System.Drawing.Size(162, 26);
             this.dtpRecodTo.TabIndex = 35;
+            this.dtpRecodTo.Visible = false;
             // 
             // dtpRecheckTo
             // 
@@ -461,6 +467,7 @@
             this.dtpRecheckTo.Name = "dtpRecheckTo";
             this.dtpRecheckTo.Size = new System.Drawing.Size(162, 26);
             this.dtpRecheckTo.TabIndex = 36;
+            this.dtpRecheckTo.Visible = false;
             // 
             // label13
             // 
@@ -507,11 +514,21 @@
             this.dtpProduceTo.Size = new System.Drawing.Size(151, 26);
             this.dtpProduceTo.TabIndex = 41;
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(17, 668);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(92, 30);
+            this.btnSave.TabIndex = 42;
+            this.btnSave.Text = "保存";
+            this.btnSave.UseVisualStyleBackColor = true;
+            // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1016, 741);
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.dtpProduceTo);
             this.Controls.Add(this.dtpProduce);
             this.Controls.Add(this.label15);
@@ -594,5 +611,6 @@
         private System.Windows.Forms.DateTimePicker dtpProduce;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.DateTimePicker dtpProduceTo;
+        private System.Windows.Forms.Button btnSave;
     }
 }

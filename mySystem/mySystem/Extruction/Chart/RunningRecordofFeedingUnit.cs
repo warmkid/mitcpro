@@ -69,13 +69,13 @@ namespace mySystem.Extruction.Process
             this.cmbSolve.Visible = false;
             this.lbSolve.Visible = false;
             this.ckbDy.Checked = true;
-            this.dtpDate.CustomFormat = "yyyy-MM-dd";
-            this.dtpDate.Format = DateTimePickerFormat.Custom;
-            this.dtpDate.ShowUpDown = true;
+            //this.dtpDate.CustomFormat = "yyyy-MM-dd";
+            this.dtpDate.Format = DateTimePickerFormat.Short;
+            //this.dtpDate.ShowUpDown = true;
             this.dtpDate.Value = DateTime.Today;
-            this.dtpHour.CustomFormat = "HH:mm:ss";
-            this.dtpHour.Format = DateTimePickerFormat.Custom;
-            this.dtpHour.ShowUpDown = true;
+            //this.dtpHour.CustomFormat = "HH:mm:ss";
+            this.dtpHour.Format = DateTimePickerFormat.Time;
+            //this.dtpHour.ShowUpDown = true;
             this.dtpHour.Value = DateTime.Now;            
         }
 
