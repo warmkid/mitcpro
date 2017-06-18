@@ -16,7 +16,8 @@ namespace mySystem.Extruction.Process
     public partial class ExtructionProcess : Form
     {
         private ExtructionForm blowformfather = null;
-        private int StepState = 1; public bool[] stepchecked = { false, false, false, false, false, false };
+        private int StepShowState = 1;
+        public bool[] stepchecked = { false, false, false, false, false, false };
         private SqlConnection conn = null;
         
         Record_extrusClean step1form = null;
@@ -33,20 +34,66 @@ namespace mySystem.Extruction.Process
             blowformfather = Mainform;
             conn = Formconn;
 
-            StepState = stepcurrent;
-            ShowView(stepcurrent);
+            //读取当前保存、审核完成的步骤
+            string sql = "Select * From extrusion";
+            SqlCommand comm = new SqlCommand(sql, conn);
+            SqlDataAdapter daSQL = new SqlDataAdapter(comm);
+            DataTable dtSQL = new DataTable();
+            daSQL.Fill(dtSQL);
+            int stepshow = Convert.ToInt32(dtSQL.Rows[0]["step_status"]);
+            int stepcheck = Convert.ToInt32(dtSQL.Rows[0]["step_checked_status"]);
+            comm.Dispose();
+            daSQL.Dispose();
+            dtSQL.Dispose();
+
+            //根据StepShowState显示界面
+            if (stepshow == 0)
+            {
+                ShowView(1);
+                StepShowState = 1;
+                CheckBtn.Enabled = false;
+                NextBtn.Enabled = false;
+            }
+            else
+            {
+                StepShowState = stepshow;
+                ShowView(StepShowState);
+                if (stepcheck >= StepShowState)
+                {
+                    if (stepcheck > StepShowState)
+                    {
+                        sql = "update extrusion set step_checked_status = " + StepShowState.ToString() + " where id =1";
+                        comm = new SqlCommand(sql, conn);
+                        comm.ExecuteNonQuery();
+                        comm.Dispose(); 
+                    }
+                    SaveBtn.Enabled = false;
+                    CheckBtn.Enabled = false;
+                    NextBtn.Enabled = true;
+                }
+                for (int i = 0; i < stepcheck; i++)
+                {
+                    stepchecked[i] = true;
+                }            
+            } 
+
+            /*StepShowState = stepcurrent;
+            ShowView(StepShowState);
+
             CheckBtn.Enabled = false;
             NextBtn.Enabled = false;
+             * */
+
         }
 
         //上一页按钮
         private void BackBtn_Click(object sender, EventArgs e)
         {
-            if ((StepState > 1) && (StepState < 8))
+            if ((StepShowState > 1) && (StepShowState < 8))
             {
-                StepState = StepState - 1;
-                ShowView(StepState);
-                if (stepchecked[StepState - 1])
+                StepShowState = StepShowState - 1;
+                ShowView(StepShowState);
+                if (stepchecked[StepShowState - 1])
                 {
                     SaveBtn.Enabled = false;
                     CheckBtn.Enabled = false;
@@ -64,11 +111,11 @@ namespace mySystem.Extruction.Process
         //下一页按钮
         private void NextBtn_Click(object sender, EventArgs e)
         {
-            if ((StepState > 0) && (StepState < 7))
+            if ((StepShowState > 0) && (StepShowState < 7))
             {
-                StepState = StepState + 1;
-                ShowView(StepState);
-                if (StepState == 7)
+                StepShowState = StepShowState + 1;
+                ShowView(StepShowState);
+                if (StepShowState == 7)
                 {
                     NextBtn.Enabled = true;
                     SaveBtn.Enabled = false;
@@ -76,7 +123,7 @@ namespace mySystem.Extruction.Process
                 }
                 else
                 {
-                    if (stepchecked[StepState - 1])
+                    if (stepchecked[StepShowState - 1])
                     {
                         SaveBtn.Enabled = false;
                         CheckBtn.Enabled = false;
@@ -95,9 +142,9 @@ namespace mySystem.Extruction.Process
         //确认按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            if ((StepState > 0) && (StepState < 7))
+            if ((StepShowState > 0) && (StepShowState < 7))
             {
-                switch (StepState)
+                switch (StepShowState)
                 {
                     case 1:
                         step1form.DataSave();
@@ -138,17 +185,24 @@ namespace mySystem.Extruction.Process
             check.ExitButton.Text = "取消";
             check.ShowDialog();
             */
-            if ((StepState > 0) && (StepState < 7))
+
+            if ((StepShowState > 0) && (StepShowState < 7))
             {
                 SaveBtn.Enabled = false;
                 CheckBtn.Enabled = false;
                 NextBtn.Enabled = true;
-                stepchecked[StepState - 1] = true;
+                stepchecked[StepShowState - 1] = true;
+
+                string sqlstr = "update extrusion set step_checked_status = " + StepShowState.ToString() + " where id =1";
+                SqlCommand com = new SqlCommand(sqlstr, conn);
+                com.ExecuteNonQuery();
+                com.Dispose(); 
             }
         } 
 
         private void ShowView(int ProcessState)
         {
+            
             switch (ProcessState)
             {
                 case 1:
@@ -162,7 +216,7 @@ namespace mySystem.Extruction.Process
                     break;
                 case 2:
                     this.BackBtn.Enabled = true;
-                    step2form = new ExtructionCheckBeforePowerStep2(this);
+                    step2form = new ExtructionCheckBeforePowerStep2(this, conn);
                     step2form.FormBorderStyle = FormBorderStyle.None;
                     step2form.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();
@@ -171,7 +225,7 @@ namespace mySystem.Extruction.Process
                     step2form.Show();
                     break;
                 case 3:
-                    step3form = new ExtructionPreheatParameterRecordStep3(this);
+                    step3form = new ExtructionPreheatParameterRecordStep3(this, conn);
                     step3form.FormBorderStyle = FormBorderStyle.None;
                     step3form.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();
@@ -180,7 +234,7 @@ namespace mySystem.Extruction.Process
                     step3form.Show();
                     break;
                 case 4:
-                    step4form = new ExtructionTransportRecordStep4(this);
+                    step4form = new ExtructionTransportRecordStep4(this, conn);
                     step4form.FormBorderStyle = FormBorderStyle.None;
                     step4form.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();
@@ -202,7 +256,7 @@ namespace mySystem.Extruction.Process
                     this.BackBtn.Text = "上一页";
                     this.SaveBtn.Visible = true;
                     this.CheckBtn.Visible = true;
-                    step6form = new ExtructionpRoductionAndRestRecordStep6(this);
+                    step6form = new ExtructionpRoductionAndRestRecordStep6(this, conn);
                     step6form.FormBorderStyle = FormBorderStyle.None;
                     step6form.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();
@@ -215,7 +269,7 @@ namespace mySystem.Extruction.Process
                     this.SaveBtn.Visible = false;
                     this.CheckBtn.Visible = false;
                     this.NextBtn.Text = "确认打印";
-                    stepcheckform = new ExtructionCheck(this);
+                    stepcheckform = new ExtructionCheck(this, conn);
                     stepcheckform.FormBorderStyle = FormBorderStyle.None;
                     stepcheckform.TopLevel = false;
                     this.StepViewPanel.Controls.Clear();

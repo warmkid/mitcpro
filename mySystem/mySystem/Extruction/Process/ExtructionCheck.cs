@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace mySystem.Extruction.Process
 {
@@ -14,6 +15,9 @@ namespace mySystem.Extruction.Process
         private ExtructionProcess extructionformfather = null;
         private Color greencolor = Color.FromArgb(0, 255, 0);
         private Color redcolor = Color.FromArgb(255, 100, 100);
+
+        private SqlConnection conn = null;
+        private string sql = "Select * From extrusion";
 
         //5个报表
         public bool page7finished = false;
@@ -32,23 +36,25 @@ namespace mySystem.Extruction.Process
         public String page13recorder = "记录人";
         public String page13checker = "审核人";
         //6个工序
-        public String step1recorder = "记录人";
-        public String step1checker = "审核人";
-        public String step2recorder = "记录人";
-        public String step2checker = "审核人";
-        public String step3recorder = "记录人";
-        public String step3checker = "审核人";
-        public String step4recorder = "记录人";
-        public String step4checker = "审核人";
-        public String step5recorder = "记录人";
-        public String step5checker = "审核人";
-        public String step6recorder = "记录人";
-        public String step6checker = "审核人";
+        public String step1recorder = "张三";
+        public String step1checker = "张三";
+        public String step2recorder = "张三";
+        public String step2checker = "张三";
+        public String step3recorder = "张三";
+        public String step3checker = "张三";
+        public String step4recorder = "张三";
+        public String step4checker = "张三";
+        public String step5recorder = "张三";
+        public String step5checker = "张三";
+        public String step6recorder = "张三";
+        public String step6checker = "张三";
 
-        public ExtructionCheck(ExtructionProcess winMain)
+        public ExtructionCheck(ExtructionProcess winMain, SqlConnection Mainconn)
         {
             InitializeComponent();
             extructionformfather = winMain;
+
+            conn = Mainconn;
 
             ShowNameandColor();
         }
@@ -108,16 +114,22 @@ namespace mySystem.Extruction.Process
             }
             //6个工序
             Step1Recorder.Text = step1recorder;
+            Step1Checker.Text = step1checker;
             this.Step1Label.BackColor = greencolor;
             Step2Recorder.Text = step2recorder;
+            Step2Checker.Text = step2checker;
             this.Step2Label.BackColor = greencolor;
             Step3Recorder.Text = step3recorder;
+            Step3Checker.Text = step3checker;
             this.Step3Label.BackColor = greencolor;
             Step4Recorder.Text = step4recorder;
+            Step4Checker.Text = step4checker;
             this.Step4Label.BackColor = greencolor;
             Step5Recorder.Text = step5recorder;
+            Step5Checker.Text = step5checker;
             this.Step5Label.BackColor = greencolor;
             Step6Recorder.Text = step6recorder;
+            Step6Checker.Text = step6checker;
             this.Step6Label.BackColor = greencolor;
         }
     }

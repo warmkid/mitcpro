@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
+using System.Data.SqlClient;
 
 namespace mySystem.Extruction.Process
 {
@@ -17,38 +18,16 @@ namespace mySystem.Extruction.Process
         public string checker; //复核人
         public string date; //日期
 
-        private class record
-        {
+        private SqlConnection conn = null;
+        private string sql = "Select * From extrusion";
 
-            public string sizephi; //模芯规格 phi
-            public string sizegap; //模芯规格 gap
-            public string time1;   //预热开始时间
-            public string time2;   //保温结束时间
-            public string time3;   //保温开始时间
-            public string time4;   //保温结束时间
-            public string time5;   //保温结束时间
-            public string PS;
-            public record()
-            {
-                sizephi = "";
-                sizegap = "";
-                time1 = "";
-                time2 = "";
-                time3 = "";
-                time4 = "";
-                time5 = "";
-                PS = "";
-            }
-        }
-        private record recorddata = new record();
-
-        public ExtructionPreheatParameterRecordStep3(ExtructionProcess winMain)
+        public ExtructionPreheatParameterRecordStep3(ExtructionProcess winMain, SqlConnection Mainconn)
         {
             InitializeComponent();
             extructionformfather = winMain;
-
+            conn = Mainconn;
             InformationInitialize();
-            //TabelPaint();
+            
         }
 
         private void InformationInitialize()
@@ -64,6 +43,31 @@ namespace mySystem.Extruction.Process
              * */
             this.PSbox.AutoSize = false;
             this.PSbox.Height = 32;
+
+            //若已有数据，向内部添加现有数据
+            SqlCommand comm = new SqlCommand(sql, conn);
+            SqlDataAdapter daSQL = new SqlDataAdapter(comm);
+            DataTable dtSQL = new DataTable();
+            daSQL.Fill(dtSQL);
+
+            int stepnow = Convert.ToInt32(dtSQL.Rows[0]["step_status"]);
+            if (stepnow >= 3)
+            {
+                this.phiBox.Text = dtSQL.Rows[0]["s3_core_specifications_1"].ToString();
+                this.gapBox.Text = dtSQL.Rows[0]["s3_core_specifications_2"].ToString();
+                this.timeBox1.Text = dtSQL.Rows[0]["s3_start_preheat_time"].ToString();
+                this.timeBox2.Text = dtSQL.Rows[0]["s3_end_preheat_time"].ToString();
+                this.timeBox3.Text = dtSQL.Rows[0]["s3_start_insulation_time"].ToString();
+                this.timeBox4.Text = dtSQL.Rows[0]["s3_end_insulation_time_1"].ToString();
+                this.timeBox5.Text = dtSQL.Rows[0]["s3_end_insulation_time_2"].ToString();                
+            }
+
+            comm.Dispose();
+            daSQL.Dispose();
+            dtSQL.Dispose();
+
+           this.PSbox.Text = "时间输入的格式示例为：2003-12-24 14:34:08";
+
         }       
 
         private void TabelPaint()
@@ -83,14 +87,24 @@ namespace mySystem.Extruction.Process
 
         public void DataSave()
         {
-            recorddata.sizephi = this.phiBox.Text;
-            recorddata.sizegap = this.gapBox.Text;
-            recorddata.time1 = this.timeBox1.Text;
-            recorddata.time2 = this.timeBox1.Text;
-            recorddata.time3 = this.timeBox1.Text;
-            recorddata.time4 = this.timeBox1.Text;
-            recorddata.time5 = this.timeBox1.Text;
-            recorddata.PS = this.PSbox.Text;
+            string[] sqlstr = new string[8];
+            SqlCommand com = null;
+
+            sqlstr[0] = "update extrusion set s3_core_specifications_1 = " + Convert.ToInt32(this.phiBox.Text).ToString() + "  where id =1";
+            sqlstr[1] = "update extrusion set s3_core_specifications_2 = " + Convert.ToInt32(this.gapBox.Text).ToString() + "  where id =1";
+            sqlstr[2] = "update extrusion set s3_start_preheat_time =  CAST( '"+timeBox1.Text+"' AS datetime)  where id =1";
+            sqlstr[3] = "update extrusion set s3_end_preheat_time =  CAST( '" + timeBox2.Text + "' AS datetime)  where id =1";
+            sqlstr[4] = "update extrusion set s3_start_insulation_time =  CAST( '" + timeBox3.Text + "' AS datetime)  where id =1";
+            sqlstr[5] = "update extrusion set s3_end_insulation_time_1 =  CAST( '" + timeBox4.Text + "' AS datetime)  where id =1";
+            sqlstr[6] = "update extrusion set s3_end_insulation_time_2 =  CAST( '" + timeBox5.Text + "' AS datetime)  where id =1";   
+            sqlstr[7] = "update extrusion set step_status = 3 where id =1";
+            
+            for (int i = 0; i < 8; i++)
+            {
+                com = new SqlCommand(sqlstr[i], conn);
+                com.ExecuteNonQuery();
+                com.Dispose();
+            }                   
         }
     }
 }
