@@ -34,6 +34,7 @@ namespace WindowsFormsApplication1
 
             //dataGridView1.RowsDefaultCellStyle.Font = new Font("宋体", 12);  
             dataGridView1.Font = new Font("宋体", 12);
+            dataGridView1.Columns[0].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             
         }
         public void connToServer()
@@ -71,6 +72,7 @@ namespace WindowsFormsApplication1
                 //dr.Cells[2].Value = "是".ToString();
                 dataGridView1.Rows.Add(dr);
             }
+            //this.dataGridView1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
