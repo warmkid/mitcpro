@@ -37,6 +37,7 @@
             this.用户ID = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.usernameLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -115,7 +116,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 24;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // label1
             // 
@@ -127,12 +127,22 @@
             this.label1.TabIndex = 25;
             this.label1.Text = "颇尔奥星管理系统";
             // 
+            // usernameLabel
+            // 
+            this.usernameLabel.AutoSize = true;
+            this.usernameLabel.Location = new System.Drawing.Point(118, 58);
+            this.usernameLabel.Name = "usernameLabel";
+            this.usernameLabel.Size = new System.Drawing.Size(0, 12);
+            this.usernameLabel.TabIndex = 26;
+            this.usernameLabel.Visible = false;
+            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(342, 205);
             this.ControlBox = false;
+            this.Controls.Add(this.usernameLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.LoginButton);
@@ -163,5 +173,6 @@
         public System.Windows.Forms.TextBox UserPWTextBox;
         public System.Windows.Forms.Button LoginButton;
         public System.Windows.Forms.Button ExitButton;
+        public System.Windows.Forms.Label usernameLabel;
     }
 }

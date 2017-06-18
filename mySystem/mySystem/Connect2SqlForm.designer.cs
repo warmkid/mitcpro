@@ -39,10 +39,11 @@
             // 
             // ExitButton
             // 
+            this.ExitButton.Font = new System.Drawing.Font("SimSun", 12F);
             this.ExitButton.Image = ((System.Drawing.Image)(resources.GetObject("ExitButton.Image")));
             this.ExitButton.Location = new System.Drawing.Point(201, 110);
             this.ExitButton.Name = "ExitButton";
-            this.ExitButton.Size = new System.Drawing.Size(79, 25);
+            this.ExitButton.Size = new System.Drawing.Size(85, 30);
             this.ExitButton.TabIndex = 37;
             this.ExitButton.Text = "退出";
             this.ExitButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -52,10 +53,11 @@
             // 
             // Connect2SqlButton
             // 
+            this.Connect2SqlButton.Font = new System.Drawing.Font("SimSun", 12F);
             this.Connect2SqlButton.Image = ((System.Drawing.Image)(resources.GetObject("Connect2SqlButton.Image")));
             this.Connect2SqlButton.Location = new System.Drawing.Point(62, 110);
             this.Connect2SqlButton.Name = "Connect2SqlButton";
-            this.Connect2SqlButton.Size = new System.Drawing.Size(78, 25);
+            this.Connect2SqlButton.Size = new System.Drawing.Size(85, 30);
             this.Connect2SqlButton.TabIndex = 36;
             this.Connect2SqlButton.Text = "连接";
             this.Connect2SqlButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -65,33 +67,39 @@
             // 
             // PortTextBox
             // 
-            this.PortTextBox.Location = new System.Drawing.Point(104, 64);
+            this.PortTextBox.Font = new System.Drawing.Font("SimSun", 12F);
+            this.PortTextBox.Location = new System.Drawing.Point(124, 64);
             this.PortTextBox.Name = "PortTextBox";
-            this.PortTextBox.Size = new System.Drawing.Size(183, 21);
+            this.PortTextBox.Size = new System.Drawing.Size(163, 26);
             this.PortTextBox.TabIndex = 33;
+            this.PortTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PortTextBox_KeyPress);
             // 
             // 端口
             // 
             this.端口.AutoSize = true;
+            this.端口.Font = new System.Drawing.Font("SimSun", 12F);
             this.端口.Location = new System.Drawing.Point(43, 69);
             this.端口.Name = "端口";
-            this.端口.Size = new System.Drawing.Size(41, 12);
+            this.端口.Size = new System.Drawing.Size(56, 16);
             this.端口.TabIndex = 32;
             this.端口.Text = "端口：";
             // 
             // IPTextBox
             // 
-            this.IPTextBox.Location = new System.Drawing.Point(104, 31);
+            this.IPTextBox.Font = new System.Drawing.Font("SimSun", 12F);
+            this.IPTextBox.Location = new System.Drawing.Point(124, 31);
             this.IPTextBox.Name = "IPTextBox";
-            this.IPTextBox.Size = new System.Drawing.Size(183, 21);
+            this.IPTextBox.Size = new System.Drawing.Size(163, 26);
             this.IPTextBox.TabIndex = 31;
+            this.IPTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IPTextBox_KeyPress);
             // 
             // 服务器IP
             // 
             this.服务器IP.AutoSize = true;
+            this.服务器IP.Font = new System.Drawing.Font("SimSun", 12F);
             this.服务器IP.Location = new System.Drawing.Point(43, 36);
             this.服务器IP.Name = "服务器IP";
-            this.服务器IP.Size = new System.Drawing.Size(65, 12);
+            this.服务器IP.Size = new System.Drawing.Size(88, 16);
             this.服务器IP.TabIndex = 30;
             this.服务器IP.Text = "服务器IP：";
             // 

@@ -6,14 +6,18 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace mySystem
 {
     public partial class ProcessMainForm : Form
     {
-        public ProcessMainForm()
+        SqlConnection conn = null;
+
+        public ProcessMainForm(SqlConnection myConnection)
         {
             InitializeComponent();
+            conn = myConnection;
             ExtructionBtn.Image = Image.FromFile(@"../../pic/Extruction.png", false);
             CleanBtn.Image = Image.FromFile(@"../../pic/Clean.png", false);
             BagBtn.Image = Image.FromFile(@"../../pic/Bag.png", false);
@@ -27,7 +31,7 @@ namespace mySystem
         private void ExtructionBtn_Click(object sender, EventArgs e)
         {
             ProducePanelRight.Controls.Clear();
-            ExtructionForm myDlg = new ExtructionForm();
+            ExtructionForm myDlg = new ExtructionForm(conn);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = ProducePanelRight.Size;

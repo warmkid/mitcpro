@@ -9,17 +9,19 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using mySystem;
 using WindowsFormsApplication1;
+using System.Data.SqlClient;
 
 namespace mySystem
 {
     public partial class ExtructionForm : Form
     {
-        int ProcessStep = 0;
-               
-        public ExtructionForm()
+        SqlConnection conn = null;
+        int ProcessStep = 0;     
+        public ExtructionForm(SqlConnection myConnection)
         {
-            InitializeComponent();            
-           
+            InitializeComponent();
+            conn = myConnection;
+
             //将内容列表添加到comboBox1中
             DataTable table = ProductionPlanDataTable();
             comboBox1.DataSource = table;
@@ -46,7 +48,7 @@ namespace mySystem
                     this.panel1.Controls.Clear();
                     break;
                 case 1:
-                    ExtructionProcess stepform = new ExtructionProcess(this, 1);
+                    ExtructionProcess stepform = new ExtructionProcess(this, 1, this.conn);
                     stepform.FormBorderStyle = FormBorderStyle.None; //隐藏子窗体边框（去除最小化，最大化，关闭等按钮）
                     stepform.TopLevel = false; //指示子窗体非顶级窗体
                     this.panel1.Controls.Clear();
@@ -115,7 +117,6 @@ namespace mySystem
             Record_extrusSiteClean myDlg = new Record_extrusSiteClean();
             myDlg.Show();
         }
-
 
 
     }
