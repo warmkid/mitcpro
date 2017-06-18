@@ -15,10 +15,10 @@ namespace mySystem.Query
     public partial class QueryExtruForm : Form
     {
         SqlConnection conn = null;
-        public QueryExtruForm(SqlConnection myconnection)
+        public QueryExtruForm(SqlConnection myConnection)
         {
-            conn = myconnection;
             InitializeComponent();
+            conn = myConnection;
         }
 
         //吹膜生产日报表

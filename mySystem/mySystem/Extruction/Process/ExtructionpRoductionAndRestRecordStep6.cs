@@ -126,7 +126,7 @@ namespace mySystem.Extruction.Process
                 this.RecordView.Rows[0].Cells["膜卷编号\r(卷)"].Value = dtSQL.Rows[0]["s6_mojuan_number"].ToString();
                 this.RecordView.Rows[0].Cells["膜卷长度\r(m)"].Value = dtSQL.Rows[0]["s6_mojuan_length"].ToString();
                 this.RecordView.Rows[0].Cells["膜卷重量\r(kg)"].Value = dtSQL.Rows[0]["s6_mojuan_weight"].ToString();
-                //this.RecordView.Rows[0].Cells["外观"].Value = bool.Parse(dtSQL.Rows[0]["s6_outward"].ToString());
+                this.RecordView.Rows[0].Cells["外观"].Value = bool.Parse(dtSQL.Rows[0]["s6_outward"].ToString());
                 this.RecordView.Rows[0].Cells["宽度\r(mm)"].Value = dtSQL.Rows[0]["s6_width"].ToString();
                 this.RecordView.Rows[0].Cells["最大厚度\r（μm）"].Value = dtSQL.Rows[0]["s6_max_thickness"].ToString();
                 this.RecordView.Rows[0].Cells["最小厚度\r（μm）"].Value = dtSQL.Rows[0]["s6_min_thickness"].ToString();
@@ -250,7 +250,7 @@ namespace mySystem.Extruction.Process
         //保存数据
         public void DataSave()
         {
-            string[] sqlstr = new string[16];
+            string[] sqlstr = new string[17];
             SqlCommand com = null;
 
             sqlstr[0] = "update extrusion set product_name = '" + this.productnameBox.Text + "' where id =1";
@@ -263,20 +263,18 @@ namespace mySystem.Extruction.Process
             sqlstr[6] = "update extrusion set s6_mojuan_number = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["膜卷编号\r(卷)"].Value.ToString()).ToString() + "  where id =1";
             sqlstr[7] = "update extrusion set s6_mojuan_length = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["膜卷长度\r(m)"].Value.ToString()).ToString() + "  where id =1";
             sqlstr[8] = "update extrusion set s6_mojuan_weight = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["膜卷重量\r(kg)"].Value.ToString()).ToString() + "  where id =1";
-            
-            /*string val = this.RecordView.Rows[0].Cells["外观"].Value.ToString() == "True" ? "1" : "0";
-            sqlstr[9] = "update extrusion set s6_outward = " + val + "  where id =1";
-            */
-            sqlstr[9] = "update extrusion set s6_width = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["宽度\r(mm)"].Value.ToString()).ToString() + "  where id =1";
-            sqlstr[10] = "update extrusion set s6_max_thickness = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["最大厚度\r（μm）"].Value.ToString()).ToString() + "  where id =1";
-            sqlstr[11] = "update extrusion set s6_min_thickness = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["最小厚度\r（μm）"].Value.ToString()).ToString() + "  where id =1";
-            sqlstr[12] = "update extrusion set s6_aver_thickness = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["平均厚度\r（μm）"].Value.ToString()).ToString() + "  where id =1";
-            sqlstr[13] = "update extrusion set s6_tolerance_thickness = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["厚度公差\r(%)"].Value.ToString()).ToString() + "  where id =1";
-            string val = this.RecordView.Rows[0].Cells["判定"].Value.ToString() == "True" ? "1" : "0";
-            sqlstr[14] = "update extrusion set s6_is_qualified = " + val + "  where id =1";
-            sqlstr[15] = "update extrusion set step_status = 6 where id =1";
+            string val = this.RecordView.Rows[0].Cells["外观"].Value.ToString() == "True" ? "1" : "0";
+            sqlstr[9] = "update extrusion set s6_outward = " + val + "  where id =1";            
+            sqlstr[10] = "update extrusion set s6_width = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["宽度\r(mm)"].Value.ToString()).ToString() + "  where id =1";
+            sqlstr[11] = "update extrusion set s6_max_thickness = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["最大厚度\r（μm）"].Value.ToString()).ToString() + "  where id =1";
+            sqlstr[12] = "update extrusion set s6_min_thickness = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["最小厚度\r（μm）"].Value.ToString()).ToString() + "  where id =1";
+            sqlstr[13] = "update extrusion set s6_aver_thickness = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["平均厚度\r（μm）"].Value.ToString()).ToString() + "  where id =1";
+            sqlstr[14] = "update extrusion set s6_tolerance_thickness = " + Convert.ToInt32(this.RecordView.Rows[0].Cells["厚度公差\r(%)"].Value.ToString()).ToString() + "  where id =1";
+            val = this.RecordView.Rows[0].Cells["判定"].Value.ToString() == "True" ? "1" : "0";
+            sqlstr[15] = "update extrusion set s6_is_qualified = " + val + "  where id =1";
+            sqlstr[16] = "update extrusion set step_status = 6 where id =1";
 
-            for (int i = 0; i < 16; i++)
+            for (int i = 0; i < 17; i++)
             {
                 com = new SqlCommand(sqlstr[i], conn);
                 com.ExecuteNonQuery();

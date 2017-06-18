@@ -18,14 +18,18 @@ namespace mySystem
         string strCon;
         SqlConnection conn;
         string username; //登录用户名
+        int userID;
 
         public MainForm()
         {
             conn = Init(conn);
             LoginForm login = new LoginForm(conn);
             login.ShowDialog();
-            username = login.usernameLabel.Text;
+            userID = login.userID;
+            username = checkID(userID);
+            
             InitializeComponent();
+            userLabel.Text = username;
 
             //Rectangle ScreenArea = Screen.GetWorkingArea(this);
             //ProducePanelLeft.Size = new Size(160, ScreenArea.Height - 260);
@@ -39,12 +43,31 @@ namespace mySystem
 
         }
 
+
+        
+        private string checkID(int userID)
+        {
+            string user = null;
+            string searchsql = "select * from [user] where user_id='" + userID + "'";
+            SqlCommand comm = new SqlCommand(searchsql, conn);
+            SqlDataReader daSQL = comm.ExecuteReader();
+            while (daSQL.Read())
+            {
+                user = daSQL.GetString(4);
+            }
+
+            comm.Dispose();
+            return user;
+        }
+        
+
+
         private SqlConnection Init(SqlConnection myConnection)
         {
             //错误IP测试
             //strCon = @"server=10.105.223.14,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
             //正确IP
-            strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+            strCon = @"server=10.105.223.19,56625;database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
             isOk = false;
             myConnection = connToServer(strCon);
             while (!isOk)
@@ -118,6 +141,23 @@ namespace mySystem
             myDlg.Size = MainPanel.Size;
             MainPanel.Controls.Add(myDlg);
             myDlg.Show();
+        }
+
+
+        private void ExitBtn_Click(object sender, EventArgs e)
+        {
+            username = null;
+            this.Hide();
+            //this.Dispose();
+
+            LoginForm login = new LoginForm(conn);
+            login.ShowDialog();
+            userID = login.userID;
+            username = checkID(userID);
+            
+            userLabel.Text = username;
+            this.Show();
+
         }
 
 
