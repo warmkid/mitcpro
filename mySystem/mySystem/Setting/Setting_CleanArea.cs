@@ -31,8 +31,8 @@ namespace WindowsFormsApplication1
         private void Init()
         {
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            strCon = @"server=10.105.223.19,56625;database=wyttest;Uid=sa;Pwd=mitc";
-            sql = "select * from CleanArea_table";
+            strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+            sql = "select * from cleanarea";
             isOk = false;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Font=new Font("宋体",12);
@@ -79,7 +79,7 @@ namespace WindowsFormsApplication1
             DataRowView drv = dataGridView1.SelectedRows[0].DataBoundItem as DataRowView;
             //System.Console.WriteLine(drv[1].ToString());
             string id=drv[0].ToString().Trim();
-            string strsql = "delete from CleanArea_table where 名称=" + "'"+id+"'";
+            string strsql = "delete from cleanarea where cast([清洁区域] as nvarchar(50))=" + "'" + id + "'";
             SqlCommand Cmd = new SqlCommand(strsql, conn);
             int i = Cmd.ExecuteNonQuery();
             if(i<0)

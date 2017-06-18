@@ -193,7 +193,9 @@ namespace WindowsFormsApplication1
         }
 
         public void DataSave()
-        { }
+        {
+
+        }
 
         private void groupBox6_Enter(object sender, EventArgs e)
         {

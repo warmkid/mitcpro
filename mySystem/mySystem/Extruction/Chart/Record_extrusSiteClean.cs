@@ -184,5 +184,10 @@ namespace mySystem.Extruction.Process
             lf.ExitButton.Text = "取消";
             lf.Show();
         }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

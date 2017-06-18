@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
+using Newtonsoft.Json.Linq;
 
 namespace WindowsFormsApplication1
 {
@@ -25,14 +26,15 @@ namespace WindowsFormsApplication1
         }
         private void Init()
         {
-            strCon = @"server=10.105.223.19,56625;database=wyttest;Uid=sa;Pwd=mitc";
-            sql = "select * from CleanArea_table";
+            strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+            sql = "select * from cleanarea";
             isOk = false;
             cleancont = new List<cont>();
             cont_clean = new cont();
 
             //dataGridView1.RowsDefaultCellStyle.Font = new Font("宋体", 12);  
             dataGridView1.Font = new Font("宋体", 12);
+            
         }
         public void connToServer()
         {
@@ -51,7 +53,7 @@ namespace WindowsFormsApplication1
             SqlCommand comm = new SqlCommand(sql, conn);
             SqlDataAdapter da = new SqlDataAdapter(comm);
 
-            DataTable dt = new DataTable();
+            dt = new DataTable();
             da.Fill(dt);
             //dataGridView1.DataSource = dt;
 
@@ -80,7 +82,7 @@ namespace WindowsFormsApplication1
         string checker;//复核人
         string checktime;//复核日期
         List<cont> cleancont;
-
+        DataTable dt;
         bool isOk;
         string strCon;
         string sql;
@@ -103,6 +105,19 @@ namespace WindowsFormsApplication1
             checker = textBox2.Text.ToString();
             checktime = dateTimePicker2.Text.ToString();
 
+            string json = @"{}";           
+            JObject j = JObject.Parse(json);
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                string t = dataGridView1.Rows[i].Cells[0].Value.ToString();
+                if (dataGridView1.Rows[i].Cells[2].Value.ToString() == "True")
+                    j.Add(t, new JValue('1'));
+                else
+                    j.Add(t, new JValue("0"));      
+            }
+            //System.Console.WriteLine(j.ToString());
+
+
             //for (int i = 0; i < dataGridView1.Rows.Count; i++)
             //{
             //    cont_clean.cleanstat = dataGridView1.Rows[i].Cells[2].Value.ToString() == "True";
@@ -122,6 +137,16 @@ namespace WindowsFormsApplication1
         {
 
         }
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void textBox1_TextChanged(object sender, EventArgs e)
+        //{
+
+        //}
 
     }
 }

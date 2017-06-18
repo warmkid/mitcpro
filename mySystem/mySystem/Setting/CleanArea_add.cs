@@ -21,10 +21,10 @@ namespace WindowsFormsApplication1
         {
             string name = textBox1.Text.ToString();
             string content = textBox2.Text.ToString();
-            string strCon = @"server=10.105.223.19,56625;database=wyttest;Uid=sa;Pwd=mitc";
+            string strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
             SqlConnection conn = new SqlConnection(strCon);
 
-            string sql = "insert into CleanArea_table (名称,内容) values("+"'"+name+"'"+","+"'"+content+"'"+");";
+            string sql = "insert into cleanarea (清洁区域,清洁内容) values("+"'"+name+"'"+","+"'"+content+"'"+");";
             System.Console.WriteLine(sql+"*************************************************************************");
             int result = 0;
             using (SqlCommand comm = new SqlCommand(sql, conn))
