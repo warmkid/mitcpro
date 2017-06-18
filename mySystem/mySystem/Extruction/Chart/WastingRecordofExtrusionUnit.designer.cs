@@ -49,6 +49,7 @@
             this.dtpProductDate = new System.Windows.Forms.DateTimePicker();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnSace = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -192,7 +193,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(680, 46);
+            this.btnAdd.Location = new System.Drawing.Point(453, 344);
             this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(100, 31);
@@ -246,7 +247,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(680, 120);
+            this.button1.Location = new System.Drawing.Point(572, 342);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 33);
             this.button1.TabIndex = 22;
@@ -260,15 +261,26 @@
             this.dataGridView1.Location = new System.Drawing.Point(7, 46);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(656, 354);
+            this.dataGridView1.Size = new System.Drawing.Size(698, 271);
             this.dataGridView1.TabIndex = 23;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            // 
+            // btnSace
+            // 
+            this.btnSace.Location = new System.Drawing.Point(333, 344);
+            this.btnSace.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSace.Name = "btnSace";
+            this.btnSace.Size = new System.Drawing.Size(100, 31);
+            this.btnSace.TabIndex = 24;
+            this.btnSace.Text = "保存";
+            this.btnSace.UseVisualStyleBackColor = true;
             // 
             // WastingRecordofExtrusionUnit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 467);
+            this.ClientSize = new System.Drawing.Size(730, 385);
+            this.Controls.Add(this.btnSace);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
@@ -311,5 +323,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DateTimePicker dtpProductDate;
+        private System.Windows.Forms.Button btnSace;
     }
 }
