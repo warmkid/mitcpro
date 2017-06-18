@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 
 //this form is about the 10th picture of the extrusion step 
@@ -14,8 +15,11 @@ namespace mySystem.Extruction.Process
     public partial class WastingRecordofExtrusionUnit : Form
     {
         public int items = 1;
+        private DateTimePicker dtp = new DateTimePicker();
         private DataTable datatab = new DataTable();
-        public WastingRecordofExtrusionUnit()
+        SqlConnection conn = null;
+
+        public WastingRecordofExtrusionUnit(SqlConnection conn)
         {
             InitializeComponent();
             this.Default();
@@ -49,6 +53,7 @@ namespace mySystem.Extruction.Process
             this.txbRecheckMan.Text = "";
             this.txbRecheckMan.Visible = false;
             this.lbRecheckMan.Visible = false;
+            this.lbProductDate.Visible = false;
             datatab.Columns.Add("序号", typeof(String));
             datatab.Columns.Add("生产日期", typeof(String));
             datatab.Columns.Add("班次", typeof(String));
@@ -61,7 +66,7 @@ namespace mySystem.Extruction.Process
         private void btnAdd_Click(object sender, EventArgs e)
         {
             this.lbId.Text = items.ToString();
-            datatab.Rows.Add(lbId.Text, dtpProductDate.Value.ToShortDateString(), txbWorkTurn.Text, txbProductCode.Text, txbWasteWeight.Text, txbReason.Text);
+            datatab.Rows.Add(lbId.Text, dtp.Value.ToShortDateString(), txbWorkTurn.Text, txbProductCode.Text, txbWasteWeight.Text, txbReason.Text);
             items++;
         }
 
@@ -72,12 +77,60 @@ namespace mySystem.Extruction.Process
         
         private void button1_Click(object sender, EventArgs e)
         {
-            /*LoginForm check = new LoginForm();
+            LoginForm check = new LoginForm(conn);
 			//check.LoginButton.Text = "审核通过";
 			//check.ExitButton.Text = "取消";
-            check.ShowDialog();*/
+            check.ShowDialog();
+            //this.txbRecheckMan.Text = "李四";
+            //this.txbRecheckMan.Visible = true;
+            //this.lbRecheckMan.Visible = true;
         }
-        
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (true==dtp.Visible ) dtp.Visible = false;
+            if (e.ColumnIndex >= 0)
+            {
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "生产日期")
+                {
+                    showdtp(e);
+                }
+            }
+        }
+
+        private void showdtp(DataGridViewCellEventArgs e)
+        {
+
+            dtp.Size = dataGridView1.CurrentCell.Size;
+            //dtp.Top = dataGridView1.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true).Top + dataGridView1.Top;
+            //dtp.Left = dataGridView1.GetCellDisplayRectangle(e.ColumnIndex, e.RowIndex, true).Left + dataGridView1.Left;
+            dtp.Top = 0;
+            dtp.Left = 0;
+            dtp.Visible = true;
+            if (!(object.Equals(Convert.ToString(dataGridView1.CurrentCell.Value), "")))
+            {
+                dtp.Value = Convert.ToDateTime(dataGridView1.CurrentCell.Value);
+            }
+            
+            dtp.Visible = true;
+            this.Controls.Add(dtp);
+            //dtp.Show();
+
+            //DateTimePicker dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            //dateTimePicker1.Location = new System.Drawing.Point(0,0);
+            //dateTimePicker1.Name = "dateTimePicker1";
+            //dateTimePicker1.Size = dataGridView1.CurrentCell.Size;
+            //dateTimePicker1.TabIndex = 24;
+            //dateTimePicker1.BringToFront();
+            //this.Controls.Add(dateTimePicker1);
+
+            dtp.ValueChanged += new EventHandler(dtp_ValueChanged);
+        }
+
+        void dtp_ValueChanged(object sender, EventArgs e)
+        {
+            dataGridView1.CurrentCell.Value = dtp.Value.ToShortDateString();
+        }
         
     }
 }

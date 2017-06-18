@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Data.SqlClient;
 
 //this form is about the 13th picture of the extrusion step 
 namespace mySystem.Extruction.Process
@@ -16,12 +16,13 @@ namespace mySystem.Extruction.Process
         public int quiz=14;
         public int TN = 2;
         bool[,] itemcheck = new bool[14, 2];
-        
+        SqlConnection conn = null;
   
 
-        public HandoverRecordofExtrusionProcess()
+        public HandoverRecordofExtrusionProcess(SqlConnection myConnection)
         {
             InitializeComponent();
+            conn = myConnection;
             this.GenerateQuiz(quiz);
             //this part to add the confirm items
 
@@ -158,11 +159,12 @@ namespace mySystem.Extruction.Process
         
         private void button1_Click(object sender, EventArgs e)
         {
-            /*
-            LoginForm check = new LoginForm();
+            
+            LoginForm check = new LoginForm(conn);
 			//check.LoginButton.Text = "审核通过";
 			//check.ExitButton.Text = "取消";
-            check.ShowDialog();*/
+            check.ShowDialog();
+
         }
         
         

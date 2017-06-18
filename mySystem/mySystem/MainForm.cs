@@ -112,7 +112,7 @@ namespace mySystem
         private void MainQueryBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
-            QueryMainForm myDlg = new QueryMainForm();
+            QueryMainForm myDlg = new QueryMainForm(conn);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = MainPanel.Size;

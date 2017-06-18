@@ -40,7 +40,7 @@
             // 
             // Chart2Btn
             // 
-            this.Chart2Btn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Chart2Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Chart2Btn.Location = new System.Drawing.Point(14, 12);
             this.Chart2Btn.Name = "Chart2Btn";
             this.Chart2Btn.Size = new System.Drawing.Size(185, 38);
@@ -51,8 +51,7 @@
             // 
             // Chart4Btn
             // 
-            this.Chart4Btn.Enabled = false;
-            this.Chart4Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Chart4Btn.Font = new System.Drawing.Font("宋体", 12F);
             this.Chart4Btn.Location = new System.Drawing.Point(425, 12);
             this.Chart4Btn.Name = "Chart4Btn";
             this.Chart4Btn.Size = new System.Drawing.Size(155, 38);
@@ -75,7 +74,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label1.Font = new System.Drawing.Font("宋体", 12F);
             this.label1.Location = new System.Drawing.Point(12, 62);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 16);
@@ -84,7 +83,7 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(93, 57);
             this.comboBox1.Name = "comboBox1";
@@ -94,7 +93,7 @@
             // 
             // Chart5Btn
             // 
-            this.Chart5Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Chart5Btn.Font = new System.Drawing.Font("宋体", 12F);
             this.Chart5Btn.Location = new System.Drawing.Point(618, 12);
             this.Chart5Btn.Name = "Chart5Btn";
             this.Chart5Btn.Size = new System.Drawing.Size(174, 38);
@@ -105,7 +104,7 @@
             // 
             // Chart3Btn
             // 
-            this.Chart3Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Chart3Btn.Font = new System.Drawing.Font("宋体", 12F);
             this.Chart3Btn.Location = new System.Drawing.Point(231, 12);
             this.Chart3Btn.Name = "Chart3Btn";
             this.Chart3Btn.Size = new System.Drawing.Size(161, 38);
@@ -116,7 +115,7 @@
             // 
             // Chart7Btn
             // 
-            this.Chart7Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Chart7Btn.Font = new System.Drawing.Font("宋体", 12F);
             this.Chart7Btn.Location = new System.Drawing.Point(834, 12);
             this.Chart7Btn.Name = "Chart7Btn";
             this.Chart7Btn.Size = new System.Drawing.Size(175, 38);

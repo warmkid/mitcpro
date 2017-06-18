@@ -8,13 +8,16 @@ using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApplication1;
 using mySystem.Extruction.Process;
+using System.Data.SqlClient;
 
 namespace mySystem.Query
 {
     public partial class QueryExtruForm : Form
     {
-        public QueryExtruForm()
+        SqlConnection conn = null;
+        public QueryExtruForm(SqlConnection myconnection)
         {
+            conn = myconnection;
             InitializeComponent();
         }
 
@@ -28,7 +31,7 @@ namespace mySystem.Query
         //吹膜工序物料平衡记录
         private void Chart6Btn_Click(object sender, EventArgs e)
         {
-            MaterialBalenceofExtrusionProcess myDlg = new MaterialBalenceofExtrusionProcess();
+            MaterialBalenceofExtrusionProcess myDlg = new MaterialBalenceofExtrusionProcess(conn);
             myDlg.Show();
         }
     }

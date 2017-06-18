@@ -197,7 +197,7 @@
             this.panel1.Controls.Add(this.txbBatchNoN);
             this.panel1.Controls.Add(this.txbAmountsD);
             this.panel1.Controls.Add(this.txbBatchNoD);
-            this.panel1.Location = new System.Drawing.Point(733, 56);
+            this.panel1.Location = new System.Drawing.Point(545, 90);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(585, 564);

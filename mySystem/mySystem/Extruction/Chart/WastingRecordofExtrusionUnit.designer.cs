@@ -30,7 +30,6 @@
         {
             this.lbIdtxt = new System.Windows.Forms.Label();
             this.lbId = new System.Windows.Forms.Label();
-            this.dtpProductDate = new System.Windows.Forms.DateTimePicker();
             this.txbWorkTurn = new System.Windows.Forms.TextBox();
             this.lbWorkTurn = new System.Windows.Forms.Label();
             this.lbProductCode = new System.Windows.Forms.Label();
@@ -49,6 +48,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dtpProductDate = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -71,14 +71,6 @@
             this.lbId.Name = "lbId";
             this.lbId.Size = new System.Drawing.Size(0, 16);
             this.lbId.TabIndex = 1;
-            // 
-            // dtpProductDate
-            // 
-            this.dtpProductDate.Location = new System.Drawing.Point(116, 64);
-            this.dtpProductDate.Margin = new System.Windows.Forms.Padding(4);
-            this.dtpProductDate.Name = "dtpProductDate";
-            this.dtpProductDate.Size = new System.Drawing.Size(161, 26);
-            this.dtpProductDate.TabIndex = 2;
             // 
             // txbWorkTurn
             // 
@@ -256,11 +248,21 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(300, 116);
+            this.dataGridView1.Location = new System.Drawing.Point(300, 52);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(656, 354);
             this.dataGridView1.TabIndex = 23;
+            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            // 
+            // dtpProductDate
+            // 
+            this.dtpProductDate.Location = new System.Drawing.Point(116, 64);
+            this.dtpProductDate.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpProductDate.Name = "dtpProductDate";
+            this.dtpProductDate.Size = new System.Drawing.Size(161, 26);
+            this.dtpProductDate.TabIndex = 2;
+            this.dtpProductDate.Visible = false;
             // 
             // WastingRecordofExtrusionUnit
             // 
@@ -288,7 +290,6 @@
 
         private System.Windows.Forms.Label lbIdtxt;
         private System.Windows.Forms.Label lbId;
-        private System.Windows.Forms.DateTimePicker dtpProductDate;
         private System.Windows.Forms.TextBox txbWorkTurn;
         private System.Windows.Forms.Label lbWorkTurn;
         private System.Windows.Forms.Label lbProductCode;
@@ -307,5 +308,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DateTimePicker dtpProductDate;
     }
 }

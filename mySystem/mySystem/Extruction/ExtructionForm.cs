@@ -78,31 +78,31 @@ namespace mySystem
 
         private void Chart2Btn_Click(object sender, EventArgs e)
         {
-            RunningRecordofFeedingUnit myDlg = new RunningRecordofFeedingUnit();
+            RunningRecordofFeedingUnit myDlg = new RunningRecordofFeedingUnit(conn);
             myDlg.Show();
         }
 
         private void Chart3Btn_Click(object sender, EventArgs e)
         {
-            RunningRecordofExtrusionUnit myDlg = new RunningRecordofExtrusionUnit();
+            RunningRecordofExtrusionUnit myDlg = new RunningRecordofExtrusionUnit(conn);
             myDlg.Show();
         }
 
         private void Chart4Btn_Click(object sender, EventArgs e)
         {
-            WastingRecordofExtrusionUnit myDlg = new WastingRecordofExtrusionUnit();
+            WastingRecordofExtrusionUnit myDlg = new WastingRecordofExtrusionUnit(conn);
             myDlg.Show();
         }
 
         private void Chart6Btn_Click(object sender, EventArgs e)
         {
-            MaterialBalenceofExtrusionProcess myDlg = new MaterialBalenceofExtrusionProcess();
+            MaterialBalenceofExtrusionProcess myDlg = new MaterialBalenceofExtrusionProcess(conn);
             myDlg.Show();
         }
 
         private void Chart7Btn_Click(object sender, EventArgs e)
         {
-            HandoverRecordofExtrusionProcess myDlg = new HandoverRecordofExtrusionProcess();
+            HandoverRecordofExtrusionProcess myDlg = new HandoverRecordofExtrusionProcess(conn);
             myDlg.Show();
         }
 
