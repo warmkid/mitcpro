@@ -22,15 +22,16 @@ namespace mySystem.Extruction.Process
         {
             MessageBox.Show("data has benn collecteed and more operarion is under developmen");
         }
-
-        /*private void button1_Click(object sender, EventArgs e)
+        
+        private void button1_Click(object sender, EventArgs e)
         {
+            /*
             LoginForm check = new LoginForm();
-			check.LoginButton.Text = "审核通过";
-			check.ExitButton.Text = "取消";
-            check.ShowDialog();
-        }*/
-
+			//check.LoginButton.Text = "审核通过";
+			//check.ExitButton.Text = "取消";
+            check.ShowDialog();*/
+        }
+        
        
     }
 }
