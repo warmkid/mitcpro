@@ -111,6 +111,9 @@ namespace mySystem
         private void MainProduceBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
+            MainProduceBtn.BackColor = Color.Gray;
+            MainSettingBtn.BackColor = Color.LightGray;
+            MainQueryBtn.BackColor = Color.LightGray;
             ProcessMainForm myDlg = new ProcessMainForm(conn);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -123,6 +126,9 @@ namespace mySystem
         private void MainSettingBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
+            MainProduceBtn.BackColor = Color.LightGray;
+            MainSettingBtn.BackColor = Color.Gray;
+            MainQueryBtn.BackColor = Color.LightGray;
             SettingMainForm myDlg = new SettingMainForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -135,6 +141,9 @@ namespace mySystem
         private void MainQueryBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
+            MainProduceBtn.BackColor = Color.LightGray;
+            MainSettingBtn.BackColor = Color.LightGray;
+            MainQueryBtn.BackColor = Color.Gray;
             QueryMainForm myDlg = new QueryMainForm(conn);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;

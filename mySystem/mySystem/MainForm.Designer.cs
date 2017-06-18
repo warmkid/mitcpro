@@ -37,9 +37,9 @@
             this.MainQueryBtn = new System.Windows.Forms.Button();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.userLabel = new System.Windows.Forms.Label();
             this.ExitBtn = new System.Windows.Forms.Button();
+            this.userLabel = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.订单信息BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).BeginInit();
@@ -63,6 +63,7 @@
             // 
             // MainProduceBtn
             // 
+            this.MainProduceBtn.BackColor = System.Drawing.SystemColors.Control;
             this.MainProduceBtn.FlatAppearance.BorderSize = 0;
             this.MainProduceBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MainProduceBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -73,7 +74,7 @@
             this.MainProduceBtn.TabIndex = 0;
             this.MainProduceBtn.Text = "工序";
             this.MainProduceBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.MainProduceBtn.UseVisualStyleBackColor = true;
+            this.MainProduceBtn.UseVisualStyleBackColor = false;
             this.MainProduceBtn.Click += new System.EventHandler(this.MainProduceBtn_Click);
             // 
             // MainSettingBtn
@@ -128,25 +129,6 @@
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 15F);
-            this.label1.Location = new System.Drawing.Point(1068, 37);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 20);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "操作员：";
-            // 
-            // userLabel
-            // 
-            this.userLabel.AutoSize = true;
-            this.userLabel.Font = new System.Drawing.Font("SimSun", 15F);
-            this.userLabel.Location = new System.Drawing.Point(1151, 37);
-            this.userLabel.Name = "userLabel";
-            this.userLabel.Size = new System.Drawing.Size(0, 20);
-            this.userLabel.TabIndex = 5;
-            // 
             // ExitBtn
             // 
             this.ExitBtn.Font = new System.Drawing.Font("SimSun", 15F);
@@ -157,6 +139,25 @@
             this.ExitBtn.Text = "退出登录";
             this.ExitBtn.UseVisualStyleBackColor = true;
             this.ExitBtn.Click += new System.EventHandler(this.ExitBtn_Click);
+            // 
+            // userLabel
+            // 
+            this.userLabel.AutoSize = true;
+            this.userLabel.Font = new System.Drawing.Font("SimSun", 15F);
+            this.userLabel.Location = new System.Drawing.Point(1151, 37);
+            this.userLabel.Name = "userLabel";
+            this.userLabel.Size = new System.Drawing.Size(0, 20);
+            this.userLabel.TabIndex = 5;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("SimSun", 15F);
+            this.label1.Location = new System.Drawing.Point(1068, 37);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(89, 20);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "操作员：";
             // 
             // MainForm
             // 
