@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-
+using System.Data.SqlClient;
 
 //this form is about the 13th picture of the extrusion step 
 namespace mySystem.Extruction.Process
@@ -16,12 +16,13 @@ namespace mySystem.Extruction.Process
         public int quiz=14;
         public int TN = 2;
         bool[,] itemcheck = new bool[14, 2];
-        
+        SqlConnection conn = null;
   
 
-        public HandoverRecordofExtrusionProcess()
+        public HandoverRecordofExtrusionProcess(SqlConnection myConnection)
         {
             InitializeComponent();
+            conn = myConnection;
             this.GenerateQuiz(quiz);
             //this part to add the confirm items
 
@@ -88,16 +89,18 @@ namespace mySystem.Extruction.Process
             items[13] = "确认电动叉车运行正常。";
 
 
-            int x0 = 30, y0 = 150, w = 360, d = 20, margin=55;
+            int x0 = 20, y0 = 40, w = 360, d = 20, margin=55;
             Label num = new Label();
-            num.Top = y0 - d;
+            num.Top = y0 -20;
             num.Left = x0;
             num.Height = d;
             num.Width = 360;
             num.Visible = true;
-            num.Text = "序号" + "    " + "确认项目";
+            num.Text = "序号  " +"确认项目";
             num.Font = new Font("宋体", 12);
-            this.Controls.Add(num);
+            num.BackColor = Color.Transparent;
+            num.BorderStyle = BorderStyle.FixedSingle;
+            groupBox1.Controls.Add(num);
 
             /*Label[] DN = new Label[TN];
             Label D = new Label();
@@ -127,11 +130,16 @@ namespace mySystem.Extruction.Process
                 lb.Width = w;
                 lb.Height = d;
                 lb.Visible = true;
-                lb.Text = (r+1).ToString()+"       "+items[r];
+                if (r < 9)
+                {
+                    lb.Text = "0";
+                }
+                lb.Text += (r+1).ToString()+"    " +items[r];
                 lb.Font = new Font("宋体", 12);
  
                 labels[r] = lb;
-                this.Controls.Add(lb);
+                //this.Controls.Add(lb);
+                groupBox1.Controls.Add(lb);
                 for (int turn = 0; turn < TN; turn++)
                 {
                     CheckBox ckb = new CheckBox();
@@ -143,7 +151,8 @@ namespace mySystem.Extruction.Process
                     ckb.Visible = true;
                     ckb.Checked = true;
                     checkboxes[r, turn] = ckb;
-                    this.Controls.Add(ckb);
+                    //this.Controls.Add(ckb);
+                    groupBox1.Controls.Add(ckb);
                     itemcheck[r, turn] = ckb.Checked;
                 }
             }
@@ -153,16 +162,18 @@ namespace mySystem.Extruction.Process
             panQuiz.Height = y0 + quiz * d + margin;
             panQuiz.Width = 2 * x0 + lbAbnormal.Width + 2 * d + margin;
             panQuiz.Visible = true;
-            this.Controls.Add(panQuiz);
+            //this.Controls.Add(panQuiz);
+            groupBox1.Controls.Add(panQuiz);
         }
         
         private void button1_Click(object sender, EventArgs e)
         {
-            /*
-            LoginForm check = new LoginForm();
+            
+            LoginForm check = new LoginForm(conn);
 			//check.LoginButton.Text = "审核通过";
 			//check.ExitButton.Text = "取消";
-            check.ShowDialog();*/
+            check.ShowDialog();
+
         }
         
         

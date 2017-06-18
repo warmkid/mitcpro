@@ -7,14 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using mySystem.Query;
+using System.Data.SqlClient;
 
 namespace mySystem
 {
     public partial class QueryMainForm : Form
     {
-        public QueryMainForm()
+        SqlConnection conn = null;
+        public QueryMainForm(SqlConnection myConnection)
         {
             InitializeComponent();
+            conn = myConnection;
             ExtructionBtn.Image = Image.FromFile(@"../../pic/Extruction.png", false);
             CleanBtn.Image = Image.FromFile(@"../../pic/Clean.png", false);
             BagBtn.Image = Image.FromFile(@"../../pic/Bag.png", false);
@@ -28,7 +31,7 @@ namespace mySystem
         private void ExtructionBtn_Click(object sender, EventArgs e)
         {
             QueryPanelRight.Controls.Clear();
-            QueryExtruForm myDlg = new QueryExtruForm();
+            QueryExtruForm myDlg = new QueryExtruForm(conn);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = QueryPanelRight.Size;

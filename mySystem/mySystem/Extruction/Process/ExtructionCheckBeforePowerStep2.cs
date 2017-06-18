@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
+using System.Data.SqlClient;
 
 namespace mySystem.Extruction.Process
 {
@@ -15,29 +16,24 @@ namespace mySystem.Extruction.Process
         private ExtructionProcess extructionformfather = null;
         private DataTable dt = new DataTable();
 
+        private string sql = "Select * From extrusion";
+        private SqlConnection conn = null;
+
         public string confirmer = ""; //确认人
         public string confirmdate = ""; //确认日期
         public string checker = "";  //复核人
         public string checkdate = "";  //复核日期
-
-        private class check
-        {
-            public bool[] checkstate;  //14个确认结果
-            public check()
-            {
-                checkstate = new bool[14] { true, true, true, true, true, true, true, true, true, true, true, true, true, true };
-            }
-        }
-        private check checkdata = new check();
-
-        public ExtructionCheckBeforePowerStep2(ExtructionProcess winMain)
+        
+        public ExtructionCheckBeforePowerStep2(ExtructionProcess winMain, SqlConnection Mainconn)
         {
             InitializeComponent();
             extructionformfather = winMain;
 
-            DataTabelInitialize();
+            conn = Mainconn;
 
             PSLabel.Text = "注：正常或符合打“√”，不正常或不符合取消勾选。";
+
+            DataTabelInitialize();           
                       
         }
 
@@ -74,14 +70,14 @@ namespace mySystem.Extruction.Process
             dt.Rows.Add("11", "电动叉车", "已清洁干净且运行正常，电量充足。", true);
             dt.Rows.Add("12", "测厚仪、电脑", "能正常打开，相关软件能正常运行。", true);
             dt.Rows.Add("13", "吸尘器", "已清洁干净且运行正常。", true);
-            dt.Rows.Add("14", "供料系统", "设备卫生符合要求，供料系统各部件运行正常。", true);            
+            dt.Rows.Add("14", "供料系统", "设备卫生符合要求，供料系统各部件运行正常。", true);
             this.CheckBeforePowerView.DataSource = dt;
             this.CheckBeforePowerView.Font = new Font("宋体", 12, FontStyle.Regular);
 
             //设置
             this.CheckBeforePowerView.RowHeadersVisible = false;
             this.CheckBeforePowerView.AllowUserToResizeColumns = false;
-            this.CheckBeforePowerView.AllowUserToResizeRows = false; 
+            this.CheckBeforePowerView.AllowUserToResizeRows = false;
             //this.CheckBeforePowerTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.CheckBeforePowerView.ColumnHeadersHeight = 40;
             for (int i = 0; i < this.CheckBeforePowerView.Columns.Count; i++)
@@ -93,20 +89,56 @@ namespace mySystem.Extruction.Process
             this.CheckBeforePowerView.Columns[1].MinimumWidth = 160;
             this.CheckBeforePowerView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.CheckBeforePowerView.Columns[3].MinimumWidth = 80;
-            for (int i = 0; i < this.CheckBeforePowerView.Columns.Count-1; i++)
+            for (int i = 0; i < this.CheckBeforePowerView.Columns.Count - 1; i++)
             {
                 this.CheckBeforePowerView.Columns[i].ReadOnly = true;
-            }                      
+            }
             this.CheckBeforePowerView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.CheckBeforePowerView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+
+            //若已有数据，向内部添加现有数据
+            SqlCommand comm = new SqlCommand(sql, conn);
+            SqlDataAdapter daSQL = new SqlDataAdapter(comm);
+            DataTable dtSQL = new DataTable();
+            daSQL.Fill(dtSQL);
+            
+            int stepnow = Convert.ToInt32(dtSQL.Rows[0]["step_status"]);
+            if (stepnow >= 2)
+            {
+                for (int i=1;i<=14;i++)
+                {
+                    string qualified_string = "s2_item"+i.ToString()+"_qualified";
+                    bool qualified_bool = bool.Parse(dtSQL.Rows[0][qualified_string].ToString());
+                    this.CheckBeforePowerView.Rows[i-1].Cells["确认结果"].Value = qualified_bool;
+                }
+            }
+            comm.Dispose();
+            daSQL.Dispose();
+            dtSQL.Dispose();
         }
 
         public void DataSave()
         {
-            for (int i = 0; i < 14; i++)
+            string qualified_string = null;
+            string val = null;
+            string sqlstr = null;
+            SqlCommand com = null;
+
+            for (int i = 1; i <= 14; i++)
             {
-                checkdata.checkstate[i] = this.CheckBeforePowerView.Rows[i].Cells["确认结果"].Value.ToString() == "是" ? true : false;
+                qualified_string = "s2_item" + i.ToString() + "_qualified";
+                val = this.CheckBeforePowerView.Rows[i-1].Cells["确认结果"].Value.ToString() == "True"? "1":"0" ; 
+                sqlstr = "update extrusion set " + qualified_string + " = " + val + "  where id =1";
+                com = new SqlCommand(sqlstr, conn);
+                com.ExecuteNonQuery();
+                com.Dispose();
             }
+
+            sqlstr = "update extrusion set step_status = 2 where id =1";
+            com = new SqlCommand(sqlstr, conn);
+            com.ExecuteNonQuery();
+            com.Dispose();
         }
 
         private void CheckBeforePowerView_CellContentClick(object sender, DataGridViewCellEventArgs e)

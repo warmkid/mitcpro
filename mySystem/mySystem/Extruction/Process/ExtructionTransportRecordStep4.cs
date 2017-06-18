@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
+using System.Data.SqlClient;
 
 namespace mySystem.Extruction.Process
 {
@@ -15,41 +16,23 @@ namespace mySystem.Extruction.Process
         private ExtructionProcess extructionformfather = null;
         private DataTable dt = new DataTable();
 
+        private SqlConnection conn = null;
+        private string sql = "Select * From extrusion";
+
         private int Recordnum = 0;
         public string date; //传料日期   
         public string recorder; //操作人
         public string checker; //复核人
-
-        private class transport
-        {
-            public string time; //时间
-            public string material; //物料代码
-            public string num;  //数量
-            public string weight;  //kg /件
-            public string numperkg; //数量/kg
-            public bool wetherbag;   //是否包装完好
-            public bool wetherclean;   //是否清洁合格
-
-            public transport()
-            {
-                time = "";
-                material = "SPM-PE";
-                num = "";
-                weight = "";
-                numperkg = "";
-                wetherbag = true;
-                wetherclean = true;
-            }
-        }
-        private transport transportdata = new transport();
-        private transport[] transportlist = null;
-
-
-        public ExtructionTransportRecordStep4(ExtructionProcess winMain)
+                
+        public ExtructionTransportRecordStep4(ExtructionProcess winMain, SqlConnection Mainconn)
         {
             InitializeComponent();
             extructionformfather = winMain;
+
+            conn = Mainconn;
             DataTabelInitialize();
+
+            AddLineBtn.Enabled = false;
         }
 
 
@@ -62,7 +45,7 @@ namespace mySystem.Extruction.Process
             ///***********************表格数据初始化************************///
             //添加列
             dt.Columns.Add("时间", typeof(String));
-            dt.Columns["时间"].ReadOnly = true;
+            //dt.Columns["时间"].ReadOnly = true;
             dt.Columns.Add("物料代码", typeof(String));
             dt.Columns.Add("数量(件)", typeof(String));
             dt.Columns.Add("kg/件", typeof(String));
@@ -94,6 +77,28 @@ namespace mySystem.Extruction.Process
             this.TransportRecordView.ColumnHeadersHeight = 40;
             //this.CheckBeforePowerTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             //this.TransportRecordView.Columns["传料日期\r2016年"].Width = 80;
+
+            //若已有数据，向内部添加现有数据
+            SqlCommand comm = new SqlCommand(sql, conn);
+            SqlDataAdapter daSQL = new SqlDataAdapter(comm);
+            DataTable dtSQL = new DataTable();
+            daSQL.Fill(dtSQL);
+
+            int stepnow = Convert.ToInt32(dtSQL.Rows[0]["step_status"]);
+            if (stepnow >= 4)
+            {
+                this.TransportRecordView.Rows[0].Cells["时间"].Value = dtSQL.Rows[0]["s4_time"].ToString();
+                this.TransportRecordView.Rows[0].Cells["物料代码"].Value = dtSQL.Rows[0]["s4_raw_material_id"].ToString();
+                this.TransportRecordView.Rows[0].Cells["数量(件)"].Value = dtSQL.Rows[0]["s4_quantity"].ToString();
+                this.TransportRecordView.Rows[0].Cells["kg/件"].Value = dtSQL.Rows[0]["s4_kilogram_per_piece"].ToString();
+                this.TransportRecordView.Rows[0].Cells["数量/kg"].Value = dtSQL.Rows[0]["s4_quantity_per_kilogram"].ToString();
+                this.TransportRecordView.Rows[0].Cells["包装是否完好"].Value = bool.Parse(dtSQL.Rows[0]["s4_is_packed_well"].ToString());
+                this.TransportRecordView.Rows[0].Cells["是否清洁合格"].Value = bool.Parse(dtSQL.Rows[0]["s4_is_cleaned"].ToString());
+            }
+            comm.Dispose();
+            daSQL.Dispose();
+            dtSQL.Dispose();
+
         }        
 
         //添加单行模板
@@ -114,7 +119,6 @@ namespace mySystem.Extruction.Process
             //添加行
             dt.Rows.Add(rowline);
             Recordnum = Recordnum + 1;       
-
         }
 
         //删除单条记录
@@ -137,19 +141,26 @@ namespace mySystem.Extruction.Process
 
         public void DataSave()
         {
-            transportlist = new transport[TransportRecordView.Rows.Count];
-            for (int i = 0; i < TransportRecordView.Rows.Count; i++)
+            string[] sqlstr = new string[8];
+            SqlCommand com = null;
+            sqlstr[0] = "update extrusion set s4_time =  CAST( '" + this.TransportRecordView.Rows[0].Cells["时间"].Value.ToString() + "' AS time)  where id =1";
+            sqlstr[1] = "update extrusion set s4_raw_material_id = '" + this.TransportRecordView.Rows[0].Cells["物料代码"].Value.ToString() + "' where id =1";
+            sqlstr[2] = "update extrusion set s4_quantity = " + Convert.ToInt32(this.TransportRecordView.Rows[0].Cells["数量(件)"].Value.ToString()).ToString() + "  where id =1";
+            sqlstr[3] = "update extrusion set s4_kilogram_per_piece = " + Convert.ToInt32(this.TransportRecordView.Rows[0].Cells["kg/件"].Value.ToString()).ToString() + "  where id =1";
+            sqlstr[4] = "update extrusion set s4_quantity_per_kilogram = " + Convert.ToInt32(this.TransportRecordView.Rows[0].Cells["数量/kg"].Value.ToString()).ToString() + "  where id =1";
+            string val = this.TransportRecordView.Rows[0].Cells["包装是否完好"].Value.ToString() == "True" ? "1" : "0";
+            sqlstr[5] = "update extrusion set s4_is_packed_well = " + val + "  where id =1";
+            val = this.TransportRecordView.Rows[0].Cells["是否清洁合格"].Value.ToString() == "True" ? "1" : "0";
+            sqlstr[6] = "update extrusion set s4_is_cleaned = " + val + "  where id =1";
+            sqlstr[7] = "update extrusion set step_status = 4 where id =1";
+            
+            for (int i = 0; i < 8; i++)
             {
-                transportdata.time = TransportRecordView.Rows[i].Cells[0].Value.ToString();
-                transportdata.material = TransportRecordView.Rows[i].Cells[1].Value.ToString();
-                transportdata.num = TransportRecordView.Rows[i].Cells[2].Value.ToString();
-                transportdata.weight = TransportRecordView.Rows[i].Cells[3].Value.ToString();
-                transportdata.numperkg = TransportRecordView.Rows[i].Cells[4].Value.ToString();
-                transportdata.wetherbag = TransportRecordView.Rows[i].Cells[5].Value.ToString() == "是" ? true : false;
-                transportdata.wetherclean = TransportRecordView.Rows[i].Cells[6].Value.ToString() == "是" ? true : false;
-                //transportlist.Add(transportdata);
-                transportlist[i] = transportdata;
-            }                      
+                com = new SqlCommand(sqlstr[i], conn);
+                com.ExecuteNonQuery();
+                com.Dispose();
+            }
+            
         }
     }
 }

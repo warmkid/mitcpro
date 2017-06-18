@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 
 
@@ -14,11 +15,14 @@ namespace mySystem.Extruction.Process
 {
     public partial class RunningRecordofFeedingUnit : Form
     {
+
         private DataTable datatab = new DataTable();
         public int id = 0;
-        public RunningRecordofFeedingUnit()
+        SqlConnection conn = null;
+        public RunningRecordofFeedingUnit(SqlConnection myConnection)
         {
             InitializeComponent();
+            conn = myConnection;
 
             //this part add items to the cmblist
             this.cmbEngine.Items.Add("是");
@@ -65,13 +69,13 @@ namespace mySystem.Extruction.Process
             this.cmbSolve.Visible = false;
             this.lbSolve.Visible = false;
             this.ckbDy.Checked = true;
-            this.dtpDate.CustomFormat = "yyyy-MM-dd";
-            this.dtpDate.Format = DateTimePickerFormat.Custom;
-            this.dtpDate.ShowUpDown = true;
+            //this.dtpDate.CustomFormat = "yyyy-MM-dd";
+            this.dtpDate.Format = DateTimePickerFormat.Short;
+            //this.dtpDate.ShowUpDown = true;
             this.dtpDate.Value = DateTime.Today;
-            this.dtpHour.CustomFormat = "HH:mm:ss";
-            this.dtpHour.Format = DateTimePickerFormat.Custom;
-            this.dtpHour.ShowUpDown = true;
+            //this.dtpHour.CustomFormat = "HH:mm:ss";
+            this.dtpHour.Format = DateTimePickerFormat.Time;
+            //this.dtpHour.ShowUpDown = true;
             this.dtpHour.Value = DateTime.Now;            
         }
 
@@ -103,11 +107,12 @@ namespace mySystem.Extruction.Process
         
         private void button1_Click(object sender, EventArgs e)
         {
-            /*
-            LoginForm check = new LoginForm();
+            
+            LoginForm check = new LoginForm(conn);
 			//check.LoginButton.Text = "审核通过";
 			//check.ExitButton.Text = "取消";
-            check.ShowDialog();*/
+            check.ShowDialog();
+            
         }
         
        

@@ -18,13 +18,14 @@ namespace mySystem.Extruction.Process
         DataRow[] dr;
         DateTime produce1, produce2, record1, record2, recheck1, recheck2;
         string produceid, recordman, recheckman;
+        SqlConnection conn;
 
-        public MaterialBalenceofExtrusionProcess()
+        public MaterialBalenceofExtrusionProcess(SqlConnection myConnection)
         {
             InitializeComponent();
+            conn = myConnection;
             
-            
-            this.sqlconnec();
+            this.sqlconnec(conn);
             //this.dtpProduce.Value = DateTime.MinValue;
             //this.dtpRecord.Value = DateTime.MinValue;
             //this.dtpRecheck.Value = DateTime.MinValue;
@@ -59,11 +60,11 @@ namespace mySystem.Extruction.Process
         
         private void button1_Click(object sender, EventArgs e)
         {
-            /*
-            LoginForm check = new LoginForm();
+            
+            LoginForm check = new LoginForm(conn);
 			//check.LoginButton.Text = "审核通过";
 			//check.ExitButton.Text = "取消";
-            check.ShowDialog();*/
+            check.ShowDialog();
         }
         
         private void show()
@@ -172,7 +173,7 @@ namespace mySystem.Extruction.Process
             dataGridView1.DataSource = temp;
         }
 
-        private void sqlconnec()
+        private void sqlconnec(SqlConnection myConnection)
         {
             try
             {

@@ -18,14 +18,18 @@ namespace mySystem
         string strCon;
         SqlConnection conn;
         string username; //登录用户名
+        int userID;
 
         public MainForm()
         {
             conn = Init(conn);
             LoginForm login = new LoginForm(conn);
             login.ShowDialog();
-            username = login.usernameLabel.Text;
+            userID = login.userID;
+            username = checkID(userID);
+            
             InitializeComponent();
+            userLabel.Text = username;
 
             //Rectangle ScreenArea = Screen.GetWorkingArea(this);
             //ProducePanelLeft.Size = new Size(160, ScreenArea.Height - 260);
@@ -39,12 +43,31 @@ namespace mySystem
 
         }
 
+
+        
+        private string checkID(int userID)
+        {
+            string user = null;
+            string searchsql = "select * from [user] where user_id='" + userID + "'";
+            SqlCommand comm = new SqlCommand(searchsql, conn);
+            SqlDataReader daSQL = comm.ExecuteReader();
+            while (daSQL.Read())
+            {
+                user = daSQL.GetString(4);
+            }
+
+            comm.Dispose();
+            return user;
+        }
+        
+
+
         private SqlConnection Init(SqlConnection myConnection)
         {
             //错误IP测试
             //strCon = @"server=10.105.223.14,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
             //正确IP
-            strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+            strCon = @"server=10.105.223.19,56625;database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
             isOk = false;
             myConnection = connToServer(strCon);
             while (!isOk)
@@ -88,6 +111,9 @@ namespace mySystem
         private void MainProduceBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
+            MainProduceBtn.BackColor = Color.Gray;
+            MainSettingBtn.BackColor = Color.LightGray;
+            MainQueryBtn.BackColor = Color.LightGray;
             ProcessMainForm myDlg = new ProcessMainForm(conn);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -100,6 +126,9 @@ namespace mySystem
         private void MainSettingBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
+            MainProduceBtn.BackColor = Color.LightGray;
+            MainSettingBtn.BackColor = Color.Gray;
+            MainQueryBtn.BackColor = Color.LightGray;
             SettingMainForm myDlg = new SettingMainForm();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -112,12 +141,32 @@ namespace mySystem
         private void MainQueryBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
-            QueryMainForm myDlg = new QueryMainForm();
+            MainProduceBtn.BackColor = Color.LightGray;
+            MainSettingBtn.BackColor = Color.LightGray;
+            MainQueryBtn.BackColor = Color.Gray;
+            QueryMainForm myDlg = new QueryMainForm(conn);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = MainPanel.Size;
             MainPanel.Controls.Add(myDlg);
             myDlg.Show();
+        }
+
+
+        private void ExitBtn_Click(object sender, EventArgs e)
+        {
+            username = null;
+            this.Hide();
+            //this.Dispose();
+
+            LoginForm login = new LoginForm(conn);
+            login.ShowDialog();
+            userID = login.userID;
+            username = checkID(userID);
+            
+            userLabel.Text = username;
+            this.Show();
+
         }
 
 
