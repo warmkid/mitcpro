@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
+using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace WindowsFormsApplication1
 {
@@ -25,7 +27,7 @@ namespace WindowsFormsApplication1
         string bunker2_code;//
         string bunker2_batch;//2 批号
 
-        string date;//供料日期
+        DateTime date;//供料日期
         float serve_out;//外层供料量
         float serve_mid;//中层供料量
         float serve_in;//中内层供料量
@@ -33,29 +35,34 @@ namespace WindowsFormsApplication1
         string server;//供料人
 
         string bunker_use;//物料使用料仓
-        float use;//物料使用量
-        float left;//余料
-        string checker;//复核人
+        float use1;//物料使用量
+        float left1;//余料
+        float use2;
+        float left2;
+
+        int checker;//复核人
 
         private void Init()
         {
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
             product_code = "rw2cws3";
             product_num = "rw2cws3";
             product_instrnum = "rw2cws3";
 
             bunker1 = "AB1C";
-            bunker1_code = "rw2cws3";
-            bunker1_batch = "rw2cws3";
+            bunker1_code = "";
+            bunker1_batch = "";
             bunker2 = "B2";
-            bunker2_code = "rw2cws3";
-            bunker2_batch = "rw2cws3";
+            bunker2_code = "";
+            bunker2_batch = "";
+
+            checker = 332;
 
             //string date;//供料日期
             dataGridView1.Font = new Font("宋体", 12);
-            dataGridView2.Font = new Font("宋体", 12);
+            //dataGridView2.Font = new Font("宋体", 12);
         }
 
         private void Setup()
@@ -72,7 +79,7 @@ namespace WindowsFormsApplication1
 
             //textBox1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
-            dataGridView2.AllowUserToAddRows = false;
+            //dataGridView2.AllowUserToAddRows = false;
         }
 
         public Record_extrusSupply(ExtructionProcess winMain)
@@ -107,7 +114,8 @@ namespace WindowsFormsApplication1
                 return;
             }
 
-            date = dateTimePicker1.Text.ToString();
+            //date = dateTimePicker1.Text.ToString();
+            date = dateTimePicker1.Value;
 
             if (!float.TryParse(Serve_out.Text, out temp) || !float.TryParse(Serve_in.Text, out temp) || !float.TryParse(Serve_mid.Text, out temp))
             {
@@ -135,39 +143,41 @@ namespace WindowsFormsApplication1
             dataGridView1.Rows.Add(dr);
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
+        //private void button2_Click(object sender, EventArgs e)
+        //{
             
-            bunker_use = comboBox1.Text.ToString();
-            checker = textBox10.Text.ToString();
-            if (bunker_use == "" || checker == "")
-            {
-                MessageBox.Show("料仓、复核人均不能为空");
-                return;
-            }
+        //    //bunker_use = comboBox1.Text.ToString();
+        //    //checker = textBox10.Text.ToString();
+        //    //if (bunker_use == "")
+        //    //{
+        //    //    MessageBox.Show("料仓不能为空");
+        //    //    return;
+        //    //}
 
-            float temp;
-            if (!float.TryParse(textBox11.Text, out temp) || !float.TryParse(textBox12.Text, out temp))
-            {
-                MessageBox.Show("用料、余料必须为数值类型");
-                return;
-            }
-            use = (float)Convert.ToSingle(textBox11.Text.ToString());
-            left = (float)Convert.ToSingle(textBox12.Text.ToString());
+        //    float temp;
+        //    if (!float.TryParse(textBox11.Text, out temp) || !float.TryParse(textBox12.Text, out temp) || !float.TryParse(textBox14.Text, out temp) || !float.TryParse(textBox15.Text, out temp))
+        //    {
+        //        MessageBox.Show("用料、余料必须为数值类型");
+        //        return;
+        //    }
+        //    use1 = (float)Convert.ToSingle(textBox11.Text.ToString());
+        //    left1 = (float)Convert.ToSingle(textBox12.Text.ToString());
+        //    use2 = (float)Convert.ToSingle(textBox14.Text.ToString());
+        //    left2 = (float)Convert.ToSingle(textBox15.Text.ToString());
             
+        //    //添加到表格
+        //    DataGridViewRow dr = new DataGridViewRow();
+        //    foreach (DataGridViewColumn c in dataGridView2.Columns)
+        //    {
+        //        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+        //    }
+        //    dr.Cells[0].Value = use1;
+        //    dr.Cells[1].Value = left1;
+        //    dr.Cells[2].Value = use2;
+        //    dr.Cells[3].Value = left2;
 
-            DataGridViewRow dr = new DataGridViewRow();
-            foreach (DataGridViewColumn c in dataGridView2.Columns)
-            {
-                dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            }
-            dr.Cells[0].Value = bunker_use;
-            dr.Cells[1].Value = use;
-            dr.Cells[2].Value = left;
-            dr.Cells[3].Value = checker;
-
-            dataGridView2.Rows.Add(dr);
-        }
+        //    dataGridView2.Rows.Add(dr);
+        //}
 
         private void button3_Click(object sender, EventArgs e)
         {
@@ -178,14 +188,14 @@ namespace WindowsFormsApplication1
             dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
         }
 
-        private void button4_Click(object sender, EventArgs e)
-        {
-            if (dataGridView2.SelectedRows.Count== 0)
-                return;
-            //if (dataGridView2.SelectedRows[0].Index < dataGridView2.Rows.Count - 1 )
-            //    dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
-            dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
-        }
+        //private void button4_Click(object sender, EventArgs e)
+        //{
+        //    if (dataGridView2.SelectedRows.Count== 0)
+        //        return;
+        //    //if (dataGridView2.SelectedRows[0].Index < dataGridView2.Rows.Count - 1 )
+        //    //    dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
+        //    dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
+        //}
 
         private void Serve_out_TextChanged(object sender, EventArgs e)
         {
@@ -194,7 +204,86 @@ namespace WindowsFormsApplication1
 
         public void DataSave()
         {
+            //string date;//供料日期
+            //float serve_out;//外层供料量
+            //float serve_mid;//中层供料量
+            //float serve_in;//中内层供料量
+            //string checkout;
+            //string server;//供料人
 
+            //string bunker_use;//物料使用料仓
+            //float use;//物料使用量
+            //float left;//余料
+            //int checker;//复核人
+
+            bunker1_code = textBox6.Text;
+            bunker1_batch = textBox8.Text;
+            bunker2_code = textBox7.Text;
+            bunker2_batch = textBox9.Text;
+            if (bunker1_code == "" || bunker1_batch == "" || bunker2_code == "" || bunker2_batch == "")
+            {
+                MessageBox.Show("原料代码和原料批次均不能为空！");
+                return;
+            }
+            date = dateTimePicker1.Value;
+
+            float temp;
+            if (!float.TryParse(textBox11.Text, out temp) || !float.TryParse(textBox12.Text, out temp) || !float.TryParse(textBox14.Text, out temp) || !float.TryParse(textBox15.Text, out temp))
+            {
+                MessageBox.Show("用料、余料必须为数值类型");
+                return;
+            }
+            use1 = (float)Convert.ToSingle(textBox11.Text.ToString());
+            left1 = (float)Convert.ToSingle(textBox12.Text.ToString());
+            use2 = (float)Convert.ToSingle(textBox14.Text.ToString());
+            left2 = (float)Convert.ToSingle(textBox15.Text.ToString());
+
+            string strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+            SqlConnection conn = new SqlConnection(strCon);
+            conn.Open();
+
+            //jason 保存表格
+            JArray jarray = JArray.Parse("[]");
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                string json = @"{}";
+                JObject j = JObject.Parse(json);
+                //j.Add("s", new JValue("3"));
+                j.Add("s5_feeding_time", new JValue(Convert.ToDateTime(dataGridView1.Rows[i].Cells[0].Value.ToString())));
+                j.Add("s5_a_feeding_quantity", new JValue(Convert.ToInt32(dataGridView1.Rows[i].Cells[1].Value.ToString())));
+                j.Add("s5_b1c_feeding_quantity", new JValue(Convert.ToInt32(dataGridView1.Rows[i].Cells[2].Value.ToString())));
+                j.Add("s5_b2_feeing_quantity", new JValue(Convert.ToInt32(dataGridView1.Rows[i].Cells[3].Value.ToString())));
+                j.Add("s5_raw_material_sampling_results", new JValue(dataGridView1.Rows[i].Cells[4].Value.ToString()));
+                j.Add("s5_supplier", new JValue(dataGridView1.Rows[i].Cells[5].Value.ToString()));
+
+                //System.Console.WriteLine(json.ToString());
+                jarray.Add(j);
+            }
+
+            //System.Console.WriteLine(jarray.ToString());
+
+            string s = "update extrusion set s5_ab1c_raw_material_id='"+bunker1_code;
+            s += "',s5_b2_raw_material_id='" + bunker2_code;
+            s += "',s5_ab1c_raw_material_batch='" + bunker1_batch;
+            s += "',s5_b2_raw_material_batch='" + bunker2_batch;
+            s += "',s5_feeding_info='" + jarray.ToString();
+            s += "',s5_ab1c_raw_material_consumption=" + Convert.ToInt32(use1);
+            s += ",s5_ab1c_raw_material_margin=" + Convert.ToInt32(left1);
+            s += ",s5_b2_raw_material_consumption=" + Convert.ToInt32(use2);
+            s += ",s5_b2_raw_material_margin=" + Convert.ToInt32(left2);
+            s += " where id=1";
+            //更新数据库
+            int result = 0;
+            using (SqlCommand comm = new SqlCommand(s, conn))
+            {
+                //conn.Open();
+                result = comm.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    //MessageBox.Show("添加成功");
+                }
+                else { MessageBox.Show("错误"); }
+            }
         }
 
         private void groupBox6_Enter(object sender, EventArgs e)

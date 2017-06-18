@@ -37,7 +37,7 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Title.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Title.Location = new System.Drawing.Point(482, 7);
             this.Title.Name = "Title";
             this.Title.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -56,10 +56,11 @@
             this.CheckBeforePowerView.RowTemplate.Height = 23;
             this.CheckBeforePowerView.Size = new System.Drawing.Size(1113, 402);
             this.CheckBeforePowerView.TabIndex = 1;
+            this.CheckBeforePowerView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CheckBeforePowerView_CellContentClick);
             // 
             // PSLabel
             // 
-            this.PSLabel.Font = new System.Drawing.Font("SimSun", 12F);
+            this.PSLabel.Font = new System.Drawing.Font("宋体", 12F);
             this.PSLabel.Location = new System.Drawing.Point(25, 438);
             this.PSLabel.Name = "PSLabel";
             this.PSLabel.Size = new System.Drawing.Size(498, 15);

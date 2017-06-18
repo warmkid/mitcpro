@@ -108,5 +108,10 @@ namespace mySystem.Extruction.Process
                 checkdata.checkstate[i] = this.CheckBeforePowerView.Rows[i].Cells["确认结果"].Value.ToString() == "是" ? true : false;
             }
         }
+
+        private void CheckBeforePowerView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

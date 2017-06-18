@@ -77,10 +77,12 @@ namespace WindowsFormsApplication1
 
         }
 
-        string cleantime;//清洁日期
+        //string cleantime;//清洁日期
+        DateTime cleantime;
         string classes;//班次
         string checker;//复核人
-        string checktime;//复核日期
+        //string checktime;//复核日期
+        DateTime checktime;
         List<cont> cleancont;
         DataTable dt;
         bool isOk;
@@ -99,12 +101,19 @@ namespace WindowsFormsApplication1
 
         public void DataSave()
         {
-            cleantime = dateTimePicker1.Text.ToString();
+            //cleantime = dateTimePicker1.Text.ToString();
+            cleantime = dateTimePicker1.Value;
             //textBox1.Text = cleantime;
             classes = textBox1.Text.ToString();
             checker = textBox2.Text.ToString();
-            checktime = dateTimePicker2.Text.ToString();
+            //checktime = dateTimePicker2.Text.ToString();
+            checktime = dateTimePicker2.Value;
 
+            if (classes == "" || checker == "")
+            {
+                MessageBox.Show("班次和复核人均不能为空");
+                return;
+            }
             string json = @"{}";           
             JObject j = JObject.Parse(json);
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -116,8 +125,28 @@ namespace WindowsFormsApplication1
                     j.Add(t, new JValue("0"));      
             }
             //System.Console.WriteLine(j.ToString());
+            int status=0;
+            //int checkerid = 5;
+            //string s = "update extrusion set s1_clean_date='" + cleantime.ToString() + "' where id=1";
+            //string s = "update extrusion set s1_flight='"+classes+"' where id=1";
+            string s = "update extrusion set s1_clean_date='" + cleantime + "',s1_flight=" + classes + ",s1_reviewer_id='" + int.Parse(checker) + "',s1_review_date='" + checktime + "',s1_region_content_result_cleaner_reviewer='" + j.ToString() + "',step_status=" + status + " where id=1";
+            //SqlCommand comm = new SqlCommand(s, conn);
+            //SqlDataAdapter da = new SqlDataAdapter(comm);
+            //更新数据库
+            int result = 0;
+            using (SqlCommand comm = new SqlCommand(s, conn))
+            {
+                //conn.Open();
+                result = comm.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    //MessageBox.Show("添加成功");
+                }
+                else { MessageBox.Show("错误"); }
+            }
 
 
+            
             //for (int i = 0; i < dataGridView1.Rows.Count; i++)
             //{
             //    cont_clean.cleanstat = dataGridView1.Rows[i].Cells[2].Value.ToString() == "True";

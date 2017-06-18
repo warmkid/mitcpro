@@ -225,6 +225,11 @@ namespace mySystem.Extruction.Process
                 default:
                     break;
             }
+        }
+
+        private void StepViewPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }             
     }
 }

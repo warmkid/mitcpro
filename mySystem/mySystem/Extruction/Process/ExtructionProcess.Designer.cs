@@ -37,7 +37,7 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.SaveBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.SaveBtn.Location = new System.Drawing.Point(740, 476);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
@@ -48,7 +48,7 @@
             // 
             // BackBtn
             // 
-            this.BackBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.BackBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.BackBtn.Location = new System.Drawing.Point(978, 476);
             this.BackBtn.Name = "BackBtn";
             this.BackBtn.Size = new System.Drawing.Size(80, 30);
@@ -59,7 +59,7 @@
             // 
             // NextBtn
             // 
-            this.NextBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.NextBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.NextBtn.Location = new System.Drawing.Point(1068, 476);
             this.NextBtn.Name = "NextBtn";
             this.NextBtn.Size = new System.Drawing.Size(80, 30);
@@ -70,18 +70,19 @@
             // 
             // StepViewPanel
             // 
-            this.StepViewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.StepViewPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.StepViewPanel.AutoScroll = true;
             this.StepViewPanel.Location = new System.Drawing.Point(0, 0);
             this.StepViewPanel.Name = "StepViewPanel";
             this.StepViewPanel.Size = new System.Drawing.Size(1168, 464);
             this.StepViewPanel.TabIndex = 3;
+            this.StepViewPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.StepViewPanel_Paint);
             // 
             // CheckBtn
             // 
-            this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.CheckBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.CheckBtn.Location = new System.Drawing.Point(835, 476);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);

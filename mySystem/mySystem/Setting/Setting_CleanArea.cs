@@ -62,6 +62,8 @@ namespace WindowsFormsApplication1
             DataTable dt = new DataTable();
             da.Fill(dt);
             dataGridView1.DataSource = dt;
+            dataGridView1.Columns[0].Width = 370;
+            dataGridView1.Columns[1].Width = 800;
         }
         private void fresh_Click(object sender, EventArgs e)
         {
