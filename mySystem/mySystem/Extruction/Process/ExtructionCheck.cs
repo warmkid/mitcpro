@@ -37,17 +37,17 @@ namespace mySystem.Extruction.Process
         public String page13checker = "审核人";
         //6个工序
         public String step1recorder = "张三";
-        public String step1checker = "张三";
+        public String step1checker = "李四";
         public String step2recorder = "张三";
-        public String step2checker = "张三";
+        public String step2checker = "李四";
         public String step3recorder = "张三";
-        public String step3checker = "张三";
+        public String step3checker = "李四";
         public String step4recorder = "张三";
-        public String step4checker = "张三";
+        public String step4checker = "李四";
         public String step5recorder = "张三";
-        public String step5checker = "张三";
+        public String step5checker = "李四";
         public String step6recorder = "张三";
-        public String step6checker = "张三";
+        public String step6checker = "李四";
 
         public ExtructionCheck(ExtructionProcess winMain, SqlConnection Mainconn)
         {

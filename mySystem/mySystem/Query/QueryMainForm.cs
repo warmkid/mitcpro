@@ -14,10 +14,10 @@ namespace mySystem
     public partial class QueryMainForm : Form
     {
         SqlConnection conn = null;
-        public QueryMainForm(SqlConnection myconnection)
+        public QueryMainForm(SqlConnection myConnection)
         {
-            conn = myconnection;
             InitializeComponent();
+            conn = myConnection;
             ExtructionBtn.Image = Image.FromFile(@"../../pic/Extruction.png", false);
             CleanBtn.Image = Image.FromFile(@"../../pic/Clean.png", false);
             BagBtn.Image = Image.FromFile(@"../../pic/Bag.png", false);

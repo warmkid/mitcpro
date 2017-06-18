@@ -42,6 +42,24 @@ namespace mySystem.Extruction.Process
             daSQL.Fill(dtSQL);
             int stepshow = Convert.ToInt32(dtSQL.Rows[0]["step_status"]);
             int stepcheck = Convert.ToInt32(dtSQL.Rows[0]["step_checked_status"]);
+
+            //检查stepcheck>StepShowState的情况
+            if (stepcheck > StepShowState)
+            {
+                sql = "update extrusion set step_checked_status = " + stepshow.ToString() + " where id =1";
+                comm = new SqlCommand(sql, conn);
+                comm.ExecuteNonQuery();
+                comm.Dispose();
+            }
+            //检查(StepShowState - stepcheck)>1的情况
+            if ((StepShowState - stepcheck)>1)
+            {
+                sql = "update extrusion set step_status = " + stepcheck.ToString() + " where id =1";
+                comm = new SqlCommand(sql, conn);
+                comm.ExecuteNonQuery();
+                comm.Dispose();
+            }
+
             comm.Dispose();
             daSQL.Dispose();
             dtSQL.Dispose();
@@ -58,15 +76,8 @@ namespace mySystem.Extruction.Process
             {
                 StepShowState = stepshow;
                 ShowView(StepShowState);
-                if (stepcheck >= StepShowState)
-                {
-                    if (stepcheck > StepShowState)
-                    {
-                        sql = "update extrusion set step_checked_status = " + StepShowState.ToString() + " where id =1";
-                        comm = new SqlCommand(sql, conn);
-                        comm.ExecuteNonQuery();
-                        comm.Dispose(); 
-                    }
+                if (stepcheck == StepShowState)
+                {                    
                     SaveBtn.Enabled = false;
                     CheckBtn.Enabled = false;
                     NextBtn.Enabled = true;
@@ -75,7 +86,9 @@ namespace mySystem.Extruction.Process
                 {
                     stepchecked[i] = true;
                 }            
-            } 
+            }
+
+            MessageBox.Show("stepshow = " + stepshow.ToString() + ";  stepcheck = " + stepcheck.ToString()+ ";");
 
             /*StepShowState = stepcurrent;
             ShowView(StepShowState);
@@ -179,12 +192,11 @@ namespace mySystem.Extruction.Process
         //审核通过按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            /*
-            LoginForm check = new LoginForm();
+            
+            LoginForm check = new LoginForm(conn);
             check.LoginButton.Text = "审核通过";
             check.ExitButton.Text = "取消";
             check.ShowDialog();
-            */
 
             if ((StepShowState > 0) && (StepShowState < 7))
             {
