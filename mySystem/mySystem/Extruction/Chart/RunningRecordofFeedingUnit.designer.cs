@@ -42,16 +42,11 @@
             this.cmbSolve = new System.Windows.Forms.ComboBox();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
             this.dtpHour = new System.Windows.Forms.DateTimePicker();
-            this.txbCheckman = new System.Windows.Forms.TextBox();
-            this.txbRecheckman = new System.Windows.Forms.TextBox();
-            this.lbCheckman = new System.Windows.Forms.Label();
-            this.lbRecheckman = new System.Windows.Forms.Label();
             this.lbTitle = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.ckbDy = new System.Windows.Forms.CheckBox();
             this.ckbNt = new System.Windows.Forms.CheckBox();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.brnDefault = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -89,7 +84,7 @@
             // lbValve
             // 
             this.lbValve.AutoSize = true;
-            this.lbValve.Location = new System.Drawing.Point(25, 218);
+            this.lbValve.Location = new System.Drawing.Point(228, 186);
             this.lbValve.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbValve.Name = "lbValve";
             this.lbValve.Size = new System.Drawing.Size(120, 16);
@@ -99,7 +94,7 @@
             // lbMaterial
             // 
             this.lbMaterial.AutoSize = true;
-            this.lbMaterial.Location = new System.Drawing.Point(25, 250);
+            this.lbMaterial.Location = new System.Drawing.Point(435, 187);
             this.lbMaterial.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbMaterial.Name = "lbMaterial";
             this.lbMaterial.Size = new System.Drawing.Size(104, 16);
@@ -109,7 +104,7 @@
             // lbAlert
             // 
             this.lbAlert.AutoSize = true;
-            this.lbAlert.Location = new System.Drawing.Point(25, 282);
+            this.lbAlert.Location = new System.Drawing.Point(618, 187);
             this.lbAlert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbAlert.Name = "lbAlert";
             this.lbAlert.Size = new System.Drawing.Size(88, 16);
@@ -119,7 +114,7 @@
             // lbSolve
             // 
             this.lbSolve.AutoSize = true;
-            this.lbSolve.Location = new System.Drawing.Point(25, 314);
+            this.lbSolve.Location = new System.Drawing.Point(714, 187);
             this.lbSolve.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbSolve.Name = "lbSolve";
             this.lbSolve.Size = new System.Drawing.Size(72, 16);
@@ -128,8 +123,9 @@
             // 
             // cmbEngine
             // 
+            this.cmbEngine.Enabled = false;
             this.cmbEngine.FormattingEnabled = true;
-            this.cmbEngine.Location = new System.Drawing.Point(175, 183);
+            this.cmbEngine.Location = new System.Drawing.Point(137, 183);
             this.cmbEngine.Margin = new System.Windows.Forms.Padding(4);
             this.cmbEngine.Name = "cmbEngine";
             this.cmbEngine.Size = new System.Drawing.Size(75, 24);
@@ -138,7 +134,7 @@
             // cmbValve
             // 
             this.cmbValve.FormattingEnabled = true;
-            this.cmbValve.Location = new System.Drawing.Point(175, 215);
+            this.cmbValve.Location = new System.Drawing.Point(356, 183);
             this.cmbValve.Margin = new System.Windows.Forms.Padding(4);
             this.cmbValve.Name = "cmbValve";
             this.cmbValve.Size = new System.Drawing.Size(75, 24);
@@ -147,7 +143,7 @@
             // cmbMaterial
             // 
             this.cmbMaterial.FormattingEnabled = true;
-            this.cmbMaterial.Location = new System.Drawing.Point(175, 247);
+            this.cmbMaterial.Location = new System.Drawing.Point(535, 184);
             this.cmbMaterial.Margin = new System.Windows.Forms.Padding(4);
             this.cmbMaterial.Name = "cmbMaterial";
             this.cmbMaterial.Size = new System.Drawing.Size(75, 24);
@@ -156,7 +152,7 @@
             // cmbAlert
             // 
             this.cmbAlert.FormattingEnabled = true;
-            this.cmbAlert.Location = new System.Drawing.Point(175, 279);
+            this.cmbAlert.Location = new System.Drawing.Point(794, 183);
             this.cmbAlert.Margin = new System.Windows.Forms.Padding(4);
             this.cmbAlert.Name = "cmbAlert";
             this.cmbAlert.Size = new System.Drawing.Size(75, 24);
@@ -165,7 +161,7 @@
             // cmbSolve
             // 
             this.cmbSolve.FormattingEnabled = true;
-            this.cmbSolve.Location = new System.Drawing.Point(175, 311);
+            this.cmbSolve.Location = new System.Drawing.Point(877, 183);
             this.cmbSolve.Margin = new System.Windows.Forms.Padding(4);
             this.cmbSolve.Name = "cmbSolve";
             this.cmbSolve.Size = new System.Drawing.Size(75, 24);
@@ -189,42 +185,6 @@
             this.dtpHour.TabIndex = 16;
             this.dtpHour.UseWaitCursor = true;
             // 
-            // txbCheckman
-            // 
-            this.txbCheckman.Location = new System.Drawing.Point(545, 71);
-            this.txbCheckman.Margin = new System.Windows.Forms.Padding(4);
-            this.txbCheckman.Name = "txbCheckman";
-            this.txbCheckman.Size = new System.Drawing.Size(132, 26);
-            this.txbCheckman.TabIndex = 20;
-            // 
-            // txbRecheckman
-            // 
-            this.txbRecheckman.Location = new System.Drawing.Point(545, 107);
-            this.txbRecheckman.Margin = new System.Windows.Forms.Padding(4);
-            this.txbRecheckman.Name = "txbRecheckman";
-            this.txbRecheckman.Size = new System.Drawing.Size(132, 26);
-            this.txbRecheckman.TabIndex = 21;
-            // 
-            // lbCheckman
-            // 
-            this.lbCheckman.AutoSize = true;
-            this.lbCheckman.Location = new System.Drawing.Point(451, 76);
-            this.lbCheckman.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbCheckman.Name = "lbCheckman";
-            this.lbCheckman.Size = new System.Drawing.Size(56, 16);
-            this.lbCheckman.TabIndex = 22;
-            this.lbCheckman.Text = "检查人";
-            // 
-            // lbRecheckman
-            // 
-            this.lbRecheckman.AutoSize = true;
-            this.lbRecheckman.Location = new System.Drawing.Point(451, 113);
-            this.lbRecheckman.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbRecheckman.Name = "lbRecheckman";
-            this.lbRecheckman.Size = new System.Drawing.Size(56, 16);
-            this.lbRecheckman.TabIndex = 23;
-            this.lbRecheckman.Text = "复核人";
-            // 
             // lbTitle
             // 
             this.lbTitle.AutoSize = true;
@@ -239,7 +199,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 342);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 219);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(983, 182);
@@ -277,16 +237,6 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // brnDefault
-            // 
-            this.brnDefault.Location = new System.Drawing.Point(312, 154);
-            this.brnDefault.Name = "brnDefault";
-            this.brnDefault.Size = new System.Drawing.Size(75, 23);
-            this.brnDefault.TabIndex = 29;
-            this.brnDefault.Text = "默认";
-            this.brnDefault.UseVisualStyleBackColor = true;
-            this.brnDefault.Click += new System.EventHandler(this.brnDefault_Click);
-            // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(513, 154);
@@ -295,6 +245,7 @@
             this.button1.TabIndex = 30;
             this.button1.Text = "复核";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // RunningRecordofFeedingUnit
             // 
@@ -302,16 +253,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1016, 741);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.brnDefault);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.ckbNt);
             this.Controls.Add(this.ckbDy);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.lbTitle);
-            this.Controls.Add(this.lbRecheckman);
-            this.Controls.Add(this.lbCheckman);
-            this.Controls.Add(this.txbRecheckman);
-            this.Controls.Add(this.txbCheckman);
             this.Controls.Add(this.dtpHour);
             this.Controls.Add(this.dtpDate);
             this.Controls.Add(this.cmbSolve);
@@ -351,16 +297,11 @@
         private System.Windows.Forms.ComboBox cmbSolve;
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.DateTimePicker dtpHour;
-        private System.Windows.Forms.TextBox txbCheckman;
-        private System.Windows.Forms.TextBox txbRecheckman;
-        private System.Windows.Forms.Label lbCheckman;
-        private System.Windows.Forms.Label lbRecheckman;
         private System.Windows.Forms.Label lbTitle;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.CheckBox ckbDy;
         private System.Windows.Forms.CheckBox ckbNt;
         private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button brnDefault;
         private System.Windows.Forms.Button button1;
     }
 }
