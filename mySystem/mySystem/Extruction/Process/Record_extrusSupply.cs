@@ -14,6 +14,7 @@ namespace WindowsFormsApplication1
 {
     public partial class Record_extrusSupply : Form
     {
+        //SqlConnection conn;
         private ExtructionProcess extructionformfather = null;
 
         string product_code;//产品代码
@@ -44,12 +45,49 @@ namespace WindowsFormsApplication1
 
         private void Init()
         {
+            string strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+            SqlConnection conn = new SqlConnection(strCon);
+            conn.Open();
+            string s = "select product_id,product_batch,production_instruction,s5_feeding_info from extrusion where id=1";
+            SqlCommand comm = new SqlCommand(s, conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
+            DataTable dtemp = new DataTable();
+            da.Fill(dtemp);
+          
+
+
+            conn.Close();
+
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             //dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            product_code = "rw2cws3";
-            product_num = "rw2cws3";
-            product_instrnum = "rw2cws3";
+            product_code = dtemp.Rows[0][0].ToString();
+            product_num = dtemp.Rows[0][1].ToString();
+            product_instrnum = dtemp.Rows[0][2].ToString();
+
+            //解析jason
+            JArray jo = JArray.Parse(dtemp.Rows[0][3].ToString());
+
+
+            //填数据
+            foreach (var ss in jo )  //查找某个字段与值
+            {
+                //if(((JObject) ss)["a"]=="aa")
+                DataGridViewRow dr = new DataGridViewRow();
+                foreach (DataGridViewColumn c in dataGridView1.Columns)
+                {
+                    dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                }
+                dr.Cells[0].Value = ss["s5_feeding_time"].ToString();
+                dr.Cells[1].Value = ss["s5_a_feeding_quantity"].ToString();
+                dr.Cells[2].Value = ss["s5_b1c_feeding_quantity"].ToString();
+                dr.Cells[3].Value = ss["s5_b2_feeing_quantity"].ToString();
+                dr.Cells[4].Value = ss["s5_raw_material_sampling_results"].ToString();
+                dr.Cells[5].Value = ss["s5_supplier"].ToString();
+                dataGridView1.Rows.Add(dr);
+            }
+
+            
 
             bunker1 = "AB1C";
             bunker1_code = "";
@@ -84,6 +122,7 @@ namespace WindowsFormsApplication1
 
         public Record_extrusSupply(ExtructionProcess winMain)
         {
+            //conn = con;
             InitializeComponent();
             extructionformfather = winMain;
             Init();

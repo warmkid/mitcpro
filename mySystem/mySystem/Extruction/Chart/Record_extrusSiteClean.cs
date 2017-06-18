@@ -187,7 +187,7 @@ namespace mySystem.Extruction.Process
                 result = comm.ExecuteNonQuery();
                 if (result > 0)
                 {
-                    MessageBox.Show("添加成功");
+                    //MessageBox.Show("添加成功");
                 }
                 else { MessageBox.Show("错误"); }
             }
@@ -238,6 +238,10 @@ namespace mySystem.Extruction.Process
             lf.LoginButton.Text = "审核通过";
             lf.ExitButton.Text = "取消";
             lf.Show();*/
+            LoginForm check = new LoginForm(conn);
+            check.LoginButton.Text = "审核通过";
+            check.ExitButton.Text = "取消";
+            check.ShowDialog();
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
