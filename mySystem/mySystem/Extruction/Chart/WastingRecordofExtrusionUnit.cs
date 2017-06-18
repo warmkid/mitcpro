@@ -19,9 +19,10 @@ namespace mySystem.Extruction.Process
         private DataTable datatab = new DataTable();
         SqlConnection conn = null;
 
-        public WastingRecordofExtrusionUnit(SqlConnection conn)
+        public WastingRecordofExtrusionUnit(SqlConnection myConnection)
         {
             InitializeComponent();
+            conn = myConnection;
             this.Default();
             //int items =1;
             //items = this.ltbShow.Items.Count+1;
