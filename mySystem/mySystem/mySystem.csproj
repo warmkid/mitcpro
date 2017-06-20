@@ -60,6 +60,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BaseForm.Designer.cs">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="common.cs" />
     <Compile Include="Extruction\Process\ExtructionCheck.cs">
       <SubType>Form</SubType>
     </Compile>
