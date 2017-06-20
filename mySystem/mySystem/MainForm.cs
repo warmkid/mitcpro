@@ -43,7 +43,6 @@ namespace mySystem
 
         }
 
-
         
         private string checkID(int userID)
         {
@@ -60,7 +59,6 @@ namespace mySystem
             return user;
         }
         
-
 
         private SqlConnection Init(SqlConnection myConnection)
         {
@@ -157,7 +155,6 @@ namespace mySystem
         {
             username = null;
             this.Hide();
-            //this.Dispose();
 
             LoginForm login = new LoginForm(conn);
             login.ShowDialog();
