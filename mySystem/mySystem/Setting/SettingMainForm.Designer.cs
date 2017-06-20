@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingMainForm));
             this.SettingPanelRight = new System.Windows.Forms.Panel();
             this.SettingPanelLeft = new System.Windows.Forms.Panel();
-            this.PWSetBtn = new System.Windows.Forms.Button();
-            this.AuthoritySetBtn = new System.Windows.Forms.Button();
+            this.ExtruSetBtn = new System.Windows.Forms.Button();
             this.PeopleSetBtn = new System.Windows.Forms.Button();
             this.SystemSetBtn = new System.Windows.Forms.Button();
             this.SettingPanelLeft.SuspendLayout();
@@ -49,8 +49,7 @@
             // 
             this.SettingPanelLeft.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.SettingPanelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SettingPanelLeft.Controls.Add(this.PWSetBtn);
-            this.SettingPanelLeft.Controls.Add(this.AuthoritySetBtn);
+            this.SettingPanelLeft.Controls.Add(this.ExtruSetBtn);
             this.SettingPanelLeft.Controls.Add(this.PeopleSetBtn);
             this.SettingPanelLeft.Controls.Add(this.SystemSetBtn);
             this.SettingPanelLeft.Location = new System.Drawing.Point(4, 2);
@@ -58,41 +57,29 @@
             this.SettingPanelLeft.Size = new System.Drawing.Size(180, 615);
             this.SettingPanelLeft.TabIndex = 2;
             // 
-            // PWSetBtn
+            // ExtruSetBtn
             // 
-            this.PWSetBtn.FlatAppearance.BorderSize = 0;
-            this.PWSetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.PWSetBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.PWSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.PWSetBtn.Location = new System.Drawing.Point(3, 133);
-            this.PWSetBtn.Name = "PWSetBtn";
-            this.PWSetBtn.Size = new System.Drawing.Size(172, 43);
-            this.PWSetBtn.TabIndex = 5;
-            this.PWSetBtn.Text = " 密码管理";
-            this.PWSetBtn.UseVisualStyleBackColor = true;
-            this.PWSetBtn.Click += new System.EventHandler(this.PWSetBtn_Click);
-            // 
-            // AuthoritySetBtn
-            // 
-            this.AuthoritySetBtn.FlatAppearance.BorderSize = 0;
-            this.AuthoritySetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AuthoritySetBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.AuthoritySetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.AuthoritySetBtn.Location = new System.Drawing.Point(3, 90);
-            this.AuthoritySetBtn.Name = "AuthoritySetBtn";
-            this.AuthoritySetBtn.Size = new System.Drawing.Size(172, 43);
-            this.AuthoritySetBtn.TabIndex = 4;
-            this.AuthoritySetBtn.Text = " 权限管理";
-            this.AuthoritySetBtn.UseVisualStyleBackColor = true;
-            this.AuthoritySetBtn.Click += new System.EventHandler(this.AuthoritySetBtn_Click);
+            this.ExtruSetBtn.FlatAppearance.BorderSize = 0;
+            this.ExtruSetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExtruSetBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ExtruSetBtn.Image = ((System.Drawing.Image)(resources.GetObject("ExtruSetBtn.Image")));
+            this.ExtruSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ExtruSetBtn.Location = new System.Drawing.Point(2, 3);
+            this.ExtruSetBtn.Name = "ExtruSetBtn";
+            this.ExtruSetBtn.Size = new System.Drawing.Size(172, 43);
+            this.ExtruSetBtn.TabIndex = 4;
+            this.ExtruSetBtn.Text = "  吹膜设置 ";
+            this.ExtruSetBtn.UseVisualStyleBackColor = true;
+            this.ExtruSetBtn.Click += new System.EventHandler(this.ExtruSetBtn_Click);
             // 
             // PeopleSetBtn
             // 
             this.PeopleSetBtn.FlatAppearance.BorderSize = 0;
             this.PeopleSetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PeopleSetBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PeopleSetBtn.Image = ((System.Drawing.Image)(resources.GetObject("PeopleSetBtn.Image")));
             this.PeopleSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.PeopleSetBtn.Location = new System.Drawing.Point(3, 47);
+            this.PeopleSetBtn.Location = new System.Drawing.Point(3, 90);
             this.PeopleSetBtn.Name = "PeopleSetBtn";
             this.PeopleSetBtn.Size = new System.Drawing.Size(172, 43);
             this.PeopleSetBtn.TabIndex = 3;
@@ -105,8 +92,9 @@
             this.SystemSetBtn.FlatAppearance.BorderSize = 0;
             this.SystemSetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SystemSetBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.SystemSetBtn.Image = ((System.Drawing.Image)(resources.GetObject("SystemSetBtn.Image")));
             this.SystemSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SystemSetBtn.Location = new System.Drawing.Point(3, 4);
+            this.SystemSetBtn.Location = new System.Drawing.Point(3, 47);
             this.SystemSetBtn.Name = "SystemSetBtn";
             this.SystemSetBtn.Size = new System.Drawing.Size(172, 43);
             this.SystemSetBtn.TabIndex = 0;
@@ -134,8 +122,7 @@
         private System.Windows.Forms.Panel SettingPanelRight;
         private System.Windows.Forms.Panel SettingPanelLeft;
         private System.Windows.Forms.Button SystemSetBtn;
-        private System.Windows.Forms.Button PWSetBtn;
-        private System.Windows.Forms.Button AuthoritySetBtn;
+        private System.Windows.Forms.Button ExtruSetBtn;
         private System.Windows.Forms.Button PeopleSetBtn;
     }
 }

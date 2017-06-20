@@ -234,13 +234,7 @@ namespace mySystem.Extruction.Process
 
         private void button2_Click(object sender, EventArgs e)
         {
-            /*LoginForm lf = new LoginForm();
-            lf.LoginButton.Text = "审核通过";
-            lf.ExitButton.Text = "取消";
-            lf.Show();*/
             LoginForm check = new LoginForm(conn);
-            check.LoginButton.Text = "审核通过";
-            check.ExitButton.Text = "取消";
             check.ShowDialog();
         }
 

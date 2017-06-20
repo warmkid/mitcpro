@@ -14,11 +14,23 @@ namespace mySystem.Setting
         public SettingMainForm()
         {
             InitializeComponent();
-            SystemSetBtn.Image = Image.FromFile(@"../../pic/SystemSet.png", false);
-            PWSetBtn.Image = Image.FromFile(@"../../pic/PWSet.png", false);
-            AuthoritySetBtn.Image = Image.FromFile(@"../../pic/AuthoritySet.png", false);
-            PeopleSetBtn.Image = Image.FromFile(@"../../pic/PeopleSet.png", false);
+            //SystemSetBtn.Image = Image.FromFile(@"../../pic/SystemSet.png", false);
+            //ExtruSetBtn.Image = Image.FromFile(@"../../pic/AuthoritySet.png", false);
+            //PeopleSetBtn.Image = Image.FromFile(@"../../pic/PeopleSet.png", false);
         }
+
+
+        private void ExtruSetBtn_Click(object sender, EventArgs e)
+        {
+            SettingPanelRight.Controls.Clear();
+            SetExtruForm myDlg = new SetExtruForm();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
+        }
+
 
         private void SystemSetBtn_Click(object sender, EventArgs e)
         {
@@ -29,6 +41,7 @@ namespace mySystem.Setting
             myDlg.Size = SettingPanelRight.Size;
             SettingPanelRight.Controls.Add(myDlg);
             myDlg.Show();
+            
         }
 
 
@@ -38,15 +51,6 @@ namespace mySystem.Setting
         }
 
 
-        private void AuthoritySetBtn_Click(object sender, EventArgs e)
-        {
-            SettingPanelRight.Controls.Clear();
-        }
-
-
-        private void PWSetBtn_Click(object sender, EventArgs e)
-        {
-            SettingPanelRight.Controls.Clear();
-        }
+        
     }
 }

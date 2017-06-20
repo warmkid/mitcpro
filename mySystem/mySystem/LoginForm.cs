@@ -19,7 +19,7 @@ namespace mySystem
         {
             InitializeComponent();
             conn = myConnection;
-            pictureBox1.Image = Image.FromFile(@"../../pic/logo.png", false);
+            pictureBox1.Image = Image.FromFile(@"../../pic/logonew.jpg", false);
             
         }
 

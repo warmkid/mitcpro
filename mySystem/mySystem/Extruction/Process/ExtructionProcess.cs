@@ -194,8 +194,6 @@ namespace mySystem.Extruction.Process
         {
             
             LoginForm check = new LoginForm(conn);
-            check.LoginButton.Text = "审核通过";
-            check.ExitButton.Text = "取消";
             check.ShowDialog();
 
             if ((StepShowState > 0) && (StepShowState < 7))

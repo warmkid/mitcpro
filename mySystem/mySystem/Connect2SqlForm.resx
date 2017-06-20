@@ -120,18 +120,18 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ExitButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAFxJREFUOE+tkskN
-        ACAIBOm/KjrDK8Z4ENlV/jNOEJHvY2KqarS3wk+SDrOSqYCSrAWo5FgASbyCqORSEPhefwcBOF+P8wsx
-        uF7ffgcAvBYUHTxj2wTcXisgDcPBCegQrh93cahoAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAATUlEQVQ4T63OOw4AIAhEQe5/Km6GBKXQ
+        aPisryEWs5H+JyTMLOtVzzA04rg7suHWyImrI1fsN9UL+40KcOIXENYgbEFYg7AF4RmEixEN6BCuH8fa
+        rpoAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="Connect2SqlButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAGBJREFUOE9jYBgF
-        1AmBhoaG/0CT4BjKJ85wmOb/SABqGHEGgBRDAMQFMBrZRbjYMJdiGAAyBGYoKg2xCNlCkDNJdgHMlWAX
-        IMIA4nwkL+AKA0w1pMQCTC1JMUV0dAxNhQDB7Zt0w4zLbwAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
+        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAXElEQVQ4T+2QQQ7AIAgEeTo/1yJsoVoq
+        h97aSTYEWAhKPy/BzO0IpyyvgeGI5KNZBGO2yC/ZCZfqfFigEuYoeM0WXQuhkQqecYH/gcuMGasHSyC8
+        7Q54nzzfgqgDwe2bdNqAxukAAAAASUVORK5CYII=
 </value>
   </data>
 </root>

@@ -18,13 +18,13 @@ namespace mySystem
         {
             InitializeComponent();
             conn = myConnection;
-            ExtructionBtn.Image = Image.FromFile(@"../../pic/Extruction.png", false);
-            CleanBtn.Image = Image.FromFile(@"../../pic/Clean.png", false);
-            BagBtn.Image = Image.FromFile(@"../../pic/Bag.png", false);
-            KillBtn.Image = Image.FromFile(@"../../pic/Kill.png", false);
-            PlanBtn.Image = Image.FromFile(@"../../pic/Plan.png", false);
-            OrderBtn.Image = Image.FromFile(@"../../pic/Order.png", false);
-            StockBtn.Image = Image.FromFile(@"../../pic/Stock.png", false);
+            //ExtructionBtn.Image = Image.FromFile(@"../../pic/Extruction.png", false);
+            //CleanBtn.Image = Image.FromFile(@"../../pic/Clean.png", false);
+            //BagBtn.Image = Image.FromFile(@"../../pic/Bag.png", false);
+            //KillBtn.Image = Image.FromFile(@"../../pic/Kill.png", false);
+            //PlanBtn.Image = Image.FromFile(@"../../pic/Plan.png", false);
+            //OrderBtn.Image = Image.FromFile(@"../../pic/Order.png", false);
+            //StockBtn.Image = Image.FromFile(@"../../pic/Stock.png", false);
         }
 
         //吹膜

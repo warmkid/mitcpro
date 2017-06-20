@@ -66,7 +66,19 @@
     <Compile Include="BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="CheckForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckForm.Designer.cs">
+      <DependentUpon>CheckForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="common.cs" />
+    <Compile Include="Extruction\ExtructionMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\ExtructionMainForm.Designer.cs">
+      <DependentUpon>ExtructionMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extruction\Process\BatchProductRecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +90,12 @@
     </Compile>
     <Compile Include="Extruction\Process\ExtructionCheck.Designer.cs">
       <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\ProcessProductInstru.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ProcessProductInstru.Designer.cs">
+      <DependentUpon>ProcessProductInstru.cs</DependentUpon>
     </Compile>
     <Compile Include="ProcessMainForm.cs">
       <SubType>Form</SubType>
@@ -96,6 +114,12 @@
     </Compile>
     <Compile Include="Query\QueryMainForm.Designer.cs">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SetExtruForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetExtruForm.Designer.cs">
+      <DependentUpon>SetExtruForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\CleanArea_add.cs">
       <SubType>Form</SubType>
@@ -287,11 +311,20 @@
     <Compile Include="Setting\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CheckForm.resx">
+      <DependentUpon>CheckForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\ExtructionMainForm.resx">
+      <DependentUpon>ExtructionMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\BatchProductRecord.resx">
       <DependentUpon>BatchProductRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\ExtructionCheck.resx">
       <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ProcessProductInstru.resx">
+      <DependentUpon>ProcessProductInstru.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProcessMainForm.resx">
       <DependentUpon>ProcessMainForm.cs</DependentUpon>
@@ -301,6 +334,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryMainForm.resx">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetExtruForm.resx">
+      <DependentUpon>SetExtruForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\CleanArea_add.resx">
       <DependentUpon>CleanArea_add.cs</DependentUpon>

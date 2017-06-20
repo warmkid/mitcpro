@@ -6,16 +6,23 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using WindowsFormsApplication1;
+using mySystem.Extruction.Process;
+using System.Data.SqlClient;
+
 
 namespace mySystem
 {
-    public partial class SettingForm : Form
+    public partial class ExtructionMainForm : Form
     {
-        public SettingForm()
+        public ExtructionMainForm()
         {
             InitializeComponent();
         }
+
+
+
+
+
 
 
 

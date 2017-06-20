@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(QueryMainForm));
             this.StockBtn = new System.Windows.Forms.Button();
             this.PlanBtn = new System.Windows.Forms.Button();
             this.OrderBtn = new System.Windows.Forms.Button();
@@ -45,6 +46,7 @@
             this.StockBtn.FlatAppearance.BorderSize = 0;
             this.StockBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.StockBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.StockBtn.Image = ((System.Drawing.Image)(resources.GetObject("StockBtn.Image")));
             this.StockBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.StockBtn.Location = new System.Drawing.Point(3, 262);
             this.StockBtn.Name = "StockBtn";
@@ -60,6 +62,7 @@
             this.PlanBtn.FlatAppearance.BorderSize = 0;
             this.PlanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PlanBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.PlanBtn.Image = ((System.Drawing.Image)(resources.GetObject("PlanBtn.Image")));
             this.PlanBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.PlanBtn.Location = new System.Drawing.Point(3, 176);
             this.PlanBtn.Name = "PlanBtn";
@@ -75,6 +78,7 @@
             this.OrderBtn.FlatAppearance.BorderSize = 0;
             this.OrderBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OrderBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.OrderBtn.Image = ((System.Drawing.Image)(resources.GetObject("OrderBtn.Image")));
             this.OrderBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.OrderBtn.Location = new System.Drawing.Point(3, 219);
             this.OrderBtn.Name = "OrderBtn";
@@ -98,6 +102,7 @@
             this.KillBtn.FlatAppearance.BorderSize = 0;
             this.KillBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.KillBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.KillBtn.Image = ((System.Drawing.Image)(resources.GetObject("KillBtn.Image")));
             this.KillBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.KillBtn.Location = new System.Drawing.Point(3, 133);
             this.KillBtn.Name = "KillBtn";
@@ -129,6 +134,7 @@
             this.BagBtn.FlatAppearance.BorderSize = 0;
             this.BagBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BagBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.BagBtn.Image = ((System.Drawing.Image)(resources.GetObject("BagBtn.Image")));
             this.BagBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BagBtn.Location = new System.Drawing.Point(3, 90);
             this.BagBtn.Name = "BagBtn";
@@ -144,6 +150,7 @@
             this.CleanBtn.FlatAppearance.BorderSize = 0;
             this.CleanBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CleanBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CleanBtn.Image = ((System.Drawing.Image)(resources.GetObject("CleanBtn.Image")));
             this.CleanBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.CleanBtn.Location = new System.Drawing.Point(3, 47);
             this.CleanBtn.Name = "CleanBtn";
@@ -159,6 +166,7 @@
             this.ExtructionBtn.FlatAppearance.BorderSize = 0;
             this.ExtructionBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExtructionBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ExtructionBtn.Image = ((System.Drawing.Image)(resources.GetObject("ExtructionBtn.Image")));
             this.ExtructionBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ExtructionBtn.Location = new System.Drawing.Point(3, 4);
             this.ExtructionBtn.Name = "ExtructionBtn";

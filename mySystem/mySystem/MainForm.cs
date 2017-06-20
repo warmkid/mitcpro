@@ -14,6 +14,7 @@ namespace mySystem
     public partial class MainForm : Form
     {
 
+        bool isSqlOk = true;
         bool isOk;
         string strCon;
         SqlConnection conn;
@@ -22,7 +23,11 @@ namespace mySystem
 
         public MainForm()
         {
-            conn = Init(conn);
+            if(isSqlOk)
+            {
+                conn = Init(conn);
+            }
+            
             LoginForm login = new LoginForm(conn);
             login.ShowDialog();
             userID = login.userID;
@@ -37,9 +42,9 @@ namespace mySystem
             //StockPanelLeft.Size = SystemPanelLeft.Size = ProducePanelLeft.Size;
             //StockPanelRight.Size = SystemPanelRight.Size = ProducePanelRight.Size;
             //this.textBox1.Text = ProducePanelRight.Size.Height.ToString();
-            MainProduceBtn.Image = Image.FromFile(@"../../pic/MainProduce.png", false);
-            MainSettingBtn.Image = Image.FromFile(@"../../pic/MainSetting.png", false);
-            MainQueryBtn.Image = Image.FromFile(@"../../pic/MainQuery.png", false);
+            //MainProduceBtn.Image = Image.FromFile(@"../../pic/MainProduce.png", false);
+            //MainSettingBtn.Image = Image.FromFile(@"../../pic/MainSetting.png", false);
+            //MainQueryBtn.Image = Image.FromFile(@"../../pic/MainQuery.png", false);
 
         }
 
@@ -109,7 +114,7 @@ namespace mySystem
         private void MainProduceBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
-            MainProduceBtn.BackColor = Color.Gray;
+            MainProduceBtn.BackColor = Color.FromArgb(96, 123, 174);
             MainSettingBtn.BackColor = Color.LightGray;
             MainQueryBtn.BackColor = Color.LightGray;
             ProcessMainForm myDlg = new ProcessMainForm(conn);
@@ -125,7 +130,7 @@ namespace mySystem
         {
             MainPanel.Controls.Clear();
             MainProduceBtn.BackColor = Color.LightGray;
-            MainSettingBtn.BackColor = Color.Gray;
+            MainSettingBtn.BackColor = Color.FromArgb(96, 123, 174);
             MainQueryBtn.BackColor = Color.LightGray;
             SettingMainForm myDlg = new SettingMainForm();
             myDlg.TopLevel = false;
@@ -141,7 +146,7 @@ namespace mySystem
             MainPanel.Controls.Clear();
             MainProduceBtn.BackColor = Color.LightGray;
             MainSettingBtn.BackColor = Color.LightGray;
-            MainQueryBtn.BackColor = Color.Gray;
+            MainQueryBtn.BackColor = Color.FromArgb(96, 123, 174);
             QueryMainForm myDlg = new QueryMainForm(conn);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;

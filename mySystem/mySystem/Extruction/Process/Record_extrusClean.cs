@@ -15,23 +15,6 @@ namespace WindowsFormsApplication1
     public partial class Record_extrusClean : Form
     {
         private ExtructionProcess extructionformfather = null;
-
-        //string cleantime;//清洁日期
-        DateTime cleantime;
-        string classes;//班次
-        string checker;//复核人
-        //string checktime;//复核日期
-        DateTime checktime;
-        List<cont> cleancont;
-        DataTable dt;
-        bool isOk;
-        string strCon;
-        string sql;
-        SqlConnection conn;
-
-        List<int> cleanmans;
-        List<int> checkmans;
-        
         public Record_extrusClean(ExtructionProcess winMain)
         {
             InitializeComponent();
@@ -47,8 +30,6 @@ namespace WindowsFormsApplication1
             sql = "select * from cleanarea";
             isOk = false;
             cleancont = new List<cont>();
-            cleanmans = new List<int>();
-            checkmans = new List<int>();
             cont_clean = new cont();
 
             //dataGridView1.RowsDefaultCellStyle.Font = new Font("宋体", 12);  
@@ -90,19 +71,26 @@ namespace WindowsFormsApplication1
                 dr.Cells[2].Value = true;
                 //dr.Cells[2].Value = "是".ToString();
                 dataGridView1.Rows.Add(dr);
-
-                //清洁人和审核人均为-1代表初始状态留空
-                cleanmans.Add(-1);
-                checkmans.Add(-1);
             }
-
-
-            
+            //this.dataGridView1.Columns[1].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
 
         }
+
+        //string cleantime;//清洁日期
+        DateTime cleantime;
+        string classes;//班次
+        string checker;//复核人
+        //string checktime;//复核日期
+        DateTime checktime;
+        List<cont> cleancont;
+        DataTable dt;
+        bool isOk;
+        string strCon;
+        string sql;
+        SqlConnection conn;
 
         public class cont 
         {
@@ -128,46 +116,22 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("班次和复核人均不能为空");
                 return;
             }
-
-            //添加清洁记录到jason
-            //string json = @"{}";
-            //JObject j = JObject.Parse(json);
-            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            //{
-            //    string t = dataGridView1.Rows[i].Cells[0].Value.ToString();
-            //    if (dataGridView1.Rows[i].Cells[2].Value.ToString() == "True")
-            //        j.Add(t, new JValue('1'));
-            //    else
-            //        j.Add(t, new JValue("0"));
-            //}
-
-            string json = @"[]";
-            JArray jarray = JArray.Parse(json);
+            string json = @"{}";           
+            JObject j = JObject.Parse(json);
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                int a, b, c;
-                string st = "{'";
-                string t = dataGridView1.Rows[i].Cells[0].Value.ToString() + "':";
-                st += t;
-                //是否清洁合格
+                string t = dataGridView1.Rows[i].Cells[0].Value.ToString();
                 if (dataGridView1.Rows[i].Cells[2].Value.ToString() == "True")
-                    a = 1;
+                    j.Add(t, new JValue('1'));
                 else
-                    a = 0;
-                st += "["+a.ToString()+","+cleanmans[i].ToString()+","+checkmans.ToString()+",]";
-
-                JObject temp = JObject.Parse(st);
-                jarray.Add(temp);
+                    j.Add(t, new JValue("0"));      
             }
-
-
-
             //System.Console.WriteLine(j.ToString());
             int status=0;
             //int checkerid = 5;
             //string s = "update extrusion set s1_clean_date='" + cleantime.ToString() + "' where id=1";
             //string s = "update extrusion set s1_flight='"+classes+"' where id=1";
-            string s = "update extrusion set s1_clean_date='" + cleantime + "',s1_flight=" + classes + ",s1_reviewer_id='" + int.Parse(checker) + "',s1_review_date='" + checktime + "',s1_region_content_result_cleaner_reviewer='" + jarray.ToString() + "',step_status=" + status + " where id=1";
+            string s = "update extrusion set s1_clean_date='" + cleantime + "',s1_flight=" + classes + ",s1_reviewer_id='" + int.Parse(checker) + "',s1_review_date='" + checktime + "',s1_region_content_result_cleaner_reviewer='" + j.ToString() + "',step_status=" + status + " where id=1";
             //SqlCommand comm = new SqlCommand(s, conn);
             //SqlDataAdapter da = new SqlDataAdapter(comm);
             //更新数据库
@@ -202,29 +166,6 @@ namespace WindowsFormsApplication1
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0)
-                return;
-            //更改清洁人项
-            if (e.ColumnIndex == 3)
-            {
-                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-                if (rt > 0)
-                    cleanmans[e.RowIndex] = rt;
-                else
-                    MessageBox.Show("清洁人id不存在，请重新输入");
-                return;
-            }
-            //更改审核人项
-            if (e.ColumnIndex == 4)
-            {
-                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
-                if (rt > 0)
-                    checkmans[e.RowIndex] = rt;
-                else
-                    MessageBox.Show("审核人id不存在，请重新输入");
-                return;
-            }
-
 
         }
 
@@ -237,13 +178,6 @@ namespace WindowsFormsApplication1
         //{
 
         //}
-
-        //查找输入清场人和检查人名字是否合法
-        private int queryid(string s)
-        {
-            int rtnum = 0xfffff ;
-            return rtnum;//如果查找成功返回id，否则返回-1
-        }
 
     }
 }

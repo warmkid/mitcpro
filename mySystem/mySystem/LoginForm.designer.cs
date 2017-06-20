@@ -110,9 +110,10 @@
             // 
             // pictureBox1
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(24, 1);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(2, 1);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(80, 80);
+            this.pictureBox1.Size = new System.Drawing.Size(134, 80);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 24;
             this.pictureBox1.TabStop = false;
@@ -121,7 +122,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimHei", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(110, 26);
+            this.label1.Location = new System.Drawing.Point(136, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(194, 21);
             this.label1.TabIndex = 25;
@@ -166,13 +167,13 @@
         #endregion
 
         private System.Windows.Forms.Label 用户密码;
-        public System.Windows.Forms.TextBox UserIDTextBox;
         private System.Windows.Forms.Label 用户ID;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TextBox UserPWTextBox;
-        public System.Windows.Forms.Button LoginButton;
-        public System.Windows.Forms.Button ExitButton;
         public System.Windows.Forms.Label usernameLabel;
+        private System.Windows.Forms.TextBox UserIDTextBox;
+        private System.Windows.Forms.TextBox UserPWTextBox;
+        private System.Windows.Forms.Button LoginButton;
+        private System.Windows.Forms.Button ExitButton;
     }
 }

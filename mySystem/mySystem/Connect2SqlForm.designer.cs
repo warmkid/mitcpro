@@ -114,6 +114,7 @@
             this.Controls.Add(this.端口);
             this.Controls.Add(this.IPTextBox);
             this.Controls.Add(this.服务器IP);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Connect2SqlForm";

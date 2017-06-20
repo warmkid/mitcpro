@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.订单信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.myDataSet = new mySystem.myDataSet();
             this.库存信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -67,6 +68,7 @@
             this.MainProduceBtn.FlatAppearance.BorderSize = 0;
             this.MainProduceBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MainProduceBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainProduceBtn.Image = ((System.Drawing.Image)(resources.GetObject("MainProduceBtn.Image")));
             this.MainProduceBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainProduceBtn.Location = new System.Drawing.Point(3, 9);
             this.MainProduceBtn.Name = "MainProduceBtn";
@@ -82,6 +84,7 @@
             this.MainSettingBtn.FlatAppearance.BorderSize = 0;
             this.MainSettingBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MainSettingBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainSettingBtn.Image = ((System.Drawing.Image)(resources.GetObject("MainSettingBtn.Image")));
             this.MainSettingBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainSettingBtn.Location = new System.Drawing.Point(78, 9);
             this.MainSettingBtn.Name = "MainSettingBtn";
@@ -97,6 +100,7 @@
             this.MainQueryBtn.FlatAppearance.BorderSize = 0;
             this.MainQueryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MainQueryBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainQueryBtn.Image = ((System.Drawing.Image)(resources.GetObject("MainQueryBtn.Image")));
             this.MainQueryBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainQueryBtn.Location = new System.Drawing.Point(153, 9);
             this.MainQueryBtn.Name = "MainQueryBtn";
