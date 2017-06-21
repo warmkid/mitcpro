@@ -8,30 +8,46 @@ using System.Text;
 using System.Windows.Forms;
 using mySystem.Setting;
 using System.Data.SqlClient;
+using System.Data.OleDb;
+
 
 namespace mySystem
 {
     public partial class MainForm : Form
     {
 
-        bool isSqlOk = true;
+        public bool isSqlOk = false;
         bool isOk;
         string strCon;
-        SqlConnection conn;
+        public SqlConnection conn;
+        public OleDbConnection connOle;
         string username; //登录用户名
         int userID;
 
         public MainForm()
         {
-            if(isSqlOk)
+            if (isSqlOk)
             {
-                conn = Init(conn);
+                conn = Init(conn);              
+            }
+            else
+            {
+                connOle = Init(connOle);               
             }
             
-            LoginForm login = new LoginForm(conn);
+            LoginForm login = new LoginForm(this);
             login.ShowDialog();
             userID = login.userID;
-            username = checkID(userID);
+
+            if (isSqlOk)
+            {
+                username = checkID(userID);
+            }
+            else
+            {
+                username = checkIDOle(userID);
+            }
+            
             
             InitializeComponent();
             userLabel.Text = username;
@@ -54,16 +70,37 @@ namespace mySystem
             string user = null;
             string searchsql = "select * from [user] where user_id='" + userID + "'";
             SqlCommand comm = new SqlCommand(searchsql, conn);
-            SqlDataReader daSQL = comm.ExecuteReader();
-            while (daSQL.Read())
+            SqlDataReader myReader = comm.ExecuteReader();
+            while (myReader.Read())
             {
-                user = daSQL.GetString(4);
+                user = myReader.GetString(4);
             }
 
+            myReader.Close();  
             comm.Dispose();
             return user;
         }
-        
+
+        private string checkIDOle(int userID)
+        {
+            string user = null;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = connOle;
+            comm.CommandText = "select * from [user] where user_id= @ID";
+            comm.Parameters.AddWithValue("@ID", userID);
+
+            //string searchole = "select * from [user] where user_id='" + userID + "'";
+            //OleDbCommand comm = new OleDbCommand(searchole, connOle);
+            OleDbDataReader myReader = comm.ExecuteReader();
+            while (myReader.Read())
+            {
+                user = myReader.GetString(4);
+            }
+
+            myReader.Close();  
+            comm.Dispose();
+            return user;
+        }
 
         private SqlConnection Init(SqlConnection myConnection)
         {
@@ -86,10 +123,27 @@ namespace mySystem
             return myConnection;
         }
 
+        private OleDbConnection Init(OleDbConnection myConnection)
+        {
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/database1.mdb;Persist Security Info=False";
+            isOk = false;
+            myConnection = connToServerOle(strConnect);            
+            while (!isOk)
+            {
+                MessageBox.Show("连接数据库失败", "error");
+                return null;
+
+            }
+            MessageBox.Show("连接数据库成功", "success");
+            return myConnection;
+        }
+
+
         public void IPChanged(string IP,string port)
         {
             //获取新IP
-            strCon = @"server=" + IP + "," + port + ";database=ProductionPlan;Uid=sa;Pwd=mitc";
+            strCon = @"server=" + IP + "," + port + ";database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
         }
 
 
@@ -109,6 +163,22 @@ namespace mySystem
             return myConnection;
         }
 
+        private OleDbConnection connToServerOle(string connectStr)
+        {
+            OleDbConnection myConn;
+            try
+            {
+                myConn = new OleDbConnection(connectStr);
+                myConn.Open();
+            }
+            catch
+            {
+                return null;
+            }
+            isOk = true;
+            return myConn;
+        }
+
 
         //工序按钮
         private void MainProduceBtn_Click(object sender, EventArgs e)
@@ -117,7 +187,7 @@ namespace mySystem
             MainProduceBtn.BackColor = Color.FromArgb(96, 123, 174);
             MainSettingBtn.BackColor = Color.LightGray;
             MainQueryBtn.BackColor = Color.LightGray;
-            ProcessMainForm myDlg = new ProcessMainForm(conn);
+            ProcessMainForm myDlg = new ProcessMainForm(this);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = MainPanel.Size;
@@ -132,7 +202,7 @@ namespace mySystem
             MainProduceBtn.BackColor = Color.LightGray;
             MainSettingBtn.BackColor = Color.FromArgb(96, 123, 174);
             MainQueryBtn.BackColor = Color.LightGray;
-            SettingMainForm myDlg = new SettingMainForm();
+            SettingMainForm myDlg = new SettingMainForm(this);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = MainPanel.Size;
@@ -161,10 +231,17 @@ namespace mySystem
             username = null;
             this.Hide();
 
-            LoginForm login = new LoginForm(conn);
+            LoginForm login = new LoginForm(this);
             login.ShowDialog();
             userID = login.userID;
-            username = checkID(userID);
+            if (isSqlOk)
+            {
+                username = checkID(userID);
+            }
+            else
+            {
+                username = checkIDOle(userID);
+            }
             
             userLabel.Text = username;
             this.Show();

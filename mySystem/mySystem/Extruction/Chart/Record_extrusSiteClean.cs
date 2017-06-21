@@ -234,8 +234,8 @@ namespace mySystem.Extruction.Process
 
         private void button2_Click(object sender, EventArgs e)
         {
-            LoginForm check = new LoginForm(conn);
-            check.ShowDialog();
+            //LoginForm check = new LoginForm(conn);
+            ///check.ShowDialog();
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)

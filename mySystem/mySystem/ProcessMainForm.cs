@@ -7,31 +7,32 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Data.OleDb;
 
 namespace mySystem
 {
-    public partial class ProcessMainForm : Form
+    public partial class ProcessMainForm : BaseForm
     {
         SqlConnection conn = null;
+        OleDbConnection connOle = null;
+        bool isSqlOk;
+        MainForm mform = null;
 
-        public ProcessMainForm(SqlConnection myConnection)
+        public ProcessMainForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            conn = myConnection;
-            //ExtructionBtn.Image = Image.FromFile(@"../../pic/Extruction.png", false);
-            //CleanBtn.Image = Image.FromFile(@"../../pic/Clean.png", false);
-            //BagBtn.Image = Image.FromFile(@"../../pic/Bag.png", false);
-            //KillBtn.Image = Image.FromFile(@"../../pic/Kill.png", false);
-            //PlanBtn.Image = Image.FromFile(@"../../pic/Plan.png", false);
-            //OrderBtn.Image = Image.FromFile(@"../../pic/Order.png", false);
-            //StockBtn.Image = Image.FromFile(@"../../pic/Stock.png", false);
+            mform = mainform;
+            conn = mainform.conn;
+            connOle = mainform.connOle;
+            isSqlOk = mainform.isSqlOk;
+
         }
 
         //吹膜
         private void ExtructionBtn_Click(object sender, EventArgs e)
         {
             ProducePanelRight.Controls.Clear();
-            ExtructionForm myDlg = new ExtructionForm(conn);
+            ExtructionMainForm myDlg = new ExtructionMainForm(mform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = ProducePanelRight.Size;

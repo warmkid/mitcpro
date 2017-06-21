@@ -115,10 +115,10 @@
     <Compile Include="Query\QueryMainForm.Designer.cs">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SetExtruForm.cs">
+    <Compile Include="Setting\SetExtruForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SetExtruForm.Designer.cs">
+    <Compile Include="Setting\SetExtruForm.Designer.cs">
       <DependentUpon>SetExtruForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\CleanArea_add.cs">
@@ -335,7 +335,7 @@
     <EmbeddedResource Include="Query\QueryMainForm.resx">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="SetExtruForm.resx">
+    <EmbeddedResource Include="Setting\SetExtruForm.resx">
       <DependentUpon>SetExtruForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\CleanArea_add.resx">
