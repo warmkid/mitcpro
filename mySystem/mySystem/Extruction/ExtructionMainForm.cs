@@ -71,7 +71,6 @@ namespace mySystem
             extrusclean.Show();
         }
 
-<<<<<<< HEAD
         private void A5Btn_Click(object sender, EventArgs e)
         {
             Record_extrusSiteClean ext = new Record_extrusSiteClean(mform);
@@ -88,7 +87,7 @@ namespace mySystem
         {
             BatchProductRecord.ProcessProductInstru ppi = new BatchProductRecord.ProcessProductInstru(mform);
             ppi.Show();
-=======
+        }
         private void C1Btn_Click(object sender, EventArgs e)
         {
             ExtructionCheckBeforePowerStep2 stepform = new ExtructionCheckBeforePowerStep2(mform);
@@ -111,15 +110,6 @@ namespace mySystem
         {
             ExtructionpRoductionAndRestRecordStep6 stepform = new ExtructionpRoductionAndRestRecordStep6(mform);
             stepform.Show();
->>>>>>> b444fd7e2b29f17e2a00051af075fb4a1552842b
         }
-
-
-
-
-
-
-
-
     }
 }
