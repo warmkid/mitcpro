@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using WindowsFormsApplication1;
 
 
 namespace mySystem
@@ -27,11 +28,47 @@ namespace mySystem
             isSqlOk = mainform.isSqlOk;
             mform = mainform;
             InitializeComponent();
+            Init();
         }
+
+        private void Init()
+        {
+            if (!isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = connOle;
+                comm.CommandText = "select production_instruction_code from production_instruction";
+                OleDbDataReader reader = comm.ExecuteReader();//执行查询
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader["production_instruction_code"]);
+                    }
+                }
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = conn;
+                comm.CommandText = "select production_instruction_code from production_instruction";
+                SqlDataReader reader = comm.ExecuteReader();//执行查询
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader["production_instruction_code"]);
+                    }
+                }
+
+            }
+        }
+
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-
+            Record_extrusClean extrusclean = new Record_extrusClean(mform);
+            extrusclean.Show();
         }
 
         private void C1Btn_Click(object sender, EventArgs e)

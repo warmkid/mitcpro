@@ -17,14 +17,12 @@ namespace mySystem
         OleDbConnection connOle = null;
         bool isSqlOk;
         public int userID;
-        string opinion;
+        public string opinion;
         
 
         public CheckForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            //pictureBox1.Image = Image.FromFile(@"../../pic/logonew.jpg", false);
-            //NotOKBtn.Image = Image.FromFile(@"../../pic/delete.png", false);
             conn = mainform.conn;
             connOle = mainform.connOle;
             isSqlOk = mainform.isSqlOk;
@@ -123,7 +121,6 @@ namespace mySystem
             OleDbDataReader sdr = comm.ExecuteReader();//执行查询
             if (sdr.Read())  //如果该用户存在
             {
-                MessageBox.Show("登录成功！", "提示");
                 userID = sdr.GetInt32(3);
                 comm.Dispose();
                 sdr.Close();

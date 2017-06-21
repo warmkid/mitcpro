@@ -49,7 +49,23 @@ namespace mySystem
         //制袋
         private void BagBtn_Click(object sender, EventArgs e)
         {
-            ProducePanelRight.Controls.Clear();
+            //ProducePanelRight.Controls.Clear();
+
+            if (bagPanel.Visible == true)
+            {
+                otherPanel.Location = new Point(0, 130);
+                //PlanBtn.Location = new Point(3, 133);
+                bagPanel.Visible = false;
+            }
+            else
+            {
+                otherPanel.Location = new Point(0, 361);
+                //PlanBtn.Location = new Point(3, 361);
+                bagPanel.Visible = true;
+ 
+            }
+
+
         }
 
         //灭菌
