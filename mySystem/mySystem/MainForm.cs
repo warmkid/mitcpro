@@ -21,8 +21,8 @@ namespace mySystem
         string strCon;
         public SqlConnection conn;
         public OleDbConnection connOle;
-        string username; //登录用户名
-        int userID;
+        public string username; //登录用户名
+        public int userID;
 
         public MainForm()
         {

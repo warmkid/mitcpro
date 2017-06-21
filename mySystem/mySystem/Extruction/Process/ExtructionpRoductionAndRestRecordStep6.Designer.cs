@@ -45,6 +45,8 @@
             this.label8 = new System.Windows.Forms.Label();
             this.temperatureBox = new System.Windows.Forms.TextBox();
             this.humidityBox = new System.Windows.Forms.TextBox();
+            this.CheckBtn = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.RecordView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,7 +119,7 @@
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(1068, 425);
+            this.AddLineBtn.Location = new System.Drawing.Point(1068, 430);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 13;
@@ -221,11 +223,33 @@
             this.humidityBox.Size = new System.Drawing.Size(100, 26);
             this.humidityBox.TabIndex = 23;
             // 
+            // CheckBtn
+            // 
+            this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.CheckBtn.Location = new System.Drawing.Point(1068, 477);
+            this.CheckBtn.Name = "CheckBtn";
+            this.CheckBtn.Size = new System.Drawing.Size(80, 30);
+            this.CheckBtn.TabIndex = 25;
+            this.CheckBtn.Text = "审核通过";
+            this.CheckBtn.UseVisualStyleBackColor = true;
+            // 
+            // SaveBtn
+            // 
+            this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.SaveBtn.Location = new System.Drawing.Point(976, 477);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(80, 30);
+            this.SaveBtn.TabIndex = 24;
+            this.SaveBtn.Text = "确认";
+            this.SaveBtn.UseVisualStyleBackColor = true;
+            // 
             // ExtructionpRoductionAndRestRecordStep6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1168, 464);
+            this.ClientSize = new System.Drawing.Size(1168, 519);
+            this.Controls.Add(this.CheckBtn);
+            this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.humidityBox);
             this.Controls.Add(this.temperatureBox);
             this.Controls.Add(this.label8);
@@ -243,7 +267,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RecordView);
             this.Controls.Add(this.Title);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExtructionpRoductionAndRestRecordStep6";
             this.Text = "ExtructionpRoductionAndRestRecordStep6";
             ((System.ComponentModel.ISupportInitialize)(this.RecordView)).EndInit();
@@ -271,5 +295,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox temperatureBox;
         private System.Windows.Forms.TextBox humidityBox;
+        private System.Windows.Forms.Button CheckBtn;
+        private System.Windows.Forms.Button SaveBtn;
     }
 }

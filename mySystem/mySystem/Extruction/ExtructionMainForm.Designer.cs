@@ -187,6 +187,7 @@
             this.B6Btn.TabIndex = 20;
             this.B6Btn.Text = "吹膜工序生产和检验记录";
             this.B6Btn.UseVisualStyleBackColor = true;
+            this.B6Btn.Click += new System.EventHandler(this.B6Btn_Click);
             // 
             // B9Btn
             // 
@@ -217,6 +218,7 @@
             this.B1Btn.TabIndex = 12;
             this.B1Btn.Text = "吹膜工序传料记录";
             this.B1Btn.UseVisualStyleBackColor = true;
+            this.B1Btn.Click += new System.EventHandler(this.B1Btn_Click);
             // 
             // B5Btn
             // 
@@ -282,6 +284,7 @@
             this.C1Btn.TabIndex = 12;
             this.C1Btn.Text = "吹膜机组开机前确认表";
             this.C1Btn.UseVisualStyleBackColor = true;
+            this.C1Btn.Click += new System.EventHandler(this.C1Btn_Click);
             // 
             // C2Btn
             // 
@@ -292,6 +295,7 @@
             this.C2Btn.TabIndex = 16;
             this.C2Btn.Text = "吹膜机组预热参数记录表";
             this.C2Btn.UseVisualStyleBackColor = true;
+            this.C2Btn.Click += new System.EventHandler(this.C2Btn_Click);
             // 
             // C4Btn
             // 

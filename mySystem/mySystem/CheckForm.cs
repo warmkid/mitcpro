@@ -16,7 +16,7 @@ namespace mySystem
         SqlConnection conn = null;
         OleDbConnection connOle = null;
         bool isSqlOk;
-        int userID;
+        public int userID;
         string opinion;
         
 

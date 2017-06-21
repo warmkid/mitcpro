@@ -31,6 +31,8 @@
             this.Title = new System.Windows.Forms.Label();
             this.TransportRecordView = new System.Windows.Forms.DataGridView();
             this.AddLineBtn = new System.Windows.Forms.Button();
+            this.CheckBtn = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.TransportRecordView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +59,7 @@
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(1068, 425);
+            this.AddLineBtn.Location = new System.Drawing.Point(1065, 425);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 6;
@@ -65,15 +67,37 @@
             this.AddLineBtn.UseVisualStyleBackColor = true;
             this.AddLineBtn.Click += new System.EventHandler(this.AddLineBtn_Click_1);
             // 
+            // CheckBtn
+            // 
+            this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.CheckBtn.Location = new System.Drawing.Point(1065, 467);
+            this.CheckBtn.Name = "CheckBtn";
+            this.CheckBtn.Size = new System.Drawing.Size(80, 30);
+            this.CheckBtn.TabIndex = 10;
+            this.CheckBtn.Text = "审核通过";
+            this.CheckBtn.UseVisualStyleBackColor = true;
+            // 
+            // SaveBtn
+            // 
+            this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.SaveBtn.Location = new System.Drawing.Point(973, 467);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(80, 30);
+            this.SaveBtn.TabIndex = 9;
+            this.SaveBtn.Text = "确认";
+            this.SaveBtn.UseVisualStyleBackColor = true;
+            // 
             // ExtructionTransportRecordStep4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1168, 464);
+            this.ClientSize = new System.Drawing.Size(1168, 509);
+            this.Controls.Add(this.CheckBtn);
+            this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.AddLineBtn);
             this.Controls.Add(this.TransportRecordView);
             this.Controls.Add(this.Title);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExtructionTransportRecordStep4";
             this.Text = "ExtructionTransportRecordStep4";
             ((System.ComponentModel.ISupportInitialize)(this.TransportRecordView)).EndInit();
@@ -87,5 +111,7 @@
         private System.Windows.Forms.Label Title;
         private System.Windows.Forms.DataGridView TransportRecordView;
         private System.Windows.Forms.Button AddLineBtn;
+        private System.Windows.Forms.Button CheckBtn;
+        private System.Windows.Forms.Button SaveBtn;
     }
 }
