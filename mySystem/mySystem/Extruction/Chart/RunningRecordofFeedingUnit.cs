@@ -108,10 +108,10 @@ namespace mySystem.Extruction.Process
         private void button1_Click(object sender, EventArgs e)
         {
             
-            LoginForm check = new LoginForm(conn);
+            //LoginForm check = new LoginForm(conn);
 			//check.LoginButton.Text = "审核通过";
 			//check.ExitButton.Text = "取消";
-            check.ShowDialog();
+            //check.ShowDialog();
             
         }
         

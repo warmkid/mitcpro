@@ -193,8 +193,8 @@ namespace mySystem.Extruction.Process
         private void CheckBtn_Click(object sender, EventArgs e)
         {
             
-            LoginForm check = new LoginForm(conn);
-            check.ShowDialog();
+            //LoginForm check = new LoginForm(conn);
+            //check.ShowDialog();
 
             if ((StepShowState > 0) && (StepShowState < 7))
             {

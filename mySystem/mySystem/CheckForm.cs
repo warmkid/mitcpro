@@ -7,22 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using System.Data.OleDb;
 
 namespace mySystem
 {
-    public partial class CheckForm : Form
+    public partial class CheckForm : BaseForm
     {
         SqlConnection conn = null;
+        OleDbConnection connOle = null;
+        bool isSqlOk;
         int userID;
         string opinion;
         
 
-        public CheckForm(SqlConnection myConnection)
+        public CheckForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            pictureBox1.Image = Image.FromFile(@"../../pic/logonew.jpg", false);
-            NotOKBtn.Image = Image.FromFile(@"../../pic/delete.png", false);
-            conn = myConnection;
+            //pictureBox1.Image = Image.FromFile(@"../../pic/logonew.jpg", false);
+            //NotOKBtn.Image = Image.FromFile(@"../../pic/delete.png", false);
+            conn = mainform.conn;
+            connOle = mainform.connOle;
+            isSqlOk = mainform.isSqlOk;
         }
 
         private void OKButton_Click(object sender, EventArgs e)
@@ -36,7 +41,16 @@ namespace mySystem
             {
                 String myID = this.CheckerIDTextBox.Text;
                 String mypassword = this.CheckerPWTextBox.Text;
-                userID = CheckUser(conn, myID, mypassword);               
+
+                if (isSqlOk)
+                {
+                    userID = CheckUser(conn, myID, mypassword);
+                }
+                else
+                {
+                    userID = CheckUser(connOle, myID, mypassword);
+                }   
+          
             }
             opinion = OpTextBox.Text;
         }
@@ -55,7 +69,15 @@ namespace mySystem
             {
                 String myID = this.CheckerIDTextBox.Text;
                 String mypassword = this.CheckerPWTextBox.Text;
-                userID = CheckUser(conn, myID, mypassword);
+
+                if (isSqlOk)
+                {
+                    userID = CheckUser(conn, myID, mypassword);
+                }
+                else
+                {
+                    userID = CheckUser(connOle, myID, mypassword);
+                }  
 
             }
             opinion = OpTextBox.Text;
@@ -89,6 +111,42 @@ namespace mySystem
             }
 
         }
+
+        private int CheckUser(OleDbConnection Connection, string ID, string password)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Connection;
+            comm.CommandText = "select * from [user] where user_id= @ID and user_password= @password";
+            comm.Parameters.AddWithValue("@ID", ID);
+            comm.Parameters.AddWithValue("@password", password);
+
+            OleDbDataReader sdr = comm.ExecuteReader();//执行查询
+            if (sdr.Read())  //如果该用户存在
+            {
+                MessageBox.Show("登录成功！", "提示");
+                userID = sdr.GetInt32(3);
+                comm.Dispose();
+                sdr.Close();
+                sdr.Dispose();
+                this.Hide();
+                return userID;
+
+            }
+            else
+            {
+                MessageBox.Show("输入登录信息不正确，请重新输入！", "警告");
+                this.CheckerIDTextBox.Text = null;
+                this.CheckerPWTextBox.Text = null;
+                CheckerIDTextBox.Focus();
+                sdr.Close();
+                sdr.Dispose();
+                return 0;
+
+            }
+
+        }
+
+
 
         private void CancelButton_Click(object sender, EventArgs e)
         {

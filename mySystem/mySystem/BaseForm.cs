@@ -17,5 +17,10 @@ namespace mySystem
             mainform = mForm;
             InitializeComponent();
         }
+
+        public BaseForm()
+        { 
+        
+        }
     }
 }

@@ -37,6 +37,10 @@
             this.A3Btn = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.B8Btn = new System.Windows.Forms.Button();
+            this.B6Btn = new System.Windows.Forms.Button();
+            this.B9Btn = new System.Windows.Forms.Button();
+            this.B7Btn = new System.Windows.Forms.Button();
             this.B1Btn = new System.Windows.Forms.Button();
             this.B5Btn = new System.Windows.Forms.Button();
             this.B2Btn = new System.Windows.Forms.Button();
@@ -52,10 +56,6 @@
             this.D2Btn = new System.Windows.Forms.Button();
             this.D4Btn = new System.Windows.Forms.Button();
             this.D3Btn = new System.Windows.Forms.Button();
-            this.B8Btn = new System.Windows.Forms.Button();
-            this.B6Btn = new System.Windows.Forms.Button();
-            this.B9Btn = new System.Windows.Forms.Button();
-            this.B7Btn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -130,6 +130,7 @@
             this.A3Btn.TabIndex = 11;
             this.A3Btn.Text = "吹膜机组清洁记录";
             this.A3Btn.UseVisualStyleBackColor = true;
+            this.A3Btn.Click += new System.EventHandler(this.A3Btn_Click);
             // 
             // groupBox1
             // 
@@ -166,6 +167,46 @@
             this.groupBox2.TabIndex = 19;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "生产运行";
+            // 
+            // B8Btn
+            // 
+            this.B8Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.B8Btn.Location = new System.Drawing.Point(15, 409);
+            this.B8Btn.Name = "B8Btn";
+            this.B8Btn.Size = new System.Drawing.Size(200, 38);
+            this.B8Btn.TabIndex = 21;
+            this.B8Btn.Text = "产品内包装记录";
+            this.B8Btn.UseVisualStyleBackColor = true;
+            // 
+            // B6Btn
+            // 
+            this.B6Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.B6Btn.Location = new System.Drawing.Point(15, 305);
+            this.B6Btn.Name = "B6Btn";
+            this.B6Btn.Size = new System.Drawing.Size(200, 38);
+            this.B6Btn.TabIndex = 20;
+            this.B6Btn.Text = "吹膜工序生产和检验记录";
+            this.B6Btn.UseVisualStyleBackColor = true;
+            // 
+            // B9Btn
+            // 
+            this.B9Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.B9Btn.Location = new System.Drawing.Point(15, 461);
+            this.B9Btn.Name = "B9Btn";
+            this.B9Btn.Size = new System.Drawing.Size(200, 38);
+            this.B9Btn.TabIndex = 19;
+            this.B9Btn.Text = "产品外包装记录";
+            this.B9Btn.UseVisualStyleBackColor = true;
+            // 
+            // B7Btn
+            // 
+            this.B7Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.B7Btn.Location = new System.Drawing.Point(15, 357);
+            this.B7Btn.Name = "B7Btn";
+            this.B7Btn.Size = new System.Drawing.Size(200, 38);
+            this.B7Btn.TabIndex = 18;
+            this.B7Btn.Text = "吹膜工序物料平衡记录";
+            this.B7Btn.UseVisualStyleBackColor = true;
             // 
             // B1Btn
             // 
@@ -300,7 +341,7 @@
             // D2Btn
             // 
             this.D2Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.D2Btn.Location = new System.Drawing.Point(20, 103);
+            this.D2Btn.Location = new System.Drawing.Point(20, 97);
             this.D2Btn.Name = "D2Btn";
             this.D2Btn.Size = new System.Drawing.Size(185, 54);
             this.D2Btn.TabIndex = 16;
@@ -310,7 +351,7 @@
             // D4Btn
             // 
             this.D4Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.D4Btn.Location = new System.Drawing.Point(20, 253);
+            this.D4Btn.Location = new System.Drawing.Point(20, 233);
             this.D4Btn.Name = "D4Btn";
             this.D4Btn.Size = new System.Drawing.Size(185, 38);
             this.D4Btn.TabIndex = 15;
@@ -320,52 +361,12 @@
             // D3Btn
             // 
             this.D3Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.D3Btn.Location = new System.Drawing.Point(20, 178);
+            this.D3Btn.Location = new System.Drawing.Point(20, 166);
             this.D3Btn.Name = "D3Btn";
             this.D3Btn.Size = new System.Drawing.Size(185, 52);
             this.D3Btn.TabIndex = 11;
             this.D3Btn.Text = "吹膜机更换模芯记录及安装检查表";
             this.D3Btn.UseVisualStyleBackColor = true;
-            // 
-            // B8Btn
-            // 
-            this.B8Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B8Btn.Location = new System.Drawing.Point(15, 409);
-            this.B8Btn.Name = "B8Btn";
-            this.B8Btn.Size = new System.Drawing.Size(200, 38);
-            this.B8Btn.TabIndex = 21;
-            this.B8Btn.Text = "产品内包装记录";
-            this.B8Btn.UseVisualStyleBackColor = true;
-            // 
-            // B6Btn
-            // 
-            this.B6Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B6Btn.Location = new System.Drawing.Point(15, 305);
-            this.B6Btn.Name = "B6Btn";
-            this.B6Btn.Size = new System.Drawing.Size(200, 38);
-            this.B6Btn.TabIndex = 20;
-            this.B6Btn.Text = "吹膜工序生产和检验记录";
-            this.B6Btn.UseVisualStyleBackColor = true;
-            // 
-            // B9Btn
-            // 
-            this.B9Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B9Btn.Location = new System.Drawing.Point(15, 461);
-            this.B9Btn.Name = "B9Btn";
-            this.B9Btn.Size = new System.Drawing.Size(200, 38);
-            this.B9Btn.TabIndex = 19;
-            this.B9Btn.Text = "产品外包装记录";
-            this.B9Btn.UseVisualStyleBackColor = true;
-            // 
-            // B7Btn
-            // 
-            this.B7Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B7Btn.Location = new System.Drawing.Point(15, 357);
-            this.B7Btn.Name = "B7Btn";
-            this.B7Btn.Size = new System.Drawing.Size(200, 38);
-            this.B7Btn.TabIndex = 18;
-            this.B7Btn.Text = "吹膜工序物料平衡记录";
-            this.B7Btn.UseVisualStyleBackColor = true;
             // 
             // ExtructionMainForm
             // 
