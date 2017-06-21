@@ -9,13 +9,18 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
+using System.Data.OleDb;
 
 namespace WindowsFormsApplication1
 {
-    public partial class Record_extrusSupply : Form
+    public partial class Record_extrusSupply : mySystem.BaseForm
     {
         //SqlConnection conn;
-        private ExtructionProcess extructionformfather = null;
+        //private ExtructionProcess extructionformfather = null;
+
+        SqlConnection conn = null;//连接sql
+        OleDbConnection connOle = null;//连接access
+        bool isSqlOk;//使用sql还是access
 
         string product_code;//产品代码
         string product_num;//产品批号
@@ -120,11 +125,13 @@ namespace WindowsFormsApplication1
             //dataGridView2.AllowUserToAddRows = false;
         }
 
-        public Record_extrusSupply(ExtructionProcess winMain)
+        public Record_extrusSupply(mySystem.MainForm mainform):base(mainform)
         {
-            //conn = con;
+            conn = mainform.conn;
+            connOle = mainform.connOle;
+            isSqlOk = mainform.isSqlOk;
+
             InitializeComponent();
-            extructionformfather = winMain;
             Init();
             Setup();
         }

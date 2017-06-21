@@ -36,6 +36,12 @@ namespace mySystem
             extrusclean.Show();
         }
 
+        private void A5Btn_Click(object sender, EventArgs e)
+        {
+            Record_extrusSiteClean ext = new Record_extrusSiteClean(mform);
+            ext.Show();
+        }
+
 
 
 

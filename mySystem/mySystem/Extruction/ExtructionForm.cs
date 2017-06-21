@@ -114,8 +114,8 @@ namespace mySystem
 
         private void Chart5Btn_Click(object sender, EventArgs e)
         {
-            Record_extrusSiteClean myDlg = new Record_extrusSiteClean(conn);
-            myDlg.Show();
+            //Record_extrusSiteClean myDlg = new Record_extrusSiteClean(conn);
+            //myDlg.Show();
         }
 
 

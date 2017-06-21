@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 //using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
+using System.Data.OleDb;
+
 
 
 namespace mySystem.Extruction.Process
@@ -17,9 +19,13 @@ namespace mySystem.Extruction.Process
     /// <summary>
     /// 吹膜工序清场记录
     /// </summary>
-    public partial class Record_extrusSiteClean : Form
+    public partial class Record_extrusSiteClean : mySystem.BaseForm
     {
-        SqlConnection conn=null;
+        //SqlConnection conn=null;
+        SqlConnection conn = null;//连接sql
+        OleDbConnection connOle = null;//连接access
+        bool isSqlOk;//使用sql还是access
+
         string prod_instrcode;//生产指令
         string prod_code;//清场前产品代码及
         string prod_batch;//清场前批号
@@ -41,6 +47,13 @@ namespace mySystem.Extruction.Process
         List<int> ischecked_2;//吹膜工序 检查结果是否合格列表
 
         static int k = 0;
+
+        //查询数据库，获得供料工序和吹膜工序清场列表
+        private void queryjob()
+        {
+            unit_serve = new string[] { "填写供料记录是否已归档", "使用剩余的原料是否称重退库", "设备是否按程序开机，并切断电源", "设备和工位器具是否已清洁", "生产废弃物是否已清，卫生是否已打扫", "其他" };
+            unit_exstru = new string[] { "填写的记录是否已归档", "使用的文件，设备运行参数是否已经归档", "设备是否已按程序关机，并切断电源", "设备和工位器具是否已清洁", "生产的产品是否定置摆放，粘贴标签，登记台账", "生产用半成品标签是否已销毁", "生产废物是否已清，卫生是否已打扫", "其他" };
+        }
         private void Init()
         {
             cleaner = 32;
@@ -53,8 +66,7 @@ namespace mySystem.Extruction.Process
             //date = "2017/6/10";
 
             comboBox2.Text = "供料工序";
-            unit_serve = new string[] {"填写供料记录是否已归档","使用剩余的原料是否称重退库","设备是否按程序开机，并切断电源","设备和工位器具是否已清洁","生产废弃物是否已清，卫生是否已打扫","其他"};
-            unit_exstru = new string[]{"填写的记录是否已归档","使用的文件，设备运行参数是否已经归档","设备是否已按程序关机，并切断电源","设备和工位器具是否已清洁","生产的产品是否定置摆放，粘贴标签，登记台账","生产用半成品标签是否已销毁","生产废物是否已清，卫生是否已打扫","其他"};
+
 
             dataGridView1.AllowUserToAddRows = false;
             ischecked_1 = new List<int>();
@@ -126,10 +138,14 @@ namespace mySystem.Extruction.Process
                 dataGridView1.Rows.RemoveAt(i);
 
         }
-        public Record_extrusSiteClean(SqlConnection mycon)
+        public Record_extrusSiteClean(mySystem.MainForm mainform):base(mainform)
         {
-            conn = mycon;
+            conn = mainform.conn;
+            connOle = mainform.connOle;
+            isSqlOk = mainform.isSqlOk;
+
             InitializeComponent();
+            queryjob();
             Init();
             AddtoGridView();
         }
@@ -164,33 +180,51 @@ namespace mySystem.Extruction.Process
 
 
             //插入数据库
-            string s = "update clean_record_of_extrusion_process set production_instruction='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
-            s += ",cleaner_id=" + cleaner;
-            s += ",reviewer_id=" + checker;
-            for (int i = 0; i < unit_serve.Length; i++)
-            {
-                s += ",item" + (i + 1).ToString() + "_is_cleaned="+ischecked_1[i];
-            }
-            for (int i = 7; i < 15; i++)
-            {
-                s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i-7];
-            }
-
-            s += " where id=1";
-            //SqlCommand comm = new SqlCommand(s, conn);
-            //SqlDataAdapter da = new SqlDataAdapter(comm);
-            //更新数据库
             int result = 0;
-            using (SqlCommand comm = new SqlCommand(s, conn))
+            if (mainform.isSqlOk)
             {
-                //conn.Open();
-                result = comm.ExecuteNonQuery();
-                if (result > 0)
+                string s = "update clean_record_of_extrusion_process set production_instruction='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
+                s += ",cleaner_id=" + cleaner;
+                s += ",reviewer_id=" + checker;
+                for (int i = 0; i < unit_serve.Length; i++)
                 {
-                    //MessageBox.Show("添加成功");
+                    s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
                 }
-                else { MessageBox.Show("错误"); }
+                for (int i = 7; i < 15; i++)
+                {
+                    s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i - 7];
+                }
+
+                s += " where id=1";
+                using (SqlCommand comm = new SqlCommand(s, conn))
+                {
+                    result = comm.ExecuteNonQuery();
+
+                }
             }
+            else
+            {
+                string s = "update clean_record_of_extrusion_process set production_instruction='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
+                s += ",cleaner_id=" + cleaner;
+                s += ",reviewer_id=" + checker;
+                for (int i = 0; i < unit_serve.Length; i++)
+                {
+                    s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
+                }
+                for (int i = 7; i < 15; i++)
+                {
+                    s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i - 7];
+                }
+
+                s += " where id=1";
+                OleDbCommand comm = new OleDbCommand(s, mainform.connOle);
+                result = comm.ExecuteNonQuery();
+            }
+            if (result > 0)
+            {
+                MessageBox.Show("添加成功");
+            }
+            else { MessageBox.Show("错误"); }
 
         }
 

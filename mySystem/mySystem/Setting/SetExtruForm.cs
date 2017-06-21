@@ -31,7 +31,7 @@ namespace mySystem
         private void cleanPanel_Paint(object sender, PaintEventArgs e)
         {
             cleanPanel.Controls.Clear();
-            Setting_CleanArea setcleanDlg = new Setting_CleanArea();
+            Setting_CleanArea setcleanDlg = new Setting_CleanArea(base.mainform);
             setcleanDlg.TopLevel = false;
             setcleanDlg.FormBorderStyle = FormBorderStyle.None;
             cleanPanel.Controls.Add(setcleanDlg);
