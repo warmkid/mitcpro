@@ -42,6 +42,18 @@ namespace mySystem
             ext.Show();
         }
 
+        private void A1Btn_Click(object sender, EventArgs e)
+        {
+            BatchProductRecord.BatchProductRecord b = new BatchProductRecord.BatchProductRecord(mform);
+            b.Show();
+        }
+
+        private void A2Btn_Click(object sender, EventArgs e)
+        {
+            BatchProductRecord.ProcessProductInstru ppi = new BatchProductRecord.ProcessProductInstru(mform);
+            ppi.Show();
+        }
+
 
 
 

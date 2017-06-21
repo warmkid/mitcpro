@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace BatchProductRecord
 {
-    public partial class BatchProductRecord : Form
+    public partial class BatchProductRecord : mySystem.BaseForm
     {
-        public BatchProductRecord()
+        public BatchProductRecord(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
         }
@@ -22,6 +22,11 @@ namespace BatchProductRecord
         }
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
 
         }

@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace BatchProductRecord
 {
-    public partial class ProcessProductInstru : Form
+    public partial class ProcessProductInstru : mySystem.BaseForm
     {
-        public ProcessProductInstru()
+        public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
         }
@@ -22,6 +22,11 @@ namespace BatchProductRecord
         }
 
         private void ProcessProductInstru_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }

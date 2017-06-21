@@ -82,6 +82,7 @@
             this.A2Btn.TabIndex = 16;
             this.A2Btn.Text = "吹膜工序生产指令";
             this.A2Btn.UseVisualStyleBackColor = true;
+            this.A2Btn.Click += new System.EventHandler(this.A2Btn_Click);
             // 
             // A4Btn
             // 
@@ -121,6 +122,7 @@
             this.A1Btn.TabIndex = 12;
             this.A1Btn.Text = "批生产记录（吹膜）";
             this.A1Btn.UseVisualStyleBackColor = true;
+            this.A1Btn.Click += new System.EventHandler(this.A1Btn_Click);
             // 
             // A3Btn
             // 
