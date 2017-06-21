@@ -57,6 +57,11 @@ namespace mySystem
             }
         }
 
+        private void Connect2SqlForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
 
     }
 }

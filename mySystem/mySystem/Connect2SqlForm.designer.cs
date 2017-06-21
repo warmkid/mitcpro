@@ -108,6 +108,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(342, 166);
+            this.ControlBox = false;
             this.Controls.Add(this.ExitButton);
             this.Controls.Add(this.Connect2SqlButton);
             this.Controls.Add(this.PortTextBox);
@@ -115,11 +116,14 @@
             this.Controls.Add(this.IPTextBox);
             this.Controls.Add(this.服务器IP);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Connect2SqlForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "连接到数据库";
+            this.Load += new System.EventHandler(this.Connect2SqlForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

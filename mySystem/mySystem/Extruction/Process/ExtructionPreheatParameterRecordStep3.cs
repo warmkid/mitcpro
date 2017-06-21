@@ -8,24 +8,33 @@ using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using System.Data.SqlClient;
+using System.Data.OleDb;
 
 namespace mySystem.Extruction.Process
 {
-    public partial class ExtructionPreheatParameterRecordStep3 : Form
+    public partial class ExtructionPreheatParameterRecordStep3 : BaseForm
     {
         private ExtructionProcess extructionformfather = null;
-        public string recorder; //记录人
-        public string checker; //复核人
-        public string date; //日期
 
-        private SqlConnection conn = null;
         private string sql = "Select * From extrusion";
+        private SqlConnection conn = null;
+        private OleDbConnection connOle = null;
+        private bool isSqlOk;
 
-        public ExtructionPreheatParameterRecordStep3(ExtructionProcess winMain, SqlConnection Mainconn)
+        private int operator_id;
+        private string operator_name;
+        private DateTime operate_date;
+        private int review_id;
+        private string reviewer_name;
+        private DateTime review_date;
+
+        public ExtructionPreheatParameterRecordStep3(MainForm mainform): base(mainform)
         {
             InitializeComponent();
-            extructionformfather = winMain;
-            conn = Mainconn;
+            
+            conn = base.mainform.conn;
+            connOle = base.mainform.connOle;
+
             InformationInitialize();
             
         }
@@ -33,38 +42,50 @@ namespace mySystem.Extruction.Process
         private void InformationInitialize()
         {
             ///***********************表头数据初始化************************///
-            recorder = "记录人员";
-            checker = "复核人员";
-            date = DateTime.Now.ToLongDateString().ToString();
-            /*
-            this.recorderlabel.Text = recorder;
-            this.checkerlabel.Text = checker;
-            this.datelabel.Text = date;
-             * */
             this.PSbox.AutoSize = false;
             this.PSbox.Height = 32;
 
-            //若已有数据，向内部添加现有数据
-            SqlCommand comm = new SqlCommand(sql, conn);
-            SqlDataAdapter daSQL = new SqlDataAdapter(comm);
-            DataTable dtSQL = new DataTable();
-            daSQL.Fill(dtSQL);
-
-            int stepnow = Convert.ToInt32(dtSQL.Rows[0]["step_status"]);
-            if (stepnow >= 3)
+            if (isSqlOk)
             {
+                //若已有数据，向内部添加现有数据
+                SqlCommand comm = new SqlCommand(sql, conn);
+                SqlDataAdapter daSQL = new SqlDataAdapter(comm);
+                DataTable dtSQL = new DataTable();
+                daSQL.Fill(dtSQL);
+
                 this.phiBox.Text = dtSQL.Rows[0]["s3_core_specifications_1"].ToString();
                 this.gapBox.Text = dtSQL.Rows[0]["s3_core_specifications_2"].ToString();
                 this.timeBox1.Text = dtSQL.Rows[0]["s3_start_preheat_time"].ToString();
                 this.timeBox2.Text = dtSQL.Rows[0]["s3_end_preheat_time"].ToString();
                 this.timeBox3.Text = dtSQL.Rows[0]["s3_start_insulation_time"].ToString();
                 this.timeBox4.Text = dtSQL.Rows[0]["s3_end_insulation_time_1"].ToString();
-                this.timeBox5.Text = dtSQL.Rows[0]["s3_end_insulation_time_2"].ToString();                
-            }
+                this.timeBox5.Text = dtSQL.Rows[0]["s3_end_insulation_time_2"].ToString();
 
-            comm.Dispose();
-            daSQL.Dispose();
-            dtSQL.Dispose();
+                comm.Dispose();
+                daSQL.Dispose();
+                dtSQL.Dispose();
+            }
+            else
+            {
+                //若已有数据，向内部添加现有数据
+                OleDbCommand comm = new OleDbCommand(sql, connOle);
+                OleDbDataAdapter daOle = new OleDbDataAdapter(comm);
+                DataTable dtOle = new DataTable();
+                daOle.Fill(dtOle);
+
+                this.phiBox.Text = dtOle.Rows[0]["s3_core_specifications_1"].ToString();
+                this.gapBox.Text = dtOle.Rows[0]["s3_core_specifications_2"].ToString();
+                this.timeBox1.Text = dtOle.Rows[0]["s3_start_preheat_time"].ToString();
+                this.timeBox2.Text = dtOle.Rows[0]["s3_end_preheat_time"].ToString();
+                this.timeBox3.Text = dtOle.Rows[0]["s3_start_insulation_time"].ToString();
+                this.timeBox4.Text = dtOle.Rows[0]["s3_end_insulation_time_1"].ToString();
+                this.timeBox5.Text = dtOle.Rows[0]["s3_end_insulation_time_2"].ToString();
+
+                comm.Dispose();
+                daOle.Dispose();
+                dtOle.Dispose();
+            }
+            
 
            this.PSbox.Text = "时间输入的格式示例为：2003-12-24 14:34:08";
 

@@ -311,6 +311,9 @@
     <Compile Include="Setting\SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="BaseForm.resx">
+      <DependentUpon>BaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>

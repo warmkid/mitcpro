@@ -21,8 +21,8 @@ namespace mySystem
         string strCon;
         public SqlConnection conn;
         public OleDbConnection connOle;
-        string username; //登录用户名
-        int userID;
+        public string username; //登录用户名
+        public int userID;
 
         public MainForm()
         {
@@ -57,10 +57,7 @@ namespace mySystem
             //ProducePanelRight.Size = new Size(ScreenArea.Width - 184, ScreenArea.Height - 260);
             //StockPanelLeft.Size = SystemPanelLeft.Size = ProducePanelLeft.Size;
             //StockPanelRight.Size = SystemPanelRight.Size = ProducePanelRight.Size;
-            //this.textBox1.Text = ProducePanelRight.Size.Height.ToString();
-            //MainProduceBtn.Image = Image.FromFile(@"../../pic/MainProduce.png", false);
-            //MainSettingBtn.Image = Image.FromFile(@"../../pic/MainSetting.png", false);
-            //MainQueryBtn.Image = Image.FromFile(@"../../pic/MainQuery.png", false);
+            //this.textBox1.Text = ProducePanelRight.Size.Height.ToString();           
 
         }
 
@@ -89,8 +86,6 @@ namespace mySystem
             comm.CommandText = "select * from [user] where user_id= @ID";
             comm.Parameters.AddWithValue("@ID", userID);
 
-            //string searchole = "select * from [user] where user_id='" + userID + "'";
-            //OleDbCommand comm = new OleDbCommand(searchole, connOle);
             OleDbDataReader myReader = comm.ExecuteReader();
             while (myReader.Read())
             {

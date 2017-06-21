@@ -175,6 +175,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "欢迎使用颇尔奥星管理系统";
             ((System.ComponentModel.ISupportInitialize)(this.订单信息BindingSource)).EndInit();

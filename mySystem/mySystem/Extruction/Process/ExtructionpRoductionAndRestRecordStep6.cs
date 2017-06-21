@@ -8,17 +8,27 @@ using System.Text;
 using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using System.Data.SqlClient;
+using System.Data.OleDb;
 
 namespace mySystem.Extruction.Process
 {
-    public partial class ExtructionpRoductionAndRestRecordStep6 : Form
+    public partial class ExtructionpRoductionAndRestRecordStep6 : BaseForm
     {
         private ExtructionProcess extructionformfather = null;
         private DataTable dtInformation = new DataTable();
         private DataTable dtRecord = new DataTable();
 
-        private SqlConnection conn = null;
         private string sql = "Select * From extrusion";
+        private SqlConnection conn = null;
+        private OleDbConnection connOle = null;
+        private bool isSqlOk;
+
+        private int operator_id;
+        private string operator_name;
+        private DateTime operate_date;
+        private int review_id;
+        private string reviewer_name;
+        private DateTime review_date;
 
         private int Recordnum = 0;
         private string productname = "";  //产品名称
@@ -28,42 +38,26 @@ namespace mySystem.Extruction.Process
         private bool spot = true;  //班次；true白班；false夜班
 
 
-        public string date = "";  //生产日期        
-        public string recorder;  //记录人
-        public string checker;  //检查人
-
-        
-
-        public ExtructionpRoductionAndRestRecordStep6(ExtructionProcess winMain, SqlConnection Mainconn)
+        public ExtructionpRoductionAndRestRecordStep6(MainForm mainform) : base(mainform)
         {
             InitializeComponent();
-            extructionformfather = winMain;
 
-            conn = Mainconn;
+            conn = base.mainform.conn;
+            connOle = base.mainform.connOle;
+            isSqlOk = base.mainform.isSqlOk;
+            operator_id = base.mainform.userID;
 
-            InformationViewInitialize();
             RecordViewInitialize();
 
             AddLineBtn.Enabled = false;
         }
 
-        private void InformationViewInitialize()
-        {
-            ///***********************表头数据初始化************************///
-            date = DateTime.Now.ToLongDateString().ToString();
-            spot = true;
-            recorder = "";  //记录人
-            checker = "";  //检查人
-            /*
-            this.Datelabel.Text = "生产日期：" + date;
-            this.CheckNameLabel.Text = "复核人:" + checkername;
-             * */
-            this.DatecheckBox.Checked = spot;
-            this.NeightcheckBox.Checked = !spot;
-        }
 
         private void RecordViewInitialize()
         {
+            this.DatecheckBox.Checked = spot;
+            this.NeightcheckBox.Checked = !spot;
+
             //添加列
             dtRecord.Columns.Add("序号", typeof(String));
             dtRecord.Columns.Add("时间", typeof(String));
@@ -106,37 +100,44 @@ namespace mySystem.Extruction.Process
             this.RecordView.ColumnHeadersHeight = 40;
 
 
-            //若已有数据，向内部添加现有数据
-            SqlCommand comm = new SqlCommand(sql, conn);
-            SqlDataAdapter daSQL = new SqlDataAdapter(comm);
-            DataTable dtSQL = new DataTable();
-            daSQL.Fill(dtSQL);
-
-            int stepnow = Convert.ToInt32(dtSQL.Rows[0]["step_status"]);
-            if (stepnow >= 6)
+            ///***********************表头数据初始化************************///
+            if (isSqlOk)
             {
-                this.productnameBox.Text = dtSQL.Rows[0]["product_name"].ToString();
-                this.productnumberBox.Text = dtSQL.Rows[0]["product_batch"].ToString();
-                this.temperatureBox.Text = dtSQL.Rows[0]["s6_temperature"].ToString();
-                this.humidityBox.Text = dtSQL.Rows[0]["s6_relative_humidity"].ToString();
-                bool val = bool.Parse(dtSQL.Rows[0]["s6_flight"].ToString());
-                this.DatecheckBox.Checked = val;
-                this.NeightcheckBox.Checked = !val;
-                this.RecordView.Rows[0].Cells["时间"].Value = dtSQL.Rows[0]["s6_time"].ToString();
-                this.RecordView.Rows[0].Cells["膜卷编号\r(卷)"].Value = dtSQL.Rows[0]["s6_mojuan_number"].ToString();
-                this.RecordView.Rows[0].Cells["膜卷长度\r(m)"].Value = dtSQL.Rows[0]["s6_mojuan_length"].ToString();
-                this.RecordView.Rows[0].Cells["膜卷重量\r(kg)"].Value = dtSQL.Rows[0]["s6_mojuan_weight"].ToString();
-                this.RecordView.Rows[0].Cells["外观"].Value = bool.Parse(dtSQL.Rows[0]["s6_outward"].ToString());
-                this.RecordView.Rows[0].Cells["宽度\r(mm)"].Value = dtSQL.Rows[0]["s6_width"].ToString();
-                this.RecordView.Rows[0].Cells["最大厚度\r（μm）"].Value = dtSQL.Rows[0]["s6_max_thickness"].ToString();
-                this.RecordView.Rows[0].Cells["最小厚度\r（μm）"].Value = dtSQL.Rows[0]["s6_min_thickness"].ToString();
-                this.RecordView.Rows[0].Cells["平均厚度\r（μm）"].Value = dtSQL.Rows[0]["s6_aver_thickness"].ToString();
-                this.RecordView.Rows[0].Cells["厚度公差\r(%)"].Value = dtSQL.Rows[0]["s6_tolerance_thickness"].ToString();
-                this.RecordView.Rows[0].Cells["判定"].Value = bool.Parse(dtSQL.Rows[0]["s6_is_qualified"].ToString());
+                //若已有数据，向内部添加现有数据
+                SqlCommand comm = new SqlCommand(sql, conn);
+                SqlDataAdapter daSQL = new SqlDataAdapter(comm);
+                DataTable dtSQL = new DataTable();
+                daSQL.Fill(dtSQL);
+
+                int stepnow = Convert.ToInt32(dtSQL.Rows[0]["step_status"]);
+                if (stepnow >= 6)
+                {
+                    this.productnameBox.Text = dtSQL.Rows[0]["product_name"].ToString();
+                    this.productnumberBox.Text = dtSQL.Rows[0]["product_batch"].ToString();
+                    this.temperatureBox.Text = dtSQL.Rows[0]["s6_temperature"].ToString();
+                    this.humidityBox.Text = dtSQL.Rows[0]["s6_relative_humidity"].ToString();
+                    bool val = bool.Parse(dtSQL.Rows[0]["s6_flight"].ToString());
+                    this.DatecheckBox.Checked = val;
+                    this.NeightcheckBox.Checked = !val;
+                    this.RecordView.Rows[0].Cells["时间"].Value = dtSQL.Rows[0]["s6_time"].ToString();
+                    this.RecordView.Rows[0].Cells["膜卷编号\r(卷)"].Value = dtSQL.Rows[0]["s6_mojuan_number"].ToString();
+                    this.RecordView.Rows[0].Cells["膜卷长度\r(m)"].Value = dtSQL.Rows[0]["s6_mojuan_length"].ToString();
+                    this.RecordView.Rows[0].Cells["膜卷重量\r(kg)"].Value = dtSQL.Rows[0]["s6_mojuan_weight"].ToString();
+                    this.RecordView.Rows[0].Cells["外观"].Value = bool.Parse(dtSQL.Rows[0]["s6_outward"].ToString());
+                    this.RecordView.Rows[0].Cells["宽度\r(mm)"].Value = dtSQL.Rows[0]["s6_width"].ToString();
+                    this.RecordView.Rows[0].Cells["最大厚度\r（μm）"].Value = dtSQL.Rows[0]["s6_max_thickness"].ToString();
+                    this.RecordView.Rows[0].Cells["最小厚度\r（μm）"].Value = dtSQL.Rows[0]["s6_min_thickness"].ToString();
+                    this.RecordView.Rows[0].Cells["平均厚度\r（μm）"].Value = dtSQL.Rows[0]["s6_aver_thickness"].ToString();
+                    this.RecordView.Rows[0].Cells["厚度公差\r(%)"].Value = dtSQL.Rows[0]["s6_tolerance_thickness"].ToString();
+                    this.RecordView.Rows[0].Cells["判定"].Value = bool.Parse(dtSQL.Rows[0]["s6_is_qualified"].ToString());
+                }
+                comm.Dispose();
+                daSQL.Dispose();
+                dtSQL.Dispose();
             }
-            comm.Dispose();
-            daSQL.Dispose();
-            dtSQL.Dispose();
+            else
+            { }
+            
         }
 
         private void AddRecordRowLine()

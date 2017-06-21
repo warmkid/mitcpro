@@ -155,6 +155,7 @@ namespace mySystem.Extruction.Process
         //确认按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
+            /*
             if ((StepShowState > 0) && (StepShowState < 7))
             {
                 switch (StepShowState)
@@ -186,7 +187,7 @@ namespace mySystem.Extruction.Process
                     default:
                         break;
                 }
-            }  
+            }  */
         }
 
         //审核通过按钮

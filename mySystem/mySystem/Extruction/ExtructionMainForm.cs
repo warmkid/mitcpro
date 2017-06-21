@@ -28,7 +28,42 @@ namespace mySystem
             isSqlOk = mainform.isSqlOk;
             mform = mainform;
             InitializeComponent();
+            Init();
         }
+
+        private void Init()
+        {
+            if (!isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = connOle;
+                comm.CommandText = "select production_instruction_code from production_instruction";
+                OleDbDataReader reader = comm.ExecuteReader();//执行查询
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader["production_instruction_code"]);
+                    }
+                }
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = conn;
+                comm.CommandText = "select production_instruction_code from production_instruction";
+                SqlDataReader reader = comm.ExecuteReader();//执行查询
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader["production_instruction_code"]);
+                    }
+                }
+
+            }
+        }
+
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
@@ -36,6 +71,7 @@ namespace mySystem
             extrusclean.Show();
         }
 
+<<<<<<< HEAD
         private void A5Btn_Click(object sender, EventArgs e)
         {
             Record_extrusSiteClean ext = new Record_extrusSiteClean(mform);
@@ -52,6 +88,30 @@ namespace mySystem
         {
             BatchProductRecord.ProcessProductInstru ppi = new BatchProductRecord.ProcessProductInstru(mform);
             ppi.Show();
+=======
+        private void C1Btn_Click(object sender, EventArgs e)
+        {
+            ExtructionCheckBeforePowerStep2 stepform = new ExtructionCheckBeforePowerStep2(mform);
+            stepform.Show();
+        }
+
+        private void C2Btn_Click(object sender, EventArgs e)
+        {
+            ExtructionPreheatParameterRecordStep3 stepform = new ExtructionPreheatParameterRecordStep3(mform);
+            stepform.Show();
+        }
+
+        private void B1Btn_Click(object sender, EventArgs e)
+        {
+            ExtructionTransportRecordStep4 stepform = new ExtructionTransportRecordStep4(mform);
+            stepform.Show();
+        }
+
+        private void B6Btn_Click(object sender, EventArgs e)
+        {
+            ExtructionpRoductionAndRestRecordStep6 stepform = new ExtructionpRoductionAndRestRecordStep6(mform);
+            stepform.Show();
+>>>>>>> b444fd7e2b29f17e2a00051af075fb4a1552842b
         }
 
 
