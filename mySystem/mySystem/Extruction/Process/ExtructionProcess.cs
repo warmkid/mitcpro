@@ -213,82 +213,82 @@ namespace mySystem.Extruction.Process
         private void ShowView(int ProcessState)
         {
             
-            switch (ProcessState)
-            {
-                case 1:
-                    this.BackBtn.Enabled = false;
-                    step1form = new Record_extrusClean(this);
-                    step1form.FormBorderStyle = FormBorderStyle.None;
-                    step1form.TopLevel = false;
-                    this.StepViewPanel.Controls.Clear();
-                    this.StepViewPanel.Controls.Add(step1form);
-                    step1form.Show();
-                    break;
-                case 2:
-                    this.BackBtn.Enabled = true;
-                    step2form = new ExtructionCheckBeforePowerStep2(this, conn);
-                    step2form.FormBorderStyle = FormBorderStyle.None;
-                    step2form.TopLevel = false;
-                    this.StepViewPanel.Controls.Clear();
-                    this.StepViewPanel.Controls.Add(step2form);
-                    //step2form.Disabled();
-                    step2form.Show();
-                    break;
-                case 3:
-                    step3form = new ExtructionPreheatParameterRecordStep3(this, conn);
-                    step3form.FormBorderStyle = FormBorderStyle.None;
-                    step3form.TopLevel = false;
-                    this.StepViewPanel.Controls.Clear();
-                    this.StepViewPanel.Controls.Add(step3form);
-                    //step3form.Disabled();
-                    step3form.Show();
-                    break;
-                case 4:
-                    step4form = new ExtructionTransportRecordStep4(this, conn);
-                    step4form.FormBorderStyle = FormBorderStyle.None;
-                    step4form.TopLevel = false;
-                    this.StepViewPanel.Controls.Clear();
-                    this.StepViewPanel.Controls.Add(step4form);
-                    //step4form.Disabled();
-                    step4form.Show();
-                    break;
-                case 5:
-                    this.NextBtn.Text = "下一页";
-                    step5form = new Record_extrusSupply(this);
-                    step5form.FormBorderStyle = FormBorderStyle.None;
-                    step5form.TopLevel = false;
-                    this.StepViewPanel.Controls.Clear();
-                    this.StepViewPanel.Controls.Add(step5form);
-                    step5form.Show();
-                    break;
-                case 6:
-                    this.NextBtn.Text = "完成";
-                    this.BackBtn.Text = "上一页";
-                    this.SaveBtn.Visible = true;
-                    this.CheckBtn.Visible = true;
-                    step6form = new ExtructionpRoductionAndRestRecordStep6(this, conn);
-                    step6form.FormBorderStyle = FormBorderStyle.None;
-                    step6form.TopLevel = false;
-                    this.StepViewPanel.Controls.Clear();
-                    this.StepViewPanel.Controls.Add(step6form);
-                    //step6form.Disabled();
-                    step6form.Show();
-                    break;
-                case 7:
-                    this.BackBtn.Text = "返回";
-                    this.SaveBtn.Visible = false;
-                    this.CheckBtn.Visible = false;
-                    this.NextBtn.Text = "确认打印";
-                    stepcheckform = new ExtructionCheck(this, conn);
-                    stepcheckform.FormBorderStyle = FormBorderStyle.None;
-                    stepcheckform.TopLevel = false;
-                    this.StepViewPanel.Controls.Clear();
-                    this.StepViewPanel.Controls.Add(stepcheckform);
-                    stepcheckform.Show();
-                    break;
-                default:
-                    break;
-            }
+            //switch (ProcessState)
+            //{
+            //    case 1:
+            //        this.BackBtn.Enabled = false;
+            //        step1form = new Record_extrusClean(this);
+            //        step1form.FormBorderStyle = FormBorderStyle.None;
+            //        step1form.TopLevel = false;
+            //        this.StepViewPanel.Controls.Clear();
+            //        this.StepViewPanel.Controls.Add(step1form);
+            //        step1form.Show();
+            //        break;
+            //    case 2:
+            //        this.BackBtn.Enabled = true;
+            //        step2form = new ExtructionCheckBeforePowerStep2(this, conn);
+            //        step2form.FormBorderStyle = FormBorderStyle.None;
+            //        step2form.TopLevel = false;
+            //        this.StepViewPanel.Controls.Clear();
+            //        this.StepViewPanel.Controls.Add(step2form);
+            //        //step2form.Disabled();
+            //        step2form.Show();
+            //        break;
+            //    case 3:
+            //        step3form = new ExtructionPreheatParameterRecordStep3(this, conn);
+            //        step3form.FormBorderStyle = FormBorderStyle.None;
+            //        step3form.TopLevel = false;
+            //        this.StepViewPanel.Controls.Clear();
+            //        this.StepViewPanel.Controls.Add(step3form);
+            //        //step3form.Disabled();
+            //        step3form.Show();
+            //        break;
+            //    case 4:
+            //        step4form = new ExtructionTransportRecordStep4(this, conn);
+            //        step4form.FormBorderStyle = FormBorderStyle.None;
+            //        step4form.TopLevel = false;
+            //        this.StepViewPanel.Controls.Clear();
+            //        this.StepViewPanel.Controls.Add(step4form);
+            //        //step4form.Disabled();
+            //        step4form.Show();
+            //        break;
+            //    case 5:
+            //        this.NextBtn.Text = "下一页";
+            //        step5form = new Record_extrusSupply(this);
+            //        step5form.FormBorderStyle = FormBorderStyle.None;
+            //        step5form.TopLevel = false;
+            //        this.StepViewPanel.Controls.Clear();
+            //        this.StepViewPanel.Controls.Add(step5form);
+            //        step5form.Show();
+            //        break;
+            //    case 6:
+            //        this.NextBtn.Text = "完成";
+            //        this.BackBtn.Text = "上一页";
+            //        this.SaveBtn.Visible = true;
+            //        this.CheckBtn.Visible = true;
+            //        step6form = new ExtructionpRoductionAndRestRecordStep6(this, conn);
+            //        step6form.FormBorderStyle = FormBorderStyle.None;
+            //        step6form.TopLevel = false;
+            //        this.StepViewPanel.Controls.Clear();
+            //        this.StepViewPanel.Controls.Add(step6form);
+            //        //step6form.Disabled();
+            //        step6form.Show();
+            //        break;
+            //    case 7:
+            //        this.BackBtn.Text = "返回";
+            //        this.SaveBtn.Visible = false;
+            //        this.CheckBtn.Visible = false;
+            //        this.NextBtn.Text = "确认打印";
+            //        stepcheckform = new ExtructionCheck(this, conn);
+            //        stepcheckform.FormBorderStyle = FormBorderStyle.None;
+            //        stepcheckform.TopLevel = false;
+            //        this.StepViewPanel.Controls.Clear();
+            //        this.StepViewPanel.Controls.Add(stepcheckform);
+            //        stepcheckform.Show();
+            //        break;
+            //    default:
+            //        break;
+            //}
         }
 
         private void StepViewPanel_Paint(object sender, PaintEventArgs e)

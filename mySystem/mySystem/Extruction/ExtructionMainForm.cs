@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using WindowsFormsApplication1;
 
 
 namespace mySystem
@@ -31,7 +32,8 @@ namespace mySystem
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-
+            Record_extrusClean extrusclean = new Record_extrusClean(mform);
+            extrusclean.Show();
         }
 
 

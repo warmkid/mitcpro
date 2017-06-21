@@ -11,7 +11,7 @@ namespace mySystem
 {
     public partial class BaseForm : Form
     {
-        private MainForm mainform;
+        public MainForm mainform;
         public BaseForm(MainForm mForm)
         {
             mainform = mForm;
