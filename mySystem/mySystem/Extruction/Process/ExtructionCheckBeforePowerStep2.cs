@@ -270,10 +270,11 @@ namespace mySystem.Extruction.Process
             checkerBox.Text = reviewer_name;
         }
 
+
         private string checkIDSQL(int userID)
         {
             string user = null;
-            string searchsql = "select * from [user] where user_id='" + userID + "'";
+            string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
             SqlCommand comm = new SqlCommand(searchsql, conn);
             SqlDataReader myReader = comm.ExecuteReader();
             while (myReader.Read())
@@ -291,11 +292,9 @@ namespace mySystem.Extruction.Process
             string user = null;
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = connOle;
-            comm.CommandText = "select * from [user] where user_id= @ID";
+            comm.CommandText = "select * from user_aoxing where user_id= @ID";
             comm.Parameters.AddWithValue("@ID", userID);
 
-            //string searchole = "select * from [user] where user_id='" + userID + "'";
-            //OleDbCommand comm = new OleDbCommand(searchole, connOle);
             OleDbDataReader myReader = comm.ExecuteReader();
             while (myReader.Read())
             {
