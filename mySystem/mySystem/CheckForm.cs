@@ -83,7 +83,7 @@ namespace mySystem
 
         private int CheckUser(SqlConnection Connection, string ID, string password)
         {
-            string searchsql = "select * from [user] where user_id='" + ID + "'and user_password='" + password + "'";
+            string searchsql = "select * from user_aoxing where user_id='" + ID + "'and user_password='" + password + "'";
             SqlCommand comm = new SqlCommand(searchsql, Connection);
             SqlDataReader sdr = comm.ExecuteReader();//执行查询
             if (sdr.Read())  //如果该用户存在
@@ -114,7 +114,7 @@ namespace mySystem
         {
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Connection;
-            comm.CommandText = "select * from [user] where user_id= @ID and user_password= @password";
+            comm.CommandText = "select * from user_aoxing where user_id= @ID and user_password= @password";
             comm.Parameters.AddWithValue("@ID", ID);
             comm.Parameters.AddWithValue("@password", password);
 

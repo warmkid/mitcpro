@@ -1,4 +1,5 @@
-﻿using System;
+﻿using mySystem.Setting;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,12 +18,10 @@ namespace mySystem
         SqlConnection conn = null;
         OleDbConnection connOle = null;
         bool isSqlOk;
-        MainForm mform = null;
 
         public SetExtruForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            mform = mainform;
             conn = mainform.conn;
             connOle = mainform.connOle;
             isSqlOk = mainform.isSqlOk;
@@ -30,12 +29,32 @@ namespace mySystem
 
         private void cleanPanel_Paint(object sender, PaintEventArgs e)
         {
-            cleanPanel.Controls.Clear();
+            //cleanPanel.Controls.Clear();
             Setting_CleanArea setcleanDlg = new Setting_CleanArea(base.mainform);
             setcleanDlg.TopLevel = false;
             setcleanDlg.FormBorderStyle = FormBorderStyle.None;
             cleanPanel.Controls.Add(setcleanDlg);
             setcleanDlg.Show();
         }
+
+        private void preHeatPanel_Paint(object sender, PaintEventArgs e)
+        {
+            PreheatParameterForm preheatDlg = new PreheatParameterForm(base.mainform);
+            preheatDlg.TopLevel = false;
+            preheatDlg.FormBorderStyle = FormBorderStyle.None;
+            preHeatPanel.Controls.Add(preheatDlg);
+            preheatDlg.Show();
+        }
+
+        private void bfStartPanel_Paint(object sender, PaintEventArgs e)
+        {
+            Setting_CheckBeforePower bfPowerDlg = new Setting_CheckBeforePower(base.mainform);
+            bfPowerDlg.TopLevel = false;
+            bfPowerDlg.FormBorderStyle = FormBorderStyle.None;
+            bfStartPanel.Controls.Add(bfPowerDlg);
+            bfPowerDlg.Show();
+
+        }
+
     }
 }

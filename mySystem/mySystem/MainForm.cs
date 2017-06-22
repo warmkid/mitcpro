@@ -65,7 +65,7 @@ namespace mySystem
         private string checkID(int userID)
         {
             string user = null;
-            string searchsql = "select * from [user] where user_id='" + userID + "'";
+            string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
             SqlCommand comm = new SqlCommand(searchsql, conn);
             SqlDataReader myReader = comm.ExecuteReader();
             while (myReader.Read())
@@ -83,7 +83,7 @@ namespace mySystem
             string user = null;
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = connOle;
-            comm.CommandText = "select * from [user] where user_id= @ID";
+            comm.CommandText = "select * from user_aoxing where user_id= @ID";
             comm.Parameters.AddWithValue("@ID", userID);
 
             OleDbDataReader myReader = comm.ExecuteReader();
