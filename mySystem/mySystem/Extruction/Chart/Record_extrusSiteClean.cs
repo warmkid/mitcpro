@@ -217,10 +217,64 @@ namespace mySystem.Extruction.Process
 
         }
 
+        //查找输入清场人和检查人名字是否合法
+        private int queryid(string s)
+        {
+            //如果查找成功返回id，否则返回-1
+            //int rtnum = -1;
+            if (mainform.isSqlOk)
+            {
+                //未完成
+                //string sql = "select user_id from cleanarea";
+                //SqlCommand comm = new SqlCommand(sql, conn);
+                //SqlDataAdapter da = new SqlDataAdapter(comm);
+
+                //dt = new DataTable();
+                //da.Fill(dt);
+                return -1;
+            }
+            else
+            {
+                string asql = "select user_id from user_aoxing where user_name=" + "'" + s + "'";
+                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                if (tempdt.Rows.Count == 0)
+                    return -1;
+                else
+                    return Int32.Parse(tempdt.Rows[0][0].ToString());
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             //cleaner = textBox4.Text;
+            string strcleaner = textBox5.Text;
+            string strchecker = textBox6.Text;
+            if (strcleaner == "" || strchecker == "")
+            {
+                MessageBox.Show("清场人和检查人均不能为空");
+                return;
+            }
+            cleaner = queryid(strcleaner);
+            checker = queryid(strchecker);
+            if (cleaner == -1)
+            {
+                MessageBox.Show("清场人id不存在");
+                return;
+            }
+            if (checker == -1)
+            {
+                MessageBox.Show("检查人id不存在");
+                return;
+            }
+
+            //生产指令先用a代替
             prod_instrcode=textBox1.Text;
+            int a = 2313;
+
             prod_code=textBox2.Text;
             prod_batch=textBox4.Text;
             date=dateTimePicker1.Value;
@@ -229,51 +283,65 @@ namespace mySystem.Extruction.Process
             //checker = textBox5.Text;
             extr = textBox3.Text;
 
-            //if (cleaner == "" || checker == "")
-            //{
-            //    MessageBox.Show("清场人和复核人均不能为空");
-            //    return;
-            //}
-
+            //添加记录到jason
+            string json = @"[]";
+            JArray jarray = JArray.Parse(json);
+            string st = "{}";
+            JObject temp1 = JObject.Parse(st);
+            JObject temp2 = JObject.Parse(st);
+            for (int i = 0; i < unit_serve.Count; i++)
+            {
+                temp1.Add(unit_serve[i],new JValue(ischecked_1[i].ToString()));
+            }
+            for (int i = 0; i < unit_exstru.Count; i++)
+            {
+                temp2.Add(unit_exstru[i],new JValue(ischecked_2[i].ToString()));
+            }
+            jarray.Add(temp1);
+            jarray.Add(temp2);       
 
             //插入数据库
             int result = 0;
             if (mainform.isSqlOk)
             {
-                string s = "update clean_record_of_extrusion_process set production_instruction='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
-                s += ",cleaner_id=" + cleaner;
-                s += ",reviewer_id=" + checker;
-                for (int i = 0; i < unit_serve.Count; i++)
-                {
-                    s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
-                }
-                for (int i = 7; i < 15; i++)
-                {
-                    s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i - 7];
-                }
+                //需要修改。。。。。。。。。。。。。。
+                //string s = "update clean_record_of_extrusion_process set production_instruction_id='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
+                //s += ",cleaner_id=" + cleaner;
+                //s += ",reviewer_id=" + checker;
+                //for (int i = 0; i < unit_serve.Count; i++)
+                //{
+                //    s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
+                //}
+                //for (int i = 7; i < 15; i++)
+                //{
+                //    s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i - 7];
+                //}
 
-                s += " where id=1";
-                using (SqlCommand comm = new SqlCommand(s, conn))
-                {
-                    result = comm.ExecuteNonQuery();
+                //s += " where id=1";
+                //using (SqlCommand comm = new SqlCommand(s, conn))
+                //{
+                //    result = comm.ExecuteNonQuery();
 
-                }
+                //}
             }
             else
             {
-                string s = "update clean_record_of_extrusion_process set production_instruction='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
+                string s = "update clean_record_of_extrusion_process set production_instruction_id=" + a + ",product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
                 s += ",cleaner_id=" + cleaner;
                 s += ",reviewer_id=" + checker;
-                for (int i = 0; i < unit_serve.Count; i++)
-                {
-                    s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
-                }
-                for (int i = 7; i < 15; i++)
-                {
-                    s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i - 7];
-                }
+                s+=",is_cleaned='"+jarray.ToString();
+                s += "',is_qualified=" + checkout;
+                //for (int i = 0; i < unit_serve.Count; i++)
+                //{
+                //    s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
+                //}
+                //for (int i = 7; i < 15; i++)
+                //{
+                //    s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i - 7];
+                //}
 
                 s += " where id=1";
+                //System.Console.WriteLine(s);
                 OleDbCommand comm = new OleDbCommand(s, mainform.connOle);
                 result = comm.ExecuteNonQuery();
             }

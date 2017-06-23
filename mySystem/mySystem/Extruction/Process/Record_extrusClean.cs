@@ -186,8 +186,32 @@ namespace WindowsFormsApplication1
         //查找输入清场人和检查人名字是否合法
         private int queryid(string s)
         {
-            int rtnum = 3;
-            return rtnum;//如果查找成功返回id，否则返回-1
+            //如果查找成功返回id，否则返回-1
+            //int rtnum = -1;
+            if (mainform.isSqlOk)
+            {
+                //未完成
+                //string sql = "select user_id from cleanarea";
+                //SqlCommand comm = new SqlCommand(sql, conn);
+                //SqlDataAdapter da = new SqlDataAdapter(comm);
+
+                //dt = new DataTable();
+                //da.Fill(dt);
+                return -1;
+            }
+            else
+            {
+                string asql = "select user_id from user_aoxing where user_name=" + "'" + s + "'"; 
+                OleDbCommand comm = new OleDbCommand(asql,mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                if (tempdt.Rows.Count == 0)
+                    return -1;
+                else
+                    return Int32.Parse(tempdt.Rows[0][0].ToString());
+            }
         }
 
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
@@ -197,6 +221,8 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            //缺少生产批次。。。。。。。。。。。。。。。。。。
+
             cleantime = dateTimePicker1.Value;
             classes = comboBox1.Text.ToString();
             checker = textBox2.Text.ToString();
@@ -209,7 +235,12 @@ namespace WindowsFormsApplication1
             }
 
             int classid;//1代表白班，0代表夜班
-            int checkerid = queryid(checker);
+            int checkerid = queryid(checker);//获取复核人id
+            if (checkerid < 0)
+            {
+                MessageBox.Show("复核人id不存在！");
+                return;
+            }
 
             if (classes == "白班")
                 classid = 1;
@@ -270,7 +301,7 @@ namespace WindowsFormsApplication1
                 int result = 0;
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = connOle;
-                comm.CommandText = "update extrusion set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_content_result_cleaner_reviewer= @cont where id=@id";
+                comm.CommandText = "update extrusion_s1_cleanrecord set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_result_cleaner_reviewer= @cont where id= @id";
                 comm.Parameters.Add("@cleandate", System.Data.OleDb.OleDbType.Date);
                 comm.Parameters.Add("@flight", System.Data.OleDb.OleDbType.Integer);
                 comm.Parameters.Add("@reviewerid", System.Data.OleDb.OleDbType.Integer);
