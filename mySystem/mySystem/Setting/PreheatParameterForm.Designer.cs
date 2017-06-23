@@ -46,7 +46,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.tolerance = new System.Windows.Forms.TextBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -255,7 +254,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.tolerance);
             this.groupBox1.Controls.Add(this.label23);
             this.groupBox1.Controls.Add(this.label9);
@@ -294,16 +292,6 @@
             this.groupBox1.Size = new System.Drawing.Size(1118, 271);
             this.groupBox1.TabIndex = 130;
             this.groupBox1.TabStop = false;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(989, 221);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(97, 33);
-            this.button1.TabIndex = 160;
-            this.button1.Text = "保存测试";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // tolerance
             // 
@@ -692,6 +680,5 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox tolerance;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.Button button1;
     }
 }

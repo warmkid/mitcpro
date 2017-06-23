@@ -23,6 +23,7 @@ namespace mySystem
         public OleDbConnection connOle;
         public string username; //登录用户名
         public int userID;
+        public string proInstruction; //生产指令
 
         public MainForm()
         {

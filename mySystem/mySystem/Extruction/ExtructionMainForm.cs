@@ -43,7 +43,7 @@ namespace mySystem
                 {
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["production_instruction_code"]);
+                        comboBox1.Items.Add(reader["production_instruction_code"]);  //下拉框获取生产指令
                     }
                 }
             }
@@ -110,6 +110,11 @@ namespace mySystem
         {
             ExtructionpRoductionAndRestRecordStep6 stepform = new ExtructionpRoductionAndRestRecordStep6(mform);
             stepform.Show();
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            base.mainform.proInstruction = comboBox1.SelectedItem.ToString();
         }
     }
 }
