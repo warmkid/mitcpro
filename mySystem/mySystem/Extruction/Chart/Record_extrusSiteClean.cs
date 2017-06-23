@@ -40,9 +40,11 @@ namespace mySystem.Extruction.Process
         string extr;//备注
         bool ok;//是否清洁操作
 
-        string[] unit_serve;//供料工序
-        string[] unit_exstru;//吹膜工序
+        //string[] unit_serve;//供料工序
+        //string[] unit_exstru;//吹膜工序
 
+        List<string> unit_serve;//供料工序
+        List<string> unit_exstru;//吹膜工序
         List<int> ischecked_1;//供料工序 检查结果是否合格列表
         List<int> ischecked_2;//吹膜工序 检查结果是否合格列表
 
@@ -51,12 +53,67 @@ namespace mySystem.Extruction.Process
         //查询数据库，获得供料工序和吹膜工序清场列表
         private void queryjob()
         {
-            unit_serve = new string[] { "填写供料记录是否已归档", "使用剩余的原料是否称重退库", "设备是否按程序开机，并切断电源", "设备和工位器具是否已清洁", "生产废弃物是否已清，卫生是否已打扫", "其他" };
-            unit_exstru = new string[] { "填写的记录是否已归档", "使用的文件，设备运行参数是否已经归档", "设备是否已按程序关机，并切断电源", "设备和工位器具是否已清洁", "生产的产品是否定置摆放，粘贴标签，登记台账", "生产用半成品标签是否已销毁", "生产废物是否已清，卫生是否已打扫", "其他" };
+            unit_serve=new List<string>();
+            unit_exstru=new List<string>();
+            if (mainform.isSqlOk)
+            {
+                string sql = "select * from feedingprocess_cleansite";
+                SqlCommand cmd = new SqlCommand(sql, mainform.conn);
+                SqlDataAdapter data = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                data.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    unit_serve.Add(dt.Rows[i][1].ToString());
+                }
+                cmd.Dispose();
+                data.Dispose();
+                dt.Clear();
+                sql = "select * from extrusion_cleansite";
+                cmd = new SqlCommand(sql, mainform.conn);
+                data = new SqlDataAdapter(cmd);
+                data.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    unit_exstru.Add(dt.Rows[i][1].ToString());
+                }
+                cmd.Dispose();
+                data.Dispose();
+                dt.Clear();
+                //unit_serve = new string[] { "填写供料记录是否已归档", "使用剩余的原料是否称重退库", "设备是否按程序开机，并切断电源", "设备和工位器具是否已清洁", "生产废弃物是否已清，卫生是否已打扫", "其他" };
+                //unit_exstru = new string[] { "填写的记录是否已归档", "使用的文件，设备运行参数是否已经归档", "设备是否已按程序关机，并切断电源", "设备和工位器具是否已清洁", "生产的产品是否定置摆放，粘贴标签，登记台账", "生产用半成品标签是否已销毁", "生产废物是否已清，卫生是否已打扫", "其他" };
+            }
+            else
+            {
+                string accessql = "select * from feedingprocess_cleansite";
+                OleDbCommand cmd = new OleDbCommand(accessql, mainform.connOle);
+                OleDbDataAdapter data = new OleDbDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                data.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    unit_serve.Add(dt.Rows[i][1].ToString());
+                }
+                cmd.Dispose();
+                data.Dispose();
+                dt.Clear();
+                accessql = "select * from extrusion_cleansite";
+                cmd = new OleDbCommand(accessql, mainform.connOle);
+                data = new OleDbDataAdapter(cmd);
+                data.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    unit_exstru.Add(dt.Rows[i][1].ToString());
+                }
+                cmd.Dispose();
+                data.Dispose();
+                dt.Clear();
+            }
+
         }
         private void Init()
         {
-            cleaner = 32;
+            cleaner = mainform.userID;
             checker = 45;
 
             prod_instrcode = "ox32";
@@ -72,9 +129,9 @@ namespace mySystem.Extruction.Process
             ischecked_1 = new List<int>();
             ischecked_2 = new List<int>();
 
-            for (int i = 0; i < unit_serve.Length; i++)
+            for (int i = 0; i < unit_serve.Count; i++)
                 ischecked_1.Add(1);
-            for (int i = 0; i < unit_exstru.Length; i++)
+            for (int i = 0; i < unit_exstru.Count; i++)
                 ischecked_2.Add(1);
 
             comboBox1.Text = "合格";
@@ -90,7 +147,7 @@ namespace mySystem.Extruction.Process
                     {
                         Datagrid_del();
                         //添加
-                        for (int i = 0; i < unit_serve.Length; i++)
+                        for (int i = 0; i < unit_serve.Count; i++)
                         {
                             DataGridViewRow dr = new DataGridViewRow();
                             foreach (DataGridViewColumn c in dataGridView1.Columns)
@@ -108,7 +165,7 @@ namespace mySystem.Extruction.Process
                     {
                         Datagrid_del();
                         //添加
-                        for (int i = 0; i < unit_exstru.Length; i++)
+                        for (int i = 0; i < unit_exstru.Count; i++)
                         {
                             DataGridViewRow dr = new DataGridViewRow();
                             foreach (DataGridViewColumn c in dataGridView1.Columns)
@@ -186,7 +243,7 @@ namespace mySystem.Extruction.Process
                 string s = "update clean_record_of_extrusion_process set production_instruction='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
                 s += ",cleaner_id=" + cleaner;
                 s += ",reviewer_id=" + checker;
-                for (int i = 0; i < unit_serve.Length; i++)
+                for (int i = 0; i < unit_serve.Count; i++)
                 {
                     s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
                 }
@@ -207,7 +264,7 @@ namespace mySystem.Extruction.Process
                 string s = "update clean_record_of_extrusion_process set production_instruction='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
                 s += ",cleaner_id=" + cleaner;
                 s += ",reviewer_id=" + checker;
-                for (int i = 0; i < unit_serve.Length; i++)
+                for (int i = 0; i < unit_serve.Count; i++)
                 {
                     s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
                 }

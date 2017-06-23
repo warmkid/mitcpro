@@ -24,8 +24,8 @@ namespace mySystem.Query
         //吹膜生产日报表
         private void Chart1Btn_Click(object sender, EventArgs e)
         {
-            ProdctDaily_extrus myDlg = new ProdctDaily_extrus();
-            myDlg.Show();
+            //ProdctDaily_extrus myDlg = new ProdctDaily_extrus();
+            //myDlg.Show();
         }
 
         //吹膜工序物料平衡记录

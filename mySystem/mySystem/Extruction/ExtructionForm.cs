@@ -108,8 +108,8 @@ namespace mySystem
 
         private void Chart1Btn_Click(object sender, EventArgs e)
         {
-            ProdctDaily_extrus myDlg = new ProdctDaily_extrus();
-            myDlg.Show();
+            //ProdctDaily_extrus myDlg = new ProdctDaily_extrus();
+            //myDlg.Show();
         }
 
         private void Chart5Btn_Click(object sender, EventArgs e)

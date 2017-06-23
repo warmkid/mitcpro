@@ -8,19 +8,21 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Data.OleDb;
 
 namespace mySystem
 {
     /// <summary>
     ///  吹膜生产日报表
     /// </summary>
-    public partial class ProdctDaily_extrus : Form
+    public partial class ProdctDaily_extrus : mySystem.BaseForm
     {
-        public ProdctDaily_extrus()
+        public ProdctDaily_extrus(mySystem.MainForm mainform)
+            : base(mainform)
         {
             InitializeComponent();
             Init();
-            connToServer();
+            //connToServer();
             queryAndShow();
         }
 
@@ -90,26 +92,45 @@ namespace mySystem
         }
         private void queryAndShow()
         {
-            if (!isOk)
-            {
-                MessageBox.Show("连接数据库失败", "error");
-                return;
-            }
+            //if (!isOk)
+            //{
+            //    MessageBox.Show("连接数据库失败", "error");
+            //    return;
+            //}
+
             //显示生产指令
             //label3.Text = prodCode;
 
             //查询
-            SqlCommand comm = new SqlCommand(sql, conn);
-            SqlDataAdapter da = new SqlDataAdapter(comm);
+            if (mainform.isSqlOk)
+            {
+                SqlCommand comm = new SqlCommand(sql, mainform.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
 
-            //DataSet ds = new DataSet();
-            dt = new DataTable();
-            //da.Fill(dt);
+                //DataSet ds = new DataSet();
+                dt = new DataTable();
+                //da.Fill(dt);
 
-            ///添加一列
-            DataColumn col = new DataColumn("编号");
-            dt.Columns.Add(col);
-            da.Fill(dt);
+                ///添加一列
+                DataColumn col = new DataColumn("编号");
+                dt.Columns.Add(col);
+                da.Fill(dt);
+            }
+            else
+            {
+                OleDbCommand comm = new OleDbCommand(sql, mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                //DataSet ds = new DataSet();
+                dt = new DataTable();
+                //da.Fill(dt);
+
+                ///添加一列
+                DataColumn col = new DataColumn("编号");
+                dt.Columns.Add(col);
+                da.Fill(dt);
+            }
+
             for (int row = 0; row < dt.Rows.Count; row++)
             {
                 dt.Rows[row][0] = (row+1).ToString();
