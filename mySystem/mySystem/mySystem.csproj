@@ -97,6 +97,12 @@
     <Compile Include="Extruction\Process\ProcessProductInstru.Designer.cs">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting\PreheatParameterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\PreheatParameterForm.Designer.cs">
+      <DependentUpon>PreheatParameterForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ProcessMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +168,12 @@
     </Compile>
     <Compile Include="Setting\SettingMainForm.Designer.cs">
       <DependentUpon>SettingMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\Setting_CheckBeforePower.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\Setting_CheckBeforePower.designer.cs">
+      <DependentUpon>Setting_CheckBeforePower.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\Setting_CleanArea.cs">
       <SubType>Form</SubType>
@@ -338,6 +350,9 @@
     <EmbeddedResource Include="Query\QueryMainForm.resx">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Setting\PreheatParameterForm.resx">
+      <DependentUpon>PreheatParameterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Setting\SetExtruForm.resx">
       <DependentUpon>SetExtruForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -361,6 +376,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SettingMainForm.resx">
       <DependentUpon>SettingMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\Setting_CheckBeforePower.resx">
+      <DependentUpon>Setting_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\Setting_CleanArea.resx">
       <DependentUpon>Setting_CleanArea.cs</DependentUpon>

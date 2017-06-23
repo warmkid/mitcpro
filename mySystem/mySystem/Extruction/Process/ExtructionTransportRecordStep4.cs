@@ -125,8 +125,10 @@ namespace mySystem.Extruction.Process
                     this.TransportRecordView.Rows[0].Cells["数量(件)"].Value = dtOle.Rows[0]["s4_quantity"].ToString();
                     this.TransportRecordView.Rows[0].Cells["kg/件"].Value = dtOle.Rows[0]["s4_kilogram_per_piece"].ToString();
                     this.TransportRecordView.Rows[0].Cells["数量/kg"].Value = dtOle.Rows[0]["s4_quantity_per_kilogram"].ToString();
-                    this.TransportRecordView.Rows[0].Cells["包装是否完好"].Value = bool.Parse(dtOle.Rows[0]["s4_is_packed_well"].ToString());
-                    this.TransportRecordView.Rows[0].Cells["是否清洁合格"].Value = bool.Parse(dtOle.Rows[0]["s4_is_cleaned"].ToString());
+                    bool val_bool = (dtOle.Rows[0]["s4_is_packed_well"].ToString() == "1" ? true : false);
+                    this.TransportRecordView.Rows[0].Cells["包装是否完好"].Value = val_bool;
+                    val_bool = (dtOle.Rows[0]["s4_is_cleaned"].ToString() == "1" ? true : false);
+                    this.TransportRecordView.Rows[0].Cells["是否清洁合格"].Value = val_bool;
                 }
                 comm.Dispose();
                 daOle.Dispose();
