@@ -45,52 +45,66 @@ namespace WindowsFormsApplication1
         float left1;//余料
         float use2;
         float left2;
-
+        float sumout;//合计
+        float sumin;
+        float summid;
         int checker;//复核人
+
+        private class record
+        {
+            string time;
+            float srout;
+            float srin;
+            float srmid;
+            int isqua;
+            string man;
+        }
+        //record recordobj;
+        //List<List<record>> list;
 
         private void Init()
         {
-            string strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
-            SqlConnection conn = new SqlConnection(strCon);
-            conn.Open();
-            string s = "select product_id,product_batch,production_instruction,s5_feeding_info from extrusion where id=1";
-            SqlCommand comm = new SqlCommand(s, conn);
-            SqlDataAdapter da = new SqlDataAdapter(comm);
-            DataTable dtemp = new DataTable();
-            da.Fill(dtemp);
+            //string strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+            //SqlConnection conn = new SqlConnection(strCon);
+            //conn.Open();
+            //string s = "select product_id,product_batch,production_instruction,s5_feeding_info from extrusion where id=1";
+            //SqlCommand comm = new SqlCommand(s, conn);
+            //SqlDataAdapter da = new SqlDataAdapter(comm);
+            //DataTable dtemp = new DataTable();
+            //da.Fill(dtemp);
           
 
 
-            conn.Close();
+            //conn.Close();
 
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            //dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            ////dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-            product_code = dtemp.Rows[0][0].ToString();
-            product_num = dtemp.Rows[0][1].ToString();
-            product_instrnum = dtemp.Rows[0][2].ToString();
+            //product_code = dtemp.Rows[0][0].ToString();
+            //product_num = dtemp.Rows[0][1].ToString();
+            //product_instrnum = dtemp.Rows[0][2].ToString();
 
-            //解析jason
-            JArray jo = JArray.Parse(dtemp.Rows[0][3].ToString());
+            ////解析jason
+            //JArray jo = JArray.Parse(dtemp.Rows[0][3].ToString());
 
 
-            //填数据
-            foreach (var ss in jo )  //查找某个字段与值
-            {
-                //if(((JObject) ss)["a"]=="aa")
-                DataGridViewRow dr = new DataGridViewRow();
-                foreach (DataGridViewColumn c in dataGridView1.Columns)
-                {
-                    dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-                }
-                dr.Cells[0].Value = ss["s5_feeding_time"].ToString();
-                dr.Cells[1].Value = ss["s5_a_feeding_quantity"].ToString();
-                dr.Cells[2].Value = ss["s5_b1c_feeding_quantity"].ToString();
-                dr.Cells[3].Value = ss["s5_b2_feeing_quantity"].ToString();
-                dr.Cells[4].Value = ss["s5_raw_material_sampling_results"].ToString();
-                dr.Cells[5].Value = ss["s5_supplier"].ToString();
-                dataGridView1.Rows.Add(dr);
-            }
+            ////填数据
+            //foreach (var ss in jo )  //查找某个字段与值
+            //{
+            //    //if(((JObject) ss)["a"]=="aa")
+            //    DataGridViewRow dr = new DataGridViewRow();
+            //    foreach (DataGridViewColumn c in dataGridView1.Columns)
+            //    {
+            //        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+            //    }
+            //    dr.Cells[0].Value = ss["s5_feeding_time"].ToString();
+            //    dr.Cells[1].Value = ss["s5_a_feeding_quantity"].ToString();
+            //    dr.Cells[2].Value = ss["s5_b1c_feeding_quantity"].ToString();
+            //    dr.Cells[3].Value = ss["s5_b2_feeing_quantity"].ToString();
+            //    dr.Cells[4].Value = ss["s5_raw_material_sampling_results"].ToString();
+            //    dr.Cells[5].Value = ss["s5_supplier"].ToString();
+            //    dataGridView1.Rows.Add(dr);
+            //}
 
             
 
@@ -102,7 +116,9 @@ namespace WindowsFormsApplication1
             bunker2_batch = "";
 
             checker = 332;
-
+            sumout = 0;
+            sumin = 0;
+            summid = 0;
             //string date;//供料日期
             dataGridView1.Font = new Font("宋体", 12);
             //dataGridView2.Font = new Font("宋体", 12);
@@ -152,9 +168,10 @@ namespace WindowsFormsApplication1
             float temp;
             //if(dateTimePicker1.Text==""||!float.TryParse(Serve_out.Text,out temp)||)
 
-            checkout = Serve_checkresult.Text.ToString();
+            checkout = comboBox1.Text.ToString();
+
             server = Serve_person.Text.ToString();
-            if (checkout == "" || server == "")
+            if (checkout == "(空)" || server == "")
             {
                 MessageBox.Show("原料抽查结果、供料人均不能为空");
                 return;
@@ -169,24 +186,48 @@ namespace WindowsFormsApplication1
                 return;  
             }
             serve_out = (float)Convert.ToSingle(Serve_out.Text.ToString());
-            serve_in = (float)Convert.ToSingle(Serve_in.Text.ToString());
-            serve_mid = (float)Convert.ToSingle(Serve_mid.Text.ToString());
-
+            serve_mid = (float)Convert.ToSingle(Serve_in.Text.ToString());
+            serve_in = (float)Convert.ToSingle(Serve_mid.Text.ToString());
+            int checkoutnum;
+            if (checkout == "是")
+                checkoutnum = 1;
+            else
+                checkoutnum = 0;
 
 
             //填数据
+            if (dataGridView1.Rows.Count > 0)
+            {
+                dataGridView1.Rows.RemoveAt(dataGridView1.Rows[dataGridView1.Rows.Count-1].Index);
+            }
             DataGridViewRow dr = new DataGridViewRow();
             foreach (DataGridViewColumn c in dataGridView1.Columns)
             {
                 dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
             }
-            dr.Cells[0].Value = date;
+            dr.Cells[0].Value = DateTime.Now.ToLongTimeString().ToString(); ;
             dr.Cells[1].Value = serve_out;
             dr.Cells[2].Value = serve_in;
             dr.Cells[3].Value = serve_mid;
             dr.Cells[4].Value = checkout;
             dr.Cells[5].Value = server;
             dataGridView1.Rows.Add(dr);
+            sumout += serve_out;
+            sumin += serve_in;
+            summid += serve_mid;
+
+            //添加合计
+            DataGridViewRow drsum = new DataGridViewRow();
+            foreach (DataGridViewColumn c in dataGridView1.Columns)
+            {
+                drsum.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+            }
+            drsum.Cells[0].Value = "小计";
+            drsum.Cells[1].Value = sumout;
+            drsum.Cells[2].Value = sumin;
+            drsum.Cells[3].Value = summid;
+
+            dataGridView1.Rows.Add(drsum);
         }
 
         //private void button2_Click(object sender, EventArgs e)
@@ -231,7 +272,20 @@ namespace WindowsFormsApplication1
                 return;
             //if (dataGridView1.SelectedRows[0].Index < dataGridView1.Rows.Count - 1 )
             //    dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
-            dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[0].Index);
+            int ind=dataGridView1.SelectedRows[0].Index;
+            if (ind == dataGridView1.Rows.Count - 1)
+                return;
+            //更改合计行的值
+            float a = float.Parse( dataGridView1.Rows[ind].Cells[1].Value.ToString());
+            float b = float.Parse(dataGridView1.Rows[ind].Cells[2].Value.ToString());
+            float c = float.Parse(dataGridView1.Rows[ind].Cells[3].Value.ToString());
+            sumout -= a;
+            sumin -= b;
+            summid -= c;
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = sumout;
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = sumin;
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = summid;
+            dataGridView1.Rows.RemoveAt(ind);
         }
 
         //private void button4_Click(object sender, EventArgs e)
@@ -338,6 +392,16 @@ namespace WindowsFormsApplication1
         }
 
         private void splitContainer2_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label21_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
 
         }

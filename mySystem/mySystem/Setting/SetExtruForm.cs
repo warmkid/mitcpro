@@ -22,6 +22,7 @@ namespace mySystem
         Setting_CleanArea setcleanDlg = null;
         Setting_CheckBeforePower bfPowerDlg = null;
         PreheatParameterForm preheatDlg = null;
+        Setting_CleanSite setsiteDlg = null;
 
         public SetExtruForm(MainForm mainform):base(mainform)
         {
@@ -56,6 +57,12 @@ namespace mySystem
             preHeatPanel.Controls.Add(preheatDlg);
             preheatDlg.Show();
 
+            //清场点设置
+            setsiteDlg = new Setting_CleanSite(base.mainform);
+            setsiteDlg.TopLevel = false;
+            setsiteDlg.FormBorderStyle = FormBorderStyle.None;
+            procClearPanel.Controls.Add(setsiteDlg);
+            setsiteDlg.Show();
 
  
         }
@@ -70,8 +77,20 @@ namespace mySystem
             else
             {
                 preheatDlg.DataSave();
+                setsiteDlg.DataSave();
+                setcleanDlg.DataSave();
  
             }
+        }
+
+        private void procClearPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void cleanPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
 

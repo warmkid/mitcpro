@@ -40,7 +40,7 @@ namespace WindowsFormsApplication1
         {
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.Font = new Font("宋体", 12);
+            dataGridView1.Font = new Font("宋体", 10);
 
             //strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
             //sql = "select * from cleanarea";
@@ -56,8 +56,26 @@ namespace WindowsFormsApplication1
         }
         private void add_Click(object sender, EventArgs e)
         {
-            CleanArea_add add = new CleanArea_add(base.mainform);
-            add.Show();
+            //CleanArea_add add = new CleanArea_add(base.mainform);
+            //add.Show();
+            string clean = textBox1.Text;
+            string cont = textBox2.Text;
+            if (clean == "" || cont == "")
+            {
+                MessageBox.Show("清洁区域和清洁内容均不能为空");
+                return;
+            }
+            DataGridViewRow dr = new DataGridViewRow();
+            foreach (DataGridViewColumn c in dataGridView1.Columns)
+            {
+                dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+            }
+            dr.Cells[0].Value = dr.Cells[0].Value = dataGridView1.Rows.Count + 1;
+            dr.Cells[1].Value = clean;
+            dr.Cells[2].Value = cont;
+            dataGridView1.Rows.Add(dr);
+            textBox1.Text = "";
+            textBox2.Text = "";
         }
         private void qury()
         {
@@ -73,6 +91,7 @@ namespace WindowsFormsApplication1
                 SqlDataAdapter da = new SqlDataAdapter(comm);
                 dt = new DataTable();
                 da.Fill(dt);
+                dataGridView1.DataSource = dt;
             }
             else
             {
@@ -81,11 +100,23 @@ namespace WindowsFormsApplication1
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 dt = new DataTable();
                 data.Fill(dt);
-            }
 
-            dataGridView1.DataSource = dt;
-            dataGridView1.Columns[0].Width = 370;
-            dataGridView1.Columns[1].Width = 800;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    DataGridViewRow dr = new DataGridViewRow();
+                    foreach (DataGridViewColumn c in dataGridView1.Columns)
+                    {
+                        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                    }
+                    dr.Cells[0].Value = i+1;
+                    dr.Cells[1].Value = dt.Rows[i][0].ToString();
+                    dr.Cells[2].Value = dt.Rows[i][1].ToString();
+                    dataGridView1.Rows.Add(dr);
+                }
+            }
+            
+            //dataGridView1.Columns[0].Width = 370;
+            //dataGridView1.Columns[1].Width = 800;
         }
         private void fresh_Click(object sender, EventArgs e)
         {
@@ -100,12 +131,11 @@ namespace WindowsFormsApplication1
 
         private void del_Click(object sender, EventArgs e)
         {
-            DataRowView drv = dataGridView1.SelectedRows[0].DataBoundItem as DataRowView;
-            //System.Console.WriteLine(drv[1].ToString());
-            string id=drv[0].ToString().Trim();
-
             if (isSqlOk)
             {
+                DataRowView drv = dataGridView1.SelectedRows[0].DataBoundItem as DataRowView;
+                //System.Console.WriteLine(drv[1].ToString());
+                string id = drv[0].ToString().Trim();
                 string strsql = "delete from cleanarea where cast([清洁区域] as nvarchar(50))=" + "'" + id + "'";
                 SqlCommand Cmd = new SqlCommand(strsql, conn);
                 int i = Cmd.ExecuteNonQuery();
@@ -118,18 +148,37 @@ namespace WindowsFormsApplication1
             }
             else
             {
-                //string strasql = "delete from cleanarea where cast([清洁区域] as nvarchar(50))=" + "'" + id + "'";
-                string strasql = "delete from cleanarea where 清洁区域=" + "'" + id + "'";
-                OleDbCommand Cmd = new OleDbCommand(strasql, connOle);
-                int i = Cmd.ExecuteNonQuery();
-                if (i < 0)
+                if (dataGridView1.SelectedRows.Count > 0)
                 {
-                    MessageBox.Show("删除失败，请重试");
-                    return;
+                    int k = dataGridView1.SelectedRows[0].Index;
+                    dataGridView1.Rows.RemoveAt(k);
+                    //改变序号
+                    for (int i = k; i < dataGridView1.Rows.Count; i++)
+                    {
+                        dataGridView1.Rows[i].Cells[0].Value = i + 1;
+                    }
                 }
-                drv.Row.Delete();
             }
 
+        }
+        public void DataSave()
+        {
+            if (mainform.isSqlOk)
+            {
+
+            }
+            else
+            {
+                string accessql = "delete * from cleanarea";
+                OleDbCommand cmd = new OleDbCommand(accessql, mainform.connOle);
+                cmd.ExecuteNonQuery();
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    cmd.CommandText = "insert into cleanarea(清洁区域,清洁内容) values ('" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "','" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "')";
+                    cmd.ExecuteNonQuery();
+                }
+                cmd.Dispose();
+            }
         }
     }
 }

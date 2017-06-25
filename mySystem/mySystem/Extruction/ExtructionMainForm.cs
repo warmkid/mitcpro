@@ -116,5 +116,11 @@ namespace mySystem
         {
             base.mainform.proInstruction = comboBox1.SelectedItem.ToString();
         }
+
+        private void B2Btn_Click(object sender, EventArgs e)
+        {
+            Record_extrusSupply recordsupply = new Record_extrusSupply(mform);
+            recordsupply.Show();
+        }
     }
 }

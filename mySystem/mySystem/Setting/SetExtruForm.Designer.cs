@@ -52,7 +52,7 @@
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.CancelBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.CancelBtn.Location = new System.Drawing.Point(1018, 1680);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(81, 33);
@@ -62,7 +62,7 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.SaveBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.SaveBtn.Location = new System.Drawing.Point(916, 1680);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(82, 33);
@@ -77,11 +77,12 @@
             this.procClearPanel.Name = "procClearPanel";
             this.procClearPanel.Size = new System.Drawing.Size(1123, 269);
             this.procClearPanel.TabIndex = 25;
+            this.procClearPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.procClearPanel_Paint);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label4.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label4.Location = new System.Drawing.Point(13, 1002);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(135, 20);
@@ -98,7 +99,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label3.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(13, 686);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(135, 20);
@@ -108,7 +109,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label5.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.label5.Location = new System.Drawing.Point(13, 1313);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(240, 20);
@@ -132,7 +133,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(13, 343);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(198, 20);
@@ -145,11 +146,12 @@
             this.cleanPanel.Name = "cleanPanel";
             this.cleanPanel.Size = new System.Drawing.Size(1123, 269);
             this.cleanPanel.TabIndex = 17;
+            this.cleanPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.cleanPanel_Paint);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(12, 10);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(135, 20);

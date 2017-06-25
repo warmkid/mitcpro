@@ -121,7 +121,7 @@ namespace mySystem.Extruction.Process
             prod_batch = "0x55";
 
             //date = "2017/6/10";
-
+            textBox1.Text = mainform.proInstruction;
             comboBox2.Text = "供料工序";
 
 
@@ -273,7 +273,7 @@ namespace mySystem.Extruction.Process
 
             //生产指令先用a代替
             prod_instrcode=textBox1.Text;
-            int a = 2313;
+            int a = 33;
 
             prod_code=textBox2.Text;
             prod_batch=textBox4.Text;
