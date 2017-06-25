@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -108,6 +108,12 @@
     </Compile>
     <Compile Include="Extruction\Process\ProcessProductInstru.Designer.cs">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\Record_material_reqanddisg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\Record_material_reqanddisg.Designer.cs">
+      <DependentUpon>Record_material_reqanddisg.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\PreheatParameterForm.cs">
       <SubType>Form</SubType>
@@ -259,6 +265,12 @@
     <Compile Include="Extruction\ExtructionForm.Designer.cs">
       <DependentUpon>ExtructionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting\Setting_CleanSite.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\Setting_CleanSite.Designer.cs">
+      <DependentUpon>Setting_CleanSite.cs</DependentUpon>
+    </Compile>
     <Compile Include="Stock\BuyForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -354,6 +366,9 @@
     <EmbeddedResource Include="Extruction\Process\ProcessProductInstru.resx">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\Record_material_reqanddisg.resx">
+      <DependentUpon>Record_material_reqanddisg.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProcessMainForm.resx">
       <DependentUpon>ProcessMainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -428,6 +443,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\ExtructionForm.resx">
       <DependentUpon>ExtructionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\Setting_CleanSite.resx">
+      <DependentUpon>Setting_CleanSite.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Stock\BuyForm.resx">
       <DependentUpon>BuyForm.cs</DependentUpon>

@@ -165,6 +165,25 @@ namespace mySystem
             mySystem.Extruction.Chart.wasterecord wasterecord = new Extruction.Chart.wasterecord(mform);
             wasterecord.Show();
         }
+
+                private void B2Btn_Click_2(object sender, EventArgs e)
+                {
+                    Record_extrusSupply r = new Record_extrusSupply(mform);
+                    r.Show();
+                }
+
+                private void B4Btn_Click_2(object sender, EventArgs e)
+                {
+                    Record_material_reqanddisg r = new Record_material_reqanddisg(mform);
+                    r.Show();
+
+                }
+
+                private void B5Btn_Click_2(object sender, EventArgs e)
+                {
+                    ProdctDaily_extrus p = new ProdctDaily_extrus(mform);
+                    p.Show();
+                }
     }
 }
 
