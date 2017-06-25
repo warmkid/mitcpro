@@ -119,7 +119,7 @@ namespace mySystem
             }
             else
             {
-                string sql = "select s6_production_date,s6_flight,production_instruction_id,product_batch_id,s6_mojuan_length from extrusion_s6_production_check";
+                string sql = "select s6_production_date,s6_flight,production_instruction_id,product_batch_id,s6_mojuan_length,s6_mojuan_weight from extrusion_s6_production_check";
                 OleDbCommand comm = new OleDbCommand(sql, mainform.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 

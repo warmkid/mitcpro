@@ -2,27 +2,31 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.SqlClient;
+using mySystem.Extruction.Process;
+using Newtonsoft.Json.Linq;
+using System.Data.OleDb;
 
 //this form is about the 13th picture of the extrusion step 
 namespace mySystem.Extruction.Process
 {
-    public partial class HandoverRecordofExtrusionProcess : Form
+    public partial class HandoverRecordofExtrusionProcess : mySystem.BaseForm
     {
         public int quiz=14;
         public int TN = 2;
         bool[,] itemcheck = new bool[14, 2];
         SqlConnection conn = null;
-  
 
-        public HandoverRecordofExtrusionProcess(SqlConnection myConnection)
+
+        public HandoverRecordofExtrusionProcess(mySystem.MainForm mainform)
+            : base(mainform)
         {
             InitializeComponent();
-            conn = myConnection;
+            //conn = myConnection;
             this.GenerateQuiz(quiz);
             //this part to add the confirm items
 

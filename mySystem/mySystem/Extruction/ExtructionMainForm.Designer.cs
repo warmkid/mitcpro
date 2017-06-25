@@ -27,7 +27,6 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
-
         {
             this.A5Btn = new System.Windows.Forms.Button();
             this.A2Btn = new System.Windows.Forms.Button();
@@ -94,6 +93,7 @@
             this.A4Btn.TabIndex = 15;
             this.A4Btn.Text = "吹膜岗位交接班记录";
             this.A4Btn.UseVisualStyleBackColor = true;
+            this.A4Btn.Click += new System.EventHandler(this.A4Btn_Click);
             // 
             // comboBox1
             // 
@@ -204,6 +204,7 @@
             this.B9Btn.TabIndex = 19;
             this.B9Btn.Text = "产品外包装记录";
             this.B9Btn.UseVisualStyleBackColor = true;
+            this.B9Btn.Click += new System.EventHandler(this.B9Btn_Click);
             // 
             // B7Btn
             // 
@@ -214,6 +215,7 @@
             this.B7Btn.TabIndex = 18;
             this.B7Btn.Text = "吹膜工序物料平衡记录";
             this.B7Btn.UseVisualStyleBackColor = true;
+            this.B7Btn.Click += new System.EventHandler(this.B7Btn_Click);
             // 
             // B1Btn
             // 
@@ -316,6 +318,7 @@
             this.C4Btn.TabIndex = 15;
             this.C4Btn.Text = "吹膜机组运行记录";
             this.C4Btn.UseVisualStyleBackColor = true;
+            this.C4Btn.Click += new System.EventHandler(this.C4Btn_Click);
             // 
             // C3Btn
             // 
@@ -352,7 +355,7 @@
             this.D1Btn.TabIndex = 12;
             this.D1Btn.Text = "培训记录表";
             this.D1Btn.UseVisualStyleBackColor = true;
-            this.D1Btn.Click += new System.EventHandler(this.D1Btn_Click);
+            this.D1Btn.Click += new System.EventHandler(this.D1Btn_Click_1);
             // 
             // D2Btn
             // 

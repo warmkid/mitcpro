@@ -191,11 +191,44 @@ namespace mySystem
                     PIPRform.Show();
                 }
 
+
                 private void D1Btn_Click(object sender, EventArgs e)
+                {
+                    Record_train r = new Record_train(mform);
+                    r.Show();
+                }
+				                private void C4Btn_Click(object sender, EventArgs e)
+                {
+                    mySystem.Extruction.Chart.beeholetable beeholetable = new Extruction.Chart.beeholetable(mform);
+                    beeholetable.Show();
+                }
+
+                private void B7Btn_Click(object sender, EventArgs e)
+                {
+                    MaterialBalenceofExtrusionProcess test = new MaterialBalenceofExtrusionProcess(mform);
+                    test.Show();
+                }
+
+                private void A4Btn_Click(object sender, EventArgs e)
+                {
+                    HandoverRecordofExtrusionProcess test = new HandoverRecordofExtrusionProcess(mform);
+                    test.Show();
+                }
+
+                private void B9Btn_Click(object sender, EventArgs e)
+                {
+                    mySystem.Extruction.Chart.outerpack test = new Extruction.Chart.outerpack(mform);
+                    test.Show();
+                }
+
+                private void D1Btn_Click_1(object sender, EventArgs e)
                 {
                     Record_train r = new Record_train(mform);
                     r.Show();
                 }
     }
 }
+
+
+
 

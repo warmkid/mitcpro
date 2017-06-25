@@ -73,11 +73,23 @@
       <DependentUpon>CheckForm.cs</DependentUpon>
     </Compile>
     <Compile Include="common.cs" />
+    <Compile Include="Extruction\Chart\beeholetable.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\beeholetable.Designer.cs">
+      <DependentUpon>beeholetable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extruction\Chart\feedrecord.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Extruction\Chart\feedrecord.Designer.cs">
       <DependentUpon>feedrecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Chart\outerpack.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\outerpack.Designer.cs">
+      <DependentUpon>outerpack.cs</DependentUpon>
     </Compile>
     <Compile Include="Extruction\Chart\wasterecord.cs">
       <SubType>Form</SubType>
@@ -371,6 +383,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\outerpack.resx">
+      <DependentUpon>outerpack.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\ExtructionMainForm.resx">
       <DependentUpon>ExtructionMainForm.cs</DependentUpon>
