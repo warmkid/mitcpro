@@ -119,6 +119,7 @@ namespace mySystem.Extruction.Process
             prod_instrcode = "ox32";
             prod_code = "rs";
             prod_batch = "0x55";
+            //prod_instrcode = mainform.proInstruction;
 
             //date = "2017/6/10";
             textBox1.Text = mainform.proInstruction;
@@ -135,7 +136,8 @@ namespace mySystem.Extruction.Process
                 ischecked_2.Add(1);
 
             comboBox1.Text = "合格";
-            dataGridView1.Font = new Font("宋体", 12);
+            dataGridView1.Font = new Font("宋体", 10);
+            button2.Enabled = false;
         }
 
         private void AddtoGridView()
@@ -350,6 +352,7 @@ namespace mySystem.Extruction.Process
                 MessageBox.Show("添加成功");
             }
             else { MessageBox.Show("错误"); }
+            button2.Enabled = true;
 
         }
 

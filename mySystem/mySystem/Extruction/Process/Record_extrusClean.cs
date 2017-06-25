@@ -60,7 +60,8 @@ namespace WindowsFormsApplication1
             checkmans = new List<int>();
             cont_clean = new cont();
 
-            dataGridView1.Font = new Font("宋体", 12);
+            dataGridView1.Font = new Font("宋体", 10);
+            button2.Enabled = false;
             
         }
         public void connToServer()
@@ -323,6 +324,7 @@ namespace WindowsFormsApplication1
                 }
                 else { MessageBox.Show("错误"); }
             }
+            button2.Enabled = true;
 
         }
 

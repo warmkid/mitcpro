@@ -104,6 +104,7 @@
             this.textBox26 = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.label28 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -219,6 +220,7 @@
             this.textBox4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox4.Location = new System.Drawing.Point(383, 87);
             this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(87, 23);
             this.textBox4.TabIndex = 8;
             // 
@@ -459,6 +461,7 @@
             // 
             // splitContainer4.Panel2
             // 
+            this.splitContainer4.Panel2.Controls.Add(this.label28);
             this.splitContainer4.Panel2.Controls.Add(this.textBox22);
             this.splitContainer4.Panel2.Controls.Add(this.textBox21);
             this.splitContainer4.Panel2.Controls.Add(this.textBox20);
@@ -546,11 +549,11 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(3, 22);
+            this.label20.Location = new System.Drawing.Point(41, 15);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(154, 28);
+            this.label20.Size = new System.Drawing.Size(112, 28);
             this.label20.TabIndex = 15;
-            this.label20.Text = "原料：内外层SPM-PE-06\r\n    中层SPM-PE-04、06\r\n";
+            this.label20.Text = "所需原料-内外层\r\n\r\n";
             // 
             // textBox14
             // 
@@ -579,7 +582,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(32, 74);
+            this.label19.Location = new System.Drawing.Point(72, 77);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(49, 14);
             this.label19.TabIndex = 11;
@@ -887,6 +890,17 @@
             this.button1.TabIndex = 16;
             this.button1.Text = "保存";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label28.Location = new System.Drawing.Point(46, 43);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(98, 28);
+            this.label28.TabIndex = 22;
+            this.label28.Text = "所需原料-中层\r\n\r\n";
             // 
             // ProcessProductInstru
             // 
@@ -1040,5 +1054,6 @@
         private System.Windows.Forms.TextBox textBox26;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label28;
     }
 }

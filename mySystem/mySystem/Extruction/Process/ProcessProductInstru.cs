@@ -14,6 +14,11 @@ namespace BatchProductRecord
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
+            init();
+        }
+        private void init()
+        {
+            textBox4.Text = "AA-EQM-032";
         }
 
         private void textBox12_TextChanged(object sender, EventArgs e)
@@ -27,6 +32,11 @@ namespace BatchProductRecord
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }
