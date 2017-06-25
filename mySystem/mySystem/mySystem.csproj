@@ -109,6 +109,12 @@
     <Compile Include="Extruction\Process\ProcessProductInstru.Designer.cs">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extruction\Process\ProductInnerPackagingRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ProductInnerPackagingRecord.designer.cs">
+      <DependentUpon>ProductInnerPackagingRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extruction\Process\Record_material_reqanddisg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,6 +377,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\ProcessProductInstru.resx">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ProductInnerPackagingRecord.resx">
+      <DependentUpon>ProductInnerPackagingRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\Record_material_reqanddisg.resx">
       <DependentUpon>Record_material_reqanddisg.cs</DependentUpon>
