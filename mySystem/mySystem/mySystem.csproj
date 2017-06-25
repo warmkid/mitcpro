@@ -91,6 +91,12 @@
     <Compile Include="Extruction\Chart\outerpack.Designer.cs">
       <DependentUpon>outerpack.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extruction\Chart\ReplaceHeadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\ReplaceHeadForm.Designer.cs">
+      <DependentUpon>ReplaceHeadForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extruction\Chart\wasterecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +120,12 @@
     </Compile>
     <Compile Include="Extruction\Process\ExtructionCheck.Designer.cs">
       <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionReplaceCore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionReplaceCore.Designer.cs">
+      <DependentUpon>ExtructionReplaceCore.cs</DependentUpon>
     </Compile>
     <Compile Include="Extruction\Process\ProcessProductInstru.cs">
       <SubType>Form</SubType>
@@ -387,6 +399,9 @@
     <EmbeddedResource Include="Extruction\Chart\outerpack.resx">
       <DependentUpon>outerpack.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\ReplaceHeadForm.resx">
+      <DependentUpon>ReplaceHeadForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Extruction\ExtructionMainForm.resx">
       <DependentUpon>ExtructionMainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -395,6 +410,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\ExtructionCheck.resx">
       <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ExtructionReplaceCore.resx">
+      <DependentUpon>ExtructionReplaceCore.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\ProcessProductInstru.resx">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>

@@ -355,7 +355,7 @@
             this.D1Btn.TabIndex = 12;
             this.D1Btn.Text = "培训记录表";
             this.D1Btn.UseVisualStyleBackColor = true;
-            this.D1Btn.Click += new System.EventHandler(this.D1Btn_Click_1);
+            this.D1Btn.Click += new System.EventHandler(this.D1Btn_Click_2);
             // 
             // D2Btn
             // 
@@ -366,6 +366,7 @@
             this.D2Btn.TabIndex = 16;
             this.D2Btn.Text = "吹膜机更换模头记录及安装检查表";
             this.D2Btn.UseVisualStyleBackColor = true;
+            this.D2Btn.Click += new System.EventHandler(this.D2Btn_Click);
             // 
             // D4Btn
             // 
@@ -386,6 +387,7 @@
             this.D3Btn.TabIndex = 11;
             this.D3Btn.Text = "吹膜机更换模芯记录及安装检查表";
             this.D3Btn.UseVisualStyleBackColor = true;
+            this.D3Btn.Click += new System.EventHandler(this.D3Btn_Click);
             // 
             // ExtructionMainForm
             // 

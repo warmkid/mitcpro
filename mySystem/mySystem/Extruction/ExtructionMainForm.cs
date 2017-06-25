@@ -220,15 +220,31 @@ namespace mySystem
                     mySystem.Extruction.Chart.outerpack test = new Extruction.Chart.outerpack(mform);
                     test.Show();
                 }
+				 private void D3Btn_Click(object sender, EventArgs e)
+                {
+                    ExtructionReplaceCore ERCform = new ExtructionReplaceCore(mform);
+                    ERCform.Show();
+                }
+
+                private void D2Btn_Click(object sender, EventArgs e)
+                {
+                    ReplaceHeadForm myDlg = new ReplaceHeadForm();
+                    myDlg.Show();
+                }
 
                 private void D1Btn_Click_1(object sender, EventArgs e)
                 {
                     Record_train r = new Record_train(mform);
                     r.Show();
                 }
+
+                private void D1Btn_Click_2(object sender, EventArgs e)
+                {
+                    Record_train r = new Record_train(mform);
+                    r.Show();
+                }
     }
 }
-
 
 
 
