@@ -11,6 +11,7 @@ using System.Text;
 using System.Windows.Forms;
 using WindowsFormsApplication1;
 
+
 namespace mySystem
 {
     public partial class SetExtruForm : BaseForm

@@ -33,6 +33,18 @@
             this.AddLineBtn = new System.Windows.Forms.Button();
             this.CheckBtn = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
+            this.DelLineBtn = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.传料日期 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.物料代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kgper件 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.数量Total = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.包装是否完好 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.是否清洁合格 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.操作人 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.复核人 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.TransportRecordView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -49,17 +61,29 @@
             // TransportRecordView
             // 
             this.TransportRecordView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TransportRecordView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.传料日期,
+            this.时间,
+            this.物料代码,
+            this.数量,
+            this.kgper件,
+            this.数量Total,
+            this.包装是否完好,
+            this.是否清洁合格,
+            this.操作人,
+            this.复核人});
             this.TransportRecordView.Location = new System.Drawing.Point(22, 35);
             this.TransportRecordView.Name = "TransportRecordView";
             this.TransportRecordView.RowTemplate.Height = 23;
             this.TransportRecordView.Size = new System.Drawing.Size(1123, 384);
             this.TransportRecordView.TabIndex = 4;
             this.TransportRecordView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TransportRecordView_CellContentClick);
+            this.TransportRecordView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TransportRecordView_CellEndEdit);
             // 
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(1065, 425);
+            this.AddLineBtn.Location = new System.Drawing.Point(973, 428);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 6;
@@ -76,6 +100,7 @@
             this.CheckBtn.TabIndex = 10;
             this.CheckBtn.Text = "审核通过";
             this.CheckBtn.UseVisualStyleBackColor = true;
+            this.CheckBtn.Click += new System.EventHandler(this.CheckBtn_Click);
             // 
             // SaveBtn
             // 
@@ -86,12 +111,86 @@
             this.SaveBtn.TabIndex = 9;
             this.SaveBtn.Text = "确认";
             this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
+            // 
+            // DelLineBtn
+            // 
+            this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.DelLineBtn.Location = new System.Drawing.Point(1065, 428);
+            this.DelLineBtn.Name = "DelLineBtn";
+            this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
+            this.DelLineBtn.TabIndex = 11;
+            this.DelLineBtn.Text = "删除记录";
+            this.DelLineBtn.UseVisualStyleBackColor = true;
+            this.DelLineBtn.Click += new System.EventHandler(this.DelLineBtn_Click);
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label1.Location = new System.Drawing.Point(22, 428);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(924, 39);
+            this.label1.TabIndex = 12;
+            this.label1.Text = "备注：吹膜用料外包装表面应干净无积尘，每天由生产指定人员传递物料，传料时应检查外包装应完好，并用专用毛巾粘清水对包       装外表面进行清洁，传入供料间物料应" +
+                "干净整洁。";
+            // 
+            // 传料日期
+            // 
+            this.传料日期.HeaderText = "传料日期";
+            this.传料日期.Name = "传料日期";
+            // 
+            // 时间
+            // 
+            this.时间.HeaderText = "时间";
+            this.时间.Name = "时间";
+            // 
+            // 物料代码
+            // 
+            this.物料代码.HeaderText = "物料代码";
+            this.物料代码.Name = "物料代码";
+            // 
+            // 数量
+            // 
+            this.数量.HeaderText = "数量(件)";
+            this.数量.Name = "数量";
+            // 
+            // kgper件
+            // 
+            this.kgper件.HeaderText = "kg/件";
+            this.kgper件.Name = "kgper件";
+            // 
+            // 数量Total
+            // 
+            this.数量Total.HeaderText = "数量(kg)";
+            this.数量Total.Name = "数量Total";
+            // 
+            // 包装是否完好
+            // 
+            this.包装是否完好.HeaderText = "包装是否完好";
+            this.包装是否完好.Name = "包装是否完好";
+            // 
+            // 是否清洁合格
+            // 
+            this.是否清洁合格.HeaderText = "是否清洁合格";
+            this.是否清洁合格.Name = "是否清洁合格";
+            // 
+            // 操作人
+            // 
+            this.操作人.HeaderText = "操作人";
+            this.操作人.Name = "操作人";
+            // 
+            // 复核人
+            // 
+            this.复核人.HeaderText = "复核人";
+            this.复核人.Name = "复核人";
             // 
             // ExtructionTransportRecordStep4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 509);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.DelLineBtn);
             this.Controls.Add(this.CheckBtn);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.AddLineBtn);
@@ -113,5 +212,17 @@
         private System.Windows.Forms.Button AddLineBtn;
         private System.Windows.Forms.Button CheckBtn;
         private System.Windows.Forms.Button SaveBtn;
+        private System.Windows.Forms.Button DelLineBtn;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 传料日期;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 时间;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 物料代码;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 数量;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kgper件;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 数量Total;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn 包装是否完好;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn 是否清洁合格;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 操作人;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 复核人;
     }
 }

@@ -100,6 +100,7 @@ namespace mySystem
             stepform.Show();
         }
 
+        
         private void B1Btn_Click(object sender, EventArgs e)
         {
             ExtructionTransportRecordStep4 stepform = new ExtructionTransportRecordStep4(mform);
@@ -115,6 +116,13 @@ namespace mySystem
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             base.mainform.proInstruction = comboBox1.SelectedItem.ToString();
+        }
+
+        private void C3Btn_Click(object sender, EventArgs e)
+        {
+            
+            mySystem.Extruction.Chart.feedrecord feedrecord = new Extruction.Chart.feedrecord(mform);
+            feedrecord.Show();
         }
 
         private void B2Btn_Click(object sender, EventArgs e)
@@ -133,6 +141,24 @@ namespace mySystem
         {
             ProdctDaily_extrus pro = new ProdctDaily_extrus(mform);
             pro.Show();
+        }
+
+        private void B2Btn_Click_1(object sender, EventArgs e)
+        {
+            Record_extrusSupply r = new Record_extrusSupply(mform);
+            r.Show();
+        }
+
+        private void B4Btn_Click_1(object sender, EventArgs e)
+        {
+            Record_material_reqanddisg r = new Record_material_reqanddisg(mform);
+            r.Show();
+        }
+
+        private void B5Btn_Click_1(object sender, EventArgs e)
+        {
+            ProdctDaily_extrus p = new ProdctDaily_extrus(mform);
+            p.Show();
         }
     }
 }

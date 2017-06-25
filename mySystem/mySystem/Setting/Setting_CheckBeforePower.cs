@@ -17,7 +17,7 @@ namespace mySystem.Setting
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
-        private string sqlSel = "select * from confirmarea";
+        private string tableSel = "confirmarea";
 
         private DataTable dt;
 
@@ -40,14 +40,14 @@ namespace mySystem.Setting
 
             if (isSqlOk)
             {
-                SqlCommand comm = new SqlCommand(sqlSel, conn);
+                SqlCommand comm = new SqlCommand("Select * From "+tableSel, conn);
                 SqlDataAdapter da = new SqlDataAdapter(comm);
                 dt = new DataTable();
                 da.Fill(dt);
             }
             else
             {
-                OleDbCommand cmd = new OleDbCommand(sqlSel, connOle);
+                OleDbCommand cmd = new OleDbCommand("Select * From " + tableSel, connOle);
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 dt = new DataTable();
                 data.Fill(dt);
@@ -103,62 +103,30 @@ namespace mySystem.Setting
 
         public void DataSave()
         {
+            if (isSqlOk)
+            { }
+            else
+            {
+                /*
+                List<List<Object>> reasList = Utility.readFromDataGridView(dataGridView1);
+                List<String> queryCols = new List<String>(new String[] {  });
+                for (int i = 0; i < reasList.Count; i++)
+                { queryCols.Add{""}; }
+
+                List<String> queryCols = new List<String>(new String[] { "s4_review_opinion" });
+                List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString() });
+                List<String> whereCols = new List<String>(new String[] { "id" });
+                List<Object> whereVals = new List<Object>(new Object[] { 1 });
+                //Boolean b = Utility.insertAccess(connOle, table, queryCols, queryVals);
+                Boolean b = Utility.updateAccess(connOle, tableSel, queryCols, queryVals, whereCols, whereVals);*/
+
+            }
             
         }
 
-
-        private Boolean updateAccessOle(OleDbConnection conn, String tblName, List<String> updateCols, List<Object> updateVals, List<String> whereCols, List<Object> whereVals)
+        private void button1_Click(object sender, EventArgs e)
         {
-            String updates = "";
-            for (int i = 0; i < updateCols.Count; ++i)
-            {
-                if (updateCols.Count - 1 != i)
-                {
-                    updates += updateCols[i] + "=@" + updateCols[i] + ",";
-                }
-                else
-                {
-                    updates += updateCols[i] + "=@" + updateCols[i];
-                }
-
-            }
-            String wheres = "";
-            for (int i = 0; i < whereCols.Count; ++i)
-            {
-                if (whereCols.Count - 1 != i)
-                {
-                    wheres += whereCols[i] + "=@" + whereCols[i] + ",";
-                }
-                else
-                {
-                    wheres += whereCols[i] + "=@" + whereCols[i];
-                }
-
-            }
-
-            String strSQL = String.Format("UPDATE {0} SET {1} WHERE {2}", tblName, updates, wheres);
-            OleDbCommand cmd = new OleDbCommand(strSQL, conn);
-            for (int i = 0; i < updateCols.Count; ++i)
-            {
-                String c = updateCols[i];
-                Object v = updateVals[i];
-                cmd.Parameters.AddWithValue("@" + c, v);
-            }
-            for (int i = 0; i < whereCols.Count; ++i)
-            {
-                String c = whereCols[i];
-                Object v = whereVals[i];
-                cmd.Parameters.AddWithValue("@" + c, v);
-            }
-            int n = cmd.ExecuteNonQuery();
-            if (n > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            DataSave();
         }
 
     }

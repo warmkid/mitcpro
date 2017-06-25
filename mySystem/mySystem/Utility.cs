@@ -40,7 +40,7 @@ namespace mySystem
                 {
                     temp.Add(s + "=@" + s);
                 }
-                strSQL += joinList(temp, ",");
+                strSQL += joinList(temp, " AND ");
             }
             if (null != likeCol)
             {

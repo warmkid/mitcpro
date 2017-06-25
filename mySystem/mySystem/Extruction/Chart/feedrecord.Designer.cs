@@ -1,4 +1,4 @@
-﻿namespace mySystem.Extruction.Chart
+namespace mySystem.Extruction.Chart
 {
     partial class feedrecord
     {
