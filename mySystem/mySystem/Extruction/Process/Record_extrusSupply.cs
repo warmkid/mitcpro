@@ -127,7 +127,8 @@ namespace WindowsFormsApplication1
             summid = 0;
             //string date;//供料日期
             dataGridView1.Font = new Font("宋体", 12);
-            //dataGridView2.Font = new Font("宋体", 12);
+            textBox16.Text = mainform.proInstruction;
+            button4.Enabled = false;
         }
 
         private void Setup()
@@ -500,6 +501,25 @@ namespace WindowsFormsApplication1
 
                 dataGridView1.Rows.Add(drsum);
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (mainform.isSqlOk)
+            {
+
+            }
+            else
+            {
+ 
+            }
+            button4.Enabled = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
+            checkform.Show();
         }
     }
 }
