@@ -52,15 +52,17 @@ namespace WindowsFormsApplication1
 
         private class record
         {
-            string time;
-            float srout;
-            float srin;
-            float srmid;
-            int isqua;
-            string man;
+            public string time;
+            public float srout;
+            public float srin;
+            public float srmid;
+            public int isqua;
+            public string man;
         }
-        //record recordobj;
-        //List<List<record>> list;
+        Dictionary<string, List<record>> dict;//日期为键值
+        Dictionary<string, float> dictsum_out;
+        Dictionary<string, float> dictsum_in;
+        Dictionary<string, float> dictsum_mid;
 
         private void Init()
         {
@@ -106,7 +108,11 @@ namespace WindowsFormsApplication1
             //    dataGridView1.Rows.Add(dr);
             //}
 
-            
+
+            dict = new Dictionary<string, List<record>>();
+            dictsum_out = new Dictionary<string, float>();
+            dictsum_in = new Dictionary<string, float>();
+            dictsum_mid = new Dictionary<string, float>();
 
             bunker1 = "AB1C";
             bunker1_code = "";
@@ -139,6 +145,9 @@ namespace WindowsFormsApplication1
             //textBox1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             //dataGridView2.AllowUserToAddRows = false;
+            object s=null;
+            EventArgs e = null ;
+            dateTimePicker1_ValueChanged(s,e);
         }
 
         public Record_extrusSupply(mySystem.MainForm mainform):base(mainform)
@@ -178,7 +187,7 @@ namespace WindowsFormsApplication1
             }
 
             //date = dateTimePicker1.Text.ToString();
-            date = dateTimePicker1.Value;
+            //date = dateTimePicker1.Value;
 
             if (!float.TryParse(Serve_out.Text, out temp) || !float.TryParse(Serve_in.Text, out temp) || !float.TryParse(Serve_mid.Text, out temp))
             {
@@ -196,6 +205,8 @@ namespace WindowsFormsApplication1
 
 
             //填数据
+            
+            //暂时删除最后合计行
             if (dataGridView1.Rows.Count > 0)
             {
                 dataGridView1.Rows.RemoveAt(dataGridView1.Rows[dataGridView1.Rows.Count-1].Index);
@@ -205,13 +216,29 @@ namespace WindowsFormsApplication1
             {
                 dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
             }
-            dr.Cells[0].Value = DateTime.Now.ToLongTimeString().ToString(); ;
+            dr.Cells[0].Value = DateTime.Now.ToLongTimeString().ToString();
             dr.Cells[1].Value = serve_out;
             dr.Cells[2].Value = serve_in;
             dr.Cells[3].Value = serve_mid;
-            dr.Cells[4].Value = checkout;
+            dr.Cells[4].Value = checkoutnum;
             dr.Cells[5].Value = server;
             dataGridView1.Rows.Add(dr);
+
+            //添加数据到dict
+            string key=dateTimePicker1.Value.ToShortDateString();
+            record r=new record();
+            r.time=dr.Cells[0].Value.ToString();
+            r.srout=serve_out;
+            r.srin=serve_in;
+            r.srmid=serve_mid;
+            r.isqua=checkoutnum;
+            r.man=server;
+            dict[key].Add(r);
+
+            dictsum_out[key] += serve_out;
+            dictsum_in[key] += serve_in;
+            dictsum_mid[key] += serve_mid;
+
             sumout += serve_out;
             sumin += serve_in;
             summid += serve_mid;
@@ -223,11 +250,13 @@ namespace WindowsFormsApplication1
                 drsum.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
             }
             drsum.Cells[0].Value = "小计";
-            drsum.Cells[1].Value = sumout;
-            drsum.Cells[2].Value = sumin;
-            drsum.Cells[3].Value = summid;
+            drsum.Cells[1].Value = dictsum_out[key];
+            drsum.Cells[2].Value = dictsum_in[key];
+            drsum.Cells[3].Value = dictsum_mid[key];
 
             dataGridView1.Rows.Add(drsum);
+
+
         }
 
         //private void button2_Click(object sender, EventArgs e)
@@ -275,6 +304,8 @@ namespace WindowsFormsApplication1
             int ind=dataGridView1.SelectedRows[0].Index;
             if (ind == dataGridView1.Rows.Count - 1)
                 return;
+
+
             //更改合计行的值
             float a = float.Parse( dataGridView1.Rows[ind].Cells[1].Value.ToString());
             float b = float.Parse(dataGridView1.Rows[ind].Cells[2].Value.ToString());
@@ -282,9 +313,21 @@ namespace WindowsFormsApplication1
             sumout -= a;
             sumin -= b;
             summid -= c;
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = sumout;
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = sumin;
-            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = summid;
+
+
+            //删除dict中的值
+            string key = dateTimePicker1.Value.ToShortDateString();
+            if (dict.ContainsKey(key))
+            {
+                dict[key].RemoveAt(ind);
+                dictsum_out[key] -= a;
+                dictsum_in[key] -= b;
+                dictsum_mid[key] -= c;
+
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = dictsum_out[key];
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = dictsum_in[key];
+                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = dictsum_mid[key];
+            }
             dataGridView1.Rows.RemoveAt(ind);
         }
 
@@ -403,7 +446,60 @@ namespace WindowsFormsApplication1
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+            date = dateTimePicker1.Value;
+            string key = date.ToShortDateString();
+            //不存在key则创建
+            if (!dict.ContainsKey(key))
+            {
+                dict.Add(key, new List<record>());
+                dictsum_out.Add(key, 0);
+                dictsum_in.Add(key, 0);
+                dictsum_mid.Add(key, 0);
+                //清空表格
+                while (dataGridView1.Rows.Count != 0)
+                {
+                    dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+                }
+            }
+            else
+            {
+                //清空表格
+                while (dataGridView1.Rows.Count != 0)
+                {
+                    dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+                }
+                //充填表格
+                foreach (record r in dict[key])
+                {
+                    DataGridViewRow dr= new DataGridViewRow();
+                    foreach (DataGridViewColumn c in dataGridView1.Columns)
+                    {
+                        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                    }
+                    dr.Cells[0].Value = r.time;
+                    dr.Cells[1].Value = r.srout;
+                    dr.Cells[2].Value = r.srin;
+                    dr.Cells[3].Value = r.srmid;
+                    dr.Cells[4].Value = r.isqua;
+                    dr.Cells[5].Value = r.man;
+                    dataGridView1.Rows.Add(dr);
+                    dr.Dispose();
+                }
 
+                //添加合计
+                
+                DataGridViewRow drsum = new DataGridViewRow();
+                foreach (DataGridViewColumn c in dataGridView1.Columns)
+                {
+                    drsum.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                }
+                drsum.Cells[0].Value = "小计";
+                drsum.Cells[1].Value = dictsum_out[key];
+                drsum.Cells[2].Value = dictsum_in[key];
+                drsum.Cells[3].Value = dictsum_mid[key];
+
+                dataGridView1.Rows.Add(drsum);
+            }
         }
     }
 }

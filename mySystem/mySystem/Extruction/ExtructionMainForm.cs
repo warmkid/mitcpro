@@ -122,5 +122,17 @@ namespace mySystem
             Record_extrusSupply recordsupply = new Record_extrusSupply(mform);
             recordsupply.Show();
         }
+
+        private void B4Btn_Click(object sender, EventArgs e)
+        {
+            Record_material_reqanddisg mat = new Record_material_reqanddisg(mform);
+            mat.Show();
+        }
+
+        private void B5Btn_Click(object sender, EventArgs e)
+        {
+            ProdctDaily_extrus pro = new ProdctDaily_extrus(mform);
+            pro.Show();
+        }
     }
 }

@@ -103,6 +103,7 @@
             this.label27 = new System.Windows.Forms.Label();
             this.textBox26 = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -877,11 +878,22 @@
             this.label26.TabIndex = 13;
             this.label26.Text = "接收人";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(804, 45);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "保存";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 671);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.splitContainer7);
             this.Controls.Add(this.splitContainer6);
             this.Controls.Add(this.splitContainer1);
@@ -1027,5 +1039,6 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.TextBox textBox26;
         private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Button button1;
     }
 }
