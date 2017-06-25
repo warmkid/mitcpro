@@ -35,7 +35,6 @@
             this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.确认项目 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.确认内容 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -64,7 +63,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.dataGridView1);
             this.groupBox1.Location = new System.Drawing.Point(12, 5);
             this.groupBox1.Name = "groupBox1";
@@ -100,16 +98,6 @@
             this.确认内容.HeaderText = "确认内容";
             this.确认内容.Name = "确认内容";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(209, 23);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 8;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // Setting_CheckBeforePower
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -136,6 +124,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 序号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 确认项目;
         private System.Windows.Forms.DataGridViewTextBoxColumn 确认内容;
-        private System.Windows.Forms.Button button1;
     }
 }

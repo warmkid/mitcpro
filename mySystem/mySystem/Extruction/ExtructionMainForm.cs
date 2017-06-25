@@ -184,6 +184,12 @@ namespace mySystem
                     ProdctDaily_extrus p = new ProdctDaily_extrus(mform);
                     p.Show();
                 }
+
+                private void B8Btn_Click(object sender, EventArgs e)
+                {
+                    ProductInnerPackagingRecord PIPRform = new ProductInnerPackagingRecord(mform);
+                    PIPRform.Show();
+                }
     }
 }
 

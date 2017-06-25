@@ -71,12 +71,34 @@ namespace mySystem.Extruction.Process
             this.Time5Picker.Format = DateTimePickerFormat.Custom;
             this.Time5Picker.CustomFormat = "HH:mm";
 
-            //List<Control> cons=
             /*
+            List<String> queryCols = new List<String>(new String[] { "s4_review_opinion" });
+            List<String> whereCols = new List<String>(new String[] { "id" });
+            List<Object> whereVals = new List<Object>(new Object[] { 1 });
+            List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
+            */
+
+            List<String> queryCols = new List<String>(new String[] { "s3_hw_set1", "s3_ld_set1", "s3_mj_set1", "s3_jt1_set1", "s3_jt2_set1", 
+                    "s3_km_set1", "s3_region1_set1", "s3_region2_set1", "s3_region3_set1", "s3_region4_set1", "s3_hw_set2", 
+                    "s3_ld_set2", "s3_mj_set2", "s3_jt1_set2", "s3_jt2_set2", "s3_km_set2", "s3_region1_set2", "s3_region2_set2", 
+                    "s3_region3_set2", "s3_region4_set2", "s3_duration1", "s3_duration2", "s3_duration3" });
+            List<String> whereCols = new List<String>(new String[] { "id" });
+            List<Object> whereVals = new List<Object>(new Object[] { 1 });
+            List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
+                        
             List<String> data = new List<String>{ };
-            List<Control> cons = new List<Control> { };
-             * */
-            //private void fillControl(List<Control> cons, List<String> data)
+            for (int i = 0; i < queryValsList[0].Count-3; i++)
+            { data.Add(queryValsList[0][i].ToString()); }
+            data.Add("加热保温" + queryValsList[0][queryValsList[0].Count - 3].ToString() + "分钟");
+            data.Add("加热保温" + queryValsList[0][queryValsList[0].Count - 2].ToString() + "分钟");
+            data.Add("加热保温" + queryValsList[0][queryValsList[0].Count - 1].ToString() + "分钟");
+
+            List<Control> cons = new List<Control> { label_s3_hw_set1, label_s3_ld_set1, label_s3_mj_set1, label_s3_jt1_set1, label_s3_jt2_set1, 
+                    label_s3_km_set1, label_s3_region1_set1, label_s3_region2_set1, label_s3_region3_set1, label_s3_region4_set1, label_s3_hw_set2, 
+                    label_s3_ld_set2, label_s3_mj_set2, label_s3_jt1_set2, label_s3_jt2_set2, label_s3_km_set2, label_s3_region1_set2, label_s3_region2_set2, 
+                    label_s3_region3_set2, label_s3_region4_set2, label_s3_duration1, label_s3_duration2, label_s3_duration3};
+
+            Utility.fillControl(cons, data);
             
             /*
             if (isSqlOk)

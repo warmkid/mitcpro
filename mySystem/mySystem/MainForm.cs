@@ -180,9 +180,9 @@ namespace mySystem
         private void MainProduceBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
-            MainProduceBtn.BackColor = Color.FromArgb(96, 123, 174);
-            MainSettingBtn.BackColor = Color.LightGray;
-            MainQueryBtn.BackColor = Color.LightGray;
+            MainProduceBtn.BackColor = Color.FromArgb(138, 158, 196);
+            MainSettingBtn.BackColor = Color.FromName("Control");
+            MainQueryBtn.BackColor = Color.FromName("Control");
             ProcessMainForm myDlg = new ProcessMainForm(this);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -195,9 +195,9 @@ namespace mySystem
         private void MainSettingBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
-            MainProduceBtn.BackColor = Color.LightGray;
-            MainSettingBtn.BackColor = Color.FromArgb(96, 123, 174);
-            MainQueryBtn.BackColor = Color.LightGray;
+            MainProduceBtn.BackColor = Color.FromName("Control");
+            MainSettingBtn.BackColor = Color.FromArgb(138, 158, 196);
+            MainQueryBtn.BackColor = Color.FromName("Control");
             SettingMainForm myDlg = new SettingMainForm(this);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -210,10 +210,10 @@ namespace mySystem
         private void MainQueryBtn_Click(object sender, EventArgs e)
         {
             MainPanel.Controls.Clear();
-            MainProduceBtn.BackColor = Color.LightGray;
-            MainSettingBtn.BackColor = Color.LightGray;
-            MainQueryBtn.BackColor = Color.FromArgb(96, 123, 174);
-            QueryMainForm myDlg = new QueryMainForm(conn);
+            MainProduceBtn.BackColor = Color.FromName("Control");
+            MainSettingBtn.BackColor = Color.FromName("Control");
+            MainQueryBtn.BackColor = Color.FromArgb(138, 158, 196);
+            QueryMainForm myDlg = new QueryMainForm(this);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = MainPanel.Size;

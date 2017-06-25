@@ -31,6 +31,13 @@ namespace mySystem
         //吹膜
         private void ExtructionBtn_Click(object sender, EventArgs e)
         {
+            ExtructionBtn.BackColor = Color.FromArgb(138, 158, 196);
+            CleanBtn.BackColor = Color.FromName("ControlLightLight");
+            BagBtn.BackColor = Color.FromName("ControlLightLight");
+            KillBtn.BackColor = Color.FromName("ControlLightLight");
+            PlanBtn.BackColor = Color.FromName("ControlLightLight");
+            OrderBtn.BackColor = Color.FromName("ControlLightLight");
+            StockBtn.BackColor = Color.FromName("ControlLightLight");
             ProducePanelRight.Controls.Clear();
             ExtructionMainForm myDlg = new ExtructionMainForm(mform);
             myDlg.TopLevel = false;
@@ -43,14 +50,27 @@ namespace mySystem
         //清洁分切
         private void CleanBtn_Click(object sender, EventArgs e)
         {
+            ExtructionBtn.BackColor = Color.FromName("ControlLightLight");
+            CleanBtn.BackColor = Color.FromArgb(138, 158, 196);
+            BagBtn.BackColor = Color.FromName("ControlLightLight");
+            KillBtn.BackColor = Color.FromName("ControlLightLight");
+            PlanBtn.BackColor = Color.FromName("ControlLightLight");
+            OrderBtn.BackColor = Color.FromName("ControlLightLight");
+            StockBtn.BackColor = Color.FromName("ControlLightLight");
             ProducePanelRight.Controls.Clear();
         }
 
         //制袋
         private void BagBtn_Click(object sender, EventArgs e)
         {
-            //ProducePanelRight.Controls.Clear();
-
+            ProducePanelRight.Controls.Clear();
+            ExtructionBtn.BackColor = Color.FromName("ControlLightLight");
+            CleanBtn.BackColor = Color.FromName("ControlLightLight");
+            BagBtn.BackColor = Color.FromArgb(138, 158, 196);
+            KillBtn.BackColor = Color.FromName("ControlLightLight");
+            PlanBtn.BackColor = Color.FromName("ControlLightLight");
+            OrderBtn.BackColor = Color.FromName("ControlLightLight");
+            StockBtn.BackColor = Color.FromName("ControlLightLight");
             if (bagPanel.Visible == true)
             {
                 otherPanel.Location = new Point(0, 130);
@@ -71,12 +91,26 @@ namespace mySystem
         //灭菌
         private void KillBtn_Click(object sender, EventArgs e)
         {
+            ExtructionBtn.BackColor = Color.FromName("ControlLightLight");
+            CleanBtn.BackColor = Color.FromName("ControlLightLight");
+            BagBtn.BackColor = Color.FromName("ControlLightLight");
+            KillBtn.BackColor = Color.FromArgb(138, 158, 196);
+            PlanBtn.BackColor = Color.FromName("ControlLightLight");
+            OrderBtn.BackColor = Color.FromName("ControlLightLight");
+            StockBtn.BackColor = Color.FromName("ControlLightLight");
             ProducePanelRight.Controls.Clear();
         }
 
         //生产计划
         private void PlanBtn_Click(object sender, EventArgs e)
         {
+            ExtructionBtn.BackColor = Color.FromName("ControlLightLight");
+            CleanBtn.BackColor = Color.FromName("ControlLightLight");
+            BagBtn.BackColor = Color.FromName("ControlLightLight");
+            KillBtn.BackColor = Color.FromName("ControlLightLight");
+            PlanBtn.BackColor = Color.FromArgb(138, 158, 196);
+            OrderBtn.BackColor = Color.FromName("ControlLightLight");
+            StockBtn.BackColor = Color.FromName("ControlLightLight");
             ProducePanelRight.Controls.Clear();
             PlanForm myDlg = new PlanForm();
             myDlg.TopLevel = false;
@@ -89,12 +123,26 @@ namespace mySystem
         //订单管理
         private void OrderBtn_Click(object sender, EventArgs e)
         {
+            ExtructionBtn.BackColor = Color.FromName("ControlLightLight");
+            CleanBtn.BackColor = Color.FromName("ControlLightLight");
+            BagBtn.BackColor = Color.FromName("ControlLightLight");
+            KillBtn.BackColor = Color.FromName("ControlLightLight");
+            PlanBtn.BackColor = Color.FromName("ControlLightLight");
+            OrderBtn.BackColor = Color.FromArgb(138, 158, 196);
+            StockBtn.BackColor = Color.FromName("ControlLightLight");
             ProducePanelRight.Controls.Clear();
         }
 
         //库存管理
         private void StockBtn_Click(object sender, EventArgs e)
         {
+            ExtructionBtn.BackColor = Color.FromName("ControlLightLight");
+            CleanBtn.BackColor = Color.FromName("ControlLightLight");
+            BagBtn.BackColor = Color.FromName("ControlLightLight");
+            KillBtn.BackColor = Color.FromName("ControlLightLight");
+            PlanBtn.BackColor = Color.FromName("ControlLightLight");
+            OrderBtn.BackColor = Color.FromName("ControlLightLight");
+            StockBtn.BackColor = Color.FromArgb(138, 158, 196);
             ProducePanelRight.Controls.Clear();
             StockCheckForm myDlg = new StockCheckForm();
             myDlg.TopLevel = false;

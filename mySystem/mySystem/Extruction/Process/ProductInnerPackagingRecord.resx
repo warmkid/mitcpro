@@ -117,58 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="订单信息BindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>487, 12</value>
+  <metadata name="包材.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
-  <metadata name="myDataSet.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>380, 12</value>
+  <metadata name="批号.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
-  <metadata name="库存信息BindingSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 49</value>
+  <metadata name="接上班数量.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="MainProduceBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABzElEQVRYR8VXCxKEIAjt6B6tm7nyM0Aw
-        bdrdZpxcInk8Htoex+Z1nmedjc3luntts2HUo9ZmHEbku2kbcFIsHhgUfmHwGAQ80+8szynRBAAHg6cU
-        H71DEIWZSTFGuNF21FLKAAKzuTKX4GgMywC+AOIpAA/C0L3DAIJIs3XYFQMJAEX3ggYgOAJASqNgGwCk
-        ppbTXIDi3wEoEU8FyRoIGbAg5rUXDVwMOBZuRNgBwKaCymQO70B4v1cBRItLptl9BMBMIAPCirZRG6oS
-        cG86BlbAWBFCEBWwl8DbLgDCfi+BLLgdHLoAxooQrQgxNp0B7eXSMlgB0TPHjDm4zHE9BiNzYzMlsACI
-        QgtCA9Jz8bUAVN3XNOAByAIAIgMitVb3vhHtaYCOGlUCq1pPbUQ329Jsb7vAARARiahW7ivC0z6DCOlo
-        5APFIcZnC7aHDGAbSi9eJ9pKHd0mk/Z85DfsA3D4JgxsZRbVe64BTt4DUOruAN60zRjYFdQT/+w4Jg24
-        Hv+KbTiM/lcCjMyXasM36x0xOmWAtsY++CPybZv7HlAleCKq3XdSEerMvzyPGGjfE/SZ9MuhRYjzXwaP
-        /p4ZQBkYI8igVCG9Q6qX4QNhWF5qJYmEkwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="MainSettingBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAB4ElEQVRYR6WXCw6DMAxDOTpH42Zsaedi
-        3CTNAAkNoTR+za9s2+rX+TXN7rqngiWE2PQ8jsO9f2AFtzWTISKO/wHwNlBSn0QIogqgGzCY8tXIOdT7
-        vo+8F1KQbaAE0RwAwsQhqmAMg+JUQCrakrgZlQSjSCgUNrNSD1urIuTZ/NuuU84zYXXu2Z7fC+/5OWrX
-        Ycw5V8dXMVpR8r2dvC4Sz9LRADLxa/ElbPa4UTuZeAqwEgdgD2GHYHF7VnFOFXeSV5B/FaFXA554h9ra
-        zWskco1HctoHT7UDVuIGoOmi6HkAs3gEBHHdIXau4mZvtgmAL44O4Khoe6HIWjG0677z/qqnIwXQaaiV
-        bkJe2C+AnncOO8QTgKtQ+PCpthqg7VfFWzHae/qY0Qhs2lKA8ACiCYcI8JrRCfIlNQFQb079zXDZjPcA
-        vDaMxjEYXAAIRyPX63OIc0q5BqITclQpqlV/oxRw2lgc77kOshSMSPCu2fkKQMW5CCsRiCLTJmaWgrHT
-        qQV7B3AXZCIpQFaEXueMiTj/n3jKsFw3ipjHsQO+dPTUoAHoWQAASsNT/8t1k7jXBUsvLwwGwO0s+BVh
-        dBa80JuW3k47HsUqXpkFb8AaiHaBnhO/9LzRWa4dn2OeuA21DxUbN+7HIeFjAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="MainQueryBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
-        JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAABjUlEQVRYR+1W0Q6EIAzz0/k0/8xzSpfe
-        2GCKPlxyJiZ3CGtXtsKy/J8fUmDbuY7e19LZ5BEC3iPjpRSQe5zEF6YlAXAhAJJPMggzBpgAAxyT61ZN
-        83DBGUR+W/CnSHTBsx/vKuHGX9e16QAZ66lwpyYacA/YtiOIRGSySgzBy95uAoaXMpxWIgQ/+nv/ysCW
-        BFTiIF5xRkr095y+stRPK/FFAhlxFpEKmIM1TPJqTSgJLbw6Yg1Yvjfms8+FKyJQ5BG97jjW2myQPQL3
-        CMCqe+Ajs2oIsMyh81UFhIDdhsi4wva0CqDgPN/HmFc3PcfMeMOpBLWgFxBtCnPKZJ8Bl5PstF6Rll4u
-        MPaILIEsOI5SVcESwX+26lH2V8GVBAoLWwJwugWFt6VRxWcvDaO7YJcA35pQtJV8Fl/nuUT4OmYLlU9O
-        Br9L4ChOmBXL65F4A1zrwsvUXExVrVnZo31qbIHPArvvlzc7uWBIIhlnapqSQNZWianoycV6FFN165E9
-        U/FJ/GXxQGSsOmUY5wN3s0ksj2wsygAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>36</value>
+  <metadata name="领取数量.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="剩余数量.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="使用数量.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="退库数量.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="序号.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="生产日期.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="内包序号.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="产品外观.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="包装后外观.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="包装袋热封线.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="贴标签.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="贴指示剂.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="包装人.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="序号.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="生产日期.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="内包序号.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="产品外观.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="包装后外观.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="包装袋热封线.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="贴标签.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="贴指示剂.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="包装人.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
   </metadata>
 </root>

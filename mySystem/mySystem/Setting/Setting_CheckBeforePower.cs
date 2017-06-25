@@ -107,6 +107,21 @@ namespace mySystem.Setting
             { }
             else
             {
+                //先删除数据库内容
+                string strDel = "DELETE  FROM "+tableSel;
+                OleDbCommand inst = new OleDbCommand(strDel, connOle);
+                inst.ExecuteNonQuery();
+
+                for (int i = 0; i < dataGridView1.RowCount; i++)
+                {
+                    List<String> queryCols = new List<String>(new String[] {"确认序号","确认项目","确认内容" });
+                    List<Object> queryVals = new List<Object>(new Object[] { dataGridView1.Rows[i].Cells[0].Value.ToString(), dataGridView1.Rows[i].Cells[1].Value.ToString(), dataGridView1.Rows[i].Cells[2].Value.ToString() });
+                    Boolean b = Utility.insertAccess(connOle, tableSel, queryCols, queryVals);
+                }
+
+                //public static Boolean insertAccess(OleDbConnection conn, String tblName, List<String> insertCols, List<Object> insertVals)
+
+
                 /*
                 List<List<Object>> reasList = Utility.readFromDataGridView(dataGridView1);
                 List<String> queryCols = new List<String>(new String[] {  });
@@ -122,11 +137,6 @@ namespace mySystem.Setting
 
             }
             
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            DataSave();
         }
 
     }

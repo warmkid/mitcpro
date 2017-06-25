@@ -71,9 +71,9 @@
             this.label_s3_region2_set2 = new System.Windows.Forms.Label();
             this.label_s3_region3_set2 = new System.Windows.Forms.Label();
             this.label_s3_region4_set2 = new System.Windows.Forms.Label();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label45 = new System.Windows.Forms.Label();
+            this.label_s3_duration1 = new System.Windows.Forms.Label();
+            this.label_s3_duration2 = new System.Windows.Forms.Label();
+            this.label_s3_duration3 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.phiBox = new System.Windows.Forms.TextBox();
@@ -529,35 +529,35 @@
             this.label_s3_region4_set2.TabIndex = 48;
             this.label_s3_region4_set2.Text = "215";
             // 
-            // label43
+            // label_s3_duration1
             // 
-            this.label43.AutoSize = true;
-            this.label43.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label43.Location = new System.Drawing.Point(801, 254);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(120, 16);
-            this.label43.TabIndex = 49;
-            this.label43.Text = "加热保温60分钟";
+            this.label_s3_duration1.AutoSize = true;
+            this.label_s3_duration1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_duration1.Location = new System.Drawing.Point(801, 254);
+            this.label_s3_duration1.Name = "label_s3_duration1";
+            this.label_s3_duration1.Size = new System.Drawing.Size(120, 16);
+            this.label_s3_duration1.TabIndex = 49;
+            this.label_s3_duration1.Text = "加热保温60分钟";
             // 
-            // label44
+            // label_s3_duration2
             // 
-            this.label44.AutoSize = true;
-            this.label44.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label44.Location = new System.Drawing.Point(305, 355);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(120, 16);
-            this.label44.TabIndex = 50;
-            this.label44.Text = "加热保温40分钟";
+            this.label_s3_duration2.AutoSize = true;
+            this.label_s3_duration2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_duration2.Location = new System.Drawing.Point(305, 355);
+            this.label_s3_duration2.Name = "label_s3_duration2";
+            this.label_s3_duration2.Size = new System.Drawing.Size(120, 16);
+            this.label_s3_duration2.TabIndex = 50;
+            this.label_s3_duration2.Text = "加热保温40分钟";
             // 
-            // label45
+            // label_s3_duration3
             // 
-            this.label45.AutoSize = true;
-            this.label45.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label45.Location = new System.Drawing.Point(305, 429);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(120, 16);
-            this.label45.TabIndex = 51;
-            this.label45.Text = "加热保温40分钟";
+            this.label_s3_duration3.AutoSize = true;
+            this.label_s3_duration3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_duration3.Location = new System.Drawing.Point(305, 429);
+            this.label_s3_duration3.Name = "label_s3_duration3";
+            this.label_s3_duration3.Size = new System.Drawing.Size(120, 16);
+            this.label_s3_duration3.TabIndex = 51;
+            this.label_s3_duration3.Text = "加热保温40分钟";
             // 
             // label46
             // 
@@ -789,9 +789,9 @@
             this.Controls.Add(this.phiBox);
             this.Controls.Add(this.label49);
             this.Controls.Add(this.label46);
-            this.Controls.Add(this.label45);
-            this.Controls.Add(this.label44);
-            this.Controls.Add(this.label43);
+            this.Controls.Add(this.label_s3_duration3);
+            this.Controls.Add(this.label_s3_duration2);
+            this.Controls.Add(this.label_s3_duration1);
             this.Controls.Add(this.label_s3_region4_set2);
             this.Controls.Add(this.label_s3_region3_set2);
             this.Controls.Add(this.label_s3_region2_set2);
@@ -890,9 +890,9 @@
         private System.Windows.Forms.Label label_s3_region2_set2;
         private System.Windows.Forms.Label label_s3_region3_set2;
         private System.Windows.Forms.Label label_s3_region4_set2;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.Label label45;
+        private System.Windows.Forms.Label label_s3_duration1;
+        private System.Windows.Forms.Label label_s3_duration2;
+        private System.Windows.Forms.Label label_s3_duration3;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.TextBox phiBox;
