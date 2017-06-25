@@ -79,6 +79,12 @@
     <Compile Include="Extruction\Chart\feedrecord.Designer.cs">
       <DependentUpon>feedrecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extruction\Chart\wasterecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\wasterecord.Designer.cs">
+      <DependentUpon>wasterecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extruction\ExtructionMainForm.cs">
       <SubType>Form</SubType>
     </Compile>

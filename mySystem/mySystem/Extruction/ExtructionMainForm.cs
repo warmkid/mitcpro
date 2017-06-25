@@ -123,5 +123,11 @@ namespace mySystem
             mySystem.Extruction.Chart.feedrecord feedrecord = new Extruction.Chart.feedrecord(mform);
             feedrecord.Show();
         }
+
+        private void B3Btn_Click(object sender, EventArgs e)
+        {
+            mySystem.Extruction.Chart.wasterecord wasterecord = new Extruction.Chart.wasterecord(mform);
+            wasterecord.Show();
+        }
     }
 }

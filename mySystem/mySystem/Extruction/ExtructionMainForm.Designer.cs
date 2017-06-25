@@ -263,6 +263,7 @@
             this.B3Btn.TabIndex = 11;
             this.B3Btn.Text = "吹膜工序废品记录";
             this.B3Btn.UseVisualStyleBackColor = true;
+            this.B3Btn.Click += new System.EventHandler(this.B3Btn_Click);
             // 
             // groupBox3
             // 
