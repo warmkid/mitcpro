@@ -208,6 +208,12 @@ namespace mySystem
                     HandoverRecordofExtrusionProcess test = new HandoverRecordofExtrusionProcess(mform);
                     test.Show();
                 }
+
+                private void B9Btn_Click(object sender, EventArgs e)
+                {
+                    mySystem.Extruction.Chart.outerpack test = new Extruction.Chart.outerpack(mform);
+                    test.Show();
+                }
     }
 }
 

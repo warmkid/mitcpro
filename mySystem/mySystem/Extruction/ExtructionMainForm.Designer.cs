@@ -205,6 +205,7 @@
             this.B9Btn.TabIndex = 19;
             this.B9Btn.Text = "产品外包装记录";
             this.B9Btn.UseVisualStyleBackColor = true;
+            this.B9Btn.Click += new System.EventHandler(this.B9Btn_Click);
             // 
             // B7Btn
             // 
