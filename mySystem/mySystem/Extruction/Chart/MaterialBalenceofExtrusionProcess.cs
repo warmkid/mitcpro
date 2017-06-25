@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.SqlClient;
-
+using mySystem.Extruction.Process;
+using Newtonsoft.Json.Linq;
+using System.Data.OleDb;
 
 //this form is about the 12th picture of the extrusion step 
 namespace mySystem.Extruction.Process
 {
-    public partial class MaterialBalenceofExtrusionProcess : Form
+    public partial class MaterialBalenceofExtrusionProcess : mySystem.BaseForm
     {
         DataTable dt;
         DataRow[] dr;
@@ -20,17 +22,18 @@ namespace mySystem.Extruction.Process
         string produceid, recordman, recheckman;
         SqlConnection conn;
 
-        public MaterialBalenceofExtrusionProcess(SqlConnection myConnection)
+        public MaterialBalenceofExtrusionProcess(mySystem.MainForm mainform)
+            : base(mainform)
         {
             InitializeComponent();
-            conn = myConnection;
+            //conn = myConnection;
             
-            this.sqlconnec(conn);
+            //this.sqlconnec(conn);
             //this.dtpProduce.Value = DateTime.MinValue;
             //this.dtpRecord.Value = DateTime.MinValue;
             //this.dtpRecheck.Value = DateTime.MinValue;
 
-            show();
+            //show();
         }
 
         private void btnDefault_Click(object sender, EventArgs e)

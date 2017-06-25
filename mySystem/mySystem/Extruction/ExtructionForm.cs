@@ -90,20 +90,20 @@ namespace mySystem
 
         private void Chart4Btn_Click(object sender, EventArgs e)
         {
-            WastingRecordofExtrusionUnit myDlg = new WastingRecordofExtrusionUnit(conn);
-            myDlg.Show();
+            //WastingRecordofExtrusionUnit myDlg = new WastingRecordofExtrusionUnit(conn);
+            //myDlg.Show();
         }
 
         private void Chart6Btn_Click(object sender, EventArgs e)
         {
-            MaterialBalenceofExtrusionProcess myDlg = new MaterialBalenceofExtrusionProcess(conn);
-            myDlg.Show();
+            //MaterialBalenceofExtrusionProcess myDlg = new MaterialBalenceofExtrusionProcess(conn);
+            //myDlg.Show();
         }
 
         private void Chart7Btn_Click(object sender, EventArgs e)
         {
-            HandoverRecordofExtrusionProcess myDlg = new HandoverRecordofExtrusionProcess(conn);
-            myDlg.Show();
+            //HandoverRecordofExtrusionProcess myDlg = new HandoverRecordofExtrusionProcess(conn);
+            //myDlg.Show();
         }
 
         private void Chart1Btn_Click(object sender, EventArgs e)

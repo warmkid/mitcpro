@@ -94,6 +94,7 @@
             this.A4Btn.TabIndex = 15;
             this.A4Btn.Text = "吹膜岗位交接班记录";
             this.A4Btn.UseVisualStyleBackColor = true;
+            this.A4Btn.Click += new System.EventHandler(this.A4Btn_Click);
             // 
             // comboBox1
             // 
@@ -214,6 +215,7 @@
             this.B7Btn.TabIndex = 18;
             this.B7Btn.Text = "吹膜工序物料平衡记录";
             this.B7Btn.UseVisualStyleBackColor = true;
+            this.B7Btn.Click += new System.EventHandler(this.B7Btn_Click);
             // 
             // B1Btn
             // 

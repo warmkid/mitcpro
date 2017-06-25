@@ -196,6 +196,18 @@ namespace mySystem
                     mySystem.Extruction.Chart.beeholetable beeholetable = new Extruction.Chart.beeholetable(mform);
                     beeholetable.Show();
                 }
+
+                private void B7Btn_Click(object sender, EventArgs e)
+                {
+                    MaterialBalenceofExtrusionProcess test = new MaterialBalenceofExtrusionProcess(mform);
+                    test.Show();
+                }
+
+                private void A4Btn_Click(object sender, EventArgs e)
+                {
+                    HandoverRecordofExtrusionProcess test = new HandoverRecordofExtrusionProcess(mform);
+                    test.Show();
+                }
     }
 }
 
