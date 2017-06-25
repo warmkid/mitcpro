@@ -121,6 +121,12 @@
     <Compile Include="Extruction\Process\Record_material_reqanddisg.Designer.cs">
       <DependentUpon>Record_material_reqanddisg.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extruction\Process\Record_train.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\Record_train.Designer.cs">
+      <DependentUpon>Record_train.cs</DependentUpon>
+    </Compile>
     <Compile Include="Query\QueryInstruForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -383,6 +389,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\Record_material_reqanddisg.resx">
       <DependentUpon>Record_material_reqanddisg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\Record_train.resx">
+      <DependentUpon>Record_train.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProcessMainForm.resx">
       <DependentUpon>ProcessMainForm.cs</DependentUpon>

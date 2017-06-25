@@ -190,6 +190,12 @@ namespace mySystem
                     ProductInnerPackagingRecord PIPRform = new ProductInnerPackagingRecord(mform);
                     PIPRform.Show();
                 }
+
+                private void D1Btn_Click(object sender, EventArgs e)
+                {
+                    Record_train r = new Record_train(mform);
+                    r.Show();
+                }
     }
 }
 

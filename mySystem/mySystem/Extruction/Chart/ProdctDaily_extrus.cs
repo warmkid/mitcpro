@@ -104,6 +104,7 @@ namespace mySystem
             //查询
             if (mainform.isSqlOk)
             {
+                
                 SqlCommand comm = new SqlCommand(sql, mainform.conn);
                 SqlDataAdapter da = new SqlDataAdapter(comm);
 
@@ -118,6 +119,7 @@ namespace mySystem
             }
             else
             {
+                string sql = "select s6_production_date,s6_flight,production_instruction_id,product_batch_id,s6_mojuan_length from extrusion_s6_production_check";
                 OleDbCommand comm = new OleDbCommand(sql, mainform.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
@@ -140,37 +142,37 @@ namespace mySystem
             //统计列值
             
             
-            DataView dv = dt.DefaultView;
-            DataTable tempdt=dv.ToTable(true, "订单");
+            //DataView dv = dt.DefaultView;
+            //DataTable tempdt=dv.ToTable(true, "订单");
 
-            for (int i = 0; i < tempdt.Rows.Count; i++)
-            {
-                comboBox1.Items.Add(tempdt.Rows[i]["订单"].ToString().Trim());
-            }
-            tempdt = dv.ToTable(true, "生产指令");
-            for (int i = 0; i < tempdt.Rows.Count; i++)
-            {
-                comboBox2.Items.Add(tempdt.Rows[i]["生产指令"].ToString().Trim());
-            }
-            tempdt = dv.ToTable(true, "填报人");
-            for (int i = 0; i < tempdt.Rows.Count; i++)
-            {
-                comboBox3.Items.Add(tempdt.Rows[i]["填报人"].ToString().Trim());
-            }
-            tempdt = dv.ToTable(true, "复核人");
-            for (int i = 0; i < tempdt.Rows.Count; i++)
-            {
-                comboBox4.Items.Add(tempdt.Rows[i]["复核人"].ToString().Trim());
-            }
+            //for (int i = 0; i < tempdt.Rows.Count; i++)
+            //{
+            //    comboBox1.Items.Add(tempdt.Rows[i]["订单"].ToString().Trim());
+            //}
+            //tempdt = dv.ToTable(true, "生产指令");
+            //for (int i = 0; i < tempdt.Rows.Count; i++)
+            //{
+            //    comboBox2.Items.Add(tempdt.Rows[i]["生产指令"].ToString().Trim());
+            //}
+            //tempdt = dv.ToTable(true, "填报人");
+            //for (int i = 0; i < tempdt.Rows.Count; i++)
+            //{
+            //    comboBox3.Items.Add(tempdt.Rows[i]["填报人"].ToString().Trim());
+            //}
+            //tempdt = dv.ToTable(true, "复核人");
+            //for (int i = 0; i < tempdt.Rows.Count; i++)
+            //{
+            //    comboBox4.Items.Add(tempdt.Rows[i]["复核人"].ToString().Trim());
+            //}
 
-            //添加合计
-            DataRow row1;
-            row1=dt.NewRow();
-            row1[0] = "合计";
-            row1[7] = dt.Compute("sum("+dt.Columns[7].ColumnName+")", "TRUE");
-            row1[8] = dt.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
-            row1[9] = dt.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
-            dt.Rows.Add(row1);
+            ////添加合计
+            //DataRow row1;
+            //row1=dt.NewRow();
+            //row1[0] = "合计";
+            //row1[7] = dt.Compute("sum("+dt.Columns[7].ColumnName+")", "TRUE");
+            //row1[8] = dt.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
+            //row1[9] = dt.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
+            //dt.Rows.Add(row1);
 
             dataGridView1.DataSource = dt;
             
