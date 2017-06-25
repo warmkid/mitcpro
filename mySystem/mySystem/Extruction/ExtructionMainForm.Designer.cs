@@ -366,6 +366,7 @@
             this.D2Btn.TabIndex = 16;
             this.D2Btn.Text = "吹膜机更换模头记录及安装检查表";
             this.D2Btn.UseVisualStyleBackColor = true;
+            this.D2Btn.Click += new System.EventHandler(this.D2Btn_Click);
             // 
             // D4Btn
             // 

@@ -220,6 +220,12 @@ namespace mySystem
                     ExtructionReplaceCore ERCform = new ExtructionReplaceCore(mform);
                     ERCform.Show();
                 }
+
+                private void D2Btn_Click(object sender, EventArgs e)
+                {
+                    ReplaceHeadForm myDlg = new ReplaceHeadForm();
+                    myDlg.Show();
+                }
     }
 }
 

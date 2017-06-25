@@ -91,6 +91,12 @@
     <Compile Include="Extruction\Chart\outerpack.Designer.cs">
       <DependentUpon>outerpack.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extruction\Chart\ReplaceHeadForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\ReplaceHeadForm.Designer.cs">
+      <DependentUpon>ReplaceHeadForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extruction\Chart\wasterecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -386,6 +392,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Chart\outerpack.resx">
       <DependentUpon>outerpack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Chart\ReplaceHeadForm.resx">
+      <DependentUpon>ReplaceHeadForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\ExtructionMainForm.resx">
       <DependentUpon>ExtructionMainForm.cs</DependentUpon>
