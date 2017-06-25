@@ -190,6 +190,12 @@ namespace mySystem
                     ProductInnerPackagingRecord PIPRform = new ProductInnerPackagingRecord(mform);
                     PIPRform.Show();
                 }
+
+                private void C4Btn_Click(object sender, EventArgs e)
+                {
+                    mySystem.Extruction.Chart.beeholetable beeholetable = new Extruction.Chart.beeholetable(mform);
+                    beeholetable.Show();
+                }
     }
 }
 
