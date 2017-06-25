@@ -77,6 +77,7 @@ namespace mySystem
             }
             else
             {
+                bfPowerDlg.DataSave();
                 preheatDlg.DataSave();
                 setsiteDlg.DataSave();
                 setcleanDlg.DataSave();

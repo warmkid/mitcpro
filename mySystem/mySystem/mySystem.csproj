@@ -115,6 +115,12 @@
     <Compile Include="Extruction\Process\Record_material_reqanddisg.Designer.cs">
       <DependentUpon>Record_material_reqanddisg.cs</DependentUpon>
     </Compile>
+    <Compile Include="Query\QueryInstruForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\QueryInstruForm.Designer.cs">
+      <DependentUpon>QueryInstruForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\PreheatParameterForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -374,6 +380,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryExtruForm.resx">
       <DependentUpon>QueryExtruForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\QueryInstruForm.resx">
+      <DependentUpon>QueryInstruForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryMainForm.resx">
       <DependentUpon>QueryMainForm.cs</DependentUpon>

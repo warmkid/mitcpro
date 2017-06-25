@@ -81,6 +81,7 @@
             // 
             // MainSettingBtn
             // 
+            this.MainSettingBtn.BackColor = System.Drawing.SystemColors.Control;
             this.MainSettingBtn.FlatAppearance.BorderSize = 0;
             this.MainSettingBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MainSettingBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -92,7 +93,7 @@
             this.MainSettingBtn.TabIndex = 2;
             this.MainSettingBtn.Text = "设置";
             this.MainSettingBtn.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.MainSettingBtn.UseVisualStyleBackColor = true;
+            this.MainSettingBtn.UseVisualStyleBackColor = false;
             this.MainSettingBtn.Click += new System.EventHandler(this.MainSettingBtn_Click);
             // 
             // MainQueryBtn

@@ -109,7 +109,7 @@ namespace mySystem.Extruction.Process
                 }
                 dr.Cells[0].Value = dt_confirmarea.Rows[i]["确认序号"].ToString(); //序号
                 dr.Cells[1].Value = dt_confirmarea.Rows[i]["确认项目"].ToString(); //确认项目
-                dr.Cells[2].Value = dt_confirmarea.Rows[i]["确认内容"].ToString(); ; //确认内容
+                dr.Cells[2].Value = " "+dt_confirmarea.Rows[i]["确认内容"].ToString(); ; //确认内容
                 dr.Cells[3].Value = true;
                 CheckBeforePowerView.Rows.Add(dr);
             }

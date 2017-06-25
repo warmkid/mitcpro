@@ -68,7 +68,7 @@
             this.PlanBtn.Name = "PlanBtn";
             this.PlanBtn.Size = new System.Drawing.Size(172, 43);
             this.PlanBtn.TabIndex = 6;
-            this.PlanBtn.Text = "    生产计划";
+            this.PlanBtn.Text = "    生产指令";
             this.PlanBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.PlanBtn.UseVisualStyleBackColor = true;
             this.PlanBtn.Click += new System.EventHandler(this.PlanBtn_Click);
