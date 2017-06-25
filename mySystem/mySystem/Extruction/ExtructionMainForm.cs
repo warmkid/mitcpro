@@ -160,5 +160,11 @@ namespace mySystem
             ProdctDaily_extrus p = new ProdctDaily_extrus(mform);
             p.Show();
         }
+		        private void B3Btn_Click(object sender, EventArgs e)
+        {
+            mySystem.Extruction.Chart.wasterecord wasterecord = new Extruction.Chart.wasterecord(mform);
+            wasterecord.Show();
+        }
     }
 }
+

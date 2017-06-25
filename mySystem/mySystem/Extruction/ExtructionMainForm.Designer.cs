@@ -27,6 +27,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent()
+
         {
             this.A5Btn = new System.Windows.Forms.Button();
             this.A2Btn = new System.Windows.Forms.Button();
@@ -233,7 +234,6 @@
             this.B5Btn.TabIndex = 17;
             this.B5Btn.Text = "吹膜生产日报表";
             this.B5Btn.UseVisualStyleBackColor = true;
-            this.B5Btn.Click += new System.EventHandler(this.B5Btn_Click_1);
             // 
             // B2Btn
             // 
@@ -244,7 +244,6 @@
             this.B2Btn.TabIndex = 16;
             this.B2Btn.Text = "吹膜供料记录";
             this.B2Btn.UseVisualStyleBackColor = true;
-            this.B2Btn.Click += new System.EventHandler(this.B2Btn_Click_1);
             // 
             // B4Btn
             // 
@@ -255,7 +254,6 @@
             this.B4Btn.TabIndex = 15;
             this.B4Btn.Text = "吹膜工序领料退料记录";
             this.B4Btn.UseVisualStyleBackColor = true;
-            this.B4Btn.Click += new System.EventHandler(this.B4Btn_Click_1);
             // 
             // B3Btn
             // 
@@ -266,6 +264,7 @@
             this.B3Btn.TabIndex = 11;
             this.B3Btn.Text = "吹膜工序废品记录";
             this.B3Btn.UseVisualStyleBackColor = true;
+            this.B3Btn.Click += new System.EventHandler(this.B3Btn_Click);
             // 
             // groupBox3
             // 
