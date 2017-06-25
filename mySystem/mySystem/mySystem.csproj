@@ -115,6 +115,12 @@
     <Compile Include="Extruction\Process\ExtructionCheck.Designer.cs">
       <DependentUpon>ExtructionCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extruction\Process\ExtructionReplaceCore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Process\ExtructionReplaceCore.Designer.cs">
+      <DependentUpon>ExtructionReplaceCore.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extruction\Process\ProcessProductInstru.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -389,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\ExtructionCheck.resx">
       <DependentUpon>ExtructionCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Extruction\Process\ExtructionReplaceCore.resx">
+      <DependentUpon>ExtructionReplaceCore.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Extruction\Process\ProcessProductInstru.resx">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>

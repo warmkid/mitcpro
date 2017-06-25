@@ -65,7 +65,7 @@
             // 
             // A5Btn
             // 
-            this.A5Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.A5Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.A5Btn.Location = new System.Drawing.Point(20, 253);
             this.A5Btn.Name = "A5Btn";
             this.A5Btn.Size = new System.Drawing.Size(185, 38);
@@ -76,7 +76,7 @@
             // 
             // A2Btn
             // 
-            this.A2Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.A2Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.A2Btn.Location = new System.Drawing.Point(20, 97);
             this.A2Btn.Name = "A2Btn";
             this.A2Btn.Size = new System.Drawing.Size(185, 38);
@@ -87,7 +87,7 @@
             // 
             // A4Btn
             // 
-            this.A4Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.A4Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.A4Btn.Location = new System.Drawing.Point(20, 201);
             this.A4Btn.Name = "A4Btn";
             this.A4Btn.Size = new System.Drawing.Size(185, 38);
@@ -98,7 +98,7 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(97, 22);
             this.comboBox1.Name = "comboBox1";
@@ -109,7 +109,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F);
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
             this.label1.Location = new System.Drawing.Point(16, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 16);
@@ -118,7 +118,7 @@
             // 
             // A1Btn
             // 
-            this.A1Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.A1Btn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.A1Btn.Location = new System.Drawing.Point(20, 45);
             this.A1Btn.Name = "A1Btn";
             this.A1Btn.Size = new System.Drawing.Size(185, 38);
@@ -129,7 +129,7 @@
             // 
             // A3Btn
             // 
-            this.A3Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.A3Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.A3Btn.Location = new System.Drawing.Point(20, 149);
             this.A3Btn.Name = "A3Btn";
             this.A3Btn.Size = new System.Drawing.Size(185, 38);
@@ -145,7 +145,7 @@
             this.groupBox1.Controls.Add(this.A2Btn);
             this.groupBox1.Controls.Add(this.A4Btn);
             this.groupBox1.Controls.Add(this.A3Btn);
-            this.groupBox1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.groupBox1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox1.Location = new System.Drawing.Point(19, 68);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -165,7 +165,7 @@
             this.groupBox2.Controls.Add(this.B2Btn);
             this.groupBox2.Controls.Add(this.B4Btn);
             this.groupBox2.Controls.Add(this.B3Btn);
-            this.groupBox2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.groupBox2.Location = new System.Drawing.Point(298, 68);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -176,7 +176,7 @@
             // 
             // B8Btn
             // 
-            this.B8Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.B8Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.B8Btn.Location = new System.Drawing.Point(15, 409);
             this.B8Btn.Name = "B8Btn";
             this.B8Btn.Size = new System.Drawing.Size(200, 38);
@@ -187,7 +187,7 @@
             // 
             // B6Btn
             // 
-            this.B6Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.B6Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.B6Btn.Location = new System.Drawing.Point(15, 305);
             this.B6Btn.Name = "B6Btn";
             this.B6Btn.Size = new System.Drawing.Size(200, 38);
@@ -198,7 +198,7 @@
             // 
             // B9Btn
             // 
-            this.B9Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.B9Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.B9Btn.Location = new System.Drawing.Point(15, 461);
             this.B9Btn.Name = "B9Btn";
             this.B9Btn.Size = new System.Drawing.Size(200, 38);
@@ -209,7 +209,7 @@
             // 
             // B7Btn
             // 
-            this.B7Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.B7Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.B7Btn.Location = new System.Drawing.Point(15, 357);
             this.B7Btn.Name = "B7Btn";
             this.B7Btn.Size = new System.Drawing.Size(200, 38);
@@ -220,7 +220,7 @@
             // 
             // B1Btn
             // 
-            this.B1Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.B1Btn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.B1Btn.Location = new System.Drawing.Point(15, 45);
             this.B1Btn.Name = "B1Btn";
             this.B1Btn.Size = new System.Drawing.Size(200, 38);
@@ -231,7 +231,7 @@
             // 
             // B5Btn
             // 
-            this.B5Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.B5Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.B5Btn.Location = new System.Drawing.Point(15, 253);
             this.B5Btn.Name = "B5Btn";
             this.B5Btn.Size = new System.Drawing.Size(200, 38);
@@ -242,7 +242,7 @@
             // 
             // B2Btn
             // 
-            this.B2Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.B2Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.B2Btn.Location = new System.Drawing.Point(15, 97);
             this.B2Btn.Name = "B2Btn";
             this.B2Btn.Size = new System.Drawing.Size(200, 38);
@@ -253,7 +253,7 @@
             // 
             // B4Btn
             // 
-            this.B4Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.B4Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.B4Btn.Location = new System.Drawing.Point(15, 201);
             this.B4Btn.Name = "B4Btn";
             this.B4Btn.Size = new System.Drawing.Size(200, 38);
@@ -264,7 +264,7 @@
             // 
             // B3Btn
             // 
-            this.B3Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.B3Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.B3Btn.Location = new System.Drawing.Point(15, 149);
             this.B3Btn.Name = "B3Btn";
             this.B3Btn.Size = new System.Drawing.Size(200, 38);
@@ -279,7 +279,7 @@
             this.groupBox3.Controls.Add(this.C2Btn);
             this.groupBox3.Controls.Add(this.C4Btn);
             this.groupBox3.Controls.Add(this.C3Btn);
-            this.groupBox3.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.groupBox3.Location = new System.Drawing.Point(576, 68);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -290,7 +290,7 @@
             // 
             // C1Btn
             // 
-            this.C1Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.C1Btn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.C1Btn.Location = new System.Drawing.Point(15, 45);
             this.C1Btn.Name = "C1Btn";
             this.C1Btn.Size = new System.Drawing.Size(200, 38);
@@ -301,7 +301,7 @@
             // 
             // C2Btn
             // 
-            this.C2Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.C2Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.C2Btn.Location = new System.Drawing.Point(15, 97);
             this.C2Btn.Name = "C2Btn";
             this.C2Btn.Size = new System.Drawing.Size(200, 38);
@@ -312,7 +312,7 @@
             // 
             // C4Btn
             // 
-            this.C4Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.C4Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.C4Btn.Location = new System.Drawing.Point(15, 201);
             this.C4Btn.Name = "C4Btn";
             this.C4Btn.Size = new System.Drawing.Size(200, 38);
@@ -323,7 +323,7 @@
             // 
             // C3Btn
             // 
-            this.C3Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.C3Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.C3Btn.Location = new System.Drawing.Point(15, 149);
             this.C3Btn.Name = "C3Btn";
             this.C3Btn.Size = new System.Drawing.Size(200, 38);
@@ -338,7 +338,7 @@
             this.groupBox4.Controls.Add(this.D2Btn);
             this.groupBox4.Controls.Add(this.D4Btn);
             this.groupBox4.Controls.Add(this.D3Btn);
-            this.groupBox4.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox4.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.groupBox4.Location = new System.Drawing.Point(859, 68);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -349,7 +349,7 @@
             // 
             // D1Btn
             // 
-            this.D1Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.D1Btn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.D1Btn.Location = new System.Drawing.Point(20, 45);
             this.D1Btn.Name = "D1Btn";
             this.D1Btn.Size = new System.Drawing.Size(185, 38);
@@ -359,7 +359,7 @@
             // 
             // D2Btn
             // 
-            this.D2Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.D2Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.D2Btn.Location = new System.Drawing.Point(20, 97);
             this.D2Btn.Name = "D2Btn";
             this.D2Btn.Size = new System.Drawing.Size(185, 54);
@@ -369,7 +369,7 @@
             // 
             // D4Btn
             // 
-            this.D4Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.D4Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.D4Btn.Location = new System.Drawing.Point(20, 233);
             this.D4Btn.Name = "D4Btn";
             this.D4Btn.Size = new System.Drawing.Size(185, 38);
@@ -379,13 +379,14 @@
             // 
             // D3Btn
             // 
-            this.D3Btn.Font = new System.Drawing.Font("宋体", 12F);
+            this.D3Btn.Font = new System.Drawing.Font("SimSun", 12F);
             this.D3Btn.Location = new System.Drawing.Point(20, 166);
             this.D3Btn.Name = "D3Btn";
             this.D3Btn.Size = new System.Drawing.Size(185, 52);
             this.D3Btn.TabIndex = 11;
             this.D3Btn.Text = "吹膜机更换模芯记录及安装检查表";
             this.D3Btn.UseVisualStyleBackColor = true;
+            this.D3Btn.Click += new System.EventHandler(this.D3Btn_Click);
             // 
             // ExtructionMainForm
             // 
