@@ -73,6 +73,12 @@
       <DependentUpon>CheckForm.cs</DependentUpon>
     </Compile>
     <Compile Include="common.cs" />
+    <Compile Include="Extruction\Chart\feedrecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Extruction\Chart\feedrecord.Designer.cs">
+      <DependentUpon>feedrecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extruction\ExtructionMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
