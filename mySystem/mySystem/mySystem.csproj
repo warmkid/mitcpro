@@ -79,6 +79,12 @@
     <Compile Include="Process\Bag\Bagprocess_prod_instru.Designer.cs">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\CSBagMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\CSBagMainForm.Designer.cs">
+      <DependentUpon>CSBagMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\CSBag_CheckBeforePower.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,11 +109,17 @@
     <Compile Include="Process\Bag\RunningRecord.Designer.cs">
       <DependentUpon>RunningRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\CleanCut\Chart_daily_cut.cs">
+    <Compile Include="Process\Bag\Chart_daily_cs.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\CleanCut\Chart_daily_cut.Designer.cs">
-      <DependentUpon>Chart_daily_cut.cs</DependentUpon>
+    <Compile Include="Process\Bag\Chart_daily_cs.Designer.cs">
+      <DependentUpon>Chart_daily_cs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\CleanCut\CleanCutMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\CleanCut\CleanCutMainForm.Designer.cs">
+      <DependentUpon>CleanCutMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\CleanCut\CleanCut_CheckBeforePower.cs">
       <SubType>Form</SubType>
@@ -289,6 +301,12 @@
     <Compile Include="Process\Extruction\Chart\RunningRecordofFeedingUnit.designer.cs">
       <DependentUpon>RunningRecordofFeedingUnit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting\SetPeopleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\SetPeopleForm.Designer.cs">
+      <DependentUpon>SetPeopleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\SettingMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -462,6 +480,12 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\CSbagMainForm.resx">
+      <DependentUpon>CSBagMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
+      <DependentUpon>CleanCutMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\outerpack.resx">
       <DependentUpon>outerpack.cs</DependentUpon>
     </EmbeddedResource>
@@ -527,6 +551,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\Chart\RunningRecordofFeedingUnit.resx">
       <DependentUpon>RunningRecordofFeedingUnit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\SetPeopleForm.resx">
+      <DependentUpon>SetPeopleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SettingMainForm.resx">
       <DependentUpon>SettingMainForm.cs</DependentUpon>

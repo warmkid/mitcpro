@@ -33,22 +33,22 @@
             this.CleanBtn = new System.Windows.Forms.Button();
             this.BagBtn = new System.Windows.Forms.Button();
             this.ProducePanelLeft = new System.Windows.Forms.Panel();
-            this.otherPanel = new System.Windows.Forms.Panel();
-            this.StockBtn = new System.Windows.Forms.Button();
-            this.PlanBtn = new System.Windows.Forms.Button();
-            this.OrderBtn = new System.Windows.Forms.Button();
-            this.ExtructionBtn = new System.Windows.Forms.Button();
             this.bagPanel = new System.Windows.Forms.Panel();
             this.bag6Btn = new System.Windows.Forms.Button();
             this.bag5Btn = new System.Windows.Forms.Button();
             this.bag4Btn = new System.Windows.Forms.Button();
             this.bag3Btn = new System.Windows.Forms.Button();
-            this.bag2Btn = new System.Windows.Forms.Button();
+            this.CSbagBtn = new System.Windows.Forms.Button();
             this.bag1Btn = new System.Windows.Forms.Button();
+            this.otherPanel = new System.Windows.Forms.Panel();
+            this.StockBtn = new System.Windows.Forms.Button();
+            this.PlanBtn = new System.Windows.Forms.Button();
+            this.OrderBtn = new System.Windows.Forms.Button();
+            this.ExtructionBtn = new System.Windows.Forms.Button();
             this.ProducePanelRight = new System.Windows.Forms.Panel();
             this.ProducePanelLeft.SuspendLayout();
-            this.otherPanel.SuspendLayout();
             this.bagPanel.SuspendLayout();
+            this.otherPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // KillBtn
@@ -103,16 +103,114 @@
             // 
             this.ProducePanelLeft.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ProducePanelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ProducePanelLeft.Controls.Add(this.bagPanel);
             this.ProducePanelLeft.Controls.Add(this.otherPanel);
             this.ProducePanelLeft.Controls.Add(this.BagBtn);
             this.ProducePanelLeft.Controls.Add(this.CleanBtn);
             this.ProducePanelLeft.Controls.Add(this.ExtructionBtn);
-            this.ProducePanelLeft.Controls.Add(this.bagPanel);
             this.ProducePanelLeft.Location = new System.Drawing.Point(4, 2);
             this.ProducePanelLeft.Name = "ProducePanelLeft";
             this.ProducePanelLeft.Size = new System.Drawing.Size(180, 615);
             this.ProducePanelLeft.TabIndex = 4;
-            this.ProducePanelLeft.Paint += new System.Windows.Forms.PaintEventHandler(this.ProducePanelLeft_Paint);
+            // 
+            // bagPanel
+            // 
+            this.bagPanel.Controls.Add(this.bag6Btn);
+            this.bagPanel.Controls.Add(this.bag5Btn);
+            this.bagPanel.Controls.Add(this.bag4Btn);
+            this.bagPanel.Controls.Add(this.bag3Btn);
+            this.bagPanel.Controls.Add(this.CSbagBtn);
+            this.bagPanel.Controls.Add(this.bag1Btn);
+            this.bagPanel.Location = new System.Drawing.Point(-1, 128);
+            this.bagPanel.Name = "bagPanel";
+            this.bagPanel.Size = new System.Drawing.Size(180, 232);
+            this.bagPanel.TabIndex = 9;
+            this.bagPanel.Visible = false;
+            // 
+            // bag6Btn
+            // 
+            this.bag6Btn.FlatAppearance.BorderSize = 0;
+            this.bag6Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bag6Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bag6Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag6Btn.Location = new System.Drawing.Point(2, 193);
+            this.bag6Btn.Name = "bag6Btn";
+            this.bag6Btn.Size = new System.Drawing.Size(173, 38);
+            this.bag6Btn.TabIndex = 15;
+            this.bag6Btn.Text = "    防护罩";
+            this.bag6Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag6Btn.UseVisualStyleBackColor = true;
+            // 
+            // bag5Btn
+            // 
+            this.bag5Btn.FlatAppearance.BorderSize = 0;
+            this.bag5Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bag5Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bag5Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag5Btn.Location = new System.Drawing.Point(3, 155);
+            this.bag5Btn.Name = "bag5Btn";
+            this.bag5Btn.Size = new System.Drawing.Size(173, 38);
+            this.bag5Btn.TabIndex = 14;
+            this.bag5Btn.Text = "    BTV制袋";
+            this.bag5Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag5Btn.UseVisualStyleBackColor = true;
+            // 
+            // bag4Btn
+            // 
+            this.bag4Btn.FlatAppearance.BorderSize = 0;
+            this.bag4Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bag4Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bag4Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag4Btn.Location = new System.Drawing.Point(3, 117);
+            this.bag4Btn.Name = "bag4Btn";
+            this.bag4Btn.Size = new System.Drawing.Size(173, 38);
+            this.bag4Btn.TabIndex = 13;
+            this.bag4Btn.Text = "    PTV制袋";
+            this.bag4Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag4Btn.UseVisualStyleBackColor = true;
+            // 
+            // bag3Btn
+            // 
+            this.bag3Btn.FlatAppearance.BorderSize = 0;
+            this.bag3Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bag3Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bag3Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag3Btn.Location = new System.Drawing.Point(3, 79);
+            this.bag3Btn.Name = "bag3Btn";
+            this.bag3Btn.Size = new System.Drawing.Size(173, 38);
+            this.bag3Btn.TabIndex = 12;
+            this.bag3Btn.Text = "    连续袋";
+            this.bag3Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag3Btn.UseVisualStyleBackColor = true;
+            // 
+            // CSbagBtn
+            // 
+            this.CSbagBtn.FlatAppearance.BorderSize = 0;
+            this.CSbagBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CSbagBtn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.CSbagBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CSbagBtn.Location = new System.Drawing.Point(4, 41);
+            this.CSbagBtn.Name = "CSbagBtn";
+            this.CSbagBtn.Size = new System.Drawing.Size(173, 38);
+            this.CSbagBtn.TabIndex = 11;
+            this.CSbagBtn.Text = "    CS制袋";
+            this.CSbagBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.CSbagBtn.UseVisualStyleBackColor = true;
+            this.CSbagBtn.Click += new System.EventHandler(this.CSbagBtn_Click);
+            // 
+            // bag1Btn
+            // 
+            this.bag1Btn.FlatAppearance.BorderSize = 0;
+            this.bag1Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bag1Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bag1Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag1Btn.Location = new System.Drawing.Point(4, 3);
+            this.bag1Btn.Name = "bag1Btn";
+            this.bag1Btn.Size = new System.Drawing.Size(173, 38);
+            this.bag1Btn.TabIndex = 10;
+            this.bag1Btn.Text = "    LDPE制袋";
+            this.bag1Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.bag1Btn.UseVisualStyleBackColor = true;
             // 
             // otherPanel
             // 
@@ -190,104 +288,6 @@
             this.ExtructionBtn.UseVisualStyleBackColor = true;
             this.ExtructionBtn.Click += new System.EventHandler(this.ExtructionBtn_Click);
             // 
-            // bagPanel
-            // 
-            this.bagPanel.Controls.Add(this.bag6Btn);
-            this.bagPanel.Controls.Add(this.bag5Btn);
-            this.bagPanel.Controls.Add(this.bag4Btn);
-            this.bagPanel.Controls.Add(this.bag3Btn);
-            this.bagPanel.Controls.Add(this.bag2Btn);
-            this.bagPanel.Controls.Add(this.bag1Btn);
-            this.bagPanel.Location = new System.Drawing.Point(-1, 128);
-            this.bagPanel.Name = "bagPanel";
-            this.bagPanel.Size = new System.Drawing.Size(180, 232);
-            this.bagPanel.TabIndex = 9;
-            this.bagPanel.Visible = false;
-            // 
-            // bag6Btn
-            // 
-            this.bag6Btn.FlatAppearance.BorderSize = 0;
-            this.bag6Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bag6Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bag6Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag6Btn.Location = new System.Drawing.Point(2, 193);
-            this.bag6Btn.Name = "bag6Btn";
-            this.bag6Btn.Size = new System.Drawing.Size(173, 38);
-            this.bag6Btn.TabIndex = 15;
-            this.bag6Btn.Text = "    防护罩";
-            this.bag6Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag6Btn.UseVisualStyleBackColor = true;
-            // 
-            // bag5Btn
-            // 
-            this.bag5Btn.FlatAppearance.BorderSize = 0;
-            this.bag5Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bag5Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bag5Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag5Btn.Location = new System.Drawing.Point(3, 155);
-            this.bag5Btn.Name = "bag5Btn";
-            this.bag5Btn.Size = new System.Drawing.Size(173, 38);
-            this.bag5Btn.TabIndex = 14;
-            this.bag5Btn.Text = "    BTV制袋";
-            this.bag5Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag5Btn.UseVisualStyleBackColor = true;
-            // 
-            // bag4Btn
-            // 
-            this.bag4Btn.FlatAppearance.BorderSize = 0;
-            this.bag4Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bag4Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bag4Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag4Btn.Location = new System.Drawing.Point(3, 117);
-            this.bag4Btn.Name = "bag4Btn";
-            this.bag4Btn.Size = new System.Drawing.Size(173, 38);
-            this.bag4Btn.TabIndex = 13;
-            this.bag4Btn.Text = "    PTV制袋";
-            this.bag4Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag4Btn.UseVisualStyleBackColor = true;
-            // 
-            // bag3Btn
-            // 
-            this.bag3Btn.FlatAppearance.BorderSize = 0;
-            this.bag3Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bag3Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bag3Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag3Btn.Location = new System.Drawing.Point(3, 79);
-            this.bag3Btn.Name = "bag3Btn";
-            this.bag3Btn.Size = new System.Drawing.Size(173, 38);
-            this.bag3Btn.TabIndex = 12;
-            this.bag3Btn.Text = "    连续袋";
-            this.bag3Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag3Btn.UseVisualStyleBackColor = true;
-            // 
-            // bag2Btn
-            // 
-            this.bag2Btn.FlatAppearance.BorderSize = 0;
-            this.bag2Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bag2Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bag2Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag2Btn.Location = new System.Drawing.Point(4, 41);
-            this.bag2Btn.Name = "bag2Btn";
-            this.bag2Btn.Size = new System.Drawing.Size(173, 38);
-            this.bag2Btn.TabIndex = 11;
-            this.bag2Btn.Text = "    CS制袋";
-            this.bag2Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag2Btn.UseVisualStyleBackColor = true;
-            // 
-            // bag1Btn
-            // 
-            this.bag1Btn.FlatAppearance.BorderSize = 0;
-            this.bag1Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bag1Btn.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bag1Btn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag1Btn.Location = new System.Drawing.Point(4, 3);
-            this.bag1Btn.Name = "bag1Btn";
-            this.bag1Btn.Size = new System.Drawing.Size(173, 38);
-            this.bag1Btn.TabIndex = 10;
-            this.bag1Btn.Text = "    LDPE制袋";
-            this.bag1Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.bag1Btn.UseVisualStyleBackColor = true;
-            // 
             // ProducePanelRight
             // 
             this.ProducePanelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -295,7 +295,6 @@
             this.ProducePanelRight.Name = "ProducePanelRight";
             this.ProducePanelRight.Size = new System.Drawing.Size(1170, 615);
             this.ProducePanelRight.TabIndex = 5;
-            this.ProducePanelRight.Paint += new System.Windows.Forms.PaintEventHandler(this.ProducePanelRight_Paint);
             // 
             // ProcessMainForm
             // 
@@ -308,8 +307,8 @@
             this.Name = "ProcessMainForm";
             this.Text = "ProcessMainForm";
             this.ProducePanelLeft.ResumeLayout(false);
-            this.otherPanel.ResumeLayout(false);
             this.bagPanel.ResumeLayout(false);
+            this.otherPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -330,7 +329,7 @@
         private System.Windows.Forms.Button bag5Btn;
         private System.Windows.Forms.Button bag4Btn;
         private System.Windows.Forms.Button bag3Btn;
-        private System.Windows.Forms.Button bag2Btn;
+        private System.Windows.Forms.Button CSbagBtn;
         private System.Windows.Forms.Button bag1Btn;
         private System.Windows.Forms.Panel otherPanel;
     }

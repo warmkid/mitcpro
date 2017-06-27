@@ -25,9 +25,33 @@ namespace mySystem.Setting
             conn = mainform.conn;
             connOle = mainform.connOle;
             isSqlOk = mainform.isSqlOk;
+            RoleInit();
 
         }
 
+        private void RoleInit()
+        {
+            switch (base.mainform.userRole)
+            {
+                case 1:
+                    PeopleSetBtn.Enabled = true;
+                    SystemSetBtn.Enabled = false;
+                    ExtruSetBtn.Enabled = false;
+                    break;
+                case 2:
+                    PeopleSetBtn.Enabled = true;
+                    SystemSetBtn.Enabled = false;
+                    ExtruSetBtn.Enabled = false;
+                    break;
+                case 3:
+                    PeopleSetBtn.Enabled = true;
+                    SystemSetBtn.Enabled = true;
+                    ExtruSetBtn.Enabled = true;
+                    break;
+                default:
+                    break;
+            }
+        }
 
         private void ExtruSetBtn_Click(object sender, EventArgs e)
         {
@@ -66,6 +90,13 @@ namespace mySystem.Setting
             SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
             PeopleSetBtn.BackColor = Color.FromArgb(138, 158, 196);
             SettingPanelRight.Controls.Clear();
+            SetPeopleForm myDlg = new SetPeopleForm(base.mainform);
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
+
         }
 
 

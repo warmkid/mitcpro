@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using mySystem.Process.Bag;
+using mySystem.Process.CleanCut;
 
 namespace mySystem
 {
@@ -25,8 +27,28 @@ namespace mySystem
             conn = mainform.conn;
             connOle = mainform.connOle;
             isSqlOk = mainform.isSqlOk;
+            RoleInit();
 
         }
+
+        private void RoleInit()
+        {
+            switch (mform.userRole)
+            {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         //吹膜
         private void ExtructionBtn_Click(object sender, EventArgs e)
@@ -58,6 +80,12 @@ namespace mySystem
             OrderBtn.BackColor = Color.FromName("ControlLightLight");
             StockBtn.BackColor = Color.FromName("ControlLightLight");
             ProducePanelRight.Controls.Clear();
+            CleanCutMainForm myDlg = new CleanCutMainForm(mform);
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         //制袋
@@ -83,8 +111,7 @@ namespace mySystem
                 //PlanBtn.Location = new Point(3, 361);
                 bagPanel.Visible = true;
  
-            }
-
+            }          
 
         }
 
@@ -152,15 +179,18 @@ namespace mySystem
             myDlg.Show();
         }
 
-        private void ProducePanelLeft_Paint(object sender, PaintEventArgs e)
+        //CS制袋
+        private void CSbagBtn_Click(object sender, EventArgs e)
         {
-
+            ProducePanelRight.Controls.Clear();
+            CSBagMainForm myDlg = new CSBagMainForm(mform);
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
-        private void ProducePanelRight_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
 
     }
