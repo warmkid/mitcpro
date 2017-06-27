@@ -75,6 +75,7 @@ namespace mySystem
         {
             Record_extrusSiteClean ext = new Record_extrusSiteClean(mform);
             ext.Show();
+
         }
 
         private void A1Btn_Click(object sender, EventArgs e)

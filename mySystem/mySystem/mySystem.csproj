@@ -462,6 +462,9 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
+      <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\outerpack.resx">
       <DependentUpon>outerpack.cs</DependentUpon>
     </EmbeddedResource>

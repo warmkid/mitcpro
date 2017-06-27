@@ -153,10 +153,11 @@ namespace mySystem
                             select new
                             {
                                 batch_id = r.Field<int>("product_batch_id").ToString(),
+                                date=r.Field<DateTime>("s6_production_date").ToShortDateString(),
                                 flight = r.Field<bool>("s6_flight").ToString(),
                                 length = r.Field<int>("s6_mojuan_length").ToString(),
                                 weight = r.Field<int>("s6_mojuan_weight").ToString(),
-                                time = r.Field<int>("s6_time").ToString(),
+                                time = r.Field<DateTime>("s6_time").ToString(),
                                 recid = r.Field<int>("s6_recorder_id").ToString(),
                                 revid = r.Field<int>("s6_reviewer_id").ToString(),
                                 feedinfo=t!=null ? t.Field<string>("s5_feeding_info") : "***"
@@ -168,17 +169,18 @@ namespace mySystem
                             select new
                             {
                                 batch_id = r.Field<int>("product_batch_id").ToString(),
+                                date=t!=null?t.Field<DateTime>("s6_production_date").ToShortDateString():"***",
                                 flight = t!=null? t.Field<bool>("s6_flight").ToString():"***",
                                 length = t!=null? t.Field<int>("s6_mojuan_length").ToString():"***",
                                 weight = t!=null? t.Field<int>("s6_mojuan_weight").ToString():"***",
-                                time = t!=null? t.Field<int>("s6_time").ToString():"***",
+                                time = t!=null? t.Field<DateTime>("s6_time").ToString():"***",
                                 recid = t!=null? t.Field<int>("s6_recorder_id").ToString():"***",
                                 revid = t!=null? t.Field<int>("s6_reviewer_id").ToString():"***",
                                 feedinfo = r.Field<string>("s5_feeding_info")
                             };
                 var fullquery = query.Union(query_r);//最后查找的结果
                 foreach (var item in fullquery)
-                    Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7}", item.batch_id, item.flight, item.length,item.weight,item.time,item.recid,item.revid,item.feedinfo);
+                    Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7} {8}", item.batch_id,item.date, item.flight, item.length,item.weight,item.time,item.recid,item.revid,item.feedinfo);
 
 
 
