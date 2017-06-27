@@ -22,8 +22,10 @@ namespace mySystem
         {
             InitializeComponent();
             Init();
+            add_instrucode();
+            query_by_instru("E-2017-005");
             //connToServer();
-            queryAndShow();
+            //queryAndShow();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -50,6 +52,8 @@ namespace mySystem
         SqlConnection conn;
         DataTable dt;
         DataRow[] dr;
+
+        DataTable dt_by_instru;
         
 
         //针对查询
@@ -82,6 +86,103 @@ namespace mySystem
             comboBox3.Text = "(空)".Trim();
             comboBox4.Text = "(空)".Trim();
             date1 = DateTime.Parse("2016/10/20");
+        }
+        private void add_instrucode()
+        {
+            if (mainform.isSqlOk)
+            {
+
+            }
+            else
+            {
+                string acsql = "select production_instruction_code from production_instruction";
+                OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable dtemp = new DataTable();
+                da.Fill(dtemp);
+
+                for (int i = 0; i < dtemp.Rows.Count; i++)
+                {
+                    comboBox2.Items.Add(dtemp.Rows[i][0].ToString());
+                }
+                dtemp.Dispose();
+                comm.Dispose();
+                da.Dispose();
+            }
+        }
+        //查找同一条生产指令下的数据 select [A].*,[C].* from [A] left join ( select * from [B] ) as [C] on [A].id = [C].id
+        private void query_by_instru(string instru_code)
+        {
+            if (mainform.isSqlOk)
+            {
+    
+            }
+            else
+            {
+                //通过生产指令代码找到对应的生产指令id
+                string acsql = "select production_instruction_id from production_instruction where production_instruction_code='"+instru_code+"'";
+                OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable dt1 = new DataTable();
+                da.Fill(dt1);
+                
+                int id = int.Parse(dt1.Rows[0][0].ToString());//获得生产指令id
+                da.Dispose();
+
+                //通过生产指令id查找相应的子集
+                //acsql = "select s6.production_instruction_id,s6.s6_production_date,s6.s6_flight,s6.product_batch_id,s6.s6_mojuan_length,s6.s6_mojuan_weight,s5.production_instruction_id,s5.s5_feeding_info,s6.s6_time,s6.s6_recorder_id,s6.s6_reviewer_id from extrusion_s6_production_check s6,extrusion_s5_feeding s5 where s6.production_instruction_id=s5.production_instruction_id";
+                //acsql="select s6.s6_production_date,s6.s6_flight,s6.product_batch_id,s6.s6_mojuan_length,s6.s6_mojuan_weigh,s6.s6_time,s6.s6_recorder_id,s6.s6_reviewer_id from extrusion_s6_production_check where production_instruction_id="
+                acsql = "select product_batch_id,s6_production_date,s6_flight,s6_mojuan_length,s6_mojuan_weight,s6_time,s6_recorder_id,s6_reviewer_id from extrusion_s6_production_check where production_instruction_id="+id;
+                comm.CommandText = acsql;
+                da = new OleDbDataAdapter(comm);
+                DataTable dt2 = new DataTable();
+                da.Fill(dt2);
+                da.Dispose();
+
+                acsql = "select product_batch_id,s5_feeding_info from extrusion_s5_feeding where production_instruction_id="+id;
+                comm.CommandText = acsql;
+                da = new OleDbDataAdapter(comm);
+                DataTable dt3 = new DataTable();
+                da.Fill(dt3);
+
+                //子集通过连接生成最后的联合表
+                var query = from r in dt2.AsEnumerable()
+                            join s in dt3.AsEnumerable()
+                            on r.Field<int>("product_batch_id") equals s.Field<int>("product_batch_id") into temp
+                            from t in temp.DefaultIfEmpty()
+                            select new
+                            {
+                                batch_id = r.Field<int>("product_batch_id").ToString(),
+                                flight = r.Field<bool>("s6_flight").ToString(),
+                                length = r.Field<int>("s6_mojuan_length").ToString(),
+                                weight = r.Field<int>("s6_mojuan_weight").ToString(),
+                                time = r.Field<int>("s6_time").ToString(),
+                                recid = r.Field<int>("s6_recorder_id").ToString(),
+                                revid = r.Field<int>("s6_reviewer_id").ToString(),
+                                feedinfo=t!=null ? t.Field<string>("s5_feeding_info") : "***"
+                            };
+                var query_r = from r in dt3.AsEnumerable()
+                            join s in dt2.AsEnumerable()
+                            on r.Field<int>("product_batch_id") equals s.Field<int>("product_batch_id") into temp
+                            from t in temp.DefaultIfEmpty()
+                            select new
+                            {
+                                batch_id = r.Field<int>("product_batch_id").ToString(),
+                                flight = t!=null? t.Field<bool>("s6_flight").ToString():"***",
+                                length = t!=null? t.Field<int>("s6_mojuan_length").ToString():"***",
+                                weight = t!=null? t.Field<int>("s6_mojuan_weight").ToString():"***",
+                                time = t!=null? t.Field<int>("s6_time").ToString():"***",
+                                recid = t!=null? t.Field<int>("s6_recorder_id").ToString():"***",
+                                revid = t!=null? t.Field<int>("s6_reviewer_id").ToString():"***",
+                                feedinfo = r.Field<string>("s5_feeding_info")
+                            };
+                var fullquery = query.Union(query_r);//最后查找的结果
+                foreach (var item in fullquery)
+                    Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7}", item.batch_id, item.flight, item.length,item.weight,item.time,item.recid,item.revid,item.feedinfo);
+
+
+
+            }
         }
         /*仅用来来测试，实际早已在上一步登陆*/
         private void connToServer()
