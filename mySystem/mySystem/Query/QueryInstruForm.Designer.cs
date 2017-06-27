@@ -29,6 +29,13 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.product_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.production_instruction_code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.production_process = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.production_start_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operate_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.principal_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.detail = new System.Windows.Forms.DataGridViewButtonColumn();
             this.SearchBtn = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -38,13 +45,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.product_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.production_instruction_code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.production_process = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.production_start_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operate_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.principal_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.detail = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,6 +65,51 @@
             this.dataGridView1.Size = new System.Drawing.Size(1082, 460);
             this.dataGridView1.TabIndex = 24;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // product_name
+            // 
+            this.product_name.HeaderText = "产品名称";
+            this.product_name.Name = "product_name";
+            this.product_name.Width = 250;
+            // 
+            // production_instruction_code
+            // 
+            this.production_instruction_code.HeaderText = "生产指令";
+            this.production_instruction_code.Name = "production_instruction_code";
+            this.production_instruction_code.Width = 150;
+            // 
+            // production_process
+            // 
+            this.production_process.HeaderText = "生产工艺";
+            this.production_process.Name = "production_process";
+            this.production_process.Width = 150;
+            // 
+            // production_start_date
+            // 
+            this.production_start_date.HeaderText = "开始生产日期";
+            this.production_start_date.Name = "production_start_date";
+            this.production_start_date.Width = 150;
+            // 
+            // operate_date
+            // 
+            this.operate_date.HeaderText = "操作日期";
+            this.operate_date.Name = "operate_date";
+            this.operate_date.Width = 150;
+            // 
+            // principal_id
+            // 
+            this.principal_id.HeaderText = "编制人";
+            this.principal_id.Name = "principal_id";
+            this.principal_id.Width = 90;
+            // 
+            // detail
+            // 
+            this.detail.HeaderText = "查看详情";
+            this.detail.Name = "detail";
+            this.detail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.detail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.detail.Text = "查看详情";
+            this.detail.UseColumnTextForButtonValue = true;
             // 
             // SearchBtn
             // 
@@ -152,51 +197,6 @@
             this.label1.Size = new System.Drawing.Size(88, 16);
             this.label1.TabIndex = 15;
             this.label1.Text = "选择工序：";
-            // 
-            // product_name
-            // 
-            this.product_name.HeaderText = "产品名称";
-            this.product_name.Name = "product_name";
-            this.product_name.Width = 250;
-            // 
-            // production_instruction_code
-            // 
-            this.production_instruction_code.HeaderText = "生产指令";
-            this.production_instruction_code.Name = "production_instruction_code";
-            this.production_instruction_code.Width = 150;
-            // 
-            // production_process
-            // 
-            this.production_process.HeaderText = "生产工艺";
-            this.production_process.Name = "production_process";
-            this.production_process.Width = 150;
-            // 
-            // production_start_date
-            // 
-            this.production_start_date.HeaderText = "开始生产日期";
-            this.production_start_date.Name = "production_start_date";
-            this.production_start_date.Width = 150;
-            // 
-            // operate_date
-            // 
-            this.operate_date.HeaderText = "操作日期";
-            this.operate_date.Name = "operate_date";
-            this.operate_date.Width = 150;
-            // 
-            // principal_id
-            // 
-            this.principal_id.HeaderText = "编制人";
-            this.principal_id.Name = "principal_id";
-            this.principal_id.Width = 90;
-            // 
-            // detail
-            // 
-            this.detail.HeaderText = "查看详情";
-            this.detail.Name = "detail";
-            this.detail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.detail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.detail.Text = "查看详情";
-            this.detail.UseColumnTextForButtonValue = true;
             // 
             // QueryInstruForm
             // 

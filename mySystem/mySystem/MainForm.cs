@@ -42,8 +42,11 @@ namespace mySystem
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
             userID = login.userID;
-            userRole = checkRole(userID);
-
+            if (userID != 0)
+            {
+                userRole = checkRole(userID);
+            }
+            
             if (isSqlOk)
             {
                 username = checkID(userID);

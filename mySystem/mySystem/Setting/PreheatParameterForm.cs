@@ -23,6 +23,22 @@ namespace mySystem
 
         private void FillNum()
         {
+            List<String> readqueryCols = new List<String>(new String[] { "s3_hw_set1", "s3_ld_set1", "s3_mj_set1", "s3_jt1_set1", "s3_jt2_set1", 
+                    "s3_km_set1", "s3_duration1", "s3_region1_set1", "s3_region2_set1", "s3_region3_set1", "s3_region4_set1", "s3_hw_set2", 
+                    "s3_ld_set2", "s3_mj_set2", "s3_jt1_set2", "s3_jt2_set2", "s3_km_set2", "s3_duration2", "s3_region1_set2", "s3_region2_set2", 
+                    "s3_region3_set2", "s3_region4_set2", "s3_duration3" ,"s3_temperature_tolerance"});
+            List<String> whereCols = new List<String>(new String[] { "id" });
+            List<Object> whereVals = new List<Object>(new Object[] { 1 });
+            List<List<Object>> queryValsList = Utility.selectAccess(base.mainform.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
+
+            List<String> data = new List<String> { };
+            for (int i = 0; i < queryValsList[0].Count; i++)
+            {
+                data.Add(queryValsList[0][i].ToString());
+            }
+            List<Control> textboxes = new List<Control> { hw1, ld1, mj1, jt11, jt21, km1, duration1, region11, region21, region31, region41, hw2, 
+                    ld2, mj2, jt12, jt22, km2, duration2, region12, region22, region32, region42, duration3, tolerance};
+            Utility.fillControl(textboxes, data);
 
 
         }
