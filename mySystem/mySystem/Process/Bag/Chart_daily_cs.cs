@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace mySystem.Process.CleanCut
 {
-    public partial class Chart_daily_cut : Form
+    public partial class Chart_daily_cs : Form
     {
-        public Chart_daily_cut()
+        public Chart_daily_cs()
         {
             InitializeComponent();
         }

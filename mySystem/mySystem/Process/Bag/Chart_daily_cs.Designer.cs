@@ -1,6 +1,6 @@
 ﻿namespace mySystem.Process.CleanCut
 {
-    partial class Chart_daily_cut
+    partial class Chart_daily_cs
     {
         /// <summary>
         /// Required designer variable.

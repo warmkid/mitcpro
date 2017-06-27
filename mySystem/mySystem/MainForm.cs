@@ -23,7 +23,10 @@ namespace mySystem
         public OleDbConnection connOle;
         public string username; //登录用户名
         public int userID;
-        public string proInstruction; //生产指令
+        public int userRole; //用户角色
+        public string proInstruction; //吹膜生产指令
+        public string csbagInstruction; //cs制袋生产指令
+        public string cleancutInstruction; //清洁分切生产指令
 
         public MainForm()
         {
@@ -39,6 +42,7 @@ namespace mySystem
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
             userID = login.userID;
+            userRole = checkRole(userID);
 
             if (isSqlOk)
             {
@@ -51,6 +55,7 @@ namespace mySystem
             
             
             InitializeComponent();
+            RoleInit();
             userLabel.Text = username;
 
             //Rectangle ScreenArea = Screen.GetWorkingArea(this);
@@ -59,6 +64,38 @@ namespace mySystem
             //StockPanelLeft.Size = SystemPanelLeft.Size = ProducePanelLeft.Size;
             //StockPanelRight.Size = SystemPanelRight.Size = ProducePanelRight.Size;
             //this.textBox1.Text = ProducePanelRight.Size.Height.ToString();           
+
+        }
+
+        private void RoleInit()
+        {
+            switch (userRole)
+            {
+                case 1:
+
+                    break;
+                case 2:
+
+                    break;
+                case 3:
+                    
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+        private int checkRole(int userID)
+        {
+            String tblName = "user_aoxing";
+            List<String> queryCols = new List<String>(new String[] { "role_id" });
+            List<String> whereCols = new List<String>(new String[] { "user_id" });
+            List<Object> whereVals = new List<Object>(new Object[] { userID });
+            List<List<Object>> res = Utility.selectAccess(connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            int user_Role = Convert.ToInt32(res[0][0]);
+
+            return user_Role;
 
         }
 
@@ -238,10 +275,22 @@ namespace mySystem
             {
                 username = checkIDOle(userID);
             }
-            
-            userLabel.Text = username;
-            this.Show();
-
+            if (username != null)
+            {
+                userLabel.Text = username;
+                MainPanel.Controls.Clear();
+                userRole = checkRole(userID);
+                RoleInit();
+                MainProduceBtn.BackColor = Color.FromName("Control");
+                MainSettingBtn.BackColor = Color.FromName("Control");
+                MainQueryBtn.BackColor = Color.FromName("Control");
+                this.Show();
+            }
+            else
+            {
+                this.Close();
+                Application.ExitThread();
+            }
         }
 
 

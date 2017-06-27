@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
+using Newtonsoft.Json.Linq;
 
 namespace mySystem.Process.CleanCut
 {
@@ -65,22 +66,83 @@ namespace mySystem.Process.CleanCut
             InitializeComponent();
             queryjob();
         }
+        //查找输入清场人和检查人名字是否合法
+        private int queryid(string s)
+        {
+            //如果查找成功返回id，否则返回-1
+            //int rtnum = -1;
+            if (mainform.isSqlOk)
+            {
+                //未完成
+                //string sql = "select user_id from cleanarea";
+                //SqlCommand comm = new SqlCommand(sql, conn);
+                //SqlDataAdapter da = new SqlDataAdapter(comm);
+
+                //dt = new DataTable();
+                //da.Fill(dt);
+                return -1;
+            }
+            else
+            {
+                string asql = "select user_id from user_aoxing where user_name=" + "'" + s + "'";
+                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                if (tempdt.Rows.Count == 0)
+                    return -1;
+                else
+                    return Int32.Parse(tempdt.Rows[0][0].ToString());
+            }
+        }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            cleaner = textBox4.Text;
+            checker = textBox5.Text;
+            if (cleaner == "")
+            {
+                MessageBox.Show("清场人不能为空");
+                return;
+            }
+            int cleanerid = queryid(cleaner);
+            if (cleanerid == -1)
+            {
+                MessageBox.Show("清场人id不存在");
+                return;
+            }
+
+            prodcode = textBox1.Text;
+            level = textBox2.Text;
+            batch = textBox3.Text;
+            date = dateTimePicker1.Value;
+            classes = checkBox1.Checked == true ? 1 : 0;//白班1，夜班0
+            extr = textBox6.Text;
+
+            string st = "{}";
+            JObject jobj = JObject.Parse(st);
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                int a=dataGridView1.Rows[i].Cells[3].Value.ToString()=="True"?1:0;
+                jobj.Add(dataGridView1.Rows[i].Cells[1].Value.ToString(), new JValue(a));
+            }
+            System.Console.WriteLine(jobj.ToString());
+
+            if (mainform.isSqlOk)
+            { }
+            else
+            { }
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             checkBox2.Checked = !checkBox1.Checked;
-            //System.Console.WriteLine("白班{0} 夜班{1}", checkBox1.Checked, checkBox2.Checked);
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             checkBox1.Checked = !checkBox2.Checked;
-            //System.Console.WriteLine("白班{0} 夜班{1}", checkBox1.Checked, checkBox2.Checked);
         }
     }
 }
