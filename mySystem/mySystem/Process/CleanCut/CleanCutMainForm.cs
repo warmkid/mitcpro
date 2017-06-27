@@ -66,13 +66,13 @@ namespace mySystem.Process.CleanCut
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            CleanCut_CheckBeforePower myDlg = new CleanCut_CheckBeforePower();
+            CleanCut_CheckBeforePower myDlg = new CleanCut_CheckBeforePower(mainform);
             myDlg.Show();
         }
 
         private void A4Btn_Click(object sender, EventArgs e)
         {
-            CleanCut_Productrecord myDlg = new CleanCut_Productrecord();
+            CleanCut_Productrecord myDlg = new CleanCut_Productrecord(mainform);
             myDlg.Show();
         }
 

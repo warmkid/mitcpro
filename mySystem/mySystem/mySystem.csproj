@@ -483,14 +483,17 @@
     <EmbeddedResource Include="Process\Bag\Bagprocess_prod_instru.resx">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\Chart_daily_cs.resx">
+      <DependentUpon>Chart_daily_cs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CSbagMainForm.resx">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
-      <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
+    <EmbeddedResource Include="Process\CleanCut\CleanCut_CheckBeforePower.resx">
+      <DependentUpon>CleanCut_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\outerpack.resx">
       <DependentUpon>outerpack.cs</DependentUpon>

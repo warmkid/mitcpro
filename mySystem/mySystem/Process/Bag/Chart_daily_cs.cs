@@ -15,5 +15,10 @@ namespace mySystem.Process.CleanCut
         {
             InitializeComponent();
         }
+
+        private void Chart_daily_cs_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
