@@ -67,7 +67,7 @@ namespace mySystem.Process.Bag
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            CSBag_InnerPackaging myDlg = new CSBag_InnerPackaging();
+            CSBag_InnerPackaging myDlg = new CSBag_InnerPackaging(mainform);
             myDlg.Show();
         }
 
@@ -85,7 +85,7 @@ namespace mySystem.Process.Bag
 
         private void B2Btn_Click(object sender, EventArgs e)
         {
-            CSBag_CheckBeforePower myDlg = new CSBag_CheckBeforePower();
+            CSBag_CheckBeforePower myDlg = new CSBag_CheckBeforePower(mainform);
             myDlg.Show();
         }
 
