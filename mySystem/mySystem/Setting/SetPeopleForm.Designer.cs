@@ -45,6 +45,9 @@
             this.idLabel = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.SetPeoplePanelBottom = new System.Windows.Forms.Panel();
+            this.SaveEditBtn = new System.Windows.Forms.Button();
+            this.DeleteBtn = new System.Windows.Forms.Button();
+            this.AddBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -52,9 +55,6 @@
             this.user_password = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.flight = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.role_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.AddBtn = new System.Windows.Forms.Button();
-            this.DeleteBtn = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.SetPeoplePanelTop.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -217,7 +217,7 @@
             // 
             // SetPeoplePanelBottom
             // 
-            this.SetPeoplePanelBottom.Controls.Add(this.button1);
+            this.SetPeoplePanelBottom.Controls.Add(this.SaveEditBtn);
             this.SetPeoplePanelBottom.Controls.Add(this.DeleteBtn);
             this.SetPeoplePanelBottom.Controls.Add(this.AddBtn);
             this.SetPeoplePanelBottom.Controls.Add(this.label7);
@@ -226,6 +226,36 @@
             this.SetPeoplePanelBottom.Name = "SetPeoplePanelBottom";
             this.SetPeoplePanelBottom.Size = new System.Drawing.Size(1145, 400);
             this.SetPeoplePanelBottom.TabIndex = 1;
+            // 
+            // SaveEditBtn
+            // 
+            this.SaveEditBtn.Location = new System.Drawing.Point(240, 64);
+            this.SaveEditBtn.Name = "SaveEditBtn";
+            this.SaveEditBtn.Size = new System.Drawing.Size(99, 30);
+            this.SaveEditBtn.TabIndex = 12;
+            this.SaveEditBtn.Text = "保存更改";
+            this.SaveEditBtn.UseVisualStyleBackColor = true;
+            this.SaveEditBtn.Click += new System.EventHandler(this.SaveEditBtn_Click);
+            // 
+            // DeleteBtn
+            // 
+            this.DeleteBtn.Location = new System.Drawing.Point(125, 64);
+            this.DeleteBtn.Name = "DeleteBtn";
+            this.DeleteBtn.Size = new System.Drawing.Size(75, 30);
+            this.DeleteBtn.TabIndex = 11;
+            this.DeleteBtn.Text = "删除";
+            this.DeleteBtn.UseVisualStyleBackColor = true;
+            this.DeleteBtn.Click += new System.EventHandler(this.DeleteBtn_Click);
+            // 
+            // AddBtn
+            // 
+            this.AddBtn.Location = new System.Drawing.Point(38, 64);
+            this.AddBtn.Name = "AddBtn";
+            this.AddBtn.Size = new System.Drawing.Size(75, 30);
+            this.AddBtn.TabIndex = 10;
+            this.AddBtn.Text = "添加";
+            this.AddBtn.UseVisualStyleBackColor = true;
+            this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
             // 
             // label7
             // 
@@ -256,6 +286,7 @@
             // 
             this.user_id.HeaderText = "员工ID";
             this.user_id.Name = "user_id";
+            this.user_id.ReadOnly = true;
             this.user_id.Width = 150;
             // 
             // user_name
@@ -278,34 +309,6 @@
             // 
             this.role_id.HeaderText = "权限";
             this.role_id.Name = "role_id";
-            // 
-            // AddBtn
-            // 
-            this.AddBtn.Location = new System.Drawing.Point(38, 64);
-            this.AddBtn.Name = "AddBtn";
-            this.AddBtn.Size = new System.Drawing.Size(75, 30);
-            this.AddBtn.TabIndex = 10;
-            this.AddBtn.Text = "添加";
-            this.AddBtn.UseVisualStyleBackColor = true;
-            this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
-            // 
-            // DeleteBtn
-            // 
-            this.DeleteBtn.Location = new System.Drawing.Point(125, 64);
-            this.DeleteBtn.Name = "DeleteBtn";
-            this.DeleteBtn.Size = new System.Drawing.Size(75, 30);
-            this.DeleteBtn.TabIndex = 11;
-            this.DeleteBtn.Text = "删除";
-            this.DeleteBtn.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(240, 64);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(99, 30);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "保存更改";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // SetPeopleForm
             // 
@@ -353,13 +356,13 @@
         private System.Windows.Forms.Button CancelBtn;
         private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button SaveEditBtn;
+        private System.Windows.Forms.Button DeleteBtn;
+        private System.Windows.Forms.Button AddBtn;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_name;
         private System.Windows.Forms.DataGridViewTextBoxColumn user_password;
         private System.Windows.Forms.DataGridViewTextBoxColumn flight;
         private System.Windows.Forms.DataGridViewTextBoxColumn role_id;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button DeleteBtn;
-        private System.Windows.Forms.Button AddBtn;
     }
 }

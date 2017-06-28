@@ -173,6 +173,7 @@
             this.Font = new System.Drawing.Font("SimSun", 12F);
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "AddPeopleForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "添加员工信息";
             this.ResumeLayout(false);
             this.PerformLayout();

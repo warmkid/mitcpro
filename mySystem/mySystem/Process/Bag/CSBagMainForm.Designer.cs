@@ -53,19 +53,19 @@
             this.groupBox1.Controls.Add(this.B2Btn);
             this.groupBox1.Controls.Add(this.B4Btn);
             this.groupBox1.Controls.Add(this.B3Btn);
-            this.groupBox1.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.Location = new System.Drawing.Point(517, 105);
+            this.groupBox1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox1.Location = new System.Drawing.Point(443, 105);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(227, 321);
+            this.groupBox1.Size = new System.Drawing.Size(260, 321);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "管理类";
             // 
             // B1Btn
             // 
-            this.B1Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.B1Btn.Location = new System.Drawing.Point(15, 40);
+            this.B1Btn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.B1Btn.Location = new System.Drawing.Point(31, 40);
             this.B1Btn.Name = "B1Btn";
             this.B1Btn.Size = new System.Drawing.Size(200, 38);
             this.B1Btn.TabIndex = 12;
@@ -75,8 +75,8 @@
             // 
             // B2Btn
             // 
-            this.B2Btn.Font = new System.Drawing.Font("宋体", 12F);
-            this.B2Btn.Location = new System.Drawing.Point(15, 110);
+            this.B2Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.B2Btn.Location = new System.Drawing.Point(31, 110);
             this.B2Btn.Name = "B2Btn";
             this.B2Btn.Size = new System.Drawing.Size(200, 38);
             this.B2Btn.TabIndex = 16;
@@ -86,8 +86,8 @@
             // 
             // B4Btn
             // 
-            this.B4Btn.Font = new System.Drawing.Font("宋体", 12F);
-            this.B4Btn.Location = new System.Drawing.Point(15, 250);
+            this.B4Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.B4Btn.Location = new System.Drawing.Point(31, 250);
             this.B4Btn.Name = "B4Btn";
             this.B4Btn.Size = new System.Drawing.Size(200, 38);
             this.B4Btn.TabIndex = 15;
@@ -97,8 +97,8 @@
             // 
             // B3Btn
             // 
-            this.B3Btn.Font = new System.Drawing.Font("宋体", 12F);
-            this.B3Btn.Location = new System.Drawing.Point(15, 180);
+            this.B3Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.B3Btn.Location = new System.Drawing.Point(31, 180);
             this.B3Btn.Name = "B3Btn";
             this.B3Btn.Size = new System.Drawing.Size(200, 38);
             this.B3Btn.TabIndex = 11;
@@ -112,19 +112,19 @@
             this.groupBox2.Controls.Add(this.A2Btn);
             this.groupBox2.Controls.Add(this.A4Btn);
             this.groupBox2.Controls.Add(this.A3Btn);
-            this.groupBox2.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.groupBox2.Location = new System.Drawing.Point(112, 105);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox2.Size = new System.Drawing.Size(227, 321);
+            this.groupBox2.Size = new System.Drawing.Size(260, 321);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "物料流转";
             // 
             // A1Btn
             // 
-            this.A1Btn.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.A1Btn.Location = new System.Drawing.Point(15, 40);
+            this.A1Btn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.A1Btn.Location = new System.Drawing.Point(28, 40);
             this.A1Btn.Name = "A1Btn";
             this.A1Btn.Size = new System.Drawing.Size(200, 38);
             this.A1Btn.TabIndex = 12;
@@ -134,8 +134,8 @@
             // 
             // A2Btn
             // 
-            this.A2Btn.Font = new System.Drawing.Font("宋体", 12F);
-            this.A2Btn.Location = new System.Drawing.Point(15, 110);
+            this.A2Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.A2Btn.Location = new System.Drawing.Point(28, 110);
             this.A2Btn.Name = "A2Btn";
             this.A2Btn.Size = new System.Drawing.Size(200, 38);
             this.A2Btn.TabIndex = 16;
@@ -145,8 +145,8 @@
             // 
             // A4Btn
             // 
-            this.A4Btn.Font = new System.Drawing.Font("宋体", 12F);
-            this.A4Btn.Location = new System.Drawing.Point(15, 250);
+            this.A4Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.A4Btn.Location = new System.Drawing.Point(28, 250);
             this.A4Btn.Name = "A4Btn";
             this.A4Btn.Size = new System.Drawing.Size(200, 38);
             this.A4Btn.TabIndex = 15;
@@ -156,8 +156,8 @@
             // 
             // A3Btn
             // 
-            this.A3Btn.Font = new System.Drawing.Font("宋体", 12F);
-            this.A3Btn.Location = new System.Drawing.Point(15, 180);
+            this.A3Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.A3Btn.Location = new System.Drawing.Point(28, 180);
             this.A3Btn.Name = "A3Btn";
             this.A3Btn.Size = new System.Drawing.Size(200, 38);
             this.A3Btn.TabIndex = 11;
@@ -167,7 +167,7 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(97, 22);
             this.comboBox1.Name = "comboBox1";
@@ -178,7 +178,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F);
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
             this.label1.Location = new System.Drawing.Point(16, 27);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 16);
@@ -188,19 +188,19 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.button1);
-            this.groupBox3.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox3.Location = new System.Drawing.Point(864, 105);
+            this.groupBox3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.groupBox3.Location = new System.Drawing.Point(796, 105);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(227, 321);
+            this.groupBox3.Size = new System.Drawing.Size(260, 321);
             this.groupBox3.TabIndex = 22;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "封面";
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(15, 40);
+            this.button1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(28, 40);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(200, 38);
             this.button1.TabIndex = 12;
@@ -218,7 +218,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("宋体", 12F);
+            this.Font = new System.Drawing.Font("SimSun", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CSBagMainForm";

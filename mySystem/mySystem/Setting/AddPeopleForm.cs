@@ -14,14 +14,16 @@ namespace mySystem.Setting
         int userid;
         string username;
         string password;
-        string flight;
+        string flight = null;
         int flight_id;
-        string role;
+        string role = null;
         int role_id;
-        
-        public AddPeopleForm(MainForm mainform):base(mainform)
+        SetPeopleForm myfather = null;
+
+        public AddPeopleForm(MainForm mainform, SetPeopleForm father ):base(mainform)
         {
             InitializeComponent();
+            myfather = father;
         }
 
 
@@ -63,30 +65,41 @@ namespace mySystem.Setting
 
         private void AddBtn_Click(object sender, EventArgs e)
         {
-            userid = Convert.ToInt32(IDtextBox.Text.Trim());
+            string useridstr = IDtextBox.Text.Trim();           
             username = NametextBox.Text.Trim();
             password = PWtextBox.Text.Trim();
-            if (username == "" || password == "" || userid == 0)
+            if (username == "" || password == "" || useridstr == ""|| flight == "" || role == "")
             {
-                MessageBox.Show("用户信息不能为空", "错误");
+                MessageBox.Show("员工信息不能为空", "错误");
                 return;
             }
             else
             {
+                userid = Convert.ToInt32(useridstr);
                 String tblName = "user_aoxing";
-                List<String> insertCols = new List<String>(new String[] { "createtime", "modifytime", "user_id", 
+                //查最后一行的id？
+                List<String> idCol = new List<String>(new String[] { "id" });
+                List<List<Object>> idres = Utility.selectAccess(base.mainform.connOle, tblName, idCol, null, null, null, null, null, null, null);
+                int idlast = Convert.ToInt32(idres[idres.Count-1][0]);
+
+                List<String> insertCols = new List<String>(new String[] { "id", "createtime", "modifytime", "user_id", 
                     "user_name", "user_password", "last_login_time", "role_id", "department_id", "flight" });          
                 DateTime dt = DateTime.Now;
                 DateTime insertVal = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
-                List<Object> insertVals = new List<Object>(new Object[] { insertVal, insertVal, userid, username, password, insertVal, role_id, 1, flight_id });
+                List<Object> insertVals = new List<Object>(new Object[] { idlast+1, insertVal, insertVal, userid, username, password, insertVal, role_id, 1, flight_id });
                 Boolean b = Utility.insertAccess(base.mainform.connOle, tblName, insertCols, insertVals);
                 if (b)
                 {
                     MessageBox.Show("用户添加成功", "success");
+                    myfather.dgvInit();
+                    this.Close();
+                    this.Dispose();
+                    return;
                 }
                 else
                 {
                     MessageBox.Show("用户添加失败", "错误");
+                    return;
                 }
 
             }
