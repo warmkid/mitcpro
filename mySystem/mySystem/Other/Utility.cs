@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.OleDb;
 using System.Collections;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace mySystem
 {
@@ -288,6 +289,38 @@ namespace mySystem
             }
         }
 
+        public static JArray readJSONFromDataGridView(DataGridView dgv, List<String> cols)
+        {
+            JArray ret = JArray.Parse("[]");
+            List<List<Object>> data = readFromDataGridView(dgv);
+            for (int i = 0; i < data.Count; ++i)
+            {
+                JObject jo = JObject.Parse("{}");
+                for (int j = 0; j < cols.Count; ++j)
+                {
+                    jo.Add(cols[j], new JValue(data[i][j]));
+                }
+                ret.Add(jo);
+            }
+            return ret;
+        }
+
+        public static void writeJSONToDataGridView(JArray jarray, DataGridView dgv, List<String> cols, List<Type> types)
+        {
+            List<List<Object>> data = new List<List<object>>();
+            for (int i = 0; i < jarray.Count; ++i)
+            {
+                JToken jt = jarray[i];
+                List<Object> lo = new List<object>();
+                for (int j = 0; j < cols.Count; ++j)
+                {
+                    lo.Add(Convert.ChangeType(jt[cols[j]], types[j]));
+
+                }
+                data.Add(lo);
+            }
+            fillDataGridView(dgv, data);
+        }
 
     }
 }
