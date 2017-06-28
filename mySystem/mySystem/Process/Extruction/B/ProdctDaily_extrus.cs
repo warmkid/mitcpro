@@ -23,7 +23,7 @@ namespace mySystem
             InitializeComponent();
             Init();
             add_instrucode();
-            query_by_instru("E-2017-005");
+            //query_by_instru("E-2017-005");
             //connToServer();
             //queryAndShow();
         }
@@ -76,10 +76,10 @@ namespace mySystem
 
             dataGridView1.Font = new Font("宋体",12);
 
-            comboBox1.Items.Add("(空)".Trim());
-            comboBox2.Items.Add("(空)".Trim());
-            comboBox3.Items.Add("(空)".Trim());
-            comboBox4.Items.Add("(空)".Trim());
+            comboBox1.Items.Add("(空)");
+            comboBox2.Items.Add("(空)");
+            comboBox3.Items.Add("(空)");
+            comboBox4.Items.Add("(空)");
 
             comboBox1.Text = "(空)".Trim();
             comboBox2.Text = "(空)".Trim();
@@ -110,6 +110,43 @@ namespace mySystem
                 da.Dispose();
             }
         }
+        //通过批号id查找产品代码
+        private string prodcode_findby_batchid(int btid)
+        {
+            string code = "";
+
+            string acsql = "select product_code from product_aoxing where product_id in (select product_id from product_batch where product_batch_id="+btid+")";
+            OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable dt1 = new DataTable();
+            da.Fill(dt1);
+
+            if (dt1.Rows.Count == 0)
+                return "";
+            code = dt1.Rows[0][0].ToString();
+            da.Dispose();
+            dt1.Dispose();
+            return code;
+        }
+
+        //通过用户id查找用户名字
+        private string name_findby_userid(int uid)
+        {
+            string name = "";
+            string acsql = "select user_name from user_aoxing where user_id=" + uid;
+            OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable dt1 = new DataTable();
+            da.Fill(dt1);
+
+            if (dt1.Rows.Count == 0)
+                return "";
+            name = dt1.Rows[0][0].ToString();
+            da.Dispose();
+            dt1.Dispose();
+            return name;
+        }
+
         //查找同一条生产指令下的数据 select [A].*,[C].* from [A] left join ( select * from [B] ) as [C] on [A].id = [C].id
         private void query_by_instru(string instru_code)
         {
@@ -132,7 +169,7 @@ namespace mySystem
                 //通过生产指令id查找相应的子集
                 //acsql = "select s6.production_instruction_id,s6.s6_production_date,s6.s6_flight,s6.product_batch_id,s6.s6_mojuan_length,s6.s6_mojuan_weight,s5.production_instruction_id,s5.s5_feeding_info,s6.s6_time,s6.s6_recorder_id,s6.s6_reviewer_id from extrusion_s6_production_check s6,extrusion_s5_feeding s5 where s6.production_instruction_id=s5.production_instruction_id";
                 //acsql="select s6.s6_production_date,s6.s6_flight,s6.product_batch_id,s6.s6_mojuan_length,s6.s6_mojuan_weigh,s6.s6_time,s6.s6_recorder_id,s6.s6_reviewer_id from extrusion_s6_production_check where production_instruction_id="
-                acsql = "select product_batch_id,s6_production_date,s6_flight,s6_mojuan_length,s6_mojuan_weight,s6_time,s6_recorder_id,s6_reviewer_id from extrusion_s6_production_check where production_instruction_id="+id;
+                acsql = "select product_batch_id,s6_production_date,s6_flight,s6_mojuan_number,s6_mojuan_length,s6_mojuan_weight,s6_time,s6_recorder_id,s6_reviewer_id from extrusion_s6_production_check where production_instruction_id="+id;
                 comm.CommandText = acsql;
                 da = new OleDbDataAdapter(comm);
                 DataTable dt2 = new DataTable();
@@ -155,6 +192,7 @@ namespace mySystem
                                 batch_id = r.Field<int>("product_batch_id").ToString(),
                                 date=r.Field<DateTime>("s6_production_date").ToShortDateString(),
                                 flight = r.Field<bool>("s6_flight").ToString(),
+                                number=r.Field<string>("s6_mojuan_number"),
                                 length = r.Field<int>("s6_mojuan_length").ToString(),
                                 weight = r.Field<int>("s6_mojuan_weight").ToString(),
                                 time = r.Field<DateTime>("s6_time").ToString(),
@@ -171,6 +209,7 @@ namespace mySystem
                                 batch_id = r.Field<int>("product_batch_id").ToString(),
                                 date=t!=null?t.Field<DateTime>("s6_production_date").ToShortDateString():"***",
                                 flight = t!=null? t.Field<bool>("s6_flight").ToString():"***",
+                                number=t!=null? t.Field<string>("s6_mojuan_number"):"***",
                                 length = t!=null? t.Field<int>("s6_mojuan_length").ToString():"***",
                                 weight = t!=null? t.Field<int>("s6_mojuan_weight").ToString():"***",
                                 time = t!=null? t.Field<DateTime>("s6_time").ToString():"***",
@@ -179,8 +218,45 @@ namespace mySystem
                                 feedinfo = r.Field<string>("s5_feeding_info")
                             };
                 var fullquery = query.Union(query_r);//最后查找的结果
+                int index = 0;
                 foreach (var item in fullquery)
-                    Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7} {8}", item.batch_id,item.date, item.flight, item.length,item.weight,item.time,item.recid,item.revid,item.feedinfo);
+                {
+                    Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", item.batch_id, item.date, item.flight, item.number,item.length, item.weight, item.time, item.recid, item.revid, item.feedinfo);
+                    DataGridViewRow dr = new DataGridViewRow();
+                    foreach (DataGridViewColumn c in dataGridView1.Columns)
+                    {
+                        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                    }
+                    
+                    dr.Cells[0].Value = index+1;
+                    dr.Cells[1].Value = item.date;
+                    dr.Cells[2].Value = item.flight=="True";
+                    dr.Cells[3].Value = prodcode_findby_batchid(int.Parse(item.batch_id));//产品代码
+                    dr.Cells[4].Value = item.batch_id;
+                    dr.Cells[5].Value = item.number;//卷号
+                    dr.Cells[6].Value = item.length;
+                    dr.Cells[7].Value = item.weight;
+                    dr.Cells[8].Value = "";//废品重量
+                    dr.Cells[9].Value = item.feedinfo;//加料A
+                    dr.Cells[10].Value = item.feedinfo;//加料B1+C
+                    dr.Cells[11].Value = item.feedinfo;//加料B2
+                    dr.Cells[12].Value = item.time;//工时
+                    if (item.recid == "***")
+                        dr.Cells[13].Value = item.recid;
+                    else
+                        dr.Cells[13].Value = name_findby_userid(int.Parse(item.recid));
+                    if (item.revid == "***")
+                        dr.Cells[14].Value = item.revid;
+                    else
+                        dr.Cells[14].Value = name_findby_userid(int.Parse(item.revid));
+
+                    dataGridView1.Rows.Add(dr);
+                    index = index + 1;
+                }
+                    
+                
+                //填写datagridview
+
 
 
 
@@ -322,32 +398,6 @@ namespace mySystem
 
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
-            //date1 = dateTimePicker1.Value.Date;
-            ////System.Console.WriteLine(date1);
-            //date2 = dateTimePicker2.Value.Date;
-            //System.Console.WriteLine(date2);
-            //TimeSpan delt = date2 - date1;
-            //if (delt.TotalDays < 0)
-            //{
-            //    MessageBox.Show("起止时间有误，请重新输入");
-            //    return;
-            //}
-            ////DataTable temp;
-            ////dataGridView1.Rows.Clear();//清空
-            //string select="生产时间>="+"'"+date1+"'"+" and "+"生产时间<"+"'"+date2+"'";
-            //System.Console.WriteLine(select);
-            //dr = dt.Select(select);
-            
-            //DataTable temp = dr.CopyToDataTable();
-            //dataGridView1.DataSource = temp;
-
-            ////DataRow[] tempdr = temp.Select("distict 订单");
-            //comboBox1.Items.Clear();
-            //for(int i=0;i<dr.Length;i++)
-            //{
-            //    //tempdr[i][2]
-            //    comboBox1.Items.Add(dr[i][2]);
-            //}
             
         }
 
@@ -358,69 +408,88 @@ namespace mySystem
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            date1 = dateTimePicker1.Value.Date;
-            //System.Console.WriteLine(date1);
-            date2 = dateTimePicker2.Value.Date;
-            System.Console.WriteLine(date2);
-            TimeSpan delt = date2 - date1;
-            if (delt.TotalDays < 0)
-            {
-                MessageBox.Show("起止时间有误，请重新输入");
-                return;
-            }
+            //date1 = dateTimePicker1.Value.Date;
+            ////System.Console.WriteLine(date1);
+            //date2 = dateTimePicker2.Value.Date;
+            //System.Console.WriteLine(date2);
+            //TimeSpan delt = date2 - date1;
+            //if (delt.TotalDays < 0)
+            //{
+            //    MessageBox.Show("起止时间有误，请重新输入");
+            //    return;
+            //}
 
-            ddan = comboBox1.Text.Trim();
-            instr = comboBox2.Text.Trim();
-            writer = comboBox3.Text.Trim();
-            checker = comboBox4.Text.Trim();
+            //ddan = comboBox1.Text.Trim();
+            //instr = comboBox2.Text.Trim();
+            //writer = comboBox3.Text.Trim();
+            //checker = comboBox4.Text.Trim();
 
-            //删除合计行
-            dt.Rows.RemoveAt(dt.Rows.Count - 1);
+            ////删除合计行
+            //dt.Rows.RemoveAt(dt.Rows.Count - 1);
 
-            string sql = "生产时间>=" + "'" + date1 + "'" + " and " + "生产时间<=" + "'" + date2 + "'";
+            //string sql = "生产时间>=" + "'" + date1 + "'" + " and " + "生产时间<=" + "'" + date2 + "'";
 
-            if (ddan != "(空)")
-                sql += " and " + "订单 like" + "'%" + ddan + "%'";
-            if (instr != "(空)")
-                sql += " and " + "生产指令 like" + "'%" + instr + "%'";
+            //if (ddan != "(空)")
+            //    sql += " and " + "订单 like" + "'%" + ddan + "%'";
+            //if (instr != "(空)")
+            //    sql += " and " + "生产指令 like" + "'%" + instr + "%'";
 
-            if (writer != "(空)")
-                sql += " and " + "填报人 like" + "'%" + writer + "%'";
-            if (checker != "(空)")
-                sql += " and " + "复核人 like" + "'%" + checker + "%'";
+            //if (writer != "(空)")
+            //    sql += " and " + "填报人 like" + "'%" + writer + "%'";
+            //if (checker != "(空)")
+            //    sql += " and " + "复核人 like" + "'%" + checker + "%'";
 
 
-            dr = dt.Select(sql);
-            //添加合计行
-            DataRow rowtemp;
-            rowtemp = dt.NewRow();
-            rowtemp[0] = "合计";
-            rowtemp[7] = dt.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
-            rowtemp[8] = dt.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
-            rowtemp[9] = dt.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
-            dt.Rows.Add(rowtemp);
+            //dr = dt.Select(sql);
+            ////添加合计行
+            //DataRow rowtemp;
+            //rowtemp = dt.NewRow();
+            //rowtemp[0] = "合计";
+            //rowtemp[7] = dt.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
+            //rowtemp[8] = dt.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
+            //rowtemp[9] = dt.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
+            //dt.Rows.Add(rowtemp);
 
-            if (dr.Length == 0)
-            {               
-                dataGridView1.DataSource = null;
-                return;
-            }
+            //if (dr.Length == 0)
+            //{               
+            //    dataGridView1.DataSource = null;
+            //    return;
+            //}
                 
-            DataTable temp = dr.CopyToDataTable();
-            //改变序号
-            for (int row = 0; row < temp.Rows.Count; row++)
-            {
-                temp.Rows[row][0] = (row + 1).ToString();
-            }
-            DataRow row1;
-            row1 = temp.NewRow();
-            row1[0] = "合计";
-            row1[7] = temp.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
-            row1[8] = temp.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
-            row1[9] = temp.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
-            temp.Rows.Add(row1);
+            //DataTable temp = dr.CopyToDataTable();
+            ////改变序号
+            //for (int row = 0; row < temp.Rows.Count; row++)
+            //{
+            //    temp.Rows[row][0] = (row + 1).ToString();
+            //}
+            //DataRow row1;
+            //row1 = temp.NewRow();
+            //row1[0] = "合计";
+            //row1[7] = temp.Compute("sum(" + dt.Columns[7].ColumnName + ")", "TRUE");
+            //row1[8] = temp.Compute("sum(" + dt.Columns[8].ColumnName + ")", "TRUE");
+            //row1[9] = temp.Compute("sum(" + dt.Columns[9].ColumnName + ")", "TRUE");
+            //temp.Rows.Add(row1);
 
-            dataGridView1.DataSource = temp;
+            //dataGridView1.DataSource = temp;
+
+            //清空表格
+            while (dataGridView1.Rows.Count > 0)
+                dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+            if (mainform.isSqlOk)
+            {
+
+            }
+            else
+            {
+                instr = comboBox2.Text;
+                if (instr == "(空)")
+                {
+                    MessageBox.Show("选择一条生产指令");
+                    return;
+                }
+                query_by_instru(instr);
+
+            }
 
         }
 
