@@ -86,6 +86,33 @@ namespace mySystem
             comboBox3.Text = "(空)".Trim();
             comboBox4.Text = "(空)".Trim();
             date1 = DateTime.Parse("2016/10/20");
+
+            label2.Visible = false;
+            dateTimePicker1.Visible = false;
+            label3.Visible = false;
+            dateTimePicker2.Visible = false;
+            label5.Visible = false;
+            label6.Visible = false;
+            label7.Visible = false;
+            comboBox1.Visible = false;
+            comboBox3.Visible = false;
+            comboBox4.Visible = false;
+
+            dt = new DataTable();
+            dt.Columns.Add("id",System.Type.GetType("System.Int32"));
+            dt.Columns.Add("date", System.Type.GetType("System.DateTime"));
+            dt.Columns.Add("classes", System.Type.GetType("System.Boolean"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+
         }
         private void add_instrucode()
         {
@@ -218,6 +245,7 @@ namespace mySystem
                                 feedinfo = r.Field<string>("s5_feeding_info")
                             };
                 var fullquery = query.Union(query_r);//最后查找的结果
+                
                 int index = 0;
                 foreach (var item in fullquery)
                 {
@@ -255,8 +283,8 @@ namespace mySystem
                 }
                     
                 
-                //填写datagridview
-
+                //查询条件可见
+                setvisible(true);
 
 
 
@@ -491,6 +519,30 @@ namespace mySystem
 
             }
 
+        }
+
+        private bool setvisible(bool v)
+        {
+            label2.Visible = v;
+            dateTimePicker1.Visible = v;
+            label3.Visible = v;
+            dateTimePicker2.Visible = v;
+            label5.Visible = v;
+            label6.Visible = v;
+            label7.Visible = v;
+            comboBox1.Visible = v;
+            comboBox3.Visible = v;
+            comboBox4.Visible = v;
+            return v;
+        }
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setvisible(false);
         }
 
     }

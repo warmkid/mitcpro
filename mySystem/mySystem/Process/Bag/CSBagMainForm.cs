@@ -105,5 +105,11 @@ namespace mySystem.Process.Bag
 
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Record_batch_bag b = new Record_batch_bag(mainform);
+            b.Show();
+        }
+
     }
 }

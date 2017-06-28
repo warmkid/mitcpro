@@ -103,6 +103,12 @@
     <Compile Include="Process\Bag\MaterialRecord.Designer.cs">
       <DependentUpon>MaterialRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\Record_batch_bag.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\Record_batch_bag.Designer.cs">
+      <DependentUpon>Record_batch_bag.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\RunningRecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -488,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CSbagMainForm.resx">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\Record_batch_bag.resx">
+      <DependentUpon>Record_batch_bag.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>
