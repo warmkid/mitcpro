@@ -235,6 +235,12 @@
     <Compile Include="Query\QueryInstruForm.Designer.cs">
       <DependentUpon>QueryInstruForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting\AddPeopleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\AddPeopleForm.Designer.cs">
+      <DependentUpon>AddPeopleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\PreheatParameterForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -480,20 +486,11 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\Bagprocess_prod_instru.resx">
-      <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\Chart_daily_cs.resx">
-      <DependentUpon>Chart_daily_cs.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CSbagMainForm.resx">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\CleanCut\CleanCut_CheckBeforePower.resx">
-      <DependentUpon>CleanCut_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\outerpack.resx">
       <DependentUpon>outerpack.cs</DependentUpon>
@@ -536,6 +533,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryMainForm.resx">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\AddPeopleForm.resx">
+      <DependentUpon>AddPeopleForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\PreheatParameterForm.resx">
       <DependentUpon>PreheatParameterForm.cs</DependentUpon>

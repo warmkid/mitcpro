@@ -29,106 +29,127 @@
         private void InitializeComponent()
         {
             this.SetPeoplePanelTop = new System.Windows.Forms.Panel();
-            this.SetPeoplePanelBottom = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.idLabel = new System.Windows.Forms.Label();
-            this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.CancelBtn = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pw3TextBox = new System.Windows.Forms.TextBox();
+            this.pw1TextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.pw2TextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.nameTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.idLabel = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.SetPeoplePanelBottom = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.user_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.user_password = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.flight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.role_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AddBtn = new System.Windows.Forms.Button();
+            this.DeleteBtn = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SetPeoplePanelTop.SuspendLayout();
-            this.SetPeoplePanelBottom.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.SetPeoplePanelBottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // SetPeoplePanelTop
             // 
+            this.SetPeoplePanelTop.Controls.Add(this.CancelBtn);
+            this.SetPeoplePanelTop.Controls.Add(this.SaveBtn);
+            this.SetPeoplePanelTop.Controls.Add(this.label6);
             this.SetPeoplePanelTop.Controls.Add(this.groupBox2);
             this.SetPeoplePanelTop.Controls.Add(this.groupBox1);
             this.SetPeoplePanelTop.Location = new System.Drawing.Point(13, 13);
             this.SetPeoplePanelTop.Name = "SetPeoplePanelTop";
-            this.SetPeoplePanelTop.Size = new System.Drawing.Size(1145, 242);
+            this.SetPeoplePanelTop.Size = new System.Drawing.Size(1145, 184);
             this.SetPeoplePanelTop.TabIndex = 0;
             // 
-            // SetPeoplePanelBottom
+            // CancelBtn
             // 
-            this.SetPeoplePanelBottom.Controls.Add(this.dataGridView1);
-            this.SetPeoplePanelBottom.Location = new System.Drawing.Point(12, 308);
-            this.SetPeoplePanelBottom.Name = "SetPeoplePanelBottom";
-            this.SetPeoplePanelBottom.Size = new System.Drawing.Size(1145, 295);
-            this.SetPeoplePanelBottom.TabIndex = 1;
+            this.CancelBtn.Location = new System.Drawing.Point(954, 139);
+            this.CancelBtn.Name = "CancelBtn";
+            this.CancelBtn.Size = new System.Drawing.Size(96, 30);
+            this.CancelBtn.TabIndex = 8;
+            this.CancelBtn.Text = "取消";
+            this.CancelBtn.UseVisualStyleBackColor = true;
+            this.CancelBtn.Click += new System.EventHandler(this.CancelBtn_Click);
             // 
-            // label1
+            // SaveBtn
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "员工ID：";
+            this.SaveBtn.Location = new System.Drawing.Point(836, 139);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(96, 30);
+            this.SaveBtn.TabIndex = 7;
+            this.SaveBtn.Text = "确认修改";
+            this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
-            // label2
+            // label6
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 66);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "员工姓名：";
-            // 
-            // idLabel
-            // 
-            this.idLabel.AutoSize = true;
-            this.idLabel.Location = new System.Drawing.Point(107, 30);
-            this.idLabel.Name = "idLabel";
-            this.idLabel.Size = new System.Drawing.Size(32, 16);
-            this.idLabel.TabIndex = 2;
-            this.idLabel.Text = "123";
-            // 
-            // nameTextBox
-            // 
-            this.nameTextBox.Location = new System.Drawing.Point(109, 63);
-            this.nameTextBox.Name = "nameTextBox";
-            this.nameTextBox.Size = new System.Drawing.Size(100, 26);
-            this.nameTextBox.TabIndex = 3;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.nameTextBox);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.idLabel);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(18, 38);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(264, 136);
-            this.groupBox1.TabIndex = 4;
-            this.groupBox1.TabStop = false;
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(33, 15);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(156, 20);
+            this.label6.TabIndex = 6;
+            this.label6.Text = "修改姓名及密码";
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.pw3TextBox);
+            this.groupBox2.Controls.Add(this.pw1TextBox);
             this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.textBox1);
+            this.groupBox2.Controls.Add(this.pw2TextBox);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Location = new System.Drawing.Point(328, 38);
+            this.groupBox2.Location = new System.Drawing.Point(352, 38);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(264, 136);
+            this.groupBox2.Size = new System.Drawing.Size(385, 136);
             this.groupBox2.TabIndex = 5;
             this.groupBox2.TabStop = false;
             // 
-            // textBox1
+            // pw3TextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(125, 63);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 26);
-            this.textBox1.TabIndex = 3;
+            this.pw3TextBox.Location = new System.Drawing.Point(148, 98);
+            this.pw3TextBox.Name = "pw3TextBox";
+            this.pw3TextBox.PasswordChar = '*';
+            this.pw3TextBox.Size = new System.Drawing.Size(189, 26);
+            this.pw3TextBox.TabIndex = 6;
+            // 
+            // pw1TextBox
+            // 
+            this.pw1TextBox.Location = new System.Drawing.Point(148, 27);
+            this.pw1TextBox.Name = "pw1TextBox";
+            this.pw1TextBox.PasswordChar = '*';
+            this.pw1TextBox.Size = new System.Drawing.Size(189, 26);
+            this.pw1TextBox.TabIndex = 5;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(15, 101);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(136, 16);
+            this.label4.TabIndex = 4;
+            this.label4.Text = "再次输入新密码：";
+            // 
+            // pw2TextBox
+            // 
+            this.pw2TextBox.Location = new System.Drawing.Point(148, 63);
+            this.pw2TextBox.Name = "pw2TextBox";
+            this.pw2TextBox.PasswordChar = '*';
+            this.pw2TextBox.Size = new System.Drawing.Size(189, 26);
+            this.pw2TextBox.TabIndex = 3;
             // 
             // label3
             // 
@@ -148,23 +169,143 @@
             this.label5.TabIndex = 1;
             this.label5.Text = "输入新密码：";
             // 
-            // label4
+            // groupBox1
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 101);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(104, 16);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "输入新密码：";
+            this.groupBox1.Controls.Add(this.nameTextBox);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.idLabel);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Location = new System.Drawing.Point(37, 38);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(264, 136);
+            this.groupBox1.TabIndex = 4;
+            this.groupBox1.TabStop = false;
+            // 
+            // nameTextBox
+            // 
+            this.nameTextBox.Location = new System.Drawing.Point(109, 63);
+            this.nameTextBox.Name = "nameTextBox";
+            this.nameTextBox.Size = new System.Drawing.Size(100, 26);
+            this.nameTextBox.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 30);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "员工ID：";
+            // 
+            // idLabel
+            // 
+            this.idLabel.AutoSize = true;
+            this.idLabel.Location = new System.Drawing.Point(107, 30);
+            this.idLabel.Name = "idLabel";
+            this.idLabel.Size = new System.Drawing.Size(32, 16);
+            this.idLabel.TabIndex = 2;
+            this.idLabel.Text = "123";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 66);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(88, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "员工姓名：";
+            // 
+            // SetPeoplePanelBottom
+            // 
+            this.SetPeoplePanelBottom.Controls.Add(this.button1);
+            this.SetPeoplePanelBottom.Controls.Add(this.DeleteBtn);
+            this.SetPeoplePanelBottom.Controls.Add(this.AddBtn);
+            this.SetPeoplePanelBottom.Controls.Add(this.label7);
+            this.SetPeoplePanelBottom.Controls.Add(this.dataGridView1);
+            this.SetPeoplePanelBottom.Location = new System.Drawing.Point(12, 203);
+            this.SetPeoplePanelBottom.Name = "SetPeoplePanelBottom";
+            this.SetPeoplePanelBottom.Size = new System.Drawing.Size(1145, 400);
+            this.SetPeoplePanelBottom.TabIndex = 1;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(34, 19);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(135, 20);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "员工信息管理";
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(19, 26);
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.user_id,
+            this.user_name,
+            this.user_password,
+            this.flight,
+            this.role_id});
+            this.dataGridView1.Location = new System.Drawing.Point(38, 102);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(639, 231);
+            this.dataGridView1.Size = new System.Drawing.Size(700, 281);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // user_id
+            // 
+            this.user_id.HeaderText = "员工ID";
+            this.user_id.Name = "user_id";
+            this.user_id.Width = 150;
+            // 
+            // user_name
+            // 
+            this.user_name.HeaderText = "员工姓名";
+            this.user_name.Name = "user_name";
+            // 
+            // user_password
+            // 
+            this.user_password.HeaderText = "密码";
+            this.user_password.Name = "user_password";
+            this.user_password.Width = 150;
+            // 
+            // flight
+            // 
+            this.flight.HeaderText = "班次";
+            this.flight.Name = "flight";
+            // 
+            // role_id
+            // 
+            this.role_id.HeaderText = "权限";
+            this.role_id.Name = "role_id";
+            // 
+            // AddBtn
+            // 
+            this.AddBtn.Location = new System.Drawing.Point(38, 64);
+            this.AddBtn.Name = "AddBtn";
+            this.AddBtn.Size = new System.Drawing.Size(75, 30);
+            this.AddBtn.TabIndex = 10;
+            this.AddBtn.Text = "添加";
+            this.AddBtn.UseVisualStyleBackColor = true;
+            this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
+            // 
+            // DeleteBtn
+            // 
+            this.DeleteBtn.Location = new System.Drawing.Point(125, 64);
+            this.DeleteBtn.Name = "DeleteBtn";
+            this.DeleteBtn.Size = new System.Drawing.Size(75, 30);
+            this.DeleteBtn.TabIndex = 11;
+            this.DeleteBtn.Text = "删除";
+            this.DeleteBtn.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(240, 64);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(99, 30);
+            this.button1.TabIndex = 12;
+            this.button1.Text = "保存更改";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // SetPeopleForm
             // 
@@ -179,11 +320,13 @@
             this.Name = "SetPeopleForm";
             this.Text = "SetPeopleForm";
             this.SetPeoplePanelTop.ResumeLayout(false);
-            this.SetPeoplePanelBottom.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.SetPeoplePanelTop.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.SetPeoplePanelBottom.ResumeLayout(false);
+            this.SetPeoplePanelBottom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
@@ -195,7 +338,7 @@
         private System.Windows.Forms.Panel SetPeoplePanelBottom;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox pw2TextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -204,5 +347,19 @@
         private System.Windows.Forms.Label idLabel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.TextBox pw3TextBox;
+        private System.Windows.Forms.TextBox pw1TextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button CancelBtn;
+        private System.Windows.Forms.Button SaveBtn;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn user_id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn user_name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn user_password;
+        private System.Windows.Forms.DataGridViewTextBoxColumn flight;
+        private System.Windows.Forms.DataGridViewTextBoxColumn role_id;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button DeleteBtn;
+        private System.Windows.Forms.Button AddBtn;
     }
 }
