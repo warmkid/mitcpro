@@ -21,6 +21,8 @@ namespace mySystem
         string strCon;
         public SqlConnection conn;
         public OleDbConnection connOle;
+        public OleDbConnection connOleCleancut;
+        public OleDbConnection connOleBag;
         public string username; //登录用户名
         public int userID;
         public int userRole; //用户角色
@@ -36,7 +38,15 @@ namespace mySystem
             }
             else
             {
-                connOle = Init(connOle);               
+                string strConnect1 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                string strConnect2 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Cleancut.mdb;Persist Security Info=False";
+                string strConnect3 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
+                connOle = Init(strConnect1, connOle);
+                connOleCleancut = Init(strConnect2, connOleCleancut);
+                connOleBag = Init(strConnect3, connOleBag); 
             }
             
             LoginForm login = new LoginForm(this);
@@ -159,10 +169,8 @@ namespace mySystem
             return myConnection;
         }
 
-        private OleDbConnection Init(OleDbConnection myConnection)
-        {
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/database1.mdb;Persist Security Info=False";
+        private OleDbConnection Init(string strConnect, OleDbConnection myConnection)
+        {            
             isOk = false;
             myConnection = connToServerOle(strConnect);            
             while (!isOk)
