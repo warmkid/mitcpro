@@ -77,7 +77,9 @@ namespace BatchProductRecord
         private void button2_Click(object sender, EventArgs e)
         {
             mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
+            
             checkform.Show();
+            string a = checkform.opinion;
             
         }
 
@@ -97,6 +99,11 @@ namespace BatchProductRecord
 
             string prodname = textBox1.Text;
             string instrcode = textBox2.Text;
+            if (instrcode == "")
+            {
+                MessageBox.Show("生产指令未填写");
+                return;
+            }
             string art = textBox3.Text;
             string number = textBox4.Text;
             DateTime d = dateTimePicker1.Value;
@@ -149,7 +156,7 @@ namespace BatchProductRecord
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = mainform.connOle;
 
-                comm.CommandText = "insert into production_instruction2(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
+                comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
     "raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
     "receive_quantity_in_out,receive_quantity_middle,core_tube_parameter,core_tube_package_specifications,core_tube_receive_the_quantity_of_raw_material,package_specifications,package_receive_the_quantity_of_raw_material,package_specifications_inner,package_receive_the_quantity_of_raw_material_inner,extr," +
     "principal_id,editor_id,reviewer_id,receiver_id,edit_date,review_date,receive_date)" +
@@ -279,6 +286,39 @@ namespace BatchProductRecord
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+        }
+        public void fill(string prodinstr)
+        {
+            if (mainform.isSqlOk)
+            {
+
+            }
+            else
+            {
+                string asql = "select * from production_instruction where production_instruction_code=" + prodinstr;
+                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                dt = new DataTable();
+                da.Fill(dt);
+                da.Dispose();
+                comm.Dispose();
+
+                if (dt.Rows.Count > 0)
+                {
+                    textBox1.Text = dt.Rows[0]["product_name"].ToString();
+                    textBox2.Text = dt.Rows[0]["production_instruction_code"].ToString();
+                    textBox3.Text = dt.Rows[0]["production_process"].ToString();
+                    textBox4.Text = dt.Rows[0]["machine"].ToString();
+                    dateTimePicker1.Value = DateTime.Parse(dt.Rows[0]["production_start_date"].ToString());
+
+
+                    //解析jason
+                    //for(int i
+
+                }
+            }
 
         }
     }
