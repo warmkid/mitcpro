@@ -145,7 +145,8 @@ namespace BatchProductRecord
                 //int result = 0;
                 //OleDbCommand comm = new OleDbCommand();
                 //comm.Connection = mainform.connOle;
-                //comm.CommandText = "insert into production_instruction set product_name=@name,production_instruction_code= @instrcode, where id= @id";
+                //comm.CommandText = "insert into production_instruction set product_name=@name,production_instruction_code= @instrcode,production_process=@prodcess,machine=@machine,production_start_date=@startdate,instruction_description=@desc,raw_material_batch_in_out=@inout_batch,"+
+                //    "raw_material_batch_middle=@mid_batch,"+""+"where id= @id";
                 //comm.Parameters.Add("@cleandate", .Data.OleDb.OleDbType.Date);
                 //comm.Parameters.Add("@flight", System.Data.OleDb.OleDbType.Integer);
                 //comm.Parameters.Add("@reviewerid", System.Data.OleDb.OleDbType.Integer);
