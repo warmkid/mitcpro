@@ -151,8 +151,9 @@ namespace mySystem.Setting
 
 
         //*************************下半部分**************************
-        private void dgvInit()
+        public void dgvInit()
         {
+            dataGridView1.Rows.Clear();
             String usertblName = "user_aoxing";
             List<String> queryCols = new List<String>(new String[] { "user_id", "user_name", "user_password", "flight", "role_id" });
             List<List<Object>> res = Utility.selectAccess(base.mainform.connOle, usertblName, queryCols, null, null, null, null, null, null, null);
@@ -202,9 +203,78 @@ namespace mySystem.Setting
 
         private void AddBtn_Click(object sender, EventArgs e)
         {
-            AddPeopleForm addform = new AddPeopleForm(base.mainform);
+            AddPeopleForm addform = new AddPeopleForm(base.mainform, this);
             addform.Show();
-            //dgvInit();
+      
+        }
+
+        private void DeleteBtn_Click(object sender, EventArgs e)
+        {
+            int deleteID = Convert.ToInt32(dataGridView1.CurrentRow.Cells["user_id"].Value);
+            String tblName = "user_aoxing";
+            List<String> whereCols = new List<String>(new String[] { "user_id" });
+            List<Object> whereVals = new List<Object>(new Object[] { deleteID });
+            Boolean b = Utility.deleteAccess(mainform.connOle, tblName, whereCols, whereVals);
+            if (b)
+            {
+                MessageBox.Show("删除成功", "success");
+                dgvInit();
+            }
+            else
+            {
+                MessageBox.Show("删除失败", "错误");
+                return;
+            }
+
+            
+        }
+
+        private void SaveEditBtn_Click(object sender, EventArgs e)
+        {
+            int rows = dataGridView1.RowCount - 1;
+            //读取dgv中的数据
+            List<List<Object>> readdgv = Utility.readFromDataGridView(dataGridView1);
+            //将班次和权限换为数字
+            for (int i = 0; i < rows; i++)
+            {
+                if (readdgv[i][3] == "白班")
+                {
+                    readdgv[i][3] = 0;
+                }
+                else
+                {
+                    readdgv[i][3] = 1;
+                }
+            }
+            for (int i = 0; i < rows; i++)
+            {
+                if (readdgv[i][4].ToString() == "操作员")
+                {
+                    readdgv[i][4] = 1;
+                }
+                else if ( readdgv[i][4].ToString() == "计划员")
+               {
+                    readdgv[i][4] = 2;
+                }
+                else
+                {
+                    readdgv[i][4] = 3;
+                }
+            }
+
+
+            string tblName = "user_aoxing";
+            List<String> queryCols = new List<String>(new String[] { "user_name", "user_password", "flight", "role_id" });
+            for (int i = 0; i < rows; i++)
+            {
+                List<Object> queryVals = new List<Object>(new Object[] { readdgv[i][1], readdgv[i][2], Convert.ToInt32(readdgv[i][3]), Convert.ToInt32(readdgv[i][4])});
+                List<String> whereCols = new List<String>(new String[] { "user_id" });
+                List<Object> whereVals = new List<Object>(new Object[] { Convert.ToInt32(readdgv[i][0]) });
+                Boolean b = Utility.updateAccess(base.mainform.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
+             
+            }
+            MessageBox.Show("保存成功！", "success");
+            dgvInit();
 
         }
 
