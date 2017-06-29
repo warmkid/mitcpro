@@ -201,10 +201,10 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox OpTextBox;
-        private System.Windows.Forms.Button CancelBtn;
         private System.Windows.Forms.Button OKBtn;
         private System.Windows.Forms.TextBox CheckerPWTextBox;
         private System.Windows.Forms.TextBox CheckerIDTextBox;
         private System.Windows.Forms.Button NotOKBtn;
+        public System.Windows.Forms.Button CancelBtn;
     }
 }

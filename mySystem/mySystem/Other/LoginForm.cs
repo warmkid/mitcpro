@@ -27,6 +27,7 @@ namespace mySystem
             
         }
 
+
         private void LoginButton_Click(object sender, EventArgs e)
         {
             if (UserIDTextBox.Text.Trim() == "" || UserPWTextBox.Text.Trim() == "")
@@ -38,17 +39,40 @@ namespace mySystem
             {
                 String myID = this.UserIDTextBox.Text;
                 String mypassword = this.UserPWTextBox.Text;
-                if (isSqlOk)
+                if (Parameter.isSqlOk)
                 {
-                    userID = CheckUser(conn, myID, mypassword);
+                    Parameter.userID = CheckUser(Parameter.conn, myID, mypassword);
                 }
                 else
                 {
-                    userID = CheckUser(connOle, myID, mypassword);
-                }               
+                    Parameter.userID = CheckUser(Parameter.connOle, myID, mypassword);
+                }
 
             }
+                       
+            
+            //if (UserIDTextBox.Text.Trim() == "" || UserPWTextBox.Text.Trim() == "")
+            //{
+            //    MessageBox.Show("提示：请输入操作员ID和密码！", "警告");
+            //    UserIDTextBox.Focus();
+            //}
+            //else
+            //{
+            //    String myID = this.UserIDTextBox.Text;
+            //    String mypassword = this.UserPWTextBox.Text;
+            //    if (isSqlOk)
+            //    {
+            //        userID = CheckUser(conn, myID, mypassword);
+            //    }
+            //    else
+            //    {
+            //        userID = CheckUser(connOle, myID, mypassword);
+            //    }               
+
+            //}
         }
+
+
 
         private int CheckUser(SqlConnection Connection,string ID,string password)
         {

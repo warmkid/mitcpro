@@ -24,8 +24,8 @@ namespace mySystem.Setting
 
         private void Init()
         {
-            userid = base.mainform.userID;
-            username = base.mainform.username;           
+            userid = Parameter.userID;
+            username = Parameter.userName;           
             idLabel.Text = userid.ToString();
             nameTextBox.Text = username;
 
@@ -33,7 +33,7 @@ namespace mySystem.Setting
 
         private void RoleInit()
         {
-            switch (base.mainform.userRole)
+            switch (Parameter.userRole)
             {
                 case 1:
                     SetPeoplePanelBottom.Visible = false;
@@ -54,7 +54,7 @@ namespace mySystem.Setting
         //*************************上半部分**************************
         private void CancelBtn_Click(object sender, EventArgs e)
         {
-            nameTextBox.Text = base.mainform.username;
+            nameTextBox.Text = Parameter.userName;
             pw1TextBox.Text = null;
             pw2TextBox.Text = null;
             pw3TextBox.Text = null;
@@ -67,7 +67,7 @@ namespace mySystem.Setting
             List<String> queryCols = new List<String>(new String[] { "user_password" });
             List<String> whereCols = new List<String>(new String[] { "user_id" });
             List<Object> whereVals = new List<Object>(new Object[] { userid });
-            List<List<Object>> res = Utility.selectAccess(base.mainform.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             userpw = res[0][0].ToString(); //用户原始密码
             if(pw == userpw)
             {
@@ -111,7 +111,7 @@ namespace mySystem.Setting
             List<Object> updateVals = new List<Object>(new Object[] { username });
             List<String> whereCols = new List<String>(new String[] { "user_id" });
             List<Object> whereVals = new List<Object>(new Object[] { userid });
-            Boolean b = Utility.updateAccess(base.mainform.connOle, tblName, updateCols, updateVals, whereCols, whereVals);
+            Boolean b = Utility.updateAccess(Parameter.connOle, tblName, updateCols, updateVals, whereCols, whereVals);
             
             //修改密码
             string pw1 = pw1TextBox.Text.Trim();
@@ -128,7 +128,7 @@ namespace mySystem.Setting
                         //保存密码至数据库
                         List<String> updateCols2 = new List<String>(new String[] { "user_password" });
                         List<Object> updateVals2 = new List<Object>(new Object[] { pw3 });
-                        Boolean b2 = Utility.updateAccess(base.mainform.connOle, tblName, updateCols2, updateVals2, whereCols, whereVals);
+                        Boolean b2 = Utility.updateAccess(Parameter.connOle, tblName, updateCols2, updateVals2, whereCols, whereVals);
                     }
                     else
                     {
@@ -156,7 +156,7 @@ namespace mySystem.Setting
             dataGridView1.Rows.Clear();
             String usertblName = "user_aoxing";
             List<String> queryCols = new List<String>(new String[] { "user_id", "user_name", "user_password", "flight", "role_id" });
-            List<List<Object>> res = Utility.selectAccess(base.mainform.connOle, usertblName, queryCols, null, null, null, null, null, null, null);
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, usertblName, queryCols, null, null, null, null, null, null, null);
             Utility.fillDataGridView(dataGridView1, res);
 
             //填入班次和角色
@@ -214,7 +214,7 @@ namespace mySystem.Setting
             String tblName = "user_aoxing";
             List<String> whereCols = new List<String>(new String[] { "user_id" });
             List<Object> whereVals = new List<Object>(new Object[] { deleteID });
-            Boolean b = Utility.deleteAccess(mainform.connOle, tblName, whereCols, whereVals);
+            Boolean b = Utility.deleteAccess(Parameter.connOle, tblName, whereCols, whereVals);
             if (b)
             {
                 MessageBox.Show("删除成功", "success");
@@ -270,7 +270,7 @@ namespace mySystem.Setting
                 List<Object> queryVals = new List<Object>(new Object[] { readdgv[i][1], readdgv[i][2], Convert.ToInt32(readdgv[i][3]), Convert.ToInt32(readdgv[i][4])});
                 List<String> whereCols = new List<String>(new String[] { "user_id" });
                 List<Object> whereVals = new List<Object>(new Object[] { Convert.ToInt32(readdgv[i][0]) });
-                Boolean b = Utility.updateAccess(base.mainform.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
+                Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
              
             }
             MessageBox.Show("保存成功！", "success");

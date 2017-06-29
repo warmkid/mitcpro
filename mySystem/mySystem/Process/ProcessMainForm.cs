@@ -53,6 +53,8 @@ namespace mySystem
         //吹膜
         private void ExtructionBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 1;
+            Parameter.InitCon();
             ExtructionBtn.BackColor = Color.FromArgb(138, 158, 196);
             CleanBtn.BackColor = Color.FromName("ControlLightLight");
             BagBtn.BackColor = Color.FromName("ControlLightLight");
@@ -73,6 +75,8 @@ namespace mySystem
         //清洁分切
         private void CleanBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 2;
+            Parameter.InitCon();
             ExtructionBtn.BackColor = Color.FromName("ControlLightLight");
             CleanBtn.BackColor = Color.FromArgb(138, 158, 196);
             BagBtn.BackColor = Color.FromName("ControlLightLight");
@@ -189,6 +193,8 @@ namespace mySystem
         //CS制袋
         private void CSbagBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 3;
+            Parameter.InitCon();
             ProducePanelRight.Controls.Clear();
             otherBtnColor();
             CSbagBtn.BackColor = Color.FromArgb(138, 158, 196);

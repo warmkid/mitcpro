@@ -12,26 +12,17 @@ using System.Windows.Forms;
 namespace mySystem.Setting
 {
     public partial class SettingMainForm : BaseForm
-    {
-        SqlConnection conn = null;
-        OleDbConnection connOle = null;
-        bool isSqlOk;
-        MainForm mform = null;
-        
+    {       
         public SettingMainForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            mform = mainform;
-            conn = mainform.conn;
-            connOle = mainform.connOle;
-            isSqlOk = mainform.isSqlOk;
             RoleInit();
 
         }
 
         private void RoleInit()
         {
-            switch (base.mainform.userRole)
+            switch (Parameter.userRole)
             {
                 case 1:
                     PeopleSetBtn.Enabled = true;
@@ -55,11 +46,12 @@ namespace mySystem.Setting
 
         private void ExtruSetBtn_Click(object sender, EventArgs e)
         {
+            
             ExtruSetBtn.BackColor = Color.FromArgb(138, 158, 196);
             SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
             PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
             SettingPanelRight.Controls.Clear();
-            SetExtruForm myDlg = new SetExtruForm(mform);
+            SetExtruForm myDlg = new SetExtruForm(mainform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = SettingPanelRight.Size;
@@ -86,6 +78,8 @@ namespace mySystem.Setting
 
         private void PeopleSetBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 1;
+            Parameter.InitCon();
             ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
             SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
             PeopleSetBtn.BackColor = Color.FromArgb(138, 158, 196);

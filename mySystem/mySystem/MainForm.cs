@@ -30,55 +30,96 @@ namespace mySystem
         public string csbagInstruction; //cs制袋生产指令
         public string cleancutInstruction; //清洁分切生产指令
 
+
         public MainForm()
         {
-            if (isSqlOk)
-            {
-                conn = Init(conn);              
-            }
-            else
-            {
-                string strConnect1 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
-                string strConnect2 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Cleancut.mdb;Persist Security Info=False";
-                string strConnect3 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
-                connOle = Init(strConnect1, connOle);
-                connOleCleancut = Init(strConnect2, connOleCleancut);
-                connOleBag = Init(strConnect3, connOleBag); 
-            }
-            
+            Parameter.selectCon = 1;
+            Parameter.InitCon();
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
-            userID = login.userID;
-            if (userID != 0)
+            Parameter.userID = login.userID;
+
+            if (Parameter.userID != 0)
             {
-                userRole = checkRole(userID);
+                Parameter.userRole = checkRole(Parameter.userID);
             }
-            
-            if (isSqlOk)
+
+            if (Parameter.isSqlOk)
             {
-                username = checkID(userID);
+                Parameter.userName = checkID(Parameter.userID);
             }
             else
             {
-                username = checkIDOle(userID);
+                Parameter.userName = checkIDOle(Parameter.userID);
             }
-            
-            
+
             InitializeComponent();
             RoleInit();
-            userLabel.Text = username;
+            userLabel.Text = Parameter.userName;
 
-            //Rectangle ScreenArea = Screen.GetWorkingArea(this);
-            //ProducePanelLeft.Size = new Size(160, ScreenArea.Height - 260);
-            //ProducePanelRight.Size = new Size(ScreenArea.Width - 184, ScreenArea.Height - 260);
-            //StockPanelLeft.Size = SystemPanelLeft.Size = ProducePanelLeft.Size;
-            //StockPanelRight.Size = SystemPanelRight.Size = ProducePanelRight.Size;
-            //this.textBox1.Text = ProducePanelRight.Size.Height.ToString();           
+
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            username = Parameter.userName;
+            userID = Parameter.userID;
 
         }
+
+
+
+
+
+
+
+//        public MainForm()
+//        {
+//            if (isSqlOk)
+//            {
+//                conn = Init(conn);              
+//            }
+//            else
+//            {
+//                string strConnect1 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+//                string strConnect2 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/db_Cleancut.mdb;Persist Security Info=False";
+//                string strConnect3 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
+//                connOle = Init(strConnect1, connOle);
+//                connOleCleancut = Init(strConnect2, connOleCleancut);
+//                connOleBag = Init(strConnect3, connOleBag); 
+//            }
+            
+//            LoginForm login = new LoginForm(this);
+//            login.ShowDialog();
+//            userID = login.userID;
+//            if (userID != 0)
+//            {
+//                userRole = checkRole(userID);
+//            }
+            
+//            if (isSqlOk)
+//            {
+//                username = checkID(userID);
+//            }
+//            else
+//            {
+//                username = checkIDOle(userID);
+//            }
+            
+            
+//            InitializeComponent();
+//            RoleInit();
+//            userLabel.Text = username;
+
+//            //Rectangle ScreenArea = Screen.GetWorkingArea(this);
+//            //ProducePanelLeft.Size = new Size(160, ScreenArea.Height - 260);
+//            //ProducePanelRight.Size = new Size(ScreenArea.Width - 184, ScreenArea.Height - 260);
+//            //StockPanelLeft.Size = SystemPanelLeft.Size = ProducePanelLeft.Size;
+//            //StockPanelRight.Size = SystemPanelRight.Size = ProducePanelRight.Size;
+//            //this.textBox1.Text = ProducePanelRight.Size.Height.ToString();           
+
+//        }
 
         private void RoleInit()
         {
@@ -105,7 +146,7 @@ namespace mySystem
             List<String> queryCols = new List<String>(new String[] { "role_id" });
             List<String> whereCols = new List<String>(new String[] { "user_id" });
             List<Object> whereVals = new List<Object>(new Object[] { userID });
-            List<List<Object>> res = Utility.selectAccess(connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             int user_Role = Convert.ToInt32(res[0][0]);
 
             return user_Role;
@@ -117,7 +158,7 @@ namespace mySystem
         {
             string user = null;
             string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-            SqlCommand comm = new SqlCommand(searchsql, conn);
+            SqlCommand comm = new SqlCommand(searchsql, Parameter.conn);
             SqlDataReader myReader = comm.ExecuteReader();
             while (myReader.Read())
             {
@@ -133,7 +174,7 @@ namespace mySystem
         {
             string user = null;
             OleDbCommand comm = new OleDbCommand();
-            comm.Connection = connOle;
+            comm.Connection = Parameter.connOle;
             comm.CommandText = "select * from user_aoxing where user_id= @ID";
             comm.Parameters.AddWithValue("@ID", userID);
 
@@ -148,80 +189,80 @@ namespace mySystem
             return user;
         }
 
-        private SqlConnection Init(SqlConnection myConnection)
-        {
-            //错误IP测试
-            //strCon = @"server=10.105.223.14,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
-            //正确IP
-            strCon = @"server=10.105.223.19,56625;database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-            isOk = false;
-            myConnection = connToServer(strCon);
-            while (!isOk)
-            {
-                MessageBox.Show("连接数据库失败", "error");
-                Connect2SqlForm con2sql = new Connect2SqlForm();
-                con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
-                con2sql.ShowDialog();
+        //private SqlConnection Init(SqlConnection myConnection)
+        //{
+        //    //错误IP测试
+        //    //strCon = @"server=10.105.223.14,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+        //    //正确IP
+        //    strCon = @"server=10.105.223.19,56625;database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+        //    isOk = false;
+        //    myConnection = connToServer(strCon);
+        //    while (!isOk)
+        //    {
+        //        MessageBox.Show("连接数据库失败", "error");
+        //        Connect2SqlForm con2sql = new Connect2SqlForm();
+        //        con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
+        //        con2sql.ShowDialog();
 
-                myConnection = connToServer(strCon);
-            }
-            MessageBox.Show("连接数据库成功", "success");
-            return myConnection;
-        }
+        //        myConnection = connToServer(strCon);
+        //    }
+        //    MessageBox.Show("连接数据库成功", "success");
+        //    return myConnection;
+        //}
 
-        private OleDbConnection Init(string strConnect, OleDbConnection myConnection)
-        {            
-            isOk = false;
-            myConnection = connToServerOle(strConnect);            
-            while (!isOk)
-            {
-                MessageBox.Show("连接数据库失败", "error");
-                return null;
+        //private OleDbConnection Init(string strConnect, OleDbConnection myConnection)
+        //{            
+        //    isOk = false;
+        //    myConnection = connToServerOle(strConnect);            
+        //    while (!isOk)
+        //    {
+        //        MessageBox.Show("连接数据库失败", "error");
+        //        return null;
 
-            }
-            MessageBox.Show("连接数据库成功", "success");
-            return myConnection;
-        }
-
-
-        public void IPChanged(string IP,string port)
-        {
-            //获取新IP
-            strCon = @"server=" + IP + "," + port + ";database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-        }
+        //    }
+        //    MessageBox.Show("连接数据库成功", "success");
+        //    return myConnection;
+        //}
 
 
-        private SqlConnection connToServer(string connectStr)
-        {
-            SqlConnection myConnection; 
-            try
-            {               
-                myConnection=new SqlConnection(connectStr);
-                myConnection.Open();
-            }
-            catch 
-            {
-                return null;
-            }
-            isOk = true;
-            return myConnection;
-        }
+        //public void IPChanged(string IP,string port)
+        //{
+        //    //获取新IP
+        //    strCon = @"server=" + IP + "," + port + ";database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+        //}
 
-        private OleDbConnection connToServerOle(string connectStr)
-        {
-            OleDbConnection myConn;
-            try
-            {
-                myConn = new OleDbConnection(connectStr);
-                myConn.Open();
-            }
-            catch
-            {
-                return null;
-            }
-            isOk = true;
-            return myConn;
-        }
+
+        //private SqlConnection connToServer(string connectStr)
+        //{
+        //    SqlConnection myConnection; 
+        //    try
+        //    {               
+        //        myConnection=new SqlConnection(connectStr);
+        //        myConnection.Open();
+        //    }
+        //    catch 
+        //    {
+        //        return null;
+        //    }
+        //    isOk = true;
+        //    return myConnection;
+        //}
+
+        //private OleDbConnection connToServerOle(string connectStr)
+        //{
+        //    OleDbConnection myConn;
+        //    try
+        //    {
+        //        myConn = new OleDbConnection(connectStr);
+        //        myConn.Open();
+        //    }
+        //    catch
+        //    {
+        //        return null;
+        //    }
+        //    isOk = true;
+        //    return myConn;
+        //}
 
 
         //工序按钮
@@ -277,20 +318,20 @@ namespace mySystem
 
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
-            userID = login.userID;
-            if (isSqlOk)
+            Parameter.userID = login.userID;
+            if (Parameter.isSqlOk)
             {
-                username = checkID(userID);
+                Parameter.userName = checkID(Parameter.userID);
             }
             else
             {
-                username = checkIDOle(userID);
+                Parameter.userName = checkIDOle(Parameter.userID);
             }
-            if (username != null)
+            if (Parameter.userName != null)
             {
-                userLabel.Text = username;
+                userLabel.Text = Parameter.userName;
                 MainPanel.Controls.Clear();
-                userRole = checkRole(userID);
+                Parameter.userRole = checkRole(Parameter.userID);
                 RoleInit();
                 MainProduceBtn.BackColor = Color.FromName("Control");
                 MainSettingBtn.BackColor = Color.FromName("Control");

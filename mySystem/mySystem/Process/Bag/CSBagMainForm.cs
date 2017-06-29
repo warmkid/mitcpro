@@ -23,10 +23,10 @@ namespace mySystem.Process.Bag
 
         private void Init()
         {
-            if (!base.mainform.isSqlOk)
+            if (!Parameter.isSqlOk)
             {
                 OleDbCommand comm = new OleDbCommand();
-                comm.Connection = base.mainform.connOleBag;
+                comm.Connection = Parameter.connOle;
                 comm.CommandText = "select instruction_code from production_instruction_bag";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
@@ -40,7 +40,7 @@ namespace mySystem.Process.Bag
             else
             {
                 SqlCommand comm = new SqlCommand();
-                comm.Connection = base.mainform.conn;
+                comm.Connection = Parameter.conn;
                 comm.CommandText = "select production_instruction_code from production_instruction";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
@@ -56,7 +56,7 @@ namespace mySystem.Process.Bag
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            base.mainform.csbagInstruction = comboBox1.SelectedItem.ToString();
+            Parameter.csbagInstruction = comboBox1.SelectedItem.ToString();
         }
 
         private void A1Btn_Click(object sender, EventArgs e)
