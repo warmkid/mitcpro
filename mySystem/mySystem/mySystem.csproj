@@ -73,6 +73,7 @@
       <DependentUpon>CheckForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\common.cs" />
+    <Compile Include="Parameter.cs" />
     <Compile Include="Process\Bag\Bagprocess_prod_instru.cs">
       <SubType>Form</SubType>
     </Compile>

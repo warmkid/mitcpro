@@ -24,14 +24,14 @@ namespace mySystem.Process.CleanCut
             if (!base.mainform.isSqlOk)
             {
                 OleDbCommand comm = new OleDbCommand();
-                comm.Connection = base.mainform.connOle;
-                comm.CommandText = "select production_instruction_code from production_instruction";
+                comm.Connection = base.mainform.connOleCleancut;
+                comm.CommandText = "select instruction_code from production_instruction";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["production_instruction_code"]);  //下拉框获取生产指令
+                        comboBox1.Items.Add(reader["instruction_code"]);  //下拉框获取生产指令
                     }
                 }
             }
