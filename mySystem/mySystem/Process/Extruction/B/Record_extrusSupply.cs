@@ -257,7 +257,6 @@ namespace WindowsFormsApplication1
 
             dataGridView1.Rows.Add(drsum);
 
-
         }
 
         //private void button2_Click(object sender, EventArgs e)
@@ -511,7 +510,7 @@ namespace WindowsFormsApplication1
             }
             else
             {
- 
+                
             }
             button4.Enabled = true;
         }

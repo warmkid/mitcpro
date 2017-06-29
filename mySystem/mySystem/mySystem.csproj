@@ -501,6 +501,9 @@
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
+      <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\outerpack.resx">
       <DependentUpon>outerpack.cs</DependentUpon>
     </EmbeddedResource>
@@ -662,6 +665,7 @@
       <DependentUpon>SettingForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="myDataSet.xsc">
       <DependentUpon>myDataSet.xsd</DependentUpon>
     </None>
