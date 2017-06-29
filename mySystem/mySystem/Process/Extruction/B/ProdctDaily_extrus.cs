@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -63,6 +64,7 @@ namespace mySystem
         string instr;//生产指令
         string writer;//填报人
         string checker;//审核人
+        bool flag;//标志查询的条件是否可见
 
 
         //自定义函数
@@ -99,20 +101,22 @@ namespace mySystem
             comboBox4.Visible = false;
 
             dt = new DataTable();
-            dt.Columns.Add("id",System.Type.GetType("System.Int32"));
+            //dt.Columns.Add("id",System.Type.GetType("System.Int32"));
             dt.Columns.Add("date", System.Type.GetType("System.DateTime"));
             dt.Columns.Add("classes", System.Type.GetType("System.Boolean"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
-            //dt.Columns.Add("id", System.Type.GetType("System.String"));
+            dt.Columns.Add("prodcode", System.Type.GetType("System.String"));
+            dt.Columns.Add("prodbatch", System.Type.GetType("System.String"));
+            dt.Columns.Add("number", System.Type.GetType("System.String"));
+            dt.Columns.Add("count", System.Type.GetType("System.String"));
+            dt.Columns.Add("weight", System.Type.GetType("System.String"));
+            dt.Columns.Add("mA", System.Type.GetType("System.String"));
+            dt.Columns.Add("mB1C", System.Type.GetType("System.String"));
+            dt.Columns.Add("mB2", System.Type.GetType("System.String"));
+            dt.Columns.Add("time", System.Type.GetType("System.String"));
+            dt.Columns.Add("rec", System.Type.GetType("System.String"));
+            dt.Columns.Add("rev", System.Type.GetType("System.String"));
 
+            flag = false;//查询条件不可见
         }
         private void add_instrucode()
         {
@@ -137,6 +141,26 @@ namespace mySystem
                 da.Dispose();
             }
         }
+
+        //通过批号id查找批号代码
+        private string batchcode_findby_batchid(int btid)
+        {
+            string code = "";
+
+            string acsql = "select product_batch_code from product_batch where product_batch_id=" + btid;
+            OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable dt1 = new DataTable();
+            da.Fill(dt1);
+
+            if (dt1.Rows.Count == 0)
+                return "***";
+            code = dt1.Rows[0][0].ToString();
+            da.Dispose();
+            dt1.Dispose();
+            return code;
+        }
+
         //通过批号id查找产品代码
         private string prodcode_findby_batchid(int btid)
         {
@@ -149,7 +173,7 @@ namespace mySystem
             da.Fill(dt1);
 
             if (dt1.Rows.Count == 0)
-                return "";
+                return "***";
             code = dt1.Rows[0][0].ToString();
             da.Dispose();
             dt1.Dispose();
@@ -167,7 +191,7 @@ namespace mySystem
             da.Fill(dt1);
 
             if (dt1.Rows.Count == 0)
-                return "";
+                return "***";
             name = dt1.Rows[0][0].ToString();
             da.Dispose();
             dt1.Dispose();
@@ -246,6 +270,8 @@ namespace mySystem
                             };
                 var fullquery = query.Union(query_r);//最后查找的结果
                 
+                //将结果填入表格中和dt中
+                dt.Clear();
                 int index = 0;
                 foreach (var item in fullquery)
                 {
@@ -260,7 +286,7 @@ namespace mySystem
                     dr.Cells[1].Value = item.date;
                     dr.Cells[2].Value = item.flight=="True";
                     dr.Cells[3].Value = prodcode_findby_batchid(int.Parse(item.batch_id));//产品代码
-                    dr.Cells[4].Value = item.batch_id;
+                    dr.Cells[4].Value = batchcode_findby_batchid(int.Parse(item.batch_id));//批号代码
                     dr.Cells[5].Value = item.number;//卷号
                     dr.Cells[6].Value = item.length;
                     dr.Cells[7].Value = item.weight;
@@ -279,17 +305,126 @@ namespace mySystem
                         dr.Cells[14].Value = name_findby_userid(int.Parse(item.revid));
 
                     dataGridView1.Rows.Add(dr);
+
+                    DataRow drow = dt.NewRow();
+                    if (item.date == "***")
+                        drow["date"] = DateTime.Parse("1900-1-1 0:00:00");
+                    else
+                        drow["date"] = DateTime.Parse(item.date);
+                    drow["classes"] = item.flight == "True";
+                    drow["prodcode"] = dr.Cells[3].Value;
+                    drow["prodbatch"] = dr.Cells[4].Value;
+                    drow["number"] = item.number;
+                    drow["count"] = item.length;
+                    drow["weight"] = item.weight;
+                    drow["mA"] = item.feedinfo;
+                    drow["mB1C"] = item.feedinfo;
+                    drow["mB2"] = item.feedinfo;
+                    drow["time"] = item.time;
+                    drow["rec"] = dr.Cells[13].Value;
+                    drow["rev"] = dr.Cells[14].Value;
+                    dt.Rows.Add(drow);
+
                     index = index + 1;
                 }
                     
                 
                 //查询条件可见
                 setvisible(true);
+                flag = true;
 
+                //往查询条件中添加目录
+                comboBox1.Items.Clear();
+                comboBox3.Items.Clear();
+                comboBox4.Items.Clear();
+                comboBox1.Items.Add("(空)");
+                comboBox3.Items.Add("(空)");
+                comboBox4.Items.Add("(空)");
 
-
+                DistinctValueCount(dt, "prodcode", comboBox1);
+                DistinctValueCount(dt, "rec", comboBox3);
+                DistinctValueCount(dt, "rev", comboBox4);
             }
         }
+
+        //统计datatable中某一列不同值，并将其填入控件中
+        private int DistinctValueCount(DataTable dt, string colname,ComboBox combox)
+        {
+            Hashtable ht = new Hashtable();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                object tmp = dt.Rows[i][colname];
+                if (!ht.Contains(tmp))
+                {
+                    ht.Add(tmp, tmp);
+                    combox.Items.Add(tmp.ToString());
+                }
+            }
+
+            return ht.Count;
+        }
+
+        //通过查询条件来查
+        private void query_by_condt()
+        {
+            DateTime date1 = dateTimePicker1.Value.Date;
+            DateTime date2 = dateTimePicker2.Value.Date;
+            TimeSpan delt = date2 - date1;
+            if (delt.TotalDays < 0)
+            {
+                MessageBox.Show("起止时间有误，请重新输入");
+                return;
+            }
+
+            string prodcode = comboBox1.Text;//产品代码
+            string writer = comboBox3.Text;//填报人
+            string checker = comboBox4.Text;//复核人
+
+            ////删除合计行
+            //dt.Rows.RemoveAt(dt.Rows.Count - 1);
+
+            string sql = "date>=" + "'" + date1 + "'" + " and " + "date<=" + "'" + date2 + "'";
+
+            if (prodcode != "(空)")
+                sql += " and " + "prodcode like" + "'%" + prodcode + "%'";
+            if (writer!= "(空)")
+                sql += " and " + "rec like" + "'%" + writer + "%'";
+            if (checker != "(空)")
+                sql += " and " + "rev like" + "'%" + checker + "%'";
+            DataRow[] arrayDR=dt.Select(sql);
+
+            //清空表格
+            while (dataGridView1.Rows.Count > 0)
+                dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+            //填充
+            int i=0;
+            foreach(DataRow drow in arrayDR)
+            {
+                 DataGridViewRow dr = new DataGridViewRow();
+                foreach (DataGridViewColumn c in dataGridView1.Columns)
+                {
+                    dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                }
+                dr.Cells[0].Value = i + 1;
+                dr.Cells[1].Value = drow[0];
+                dr.Cells[2].Value = drow[1];
+                dr.Cells[3].Value = drow[2];
+                dr.Cells[4].Value = drow[3];
+                dr.Cells[5].Value = drow[4];
+                dr.Cells[6].Value = drow[5];
+                dr.Cells[7].Value = drow[6];
+                dr.Cells[8].Value = "";//废品重量
+                dr.Cells[9].Value = drow[7]; //加料A
+                dr.Cells[10].Value = drow[8]; //加料B1+C
+                dr.Cells[11].Value = drow[9]; //加料B2
+                dr.Cells[12].Value = drow[10]; //工时
+                dr.Cells[13].Value = drow[11];
+                dr.Cells[14].Value = drow[12];
+                dataGridView1.Rows.Add(dr);
+            }
+
+        }
+
         /*仅用来来测试，实际早已在上一步登陆*/
         private void connToServer()
         {             
@@ -515,7 +650,11 @@ namespace mySystem
                     MessageBox.Show("选择一条生产指令");
                     return;
                 }
-                query_by_instru(instr);
+                //判断通过指令查找还是进行模糊查找
+                if (!flag)
+                    query_by_instru(instr);
+                else
+                    query_by_condt();
 
             }
 
@@ -543,6 +682,7 @@ namespace mySystem
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             setvisible(false);
+            flag = false;
         }
 
     }

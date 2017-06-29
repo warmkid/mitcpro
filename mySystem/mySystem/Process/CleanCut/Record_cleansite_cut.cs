@@ -64,6 +64,7 @@ namespace mySystem.Process.CleanCut
             : base(mainform)
         {
             InitializeComponent();
+            button2.Enabled = false;
             queryjob();
         }
         //查找输入清场人和检查人名字是否合法
@@ -133,6 +134,7 @@ namespace mySystem.Process.CleanCut
             { }
             else
             { }
+            button2.Enabled = true;
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -143,6 +145,12 @@ namespace mySystem.Process.CleanCut
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
             checkBox1.Checked = !checkBox2.Checked;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
+            checkform.Show();
         }
     }
 }

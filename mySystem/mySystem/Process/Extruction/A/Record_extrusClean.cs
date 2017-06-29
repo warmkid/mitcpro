@@ -253,7 +253,7 @@ namespace WindowsFormsApplication1
             JArray jarray = JArray.Parse(json);
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                int a, b, c;
+                int a;
                 string st = "{'";
                 string t = dataGridView1.Rows[i].Cells[0].Value.ToString() + "':";
                 st += t;
