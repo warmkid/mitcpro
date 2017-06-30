@@ -163,7 +163,8 @@ namespace mySystem
             {
                 temp.Add(s + "=@" + s);
             }
-            String wheres = joinList(temp, ",");
+            //String wheres = joinList(temp, ",");
+            String wheres = joinList(temp, " AND ");
 
             String strSQL = String.Format("UPDATE {0} SET {1} WHERE {2}", tblName, updates, wheres);
             OleDbCommand cmd = new OleDbCommand(strSQL, conn);
