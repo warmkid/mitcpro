@@ -125,13 +125,43 @@ namespace BatchProductRecord
             string doubclean_quan = textBox11.Text;
 
             string chargeman = textBox5.Text;
+            int chargeman_id = id_findby_code(chargeman);
+            if (chargeman_id == -1)
+            {
+                MessageBox.Show("负责人id不存在");
+                return;
+            }
+                
             string extra = textBox23.Text;
             string compman = textBox24.Text;//编制人
+            int compman_id = id_findby_code(compman);
+            if (compman_id == -1)
+            {
+                MessageBox.Show("编制人id不存在");
+                return;
+            }
+                
             DateTime compdate = dateTimePicker2.Value;
             string checkman = textBox25.Text;//审批人
+            //int checkman_id = id_findby_code(checkman);
+            //if (checkman_id == -1)
+            //{
+            //    MessageBox.Show("审批人id不存在");
+            //    return;
+            //}
+                
             DateTime checkdate = dateTimePicker3.Value;
             string recman = textBox26.Text;//接收人
+            int recman_id = id_findby_code(recman);
+            if (recman_id == -1)
+            {
+                MessageBox.Show("接受人id不存在");
+                return;
+            }
+                
             DateTime recdate = dateTimePicker4.Value;
+
+
 
             //jason格式产品代码
             JArray ret = JArray.Parse("[]");
@@ -255,6 +285,26 @@ namespace BatchProductRecord
                     return Int32.Parse(tempdt.Rows[0][0].ToString());
             }
         }
+        private int matid_findby_code(string code)
+        {
+            if (mainform.isSqlOk)
+            {
+                return -1;
+            }
+            else
+            {
+                string asql = "select raw_material_id from raw_material where raw_material_code=" + "'" + code + "'";
+                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                if (tempdt.Rows.Count == 0)
+                    return -1;
+                else
+                    return Int32.Parse(tempdt.Rows[0][0].ToString());
+            }
+        }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -290,35 +340,6 @@ namespace BatchProductRecord
         }
         public void fill(string prodinstr)
         {
-            if (mainform.isSqlOk)
-            {
-
-            }
-            else
-            {
-                string asql = "select * from production_instruction where production_instruction_code=" + prodinstr;
-                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
-                OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
-                dt = new DataTable();
-                da.Fill(dt);
-                da.Dispose();
-                comm.Dispose();
-
-                if (dt.Rows.Count > 0)
-                {
-                    textBox1.Text = dt.Rows[0]["product_name"].ToString();
-                    textBox2.Text = dt.Rows[0]["production_instruction_code"].ToString();
-                    textBox3.Text = dt.Rows[0]["production_process"].ToString();
-                    textBox4.Text = dt.Rows[0]["machine"].ToString();
-                    dateTimePicker1.Value = DateTime.Parse(dt.Rows[0]["production_start_date"].ToString());
-
-
-                    //解析jason
-                    //for(int i
-
-                }
-            }
 
         }
     }
