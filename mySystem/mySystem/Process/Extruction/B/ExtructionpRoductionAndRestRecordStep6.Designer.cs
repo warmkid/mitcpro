@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.CheckerBox = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.productionDatePicker = new System.Windows.Forms.DateTimePicker();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.DelLineBtn = new System.Windows.Forms.Button();
@@ -40,18 +40,16 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.productnumberBox = new System.Windows.Forms.TextBox();
+            this.batchIdBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.productnameBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.AddLineBtn = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.NeightcheckBox = new System.Windows.Forms.CheckBox();
+            this.NightcheckBox = new System.Windows.Forms.CheckBox();
             this.DatecheckBox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.RecordView = new System.Windows.Forms.DataGridView();
-            this.Title = new System.Windows.Forms.Label();
             this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.膜卷编号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -66,6 +64,9 @@
             this.厚度公差 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.检查人 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.判定 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Title = new System.Windows.Forms.Label();
+            this.printBtn = new System.Windows.Forms.Button();
+            this.productnamecomboBox = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.RecordView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,25 +74,26 @@
             // 
             this.CheckerBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.CheckerBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.CheckerBox.Location = new System.Drawing.Point(812, 34);
+            this.CheckerBox.Location = new System.Drawing.Point(887, 34);
             this.CheckerBox.Name = "CheckerBox";
             this.CheckerBox.Size = new System.Drawing.Size(100, 26);
             this.CheckerBox.TabIndex = 30;
             // 
-            // dateTimePicker1
+            // productionDatePicker
             // 
-            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("SimSun", 12F);
-            this.dateTimePicker1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dateTimePicker1.Location = new System.Drawing.Point(812, 64);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 29;
+            this.productionDatePicker.CalendarFont = new System.Drawing.Font("SimSun", 12F);
+            this.productionDatePicker.Font = new System.Drawing.Font("SimSun", 12F);
+            this.productionDatePicker.Location = new System.Drawing.Point(887, 64);
+            this.productionDatePicker.Name = "productionDatePicker";
+            this.productionDatePicker.Size = new System.Drawing.Size(145, 26);
+            this.productionDatePicker.TabIndex = 29;
+            this.productionDatePicker.ValueChanged += new System.EventHandler(this.productionDatePicker_ValueChanged);
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label10.Location = new System.Drawing.Point(726, 38);
+            this.label10.Location = new System.Drawing.Point(801, 38);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(64, 16);
             this.label10.TabIndex = 28;
@@ -101,7 +103,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label9.Location = new System.Drawing.Point(726, 71);
+            this.label9.Location = new System.Drawing.Point(801, 71);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(80, 16);
             this.label9.TabIndex = 27;
@@ -110,7 +112,7 @@
             // DelLineBtn
             // 
             this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.DelLineBtn.Location = new System.Drawing.Point(1068, 438);
+            this.DelLineBtn.Location = new System.Drawing.Point(1070, 440);
             this.DelLineBtn.Name = "DelLineBtn";
             this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
             this.DelLineBtn.TabIndex = 26;
@@ -121,18 +123,18 @@
             // CheckBtn
             // 
             this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.CheckBtn.Location = new System.Drawing.Point(1068, 477);
+            this.CheckBtn.Location = new System.Drawing.Point(978, 480);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);
             this.CheckBtn.TabIndex = 25;
-            this.CheckBtn.Text = "审核通过";
+            this.CheckBtn.Text = "审核";
             this.CheckBtn.UseVisualStyleBackColor = true;
             this.CheckBtn.Click += new System.EventHandler(this.CheckBtn_Click);
             // 
             // SaveBtn
             // 
             this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.SaveBtn.Location = new System.Drawing.Point(976, 477);
+            this.SaveBtn.Location = new System.Drawing.Point(886, 480);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
             this.SaveBtn.TabIndex = 24;
@@ -144,7 +146,7 @@
             // 
             this.humidityBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.humidityBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.humidityBox.Location = new System.Drawing.Point(346, 63);
+            this.humidityBox.Location = new System.Drawing.Point(438, 63);
             this.humidityBox.Name = "humidityBox";
             this.humidityBox.Size = new System.Drawing.Size(100, 26);
             this.humidityBox.TabIndex = 23;
@@ -162,7 +164,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label8.Location = new System.Drawing.Point(270, 67);
+            this.label8.Location = new System.Drawing.Point(362, 67);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(200, 16);
             this.label8.TabIndex = 21;
@@ -182,26 +184,26 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label6.Location = new System.Drawing.Point(498, 69);
+            this.label6.Location = new System.Drawing.Point(584, 69);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(168, 16);
             this.label6.TabIndex = 19;
             this.label6.Text = "生产设备：AA-EQM-032";
             // 
-            // productnumberBox
+            // batchIdBox
             // 
-            this.productnumberBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.productnumberBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.productnumberBox.Location = new System.Drawing.Point(346, 33);
-            this.productnumberBox.Name = "productnumberBox";
-            this.productnumberBox.Size = new System.Drawing.Size(100, 26);
-            this.productnumberBox.TabIndex = 18;
+            this.batchIdBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.batchIdBox.Font = new System.Drawing.Font("SimSun", 12F);
+            this.batchIdBox.Location = new System.Drawing.Point(438, 33);
+            this.batchIdBox.Name = "batchIdBox";
+            this.batchIdBox.Size = new System.Drawing.Size(100, 26);
+            this.batchIdBox.TabIndex = 18;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label5.Location = new System.Drawing.Point(270, 38);
+            this.label5.Location = new System.Drawing.Point(362, 38);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 16);
             this.label5.TabIndex = 17;
@@ -211,20 +213,11 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label4.Location = new System.Drawing.Point(498, 38);
+            this.label4.Location = new System.Drawing.Point(584, 38);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(184, 16);
             this.label4.TabIndex = 16;
             this.label4.Text = "依据工艺：吹膜工艺规程";
-            // 
-            // productnameBox
-            // 
-            this.productnameBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.productnameBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.productnameBox.Location = new System.Drawing.Point(112, 33);
-            this.productnameBox.Name = "productnameBox";
-            this.productnameBox.Size = new System.Drawing.Size(100, 26);
-            this.productnameBox.TabIndex = 15;
             // 
             // label3
             // 
@@ -239,7 +232,7 @@
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(976, 438);
+            this.AddLineBtn.Location = new System.Drawing.Point(978, 440);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 13;
@@ -257,17 +250,17 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "注：外观和判定栏合格划“√”，不合格取消勾选。";
             // 
-            // NeightcheckBox
+            // NightcheckBox
             // 
-            this.NeightcheckBox.AutoSize = true;
-            this.NeightcheckBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.NeightcheckBox.Location = new System.Drawing.Point(1089, 67);
-            this.NeightcheckBox.Name = "NeightcheckBox";
-            this.NeightcheckBox.Size = new System.Drawing.Size(59, 20);
-            this.NeightcheckBox.TabIndex = 8;
-            this.NeightcheckBox.Text = "夜班";
-            this.NeightcheckBox.UseVisualStyleBackColor = true;
-            this.NeightcheckBox.CheckedChanged += new System.EventHandler(this.NeightcheckBox_CheckedChanged);
+            this.NightcheckBox.AutoSize = true;
+            this.NightcheckBox.Font = new System.Drawing.Font("SimSun", 12F);
+            this.NightcheckBox.Location = new System.Drawing.Point(1089, 67);
+            this.NightcheckBox.Name = "NightcheckBox";
+            this.NightcheckBox.Size = new System.Drawing.Size(59, 20);
+            this.NightcheckBox.TabIndex = 8;
+            this.NightcheckBox.Text = "夜班";
+            this.NightcheckBox.UseVisualStyleBackColor = true;
+            this.NightcheckBox.CheckedChanged += new System.EventHandler(this.NeightcheckBox_CheckedChanged);
             // 
             // DatecheckBox
             // 
@@ -317,16 +310,6 @@
             this.RecordView.Size = new System.Drawing.Size(1118, 330);
             this.RecordView.TabIndex = 5;
             this.RecordView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RecordView_CellContentClick);
-            // 
-            // Title
-            // 
-            this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
-            this.Title.Location = new System.Drawing.Point(501, 8);
-            this.Title.Name = "Title";
-            this.Title.Size = new System.Drawing.Size(229, 19);
-            this.Title.TabIndex = 3;
-            this.Title.Text = "吹膜工序生产和检验记录";
             // 
             // 序号
             // 
@@ -398,13 +381,45 @@
             this.判定.HeaderText = "判定";
             this.判定.Name = "判定";
             // 
+            // Title
+            // 
+            this.Title.AutoSize = true;
+            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
+            this.Title.Location = new System.Drawing.Point(501, 8);
+            this.Title.Name = "Title";
+            this.Title.Size = new System.Drawing.Size(229, 19);
+            this.Title.TabIndex = 3;
+            this.Title.Text = "吹膜工序生产和检验记录";
+            // 
+            // printBtn
+            // 
+            this.printBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.printBtn.Location = new System.Drawing.Point(1070, 480);
+            this.printBtn.Name = "printBtn";
+            this.printBtn.Size = new System.Drawing.Size(80, 30);
+            this.printBtn.TabIndex = 31;
+            this.printBtn.Text = "打印";
+            this.printBtn.UseVisualStyleBackColor = true;
+            // 
+            // productnamecomboBox
+            // 
+            this.productnamecomboBox.Font = new System.Drawing.Font("SimSun", 12F);
+            this.productnamecomboBox.FormattingEnabled = true;
+            this.productnamecomboBox.Location = new System.Drawing.Point(112, 34);
+            this.productnamecomboBox.Name = "productnamecomboBox";
+            this.productnamecomboBox.Size = new System.Drawing.Size(220, 24);
+            this.productnamecomboBox.TabIndex = 32;
+            this.productnamecomboBox.SelectedIndexChanged += new System.EventHandler(this.productnamecomboBox_SelectedIndexChanged);
+            // 
             // ExtructionpRoductionAndRestRecordStep6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 519);
+            this.Controls.Add(this.productnamecomboBox);
+            this.Controls.Add(this.printBtn);
             this.Controls.Add(this.CheckerBox);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.productionDatePicker);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.DelLineBtn);
@@ -415,14 +430,13 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.productnumberBox);
+            this.Controls.Add(this.batchIdBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.productnameBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.AddLineBtn);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.NeightcheckBox);
+            this.Controls.Add(this.NightcheckBox);
             this.Controls.Add(this.DatecheckBox);
             this.Controls.Add(this.RecordView);
             this.Controls.Add(this.Title);
@@ -442,14 +456,13 @@
         private System.Windows.Forms.DataGridView RecordView;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox DatecheckBox;
-        private System.Windows.Forms.CheckBox NeightcheckBox;
+        private System.Windows.Forms.CheckBox NightcheckBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button AddLineBtn;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox productnameBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox productnumberBox;
+        private System.Windows.Forms.TextBox batchIdBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
@@ -460,7 +473,7 @@
         private System.Windows.Forms.Button DelLineBtn;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker productionDatePicker;
         private System.Windows.Forms.TextBox CheckerBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn 序号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 时间;
@@ -476,5 +489,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 厚度公差;
         private System.Windows.Forms.DataGridViewTextBoxColumn 检查人;
         private System.Windows.Forms.DataGridViewCheckBoxColumn 判定;
+        private System.Windows.Forms.Button printBtn;
+        private System.Windows.Forms.ComboBox productnamecomboBox;
     }
 }
