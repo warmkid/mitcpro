@@ -13,27 +13,20 @@ namespace mySystem
 {
     public partial class QueryInstruForm : BaseForm
     {
-        SqlConnection conn = null;
-        OleDbConnection connOle = null;
-        bool isSqlOk;
         DateTime date1;//起始时间
         DateTime date2;//结束时间
         string writer;//编制人
-        DataTable dt = new DataTable();
-        
+        DataTable dt = new DataTable();        
         
         public QueryInstruForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             dataGridView1.Font = new Font("宋体", 12);
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
-            InitDataTabel();
+            InitDataTable();
 
         }
 
-        private void InitDataTabel()
+        private void InitDataTable()
         {
             ////初始化显示
             //String tblName = "production_instruction";
@@ -66,18 +59,19 @@ namespace mySystem
             List<String> queryidCols = new List<String>(new String[] { "user_id","user_name" });
             String likeCol = "user_name";
             String likeVal = writer;
-            List<List<Object>> idList = Utility.selectAccess(connOle, usertblName, queryidCols, null, null, likeCol, likeVal, null, null, null);
+            List<List<Object>> idList = Utility.selectAccess(Parameter.connOle, usertblName, queryidCols, null, null, likeCol, likeVal, null, null, null);
             string name = null;
 
             //查询生产指令
             for (int i = 0; i <= idList.Count / 2; i++)
             {
                 String tblName = "production_instruction";
-                List<String> queryCols = new List<String>(new String[] { "product_name", "production_instruction_code", "production_process", "production_start_date", "operate_date", "principal_id" });
+                //编制日期？审批日期？接收日期？
+                List<String> queryCols = new List<String>(new String[] { "product_name", "production_instruction_code", "production_process", "production_start_date", "edit_date", "principal_id" });
                 List<String> whereCols = new List<String>(new String[] { "principal_id" });
                 List<Object> whereVals = new List<Object>(new Object[] { idList[i][0] });
                 String betweenCol = "production_start_date";
-                List<List<Object>> res = Utility.selectAccess(connOle, tblName, queryCols, whereCols, whereVals, null, null, betweenCol, date1, date2);
+                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, betweenCol, date1, date2);
 
                 Utility.fillDataGridView(dataGridView1, res);
 

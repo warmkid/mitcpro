@@ -33,7 +33,7 @@ namespace mySystem.Process.CleanCut
             isSqlOk = base.mainform.isSqlOk;
             operator_id = base.mainform.userID;
 
-            operator_name = checkID(operator_id);
+            //operator_name = checkID(operator_id);
 
             CheckDgvInitialize();
             RunRecordDgvInitialize();
@@ -129,7 +129,7 @@ namespace mySystem.Process.CleanCut
             RunRecordView.Rows.Add(dr);
         }
 
-
+        /*
         private string checkID(int userID)
         {
             if (isSqlOk)
@@ -167,7 +167,7 @@ namespace mySystem.Process.CleanCut
             }
 
         }
-
+        */
         private void AddLineBtn_Click(object sender, EventArgs e)
         {
             AddRecordRowLine();

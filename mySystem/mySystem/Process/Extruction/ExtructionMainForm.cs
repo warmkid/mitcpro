@@ -15,7 +15,10 @@ using WindowsFormsApplication1;
 namespace mySystem
 {
     public partial class ExtructionMainForm : BaseForm
-    {       
+    {
+        string instruction = null;
+        int instruID = 0;
+
         public ExtructionMainForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
@@ -56,24 +59,36 @@ namespace mySystem
         }
 
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            instruction = comboBox1.SelectedItem.ToString();
+            Parameter.proInstruction = instruction;
+            String tblName = "production_instruction";
+            List<String> queryCols = new List<String>(new String[] { "production_instruction_id" });
+            List<String> whereCols = new List<String>(new String[] { "production_instruction_code" });
+            List<Object> whereVals = new List<Object>(new Object[] { instruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            instruID = Convert.ToInt32(res[0][0]);
+            Parameter.proInstruID = instruID;
+
+        }
+
+
         private void A3Btn_Click(object sender, EventArgs e)
         {
             Record_extrusClean extrusclean = new Record_extrusClean(mainform);
             extrusclean.Show();
         }
-
         private void A5Btn_Click(object sender, EventArgs e)
         {
             Record_extrusSiteClean ext = new Record_extrusSiteClean(mainform);
             ext.Show();
         }
-
         private void A1Btn_Click(object sender, EventArgs e)
         {
             BatchProductRecord.BatchProductRecord b = new BatchProductRecord.BatchProductRecord(mainform);
             b.Show();
         }
-
         private void A2Btn_Click(object sender, EventArgs e)
         {
             BatchProductRecord.ProcessProductInstru ppi = new BatchProductRecord.ProcessProductInstru(mainform);
@@ -84,163 +99,132 @@ namespace mySystem
             ExtructionCheckBeforePowerStep2 stepform = new ExtructionCheckBeforePowerStep2(mainform);
             stepform.Show();
         }
-
         private void C2Btn_Click(object sender, EventArgs e)
         {
             ExtructionPreheatParameterRecordStep3 stepform = new ExtructionPreheatParameterRecordStep3(mainform);
             stepform.Show();
-        }
-
-        
+        }        
         private void B1Btn_Click(object sender, EventArgs e)
         {
             ExtructionTransportRecordStep4 stepform = new ExtructionTransportRecordStep4(mainform);
             stepform.Show();
         }
-
         private void B6Btn_Click(object sender, EventArgs e)
         {
             ExtructionpRoductionAndRestRecordStep6 stepform = new ExtructionpRoductionAndRestRecordStep6(mainform);
             stepform.Show();
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Parameter.proInstruction = comboBox1.SelectedItem.ToString();
-        }
-
+        }        
         private void C3Btn_Click(object sender, EventArgs e)
         {
 
             mySystem.Extruction.Chart.feedrecord feedrecord = new Extruction.Chart.feedrecord(mainform);
             feedrecord.Show();
         }
-
         private void B2Btn_Click(object sender, EventArgs e)
         {
             Record_extrusSupply recordsupply = new Record_extrusSupply(mainform);
             recordsupply.Show();
         }
-
         private void B4Btn_Click(object sender, EventArgs e)
         {
             Record_material_reqanddisg mat = new Record_material_reqanddisg(mainform);
             mat.Show();
         }
-
         private void B5Btn_Click(object sender, EventArgs e)
         {
             ProdctDaily_extrus pro = new ProdctDaily_extrus(mainform);
             pro.Show();
         }
-
         private void B2Btn_Click_1(object sender, EventArgs e)
         {
             Record_extrusSupply r = new Record_extrusSupply(mainform);
             r.Show();
         }
-
         private void B4Btn_Click_1(object sender, EventArgs e)
         {
             Record_material_reqanddisg r = new Record_material_reqanddisg(mainform);
             r.Show();
         }
-
         private void B5Btn_Click_1(object sender, EventArgs e)
         {
             ProdctDaily_extrus p = new ProdctDaily_extrus(mainform);
             p.Show();
-        }
-		        private void B3Btn_Click(object sender, EventArgs e)
+        }		
+        private void B3Btn_Click(object sender, EventArgs e)
         {
             mySystem.Extruction.Chart.wasterecord wasterecord = new Extruction.Chart.wasterecord(mainform);
             wasterecord.Show();
         }
-
-                private void B2Btn_Click_2(object sender, EventArgs e)
-                {
-                    Record_extrusSupply r = new Record_extrusSupply(mainform);
-                    r.Show();
-                }
-
-                private void B4Btn_Click_2(object sender, EventArgs e)
+        private void B2Btn_Click_2(object sender, EventArgs e)
+        {
+            Record_extrusSupply r = new Record_extrusSupply(mainform);
+            r.Show();
+         }
+        private void B4Btn_Click_2(object sender, EventArgs e)
                 {
                     Record_material_reqanddisg r = new Record_material_reqanddisg(mainform);
                     r.Show();
 
                 }
+        private void B5Btn_Click_2(object sender, EventArgs e)
+        {
+            ProdctDaily_extrus p = new ProdctDaily_extrus(mainform);
+            p.Show();
+        }
+        private void B8Btn_Click(object sender, EventArgs e)
+        {
+            ProductInnerPackagingRecord PIPRform = new ProductInnerPackagingRecord(mainform);
+            PIPRform.Show();
+        }
+        private void D1Btn_Click(object sender, EventArgs e)
+        {
+            Record_train r = new Record_train(mainform);
+            r.Show();
+        }
+		private void C4Btn_Click(object sender, EventArgs e)
+        {
+            mySystem.Extruction.Chart.beeholetable beeholetable = new Extruction.Chart.beeholetable(mainform);
+            beeholetable.Show();
+        }
+        private void B7Btn_Click(object sender, EventArgs e)
+        {
+            MaterialBalenceofExtrusionProcess test = new MaterialBalenceofExtrusionProcess(mainform);
+            test.Show();
+        }
+        private void A4Btn_Click(object sender, EventArgs e)
+        {
+            HandoverRecordofExtrusionProcess test = new HandoverRecordofExtrusionProcess(mainform);
+            test.Show();
+        }
+        private void B9Btn_Click(object sender, EventArgs e)
+        {
+            mySystem.Extruction.Chart.outerpack test = new Extruction.Chart.outerpack(mainform);
+            test.Show();
+        }
+		private void D3Btn_Click(object sender, EventArgs e)
+        {
+            ExtructionReplaceCore ERCform = new ExtructionReplaceCore(mainform);
+            ERCform.Show();
+        }
+        private void D2Btn_Click(object sender, EventArgs e)
+        {
+            ReplaceHeadForm myDlg = new ReplaceHeadForm();
+            myDlg.Show();
+        }
+        private void D1Btn_Click_1(object sender, EventArgs e)
+        {
+            Record_train r = new Record_train(mainform);
+            r.Show();
+        }
+        private void D1Btn_Click_2(object sender, EventArgs e)
+        {
+            Record_train r = new Record_train(mainform);
+            r.Show();
+        }
+        private void D4Btn_Click(object sender, EventArgs e)
+        {
 
-                private void B5Btn_Click_2(object sender, EventArgs e)
-                {
-                    ProdctDaily_extrus p = new ProdctDaily_extrus(mainform);
-                    p.Show();
-                }
-
-                private void B8Btn_Click(object sender, EventArgs e)
-                {
-                    ProductInnerPackagingRecord PIPRform = new ProductInnerPackagingRecord(mainform);
-                    PIPRform.Show();
-                }
-
-
-                private void D1Btn_Click(object sender, EventArgs e)
-                {
-                    Record_train r = new Record_train(mainform);
-                    r.Show();
-                }
-
-				private void C4Btn_Click(object sender, EventArgs e)
-                {
-                    mySystem.Extruction.Chart.beeholetable beeholetable = new Extruction.Chart.beeholetable(mainform);
-                    beeholetable.Show();
-                }
-
-                private void B7Btn_Click(object sender, EventArgs e)
-                {
-                    MaterialBalenceofExtrusionProcess test = new MaterialBalenceofExtrusionProcess(mainform);
-                    test.Show();
-                }
-
-                private void A4Btn_Click(object sender, EventArgs e)
-                {
-                    HandoverRecordofExtrusionProcess test = new HandoverRecordofExtrusionProcess(mainform);
-                    test.Show();
-                }
-
-                private void B9Btn_Click(object sender, EventArgs e)
-                {
-                    mySystem.Extruction.Chart.outerpack test = new Extruction.Chart.outerpack(mainform);
-                    test.Show();
-                }
-
-				private void D3Btn_Click(object sender, EventArgs e)
-                {
-                    ExtructionReplaceCore ERCform = new ExtructionReplaceCore(mainform);
-                    ERCform.Show();
-                }
-
-                private void D2Btn_Click(object sender, EventArgs e)
-                {
-                    ReplaceHeadForm myDlg = new ReplaceHeadForm();
-                    myDlg.Show();
-                }
-
-                private void D1Btn_Click_1(object sender, EventArgs e)
-                {
-                    Record_train r = new Record_train(mainform);
-                    r.Show();
-                }
-
-                private void D1Btn_Click_2(object sender, EventArgs e)
-                {
-                    Record_train r = new Record_train(mainform);
-                    r.Show();
-                }
-
-                private void D4Btn_Click(object sender, EventArgs e)
-                {
-
-                }
+        }
     }
 }
 

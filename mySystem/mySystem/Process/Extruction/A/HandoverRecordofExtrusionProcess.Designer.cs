@@ -28,17 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lbInstructionId = new System.Windows.Forms.Label();
-            this.txbInstructionId = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txbBatchNoD = new System.Windows.Forms.TextBox();
-            this.txbBatchNoN = new System.Windows.Forms.TextBox();
-            this.txbAmountsN = new System.Windows.Forms.TextBox();
-            this.txbAmountsD = new System.Windows.Forms.TextBox();
-            this.txbCodeN = new System.Windows.Forms.TextBox();
-            this.txbCodeD = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.dtpDate = new System.Windows.Forms.DateTimePicker();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnDefault = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.dtpNight = new System.Windows.Forms.DateTimePicker();
@@ -55,124 +53,111 @@
             this.ibProductCode = new System.Windows.Forms.Label();
             this.lbAmounts = new System.Windows.Forms.Label();
             this.lbBatchNo = new System.Windows.Forms.Label();
-            this.btnDefault = new System.Windows.Forms.Button();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.dtpDate = new System.Windows.Forms.DateTimePicker();
-            this.label7 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txbCodeN = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txbAmountsN = new System.Windows.Forms.TextBox();
+            this.txbCodeD = new System.Windows.Forms.TextBox();
+            this.txbBatchNoN = new System.Windows.Forms.TextBox();
+            this.txbAmountsD = new System.Windows.Forms.TextBox();
+            this.txbBatchNoD = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txbInstructionId = new System.Windows.Forms.TextBox();
+            this.lbInstructionId = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // lbInstructionId
+            // dataGridView1
             // 
-            this.lbInstructionId.AutoSize = true;
-            this.lbInstructionId.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbInstructionId.Location = new System.Drawing.Point(24, 64);
-            this.lbInstructionId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbInstructionId.Name = "lbInstructionId";
-            this.lbInstructionId.Size = new System.Drawing.Size(104, 16);
-            this.lbInstructionId.TabIndex = 1;
-            this.lbInstructionId.Text = "生产指令编号";
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3});
+            this.dataGridView1.Location = new System.Drawing.Point(27, 90);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(453, 400);
+            this.dataGridView1.TabIndex = 52;
             // 
-            // txbInstructionId
+            // Column1
             // 
-            this.txbInstructionId.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbInstructionId.Location = new System.Drawing.Point(171, 60);
-            this.txbInstructionId.Margin = new System.Windows.Forms.Padding(4);
-            this.txbInstructionId.Name = "txbInstructionId";
-            this.txbInstructionId.Size = new System.Drawing.Size(132, 26);
-            this.txbInstructionId.TabIndex = 2;
+            this.Column1.HeaderText = "确认项目";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 350;
             // 
-            // label1
+            // Column2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(347, 64);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 16);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "生产日期";
+            this.Column2.HeaderText = "白班";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 50;
             // 
-            // txbBatchNoD
+            // Column3
             // 
-            this.txbBatchNoD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbBatchNoD.Location = new System.Drawing.Point(117, 56);
-            this.txbBatchNoD.Margin = new System.Windows.Forms.Padding(4);
-            this.txbBatchNoD.Name = "txbBatchNoD";
-            this.txbBatchNoD.Size = new System.Drawing.Size(212, 26);
-            this.txbBatchNoD.TabIndex = 36;
+            this.Column3.HeaderText = "夜班";
+            this.Column3.Name = "Column3";
+            this.Column3.Width = 50;
             // 
-            // txbBatchNoN
+            // button1
             // 
-            this.txbBatchNoN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbBatchNoN.Location = new System.Drawing.Point(339, 56);
-            this.txbBatchNoN.Margin = new System.Windows.Forms.Padding(4);
-            this.txbBatchNoN.Name = "txbBatchNoN";
-            this.txbBatchNoN.Size = new System.Drawing.Size(212, 26);
-            this.txbBatchNoN.TabIndex = 37;
+            this.button1.Location = new System.Drawing.Point(265, 519);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(90, 29);
+            this.button1.TabIndex = 51;
+            this.button1.Text = "复核";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // txbAmountsN
+            // label7
             // 
-            this.txbAmountsN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbAmountsN.Location = new System.Drawing.Point(339, 91);
-            this.txbAmountsN.Margin = new System.Windows.Forms.Padding(4);
-            this.txbAmountsN.Name = "txbAmountsN";
-            this.txbAmountsN.Size = new System.Drawing.Size(212, 26);
-            this.txbAmountsN.TabIndex = 39;
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(228, 25);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(189, 19);
+            this.label7.TabIndex = 50;
+            this.label7.Text = "吹膜岗位交接班记录";
             // 
-            // txbAmountsD
+            // dtpDate
             // 
-            this.txbAmountsD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbAmountsD.Location = new System.Drawing.Point(117, 91);
-            this.txbAmountsD.Margin = new System.Windows.Forms.Padding(4);
-            this.txbAmountsD.Name = "txbAmountsD";
-            this.txbAmountsD.Size = new System.Drawing.Size(212, 26);
-            this.txbAmountsD.TabIndex = 38;
+            this.dtpDate.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtpDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpDate.Location = new System.Drawing.Point(481, 56);
+            this.dtpDate.Margin = new System.Windows.Forms.Padding(4);
+            this.dtpDate.Name = "dtpDate";
+            this.dtpDate.Size = new System.Drawing.Size(265, 26);
+            this.dtpDate.TabIndex = 49;
+            this.dtpDate.ValueChanged += new System.EventHandler(this.dtpDate_ValueChanged);
             // 
-            // txbCodeN
+            // btnAdd
             // 
-            this.txbCodeN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbCodeN.Location = new System.Drawing.Point(339, 127);
-            this.txbCodeN.Margin = new System.Windows.Forms.Padding(4);
-            this.txbCodeN.Name = "txbCodeN";
-            this.txbCodeN.Size = new System.Drawing.Size(212, 26);
-            this.txbCodeN.TabIndex = 41;
+            this.btnAdd.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnAdd.Location = new System.Drawing.Point(362, 517);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(100, 31);
+            this.btnAdd.TabIndex = 48;
+            this.btnAdd.Text = "保存";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // txbCodeD
+            // btnDefault
             // 
-            this.txbCodeD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbCodeD.Location = new System.Drawing.Point(117, 127);
-            this.txbCodeD.Margin = new System.Windows.Forms.Padding(4);
-            this.txbCodeD.Name = "txbCodeD";
-            this.txbCodeD.Size = new System.Drawing.Size(212, 26);
-            this.txbCodeD.TabIndex = 40;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(423, 31);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(40, 16);
-            this.label2.TabIndex = 43;
-            this.label2.Text = "夜班";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(193, 31);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(40, 16);
-            this.label3.TabIndex = 42;
-            this.label3.Text = "白班";
+            this.btnDefault.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnDefault.Location = new System.Drawing.Point(36, 519);
+            this.btnDefault.Margin = new System.Windows.Forms.Padding(4);
+            this.btnDefault.Name = "btnDefault";
+            this.btnDefault.Size = new System.Drawing.Size(100, 31);
+            this.btnDefault.TabIndex = 47;
+            this.btnDefault.Text = "设置";
+            this.btnDefault.UseVisualStyleBackColor = true;
+            this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
             // 
             // panel1
             // 
@@ -218,6 +203,7 @@
             // 
             // dtpNight
             // 
+            this.dtpNight.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpNight.Location = new System.Drawing.Point(339, 444);
             this.dtpNight.Margin = new System.Windows.Forms.Padding(4);
             this.dtpNight.Name = "dtpNight";
@@ -226,9 +212,11 @@
             // 
             // dtpDay
             // 
+            this.dtpDay.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtpDay.Location = new System.Drawing.Point(121, 444);
             this.dtpDay.Margin = new System.Windows.Forms.Padding(4);
             this.dtpDay.Name = "dtpDay";
+            this.dtpDay.ShowUpDown = true;
             this.dtpDay.Size = new System.Drawing.Size(212, 26);
             this.dtpDay.TabIndex = 56;
             // 
@@ -354,99 +342,119 @@
             this.lbBatchNo.TabIndex = 44;
             this.lbBatchNo.Text = "生产批号";
             // 
-            // btnDefault
+            // label2
             // 
-            this.btnDefault.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnDefault.Location = new System.Drawing.Point(36, 519);
-            this.btnDefault.Margin = new System.Windows.Forms.Padding(4);
-            this.btnDefault.Name = "btnDefault";
-            this.btnDefault.Size = new System.Drawing.Size(100, 31);
-            this.btnDefault.TabIndex = 47;
-            this.btnDefault.Text = "默认";
-            this.btnDefault.UseVisualStyleBackColor = true;
-            this.btnDefault.Visible = false;
-            this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(423, 31);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(40, 16);
+            this.label2.TabIndex = 43;
+            this.label2.Text = "夜班";
             // 
-            // btnAdd
+            // txbCodeN
             // 
-            this.btnAdd.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnAdd.Location = new System.Drawing.Point(362, 517);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(100, 31);
-            this.btnAdd.TabIndex = 48;
-            this.btnAdd.Text = "保存";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            this.txbCodeN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txbCodeN.Location = new System.Drawing.Point(339, 127);
+            this.txbCodeN.Margin = new System.Windows.Forms.Padding(4);
+            this.txbCodeN.Name = "txbCodeN";
+            this.txbCodeN.Size = new System.Drawing.Size(212, 26);
+            this.txbCodeN.TabIndex = 41;
             // 
-            // dtpDate
+            // label3
             // 
-            this.dtpDate.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtpDate.Location = new System.Drawing.Point(481, 56);
-            this.dtpDate.Margin = new System.Windows.Forms.Padding(4);
-            this.dtpDate.Name = "dtpDate";
-            this.dtpDate.Size = new System.Drawing.Size(265, 26);
-            this.dtpDate.TabIndex = 49;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(193, 31);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(40, 16);
+            this.label3.TabIndex = 42;
+            this.label3.Text = "白班";
             // 
-            // label7
+            // txbAmountsN
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(228, 25);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(189, 19);
-            this.label7.TabIndex = 50;
-            this.label7.Text = "吹膜岗位交接班记录";
+            this.txbAmountsN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txbAmountsN.Location = new System.Drawing.Point(339, 91);
+            this.txbAmountsN.Margin = new System.Windows.Forms.Padding(4);
+            this.txbAmountsN.Name = "txbAmountsN";
+            this.txbAmountsN.Size = new System.Drawing.Size(212, 26);
+            this.txbAmountsN.TabIndex = 39;
             // 
-            // button1
+            // txbCodeD
             // 
-            this.button1.Location = new System.Drawing.Point(265, 519);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(90, 29);
-            this.button1.TabIndex = 51;
-            this.button1.Text = "复核";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.txbCodeD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txbCodeD.Location = new System.Drawing.Point(117, 127);
+            this.txbCodeD.Margin = new System.Windows.Forms.Padding(4);
+            this.txbCodeD.Name = "txbCodeD";
+            this.txbCodeD.Size = new System.Drawing.Size(212, 26);
+            this.txbCodeD.TabIndex = 40;
             // 
-            // label10
+            // txbBatchNoN
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(449, 13);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 16);
-            this.label10.TabIndex = 62;
-            this.label10.Text = "夜班";
+            this.txbBatchNoN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txbBatchNoN.Location = new System.Drawing.Point(339, 56);
+            this.txbBatchNoN.Margin = new System.Windows.Forms.Padding(4);
+            this.txbBatchNoN.Name = "txbBatchNoN";
+            this.txbBatchNoN.Size = new System.Drawing.Size(212, 26);
+            this.txbBatchNoN.TabIndex = 37;
             // 
-            // label11
+            // txbAmountsD
             // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(394, 13);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(40, 16);
-            this.label11.TabIndex = 61;
-            this.label11.Text = "白班";
+            this.txbAmountsD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txbAmountsD.Location = new System.Drawing.Point(117, 91);
+            this.txbAmountsD.Margin = new System.Windows.Forms.Padding(4);
+            this.txbAmountsD.Name = "txbAmountsD";
+            this.txbAmountsD.Size = new System.Drawing.Size(212, 26);
+            this.txbAmountsD.TabIndex = 38;
             // 
-            // groupBox1
+            // txbBatchNoD
             // 
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Location = new System.Drawing.Point(14, 115);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(507, 397);
-            this.groupBox1.TabIndex = 63;
-            this.groupBox1.TabStop = false;
+            this.txbBatchNoD.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txbBatchNoD.Location = new System.Drawing.Point(117, 56);
+            this.txbBatchNoD.Margin = new System.Windows.Forms.Padding(4);
+            this.txbBatchNoD.Name = "txbBatchNoD";
+            this.txbBatchNoD.Size = new System.Drawing.Size(212, 26);
+            this.txbBatchNoD.TabIndex = 36;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(347, 64);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 16);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "生产日期";
+            // 
+            // txbInstructionId
+            // 
+            this.txbInstructionId.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.txbInstructionId.Location = new System.Drawing.Point(171, 60);
+            this.txbInstructionId.Margin = new System.Windows.Forms.Padding(4);
+            this.txbInstructionId.Name = "txbInstructionId";
+            this.txbInstructionId.Size = new System.Drawing.Size(132, 26);
+            this.txbInstructionId.TabIndex = 2;
+            // 
+            // lbInstructionId
+            // 
+            this.lbInstructionId.AutoSize = true;
+            this.lbInstructionId.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbInstructionId.Location = new System.Drawing.Point(24, 64);
+            this.lbInstructionId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbInstructionId.Name = "lbInstructionId";
+            this.lbInstructionId.Size = new System.Drawing.Size(104, 16);
+            this.lbInstructionId.TabIndex = 1;
+            this.lbInstructionId.Text = "生产指令编号";
             // 
             // HandoverRecordofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1114, 595);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.dtpDate);
@@ -462,10 +470,9 @@
             this.MinimizeBox = false;
             this.Name = "HandoverRecordofExtrusionProcess";
             this.Text = "HandoverRecordofExtrusionProcess";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -505,8 +512,9 @@
         private System.Windows.Forms.DateTimePicker dtpDate;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
     }
 }

@@ -11,6 +11,21 @@ using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
 
+//using System;
+//using System.Collections.Generic;
+//using System.ComponentModel;
+//using System.Data;
+//using System.Drawing;
+//using System.Linq;
+//using System.Text;
+//using System.Threading.Tasks;
+//using System.Windows.Forms;
+//using Microsoft.Office;
+//using Excel = Microsoft.Office.Interop.Excel;
+//using System.Reflection;
+//using System.Runtime.InteropServices;
+//using System.Runtime.InteropServices.ComTypes;
+
 namespace BatchProductRecord
 {
     public partial class ProcessProductInstru : mySystem.BaseForm
@@ -32,6 +47,7 @@ namespace BatchProductRecord
             textBox4.Text = "AA-EQM-032";
             textBox24.Text = mySystem.Parameter.userName;
             button2.Enabled = false;
+            button3.Enabled = false;
             sumweight = 0;
 
             //从产品表中读数据填入产品代码下拉列表中
@@ -119,7 +135,7 @@ namespace BatchProductRecord
                 MessageBox.Show("添加错误");
             }
 
-
+            button3.Enabled = true;
             da.Dispose();
             comm.Dispose();
             tempdt.Dispose();

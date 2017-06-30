@@ -14,7 +14,9 @@ namespace mySystem.Process.Bag
 {
     public partial class CSBagMainForm : BaseForm
     {
-        
+        string instruction = null;
+        int instruID = 0;
+
         public CSBagMainForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
@@ -56,7 +58,16 @@ namespace mySystem.Process.Bag
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Parameter.csbagInstruction = comboBox1.SelectedItem.ToString();
+            instruction = comboBox1.SelectedItem.ToString();
+            Parameter.csbagInstruction = instruction;
+            String tblName = "production_instruction_bag";
+            List<String> queryCols = new List<String>(new String[] { "instruction_id" });
+            List<String> whereCols = new List<String>(new String[] { "instruction_code" });
+            List<Object> whereVals = new List<Object>(new Object[] { instruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            instruID = Convert.ToInt32(res[0][0]);
+            Parameter.csbagInstruID = instruID;
+
         }
 
         private void A1Btn_Click(object sender, EventArgs e)
