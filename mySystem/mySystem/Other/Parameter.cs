@@ -17,6 +17,8 @@ namespace mySystem
 
         public static SqlConnection conn;
         public static OleDbConnection connOle;
+        public static SqlConnection connUser;
+        public static OleDbConnection connOleUser;
 
         public static string proInstruction; //吹膜生产指令
         public static string csbagInstruction; //cs制袋生产指令
@@ -25,6 +27,18 @@ namespace mySystem
         public static int selectCon;
         static string strConn;
         static bool isOk = false;
+
+        public static void InitConUser()
+        {
+            if (!isSqlOk)
+            {
+                string strsql = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                connOleUser = Init(strsql, connOleUser);
+
+            }
+        }
+
         public static void InitCon()
         {            
             if (!isSqlOk)
@@ -55,6 +69,28 @@ namespace mySystem
             
         }
 
+        public static string IDtoName(int id)
+        {
+            string name = null;
+            string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+            if (!isSqlOk)
+            {
+                OleDbConnection myConn = new OleDbConnection(strCon);
+                myConn.Open();
+                OleDbCommand comm = new OleDbCommand();
+                comm.CommandText = "select * from user_aoxing where user_id= @ID";
+
+            }
+            return name;
+        }
+
+        public static int NametoID(string name)
+        {
+            int id = 0;
+
+            return id;
+        }
 
         
         private static SqlConnection connToServer(string connectStr)
@@ -72,6 +108,22 @@ namespace mySystem
             isOk = true;
             return myConnection;
         }
+
+        private static OleDbConnection connToServerOle(string connectStr)
+        {
+            OleDbConnection myConn;
+            try
+            {
+                myConn = new OleDbConnection(connectStr);
+                myConn.Open();
+            }
+            catch
+            {
+                return null;
+            }
+            isOk = true;
+            return myConn;
+        }  
 
         private static SqlConnection Init(SqlConnection myConnection)
         {
@@ -107,22 +159,7 @@ namespace mySystem
             //MessageBox.Show("连接数据库成功", "success");
             return myConnection;
         }
-
-        private static OleDbConnection connToServerOle(string connectStr)
-        {
-            OleDbConnection myConn;
-            try
-            {
-                myConn = new OleDbConnection(connectStr);
-                myConn.Open();
-            }
-            catch
-            {
-                return null;
-            }
-            isOk = true;
-            return myConn;
-        }       
+ 
 
         public static void IPChanged(string IP, string port)
         {
