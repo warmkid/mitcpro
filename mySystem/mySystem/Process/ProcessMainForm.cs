@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Data.OleDb;
 using mySystem.Process.Bag;
 using mySystem.Process.CleanCut;
+using mySystem.Process.Bag.LDPE;
 
 namespace mySystem
 {
@@ -222,6 +223,12 @@ namespace mySystem
             PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
             BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
             bag6Btn.BackColor = Color.FromName("ControlLightLight");
+            LDPEMainForm myDlg = new LDPEMainForm();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         //连续袋

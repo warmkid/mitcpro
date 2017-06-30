@@ -33,11 +33,12 @@ namespace mySystem
 
         public MainForm()
         {
-            Parameter.selectCon = 1;
-            Parameter.InitCon();
+            //Parameter.selectCon = 1;
+            //Parameter.InitCon();
+            Parameter.InitConUser();
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
-            Parameter.userID = login.userID;
+            //Parameter.userID = login.userID;
 
             if (Parameter.userID != 0)
             {
@@ -50,18 +51,13 @@ namespace mySystem
             }
             else
             {
-                Parameter.userName = checkIDOle(Parameter.userID);
+                //Parameter.userName = checkIDOle(Parameter.userID);
+                Parameter.userName = Parameter.IDtoName(Parameter.userID);
             }
 
             InitializeComponent();
             RoleInit();
             userLabel.Text = Parameter.userName;
-
-
-            conn = Parameter.conn;
-            connOle = Parameter.connOle;
-            username = Parameter.userName;
-            userID = Parameter.userID;
 
         }
 
@@ -123,7 +119,7 @@ namespace mySystem
 
         private void RoleInit()
         {
-            switch (userRole)
+            switch (Parameter.userRole)
             {
                 case 1:
 
@@ -146,7 +142,7 @@ namespace mySystem
             List<String> queryCols = new List<String>(new String[] { "role_id" });
             List<String> whereCols = new List<String>(new String[] { "user_id" });
             List<Object> whereVals = new List<Object>(new Object[] { userID });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOleUser, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             int user_Role = Convert.ToInt32(res[0][0]);
 
             return user_Role;
@@ -158,7 +154,7 @@ namespace mySystem
         {
             string user = null;
             string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-            SqlCommand comm = new SqlCommand(searchsql, Parameter.conn);
+            SqlCommand comm = new SqlCommand(searchsql, Parameter.connUser);
             SqlDataReader myReader = comm.ExecuteReader();
             while (myReader.Read())
             {
@@ -174,7 +170,7 @@ namespace mySystem
         {
             string user = null;
             OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
+            comm.Connection = Parameter.connOleUser;
             comm.CommandText = "select * from user_aoxing where user_id= @ID";
             comm.Parameters.AddWithValue("@ID", userID);
 
@@ -313,12 +309,10 @@ namespace mySystem
 
         private void ExitBtn_Click(object sender, EventArgs e)
         {
-            username = null;
             this.Hide();
 
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
-            Parameter.userID = login.userID;
             if (Parameter.isSqlOk)
             {
                 Parameter.userName = checkID(Parameter.userID);
