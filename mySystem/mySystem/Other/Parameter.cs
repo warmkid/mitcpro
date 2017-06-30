@@ -21,8 +21,11 @@ namespace mySystem
         public static OleDbConnection connOleUser;
 
         public static string proInstruction; //吹膜生产指令
+        public static int proInstruID; //吹膜生产指令编号
         public static string csbagInstruction; //cs制袋生产指令
+        public static int csbagInstruID; //cs制袋生产指令编号
         public static string cleancutInstruction; //清洁分切生产指令
+        public static int cleancutInstruID; //清洁分切生产指令编号
 
         public static int selectCon;
         static string strConn;
@@ -103,7 +106,35 @@ namespace mySystem
         public static int NametoID(string name)
         {
             int id = 0;
+            if (!isSqlOk)
+            {
+                string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                OleDbConnection myConn = new OleDbConnection(strCon);
+                myConn.Open();
+                String tblName = "user_aoxing";
+                List<String> queryCols = new List<String>(new String[] { "user_id" });
+                List<String> whereCols = new List<String>(new String[] { "user_name" });
+                List<Object> whereVals = new List<Object>(new Object[] { name });
+                List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
 
+                if (res.Count > 1)
+                {
+                    MessageBox.Show("该姓名的员工不唯一，请在设置中更改", "警告");
+                    id = Convert.ToInt32(res[0][0]);
+                }
+                else if (res.Count == 0)
+                {
+                    MessageBox.Show("未找到结果", "错误");
+                    id = 0;
+                }
+                else
+                {
+                    id = Convert.ToInt32(res[0][0]);
+                }
+                myConn.Dispose();
+            }
+            
             return id;
         }
 

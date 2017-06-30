@@ -15,9 +15,6 @@ namespace mySystem.Query
 {
     public partial class QueryExtruForm : BaseForm
     {
-        SqlConnection conn = null;
-        OleDbConnection connOle = null;
-        bool isSqlOk;
         DateTime date1;//起始时间
         DateTime date2;//结束时间
         string person;//操作员
@@ -25,19 +22,16 @@ namespace mySystem.Query
         public QueryExtruForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
             Init();
 
         }
 
         private void Init()
         {
-            if (!isSqlOk)
+            if (!Parameter.isSqlOk)
             {
                 OleDbCommand comm = new OleDbCommand();
-                comm.Connection = connOle;
+                comm.Connection = Parameter.connOle;
                 comm.CommandText = "select production_instruction_code from production_instruction";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
@@ -51,7 +45,7 @@ namespace mySystem.Query
             else
             {
                 SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
+                comm.Connection = Parameter.conn;
                 comm.CommandText = "select production_instruction_code from production_instruction";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)

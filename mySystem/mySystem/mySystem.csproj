@@ -547,29 +547,20 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
-      <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\CSbagMainForm.resx">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\CS\MaterialRecord.resx">
-      <DependentUpon>MaterialRecord.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Record_batch_bag.resx">
       <DependentUpon>Record_batch_bag.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_batchproduction.resx">
-      <DependentUpon>LDPEBag_batchproduction.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_materialrecord.resx">
-      <DependentUpon>LDPEBag_materialrecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\CleanCut_CheckBeforePower.resx">
+      <DependentUpon>CleanCut_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>

@@ -65,7 +65,7 @@
             // A5Btn
             // 
             this.A5Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.A5Btn.Location = new System.Drawing.Point(20, 253);
+            this.A5Btn.Location = new System.Drawing.Point(20, 201);
             this.A5Btn.Name = "A5Btn";
             this.A5Btn.Size = new System.Drawing.Size(185, 38);
             this.A5Btn.TabIndex = 17;
@@ -87,7 +87,7 @@
             // A4Btn
             // 
             this.A4Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.A4Btn.Location = new System.Drawing.Point(20, 201);
+            this.A4Btn.Location = new System.Drawing.Point(20, 253);
             this.A4Btn.Name = "A4Btn";
             this.A4Btn.Size = new System.Drawing.Size(185, 38);
             this.A4Btn.TabIndex = 15;
@@ -176,7 +176,7 @@
             // B8Btn
             // 
             this.B8Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B8Btn.Location = new System.Drawing.Point(15, 409);
+            this.B8Btn.Location = new System.Drawing.Point(15, 357);
             this.B8Btn.Name = "B8Btn";
             this.B8Btn.Size = new System.Drawing.Size(200, 38);
             this.B8Btn.TabIndex = 21;
@@ -187,7 +187,7 @@
             // B6Btn
             // 
             this.B6Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B6Btn.Location = new System.Drawing.Point(15, 305);
+            this.B6Btn.Location = new System.Drawing.Point(15, 253);
             this.B6Btn.Name = "B6Btn";
             this.B6Btn.Size = new System.Drawing.Size(200, 38);
             this.B6Btn.TabIndex = 20;
@@ -198,7 +198,7 @@
             // B9Btn
             // 
             this.B9Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B9Btn.Location = new System.Drawing.Point(15, 461);
+            this.B9Btn.Location = new System.Drawing.Point(15, 409);
             this.B9Btn.Name = "B9Btn";
             this.B9Btn.Size = new System.Drawing.Size(200, 38);
             this.B9Btn.TabIndex = 19;
@@ -209,7 +209,7 @@
             // B7Btn
             // 
             this.B7Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B7Btn.Location = new System.Drawing.Point(15, 357);
+            this.B7Btn.Location = new System.Drawing.Point(15, 305);
             this.B7Btn.Name = "B7Btn";
             this.B7Btn.Size = new System.Drawing.Size(200, 38);
             this.B7Btn.TabIndex = 18;
@@ -220,18 +220,19 @@
             // B1Btn
             // 
             this.B1Btn.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.B1Btn.Location = new System.Drawing.Point(15, 45);
+            this.B1Btn.Location = new System.Drawing.Point(15, 461);
             this.B1Btn.Name = "B1Btn";
             this.B1Btn.Size = new System.Drawing.Size(200, 38);
             this.B1Btn.TabIndex = 12;
             this.B1Btn.Text = "吹膜工序传料记录";
             this.B1Btn.UseVisualStyleBackColor = true;
+            this.B1Btn.Visible = false;
             this.B1Btn.Click += new System.EventHandler(this.B1Btn_Click);
             // 
             // B5Btn
             // 
             this.B5Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B5Btn.Location = new System.Drawing.Point(15, 253);
+            this.B5Btn.Location = new System.Drawing.Point(15, 201);
             this.B5Btn.Name = "B5Btn";
             this.B5Btn.Size = new System.Drawing.Size(200, 38);
             this.B5Btn.TabIndex = 17;
@@ -242,7 +243,7 @@
             // B2Btn
             // 
             this.B2Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B2Btn.Location = new System.Drawing.Point(15, 97);
+            this.B2Btn.Location = new System.Drawing.Point(15, 45);
             this.B2Btn.Name = "B2Btn";
             this.B2Btn.Size = new System.Drawing.Size(200, 38);
             this.B2Btn.TabIndex = 16;
@@ -253,7 +254,7 @@
             // B4Btn
             // 
             this.B4Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B4Btn.Location = new System.Drawing.Point(15, 201);
+            this.B4Btn.Location = new System.Drawing.Point(15, 149);
             this.B4Btn.Name = "B4Btn";
             this.B4Btn.Size = new System.Drawing.Size(200, 38);
             this.B4Btn.TabIndex = 15;
@@ -264,7 +265,7 @@
             // B3Btn
             // 
             this.B3Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.B3Btn.Location = new System.Drawing.Point(15, 149);
+            this.B3Btn.Location = new System.Drawing.Point(15, 97);
             this.B3Btn.Name = "B3Btn";
             this.B3Btn.Size = new System.Drawing.Size(200, 38);
             this.B3Btn.TabIndex = 11;
