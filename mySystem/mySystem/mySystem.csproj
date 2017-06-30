@@ -374,6 +374,12 @@
     <Compile Include="Setting\SetPeopleForm.Designer.cs">
       <DependentUpon>SetPeopleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting\SettingHandOver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\SettingHandOver.Designer.cs">
+      <DependentUpon>SettingHandOver.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\SettingMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -636,6 +642,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SetPeopleForm.resx">
       <DependentUpon>SetPeopleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\SettingHandOver.resx">
+      <DependentUpon>SettingHandOver.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SettingMainForm.resx">
       <DependentUpon>SettingMainForm.cs</DependentUpon>
