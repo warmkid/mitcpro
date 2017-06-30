@@ -1,4 +1,4 @@
-﻿namespace mySystem.Setting
+namespace mySystem.Setting
 {
     partial class SettingHandOver
     {

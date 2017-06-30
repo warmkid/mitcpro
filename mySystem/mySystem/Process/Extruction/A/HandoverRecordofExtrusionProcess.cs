@@ -16,29 +16,46 @@ namespace mySystem.Extruction.Process
 {
     
     public partial class HandoverRecordofExtrusionProcess : mySystem.BaseForm
+
     {
         string checker;
         private CheckForm check = null;
+
         private OleDbConnection connOle = null;
         public HandoverRecordofExtrusionProcess(mySystem.MainForm mainform)
             : base(mainform)
         {
+
             InitializeComponent();
             connOle = Parameter.connOle;
+
             searchTime(DateTime.Now);
 
              
         }
 
+        //public override void CheckResult()
+        //{
+        //    base.CheckResult();
+        //    checker= check.opinion;
+        //}
+
+        //public override void CheckResult()
+        //{
+        //    base.CheckResult();
+        //    checker = check.opinion;
+        //}
         public override void CheckResult()
         {
             base.CheckResult();
-            checker= check.opinion;
+            checker = check.opinion;
         }
+        
 
         private void btnDefault_Click(object sender, EventArgs e)
         {
             //the control names queren
+
             //this.dtpDate.Value = DateTime.Now;
             mySystem.Setting.SettingHandOver test = new Setting.SettingHandOver(mainform);
             test.Show();
@@ -135,10 +152,12 @@ namespace mySystem.Extruction.Process
         private void button1_Click(object sender, EventArgs e)
         {
             //this control names shen he
+
             //getItem();
             //LoginForm check = new LoginForm(conn);
 			//check.LoginButton.Text = "审核通过";
 			//check.ExitButton.Text = "取消";
+
             //check.ShowDialog();
             check = new CheckForm(this);
             check.Show();
@@ -174,6 +193,7 @@ namespace mySystem.Extruction.Process
             {
                 dataGridView1.Rows.RemoveAt(i);
             }
+
             
            
         }
