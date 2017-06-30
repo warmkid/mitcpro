@@ -76,10 +76,12 @@ namespace BatchProductRecord
 
         private void button2_Click(object sender, EventArgs e)
         {
+            /*
             mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
             
             checkform.Show();
             string a = checkform.opinion;
+             * */
             
         }
 

@@ -262,21 +262,21 @@ namespace mySystem.Extruction.Process
 
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            CheckForm check = new CheckForm(base.mainform);
-            check.ShowDialog();
-            review_id = check.userID;
-            if (isSqlOk)
-            {   }
-            else
-            {
-                List<String> queryCols = new List<String>(new String[] { "s3_reviewer_id"});
-                List<Object> queryVals = new List<Object>(new Object[] { review_id });
-                List<String> whereCols = new List<String>(new String[] { "id" });
-                List<Object> whereVals = new List<Object>(new Object[] { 1 });
-                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-                reviewer_name = checkIDOle(review_id);
-            }
-            checkerBox.Text = reviewer_name;
+            //CheckForm check = new CheckForm(base.mainform);
+            //check.ShowDialog();
+            //review_id = check.userID;
+            //if (isSqlOk)
+            //{   }
+            //else
+            //{
+            //    List<String> queryCols = new List<String>(new String[] { "s3_reviewer_id"});
+            //    List<Object> queryVals = new List<Object>(new Object[] { review_id });
+            //    List<String> whereCols = new List<String>(new String[] { "id" });
+            //    List<Object> whereVals = new List<Object>(new Object[] { 1 });
+            //    Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
+            //    reviewer_name = checkIDOle(review_id);
+            //}
+            //checkerBox.Text = reviewer_name;
         }
            
     }

@@ -13,19 +13,17 @@ namespace mySystem
 {
     public partial class CheckForm : BaseForm
     {
-        SqlConnection conn = null;
-        OleDbConnection connOle = null;
         bool isSqlOk;
         public int userID;
         public string opinion;
-        
 
-        public CheckForm(MainForm mainform):base(mainform)
+        BaseForm bs;
+        public CheckForm(BaseForm mainform)
         {
+            bs = mainform;
             InitializeComponent();
-            conn = mainform.conn;
-            connOle = mainform.connOle;
-            isSqlOk = mainform.isSqlOk;
+            Parameter.InitConUser();
+
         }
 
         private void OKButton_Click(object sender, EventArgs e)
@@ -42,15 +40,19 @@ namespace mySystem
 
                 if (isSqlOk)
                 {
-                    userID = CheckUser(conn, myID, mypassword);
+                    userID = CheckUser(Parameter.connUser, myID, mypassword);
                 }
                 else
                 {
-                    userID = CheckUser(connOle, myID, mypassword);
-                }   
+                    userID = CheckUser(Parameter.connOleUser, myID, mypassword);
+                }
+                opinion = OpTextBox.Text;
+
+                bs.CheckResult();
+                this.Dispose();
           
             }
-            opinion = OpTextBox.Text;
+            
         }
 
 
@@ -70,16 +72,19 @@ namespace mySystem
 
                 if (isSqlOk)
                 {
-                    userID = CheckUser(conn, myID, mypassword);
+                    userID = CheckUser(Parameter.connUser, myID, mypassword);
                 }
                 else
                 {
-                    userID = CheckUser(connOle, myID, mypassword);
-                }  
+                    userID = CheckUser(Parameter.connOleUser, myID, mypassword);
+                }
 
-            }
-            opinion = OpTextBox.Text;
+                opinion = OpTextBox.Text;
+                base.CheckResult();
+                this.Dispose();
+            }            
         }
+
 
         private int CheckUser(SqlConnection Connection, string ID, string password)
         {
@@ -92,7 +97,7 @@ namespace mySystem
                 comm.Dispose();
                 sdr.Close();
                 sdr.Dispose();
-                this.Hide();
+                //this.Hide();
                 return userID;
 
             }
@@ -110,6 +115,7 @@ namespace mySystem
 
         }
 
+
         private int CheckUser(OleDbConnection Connection, string ID, string password)
         {
             OleDbCommand comm = new OleDbCommand();
@@ -125,7 +131,7 @@ namespace mySystem
                 comm.Dispose();
                 sdr.Close();
                 sdr.Dispose();
-                this.Hide();
+                //this.Hide();
                 return userID;
 
             }

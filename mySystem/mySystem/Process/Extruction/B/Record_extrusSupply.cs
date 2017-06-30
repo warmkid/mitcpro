@@ -517,8 +517,8 @@ namespace WindowsFormsApplication1
 
         private void button4_Click(object sender, EventArgs e)
         {
-            mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
-            checkform.Show();
+            //mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
+            //checkform.Show();
         }
     }
 }

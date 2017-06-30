@@ -122,15 +122,16 @@ namespace mySystem.Process.Bag
 
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            CheckForm check = new CheckForm(base.mainform);
-            check.ShowDialog();
-            review_id = check.userID;
-            reviewer_name = checkID(review_id);
-            if (isSqlOk)
-            { }
-            else
-            { }
-            checkerBox.Text = reviewer_name;
+
+            //CheckForm check = new CheckForm(base.mainform);
+            //check.ShowDialog();
+            //review_id = check.userID;
+            //reviewer_name = checkID(review_id);
+            //if (isSqlOk)
+            //{ }
+            //else
+            //{ }
+            //checkerBox.Text = reviewer_name;
         }
 
     }

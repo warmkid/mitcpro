@@ -398,8 +398,8 @@ namespace mySystem.Extruction.Process
         {
             //LoginForm check = new LoginForm(conn);
             ///check.ShowDialog();
-            mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
-            checkform.Show();
+            //mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
+            //checkform.Show();
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)

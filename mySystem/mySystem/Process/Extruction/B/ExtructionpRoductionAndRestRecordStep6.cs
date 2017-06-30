@@ -39,7 +39,8 @@ namespace mySystem.Extruction.Process
         private string humidity = "";  //相对湿度
         private bool spot = true;  //班次；true白班；false夜班
 
-
+        private CheckForm check = null;
+        
         public ExtructionpRoductionAndRestRecordStep6(MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -51,7 +52,6 @@ namespace mySystem.Extruction.Process
 
             if (isSqlOk) { operator_name = checkIDSql(operator_id); }
             else { operator_name = checkIDOle(operator_id); }
-
 
             RecordViewInitialize();
 
@@ -447,9 +447,18 @@ namespace mySystem.Extruction.Process
             DelLineBtn.Enabled = false;
         }
 
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            CheckerBox.Text = check.opinion;
+        }
+
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            CheckForm check = new CheckForm(base.mainform);
+            check = new CheckForm(this);
+            check.Show();
+            /*
+             * CheckForm check = new CheckForm(base.mainform);
             check.ShowDialog();
             review_id = check.userID;
 
@@ -536,6 +545,7 @@ namespace mySystem.Extruction.Process
             RecordView.Rows[checknum].Cells["检查人"].Value = reviewer_name;
             CheckerBox.Text = reviewer_name;
             checknum++;
+             * */
         }        
     }
 }
