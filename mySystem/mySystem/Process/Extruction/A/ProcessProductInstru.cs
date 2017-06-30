@@ -19,6 +19,7 @@ namespace BatchProductRecord
         DataTable dt=null;//存储从产品表中读到的产品代码
         string last_code;//最后一次保存数据库时生产指令编码,默认该表内不会重复
         float leng;
+        float sumweight;
 
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
@@ -31,6 +32,7 @@ namespace BatchProductRecord
             textBox4.Text = "AA-EQM-032";
             textBox24.Text = mySystem.Parameter.userName;
             button2.Enabled = false;
+            sumweight = 0;
 
             //从产品表中读数据填入产品代码下拉列表中
             if (mainform.isSqlOk)
@@ -203,6 +205,17 @@ namespace BatchProductRecord
                 
             DateTime recdate = dateTimePicker4.Value;
 
+            //领料量是否合法
+            sumweight = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+            {
+                sumweight += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
+            }
+            if (in_amout < sumweight * 0.75 / 0.9)
+            {
+                MessageBox.Show("领料量小于供料重量，请重新填写");
+                return;
+            }
 
 
             //jason格式产品代码
