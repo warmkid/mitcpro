@@ -12,18 +12,11 @@ namespace mySystem
 {
     public partial class LoginForm : BaseForm
     {
-        SqlConnection conn = null;
-        OleDbConnection connOle = null;
         public int userID;
-        bool isSqlOk;
 
         public LoginForm(MainForm mainform):base(mainform)
         {
-            InitializeComponent();
-            conn = mainform.conn;
-            connOle = mainform.connOle;
-            isSqlOk = mainform.isSqlOk;
-            //pictureBox1.Image = Image.FromFile(@"../../pic/logonew.jpg", false);
+            InitializeComponent();           
             
         }
 
@@ -41,11 +34,11 @@ namespace mySystem
                 String mypassword = this.UserPWTextBox.Text;
                 if (Parameter.isSqlOk)
                 {
-                    Parameter.userID = CheckUser(Parameter.conn, myID, mypassword);
+                    Parameter.userID = CheckUser(Parameter.connUser, myID, mypassword);
                 }
                 else
                 {
-                    Parameter.userID = CheckUser(Parameter.connOle, myID, mypassword);
+                    Parameter.userID = CheckUser(Parameter.connOleUser, myID, mypassword);
                 }
 
             }
@@ -76,59 +69,79 @@ namespace mySystem
 
         private int CheckUser(SqlConnection Connection,string ID,string password)
         {
-            string searchstr = "select * from user_aoxing where user_id='" + ID + "'and user_password='" + password + "'";
-            SqlCommand comm = new SqlCommand(searchstr, Connection);
+            string searchsql = "select * from user_aoxing where user_id='" + ID + "'";
+            SqlCommand comm = new SqlCommand(searchsql, Connection);
             SqlDataReader sdr = comm.ExecuteReader();//执行查询
             if (sdr.Read())  //如果该用户存在
-            {              
-                MessageBox.Show("登录成功！", "提示");
-                userID = sdr.GetInt32(3);
-                comm.Dispose();
-                sdr.Close();
-                sdr.Dispose();
-                this.Hide();
-                return userID;
-
+            {
+                if (sdr.GetString(5).Trim() == password) //密码正确
+                {
+                    //MessageBox.Show("登录成功！", "提示");
+                    userID = sdr.GetInt32(3);
+                    comm.Dispose();
+                    sdr.Close();
+                    sdr.Dispose();
+                    this.Hide();
+                    return userID;
+                }
+                else         //密码错误
+                {
+                    MessageBox.Show("您输入的密码有误，请重新输入！", "警告");
+                    this.UserPWTextBox.Text = null;
+                    this.UserPWTextBox.Focus();
+                    sdr.Close();
+                    sdr.Dispose();
+                    return 0;
+                }
             }
             else
             {
-                MessageBox.Show("输入登录信息不正确，请重新输入！", "警告");
+                MessageBox.Show("该用户不存在，请检查后重新输入！", "警告");
                 this.UserIDTextBox.Text = null;
                 this.UserPWTextBox.Text = null;
                 UserIDTextBox.Focus();
                 sdr.Close();
                 sdr.Dispose();
                 return 0;
- 
+
             }
+
 
         }
 
         private int CheckUser(OleDbConnection Connection, string ID, string password)
         {
-            //string searchstr = "select * from [user] where user_id='" + ID + "'and user_password='" + password + "'";
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Connection;
-            comm.CommandText = "select * from user_aoxing where user_id= @ID and user_password= @password";
-            comm.Parameters.AddWithValue("@ID" , ID);
-            comm.Parameters.AddWithValue("@password", password);
+            comm.CommandText = "select * from user_aoxing where user_id= @ID";
+            comm.Parameters.AddWithValue("@ID", ID);
 
-            //OleDbCommand comm = new OleDbCommand(searchstr, Connection);
             OleDbDataReader sdr = comm.ExecuteReader();//执行查询
             if (sdr.Read())  //如果该用户存在
             {
-                MessageBox.Show("登录成功！", "提示");
-                userID = sdr.GetInt32(3);
-                comm.Dispose();
-                sdr.Close();
-                sdr.Dispose();
-                this.Hide();
-                return userID;
-
+                if (sdr.GetString(5).Trim() == password) //密码正确
+                {
+                    //MessageBox.Show("登录成功！", "提示");
+                    userID = sdr.GetInt32(3);
+                    comm.Dispose();
+                    sdr.Close();
+                    sdr.Dispose();
+                    this.Hide();
+                    return userID;
+                }
+                else         //密码错误
+                {
+                    MessageBox.Show("您输入的密码有误，请重新输入！", "警告");
+                    this.UserPWTextBox.Text = null;
+                    this.UserPWTextBox.Focus();
+                    sdr.Close();
+                    sdr.Dispose();
+                    return 0;
+                }
             }
             else
             {
-                MessageBox.Show("输入登录信息不正确，请重新输入！", "警告");
+                MessageBox.Show("该用户不存在，请检查后重新输入！", "警告");
                 this.UserIDTextBox.Text = null;
                 this.UserPWTextBox.Text = null;
                 UserIDTextBox.Focus();
@@ -137,8 +150,8 @@ namespace mySystem
                 return 0;
 
             }
-
         }
+
 
 
         private void ExitButton_Click(object sender, EventArgs e)

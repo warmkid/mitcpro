@@ -74,53 +74,107 @@
     </Compile>
     <Compile Include="Other\common.cs" />
     <Compile Include="Other\Parameter.cs" />
-    <Compile Include="Process\Bag\Bagprocess_prod_instru.cs">
+    <Compile Include="Process\Bag\CS\Bagprocess_prod_instru.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\Bagprocess_prod_instru.Designer.cs">
+    <Compile Include="Process\Bag\CS\Bagprocess_prod_instru.Designer.cs">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\CSBagMainForm.cs">
+    <Compile Include="Process\Bag\CS\CSBagMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\CSBagMainForm.Designer.cs">
+    <Compile Include="Process\Bag\CS\CSBagMainForm.Designer.cs">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\CSBag_CheckBeforePower.cs">
+    <Compile Include="Process\Bag\CS\CSBag_CheckBeforePower.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\CSBag_CheckBeforePower.Designer.cs">
+    <Compile Include="Process\Bag\CS\CSBag_CheckBeforePower.Designer.cs">
       <DependentUpon>CSBag_CheckBeforePower.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\CSBag_InnerPackaging.cs">
+    <Compile Include="Process\Bag\CS\CSBag_InnerPackaging.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\CSBag_InnerPackaging.Designer.cs">
+    <Compile Include="Process\Bag\CS\CSBag_InnerPackaging.Designer.cs">
       <DependentUpon>CSBag_InnerPackaging.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\MaterialRecord.cs">
+    <Compile Include="Process\Bag\CS\MaterialRecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\MaterialRecord.Designer.cs">
+    <Compile Include="Process\Bag\CS\MaterialRecord.Designer.cs">
       <DependentUpon>MaterialRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\Record_batch_bag.cs">
+    <Compile Include="Process\Bag\CS\Record_batch_bag.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\Record_batch_bag.Designer.cs">
+    <Compile Include="Process\Bag\CS\Record_batch_bag.Designer.cs">
       <DependentUpon>Record_batch_bag.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\RunningRecord.cs">
+    <Compile Include="Process\Bag\CS\RunningRecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\RunningRecord.Designer.cs">
+    <Compile Include="Process\Bag\CS\RunningRecord.Designer.cs">
       <DependentUpon>RunningRecord.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\Chart_daily_cs.cs">
+    <Compile Include="Process\Bag\CS\Chart_daily_cs.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\Chart_daily_cs.Designer.cs">
+    <Compile Include="Process\Bag\CS\Chart_daily_cs.Designer.cs">
       <DependentUpon>Chart_daily_cs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_batchproduction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_batchproduction.Designer.cs">
+      <DependentUpon>LDPEBag_batchproduction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_checklist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_checklist.Designer.cs">
+      <DependentUpon>LDPEBag_checklist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_cleanrance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_cleanrance.Designer.cs">
+      <DependentUpon>LDPEBag_cleanrance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_dailyreport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_dailyreport.Designer.cs">
+      <DependentUpon>LDPEBag_dailyreport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_innerpackaging.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_innerpackaging.Designer.cs">
+      <DependentUpon>LDPEBag_innerpackaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_materialrecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_materialrecord.Designer.cs">
+      <DependentUpon>LDPEBag_materialrecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_productioninstruction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_productioninstruction.Designer.cs">
+      <DependentUpon>LDPEBag_productioninstruction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_runningrecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEBag_runningrecord.Designer.cs">
+      <DependentUpon>LDPEBag_runningrecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPEMainForm.Designer.cs">
+      <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\CleanCut\CleanCutMainForm.cs">
       <SubType>Form</SubType>
@@ -493,11 +547,14 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\CSbagMainForm.resx">
+    <EmbeddedResource Include="Process\Bag\CS\CSbagMainForm.resx">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\Record_batch_bag.resx">
+    <EmbeddedResource Include="Process\Bag\CS\Record_batch_bag.resx">
       <DependentUpon>Record_batch_bag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
+      <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>

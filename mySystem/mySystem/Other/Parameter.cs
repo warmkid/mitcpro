@@ -37,6 +37,10 @@ namespace mySystem
                 connOleUser = Init(strsql, connOleUser);
 
             }
+            else
+            {
+                connUser = Init(connUser);
+            }
         }
 
         public static void InitCon()
@@ -79,8 +83,19 @@ namespace mySystem
                 OleDbConnection myConn = new OleDbConnection(strCon);
                 myConn.Open();
                 OleDbCommand comm = new OleDbCommand();
+                comm.Connection = myConn;
                 comm.CommandText = "select * from user_aoxing where user_id= @ID";
+                comm.Parameters.AddWithValue("@ID", id);
 
+                OleDbDataReader myReader = comm.ExecuteReader();
+                while (myReader.Read())
+                {
+                    name = myReader.GetString(4);
+                }
+
+                myReader.Close();
+                comm.Dispose();
+                myConn.Dispose();
             }
             return name;
         }

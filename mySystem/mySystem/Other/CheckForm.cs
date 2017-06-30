@@ -15,7 +15,10 @@ namespace mySystem
     {
         bool isSqlOk;
         public int userID;
+        public string userName;
         public string opinion;
+        public bool ischeckOk; //审核是否通过
+        public DateTime time;
 
         BaseForm bs;
         public CheckForm(BaseForm mainform)
@@ -47,7 +50,8 @@ namespace mySystem
                     userID = CheckUser(Parameter.connOleUser, myID, mypassword);
                 }
                 opinion = OpTextBox.Text;
-
+                ischeckOk = true;
+                time = DateTime.Now;
                 bs.CheckResult();
                 this.Dispose();
           
@@ -80,6 +84,8 @@ namespace mySystem
                 }
 
                 opinion = OpTextBox.Text;
+                ischeckOk = false;
+                time = DateTime.Now;
                 base.CheckResult();
                 this.Dispose();
             }            
@@ -94,6 +100,7 @@ namespace mySystem
             if (sdr.Read())  //如果该用户存在
             {
                 userID = sdr.GetInt32(3);
+                userName = sdr.GetString(4);
                 comm.Dispose();
                 sdr.Close();
                 sdr.Dispose();
@@ -128,6 +135,7 @@ namespace mySystem
             if (sdr.Read())  //如果该用户存在
             {
                 userID = sdr.GetInt32(3);
+                userName = sdr.GetString(4);
                 comm.Dispose();
                 sdr.Close();
                 sdr.Dispose();
