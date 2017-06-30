@@ -16,6 +16,9 @@ namespace BatchProductRecord
     {
         mySystem.CheckForm checkform;
         DataTable dt=null;//存储从产品表中读到的产品代码
+        string last_code;//最后一次保存数据库时生产指令编码,默认该表内不会重复
+
+
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
@@ -34,7 +37,7 @@ namespace BatchProductRecord
             else
             {
                 string asql = "select product_code from product_aoxing";
-                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
                 dt = new DataTable();
@@ -78,10 +81,44 @@ namespace BatchProductRecord
         {
             base.CheckResult();
             //获得审核信息
-            string opinion = checkform.opinion;
+            //string opinion = checkform.opinion;
+            //bool isok = checkform.ischeckOk;
             textBox25.Text = name_findby_id(checkform.userID);
+            dateTimePicker3.Value = checkform.time;
 
             //选择刚才的表中对应的记录，并更新里面的记录
+            string asql = "select production_instruction_id from production_instruction where production_instruction_code='"+last_code+"'";
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                MessageBox.Show("对应的记录未找到");
+                return;
+            }
+            int id = Int32.Parse(tempdt.Rows[0][0].ToString());
+            comm.CommandText = "update production_instruction set reviewer_id=@id,review_date=@date,review_opinion=@opinion,is_review_qualified=@isok where production_instruction_id="+id;
+            comm.Parameters.Add("@id", System.Data.OleDb.OleDbType.Integer);
+            comm.Parameters.Add("@date", System.Data.OleDb.OleDbType.Date);
+            comm.Parameters.Add("@opinion", System.Data.OleDb.OleDbType.VarChar);
+            comm.Parameters.Add("@isok", System.Data.OleDb.OleDbType.Boolean);
+
+            comm.Parameters["@id"].Value = checkform.userID;
+            comm.Parameters["@date"].Value = checkform.time;
+            comm.Parameters["@opinion"].Value = checkform.opinion;
+            comm.Parameters["@isok"].Value = checkform.ischeckOk;
+            int result = comm.ExecuteNonQuery();
+            if (result<=0)
+            {
+                MessageBox.Show("添加错误");
+            }
+
+
+            da.Dispose();
+            comm.Dispose();
+            tempdt.Dispose();
 
         }
         private void button2_Click(object sender, EventArgs e)
@@ -173,7 +210,7 @@ namespace BatchProductRecord
                 string st = "{'";
                 string t = dataGridView1.Rows[i].Cells[1].Value.ToString() + "':";
                 st += t;
-                st += "[" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "," + dataGridView1.Rows[i].Cells[3].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[4].Value.ToString() + "'," + dataGridView1.Rows[i].Cells[5].Value.ToString() + "," + dataGridView1.Rows[i].Cells[6].Value.ToString() + "," + dataGridView1.Rows[i].Cells[7].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[8].Value.ToString() +"','" + dataGridView1.Rows[i].Cells[8].Value.ToString()+ "']}";
+                st += "[" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "," + dataGridView1.Rows[i].Cells[3].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[4].Value.ToString() + "'," + dataGridView1.Rows[i].Cells[5].Value.ToString() + "," + dataGridView1.Rows[i].Cells[6].Value.ToString() + "," + dataGridView1.Rows[i].Cells[7].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[8].Value.ToString() +"','" + dataGridView1.Rows[i].Cells[9].Value.ToString()+ "']}";
 
                 JObject temp = JObject.Parse(st);
                 ret.Add(temp);
@@ -187,7 +224,7 @@ namespace BatchProductRecord
             {
                 int result = 0;
                 OleDbCommand comm = new OleDbCommand();
-                comm.Connection = mainform.connOle;
+                comm.Connection = mySystem.Parameter.connOle;
 
 //                comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
 //    "raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
@@ -270,6 +307,7 @@ namespace BatchProductRecord
                 result = comm.ExecuteNonQuery();
                 if (result > 0)
                 {
+                    last_code = instrcode;
                     MessageBox.Show("添加成功");
                 }
                 else { MessageBox.Show("错误"); }
@@ -285,7 +323,7 @@ namespace BatchProductRecord
             else
             {
                 string asql = "select user_id from user_aoxing where user_name=" + "'" + code + "'";
-                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(asql,mySystem.Parameter.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
                 DataTable tempdt = new DataTable();
@@ -305,7 +343,7 @@ namespace BatchProductRecord
             else
             {
                 string asql = "select raw_material_id from raw_material where raw_material_code=" + "'" + code + "'";
-                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(asql,mySystem.Parameter.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
                 DataTable tempdt = new DataTable();
@@ -325,7 +363,7 @@ namespace BatchProductRecord
             else
             {
                 string asql = "select user_name from user_aoxing where user_id=" +id;
-                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(asql,mySystem.Parameter.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
                 DataTable tempdt = new DataTable();
@@ -372,6 +410,11 @@ namespace BatchProductRecord
 
         }
         public void fill(string prodinstr)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
         {
 
         }
