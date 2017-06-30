@@ -53,21 +53,21 @@ namespace mySystem.Setting
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
             this.dataGridView1.Location = new System.Drawing.Point(36, 112);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(543, 284);
+            this.dataGridView1.Size = new System.Drawing.Size(914, 284);
             this.dataGridView1.TabIndex = 52;
             // 
             // Column1
             // 
             this.Column1.HeaderText = "确认项目";
             this.Column1.Name = "Column1";
-            this.Column1.Width = 500;
+            this.Column1.Width = 870;
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(619, 112);
+            this.btnDel.Location = new System.Drawing.Point(991, 112);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(93, 30);
             this.btnDel.TabIndex = 53;
@@ -77,25 +77,26 @@ namespace mySystem.Setting
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(619, 179);
+            this.btnSave.Location = new System.Drawing.Point(991, 179);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(93, 30);
             this.btnSave.TabIndex = 54;
             this.btnSave.Text = "保存设置";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Visible = false;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // SettingHandOver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(935, 432);
+            this.ClientSize = new System.Drawing.Size(1107, 432);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnDel);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label7);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SettingHandOver";
             this.Text = "SettingHandOver";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -108,8 +109,8 @@ namespace mySystem.Setting
 
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.Button btnDel;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
     }
 }

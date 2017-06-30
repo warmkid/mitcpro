@@ -24,7 +24,27 @@ namespace mySystem.Setting
         private void AddLayout()
         {
         }
-
+        public void DataSave()
+        {
+            List<List<Object>> data = new List<List<object>>();
+            string sqlStr = "DELETE * FROM handoveritem";
+            string tableStr = "handoveritem";
+            bool flag;
+            List<String> insertCols = new List<string>(new string[] { "确认序号", "确认项目" });
+            List<Object> insertVals;
+            OleDbCommand sqlcmd = new OleDbCommand(sqlStr, conOle);
+            sqlcmd.ExecuteNonQuery();
+            sqlcmd.Dispose();
+            data = Utility.readFromDataGridView(dataGridView1);
+            for (int i = 0; i < data.Count - 1; i++)
+            {
+                //insertVals=new List<object>(new object[]{Convert.ToString(data[i])});
+                insertVals = new List<object>();
+                insertVals.Add(i + 1);
+                insertVals.Add(data[i][0]);
+                flag = Utility.insertAccess(conOle, tableStr, insertCols, insertVals);
+            }
+        }
         private void btnDel_Click(object sender, EventArgs e)
         {
             //dataGridView1.
