@@ -496,9 +496,9 @@ namespace mySystem.Extruction.Chart
         }
         private void btChk_Click(object sender, EventArgs e)
         {
-            CheckForm check = new CheckForm(base.mainform);
-            check.ShowDialog();
-            datatab.Rows[0][12] = check.userID;
+            //CheckForm check = new CheckForm(base.mainform);
+            //check.ShowDialog();
+            //datatab.Rows[0][12] = check.userID;
         }
         private void returnsel()
         {

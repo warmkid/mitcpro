@@ -192,18 +192,18 @@ namespace mySystem.Extruction.Process
 
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            CheckForm check = new CheckForm(base.mainform);
-            check.ShowDialog();
-            review_id = check.userID;
+            //CheckForm check = new CheckForm(base.mainform);
+            //check.ShowDialog();
+            //review_id = check.userID;
 
-            if (isSqlOk)
-            { }
-            else
-            {
-                reviewer_name = checkIDOle(review_id);
-            }
+            //if (isSqlOk)
+            //{ }
+            //else
+            //{
+            //    reviewer_name = checkIDOle(review_id);
+            //}
 
-            checkerBox.Text = reviewer_name;
+            //checkerBox.Text = reviewer_name;
         }
 
     }

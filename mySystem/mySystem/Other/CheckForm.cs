@@ -16,10 +16,11 @@ namespace mySystem
         bool isSqlOk;
         public int userID;
         public string opinion;
-        
 
-        public CheckForm(MainForm mainform):base(mainform)
+        BaseForm bs;
+        public CheckForm(BaseForm mainform)
         {
+            bs = mainform;
             InitializeComponent();
             Parameter.InitConUser();
 
@@ -47,7 +48,7 @@ namespace mySystem
                 }
                 opinion = OpTextBox.Text;
 
-                base.CheckResult();
+                bs.CheckResult();
                 this.Dispose();
           
             }

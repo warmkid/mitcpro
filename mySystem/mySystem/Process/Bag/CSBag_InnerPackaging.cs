@@ -240,21 +240,21 @@ namespace mySystem.Process.Bag
 
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            CheckForm check = new CheckForm(base.mainform);
-            check.ShowDialog();
-            review_id = check.userID;
-            reviewer_name = checkID(review_id);
+            //CheckForm check = new CheckForm(base.mainform);
+            //check.ShowDialog();
+            //review_id = check.userID;
+            //reviewer_name = checkID(review_id);
 
-            if (isSqlOk)
-            { }
-            else
-            { }
+            //if (isSqlOk)
+            //{ }
+            //else
+            //{ }
 
-            CheckBtn.Enabled = false;
-            SaveBtn.Enabled = false;
-            AddLineBtn.Enabled = true;
-            RecordView.Rows[checknum].Cells["复核人"].Value = reviewer_name;
-            checknum++;
+            //CheckBtn.Enabled = false;
+            //SaveBtn.Enabled = false;
+            //AddLineBtn.Enabled = true;
+            //RecordView.Rows[checknum].Cells["复核人"].Value = reviewer_name;
+            //checknum++;
         }
 
 
