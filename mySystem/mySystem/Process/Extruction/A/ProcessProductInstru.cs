@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace BatchProductRecord
 {
@@ -17,7 +18,7 @@ namespace BatchProductRecord
         mySystem.CheckForm checkform;
         DataTable dt=null;//存储从产品表中读到的产品代码
         string last_code;//最后一次保存数据库时生产指令编码,默认该表内不会重复
-
+        float leng;
 
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
@@ -28,6 +29,7 @@ namespace BatchProductRecord
         private void init()
         {
             textBox4.Text = "AA-EQM-032";
+            textBox24.Text = mySystem.Parameter.userName;
             button2.Enabled = false;
 
             //从产品表中读数据填入产品代码下拉列表中
@@ -57,11 +59,11 @@ namespace BatchProductRecord
             }
             dr.Cells[0].Value = dataGridView1.Rows.Count+1;
             dataGridView1.Rows.Add(dr);
-            DataGridViewComboBoxCell combox = dataGridView1.Rows[dataGridView1.Rows.Count-1].Cells[1] as DataGridViewComboBoxCell;
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                combox.Items.Add(dt.Rows[i][0]);
-            }
+            //DataGridViewComboBoxCell combox = dataGridView1.Rows[dataGridView1.Rows.Count-1].Cells[1] as DataGridViewComboBoxCell;
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    combox.Items.Add(dt.Rows[i][0]);
+            //}
         }
         private void textBox12_TextChanged(object sender, EventArgs e)
         {
@@ -179,13 +181,13 @@ namespace BatchProductRecord
             }
                 
             string extra = textBox23.Text;
-            string compman = textBox24.Text;//编制人
-            int compman_id = id_findby_code(compman);
-            if (compman_id == -1)
-            {
-                MessageBox.Show("编制人id不存在");
-                return;
-            }
+            string compman = textBox24.Text;//编制人;
+            //int compman_id = id_findby_code(compman);
+            //if (compman_id == -1)
+            //{
+            //    MessageBox.Show("编制人id不存在");
+            //    return;
+            //}
                 
             DateTime compdate = dateTimePicker2.Value;
             string checkman = textBox25.Text;//审批人
@@ -382,12 +384,28 @@ namespace BatchProductRecord
             if (e.RowIndex == dataGridView1.Rows.Count - 1)
                 addrows();
 
+            if (e.ColumnIndex == 1)
+            {
+                string str = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+                string pattern = @"^[a-zA-Z]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
+                if (!Regex.IsMatch(str, pattern))
+                {
+                    MessageBox.Show("产品代码输入不符合规定，重新输入，例如 PEQ-QE-500*100");
+                    //MessageBox.Show("...");
+                    dataGridView1.Rows[e.RowIndex].Cells[1].Value = "";
+                    leng = 0;
+                    return;
+                }
+                string[] array = str.Split('*');
+                string[] array2 = array[0].Split('-');
+                leng = float.Parse(array2[2]);
+            }
             //用料重量自己计算
             if(e.ColumnIndex==2)
             {
-                float fout=0;
+
                 float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
-                dataGridView1.Rows[e.RowIndex].Cells[3].Value = a * 0.5 * 2 * 0.093;
+                dataGridView1.Rows[e.RowIndex].Cells[3].Value = a * leng/1000.0 * 2 * 0.093;
             }
 
 
