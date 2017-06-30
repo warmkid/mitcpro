@@ -15,5 +15,17 @@ namespace mySystem.Process.Bag.LDPE
         {
             InitializeComponent();
         }
+
+        private void A1Btn_Click(object sender, EventArgs e)
+        {
+            LDPEBag_materialrecord material = new LDPEBag_materialrecord();
+            material.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            LDPEBag_batchproduction batch = new LDPEBag_batchproduction();
+            batch.Show();
+        }
     }
 }
