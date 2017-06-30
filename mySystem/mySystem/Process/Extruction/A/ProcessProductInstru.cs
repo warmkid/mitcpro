@@ -14,6 +14,7 @@ namespace BatchProductRecord
 {
     public partial class ProcessProductInstru : mySystem.BaseForm
     {
+        mySystem.CheckForm checkform;
         DataTable dt=null;//存储从产品表中读到的产品代码
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
@@ -73,15 +74,21 @@ namespace BatchProductRecord
         {
 
         }
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            //获得审核信息
+            string opinion = checkform.opinion;
+            textBox25.Text = name_findby_id(checkform.userID);
 
+            //选择刚才的表中对应的记录，并更新里面的记录
+
+        }
         private void button2_Click(object sender, EventArgs e)
         {
-            /*
-            mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
             
-            checkform.Show();
-            string a = checkform.opinion;
-             * */
+            checkform = new mySystem.CheckForm(this);
+            checkform.Show();  
             
         }
 
@@ -121,10 +128,10 @@ namespace BatchProductRecord
             string juan_format = textBox13.Text;
             string juan_quan = textBox14.Text;
 
-            string extruproc_label_format = textBox8.Text;
-            string extruproc_label_quan = textBox10.Text;
-            string doubclean_format = textBox9.Text;
-            string doubclean_quan = textBox11.Text;
+            //string extruproc_label_format = textBox8.Text;
+            //string extruproc_label_quan = textBox10.Text;
+            string doubclean_format = textBox9.Text;//内包形式包装规格
+            string doubclean_quan = textBox11.Text;//内包形式领料量
 
             string chargeman = textBox5.Text;
             int chargeman_id = id_findby_code(chargeman);
@@ -145,12 +152,6 @@ namespace BatchProductRecord
                 
             DateTime compdate = dateTimePicker2.Value;
             string checkman = textBox25.Text;//审批人
-            //int checkman_id = id_findby_code(checkman);
-            //if (checkman_id == -1)
-            //{
-            //    MessageBox.Show("审批人id不存在");
-            //    return;
-            //}
                 
             DateTime checkdate = dateTimePicker3.Value;
             string recman = textBox26.Text;//接收人
@@ -172,7 +173,7 @@ namespace BatchProductRecord
                 string st = "{'";
                 string t = dataGridView1.Rows[i].Cells[1].Value.ToString() + "':";
                 st += t;
-                st += "[" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "," + dataGridView1.Rows[i].Cells[3].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[4].Value.ToString() + "'," + dataGridView1.Rows[i].Cells[5].Value.ToString() + "," + dataGridView1.Rows[i].Cells[6].Value.ToString() + "," + dataGridView1.Rows[i].Cells[7].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[8].Value.ToString() + "']}";
+                st += "[" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "," + dataGridView1.Rows[i].Cells[3].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[4].Value.ToString() + "'," + dataGridView1.Rows[i].Cells[5].Value.ToString() + "," + dataGridView1.Rows[i].Cells[6].Value.ToString() + "," + dataGridView1.Rows[i].Cells[7].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[8].Value.ToString() +"','" + dataGridView1.Rows[i].Cells[8].Value.ToString()+ "']}";
 
                 JObject temp = JObject.Parse(st);
                 ret.Add(temp);
@@ -188,12 +189,20 @@ namespace BatchProductRecord
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = mainform.connOle;
 
+//                comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
+//    "raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
+//    "receive_quantity_in_out,receive_quantity_middle,core_tube_parameter,core_tube_package_specifications,core_tube_receive_the_quantity_of_raw_material,package_specifications,package_receive_the_quantity_of_raw_material,package_specifications_inner,package_receive_the_quantity_of_raw_material_inner,extr," +
+//    "principal_id,editor_id,reviewer_id,receiver_id,edit_date,review_date,receive_date)" +
+//    " values(@name,@instrcode,@prodcess,@machine,@startdate,@desc,@inout_id,@inout_batch,@mid_id,@mid_batch,@inout_pac,@mid_pac," +
+//"@inout_quan,@mid_quan,@tube_para,@tube_pac,@tube_quan,@pac_label,@quan_label,@pac_inner,@quan_inner,@extr,@princ_id,@editor_id,@rev_id,@rec_id,@editdate,@revdate,@recdate)";
+
                 comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
-    "raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
-    "receive_quantity_in_out,receive_quantity_middle,core_tube_parameter,core_tube_package_specifications,core_tube_receive_the_quantity_of_raw_material,package_specifications,package_receive_the_quantity_of_raw_material,package_specifications_inner,package_receive_the_quantity_of_raw_material_inner,extr," +
-    "principal_id,editor_id,reviewer_id,receiver_id,edit_date,review_date,receive_date)" +
-    " values(@name,@instrcode,@prodcess,@machine,@startdate,@desc,@inout_id,@inout_batch,@mid_id,@mid_batch,@inout_pac,@mid_pac," +
-"@inout_quan,@mid_quan,@tube_para,@tube_pac,@tube_quan,@pac_label,@quan_label,@pac_inner,@quan_inner,@extr,@princ_id,@editor_id,@rev_id,@rec_id,@editdate,@revdate,@recdate)";
+"raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
+"receive_quantity_in_out,receive_quantity_middle,core_tube_parameter,core_tube_package_specifications,core_tube_receive_the_quantity_of_raw_material,package_specifications,package_receive_the_quantity_of_raw_material,extr," +
+"principal_id,editor_id,reviewer_id,receiver_id,edit_date,review_date,receive_date)" +
+" values(@name,@instrcode,@prodcess,@machine,@startdate,@desc,@inout_id,@inout_batch,@mid_id,@mid_batch,@inout_pac,@mid_pac," +
+"@inout_quan,@mid_quan,@tube_para,@tube_pac,@tube_quan,@pac_inner,@quan_inner,@extr,@princ_id,@editor_id,@rev_id,@rec_id,@editdate,@revdate,@recdate)";
+
 
                 System.Console.WriteLine(comm.CommandText.ToString());
                 comm.Parameters.Add("@name",System.Data.OleDb.OleDbType.VarChar);
@@ -208,15 +217,15 @@ namespace BatchProductRecord
                 comm.Parameters.Add("@mid_batch", System.Data.OleDb.OleDbType.VarChar);
                 comm.Parameters.Add("@inout_pac", System.Data.OleDb.OleDbType.VarChar);
                 comm.Parameters.Add("@mid_pac", System.Data.OleDb.OleDbType.VarChar);
-                comm.Parameters.Add("@inout_quan", System.Data.OleDb.OleDbType.VarChar);
-                comm.Parameters.Add("@mid_quan", System.Data.OleDb.OleDbType.VarChar);
+                comm.Parameters.Add("@inout_quan", System.Data.OleDb.OleDbType.Integer);//
+                comm.Parameters.Add("@mid_quan", System.Data.OleDb.OleDbType.Integer);//
                 comm.Parameters.Add("@tube_para", System.Data.OleDb.OleDbType.VarChar);
                 comm.Parameters.Add("@tube_pac", System.Data.OleDb.OleDbType.VarChar);
-                comm.Parameters.Add("@tube_quan", System.Data.OleDb.OleDbType.VarChar);
-                comm.Parameters.Add("@pac_label", System.Data.OleDb.OleDbType.VarChar);
-                comm.Parameters.Add("@quan_label", System.Data.OleDb.OleDbType.VarChar);
-                comm.Parameters.Add("@pac_inner", System.Data.OleDb.OleDbType.VarChar);
-                comm.Parameters.Add("@quan_inner", System.Data.OleDb.OleDbType.VarChar);
+                comm.Parameters.Add("@tube_quan", System.Data.OleDb.OleDbType.Integer);//
+                //comm.Parameters.Add("@pac_label", System.Data.OleDb.OleDbType.VarChar);
+                //comm.Parameters.Add("@quan_label", System.Data.OleDb.OleDbType.VarChar);
+                comm.Parameters.Add("@pac_inner", System.Data.OleDb.OleDbType.VarChar);//内包装 包装规格
+                comm.Parameters.Add("@quan_inner", System.Data.OleDb.OleDbType.VarChar);//内包装 领量
                 comm.Parameters.Add("@extr", System.Data.OleDb.OleDbType.VarChar);
                 comm.Parameters.Add("@princ_id", System.Data.OleDb.OleDbType.Integer);
                 comm.Parameters.Add("@editor_id", System.Data.OleDb.OleDbType.Integer);
@@ -238,13 +247,13 @@ namespace BatchProductRecord
                 comm.Parameters["@mid_batch"].Value = mid_matbatch;
                 comm.Parameters["@inout_pac"].Value = mid_format;
                 comm.Parameters["@mid_pac"].Value = ret.ToString();
-                comm.Parameters["@inout_quan"].Value =in_amout.ToString();
-                comm.Parameters["@mid_quan"].Value = mid_amout.ToString();
+                comm.Parameters["@inout_quan"].Value =Convert.ToInt32(in_amout);//float to int
+                comm.Parameters["@mid_quan"].Value =Convert.ToInt32(mid_amout);//float to int
                 comm.Parameters["@tube_para"].Value = juan_extr;
                 comm.Parameters["@tube_pac"].Value = juan_format;
                 comm.Parameters["@tube_quan"].Value = juan_quan;
-                comm.Parameters["@pac_label"].Value = extruproc_label_format;
-                comm.Parameters["@quan_label"].Value = extruproc_label_quan;
+                //comm.Parameters["@pac_label"].Value = extruproc_label_format;
+                //comm.Parameters["@quan_label"].Value = extruproc_label_quan;
                 comm.Parameters["@pac_inner"].Value = doubclean_format;
                 comm.Parameters["@quan_inner"].Value = doubclean_quan;
                 comm.Parameters["@extr"].Value = extra;
@@ -307,6 +316,26 @@ namespace BatchProductRecord
                     return Int32.Parse(tempdt.Rows[0][0].ToString());
             }
         }
+        private string name_findby_id(int id)
+        {
+            if (mainform.isSqlOk)
+            {
+                return "";
+            }
+            else
+            {
+                string asql = "select user_name from user_aoxing where user_id=" +id;
+                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                if (tempdt.Rows.Count == 0)
+                    return "";
+                else
+                    return tempdt.Rows[0][0].ToString();
+            }
+        }
 
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -314,6 +343,17 @@ namespace BatchProductRecord
                 return;
             if (e.RowIndex == dataGridView1.Rows.Count - 1)
                 addrows();
+
+            //用料重量自己计算
+            if(e.ColumnIndex==2)
+            {
+                float fout=0;
+                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
+                dataGridView1.Rows[e.RowIndex].Cells[3].Value = a * 0.5 * 2 * 0.093;
+            }
+
+
+
             ////更改清洁人项
             //if (e.ColumnIndex == 3)
             //{
@@ -325,15 +365,6 @@ namespace BatchProductRecord
             //    return;
             //}
             ////更改审核人项
-            //if (e.ColumnIndex == 4)
-            //{
-            //    int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
-            //    if (rt > 0)
-            //        checkmans[e.RowIndex] = rt;
-            //    else
-            //        MessageBox.Show("审核人id不存在，请重新输入");
-            //    return;
-            //}
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

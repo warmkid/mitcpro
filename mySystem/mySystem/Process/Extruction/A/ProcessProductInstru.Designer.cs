@@ -50,6 +50,7 @@
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
@@ -79,13 +80,9 @@
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.label16 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
             this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
             this.label21 = new System.Windows.Forms.Label();
@@ -267,7 +264,8 @@
             this.Column6,
             this.Column7,
             this.Column8,
-            this.Column9});
+            this.Column9,
+            this.Column10});
             this.dataGridView1.Location = new System.Drawing.Point(4, 125);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
@@ -299,6 +297,7 @@
             // 
             this.Column4.HeaderText = "用料重量（kg）";
             this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             // 
             // Column5
             // 
@@ -325,6 +324,11 @@
             this.Column9.HeaderText = "产品用途";
             this.Column9.Name = "Column9";
             // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "标签";
+            this.Column10.Name = "Column10";
+            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -347,8 +351,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(888, 215);
-            this.splitContainer1.SplitterDistance = 33;
+            this.splitContainer1.Size = new System.Drawing.Size(888, 173);
+            this.splitContainer1.SplitterDistance = 34;
             this.splitContainer1.TabIndex = 13;
             // 
             // label14
@@ -434,7 +438,7 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this.textBox5);
-            this.splitContainer2.Size = new System.Drawing.Size(888, 178);
+            this.splitContainer2.Size = new System.Drawing.Size(888, 135);
             this.splitContainer2.SplitterDistance = 760;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -452,8 +456,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer3.Size = new System.Drawing.Size(760, 178);
-            this.splitContainer3.SplitterDistance = 104;
+            this.splitContainer3.Size = new System.Drawing.Size(760, 135);
+            this.splitContainer3.SplitterDistance = 101;
             this.splitContainer3.TabIndex = 0;
             // 
             // splitContainer4
@@ -482,7 +486,7 @@
             this.splitContainer4.Panel2.Controls.Add(this.textBox13);
             this.splitContainer4.Panel2.Controls.Add(this.textBox12);
             this.splitContainer4.Panel2.Controls.Add(this.label19);
-            this.splitContainer4.Size = new System.Drawing.Size(760, 104);
+            this.splitContainer4.Size = new System.Drawing.Size(760, 101);
             this.splitContainer4.SplitterDistance = 73;
             this.splitContainer4.TabIndex = 0;
             // 
@@ -618,14 +622,10 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.textBox11);
-            this.splitContainer5.Panel2.Controls.Add(this.textBox10);
             this.splitContainer5.Panel2.Controls.Add(this.textBox9);
-            this.splitContainer5.Panel2.Controls.Add(this.textBox8);
             this.splitContainer5.Panel2.Controls.Add(this.textBox7);
-            this.splitContainer5.Panel2.Controls.Add(this.textBox6);
             this.splitContainer5.Panel2.Controls.Add(this.label18);
-            this.splitContainer5.Panel2.Controls.Add(this.label17);
-            this.splitContainer5.Size = new System.Drawing.Size(760, 70);
+            this.splitContainer5.Size = new System.Drawing.Size(760, 30);
             this.splitContainer5.SplitterDistance = 73;
             this.splitContainer5.TabIndex = 0;
             // 
@@ -633,7 +633,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(21, 30);
+            this.label16.Location = new System.Drawing.Point(21, 6);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(35, 14);
             this.label16.TabIndex = 9;
@@ -641,81 +641,48 @@
             // 
             // textBox11
             // 
-            this.textBox11.Location = new System.Drawing.Point(560, 40);
+            this.textBox11.Location = new System.Drawing.Point(560, 3);
             this.textBox11.Name = "textBox11";
             this.textBox11.Size = new System.Drawing.Size(100, 23);
             this.textBox11.TabIndex = 16;
             // 
-            // textBox10
-            // 
-            this.textBox10.Location = new System.Drawing.Point(560, 11);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(100, 23);
-            this.textBox10.TabIndex = 15;
-            // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(442, 40);
+            this.textBox9.Location = new System.Drawing.Point(443, 3);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(100, 23);
             this.textBox9.TabIndex = 14;
             // 
-            // textBox8
-            // 
-            this.textBox8.Location = new System.Drawing.Point(442, 11);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 23);
-            this.textBox8.TabIndex = 13;
-            // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(178, 41);
+            this.textBox7.Location = new System.Drawing.Point(186, 3);
             this.textBox7.Name = "textBox7";
             this.textBox7.ReadOnly = true;
             this.textBox7.Size = new System.Drawing.Size(239, 23);
             this.textBox7.TabIndex = 12;
             this.textBox7.Text = "双层洁净包装";
             // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(178, 11);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.ReadOnly = true;
-            this.textBox6.Size = new System.Drawing.Size(239, 23);
-            this.textBox6.TabIndex = 11;
-            this.textBox6.Text = "吹膜工序标签";
-            // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(41, 44);
+            this.label18.Location = new System.Drawing.Point(58, 6);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(63, 14);
             this.label18.TabIndex = 10;
             this.label18.Text = "内包形式";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(46, 14);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(35, 14);
-            this.label17.TabIndex = 9;
-            this.label17.Text = "标签";
             // 
             // textBox5
             // 
             this.textBox5.Location = new System.Drawing.Point(3, 3);
             this.textBox5.Multiline = true;
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(117, 168);
+            this.textBox5.Size = new System.Drawing.Size(117, 128);
             this.textBox5.TabIndex = 0;
             // 
             // splitContainer6
             // 
-            this.splitContainer6.Location = new System.Drawing.Point(0, 546);
+            this.splitContainer6.Location = new System.Drawing.Point(4, 504);
             this.splitContainer6.Name = "splitContainer6";
             // 
             // splitContainer6.Panel1
@@ -750,7 +717,7 @@
             // 
             // splitContainer7
             // 
-            this.splitContainer7.Location = new System.Drawing.Point(0, 590);
+            this.splitContainer7.Location = new System.Drawing.Point(4, 548);
             this.splitContainer7.Name = "splitContainer7";
             // 
             // splitContainer7.Panel1
@@ -763,8 +730,8 @@
             // splitContainer7.Panel2
             // 
             this.splitContainer7.Panel2.Controls.Add(this.splitContainer8);
-            this.splitContainer7.Size = new System.Drawing.Size(879, 72);
-            this.splitContainer7.SplitterDistance = 253;
+            this.splitContainer7.Size = new System.Drawing.Size(888, 72);
+            this.splitContainer7.SplitterDistance = 255;
             this.splitContainer7.TabIndex = 15;
             // 
             // dateTimePicker2
@@ -822,8 +789,8 @@
             this.splitContainer8.Panel2.Controls.Add(this.label27);
             this.splitContainer8.Panel2.Controls.Add(this.textBox26);
             this.splitContainer8.Panel2.Controls.Add(this.label26);
-            this.splitContainer8.Size = new System.Drawing.Size(622, 72);
-            this.splitContainer8.SplitterDistance = 317;
+            this.splitContainer8.Size = new System.Drawing.Size(629, 72);
+            this.splitContainer8.SplitterDistance = 320;
             this.splitContainer8.TabIndex = 0;
             // 
             // dateTimePicker3
@@ -846,6 +813,7 @@
             // 
             // textBox25
             // 
+            this.textBox25.Enabled = false;
             this.textBox25.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox25.Location = new System.Drawing.Point(136, 8);
             this.textBox25.Name = "textBox25";
@@ -901,7 +869,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(605, 677);
+            this.button1.Location = new System.Drawing.Point(614, 636);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 16;
@@ -913,7 +881,7 @@
             // 
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.button2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button2.Location = new System.Drawing.Point(709, 677);
+            this.button2.Location = new System.Drawing.Point(709, 636);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 17;
@@ -924,7 +892,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button3.Location = new System.Drawing.Point(804, 677);
+            this.button3.Location = new System.Drawing.Point(808, 636);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 18;
@@ -935,7 +903,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(904, 715);
+            this.ClientSize = new System.Drawing.Size(904, 669);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -1037,13 +1005,9 @@
         private System.Windows.Forms.SplitContainer splitContainer5;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox textBox14;
@@ -1078,6 +1042,7 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewComboBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
@@ -1087,6 +1052,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
     }
 }
