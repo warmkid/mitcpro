@@ -310,6 +310,7 @@
             this.RecordView.Size = new System.Drawing.Size(1118, 330);
             this.RecordView.TabIndex = 5;
             this.RecordView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RecordView_CellContentClick);
+            this.RecordView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RecordView_CellEndEdit);
             // 
             // 序号
             // 

@@ -48,9 +48,9 @@ namespace mySystem.Extruction.Process
             operator_id = Parameter.userID;
             operator_name = Parameter.userName;
             Instructionid = Parameter.proInstruID;
+
             spot = true; //需要从Parameter里面读取，暂无
             
-
             Init();
 
         }
@@ -168,6 +168,7 @@ namespace mySystem.Extruction.Process
             Recordnum++;
             RecordView.Rows[Recordnum-1].ReadOnly = false;
             RecordView.Rows[Recordnum].ReadOnly = true;
+            getTotal();
         }
 
         //添加最后一行
@@ -196,6 +197,41 @@ namespace mySystem.Extruction.Process
             RecordView.Rows.Add(dr);
         }
 
+        //求合计
+        private void getTotal()
+        {
+            int numtemp;
+            if (Int32.TryParse((RecordView.Rows[RecordView.Rows.Count - 2].Cells["膜卷长度"].Value.ToString()), out numtemp) == true)
+            {
+                sum[0] = 0;
+                for (int i = 0; i < RecordView.Rows.Count - 1; i++)
+                    sum[0] += Convert.ToInt32((RecordView.Rows[i].Cells["膜卷长度"].Value.ToString()));
+                RecordView.Rows[RecordView.Rows.Count - 1].Cells["膜卷长度"].Value = sum[0].ToString();
+            }
+            else
+            {
+                sum[0] = 0;
+                for (int i = 0; i < RecordView.Rows.Count - 2; i++)
+                    sum[0] += Convert.ToInt32((RecordView.Rows[i].Cells["膜卷长度"].Value.ToString()));
+                RecordView.Rows[RecordView.Rows.Count - 1].Cells["膜卷长度"].Value = sum[0].ToString();
+            }
+
+            if (Int32.TryParse((RecordView.Rows[RecordView.Rows.Count - 2].Cells["膜卷重量"].Value.ToString()), out numtemp) == true)
+            {
+                sum[1] = 0;
+                for (int i = 0; i < RecordView.Rows.Count - 1; i++)
+                    sum[1] += Convert.ToInt32((RecordView.Rows[i].Cells["膜卷重量"].Value.ToString()));
+                RecordView.Rows[RecordView.Rows.Count - 1].Cells["膜卷重量"].Value = sum[1].ToString();
+            }
+            else
+            {
+                sum[1] = 0;
+                for (int i = 0; i < RecordView.Rows.Count - 2; i++)
+                    sum[1] += Convert.ToInt32((RecordView.Rows[i].Cells["膜卷重量"].Value.ToString()));
+                RecordView.Rows[RecordView.Rows.Count - 1].Cells["膜卷重量"].Value = sum[1].ToString();
+            }
+        }
+
         //删除单条记录
         private void RecordView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -219,27 +255,26 @@ namespace mySystem.Extruction.Process
                     RefreshNum();
                 }
             }*/
-            if (RecordView.Columns[e.ColumnIndex].Name == "膜卷长度")
-            {
-                int numtemp;
-                if (Int32.TryParse((RecordView.Rows[Recordnum-1].Cells["膜卷长度"].Value.ToString()), out numtemp) == true)
-                {
-                    for (int i = 0; i < Recordnum; i++)
-                        sum[0] += Convert.ToInt32((RecordView.Rows[i].Cells["膜卷长度"].Value.ToString()));
-                }
-            }
-            else if (RecordView.Columns[e.ColumnIndex].Name == "膜卷重量")
-            {
-                int numtemp;
-                if (Int32.TryParse((RecordView.Rows[Recordnum-1].Cells["膜卷重量"].Value.ToString()), out numtemp) == true)
-                {
-                    for (int i = 0; i < Recordnum; i++)
-                        sum[1] += Convert.ToInt32((RecordView.Rows[i].Cells["膜卷重量"].Value.ToString()));
-                }
-            }
-            else
-            { }
+            
         }
+
+        private void RecordView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex >= 0)
+            {
+                if (RecordView.Columns[e.ColumnIndex].Name == "膜卷长度")
+                {
+                    getTotal();
+                }
+                else if (RecordView.Columns[e.ColumnIndex].Name == "膜卷重量")
+                {
+                    getTotal();
+                }
+                else
+                { }
+            }
+        }
+
 
         //更新序号
         private void RefreshNum()
@@ -565,67 +600,9 @@ namespace mySystem.Extruction.Process
                 SaveBtn.Enabled = false;
                 printBtn.Enabled = false;                
             }
+            getTotal();
         }
-
-        /*
-        private string checkID(int userID)
-        {
-            if (isSqlOk)
-            {
-                string user = null;
-                string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-                SqlCommand comm = new SqlCommand(searchsql, conn);
-                SqlDataReader myReader = comm.ExecuteReader();
-                while (myReader.Read())
-                {
-                    user = myReader.GetString(4);
-                }
-
-                myReader.Close();
-                comm.Dispose();
-                return user;
-            }
-            else
-            {
-                List<String> queryCols = new List<String>(new String[] { "user_name" });
-                List<String> whereCols = new List<String>(new String[] { "user_id" });
-                List<Object> whereVals = new List<Object>(new Object[] { userID });
-                List<List<Object>> queryValsList = Utility.selectAccess(connOle, "user_aoxing", queryCols, whereCols, whereVals, null, null, null, null, null);
-                string user = queryValsList[0][0].ToString();
-                return user;
-            }
-        }
-
-        private bool checkFlight(int userID)
-        {
-            if (isSqlOk)
-            {
-                string Fightuser = null;
-                string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-                SqlCommand comm = new SqlCommand(searchsql, conn);
-                SqlDataReader myReader = comm.ExecuteReader();
-                while (myReader.Read())
-                {
-                    Fightuser = myReader.GetString(9);
-                }
-
-                myReader.Close();
-                comm.Dispose();
-                return (Fightuser == "1" ? true : false);
-            }
-            else
-            {
-                List<String> queryCols = new List<String>(new String[] { "flight" });
-                List<String> whereCols = new List<String>(new String[] { "user_id" });
-                List<Object> whereVals = new List<Object>(new Object[] { userID });
-                List<List<Object>> queryValsList = Utility.selectAccess(connOle, "user_aoxing", queryCols, whereCols, whereVals, null, null, null, null, null);
-                string Fightuser = queryValsList[0][0].ToString();
-                return (Fightuser == "1" ? true : false);
-            }
-
-        }
-        */
-
+        
         private void DelLineBtn_Click(object sender, EventArgs e)
         {
             if (RecordView.Rows.Count >= 3)
@@ -639,6 +616,7 @@ namespace mySystem.Extruction.Process
                     SaveBtn.Enabled = false;
                     Recordnum--;
                     RecordView.Rows[Recordnum].ReadOnly = true;
+                    getTotal();
                 }
             }
         }
@@ -682,16 +660,14 @@ namespace mySystem.Extruction.Process
         private void CheckBtn_Click(object sender, EventArgs e)
         {
             check = new CheckForm(this);
-            check.Show();            
+            check.Show();
+            reviewer_name = Parameter.IDtoName(review_id);
 
             if (isSqlOk)
             { }
             else
             {
                 //暂时没有name返回
-
-                reviewer_name = Parameter.IDtoName(review_id);
-
                 List<String> queryCols = new List<String>(new String[] { "s6_reviewer_id", "s6_review_opinion", "s6_is_review_qualified" });
                 List<Object> queryVals = new List<Object>(new Object[] { review_id, review_opinion, ischeckOk });
                 List<String> whereCols = new List<String>(new String[] { "product_name", "s6_production_date", "s6_flight" });

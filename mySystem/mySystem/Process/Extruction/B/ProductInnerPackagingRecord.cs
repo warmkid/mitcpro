@@ -16,6 +16,10 @@ namespace mySystem.Extruction.Process
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
+        private int Instructionid;
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false;
 
         private int operator_id;
         private string operator_name;
@@ -28,13 +32,13 @@ namespace mySystem.Extruction.Process
         {
             InitializeComponent();
 
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
-            operator_id = base.mainform.userID;
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            Instructionid = Parameter.proInstruID;
 
-            if (isSqlOk) { operator_name = checkIDSql(operator_id); }
-            else { operator_name = checkIDOle(operator_id); }
             DataInitialize();
         }
 
@@ -137,41 +141,6 @@ namespace mySystem.Extruction.Process
             dataGridView2.Rows.Add(dr);
         }
 
-        private string checkIDSql(int userID)
-        {
-            string user = null;
-            string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-            SqlCommand comm = new SqlCommand(searchsql, conn);
-            SqlDataReader myReader = comm.ExecuteReader();
-            while (myReader.Read())
-            {
-                user = myReader.GetString(4);
-            }
-
-            myReader.Close();
-            comm.Dispose();
-            return user;
-        }
-
-        private string checkIDOle(int userID)
-        {
-            string user = null;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = connOle;
-            comm.CommandText = "select * from user_aoxing where user_id= @ID";
-            comm.Parameters.AddWithValue("@ID", userID);
-
-            OleDbDataReader myReader = comm.ExecuteReader();
-            while (myReader.Read())
-            {
-                user = myReader.GetString(4);
-            }
-
-            myReader.Close();
-            comm.Dispose();
-            return user;
-        }
-
         private void AddLineBtn_Click(object sender, EventArgs e)
         {  AddRowLine();  }
 
@@ -183,28 +152,27 @@ namespace mySystem.Extruction.Process
                 numFresh();
             }            
         }
-
+        
         private void numFresh()
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             { dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString(); }
         }
 
-        private void CheckBtn_Click(object sender, EventArgs e)
+        public override void CheckResult()
         {
-            //CheckForm check = new CheckForm(base.mainform);
-            //check.ShowDialog();
-            //review_id = check.userID;
-
-            //if (isSqlOk)
-            //{ }
-            //else
-            //{
-            //    reviewer_name = checkIDOle(review_id);
-            //}
-
-            //checkerBox.Text = reviewer_name;
+            base.CheckResult();
+            review_id = check.userID;
+            review_opinion = check.opinion;
+            ischeckOk = check.ischeckOk;
         }
 
+        private void CheckBtn_Click(object sender, EventArgs e)
+        {
+            check = new CheckForm(this);
+            check.ShowDialog();
+            reviewer_name = Parameter.IDtoName(review_id);
+            checkerBox.Text = reviewer_name;
+        }
     }
 }
