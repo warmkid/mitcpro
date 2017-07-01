@@ -564,18 +564,6 @@
     <EmbeddedResource Include="Process\Bag\CS\Record_batch_bag.resx">
       <DependentUpon>Record_batch_bag.cs</DependentUpon>
     </EmbeddedResource>
-<<<<<<< HEAD
-    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_batchproduction.resx">
-      <DependentUpon>LDPEBag_batchproduction.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_innerpackaging.resx">
-      <DependentUpon>LDPEBag_innerpackaging.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_materialrecord.resx">
-      <DependentUpon>LDPEBag_materialrecord.cs</DependentUpon>
-    </EmbeddedResource>
-=======
->>>>>>> 0de82d15be63d5ff8ade88c3ef743c0e9b8ce284
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </EmbeddedResource>
