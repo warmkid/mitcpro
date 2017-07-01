@@ -29,7 +29,7 @@ namespace mySystem
                     "s3_region3_set2", "s3_region4_set2", "s3_duration3" ,"s3_temperature_tolerance"});
             List<String> whereCols = new List<String>(new String[] { "id" });
             List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            List<List<Object>> queryValsList = Utility.selectAccess(base.mainform.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
 
             List<String> data = new List<String> { };
             for (int i = 0; i < queryValsList[0].Count; i++)
@@ -51,7 +51,7 @@ namespace mySystem
             List<Object> queryVals = new List<Object>(new Object[] { Convert.ToInt32(tolerance.Text) });
             List<String> whereCols = new List<String>(new String[] { "id" });
             List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            Boolean b = Utility.updateAccess(base.mainform.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
+            Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
  
         }
 
@@ -64,7 +64,7 @@ namespace mySystem
 
             int tolerance = 0;
             OleDbCommand comm = new OleDbCommand();
-            comm.Connection = base.mainform.connOle;
+            comm.Connection = Parameter.connOle;
             comm.CommandText = "select * from extrusion_s3_preheat where id= 1";
             OleDbDataReader myReader = comm.ExecuteReader();
             while (myReader.Read())
@@ -299,7 +299,7 @@ namespace mySystem
                     Convert.ToInt32(region32.Text), Convert.ToInt32(region42.Text), Convert.ToInt32(duration3.Text)});
                 List<String> whereCols = new List<String>(new String[] { "id" });
                 List<Object> whereVals = new List<Object>(new Object[] { 1 });
-                Boolean b = Utility.updateAccess(base.mainform.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
+                Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
                 MessageBox.Show("预热参数设置保存成功！", "success");
             }
 

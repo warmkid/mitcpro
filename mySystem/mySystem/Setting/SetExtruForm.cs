@@ -16,21 +16,15 @@ namespace mySystem
 {
     public partial class SetExtruForm : BaseForm
     {
-        SqlConnection conn = null;
-        OleDbConnection connOle = null;
-        bool isSqlOk;
-
         Setting_CleanArea setcleanDlg = null;
         Setting_CheckBeforePower bfPowerDlg = null;
         PreheatParameterForm preheatDlg = null;
         Setting_CleanSite setsiteDlg = null;
+        SettingHandOver handoverDlg = null;
 
         public SetExtruForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            conn = mainform.conn;
-            connOle = mainform.connOle;
-            isSqlOk = mainform.isSqlOk;
             Init();
         }
 
@@ -65,13 +59,20 @@ namespace mySystem
             procClearPanel.Controls.Add(setsiteDlg);
             setsiteDlg.Show();
 
+            //交接班设置
+            handoverDlg = new SettingHandOver(base.mainform);
+            handoverDlg.TopLevel = false;
+            handoverDlg.FormBorderStyle = FormBorderStyle.None;
+            this.handoverPanel.Controls.Add(handoverDlg);
+            handoverDlg.Show();
+
  
         }
 
    
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (isSqlOk)
+            if (Parameter.isSqlOk)
             {
 
             }
@@ -81,6 +82,7 @@ namespace mySystem
                 preheatDlg.DataSave();
                 setsiteDlg.DataSave();
                 setcleanDlg.DataSave();
+                handoverDlg.DataSave();
  
             }
         }

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -43,6 +43,11 @@
     <Reference Include="FarPoint.Win.Chart, Version=7.0.3502.2008, Culture=neutral, PublicKeyToken=327c3516b1b18457" />
     <Reference Include="FarPoint.Win.Spread, Version=7.0.3502.2008, Culture=neutral, PublicKeyToken=327c3516b1b18457, processorArchitecture=MSIL" />
     <Reference Include="GrapeCity.Win.PluginInputMan, Version=7.0.3502.2008, Culture=neutral, PublicKeyToken=327c3516b1b18457, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>extern\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>extern\Newtonsoft.Json.dll</HintPath>
@@ -374,6 +379,12 @@
     <Compile Include="Setting\SetPeopleForm.Designer.cs">
       <DependentUpon>SetPeopleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting\SettingHandOver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\SettingHandOver.Designer.cs">
+      <DependentUpon>SettingHandOver.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\SettingMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -547,18 +558,13 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
-      <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\CSbagMainForm.resx">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\CS\MaterialRecord.resx">
-      <DependentUpon>MaterialRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Record_batch_bag.resx">
       <DependentUpon>Record_batch_bag.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_batchproduction.resx">
       <DependentUpon>LDPEBag_batchproduction.cs</DependentUpon>
     </EmbeddedResource>
@@ -568,11 +574,16 @@
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_materialrecord.resx">
       <DependentUpon>LDPEBag_materialrecord.cs</DependentUpon>
     </EmbeddedResource>
+=======
+>>>>>>> 0de82d15be63d5ff8ade88c3ef743c0e9b8ce284
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\CleanCut_CheckBeforePower.resx">
+      <DependentUpon>CleanCut_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
@@ -648,6 +659,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SetPeopleForm.resx">
       <DependentUpon>SetPeopleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\SettingHandOver.resx">
+      <DependentUpon>SettingHandOver.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SettingMainForm.resx">
       <DependentUpon>SettingMainForm.cs</DependentUpon>

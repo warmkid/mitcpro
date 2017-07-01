@@ -29,7 +29,7 @@ namespace mySystem.Setting
             else
             {
                 string accessql = "select * from feedingprocess_cleansite";
-                OleDbCommand cmd = new OleDbCommand(accessql, mainform.connOle);
+                OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 data.Fill(dt);
@@ -49,7 +49,7 @@ namespace mySystem.Setting
                 data.Dispose();
                 dt.Clear();
                 accessql = "select * from extrusion_cleansite";
-                cmd = new OleDbCommand(accessql, mainform.connOle);
+                cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 data = new OleDbDataAdapter(cmd);
                 data.Fill(dt);
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -131,7 +131,7 @@ namespace mySystem.Setting
             else
             {
                 string accessql = "delete * from feedingprocess_cleansite";
-                OleDbCommand cmd = new OleDbCommand(accessql, mainform.connOle);
+                OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 cmd.ExecuteNonQuery();
                 for(int i=0;i<dataGridView1.Rows.Count;i++)
                 {

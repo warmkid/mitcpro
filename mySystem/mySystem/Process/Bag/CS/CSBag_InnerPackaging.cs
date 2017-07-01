@@ -16,6 +16,10 @@ namespace mySystem.Process.Bag
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
+        private int Instructionid;
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false;
 
         private int checknum = 0;
 
@@ -32,11 +36,12 @@ namespace mySystem.Process.Bag
         {
             InitializeComponent();
 
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
-            operator_id = base.mainform.userID;
-            operator_name = checkID(operator_id);
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            Instructionid = Parameter.proInstruID;
             operate_date = DateTime.Now.Date;
 
             DgvInitialize();
@@ -159,43 +164,6 @@ namespace mySystem.Process.Bag
             }
         }
 
-        private string checkID(int userID)
-        {
-            if (isSqlOk)
-            {
-                string user = null;
-                string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-                SqlCommand comm = new SqlCommand(searchsql, conn);
-                SqlDataReader myReader = comm.ExecuteReader();
-                while (myReader.Read())
-                {
-                    user = myReader.GetString(4);
-                }
-                myReader.Close();
-                comm.Dispose();
-                return user;
-            }
-            else
-            {
-                string user = null;
-                OleDbCommand comm = new OleDbCommand();
-                comm.Connection = connOle;
-                comm.CommandText = "select * from user_aoxing where user_id= @ID";
-                comm.Parameters.AddWithValue("@ID", userID);
-
-                OleDbDataReader myReader = comm.ExecuteReader();
-                while (myReader.Read())
-                {
-                    user = myReader.GetString(4);
-                }
-
-                myReader.Close();
-                comm.Dispose();
-                return user;
-            }
-
-        }
-
         private void RecordView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -238,27 +206,30 @@ namespace mySystem.Process.Bag
             DelLineBtn.Enabled = false;
         }
 
-        private void CheckBtn_Click(object sender, EventArgs e)
+        public override void CheckResult()
         {
-            //CheckForm check = new CheckForm(base.mainform);
-            //check.ShowDialog();
-            //review_id = check.userID;
-            //reviewer_name = checkID(review_id);
-
-            //if (isSqlOk)
-            //{ }
-            //else
-            //{ }
-
-            //CheckBtn.Enabled = false;
-            //SaveBtn.Enabled = false;
-            //AddLineBtn.Enabled = true;
-            //RecordView.Rows[checknum].Cells["复核人"].Value = reviewer_name;
-            //checknum++;
+            base.CheckResult();
+            review_id = check.userID;
+            review_opinion = check.opinion;
+            ischeckOk = check.ischeckOk;
         }
 
+        private void CheckBtn_Click(object sender, EventArgs e)
+        {
+            check = new CheckForm(this);
+            check.Show();
+            reviewer_name = Parameter.IDtoName(review_id);
 
+            if (isSqlOk)
+            { }
+            else
+            { }
 
-
+            CheckBtn.Enabled = false;
+            SaveBtn.Enabled = false;
+            AddLineBtn.Enabled = true;
+            RecordView.Rows[checknum].Cells["复核人"].Value = reviewer_name;
+            checknum++;
+        }
     }
 }

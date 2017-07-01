@@ -137,7 +137,7 @@
             this.bag6Btn.Name = "bag6Btn";
             this.bag6Btn.Size = new System.Drawing.Size(173, 38);
             this.bag6Btn.TabIndex = 15;
-            this.bag6Btn.Text = "    防护罩";
+            this.bag6Btn.Text = "    6.防护罩";
             this.bag6Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bag6Btn.UseVisualStyleBackColor = true;
             this.bag6Btn.Click += new System.EventHandler(this.bag6Btn_Click);
@@ -152,7 +152,7 @@
             this.BTVbagBtn.Name = "BTVbagBtn";
             this.BTVbagBtn.Size = new System.Drawing.Size(173, 38);
             this.BTVbagBtn.TabIndex = 14;
-            this.BTVbagBtn.Text = "    BTV制袋";
+            this.BTVbagBtn.Text = "    5.BTV制袋";
             this.BTVbagBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BTVbagBtn.UseVisualStyleBackColor = true;
             this.BTVbagBtn.Click += new System.EventHandler(this.BTVbagBtn_Click);
@@ -167,7 +167,7 @@
             this.PTVbagBtn.Name = "PTVbagBtn";
             this.PTVbagBtn.Size = new System.Drawing.Size(173, 38);
             this.PTVbagBtn.TabIndex = 13;
-            this.PTVbagBtn.Text = "    PTV制袋";
+            this.PTVbagBtn.Text = "    4.PTV制袋";
             this.PTVbagBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.PTVbagBtn.UseVisualStyleBackColor = true;
             this.PTVbagBtn.Click += new System.EventHandler(this.PTVbagBtn_Click);
@@ -182,7 +182,7 @@
             this.bag3Btn.Name = "bag3Btn";
             this.bag3Btn.Size = new System.Drawing.Size(173, 38);
             this.bag3Btn.TabIndex = 12;
-            this.bag3Btn.Text = "    连续袋";
+            this.bag3Btn.Text = "    3.连续袋";
             this.bag3Btn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.bag3Btn.UseVisualStyleBackColor = true;
             this.bag3Btn.Click += new System.EventHandler(this.bag3Btn_Click);
@@ -197,7 +197,7 @@
             this.CSbagBtn.Name = "CSbagBtn";
             this.CSbagBtn.Size = new System.Drawing.Size(173, 38);
             this.CSbagBtn.TabIndex = 11;
-            this.CSbagBtn.Text = "    CS制袋";
+            this.CSbagBtn.Text = "    2.CS制袋";
             this.CSbagBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.CSbagBtn.UseVisualStyleBackColor = true;
             this.CSbagBtn.Click += new System.EventHandler(this.CSbagBtn_Click);
@@ -212,7 +212,7 @@
             this.LDPEbagBtn.Name = "LDPEbagBtn";
             this.LDPEbagBtn.Size = new System.Drawing.Size(173, 38);
             this.LDPEbagBtn.TabIndex = 10;
-            this.LDPEbagBtn.Text = "    LDPE制袋";
+            this.LDPEbagBtn.Text = "    1.PE制袋";
             this.LDPEbagBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LDPEbagBtn.UseVisualStyleBackColor = true;
             this.LDPEbagBtn.Click += new System.EventHandler(this.LDPEbagBtn_Click);

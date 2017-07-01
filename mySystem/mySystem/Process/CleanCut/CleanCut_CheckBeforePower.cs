@@ -16,6 +16,10 @@ namespace mySystem.Process.CleanCut
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
+        private int Instructionid;
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false;
 
         private int operator_id;
         private string operator_name;
@@ -28,12 +32,13 @@ namespace mySystem.Process.CleanCut
         {
             InitializeComponent();
 
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
-            operator_id = base.mainform.userID;
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            Instructionid = Parameter.proInstruID;
 
-            operator_name = checkID(operator_id);
 
             CheckDgvInitialize();
             RunRecordDgvInitialize();
@@ -128,46 +133,7 @@ namespace mySystem.Process.CleanCut
 
             RunRecordView.Rows.Add(dr);
         }
-
-
-        private string checkID(int userID)
-        {
-            if (isSqlOk)
-            {
-                string user = null;
-                string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-                SqlCommand comm = new SqlCommand(searchsql, conn);
-                SqlDataReader myReader = comm.ExecuteReader();
-                while (myReader.Read())
-                {
-                    user = myReader.GetString(4);
-                }
-
-                myReader.Close();
-                comm.Dispose();
-                return user;
-            }
-            else
-            {
-                string user = null;
-                OleDbCommand comm = new OleDbCommand();
-                comm.Connection = connOle;
-                comm.CommandText = "select * from user_aoxing where user_id= @ID";
-                comm.Parameters.AddWithValue("@ID", userID);
-
-                OleDbDataReader myReader = comm.ExecuteReader();
-                while (myReader.Read())
-                {
-                    user = myReader.GetString(4);
-                }
-
-                myReader.Close();
-                comm.Dispose();
-                return user;
-            }
-
-        }
-
+                
         private void AddLineBtn_Click(object sender, EventArgs e)
         {
             AddRecordRowLine();
@@ -179,13 +145,20 @@ namespace mySystem.Process.CleanCut
             this.RunRecordView.Rows.RemoveAt(deletenum);            
         }
 
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            review_id = check.userID;
+            review_opinion = check.opinion;
+            ischeckOk = check.ischeckOk;
+        }
+
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            //CheckForm check = new CheckForm(base.mainform);
-            //check.ShowDialog();
-            //review_id = check.userID;
-            //reviewer_name = checkID(review_id);
-            //checkerBox.Text = reviewer_name;
+            check = new CheckForm(this);
+            check.Show();
+            reviewer_name = Parameter.IDtoName(review_id);
+            checkerBox.Text = reviewer_name;
         }        
     }
 }

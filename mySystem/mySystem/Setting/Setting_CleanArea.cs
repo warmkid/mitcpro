@@ -96,7 +96,7 @@ namespace WindowsFormsApplication1
             else
             {
                 string accessql = "select * from cleanarea";
-                OleDbCommand cmd = new OleDbCommand(accessql, connOle);
+                OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 dt = new DataTable();
                 data.Fill(dt);
@@ -170,7 +170,7 @@ namespace WindowsFormsApplication1
             else
             {
                 string accessql = "delete * from cleanarea";
-                OleDbCommand cmd = new OleDbCommand(accessql, mainform.connOle);
+                OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 cmd.ExecuteNonQuery();
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {

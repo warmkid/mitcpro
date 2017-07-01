@@ -16,6 +16,10 @@ namespace mySystem.Extruction.Process
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
+        private int Instructionid;
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false;
 
         private int operator_id;
         private string operator_name;
@@ -27,10 +31,12 @@ namespace mySystem.Extruction.Process
         {
             InitializeComponent();
 
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
-            operator_id = base.mainform.userID;
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            Instructionid = Parameter.proInstruID;
 
             DgvInitialize();
 
@@ -78,7 +84,6 @@ namespace mySystem.Extruction.Process
                 this.ReplaceCoreView.Rows.Add(rowArray);
             }
         }
-
-
+        
     }
 }

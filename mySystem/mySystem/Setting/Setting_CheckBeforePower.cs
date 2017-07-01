@@ -23,9 +23,9 @@ namespace mySystem.Setting
 
         public Setting_CheckBeforePower(mySystem.MainForm mainform) : base(mainform)
         {
-            conn = mainform.conn;
-            connOle = mainform.connOle;
-            isSqlOk = mainform.isSqlOk;
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
 
             InitializeComponent();
             Init();
@@ -40,7 +40,7 @@ namespace mySystem.Setting
 
             if (isSqlOk)
             {
-                SqlCommand comm = new SqlCommand("Select * From "+tableSel, conn);
+                SqlCommand comm = new SqlCommand("Select * From " + tableSel, conn);
                 SqlDataAdapter da = new SqlDataAdapter(comm);
                 dt = new DataTable();
                 da.Fill(dt);

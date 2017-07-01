@@ -13,6 +13,9 @@ namespace mySystem.Process.CleanCut
 {
     public partial class CleanCutMainForm : BaseForm
     {
+        string instruction = null;
+        int instruID = 0;
+
         public CleanCutMainForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
@@ -86,7 +89,16 @@ namespace mySystem.Process.CleanCut
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Parameter.cleancutInstruction = comboBox1.SelectedItem.ToString();
+            instruction = comboBox1.SelectedItem.ToString();
+            Parameter.cleancutInstruction = instruction;
+            String tblName = "production_instruction";
+            List<String> queryCols = new List<String>(new String[] { "instruction_id" });
+            List<String> whereCols = new List<String>(new String[] { "instruction_code" });
+            List<Object> whereVals = new List<Object>(new Object[] { instruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            instruID = Convert.ToInt32(res[0][0]);
+            Parameter.cleancutInstruID = instruID;
+
         }
 
 

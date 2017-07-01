@@ -19,10 +19,10 @@ namespace mySystem.Extruction.Process
 
         private String table = "extrusion_s2_confirm";
         private String tableSel = "confirmarea";
-
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
+        private int Instructionid;
 
         private int checknum = 0;
         private bool[] checklist;
@@ -34,14 +34,20 @@ namespace mySystem.Extruction.Process
         private string reviewer_name;
         private DateTime review_date;
 
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false; 
+
         public ExtructionCheckBeforePowerStep2(MainForm mainform): base(mainform)
         {
             InitializeComponent();
 
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
-            operator_id = base.mainform.userID;
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            Instructionid = Parameter.proInstruID;
 
             if (isSqlOk) { operator_name = checkIDSql(operator_id); }
             else { operator_name = checkIDOle(operator_id); }  
@@ -189,41 +195,49 @@ namespace mySystem.Extruction.Process
             else { DataSaveOle(); }
         }
 
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            review_id = check.userID;
+            review_opinion = check.opinion;
+            ischeckOk = check.ischeckOk;
+        }
+
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            //CheckForm check = new CheckForm(base.mainform);
-            //check.ShowDialog();
-            //review_id = check.userID;
-            //if (isSqlOk)
-            //{
-            //    int result = 0;
-            //    SqlCommand comm = new SqlCommand();
-            //    comm.Connection = conn;
-            //    comm.CommandText = "update extrusion set s2_reviewer_id=@s2_reviewer_id, s2_review_date=@s2_review_date where id=1";
+            check = new CheckForm(this);
+            check.ShowDialog();
 
-            //    comm.Parameters.Add("@s2_reviewer_id", System.Data.SqlDbType.Int);
-            //    comm.Parameters.Add("@s2_review_date", System.Data.SqlDbType.Date);
-            //    comm.Parameters["@s2_reviewer_id"].Value = review_id;
-            //    comm.Parameters["@s2_review_date"].Value = checkTimePicker.Value;
+            if (isSqlOk)
+            {
+                int result = 0;
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = conn;
+                comm.CommandText = "update extrusion set s2_reviewer_id=@s2_reviewer_id, s2_review_date=@s2_review_date where id=1";
 
-            //    result = comm.ExecuteNonQuery();
-            //    /*
-            //    if (result > 0)
-            //    { MessageBox.Show("添加成功"); }
-            //    else { MessageBox.Show("错误"); }
-            //     * */
-            //    comm.Dispose();
-            //}
-            //else
-            //{
-            //    List<String> queryCols = new List<String>(new String[] { "s2_reviewer_id", "s2_review_date" });
-            //    List<Object> queryVals = new List<Object>(new Object[] { review_id, checkTimePicker.Value });
-            //    List<String> whereCols = new List<String>(new String[] { "id" });
-            //    List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            //    Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-            //    reviewer_name = checkIDOle(review_id);
-            //}
-            //checkerBox.Text = reviewer_name;
+                comm.Parameters.Add("@s2_reviewer_id", System.Data.SqlDbType.Int);
+                comm.Parameters.Add("@s2_review_date", System.Data.SqlDbType.Date);
+                comm.Parameters["@s2_reviewer_id"].Value = review_id;
+                comm.Parameters["@s2_review_date"].Value = checkTimePicker.Value;
+
+                result = comm.ExecuteNonQuery();
+                /*
+                if (result > 0)
+                { MessageBox.Show("添加成功"); }
+                else { MessageBox.Show("错误"); }
+                 * */
+                comm.Dispose();
+            }
+            else
+            {
+                List<String> queryCols = new List<String>(new String[] { "s2_reviewer_id", "s2_review_date" });
+                List<Object> queryVals = new List<Object>(new Object[] { review_id, checkTimePicker.Value });
+                List<String> whereCols = new List<String>(new String[] { "id" });
+                List<Object> whereVals = new List<Object>(new Object[] { 1 });
+                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
+                reviewer_name = checkIDOle(review_id);
+            }
+            checkerBox.Text = reviewer_name;
         }
         
         private string checkIDSql(int userID)

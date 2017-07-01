@@ -46,7 +46,8 @@ namespace mySystem.Setting
 
         private void ExtruSetBtn_Click(object sender, EventArgs e)
         {
-            
+            Parameter.selectCon = 1;
+            Parameter.InitCon();
             ExtruSetBtn.BackColor = Color.FromArgb(138, 158, 196);
             SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
             PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
