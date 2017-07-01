@@ -275,7 +275,6 @@ namespace mySystem.Extruction.Process
             }
         }
 
-
         //更新序号
         private void RefreshNum()
         {
@@ -655,12 +654,6 @@ namespace mySystem.Extruction.Process
             review_id = check.userID;
             review_opinion = check.opinion;
             ischeckOk = check.ischeckOk;
-        }
-
-        private void CheckBtn_Click(object sender, EventArgs e)
-        {
-            check = new CheckForm(this);
-            check.Show();
             reviewer_name = Parameter.IDtoName(review_id);
 
             if (isSqlOk)
@@ -673,11 +666,17 @@ namespace mySystem.Extruction.Process
                 List<String> whereCols = new List<String>(new String[] { "product_name", "s6_production_date", "s6_flight" });
                 //List<Object> whereVals = new List<Object>(new Object[] { Convert.ToInt32(batchIdBox.Text.ToString()), Convert.ToInt32(instructionIdBox.Text.ToString()), productiondate.Date, DatecheckBox.Checked });
                 List<Object> whereVals = new List<Object>(new Object[] { productnamecomboBox.Text.ToString(), Convert.ToDateTime(productionDatePicker.Value.ToString("yyyy/MM/dd")), DatecheckBox.Checked });
-                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);                
+                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
             }
             CheckerBox.Text = reviewer_name;
             printBtn.Enabled = true;
            
+        }
+
+        private void CheckBtn_Click(object sender, EventArgs e)
+        {
+            check = new CheckForm(this);
+            check.Show();
         }
 
         private void productnamecomboBox_SelectedIndexChanged(object sender, EventArgs e)
