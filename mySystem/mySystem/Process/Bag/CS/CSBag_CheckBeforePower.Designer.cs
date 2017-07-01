@@ -88,7 +88,7 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Title.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Title.Location = new System.Drawing.Point(478, 9);
             this.Title.Name = "Title";
             this.Title.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -112,6 +112,7 @@
             this.CheckView.RowTemplate.Height = 23;
             this.CheckView.Size = new System.Drawing.Size(1113, 349);
             this.CheckView.TabIndex = 27;
+            this.CheckView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CheckView_CellContentClick);
             // 
             // 序号
             // 
@@ -135,7 +136,7 @@
             // 
             // checkTimePicker
             // 
-            this.checkTimePicker.Font = new System.Drawing.Font("SimSun", 12F);
+            this.checkTimePicker.Font = new System.Drawing.Font("宋体", 12F);
             this.checkTimePicker.Location = new System.Drawing.Point(927, 45);
             this.checkTimePicker.Name = "checkTimePicker";
             this.checkTimePicker.Size = new System.Drawing.Size(200, 26);
@@ -144,7 +145,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label4.Font = new System.Drawing.Font("宋体", 12F);
             this.label4.Location = new System.Drawing.Point(846, 49);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 16);
@@ -153,7 +154,7 @@
             // 
             // recordTimePicker
             // 
-            this.recordTimePicker.Font = new System.Drawing.Font("SimSun", 12F);
+            this.recordTimePicker.Font = new System.Drawing.Font("宋体", 12F);
             this.recordTimePicker.Location = new System.Drawing.Point(327, 44);
             this.recordTimePicker.Name = "recordTimePicker";
             this.recordTimePicker.Size = new System.Drawing.Size(200, 26);
@@ -162,7 +163,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label3.Font = new System.Drawing.Font("宋体", 12F);
             this.label3.Location = new System.Drawing.Point(246, 48);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
@@ -171,7 +172,7 @@
             // 
             // checkerBox
             // 
-            this.checkerBox.Font = new System.Drawing.Font("SimSun", 12F);
+            this.checkerBox.Font = new System.Drawing.Font("宋体", 12F);
             this.checkerBox.Location = new System.Drawing.Point(683, 44);
             this.checkerBox.Name = "checkerBox";
             this.checkerBox.Size = new System.Drawing.Size(100, 26);
@@ -180,7 +181,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label2.Font = new System.Drawing.Font("宋体", 12F);
             this.label2.Location = new System.Drawing.Point(615, 52);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
@@ -189,7 +190,7 @@
             // 
             // recorderBox
             // 
-            this.recorderBox.Font = new System.Drawing.Font("SimSun", 12F);
+            this.recorderBox.Font = new System.Drawing.Font("宋体", 12F);
             this.recorderBox.Location = new System.Drawing.Point(82, 44);
             this.recorderBox.Name = "recorderBox";
             this.recorderBox.Size = new System.Drawing.Size(100, 26);
@@ -198,7 +199,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label1.Font = new System.Drawing.Font("宋体", 12F);
             this.label1.Location = new System.Drawing.Point(14, 48);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
@@ -207,7 +208,7 @@
             // 
             // CheckBtn
             // 
-            this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.CheckBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.CheckBtn.Location = new System.Drawing.Point(1047, 436);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);
@@ -218,7 +219,7 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.SaveBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.SaveBtn.Location = new System.Drawing.Point(955, 436);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
@@ -228,7 +229,7 @@
             // 
             // PSLabel
             // 
-            this.PSLabel.Font = new System.Drawing.Font("SimSun", 12F);
+            this.PSLabel.Font = new System.Drawing.Font("宋体", 12F);
             this.PSLabel.Location = new System.Drawing.Point(11, 433);
             this.PSLabel.Name = "PSLabel";
             this.PSLabel.Size = new System.Drawing.Size(498, 15);

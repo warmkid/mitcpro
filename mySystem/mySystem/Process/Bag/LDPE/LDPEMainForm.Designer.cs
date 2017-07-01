@@ -94,6 +94,7 @@
             this.B1Btn.TabIndex = 12;
             this.B1Btn.Text = "1#制袋工序生产指令";
             this.B1Btn.UseVisualStyleBackColor = true;
+            this.B1Btn.Click += new System.EventHandler(this.B1Btn_Click);
             // 
             // B2Btn
             // 
@@ -104,6 +105,7 @@
             this.B2Btn.TabIndex = 16;
             this.B2Btn.Text = "1#制袋机开机前确认表";
             this.B2Btn.UseVisualStyleBackColor = true;
+            this.B2Btn.Click += new System.EventHandler(this.B2Btn_Click);
             // 
             // B4Btn
             // 
@@ -114,6 +116,7 @@
             this.B4Btn.TabIndex = 15;
             this.B4Btn.Text = "清场记录";
             this.B4Btn.UseVisualStyleBackColor = true;
+            this.B4Btn.Click += new System.EventHandler(this.B4Btn_Click);
             // 
             // B3Btn
             // 
@@ -124,6 +127,7 @@
             this.B3Btn.TabIndex = 11;
             this.B3Btn.Text = "1#制袋机运行记录";
             this.B3Btn.UseVisualStyleBackColor = true;
+            this.B3Btn.Click += new System.EventHandler(this.B3Btn_Click);
             // 
             // A1Btn
             // 
@@ -179,6 +183,7 @@
             this.A2Btn.TabIndex = 16;
             this.A2Btn.Text = "产品内包装记录";
             this.A2Btn.UseVisualStyleBackColor = true;
+            this.A2Btn.Click += new System.EventHandler(this.A2Btn_Click);
             // 
             // A4Btn
             // 
@@ -199,6 +204,7 @@
             this.A3Btn.TabIndex = 11;
             this.A3Btn.Text = "LDPE生产日报表";
             this.A3Btn.UseVisualStyleBackColor = true;
+            this.A3Btn.Click += new System.EventHandler(this.A3Btn_Click);
             // 
             // LDPEMainForm
             // 

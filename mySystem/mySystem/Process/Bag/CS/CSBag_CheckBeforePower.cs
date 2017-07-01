@@ -106,5 +106,10 @@ namespace mySystem.Process.Bag
             checkerBox.Text = reviewer_name;
         }
 
+        private void CheckView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
     }
 }
