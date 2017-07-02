@@ -14,6 +14,7 @@ namespace mySystem
         public static int userID; //登录人ID
         public static string userName; //登录用户名
         public static int userRole; //登录用户角色（权限）
+        public static bool userflight; //登录人班次
 
         public static SqlConnection conn;
         public static OleDbConnection connOle;
@@ -31,51 +32,9 @@ namespace mySystem
         static string strConn;
         static bool isOk = false;
 
-        public static void InitConUser()
-        {
-            if (!isSqlOk)
-            {
-                string strsql = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
-                connOleUser = Init(strsql, connOleUser);
+        
 
-            }
-            else
-            {
-                connUser = Init(connUser);
-            }
-        }
-
-        public static void InitCon()
-        {            
-            if (!isSqlOk)
-            {
-                switch (selectCon)
-                {
-                    case 1:  //吹膜
-                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
-                        connOle = Init(strConn, connOle);
-                        break;
-                    case 2:  //清洁分切
-                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Cleancut.mdb;Persist Security Info=False";
-                        connOle = Init(strConn, connOle);
-                        break;
-                    case 3:  //CS制袋
-                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
-                        connOle = Init(strConn, connOle);
-                        break;
-                }
-            }
-            else
-            {
-                conn = Init(conn);  
-            }
-            
-        }
-
+        //通过id查名字
         public static string IDtoName(int id)
         {
             string name = null;
@@ -103,6 +62,7 @@ namespace mySystem
             return name;
         }
 
+        //通过名字查id
         public static int NametoID(string name)
         {
             int id = 0;
@@ -138,7 +98,98 @@ namespace mySystem
             return id;
         }
 
-        
+        //通过id查班次
+        public static bool IDtoFlight(int id)
+        {
+            bool flight = false;
+            if (!isSqlOk)
+            {
+                string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                OleDbConnection myConn = new OleDbConnection(strCon);
+                myConn.Open();
+                String tblName = "user_aoxing";
+                List<String> queryCols = new List<String>(new String[] { "flight" });
+                List<String> whereCols = new List<String>(new String[] { "user_id" });
+                List<Object> whereVals = new List<Object>(new Object[] { id });
+                List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                flight = Convert.ToBoolean(res[0][0]);
+                myConn.Dispose();
+            }  
+
+            return flight; 
+        }
+
+        //通过id查用户角色（权限）
+        public static int IDtoRole(int id)
+        {
+            int role = 0;
+            if (!isSqlOk)
+            {
+                string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                OleDbConnection myConn = new OleDbConnection(strCon);
+                myConn.Open();
+                String tblName = "user_aoxing";
+                List<String> queryCols = new List<String>(new String[] { "role_id" });
+                List<String> whereCols = new List<String>(new String[] { "user_id" });
+                List<Object> whereVals = new List<Object>(new Object[] { id });
+                List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                role = Convert.ToInt32(res[0][0]);
+                myConn.Dispose();
+            }           
+            return role;
+        }
+
+
+
+        //初始化连接有用户表的数据库
+        public static void InitConnUser()
+        {
+            if (!isSqlOk)
+            {
+                string strsql = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                connOleUser = Init(strsql, connOleUser);
+
+            }
+            else
+            {
+                connUser = Init(connUser);
+            }
+        }
+
+        public static void InitCon()
+        {
+            if (!isSqlOk)
+            {
+                switch (selectCon)
+                {
+                    case 1:  //吹膜
+                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                        connOle = Init(strConn, connOle);
+                        break;
+                    case 2:  //清洁分切
+                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Cleancut.mdb;Persist Security Info=False";
+                        connOle = Init(strConn, connOle);
+                        break;
+                    case 3:  //CS制袋
+                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
+                        connOle = Init(strConn, connOle);
+                        break;
+                }
+            }
+            else
+            {
+                conn = Init(conn);
+            }
+
+        }
+
+
         private static SqlConnection connToServer(string connectStr)
         {
             SqlConnection myConnection;

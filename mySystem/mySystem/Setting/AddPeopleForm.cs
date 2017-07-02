@@ -68,7 +68,7 @@ namespace mySystem.Setting
             string useridstr = IDtextBox.Text.Trim();           
             username = NametextBox.Text.Trim();
             password = PWtextBox.Text.Trim();
-            if (username == "" || password == "" || useridstr == ""|| flight == "" || role == "")
+            if (username == "" || password == "" || useridstr == "" || comboBox1.SelectedIndex == -1 || comboBox2.SelectedIndex == -1)
             {
                 MessageBox.Show("员工信息不能为空", "错误");
                 return;

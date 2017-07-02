@@ -25,7 +25,7 @@ namespace mySystem
         {
             bs = mainform;
             InitializeComponent();
-            Parameter.InitConUser();
+            Parameter.InitConnUser();
 
         }
 
@@ -94,23 +94,34 @@ namespace mySystem
 
         private int CheckUser(SqlConnection Connection, string ID, string password)
         {
-            string searchsql = "select * from user_aoxing where user_id='" + ID + "'and user_password='" + password + "'";
+            string searchsql = "select * from user_aoxing where user_id='" + ID + "'";
             SqlCommand comm = new SqlCommand(searchsql, Connection);
             SqlDataReader sdr = comm.ExecuteReader();//执行查询
             if (sdr.Read())  //如果该用户存在
             {
-                userID = sdr.GetInt32(3);
-                userName = sdr.GetString(4);
-                comm.Dispose();
-                sdr.Close();
-                sdr.Dispose();
-                //this.Hide();
-                return userID;
-
+                if (sdr.GetString(5).Trim() == password) //密码正确
+                {
+                    //MessageBox.Show("登录成功！", "提示");
+                    userID = sdr.GetInt32(3);
+                    comm.Dispose();
+                    sdr.Close();
+                    sdr.Dispose();
+                    this.Hide();
+                    return userID;
+                }
+                else         //密码错误
+                {
+                    MessageBox.Show("您输入的密码有误，请重新输入！", "警告");
+                    this.CheckerPWTextBox.Text = null;
+                    this.CheckerPWTextBox.Focus();
+                    sdr.Close();
+                    sdr.Dispose();
+                    return 0;
+                }
             }
             else
             {
-                MessageBox.Show("输入登录信息不正确，请重新输入！", "警告");
+                MessageBox.Show("该用户不存在，请检查后重新输入！", "警告");
                 this.CheckerIDTextBox.Text = null;
                 this.CheckerPWTextBox.Text = null;
                 CheckerIDTextBox.Focus();
@@ -120,32 +131,42 @@ namespace mySystem
 
             }
 
-        }
 
+        }
 
         private int CheckUser(OleDbConnection Connection, string ID, string password)
         {
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Connection;
-            comm.CommandText = "select * from user_aoxing where user_id= @ID and user_password= @password";
+            comm.CommandText = "select * from user_aoxing where user_id= @ID";
             comm.Parameters.AddWithValue("@ID", ID);
-            comm.Parameters.AddWithValue("@password", password);
 
             OleDbDataReader sdr = comm.ExecuteReader();//执行查询
             if (sdr.Read())  //如果该用户存在
             {
-                userID = sdr.GetInt32(3);
-                userName = sdr.GetString(4);
-                comm.Dispose();
-                sdr.Close();
-                sdr.Dispose();
-                //this.Hide();
-                return userID;
-
+                if (sdr.GetString(5).Trim() == password) //密码正确
+                {
+                    //MessageBox.Show("登录成功！", "提示");
+                    userID = sdr.GetInt32(3);
+                    comm.Dispose();
+                    sdr.Close();
+                    sdr.Dispose();
+                    this.Hide();
+                    return userID;
+                }
+                else         //密码错误
+                {
+                    MessageBox.Show("您输入的密码有误，请重新输入！", "警告");
+                    this.CheckerPWTextBox.Text = null;
+                    this.CheckerPWTextBox.Focus();
+                    sdr.Close();
+                    sdr.Dispose();
+                    return 0;
+                }
             }
             else
             {
-                MessageBox.Show("输入登录信息不正确，请重新输入！", "警告");
+                MessageBox.Show("该用户不存在，请检查后重新输入！", "警告");
                 this.CheckerIDTextBox.Text = null;
                 this.CheckerPWTextBox.Text = null;
                 CheckerIDTextBox.Focus();
@@ -154,7 +175,6 @@ namespace mySystem
                 return 0;
 
             }
-
         }
 
 
