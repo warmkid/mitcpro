@@ -675,6 +675,15 @@
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_batchproduction.resx">
+      <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_innerpackaging.resx">
+      <DependentUpon>PTVBag_innerpackaging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_materialrecord.resx">
+      <DependentUpon>PTVBag_materialrecord.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVMainForm.resx">
       <DependentUpon>PTVMainForm.cs</DependentUpon>
     </EmbeddedResource>

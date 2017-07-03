@@ -15,5 +15,17 @@ namespace mySystem.Process.Bag.PTV
         {
             InitializeComponent();
         }
+
+        private void A1Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_materialrecord material = new PTVBag_materialrecord();
+            material.Show();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            PTVBag_batchproduction batch = new PTVBag_batchproduction();
+            batch.Show();
+        }
     }
 }
