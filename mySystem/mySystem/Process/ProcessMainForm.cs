@@ -11,6 +11,7 @@ using System.Data.OleDb;
 using mySystem.Process.Bag;
 using mySystem.Process.CleanCut;
 using mySystem.Process.Bag.LDPE;
+using mySystem.Process.Bag.PTV;
 
 namespace mySystem
 {
@@ -255,6 +256,12 @@ namespace mySystem
             PTVbagBtn.BackColor = Color.FromArgb(138, 158, 196);
             BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
             bag6Btn.BackColor = Color.FromName("ControlLightLight");
+            PTVMainForm myDlg = new PTVMainForm();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         //BTV制袋
