@@ -86,7 +86,7 @@ namespace mySystem
                 opinion = OpTextBox.Text;
                 ischeckOk = false;
                 time = DateTime.Now;
-                base.CheckResult();
+                bs.CheckResult();
                 this.Dispose();
             }
         }

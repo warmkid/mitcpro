@@ -32,7 +32,6 @@ namespace mySystem.Extruction.Process
         //private int checknum = 0;
         //private bool[] checklist;
 
-
         private int operator_id;
         private string operator_name;
         private DateTime operate_date;
@@ -108,6 +107,7 @@ namespace mySystem.Extruction.Process
                     dr.Cells[1].Value = dt_confirmarea.Rows[i]["确认项目"].ToString(); //确认项目
                     dr.Cells[2].Value = " " + dt_confirmarea.Rows[i]["确认内容"].ToString(); ; //确认内容
                     dr.Cells[3].Value = true;
+                    dr.Cells[4].Value = false;
                     CheckBeforePowerView.Rows.Add(dr);
                 }
                 SaveBtn.Enabled = true;
@@ -152,7 +152,8 @@ namespace mySystem.Extruction.Process
                         CheckBeforePowerView.ReadOnly = false;
                     }
                     printBtn.Enabled = true;
-                    CheckBeforePowerView.Columns["确认结果"].ReadOnly = true;
+                    CheckBeforePowerView.Columns["确认结果Y"].ReadOnly = true;
+                    CheckBeforePowerView.Columns["确认结果N"].ReadOnly = true;
                 }
                 else
                 {
@@ -178,6 +179,7 @@ namespace mySystem.Extruction.Process
                     dr.Cells[1].Value = ss["s2_确认项目"].ToString(); //确认项目
                     dr.Cells[2].Value = " " + ss["s2_确认内容"].ToString(); //确认内容
                     dr.Cells[3].Value = ss["s2_确认结果"].ToString() == "1" ? true : false;
+                    dr.Cells[4].Value = ss["s2_确认结果"].ToString() == "1" ? false : true;
                     CheckBeforePowerView.Rows.Add(dr);
                     i++;
                 }
@@ -203,7 +205,8 @@ namespace mySystem.Extruction.Process
             this.CheckBeforePowerView.Columns[1].MinimumWidth = 160;
             this.CheckBeforePowerView.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.CheckBeforePowerView.Columns[3].MinimumWidth = 80;
-            for (int i = 0; i < this.CheckBeforePowerView.Columns.Count - 2; i++)
+            this.CheckBeforePowerView.Columns[4].MinimumWidth = 80;
+            for (int i = 0; i < this.CheckBeforePowerView.Columns.Count - 3; i++)
             {
                 this.CheckBeforePowerView.Columns[i].ReadOnly = true;
             }
@@ -225,7 +228,7 @@ namespace mySystem.Extruction.Process
             for (int i = 0; i < 14; i++)
             {
                 comm.Parameters.Add("@s2_item" + (i + 1).ToString() + "_qualified", System.Data.SqlDbType.Bit);
-                comm.Parameters["@s2_item" + (i + 1).ToString() + "_qualified"].Value = (this.CheckBeforePowerView.Rows[i].Cells["确认结果"].Value.ToString() == "True" ? true : false);
+                comm.Parameters["@s2_item" + (i + 1).ToString() + "_qualified"].Value = (this.CheckBeforePowerView.Rows[i].Cells["确认结果Y"].Value.ToString() == "True" ? true : false);
             }
             comm.Parameters.Add("@s2_operator_id", System.Data.SqlDbType.Int);
             comm.Parameters.Add("@s2_operate_date", System.Data.SqlDbType.Date);
@@ -261,7 +264,7 @@ namespace mySystem.Extruction.Process
                 JObject j = JObject.Parse(json);
                 j.Add("s2_确认项目", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认项目"].Value.ToString()));
                 j.Add("s2_确认内容", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认内容"].Value.ToString()));
-                j.Add("s2_确认结果", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认结果"].Value.ToString() == "True" ? "1" : "0"));
+                j.Add("s2_确认结果", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认结果Y"].Value.ToString() == "True" ? "1" : "0"));
                 jarray.Add(j);
             }
 
@@ -286,9 +289,39 @@ namespace mySystem.Extruction.Process
 
         private void CheckBeforePowerView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (e.RowIndex >= 0 && e.RowIndex != -1 && !CheckBeforePowerView.Rows[e.RowIndex].IsNewRow)
+            {
+                if (e.ColumnIndex == 3)
+                {
+                    if ((bool)this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value == true)
+                    {
+                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = false;
+                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = true;
+                    }
+                    else
+                    {
+                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = true;
+                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = false;
+                    }
+                }
+                else if (e.ColumnIndex == 4)
+                {
+                    if ((bool)this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value == true)
+                    {
+                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = true;
+                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = false;
+                    }
+                    else
+                    {
+                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = false;
+                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = true;
+                    }
+                }
+                else
+                { }
+            }      
         }
-
+        
         private void SaveBtn_Click(object sender, EventArgs e)
         {            
             if (isSqlOk) { DataSaveSql(); }
@@ -302,6 +335,7 @@ namespace mySystem.Extruction.Process
             reviewer_name = Parameter.IDtoName(review_id);
             review_opinion = check.opinion;
             ischeckOk = check.ischeckOk;
+
             if (isSqlOk)
             {
                 int result = 0;
