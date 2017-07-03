@@ -124,12 +124,14 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(265, 519);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(90, 29);
             this.button1.TabIndex = 51;
             this.button1.Text = "复核";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label7
@@ -168,6 +170,7 @@
             // 
             // btnDefault
             // 
+            this.btnDefault.Enabled = false;
             this.btnDefault.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnDefault.Location = new System.Drawing.Point(36, 519);
             this.btnDefault.Margin = new System.Windows.Forms.Padding(4);
@@ -176,6 +179,7 @@
             this.btnDefault.TabIndex = 47;
             this.btnDefault.Text = "设置";
             this.btnDefault.UseVisualStyleBackColor = true;
+            this.btnDefault.Visible = false;
             this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
             // 
             // panel1
