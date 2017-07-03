@@ -45,6 +45,7 @@
             this.确认内容 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.确认结果 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Title = new System.Windows.Forms.Label();
+            this.printBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CheckBeforePowerView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -123,18 +124,18 @@
             // CheckBtn
             // 
             this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.CheckBtn.Location = new System.Drawing.Point(1060, 490);
+            this.CheckBtn.Location = new System.Drawing.Point(965, 491);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);
             this.CheckBtn.TabIndex = 8;
-            this.CheckBtn.Text = "审核通过";
+            this.CheckBtn.Text = "审核";
             this.CheckBtn.UseVisualStyleBackColor = true;
             this.CheckBtn.Click += new System.EventHandler(this.CheckBtn_Click);
             // 
             // SaveBtn
             // 
             this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.SaveBtn.Location = new System.Drawing.Point(968, 490);
+            this.SaveBtn.Location = new System.Drawing.Point(873, 491);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
             this.SaveBtn.TabIndex = 7;
@@ -200,11 +201,22 @@
             this.Title.Text = "吹膜机组开机前确认表";
             this.Title.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // printBtn
+            // 
+            this.printBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.printBtn.Location = new System.Drawing.Point(1060, 491);
+            this.printBtn.Name = "printBtn";
+            this.printBtn.Size = new System.Drawing.Size(80, 30);
+            this.printBtn.TabIndex = 17;
+            this.printBtn.Text = "打印";
+            this.printBtn.UseVisualStyleBackColor = true;
+            // 
             // ExtructionCheckBeforePowerStep2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 532);
+            this.Controls.Add(this.printBtn);
             this.Controls.Add(this.checkTimePicker);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.recordTimePicker);
@@ -246,5 +258,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 确认项目;
         private System.Windows.Forms.DataGridViewTextBoxColumn 确认内容;
         private System.Windows.Forms.DataGridViewCheckBoxColumn 确认结果;
+        private System.Windows.Forms.Button printBtn;
     }
 }

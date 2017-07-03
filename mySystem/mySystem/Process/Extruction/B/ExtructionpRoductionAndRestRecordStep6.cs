@@ -15,14 +15,16 @@ namespace mySystem.Extruction.Process
 {
     public partial class ExtructionpRoductionAndRestRecordStep6 : BaseForm
     {
-        private DataTable dtInformation = new DataTable();
-        //private DataTable dtRecord = new DataTable();
+        //private DataTable dtInformation = new DataTable();
 
         private String table = "extrusion_s6_production_check";
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
         private int Instructionid;
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false;
 
         private int operator_id;
         private string operator_name;
@@ -34,10 +36,7 @@ namespace mySystem.Extruction.Process
 
         private int[] sum = { 0, 0 };
 
-        private CheckForm check = null;
-        private string review_opinion;
-        private bool ischeckOk = false;
-
+        //审核通过的话，审核按钮还可点吗？
         public ExtructionpRoductionAndRestRecordStep6(MainForm mainform): base(mainform)
         {
             InitializeComponent();
@@ -49,7 +48,7 @@ namespace mySystem.Extruction.Process
             operator_name = Parameter.userName;
             Instructionid = Parameter.proInstruID;
 
-            spot = true; //需要从Parameter里面读取，暂无
+            spot = Parameter.userflight; //需要从Parameter里面读取，暂无
             
             Init();
 
@@ -86,7 +85,8 @@ namespace mySystem.Extruction.Process
                     }
                 }
             }
-            productnamecomboBox.SelectedIndex = 0;
+            //产品名称的初始化
+            productnamecomboBox.SelectedIndex = -1;
             //班次初始化
             this.DatecheckBox.Checked = spot;
             this.NightcheckBox.Checked = !spot;
@@ -518,27 +518,27 @@ namespace mySystem.Extruction.Process
         //显示数据
         public void DataShow(String Production_name, DateTime searchDate, Boolean searchFlight)
         {
-            List<String> queryCols = new List<String>(new String[] { "s6_check_info", "product_batch_id", "s6_temperature", "s6_relative_humidity", "s6_reviewer_id" });
-            //List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), Convert.ToInt32(batchIdBox.Text.ToString()), Convert.ToInt32(instructionIdBox.Text.ToString()), Convert.ToInt32(temperatureBox.Text.ToString()), Convert.ToInt32(humidityBox.Text.ToString()) });
-            //List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), instructionIdBox.SelectedText.ToString(), Convert.ToInt32(instructionIdBox.Text.ToString()), Convert.ToInt32(temperatureBox.Text.ToString()), Convert.ToInt32(humidityBox.Text.ToString()) });
-
-            List<String> whereCols = new List<String>(new String[] { "product_name", "s6_production_date", "s6_flight" });
-            //List<Object> whereVals = new List<Object>(new Object[] { Production_name, searchDate.Date, searchFlight });
+            List<String> queryCols = new List<String>(new String[] { "s6_check_info", "product_batch_id", "s6_temperature", "s6_relative_humidity", "s6_reviewer_id", "s6_is_review_qualified" });
+            List<String> whereCols = new List<String>(new String[] { "product_name", "s6_production_date", "s6_flight" });     
             List<Object> whereVals = new List<Object>(new Object[] { Production_name, Convert.ToDateTime(searchDate.Date.ToString("yyyy/MM/dd")), searchFlight });
             List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
 
             if (queryValsList.Count == 0)
             {
-                RecordViewInitialize();
-                RecordView.Rows.Clear();
                 Recordnum = 0;
-                AddRecordRowLine();
+                RecordViewInitialize();
+                RecordView.Rows.Clear();                
+                AddRecordRowLine();                
+                getTotal();
 
+                ischeckOk = false;
+                review_id = 0;
+                reviewer_name = "";
+                CheckerBox.Text = reviewer_name;
                 batchIdBox.Text = "";
                 temperatureBox.Text = "";
                 humidityBox.Text = "";
-                CheckerBox.Text = "";
-
+                
                 AddLineBtn.Enabled = false;
                 DelLineBtn.Enabled = false;
                 SaveBtn.Enabled = true;
@@ -555,7 +555,30 @@ namespace mySystem.Extruction.Process
                 batchIdBox.Text = queryValsList[0][1].ToString();
                 temperatureBox.Text = queryValsList[0][2].ToString();
                 humidityBox.Text = queryValsList[0][3].ToString();
-                CheckerBox.Text = Parameter.IDtoName(Convert.ToInt32(queryValsList[0][4].ToString()));
+                review_id = Convert.ToInt32(queryValsList[0][4].ToString());
+                ischeckOk = Convert.ToBoolean(queryValsList[0][5].ToString());
+                reviewer_name = Parameter.IDtoName(review_id);
+                CheckerBox.Text = reviewer_name;
+                AddLineBtn.Enabled = true;
+                DelLineBtn.Enabled = false;
+                SaveBtn.Enabled = false;
+                CheckBtn.Enabled = true;
+
+                /*
+                if (reviewer_name == null)
+                {
+                    MessageBox.Show("空的");
+                }
+                */
+
+                if (ischeckOk)
+                {
+                    printBtn.Enabled = true; 
+                }
+                else
+                {
+                    printBtn.Enabled = false; 
+                }
 
                 //解析jason
                 JArray jo = JArray.Parse(queryValsList[0][0].ToString());
@@ -593,11 +616,6 @@ namespace mySystem.Extruction.Process
                 }
                 Recordnum = RecordView.RowCount - 1;
                 RecordView.Rows[Recordnum].ReadOnly = true;
-                AddLineBtn.Enabled = true;
-                DelLineBtn.Enabled = false;
-                CheckBtn.Enabled = false;
-                SaveBtn.Enabled = false;
-                printBtn.Enabled = false;                
             }
             getTotal();
         }
@@ -664,7 +682,6 @@ namespace mySystem.Extruction.Process
                 List<String> queryCols = new List<String>(new String[] { "s6_reviewer_id", "s6_review_opinion", "s6_is_review_qualified" });
                 List<Object> queryVals = new List<Object>(new Object[] { review_id, review_opinion, ischeckOk });
                 List<String> whereCols = new List<String>(new String[] { "product_name", "s6_production_date", "s6_flight" });
-                //List<Object> whereVals = new List<Object>(new Object[] { Convert.ToInt32(batchIdBox.Text.ToString()), Convert.ToInt32(instructionIdBox.Text.ToString()), productiondate.Date, DatecheckBox.Checked });
                 List<Object> whereVals = new List<Object>(new Object[] { productnamecomboBox.Text.ToString(), Convert.ToDateTime(productionDatePicker.Value.ToString("yyyy/MM/dd")), DatecheckBox.Checked });
                 Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
             }
