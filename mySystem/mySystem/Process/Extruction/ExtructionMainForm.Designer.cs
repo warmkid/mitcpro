@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.A5Btn = new System.Windows.Forms.Button();
             this.A2Btn = new System.Windows.Forms.Button();
             this.A4Btn = new System.Windows.Forms.Button();
@@ -56,6 +57,7 @@
             this.D2Btn = new System.Windows.Forms.Button();
             this.D4Btn = new System.Windows.Forms.Button();
             this.D3Btn = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -391,6 +393,11 @@
             this.D3Btn.UseVisualStyleBackColor = true;
             this.D3Btn.Click += new System.EventHandler(this.D3Btn_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // ExtructionMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -405,6 +412,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ExtructionMainForm";
             this.Text = "ExtructionMainForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExtructionMainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ExtructionMainForm_FormClosed);
+            this.VisibleChanged += new System.EventHandler(this.ExtructionMainForm_VisibleChanged);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
@@ -444,5 +454,6 @@
         private System.Windows.Forms.Button B6Btn;
         private System.Windows.Forms.Button B9Btn;
         private System.Windows.Forms.Button B7Btn;
+        private System.Windows.Forms.Timer timer1;
     }
 }

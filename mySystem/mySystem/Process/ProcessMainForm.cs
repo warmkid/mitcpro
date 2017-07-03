@@ -21,6 +21,11 @@ namespace mySystem
         OleDbConnection connOle = null;
         bool isSqlOk;
         MainForm mform = null;
+        public ExtructionMainForm extruform = null;
+        CleanCutMainForm cleancutform = null;
+        CSBagMainForm csbagform = null;
+        LDPEMainForm ldpebagform = null;
+        PTVMainForm ptvbagform = null;
 
         public ProcessMainForm(MainForm mainform):base(mainform)
         {
@@ -30,7 +35,6 @@ namespace mySystem
             connOle = mainform.connOle;
             isSqlOk = mainform.isSqlOk;
             RoleInit();
-
         }
 
         private void RoleInit()
@@ -51,6 +55,7 @@ namespace mySystem
             }
         }
 
+        
 
         //吹膜
         private void ExtructionBtn_Click(object sender, EventArgs e)
@@ -66,12 +71,16 @@ namespace mySystem
             StockBtn.BackColor = Color.FromName("ControlLightLight");
             bagBtnColor();
             ProducePanelRight.Controls.Clear();
-            ExtructionMainForm myDlg = new ExtructionMainForm(mform);
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = ProducePanelRight.Size;
-            ProducePanelRight.Controls.Add(myDlg);
-            myDlg.Show();
+
+            if (extruform == null || extruform.IsDisposed)
+            { extruform = new ExtructionMainForm(mform); }
+                       
+            extruform.TopLevel = false;
+            extruform.FormBorderStyle = FormBorderStyle.None;
+            extruform.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(extruform);
+            extruform.Show();
+            extruform.Visible = true;
         }
 
         //清洁分切
@@ -88,12 +97,21 @@ namespace mySystem
             StockBtn.BackColor = Color.FromName("ControlLightLight");
             bagBtnColor();
             ProducePanelRight.Controls.Clear();
-            CleanCutMainForm myDlg = new CleanCutMainForm(mform);
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = ProducePanelRight.Size;
-            ProducePanelRight.Controls.Add(myDlg);
-            myDlg.Show();
+            
+            if (extruform != null)
+            {
+                extruform.Visible = false;
+                //extruform.Close(); 
+            }
+
+            if (cleancutform == null || cleancutform.IsDisposed)
+            { cleancutform = new CleanCutMainForm(mform); }           
+            cleancutform.TopLevel = false;
+            cleancutform.FormBorderStyle = FormBorderStyle.None;
+            cleancutform.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(cleancutform);
+            cleancutform.Show();
+            cleancutform.Visible = true;
         }
 
         //制袋
@@ -124,6 +142,114 @@ namespace mySystem
 
         }
 
+        //CS制袋
+        private void CSbagBtn_Click(object sender, EventArgs e)
+        {
+            Parameter.selectCon = 3;
+            Parameter.InitCon();
+            ProducePanelRight.Controls.Clear();
+            otherBtnColor();
+            CSbagBtn.BackColor = Color.FromArgb(138, 158, 196);
+            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag3Btn.BackColor = Color.FromName("ControlLightLight");
+            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag6Btn.BackColor = Color.FromName("ControlLightLight");
+
+            if (csbagform == null || csbagform.IsDisposed)
+            { csbagform = new CSBagMainForm(mform); }
+            csbagform.TopLevel = false;
+            csbagform.FormBorderStyle = FormBorderStyle.None;
+            csbagform.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(csbagform);
+            csbagform.Show();
+            csbagform.Visible = true;
+            
+        }
+
+        //LDPE制袋
+        private void LDPEbagBtn_Click(object sender, EventArgs e)
+        {
+            ProducePanelRight.Controls.Clear();
+            otherBtnColor();
+            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
+            LDPEbagBtn.BackColor = Color.FromArgb(138, 158, 196);
+            bag3Btn.BackColor = Color.FromName("ControlLightLight");
+            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag6Btn.BackColor = Color.FromName("ControlLightLight");
+
+            if (ldpebagform == null || ldpebagform.IsDisposed)
+            { ldpebagform = new LDPEMainForm(); }
+            ldpebagform.TopLevel = false;
+            ldpebagform.FormBorderStyle = FormBorderStyle.None;
+            ldpebagform.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(ldpebagform);
+            ldpebagform.Show();
+            ldpebagform.Visible = true;
+        }
+
+        //连续袋
+        private void bag3Btn_Click(object sender, EventArgs e)
+        {
+            ProducePanelRight.Controls.Clear();
+            otherBtnColor();
+            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
+            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag3Btn.BackColor = Color.FromArgb(138, 158, 196);
+            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag6Btn.BackColor = Color.FromName("ControlLightLight");
+        }
+
+        //PTV制袋
+        private void PTVbagBtn_Click(object sender, EventArgs e)
+        {
+            ProducePanelRight.Controls.Clear();
+            otherBtnColor();
+            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
+            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag3Btn.BackColor = Color.FromName("ControlLightLight");
+            PTVbagBtn.BackColor = Color.FromArgb(138, 158, 196);
+            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag6Btn.BackColor = Color.FromName("ControlLightLight");
+
+            if (ptvbagform == null || ptvbagform.IsDisposed)
+            { ptvbagform = new PTVMainForm(); }
+            ptvbagform.TopLevel = false;
+            ptvbagform.FormBorderStyle = FormBorderStyle.None;
+            ptvbagform.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(ptvbagform);
+            ptvbagform.Show();
+            ptvbagform.Visible = true;
+        }
+
+        //BTV制袋
+        private void BTVbagBtn_Click(object sender, EventArgs e)
+        {
+            ProducePanelRight.Controls.Clear();
+            otherBtnColor();
+            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
+            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag3Btn.BackColor = Color.FromName("ControlLightLight");
+            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            BTVbagBtn.BackColor = Color.FromArgb(138, 158, 196);
+            bag6Btn.BackColor = Color.FromName("ControlLightLight");
+        }
+
+        //防护罩
+        private void bag6Btn_Click(object sender, EventArgs e)
+        {
+            ProducePanelRight.Controls.Clear();
+            otherBtnColor();
+            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
+            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag3Btn.BackColor = Color.FromName("ControlLightLight");
+            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
+            bag6Btn.BackColor = Color.FromArgb(138, 158, 196);
+        }
+
         //灭菌
         private void KillBtn_Click(object sender, EventArgs e)
         {
@@ -150,12 +276,12 @@ namespace mySystem
             StockBtn.BackColor = Color.FromName("ControlLightLight");
             bagBtnColor();
             ProducePanelRight.Controls.Clear();
-            PlanForm myDlg = new PlanForm();
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = ProducePanelRight.Size;
-            ProducePanelRight.Controls.Add(myDlg);
-            myDlg.Show();
+            //PlanForm myDlg = new PlanForm();
+            //myDlg.TopLevel = false;
+            //myDlg.FormBorderStyle = FormBorderStyle.None;
+            //myDlg.Size = ProducePanelRight.Size;
+            //ProducePanelRight.Controls.Add(myDlg);
+            //myDlg.Show();
         }
 
         //订单管理
@@ -184,111 +310,15 @@ namespace mySystem
             StockBtn.BackColor = Color.FromArgb(138, 158, 196);
             bagBtnColor();
             ProducePanelRight.Controls.Clear();
-            StockCheckForm myDlg = new StockCheckForm();
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = ProducePanelRight.Size;
-            ProducePanelRight.Controls.Add(myDlg);
-            myDlg.Show();
+            //StockCheckForm myDlg = new StockCheckForm();
+            //myDlg.TopLevel = false;
+            //myDlg.FormBorderStyle = FormBorderStyle.None;
+            //myDlg.Size = ProducePanelRight.Size;
+            //ProducePanelRight.Controls.Add(myDlg);
+            //myDlg.Show();
         }
 
-        //CS制袋
-        private void CSbagBtn_Click(object sender, EventArgs e)
-        {
-            Parameter.selectCon = 3;
-            Parameter.InitCon();
-            ProducePanelRight.Controls.Clear();
-            otherBtnColor();
-            CSbagBtn.BackColor = Color.FromArgb(138, 158, 196);
-            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag3Btn.BackColor = Color.FromName("ControlLightLight");
-            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag6Btn.BackColor = Color.FromName("ControlLightLight");
-            CSBagMainForm myDlg = new CSBagMainForm(mform);
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = ProducePanelRight.Size;
-            ProducePanelRight.Controls.Add(myDlg);
-            myDlg.Show();
-        }
-
-        //LDPE制袋
-        private void LDPEbagBtn_Click(object sender, EventArgs e)
-        {
-            ProducePanelRight.Controls.Clear();
-            otherBtnColor();
-            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
-            LDPEbagBtn.BackColor = Color.FromArgb(138, 158, 196);
-            bag3Btn.BackColor = Color.FromName("ControlLightLight");
-            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag6Btn.BackColor = Color.FromName("ControlLightLight");
-            LDPEMainForm myDlg = new LDPEMainForm();
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = ProducePanelRight.Size;
-            ProducePanelRight.Controls.Add(myDlg);
-            myDlg.Show();
-        }
-
-        //连续袋
-        private void bag3Btn_Click(object sender, EventArgs e)
-        {
-            ProducePanelRight.Controls.Clear();
-            otherBtnColor();
-            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
-            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag3Btn.BackColor = Color.FromArgb(138, 158, 196);
-            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag6Btn.BackColor = Color.FromName("ControlLightLight");
-        }
-
-        //PTV制袋
-        private void PTVbagBtn_Click(object sender, EventArgs e)
-        {
-            ProducePanelRight.Controls.Clear();
-            otherBtnColor();
-            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
-            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag3Btn.BackColor = Color.FromName("ControlLightLight");
-            PTVbagBtn.BackColor = Color.FromArgb(138, 158, 196);
-            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag6Btn.BackColor = Color.FromName("ControlLightLight");
-            PTVMainForm myDlg = new PTVMainForm();
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = ProducePanelRight.Size;
-            ProducePanelRight.Controls.Add(myDlg);
-            myDlg.Show();
-        }
-
-        //BTV制袋
-        private void BTVbagBtn_Click(object sender, EventArgs e)
-        {
-            ProducePanelRight.Controls.Clear();
-            otherBtnColor();
-            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
-            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag3Btn.BackColor = Color.FromName("ControlLightLight");
-            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            BTVbagBtn.BackColor = Color.FromArgb(138, 158, 196);
-            bag6Btn.BackColor = Color.FromName("ControlLightLight");
-        }
-
-        //防护罩
-        private void bag6Btn_Click(object sender, EventArgs e)
-        {
-            ProducePanelRight.Controls.Clear();
-            otherBtnColor();
-            CSbagBtn.BackColor = Color.FromName("ControlLightLight");
-            LDPEbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag3Btn.BackColor = Color.FromName("ControlLightLight");
-            PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            BTVbagBtn.BackColor = Color.FromName("ControlLightLight");
-            bag6Btn.BackColor = Color.FromArgb(138, 158, 196);
-        }
+        
 
         //其他按钮背景色不高亮
         private void otherBtnColor()

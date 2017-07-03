@@ -55,34 +55,54 @@ namespace mySystem.Process.CleanCut
             }
         }
 
+
+        //定义各窗体变量
+        CleanCut_Productrecord form1 = null;
+        DailyRecord form2 = null;
+        Instru form4 = null;
+        CleanCut_CheckBeforePower form5 = null;
+        Record_cleansite_cut form6 = null;
+
+
+
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            Instru myDlg = new Instru();
-            myDlg.Show();
+            if (form4 == null || form4.IsDisposed)
+            { form4 = new Instru(); }            
+            form4.Show();
+            form4.BringToFront();
         }
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            Record_cleansite_cut myDlg = new Record_cleansite_cut(base.mainform);
-            myDlg.Show();
+            if (form6 == null || form6.IsDisposed)
+            { form6 = new Record_cleansite_cut(base.mainform);}            
+            form6.Show();
+            form6.BringToFront();
         }
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            CleanCut_CheckBeforePower myDlg = new CleanCut_CheckBeforePower(mainform);
-            myDlg.Show();
+            if (form5 == null || form5.IsDisposed)
+            { form5 = new CleanCut_CheckBeforePower(mainform);}            
+            form5.Show();
+            form5.BringToFront();
         }
 
         private void A4Btn_Click(object sender, EventArgs e)
         {
-            CleanCut_Productrecord myDlg = new CleanCut_Productrecord(mainform);
-            myDlg.Show();
+            if (form1 == null || form1.IsDisposed)
+            { form1 = new CleanCut_Productrecord(mainform);}            
+            form1.Show();
+            form1.BringToFront();
         }
 
         private void A5Btn_Click(object sender, EventArgs e)
         {
-            DailyRecord myDlg = new DailyRecord();
-            myDlg.Show();
+            if (form2 == null || form2.IsDisposed)
+            { form2 = new DailyRecord();}
+            form2.Show();
+            form2.BringToFront();
         }
 
 
@@ -98,6 +118,16 @@ namespace mySystem.Process.CleanCut
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.cleancutInstruID = instruID;
+
+        }
+
+        private void A6Btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void A7Btn_Click(object sender, EventArgs e)
+        {
 
         }
 
