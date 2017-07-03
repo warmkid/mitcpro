@@ -54,13 +54,13 @@ namespace mySystem
                 time = DateTime.Now;
                 bs.CheckResult();
                 this.Dispose();
-          
+
             }
-            
+
         }
 
 
-        
+
 
         private void NotOKBtn_Click(object sender, EventArgs e)
         {
@@ -88,7 +88,7 @@ namespace mySystem
                 time = DateTime.Now;
                 base.CheckResult();
                 this.Dispose();
-            }            
+            }
         }
 
 
@@ -103,10 +103,11 @@ namespace mySystem
                 {
                     //MessageBox.Show("登录成功！", "提示");
                     userID = sdr.GetInt32(3);
+                    userName = sdr.GetString(4);
                     comm.Dispose();
                     sdr.Close();
                     sdr.Dispose();
-                    this.Hide();
+                    //this.Hide();
                     return userID;
                 }
                 else         //密码错误
@@ -148,10 +149,11 @@ namespace mySystem
                 {
                     //MessageBox.Show("登录成功！", "提示");
                     userID = sdr.GetInt32(3);
+                    userName = sdr.GetString(4);
                     comm.Dispose();
                     sdr.Close();
                     sdr.Dispose();
-                    this.Hide();
+                    //this.Hide();
                     return userID;
                 }
                 else         //密码错误
@@ -202,7 +204,7 @@ namespace mySystem
 
 
 
-        
+
 
     }
 }

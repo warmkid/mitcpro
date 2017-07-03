@@ -181,6 +181,84 @@
     <Compile Include="Process\Bag\LDPE\LDPEMainForm.Designer.cs">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_batchproduction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_batchproduction.Designer.cs">
+      <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_checklist.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_checklist.Designer.cs">
+      <DependentUpon>PTVBag_checklist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_clearance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_clearance.Designer.cs">
+      <DependentUpon>PTVBag_clearance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_dailyreport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_dailyreport.Designer.cs">
+      <DependentUpon>PTVBag_dailyreport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_innerpackaging.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_innerpackaging.Designer.cs">
+      <DependentUpon>PTVBag_innerpackaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_materialrecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_materialrecord.Designer.cs">
+      <DependentUpon>PTVBag_materialrecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_productioninstruction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_productioninstruction.Designer.cs">
+      <DependentUpon>PTVBag_productioninstruction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_runningrecordofdf.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_runningrecordofdf.Designer.cs">
+      <DependentUpon>PTVBag_runningrecordofdf.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_runningrecordofpk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_runningrecordofpk.Designer.cs">
+      <DependentUpon>PTVBag_runningrecordofpk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_runningrecordofyk.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_runningrecordofyk.Designer.cs">
+      <DependentUpon>PTVBag_runningrecordofyk.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_testrecordofdisclose.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_testrecordofdisclose.Designer.cs">
+      <DependentUpon>PTVBag_testrecordofdisclose.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_weldingrecordofwave.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVBag_weldingrecordofwave.Designer.cs">
+      <DependentUpon>PTVBag_weldingrecordofwave.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTVMainForm.Designer.cs">
+      <DependentUpon>PTVMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\CleanCut\CleanCutMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -596,6 +674,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVMainForm.resx">
+      <DependentUpon>PTVMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>
