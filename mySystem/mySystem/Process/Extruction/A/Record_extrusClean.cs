@@ -449,7 +449,10 @@ namespace WindowsFormsApplication1
                 comm.Connection = mySystem.Parameter.connOle;
                 //comm.CommandText = "update extrusion_s1_cleanrecord set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_result_cleaner_reviewer= @cont where id= @id";
                 if (label == 1)//插入数据库
+                {
                     comm.CommandText = "insert into extrusion_s1_cleanrecord(s1_clean_date,s1_flight,s1_region_result_cleaner_reviewer,production_instruction) values(@cleandate,@flight,@cont,@id)";
+                    label = 0;
+                }                  
                 else//更新数据库
                     comm.CommandText = "update extrusion_s1_cleanrecord set s1_clean_date= @cleandate,s1_flight=@flight,s1_region_result_cleaner_reviewer= @cont where production_instruction= @id";
                 comm.Parameters.Add("@cleandate", System.Data.OleDb.OleDbType.Date);

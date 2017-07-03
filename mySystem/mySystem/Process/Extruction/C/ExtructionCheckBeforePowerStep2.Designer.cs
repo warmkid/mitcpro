@@ -40,12 +40,13 @@
             this.SaveBtn = new System.Windows.Forms.Button();
             this.PSLabel = new System.Windows.Forms.Label();
             this.CheckBeforePowerView = new System.Windows.Forms.DataGridView();
+            this.Title = new System.Windows.Forms.Label();
+            this.printBtn = new System.Windows.Forms.Button();
             this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.确认项目 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.确认内容 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.确认结果 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.Title = new System.Windows.Forms.Label();
-            this.printBtn = new System.Windows.Forms.Button();
+            this.确认结果Y = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.确认结果N = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.CheckBeforePowerView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -161,33 +162,14 @@
             this.序号,
             this.确认项目,
             this.确认内容,
-            this.确认结果});
+            this.确认结果Y,
+            this.确认结果N});
             this.CheckBeforePowerView.Location = new System.Drawing.Point(27, 82);
             this.CheckBeforePowerView.Name = "CheckBeforePowerView";
             this.CheckBeforePowerView.RowTemplate.Height = 23;
             this.CheckBeforePowerView.Size = new System.Drawing.Size(1113, 402);
             this.CheckBeforePowerView.TabIndex = 1;
             this.CheckBeforePowerView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CheckBeforePowerView_CellContentClick);
-            // 
-            // 序号
-            // 
-            this.序号.HeaderText = "序号";
-            this.序号.Name = "序号";
-            // 
-            // 确认项目
-            // 
-            this.确认项目.HeaderText = "确认项目";
-            this.确认项目.Name = "确认项目";
-            // 
-            // 确认内容
-            // 
-            this.确认内容.HeaderText = "确认内容";
-            this.确认内容.Name = "确认内容";
-            // 
-            // 确认结果
-            // 
-            this.确认结果.HeaderText = "确认结果";
-            this.确认结果.Name = "确认结果";
             // 
             // Title
             // 
@@ -210,6 +192,33 @@
             this.printBtn.TabIndex = 17;
             this.printBtn.Text = "打印";
             this.printBtn.UseVisualStyleBackColor = true;
+            // 
+            // 序号
+            // 
+            this.序号.HeaderText = "序号";
+            this.序号.Name = "序号";
+            // 
+            // 确认项目
+            // 
+            this.确认项目.HeaderText = "确认项目";
+            this.确认项目.Name = "确认项目";
+            // 
+            // 确认内容
+            // 
+            this.确认内容.HeaderText = "确认内容";
+            this.确认内容.Name = "确认内容";
+            // 
+            // 确认结果Y
+            // 
+            this.确认结果Y.HeaderText = "确认结果(Y)";
+            this.确认结果Y.Name = "确认结果Y";
+            // 
+            // 确认结果N
+            // 
+            this.确认结果N.HeaderText = "确认结果(N)";
+            this.确认结果N.Name = "确认结果N";
+            this.确认结果N.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.确认结果N.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // ExtructionCheckBeforePowerStep2
             // 
@@ -254,10 +263,11 @@
         private System.Windows.Forms.DateTimePicker recordTimePicker;
         private System.Windows.Forms.DateTimePicker checkTimePicker;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button printBtn;
         private System.Windows.Forms.DataGridViewTextBoxColumn 序号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 确认项目;
         private System.Windows.Forms.DataGridViewTextBoxColumn 确认内容;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 确认结果;
-        private System.Windows.Forms.Button printBtn;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn 确认结果Y;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn 确认结果N;
     }
 }

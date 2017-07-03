@@ -405,8 +405,8 @@ namespace BatchProductRecord
                     return tempdt.Rows[0][0].ToString();
             }
         }
-
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        //编辑单元格结束后触发事件
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
@@ -430,26 +430,44 @@ namespace BatchProductRecord
                 leng = float.Parse(array2[2]);
             }
             //用料重量自己计算
-            if(e.ColumnIndex==2)
+            if (e.ColumnIndex == 2)
             {
 
                 float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
-                dataGridView1.Rows[e.RowIndex].Cells[3].Value = a * leng/1000.0 * 2 * 0.093;
+                dataGridView1.Rows[e.RowIndex].Cells[3].Value = a * leng / 1000.0 * 2 * 0.093;
             }
-
-
-
-            ////更改清洁人项
-            //if (e.ColumnIndex == 3)
-            //{
-            //    int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-            //    if (rt > 0)
-            //        cleanmans[e.RowIndex] = rt;
-            //    else
-            //        MessageBox.Show("清洁人id不存在，请重新输入");
+        }
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //if (e.RowIndex < 0)
             //    return;
+            //if (e.RowIndex == dataGridView1.Rows.Count - 1)
+            //    addrows();
+
+            //if (e.ColumnIndex == 1)
+            //{
+            //    string str = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+            //    string pattern = @"^[a-zA-Z]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
+            //    if (!Regex.IsMatch(str, pattern))
+            //    {
+            //        MessageBox.Show("产品代码输入不符合规定，重新输入，例如 PEQ-QE-500*100");
+            //        //MessageBox.Show("...");
+            //        dataGridView1.Rows[e.RowIndex].Cells[1].Value = "";
+            //        leng = 0;
+            //        return;
+            //    }
+            //    string[] array = str.Split('*');
+            //    string[] array2 = array[0].Split('-');
+            //    leng = float.Parse(array2[2]);
             //}
-            ////更改审核人项
+            ////用料重量自己计算
+            //if(e.ColumnIndex==2)
+            //{
+
+            //    float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
+            //    dataGridView1.Rows[e.RowIndex].Cells[3].Value = a * leng/1000.0 * 2 * 0.093;
+            //}
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

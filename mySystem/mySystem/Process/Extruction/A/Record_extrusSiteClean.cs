@@ -175,8 +175,15 @@ namespace mySystem.Extruction.Process
                 {
                     button1.Enabled = false;
                     button2.Enabled = false;
+                    button3.Enabled = true;
                     textBox6.Text = rev;
                     textBox5.Text=int.Parse(tempdt.Rows[0][5].ToString())>0?"合格":"不合格";
+
+                    textBox5.ReadOnly = true;
+                    dataGridView1.ReadOnly = true;
+                    textBox2.ReadOnly = true;
+                    textBox4.ReadOnly = true;
+                    dateTimePicker1.Enabled = false;
                 }
 
                 string jstr = tempdt.Rows[0][3].ToString();
@@ -370,41 +377,17 @@ namespace mySystem.Extruction.Process
             int result = 0;
             if (mySystem.Parameter.isSqlOk)
             {
-                //需要修改。。。。。。。。。。。。。。
-                //string s = "update clean_record_of_extrusion_process set production_instruction_id='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
-                //s += ",cleaner_id=" + cleaner;
-                //s += ",reviewer_id=" + checker;
-                //for (int i = 0; i < unit_serve.Count; i++)
-                //{
-                //    s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
-                //}
-                //for (int i = 7; i < 15; i++)
-                //{
-                //    s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i - 7];
-                //}
-
-                //s += " where id=1";
-                //using (SqlCommand comm = new SqlCommand(s, conn))
-                //{
-                //    result = comm.ExecuteNonQuery();
-
-                //}
             }
             else
             {
-                //string s = "update clean_record_of_extrusion_process set production_instruction_id=" + a + ",product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
-                //s += ",cleaner_id=" + cleaner;
-                //s += ",reviewer_id=" + checker;
-                //s+=",is_cleaned='"+jarray.ToString();
-                //s += "',is_qualified=" + checkout;
-                //s += " where id=1";
-                //OleDbCommand comm = new OleDbCommand(s, mySystem.Parameter.connOle);
-                //result = comm.ExecuteNonQuery();
-
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = mySystem.Parameter.connOle;
                 if (label == 1)
-                    comm.CommandText = "";
+                {
+                    comm.CommandText = "insert into clean_record_of_extrusion_process(product_id_before,product_batch_before,clean_date,cleaner_id,is_cleaned,production_instruction_id) values(@beforeid,@beforebatch,@cleandate,@cleanerid,@cleancont,@id)";
+                    label = 0;
+                }
+                    
                 else
                     comm.CommandText = "update clean_record_of_extrusion_process set product_id_before=@beforeid,product_batch_before= @beforebatch,clean_date=@cleandate,cleaner_id=@cleanerid,is_cleaned=@cleancont where production_instruction_id= @id";
                 comm.Parameters.Add("@beforeid", System.Data.OleDb.OleDbType.VarChar);
@@ -416,9 +399,11 @@ namespace mySystem.Extruction.Process
 
                 comm.Parameters["@beforeid"].Value = prod_code;
                 comm.Parameters["@beforebatch"].Value = prod_batch;
-                comm.Parameters["@cleandate"].Value = checkform.ischeckOk;
-                comm.Parameters["@id"].Value = mySystem.Parameter.proInstruID;
-
+                comm.Parameters["@cleandate"].Value = date;
+                comm.Parameters["@cleanerid"].Value = cleaner;
+                comm.Parameters["@cleancont"].Value = jarray.ToString();
+                comm.Parameters["@id"].Value = a;
+                result = comm.ExecuteNonQuery();
             }
             if (result > 0)
             {
@@ -472,7 +457,7 @@ namespace mySystem.Extruction.Process
         {
             base.CheckResult();
             textBox6.Text = checkform.userName;
-
+            comboBox1.Text = checkform.ischeckOk==true?"合格":"不合格";
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = mySystem.Parameter.connOle;
             comm.CommandText = "update clean_record_of_extrusion_process set reviewer_id= @revid,review_opinion=@revopinion,is_review_qualified= @isok where production_instruction_id= @id";
