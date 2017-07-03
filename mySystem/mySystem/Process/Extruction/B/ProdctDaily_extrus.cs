@@ -127,7 +127,7 @@ namespace mySystem
             else
             {
                 string acsql = "select production_instruction_code from production_instruction";
-                OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle );
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
                 DataTable dtemp = new DataTable();
                 da.Fill(dtemp);
@@ -148,7 +148,7 @@ namespace mySystem
             string code = "";
 
             string acsql = "select product_batch_code from product_batch where product_batch_id=" + btid;
-            OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+            OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable dt1 = new DataTable();
             da.Fill(dt1);
@@ -167,7 +167,7 @@ namespace mySystem
             string code = "";
 
             string acsql = "select product_code from product_aoxing where product_id in (select product_id from product_batch where product_batch_id="+btid+")";
-            OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+            OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable dt1 = new DataTable();
             da.Fill(dt1);
@@ -185,7 +185,7 @@ namespace mySystem
         {
             string name = "";
             string acsql = "select user_name from user_aoxing where user_id=" + uid;
-            OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+            OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable dt1 = new DataTable();
             da.Fill(dt1);
@@ -209,7 +209,7 @@ namespace mySystem
             {
                 //通过生产指令代码找到对应的生产指令id
                 string acsql = "select production_instruction_id from production_instruction where production_instruction_code='"+instru_code+"'";
-                OleDbCommand comm = new OleDbCommand(acsql, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
                 DataTable dt1 = new DataTable();
                 da.Fill(dt1);

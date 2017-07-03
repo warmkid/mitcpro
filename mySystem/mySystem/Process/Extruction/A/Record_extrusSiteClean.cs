@@ -47,6 +47,9 @@ namespace mySystem.Extruction.Process
         List<string> unit_exstru;//吹膜工序
         List<int> ischecked_1;//供料工序 检查结果是否合格列表
         List<int> ischecked_2;//吹膜工序 检查结果是否合格列表
+        mySystem.CheckForm checkform;
+
+        int label;//判断是更新数据库还是插入数据库
 
         static int k = 0;
 
@@ -55,7 +58,7 @@ namespace mySystem.Extruction.Process
         {
             unit_serve=new List<string>();
             unit_exstru=new List<string>();
-            if (mainform.isSqlOk)
+            if ( mySystem.Parameter.isSqlOk)
             {
                 string sql = "select * from feedingprocess_cleansite";
                 SqlCommand cmd = new SqlCommand(sql, mainform.conn);
@@ -116,13 +119,14 @@ namespace mySystem.Extruction.Process
             cleaner = mainform.userID;
             checker = 45;
 
-            prod_instrcode = "ox32";
+            prod_instrcode = mySystem.Parameter.proInstruction;
+            System.Console.WriteLine(mySystem.Parameter.proInstruction);
             prod_code = "rs";
             prod_batch = "0x55";
             //prod_instrcode = mainform.proInstruction;
 
             //date = "2017/6/10";
-            textBox1.Text = mainform.proInstruction;
+            textBox1.Text = prod_instrcode;
             comboBox2.Text = "供料工序";
 
 
@@ -138,6 +142,61 @@ namespace mySystem.Extruction.Process
             comboBox1.Text = "合格";
             dataGridView1.Font = new Font("宋体", 10);
             button2.Enabled = false;
+            textBox6.ReadOnly= true;
+            button3.Enabled = false;
+            label = 0;
+           
+        }
+
+        //根据生产指令id将数据填写到各控件中
+        private int fill_by_id(int id)
+        {
+            string asql = "select product_id_before,product_batch_before,clean_date,is_cleaned,cleaner_id,reviewer_id,is_qualified from clean_record_of_extrusion_process where production_instruction_id=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+                return -1;
+            else
+            {
+                //将tempdt填入控件
+                textBox2.Text = tempdt.Rows[0][0].ToString();
+                textBox4.Text = tempdt.Rows[0][1].ToString();
+                dateTimePicker1.Value =DateTime.Parse(tempdt.Rows[0][2].ToString());
+                textBox5.Text = mySystem.Parameter.IDtoName(int.Parse(tempdt.Rows[0][4].ToString()));
+
+
+                string rev = mySystem.Parameter.IDtoName(int.Parse(tempdt.Rows[0][5].ToString())); 
+                if (rev == "")
+                    button2.Enabled = true;
+                else
+                {
+                    button1.Enabled = false;
+                    button2.Enabled = false;
+                    textBox6.Text = rev;
+                    textBox5.Text=int.Parse(tempdt.Rows[0][5].ToString())>0?"合格":"不合格";
+                }
+
+                string jstr = tempdt.Rows[0][3].ToString();
+                JArray jarray = JArray.Parse(jstr);
+                //第一个选项
+                JObject jobj1 = JObject.Parse(jarray[0].ToString());
+                int i=0;
+                foreach (var p in jobj1)
+                {
+                    ischecked_1[i++] = int.Parse(jobj1[p.Key].ToString());
+                }
+                //第二个选项
+                JObject jobj2 = JObject.Parse(jarray[1].ToString());
+                i = 0;
+                foreach (var p in jobj2)
+                {
+                    ischecked_2[i++] = int.Parse(jobj2[p.Key].ToString());
+                }
+            }
+            return 0;
         }
 
         private void AddtoGridView()
@@ -206,7 +265,18 @@ namespace mySystem.Extruction.Process
             InitializeComponent();
             queryjob();
             Init();
-            AddtoGridView();
+            if (fill_by_id(mySystem.Parameter.proInstruID) == -1)//根据id填表失败，表未填写过
+            {
+                AddtoGridView();
+                label = 1;//代表是新的填写,保存采用插入数据库方式
+            }
+            else
+            {
+                label = 0;//代表是在原来基础上更改，保存采用更新方式
+                fill_by_id(mySystem.Parameter.proInstruID);
+            }
+                
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -254,28 +324,22 @@ namespace mySystem.Extruction.Process
         {
             //cleaner = textBox4.Text;
             string strcleaner = textBox5.Text;
-            string strchecker = textBox6.Text;
-            if (strcleaner == "" || strchecker == "")
+            //string strchecker = textBox6.Text;
+            if (strcleaner == "")
             {
-                MessageBox.Show("清场人和检查人均不能为空");
+                MessageBox.Show("清场人不能为空");
                 return;
             }
             cleaner = queryid(strcleaner);
-            checker = queryid(strchecker);
+            //checker = queryid(strchecker);
             if (cleaner == -1)
             {
                 MessageBox.Show("清场人id不存在");
                 return;
             }
-            if (checker == -1)
-            {
-                MessageBox.Show("检查人id不存在");
-                return;
-            }
 
             //生产指令先用a代替
-            prod_instrcode=textBox1.Text;
-            int a = 33;
+            int a = mySystem.Parameter.proInstruID;
 
             prod_code=textBox2.Text;
             prod_batch=textBox4.Text;
@@ -304,7 +368,7 @@ namespace mySystem.Extruction.Process
 
             //插入数据库
             int result = 0;
-            if (mainform.isSqlOk)
+            if (mySystem.Parameter.isSqlOk)
             {
                 //需要修改。。。。。。。。。。。。。。
                 //string s = "update clean_record_of_extrusion_process set production_instruction_id='" + prod_instrcode + "',product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
@@ -328,24 +392,33 @@ namespace mySystem.Extruction.Process
             }
             else
             {
-                string s = "update clean_record_of_extrusion_process set production_instruction_id=" + a + ",product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
-                s += ",cleaner_id=" + cleaner;
-                s += ",reviewer_id=" + checker;
-                s+=",is_cleaned='"+jarray.ToString();
-                s += "',is_qualified=" + checkout;
-                //for (int i = 0; i < unit_serve.Count; i++)
-                //{
-                //    s += ",item" + (i + 1).ToString() + "_is_cleaned=" + ischecked_1[i];
-                //}
-                //for (int i = 7; i < 15; i++)
-                //{
-                //    s += ",item" + i.ToString() + "_is_cleaned=" + ischecked_2[i - 7];
-                //}
+                //string s = "update clean_record_of_extrusion_process set production_instruction_id=" + a + ",product_id_before='" + prod_code + "',product_batch_before='" + prod_batch + "',clean_date='" + date + "'";
+                //s += ",cleaner_id=" + cleaner;
+                //s += ",reviewer_id=" + checker;
+                //s+=",is_cleaned='"+jarray.ToString();
+                //s += "',is_qualified=" + checkout;
+                //s += " where id=1";
+                //OleDbCommand comm = new OleDbCommand(s, mySystem.Parameter.connOle);
+                //result = comm.ExecuteNonQuery();
 
-                s += " where id=1";
-                //System.Console.WriteLine(s);
-                OleDbCommand comm = new OleDbCommand(s, mySystem.Parameter.connOle);
-                result = comm.ExecuteNonQuery();
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = mySystem.Parameter.connOle;
+                if (label == 1)
+                    comm.CommandText = "";
+                else
+                    comm.CommandText = "update clean_record_of_extrusion_process set product_id_before=@beforeid,product_batch_before= @beforebatch,clean_date=@cleandate,cleaner_id=@cleanerid,is_cleaned=@cleancont where production_instruction_id= @id";
+                comm.Parameters.Add("@beforeid", System.Data.OleDb.OleDbType.VarChar);
+                comm.Parameters.Add("@beforebatch", System.Data.OleDb.OleDbType.VarChar);
+                comm.Parameters.Add("@cleandate", System.Data.OleDb.OleDbType.Date);
+                comm.Parameters.Add("@cleanerid", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@cleancont", System.Data.OleDb.OleDbType.VarChar);
+                comm.Parameters.Add("@id", System.Data.OleDb.OleDbType.Integer);
+
+                comm.Parameters["@beforeid"].Value = prod_code;
+                comm.Parameters["@beforebatch"].Value = prod_batch;
+                comm.Parameters["@cleandate"].Value = checkform.ischeckOk;
+                comm.Parameters["@id"].Value = mySystem.Parameter.proInstruID;
+
             }
             if (result > 0)
             {
@@ -394,12 +467,40 @@ namespace mySystem.Extruction.Process
 
         }
 
+        //重写函数，获得审核信息
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            textBox6.Text = checkform.userName;
+
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "update clean_record_of_extrusion_process set reviewer_id= @revid,review_opinion=@revopinion,is_review_qualified= @isok where production_instruction_id= @id";
+            comm.Parameters.Add("@revid", System.Data.OleDb.OleDbType.Integer);
+            comm.Parameters.Add("@revopinion", System.Data.OleDb.OleDbType.VarChar);
+            comm.Parameters.Add("@isok", System.Data.OleDb.OleDbType.Boolean);
+            comm.Parameters.Add("@id", System.Data.OleDb.OleDbType.Integer);
+
+            comm.Parameters["@revid"].Value = checkform.userID;
+            comm.Parameters["@revopinion"].Value = checkform.opinion;
+            comm.Parameters["@isok"].Value = checkform.ischeckOk;
+            comm.Parameters["@id"].Value = mySystem.Parameter.proInstruID;
+
+            int result = comm.ExecuteNonQuery();
+            if (result <= 0)
+            {
+                MessageBox.Show("审核出错");
+                return;
+            }
+            button3.Enabled = true;
+        }
+
         private void button2_Click(object sender, EventArgs e)
         {
             //LoginForm check = new LoginForm(conn);
             ///check.ShowDialog();
-            //mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
-            //checkform.Show();
+            checkform = new mySystem.CheckForm(this);
+            checkform.Show();
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
