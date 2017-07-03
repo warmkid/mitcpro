@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -558,11 +558,41 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
+      <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\CSbagMainForm.resx">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\CS\CSBag_CheckBeforePower.resx">
+      <DependentUpon>CSBag_CheckBeforePower.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Record_batch_bag.resx">
       <DependentUpon>Record_batch_bag.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_batchproduction.resx">
+      <DependentUpon>LDPEBag_batchproduction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_checklist.resx">
+      <DependentUpon>LDPEBag_checklist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_cleanrance.resx">
+      <DependentUpon>LDPEBag_cleanrance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_dailyreport.resx">
+      <DependentUpon>LDPEBag_dailyreport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_innerpackaging.resx">
+      <DependentUpon>LDPEBag_innerpackaging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_materialrecord.resx">
+      <DependentUpon>LDPEBag_materialrecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_productioninstruction.resx">
+      <DependentUpon>LDPEBag_productioninstruction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_runningrecord.resx">
+      <DependentUpon>LDPEBag_runningrecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>

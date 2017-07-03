@@ -19,6 +19,7 @@ namespace mySystem.Extruction.Process
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
+        private int Instructionid;
 
         private int operator_id;
         private string operator_name;
@@ -27,14 +28,20 @@ namespace mySystem.Extruction.Process
         private string reviewer_name;
         //private DateTime review_date;
 
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false;
+
         public ExtructionPreheatParameterRecordStep3(MainForm mainform): base(mainform)
         {
             InitializeComponent();
-            
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            operator_id = base.mainform.userID;
-            isSqlOk = base.mainform.isSqlOk;
+
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            Instructionid = Parameter.proInstruID;
 
             if (isSqlOk) { operator_name = checkIDSql(operator_id); }
             else { operator_name = checkIDOle(operator_id); }
@@ -260,23 +267,30 @@ namespace mySystem.Extruction.Process
             else { DataSaveOle(); }
         }
 
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            review_id = check.userID;
+            review_opinion = check.opinion;
+            ischeckOk = check.ischeckOk;
+        }
+
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            //CheckForm check = new CheckForm(base.mainform);
-            //check.ShowDialog();
-            //review_id = check.userID;
-            //if (isSqlOk)
-            //{   }
-            //else
-            //{
-            //    List<String> queryCols = new List<String>(new String[] { "s3_reviewer_id"});
-            //    List<Object> queryVals = new List<Object>(new Object[] { review_id });
-            //    List<String> whereCols = new List<String>(new String[] { "id" });
-            //    List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            //    Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-            //    reviewer_name = checkIDOle(review_id);
-            //}
-            //checkerBox.Text = reviewer_name;
+            check = new CheckForm(this);
+            check.ShowDialog();
+            if (isSqlOk)
+            { }
+            else
+            {
+                List<String> queryCols = new List<String>(new String[] { "s3_reviewer_id" });
+                List<Object> queryVals = new List<Object>(new Object[] { review_id });
+                List<String> whereCols = new List<String>(new String[] { "id" });
+                List<Object> whereVals = new List<Object>(new Object[] { 1 });
+                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
+                reviewer_name = checkIDOle(review_id);
+            }
+            checkerBox.Text = reviewer_name;
         }
            
     }

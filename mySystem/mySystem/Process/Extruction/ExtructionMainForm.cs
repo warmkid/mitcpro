@@ -22,10 +22,115 @@ namespace mySystem
         public ExtructionMainForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            Init();
+            comboInit(); //从数据库中读取生产指令
+            InitBtn();
         }
 
-        private void Init()
+        public void InitBtn()
+        {            
+            bool checkBeforePower;
+            bool extrusClean;
+            bool preheat;
+            // 开机前确认表
+            String tblName1 = "extrusion_s2_confirm";
+            List<String> queryCols1 = new List<String>(new String[] { "s2_reviewer_id" });
+            List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
+            List<Object> whereVals1 = new List<Object>(new Object[] { Parameter.proInstruID });
+            List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, tblName1, queryCols1, whereCols1, whereVals1, null, null, null, null, null);
+            if (res1.Count != 0)
+            {
+                checkBeforePower = true;
+            }
+            else
+            {
+                checkBeforePower = false;
+            }
+            //吹膜机组清洁记录
+            String tblName2 = "extrusion_s1_cleanrecord";
+            List<String> queryCols2 = new List<String>(new String[] { "s1_reviewer_id" });
+            List<String> whereCols2 = new List<String>(new String[] { "production_instruction" });
+            List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
+            List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, tblName2, queryCols2, whereCols2, whereVals2, null, null, null, null, null);
+            if (res2.Count != 0)
+            {
+                extrusClean = true;
+            }
+            else
+            {
+                extrusClean = false;
+            }
+            //吹膜机组预热参数记录表
+            String tblName3 = "extrusion_s3_preheat";
+            List<String> queryCols3 = new List<String>(new String[] { "s3_reviewer_id" });
+            List<String> whereCols3 = new List<String>(new String[] { "production_instruction_id" });
+            List<Object> whereVals3 = new List<Object>(new Object[] { Parameter.proInstruID });
+            List<List<Object>> res3 = Utility.selectAccess(Parameter.connOle, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
+            if (res3.Count != 0)
+            {
+                preheat = true;
+            }
+            else
+            {
+                preheat = false;
+            }
+
+
+            //按钮状态
+            A2Btn.Enabled = true;
+            int index = comboBox1.SelectedIndex;
+            if (index == -1)  //未选择生产指令
+            {
+                A3Btn.Enabled = false;
+                C1Btn.Enabled = false;
+                C2Btn.Enabled = false;
+                otherBtnInit(false);
+            }
+            else
+            {
+                C1Btn.Enabled = true;
+                A3Btn.Enabled = false;
+                C2Btn.Enabled = false;
+                otherBtnInit(false);
+                if (checkBeforePower)
+                {
+                    A3Btn.Enabled = true;
+                    if (extrusClean)
+                    {
+                        C2Btn.Enabled = true;
+                        if (preheat)
+                        {
+                            otherBtnInit(true);
+                        }
+                    }
+                }
+  
+            }           
+
+        }
+
+        private void otherBtnInit(bool b)
+        {
+            A1Btn.Enabled = b;
+            A4Btn.Enabled = b;
+            A5Btn.Enabled = b;
+            B2Btn.Enabled = b;
+            B3Btn.Enabled = b;
+            B4Btn.Enabled = b;
+            B5Btn.Enabled = b;
+            B6Btn.Enabled = b;
+            B7Btn.Enabled = b;
+            B8Btn.Enabled = b;
+            B9Btn.Enabled = b;
+            C3Btn.Enabled = b;
+            C4Btn.Enabled = b;
+            D1Btn.Enabled = b;
+            D2Btn.Enabled = b;
+            D3Btn.Enabled = b;
+            D4Btn.Enabled = b;
+        }
+
+        //下拉框获取生产指令
+        private void comboInit()
         {
             if (!Parameter.isSqlOk)
             {
@@ -37,7 +142,7 @@ namespace mySystem
                 {
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["production_instruction_code"]);  //下拉框获取生产指令
+                        comboBox1.Items.Add(reader["production_instruction_code"]);
                     }
                 }
             }
@@ -58,7 +163,6 @@ namespace mySystem
             }
         }
 
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             instruction = comboBox1.SelectedItem.ToString();
@@ -70,7 +174,7 @@ namespace mySystem
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.proInstruID = instruID;
-
+            InitBtn();
         }
 
 
@@ -161,11 +265,10 @@ namespace mySystem
             r.Show();
          }
         private void B4Btn_Click_2(object sender, EventArgs e)
-                {
-                    Record_material_reqanddisg r = new Record_material_reqanddisg(mainform);
-                    r.Show();
-
-                }
+        {
+            Record_material_reqanddisg r = new Record_material_reqanddisg(mainform);
+            r.Show();
+        }
         private void B5Btn_Click_2(object sender, EventArgs e)
         {
             ProdctDaily_extrus p = new ProdctDaily_extrus(mainform);

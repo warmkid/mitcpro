@@ -35,5 +35,10 @@ namespace mySystem.Process.Bag
         {
 
         }
+
+        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

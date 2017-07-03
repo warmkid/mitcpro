@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
         SqlConnection conn = null;//连接sql
         OleDbConnection connOle = null;//连接access
         bool isSqlOk;//使用sql还是access
-        int label = 2;//判断选中列
+        int label ;//判断是插入数据库还是更新数据库
         //private ExtructionProcess extructionformfather = null;
 
         //string cleantime;//清洁日期
@@ -37,6 +37,8 @@ namespace WindowsFormsApplication1
         List<int> checkmans;
         int instrid;
 
+        mySystem.CheckForm checkform;//审核信息
+
         public Record_extrusClean(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -47,7 +49,14 @@ namespace WindowsFormsApplication1
             InitializeComponent();
             Init();
             //connToServer();
-            qury();
+            if (fill_by_id(instrid) == -1)//根据id填表失败，表未填写过
+            {
+                qury();
+                label = 1;//代表是新的填写,保存采用插入数据库方式
+            }
+            else
+                label = 0;//代表是在原来基础上更改，保存采用更新方式
+                
 
         }
         //获得生产指令id
@@ -71,7 +80,7 @@ namespace WindowsFormsApplication1
             textBox2.Enabled = false;
 
             instrid = getinstrid();
-            
+            label = 0;
             
         }
         public void connToServer()
@@ -95,7 +104,7 @@ namespace WindowsFormsApplication1
                 return tempdt.Rows[0][0].ToString();
         }
         //根据生产指令id将数据填写到各控件中
-        private void fill_by_id(int id)
+        private int fill_by_id(int id)
         {
             string asql = "select s1_clean_date,s1_flight,s1_reviewer_id,s1_review_date,s1_region_result_cleaner_reviewer from extrusion_s1_cleanrecord where production_instruction="  + id ;
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
@@ -104,15 +113,23 @@ namespace WindowsFormsApplication1
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             if (tempdt.Rows.Count == 0)
-                return;
+                return -1;
             else
             {
                 //将tempdt填入控件
                 dateTimePicker1.Value = DateTime.Parse(tempdt.Rows[0][0].ToString());
                 comboBox1.Text = int.Parse(tempdt.Rows[0][1].ToString()) == 1 ? "白班" : "夜班";
-                textBox2.Text = mySystem.Parameter.IDtoName(int.Parse(tempdt.Rows[0][2].ToString()));
-                dateTimePicker2.Value = DateTime.Parse(tempdt.Rows[0][3].ToString());
-
+                string rev = tempdt.Rows[0][2].ToString();
+                if (rev == "")
+                    button2.Enabled = true;
+                else
+                {
+                    button1.Enabled = false;
+                    button2.Enabled = false;
+                    textBox2.Text = mySystem.Parameter.IDtoName(int.Parse(rev));
+                    dateTimePicker2.Value = DateTime.Parse(tempdt.Rows[0][3].ToString());
+                }
+                    
                 string jstr = tempdt.Rows[0][4].ToString();
                 JArray jarray = JArray.Parse(jstr);
                 for (int i = 0; i < jarray.Count; i++)
@@ -120,6 +137,8 @@ namespace WindowsFormsApplication1
                     JObject jobj = JObject.Parse(jarray[i].ToString());
                     foreach (var p in jobj)
                     {
+                        DataGridViewRow dr = new DataGridViewRow();
+                        dataGridView1.Rows.Add(dr);
                         dataGridView1.Rows[i].Cells[0].Value = p.Key;//名称
                         dataGridView1.Rows[i].Cells[1].Value =cont_findby_name( p.Key);//内容
                         if (int.Parse(jobj[p.Key][0].ToString()) == 1)
@@ -138,8 +157,10 @@ namespace WindowsFormsApplication1
                     }
                 }
             }
+            return 0;
             
         }
+        //查找清洁区域和清洁内容，并填入表格
         private void qury()
         {
             //if (!isOk)
@@ -201,6 +222,7 @@ namespace WindowsFormsApplication1
            
         }
 
+        //单元格编辑结束触发事件
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
@@ -229,7 +251,9 @@ namespace WindowsFormsApplication1
             {
                 int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
                 if (rt > 0)
-                    cleanmans[e.RowIndex] = rt;
+                { 
+                    //cleanmans[e.RowIndex] = rt;
+                }
                 else
                 {
                     MessageBox.Show("清洁人id不存在，请重新输入");
@@ -243,7 +267,9 @@ namespace WindowsFormsApplication1
             {
                 int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
                 if (rt > 0)
-                    checkmans[e.RowIndex] = rt;
+                {
+                    //checkmans[e.RowIndex] = rt;
+                }          
                 else
                 {
                     MessageBox.Show("审核人id不存在，请重新输入");
@@ -311,28 +337,6 @@ namespace WindowsFormsApplication1
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //if (e.RowIndex < 0)
-            //    return;
-            ////更改清洁人项
-            //if (e.ColumnIndex == 3)
-            //{
-            //    int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-            //    if (rt > 0)
-            //        cleanmans[e.RowIndex] = rt;
-            //    else
-            //        MessageBox.Show("清洁人id不存在，请重新输入");
-            //    return;
-            //}
-            ////更改审核人项
-            //if (e.ColumnIndex == 4)
-            //{
-            //    int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
-            //    if (rt > 0)
-            //        checkmans[e.RowIndex] = rt;
-            //    else
-            //        MessageBox.Show("审核人id不存在，请重新输入");
-            //    return;
-            //}
         }
 
         //查找输入清场人和检查人名字是否合法
@@ -377,23 +381,9 @@ namespace WindowsFormsApplication1
 
             cleantime = dateTimePicker1.Value;
             classes = comboBox1.Text.ToString();
-            checker = textBox2.Text.ToString();
+            //checker = textBox2.Text.ToString();
             checktime = dateTimePicker2.Value;
-
-            if (classes == "" || checker == "")
-            {
-                MessageBox.Show("班次和复核人均不能为空");
-                return;
-            }
-
             int classid;//1代表白班，0代表夜班
-            int checkerid = queryid(checker);//获取复核人id
-            if (checkerid < 0)
-            {
-                MessageBox.Show("复核人id不存在！");
-                return;
-            }
-
             if (classes == "白班")
                 classid = 1;
             else
@@ -412,7 +402,12 @@ namespace WindowsFormsApplication1
                     a = 1;
                 else
                     a = 0;
-                st += "[" + a.ToString() + "," + cleanmans[i].ToString() + "," + checkmans[i].ToString() + ",]}";
+                if (dataGridView1.Rows[i].Cells[4].Value==null || dataGridView1.Rows[i].Cells[5].Value==null)
+                {
+                    MessageBox.Show("清洁人和检查人不能为空");
+                    return;
+                }
+                st += "[" + a.ToString() + "," + mySystem.Parameter.NametoID(dataGridView1.Rows[i].Cells[4].Value.ToString()) + "," + mySystem.Parameter.NametoID(dataGridView1.Rows[i].Cells[5].Value.ToString()) + "]}";
 
                 JObject temp = JObject.Parse(st);
                 jarray.Add(temp);
@@ -421,31 +416,31 @@ namespace WindowsFormsApplication1
             //选择本地还是远程并更新数据到数据库
             if (isSqlOk)
             {
-                //string s = "update extrusion set s1_clean_date='" + cleantime + "',s1_flight=" + classes + ",s1_reviewer_id='" + int.Parse(checker) + "',s1_review_date='" + checktime + "',s1_region_content_result_cleaner_reviewer='" + j.ToString() + "',step_status=" + status + " where id=1";
-                int result = 0;
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                comm.CommandText = "update extrusion set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_content_result_cleaner_reviewer= @cont where id=@id";
-                comm.Parameters.Add("@cleandate", System.Data.SqlDbType.Date);
-                comm.Parameters.Add("@flight", System.Data.SqlDbType.Int);
-                comm.Parameters.Add("@reviewerid", System.Data.SqlDbType.Int);
-                comm.Parameters.Add("@reviewdate", System.Data.SqlDbType.Date);
-                comm.Parameters.Add("@cont", System.Data.SqlDbType.VarChar);
-                comm.Parameters.Add("@id", System.Data.SqlDbType.Int);
+                ////string s = "update extrusion set s1_clean_date='" + cleantime + "',s1_flight=" + classes + ",s1_reviewer_id='" + int.Parse(checker) + "',s1_review_date='" + checktime + "',s1_region_content_result_cleaner_reviewer='" + j.ToString() + "',step_status=" + status + " where id=1";
+                //int result = 0;
+                //SqlCommand comm = new SqlCommand();
+                //comm.Connection = conn;
+                //comm.CommandText = "update extrusion set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_content_result_cleaner_reviewer= @cont where id=@id";
+                //comm.Parameters.Add("@cleandate", System.Data.SqlDbType.Date);
+                //comm.Parameters.Add("@flight", System.Data.SqlDbType.Int);
+                //comm.Parameters.Add("@reviewerid", System.Data.SqlDbType.Int);
+                //comm.Parameters.Add("@reviewdate", System.Data.SqlDbType.Date);
+                //comm.Parameters.Add("@cont", System.Data.SqlDbType.VarChar);
+                //comm.Parameters.Add("@id", System.Data.SqlDbType.Int);
 
-                comm.Parameters["@cleandate"].Value = cleantime;
-                comm.Parameters["@flight"].Value = classid;
-                comm.Parameters["@reviewerid"].Value = checkerid;
-                comm.Parameters["@reviewdate"].Value = checktime;
-                comm.Parameters["@cont"].Value = jarray.ToString();
-                comm.Parameters["@id"].Value = 1;
+                //comm.Parameters["@cleandate"].Value = cleantime;
+                //comm.Parameters["@flight"].Value = classid;
+                //comm.Parameters["@reviewerid"].Value = checkerid;
+                //comm.Parameters["@reviewdate"].Value = checktime;
+                //comm.Parameters["@cont"].Value = jarray.ToString();
+                //comm.Parameters["@id"].Value = 1;
 
-                result = comm.ExecuteNonQuery();
-                if (result > 0)
-                {
-                    MessageBox.Show("添加成功");
-                }
-                else { MessageBox.Show("错误"); }
+                //result = comm.ExecuteNonQuery();
+                //if (result > 0)
+                //{
+                //    MessageBox.Show("添加成功");
+                //}
+                //else { MessageBox.Show("错误"); }
             }
             else
             {
@@ -453,18 +448,17 @@ namespace WindowsFormsApplication1
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = mySystem.Parameter.connOle;
                 //comm.CommandText = "update extrusion_s1_cleanrecord set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_result_cleaner_reviewer= @cont where id= @id";
-                comm.CommandText = "insert into extrusion_s1_cleanrecord(s1_clean_date,s1_flight,s1_reviewer_id,s1_review_date,s1_region_result_cleaner_reviewer,production_instruction) values(@cleandate,@flight,@reviewerid,@reviewdate,@cont,@id)";
+                if (label == 1)//插入数据库
+                    comm.CommandText = "insert into extrusion_s1_cleanrecord(s1_clean_date,s1_flight,s1_region_result_cleaner_reviewer,production_instruction) values(@cleandate,@flight,@cont,@id)";
+                else//更新数据库
+                    comm.CommandText = "update extrusion_s1_cleanrecord set s1_clean_date= @cleandate,s1_flight=@flight,s1_region_result_cleaner_reviewer= @cont where production_instruction= @id";
                 comm.Parameters.Add("@cleandate", System.Data.OleDb.OleDbType.Date);
                 comm.Parameters.Add("@flight", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@reviewerid", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@reviewdate", System.Data.OleDb.OleDbType.Date);
                 comm.Parameters.Add("@cont", System.Data.OleDb.OleDbType.VarChar);
                 comm.Parameters.Add("@id", System.Data.OleDb.OleDbType.Integer);
 
                 comm.Parameters["@cleandate"].Value = cleantime;
                 comm.Parameters["@flight"].Value = classid;
-                comm.Parameters["@reviewerid"].Value = checkerid;
-                comm.Parameters["@reviewdate"].Value = checktime;
                 comm.Parameters["@cont"].Value = jarray.ToString();
                 comm.Parameters["@id"].Value = instrid;
 
@@ -472,22 +466,53 @@ namespace WindowsFormsApplication1
                 if (result > 0)
                 {
                     MessageBox.Show("添加成功");
+                    label = 0;
+                    button2.Enabled = true;
                 }
                 else { MessageBox.Show("错误"); }
+                comm.Dispose();
             }
-            button2.Enabled = true;
+            
 
 
         }
 
+        //重写函数，获得审查人信息
         public override void CheckResult()
         {
             base.CheckResult();
+            textBox2.Text = mySystem.Parameter.IDtoName(checkform.userID);//审核人名字
+            dateTimePicker2.Value = checkform.time;
+
+            //获得上次的记录并更新
+            string asql = "update extrusion_s1_cleanrecord set s1_reviewer_id=@revid,s1_review_date=@revdate,s1_review_opinion=@revopinion,s1_is_review_qualified=@revisok where production_instruction=@id";
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            comm.Parameters.Add("@revid",System.Data.OleDb.OleDbType.Integer);
+            comm.Parameters.Add("@revdate",System.Data.OleDb.OleDbType.Date);
+            comm.Parameters.Add("@revopinion",System.Data.OleDb.OleDbType.VarChar);
+            comm.Parameters.Add("@revisok",System.Data.OleDb.OleDbType.Boolean);
+            comm.Parameters.Add("@id",System.Data.OleDb.OleDbType.Integer);
+
+            comm.Parameters["@revid"].Value = checkform.userID;
+            comm.Parameters["@revdate"].Value = checkform.time;
+            comm.Parameters["@revopinion"].Value = checkform.opinion;
+            comm.Parameters["@revisok"].Value = checkform.ischeckOk;
+            comm.Parameters["@id"].Value = instrid;
+
+            int result=comm.ExecuteNonQuery();
+            if(result<0)
+            {
+                MessageBox.Show("插入数据库发生错误");
+                return;
+            }
+            button1.Enabled = false;
+            button2.Enabled = false;
+            button3.Enabled = true;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            mySystem.CheckForm checkform = new mySystem.CheckForm(this);
+            checkform = new mySystem.CheckForm(this);
             checkform.Show();
         }
 

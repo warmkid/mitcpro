@@ -33,6 +33,8 @@
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.button1 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.dtpDate = new System.Windows.Forms.DateTimePicker();
@@ -77,41 +79,59 @@
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
-            this.Column3});
-            this.dataGridView1.Location = new System.Drawing.Point(27, 90);
+            this.Column3,
+            this.Column4,
+            this.Column5});
+            this.dataGridView1.Location = new System.Drawing.Point(36, 93);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(453, 400);
+            this.dataGridView1.Size = new System.Drawing.Size(592, 400);
             this.dataGridView1.TabIndex = 52;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            this.dataGridView1.CurrentCellDirtyStateChanged += new System.EventHandler(this.dataGridView1_CurrentCellDirtyStateChanged);
             // 
             // Column1
             // 
             this.Column1.HeaderText = "确认项目";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
-            this.Column1.Width = 350;
+            this.Column1.Width = 320;
             // 
             // Column2
             // 
-            this.Column2.HeaderText = "白班";
+            this.Column2.HeaderText = "白班Y";
             this.Column2.Name = "Column2";
-            this.Column2.Width = 50;
+            this.Column2.Width = 60;
             // 
             // Column3
             // 
-            this.Column3.HeaderText = "夜班";
+            this.Column3.HeaderText = "白班N";
             this.Column3.Name = "Column3";
-            this.Column3.Width = 50;
+            this.Column3.Width = 60;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "夜班Y";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 60;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "夜班N";
+            this.Column5.Name = "Column5";
+            this.Column5.Width = 60;
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(265, 519);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(90, 29);
             this.button1.TabIndex = 51;
             this.button1.Text = "复核";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label7
@@ -150,6 +170,7 @@
             // 
             // btnDefault
             // 
+            this.btnDefault.Enabled = false;
             this.btnDefault.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnDefault.Location = new System.Drawing.Point(36, 519);
             this.btnDefault.Margin = new System.Windows.Forms.Padding(4);
@@ -158,6 +179,7 @@
             this.btnDefault.TabIndex = 47;
             this.btnDefault.Text = "设置";
             this.btnDefault.UseVisualStyleBackColor = true;
+            this.btnDefault.Visible = false;
             this.btnDefault.Click += new System.EventHandler(this.btnDefault_Click);
             // 
             // panel1
@@ -185,10 +207,10 @@
             this.panel1.Controls.Add(this.txbBatchNoN);
             this.panel1.Controls.Add(this.txbAmountsD);
             this.panel1.Controls.Add(this.txbBatchNoD);
-            this.panel1.Location = new System.Drawing.Point(511, 90);
+            this.panel1.Location = new System.Drawing.Point(663, 95);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(585, 487);
+            this.panel1.Size = new System.Drawing.Size(438, 487);
             this.panel1.TabIndex = 44;
             // 
             // label6
@@ -205,10 +227,10 @@
             // dtpNight
             // 
             this.dtpNight.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtpNight.Location = new System.Drawing.Point(339, 444);
+            this.dtpNight.Location = new System.Drawing.Point(275, 444);
             this.dtpNight.Margin = new System.Windows.Forms.Padding(4);
             this.dtpNight.Name = "dtpNight";
-            this.dtpNight.Size = new System.Drawing.Size(212, 26);
+            this.dtpNight.Size = new System.Drawing.Size(150, 26);
             this.dtpNight.TabIndex = 57;
             // 
             // dtpDay
@@ -218,7 +240,7 @@
             this.dtpDay.Margin = new System.Windows.Forms.Padding(4);
             this.dtpDay.Name = "dtpDay";
             this.dtpDay.ShowUpDown = true;
-            this.dtpDay.Size = new System.Drawing.Size(212, 26);
+            this.dtpDay.Size = new System.Drawing.Size(150, 26);
             this.dtpDay.TabIndex = 56;
             // 
             // label4
@@ -257,19 +279,19 @@
             // txbTakeinN
             // 
             this.txbTakeinN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbTakeinN.Location = new System.Drawing.Point(339, 405);
+            this.txbTakeinN.Location = new System.Drawing.Point(275, 405);
             this.txbTakeinN.Margin = new System.Windows.Forms.Padding(4);
             this.txbTakeinN.Name = "txbTakeinN";
-            this.txbTakeinN.Size = new System.Drawing.Size(212, 26);
+            this.txbTakeinN.Size = new System.Drawing.Size(150, 26);
             this.txbTakeinN.TabIndex = 52;
             // 
             // txbHandinN
             // 
             this.txbHandinN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbHandinN.Location = new System.Drawing.Point(339, 369);
+            this.txbHandinN.Location = new System.Drawing.Point(275, 369);
             this.txbHandinN.Margin = new System.Windows.Forms.Padding(4);
             this.txbHandinN.Name = "txbHandinN";
-            this.txbHandinN.Size = new System.Drawing.Size(212, 26);
+            this.txbHandinN.Size = new System.Drawing.Size(150, 26);
             this.txbHandinN.TabIndex = 50;
             // 
             // txbTakeinD
@@ -278,17 +300,17 @@
             this.txbTakeinD.Location = new System.Drawing.Point(117, 405);
             this.txbTakeinD.Margin = new System.Windows.Forms.Padding(4);
             this.txbTakeinD.Name = "txbTakeinD";
-            this.txbTakeinD.Size = new System.Drawing.Size(212, 26);
+            this.txbTakeinD.Size = new System.Drawing.Size(150, 26);
             this.txbTakeinD.TabIndex = 51;
             // 
             // txbAbnormalN
             // 
             this.txbAbnormalN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbAbnormalN.Location = new System.Drawing.Point(339, 161);
+            this.txbAbnormalN.Location = new System.Drawing.Point(275, 161);
             this.txbAbnormalN.Margin = new System.Windows.Forms.Padding(4);
             this.txbAbnormalN.Multiline = true;
             this.txbAbnormalN.Name = "txbAbnormalN";
-            this.txbAbnormalN.Size = new System.Drawing.Size(212, 199);
+            this.txbAbnormalN.Size = new System.Drawing.Size(150, 199);
             this.txbAbnormalN.TabIndex = 48;
             // 
             // txbHandinD
@@ -297,7 +319,7 @@
             this.txbHandinD.Location = new System.Drawing.Point(117, 369);
             this.txbHandinD.Margin = new System.Windows.Forms.Padding(4);
             this.txbHandinD.Name = "txbHandinD";
-            this.txbHandinD.Size = new System.Drawing.Size(212, 26);
+            this.txbHandinD.Size = new System.Drawing.Size(150, 26);
             this.txbHandinD.TabIndex = 49;
             // 
             // txbAbnormalD
@@ -307,7 +329,7 @@
             this.txbAbnormalD.Margin = new System.Windows.Forms.Padding(4);
             this.txbAbnormalD.Multiline = true;
             this.txbAbnormalD.Name = "txbAbnormalD";
-            this.txbAbnormalD.Size = new System.Drawing.Size(212, 199);
+            this.txbAbnormalD.Size = new System.Drawing.Size(150, 199);
             this.txbAbnormalD.TabIndex = 47;
             // 
             // ibProductCode
@@ -347,7 +369,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(423, 31);
+            this.label2.Location = new System.Drawing.Point(337, 31);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 16);
@@ -357,17 +379,17 @@
             // txbCodeN
             // 
             this.txbCodeN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbCodeN.Location = new System.Drawing.Point(339, 127);
+            this.txbCodeN.Location = new System.Drawing.Point(275, 127);
             this.txbCodeN.Margin = new System.Windows.Forms.Padding(4);
             this.txbCodeN.Name = "txbCodeN";
-            this.txbCodeN.Size = new System.Drawing.Size(212, 26);
+            this.txbCodeN.Size = new System.Drawing.Size(150, 26);
             this.txbCodeN.TabIndex = 41;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(193, 31);
+            this.label3.Location = new System.Drawing.Point(181, 31);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(40, 16);
@@ -377,10 +399,10 @@
             // txbAmountsN
             // 
             this.txbAmountsN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbAmountsN.Location = new System.Drawing.Point(339, 91);
+            this.txbAmountsN.Location = new System.Drawing.Point(275, 91);
             this.txbAmountsN.Margin = new System.Windows.Forms.Padding(4);
             this.txbAmountsN.Name = "txbAmountsN";
-            this.txbAmountsN.Size = new System.Drawing.Size(212, 26);
+            this.txbAmountsN.Size = new System.Drawing.Size(150, 26);
             this.txbAmountsN.TabIndex = 39;
             // 
             // txbCodeD
@@ -389,16 +411,16 @@
             this.txbCodeD.Location = new System.Drawing.Point(117, 127);
             this.txbCodeD.Margin = new System.Windows.Forms.Padding(4);
             this.txbCodeD.Name = "txbCodeD";
-            this.txbCodeD.Size = new System.Drawing.Size(212, 26);
+            this.txbCodeD.Size = new System.Drawing.Size(150, 26);
             this.txbCodeD.TabIndex = 40;
             // 
             // txbBatchNoN
             // 
             this.txbBatchNoN.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txbBatchNoN.Location = new System.Drawing.Point(339, 56);
+            this.txbBatchNoN.Location = new System.Drawing.Point(275, 56);
             this.txbBatchNoN.Margin = new System.Windows.Forms.Padding(4);
             this.txbBatchNoN.Name = "txbBatchNoN";
-            this.txbBatchNoN.Size = new System.Drawing.Size(212, 26);
+            this.txbBatchNoN.Size = new System.Drawing.Size(150, 26);
             this.txbBatchNoN.TabIndex = 37;
             // 
             // txbAmountsD
@@ -407,7 +429,7 @@
             this.txbAmountsD.Location = new System.Drawing.Point(117, 91);
             this.txbAmountsD.Margin = new System.Windows.Forms.Padding(4);
             this.txbAmountsD.Name = "txbAmountsD";
-            this.txbAmountsD.Size = new System.Drawing.Size(212, 26);
+            this.txbAmountsD.Size = new System.Drawing.Size(150, 26);
             this.txbAmountsD.TabIndex = 38;
             // 
             // txbBatchNoD
@@ -416,7 +438,7 @@
             this.txbBatchNoD.Location = new System.Drawing.Point(117, 56);
             this.txbBatchNoD.Margin = new System.Windows.Forms.Padding(4);
             this.txbBatchNoD.Name = "txbBatchNoD";
-            this.txbBatchNoD.Size = new System.Drawing.Size(212, 26);
+            this.txbBatchNoD.Size = new System.Drawing.Size(150, 26);
             this.txbBatchNoD.TabIndex = 36;
             // 
             // label1
@@ -443,7 +465,7 @@
             // 
             this.lbInstructionId.AutoSize = true;
             this.lbInstructionId.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbInstructionId.Location = new System.Drawing.Point(24, 64);
+            this.lbInstructionId.Location = new System.Drawing.Point(32, 64);
             this.lbInstructionId.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbInstructionId.Name = "lbInstructionId";
             this.lbInstructionId.Size = new System.Drawing.Size(104, 16);
@@ -517,5 +539,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column5;
     }
 }

@@ -16,6 +16,10 @@ namespace mySystem.Process.CleanCut
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
+        private int Instructionid;
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false;
 
         private int operator_id;
         private string operator_name;
@@ -28,12 +32,12 @@ namespace mySystem.Process.CleanCut
 
         public CleanCut_Productrecord(MainForm mainform) : base(mainform)
         {
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
-            operator_id = base.mainform.userID;
-
-            operator_name = checkID(operator_id);
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            Instructionid = Parameter.proInstruID;
 
             InitializeComponent();
 
@@ -157,13 +161,21 @@ namespace mySystem.Process.CleanCut
             RefreshNum();
         }
 
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            review_id = check.userID;
+            review_opinion = check.opinion;
+            ischeckOk = check.ischeckOk;
+        }
+
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            //CheckForm check = new CheckForm(base.mainform);
-            //check.ShowDialog();
-            //review_id = check.userID;
-            //reviewer_name = checkID(review_id);
-            //checkerBox.Text = reviewer_name;
+            check = new CheckForm(this);
+            check.Show();
+            reviewer_name = Parameter.IDtoName(review_id);
+
+            checkerBox.Text = reviewer_name;
         }
     }
 }

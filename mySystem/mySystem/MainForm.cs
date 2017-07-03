@@ -33,26 +33,25 @@ namespace mySystem
 
         public MainForm()
         {
-            //Parameter.selectCon = 1;
-            //Parameter.InitCon();
-            Parameter.InitConUser();
+            Parameter.InitConnUser(); //初始化连接到有用户表的数据库
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
             //Parameter.userID = login.userID;
 
             if (Parameter.userID != 0)
             {
-                Parameter.userRole = checkRole(Parameter.userID);
-            }
-
-            if (Parameter.isSqlOk)
-            {
-                Parameter.userName = checkID(Parameter.userID);
-            }
-            else
-            {
-                //Parameter.userName = checkIDOle(Parameter.userID);
-                Parameter.userName = Parameter.IDtoName(Parameter.userID);
+                if (Parameter.isSqlOk)
+                {
+                    //Parameter.userName = Parameter.IDtoName(Parameter.userID);
+                    //Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
+                    //Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
+                }
+                else
+                {
+                    Parameter.userName = Parameter.IDtoName(Parameter.userID);
+                    Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
+                    Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
+                }
             }
 
             InitializeComponent();
@@ -136,54 +135,7 @@ namespace mySystem
         }
 
 
-        private int checkRole(int userID)
-        {
-            String tblName = "user_aoxing";
-            List<String> queryCols = new List<String>(new String[] { "role_id" });
-            List<String> whereCols = new List<String>(new String[] { "user_id" });
-            List<Object> whereVals = new List<Object>(new Object[] { userID });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOleUser, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
-            int user_Role = Convert.ToInt32(res[0][0]);
-
-            return user_Role;
-
-        }
-
         
-        private string checkID(int userID)
-        {
-            string user = null;
-            string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-            SqlCommand comm = new SqlCommand(searchsql, Parameter.connUser);
-            SqlDataReader myReader = comm.ExecuteReader();
-            while (myReader.Read())
-            {
-                user = myReader.GetString(4);
-            }
-
-            myReader.Close();  
-            comm.Dispose();
-            return user;
-        }
-
-        private string checkIDOle(int userID)
-        {
-            string user = null;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOleUser;
-            comm.CommandText = "select * from user_aoxing where user_id= @ID";
-            comm.Parameters.AddWithValue("@ID", userID);
-
-            OleDbDataReader myReader = comm.ExecuteReader();
-            while (myReader.Read())
-            {
-                user = myReader.GetString(4);
-            }
-
-            myReader.Close();  
-            comm.Dispose();
-            return user;
-        }
 
         //private SqlConnection Init(SqlConnection myConnection)
         //{
@@ -313,19 +265,23 @@ namespace mySystem
 
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
-            if (Parameter.isSqlOk)
-            {
-                Parameter.userName = checkID(Parameter.userID);
-            }
-            else
-            {
-                Parameter.userName = checkIDOle(Parameter.userID);
-            }
+            
             if (Parameter.userName != null)
             {
+                if (Parameter.isSqlOk)
+                {
+                    //Parameter.userName = Parameter.IDtoName(Parameter.userID);
+                    //Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
+                    //Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
+                }
+                else
+                {
+                    Parameter.userName = Parameter.IDtoName(Parameter.userID);
+                    Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
+                    Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
+                }
                 userLabel.Text = Parameter.userName;
                 MainPanel.Controls.Clear();
-                Parameter.userRole = checkRole(Parameter.userID);
                 RoleInit();
                 MainProduceBtn.BackColor = Color.FromName("Control");
                 MainSettingBtn.BackColor = Color.FromName("Control");

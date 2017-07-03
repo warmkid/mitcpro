@@ -23,9 +23,15 @@ namespace mySystem.Extruction.Process
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
+        private int Instructionid;
+        private CheckForm check = null;
+        private string review_opinion;
+        private bool ischeckOk = false;
+        private bool isSaveOk = false;
 
-        private int checknum = 0;
-        private bool[] checklist;
+        //private int checknum = 0;
+        //private bool[] checklist;
+
 
         private int operator_id;
         private string operator_name;
@@ -34,24 +40,150 @@ namespace mySystem.Extruction.Process
         private string reviewer_name;
         private DateTime review_date;
 
+        //有信息的时候，并未修改operator_id、operator_name
         public ExtructionCheckBeforePowerStep2(MainForm mainform): base(mainform)
         {
             InitializeComponent();
 
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
-            operator_id = base.mainform.userID;
-
-            if (isSqlOk) { operator_name = checkIDSql(operator_id); }
-            else { operator_name = checkIDOle(operator_id); }  
-
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            Instructionid = Parameter.proInstruID;
+            
+            Init();
             DataTabelInitialize();
-
-            //DataShow();
-
+            DataShow(Instructionid);
         }
 
+        private void Init() 
+        {
+            //记录人初始化
+            operator_id = Parameter.userID;
+            operator_name = Parameter.userName;
+            this.recorderBox.Text = operator_name;
+            operate_date = DateTime.Now.Date;
+            recordTimePicker.Value = operate_date;
+            //审核人初始化
+            review_id = 0;
+            reviewer_name = null;
+            this.checkerBox.Text = reviewer_name;
+            review_date = DateTime.Now.Date;
+            checkTimePicker.Value = review_date;
+
+            PSLabel.Text = "注：正常或符合打“√”，不正常或不符合取消勾选。";
+        }
+
+        private void DataShow(int InstructionID)
+        {
+            List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date", "s2_reviewer_id", "s2_review_date", "s2_is_review_qualified" });
+            List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
+            List<Object> whereVals = new List<Object>(new Object[] { InstructionID });
+            List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
+
+            if (queryValsList.Count == 0)
+            {
+                dt_confirmarea.Clear();
+                CheckBeforePowerView.Rows.Clear();
+                CheckBeforePowerView.ReadOnly = false;
+                Init();
+                ischeckOk = false;
+                isSaveOk = false;
+                ///***********************将设置界面的内容填入************************///
+                OleDbCommand cmd = new OleDbCommand("select * from " + tableSel, connOle);
+                OleDbDataAdapter daOle = new OleDbDataAdapter(cmd);
+                daOle.Fill(dt_confirmarea);
+                daOle.Dispose();
+                ///填写项目内容
+
+                for (int i = 0; i < dt_confirmarea.Rows.Count; i++)
+                {
+                    DataGridViewRow dr = new DataGridViewRow();
+                    foreach (DataGridViewColumn c in CheckBeforePowerView.Columns)
+                    {
+                        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                    }
+                    dr.Cells[0].Value = dt_confirmarea.Rows[i]["确认序号"].ToString(); //序号
+                    dr.Cells[1].Value = dt_confirmarea.Rows[i]["确认项目"].ToString(); //确认项目
+                    dr.Cells[2].Value = " " + dt_confirmarea.Rows[i]["确认内容"].ToString(); ; //确认内容
+                    dr.Cells[3].Value = true;
+                    CheckBeforePowerView.Rows.Add(dr);
+                }
+                SaveBtn.Enabled = true;
+                CheckBtn.Enabled = true;
+                printBtn.Enabled = false;
+            }
+            else
+            {
+                dt_confirmarea.Clear();
+                CheckBeforePowerView.Rows.Clear();
+                isSaveOk = true;
+
+                //记录人初始化
+                operator_id = Convert.ToInt32(queryValsList[0][1].ToString());
+                operator_name = Parameter.IDtoName(operator_id);
+                this.recorderBox.Text = operator_name;
+                operate_date = Convert.ToDateTime(queryValsList[0][2].ToString());
+                recordTimePicker.Value = operate_date;
+                //审核人初始化
+                review_id = Convert.ToInt32(queryValsList[0][3].ToString());
+                reviewer_name = Parameter.IDtoName(review_id);
+                this.checkerBox.Text = reviewer_name;
+
+                if (reviewer_name != null)
+                {
+                    review_date = Convert.ToDateTime(queryValsList[0][4].ToString());
+                    checkTimePicker.Value = review_date;
+                    ischeckOk = Convert.ToBoolean(queryValsList[0][5].ToString());
+                    //审核通过，则确认、保存均不可点
+                    if (ischeckOk)
+                    {
+                        SaveBtn.Enabled = false;
+                        CheckBtn.Enabled = false;
+                        printBtn.Enabled = true;
+                        CheckBeforePowerView.ReadOnly = true;
+                    }
+                    else
+                    {
+                        SaveBtn.Enabled = true;
+                        CheckBtn.Enabled = true;
+                        printBtn.Enabled = false;
+                        CheckBeforePowerView.ReadOnly = false;
+                    }
+                    printBtn.Enabled = true;
+                    CheckBeforePowerView.Columns["确认结果"].ReadOnly = true;
+                }
+                else
+                {
+                    review_date = DateTime.Now.Date;
+                    checkTimePicker.Value = review_date;
+                    ischeckOk = false; 
+                    SaveBtn.Enabled = true;
+                    CheckBtn.Enabled = true;
+                    printBtn.Enabled = false;
+                } 
+
+                //解析jason
+                JArray jo = JArray.Parse(queryValsList[0][0].ToString());
+                int i = 0;
+                foreach (var ss in jo)  //查找某个字段与值
+                {
+                    DataGridViewRow dr = new DataGridViewRow();
+                    foreach (DataGridViewColumn c in CheckBeforePowerView.Columns)
+                    {
+                        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                    }
+                    dr.Cells[0].Value = (i + 1).ToString(); //序号
+                    dr.Cells[1].Value = ss["s2_确认项目"].ToString(); //确认项目
+                    dr.Cells[2].Value = " " + ss["s2_确认内容"].ToString(); //确认内容
+                    dr.Cells[3].Value = ss["s2_确认结果"].ToString() == "1" ? true : false;
+                    CheckBeforePowerView.Rows.Add(dr);
+                    i++;
+                }
+            }
+        }
+    
         private void DataTabelInitialize()
         {
             ///***********************表格数据初始化************************///
@@ -71,56 +203,13 @@ namespace mySystem.Extruction.Process
             this.CheckBeforePowerView.Columns[1].MinimumWidth = 160;
             this.CheckBeforePowerView.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.CheckBeforePowerView.Columns[3].MinimumWidth = 80;
-            for (int i = 0; i < this.CheckBeforePowerView.Columns.Count - 1; i++)
+            for (int i = 0; i < this.CheckBeforePowerView.Columns.Count - 2; i++)
             {
                 this.CheckBeforePowerView.Columns[i].ReadOnly = true;
             }
             this.CheckBeforePowerView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.CheckBeforePowerView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.CheckBeforePowerView.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
-
-            ///***********************表头数据初始化************************///
-            if (isSqlOk)
-            {
-                SqlCommand comm = new SqlCommand("select * from " + tableSel, conn);
-                SqlDataAdapter daSql = new SqlDataAdapter(comm);
-                daSql.Fill(dt_confirmarea);
-                daSql.Dispose();
-            }
-            else
-            {
-                OleDbCommand cmd = new OleDbCommand("select * from " + tableSel, connOle);
-                OleDbDataAdapter daOle = new OleDbDataAdapter(cmd);
-                daOle.Fill(dt_confirmarea);
-                daOle.Dispose();
-            }
-            ///填写项目内容
-            checknum = dt_confirmarea.Rows.Count;
-            checklist = new bool[checknum];
-
-            
-            for (int i = 0; i < checknum; i++)
-            {
-                DataGridViewRow dr = new DataGridViewRow();
-                foreach (DataGridViewColumn c in CheckBeforePowerView.Columns)
-                {
-                    dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-                }
-                dr.Cells[0].Value = dt_confirmarea.Rows[i]["确认序号"].ToString(); //序号
-                dr.Cells[1].Value = dt_confirmarea.Rows[i]["确认项目"].ToString(); //确认项目
-                dr.Cells[2].Value = " "+dt_confirmarea.Rows[i]["确认内容"].ToString(); ; //确认内容
-                dr.Cells[3].Value = true;
-                CheckBeforePowerView.Rows.Add(dr);
-            }
-
-            PSLabel.Text = "注：正常或符合打“√”，不正常或不符合取消勾选。";
-                                  
-            this.recorderBox.Text = operator_name;
-            operate_date = DateTime.Now.Date;
-            recordTimePicker.Value = operate_date;
-            review_date = DateTime.Now.Date;
-            checkTimePicker.Value = review_date;            
+            this.CheckBeforePowerView.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;            
         }
 
         private void DataSaveSql()
@@ -158,24 +247,41 @@ namespace mySystem.Extruction.Process
         }
 
         private void DataSaveOle()
-        {           
+        {
+            operator_name = recorderBox.Text;            
+            if (operator_name != Parameter.IDtoName(operator_id))
+            {
+                operator_id = Parameter.NametoID(operator_name);
+            }
             //jason 保存表格
             JArray jarray = JArray.Parse("[]");
-            for (int i = 0; i < checknum; i++)
+            for (int i = 0; i < CheckBeforePowerView.Rows.Count; i++)
             {
                 string json = @"{}";
                 JObject j = JObject.Parse(json);
-                j.Add("s2_item_qualified", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认结果"].Value.ToString() == "True" ? "1" : "0"));
+                j.Add("s2_确认项目", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认项目"].Value.ToString()));
+                j.Add("s2_确认内容", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认内容"].Value.ToString()));
+                j.Add("s2_确认结果", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认结果"].Value.ToString() == "True" ? "1" : "0"));
                 jarray.Add(j);
             }
 
-            List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
-            List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(),operator_id, recordTimePicker.Value });
-            List<String> whereCols = new List<String>(new String[] { "id" });
-            List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-            //Boolean b = Utility.insertAccess(connOle, table, queryCols, queryVals);
-            
+            //新建的
+            if (isSaveOk == false)
+            {
+                List<String> queryCols = new List<String>(new String[] { "production_instruction_id" ,"s2_is_qualified", "s2_operator_id", "s2_operate_date" });
+                List<Object> queryVals = new List<Object>(new Object[] { Instructionid, jarray.ToString(), operator_id, Convert.ToDateTime(recordTimePicker.Value.ToString("yyyy/MM/dd")) });
+                Boolean b = Utility.insertAccess(connOle, table, queryCols, queryVals);
+            }
+            //已经有了
+            else
+            {
+                List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
+                List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), operator_id, Convert.ToDateTime(recordTimePicker.Value.ToString("yyyy/MM/dd")) });                
+                List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
+                List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
+                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
+            }
+            CheckBtn.Enabled = true;            
         }
 
         private void CheckBeforePowerView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -189,113 +295,56 @@ namespace mySystem.Extruction.Process
             else { DataSaveOle(); }
         }
 
-        private void CheckBtn_Click(object sender, EventArgs e)
+        public override void CheckResult()
         {
-            //CheckForm check = new CheckForm(base.mainform);
-            //check.ShowDialog();
-            //review_id = check.userID;
-            //if (isSqlOk)
-            //{
-            //    int result = 0;
-            //    SqlCommand comm = new SqlCommand();
-            //    comm.Connection = conn;
-            //    comm.CommandText = "update extrusion set s2_reviewer_id=@s2_reviewer_id, s2_review_date=@s2_review_date where id=1";
-
-            //    comm.Parameters.Add("@s2_reviewer_id", System.Data.SqlDbType.Int);
-            //    comm.Parameters.Add("@s2_review_date", System.Data.SqlDbType.Date);
-            //    comm.Parameters["@s2_reviewer_id"].Value = review_id;
-            //    comm.Parameters["@s2_review_date"].Value = checkTimePicker.Value;
-
-            //    result = comm.ExecuteNonQuery();
-            //    /*
-            //    if (result > 0)
-            //    { MessageBox.Show("添加成功"); }
-            //    else { MessageBox.Show("错误"); }
-            //     * */
-            //    comm.Dispose();
-            //}
-            //else
-            //{
-            //    List<String> queryCols = new List<String>(new String[] { "s2_reviewer_id", "s2_review_date" });
-            //    List<Object> queryVals = new List<Object>(new Object[] { review_id, checkTimePicker.Value });
-            //    List<String> whereCols = new List<String>(new String[] { "id" });
-            //    List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            //    Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-            //    reviewer_name = checkIDOle(review_id);
-            //}
-            //checkerBox.Text = reviewer_name;
-        }
-        
-        private string checkIDSql(int userID)
-        {
-            string user = null;
-            string searchsql = "select * from user_aoxing where user_id='" + userID + "'";
-            SqlCommand comm = new SqlCommand(searchsql, conn);
-            SqlDataReader myReader = comm.ExecuteReader();
-            while (myReader.Read())
-            {
-                user = myReader.GetString(4);
-            }
-
-            myReader.Close();
-            comm.Dispose();
-            return user;
-        }
-
-        private string checkIDOle(int userID)
-        {
-            string user = null;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = connOle;
-            comm.CommandText = "select * from user_aoxing where user_id= @ID";
-            comm.Parameters.AddWithValue("@ID", userID);
-
-            OleDbDataReader myReader = comm.ExecuteReader();
-            while (myReader.Read())
-            {
-                user = myReader.GetString(4);
-            }
-
-            myReader.Close();
-            comm.Dispose();
-            return user;
-        }
-
-        private void DataShow()
-        {
-             ///填写数据库的确认结果、用户id、审核人id
+            base.CheckResult();
+            review_id = check.userID;
+            reviewer_name = Parameter.IDtoName(review_id);
+            review_opinion = check.opinion;
+            ischeckOk = check.ischeckOk;
             if (isSqlOk)
             {
+                int result = 0;
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = conn;
+                comm.CommandText = "update extrusion set s2_reviewer_id=@s2_reviewer_id, s2_review_date=@s2_review_date where id=1";
+
+                comm.Parameters.Add("@s2_reviewer_id", System.Data.SqlDbType.Int);
+                comm.Parameters.Add("@s2_review_date", System.Data.SqlDbType.Date);
+                comm.Parameters["@s2_reviewer_id"].Value = review_id;
+                comm.Parameters["@s2_review_date"].Value = checkTimePicker.Value;
+
+                result = comm.ExecuteNonQuery();
+                /*
+                if (result > 0)
+                { MessageBox.Show("添加成功"); }
+                else { MessageBox.Show("错误"); }
+                 * */
+                comm.Dispose();
             }
             else
             {
-                List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date", "s2_reviewer_id", "s2_review_date" });
-                List<String> whereCols = new List<String>(new String[] { "id" });
-                List<Object> whereVals = new List<Object>(new Object[] { 1 });
-                List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
-
-                //解析jason
-                JArray jo = JArray.Parse(queryValsList[0][0].ToString());
-                //填数据
-                int i = 0;
-                foreach (var ss in jo)  //查找某个字段与值
-                {  checklist[i++] = ss["s2_item_qualified"].ToString() == "1" ? true : false; }
-
-                operator_id = Convert.ToInt32(queryValsList[0][1]);
-                operator_name = checkIDOle(operator_id);
-                operate_date = Convert.ToDateTime(queryValsList[0][2]);
-                review_id = Convert.ToInt32(queryValsList[0][3]);
-                reviewer_name = checkIDOle(review_id);
-                review_date = Convert.ToDateTime(queryValsList[0][4]);
-
-                for (i = 0; i < checknum; i++)
-                {  this.CheckBeforePowerView.Rows[i].Cells["确认结果"].Value = checklist[i];  }
+                List<String> queryCols = new List<String>(new String[] { "s2_reviewer_id", "s2_review_date", "s2_review_opinion", "s2_is_review_qualified" });
+                List<Object> queryVals = new List<Object>(new Object[] { review_id, Convert.ToDateTime(checkTimePicker.Value.ToString("yyyy/MM/dd")), review_opinion, ischeckOk });
+                List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
+                List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
+                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);                
             }
-
-            this.recorderBox.Text = operator_name;
-            recordTimePicker.Value = operate_date.Date;
-            this.checkerBox.Text = reviewer_name; 
-            checkTimePicker.Value = review_date;             
+            if (ischeckOk)
+            {
+                CheckBeforePowerView.ReadOnly = true;
+                SaveBtn.Enabled = false;
+                CheckBtn.Enabled = false;
+                printBtn.Enabled = true;
+            }
+            checkerBox.Text = reviewer_name;            
         }
+
+        private void CheckBtn_Click(object sender, EventArgs e)
+        {
+            check = new CheckForm(this);
+            check.ShowDialog();
+        }
+               
     }
 }
