@@ -115,7 +115,7 @@ namespace mySystem.Process.CleanCut
             {
                 string user = null;
                 OleDbCommand comm = new OleDbCommand();
-                comm.Connection = connOle;
+                comm.Connection = mySystem.Parameter.connOle;
                 comm.CommandText = "select * from user_aoxing where user_id= @ID";
                 comm.Parameters.AddWithValue("@ID", userID);
 

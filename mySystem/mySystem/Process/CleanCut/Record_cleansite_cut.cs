@@ -33,7 +33,7 @@ namespace mySystem.Process.CleanCut
             else
             {
                 string accessql = "select * from weildprocess_cleansite";
-                OleDbCommand cmd = new OleDbCommand(accessql, mainform.connOle);
+                OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 data.Fill(dt);
@@ -86,7 +86,7 @@ namespace mySystem.Process.CleanCut
             else
             {
                 string asql = "select user_id from user_aoxing where user_name=" + "'" + s + "'";
-                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
                 DataTable tempdt = new DataTable();

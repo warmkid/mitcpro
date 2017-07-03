@@ -86,7 +86,7 @@ namespace mySystem.Extruction.Process
             else
             {
                 string accessql = "select * from feedingprocess_cleansite";
-                OleDbCommand cmd = new OleDbCommand(accessql, mainform.connOle);
+                OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 data.Fill(dt);
@@ -98,7 +98,7 @@ namespace mySystem.Extruction.Process
                 data.Dispose();
                 dt.Clear();
                 accessql = "select * from extrusion_cleansite";
-                cmd = new OleDbCommand(accessql, mainform.connOle);
+                cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 data = new OleDbDataAdapter(cmd);
                 data.Fill(dt);
                 for (int i = 0; i < dt.Rows.Count; i++)
@@ -238,7 +238,7 @@ namespace mySystem.Extruction.Process
             else
             {
                 string asql = "select user_id from user_aoxing where user_name=" + "'" + s + "'";
-                OleDbCommand comm = new OleDbCommand(asql, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
                 DataTable tempdt = new DataTable();
@@ -344,7 +344,7 @@ namespace mySystem.Extruction.Process
 
                 s += " where id=1";
                 //System.Console.WriteLine(s);
-                OleDbCommand comm = new OleDbCommand(s, mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(s, mySystem.Parameter.connOle);
                 result = comm.ExecuteNonQuery();
             }
             if (result > 0)

@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
         SqlConnection conn = null;//连接sql
         OleDbConnection connOle = null;//连接access
         bool isSqlOk;//使用sql还是access
-
+        int label = 2;//判断选中列
         //private ExtructionProcess extructionformfather = null;
 
         //string cleantime;//清洁日期
@@ -35,6 +35,7 @@ namespace WindowsFormsApplication1
 
         List<int> cleanmans;
         List<int> checkmans;
+        int instrid;
 
         public Record_extrusClean(mySystem.MainForm mainform)
             : base(mainform)
@@ -49,6 +50,11 @@ namespace WindowsFormsApplication1
             qury();
 
         }
+        //获得生产指令id
+        private int getinstrid()
+        {
+            return mySystem.Parameter.proInstruID;
+        }
         private void Init()
         {
             strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
@@ -62,6 +68,10 @@ namespace WindowsFormsApplication1
 
             dataGridView1.Font = new Font("宋体", 10);
             button2.Enabled = false;
+            textBox2.Enabled = false;
+
+            instrid = getinstrid();
+            
             
         }
         public void connToServer()
@@ -70,7 +80,66 @@ namespace WindowsFormsApplication1
             conn.Open();
             isOk = true;
         }
+        //通过清洁名称找到清洁内容
+        private string cont_findby_name(string name)
+        {
+            string asql = "select 清洁内容 from cleanarea where 清洁区域='"  + name+"'" ;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+                return "";
+            else
+                return tempdt.Rows[0][0].ToString();
+        }
+        //根据生产指令id将数据填写到各控件中
+        private void fill_by_id(int id)
+        {
+            string asql = "select s1_clean_date,s1_flight,s1_reviewer_id,s1_review_date,s1_region_result_cleaner_reviewer from extrusion_s1_cleanrecord where production_instruction="  + id ;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+                return;
+            else
+            {
+                //将tempdt填入控件
+                dateTimePicker1.Value = DateTime.Parse(tempdt.Rows[0][0].ToString());
+                comboBox1.Text = int.Parse(tempdt.Rows[0][1].ToString()) == 1 ? "白班" : "夜班";
+                textBox2.Text = mySystem.Parameter.IDtoName(int.Parse(tempdt.Rows[0][2].ToString()));
+                dateTimePicker2.Value = DateTime.Parse(tempdt.Rows[0][3].ToString());
+
+                string jstr = tempdt.Rows[0][4].ToString();
+                JArray jarray = JArray.Parse(jstr);
+                for (int i = 0; i < jarray.Count; i++)
+                {
+                    JObject jobj = JObject.Parse(jarray[i].ToString());
+                    foreach (var p in jobj)
+                    {
+                        dataGridView1.Rows[i].Cells[0].Value = p.Key;//名称
+                        dataGridView1.Rows[i].Cells[1].Value =cont_findby_name( p.Key);//内容
+                        if (int.Parse(jobj[p.Key][0].ToString()) == 1)
+                        {
+                            //白班
+                            dataGridView1.Rows[i].Cells[2].Value = "True";
+                            dataGridView1.Rows[i].Cells[3].Value = "False";
+                        }
+                        else
+                        {
+                            dataGridView1.Rows[i].Cells[3].Value = "True";
+                            dataGridView1.Rows[i].Cells[2].Value = "False";
+                        }
+                        dataGridView1.Rows[i].Cells[4].Value = mySystem.Parameter.IDtoName(int.Parse(jobj[p.Key][1].ToString()));
+                        dataGridView1.Rows[i].Cells[5].Value = mySystem.Parameter.IDtoName(int.Parse(jobj[p.Key][2].ToString()));
+                    }
+                }
+            }
+            
+        }
         private void qury()
         {
             //if (!isOk)
@@ -90,7 +159,7 @@ namespace WindowsFormsApplication1
             else
             {
                 string accessql = "select * from cleanarea";
-                OleDbCommand cmd = new OleDbCommand(accessql, connOle);
+                OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 dt = new DataTable();
                 data.Fill(dt);
@@ -132,30 +201,112 @@ namespace WindowsFormsApplication1
            
         }
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
-            //更改清洁人项
-            if (e.ColumnIndex == 3)
+            if (e.ColumnIndex == 2)
             {
-                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-                if (rt > 0)
-                    cleanmans[e.RowIndex] = rt;
+                string a = dataGridView1.Rows[e.RowIndex].Cells[2].EditedFormattedValue.ToString();
+                if (a == "False")
+                    dataGridView1.Rows[e.RowIndex].Cells[3].Value = "True";
                 else
-                    MessageBox.Show("清洁人id不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[3].Value = "False";
                 return;
             }
-            //更改审核人项
+
+            if (e.ColumnIndex == 3)
+            {
+                string a = dataGridView1.Rows[e.RowIndex].Cells[3].EditedFormattedValue.ToString();
+                if (a == "False")
+                    dataGridView1.Rows[e.RowIndex].Cells[2].Value = "True";
+                else
+                    dataGridView1.Rows[e.RowIndex].Cells[2].Value = "False";
+                return;
+            }
+            //更改清洁人项
             if (e.ColumnIndex == 4)
             {
                 int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
                 if (rt > 0)
-                    checkmans[e.RowIndex] = rt;
+                    cleanmans[e.RowIndex] = rt;
                 else
-                    MessageBox.Show("审核人id不存在，请重新输入");
+                {
+                    MessageBox.Show("清洁人id不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[4].Value = "";
+                }
+
                 return;
             }
+            //更改审核人项
+            if (e.ColumnIndex == 5)
+            {
+                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
+                if (rt > 0)
+                    checkmans[e.RowIndex] = rt;
+                else
+                {
+                    MessageBox.Show("审核人id不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[5].Value = "";
+                }
+
+                return;
+            }
+        }
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            //if (e.RowIndex < 0)
+            //    return;
+            //if (e.ColumnIndex == 2 && label==2)
+            //{
+            //    string a = dataGridView1.Rows[e.RowIndex].Cells[2].EditedFormattedValue.ToString();
+            //    if(a=="False")
+            //        dataGridView1.Rows[e.RowIndex].Cells[3].Value = "True";
+            //    else
+            //        dataGridView1.Rows[e.RowIndex].Cells[3].Value="False";
+            //    label = 3;
+            //    return;
+            //}
+
+            //if (e.ColumnIndex == 3 && label==3)
+            //{
+            //    string a=dataGridView1.Rows[e.RowIndex].Cells[3].EditedFormattedValue.ToString();
+            //    if(a=="False")
+            //        dataGridView1.Rows[e.RowIndex].Cells[2].Value ="True";
+            //    else
+            //        dataGridView1.Rows[e.RowIndex].Cells[2].Value = "False";
+            //    label = 2;
+            //    return;
+            //}
+            ////更改清洁人项
+            //if (e.ColumnIndex == 4)
+            //{
+            //    int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
+            //    if (rt > 0)
+            //        cleanmans[e.RowIndex] = rt;
+            //    else
+            //    {
+            //        MessageBox.Show("清洁人id不存在，请重新输入");
+            //        dataGridView1.Rows[e.RowIndex].Cells[4].Value = "";
+            //    }
+                    
+            //    return;
+            //}
+            ////更改审核人项
+            //if (e.ColumnIndex == 5)
+            //{
+            //    int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
+            //    if (rt > 0)
+            //        checkmans[e.RowIndex] = rt;
+            //    else
+            //    {
+            //        MessageBox.Show("审核人id不存在，请重新输入");
+            //        dataGridView1.Rows[e.RowIndex].Cells[5].Value = "";
+            //    }
+                    
+            //    return;
+            //}
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -203,7 +354,7 @@ namespace WindowsFormsApplication1
             else
             {
                 string asql = "select user_id from user_aoxing where user_name=" + "'" + s + "'"; 
-                OleDbCommand comm = new OleDbCommand(asql,mainform.connOle);
+                OleDbCommand comm = new OleDbCommand(asql,mySystem.Parameter.connOle);
                 OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
                 DataTable tempdt = new DataTable();
@@ -257,8 +408,7 @@ namespace WindowsFormsApplication1
                 string st = "{'";
                 string t = dataGridView1.Rows[i].Cells[0].Value.ToString() + "':";
                 st += t;
-                //是否清洁合格
-                if (dataGridView1.Rows[i].Cells[2].Value.ToString() == "True")
+                if (dataGridView1.Rows[i].Cells[2].Value.ToString()=="True")
                     a = 1;
                 else
                     a = 0;
@@ -301,8 +451,9 @@ namespace WindowsFormsApplication1
             {
                 int result = 0;
                 OleDbCommand comm = new OleDbCommand();
-                comm.Connection = connOle;
-                comm.CommandText = "update extrusion_s1_cleanrecord set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_result_cleaner_reviewer= @cont where id= @id";
+                comm.Connection = mySystem.Parameter.connOle;
+                //comm.CommandText = "update extrusion_s1_cleanrecord set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_result_cleaner_reviewer= @cont where id= @id";
+                comm.CommandText = "insert into extrusion_s1_cleanrecord(s1_clean_date,s1_flight,s1_reviewer_id,s1_review_date,s1_region_result_cleaner_reviewer,production_instruction) values(@cleandate,@flight,@reviewerid,@reviewdate,@cont,@id)";
                 comm.Parameters.Add("@cleandate", System.Data.OleDb.OleDbType.Date);
                 comm.Parameters.Add("@flight", System.Data.OleDb.OleDbType.Integer);
                 comm.Parameters.Add("@reviewerid", System.Data.OleDb.OleDbType.Integer);
@@ -315,7 +466,7 @@ namespace WindowsFormsApplication1
                 comm.Parameters["@reviewerid"].Value = checkerid;
                 comm.Parameters["@reviewdate"].Value = checktime;
                 comm.Parameters["@cont"].Value = jarray.ToString();
-                comm.Parameters["@id"].Value = 1;
+                comm.Parameters["@id"].Value = instrid;
 
                 result = comm.ExecuteNonQuery();
                 if (result > 0)
@@ -326,12 +477,23 @@ namespace WindowsFormsApplication1
             }
             button2.Enabled = true;
 
+
+        }
+
+        public override void CheckResult()
+        {
+            base.CheckResult();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
-            //checkform.Show();
+            mySystem.CheckForm checkform = new mySystem.CheckForm(this);
+            checkform.Show();
+        }
+
+        private void label8_Click(object sender, EventArgs e)
+        {
+
         }
 
         //private void textBox1_TextChanged(object sender, EventArgs e)
