@@ -111,7 +111,7 @@ namespace mySystem.Extruction.Process
                     CheckBeforePowerView.Rows.Add(dr);
                 }
                 SaveBtn.Enabled = true;
-                CheckBtn.Enabled = true;
+                CheckBtn.Enabled = false;
                 printBtn.Enabled = false;
             }
             else
@@ -163,6 +163,8 @@ namespace mySystem.Extruction.Process
                     SaveBtn.Enabled = true;
                     CheckBtn.Enabled = true;
                     printBtn.Enabled = false;
+                    CheckBeforePowerView.Columns["确认结果Y"].ReadOnly = false;
+                    CheckBeforePowerView.Columns["确认结果N"].ReadOnly = false;
                 } 
 
                 //解析jason
@@ -362,14 +364,22 @@ namespace mySystem.Extruction.Process
                 List<Object> queryVals = new List<Object>(new Object[] { review_id, Convert.ToDateTime(checkTimePicker.Value.ToString("yyyy/MM/dd")), review_opinion, ischeckOk });
                 List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
                 List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
-                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);                
+                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
             }
+            //判断是否检验合格
             if (ischeckOk)
             {
                 CheckBeforePowerView.ReadOnly = true;
                 SaveBtn.Enabled = false;
                 CheckBtn.Enabled = false;
                 printBtn.Enabled = true;
+            }
+            else
+            {
+                CheckBeforePowerView.ReadOnly = false;
+                SaveBtn.Enabled = true;
+                CheckBtn.Enabled = true;
+                printBtn.Enabled = false;
             }
             checkerBox.Text = reviewer_name;            
         }

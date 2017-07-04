@@ -685,6 +685,7 @@ namespace mySystem.Extruction.Process
                 List<Object> whereVals = new List<Object>(new Object[] { productnamecomboBox.Text.ToString(), Convert.ToDateTime(productionDatePicker.Value.ToString("yyyy/MM/dd")), DatecheckBox.Checked });
                 Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
             }
+            //检查审核是否过关
             CheckerBox.Text = reviewer_name;
             printBtn.Enabled = true;
            
