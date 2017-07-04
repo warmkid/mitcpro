@@ -129,6 +129,9 @@ namespace mySystem.Setting
                         List<String> updateCols2 = new List<String>(new String[] { "user_password" });
                         List<Object> updateVals2 = new List<Object>(new Object[] { pw3 });
                         Boolean b2 = Utility.updateAccess(Parameter.connOle, tblName, updateCols2, updateVals2, whereCols, whereVals);
+                        pw1TextBox.Text = null;
+                        pw2TextBox.Text = null;
+                        pw3TextBox.Text = null;
                     }
                     else
                     {
@@ -204,7 +207,7 @@ namespace mySystem.Setting
         private void AddBtn_Click(object sender, EventArgs e)
         {
             AddPeopleForm addform = new AddPeopleForm(base.mainform, this);
-            addform.Show();
+            addform.ShowDialog();
       
         }
 

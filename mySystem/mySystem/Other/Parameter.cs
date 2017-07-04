@@ -10,6 +10,7 @@ namespace mySystem
 {
     class Parameter
     {
+        public static int i = 0;
         public static bool isSqlOk = false; //sql or access
         public static int userID; //登录人ID
         public static string userName; //登录用户名

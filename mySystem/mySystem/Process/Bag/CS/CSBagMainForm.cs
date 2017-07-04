@@ -70,40 +70,52 @@ namespace mySystem.Process.Bag
 
         }
 
+
+        //定义各窗体变量
+        MaterialRecord form1 = null;
+        CSBag_InnerPackaging form2 = null;
+        Chart_daily_cs form3 = null;
+
+        Bagprocess_prod_instru form5 = null;
+        CSBag_CheckBeforePower form6 = null;
+        RunningRecord form7 = null;
+
+        Record_batch_bag form9 = null;
+
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            MaterialRecord myDlg = new MaterialRecord();
-            myDlg.Show();
+            form1 = new MaterialRecord();            
+            form1.ShowDialog();
         }
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            CSBag_InnerPackaging myDlg = new CSBag_InnerPackaging(mainform);
-            myDlg.Show();
+            form2 = new CSBag_InnerPackaging(mainform);            
+            form2.ShowDialog();
         }
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            Chart_daily_cs myDlg = new Chart_daily_cs();
-            myDlg.Show();
+            form3 = new Chart_daily_cs();           
+            form3.ShowDialog();
         }
 
         private void B1Btn_Click(object sender, EventArgs e)
         {
-            Bagprocess_prod_instru myDlg = new Bagprocess_prod_instru();
-            myDlg.Show();
+            form5 = new Bagprocess_prod_instru();           
+            form5.ShowDialog();
         }
 
         private void B2Btn_Click(object sender, EventArgs e)
         {
-            CSBag_CheckBeforePower myDlg = new CSBag_CheckBeforePower(mainform);
-            myDlg.Show();
+            form6 = new CSBag_CheckBeforePower(mainform);            
+            form6.ShowDialog();
         }
 
         private void B3Btn_Click(object sender, EventArgs e)
         {
-            RunningRecord myDlg = new RunningRecord();
-            myDlg.Show();
+            form7 = new RunningRecord();            
+            form7.ShowDialog();
         }
 
         private void B4Btn_Click(object sender, EventArgs e)
@@ -118,8 +130,8 @@ namespace mySystem.Process.Bag
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Record_batch_bag b = new Record_batch_bag(mainform);
-            b.Show();
+            form9 = new Record_batch_bag(mainform);           
+            form9.ShowDialog();
         }
 
     }

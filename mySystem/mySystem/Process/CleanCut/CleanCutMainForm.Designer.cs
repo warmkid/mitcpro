@@ -110,6 +110,7 @@
             this.A6Btn.TabIndex = 18;
             this.A6Btn.Text = "清洁分切标签";
             this.A6Btn.UseVisualStyleBackColor = true;
+            this.A6Btn.Click += new System.EventHandler(this.A6Btn_Click);
             // 
             // A5Btn
             // 
@@ -167,6 +168,7 @@
             this.A7Btn.TabIndex = 17;
             this.A7Btn.Text = "清洁分切批生产记录";
             this.A7Btn.UseVisualStyleBackColor = true;
+            this.A7Btn.Click += new System.EventHandler(this.A7Btn_Click);
             // 
             // groupBox3
             // 

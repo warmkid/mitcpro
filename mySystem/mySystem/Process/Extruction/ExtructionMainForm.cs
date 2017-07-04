@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Data.OleDb;
 using WindowsFormsApplication1;
 using System.Threading;
+using BatchProductRecord;
 
 
 namespace mySystem
@@ -21,11 +22,9 @@ namespace mySystem
         int instruID = 0;
         System.Timers.Timer timer = new System.Timers.Timer();//实例化Timer类
 
-        public ExtructionMainForm(MainForm mainform)
-            : base(mainform)
+        public ExtructionMainForm(MainForm mainform): base(mainform)
         {
             InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false; //新创建的线程可以访问UI线程创建的窗口控件
             comboInit(); //从数据库中读取生产指令
             InitBtn();
         }
@@ -113,7 +112,7 @@ namespace mySystem
 
         }
 
-        private void otherBtnInit(bool b)
+        public void otherBtnInit(bool b)
         {
             A1Btn.Enabled = b;
             A4Btn.Enabled = b;
@@ -180,24 +179,31 @@ namespace mySystem
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.proInstruID = instruID;
             InitBtn();
-            ////定时器开始计时            
-            //timer.Interval = 20000;
-            //timer.Enabled = true;
-            //timer.Elapsed += new System.Timers.ElapsedEventHandler(CheckHour);
+  
+            //CheckHour(); //立即执行一次 
+            //定时器开始计时
+            timer1.Interval = 300000; //五分钟
+            timer1.Start();
 
         }
-        int num = 0;
-        void test(object sender, System.Timers.ElapsedEventArgs e)
+        int num = Parameter.i;
+        void test()
         {
             label1.Text = Convert.ToString((++num)); //显示到lable 
+            Parameter.i = num;
         }
 
-
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //test();
+            //CheckHour();
+        }
+        
         //定时器调用的函数，判断时间，查看是否填写
-        private void CheckHour(object sender, System.Timers.ElapsedEventArgs e)
+        private void CheckHour()
         {
-            label1.Text = Convert.ToString((++num)); //显示到lable 
             DateTime now = DateTime.Now;
+            //DateTime now = new DateTime(2017, 7, 4, 18, 14, 30); //测试用，可以跳出界面的时间
             DateTime preheattime;
             //获取开机时间
             String table = "extrusion_s3_preheat";
@@ -211,246 +217,334 @@ namespace mySystem
             }
             else
             {
-                preheattime = Convert.ToDateTime(res[0][0]);
+                preheattime = Convert.ToDateTime(res[0][0]); //开机时间
                 TimeSpan delt = now - preheattime;
-                if (110 <= Convert.ToInt32(delt.TotalMinutes) % 120 || Convert.ToInt32(delt.TotalMinutes) % 120 < 120) //差十分钟
-                {
-                    //检查是否填写
-                    //？？？？？？？？？？？标准表达式中数据类型不匹配。
-                    String table1 = "running_record_of_feeding_unit"; //吹膜供料系统运行记录
-                    List<String> queryCols1 = new List<String>(new String[] { "id" });
-                    List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
-                    List<Object> whereVals1 = new List<Object>(new Object[] { Parameter.proInstruID });
-                    String betweenCol1 = "modifytime";
-                    DateTime right1 = now;
-                    DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120));
-                    List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left1, right1);
-
-                    String table2 = "running_record_of_extrusion_unit"; //吹膜机组运行记录
-                    List<String> queryCols2 = new List<String>(new String[] { "id" });
-                    List<String> whereCols2 = new List<String>(new String[] { "production_instruction_id" });
-                    List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                    String betweenCol2 = "modifytime";
-                    DateTime right2 = now;
-                    DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120));
-                    List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left2, right2);
-
-                    if (res1.Count != 0 && res2.Count != 0)
-                    {
-                        return;
-                    }
-                    else if (res1.Count == 0 && res2.Count != 0)
-                    {
-                        MessageBox.Show("请在10分钟之内填写“吹膜供料系统运行记录”！", "警告");
-                        return;
-                    }
-                    else if (res1.Count != 0 && res2.Count == 0)
-                    {
-                        MessageBox.Show("请在10分钟之内填写“吹膜机组运行记录”！", "警告");
-                        return;
-                    }
-                    else
-                    {
-                        MessageBox.Show("请在10分钟之内填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
-                        return;
-                    }
-
-                }
-                else if (0 <= Convert.ToInt32(delt.TotalMinutes) % 120 || Convert.ToInt32(delt.TotalMinutes) % 120 < 1) //到了两小时
-                {
-                    //检查是否填写
-                    String table1 = "runnig_record_of_feeding_unit"; //吹膜供料系统运行记录
-                    List<String> queryCols1 = new List<String>(new String[] { "id" });
-                    List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
-                    List<Object> whereVals1 = new List<Object>(new Object[] { Parameter.proInstruID });
-                    String betweenCol1 = "modifytime";
-                    DateTime right1 = now;
-                    DateTime left1 = right1.AddMinutes(-120);
-                    List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left1, right1);
-                    String table2 = "running_record_of_extrusion_unit"; //吹膜机组运行记录
-                    List<String> queryCols2 = new List<String>(new String[] { "id" });
-                    List<String> whereCols2 = new List<String>(new String[] { "production_instruction_id" });
-                    List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                    String betweenCol2 = "modifytime";
-                    DateTime right2 = now;
-                    DateTime left2 = right2.AddMinutes(-120);
-                    List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left2, right2);
-
-                    if (res1.Count != 0 && res2.Count != 0)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        this.Hide();
-
-                        CheckForm checkform = new CheckForm(this);
-                        checkform.CancelBtn.Enabled = false;
-                        checkform.ShowDialog();
-                        this.Show();
-                    }
-
-                }
-                else
+                double duration = delt.TotalMinutes % 120; //余数
+                if (delt.TotalMinutes < 110) //刚开机不到两小时
                 {
                     return;
                 }
+                else
+                {
+                    if (110 <= duration && duration < 120) //差十分钟
+                    {
+                        //检查是否填写
+                        String table1 = "running_record_of_feeding_unit"; //吹膜供料系统运行记录
+                        List<String> queryCols1 = new List<String>(new String[] { "id" });
+                        List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
+                        List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
+                        String betweenCol1 = "modifytime";
+                        DateTime right1 = now;
+                        DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 5));
+                        DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
+                        DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
+                        List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
+
+                        String table2 = "running_record_of_extrusion_unit"; //吹膜机组运行记录
+                        List<String> queryCols2 = new List<String>(new String[] { "id" });
+                        List<String> whereCols2 = new List<String>(new String[] { "production_instruction_id" });
+                        List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
+                        String betweenCol2 = "modifytime";
+                        DateTime right2 = now;
+                        DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 5));
+                        DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);
+                        DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
+                        List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
+
+                        if (res1.Count != 0 && res2.Count != 0)
+                        {
+                            return;
+                        }
+                        else if (res1.Count == 0 && res2.Count != 0)
+                        {
+                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
+                            return;
+                        }
+                        else if (res1.Count != 0 && res2.Count == 0)
+                        {
+                            MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            return;
+                        }
+                    }
+                    else if (0 <= duration && duration < 5) //超时五分钟
+                    {
+                        //检查是否填写
+                        String table1 = "running_record_of_feeding_unit"; //吹膜供料系统运行记录
+                        List<String> queryCols1 = new List<String>(new String[] { "id" });
+                        List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
+                        List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
+                        String betweenCol1 = "modifytime";
+                        DateTime right1 = now;
+                        DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 125));
+                        DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
+                        DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
+                        List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
+
+                        String table2 = "running_record_of_extrusion_unit"; //吹膜机组运行记录
+                        List<String> queryCols2 = new List<String>(new String[] { "id" });
+                        List<String> whereCols2 = new List<String>(new String[] { "production_instruction_id" });
+                        List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
+                        String betweenCol2 = "modifytime";
+                        DateTime right2 = now;
+                        DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 125));
+                        DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);
+                        DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
+                        List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
+
+                        if (res1.Count != 0 && res2.Count != 0)
+                        {
+                            return;
+                        }
+                        else if (res1.Count == 0 && res2.Count != 0)
+                        {
+                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
+                            return;
+                        }
+                        else if (res1.Count != 0 && res2.Count == 0)
+                        {
+                            MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            return;
+                        }
+                    }
+                    else if (5 <= duration && duration < 10) //超时十分钟，弹出
+                    {
+                        //检查是否填写
+                        String table1 = "running_record_of_feeding_unit"; //吹膜供料系统运行记录
+                        List<String> queryCols1 = new List<String>(new String[] { "id" });
+                        List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
+                        List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
+                        String betweenCol1 = "modifytime";
+                        DateTime right1 = now;
+                        DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 125));
+                        DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
+                        DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
+                        List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
+
+                        String table2 = "running_record_of_extrusion_unit"; //吹膜机组运行记录
+                        List<String> queryCols2 = new List<String>(new String[] { "id" });
+                        List<String> whereCols2 = new List<String>(new String[] { "production_instruction_id" });
+                        List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
+                        String betweenCol2 = "modifytime";
+                        DateTime right2 = now;
+                        DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 125));
+                        DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);
+                        DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
+                        List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
+
+                        if (res1.Count != 0 && res2.Count != 0)
+                        {
+                            return;
+                        }
+                        else if (res1.Count == 0 && res2.Count != 0)
+                        {
+                            MessageBox.Show("请填写“吹膜供料系统运行记录”！", "警告");
+                            form16.ShowDialog();
+                            return;
+                        }
+                        else if (res1.Count != 0 && res2.Count == 0)
+                        {
+                            MessageBox.Show("请填写“吹膜机组运行记录”！", "警告");
+                            form17.ShowDialog();
+                            return;
+                        }
+                        else
+                        {
+                            MessageBox.Show("请填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            form16 = new Extruction.Chart.feedrecord(mainform);
+                            form16.ShowDialog();
+                            form17 = new Extruction.Chart.beeholetable(mainform);
+                            form17.ShowDialog();
+                            return;
+                        }
+                    }
+                    else //未到时间
+                    {
+                        return;
+                    }
+                }
             }
-
-
         }
 
+
+        //定义各窗体变量
+        BatchProductRecord.BatchProductRecord form1 = null;
+        BatchProductRecord.ProcessProductInstru form2 = null;
+        Record_extrusClean form3 = null;
+        Record_extrusSiteClean form4 = null;
+        HandoverRecordofExtrusionProcess form5 = null;
+        Record_extrusSupply form6 = null;
+        mySystem.Extruction.Chart.wasterecord form7 = null;
+        Record_material_reqanddisg form8 = null;
+        ProdctDaily_extrus form9 = null;
+        ExtructionpRoductionAndRestRecordStep6 form10 = null;
+        MaterialBalenceofExtrusionProcess form11 = null;
+        ProductInnerPackagingRecord form12 = null;
+        mySystem.Extruction.Chart.outerpack form13 = null;
+        ExtructionCheckBeforePowerStep2 form14 = null;
+        ExtructionPreheatParameterRecordStep3 form15 = null;
+        mySystem.Extruction.Chart.feedrecord form16 = null;
+        mySystem.Extruction.Chart.beeholetable form17 = null;
+        Record_train form18 = null;
+        ReplaceHeadForm form19 = null;
+        ExtructionReplaceCore form20 = null;
+        
+        
+        ExtructionTransportRecordStep4 form22 = null;
+
+        private void A1Btn_Click(object sender, EventArgs e)
+        {
+            form1 = new BatchProductRecord.BatchProductRecord(mainform);
+            form1.ShowDialog();
+        }
+
+        private void A2Btn_Click(object sender, EventArgs e)
+        {
+            form2 = new BatchProductRecord.ProcessProductInstru(mainform);
+            form2.ShowDialog();
+        }
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            Record_extrusClean extrusclean = new Record_extrusClean(mainform);
-            extrusclean.Show();
+            form3 = new Record_extrusClean(mainform);
+            form3.ShowDialog();
         }
+
         private void A5Btn_Click(object sender, EventArgs e)
         {
-            Record_extrusSiteClean ext = new Record_extrusSiteClean(mainform);
-            ext.Show();
+            form4 = new Record_extrusSiteClean(mainform);
+            form4.ShowDialog();
         }
-        private void A1Btn_Click(object sender, EventArgs e)
-        {
-            BatchProductRecord.BatchProductRecord b = new BatchProductRecord.BatchProductRecord(mainform);
-            b.Show();
-        }
-        private void A2Btn_Click(object sender, EventArgs e)
-        {
-            BatchProductRecord.ProcessProductInstru ppi = new BatchProductRecord.ProcessProductInstru(mainform);
-            ppi.Show();
-        }
-        private void C1Btn_Click(object sender, EventArgs e)
-        {
-            ExtructionCheckBeforePowerStep2 stepform = new ExtructionCheckBeforePowerStep2(mainform);
-            stepform.Show();
-        }
-        private void C2Btn_Click(object sender, EventArgs e)
-        {
-            ExtructionPreheatParameterRecordStep3 stepform = new ExtructionPreheatParameterRecordStep3(mainform);
-            stepform.Show();
-        }
-        private void B1Btn_Click(object sender, EventArgs e)
-        {
-            ExtructionTransportRecordStep4 stepform = new ExtructionTransportRecordStep4(mainform);
-            stepform.Show();
-        }
-        private void B6Btn_Click(object sender, EventArgs e)
-        {
-            ExtructionpRoductionAndRestRecordStep6 stepform = new ExtructionpRoductionAndRestRecordStep6(mainform);
-            stepform.Show();
-        }
-        private void C3Btn_Click(object sender, EventArgs e)
-        {
 
-            mySystem.Extruction.Chart.feedrecord feedrecord = new Extruction.Chart.feedrecord(mainform);
-            feedrecord.Show();
-        }
-        private void B2Btn_Click(object sender, EventArgs e)
-        {
-            Record_extrusSupply recordsupply = new Record_extrusSupply(mainform);
-            recordsupply.Show();
-        }
-        private void B4Btn_Click(object sender, EventArgs e)
-        {
-            Record_material_reqanddisg mat = new Record_material_reqanddisg(mainform);
-            mat.Show();
-        }
-        private void B5Btn_Click(object sender, EventArgs e)
-        {
-            ProdctDaily_extrus pro = new ProdctDaily_extrus(mainform);
-            pro.Show();
-        }
-        private void B2Btn_Click_1(object sender, EventArgs e)
-        {
-            Record_extrusSupply r = new Record_extrusSupply(mainform);
-            r.Show();
-        }
-        private void B4Btn_Click_1(object sender, EventArgs e)
-        {
-            Record_material_reqanddisg r = new Record_material_reqanddisg(mainform);
-            r.Show();
-        }
-        private void B5Btn_Click_1(object sender, EventArgs e)
-        {
-            ProdctDaily_extrus p = new ProdctDaily_extrus(mainform);
-            p.Show();
-        }
-        private void B3Btn_Click(object sender, EventArgs e)
-        {
-            mySystem.Extruction.Chart.wasterecord wasterecord = new Extruction.Chart.wasterecord(mainform);
-            wasterecord.Show();
-        }
-        private void B2Btn_Click_2(object sender, EventArgs e)
-        {
-            Record_extrusSupply r = new Record_extrusSupply(mainform);
-            r.Show();
-        }
-        private void B4Btn_Click_2(object sender, EventArgs e)
-        {
-            Record_material_reqanddisg r = new Record_material_reqanddisg(mainform);
-            r.Show();
-        }
-        private void B5Btn_Click_2(object sender, EventArgs e)
-        {
-            ProdctDaily_extrus p = new ProdctDaily_extrus(mainform);
-            p.Show();
-        }
-        private void B8Btn_Click(object sender, EventArgs e)
-        {
-            ProductInnerPackagingRecord PIPRform = new ProductInnerPackagingRecord(mainform);
-            PIPRform.Show();
-        }
-        private void D1Btn_Click(object sender, EventArgs e)
-        {
-            Record_train r = new Record_train(mainform);
-            r.Show();
-        }
-        private void C4Btn_Click(object sender, EventArgs e)
-        {
-            mySystem.Extruction.Chart.beeholetable beeholetable = new Extruction.Chart.beeholetable(mainform);
-            beeholetable.Show();
-        }
-        private void B7Btn_Click(object sender, EventArgs e)
-        {
-            MaterialBalenceofExtrusionProcess test = new MaterialBalenceofExtrusionProcess(mainform);
-            test.Show();
-        }
         private void A4Btn_Click(object sender, EventArgs e)
         {
-            HandoverRecordofExtrusionProcess test = new HandoverRecordofExtrusionProcess(mainform);
-            test.Show();
+            form5 = new HandoverRecordofExtrusionProcess(mainform);
+            form5.ShowDialog();
         }
+
+        private void B2Btn_Click(object sender, EventArgs e)
+        {
+            form6 = new Record_extrusSupply(mainform);
+            form6.ShowDialog();
+        }
+
+        private void B3Btn_Click(object sender, EventArgs e)
+        {
+            form7 = new Extruction.Chart.wasterecord(mainform);
+            form7.ShowDialog();
+        }
+
+        private void B4Btn_Click(object sender, EventArgs e)
+        {
+            form8 = new Record_material_reqanddisg(mainform);
+            form8.ShowDialog();
+        }
+
+        private void B5Btn_Click(object sender, EventArgs e)
+        {
+            form9 = new ProdctDaily_extrus(mainform);
+            form9.ShowDialog();
+        }
+
+        private void B6Btn_Click(object sender, EventArgs e)
+        {
+            form10 = new ExtructionpRoductionAndRestRecordStep6(mainform);
+            form10.ShowDialog();
+        }
+
+        private void B7Btn_Click(object sender, EventArgs e)
+        {
+            form11 = new MaterialBalenceofExtrusionProcess(mainform);
+            form11.ShowDialog();
+        }
+
+        private void B8Btn_Click(object sender, EventArgs e)
+        {
+            form12 = new ProductInnerPackagingRecord(mainform);
+            form12.ShowDialog();
+        }
+
         private void B9Btn_Click(object sender, EventArgs e)
         {
-            mySystem.Extruction.Chart.outerpack test = new Extruction.Chart.outerpack(mainform);
-            test.Show();
+            form13 = new Extruction.Chart.outerpack(mainform);
+            form13.ShowDialog();
         }
-        private void D3Btn_Click(object sender, EventArgs e)
+
+        private void C1Btn_Click(object sender, EventArgs e)
         {
-            ExtructionReplaceCore ERCform = new ExtructionReplaceCore(mainform);
-            ERCform.Show();
+            form14 = new ExtructionCheckBeforePowerStep2(mainform);
+            form14.ShowDialog();
         }
+
+        private void C2Btn_Click(object sender, EventArgs e)
+        {
+            form15 = new ExtructionPreheatParameterRecordStep3(mainform);
+            form15.ShowDialog();
+        }
+
+        private void C3Btn_Click(object sender, EventArgs e)
+        {
+            form16 = new Extruction.Chart.feedrecord(mainform);
+            form16.ShowDialog();
+        }
+
+        private void C4Btn_Click(object sender, EventArgs e)
+        {
+            form17 = new Extruction.Chart.beeholetable(mainform);
+            form17.ShowDialog();
+        }
+
+        private void D1Btn_Click(object sender, EventArgs e)
+        {
+            form18 = new Record_train(mainform);
+            form18.ShowDialog();
+        }
+
         private void D2Btn_Click(object sender, EventArgs e)
         {
-            ReplaceHeadForm myDlg = new ReplaceHeadForm();
-            myDlg.Show();
+            form19 = new ReplaceHeadForm();
+            form19.ShowDialog();
         }
-        private void D1Btn_Click_1(object sender, EventArgs e)
+
+        private void D3Btn_Click(object sender, EventArgs e)
         {
-            Record_train r = new Record_train(mainform);
-            r.Show();
+            form20 = new ExtructionReplaceCore(mainform);
+            form20.ShowDialog();
         }
-        private void D1Btn_Click_2(object sender, EventArgs e)
+
+        private void B1Btn_Click(object sender, EventArgs e)
         {
-            Record_train r = new Record_train(mainform);
-            r.Show();
+            form22 = new ExtructionTransportRecordStep4(mainform);
+            form22.ShowDialog();
         }
-        private void D4Btn_Click(object sender, EventArgs e)
+
+        private void ExtructionMainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
 
         }
+
+        private void ExtructionMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {           
+
+        }
+
+        private void ExtructionMainForm_VisibleChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        
+
+        
     }
 }
 

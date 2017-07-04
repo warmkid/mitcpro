@@ -282,7 +282,8 @@ namespace mySystem
         public void DataSave()
         {
             SaveTolerance(); //保存公差
-            bool isNumOk = CheckNum();  //检验数据
+            //bool isNumOk = CheckNum();  //检验数据
+            bool isNumOk = true;
             if (isNumOk)
             {
                 string tblName = "extrusion_s3_preheat";
@@ -300,7 +301,7 @@ namespace mySystem
                 List<String> whereCols = new List<String>(new String[] { "id" });
                 List<Object> whereVals = new List<Object>(new Object[] { 1 });
                 Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
-                MessageBox.Show("预热参数设置保存成功！", "success");
+                //MessageBox.Show("预热参数设置保存成功！", "success");
             }
 
             else

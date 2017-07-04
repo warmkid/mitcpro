@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.A5Btn = new System.Windows.Forms.Button();
             this.A2Btn = new System.Windows.Forms.Button();
             this.A4Btn = new System.Windows.Forms.Button();
@@ -56,6 +57,7 @@
             this.D2Btn = new System.Windows.Forms.Button();
             this.D4Btn = new System.Windows.Forms.Button();
             this.D3Btn = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -238,7 +240,7 @@
             this.B5Btn.TabIndex = 17;
             this.B5Btn.Text = "吹膜生产日报表";
             this.B5Btn.UseVisualStyleBackColor = true;
-            this.B5Btn.Click += new System.EventHandler(this.B5Btn_Click_2);
+            this.B5Btn.Click += new System.EventHandler(this.B5Btn_Click);
             // 
             // B2Btn
             // 
@@ -249,7 +251,7 @@
             this.B2Btn.TabIndex = 16;
             this.B2Btn.Text = "吹膜供料记录";
             this.B2Btn.UseVisualStyleBackColor = true;
-            this.B2Btn.Click += new System.EventHandler(this.B2Btn_Click_2);
+            this.B2Btn.Click += new System.EventHandler(this.B2Btn_Click);
             // 
             // B4Btn
             // 
@@ -260,7 +262,7 @@
             this.B4Btn.TabIndex = 15;
             this.B4Btn.Text = "吹膜工序领料退料记录";
             this.B4Btn.UseVisualStyleBackColor = true;
-            this.B4Btn.Click += new System.EventHandler(this.B4Btn_Click_2);
+            this.B4Btn.Click += new System.EventHandler(this.B4Btn_Click);
             // 
             // B3Btn
             // 
@@ -356,7 +358,7 @@
             this.D1Btn.TabIndex = 12;
             this.D1Btn.Text = "培训记录表";
             this.D1Btn.UseVisualStyleBackColor = true;
-            this.D1Btn.Click += new System.EventHandler(this.D1Btn_Click_2);
+            this.D1Btn.Click += new System.EventHandler(this.D1Btn_Click);
             // 
             // D2Btn
             // 
@@ -378,7 +380,6 @@
             this.D4Btn.TabIndex = 15;
             this.D4Btn.Text = "吹膜机更换过滤网记录";
             this.D4Btn.UseVisualStyleBackColor = true;
-            this.D4Btn.Click += new System.EventHandler(this.D4Btn_Click);
             // 
             // D3Btn
             // 
@@ -390,6 +391,11 @@
             this.D3Btn.Text = "吹膜机更换模芯记录及安装检查表";
             this.D3Btn.UseVisualStyleBackColor = true;
             this.D3Btn.Click += new System.EventHandler(this.D3Btn_Click);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // ExtructionMainForm
             // 
@@ -444,5 +450,6 @@
         private System.Windows.Forms.Button B6Btn;
         private System.Windows.Forms.Button B9Btn;
         private System.Windows.Forms.Button B7Btn;
+        private System.Windows.Forms.Timer timer1;
     }
 }
