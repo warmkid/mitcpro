@@ -68,6 +68,7 @@
             this.B1Btn.TabIndex = 12;
             this.B1Btn.Text = "PTV生产指令";
             this.B1Btn.UseVisualStyleBackColor = true;
+            this.B1Btn.Click += new System.EventHandler(this.B1Btn_Click);
             // 
             // B2Btn
             // 
@@ -78,6 +79,7 @@
             this.B2Btn.TabIndex = 16;
             this.B2Btn.Text = "PTV生产开机确认表";
             this.B2Btn.UseVisualStyleBackColor = true;
+            this.B2Btn.Click += new System.EventHandler(this.B2Btn_Click);
             // 
             // label1
             // 
@@ -109,6 +111,7 @@
             this.A2Btn.TabIndex = 16;
             this.A2Btn.Text = "产品内包装记录";
             this.A2Btn.UseVisualStyleBackColor = true;
+            this.A2Btn.Click += new System.EventHandler(this.A2Btn_Click);
             // 
             // B7Btn
             // 
@@ -143,6 +146,7 @@
             this.A3Btn.TabIndex = 11;
             this.A3Btn.Text = "PTV生产日报表";
             this.A3Btn.UseVisualStyleBackColor = true;
+            this.A3Btn.Click += new System.EventHandler(this.A3Btn_Click);
             // 
             // B3Btn
             // 
@@ -215,6 +219,7 @@
             this.B8Btn.TabIndex = 18;
             this.B8Btn.Text = "清场记录";
             this.B8Btn.UseVisualStyleBackColor = true;
+            this.B8Btn.Click += new System.EventHandler(this.B8Btn_Click);
             // 
             // B6Btn
             // 
@@ -240,7 +245,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1170, 615);
+            this.ClientSize = new System.Drawing.Size(1170, 623);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
