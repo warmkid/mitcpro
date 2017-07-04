@@ -125,7 +125,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(272, 13);
+            this.label1.Location = new System.Drawing.Point(317, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(191, 19);
             this.label1.TabIndex = 0;
@@ -135,7 +135,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(38, 47);
+            this.label2.Location = new System.Drawing.Point(38, 49);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 1;
@@ -171,7 +171,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(37, 85);
+            this.label4.Location = new System.Drawing.Point(37, 90);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(72, 16);
             this.label4.TabIndex = 5;
@@ -191,7 +191,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(263, 87);
+            this.label5.Location = new System.Drawing.Point(263, 90);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 16);
             this.label5.TabIndex = 7;
@@ -211,7 +211,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(522, 88);
+            this.label6.Location = new System.Drawing.Point(526, 90);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(104, 16);
             this.label6.TabIndex = 9;
@@ -220,7 +220,7 @@
             // dateTimePicker1
             // 
             this.dateTimePicker1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(633, 87);
+            this.dateTimePicker1.Location = new System.Drawing.Point(633, 85);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
             this.dateTimePicker1.TabIndex = 10;
@@ -375,7 +375,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(24, 64);
+            this.label17.Location = new System.Drawing.Point(25, 64);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(40, 16);
             this.label17.TabIndex = 1;
@@ -712,7 +712,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label23.Location = new System.Drawing.Point(65, 637);
+            this.label23.Location = new System.Drawing.Point(65, 632);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(40, 16);
             this.label23.TabIndex = 20;
@@ -721,7 +721,7 @@
             // textBox30
             // 
             this.textBox30.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox30.Location = new System.Drawing.Point(133, 634);
+            this.textBox30.Location = new System.Drawing.Point(133, 629);
             this.textBox30.Name = "textBox30";
             this.textBox30.Size = new System.Drawing.Size(695, 26);
             this.textBox30.TabIndex = 21;
@@ -732,7 +732,7 @@
             this.panel9.Controls.Add(this.textBox31);
             this.panel9.Controls.Add(this.label25);
             this.panel9.Controls.Add(this.label24);
-            this.panel9.Location = new System.Drawing.Point(41, 666);
+            this.panel9.Location = new System.Drawing.Point(41, 663);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(284, 82);
             this.panel9.TabIndex = 22;
@@ -779,7 +779,7 @@
             this.panel10.Controls.Add(this.textBox32);
             this.panel10.Controls.Add(this.label27);
             this.panel10.Controls.Add(this.label26);
-            this.panel10.Location = new System.Drawing.Point(334, 666);
+            this.panel10.Location = new System.Drawing.Point(334, 663);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(284, 82);
             this.panel10.TabIndex = 23;
@@ -826,7 +826,7 @@
             this.panel11.Controls.Add(this.label28);
             this.panel11.Controls.Add(this.textBox33);
             this.panel11.Controls.Add(this.dateTimePicker4);
-            this.panel11.Location = new System.Drawing.Point(628, 666);
+            this.panel11.Location = new System.Drawing.Point(628, 663);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(284, 82);
             this.panel11.TabIndex = 24;
