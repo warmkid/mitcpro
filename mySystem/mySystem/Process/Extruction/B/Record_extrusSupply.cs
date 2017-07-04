@@ -209,6 +209,7 @@ namespace WindowsFormsApplication1
             if (mySystem.Parameter.NametoID(server) <= 0)
             {
                 MessageBox.Show("供料人id不存在");
+                Serve_person.Text = "";
                 return;
             }
 
@@ -492,6 +493,18 @@ namespace WindowsFormsApplication1
             }
             else
             {
+                //产品批号
+                product_code = comboBox2.Text;
+                int prodid = productid_findby_prodcode(product_code);
+                product_num = textBox2.Text;
+                if (product_num == "")
+                {
+                    MessageBox.Show("产品批号不能为空");
+                    return;
+                }
+                insert_batch(product_num, prodid);
+                int batchid=id_findby_batch(product_num);
+
                 //获取使用量信息
                 string struse1 = textBox11.Text;
                 string struse2 = textBox14.Text;
@@ -562,7 +575,7 @@ namespace WindowsFormsApplication1
                 int batchid2 = batchid_findby_matcode(bunker2_batch);
 
                 //判断数据库中是否存在该记录
-
+                //comm.CommandText = "select s5_feeding_info,s5_reviewer_id from extrusion_s5_feeding where production_instruction_id="+mySystem.Parameter.proInstruID+" and ";
 
                 //插入数据库新纪录
                 comm.CommandText = "insert into extrusion_s5_feeding(product_batch_id,production_instruction_id,s5_ab1c_raw_material_id,s5_b2_raw_material_id,s5_ab1c_raw_material_batch,s5_b2_raw_material_batch,s5_feeding_info,s5_ab1c_raw_material_consumption,s5_ab1c_raw_material_margin,s5_b2_raw_material_consumption,s5_b2_raw_material_margin) values(@batchid,@instrid,@ab1c_matid,@b2_matid,@ab1c_matbatch,@b2_matbatch,@feedinfo,@ab1c_use,@ab1c_left,@b2_use,@b2_left)";
@@ -578,7 +591,7 @@ namespace WindowsFormsApplication1
                 comm.Parameters.Add("@b2_use", System.Data.OleDb.OleDbType.Integer);
                 comm.Parameters.Add("@b2_left", System.Data.OleDb.OleDbType.Integer);
 
-                comm.Parameters["@batchid"].Value = id_findby_batch(product_num);
+                comm.Parameters["@batchid"].Value = batchid;
                 comm.Parameters["@instrid"].Value = id_findby_instr(product_instrnum);
                 comm.Parameters["@ab1c_matid"].Value = matid1;
                 comm.Parameters["@b2_matid"].Value = matid2;
@@ -622,6 +635,29 @@ namespace WindowsFormsApplication1
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = mySystem.Parameter.connOle;
             comm.CommandText = "select raw_material_id from raw_material where raw_material_code='" + matcode + "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return -1;
+            }
+            else
+            {
+                da.Dispose();
+                return int.Parse(tempdt.Rows[0][0].ToString());
+            }
+        }
+
+        //通过产品代码查找产品id
+        private int productid_findby_prodcode(string code)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select product_id from product_aoxing where product_code='" + code + "'";
 
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable tempdt = new DataTable();
