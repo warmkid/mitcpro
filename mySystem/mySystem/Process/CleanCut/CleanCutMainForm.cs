@@ -67,42 +67,32 @@ namespace mySystem.Process.CleanCut
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            if (form4 == null || form4.IsDisposed)
-            { form4 = new Instru(); }            
-            form4.Show();
-            form4.BringToFront();
+            form4 = new Instru();             
+            form4.ShowDialog();
         }
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            if (form6 == null || form6.IsDisposed)
-            { form6 = new Record_cleansite_cut(base.mainform);}            
-            form6.Show();
-            form6.BringToFront();
+            form6 = new Record_cleansite_cut(base.mainform);            
+            form6.ShowDialog();
         }
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            if (form5 == null || form5.IsDisposed)
-            { form5 = new CleanCut_CheckBeforePower(mainform);}            
-            form5.Show();
-            form5.BringToFront();
+            form5 = new CleanCut_CheckBeforePower(mainform);            
+            form5.ShowDialog();
         }
 
         private void A4Btn_Click(object sender, EventArgs e)
         {
-            if (form1 == null || form1.IsDisposed)
-            { form1 = new CleanCut_Productrecord(mainform);}            
-            form1.Show();
-            form1.BringToFront();
+            form1 = new CleanCut_Productrecord(mainform);           
+            form1.ShowDialog();
         }
 
         private void A5Btn_Click(object sender, EventArgs e)
         {
-            if (form2 == null || form2.IsDisposed)
-            { form2 = new DailyRecord();}
-            form2.Show();
-            form2.BringToFront();
+            form2 = new DailyRecord();
+            form2.ShowDialog();
         }
 
 

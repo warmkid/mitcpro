@@ -325,7 +325,6 @@
         private System.Windows.Forms.Button BagBtn;
         private System.Windows.Forms.Panel ProducePanelLeft;
         private System.Windows.Forms.Button ExtructionBtn;
-        private System.Windows.Forms.Panel ProducePanelRight;
         private System.Windows.Forms.Button StockBtn;
         private System.Windows.Forms.Button OrderBtn;
         private System.Windows.Forms.Button PlanBtn;
@@ -337,5 +336,6 @@
         private System.Windows.Forms.Button CSbagBtn;
         private System.Windows.Forms.Button LDPEbagBtn;
         private System.Windows.Forms.Panel otherPanel;
+        public System.Windows.Forms.Panel ProducePanelRight;
     }
 }

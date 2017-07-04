@@ -84,50 +84,38 @@ namespace mySystem.Process.Bag
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            if (form1 == null || form1.IsDisposed)
-            { form1 = new MaterialRecord();}            
-            form1.Show();
-            form1.BringToFront();
+            form1 = new MaterialRecord();            
+            form1.ShowDialog();
         }
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            if (form2 == null || form2.IsDisposed)
-            { form2 = new CSBag_InnerPackaging(mainform);}            
-            form2.Show();
-            form2.BringToFront();
+            form2 = new CSBag_InnerPackaging(mainform);            
+            form2.ShowDialog();
         }
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            if (form3 == null || form3.IsDisposed)
-            { form3 = new Chart_daily_cs();}            
-            form3.Show();
-            form3.BringToFront();
+            form3 = new Chart_daily_cs();           
+            form3.ShowDialog();
         }
 
         private void B1Btn_Click(object sender, EventArgs e)
         {
-            if (form5== null || form5.IsDisposed)
-            { form5 = new Bagprocess_prod_instru();}            
-            form5.Show();
-            form5.BringToFront();
+            form5 = new Bagprocess_prod_instru();           
+            form5.ShowDialog();
         }
 
         private void B2Btn_Click(object sender, EventArgs e)
         {
-            if (form6 == null || form6.IsDisposed)
-            { form6 = new CSBag_CheckBeforePower(mainform);}            
-            form6.Show();
-            form6.BringToFront();
+            form6 = new CSBag_CheckBeforePower(mainform);            
+            form6.ShowDialog();
         }
 
         private void B3Btn_Click(object sender, EventArgs e)
         {
-            if (form7 == null || form7.IsDisposed)
-            { form7 = new RunningRecord();}            
-            form7.Show();
-            form7.BringToFront();
+            form7 = new RunningRecord();            
+            form7.ShowDialog();
         }
 
         private void B4Btn_Click(object sender, EventArgs e)
@@ -142,10 +130,8 @@ namespace mySystem.Process.Bag
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (form9 == null || form9.IsDisposed)
-            { form9 = new Record_batch_bag(mainform);}            
-            form9.Show();
-            form9.BringToFront();
+            form9 = new Record_batch_bag(mainform);           
+            form9.ShowDialog();
         }
 
     }
