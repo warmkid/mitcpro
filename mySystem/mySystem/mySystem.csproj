@@ -295,6 +295,12 @@
     <Compile Include="Process\CleanCut\Record_cleansite_cut.Designer.cs">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Extruction\B\WasteInExtrusion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Extruction\B\WasteInExtrusion.Designer.cs">
+      <DependentUpon>WasteInExtrusion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Extruction\C\beeholetable.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -698,6 +704,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\outerpack.resx">
       <DependentUpon>outerpack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Extruction\B\WasteInExtrusion.resx">
+      <DependentUpon>WasteInExtrusion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\D\ReplaceHeadForm.resx">
       <DependentUpon>ReplaceHeadForm.cs</DependentUpon>
