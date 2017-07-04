@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.订单信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.myDataSet = new mySystem.myDataSet();
             this.库存信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.MainProduceBtn = new System.Windows.Forms.Button();
@@ -41,16 +40,10 @@
             this.ExitBtn = new System.Windows.Forms.Button();
             this.userLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.订单信息BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // 订单信息BindingSource
-            // 
-            this.订单信息BindingSource.DataMember = "订单信息";
-            this.订单信息BindingSource.DataSource = this.myDataSet;
             // 
             // myDataSet
             // 
@@ -175,11 +168,9 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "欢迎使用颇尔奥星管理系统";
-            ((System.ComponentModel.ISupportInitialize)(this.订单信息BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -190,17 +181,16 @@
 
         #endregion
 
-        private System.Windows.Forms.BindingSource 订单信息BindingSource;
         private myDataSet myDataSet;
         private System.Windows.Forms.BindingSource 库存信息BindingSource;
         private System.Windows.Forms.Button MainProduceBtn;
         private System.Windows.Forms.Button MainSettingBtn;
         private System.Windows.Forms.Button MainQueryBtn;
-        private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.Label userLabel;
         private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Panel MainPanel;
 
 
     }

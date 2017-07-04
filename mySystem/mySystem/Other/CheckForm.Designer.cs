@@ -205,6 +205,6 @@
         private System.Windows.Forms.TextBox CheckerPWTextBox;
         private System.Windows.Forms.TextBox CheckerIDTextBox;
         private System.Windows.Forms.Button NotOKBtn;
-        public System.Windows.Forms.Button CancelBtn;
+        private System.Windows.Forms.Button CancelBtn;
     }
 }

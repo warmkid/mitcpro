@@ -218,8 +218,6 @@ namespace mySystem
                 da.Dispose();
 
                 //通过生产指令id查找相应的子集
-                //acsql = "select s6.production_instruction_id,s6.s6_production_date,s6.s6_flight,s6.product_batch_id,s6.s6_mojuan_length,s6.s6_mojuan_weight,s5.production_instruction_id,s5.s5_feeding_info,s6.s6_time,s6.s6_recorder_id,s6.s6_reviewer_id from extrusion_s6_production_check s6,extrusion_s5_feeding s5 where s6.production_instruction_id=s5.production_instruction_id";
-                //acsql="select s6.s6_production_date,s6.s6_flight,s6.product_batch_id,s6.s6_mojuan_length,s6.s6_mojuan_weigh,s6.s6_time,s6.s6_recorder_id,s6.s6_reviewer_id from extrusion_s6_production_check where production_instruction_id="
                 acsql = "select product_batch_id,s6_production_date,s6_flight,s6_mojuan_number,s6_mojuan_length,s6_mojuan_weight,s6_time,s6_recorder_id,s6_reviewer_id from extrusion_s6_production_check where production_instruction_id="+id;
                 comm.CommandText = acsql;
                 da = new OleDbDataAdapter(comm);
