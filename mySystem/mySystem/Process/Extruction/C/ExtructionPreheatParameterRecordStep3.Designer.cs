@@ -51,29 +51,9 @@
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.label_s3_region1_set1 = new System.Windows.Forms.Label();
-            this.label_s3_region2_set1 = new System.Windows.Forms.Label();
-            this.label_s3_region3_set1 = new System.Windows.Forms.Label();
-            this.label_s3_region4_set1 = new System.Windows.Forms.Label();
-            this.label_s3_km_set1 = new System.Windows.Forms.Label();
-            this.label_s3_hw_set1 = new System.Windows.Forms.Label();
-            this.label_s3_ld_set1 = new System.Windows.Forms.Label();
-            this.label_s3_mj_set1 = new System.Windows.Forms.Label();
-            this.label_s3_jt1_set1 = new System.Windows.Forms.Label();
-            this.label_s3_jt2_set1 = new System.Windows.Forms.Label();
-            this.label_s3_hw_set2 = new System.Windows.Forms.Label();
-            this.label_s3_ld_set2 = new System.Windows.Forms.Label();
-            this.label_s3_mj_set2 = new System.Windows.Forms.Label();
-            this.label_s3_jt1_set2 = new System.Windows.Forms.Label();
-            this.label_s3_jt2_set2 = new System.Windows.Forms.Label();
-            this.label_s3_km_set2 = new System.Windows.Forms.Label();
-            this.label_s3_region1_set2 = new System.Windows.Forms.Label();
-            this.label_s3_region2_set2 = new System.Windows.Forms.Label();
-            this.label_s3_region3_set2 = new System.Windows.Forms.Label();
-            this.label_s3_region4_set2 = new System.Windows.Forms.Label();
-            this.label_s3_duration1 = new System.Windows.Forms.Label();
-            this.label_s3_duration2 = new System.Windows.Forms.Label();
-            this.label_s3_duration3 = new System.Windows.Forms.Label();
+            this.s3_duration1_label = new System.Windows.Forms.Label();
+            this.s3_duration2_label = new System.Windows.Forms.Label();
+            this.s3_duration3_label = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
             this.label49 = new System.Windows.Forms.Label();
             this.phiBox = new System.Windows.Forms.TextBox();
@@ -87,15 +67,39 @@
             this.recorderBox = new System.Windows.Forms.TextBox();
             this.checkerBox = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label_s3_region1_set2 = new System.Windows.Forms.TextBox();
+            this.label_s3_region4_set2 = new System.Windows.Forms.TextBox();
+            this.label_s3_region3_set2 = new System.Windows.Forms.TextBox();
+            this.label_s3_region2_set2 = new System.Windows.Forms.TextBox();
+            this.label_s3_region1_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_region4_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_region3_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_region2_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_jt2_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_km_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_jt1_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_mj_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_ld_set1 = new System.Windows.Forms.TextBox();
+            this.label_s3_hw_set2 = new System.Windows.Forms.TextBox();
+            this.label_s3_jt2_set2 = new System.Windows.Forms.TextBox();
+            this.label_s3_km_set2 = new System.Windows.Forms.TextBox();
+            this.label_s3_jt1_set2 = new System.Windows.Forms.TextBox();
             this.Time5Picker = new System.Windows.Forms.DateTimePicker();
+            this.label_s3_mj_set2 = new System.Windows.Forms.TextBox();
             this.Time4Picker = new System.Windows.Forms.DateTimePicker();
+            this.label_s3_ld_set2 = new System.Windows.Forms.TextBox();
             this.Time3Picker = new System.Windows.Forms.DateTimePicker();
             this.Time2Picker = new System.Windows.Forms.DateTimePicker();
+            this.label_s3_hw_set1 = new System.Windows.Forms.TextBox();
             this.Time1Picker = new System.Windows.Forms.DateTimePicker();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CheckBtn = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
+            this.printBtn = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -133,7 +137,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label3.Location = new System.Drawing.Point(46, 230);
+            this.label3.Location = new System.Drawing.Point(46, 245);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(104, 16);
             this.label3.TabIndex = 4;
@@ -143,7 +147,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label4.Location = new System.Drawing.Point(46, 255);
+            this.label4.Location = new System.Drawing.Point(46, 285);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(104, 16);
             this.label4.TabIndex = 5;
@@ -153,7 +157,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label5.Location = new System.Drawing.Point(46, 280);
+            this.label5.Location = new System.Drawing.Point(46, 325);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 16);
             this.label5.TabIndex = 6;
@@ -163,7 +167,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label6.Location = new System.Drawing.Point(46, 330);
+            this.label6.Location = new System.Drawing.Point(46, 405);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(104, 16);
             this.label6.TabIndex = 7;
@@ -173,7 +177,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label7.Location = new System.Drawing.Point(46, 305);
+            this.label7.Location = new System.Drawing.Point(46, 365);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(104, 16);
             this.label7.TabIndex = 8;
@@ -183,7 +187,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label8.Location = new System.Drawing.Point(46, 355);
+            this.label8.Location = new System.Drawing.Point(46, 445);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(104, 16);
             this.label8.TabIndex = 9;
@@ -193,7 +197,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label9.Location = new System.Drawing.Point(46, 380);
+            this.label9.Location = new System.Drawing.Point(46, 485);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(104, 16);
             this.label9.TabIndex = 10;
@@ -203,7 +207,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label10.Location = new System.Drawing.Point(46, 405);
+            this.label10.Location = new System.Drawing.Point(46, 525);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(104, 16);
             this.label10.TabIndex = 11;
@@ -213,7 +217,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label11.Location = new System.Drawing.Point(46, 430);
+            this.label11.Location = new System.Drawing.Point(46, 565);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(104, 16);
             this.label11.TabIndex = 12;
@@ -223,7 +227,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label12.Location = new System.Drawing.Point(46, 455);
+            this.label12.Location = new System.Drawing.Point(46, 605);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(104, 16);
             this.label12.TabIndex = 13;
@@ -329,241 +333,41 @@
             this.label22.TabIndex = 23;
             this.label22.Text = "口模";
             // 
-            // label_s3_region1_set1
+            // s3_duration1_label
             // 
-            this.label_s3_region1_set1.AutoSize = true;
-            this.label_s3_region1_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_region1_set1.Location = new System.Drawing.Point(187, 305);
-            this.label_s3_region1_set1.Name = "label_s3_region1_set1";
-            this.label_s3_region1_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_region1_set1.TabIndex = 29;
-            this.label_s3_region1_set1.Text = "120";
+            this.s3_duration1_label.AutoSize = true;
+            this.s3_duration1_label.Font = new System.Drawing.Font("SimSun", 12F);
+            this.s3_duration1_label.Location = new System.Drawing.Point(817, 153);
+            this.s3_duration1_label.Name = "s3_duration1_label";
+            this.s3_duration1_label.Size = new System.Drawing.Size(24, 16);
+            this.s3_duration1_label.TabIndex = 49;
+            this.s3_duration1_label.Text = "40";
             // 
-            // label_s3_region2_set1
+            // s3_duration2_label
             // 
-            this.label_s3_region2_set1.AutoSize = true;
-            this.label_s3_region2_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_region2_set1.Location = new System.Drawing.Point(287, 305);
-            this.label_s3_region2_set1.Name = "label_s3_region2_set1";
-            this.label_s3_region2_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_region2_set1.TabIndex = 30;
-            this.label_s3_region2_set1.Text = "120";
+            this.s3_duration2_label.AutoSize = true;
+            this.s3_duration2_label.Font = new System.Drawing.Font("SimSun", 12F);
+            this.s3_duration2_label.Location = new System.Drawing.Point(325, 313);
+            this.s3_duration2_label.Name = "s3_duration2_label";
+            this.s3_duration2_label.Size = new System.Drawing.Size(24, 16);
+            this.s3_duration2_label.TabIndex = 50;
+            this.s3_duration2_label.Text = "40";
             // 
-            // label_s3_region3_set1
+            // s3_duration3_label
             // 
-            this.label_s3_region3_set1.AutoSize = true;
-            this.label_s3_region3_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_region3_set1.Location = new System.Drawing.Point(389, 305);
-            this.label_s3_region3_set1.Name = "label_s3_region3_set1";
-            this.label_s3_region3_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_region3_set1.TabIndex = 31;
-            this.label_s3_region3_set1.Text = "120";
-            // 
-            // label_s3_region4_set1
-            // 
-            this.label_s3_region4_set1.AutoSize = true;
-            this.label_s3_region4_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_region4_set1.Location = new System.Drawing.Point(487, 305);
-            this.label_s3_region4_set1.Name = "label_s3_region4_set1";
-            this.label_s3_region4_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_region4_set1.TabIndex = 32;
-            this.label_s3_region4_set1.Text = "120";
-            // 
-            // label_s3_km_set1
-            // 
-            this.label_s3_km_set1.AutoSize = true;
-            this.label_s3_km_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_km_set1.Location = new System.Drawing.Point(1090, 205);
-            this.label_s3_km_set1.Name = "label_s3_km_set1";
-            this.label_s3_km_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_km_set1.TabIndex = 33;
-            this.label_s3_km_set1.Text = "120";
-            // 
-            // label_s3_hw_set1
-            // 
-            this.label_s3_hw_set1.AutoSize = true;
-            this.label_s3_hw_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_hw_set1.Location = new System.Drawing.Point(589, 205);
-            this.label_s3_hw_set1.Name = "label_s3_hw_set1";
-            this.label_s3_hw_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_hw_set1.TabIndex = 34;
-            this.label_s3_hw_set1.Text = "120";
-            // 
-            // label_s3_ld_set1
-            // 
-            this.label_s3_ld_set1.AutoSize = true;
-            this.label_s3_ld_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_ld_set1.Location = new System.Drawing.Point(690, 205);
-            this.label_s3_ld_set1.Name = "label_s3_ld_set1";
-            this.label_s3_ld_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_ld_set1.TabIndex = 35;
-            this.label_s3_ld_set1.Text = "120";
-            // 
-            // label_s3_mj_set1
-            // 
-            this.label_s3_mj_set1.AutoSize = true;
-            this.label_s3_mj_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_mj_set1.Location = new System.Drawing.Point(790, 205);
-            this.label_s3_mj_set1.Name = "label_s3_mj_set1";
-            this.label_s3_mj_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_mj_set1.TabIndex = 36;
-            this.label_s3_mj_set1.Text = "120";
-            // 
-            // label_s3_jt1_set1
-            // 
-            this.label_s3_jt1_set1.AutoSize = true;
-            this.label_s3_jt1_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_jt1_set1.Location = new System.Drawing.Point(892, 205);
-            this.label_s3_jt1_set1.Name = "label_s3_jt1_set1";
-            this.label_s3_jt1_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_jt1_set1.TabIndex = 37;
-            this.label_s3_jt1_set1.Text = "120";
-            // 
-            // label_s3_jt2_set1
-            // 
-            this.label_s3_jt2_set1.AutoSize = true;
-            this.label_s3_jt2_set1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_jt2_set1.Location = new System.Drawing.Point(994, 205);
-            this.label_s3_jt2_set1.Name = "label_s3_jt2_set1";
-            this.label_s3_jt2_set1.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_jt2_set1.TabIndex = 38;
-            this.label_s3_jt2_set1.Text = "120";
-            // 
-            // label_s3_hw_set2
-            // 
-            this.label_s3_hw_set2.AutoSize = true;
-            this.label_s3_hw_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_hw_set2.Location = new System.Drawing.Point(589, 305);
-            this.label_s3_hw_set2.Name = "label_s3_hw_set2";
-            this.label_s3_hw_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_hw_set2.TabIndex = 39;
-            this.label_s3_hw_set2.Text = "215";
-            // 
-            // label_s3_ld_set2
-            // 
-            this.label_s3_ld_set2.AutoSize = true;
-            this.label_s3_ld_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_ld_set2.Location = new System.Drawing.Point(690, 305);
-            this.label_s3_ld_set2.Name = "label_s3_ld_set2";
-            this.label_s3_ld_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_ld_set2.TabIndex = 40;
-            this.label_s3_ld_set2.Text = "215";
-            // 
-            // label_s3_mj_set2
-            // 
-            this.label_s3_mj_set2.AutoSize = true;
-            this.label_s3_mj_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_mj_set2.Location = new System.Drawing.Point(790, 305);
-            this.label_s3_mj_set2.Name = "label_s3_mj_set2";
-            this.label_s3_mj_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_mj_set2.TabIndex = 41;
-            this.label_s3_mj_set2.Text = "215";
-            // 
-            // label_s3_jt1_set2
-            // 
-            this.label_s3_jt1_set2.AutoSize = true;
-            this.label_s3_jt1_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_jt1_set2.Location = new System.Drawing.Point(892, 305);
-            this.label_s3_jt1_set2.Name = "label_s3_jt1_set2";
-            this.label_s3_jt1_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_jt1_set2.TabIndex = 42;
-            this.label_s3_jt1_set2.Text = "215";
-            // 
-            // label_s3_jt2_set2
-            // 
-            this.label_s3_jt2_set2.AutoSize = true;
-            this.label_s3_jt2_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_jt2_set2.Location = new System.Drawing.Point(994, 305);
-            this.label_s3_jt2_set2.Name = "label_s3_jt2_set2";
-            this.label_s3_jt2_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_jt2_set2.TabIndex = 43;
-            this.label_s3_jt2_set2.Text = "215";
-            // 
-            // label_s3_km_set2
-            // 
-            this.label_s3_km_set2.AutoSize = true;
-            this.label_s3_km_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_km_set2.Location = new System.Drawing.Point(1090, 305);
-            this.label_s3_km_set2.Name = "label_s3_km_set2";
-            this.label_s3_km_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_km_set2.TabIndex = 44;
-            this.label_s3_km_set2.Text = "215";
-            // 
-            // label_s3_region1_set2
-            // 
-            this.label_s3_region1_set2.AutoSize = true;
-            this.label_s3_region1_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_region1_set2.Location = new System.Drawing.Point(187, 405);
-            this.label_s3_region1_set2.Name = "label_s3_region1_set2";
-            this.label_s3_region1_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_region1_set2.TabIndex = 45;
-            this.label_s3_region1_set2.Text = "180";
-            // 
-            // label_s3_region2_set2
-            // 
-            this.label_s3_region2_set2.AutoSize = true;
-            this.label_s3_region2_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_region2_set2.Location = new System.Drawing.Point(287, 405);
-            this.label_s3_region2_set2.Name = "label_s3_region2_set2";
-            this.label_s3_region2_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_region2_set2.TabIndex = 46;
-            this.label_s3_region2_set2.Text = "195";
-            // 
-            // label_s3_region3_set2
-            // 
-            this.label_s3_region3_set2.AutoSize = true;
-            this.label_s3_region3_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_region3_set2.Location = new System.Drawing.Point(389, 405);
-            this.label_s3_region3_set2.Name = "label_s3_region3_set2";
-            this.label_s3_region3_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_region3_set2.TabIndex = 47;
-            this.label_s3_region3_set2.Text = "210";
-            // 
-            // label_s3_region4_set2
-            // 
-            this.label_s3_region4_set2.AutoSize = true;
-            this.label_s3_region4_set2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_region4_set2.Location = new System.Drawing.Point(487, 405);
-            this.label_s3_region4_set2.Name = "label_s3_region4_set2";
-            this.label_s3_region4_set2.Size = new System.Drawing.Size(32, 16);
-            this.label_s3_region4_set2.TabIndex = 48;
-            this.label_s3_region4_set2.Text = "215";
-            // 
-            // label_s3_duration1
-            // 
-            this.label_s3_duration1.AutoSize = true;
-            this.label_s3_duration1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_duration1.Location = new System.Drawing.Point(801, 254);
-            this.label_s3_duration1.Name = "label_s3_duration1";
-            this.label_s3_duration1.Size = new System.Drawing.Size(120, 16);
-            this.label_s3_duration1.TabIndex = 49;
-            this.label_s3_duration1.Text = "加热保温60分钟";
-            // 
-            // label_s3_duration2
-            // 
-            this.label_s3_duration2.AutoSize = true;
-            this.label_s3_duration2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_duration2.Location = new System.Drawing.Point(305, 355);
-            this.label_s3_duration2.Name = "label_s3_duration2";
-            this.label_s3_duration2.Size = new System.Drawing.Size(120, 16);
-            this.label_s3_duration2.TabIndex = 50;
-            this.label_s3_duration2.Text = "加热保温40分钟";
-            // 
-            // label_s3_duration3
-            // 
-            this.label_s3_duration3.AutoSize = true;
-            this.label_s3_duration3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_s3_duration3.Location = new System.Drawing.Point(305, 429);
-            this.label_s3_duration3.Name = "label_s3_duration3";
-            this.label_s3_duration3.Size = new System.Drawing.Size(120, 16);
-            this.label_s3_duration3.TabIndex = 51;
-            this.label_s3_duration3.Text = "加热保温40分钟";
+            this.s3_duration3_label.AutoSize = true;
+            this.s3_duration3_label.Font = new System.Drawing.Font("SimSun", 12F);
+            this.s3_duration3_label.Location = new System.Drawing.Point(325, 433);
+            this.s3_duration3_label.Name = "s3_duration3_label";
+            this.s3_duration3_label.Size = new System.Drawing.Size(24, 16);
+            this.s3_duration3_label.TabIndex = 51;
+            this.s3_duration3_label.Text = "60";
             // 
             // label46
             // 
             this.label46.AutoSize = true;
             this.label46.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label46.Location = new System.Drawing.Point(794, 398);
+            this.label46.Location = new System.Drawing.Point(735, 379);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(200, 16);
             this.label46.TabIndex = 52;
@@ -587,6 +391,7 @@
             this.phiBox.Name = "phiBox";
             this.phiBox.Size = new System.Drawing.Size(124, 26);
             this.phiBox.TabIndex = 56;
+            this.phiBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // gapBox
             // 
@@ -596,12 +401,13 @@
             this.gapBox.Name = "gapBox";
             this.gapBox.Size = new System.Drawing.Size(118, 26);
             this.gapBox.TabIndex = 57;
+            this.gapBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label48
             // 
             this.label48.AutoSize = true;
             this.label48.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label48.Location = new System.Drawing.Point(46, 497);
+            this.label48.Location = new System.Drawing.Point(47, 674);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(48, 16);
             this.label48.TabIndex = 67;
@@ -611,9 +417,9 @@
             // 
             this.PSbox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PSbox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.PSbox.Location = new System.Drawing.Point(102, 493);
+            this.PSbox.Location = new System.Drawing.Point(103, 670);
             this.PSbox.Name = "PSbox";
-            this.PSbox.Size = new System.Drawing.Size(1022, 26);
+            this.PSbox.Size = new System.Drawing.Size(1054, 26);
             this.PSbox.TabIndex = 68;
             // 
             // label47
@@ -674,69 +480,326 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.s3_duration1_label);
+            this.groupBox1.Controls.Add(this.s3_duration3_label);
+            this.groupBox1.Controls.Add(this.label25);
+            this.groupBox1.Controls.Add(this.label24);
+            this.groupBox1.Controls.Add(this.s3_duration2_label);
+            this.groupBox1.Controls.Add(this.label23);
+            this.groupBox1.Controls.Add(this.label_s3_region1_set2);
+            this.groupBox1.Controls.Add(this.label_s3_region4_set2);
+            this.groupBox1.Controls.Add(this.label_s3_region3_set2);
+            this.groupBox1.Controls.Add(this.label_s3_region2_set2);
+            this.groupBox1.Controls.Add(this.label_s3_region1_set1);
+            this.groupBox1.Controls.Add(this.label_s3_region4_set1);
+            this.groupBox1.Controls.Add(this.label_s3_region3_set1);
+            this.groupBox1.Controls.Add(this.label_s3_region2_set1);
+            this.groupBox1.Controls.Add(this.label_s3_jt2_set1);
+            this.groupBox1.Controls.Add(this.label_s3_km_set1);
+            this.groupBox1.Controls.Add(this.label_s3_jt1_set1);
+            this.groupBox1.Controls.Add(this.label46);
+            this.groupBox1.Controls.Add(this.label_s3_mj_set1);
+            this.groupBox1.Controls.Add(this.label_s3_ld_set1);
+            this.groupBox1.Controls.Add(this.label_s3_hw_set2);
+            this.groupBox1.Controls.Add(this.label_s3_jt2_set2);
+            this.groupBox1.Controls.Add(this.label_s3_km_set2);
+            this.groupBox1.Controls.Add(this.label_s3_jt1_set2);
             this.groupBox1.Controls.Add(this.Time5Picker);
+            this.groupBox1.Controls.Add(this.label_s3_mj_set2);
             this.groupBox1.Controls.Add(this.Time4Picker);
+            this.groupBox1.Controls.Add(this.label_s3_ld_set2);
             this.groupBox1.Controls.Add(this.Time3Picker);
             this.groupBox1.Controls.Add(this.Time2Picker);
+            this.groupBox1.Controls.Add(this.label_s3_hw_set1);
             this.groupBox1.Controls.Add(this.Time1Picker);
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.Location = new System.Drawing.Point(38, 132);
+            this.groupBox1.Location = new System.Drawing.Point(35, 132);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1109, 418);
+            this.groupBox1.Size = new System.Drawing.Size(1121, 513);
             this.groupBox1.TabIndex = 75;
             this.groupBox1.TabStop = false;
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label25.Location = new System.Drawing.Point(736, 153);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(152, 16);
+            this.label25.TabIndex = 103;
+            this.label25.Text = "加热保温      分钟";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label24.Location = new System.Drawing.Point(244, 433);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(152, 16);
+            this.label24.TabIndex = 102;
+            this.label24.Text = "加热保温      分钟";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label23.Location = new System.Drawing.Point(244, 313);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(152, 16);
+            this.label23.TabIndex = 101;
+            this.label23.Text = "加热保温      分钟";
+            // 
+            // label_s3_region1_set2
+            // 
+            this.label_s3_region1_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_region1_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_region1_set2.Location = new System.Drawing.Point(139, 389);
+            this.label_s3_region1_set2.Name = "label_s3_region1_set2";
+            this.label_s3_region1_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_region1_set2.TabIndex = 100;
+            this.label_s3_region1_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_region4_set2
+            // 
+            this.label_s3_region4_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_region4_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_region4_set2.Location = new System.Drawing.Point(439, 389);
+            this.label_s3_region4_set2.Name = "label_s3_region4_set2";
+            this.label_s3_region4_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_region4_set2.TabIndex = 99;
+            this.label_s3_region4_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_region3_set2
+            // 
+            this.label_s3_region3_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_region3_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_region3_set2.Location = new System.Drawing.Point(339, 389);
+            this.label_s3_region3_set2.Name = "label_s3_region3_set2";
+            this.label_s3_region3_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_region3_set2.TabIndex = 98;
+            this.label_s3_region3_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_region2_set2
+            // 
+            this.label_s3_region2_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_region2_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_region2_set2.Location = new System.Drawing.Point(239, 389);
+            this.label_s3_region2_set2.Name = "label_s3_region2_set2";
+            this.label_s3_region2_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_region2_set2.TabIndex = 97;
+            this.label_s3_region2_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_region1_set1
+            // 
+            this.label_s3_region1_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_region1_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_region1_set1.Location = new System.Drawing.Point(138, 232);
+            this.label_s3_region1_set1.Name = "label_s3_region1_set1";
+            this.label_s3_region1_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_region1_set1.TabIndex = 96;
+            this.label_s3_region1_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_region4_set1
+            // 
+            this.label_s3_region4_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_region4_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_region4_set1.Location = new System.Drawing.Point(438, 232);
+            this.label_s3_region4_set1.Name = "label_s3_region4_set1";
+            this.label_s3_region4_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_region4_set1.TabIndex = 95;
+            this.label_s3_region4_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_region3_set1
+            // 
+            this.label_s3_region3_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_region3_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_region3_set1.Location = new System.Drawing.Point(338, 232);
+            this.label_s3_region3_set1.Name = "label_s3_region3_set1";
+            this.label_s3_region3_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_region3_set1.TabIndex = 94;
+            this.label_s3_region3_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_region2_set1
+            // 
+            this.label_s3_region2_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_region2_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_region2_set1.Location = new System.Drawing.Point(238, 232);
+            this.label_s3_region2_set1.Name = "label_s3_region2_set1";
+            this.label_s3_region2_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_region2_set1.TabIndex = 93;
+            this.label_s3_region2_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_jt2_set1
+            // 
+            this.label_s3_jt2_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_jt2_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_jt2_set1.Location = new System.Drawing.Point(938, 67);
+            this.label_s3_jt2_set1.Name = "label_s3_jt2_set1";
+            this.label_s3_jt2_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_jt2_set1.TabIndex = 91;
+            this.label_s3_jt2_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_km_set1
+            // 
+            this.label_s3_km_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_km_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_km_set1.Location = new System.Drawing.Point(1038, 67);
+            this.label_s3_km_set1.Name = "label_s3_km_set1";
+            this.label_s3_km_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_km_set1.TabIndex = 92;
+            this.label_s3_km_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_jt1_set1
+            // 
+            this.label_s3_jt1_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_jt1_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_jt1_set1.Location = new System.Drawing.Point(838, 67);
+            this.label_s3_jt1_set1.Name = "label_s3_jt1_set1";
+            this.label_s3_jt1_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_jt1_set1.TabIndex = 90;
+            this.label_s3_jt1_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_mj_set1
+            // 
+            this.label_s3_mj_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_mj_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_mj_set1.Location = new System.Drawing.Point(738, 67);
+            this.label_s3_mj_set1.Name = "label_s3_mj_set1";
+            this.label_s3_mj_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_mj_set1.TabIndex = 89;
+            this.label_s3_mj_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_ld_set1
+            // 
+            this.label_s3_ld_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_ld_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_ld_set1.Location = new System.Drawing.Point(638, 67);
+            this.label_s3_ld_set1.Name = "label_s3_ld_set1";
+            this.label_s3_ld_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_ld_set1.TabIndex = 88;
+            this.label_s3_ld_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_hw_set2
+            // 
+            this.label_s3_hw_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_hw_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_hw_set2.Location = new System.Drawing.Point(538, 232);
+            this.label_s3_hw_set2.Name = "label_s3_hw_set2";
+            this.label_s3_hw_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_hw_set2.TabIndex = 87;
+            this.label_s3_hw_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_jt2_set2
+            // 
+            this.label_s3_jt2_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_jt2_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_jt2_set2.Location = new System.Drawing.Point(938, 232);
+            this.label_s3_jt2_set2.Name = "label_s3_jt2_set2";
+            this.label_s3_jt2_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_jt2_set2.TabIndex = 85;
+            this.label_s3_jt2_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_km_set2
+            // 
+            this.label_s3_km_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_km_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_km_set2.Location = new System.Drawing.Point(1038, 232);
+            this.label_s3_km_set2.Name = "label_s3_km_set2";
+            this.label_s3_km_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_km_set2.TabIndex = 86;
+            this.label_s3_km_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label_s3_jt1_set2
+            // 
+            this.label_s3_jt1_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_jt1_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_jt1_set2.Location = new System.Drawing.Point(838, 232);
+            this.label_s3_jt1_set2.Name = "label_s3_jt1_set2";
+            this.label_s3_jt1_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_jt1_set2.TabIndex = 84;
+            this.label_s3_jt1_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Time5Picker
             // 
             this.Time5Picker.Font = new System.Drawing.Font("SimSun", 12F);
             this.Time5Picker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Time5Picker.Location = new System.Drawing.Point(151, 316);
+            this.Time5Picker.Location = new System.Drawing.Point(138, 468);
             this.Time5Picker.Name = "Time5Picker";
-            this.Time5Picker.Size = new System.Drawing.Size(327, 26);
+            this.Time5Picker.Size = new System.Drawing.Size(362, 26);
             this.Time5Picker.TabIndex = 80;
+            // 
+            // label_s3_mj_set2
+            // 
+            this.label_s3_mj_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_mj_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_mj_set2.Location = new System.Drawing.Point(738, 232);
+            this.label_s3_mj_set2.Name = "label_s3_mj_set2";
+            this.label_s3_mj_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_mj_set2.TabIndex = 83;
+            this.label_s3_mj_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Time4Picker
             // 
             this.Time4Picker.Font = new System.Drawing.Font("SimSun", 12F);
             this.Time4Picker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Time4Picker.Location = new System.Drawing.Point(151, 242);
+            this.Time4Picker.Location = new System.Drawing.Point(138, 346);
             this.Time4Picker.Name = "Time4Picker";
-            this.Time4Picker.Size = new System.Drawing.Size(327, 26);
+            this.Time4Picker.Size = new System.Drawing.Size(362, 26);
             this.Time4Picker.TabIndex = 79;
+            // 
+            // label_s3_ld_set2
+            // 
+            this.label_s3_ld_set2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_ld_set2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_ld_set2.Location = new System.Drawing.Point(638, 232);
+            this.label_s3_ld_set2.Name = "label_s3_ld_set2";
+            this.label_s3_ld_set2.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_ld_set2.TabIndex = 82;
+            this.label_s3_ld_set2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Time3Picker
             // 
             this.Time3Picker.Font = new System.Drawing.Font("SimSun", 12F);
             this.Time3Picker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Time3Picker.Location = new System.Drawing.Point(151, 194);
+            this.Time3Picker.Location = new System.Drawing.Point(139, 269);
             this.Time3Picker.Name = "Time3Picker";
-            this.Time3Picker.Size = new System.Drawing.Size(327, 26);
+            this.Time3Picker.Size = new System.Drawing.Size(362, 26);
             this.Time3Picker.TabIndex = 78;
             // 
             // Time2Picker
             // 
             this.Time2Picker.Font = new System.Drawing.Font("SimSun", 12F);
             this.Time2Picker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Time2Picker.Location = new System.Drawing.Point(554, 141);
+            this.Time2Picker.Location = new System.Drawing.Point(535, 183);
             this.Time2Picker.Name = "Time2Picker";
-            this.Time2Picker.Size = new System.Drawing.Size(526, 26);
+            this.Time2Picker.Size = new System.Drawing.Size(565, 26);
             this.Time2Picker.TabIndex = 78;
+            // 
+            // label_s3_hw_set1
+            // 
+            this.label_s3_hw_set1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label_s3_hw_set1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label_s3_hw_set1.Location = new System.Drawing.Point(535, 67);
+            this.label_s3_hw_set1.Name = "label_s3_hw_set1";
+            this.label_s3_hw_set1.Size = new System.Drawing.Size(62, 26);
+            this.label_s3_hw_set1.TabIndex = 81;
+            this.label_s3_hw_set1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Time1Picker
             // 
             this.Time1Picker.Font = new System.Drawing.Font("SimSun", 12F);
             this.Time1Picker.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.Time1Picker.Location = new System.Drawing.Point(553, 93);
+            this.Time1Picker.Location = new System.Drawing.Point(535, 109);
             this.Time1Picker.Name = "Time1Picker";
-            this.Time1Picker.Size = new System.Drawing.Size(526, 26);
+            this.Time1Picker.Size = new System.Drawing.Size(565, 26);
             this.Time1Picker.TabIndex = 2;
             // 
             // groupBox3
             // 
-            this.groupBox3.Location = new System.Drawing.Point(149, 68);
+            this.groupBox3.Location = new System.Drawing.Point(138, 58);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(324, 97);
+            this.groupBox3.Size = new System.Drawing.Size(362, 151);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             // 
@@ -744,25 +807,25 @@
             // 
             this.groupBox2.Location = new System.Drawing.Point(10, 14);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1081, 38);
+            this.groupBox2.Size = new System.Drawing.Size(1090, 38);
             this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             // 
             // CheckBtn
             // 
             this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.CheckBtn.Location = new System.Drawing.Point(1067, 570);
+            this.CheckBtn.Location = new System.Drawing.Point(983, 726);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);
             this.CheckBtn.TabIndex = 77;
-            this.CheckBtn.Text = "审核通过";
+            this.CheckBtn.Text = "审核";
             this.CheckBtn.UseVisualStyleBackColor = true;
             this.CheckBtn.Click += new System.EventHandler(this.CheckBtn_Click);
             // 
             // SaveBtn
             // 
             this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.SaveBtn.Location = new System.Drawing.Point(975, 570);
+            this.SaveBtn.Location = new System.Drawing.Point(891, 726);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
             this.SaveBtn.TabIndex = 76;
@@ -770,11 +833,22 @@
             this.SaveBtn.UseVisualStyleBackColor = true;
             this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
+            // printBtn
+            // 
+            this.printBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.printBtn.Location = new System.Drawing.Point(1077, 726);
+            this.printBtn.Name = "printBtn";
+            this.printBtn.Size = new System.Drawing.Size(80, 30);
+            this.printBtn.TabIndex = 78;
+            this.printBtn.Text = "打印";
+            this.printBtn.UseVisualStyleBackColor = true;
+            // 
             // ExtructionPreheatParameterRecordStep3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1168, 612);
+            this.ClientSize = new System.Drawing.Size(1191, 777);
+            this.Controls.Add(this.printBtn);
             this.Controls.Add(this.CheckBtn);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.checkerBox);
@@ -788,30 +862,6 @@
             this.Controls.Add(this.gapBox);
             this.Controls.Add(this.phiBox);
             this.Controls.Add(this.label49);
-            this.Controls.Add(this.label46);
-            this.Controls.Add(this.label_s3_duration3);
-            this.Controls.Add(this.label_s3_duration2);
-            this.Controls.Add(this.label_s3_duration1);
-            this.Controls.Add(this.label_s3_region4_set2);
-            this.Controls.Add(this.label_s3_region3_set2);
-            this.Controls.Add(this.label_s3_region2_set2);
-            this.Controls.Add(this.label_s3_region1_set2);
-            this.Controls.Add(this.label_s3_km_set2);
-            this.Controls.Add(this.label_s3_jt2_set2);
-            this.Controls.Add(this.label_s3_jt1_set2);
-            this.Controls.Add(this.label_s3_mj_set2);
-            this.Controls.Add(this.label_s3_ld_set2);
-            this.Controls.Add(this.label_s3_hw_set2);
-            this.Controls.Add(this.label_s3_jt2_set1);
-            this.Controls.Add(this.label_s3_jt1_set1);
-            this.Controls.Add(this.label_s3_mj_set1);
-            this.Controls.Add(this.label_s3_ld_set1);
-            this.Controls.Add(this.label_s3_hw_set1);
-            this.Controls.Add(this.label_s3_km_set1);
-            this.Controls.Add(this.label_s3_region4_set1);
-            this.Controls.Add(this.label_s3_region3_set1);
-            this.Controls.Add(this.label_s3_region2_set1);
-            this.Controls.Add(this.label_s3_region1_set1);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label20);
@@ -840,6 +890,7 @@
             this.Name = "ExtructionPreheatParameterRecordStep3";
             this.Text = "  ";
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -870,29 +921,9 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label_s3_region1_set1;
-        private System.Windows.Forms.Label label_s3_region2_set1;
-        private System.Windows.Forms.Label label_s3_region3_set1;
-        private System.Windows.Forms.Label label_s3_region4_set1;
-        private System.Windows.Forms.Label label_s3_km_set1;
-        private System.Windows.Forms.Label label_s3_hw_set1;
-        private System.Windows.Forms.Label label_s3_ld_set1;
-        private System.Windows.Forms.Label label_s3_mj_set1;
-        private System.Windows.Forms.Label label_s3_jt1_set1;
-        private System.Windows.Forms.Label label_s3_jt2_set1;
-        private System.Windows.Forms.Label label_s3_hw_set2;
-        private System.Windows.Forms.Label label_s3_ld_set2;
-        private System.Windows.Forms.Label label_s3_mj_set2;
-        private System.Windows.Forms.Label label_s3_jt1_set2;
-        private System.Windows.Forms.Label label_s3_jt2_set2;
-        private System.Windows.Forms.Label label_s3_km_set2;
-        private System.Windows.Forms.Label label_s3_region1_set2;
-        private System.Windows.Forms.Label label_s3_region2_set2;
-        private System.Windows.Forms.Label label_s3_region3_set2;
-        private System.Windows.Forms.Label label_s3_region4_set2;
-        private System.Windows.Forms.Label label_s3_duration1;
-        private System.Windows.Forms.Label label_s3_duration2;
-        private System.Windows.Forms.Label label_s3_duration3;
+        private System.Windows.Forms.Label s3_duration1_label;
+        private System.Windows.Forms.Label s3_duration2_label;
+        private System.Windows.Forms.Label s3_duration3_label;
         private System.Windows.Forms.Label label46;
         private System.Windows.Forms.Label label49;
         private System.Windows.Forms.TextBox phiBox;
@@ -915,5 +946,29 @@
         private System.Windows.Forms.DateTimePicker Time3Picker;
         private System.Windows.Forms.DateTimePicker Time4Picker;
         private System.Windows.Forms.DateTimePicker Time5Picker;
+        private System.Windows.Forms.TextBox label_s3_hw_set1;
+        private System.Windows.Forms.TextBox label_s3_km_set2;
+        private System.Windows.Forms.TextBox label_s3_ld_set2;
+        private System.Windows.Forms.TextBox label_s3_mj_set2;
+        private System.Windows.Forms.TextBox label_s3_jt1_set2;
+        private System.Windows.Forms.TextBox label_s3_jt2_set2;
+        private System.Windows.Forms.TextBox label_s3_hw_set2;
+        private System.Windows.Forms.TextBox label_s3_jt2_set1;
+        private System.Windows.Forms.TextBox label_s3_km_set1;
+        private System.Windows.Forms.TextBox label_s3_jt1_set1;
+        private System.Windows.Forms.TextBox label_s3_mj_set1;
+        private System.Windows.Forms.TextBox label_s3_ld_set1;
+        private System.Windows.Forms.Button printBtn;
+        private System.Windows.Forms.TextBox label_s3_region1_set1;
+        private System.Windows.Forms.TextBox label_s3_region4_set1;
+        private System.Windows.Forms.TextBox label_s3_region3_set1;
+        private System.Windows.Forms.TextBox label_s3_region2_set1;
+        private System.Windows.Forms.TextBox label_s3_region1_set2;
+        private System.Windows.Forms.TextBox label_s3_region4_set2;
+        private System.Windows.Forms.TextBox label_s3_region3_set2;
+        private System.Windows.Forms.TextBox label_s3_region2_set2;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label24;
     }
 }

@@ -20,6 +20,7 @@ namespace mySystem.Extruction.Process
     {
         string checker;
         private CheckForm check = null;
+        
 
         private OleDbConnection connOle = null;
         int status;
@@ -28,11 +29,11 @@ namespace mySystem.Extruction.Process
         {
 
             InitializeComponent();
-
+            txbInstructionId.Text = Parameter.proInstruID.ToString();
             txbInstructionId.Enabled = false;
             connOle = Parameter.connOle;
 
-            searchTime(Convert.ToDateTime(dtpDate.Value.Date));
+            searchTime(Convert.ToDateTime(dtpDate.Value.Date),Convert.ToInt32(txbInstructionId.Text));
             //ud();
             
              
@@ -112,27 +113,31 @@ namespace mySystem.Extruction.Process
             //the control names queren
 
             //this.dtpDate.Value = DateTime.Now;
-            mySystem.Setting.SettingHandOver test = new Setting.SettingHandOver(mainform);
-            test.Show();
-            searchTime(Convert.ToDateTime(dtpDate.Value.Date));
-            
+            //mySystem.Setting.SettingHandOver test = new Setting.SettingHandOver(mainform);
+            //test.Show();
+            //searchTime(Convert.ToDateTime(dtpDate.Value.Date), Convert.ToInt32(txbInstructionId.Text));
+
+            mySystem.Process.Extruction.B.WasteInExtrusion test1 = new mySystem.Process.Extruction.B.WasteInExtrusion(mainform);
+            test1.Show();
 
         }
-        private void searchTime(DateTime dt)
+        private void searchTime(DateTime dt,int ProductInsId)
         {
             string dateStr = dt.ToShortDateString();
             string tablename = "handover_record_of_extrusion_process";
             List<List<Object>> rlt = new List<List<object>>();
             List<String> selectCols = new List<String>(new String[] { "id", "production_date", "createtime", "modifytime", "production_instruction_id", "confirm_item", "product_id_day", "product_id_night", "product_batch_day", "product_batch_night", "product_quantity_day", "product_quantity_night", "exception_handling_day", "to_attend_day", "successor_day", "successor_time_day", "exception_handling_night", "to_attend_night", "successor_night", "successor_time_night", });
             //List<Object> insertVals = new List<Object>(new Object[] { i, dtpDate.Value.ToShortDateString(), DateTime.Now.TimeOfDay, DateTime.Now.TimeOfDay, Convert.ToInt32(txbInstructionId.Text), jarray.ToString(), Convert.ToInt32(txbCodeD.Text), Convert.ToInt32(txbCodeN.Text), txbBatchNoD.Text, txbBatchNoN.Text, Convert.ToInt32(txbAmountsD.Text), Convert.ToInt32(txbAmountsN.Text), txbAbnormalD.Text, txbHandinD.Text, txbTakeinD.Text, dtpDay.Value.TimeOfDay, txbAbnormalN.Text, txbHandinN.Text, txbTakeinN.Text, dtpNight.Value.TimeOfDay });
-            List<String> whereCols = new List<String>(new String[] {  "production_date"});
-            List<Object> whereVals = new List<Object>(new Object[] { dt.ToShortDateString()});
+            List<String> whereCols = new List<String>(new String[] { "production_date", "production_instruction_id" });
+            List<Object> whereVals = new List<Object>(new Object[] { dt.ToShortDateString(),ProductInsId});
             rlt = Utility.selectAccess(connOle, tablename, selectCols, whereCols, whereVals, null, null, null, null, null);
             List<Control> consday = new List<Control> {};// /*txbInstructionId,*/ txbBatchNoD, /*txbBatchNoN,*/ txbAmountsD, /*txbAmountsN,*/ txbCodeD, /*txbCodeN,*/ txbAbnormalD, /*txbAbnormalN,*/ txbHandinD, /*txbHandinN,*/ txbTakeinD, /*txbTakeinN,*/ dtpDay, /*dtpNight*/ };
             List<String> strsday = new List<string> { };// /*rlt[0][4].ToString(),*/ rlt[0][8].ToString(), /*rlt[0][9].ToString(),*/ rlt[0][10].ToString(), /*rlt[0][11].ToString(),*/ rlt[0][6].ToString(), /*rlt[0][7].ToString(),*/ rlt[0][12].ToString(), /*rlt[0][16].ToString(),*/ rlt[0][13].ToString(), /*rlt[0][17].ToString(),*/ rlt[0][14].ToString(), /*rlt[0][18].ToString(),*/ rlt[0][15].ToString(), /*rlt[0][19].ToString()*/ };
             List<Control> consnight = new List<Control> {};// /*txbInstructionId, txbBatchNoD,*/ txbBatchNoN, /*txbAmountsD,*/ txbAmountsN, /*txbCodeD,*/ txbCodeN, /*txbAbnormalD,*/ txbAbnormalN, /*txbHandinD,*/ txbHandinN, /*txbTakeinD,*/ txbTakeinN, /*dtpDay,*/ dtpNight };
             List<String> strsnight = new List<string> {};// /*rlt[0][4].ToString(), rlt[0][8].ToString(),*/ rlt[0][9].ToString(), /*rlt[0][10].ToString(),*/ rlt[0][11].ToString(), /*rlt[0][6].ToString(),*/ rlt[0][7].ToString(), /*rlt[0][12].ToString(),*/ rlt[0][16].ToString(), /*rlt[0][13].ToString(),*/ rlt[0][17].ToString(), /*rlt[0][14].ToString(),*/ rlt[0][18].ToString(), /*rlt[0][15].ToString(),*/ rlt[0][19].ToString() };
-                
+            
+            
+    
             if (rlt.Count != 0)
             {
                 /*List<Control>*/ consday = new List<Control> { /*txbInstructionId,*/ txbBatchNoD, /*txbBatchNoN,*/ txbAmountsD, /*txbAmountsN,*/ txbCodeD, /*txbCodeN,*/ txbAbnormalD, /*txbAbnormalN,*/ txbHandinD, /*txbHandinN,*/ txbTakeinD, /*txbTakeinN,*/ dtpDay, /*dtpNight*/ };
@@ -301,12 +306,12 @@ namespace mySystem.Extruction.Process
         private void dtpDate_ValueChanged(object sender, EventArgs e)
         {
             clearCrol();
-            searchTime(dtpDate.Value);
+            searchTime(dtpDate.Value,Convert.ToInt32(txbInstructionId.Text));
         }
         private void clearCrol()
         {
-            List<Control> cons = new List<Control> { txbInstructionId, txbBatchNoD, txbBatchNoN, txbAmountsD, txbAmountsN, txbCodeD, txbCodeN, txbAbnormalD, txbAbnormalN, txbHandinD, txbHandinN, txbTakeinD, txbTakeinN, dtpDay, dtpNight };
-            List<String> strs = new List<string> { "","","","","","","","","","","","","","","" };
+            List<Control> cons = new List<Control> { txbBatchNoD, txbBatchNoN, txbAmountsD, txbAmountsN, txbCodeD, txbCodeN, txbAbnormalD, txbAbnormalN, txbHandinD, txbHandinN, txbTakeinD, txbTakeinN, dtpDay, dtpNight };
+            List<String> strs = new List<string> { "","","","","","","","","","","","","","" };
             Utility.fillControl(cons, strs);
             for (int i=dataGridView1.Rows.Count-1;i>=0;i--)
             {

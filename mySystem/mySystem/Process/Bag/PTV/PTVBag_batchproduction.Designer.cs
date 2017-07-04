@@ -30,11 +30,11 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -64,7 +64,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(255, 13);
+            this.label1.Location = new System.Drawing.Point(349, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(189, 19);
             this.label1.TabIndex = 0;
@@ -78,16 +78,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(400, 343);
             this.panel1.TabIndex = 1;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(111, 15);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(152, 16);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "制袋工序记录  目录";
             // 
             // dataGridView1
             // 
@@ -116,6 +106,16 @@
             // 
             this.Column3.HeaderText = "页数";
             this.Column3.Name = "Column3";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(111, 15);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(152, 16);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "制袋工序记录  目录";
             // 
             // label3
             // 
@@ -293,7 +293,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(889, 406);
+            this.ClientSize = new System.Drawing.Size(889, 417);
             this.Controls.Add(this.dateTimePicker4);
             this.Controls.Add(this.dateTimePicker3);
             this.Controls.Add(this.dateTimePicker2);
