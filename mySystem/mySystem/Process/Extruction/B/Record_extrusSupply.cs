@@ -50,6 +50,9 @@ namespace WindowsFormsApplication1
         float summid;
         int checker;//复核人
 
+        float sum_provide;//总共供料量
+        mySystem.CheckForm checkform;
+
         private class record
         {
             public string time;
@@ -66,49 +69,6 @@ namespace WindowsFormsApplication1
 
         private void Init()
         {
-            //string strCon = @"server=10.105.223.19,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
-            //SqlConnection conn = new SqlConnection(strCon);
-            //conn.Open();
-            //string s = "select product_id,product_batch,production_instruction,s5_feeding_info from extrusion where id=1";
-            //SqlCommand comm = new SqlCommand(s, conn);
-            //SqlDataAdapter da = new SqlDataAdapter(comm);
-            //DataTable dtemp = new DataTable();
-            //da.Fill(dtemp);
-          
-
-
-            //conn.Close();
-
-            //dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            ////dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-
-            //product_code = dtemp.Rows[0][0].ToString();
-            //product_num = dtemp.Rows[0][1].ToString();
-            //product_instrnum = dtemp.Rows[0][2].ToString();
-
-            ////解析jason
-            //JArray jo = JArray.Parse(dtemp.Rows[0][3].ToString());
-
-
-            ////填数据
-            //foreach (var ss in jo )  //查找某个字段与值
-            //{
-            //    //if(((JObject) ss)["a"]=="aa")
-            //    DataGridViewRow dr = new DataGridViewRow();
-            //    foreach (DataGridViewColumn c in dataGridView1.Columns)
-            //    {
-            //        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            //    }
-            //    dr.Cells[0].Value = ss["s5_feeding_time"].ToString();
-            //    dr.Cells[1].Value = ss["s5_a_feeding_quantity"].ToString();
-            //    dr.Cells[2].Value = ss["s5_b1c_feeding_quantity"].ToString();
-            //    dr.Cells[3].Value = ss["s5_b2_feeing_quantity"].ToString();
-            //    dr.Cells[4].Value = ss["s5_raw_material_sampling_results"].ToString();
-            //    dr.Cells[5].Value = ss["s5_supplier"].ToString();
-            //    dataGridView1.Rows.Add(dr);
-            //}
-
-
             dict = new Dictionary<string, List<record>>();
             dictsum_out = new Dictionary<string, float>();
             dictsum_in = new Dictionary<string, float>();
@@ -122,6 +82,7 @@ namespace WindowsFormsApplication1
             bunker2_batch = "";
 
             checker = 332;
+            sum_provide = 0;
             sumout = 0;
             sumin = 0;
             summid = 0;
@@ -129,17 +90,19 @@ namespace WindowsFormsApplication1
             dataGridView1.Font = new Font("宋体", 12);
             textBox16.Text = mainform.proInstruction;
             button4.Enabled = false;
+            textBox12.ReadOnly = true;
+            textBox15.ReadOnly = true;
         }
 
         private void Setup()
         {
-            textBox1.Text = product_code;
+            //textBox1.Text = product_code;
             textBox2.Text = product_num;
             textBox3.Text = product_instrnum;
             textBox4.Text = bunker1;
             textBox5.Text = bunker2;
-            textBox6.Text = bunker1_code;
-            textBox7.Text = bunker2_code;
+            //textBox6.Text = bunker1_code;
+            //textBox7.Text = bunker2_code;
             textBox8.Text = bunker1_batch;
             textBox9.Text = bunker2_batch;
 
@@ -149,6 +112,63 @@ namespace WindowsFormsApplication1
             object s=null;
             EventArgs e = null ;
             dateTimePicker1_ValueChanged(s,e);
+            textBox16.Text = mySystem.Parameter.proInstruction;
+
+            button4.Enabled = false;
+            get_prodcode();
+            get_matcode();
+        }
+
+        //查找物料代码填入物料代码复选框中
+        private void get_matcode()
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select raw_material_code from raw_material";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return;
+            }
+            else
+            {
+                da.Dispose();
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    comboBox3.Items.Add(tempdt.Rows[i][0].ToString());//添加
+                    comboBox4.Items.Add(tempdt.Rows[i][0].ToString());//添加
+                }
+            }
+        }
+        //查找产品代码填入复选框中
+        private void get_prodcode()
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select product_code from product_aoxing";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return;
+            }
+            else
+            {
+                da.Dispose();
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    comboBox2.Items.Add(tempdt.Rows[i][0].ToString());//添加
+                }
+            }
         }
 
         public Record_extrusSupply(mySystem.MainForm mainform):base(mainform)
@@ -172,7 +192,7 @@ namespace WindowsFormsApplication1
 
         }
  
-
+        //添加供料
         private void button1_Click(object sender, EventArgs e)
         {   
             float temp;
@@ -184,6 +204,11 @@ namespace WindowsFormsApplication1
             if (checkout == "(空)" || server == "")
             {
                 MessageBox.Show("原料抽查结果、供料人均不能为空");
+                return;
+            }
+            if (mySystem.Parameter.NametoID(server) <= 0)
+            {
+                MessageBox.Show("供料人id不存在");
                 return;
             }
 
@@ -259,42 +284,7 @@ namespace WindowsFormsApplication1
 
         }
 
-        //private void button2_Click(object sender, EventArgs e)
-        //{
-            
-        //    //bunker_use = comboBox1.Text.ToString();
-        //    //checker = textBox10.Text.ToString();
-        //    //if (bunker_use == "")
-        //    //{
-        //    //    MessageBox.Show("料仓不能为空");
-        //    //    return;
-        //    //}
-
-        //    float temp;
-        //    if (!float.TryParse(textBox11.Text, out temp) || !float.TryParse(textBox12.Text, out temp) || !float.TryParse(textBox14.Text, out temp) || !float.TryParse(textBox15.Text, out temp))
-        //    {
-        //        MessageBox.Show("用料、余料必须为数值类型");
-        //        return;
-        //    }
-        //    use1 = (float)Convert.ToSingle(textBox11.Text.ToString());
-        //    left1 = (float)Convert.ToSingle(textBox12.Text.ToString());
-        //    use2 = (float)Convert.ToSingle(textBox14.Text.ToString());
-        //    left2 = (float)Convert.ToSingle(textBox15.Text.ToString());
-            
-        //    //添加到表格
-        //    DataGridViewRow dr = new DataGridViewRow();
-        //    foreach (DataGridViewColumn c in dataGridView2.Columns)
-        //    {
-        //        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-        //    }
-        //    dr.Cells[0].Value = use1;
-        //    dr.Cells[1].Value = left1;
-        //    dr.Cells[2].Value = use2;
-        //    dr.Cells[3].Value = left2;
-
-        //    dataGridView2.Rows.Add(dr);
-        //}
-
+        //删除一条供料记录
         private void button3_Click(object sender, EventArgs e)
         {
             if(dataGridView1.SelectedRows.Count==0)
@@ -327,18 +317,10 @@ namespace WindowsFormsApplication1
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = dictsum_out[key];
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = dictsum_in[key];
                 dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = dictsum_mid[key];
+
             }
             dataGridView1.Rows.RemoveAt(ind);
         }
-
-        //private void button4_Click(object sender, EventArgs e)
-        //{
-        //    if (dataGridView2.SelectedRows.Count== 0)
-        //        return;
-        //    //if (dataGridView2.SelectedRows[0].Index < dataGridView2.Rows.Count - 1 )
-        //    //    dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
-        //    dataGridView2.Rows.RemoveAt(dataGridView2.SelectedRows[0].Index);
-        //}
 
         private void Serve_out_TextChanged(object sender, EventArgs e)
         {
@@ -359,9 +341,9 @@ namespace WindowsFormsApplication1
             //float left;//余料
             //int checker;//复核人
 
-            bunker1_code = textBox6.Text;
+            //bunker1_code = textBox6.Text;
             bunker1_batch = textBox8.Text;
-            bunker2_code = textBox7.Text;
+            //bunker2_code = textBox7.Text;
             bunker2_batch = textBox9.Text;
             if (bunker1_code == "" || bunker1_batch == "" || bunker2_code == "" || bunker2_batch == "")
             {
@@ -504,21 +486,318 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (mainform.isSqlOk)
+            if (mySystem.Parameter.isSqlOk)
             {
 
             }
             else
             {
+                //获取使用量信息
+                string struse1 = textBox11.Text;
+                string struse2 = textBox14.Text;
+                if (!float.TryParse(struse1,out use1) || !float.TryParse(struse1,out use2))
+                {
+                    MessageBox.Show("使用量必需为数字");
+                    return;
+                }
+                left1 = float.Parse(textBox12.Text);
+                left2 = float.Parse(textBox15.Text);
+                //供料总量
+                float sum_provide1 = float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value.ToString()) + float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value.ToString());
+                float sum_provide2 = float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value.ToString());
+
                 
+
+                int result = 0;
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = mySystem.Parameter.connOle;
+                //判断对应生产指令和生产批号下数据库中是否存在对应记录
+
+                //获得记录的jason块,最后形式如[{2017/7/3：[{8-23：---}，{8-27：---}]},{2017/7/4：[{8-23：---}，{8-27：---}]},...]
+                //string json = @"[]";
+                //JArray jarray = JArray.Parse(json);
+                //foreach (var item in dict)
+                //{
+                //    string st = "{'";
+                //    st += DateTime.Parse(item.Key).ToShortDateString() + "':";
+                //    JArray jlist = JArray.Parse(@"[]");
+                //    //解析list<record>
+                //    for (int i = 0; i < item.Value.Count; i++)
+                //    {
+                //        string objstr = "{'";
+                //        objstr += item.Value[i].time+"':";
+                //        objstr += "[" + item.Value[i].srout + "," + item.Value[i].srin + "," + item.Value[i].srmid + "," + item.Value[i].isqua + "," + item.Value[i].man + "]";
+                //        objstr += "}";
+                //        JObject obj = JObject.Parse(objstr);
+                //        jlist.Add(obj);
+                //    }
+                //    st += jlist.ToString() + "}";
+                //    JObject temp = JObject.Parse(st);
+                //    jarray.Add(temp);
+                //}
+                string str = "{'" + dateTimePicker1.Value.ToShortDateString() + "':";
+                JArray jlist = JArray.Parse(@"[]");
+                for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
+                {
+                        string objstr = "{'";
+                        objstr += dataGridView1.Rows[i].Cells[0].Value.ToString()+"':";
+                        objstr += "[" + dataGridView1.Rows[i].Cells[1].Value + "," + dataGridView1.Rows[i].Cells[2].Value + "," + dataGridView1.Rows[i].Cells[3].Value + "," + dataGridView1.Rows[i].Cells[4].Value + ",'" + dataGridView1.Rows[i].Cells[5].Value + "']";
+                        objstr += "}";
+                        JObject obj = JObject.Parse(objstr);
+                        jlist.Add(obj);
+                }
+                str += jlist.ToString() + "}";
+                JObject jobj= JObject.Parse(str);
+
+                //插入原料批号表,并获取原料id和批号id
+                bunker1_code = comboBox3.Text;
+                bunker2_code = comboBox4.Text;
+                bunker1_batch = textBox8.Text;
+                bunker2_batch = textBox9.Text;
+                insert_matbatch(id_findby_matcode(bunker1_code), bunker1_batch);
+                insert_matbatch(id_findby_matcode(bunker2_code), bunker2_batch);
+                int matid1 = id_findby_matcode(bunker1_code);
+                int matid2 = id_findby_matcode(bunker2_code);
+                int batchid1 = batchid_findby_matcode(bunker1_batch);
+                int batchid2 = batchid_findby_matcode(bunker2_batch);
+
+                //判断数据库中是否存在该记录
+
+
+                //插入数据库新纪录
+                comm.CommandText = "insert into extrusion_s5_feeding(product_batch_id,production_instruction_id,s5_ab1c_raw_material_id,s5_b2_raw_material_id,s5_ab1c_raw_material_batch,s5_b2_raw_material_batch,s5_feeding_info,s5_ab1c_raw_material_consumption,s5_ab1c_raw_material_margin,s5_b2_raw_material_consumption,s5_b2_raw_material_margin) values(@batchid,@instrid,@ab1c_matid,@b2_matid,@ab1c_matbatch,@b2_matbatch,@feedinfo,@ab1c_use,@ab1c_left,@b2_use,@b2_left)";
+                comm.Parameters.Add("@batchid", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@instrid", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@ab1c_matid", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@b2_matid", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@ab1c_matbatch", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@b2_matbatch", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@feedinfo", System.Data.OleDb.OleDbType.VarChar);
+                comm.Parameters.Add("@ab1c_use", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@ab1c_left", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@b2_use", System.Data.OleDb.OleDbType.Integer);
+                comm.Parameters.Add("@b2_left", System.Data.OleDb.OleDbType.Integer);
+
+                comm.Parameters["@batchid"].Value = id_findby_batch(product_num);
+                comm.Parameters["@instrid"].Value = id_findby_instr(product_instrnum);
+                comm.Parameters["@ab1c_matid"].Value = matid1;
+                comm.Parameters["@b2_matid"].Value = matid2;
+                comm.Parameters["@ab1c_matbatch"].Value = batchid1;
+                comm.Parameters["@b2_matbatch"].Value = batchid2;
+                comm.Parameters["@feedinfo"].Value = jobj.ToString();
+                comm.Parameters["@ab1c_use"].Value = Convert.ToInt32(use1);
+                comm.Parameters["@ab1c_left"].Value = Convert.ToInt32(left1);
+                comm.Parameters["@b2_use"].Value = Convert.ToInt32(use2);
+                comm.Parameters["@b2_left"].Value = Convert.ToInt32(left2);
+
+
+                result = comm.ExecuteNonQuery();
+                if (result > 0)
+                {
+                    MessageBox.Show("添加成功");
+                }
+                else { MessageBox.Show("错误"); }
+                comm.Dispose();
             }
             button4.Enabled = true;
         }
 
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            int revid = checkform.userID;
+            bool isok = checkform.ischeckOk;
+            string opinion = checkform.opinion;
+            textBox1.Text = checkform.userName;
+        }
         private void button4_Click(object sender, EventArgs e)
         {
-            //mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
-            //checkform.Show();
+            checkform = new mySystem.CheckForm(this);
+            checkform.Show();
         }
+
+        //通过原料代码查找原料id
+        private int id_findby_matcode(string matcode)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select raw_material_id from raw_material where raw_material_code='" + matcode + "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return -1;
+            }
+            else
+            {
+                da.Dispose();
+                return int.Parse(tempdt.Rows[0][0].ToString());
+            }
+        }
+
+        //通过生产指令编号查找生产指令id
+        private int id_findby_instr(string instr)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select production_instruction_id from production_instruction where production_instruction_code='" + instr + "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return -1;
+            }
+            else
+            {
+                da.Dispose();
+                return int.Parse(tempdt.Rows[0][0].ToString());
+            }
+                
+        }
+
+        //产品批号表中插入一条记录
+        private void insert_batch(string batch,int prodid)
+        {
+            int result = 0;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "insert into product_batch(product_batch_code,product_id) values(@code,@prodid)";
+
+            comm.Parameters.Add("@code", System.Data.OleDb.OleDbType.VarChar);
+            comm.Parameters.Add("@prodid", System.Data.OleDb.OleDbType.Integer);
+
+            comm.Parameters["@code"].Value = batch;
+            comm.Parameters["@prodid"].Value = prodid;
+
+            result = comm.ExecuteNonQuery();
+            if (result <= 0)
+            {
+                MessageBox.Show("批号插入批号表出错");
+                return;
+            }
+        }
+
+        //通过批号查找数据库中id
+        private int id_findby_batch(string batch)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select product_batch_id from product_batch where product_batch_code='" + batch + "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return -1;
+            }
+            else
+            {
+                da.Dispose();
+                return int.Parse(tempdt.Rows[0][0].ToString());
+            }
+        }
+
+        //原料批号表中插入一条记录
+        private void insert_matbatch(int matid, string batch)
+        {
+            //int result = 0;
+            //OleDbCommand comm = new OleDbCommand();
+            //comm.Connection = mySystem.Parameter.connOle;
+            //comm.CommandText = "insert into raw_material_batch(raw_material_id,batch) values(@id,@batch)";
+
+            //comm.Parameters.Add("@id", System.Data.OleDb.OleDbType.VarChar);
+            //comm.Parameters.Add("@prodid", System.Data.OleDb.OleDbType.Integer);
+
+            //comm.Parameters["@code"].Value = batch;
+            //comm.Parameters["@prodid"].Value = prodid;
+
+            //result = comm.ExecuteNonQuery();
+            //if (result <= 0)
+            //{
+            //    MessageBox.Show("批号插入批号表出错");
+            //    return;
+            //}
+            List<string> cols=new List<string>();
+            cols.Add("raw_material_id");
+            cols.Add("batch");
+            List<object> val=new List<object>();
+            val.Add(matid);
+            val.Add(batch);
+            if (!mySystem.Utility.insertAccess(mySystem.Parameter.connOle, "raw_material_batch", cols, val))
+            {
+                MessageBox.Show("插入原料批号表出错");
+                return;
+            }
+        }
+
+        //通过原料批号查找批号id
+        private int batchid_findby_matcode(string code)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select batch_id from raw_material_batch where batch='" + code+ "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return -1;
+            }
+            else
+            {
+                da.Dispose();
+                return int.Parse(tempdt.Rows[0][0].ToString());
+            }
+        }
+
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+            //供料总量
+            sum_provide = 0;
+            sum_provide = float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value.ToString()) + float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value.ToString());
+
+            if (!float.TryParse(textBox11.Text, out use1))
+            {
+                MessageBox.Show("使用量必需为数字");
+                textBox11.Text= "";
+                return;
+            }
+            textBox12.Text = (sum_provide - use1).ToString();
+        }
+
+        private void textBox15_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox14_TextChanged(object sender, EventArgs e)
+        {
+            //供料总量
+            sum_provide = 0;
+            sum_provide = float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value.ToString());
+
+            if (!float.TryParse(textBox14.Text, out use2))
+            {
+                MessageBox.Show("使用量必需为数字");
+                textBox14.Text = "";
+                return;
+            }
+            textBox15.Text = (sum_provide - use2).ToString();
+        }
+
     }
 }

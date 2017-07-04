@@ -121,9 +121,6 @@ namespace mySystem.Extruction.Process
 
             prod_instrcode = mySystem.Parameter.proInstruction;
             System.Console.WriteLine(mySystem.Parameter.proInstruction);
-            prod_code = "rs";
-            prod_batch = "0x55";
-            //prod_instrcode = mainform.proInstruction;
 
             //date = "2017/6/10";
             textBox1.Text = prod_instrcode;
@@ -139,14 +136,57 @@ namespace mySystem.Extruction.Process
             for (int i = 0; i < unit_exstru.Count; i++)
                 ischecked_2.Add(1);
 
-            comboBox1.Text = "合格";
             dataGridView1.Font = new Font("宋体", 10);
             button2.Enabled = false;
             textBox6.ReadOnly= true;
             button3.Enabled = false;
             label = 0;
+            checkBox1.Enabled = false;
+            checkBox2.Enabled = false;
+            textBox2.Enabled = false;
+            textBox4.Enabled = false;
            
         }
+
+        //查找清场前产品代码和批号
+        private void query_prodandbatch()
+        {
+            string asql = "select product_batch_id,s6_production_date from extrusion_s6_production_check where production_instruction_id=" + mySystem.Parameter.proInstruID + " ORDER BY s6_production_date";
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+                return;
+            else
+            {
+                int batchid = int.Parse(tempdt.Rows[0][0].ToString());
+                comm.CommandText = "select product_code from product_aoxing where product_id in (select product_id from product_batch where product_batch_id="+batchid+")";
+                OleDbDataAdapter db = new OleDbDataAdapter(comm);
+                DataTable tempdt2 = new DataTable();
+                db.Fill(tempdt2);
+                if (tempdt2.Rows.Count == 0)
+                    return;
+                else
+                {
+                    comm.CommandText = "select product_batch_code from product_batch where product_batch_id=" + batchid;
+                    OleDbDataAdapter da2 = new OleDbDataAdapter(comm);
+                    DataTable dt3 = new DataTable();
+                    da2.Fill(dt3);
+                    textBox2.Text = tempdt2.Rows[0][0].ToString();//产品代码
+                    textBox4.Text = dt3.Rows[0][0].ToString();//产品批号
+                    dt3.Dispose();
+                    da2.Dispose();
+                }
+                db.Dispose();
+
+            }
+            da.Dispose();
+            comm.Dispose();
+                
+        }
+
 
         //根据生产指令id将数据填写到各控件中
         private int fill_by_id(int id)
@@ -167,30 +207,11 @@ namespace mySystem.Extruction.Process
                 dateTimePicker1.Value =DateTime.Parse(tempdt.Rows[0][2].ToString());
                 textBox5.Text = mySystem.Parameter.IDtoName(int.Parse(tempdt.Rows[0][4].ToString()));
 
-
-                string rev = mySystem.Parameter.IDtoName(int.Parse(tempdt.Rows[0][5].ToString())); 
-                if (rev == "")
-                    button2.Enabled = true;
-                else
-                {
-                    button1.Enabled = false;
-                    button2.Enabled = false;
-                    button3.Enabled = true;
-                    textBox6.Text = rev;
-                    textBox5.Text=int.Parse(tempdt.Rows[0][5].ToString())>0?"合格":"不合格";
-
-                    textBox5.ReadOnly = true;
-                    dataGridView1.ReadOnly = true;
-                    textBox2.ReadOnly = true;
-                    textBox4.ReadOnly = true;
-                    dateTimePicker1.Enabled = false;
-                }
-
                 string jstr = tempdt.Rows[0][3].ToString();
                 JArray jarray = JArray.Parse(jstr);
                 //第一个选项
                 JObject jobj1 = JObject.Parse(jarray[0].ToString());
-                int i=0;
+                int i = 0;
                 foreach (var p in jobj1)
                 {
                     ischecked_1[i++] = int.Parse(jobj1[p.Key].ToString());
@@ -202,6 +223,34 @@ namespace mySystem.Extruction.Process
                 {
                     ischecked_2[i++] = int.Parse(jobj2[p.Key].ToString());
                 }
+
+                string strrev = tempdt.Rows[0][5].ToString();
+                if (strrev == "")
+                {
+                    button2.Enabled = true; 
+                    return -1;
+                }
+                   
+                else
+                {
+                    button1.Enabled = false;
+                    button2.Enabled = false;
+                    button3.Enabled = true;
+                    textBox6.Text = mySystem.Parameter.IDtoName(int.Parse(strrev));
+                    //textBox5.Text=int.Parse(tempdt.Rows[0][5].ToString())>0?"合格":"不合格";
+                    //textBox5.Enabled = false;
+                    checkBox1.Checked = int.Parse(tempdt.Rows[0][5].ToString()) > 0 ? true : false;
+                    checkBox2.Checked = !checkBox1.Checked;
+
+                    dataGridView1.ReadOnly = true;
+                    textBox2.Enabled = false;
+                    textBox4.Enabled = false;
+                    dateTimePicker1.Enabled = false;
+                    textBox6.Enabled = false;
+
+                }
+
+
             }
             return 0;
         }
@@ -276,6 +325,7 @@ namespace mySystem.Extruction.Process
             {
                 AddtoGridView();
                 label = 1;//代表是新的填写,保存采用插入数据库方式
+                query_prodandbatch();
             }
             else
             {
@@ -352,7 +402,7 @@ namespace mySystem.Extruction.Process
             prod_batch=textBox4.Text;
             date=dateTimePicker1.Value;
 
-            checkout = comboBox1.Text == "合格";
+            //checkout = comboBox1.Text == "合格";
             //checker = textBox5.Text;
             extr = textBox3.Text;
 
@@ -457,7 +507,9 @@ namespace mySystem.Extruction.Process
         {
             base.CheckResult();
             textBox6.Text = checkform.userName;
-            comboBox1.Text = checkform.ischeckOk==true?"合格":"不合格";
+            //comboBox1.Text = checkform.ischeckOk==true?"合格":"不合格";
+            checkBox1.Checked = checkform.ischeckOk;
+            checkBox2.Checked = !checkBox1.Checked;
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = mySystem.Parameter.connOle;
             comm.CommandText = "update clean_record_of_extrusion_process set reviewer_id= @revid,review_opinion=@revopinion,is_review_qualified= @isok where production_instruction_id= @id";
@@ -482,8 +534,6 @@ namespace mySystem.Extruction.Process
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //LoginForm check = new LoginForm(conn);
-            ///check.ShowDialog();
             checkform = new mySystem.CheckForm(this);
             checkform.Show();
         }

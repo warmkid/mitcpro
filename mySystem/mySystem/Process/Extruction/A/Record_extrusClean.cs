@@ -81,7 +81,13 @@ namespace WindowsFormsApplication1
 
             instrid = getinstrid();
             label = 0;
-            
+            checkBox1.Enabled = false;
+            checkBox2.Enabled = false;
+            if (mySystem.Parameter.IDtoFlight(mySystem.Parameter.userID))
+            {
+                checkBox1.Checked = true;
+                checkBox2.Checked = false;
+            }
         }
         public void connToServer()
         {
@@ -118,7 +124,9 @@ namespace WindowsFormsApplication1
             {
                 //将tempdt填入控件
                 dateTimePicker1.Value = DateTime.Parse(tempdt.Rows[0][0].ToString());
-                comboBox1.Text = int.Parse(tempdt.Rows[0][1].ToString()) == 1 ? "白班" : "夜班";
+                //comboBox1.Text = int.Parse(tempdt.Rows[0][1].ToString()) == 1 ? "白班" : "夜班";
+                checkBox1.Checked = int.Parse(tempdt.Rows[0][1].ToString()) == 1 ? true : false;
+                checkBox2.Checked = !checkBox1.Checked;
                 string rev = tempdt.Rows[0][2].ToString();
                 if (rev == "")
                     button2.Enabled = true;
@@ -128,6 +136,9 @@ namespace WindowsFormsApplication1
                     button2.Enabled = false;
                     textBox2.Text = mySystem.Parameter.IDtoName(int.Parse(rev));
                     dateTimePicker2.Value = DateTime.Parse(tempdt.Rows[0][3].ToString());
+                    dataGridView1.ReadOnly = true;
+                    dateTimePicker1.Enabled = false;
+                    dateTimePicker2.Enabled = false;
                 }
                     
                 string jstr = tempdt.Rows[0][4].ToString();
@@ -222,8 +233,55 @@ namespace WindowsFormsApplication1
            
         }
 
+        private void dataGridView1_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (this.dataGridView1.IsCurrentCellDirty)
+            {
+
+                this.dataGridView1.CommitEdit(DataGridViewDataErrorContexts.Commit);
+
+            }
+        }
+
         //单元格编辑结束触发事件
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0)
+                return;
+            //更改清洁人项
+            if (e.ColumnIndex == 4)
+            {
+                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
+                if (rt > 0)
+                {
+                    //cleanmans[e.RowIndex] = rt;
+                }
+                else
+                {
+                    MessageBox.Show("清洁人id不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[4].Value = "";
+                }
+
+                return;
+            }
+            //更改审核人项
+            if (e.ColumnIndex == 5)
+            {
+                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
+                if (rt > 0)
+                {
+                    //checkmans[e.RowIndex] = rt;
+                }
+                else
+                {
+                    MessageBox.Show("审核人id不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[5].Value = "";
+                }
+
+                return;
+            }
+        }
+        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
                 return;
@@ -246,92 +304,7 @@ namespace WindowsFormsApplication1
                     dataGridView1.Rows[e.RowIndex].Cells[2].Value = "False";
                 return;
             }
-            //更改清洁人项
-            if (e.ColumnIndex == 4)
-            {
-                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
-                if (rt > 0)
-                { 
-                    //cleanmans[e.RowIndex] = rt;
-                }
-                else
-                {
-                    MessageBox.Show("清洁人id不存在，请重新输入");
-                    dataGridView1.Rows[e.RowIndex].Cells[4].Value = "";
-                }
 
-                return;
-            }
-            //更改审核人项
-            if (e.ColumnIndex == 5)
-            {
-                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
-                if (rt > 0)
-                {
-                    //checkmans[e.RowIndex] = rt;
-                }          
-                else
-                {
-                    MessageBox.Show("审核人id不存在，请重新输入");
-                    dataGridView1.Rows[e.RowIndex].Cells[5].Value = "";
-                }
-
-                return;
-            }
-        }
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            //if (e.RowIndex < 0)
-            //    return;
-            //if (e.ColumnIndex == 2 && label==2)
-            //{
-            //    string a = dataGridView1.Rows[e.RowIndex].Cells[2].EditedFormattedValue.ToString();
-            //    if(a=="False")
-            //        dataGridView1.Rows[e.RowIndex].Cells[3].Value = "True";
-            //    else
-            //        dataGridView1.Rows[e.RowIndex].Cells[3].Value="False";
-            //    label = 3;
-            //    return;
-            //}
-
-            //if (e.ColumnIndex == 3 && label==3)
-            //{
-            //    string a=dataGridView1.Rows[e.RowIndex].Cells[3].EditedFormattedValue.ToString();
-            //    if(a=="False")
-            //        dataGridView1.Rows[e.RowIndex].Cells[2].Value ="True";
-            //    else
-            //        dataGridView1.Rows[e.RowIndex].Cells[2].Value = "False";
-            //    label = 2;
-            //    return;
-            //}
-            ////更改清洁人项
-            //if (e.ColumnIndex == 4)
-            //{
-            //    int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
-            //    if (rt > 0)
-            //        cleanmans[e.RowIndex] = rt;
-            //    else
-            //    {
-            //        MessageBox.Show("清洁人id不存在，请重新输入");
-            //        dataGridView1.Rows[e.RowIndex].Cells[4].Value = "";
-            //    }
-                    
-            //    return;
-            //}
-            ////更改审核人项
-            //if (e.ColumnIndex == 5)
-            //{
-            //    int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
-            //    if (rt > 0)
-            //        checkmans[e.RowIndex] = rt;
-            //    else
-            //    {
-            //        MessageBox.Show("审核人id不存在，请重新输入");
-            //        dataGridView1.Rows[e.RowIndex].Cells[5].Value = "";
-            //    }
-                    
-            //    return;
-            //}
 
         }
 
@@ -380,9 +353,10 @@ namespace WindowsFormsApplication1
             //缺少生产批次。。。。。。。。。。。。。。。。。。
 
             cleantime = dateTimePicker1.Value;
-            classes = comboBox1.Text.ToString();
+            //classes = comboBox1.Text.ToString();
             //checker = textBox2.Text.ToString();
             checktime = dateTimePicker2.Value;
+            classes = checkBox1.Checked == true ? "白班" : "夜班";
             int classid;//1代表白班，0代表夜班
             if (classes == "白班")
                 classid = 1;
@@ -416,31 +390,6 @@ namespace WindowsFormsApplication1
             //选择本地还是远程并更新数据到数据库
             if (isSqlOk)
             {
-                ////string s = "update extrusion set s1_clean_date='" + cleantime + "',s1_flight=" + classes + ",s1_reviewer_id='" + int.Parse(checker) + "',s1_review_date='" + checktime + "',s1_region_content_result_cleaner_reviewer='" + j.ToString() + "',step_status=" + status + " where id=1";
-                //int result = 0;
-                //SqlCommand comm = new SqlCommand();
-                //comm.Connection = conn;
-                //comm.CommandText = "update extrusion set s1_clean_date= @cleandate,s1_flight=@flight,s1_reviewer_id=@reviewerid,s1_review_date=@reviewdate,s1_region_content_result_cleaner_reviewer= @cont where id=@id";
-                //comm.Parameters.Add("@cleandate", System.Data.SqlDbType.Date);
-                //comm.Parameters.Add("@flight", System.Data.SqlDbType.Int);
-                //comm.Parameters.Add("@reviewerid", System.Data.SqlDbType.Int);
-                //comm.Parameters.Add("@reviewdate", System.Data.SqlDbType.Date);
-                //comm.Parameters.Add("@cont", System.Data.SqlDbType.VarChar);
-                //comm.Parameters.Add("@id", System.Data.SqlDbType.Int);
-
-                //comm.Parameters["@cleandate"].Value = cleantime;
-                //comm.Parameters["@flight"].Value = classid;
-                //comm.Parameters["@reviewerid"].Value = checkerid;
-                //comm.Parameters["@reviewdate"].Value = checktime;
-                //comm.Parameters["@cont"].Value = jarray.ToString();
-                //comm.Parameters["@id"].Value = 1;
-
-                //result = comm.ExecuteNonQuery();
-                //if (result > 0)
-                //{
-                //    MessageBox.Show("添加成功");
-                //}
-                //else { MessageBox.Show("错误"); }
             }
             else
             {
@@ -511,6 +460,9 @@ namespace WindowsFormsApplication1
             button1.Enabled = false;
             button2.Enabled = false;
             button3.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            dateTimePicker2.Enabled = false;
+            dateTimePicker1.Enabled = false;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -524,10 +476,16 @@ namespace WindowsFormsApplication1
 
         }
 
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
         //private void textBox1_TextChanged(object sender, EventArgs e)
         //{
 
         //}
+
 
     }
 }
