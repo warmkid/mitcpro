@@ -337,6 +337,12 @@
     <Compile Include="Process\Extruction\A\BatchProductRecord.Designer.cs">
       <DependentUpon>BatchProductRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Extruction\Label.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Extruction\Label.Designer.cs">
+      <DependentUpon>Label.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Extruction\Process\ExtructionCheck.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -707,6 +713,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\A\BatchProductRecord.resx">
       <DependentUpon>BatchProductRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Extruction\Label.resx">
+      <DependentUpon>Label.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\Process\ExtructionCheck.resx">
       <DependentUpon>ExtructionCheck.cs</DependentUpon>
