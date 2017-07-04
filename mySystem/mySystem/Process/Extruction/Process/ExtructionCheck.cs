@@ -12,7 +12,7 @@ namespace mySystem.Extruction.Process
 {
     public partial class ExtructionCheck : Form
     {
-        private ExtructionProcess extructionformfather = null;
+        //private ExtructionProcess extructionformfather = null;
         private Color greencolor = Color.FromArgb(0, 255, 0);
         private Color redcolor = Color.FromArgb(255, 100, 100);
 
@@ -49,15 +49,15 @@ namespace mySystem.Extruction.Process
         public String step6recorder = "张三";
         public String step6checker = "李四";
 
-        public ExtructionCheck(ExtructionProcess winMain, SqlConnection Mainconn)
-        {
-            InitializeComponent();
-            extructionformfather = winMain;
+        //public ExtructionCheck(ExtructionProcess winMain, SqlConnection Mainconn)
+        //{
+        //    InitializeComponent();
+        //    extructionformfather = winMain;
 
-            conn = Mainconn;
+        //    conn = Mainconn;
 
-            ShowNameandColor();
-        }
+        //    ShowNameandColor();
+        //}
 
         private void ShowNameandColor()
         {

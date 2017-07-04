@@ -511,12 +511,6 @@
     <Compile Include="Process\Extruction\C\ExtructionPreheatParameterRecordStep3.Designer.cs">
       <DependentUpon>ExtructionPreheatParameterRecordStep3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Extruction\Process\ExtructionProcess.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Extruction\Process\ExtructionProcess.Designer.cs">
-      <DependentUpon>ExtructionProcess.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\Extruction\B\ExtructionpRoductionAndRestRecordStep6.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -552,12 +546,6 @@
     </Compile>
     <Compile Include="Process\Plan\AddPlanForm.Designer.cs">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Extruction\ExtructionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Extruction\ExtructionForm.Designer.cs">
-      <DependentUpon>ExtructionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\Setting_CleanSite.cs">
       <SubType>Form</SubType>
@@ -807,9 +795,6 @@
     <EmbeddedResource Include="Process\Extruction\C\ExtructionPreheatParameterRecordStep3.resx">
       <DependentUpon>ExtructionPreheatParameterRecordStep3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Extruction\Process\ExtructionProcess.resx">
-      <DependentUpon>ExtructionProcess.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\ExtructionpRoductionAndRestRecordStep6.resx">
       <DependentUpon>ExtructionpRoductionAndRestRecordStep6.cs</DependentUpon>
     </EmbeddedResource>
@@ -827,9 +812,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Plan\AddPlanForm.resx">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Extruction\ExtructionForm.resx">
-      <DependentUpon>ExtructionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\Setting_CleanSite.resx">
       <DependentUpon>Setting_CleanSite.cs</DependentUpon>
@@ -899,9 +881,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Process\Extruction\Chart\readme.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
