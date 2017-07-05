@@ -27,5 +27,35 @@ namespace mySystem.Process.Bag.PTV
             PTVBag_batchproduction batch = new PTVBag_batchproduction();
             batch.Show();
         }
+
+        private void A2Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_innerpackaging inner = new PTVBag_innerpackaging();
+            inner.Show();
+        }
+
+        private void B8Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_clearance clearance = new PTVBag_clearance();
+            clearance.Show();
+        }
+
+        private void B1Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_productioninstruction pro_ins = new PTVBag_productioninstruction();
+            pro_ins.Show();
+        }
+
+        private void B2Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_checklist check = new PTVBag_checklist();
+            check.Show();
+        }
+
+        private void A3Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_dailyreport daily = new PTVBag_dailyreport();
+            daily.Show();
+        }
     }
 }

@@ -37,6 +37,7 @@
             this.A1Btn = new System.Windows.Forms.Button();
             this.A3Btn = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.LabelBtn = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.B8Btn = new System.Windows.Forms.Button();
             this.B6Btn = new System.Windows.Forms.Button();
@@ -141,6 +142,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.LabelBtn);
             this.groupBox1.Controls.Add(this.A1Btn);
             this.groupBox1.Controls.Add(this.A5Btn);
             this.groupBox1.Controls.Add(this.A2Btn);
@@ -154,6 +156,17 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "工序管理";
+            // 
+            // LabelBtn
+            // 
+            this.LabelBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.LabelBtn.Location = new System.Drawing.Point(20, 305);
+            this.LabelBtn.Name = "LabelBtn";
+            this.LabelBtn.Size = new System.Drawing.Size(185, 38);
+            this.LabelBtn.TabIndex = 19;
+            this.LabelBtn.Text = "吹膜标签";
+            this.LabelBtn.UseVisualStyleBackColor = true;
+            this.LabelBtn.Click += new System.EventHandler(this.LabelBtn_Click);
             // 
             // groupBox2
             // 
@@ -451,5 +464,6 @@
         private System.Windows.Forms.Button B9Btn;
         private System.Windows.Forms.Button B7Btn;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Button LabelBtn;
     }
 }

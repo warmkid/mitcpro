@@ -343,6 +343,12 @@
     <Compile Include="Process\Extruction\A\BatchProductRecord.Designer.cs">
       <DependentUpon>BatchProductRecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Extruction\Label.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Extruction\Label.Designer.cs">
+      <DependentUpon>Label.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Extruction\Process\ExtructionCheck.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -505,12 +511,6 @@
     <Compile Include="Process\Extruction\C\ExtructionPreheatParameterRecordStep3.Designer.cs">
       <DependentUpon>ExtructionPreheatParameterRecordStep3.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Extruction\Process\ExtructionProcess.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Extruction\Process\ExtructionProcess.Designer.cs">
-      <DependentUpon>ExtructionProcess.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\Extruction\B\ExtructionpRoductionAndRestRecordStep6.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -546,12 +546,6 @@
     </Compile>
     <Compile Include="Process\Plan\AddPlanForm.Designer.cs">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Extruction\ExtructionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Extruction\ExtructionForm.Designer.cs">
-      <DependentUpon>ExtructionForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\Setting_CleanSite.cs">
       <SubType>Form</SubType>
@@ -690,6 +684,9 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_materialrecord.resx">
       <DependentUpon>PTVBag_materialrecord.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_runningrecordofdf.resx">
+      <DependentUpon>PTVBag_runningrecordofdf.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVMainForm.resx">
       <DependentUpon>PTVMainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -716,6 +713,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\A\BatchProductRecord.resx">
       <DependentUpon>BatchProductRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Extruction\Label.resx">
+      <DependentUpon>Label.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\Process\ExtructionCheck.resx">
       <DependentUpon>ExtructionCheck.cs</DependentUpon>
@@ -798,9 +798,6 @@
     <EmbeddedResource Include="Process\Extruction\C\ExtructionPreheatParameterRecordStep3.resx">
       <DependentUpon>ExtructionPreheatParameterRecordStep3.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Extruction\Process\ExtructionProcess.resx">
-      <DependentUpon>ExtructionProcess.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\ExtructionpRoductionAndRestRecordStep6.resx">
       <DependentUpon>ExtructionpRoductionAndRestRecordStep6.cs</DependentUpon>
     </EmbeddedResource>
@@ -818,9 +815,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Plan\AddPlanForm.resx">
       <DependentUpon>AddPlanForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Extruction\ExtructionForm.resx">
-      <DependentUpon>ExtructionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\Setting_CleanSite.resx">
       <DependentUpon>Setting_CleanSite.cs</DependentUpon>
@@ -890,9 +884,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Process\Extruction\Chart\readme.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

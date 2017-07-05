@@ -12,6 +12,7 @@ using System.Data.OleDb;
 using WindowsFormsApplication1;
 using System.Threading;
 using BatchProductRecord;
+using mySystem.Process.Extruction;
 
 
 namespace mySystem
@@ -527,19 +528,10 @@ namespace mySystem
             form22.ShowDialog();
         }
 
-        private void ExtructionMainForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void LabelBtn_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void ExtructionMainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {           
-
-        }
-
-        private void ExtructionMainForm_VisibleChanged(object sender, EventArgs e)
-        {
-
+            LabelPrint label = new LabelPrint();
+            label.ShowDialog();
         }
 
         
