@@ -40,5 +40,15 @@ namespace mySystem.Process.Bag.PTV
         {
 
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void PTVBag_runningrecordofdf_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

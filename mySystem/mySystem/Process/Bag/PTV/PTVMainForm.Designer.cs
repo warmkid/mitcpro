@@ -157,6 +157,7 @@
             this.B3Btn.TabIndex = 11;
             this.B3Btn.Text = "底封机运行记录";
             this.B3Btn.UseVisualStyleBackColor = true;
+            this.B3Btn.Click += new System.EventHandler(this.B3Btn_Click);
             // 
             // groupBox3
             // 
@@ -230,6 +231,7 @@
             this.B6Btn.TabIndex = 17;
             this.B6Btn.Text = "超声波焊接记录";
             this.B6Btn.UseVisualStyleBackColor = true;
+            this.B6Btn.Click += new System.EventHandler(this.B6Btn_Click);
             // 
             // B4Btn
             // 
@@ -240,6 +242,7 @@
             this.B4Btn.TabIndex = 15;
             this.B4Btn.Text = "圆口焊接机运行记录";
             this.B4Btn.UseVisualStyleBackColor = true;
+            this.B4Btn.Click += new System.EventHandler(this.B4Btn_Click);
             // 
             // PTVMainForm
             // 

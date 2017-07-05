@@ -687,6 +687,9 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_runningrecordofdf.resx">
       <DependentUpon>PTVBag_runningrecordofdf.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_runningrecordofyk.resx">
+      <DependentUpon>PTVBag_runningrecordofyk.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVMainForm.resx">
       <DependentUpon>PTVMainForm.cs</DependentUpon>
     </EmbeddedResource>
