@@ -210,6 +210,7 @@
             this.B5Btn.TabIndex = 19;
             this.B5Btn.Text = "泄露测试记录";
             this.B5Btn.UseVisualStyleBackColor = true;
+            this.B5Btn.Click += new System.EventHandler(this.B5Btn_Click);
             // 
             // B8Btn
             // 

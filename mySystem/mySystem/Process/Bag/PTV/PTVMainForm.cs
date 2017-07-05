@@ -75,5 +75,11 @@ namespace mySystem.Process.Bag.PTV
             PTVBag_runningrecordofyk yk = new PTVBag_runningrecordofyk();
             yk.ShowDialog();
         }
+
+        private void B5Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_testrecordofdisclose xlDlg = new PTVBag_testrecordofdisclose();
+            xlDlg.ShowDialog();
+        }
     }
 }
