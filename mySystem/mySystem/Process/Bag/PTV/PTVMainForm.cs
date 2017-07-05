@@ -75,11 +75,5 @@ namespace mySystem.Process.Bag.PTV
             PTVBag_runningrecordofyk yk = new PTVBag_runningrecordofyk();
             yk.ShowDialog();
         }
-
-        private void B6Btn_Click(object sender, EventArgs e)
-        {
-            PTVBag_weldingrecordofwave wave = new PTVBag_weldingrecordofwave();
-            wave.ShowDialog();
-        }
     }
 }
