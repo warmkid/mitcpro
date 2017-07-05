@@ -383,7 +383,7 @@ namespace mySystem
         Record_extrusSiteClean form4 = null;
         HandoverRecordofExtrusionProcess form5 = null;
         Record_extrusSupply form6 = null;
-        mySystem.Extruction.Chart.wasterecord form7 = null;
+        mySystem.Process.Extruction.B.WasteInExtrusion form7 = null;
         Record_material_reqanddisg form8 = null;
         ProdctDaily_extrus form9 = null;
         ExtructionpRoductionAndRestRecordStep6 form10 = null;
@@ -439,7 +439,7 @@ namespace mySystem
 
         private void B3Btn_Click(object sender, EventArgs e)
         {
-            form7 = new Extruction.Chart.wasterecord(mainform);
+            form7 = new mySystem.Process.Extruction.B.WasteInExtrusion(mainform);
             form7.ShowDialog();
         }
 

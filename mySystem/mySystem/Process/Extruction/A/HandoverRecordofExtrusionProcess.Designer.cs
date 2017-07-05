@@ -170,7 +170,6 @@
             // 
             // btnDefault
             // 
-            this.btnDefault.Enabled = false;
             this.btnDefault.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnDefault.Location = new System.Drawing.Point(36, 519);
             this.btnDefault.Margin = new System.Windows.Forms.Padding(4);

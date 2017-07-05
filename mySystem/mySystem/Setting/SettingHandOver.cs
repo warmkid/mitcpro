@@ -20,9 +20,33 @@ namespace mySystem.Setting
         {
             InitializeComponent();
             conOle = Parameter.connOle;
+            getItem();
         }
-        private void AddLayout()
+        private void getItem()
         {
+            List<List<Object>> ret = new List<List<Object>>();
+            //string tableStr = "set_handover";
+            string cmdStr = "SELECT 确认项目 FROM handoveritem;";
+            //ret = Utility.selectAccess(mainform.connOle, tableStr, null, null, null, null, null, null, null, null);
+            OleDbCommand sqlcmd = new OleDbCommand(cmdStr, conOle);
+            //sqlcmd.ExecuteNonQuery();
+
+            OleDbDataReader reader = null;
+            reader = sqlcmd.ExecuteReader();
+            sqlcmd.Dispose();
+            while (reader.Read())
+            {
+                List<Object> row = new List<Object>(new Object[] { reader["确认项目"]});
+                //row.Add(row);
+
+                ret.Add(row);
+            }
+            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
+            {
+                dataGridView1.Rows.RemoveAt(i);
+            }
+            Utility.fillDataGridView(dataGridView1, ret);
+
         }
         public void DataSave()
         {

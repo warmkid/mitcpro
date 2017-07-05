@@ -119,6 +119,48 @@ namespace WindowsFormsApplication1
             get_matcode();
         }
 
+        //设置界面上所有控件不可编辑
+        private void set_noedit()
+        {
+            comboBox2.Enabled = false;
+            textBox2.Enabled = false;
+            comboBox3.Enabled = false;
+            comboBox4.Enabled = false;
+            textBox8.Enabled = false;
+            textBox9.Enabled = false;
+            Serve_in.Enabled = false;
+            Serve_mid.Enabled = false;
+            Serve_out.Enabled = false;
+            Serve_person.Enabled = false;
+            comboBox1.Enabled = false;
+            textBox11.Enabled = false;
+            textBox14.Enabled = false;
+            textBox1.Enabled = false;
+            button1.Enabled = false;
+            button3.Enabled = false;
+        }
+
+        //设置界面上所有控件可编辑
+        private void set_edit()
+        {
+            comboBox2.Enabled = true;
+            textBox2.Enabled = true;
+            comboBox3.Enabled = true;
+            comboBox4.Enabled = true;
+            textBox8.Enabled = true;
+            textBox9.Enabled = true;
+            Serve_in.Enabled = true;
+            Serve_mid.Enabled = true;
+            Serve_out.Enabled = true;
+            Serve_person.Enabled = true;
+            comboBox1.Enabled = true;
+            textBox11.Enabled = true;
+            textBox14.Enabled = true;
+            textBox1.Enabled = true;
+            button1.Enabled = true;
+            button3.Enabled = true;
+        }
+
         //查找物料代码填入物料代码复选框中
         private void get_matcode()
         {
@@ -251,20 +293,20 @@ namespace WindowsFormsApplication1
             dr.Cells[5].Value = server;
             dataGridView1.Rows.Add(dr);
 
-            //添加数据到dict
-            string key=dateTimePicker1.Value.ToShortDateString();
-            record r=new record();
-            r.time=dr.Cells[0].Value.ToString();
-            r.srout=serve_out;
-            r.srin=serve_in;
-            r.srmid=serve_mid;
-            r.isqua=checkoutnum;
-            r.man=server;
-            dict[key].Add(r);
+            ////添加数据到dict
+            //string key=dateTimePicker1.Value.ToShortDateString();
+            //record r=new record();
+            //r.time=dr.Cells[0].Value.ToString();
+            //r.srout=serve_out;
+            //r.srin=serve_in;
+            //r.srmid=serve_mid;
+            //r.isqua=checkoutnum;
+            //r.man=server;
+            //dict[key].Add(r);
 
-            dictsum_out[key] += serve_out;
-            dictsum_in[key] += serve_in;
-            dictsum_mid[key] += serve_mid;
+            //dictsum_out[key] += serve_out;
+            //dictsum_in[key] += serve_in;
+            //dictsum_mid[key] += serve_mid;
 
             sumout += serve_out;
             sumin += serve_in;
@@ -277,9 +319,9 @@ namespace WindowsFormsApplication1
                 drsum.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
             }
             drsum.Cells[0].Value = "小计";
-            drsum.Cells[1].Value = dictsum_out[key];
-            drsum.Cells[2].Value = dictsum_in[key];
-            drsum.Cells[3].Value = dictsum_mid[key];
+            drsum.Cells[1].Value = sumout;
+            drsum.Cells[2].Value = sumin;
+            drsum.Cells[3].Value = summid;
 
             dataGridView1.Rows.Add(drsum);
 
@@ -305,22 +347,26 @@ namespace WindowsFormsApplication1
             sumin -= b;
             summid -= c;
 
-
-            //删除dict中的值
-            string key = dateTimePicker1.Value.ToShortDateString();
-            if (dict.ContainsKey(key))
-            {
-                dict[key].RemoveAt(ind);
-                dictsum_out[key] -= a;
-                dictsum_in[key] -= b;
-                dictsum_mid[key] -= c;
-
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = dictsum_out[key];
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = dictsum_in[key];
-                dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = dictsum_mid[key];
-
-            }
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = sumout;
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = sumin;
+            dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = summid;
             dataGridView1.Rows.RemoveAt(ind);
+
+            ////删除dict中的值
+            //string key = dateTimePicker1.Value.ToShortDateString();
+            //if (dict.ContainsKey(key))
+            //{
+            //    dict[key].RemoveAt(ind);
+            //    dictsum_out[key] -= a;
+            //    dictsum_in[key] -= b;
+            //    dictsum_mid[key] -= c;
+
+            //    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value = dictsum_out[key];
+            //    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value = dictsum_in[key];
+            //    dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value = dictsum_mid[key];
+
+            //}
+            //dataGridView1.Rows.RemoveAt(ind);
         }
 
         private void Serve_out_TextChanged(object sender, EventArgs e)
@@ -431,58 +477,177 @@ namespace WindowsFormsApplication1
         {
             date = dateTimePicker1.Value;
             string key = date.ToShortDateString();
-            //不存在key则创建
-            if (!dict.ContainsKey(key))
+
+            ////不存在key则创建
+            //if (!dict.ContainsKey(key))
+            //{
+            //    dict.Add(key, new List<record>());
+            //    dictsum_out.Add(key, 0);
+            //    dictsum_in.Add(key, 0);
+            //    dictsum_mid.Add(key, 0);
+            //    //清空表格
+            //    while (dataGridView1.Rows.Count != 0)
+            //    {
+            //        dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+            //    }
+            //}
+            //else
+            //{
+            //    //清空表格
+            //    while (dataGridView1.Rows.Count != 0)
+            //    {
+            //        dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+            //    }
+            //    //充填表格
+            //    foreach (record r in dict[key])
+            //    {
+            //        DataGridViewRow dr= new DataGridViewRow();
+            //        foreach (DataGridViewColumn c in dataGridView1.Columns)
+            //        {
+            //            dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+            //        }
+            //        dr.Cells[0].Value = r.time;
+            //        dr.Cells[1].Value = r.srout;
+            //        dr.Cells[2].Value = r.srin;
+            //        dr.Cells[3].Value = r.srmid;
+            //        dr.Cells[4].Value = r.isqua;
+            //        dr.Cells[5].Value = r.man;
+            //        dataGridView1.Rows.Add(dr);
+            //        dr.Dispose();
+            //    }
+
+            //    //添加合计
+                
+            //    DataGridViewRow drsum = new DataGridViewRow();
+            //    foreach (DataGridViewColumn c in dataGridView1.Columns)
+            //    {
+            //        drsum.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+            //    }
+            //    drsum.Cells[0].Value = "小计";
+            //    drsum.Cells[1].Value = dictsum_out[key];
+            //    drsum.Cells[2].Value = dictsum_in[key];
+            //    drsum.Cells[3].Value = dictsum_mid[key];
+
+            //    dataGridView1.Rows.Add(drsum);
+            //}
+
+            //清空物料使用和审核兰
+            textBox1.Text = "";
+            textBox11.Text = "";
+            textBox12.Text = "";
+            textBox14.Text = "";
+            textBox15.Text = "";
+            while (dataGridView1.Rows.Count > 0)
+                dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+            //查看审核信息是否存在，如果存在,则显示未非编辑状态
+            product_num = textBox2.Text;
+            if (product_num == "")
+                return;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select s5_feeding_info,s5_reviewer_id,id,s5_ab1c_raw_material_consumption,s5_ab1c_raw_material_margin,s5_b2_raw_material_consumption,s5_b2_raw_material_margin from extrusion_s5_feeding where production_instruction_id=" + mySystem.Parameter.proInstruID + " and product_batch_id=" + id_findby_batch(product_num);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
             {
-                dict.Add(key, new List<record>());
-                dictsum_out.Add(key, 0);
-                dictsum_in.Add(key, 0);
-                dictsum_mid.Add(key, 0);
-                //清空表格
-                while (dataGridView1.Rows.Count != 0)
-                {
-                    dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-                }
+                //没有找到相应的记录，进行新建
+                set_edit();
+                dataGridView1.ReadOnly = false;
+                button2.Enabled = true;
+                button4.Enabled = true;
+                sumout = 0;
+                sumin = 0;
+                summid = 0;
+                return;
             }
             else
             {
-                //清空表格
-                while (dataGridView1.Rows.Count != 0)
+                for (int i = 0; i < tempdt.Rows.Count; i++)
                 {
-                    dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-                }
-                //充填表格
-                foreach (record r in dict[key])
-                {
-                    DataGridViewRow dr= new DataGridViewRow();
-                    foreach (DataGridViewColumn c in dataGridView1.Columns)
+                    JObject jobj = JObject.Parse(tempdt.Rows[i][0].ToString());
+                    //查看哪一个和当前表中日期一样，并判断其状态
+                    foreach (var item in jobj)
                     {
-                        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                        if (item.Key == key)
+                        {
+                            //填表
+                            while(dataGridView1.Rows.Count>0)
+                                dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count-1);
+                            JArray array = JArray.Parse(item.Value.ToString());
+                            float sum1 = 0;
+                            float sum2 = 0;
+                            float sum3 = 0;
+                            for (int j = 0; j < array.Count; j++)
+                            {
+                                JObject tempobj = JObject.Parse(array[j].ToString());
+                                DataGridViewRow dr = new DataGridViewRow();
+                                dataGridView1.Rows.Add(dr);
+                                foreach(var itemobj in tempobj)
+                                {
+                                    dataGridView1.Rows[j].Cells[0].Value = itemobj.Key;
+                                    dataGridView1.Rows[j].Cells[1].Value = itemobj.Value[0];
+                                    dataGridView1.Rows[j].Cells[2].Value = itemobj.Value[1];
+                                    dataGridView1.Rows[j].Cells[3].Value = itemobj.Value[2];
+                                    dataGridView1.Rows[j].Cells[4].Value = itemobj.Value[3];
+                                    dataGridView1.Rows[j].Cells[5].Value = itemobj.Value[4];
+
+                                    sum1 += float.Parse(itemobj.Value[0].ToString());
+                                    sum2+=float.Parse(itemobj.Value[1].ToString());
+                                    sum3+= float.Parse(itemobj.Value[2].ToString());
+                                }
+                                
+                            }
+                            //添加合计
+                            DataGridViewRow drsum = new DataGridViewRow();
+                            foreach (DataGridViewColumn c in dataGridView1.Columns)
+                            {
+                                drsum.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                            }
+                            drsum.Cells[0].Value = "小计";
+                            drsum.Cells[1].Value = sum1;
+                            drsum.Cells[2].Value = sum2;
+                            drsum.Cells[3].Value = sum3;
+
+                            dataGridView1.Rows.Add(drsum);
+                            //添加用料量和剩余量
+                            textBox11.Text = tempdt.Rows[i][3].ToString();
+                            textBox12.Text = tempdt.Rows[i][4].ToString();
+                            textBox14.Text = tempdt.Rows[i][5].ToString();
+                            textBox15.Text = tempdt.Rows[i][6].ToString();
+
+                            //判断审核状态
+                            if (tempdt.Rows[i][1].ToString() == "0")//未审核
+                            {
+                                set_edit();
+                                button2.Enabled = true;
+                                button4.Enabled = true;
+                            }
+                            else
+                            {
+                                //填审核人
+                                textBox1.Text = mySystem.Parameter.IDtoName(int.Parse(tempdt.Rows[i][1].ToString()));
+                                set_noedit();
+                                dataGridView1.ReadOnly = true;
+                                button2.Enabled = false;
+                                button4.Enabled = false;
+                            }
+                            return;
+                        }
                     }
-                    dr.Cells[0].Value = r.time;
-                    dr.Cells[1].Value = r.srout;
-                    dr.Cells[2].Value = r.srin;
-                    dr.Cells[3].Value = r.srmid;
-                    dr.Cells[4].Value = r.isqua;
-                    dr.Cells[5].Value = r.man;
-                    dataGridView1.Rows.Add(dr);
-                    dr.Dispose();
-                }
 
-                //添加合计
-                
-                DataGridViewRow drsum = new DataGridViewRow();
-                foreach (DataGridViewColumn c in dataGridView1.Columns)
-                {
-                    drsum.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-                }
-                drsum.Cells[0].Value = "小计";
-                drsum.Cells[1].Value = dictsum_out[key];
-                drsum.Cells[2].Value = dictsum_in[key];
-                drsum.Cells[3].Value = dictsum_mid[key];
+                    //没有找到相应的记录，进行新建
+                    set_edit();
+                    dataGridView1.ReadOnly = false;
+                    button2.Enabled = true;
+                    button4.Enabled = true;
+                    sumout = 0;
+                    sumin = 0;
+                    summid = 0;
 
-                dataGridView1.Rows.Add(drsum);
+                }
             }
+
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -502,13 +667,14 @@ namespace WindowsFormsApplication1
                     MessageBox.Show("产品批号不能为空");
                     return;
                 }
-                insert_batch(product_num, prodid);
-                int batchid=id_findby_batch(product_num);
+                if(!isexist_batchcode(product_num))
+                    insert_batch(product_num, prodid);
+                int batchid = id_findby_batch(product_num);
 
                 //获取使用量信息
                 string struse1 = textBox11.Text;
                 string struse2 = textBox14.Text;
-                if (!float.TryParse(struse1,out use1) || !float.TryParse(struse1,out use2))
+                if (!float.TryParse(struse1, out use1) || !float.TryParse(struse1, out use2))
                 {
                     MessageBox.Show("使用量必需为数字");
                     return;
@@ -519,7 +685,7 @@ namespace WindowsFormsApplication1
                 float sum_provide1 = float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value.ToString()) + float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value.ToString());
                 float sum_provide2 = float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value.ToString());
 
-                
+
 
                 int result = 0;
                 OleDbCommand comm = new OleDbCommand();
@@ -552,67 +718,169 @@ namespace WindowsFormsApplication1
                 JArray jlist = JArray.Parse(@"[]");
                 for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
                 {
-                        string objstr = "{'";
-                        objstr += dataGridView1.Rows[i].Cells[0].Value.ToString()+"':";
-                        objstr += "[" + dataGridView1.Rows[i].Cells[1].Value + "," + dataGridView1.Rows[i].Cells[2].Value + "," + dataGridView1.Rows[i].Cells[3].Value + "," + dataGridView1.Rows[i].Cells[4].Value + ",'" + dataGridView1.Rows[i].Cells[5].Value + "']";
-                        objstr += "}";
-                        JObject obj = JObject.Parse(objstr);
-                        jlist.Add(obj);
+                    string objstr = "{'";
+                    objstr += dataGridView1.Rows[i].Cells[0].Value.ToString() + "':";
+                    objstr += "[" + dataGridView1.Rows[i].Cells[1].Value + "," + dataGridView1.Rows[i].Cells[2].Value + "," + dataGridView1.Rows[i].Cells[3].Value + "," + dataGridView1.Rows[i].Cells[4].Value + ",'" + dataGridView1.Rows[i].Cells[5].Value + "']";
+                    objstr += "}";
+                    JObject obj = JObject.Parse(objstr);
+                    jlist.Add(obj);
                 }
                 str += jlist.ToString() + "}";
-                JObject jobj= JObject.Parse(str);
+                JObject jobj = JObject.Parse(str);
 
                 //插入原料批号表,并获取原料id和批号id
-                bunker1_code = comboBox3.Text;
+                bunker1_code = comboBox3.Text;//原料代码
                 bunker2_code = comboBox4.Text;
-                bunker1_batch = textBox8.Text;
-                bunker2_batch = textBox9.Text;
-                insert_matbatch(id_findby_matcode(bunker1_code), bunker1_batch);
-                insert_matbatch(id_findby_matcode(bunker2_code), bunker2_batch);
                 int matid1 = id_findby_matcode(bunker1_code);
                 int matid2 = id_findby_matcode(bunker2_code);
+
+                bunker1_batch = textBox8.Text;//原料批号
+                bunker2_batch = textBox9.Text;
+                if (!isexist_matbatchcode(bunker1_batch))
+                    insert_matbatch(matid1, bunker1_batch);
+                if (!isexist_matbatchcode(bunker2_batch))
+                    insert_matbatch(matid2, bunker2_batch);
+
                 int batchid1 = batchid_findby_matcode(bunker1_batch);
                 int batchid2 = batchid_findby_matcode(bunker2_batch);
 
                 //判断数据库中是否存在该记录
-                //comm.CommandText = "select s5_feeding_info,s5_reviewer_id from extrusion_s5_feeding where production_instruction_id="+mySystem.Parameter.proInstruID+" and ";
-
-                //插入数据库新纪录
-                comm.CommandText = "insert into extrusion_s5_feeding(product_batch_id,production_instruction_id,s5_ab1c_raw_material_id,s5_b2_raw_material_id,s5_ab1c_raw_material_batch,s5_b2_raw_material_batch,s5_feeding_info,s5_ab1c_raw_material_consumption,s5_ab1c_raw_material_margin,s5_b2_raw_material_consumption,s5_b2_raw_material_margin) values(@batchid,@instrid,@ab1c_matid,@b2_matid,@ab1c_matbatch,@b2_matbatch,@feedinfo,@ab1c_use,@ab1c_left,@b2_use,@b2_left)";
-                comm.Parameters.Add("@batchid", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@instrid", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@ab1c_matid", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@b2_matid", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@ab1c_matbatch", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@b2_matbatch", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@feedinfo", System.Data.OleDb.OleDbType.VarChar);
-                comm.Parameters.Add("@ab1c_use", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@ab1c_left", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@b2_use", System.Data.OleDb.OleDbType.Integer);
-                comm.Parameters.Add("@b2_left", System.Data.OleDb.OleDbType.Integer);
-
-                comm.Parameters["@batchid"].Value = batchid;
-                comm.Parameters["@instrid"].Value = id_findby_instr(product_instrnum);
-                comm.Parameters["@ab1c_matid"].Value = matid1;
-                comm.Parameters["@b2_matid"].Value = matid2;
-                comm.Parameters["@ab1c_matbatch"].Value = batchid1;
-                comm.Parameters["@b2_matbatch"].Value = batchid2;
-                comm.Parameters["@feedinfo"].Value = jobj.ToString();
-                comm.Parameters["@ab1c_use"].Value = Convert.ToInt32(use1);
-                comm.Parameters["@ab1c_left"].Value = Convert.ToInt32(left1);
-                comm.Parameters["@b2_use"].Value = Convert.ToInt32(use2);
-                comm.Parameters["@b2_left"].Value = Convert.ToInt32(left2);
-
-
-                result = comm.ExecuteNonQuery();
-                if (result > 0)
+                comm.CommandText = "select s5_feeding_info,s5_reviewer_id from extrusion_s5_feeding where production_instruction_id=" + mySystem.Parameter.proInstruID + " and product_batch_id=" + batchid;
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                if (tempdt.Rows.Count == 0)
                 {
-                    MessageBox.Show("添加成功");
+                    //插入数据库新纪录
+                    comm.CommandText = "insert into extrusion_s5_feeding(product_batch_id,production_instruction_id,s5_ab1c_raw_material_id,s5_b2_raw_material_id,s5_ab1c_raw_material_batch,s5_b2_raw_material_batch,s5_feeding_info,s5_ab1c_raw_material_consumption,s5_ab1c_raw_material_margin,s5_b2_raw_material_consumption,s5_b2_raw_material_margin) values(@batchid,@instrid,@ab1c_matid,@b2_matid,@ab1c_matbatch,@b2_matbatch,@feedinfo,@ab1c_use,@ab1c_left,@b2_use,@b2_left)";
+                    comm.Parameters.Add("@batchid", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@instrid", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@ab1c_matid", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@b2_matid", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@ab1c_matbatch", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@b2_matbatch", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@feedinfo", System.Data.OleDb.OleDbType.VarChar);
+                    comm.Parameters.Add("@ab1c_use", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@ab1c_left", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@b2_use", System.Data.OleDb.OleDbType.Integer);
+                    comm.Parameters.Add("@b2_left", System.Data.OleDb.OleDbType.Integer);
+
+                    comm.Parameters["@batchid"].Value = batchid;
+                    comm.Parameters["@instrid"].Value = mySystem.Parameter.proInstruID;
+                    comm.Parameters["@ab1c_matid"].Value = matid1;
+                    comm.Parameters["@b2_matid"].Value = matid2;
+                    comm.Parameters["@ab1c_matbatch"].Value = batchid1;
+                    comm.Parameters["@b2_matbatch"].Value = batchid2;
+                    comm.Parameters["@feedinfo"].Value = jobj.ToString();
+                    comm.Parameters["@ab1c_use"].Value = Convert.ToInt32(use1);
+                    comm.Parameters["@ab1c_left"].Value = Convert.ToInt32(left1);
+                    comm.Parameters["@b2_use"].Value = Convert.ToInt32(use2);
+                    comm.Parameters["@b2_left"].Value = Convert.ToInt32(left2);
+
+
+                    result = comm.ExecuteNonQuery();
+                    if (result > 0)
+                    {
+                        MessageBox.Show("添加成功");
+                        button4.Enabled = true;
+                    }
+                    else { MessageBox.Show("错误"); }
+                    comm.Dispose();
+                    da.Dispose();
+                    return;
+                    
                 }
-                else { MessageBox.Show("错误"); }
-                comm.Dispose();
+                else
+                {
+                    //查找对应日期信息是否存在
+                     for (int i = 0; i < tempdt.Rows.Count; i++)
+                     {
+                        JObject objtemp = JObject.Parse(tempdt.Rows[i][0].ToString());
+                        //查看哪一个和当前表中日期一样，并判断其状态
+                        foreach (var item in objtemp)
+                        {
+                            if (item.Key == dateTimePicker1.Value.ToShortDateString())
+                            {
+                                //更新数据库
+                                comm.CommandText = "update extrusion_s5_feeding set product_batch_id=@batchid,production_instruction_id=@instrid,s5_ab1c_raw_material_id=@ab1c_matid,s5_b2_raw_material_id=@b2_matid,s5_ab1c_raw_material_batch=@ab1c_matbatch,s5_b2_raw_material_batch=@b2_matbatch,s5_feeding_info=@feedinfo,s5_ab1c_raw_material_consumption=@ab1c_use,s5_ab1c_raw_material_margin=@ab1c_left,s5_b2_raw_material_consumption=@b2_use,s5_b2_raw_material_margin=@b2_left";
+                                comm.Parameters.Add("@batchid", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@instrid", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@ab1c_matid", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@b2_matid", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@ab1c_matbatch", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@b2_matbatch", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@feedinfo", System.Data.OleDb.OleDbType.VarChar);
+                                comm.Parameters.Add("@ab1c_use", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@ab1c_left", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@b2_use", System.Data.OleDb.OleDbType.Integer);
+                                comm.Parameters.Add("@b2_left", System.Data.OleDb.OleDbType.Integer);
+
+                                comm.Parameters["@batchid"].Value = batchid;
+                                comm.Parameters["@instrid"].Value = mySystem.Parameter.proInstruID;
+                                comm.Parameters["@ab1c_matid"].Value = matid1;
+                                comm.Parameters["@b2_matid"].Value = matid2;
+                                comm.Parameters["@ab1c_matbatch"].Value = batchid1;
+                                comm.Parameters["@b2_matbatch"].Value = batchid2;
+                                comm.Parameters["@feedinfo"].Value = jobj.ToString();
+                                comm.Parameters["@ab1c_use"].Value = Convert.ToInt32(use1);
+                                comm.Parameters["@ab1c_left"].Value = Convert.ToInt32(left1);
+                                comm.Parameters["@b2_use"].Value = Convert.ToInt32(use2);
+                                comm.Parameters["@b2_left"].Value = Convert.ToInt32(left2);
+
+                                result = comm.ExecuteNonQuery();
+                                if (result > 0)
+                                {
+                                    MessageBox.Show("添加成功");
+                                    button4.Enabled = true;
+                                }
+                                else { MessageBox.Show("错误"); }
+                                comm.Dispose();
+                                da.Dispose();
+                                return;
+                            }
+                        }
+                     }
+                    //如果都不存在，则插入数据库
+                     //插入数据库新纪录
+                     comm.CommandText = "insert into extrusion_s5_feeding(product_batch_id,production_instruction_id,s5_ab1c_raw_material_id,s5_b2_raw_material_id,s5_ab1c_raw_material_batch,s5_b2_raw_material_batch,s5_feeding_info,s5_ab1c_raw_material_consumption,s5_ab1c_raw_material_margin,s5_b2_raw_material_consumption,s5_b2_raw_material_margin) values(@batchid,@instrid,@ab1c_matid,@b2_matid,@ab1c_matbatch,@b2_matbatch,@feedinfo,@ab1c_use,@ab1c_left,@b2_use,@b2_left)";
+                     comm.Parameters.Add("@batchid", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@instrid", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@ab1c_matid", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@b2_matid", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@ab1c_matbatch", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@b2_matbatch", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@feedinfo", System.Data.OleDb.OleDbType.VarChar);
+                     comm.Parameters.Add("@ab1c_use", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@ab1c_left", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@b2_use", System.Data.OleDb.OleDbType.Integer);
+                     comm.Parameters.Add("@b2_left", System.Data.OleDb.OleDbType.Integer);
+
+                     comm.Parameters["@batchid"].Value = batchid;
+                     comm.Parameters["@instrid"].Value = mySystem.Parameter.proInstruID;
+                     comm.Parameters["@ab1c_matid"].Value = matid1;
+                     comm.Parameters["@b2_matid"].Value = matid2;
+                     comm.Parameters["@ab1c_matbatch"].Value = batchid1;
+                     comm.Parameters["@b2_matbatch"].Value = batchid2;
+                     comm.Parameters["@feedinfo"].Value = jobj.ToString();
+                     comm.Parameters["@ab1c_use"].Value = Convert.ToInt32(use1);
+                     comm.Parameters["@ab1c_left"].Value = Convert.ToInt32(left1);
+                     comm.Parameters["@b2_use"].Value = Convert.ToInt32(use2);
+                     comm.Parameters["@b2_left"].Value = Convert.ToInt32(left2);
+
+
+                     result = comm.ExecuteNonQuery();
+                     if (result > 0)
+                     {
+                         MessageBox.Show("添加成功");
+                         button4.Enabled = true;
+                     }
+                     else { MessageBox.Show("错误"); }
+                     comm.Dispose();
+                     da.Dispose();
+
+                     return;
+                }
             }
-            button4.Enabled = true;
         }
 
         public override void CheckResult()
@@ -622,6 +890,58 @@ namespace WindowsFormsApplication1
             bool isok = checkform.ischeckOk;
             string opinion = checkform.opinion;
             textBox1.Text = checkform.userName;
+            //判断数据库中是否存在该记录
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select s5_feeding_info,s5_reviewer_id,id from extrusion_s5_feeding where production_instruction_id=" + mySystem.Parameter.proInstruID + " and product_batch_id=" + id_findby_batch(product_num);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                MessageBox.Show("未查找到相关记录");
+                return;
+            }
+            else
+            {
+                //List<string> feedinfo = new List<string>();
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    //feedinfo.Add(tempdt.Rows[i][0].ToString());
+                    JObject jobj = JObject.Parse(tempdt.Rows[i][0].ToString());
+                    //查看哪一个和当前表中日期一样，就将审核意见填入到哪一条记录中
+                    foreach (var item in jobj)
+                    {
+                        if (item.Key == dateTimePicker1.Value.ToShortDateString())
+                        {
+                            int id = int.Parse(tempdt.Rows[i][2].ToString());//获取对应记录id
+                            //更新记录
+                            comm.CommandText = "update extrusion_s5_feeding set s5_reviewer_id=@revid,s5_review_opinion=@opinion,s5_is_review_qualified=@isok where id=" + id;
+                            comm.Parameters.Add("@revid", System.Data.OleDb.OleDbType.Integer);
+                            comm.Parameters.Add("@opinion", System.Data.OleDb.OleDbType.VarChar);
+                            comm.Parameters.Add("@isok", System.Data.OleDb.OleDbType.Boolean);
+
+                            comm.Parameters["@revid"].Value = revid;
+                            comm.Parameters["@opinion"].Value = opinion;
+                            comm.Parameters["@isok"].Value = isok;
+                            int result = comm.ExecuteNonQuery();
+                            if (result <= 0)
+                            {
+                                MessageBox.Show("更新审核信息失败");
+                            }
+                            //设置为不可编辑状态
+                            set_noedit();
+                            dataGridView1.ReadOnly = true;
+                            button2.Enabled = false;
+                            button4.Enabled = false;
+                            return;
+
+                        }
+                    }
+
+                }
+
+            }
         }
         private void button4_Click(object sender, EventArgs e)
         {
@@ -802,6 +1122,8 @@ namespace WindowsFormsApplication1
 
         private void textBox11_TextChanged(object sender, EventArgs e)
         {
+            if (textBox11.Text == "")
+                return;
             //供料总量
             sum_provide = 0;
             sum_provide = float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[1].Value.ToString()) + float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[2].Value.ToString());
@@ -822,6 +1144,8 @@ namespace WindowsFormsApplication1
 
         private void textBox14_TextChanged(object sender, EventArgs e)
         {
+            if (textBox14.Text == "")
+                return;
             //供料总量
             sum_provide = 0;
             sum_provide = float.Parse(dataGridView1.Rows[dataGridView1.Rows.Count - 1].Cells[3].Value.ToString());
@@ -833,6 +1157,52 @@ namespace WindowsFormsApplication1
                 return;
             }
             textBox15.Text = (sum_provide - use2).ToString();
+        }
+
+        //判断产品批次表中是否存在对应的批号
+        private bool isexist_batchcode(string code)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select product_batch_id from product_batch where product_batch_code='" + code + "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return false;
+            }
+            else
+            {
+                da.Dispose();
+                return true;
+            }
+        }
+
+        //判断原料批次表中是否存在对应的批号
+        private bool isexist_matbatchcode(string code)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select batch_id from raw_material_batch where batch='" + code + "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return false;
+            }
+            else
+            {
+                da.Dispose();
+                return true;
+            }
         }
 
     }
