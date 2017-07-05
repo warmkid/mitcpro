@@ -30,5 +30,15 @@ namespace mySystem.Process.Bag.PTV
         {
 
         }
+
+        private void label19_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label26_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
