@@ -57,5 +57,11 @@ namespace mySystem.Process.Bag.PTV
             PTVBag_dailyreport daily = new PTVBag_dailyreport();
             daily.Show();
         }
+
+        private void B6Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_weldingrecordofwave wave = new PTVBag_weldingrecordofwave();
+            wave.ShowDialog();
+        }
     }
 }

@@ -21,11 +21,16 @@ namespace mySystem
         PreheatParameterForm preheatDlg = null;
         Setting_CleanSite setsiteDlg = null;
         SettingHandOver handoverDlg = null;
+        string para1 = null;
+        string para2 = null;
+        string para3 = null;
+        string para4 = null;
 
         public SetExtruForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             Init();
+            InitParameter();
         }
 
         //加载panel
@@ -69,7 +74,52 @@ namespace mySystem
  
         }
 
-   
+        //系数设置部分
+        private void InitParameter()
+        { 
+            //读取数据库并显示
+            String tblName = "setting_parameter";
+            List<String> readqueryCols = new List<String>(new String[] { "matface_num", "matdens", "ration1", "ration2" });
+            List<String> whereCols = new List<String>(new String[] { "ID" });
+            List<Object> whereVals = new List<Object>(new Object[] { 1 });
+            List<List<Object>> queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
+
+            List<String> data = new List<String> { };
+            for (int i = 0; i < queryValsList[0].Count; i++)
+            {
+                data.Add(queryValsList[0][i].ToString());
+            }
+            List<Control> textboxes = new List<Control> { tB面数, tB厚度密度, tB参数1, tB参数2 };
+            Utility.fillControl(textboxes, data);
+
+        }
+
+        private void ParaSave()
+        {
+            para1 = tB面数.Text.Trim();
+            para2 = tB厚度密度.Text.Trim();
+            para3 = tB参数1.Text.Trim();
+            para4 = tB参数2.Text.Trim();
+            String tblName = "setting_parameter";
+            List<String> updateCols = new List<String>(new String[] { "matface_num", "matdens", "ration1", "ration2" });
+            List<Object> updateVals = new List<Object>(new Object[] { para1, para2, para3, para4 });
+            List<String> whereCols = new List<String>(new String[] { "ID" });
+            List<Object> whereVals = new List<Object>(new Object[] { 1 });
+            Boolean b = Utility.updateAccess(Parameter.connOle, tblName, updateCols, updateVals, whereCols, whereVals);
+            if (b)
+            {
+                return;
+            }
+            else
+            {
+                MessageBox.Show("参数保存失败", "错误");
+                return;
+            }
+
+        }
+
+
+
         private void SaveBtn_Click(object sender, EventArgs e)
         {
             if (Parameter.isSqlOk)
@@ -83,7 +133,7 @@ namespace mySystem
                 setsiteDlg.DataSave();
                 setcleanDlg.DataSave();
                 handoverDlg.DataSave();
- 
+                ParaSave();
             }
         }
 
