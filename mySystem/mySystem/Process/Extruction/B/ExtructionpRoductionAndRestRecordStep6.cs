@@ -23,7 +23,6 @@ namespace mySystem.Extruction.Process
         private bool isSqlOk;
         private int Instructionid;
         private CheckForm check = null;
-        private string review_opinion;
         private bool ischeckOk = false;
 
         private int operator_id;
@@ -86,7 +85,7 @@ namespace mySystem.Extruction.Process
                 }
             }
             //产品名称的初始化
-            productnamecomboBox.SelectedIndex = -1;
+            productnamecomboBox.SelectedIndex = 0;
             //班次初始化
             this.DatecheckBox.Checked = spot;
             this.NightcheckBox.Checked = !spot;
@@ -516,6 +515,7 @@ namespace mySystem.Extruction.Process
         }
         
         //显示数据
+        //审核未通过的数据要怎么办？？？？
         public void DataShow(String Production_name, DateTime searchDate, Boolean searchFlight)
         {
             List<String> queryCols = new List<String>(new String[] { "s6_check_info", "product_batch_id", "s6_temperature", "s6_relative_humidity", "s6_reviewer_id", "s6_is_review_qualified" });
@@ -527,7 +527,7 @@ namespace mySystem.Extruction.Process
             {
                 Recordnum = 0;
                 RecordViewInitialize();
-                RecordView.Rows.Clear();                
+                RecordView.Rows.Clear();
                 AddRecordRowLine();                
                 getTotal();
 
@@ -555,14 +555,26 @@ namespace mySystem.Extruction.Process
                 batchIdBox.Text = queryValsList[0][1].ToString();
                 temperatureBox.Text = queryValsList[0][2].ToString();
                 humidityBox.Text = queryValsList[0][3].ToString();
-                review_id = Convert.ToInt32(queryValsList[0][4].ToString());
-                ischeckOk = Convert.ToBoolean(queryValsList[0][5].ToString());
-                reviewer_name = Parameter.IDtoName(review_id);
-                CheckerBox.Text = reviewer_name;
+
+                if (Int32.TryParse(queryValsList[0][4].ToString(), out review_id) == false)
+                {
+                    ischeckOk = false;
+                    reviewer_name = null;
+                    CheckerBox.Text = "";
+                }
+                else
+                {
+                    ischeckOk = Convert.ToBoolean(queryValsList[0][5].ToString());
+                    reviewer_name = Parameter.IDtoName(review_id);
+                    CheckerBox.Text = reviewer_name;
+                }
+
                 AddLineBtn.Enabled = true;
                 DelLineBtn.Enabled = false;
                 SaveBtn.Enabled = false;
                 CheckBtn.Enabled = true;
+                printBtn.Enabled = false;
+                
 
                 /*
                 if (reviewer_name == null)
@@ -571,14 +583,7 @@ namespace mySystem.Extruction.Process
                 }
                 */
 
-                if (ischeckOk)
-                {
-                    printBtn.Enabled = true; 
-                }
-                else
-                {
-                    printBtn.Enabled = false; 
-                }
+                
 
                 //解析jason
                 JArray jo = JArray.Parse(queryValsList[0][0].ToString());
@@ -670,7 +675,7 @@ namespace mySystem.Extruction.Process
         {
             base.CheckResult();
             review_id = check.userID;
-            review_opinion = check.opinion;
+            string review_opinion = check.opinion;
             ischeckOk = check.ischeckOk;
             reviewer_name = Parameter.IDtoName(review_id);
 

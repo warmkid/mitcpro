@@ -25,9 +25,9 @@ namespace mySystem.Extruction.Process
         private bool isSqlOk;
         private int Instructionid;
         private CheckForm check = null;
-        private string review_opinion;
         private bool ischeckOk = false;
         private bool isSaveOk = false;
+        private bool isReadOnly = false;
 
         //private int checknum = 0;
         //private bool[] checklist;
@@ -86,6 +86,7 @@ namespace mySystem.Extruction.Process
                 dt_confirmarea.Clear();
                 CheckBeforePowerView.Rows.Clear();
                 CheckBeforePowerView.ReadOnly = false;
+                isReadOnly = false;
                 Init();
                 ischeckOk = false;
                 isSaveOk = false;
@@ -115,7 +116,7 @@ namespace mySystem.Extruction.Process
                 printBtn.Enabled = false;
             }
             else
-            {
+            {                
                 dt_confirmarea.Clear();
                 CheckBeforePowerView.Rows.Clear();
                 isSaveOk = true;
@@ -126,13 +127,24 @@ namespace mySystem.Extruction.Process
                 this.recorderBox.Text = operator_name;
                 operate_date = Convert.ToDateTime(queryValsList[0][2].ToString());
                 recordTimePicker.Value = operate_date;
-                //审核人初始化
-                review_id = Convert.ToInt32(queryValsList[0][3].ToString());
-                reviewer_name = Parameter.IDtoName(review_id);
-                this.checkerBox.Text = reviewer_name;
-
-                if (reviewer_name != null)
+                //审核人初始化                
+                if (Int32.TryParse(queryValsList[0][3].ToString(), out review_id) == false)
                 {
+                    reviewer_name = null;
+                    this.checkerBox.Text = "";
+                    review_date = DateTime.Now.Date;
+                    checkTimePicker.Value = review_date;
+                    ischeckOk = false;
+                    SaveBtn.Enabled = true;
+                    CheckBtn.Enabled = true;
+                    printBtn.Enabled = false;
+                    CheckBeforePowerView.ReadOnly = false;
+                    isReadOnly = false;
+                }
+                else
+                {
+                    reviewer_name = Parameter.IDtoName(review_id);
+                    this.checkerBox.Text = reviewer_name;
                     review_date = Convert.ToDateTime(queryValsList[0][4].ToString());
                     checkTimePicker.Value = review_date;
                     ischeckOk = Convert.ToBoolean(queryValsList[0][5].ToString());
@@ -143,6 +155,7 @@ namespace mySystem.Extruction.Process
                         CheckBtn.Enabled = false;
                         printBtn.Enabled = true;
                         CheckBeforePowerView.ReadOnly = true;
+                        isReadOnly = true;
                     }
                     else
                     {
@@ -150,22 +163,10 @@ namespace mySystem.Extruction.Process
                         CheckBtn.Enabled = true;
                         printBtn.Enabled = false;
                         CheckBeforePowerView.ReadOnly = false;
+                        isReadOnly = false;
                     }
                     printBtn.Enabled = true;
-                    CheckBeforePowerView.Columns["确认结果Y"].ReadOnly = true;
-                    CheckBeforePowerView.Columns["确认结果N"].ReadOnly = true;
                 }
-                else
-                {
-                    review_date = DateTime.Now.Date;
-                    checkTimePicker.Value = review_date;
-                    ischeckOk = false; 
-                    SaveBtn.Enabled = true;
-                    CheckBtn.Enabled = true;
-                    printBtn.Enabled = false;
-                    CheckBeforePowerView.Columns["确认结果Y"].ReadOnly = false;
-                    CheckBeforePowerView.Columns["确认结果N"].ReadOnly = false;
-                } 
 
                 //解析jason
                 JArray jo = JArray.Parse(queryValsList[0][0].ToString());
@@ -258,69 +259,79 @@ namespace mySystem.Extruction.Process
             {
                 operator_id = Parameter.NametoID(operator_name);
             }
-            //jason 保存表格
-            JArray jarray = JArray.Parse("[]");
-            for (int i = 0; i < CheckBeforePowerView.Rows.Count; i++)
+            if (operator_id == 0)
             {
-                string json = @"{}";
-                JObject j = JObject.Parse(json);
-                j.Add("s2_确认项目", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认项目"].Value.ToString()));
-                j.Add("s2_确认内容", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认内容"].Value.ToString()));
-                j.Add("s2_确认结果", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认结果Y"].Value.ToString() == "True" ? "1" : "0"));
-                jarray.Add(j);
+                MessageBox.Show("未找到记录人姓名，请重新输入");
             }
-
-            //新建的
-            if (isSaveOk == false)
-            {
-                List<String> queryCols = new List<String>(new String[] { "production_instruction_id" ,"s2_is_qualified", "s2_operator_id", "s2_operate_date" });
-                List<Object> queryVals = new List<Object>(new Object[] { Instructionid, jarray.ToString(), operator_id, Convert.ToDateTime(recordTimePicker.Value.ToString("yyyy/MM/dd")) });
-                Boolean b = Utility.insertAccess(connOle, table, queryCols, queryVals);
-            }
-            //已经有了
             else
             {
-                List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
-                List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), operator_id, Convert.ToDateTime(recordTimePicker.Value.ToString("yyyy/MM/dd")) });                
-                List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
-                List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
-                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-            }
-            CheckBtn.Enabled = true;            
+                //jason 保存表格
+                JArray jarray = JArray.Parse("[]");
+                for (int i = 0; i < CheckBeforePowerView.Rows.Count; i++)
+                {
+                    string json = @"{}";
+                    JObject j = JObject.Parse(json);
+                    j.Add("s2_确认项目", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认项目"].Value.ToString()));
+                    j.Add("s2_确认内容", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认内容"].Value.ToString()));
+                    j.Add("s2_确认结果", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认结果Y"].Value.ToString() == "True" ? "1" : "0"));
+                    jarray.Add(j);
+                }
+
+                //新建的
+                if (isSaveOk == false)
+                {
+                    List<String> queryCols = new List<String>(new String[] { "production_instruction_id", "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
+                    List<Object> queryVals = new List<Object>(new Object[] { Instructionid, jarray.ToString(), operator_id, Convert.ToDateTime(recordTimePicker.Value.ToString("yyyy/MM/dd")) });
+                    Boolean b = Utility.insertAccess(connOle, table, queryCols, queryVals);
+                }
+                //已经有了
+                else
+                {
+                    List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
+                    List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), operator_id, Convert.ToDateTime(recordTimePicker.Value.ToString("yyyy/MM/dd")) });
+                    List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
+                    List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
+                    Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
+                }
+                CheckBtn.Enabled = true;
+            }                        
         }
 
         private void CheckBeforePowerView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.RowIndex != -1 && !CheckBeforePowerView.Rows[e.RowIndex].IsNewRow)
             {
-                if (e.ColumnIndex == 3)
+                if (isReadOnly==false)
                 {
-                    if ((bool)this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value == true)
+                    if (e.ColumnIndex == 3)
                     {
-                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = false;
-                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = true;
+                        if ((bool)this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value == true)
+                        {
+                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = false;
+                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = true;
+                        }
+                        else
+                        {
+                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = true;
+                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = false;
+                        }
+                    }
+                    else if (e.ColumnIndex == 4)
+                    {
+                        if ((bool)this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value == true)
+                        {
+                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = true;
+                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = false;
+                        }
+                        else
+                        {
+                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = false;
+                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = true;
+                        }
                     }
                     else
-                    {
-                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = true;
-                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = false;
-                    }
-                }
-                else if (e.ColumnIndex == 4)
-                {
-                    if ((bool)this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value == true)
-                    {
-                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = true;
-                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = false;
-                    }
-                    else
-                    {
-                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = false;
-                        this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = true;
-                    }
-                }
-                else
-                { }
+                    { }
+                }                
             }      
         }
         
@@ -335,7 +346,7 @@ namespace mySystem.Extruction.Process
             base.CheckResult();
             review_id = check.userID;
             reviewer_name = Parameter.IDtoName(review_id);
-            review_opinion = check.opinion;
+            string review_opinion = check.opinion;
             ischeckOk = check.ischeckOk;
 
             if (isSqlOk)
@@ -370,6 +381,7 @@ namespace mySystem.Extruction.Process
             if (ischeckOk)
             {
                 CheckBeforePowerView.ReadOnly = true;
+                isReadOnly = true;
                 SaveBtn.Enabled = false;
                 CheckBtn.Enabled = false;
                 printBtn.Enabled = true;
@@ -377,6 +389,7 @@ namespace mySystem.Extruction.Process
             else
             {
                 CheckBeforePowerView.ReadOnly = false;
+                isReadOnly = false;
                 SaveBtn.Enabled = true;
                 CheckBtn.Enabled = true;
                 printBtn.Enabled = false;

@@ -29,7 +29,6 @@ namespace mySystem.Extruction.Process
         private string reviewer_name;
 
         private CheckForm check = null;
-        private string review_opinion;
         private bool ischeckOk = false;
         private bool isSaveOk = false;
 
@@ -49,10 +48,10 @@ namespace mySystem.Extruction.Process
             Instructionid = Parameter.proInstruID;
 
             //温度控件的初始化
-            TemConsList = new List<Control> { label_s3_hw_set1, label_s3_ld_set1, label_s3_mj_set1, label_s3_jt1_set1, label_s3_jt2_set1, 
+            TemConsList = new List<Control> (new Control[] { label_s3_hw_set1, label_s3_ld_set1, label_s3_mj_set1, label_s3_jt1_set1, label_s3_jt2_set1, 
                     label_s3_km_set1, label_s3_region1_set1, label_s3_region2_set1, label_s3_region3_set1, label_s3_region4_set1, label_s3_hw_set2, 
                     label_s3_ld_set2, label_s3_mj_set2, label_s3_jt1_set2, label_s3_jt2_set2, label_s3_km_set2, label_s3_region1_set2, label_s3_region2_set2, 
-                    label_s3_region3_set2, label_s3_region4_set2 }; 
+                    label_s3_region3_set2, label_s3_region4_set2 }); 
 
             Init();
             TempInit();
@@ -267,24 +266,23 @@ namespace mySystem.Extruction.Process
                 recorderBox.Text = operator_name;
                 operate_date = Convert.ToDateTime(queryValsList2[0][1].ToString());
                 dateTimePicker1.Value = operate_date;
-                review_id = Convert.ToInt32(queryValsList2[0][2].ToString());
-                reviewer_name = Parameter.IDtoName(review_id);
-                checkerBox.Text = reviewer_name;
 
-                //填写已有的数据
-                phiBox.Text = queryValsList2[0][5].ToString();
-                gapBox.Text = queryValsList2[0][6].ToString();
-                Time1Picker.Value = Convert.ToDateTime(queryValsList2[0][7].ToString());
-                Time2Picker.Value = Convert.ToDateTime(queryValsList2[0][8].ToString());
-                Time3Picker.Value = Convert.ToDateTime(queryValsList2[0][9].ToString());
-                Time4Picker.Value = Convert.ToDateTime(queryValsList2[0][10].ToString());
-                Time5Picker.Value = Convert.ToDateTime(queryValsList2[0][11].ToString());
-                PSbox.Text = "";
+                if (Int32.TryParse(queryValsList[0][2].ToString(), out review_id) == false)
+                {
+                    reviewer_name = null;
+                    this.checkerBox.Text = "";
+                    ischeckOk = false;
 
-                if (reviewer_name != null)
+                    otherConsChanged(true);
+                    SaveBtn.Enabled = true;
+                    CheckBtn.Enabled = true;
+                    printBtn.Enabled = false;
+                }
+                else
                 {
                     //已有审核人信息
-                    review_opinion = queryValsList2[0][3].ToString();
+                    reviewer_name = Parameter.IDtoName(review_id);
+                    checkerBox.Text = reviewer_name;
                     ischeckOk = Convert.ToBoolean(queryValsList2[0][4].ToString());
                     //审核通过，则确认、保存均不可点
                     if (ischeckOk)
@@ -302,19 +300,18 @@ namespace mySystem.Extruction.Process
                         printBtn.Enabled = false;
                     }
                 }
-                else
-                {
-                    review_opinion = null;
-                    ischeckOk = false;
-                    review_id = 0;
-                    reviewer_name = null;
-                    checkerBox.Text = "";
+                
 
-                    otherConsChanged(true);
-                    SaveBtn.Enabled = true;
-                    CheckBtn.Enabled = true;
-                    printBtn.Enabled = false;
-                }
+                //填写已有的数据
+                phiBox.Text = queryValsList2[0][5].ToString();
+                gapBox.Text = queryValsList2[0][6].ToString();
+                Time1Picker.Value = Convert.ToDateTime(queryValsList2[0][7].ToString());
+                Time2Picker.Value = Convert.ToDateTime(queryValsList2[0][8].ToString());
+                Time3Picker.Value = Convert.ToDateTime(queryValsList2[0][9].ToString());
+                Time4Picker.Value = Convert.ToDateTime(queryValsList2[0][10].ToString());
+                Time5Picker.Value = Convert.ToDateTime(queryValsList2[0][11].ToString());
+                PSbox.Text = "";
+
             }
         }
 
@@ -409,6 +406,11 @@ namespace mySystem.Extruction.Process
 
         public void DataSaveOle()
         {
+            operator_name = recorderBox.Text;
+            if (operator_name != Parameter.IDtoName(operator_id))
+            {
+                operator_id = Parameter.NametoID(operator_name);
+            }
             //jason 保存表格
             /*
             List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
@@ -423,14 +425,11 @@ namespace mySystem.Extruction.Process
             }
             else if (CheckTemperature() == false)
             {   }
+            else if (operator_id == 0)
+            { MessageBox.Show("未找到记录人姓名，请重新输入"); }
             else
             {
                 Boolean b = false;
-                operator_name = recorderBox.Text;
-                if (operator_name != Parameter.IDtoName(operator_id))
-                {
-                    operator_id = Parameter.NametoID(operator_name);
-                }
                 List<String> queryCols = new List<String>(new String[] { "s3_recorder_id", "s3_record_date", "s3_core_specifications_1", "s3_core_specifications_2","s3_duration1", "s3_duration2", "s3_duration3", 
                     "s3_start_preheat_time", "s3_end_preheat_time", "s3_start_insulation_time", "s3_end_insulation_time_1", "s3_end_insulation_time_2" });
                 List<Object> queryVals = new List<Object>(new Object[] { operator_id, operate_date.Date, Convert.ToInt32(this.phiBox.Text).ToString(), Convert.ToInt32(this.gapBox.Text).ToString(),
@@ -485,7 +484,7 @@ namespace mySystem.Extruction.Process
             base.CheckResult();
             review_id = check.userID;
             reviewer_name = Parameter.IDtoName(review_id);
-            review_opinion = check.opinion;
+            string review_opinion = check.opinion;
             ischeckOk = check.ischeckOk;
 
             if (isSqlOk)
