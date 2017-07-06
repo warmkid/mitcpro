@@ -36,7 +36,6 @@ namespace mySystem
             Parameter.InitConnUser(); //初始化连接到有用户表的数据库
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
-            //Parameter.userID = login.userID;
 
             if (Parameter.userID != 0)
             {
@@ -60,61 +59,6 @@ namespace mySystem
 
         }
 
-
-
-
-
-
-
-//        public MainForm()
-//        {
-//            if (isSqlOk)
-//            {
-//                conn = Init(conn);              
-//            }
-//            else
-//            {
-//                string strConnect1 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-//                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
-//                string strConnect2 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-//                                Data Source=../../database/db_Cleancut.mdb;Persist Security Info=False";
-//                string strConnect3 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-//                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
-//                connOle = Init(strConnect1, connOle);
-//                connOleCleancut = Init(strConnect2, connOleCleancut);
-//                connOleBag = Init(strConnect3, connOleBag); 
-//            }
-            
-//            LoginForm login = new LoginForm(this);
-//            login.ShowDialog();
-//            userID = login.userID;
-//            if (userID != 0)
-//            {
-//                userRole = checkRole(userID);
-//            }
-            
-//            if (isSqlOk)
-//            {
-//                username = checkID(userID);
-//            }
-//            else
-//            {
-//                username = checkIDOle(userID);
-//            }
-            
-            
-//            InitializeComponent();
-//            RoleInit();
-//            userLabel.Text = username;
-
-//            //Rectangle ScreenArea = Screen.GetWorkingArea(this);
-//            //ProducePanelLeft.Size = new Size(160, ScreenArea.Height - 260);
-//            //ProducePanelRight.Size = new Size(ScreenArea.Width - 184, ScreenArea.Height - 260);
-//            //StockPanelLeft.Size = SystemPanelLeft.Size = ProducePanelLeft.Size;
-//            //StockPanelRight.Size = SystemPanelRight.Size = ProducePanelRight.Size;
-//            //this.textBox1.Text = ProducePanelRight.Size.Height.ToString();           
-
-//        }
 
         private void RoleInit()
         {
