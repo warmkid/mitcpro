@@ -94,16 +94,16 @@ namespace mySystem
 
         private int CheckUser(SqlConnection Connection, string ID, string password)
         {
-            string searchsql = "select * from user_aoxing where user_id='" + ID + "'";
+            string searchsql = "select * from [users] where 用户ID='" + ID + "'";
             SqlCommand comm = new SqlCommand(searchsql, Connection);
             SqlDataReader sdr = comm.ExecuteReader();//执行查询
             if (sdr.Read())  //如果该用户存在
             {
-                if (sdr.GetString(5).Trim() == password) //密码正确
+                if (sdr["密码"].ToString().Trim() == password) //密码正确
                 {
                     //MessageBox.Show("登录成功！", "提示");
-                    userID = sdr.GetInt32(3);
-                    userName = sdr.GetString(4);
+                    userID = Convert.ToInt32(sdr["用户ID"]);
+                    userName = sdr["姓名"].ToString();
                     comm.Dispose();
                     sdr.Close();
                     sdr.Dispose();
@@ -139,17 +139,17 @@ namespace mySystem
         {
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Connection;
-            comm.CommandText = "select * from user_aoxing where user_id= @ID";
+            comm.CommandText = "select * from [users] where 用户ID= @ID";
             comm.Parameters.AddWithValue("@ID", ID);
 
             OleDbDataReader sdr = comm.ExecuteReader();//执行查询
             if (sdr.Read())  //如果该用户存在
             {
-                if (sdr.GetString(5).Trim() == password) //密码正确
+                if (sdr["密码"].ToString().Trim() == password) //密码正确
                 {
                     //MessageBox.Show("登录成功！", "提示");
-                    userID = sdr.GetInt32(3);
-                    userName = sdr.GetString(4);
+                    userID = Convert.ToInt32(sdr["用户ID"]);
+                    userName = sdr["姓名"].ToString();
                     comm.Dispose();
                     sdr.Close();
                     sdr.Dispose();

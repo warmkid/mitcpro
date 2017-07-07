@@ -37,9 +37,9 @@ namespace mySystem
             bool extrusClean;
             bool preheat;
             // 开机前确认表
-            String tblName1 = "extrusion_s2_confirm";
-            List<String> queryCols1 = new List<String>(new String[] { "s2_reviewer_id" });
-            List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
+            String tblName1 = "吹膜机组开机前确认表";
+            List<String> queryCols1 = new List<String>(new String[] { "审核人" });
+            List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
             List<Object> whereVals1 = new List<Object>(new Object[] { Parameter.proInstruID });
             List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, tblName1, queryCols1, whereCols1, whereVals1, null, null, null, null, null);
             if (res1.Count != 0)
@@ -51,9 +51,9 @@ namespace mySystem
                 checkBeforePower = false;
             }
             //吹膜机组清洁记录
-            String tblName2 = "extrusion_s1_cleanrecord";
-            List<String> queryCols2 = new List<String>(new String[] { "s1_reviewer_id" });
-            List<String> whereCols2 = new List<String>(new String[] { "production_instruction" });
+            String tblName2 = "吹膜机组清洁记录表";
+            List<String> queryCols2 = new List<String>(new String[] { "审核人" });
+            List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
             List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
             List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, tblName2, queryCols2, whereCols2, whereVals2, null, null, null, null, null);
             if (res2.Count != 0)
@@ -65,9 +65,9 @@ namespace mySystem
                 extrusClean = false;
             }
             //吹膜机组预热参数记录表
-            String tblName3 = "extrusion_s3_preheat";
-            List<String> queryCols3 = new List<String>(new String[] { "s3_reviewer_id" });
-            List<String> whereCols3 = new List<String>(new String[] { "production_instruction_id" });
+            String tblName3 = "吹膜机组预热参数记录表";
+            List<String> queryCols3 = new List<String>(new String[] { "审核人" });
+            List<String> whereCols3 = new List<String>(new String[] { "生产指令id" });
             List<Object> whereVals3 = new List<Object>(new Object[] { Parameter.proInstruID });
             List<List<Object>> res3 = Utility.selectAccess(Parameter.connOle, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
             if (res3.Count != 0)
@@ -88,6 +88,7 @@ namespace mySystem
                 A3Btn.Enabled = false;
                 C1Btn.Enabled = false;
                 C2Btn.Enabled = false;
+                A5Btn.Enabled = false;
                 otherBtnInit(false);
             }
             else
@@ -95,6 +96,7 @@ namespace mySystem
                 C1Btn.Enabled = true;
                 A3Btn.Enabled = false;
                 C2Btn.Enabled = false;
+                cleanBtnInit(); //判断清场按钮是否可点
                 otherBtnInit(false);
                 if (checkBeforePower)
                 {
@@ -121,6 +123,91 @@ namespace mySystem
             //9、吹膜工序物料平衡记录  10、吹膜机组开机前确认表  11、吹膜机组预热参数记录表
             //12、吹膜供料系统运行记录 13、吹膜机组运行记录
             bool b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
+            string str1 = "select * from 批生产记录表 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str2 = "select * from 吹膜机组清洁记录表 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str3 = "select * from 吹膜岗位交接班记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str4 = "select * from 吹膜供料记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str5 = "select * from 吹膜工序废品记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str6 = "select * from 吹膜工序领料退料记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str7 = "select * from 吹膜生产日报表 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str8 = "select * from 吹膜工序生产和检验记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str9 = "select * from 吹膜工序物料平衡记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str10 = "select * from 吹膜机组开机前确认表 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str11 = "select * from 吹膜机组预热参数记录表 where 生产指令id = '" + Parameter.proInstruID.ToString() + "'";
+            string str12 = "select * from 吹膜供料系统运行记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str13 = "select * from 吹膜机组运行记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+
+            OleDbConnection conn = Parameter.connOle;
+            OleDbCommand comm1 = new OleDbCommand(str1, conn);
+            OleDbCommand comm2 = new OleDbCommand(str2, conn);
+            OleDbCommand comm3 = new OleDbCommand(str3, conn);
+            OleDbCommand comm4 = new OleDbCommand(str4, conn);
+            OleDbCommand comm5 = new OleDbCommand(str5, conn);
+            OleDbCommand comm6 = new OleDbCommand(str6, conn);
+            OleDbCommand comm7 = new OleDbCommand(str7, conn);
+            OleDbCommand comm8 = new OleDbCommand(str8, conn);
+            OleDbCommand comm9 = new OleDbCommand(str9, conn);
+            OleDbCommand comm10 = new OleDbCommand(str10, conn);
+            OleDbCommand comm11 = new OleDbCommand(str11, conn);
+            OleDbCommand comm12 = new OleDbCommand(str12, conn);
+            OleDbCommand comm13 = new OleDbCommand(str13, conn);
+            OleDbDataReader reader1 = comm1.ExecuteReader();
+            OleDbDataReader reader2 = comm2.ExecuteReader();
+            OleDbDataReader reader3 = comm3.ExecuteReader();
+            OleDbDataReader reader4 = comm4.ExecuteReader();
+            OleDbDataReader reader5 = comm5.ExecuteReader();
+            OleDbDataReader reader6 = comm6.ExecuteReader();
+            OleDbDataReader reader7 = comm7.ExecuteReader();
+            OleDbDataReader reader8 = comm8.ExecuteReader();
+            OleDbDataReader reader9 = comm9.ExecuteReader();
+            OleDbDataReader reader10 = comm10.ExecuteReader();
+            OleDbDataReader reader11 = comm11.ExecuteReader();
+            OleDbDataReader reader12 = comm12.ExecuteReader();
+            OleDbDataReader reader13 = comm13.ExecuteReader();
+            b1 = reader1.HasRows == true ? true : false;
+            b2 = reader2.HasRows == true ? true : false;
+            b3 = reader3.HasRows == true ? true : false;
+            b4 = reader4.HasRows == true ? true : false;
+            b5 = reader5.HasRows == true ? true : false;
+            b6 = reader6.HasRows == true ? true : false;
+            b7 = reader7.HasRows == true ? true : false;
+            b8 = reader8.HasRows == true ? true : false;
+            b9 = reader9.HasRows == true ? true : false;
+            b10 = reader10.HasRows == true ? true : false;
+            b11 = reader11.HasRows == true ? true : false;
+            b12 = reader12.HasRows == true ? true : false;
+            b13 = reader13.HasRows == true ? true : false;
+            if (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9 && b10 && b11 && b12 && b13)
+            { A5Btn.Enabled = true; }
+            else
+            { A5Btn.Enabled = false; }
+
+            reader1.Dispose();
+            reader2.Dispose();
+            reader3.Dispose();
+            reader4.Dispose();
+            reader5.Dispose();
+            reader6.Dispose();
+            reader7.Dispose();
+            reader8.Dispose();
+            reader9.Dispose();
+            reader10.Dispose();
+            reader11.Dispose();
+            reader12.Dispose();
+            reader13.Dispose();
+            comm1.Dispose();
+            comm2.Dispose();
+            comm3.Dispose();
+            comm4.Dispose();
+            comm5.Dispose();
+            comm6.Dispose();
+            comm7.Dispose();
+            comm8.Dispose();
+            comm9.Dispose();
+            comm10.Dispose();
+            comm11.Dispose();
+            comm12.Dispose();
+            comm13.Dispose();
 
         }
 
@@ -151,13 +238,14 @@ namespace mySystem
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select production_instruction_code from production_instruction where isfinished=false ";
+                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 where 状态 <> 4 ";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
+                    comboBox1.Items.Clear();
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["production_instruction_code"]);
+                        comboBox1.Items.Add(reader["生产指令编号"]);
                     }
                 }
             }
@@ -165,13 +253,13 @@ namespace mySystem
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = Parameter.conn;
-                comm.CommandText = "select production_instruction_code from production_instruction where isfinished = false";
+                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 where 状态 <> 4 ";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["production_instruction_code"]);
+                        comboBox1.Items.Add(reader["生产指令编号"]);
                     }
                 }
 
@@ -182,9 +270,9 @@ namespace mySystem
         {
             instruction = comboBox1.SelectedItem.ToString();
             Parameter.proInstruction = instruction;
-            String tblName = "production_instruction";
-            List<String> queryCols = new List<String>(new String[] { "production_instruction_id" });
-            List<String> whereCols = new List<String>(new String[] { "production_instruction_code" });
+            String tblName = "生产指令信息表";
+            List<String> queryCols = new List<String>(new String[] { "ID" });
+            List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
@@ -217,9 +305,9 @@ namespace mySystem
             //DateTime now = new DateTime(2017, 7, 4, 18, 14, 30); //测试用，可以跳出界面的时间
             DateTime preheattime;
             //获取开机时间
-            String table = "extrusion_s3_preheat";
-            List<String> queryCols = new List<String>(new String[] { "s3_end_insulation_time_2" });
-            List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
+            String table = "吹膜机组预热参数记录表";
+            List<String> queryCols = new List<String>(new String[] { "保温结束时间3" });
+            List<String> whereCols = new List<String>(new String[] { "生产指令id" });
             List<Object> whereVals = new List<Object>(new Object[] { Parameter.proInstruID });
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
             if (res.Count == 0)
@@ -240,22 +328,22 @@ namespace mySystem
                     if (110 <= duration && duration < 120) //差十分钟
                     {
                         //检查是否填写
-                        String table1 = "running_record_of_feeding_unit"; //吹膜供料系统运行记录
-                        List<String> queryCols1 = new List<String>(new String[] { "id" });
-                        List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
+                        String table1 = "吹膜供料系统运行记录"; //吹膜供料系统运行记录
+                        List<String> queryCols1 = new List<String>(new String[] { "ID" });
+                        List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
                         List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
-                        String betweenCol1 = "modifytime";
+                        String betweenCol1 = "检查时间";
                         DateTime right1 = now;
                         DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 5));
                         DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
                         DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
                         List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
 
-                        String table2 = "running_record_of_extrusion_unit"; //吹膜机组运行记录
-                        List<String> queryCols2 = new List<String>(new String[] { "id" });
-                        List<String> whereCols2 = new List<String>(new String[] { "production_instruction_id" });
+                        String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
+                        List<String> queryCols2 = new List<String>(new String[] { "ID" });
+                        List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
                         List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                        String betweenCol2 = "modifytime";
+                        String betweenCol2 = "记录时间";
                         DateTime right2 = now;
                         DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 5));
                         DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);
@@ -285,22 +373,22 @@ namespace mySystem
                     else if (0 <= duration && duration < 5) //超时五分钟
                     {
                         //检查是否填写
-                        String table1 = "running_record_of_feeding_unit"; //吹膜供料系统运行记录
-                        List<String> queryCols1 = new List<String>(new String[] { "id" });
-                        List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
+                        String table1 = "吹膜供料系统运行记录"; //吹膜供料系统运行记录
+                        List<String> queryCols1 = new List<String>(new String[] { "ID" });
+                        List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
                         List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
-                        String betweenCol1 = "modifytime";
+                        String betweenCol1 = "检查时间";
                         DateTime right1 = now;
                         DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 125));
                         DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
                         DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
                         List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
 
-                        String table2 = "running_record_of_extrusion_unit"; //吹膜机组运行记录
-                        List<String> queryCols2 = new List<String>(new String[] { "id" });
-                        List<String> whereCols2 = new List<String>(new String[] { "production_instruction_id" });
+                        String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
+                        List<String> queryCols2 = new List<String>(new String[] { "ID" });
+                        List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
                         List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                        String betweenCol2 = "modifytime";
+                        String betweenCol2 = "记录时间";
                         DateTime right2 = now;
                         DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 125));
                         DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);
@@ -330,22 +418,22 @@ namespace mySystem
                     else if (5 <= duration && duration < 10) //超时十分钟，弹出
                     {
                         //检查是否填写
-                        String table1 = "running_record_of_feeding_unit"; //吹膜供料系统运行记录
-                        List<String> queryCols1 = new List<String>(new String[] { "id" });
-                        List<String> whereCols1 = new List<String>(new String[] { "production_instruction_id" });
+                        String table1 = "吹膜供料系统运行记录"; //吹膜供料系统运行记录
+                        List<String> queryCols1 = new List<String>(new String[] { "ID" });
+                        List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
                         List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
-                        String betweenCol1 = "modifytime";
+                        String betweenCol1 = "检查时间";
                         DateTime right1 = now;
                         DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 125));
                         DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
                         DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
                         List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
 
-                        String table2 = "running_record_of_extrusion_unit"; //吹膜机组运行记录
-                        List<String> queryCols2 = new List<String>(new String[] { "id" });
-                        List<String> whereCols2 = new List<String>(new String[] { "production_instruction_id" });
+                        String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
+                        List<String> queryCols2 = new List<String>(new String[] { "ID" });
+                        List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
                         List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                        String betweenCol2 = "modifytime";
+                        String betweenCol2 = "记录时间";
                         DateTime right2 = now;
                         DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 125));
                         DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);

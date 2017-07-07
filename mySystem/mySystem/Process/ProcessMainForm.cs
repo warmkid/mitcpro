@@ -17,9 +17,6 @@ namespace mySystem
 {
     public partial class ProcessMainForm : BaseForm
     {
-        SqlConnection conn = null;
-        OleDbConnection connOle = null;
-        bool isSqlOk;
         MainForm mform = null;
         public ExtructionMainForm extruform = null;
         CleanCutMainForm cleancutform = null;
@@ -31,9 +28,6 @@ namespace mySystem
         {
             InitializeComponent();
             mform = mainform;
-            conn = mainform.conn;
-            connOle = mainform.connOle;
-            isSqlOk = mainform.isSqlOk;
             RoleInit();
         }
 
