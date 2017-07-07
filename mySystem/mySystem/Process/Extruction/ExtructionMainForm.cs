@@ -96,7 +96,7 @@ namespace mySystem
                 C1Btn.Enabled = true;
                 A3Btn.Enabled = false;
                 C2Btn.Enabled = false;
-                cleanBtnInit(); //判断清场按钮是否可点
+                //cleanBtnInit(); //判断清场按钮是否可点
                 otherBtnInit(false);
                 if (checkBeforePower)
                 {
