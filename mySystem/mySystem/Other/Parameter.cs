@@ -33,27 +33,32 @@ namespace mySystem
         static string strConn;
         static bool isOk = false;
 
-        
+        public static ExtructionMainForm parentExtru; //吹膜mainform
+        public static mySystem.Process.CleanCut.CleanCutMainForm parentClean; //清洁分切mainform
+        public static mySystem.Process.Bag.CSBagMainForm parentCS; //cs制袋mainform
+        public static mySystem.Process.Bag.LDPE.LDPEMainForm parentLDPE; //LDPE制袋mainform
+        public static mySystem.Process.Bag.PTV.PTVMainForm parentPTV; //PTV制袋mainform
+
 
         //通过id查名字
         public static string IDtoName(int id)
         {
             string name = null;
             string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                                Data Source=../../database/user.mdb;Persist Security Info=False";
             if (!isSqlOk)
             {
                 OleDbConnection myConn = new OleDbConnection(strCon);
                 myConn.Open();
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = myConn;
-                comm.CommandText = "select * from user_aoxing where user_id= @ID";
+                comm.CommandText = "select * from [users] where 用户ID= @ID";
                 comm.Parameters.AddWithValue("@ID", id);
 
                 OleDbDataReader myReader = comm.ExecuteReader();
                 while (myReader.Read())
                 {
-                    name = myReader.GetString(4);
+                    name = myReader["姓名"].ToString();
                 }
 
                 myReader.Close();
@@ -70,12 +75,12 @@ namespace mySystem
             if (!isSqlOk)
             {
                 string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                                Data Source=../../database/user.mdb;Persist Security Info=False";
                 OleDbConnection myConn = new OleDbConnection(strCon);
                 myConn.Open();
-                String tblName = "user_aoxing";
-                List<String> queryCols = new List<String>(new String[] { "user_id" });
-                List<String> whereCols = new List<String>(new String[] { "user_name" });
+                String tblName = "users";
+                List<String> queryCols = new List<String>(new String[] { "用户ID" });
+                List<String> whereCols = new List<String>(new String[] { "姓名" });
                 List<Object> whereVals = new List<Object>(new Object[] { name });
                 List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
 
@@ -106,12 +111,12 @@ namespace mySystem
             if (!isSqlOk)
             {
                 string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                                Data Source=../../database/user.mdb;Persist Security Info=False";
                 OleDbConnection myConn = new OleDbConnection(strCon);
                 myConn.Open();
-                String tblName = "user_aoxing";
-                List<String> queryCols = new List<String>(new String[] { "flight" });
-                List<String> whereCols = new List<String>(new String[] { "user_id" });
+                String tblName = "users";
+                List<String> queryCols = new List<String>(new String[] { "班次" });
+                List<String> whereCols = new List<String>(new String[] { "用户ID" });
                 List<Object> whereVals = new List<Object>(new Object[] { id });
                 List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
                 flight = Convert.ToBoolean(res[0][0]);
@@ -128,12 +133,12 @@ namespace mySystem
             if (!isSqlOk)
             {
                 string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                                Data Source=../../database/user.mdb;Persist Security Info=False";
                 OleDbConnection myConn = new OleDbConnection(strCon);
                 myConn.Open();
-                String tblName = "user_aoxing";
-                List<String> queryCols = new List<String>(new String[] { "role_id" });
-                List<String> whereCols = new List<String>(new String[] { "user_id" });
+                String tblName = "users";
+                List<String> queryCols = new List<String>(new String[] { "角色ID" });
+                List<String> whereCols = new List<String>(new String[] { "用户ID" });
                 List<Object> whereVals = new List<Object>(new Object[] { id });
                 List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
                 role = Convert.ToInt32(res[0][0]);
@@ -150,7 +155,7 @@ namespace mySystem
             if (!isSqlOk)
             {
                 string strsql = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                                Data Source=../../database/user.mdb;Persist Security Info=False";
                 connOleUser = Init(strsql, connOleUser);
 
             }
@@ -168,7 +173,7 @@ namespace mySystem
                 {
                     case 1:  //吹膜
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Extrusion.mdb;Persist Security Info=False";
+                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
                         connOle = Init(strConn, connOle);
                         break;
                     case 2:  //清洁分切

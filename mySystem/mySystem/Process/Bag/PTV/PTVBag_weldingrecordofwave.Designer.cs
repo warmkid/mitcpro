@@ -36,11 +36,6 @@
             this.tB产品批号 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.焊接时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.焊接产品数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.压力 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,23 +43,21 @@
             this.熔接时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.硬化熔接时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.操作人 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.tB合格品数量 = new System.Windows.Forms.TextBox();
-            this.tB不合格品数量 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tB不合格品数量 = new System.Windows.Forms.TextBox();
+            this.tB合格品数量 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -142,12 +135,53 @@
             this.熔接时间,
             this.硬化熔接时间,
             this.操作人});
-            this.dataGridView1.Location = new System.Drawing.Point(32, 115);
+            this.dataGridView1.Location = new System.Drawing.Point(32, 152);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(873, 182);
+            this.dataGridView1.Size = new System.Drawing.Size(873, 336);
             this.dataGridView1.TabIndex = 13;
+            // 
+            // 焊接时间
+            // 
+            this.焊接时间.HeaderText = "焊接时间";
+            this.焊接时间.Name = "焊接时间";
+            this.焊接时间.Width = 120;
+            // 
+            // 焊接产品数量
+            // 
+            this.焊接产品数量.HeaderText = "焊接产品   数量";
+            this.焊接产品数量.Name = "焊接产品数量";
+            // 
+            // 压力
+            // 
+            this.压力.HeaderText = "压力(bar)";
+            this.压力.Name = "压力";
+            this.压力.Width = 90;
+            // 
+            // 延迟时间
+            // 
+            this.延迟时间.HeaderText = "延迟时间(s)";
+            this.延迟时间.Name = "延迟时间";
+            this.延迟时间.Width = 150;
+            // 
+            // 熔接时间
+            // 
+            this.熔接时间.HeaderText = "熔接时间(s)";
+            this.熔接时间.Name = "熔接时间";
+            this.熔接时间.Width = 150;
+            // 
+            // 硬化熔接时间
+            // 
+            this.硬化熔接时间.HeaderText = "硬化熔接时间(s)";
+            this.硬化熔接时间.Name = "硬化熔接时间";
+            this.硬化熔接时间.Width = 170;
+            // 
+            // 操作人
+            // 
+            this.操作人.HeaderText = "操作人";
+            this.操作人.Name = "操作人";
+            this.操作人.Width = 90;
             // 
             // dateTimePicker2
             // 
@@ -199,137 +233,13 @@
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             // 
-            // 焊接时间
+            // textBox1
             // 
-            this.焊接时间.HeaderText = "焊接时间";
-            this.焊接时间.Name = "焊接时间";
-            this.焊接时间.Width = 120;
-            // 
-            // 焊接产品数量
-            // 
-            this.焊接产品数量.HeaderText = "焊接产品   数量";
-            this.焊接产品数量.Name = "焊接产品数量";
-            // 
-            // 压力
-            // 
-            this.压力.HeaderText = "压力(bar)";
-            this.压力.Name = "压力";
-            this.压力.Width = 90;
-            // 
-            // 延迟时间
-            // 
-            this.延迟时间.HeaderText = "延迟时间(s)";
-            this.延迟时间.Name = "延迟时间";
-            this.延迟时间.Width = 150;
-            // 
-            // 熔接时间
-            // 
-            this.熔接时间.HeaderText = "熔接时间(s)";
-            this.熔接时间.Name = "熔接时间";
-            this.熔接时间.Width = 150;
-            // 
-            // 硬化熔接时间
-            // 
-            this.硬化熔接时间.HeaderText = "硬化熔接时间(s)";
-            this.硬化熔接时间.Name = "硬化熔接时间";
-            this.硬化熔接时间.Width = 170;
-            // 
-            // 操作人
-            // 
-            this.操作人.HeaderText = "操作人";
-            this.操作人.Name = "操作人";
-            this.操作人.Width = 90;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4,
-            this.dataGridViewTextBoxColumn5,
-            this.dataGridViewTextBoxColumn6,
-            this.dataGridViewTextBoxColumn7});
-            this.dataGridView2.Location = new System.Drawing.Point(32, 303);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(873, 182);
-            this.dataGridView2.TabIndex = 19;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "焊接时间";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 120;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "焊接产品   数量";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "压力(bar)";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 90;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "延迟时间(s)";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            this.dataGridViewTextBoxColumn5.HeaderText = "熔接时间(s)";
-            this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 150;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "硬化熔接时间(s)";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.Width = 170;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "操作人";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.Width = 90;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 16);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(56, 16);
-            this.label5.TabIndex = 20;
-            this.label5.Text = "备注：";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 42);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(432, 16);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "合格品数量            只，不合格品数量           只，\r\n";
-            // 
-            // tB合格品数量
-            // 
-            this.tB合格品数量.Location = new System.Drawing.Point(97, 37);
-            this.tB合格品数量.Name = "tB合格品数量";
-            this.tB合格品数量.Size = new System.Drawing.Size(81, 26);
-            this.tB合格品数量.TabIndex = 21;
-            // 
-            // tB不合格品数量
-            // 
-            this.tB不合格品数量.Location = new System.Drawing.Point(318, 37);
-            this.tB不合格品数量.Name = "tB不合格品数量";
-            this.tB不合格品数量.Size = new System.Drawing.Size(81, 26);
-            this.tB不合格品数量.TabIndex = 22;
+            this.textBox1.Location = new System.Drawing.Point(97, 70);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(463, 26);
+            this.textBox1.TabIndex = 24;
             // 
             // label9
             // 
@@ -340,20 +250,63 @@
             this.label9.TabIndex = 23;
             this.label9.Text = "不良描述：";
             // 
-            // textBox1
+            // tB不合格品数量
             // 
-            this.textBox1.Location = new System.Drawing.Point(97, 70);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(463, 26);
-            this.textBox1.TabIndex = 24;
+            this.tB不合格品数量.Location = new System.Drawing.Point(318, 37);
+            this.tB不合格品数量.Name = "tB不合格品数量";
+            this.tB不合格品数量.Size = new System.Drawing.Size(81, 26);
+            this.tB不合格品数量.TabIndex = 22;
+            // 
+            // tB合格品数量
+            // 
+            this.tB合格品数量.Location = new System.Drawing.Point(97, 37);
+            this.tB合格品数量.Name = "tB合格品数量";
+            this.tB合格品数量.Size = new System.Drawing.Size(81, 26);
+            this.tB合格品数量.TabIndex = 21;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(8, 42);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(432, 16);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "合格品数量            只，不合格品数量           只，\r\n";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 16);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 16);
+            this.label5.TabIndex = 20;
+            this.label5.Text = "备注：";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(135, 127);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(56, 16);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "设定：";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(253, 120);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(92, 26);
+            this.textBox3.TabIndex = 20;
+            this.textBox3.Text = "0.4";
+            this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // PTVBag_weldingrecordofwave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(936, 638);
-            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.textBox2);
@@ -375,7 +328,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -403,19 +355,13 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox tB不合格品数量;
         private System.Windows.Forms.TextBox tB合格品数量;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
