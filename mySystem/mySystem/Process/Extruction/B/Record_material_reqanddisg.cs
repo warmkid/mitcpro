@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.OleDb;
 
 namespace mySystem.Extruction.Process
 {
@@ -15,6 +16,7 @@ namespace mySystem.Extruction.Process
         List<cont> list_4 = null;
         List<cont> list_6 = null;
         List<cont> list_11 = null;
+        int label;//标记哪个物料被选中
         public class cont
         {
             public DateTime date;
@@ -25,6 +27,29 @@ namespace mySystem.Extruction.Process
             public int isclean;
             public string oper;
             public string checker;
+        }
+
+        //通过原料代码查找原料id
+        private int id_findby_matcode(string matcode)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select raw_material_id from raw_material where raw_material_code='" + matcode + "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return -1;
+            }
+            else
+            {
+                da.Dispose();
+                return int.Parse(tempdt.Rows[0][0].ToString());
+            }
         }
         public Record_material_reqanddisg(MainForm mainform)
             : base(mainform)
@@ -41,6 +66,7 @@ namespace mySystem.Extruction.Process
 
             checkBox1.Checked = true;
             addblankrow();
+            label = 1;
         }
         //添加空行
         private void addblankrow()
@@ -53,9 +79,24 @@ namespace mySystem.Extruction.Process
             dataGridView1.Rows.Add(dr);
         }
 
+        //保存领料退料数据到数据库中
+        private void save_to_database(List<cont> list)
+        {
+            
+        }
         private void button1_Click(object sender, EventArgs e)
         {
-
+            //switch (label)
+            //{
+            //    case 1:
+            //        break;
+            //    case 2:
+            //        break;
+            //    case 3:
+            //        break;
+            //    case 4:
+            //        break;
+            //}
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -65,6 +106,7 @@ namespace mySystem.Extruction.Process
                 checkBox2.Checked = false;
                 checkBox3.Checked = false;
                 checkBox4.Checked = false;
+                label = 1;
             }
             //清空表格
             while (dataGridView1.Rows.Count != 0)
@@ -98,6 +140,7 @@ namespace mySystem.Extruction.Process
                 checkBox1.Checked = false;
                 checkBox3.Checked = false;
                 checkBox4.Checked = false;
+                label = 2;
             }
             //清空表格
             while (dataGridView1.Rows.Count != 0)
@@ -131,6 +174,7 @@ namespace mySystem.Extruction.Process
                 checkBox2.Checked = false;
                 checkBox1.Checked = false;
                 checkBox4.Checked = false;
+                label = 3;
             }
             //清空表格
             while (dataGridView1.Rows.Count != 0)
@@ -164,6 +208,7 @@ namespace mySystem.Extruction.Process
                 checkBox2.Checked = false;
                 checkBox3.Checked = false;
                 checkBox1.Checked = false;
+                label = 4;
             }
             //清空表格
             while (dataGridView1.Rows.Count != 0)
@@ -316,6 +361,11 @@ namespace mySystem.Extruction.Process
             }
         }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void Record_material_reqanddisg_Load(object sender, EventArgs e)
         {
 
         }

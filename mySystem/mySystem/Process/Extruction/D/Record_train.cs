@@ -6,11 +6,20 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.OleDb;
 
 namespace mySystem.Extruction.Process
 {
     public partial class Record_train : mySystem.BaseForm
     {
+        static int index = 0;
+
+        OleDbConnection connOle;
+        private DataTable teacher;//讲师
+        private OleDbDataAdapter da_teacher;
+        private BindingSource bs_teacher;
+        private OleDbCommandBuilder cb_teacher;
+
         List<string> pro=null;
         List<string> cont = null;
         public Record_train(mySystem.MainForm mainform)
@@ -18,9 +27,11 @@ namespace mySystem.Extruction.Process
         {
             InitializeComponent();
             init();
+            bind();
         }
         private void init()
         {
+            //填表格
             pro = new List<string>();
             cont = new List<string>();
             pro.Add("急停开关");
@@ -60,10 +71,105 @@ namespace mySystem.Extruction.Process
                 dr.Cells[1].Value = cont[i];
                 dataGridView1.Rows.Add(dr);
             }
+            //
+            connOle = mySystem.Parameter.connOle;
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView2.DataError += dataGridView2_DataError;
 
         }
 
+        //绑定连接数据库的表，相当于更新
+        private void bind2(int id)
+        {
+            teacher.Dispose();
+            bs_teacher.Dispose();
+            da_teacher.Dispose();
+            cb_teacher.Dispose();
+
+            teacher = new DataTable("teacher");
+            bs_teacher = new BindingSource();
+            da_teacher = new OleDbDataAdapter("select * from safety_training_record where id="+id, connOle);
+            cb_teacher = new OleDbCommandBuilder(da_teacher);
+            da_teacher.Fill(teacher);
+
+            //DataTable到BindingSource的绑定
+            bs_teacher.DataSource = teacher;
+
+            //BindingSource到控件的绑定
+            textBox2.DataBindings.Clear();
+            textBox3.DataBindings.Clear();
+            dateTimePicker1.DataBindings.Clear();
+            textBox2.DataBindings.Add("Text", bs_teacher.DataSource, "teacher");
+            textBox3.DataBindings.Add("Text", bs_teacher.DataSource, "location");
+            dateTimePicker1.DataBindings.Add("Value", bs_teacher.DataSource, "training_date");
+        }
+
+        //初次绑定连接数据库的表，相当于插入
+        private void bind()
+        {
+            teacher = new DataTable("teacher");
+            bs_teacher = new BindingSource();
+            da_teacher = new OleDbDataAdapter("select * from safety_training_record where 1=2", connOle);
+            cb_teacher = new OleDbCommandBuilder(da_teacher);
+            da_teacher.Fill(teacher);
+
+
+            DataRow dr=teacher.NewRow();
+            dr[1] = dr[2] = DateTime.Now;
+            dr[3] = "";
+            dr[4] = "";
+            dr[5] = DateTime.Now;
+            dr[6] = 0;
+            dr[7] = true;
+            teacher.Rows.Add(dr);
+           
+            //DataTable到BindingSource的绑定
+            bs_teacher.DataSource = teacher;
+
+            //BindingSource到控件的绑定
+            textBox2.DataBindings.Add("Text",bs_teacher.DataSource,"teacher");
+            textBox3.DataBindings.Add("Text", bs_teacher.DataSource, "location");
+            dateTimePicker1.DataBindings.Add("Value", bs_teacher.DataSource, "training_date");
+
+        }
+        void dataGridView2_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            MessageBox.Show(name + "填写错误");
+        }
+
+        private int getid()
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select @@identity";
+
+            return (int)comm.ExecuteScalar();
+
+
+        }
         private void button1_Click(object sender, EventArgs e)
+        {
+            if (index == 0)//第一次点击
+            {
+                //保存教师
+                bs_teacher.EndEdit();
+                da_teacher.Update((DataTable)bs_teacher.DataSource);
+                MessageBox.Show("添加成功");
+                int id = getid();
+                if(id!=-1)
+                    bind2(id);
+                index = 1;
+            }
+            else
+            {
+                bs_teacher.EndEdit();
+                da_teacher.Update((DataTable)bs_teacher.DataSource);
+                MessageBox.Show("更新成功");
+            }
+        }
+        private void textBox3_TextChanged(object sender, EventArgs e)
         {
 
         }
