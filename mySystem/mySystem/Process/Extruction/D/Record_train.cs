@@ -157,10 +157,10 @@ namespace mySystem.Extruction.Process
                 bs_teacher.EndEdit();
                 da_teacher.Update((DataTable)bs_teacher.DataSource);
                 MessageBox.Show("添加成功");
-                int id = getid();
-                if(id!=-1)
-                    bind2(id);
-                index = 1;
+                //int id = getid();
+                //if(id!=-1)
+                //    bind2(id);
+                //index = 1;
             }
             else
             {
