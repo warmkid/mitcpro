@@ -33,7 +33,12 @@ namespace mySystem
         static string strConn;
         static bool isOk = false;
 
-        
+        public static ExtructionMainForm parentExtru; //吹膜mainform
+        public static mySystem.Process.CleanCut.CleanCutMainForm parentClean; //清洁分切mainform
+        public static mySystem.Process.Bag.CSBagMainForm parentCS; //cs制袋mainform
+        public static mySystem.Process.Bag.LDPE.LDPEMainForm parentLDPE; //LDPE制袋mainform
+        public static mySystem.Process.Bag.PTV.PTVMainForm parentPTV; //PTV制袋mainform
+
 
         //通过id查名字
         public static string IDtoName(int id)

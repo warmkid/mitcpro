@@ -74,13 +74,13 @@ namespace mySystem
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
 
-            extruform = new ExtructionMainForm(mform);                       
+            extruform = new ExtructionMainForm(mform);
+            Parameter.parentExtru = extruform;      
             extruform.TopLevel = false;
             extruform.FormBorderStyle = FormBorderStyle.None;
             extruform.Size = ProducePanelRight.Size;
             ProducePanelRight.Controls.Add(extruform);
             extruform.Show();
-            //extruform.Visible = true;
         }
 
         //清洁分切
@@ -106,6 +106,8 @@ namespace mySystem
             cleancutform.Size = ProducePanelRight.Size;
             ProducePanelRight.Controls.Add(cleancutform);
             cleancutform.Show();
+            Parameter.parentClean = cleancutform;
+
         }
 
         //制袋
@@ -160,7 +162,7 @@ namespace mySystem
             csbagform.Size = ProducePanelRight.Size;
             ProducePanelRight.Controls.Add(csbagform);
             csbagform.Show();
-            csbagform.Visible = true;
+            Parameter.parentCS = csbagform;
             
         }
 
@@ -184,7 +186,7 @@ namespace mySystem
             ldpebagform.Size = ProducePanelRight.Size;
             ProducePanelRight.Controls.Add(ldpebagform);
             ldpebagform.Show();
-            ldpebagform.Visible = true;
+            Parameter.parentLDPE = ldpebagform;
         }
 
         //连续袋
@@ -222,7 +224,7 @@ namespace mySystem
             ptvbagform.Size = ProducePanelRight.Size;
             ProducePanelRight.Controls.Add(ptvbagform);
             ptvbagform.Show();
-            ptvbagform.Visible = true;
+            Parameter.parentPTV = ptvbagform;
         }
 
         //BTV制袋

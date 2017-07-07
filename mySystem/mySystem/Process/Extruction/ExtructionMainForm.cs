@@ -113,11 +113,21 @@ namespace mySystem
 
         }
 
+        //清场记录按钮状态
+        public void cleanBtnInit()
+        {
+            //1、批生产记录（吹膜）  2、吹膜机组清洁记录  3、吹膜岗位交接班记录  4、吹膜供料记录
+            //5、吹膜工序废品记录  6、吹膜工序领料退料记录  7、吹膜生产日报表  8、吹膜工序生产和检验记录
+            //9、吹膜工序物料平衡记录  10、吹膜机组开机前确认表  11、吹膜机组预热参数记录表
+            //12、吹膜供料系统运行记录 13、吹膜机组运行记录
+            bool b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
+
+        }
+
         public void otherBtnInit(bool b)
         {
             A1Btn.Enabled = b;
             A4Btn.Enabled = b;
-            A5Btn.Enabled = b;
             B2Btn.Enabled = b;
             B3Btn.Enabled = b;
             B4Btn.Enabled = b;
@@ -135,13 +145,13 @@ namespace mySystem
         }
 
         //下拉框获取生产指令
-        private void comboInit()
+        public void comboInit()
         {
             if (!Parameter.isSqlOk)
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select production_instruction_code from production_instruction";
+                comm.CommandText = "select production_instruction_code from production_instruction where isfinished=false ";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
@@ -155,7 +165,7 @@ namespace mySystem
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = Parameter.conn;
-                comm.CommandText = "select production_instruction_code from production_instruction";
+                comm.CommandText = "select production_instruction_code from production_instruction where isfinished = false";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
