@@ -37,14 +37,19 @@ namespace BatchProductRecord
         float sumweight;
 
         //新的版本
-        static int index = 0;//判断是否第一次保存，第一次保存认为是插入数据库
-
+        int index = 0;//判断是插入模式还是更新模式，0代表插入，1代表更新
+        int id;
+        int label = 0;
         OleDbConnection connOle;
         private DataTable dt_prodinstr,dt_prodlist;//讲师
         private OleDbDataAdapter da_prodinstr,da_prodlist;
         private BindingSource bs_prodinstr,bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr,cb_prodlist;
 
+        private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+
+        }
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
@@ -55,6 +60,7 @@ namespace BatchProductRecord
 
             init();
             bind();
+            
         }
         private void init()
         {
@@ -83,17 +89,52 @@ namespace BatchProductRecord
             //}
             #endregion
 
+
             connOle = mySystem.Parameter.connOle;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataError += dataGridView1_DataError;
 
+            dt_prodinstr=new System.Data.DataTable();
+            bs_prodinstr=new System.Windows.Forms.BindingSource();
+            da_prodinstr=new OleDbDataAdapter();
+            cb_prodinstr=new OleDbCommandBuilder();
+
+            dt_prodlist = new System.Data.DataTable();
+            bs_prodlist=new System.Windows.Forms.BindingSource();
+            da_prodlist = new OleDbDataAdapter();
+            cb_prodlist = new OleDbCommandBuilder();
 
 
+        }
+        //产品列表绑定
+        private void bind_list(int id)
+        {
+            dt_prodlist.Dispose();
+            bs_prodlist.Dispose();
+            da_prodlist.Dispose();
+            cb_prodlist.Dispose();
+
+            dt_prodlist = new DataTable("生产指令产品列表");
+            bs_prodlist = new BindingSource();
+            da_prodlist = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID="+id, connOle);
+            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
+            da_prodlist.Fill(dt_prodlist);
+
+            //DataTable到BindingSource的绑定
+            bs_prodlist.DataSource = dt_prodlist;
+
+            //BindingSource到控件的绑定
+            dataGridView1.DataSource = bs_prodlist.DataSource;
         }
 
         //初次绑定数据库表
         private void bind()
         {
+            dt_prodinstr.Dispose();
+            bs_prodinstr.Dispose();
+            da_prodinstr.Dispose();
+            cb_prodinstr.Dispose();
+
             dt_prodinstr = new DataTable("生产指令信息表");
             bs_prodinstr = new BindingSource();
             da_prodinstr = new OleDbDataAdapter("select * from 生产指令信息表 where 1=2", connOle);
@@ -107,20 +148,50 @@ namespace BatchProductRecord
             dr[27] = false;
             dt_prodinstr.Rows.Add(dr);
 
-            dt_prodlist = new DataTable("生产指令信息表");
-            bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from 生产指令信息表 where 1=2", connOle);
-            cb_prodlist = new OleDbCommandBuilder(da_prodinstr);
-            da_prodlist.Fill(dt_prodinstr);
-
             //DataTable到BindingSource的绑定
             bs_prodinstr.DataSource = dt_prodinstr;
+
+            //解除之前的绑定
+            textBox1.DataBindings.Clear();
+            textBox2.DataBindings.Clear();
+            textBox3.DataBindings.Clear();
+            textBox4.DataBindings.Clear();
+            dateTimePicker1.DataBindings.Clear();
+
+            textBox15.DataBindings.Clear();
+            textBox17.DataBindings.Clear();
+            textBox19.DataBindings.Clear();
+            textBox21.DataBindings.Clear();
+            textBox16.DataBindings.Clear();
+            textBox18.DataBindings.Clear();
+            textBox20.DataBindings.Clear();
+            textBox22.DataBindings.Clear();
+            textBox12.DataBindings.Clear();
+            textBox13.DataBindings.Clear();
+            textBox14.DataBindings.Clear();
+            textBox9.DataBindings.Clear();
+            textBox11.DataBindings.Clear();
+            textBox5.DataBindings.Clear();
+
+            textBox24.DataBindings.Clear();
+            textBox25.DataBindings.Clear();
+            textBox26.DataBindings.Clear();
+            dateTimePicker2.DataBindings.Clear();
+            dateTimePicker3.DataBindings.Clear();
+            dateTimePicker4.DataBindings.Clear();
 
             //BindingSource到控件的绑定
             bind_bs_contr();
 
+            index = 0;
+
         }
 
+        private void bind_bs_contr_list()
+        {
+            dataGridView1.DataSource = bs_prodlist.DataSource;
+ 
+        }
         private void bind_bs_contr()    
         {
             textBox1.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品名称");
@@ -151,13 +222,36 @@ namespace BatchProductRecord
             dateTimePicker3.DataBindings.Add("Value", bs_prodinstr.DataSource, "审批时间");
             dateTimePicker4.DataBindings.Add("Value", bs_prodinstr.DataSource, "接收时间");
         }
-        //获得最近插入数据的id
+        
+        //得到最新插入的行的id
         private int getid()
         {
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = mySystem.Parameter.connOle;
             comm.CommandText = "select @@identity";
             return (int)comm.ExecuteScalar();
+        }
+        //根据筛选条件得到指令id,没有返回-1
+        private int getid(string instrcode)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select ID from 生产指令信息表 where 生产指令编号='" + instrcode + "'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                da.Dispose();
+                tempdt.Dispose();
+                return -1;
+            }
+            else
+            {
+                da.Dispose();
+                return (int)tempdt.Rows[0][0];
+            }
         }
 
         //再次绑定数据库表，相当与更新
@@ -208,6 +302,8 @@ namespace BatchProductRecord
 
             //BindingSource到控件的绑定
             bind_bs_contr();
+
+            index = 1;
         }
 
         //表格错误处理
@@ -302,14 +398,8 @@ namespace BatchProductRecord
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            //判断合法性
-            if (textBox21.Text == "" || int.Parse(textBox21.Text) < 20)
-            {
-                MessageBox.Show("输入不合法");
-                textBox21.Text = "";
-                return;
-            }
-#region 之前
+
+            #region 之前
 //            float in_amout;
 //            float mid_amout;
 //            float juan_amout;
@@ -340,7 +430,7 @@ namespace BatchProductRecord
 //            string mid_matbatch = textBox18.Text;
 //            string mid_format = textBox20.Text;
 
-//            string juan_extr=textBox12.Text;
+//            string juan_extr = textBox12.Text;
 //            string juan_format = textBox13.Text;
 //            string juan_quan = textBox14.Text;
 
@@ -356,7 +446,7 @@ namespace BatchProductRecord
 //                MessageBox.Show("负责人id不存在");
 //                return;
 //            }
-                
+
 //            string extra = textBox23.Text;
 //            string compman = textBox24.Text;//编制人;
 //            //int compman_id = id_findby_code(compman);
@@ -365,10 +455,10 @@ namespace BatchProductRecord
 //            //    MessageBox.Show("编制人id不存在");
 //            //    return;
 //            //}
-                
+
 //            DateTime compdate = dateTimePicker2.Value;
 //            string checkman = textBox25.Text;//审批人
-                
+
 //            DateTime checkdate = dateTimePicker3.Value;
 //            string recman = textBox26.Text;//接收人
 //            int recman_id = id_findby_code(recman);
@@ -377,7 +467,7 @@ namespace BatchProductRecord
 //                MessageBox.Show("接受人id不存在");
 //                return;
 //            }
-                
+
 //            DateTime recdate = dateTimePicker4.Value;
 
 //            //领料量是否合法
@@ -400,7 +490,7 @@ namespace BatchProductRecord
 //                string st = "{'";
 //                string t = dataGridView1.Rows[i].Cells[1].Value.ToString() + "':";
 //                st += t;
-//                st += "[" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "," + dataGridView1.Rows[i].Cells[3].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[4].Value.ToString() + "'," + dataGridView1.Rows[i].Cells[5].Value.ToString() + "," + dataGridView1.Rows[i].Cells[6].Value.ToString() + "," + dataGridView1.Rows[i].Cells[7].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[8].Value.ToString() +"','" + dataGridView1.Rows[i].Cells[9].Value.ToString()+ "']}";
+//                st += "[" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "," + dataGridView1.Rows[i].Cells[3].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[4].Value.ToString() + "'," + dataGridView1.Rows[i].Cells[5].Value.ToString() + "," + dataGridView1.Rows[i].Cells[6].Value.ToString() + "," + dataGridView1.Rows[i].Cells[7].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[8].Value.ToString() + "','" + dataGridView1.Rows[i].Cells[9].Value.ToString() + "']}";
 
 //                JObject temp = JObject.Parse(st);
 //                ret.Add(temp);
@@ -416,12 +506,12 @@ namespace BatchProductRecord
 //                OleDbCommand comm = new OleDbCommand();
 //                comm.Connection = mySystem.Parameter.connOle;
 
-////                comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
-////    "raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
-////    "receive_quantity_in_out,receive_quantity_middle,core_tube_parameter,core_tube_package_specifications,core_tube_receive_the_quantity_of_raw_material,package_specifications,package_receive_the_quantity_of_raw_material,package_specifications_inner,package_receive_the_quantity_of_raw_material_inner,extr," +
-////    "principal_id,editor_id,reviewer_id,receiver_id,edit_date,review_date,receive_date)" +
-////    " values(@name,@instrcode,@prodcess,@machine,@startdate,@desc,@inout_id,@inout_batch,@mid_id,@mid_batch,@inout_pac,@mid_pac," +
-////"@inout_quan,@mid_quan,@tube_para,@tube_pac,@tube_quan,@pac_label,@quan_label,@pac_inner,@quan_inner,@extr,@princ_id,@editor_id,@rev_id,@rec_id,@editdate,@revdate,@recdate)";
+//                //                comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
+//                //    "raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
+//                //    "receive_quantity_in_out,receive_quantity_middle,core_tube_parameter,core_tube_package_specifications,core_tube_receive_the_quantity_of_raw_material,package_specifications,package_receive_the_quantity_of_raw_material,package_specifications_inner,package_receive_the_quantity_of_raw_material_inner,extr," +
+//                //    "principal_id,editor_id,reviewer_id,receiver_id,edit_date,review_date,receive_date)" +
+//                //    " values(@name,@instrcode,@prodcess,@machine,@startdate,@desc,@inout_id,@inout_batch,@mid_id,@mid_batch,@inout_pac,@mid_pac," +
+//                //"@inout_quan,@mid_quan,@tube_para,@tube_pac,@tube_quan,@pac_label,@quan_label,@pac_inner,@quan_inner,@extr,@princ_id,@editor_id,@rev_id,@rec_id,@editdate,@revdate,@recdate)";
 
 //                comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
 //"raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
@@ -432,7 +522,7 @@ namespace BatchProductRecord
 
 
 //                System.Console.WriteLine(comm.CommandText.ToString());
-//                comm.Parameters.Add("@name",System.Data.OleDb.OleDbType.VarChar);
+//                comm.Parameters.Add("@name", System.Data.OleDb.OleDbType.VarChar);
 //                comm.Parameters.Add("@instrcode", System.Data.OleDb.OleDbType.VarChar);
 //                comm.Parameters.Add("@prodcess", System.Data.OleDb.OleDbType.VarChar);
 //                comm.Parameters.Add("@machine", System.Data.OleDb.OleDbType.VarChar);
@@ -468,14 +558,14 @@ namespace BatchProductRecord
 //                comm.Parameters["@machine"].Value = number;
 //                comm.Parameters["@startdate"].Value = d;
 //                comm.Parameters["@desc"].Value = ret.ToString();
-//                comm.Parameters["@inout_id"].Value =id_findby_code(ret.ToString());
+//                comm.Parameters["@inout_id"].Value = id_findby_code(ret.ToString());
 //                comm.Parameters["@inout_batch"].Value = in_matbatch;
 //                comm.Parameters["@mid_id"].Value = id_findby_code(mid_matcode);
 //                comm.Parameters["@mid_batch"].Value = mid_matbatch;
 //                comm.Parameters["@inout_pac"].Value = mid_format;
 //                comm.Parameters["@mid_pac"].Value = ret.ToString();
-//                comm.Parameters["@inout_quan"].Value =Convert.ToInt32(in_amout);//float to int
-//                comm.Parameters["@mid_quan"].Value =Convert.ToInt32(mid_amout);//float to int
+//                comm.Parameters["@inout_quan"].Value = Convert.ToInt32(in_amout);//float to int
+//                comm.Parameters["@mid_quan"].Value = Convert.ToInt32(mid_amout);//float to int
 //                comm.Parameters["@tube_para"].Value = juan_extr;
 //                comm.Parameters["@tube_pac"].Value = juan_format;
 //                comm.Parameters["@tube_quan"].Value = juan_quan;
@@ -502,23 +592,38 @@ namespace BatchProductRecord
 //                }
 //                else { MessageBox.Show("错误"); }
 //            }
-            //            button2.Enabled = true;
-#endregion
-            if (index == 0)//第一次点击
+//            button2.Enabled = true;
+            #endregion
+            //判断合法性
+            if (textBox21.Text == "" || int.Parse(textBox21.Text) < 20)
+            {
+                MessageBox.Show("输入不合法");
+                textBox21.Text = "";
+                return;
+            }
+            //判断是更新还是插入
+            id = getid(textBox2.Text);
+            if (id == -1)//进行插入
             {
                 // 保存非DataGridView中的数据必须先执行EndEdit;
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                bind();
+                id = getid();            
+                bind_list(id);
+                dataGridView1.Columns[0].Visible = false;
+                dataGridView1.Columns[1].Visible = false;
+                dataGridView1.Columns[4].ReadOnly = true;
+                fill(id);
                 MessageBox.Show("添加成功");
-                int id = getid();
-                if (id != -1)
-                    bind2(id);
-                index = 1;
             }
-            else
+            else//进行更新
             {
+                if (index == 0)
+                    bind2(id);
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                fill(id);
                 MessageBox.Show("更新成功");
             }
 
@@ -588,31 +693,30 @@ namespace BatchProductRecord
         {
             if (e.RowIndex < 0)
                 return;
-            if (e.RowIndex == dataGridView1.Rows.Count - 1)
-                addrows();
-
-            if (e.ColumnIndex == 1)
+            if (e.ColumnIndex == 3)
             {
-                string str = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+                string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
                 string pattern = @"^[a-zA-Z]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
                 if (!Regex.IsMatch(str, pattern))
                 {
                     MessageBox.Show("产品代码输入不符合规定，重新输入，例如 PEQ-QE-500*100");
                     //MessageBox.Show("...");
-                    dataGridView1.Rows[e.RowIndex].Cells[1].Value = "";
+                    dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
                     leng = 0;
                     return;
                 }
                 string[] array = str.Split('*');
                 string[] array2 = array[0].Split('-');
                 leng = float.Parse(array2[2]);
+
+
             }
             //用料重量自己计算
-            if (e.ColumnIndex == 2)
+            if (e.ColumnIndex == 7)
             {
 
-                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
-                dataGridView1.Rows[e.RowIndex].Cells[3].Value = a * leng / 1000.0 * 2 * 0.093;
+                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString());
+                dataGridView1.Rows[e.RowIndex].Cells[4].Value = a * leng / 1000.0 * 2 * 0.093;
             }
         }
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -622,15 +726,15 @@ namespace BatchProductRecord
             //if (e.RowIndex == dataGridView1.Rows.Count - 1)
             //    addrows();
 
-            //if (e.ColumnIndex == 1)
+            //if (e.ColumnIndex == 3)
             //{
-            //    string str = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
+            //    string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
             //    string pattern = @"^[a-zA-Z]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
             //    if (!Regex.IsMatch(str, pattern))
             //    {
             //        MessageBox.Show("产品代码输入不符合规定，重新输入，例如 PEQ-QE-500*100");
             //        //MessageBox.Show("...");
-            //        dataGridView1.Rows[e.RowIndex].Cells[1].Value = "";
+            //        dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
             //        leng = 0;
             //        return;
             //    }
@@ -639,11 +743,11 @@ namespace BatchProductRecord
             //    leng = float.Parse(array2[2]);
             //}
             ////用料重量自己计算
-            //if(e.ColumnIndex==2)
+            //if (e.ColumnIndex == 4)
             //{
 
-            //    float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
-            //    dataGridView1.Rows[e.RowIndex].Cells[3].Value = a * leng/1000.0 * 2 * 0.093;
+            //    float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
+            //    dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 2 * 0.093;
             //}
 
         }
@@ -662,9 +766,14 @@ namespace BatchProductRecord
 
         }
 
+        //datagridview 添加行
         private void button4_Click(object sender, System.EventArgs e)
         {
-
+            DataRow dr = dt_prodlist.NewRow();
+            // 如果行有默认值，在这里写代码填上
+            dr[1] = id;
+            dr[2] = dt_prodlist.Rows.Count+1;
+            dt_prodlist.Rows.InsertAt(dr, dt_prodlist.Rows.Count);
         }
 
         private void textBox21_TextChanged(object sender, System.EventArgs e)
@@ -680,6 +789,64 @@ namespace BatchProductRecord
             //        textBox21.Text = "";
             //    }
             //}
+        }
+
+        private void button5_Click(object sender, System.EventArgs e)
+        {
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            MessageBox.Show("添加成功");
+        }
+        //根据id填空
+        private void fill(int id)
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select * from 生产指令信息表 where ID=" +id;
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 1)
+            {
+                textBox1.Text=(string)tempdt.Rows[0][1];
+                textBox2.Text = (string)tempdt.Rows[0][2];
+                textBox3.Text = (string)tempdt.Rows[0][3]; 
+                textBox4.Text = (string)tempdt.Rows[0][4];
+                dateTimePicker1.Value = (DateTime)tempdt.Rows[0][5];
+
+                textBox15.Text = (string)tempdt.Rows[0][6]; 
+                textBox17.Text = (string)tempdt.Rows[0][7]; 
+                textBox19.Text = (string)tempdt.Rows[0][8];
+                textBox21.Text = ((double)tempdt.Rows[0][9]).ToString();
+                textBox16.Text = (string)tempdt.Rows[0][10]; 
+                textBox18.Text = (string)tempdt.Rows[0][11];
+                textBox20.Text = (string)tempdt.Rows[0][12];
+                textBox22.Text = ((double)tempdt.Rows[0][13]).ToString();
+                textBox12.Text = (string)tempdt.Rows[0][14]; 
+                textBox13.Text = (string)tempdt.Rows[0][15];
+                textBox14.Text = ((double)tempdt.Rows[0][16]).ToString();
+                textBox9.Text = (string)tempdt.Rows[0][17];
+                textBox11.Text = ((double)tempdt.Rows[0][18]).ToString();
+                textBox5.Text = (string)tempdt.Rows[0][19];
+
+                textBox24.Text = (string)tempdt.Rows[0][20];
+                dateTimePicker2.Value = (DateTime)tempdt.Rows[0][21];
+                textBox25.Text = (string)tempdt.Rows[0][22];
+                dateTimePicker3.Value = (DateTime)tempdt.Rows[0][23];
+                textBox26.Text = (string)tempdt.Rows[0][24];
+                dateTimePicker4.Value = (DateTime)tempdt.Rows[0][25];
+                textBox23.Text = (string)tempdt.Rows[0][29];
+
+                da.Dispose();
+                tempdt.Dispose();
+                //填datagridview,填datatable
+                comm.CommandText = "select * from 生产指令产品列表 where 生产指令ID=" + id;
+                da = new OleDbDataAdapter(comm);
+                da.Fill(dt_prodlist);
+                bs_prodlist.DataSource = dt_prodlist;
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+
+            }
         }
     }
 }

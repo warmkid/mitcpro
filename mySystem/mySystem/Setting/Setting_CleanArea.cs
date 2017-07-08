@@ -95,7 +95,7 @@ namespace WindowsFormsApplication1
             }
             else
             {
-                string accessql = "select * from cleanarea";
+                string accessql = "select 清洁区域,清洁内容 from 设置吹膜机组清洁项目";
                 OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 dt = new DataTable();
@@ -136,7 +136,7 @@ namespace WindowsFormsApplication1
                 DataRowView drv = dataGridView1.SelectedRows[0].DataBoundItem as DataRowView;
                 //System.Console.WriteLine(drv[1].ToString());
                 string id = drv[0].ToString().Trim();
-                string strsql = "delete from cleanarea where cast([清洁区域] as nvarchar(50))=" + "'" + id + "'";
+                string strsql = "delete from 设置吹膜机组清洁项目 where cast([清洁区域] as nvarchar(50))=" + "'" + id + "'";
                 SqlCommand Cmd = new SqlCommand(strsql, conn);
                 int i = Cmd.ExecuteNonQuery();
                 if (i < 0)
@@ -169,12 +169,12 @@ namespace WindowsFormsApplication1
             }
             else
             {
-                string accessql = "delete * from cleanarea";
+                string accessql = "delete * from 设置吹膜机组清洁项目";
                 OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 cmd.ExecuteNonQuery();
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
-                    cmd.CommandText = "insert into cleanarea(清洁区域,清洁内容) values ('" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "','" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "')";
+                    cmd.CommandText = "insert into 设置吹膜机组清洁项目(清洁区域,清洁内容) values ('" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "','" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "')";
                     cmd.ExecuteNonQuery();
                 }
                 cmd.Dispose();
