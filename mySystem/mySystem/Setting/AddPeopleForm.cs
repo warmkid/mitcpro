@@ -15,34 +15,35 @@ namespace mySystem.Setting
         string username;
         string password;
         string flight = null;
-        int flight_id;
+        bool flight_id;
         string role = null;
         int role_id;
-        SetPeopleForm myfather = null;
+        string department = null;
+        SetPeopleForm myparent = null;
 
-        public AddPeopleForm(MainForm mainform, SetPeopleForm father ):base(mainform)
+        public AddPeopleForm(MainForm mainform, SetPeopleForm parent ):base(mainform)
         {
             InitializeComponent();
-            myfather = father;
+            myparent = parent;
         }
 
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            flight = comboBox1.SelectedItem.ToString();
+            flight = comboBox班次.SelectedItem.ToString();
             if (flight == "白班")
             {
-                flight_id = 0;
+                flight_id = true;
             }
             else
             {
-                flight_id = 1;
+                flight_id = false;
             }
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            role = comboBox2.SelectedItem.ToString();
+            role = comboBox角色.SelectedItem.ToString();
             if (role == "操作员")
             {
                 role_id = 1;
@@ -57,6 +58,10 @@ namespace mySystem.Setting
             }
         }
 
+        private void comboBox部门_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            department = comboBox部门.SelectedItem.ToString();
+        }
 
         private void CancelBtn_Click(object sender, EventArgs e)
         {
@@ -68,30 +73,28 @@ namespace mySystem.Setting
             string useridstr = IDtextBox.Text.Trim();           
             username = NametextBox.Text.Trim();
             password = PWtextBox.Text.Trim();
-            if (username == "" || password == "" || useridstr == "" || comboBox1.SelectedIndex == -1 || comboBox2.SelectedIndex == -1)
+            if (username == "" || password == "" || useridstr == "" || comboBox班次.SelectedIndex == -1 || comboBox角色.SelectedIndex == -1 || comboBox部门.SelectedIndex == -1)
             {
                 MessageBox.Show("员工信息不能为空", "错误");
                 return;
             }
             else
             {
-                userid = Convert.ToInt32(useridstr);
-                String tblName = "user_aoxing";
-                //查最后一行的id？
-                //List<String> idCol = new List<String>(new String[] { "id" });
-                //List<List<Object>> idres = Utility.selectAccess(Parameter.connOle, tblName, idCol, null, null, null, null, null, null, null);
-                //int idlast = Convert.ToInt32(idres[idres.Count-1][0]);
-
-                List<String> insertCols = new List<String>(new String[] { "createtime", "modifytime", "user_id", 
-                    "user_name", "user_password", "last_login_time", "role_id", "department_id", "flight" });          
-                DateTime dt = DateTime.Now;
-                DateTime insertVal = new DateTime(dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
-                List<Object> insertVals = new List<Object>(new Object[] { insertVal, insertVal, userid, username, password, insertVal, role_id, 1, flight_id });
+                if (Int32.TryParse(useridstr, out userid))
+                { }
+                else
+                {
+                    MessageBox.Show("员工ID必须为数字", "错误");
+                    return;
+                }
+                String tblName = "users";
+                List<String> insertCols = new List<String>(new String[] { "角色ID", "姓名", "密码", "班次", "角色", "部门", "用户ID" });
+                List<Object> insertVals = new List<Object>(new Object[] { role_id, username, password, flight_id, role, department, userid });
                 Boolean b = Utility.insertAccess(Parameter.connOle, tblName, insertCols, insertVals);
                 if (b)
                 {
                     MessageBox.Show("用户添加成功", "success");
-                    myfather.dgvInit();
+                    myparent.dgvInit();
                     this.Close();
                     this.Dispose();
                     return;
@@ -106,6 +109,8 @@ namespace mySystem.Setting
 
 
         }
+
+        
 
         
     }

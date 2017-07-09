@@ -49,17 +49,12 @@
             this.DeleteBtn = new System.Windows.Forms.Button();
             this.AddBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.user_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.user_password = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.flight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.role_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dgvUser = new System.Windows.Forms.DataGridView();
             this.SetPeoplePanelTop.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SetPeoplePanelBottom.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).BeginInit();
             this.SuspendLayout();
             // 
             // SetPeoplePanelTop
@@ -221,7 +216,7 @@
             this.SetPeoplePanelBottom.Controls.Add(this.DeleteBtn);
             this.SetPeoplePanelBottom.Controls.Add(this.AddBtn);
             this.SetPeoplePanelBottom.Controls.Add(this.label7);
-            this.SetPeoplePanelBottom.Controls.Add(this.dataGridView1);
+            this.SetPeoplePanelBottom.Controls.Add(this.dgvUser);
             this.SetPeoplePanelBottom.Location = new System.Drawing.Point(12, 203);
             this.SetPeoplePanelBottom.Name = "SetPeoplePanelBottom";
             this.SetPeoplePanelBottom.Size = new System.Drawing.Size(1145, 400);
@@ -267,48 +262,15 @@
             this.label7.TabIndex = 9;
             this.label7.Text = "员工信息管理";
             // 
-            // dataGridView1
+            // dgvUser
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.user_id,
-            this.user_name,
-            this.user_password,
-            this.flight,
-            this.role_id});
-            this.dataGridView1.Location = new System.Drawing.Point(38, 102);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(700, 281);
-            this.dataGridView1.TabIndex = 0;
-            // 
-            // user_id
-            // 
-            this.user_id.HeaderText = "员工ID";
-            this.user_id.Name = "user_id";
-            this.user_id.ReadOnly = true;
-            this.user_id.Width = 150;
-            // 
-            // user_name
-            // 
-            this.user_name.HeaderText = "员工姓名";
-            this.user_name.Name = "user_name";
-            // 
-            // user_password
-            // 
-            this.user_password.HeaderText = "密码";
-            this.user_password.Name = "user_password";
-            this.user_password.Width = 150;
-            // 
-            // flight
-            // 
-            this.flight.HeaderText = "班次";
-            this.flight.Name = "flight";
-            // 
-            // role_id
-            // 
-            this.role_id.HeaderText = "权限";
-            this.role_id.Name = "role_id";
+            this.dgvUser.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvUser.Location = new System.Drawing.Point(38, 102);
+            this.dgvUser.Name = "dgvUser";
+            this.dgvUser.RowHeadersVisible = false;
+            this.dgvUser.RowTemplate.Height = 23;
+            this.dgvUser.Size = new System.Drawing.Size(700, 281);
+            this.dgvUser.TabIndex = 0;
             // 
             // SetPeopleForm
             // 
@@ -330,7 +292,7 @@
             this.groupBox1.PerformLayout();
             this.SetPeoplePanelBottom.ResumeLayout(false);
             this.SetPeoplePanelBottom.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvUser)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -349,7 +311,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label idLabel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvUser;
         private System.Windows.Forms.TextBox pw3TextBox;
         private System.Windows.Forms.TextBox pw1TextBox;
         private System.Windows.Forms.Label label6;
@@ -359,10 +321,5 @@
         private System.Windows.Forms.Button SaveEditBtn;
         private System.Windows.Forms.Button DeleteBtn;
         private System.Windows.Forms.Button AddBtn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn user_password;
-        private System.Windows.Forms.DataGridViewTextBoxColumn flight;
-        private System.Windows.Forms.DataGridViewTextBoxColumn role_id;
     }
 }

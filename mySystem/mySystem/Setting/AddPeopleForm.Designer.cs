@@ -30,9 +30,9 @@
         {
             this.CancelBtn = new System.Windows.Forms.Button();
             this.AddBtn = new System.Windows.Forms.Button();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.comboBox角色 = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox班次 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.PWtextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,11 +40,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.IDtextBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.comboBox部门 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CancelBtn
             // 
-            this.CancelBtn.Location = new System.Drawing.Point(376, 156);
+            this.CancelBtn.Location = new System.Drawing.Point(376, 172);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(75, 30);
             this.CancelBtn.TabIndex = 11;
@@ -54,7 +56,7 @@
             // 
             // AddBtn
             // 
-            this.AddBtn.Location = new System.Drawing.Point(286, 156);
+            this.AddBtn.Location = new System.Drawing.Point(286, 172);
             this.AddBtn.Name = "AddBtn";
             this.AddBtn.Size = new System.Drawing.Size(75, 30);
             this.AddBtn.TabIndex = 10;
@@ -62,18 +64,18 @@
             this.AddBtn.UseVisualStyleBackColor = true;
             this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
             // 
-            // comboBox2
+            // comboBox角色
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
+            this.comboBox角色.FormattingEnabled = true;
+            this.comboBox角色.Items.AddRange(new object[] {
             "操作员",
             "计划员",
             "管理员"});
-            this.comboBox2.Location = new System.Drawing.Point(330, 71);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 24);
-            this.comboBox2.TabIndex = 9;
-            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
+            this.comboBox角色.Location = new System.Drawing.Point(330, 71);
+            this.comboBox角色.Name = "comboBox角色";
+            this.comboBox角色.Size = new System.Drawing.Size(121, 24);
+            this.comboBox角色.TabIndex = 9;
+            this.comboBox角色.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -82,19 +84,19 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 16);
             this.label5.TabIndex = 8;
-            this.label5.Text = "权限：";
+            this.label5.Text = "角色：";
             // 
-            // comboBox1
+            // comboBox班次
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.comboBox班次.FormattingEnabled = true;
+            this.comboBox班次.Items.AddRange(new object[] {
             "白班",
             "夜班"});
-            this.comboBox1.Location = new System.Drawing.Point(330, 26);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 7;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.comboBox班次.Location = new System.Drawing.Point(330, 26);
+            this.comboBox班次.Name = "comboBox班次";
+            this.comboBox班次.Size = new System.Drawing.Size(121, 24);
+            this.comboBox班次.TabIndex = 7;
+            this.comboBox班次.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -153,16 +155,39 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "员工ID：";
             // 
+            // comboBox部门
+            // 
+            this.comboBox部门.FormattingEnabled = true;
+            this.comboBox部门.Items.AddRange(new object[] {
+            "运营部",
+            "生产部"});
+            this.comboBox部门.Location = new System.Drawing.Point(330, 118);
+            this.comboBox部门.Name = "comboBox部门";
+            this.comboBox部门.Size = new System.Drawing.Size(121, 24);
+            this.comboBox部门.TabIndex = 13;
+            this.comboBox部门.SelectedIndexChanged += new System.EventHandler(this.comboBox部门_SelectedIndexChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(268, 121);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 16);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "部门：";
+            // 
             // AddPeopleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(503, 210);
+            this.Controls.Add(this.comboBox部门);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.CancelBtn);
             this.Controls.Add(this.AddBtn);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox角色);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBox班次);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.PWtextBox);
             this.Controls.Add(this.label3);
@@ -189,10 +214,12 @@
         private System.Windows.Forms.TextBox PWtextBox;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox comboBox班次;
+        private System.Windows.Forms.ComboBox comboBox角色;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button AddBtn;
         private System.Windows.Forms.Button CancelBtn;
+        private System.Windows.Forms.ComboBox comboBox部门;
+        private System.Windows.Forms.Label label6;
     }
 }
