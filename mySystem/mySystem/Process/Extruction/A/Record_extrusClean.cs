@@ -351,6 +351,8 @@ namespace WindowsFormsApplication1
             //更改清洁人项
             if (e.ColumnIndex == 4)
             {
+                if (dataGridView1.Rows[e.RowIndex].Cells[4].Value == null || dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString() == "")
+                    return;
                 int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
                 if (rt > 0)
                 {
@@ -367,6 +369,8 @@ namespace WindowsFormsApplication1
             //更改审核人项
             if (e.ColumnIndex == 5)
             {
+                if (dataGridView1.Rows[e.RowIndex].Cells[5].Value == null || dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString() == "")
+                    return;
                 int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
                 if (rt > 0)
                 {
@@ -616,8 +620,15 @@ namespace WindowsFormsApplication1
                         Boolean tempbool = dataGridView1.Rows[i].Cells[2].Value.ToString() == "True";
                         comm.Parameters["@yes"].Value = tempbool;
                         comm.Parameters["@no"].Value = !tempbool;
-                        comm.Parameters["@cleaner"].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                        comm.Parameters["@checker"].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                        if (dataGridView1.Rows[i].Cells[4].Value == null)
+                            comm.Parameters["@cleaner"].Value = "";
+                        else
+                            comm.Parameters["@cleaner"].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+
+                        if (dataGridView1.Rows[i].Cells[5].Value == null)
+                            comm.Parameters["@checker"].Value = "";
+                        else
+                            comm.Parameters["@checker"].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
 
                         comm.ExecuteNonQuery();
                         comm.Dispose();

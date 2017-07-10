@@ -28,89 +28,78 @@ namespace mySystem.Setting
         /// </summary>
         private void InitializeComponent()
         {
-            this.label7 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.addBtn = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
+            this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label7
+            // groupBox1
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(284, 35);
-            this.label7.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(229, 19);
-            this.label7.TabIndex = 51;
-            this.label7.Text = "吹膜岗位交接班记录设置";
+            this.groupBox1.Controls.Add(this.dataGridView1);
+            this.groupBox1.Controls.Add(this.addBtn);
+            this.groupBox1.Controls.Add(this.btnDel);
+            this.groupBox1.Location = new System.Drawing.Point(5, -5);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1090, 270);
+            this.groupBox1.TabIndex = 55;
+            this.groupBox1.TabStop = false;
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1});
-            this.dataGridView1.Location = new System.Drawing.Point(36, 112);
+            this.dataGridView1.Location = new System.Drawing.Point(22, 55);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(4);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(914, 284);
+            this.dataGridView1.Size = new System.Drawing.Size(1009, 203);
             this.dataGridView1.TabIndex = 52;
+            this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
             // 
-            // Column1
+            // addBtn
             // 
-            this.Column1.HeaderText = "确认项目";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 870;
+            this.addBtn.Location = new System.Drawing.Point(22, 17);
+            this.addBtn.Name = "addBtn";
+            this.addBtn.Size = new System.Drawing.Size(70, 30);
+            this.addBtn.TabIndex = 54;
+            this.addBtn.Text = "添加";
+            this.addBtn.UseVisualStyleBackColor = true;
+            this.addBtn.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnDel
             // 
-            this.btnDel.Location = new System.Drawing.Point(991, 112);
+            this.btnDel.Location = new System.Drawing.Point(122, 17);
             this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(93, 30);
+            this.btnDel.Size = new System.Drawing.Size(70, 30);
             this.btnDel.TabIndex = 53;
-            this.btnDel.Text = "删除该项";
+            this.btnDel.Text = "删除";
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(991, 179);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(93, 30);
-            this.btnSave.TabIndex = 54;
-            this.btnSave.Text = "保存设置";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Visible = false;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // SettingHandOver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1107, 432);
-            this.Controls.Add(this.btnSave);
-            this.Controls.Add(this.btnDel);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label7);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ClientSize = new System.Drawing.Size(1107, 268);
+            this.Controls.Add(this.groupBox1);
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "SettingHandOver";
             this.Text = "SettingHandOver";
+            this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnDel;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.Button addBtn;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

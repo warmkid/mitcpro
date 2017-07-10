@@ -393,6 +393,7 @@
             this.D4Btn.TabIndex = 15;
             this.D4Btn.Text = "吹膜机更换过滤网记录";
             this.D4Btn.UseVisualStyleBackColor = true;
+            this.D4Btn.Click += new System.EventHandler(this.D4Btn_Click);
             // 
             // D3Btn
             // 

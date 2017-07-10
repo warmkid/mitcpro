@@ -32,9 +32,6 @@
             this.add = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.确认项目 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.确认内容 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -53,7 +50,7 @@
             // add
             // 
             this.add.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.add.Location = new System.Drawing.Point(32, 28);
+            this.add.Location = new System.Drawing.Point(24, 28);
             this.add.Name = "add";
             this.add.Size = new System.Drawing.Size(70, 30);
             this.add.TabIndex = 3;
@@ -64,39 +61,21 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 5);
+            this.groupBox1.Location = new System.Drawing.Point(3, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1099, 287);
+            this.groupBox1.Size = new System.Drawing.Size(1117, 288);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.序号,
-            this.确认项目,
-            this.确认内容});
             this.dataGridView1.Location = new System.Drawing.Point(18, 65);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1064, 207);
             this.dataGridView1.TabIndex = 7;
-            // 
-            // 序号
-            // 
-            this.序号.HeaderText = "序号";
-            this.序号.Name = "序号";
-            // 
-            // 确认项目
-            // 
-            this.确认项目.HeaderText = "确认项目";
-            this.确认项目.Name = "确认项目";
-            // 
-            // 确认内容
-            // 
-            this.确认内容.HeaderText = "确认内容";
-            this.确认内容.Name = "确认内容";
+            this.dataGridView1.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView1_DataError);
             // 
             // Setting_CheckBeforePower
             // 
@@ -121,8 +100,5 @@
         private System.Windows.Forms.Button add;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 序号;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 确认项目;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 确认内容;
     }
 }

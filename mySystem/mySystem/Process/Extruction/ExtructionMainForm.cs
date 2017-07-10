@@ -459,9 +459,9 @@ namespace mySystem
                         else
                         {
                             MessageBox.Show("请填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
-                            form16 = new Extruction.Chart.feedrecord(mainform);
+                            form16 = new Process.Extruction.C.Feed(mainform);
                             form16.ShowDialog();
-                            form17 = new Extruction.Chart.beeholetable(mainform);
+                            form17 = new Process.Extruction.B.Running(mainform);
                             form17.ShowDialog();
                             return;
                         }
@@ -480,9 +480,9 @@ namespace mySystem
         BatchProductRecord.ProcessProductInstru form2 = null;
         Record_extrusClean form3 = null;
         Record_extrusSiteClean form4 = null;
-        HandoverRecordofExtrusionProcess form5 = null;
+        mySystem.Process.Extruction.A.HandOver form5 = null;
         Record_extrusSupply form6 = null;
-        mySystem.Process.Extruction.B.WasteInExtrusion form7 = null;
+        mySystem.Process.Extruction.B.Waste form7 = null;
         Record_material_reqanddisg form8 = null;
         ProdctDaily_extrus form9 = null;
         ExtructionpRoductionAndRestRecordStep6 form10 = null;
@@ -491,11 +491,12 @@ namespace mySystem
         mySystem.Extruction.Chart.outerpack form13 = null;
         ExtructionCheckBeforePowerStep2 form14 = null;
         ExtructionPreheatParameterRecordStep3 form15 = null;
-        mySystem.Extruction.Chart.feedrecord form16 = null;
-        mySystem.Extruction.Chart.beeholetable form17 = null;
+        new mySystem.Process.Extruction.C.Feed form16 = null;
+        mySystem.Process.Extruction.B.Running form17 = null;
         Record_train form18 = null;
         ReplaceHeadForm form19 = null;
         ExtructionReplaceCore form20 = null;
+        mySystem.Process.Extruction.D.NetExchange form24 = null;
         
         
         ExtructionTransportRecordStep4 form22 = null;
@@ -526,7 +527,7 @@ namespace mySystem
 
         private void A4Btn_Click(object sender, EventArgs e)
         {
-            form5 = new HandoverRecordofExtrusionProcess(mainform);
+            form5 = new mySystem.Process.Extruction.A.HandOver(mainform);
             form5.ShowDialog();
         }
 
@@ -538,7 +539,7 @@ namespace mySystem
 
         private void B3Btn_Click(object sender, EventArgs e)
         {
-            form7 = new mySystem.Process.Extruction.B.WasteInExtrusion(mainform);
+            form7 = new mySystem.Process.Extruction.B.Waste(mainform);
             form7.ShowDialog();
         }
 
@@ -592,13 +593,13 @@ namespace mySystem
 
         private void C3Btn_Click(object sender, EventArgs e)
         {
-            form16 = new Extruction.Chart.feedrecord(mainform);
+            form16 = new mySystem.Process.Extruction.C.Feed(mainform);
             form16.ShowDialog();
         }
 
         private void C4Btn_Click(object sender, EventArgs e)
         {
-            form17 = new Extruction.Chart.beeholetable(mainform);
+            form17 = new mySystem.Process.Extruction.B.Running(mainform);
             form17.ShowDialog();
         }
 
@@ -630,6 +631,12 @@ namespace mySystem
         {
             LabelPrint label = new LabelPrint();
             label.ShowDialog();
+        }
+
+        private void D4Btn_Click(object sender, EventArgs e)
+        {
+            form24 = new Process.Extruction.D.NetExchange(mainform);
+            form24.ShowDialog();
         }
 
         

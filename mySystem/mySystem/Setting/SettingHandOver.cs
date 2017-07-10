@@ -15,114 +15,112 @@ namespace mySystem.Setting
 {
     public partial class SettingHandOver : BaseForm
     {
-        OleDbConnection conOle;
-        public SettingHandOver(MainForm mainform):base(mainform)
+        private SqlConnection conn = null;
+        private OleDbConnection connOle = null;
+        private bool isSqlOk;
+        private OleDbDataAdapter da;
+        private DataTable dt;
+        private BindingSource bs;
+        private OleDbCommandBuilder cb;
+
+        public SettingHandOver(MainForm mainform)
+            : base(mainform)
         {
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+
             InitializeComponent();
-            conOle = Parameter.connOle;
-            getItem();
+            Init();
+            Bind();
         }
-        private void getItem()
+
+        //dgv样式初始化
+        private void Init()
         {
-            List<List<Object>> ret = new List<List<Object>>();
-            //string tableStr = "set_handover";
-            string cmdStr = "SELECT 确认项目 FROM handoveritem;";
-            //ret = Utility.selectAccess(mainform.connOle, tableStr, null, null, null, null, null, null, null, null);
-            OleDbCommand sqlcmd = new OleDbCommand(cmdStr, conOle);
-            //sqlcmd.ExecuteNonQuery();
+            bs = new BindingSource();
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.ReadOnly = false;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.AllowUserToResizeColumns = true;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            OleDbDataReader reader = null;
-            reader = sqlcmd.ExecuteReader();
-            sqlcmd.Dispose();
-            while (reader.Read())
-            {
-                List<Object> row = new List<Object>(new Object[] { reader["确认项目"]});
-                //row.Add(row);
+            dataGridView1.Font = new Font("宋体", 12);
 
-                ret.Add(row);
-            }
-            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
-            {
-                dataGridView1.Rows.RemoveAt(i);
-            }
-            Utility.fillDataGridView(dataGridView1, ret);
-
+            this.dataGridView1.DataError += this.dataGridView1_DataError;
         }
-        public void DataSave()
+
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
-            List<List<Object>> data = new List<List<object>>();
-            string sqlStr = "DELETE * FROM handoveritem";
-            string tableStr = "handoveritem";
-            bool flag;
-            List<String> insertCols = new List<string>(new string[] { "确认序号", "确认项目" });
-            List<Object> insertVals;
-            OleDbCommand sqlcmd = new OleDbCommand(sqlStr, conOle);
-            sqlcmd.ExecuteNonQuery();
-            sqlcmd.Dispose();
-            data = Utility.readFromDataGridView(dataGridView1);
-            for (int i = 0; i < data.Count - 1; i++)
-            {
-                //insertVals=new List<object>(new object[]{Convert.ToString(data[i])});
-                insertVals = new List<object>();
-                insertVals.Add(i + 1);
-                insertVals.Add(data[i][0]);
-                flag = Utility.insertAccess(conOle, tableStr, insertCols, insertVals);
-            }
+            // 获取选中的列，然后提示
+            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            MessageBox.Show(name + "填写错误");
         }
-        private void btnDel_Click(object sender, EventArgs e)
+
+        private void Bind()
         {
-            //dataGridView1.
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                if (dataGridView1.Rows[i].Cells[0].Selected)
-                {
-                    dataGridView1.Rows[i].Selected = true;
-                }
-            }
-            int k = dataGridView1.SelectedRows.Count;
-            if (MessageBox.Show("您确认要删除这" + Convert.ToString(k) + "项吗？", "系统提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)//给出提示
-            {
+            dt = new DataTable("设置岗位交接班项目"); //""中的是表名
+            da = new OleDbDataAdapter("select * from 设置岗位交接班项目", connOle);
+            cb = new OleDbCommandBuilder(da);
 
-            }
-            else
-            {
-                if (k != dataGridView1.Rows.Count - 2)//因为还有一行为统计行所以减2
-                {
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            this.dataGridView1.DataSource = bs.DataSource;
 
-                    for (int i = k; i >= 1; i--)//从下往上删，避免沙漏效应
-                    {
+            //显示序号
+            numFresh();
 
-                        dataGridView1.Rows.RemoveAt(dataGridView1.SelectedRows[i - 1].Index);
-                    }
-                }
-                else
-                {
-                    dataGridView1.Rows.Clear();
-                }
-            }
+            this.dataGridView1.Columns["确认项目"].MinimumWidth = 250;
+            this.dataGridView1.Columns["确认项目"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridView1.Columns["确认项目"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dataGridView1.Columns["ID"].Visible = false;
         }
 
+        //在最后增加一个空白行
         private void btnSave_Click(object sender, EventArgs e)
         {
-            List<List<Object>> data = new List<List<object>>();
-            string sqlStr = "DELETE * FROM handoveritem";
-            string tableStr = "handoveritem";
-            bool flag;
-            List<String> insertCols = new List<string>(new string[] { "确认序号", "确认项目" });
-            List<Object> insertVals;
-            OleDbCommand sqlcmd = new OleDbCommand(sqlStr, conOle);
-            sqlcmd.ExecuteNonQuery();
-            sqlcmd.Dispose();
-            data=Utility.readFromDataGridView(dataGridView1);
-            for (int i = 0; i < data.Count-1; i++)
+            DataRow dr = dt.NewRow();
+            dt.Rows.InsertAt(dt.NewRow(), dt.Rows.Count);
+            numFresh();
+
+        }
+
+        private void btnDel_Click(object sender, EventArgs e)
+        {
+            int deletenum = dataGridView1.CurrentRow.Index;
+            this.dataGridView1.Rows.RemoveAt(deletenum);
+
+            numFresh();
+        }
+
+        private void numFresh()
+        {
+            int coun = this.dataGridView1.RowCount;
+            for (int i = 0; i < coun; i++)
             {
-                //insertVals=new List<object>(new object[]{Convert.ToString(data[i])});
-                insertVals = new List<object>();
-                insertVals.Add(i+1);
-                insertVals.Add(data[i][0]);
-                flag = Utility.insertAccess(conOle, tableStr, insertCols, insertVals);
+                dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString();
             }
         }
-    }
+
+        public void DataSave()
+        {
+            if (isSqlOk)
+            { }
+            else
+            {
+                da.Update((DataTable)bs.DataSource);
+                dt.Clear();
+                da.Fill(dt);
+                numFresh();
+
+            }
+        }
+
+
+    }   
 }
 

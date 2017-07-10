@@ -32,32 +32,32 @@
             this.label14 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.txbRate = new System.Windows.Forms.TextBox();
+            this.txb重量比成品率 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.txbIn = new System.Windows.Forms.TextBox();
-            this.txbWasteWeight = new System.Windows.Forms.TextBox();
-            this.txbNote = new System.Windows.Forms.TextBox();
+            this.txb领料量 = new System.Windows.Forms.TextBox();
+            this.txb废品量合计 = new System.Windows.Forms.TextBox();
+            this.txb备注 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.txbBalence = new System.Windows.Forms.TextBox();
-            this.txbGoodWeight = new System.Windows.Forms.TextBox();
+            this.txb物料平衡 = new System.Windows.Forms.TextBox();
+            this.txb成品重量合计 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.txbDate = new System.Windows.Forms.TextBox();
+            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
             this.btnSave = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.btnReview = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.txbProductInstruction = new System.Windows.Forms.TextBox();
-            this.dtpRecheck = new System.Windows.Forms.DateTimePicker();
+            this.txb生产指令 = new System.Windows.Forms.TextBox();
+            this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.lbRecheckMan = new System.Windows.Forms.Label();
-            this.txbRecheckMan = new System.Windows.Forms.TextBox();
-            this.dtpRecord = new System.Windows.Forms.DateTimePicker();
+            this.txb审核人 = new System.Windows.Forms.TextBox();
+            this.dtp记录日期 = new System.Windows.Forms.DateTimePicker();
             this.label10 = new System.Windows.Forms.Label();
             this.lbRecordMan = new System.Windows.Forms.Label();
-            this.txbRecordMan = new System.Windows.Forms.TextBox();
+            this.txb记录人 = new System.Windows.Forms.TextBox();
             this.lbTitle = new System.Windows.Forms.Label();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -68,14 +68,14 @@
             this.panel2.Controls.Add(this.label14);
             this.panel2.Controls.Add(this.label9);
             this.panel2.Controls.Add(this.label7);
-            this.panel2.Controls.Add(this.txbRate);
+            this.panel2.Controls.Add(this.txb重量比成品率);
             this.panel2.Controls.Add(this.label8);
-            this.panel2.Controls.Add(this.txbIn);
-            this.panel2.Controls.Add(this.txbWasteWeight);
-            this.panel2.Controls.Add(this.txbNote);
+            this.panel2.Controls.Add(this.txb领料量);
+            this.panel2.Controls.Add(this.txb废品量合计);
+            this.panel2.Controls.Add(this.txb备注);
             this.panel2.Controls.Add(this.label4);
-            this.panel2.Controls.Add(this.txbBalence);
-            this.panel2.Controls.Add(this.txbGoodWeight);
+            this.panel2.Controls.Add(this.txb物料平衡);
+            this.panel2.Controls.Add(this.txb成品重量合计);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Location = new System.Drawing.Point(23, 158);
             this.panel2.Name = "panel2";
@@ -112,14 +112,14 @@
             this.label7.TabIndex = 15;
             this.label7.Text = "物料平衡%";
             // 
-            // txbRate
+            // txb重量比成品率
             // 
-            this.txbRate.Location = new System.Drawing.Point(479, 41);
-            this.txbRate.Margin = new System.Windows.Forms.Padding(4);
-            this.txbRate.Name = "txbRate";
-            this.txbRate.ReadOnly = true;
-            this.txbRate.Size = new System.Drawing.Size(150, 26);
-            this.txbRate.TabIndex = 14;
+            this.txb重量比成品率.Location = new System.Drawing.Point(479, 41);
+            this.txb重量比成品率.Margin = new System.Windows.Forms.Padding(4);
+            this.txb重量比成品率.Name = "txb重量比成品率";
+            this.txb重量比成品率.ReadOnly = true;
+            this.txb重量比成品率.Size = new System.Drawing.Size(150, 26);
+            this.txb重量比成品率.TabIndex = 14;
             // 
             // label8
             // 
@@ -131,32 +131,32 @@
             this.label8.TabIndex = 13;
             this.label8.Text = "质量比(成品率)(%)";
             // 
-            // txbIn
+            // txb领料量
             // 
-            this.txbIn.Location = new System.Drawing.Point(323, 41);
-            this.txbIn.Margin = new System.Windows.Forms.Padding(4);
-            this.txbIn.Name = "txbIn";
-            this.txbIn.ReadOnly = true;
-            this.txbIn.Size = new System.Drawing.Size(150, 26);
-            this.txbIn.TabIndex = 10;
+            this.txb领料量.Location = new System.Drawing.Point(323, 41);
+            this.txb领料量.Margin = new System.Windows.Forms.Padding(4);
+            this.txb领料量.Name = "txb领料量";
+            this.txb领料量.ReadOnly = true;
+            this.txb领料量.Size = new System.Drawing.Size(150, 26);
+            this.txb领料量.TabIndex = 10;
             // 
-            // txbWasteWeight
+            // txb废品量合计
             // 
-            this.txbWasteWeight.Location = new System.Drawing.Point(165, 41);
-            this.txbWasteWeight.Margin = new System.Windows.Forms.Padding(4);
-            this.txbWasteWeight.Name = "txbWasteWeight";
-            this.txbWasteWeight.ReadOnly = true;
-            this.txbWasteWeight.Size = new System.Drawing.Size(150, 26);
-            this.txbWasteWeight.TabIndex = 8;
+            this.txb废品量合计.Location = new System.Drawing.Point(165, 41);
+            this.txb废品量合计.Margin = new System.Windows.Forms.Padding(4);
+            this.txb废品量合计.Name = "txb废品量合计";
+            this.txb废品量合计.ReadOnly = true;
+            this.txb废品量合计.Size = new System.Drawing.Size(150, 26);
+            this.txb废品量合计.TabIndex = 8;
             // 
-            // txbNote
+            // txb备注
             // 
-            this.txbNote.Location = new System.Drawing.Point(7, 104);
-            this.txbNote.Margin = new System.Windows.Forms.Padding(4);
-            this.txbNote.Multiline = true;
-            this.txbNote.Name = "txbNote";
-            this.txbNote.Size = new System.Drawing.Size(780, 47);
-            this.txbNote.TabIndex = 18;
+            this.txb备注.Location = new System.Drawing.Point(7, 104);
+            this.txb备注.Margin = new System.Windows.Forms.Padding(4);
+            this.txb备注.Multiline = true;
+            this.txb备注.Name = "txb备注";
+            this.txb备注.Size = new System.Drawing.Size(780, 47);
+            this.txb备注.TabIndex = 18;
             // 
             // label4
             // 
@@ -168,23 +168,23 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "废品重量合计(Kg)";
             // 
-            // txbBalence
+            // txb物料平衡
             // 
-            this.txbBalence.Location = new System.Drawing.Point(637, 41);
-            this.txbBalence.Margin = new System.Windows.Forms.Padding(4);
-            this.txbBalence.Name = "txbBalence";
-            this.txbBalence.ReadOnly = true;
-            this.txbBalence.Size = new System.Drawing.Size(150, 26);
-            this.txbBalence.TabIndex = 16;
+            this.txb物料平衡.Location = new System.Drawing.Point(637, 41);
+            this.txb物料平衡.Margin = new System.Windows.Forms.Padding(4);
+            this.txb物料平衡.Name = "txb物料平衡";
+            this.txb物料平衡.ReadOnly = true;
+            this.txb物料平衡.Size = new System.Drawing.Size(150, 26);
+            this.txb物料平衡.TabIndex = 16;
             // 
-            // txbGoodWeight
+            // txb成品重量合计
             // 
-            this.txbGoodWeight.Location = new System.Drawing.Point(7, 41);
-            this.txbGoodWeight.Margin = new System.Windows.Forms.Padding(4);
-            this.txbGoodWeight.Name = "txbGoodWeight";
-            this.txbGoodWeight.ReadOnly = true;
-            this.txbGoodWeight.Size = new System.Drawing.Size(150, 26);
-            this.txbGoodWeight.TabIndex = 6;
+            this.txb成品重量合计.Location = new System.Drawing.Point(7, 41);
+            this.txb成品重量合计.Margin = new System.Windows.Forms.Padding(4);
+            this.txb成品重量合计.Name = "txb成品重量合计";
+            this.txb成品重量合计.ReadOnly = true;
+            this.txb成品重量合计.Size = new System.Drawing.Size(150, 26);
+            this.txb成品重量合计.TabIndex = 6;
             // 
             // label3
             // 
@@ -198,26 +198,27 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.txbDate);
+            this.panel1.Controls.Add(this.dtp生产日期);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.btnReview);
+            this.panel1.Controls.Add(this.btn审核);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.txbProductInstruction);
+            this.panel1.Controls.Add(this.txb生产指令);
             this.panel1.Location = new System.Drawing.Point(23, 75);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(958, 67);
             this.panel1.TabIndex = 30;
             // 
-            // txbDate
+            // dtp生产日期
             // 
-            this.txbDate.Location = new System.Drawing.Point(373, 18);
-            this.txbDate.Name = "txbDate";
-            this.txbDate.ReadOnly = true;
-            this.txbDate.Size = new System.Drawing.Size(210, 26);
-            this.txbDate.TabIndex = 43;
+            this.dtp生产日期.CustomFormat = "yyyy-MM-dd";
+            this.dtp生产日期.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp生产日期.Location = new System.Drawing.Point(373, 22);
+            this.dtp生产日期.Name = "dtp生产日期";
+            this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp生产日期.TabIndex = 43;
             // 
             // btnSave
             // 
@@ -227,7 +228,7 @@
             this.btnSave.TabIndex = 42;
             this.btnSave.Text = "保存";
             this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Visible = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // label11
             // 
@@ -247,15 +248,15 @@
             this.textBox1.Size = new System.Drawing.Size(172, 26);
             this.textBox1.TabIndex = 29;
             // 
-            // btnReview
+            // btn审核
             // 
-            this.btnReview.Location = new System.Drawing.Point(735, 18);
-            this.btnReview.Name = "btnReview";
-            this.btnReview.Size = new System.Drawing.Size(92, 30);
-            this.btnReview.TabIndex = 32;
-            this.btnReview.Text = "复核";
-            this.btnReview.UseVisualStyleBackColor = true;
-            this.btnReview.Click += new System.EventHandler(this.btnReview_Click);
+            this.btn审核.Location = new System.Drawing.Point(735, 18);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(92, 30);
+            this.btn审核.TabIndex = 32;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btnReview_Click);
             // 
             // label2
             // 
@@ -277,23 +278,25 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "生产指令";
             // 
-            // txbProductInstruction
+            // txb生产指令
             // 
-            this.txbProductInstruction.Location = new System.Drawing.Point(94, 20);
-            this.txbProductInstruction.Margin = new System.Windows.Forms.Padding(4);
-            this.txbProductInstruction.Name = "txbProductInstruction";
-            this.txbProductInstruction.ReadOnly = true;
-            this.txbProductInstruction.Size = new System.Drawing.Size(172, 26);
-            this.txbProductInstruction.TabIndex = 1;
+            this.txb生产指令.Location = new System.Drawing.Point(94, 20);
+            this.txb生产指令.Margin = new System.Windows.Forms.Padding(4);
+            this.txb生产指令.Name = "txb生产指令";
+            this.txb生产指令.ReadOnly = true;
+            this.txb生产指令.Size = new System.Drawing.Size(172, 26);
+            this.txb生产指令.TabIndex = 1;
             // 
-            // dtpRecheck
+            // dtp审核日期
             // 
-            this.dtpRecheck.Location = new System.Drawing.Point(382, 426);
-            this.dtpRecheck.Margin = new System.Windows.Forms.Padding(4);
-            this.dtpRecheck.Name = "dtpRecheck";
-            this.dtpRecheck.Size = new System.Drawing.Size(162, 26);
-            this.dtpRecheck.TabIndex = 26;
-            this.dtpRecheck.Value = new System.DateTime(2017, 1, 17, 18, 13, 0, 0);
+            this.dtp审核日期.CustomFormat = "yyyy-MM-dd";
+            this.dtp审核日期.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp审核日期.Location = new System.Drawing.Point(382, 426);
+            this.dtp审核日期.Margin = new System.Windows.Forms.Padding(4);
+            this.dtp审核日期.Name = "dtp审核日期";
+            this.dtp审核日期.Size = new System.Drawing.Size(162, 26);
+            this.dtp审核日期.TabIndex = 26;
+            this.dtp审核日期.Value = new System.DateTime(2017, 1, 17, 18, 13, 0, 0);
             // 
             // label12
             // 
@@ -313,24 +316,26 @@
             this.lbRecheckMan.Name = "lbRecheckMan";
             this.lbRecheckMan.Size = new System.Drawing.Size(56, 16);
             this.lbRecheckMan.TabIndex = 24;
-            this.lbRecheckMan.Text = "复核人";
+            this.lbRecheckMan.Text = "审核人";
             // 
-            // txbRecheckMan
+            // txb审核人
             // 
-            this.txbRecheckMan.Location = new System.Drawing.Point(382, 378);
-            this.txbRecheckMan.Margin = new System.Windows.Forms.Padding(4);
-            this.txbRecheckMan.Name = "txbRecheckMan";
-            this.txbRecheckMan.Size = new System.Drawing.Size(162, 26);
-            this.txbRecheckMan.TabIndex = 23;
+            this.txb审核人.Location = new System.Drawing.Point(382, 378);
+            this.txb审核人.Margin = new System.Windows.Forms.Padding(4);
+            this.txb审核人.Name = "txb审核人";
+            this.txb审核人.Size = new System.Drawing.Size(162, 26);
+            this.txb审核人.TabIndex = 23;
             // 
-            // dtpRecord
+            // dtp记录日期
             // 
-            this.dtpRecord.Location = new System.Drawing.Point(117, 426);
-            this.dtpRecord.Margin = new System.Windows.Forms.Padding(4);
-            this.dtpRecord.Name = "dtpRecord";
-            this.dtpRecord.Size = new System.Drawing.Size(162, 26);
-            this.dtpRecord.TabIndex = 22;
-            this.dtpRecord.Value = new System.DateTime(2017, 1, 17, 18, 13, 0, 0);
+            this.dtp记录日期.CustomFormat = "yyyy-MM-dd";
+            this.dtp记录日期.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp记录日期.Location = new System.Drawing.Point(117, 426);
+            this.dtp记录日期.Margin = new System.Windows.Forms.Padding(4);
+            this.dtp记录日期.Name = "dtp记录日期";
+            this.dtp记录日期.Size = new System.Drawing.Size(162, 26);
+            this.dtp记录日期.TabIndex = 22;
+            this.dtp记录日期.Value = new System.DateTime(2017, 1, 17, 18, 13, 0, 0);
             // 
             // label10
             // 
@@ -352,13 +357,13 @@
             this.lbRecordMan.TabIndex = 20;
             this.lbRecordMan.Text = "记录人";
             // 
-            // txbRecordMan
+            // txb记录人
             // 
-            this.txbRecordMan.Location = new System.Drawing.Point(117, 378);
-            this.txbRecordMan.Margin = new System.Windows.Forms.Padding(4);
-            this.txbRecordMan.Name = "txbRecordMan";
-            this.txbRecordMan.Size = new System.Drawing.Size(155, 26);
-            this.txbRecordMan.TabIndex = 19;
+            this.txb记录人.Location = new System.Drawing.Point(117, 378);
+            this.txb记录人.Margin = new System.Windows.Forms.Padding(4);
+            this.txb记录人.Name = "txb记录人";
+            this.txb记录人.Size = new System.Drawing.Size(155, 26);
+            this.txb记录人.TabIndex = 19;
             // 
             // lbTitle
             // 
@@ -378,14 +383,14 @@
             this.ClientSize = new System.Drawing.Size(1016, 741);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.dtpRecheck);
+            this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.lbRecheckMan);
-            this.Controls.Add(this.txbRecheckMan);
-            this.Controls.Add(this.dtpRecord);
+            this.Controls.Add(this.txb审核人);
+            this.Controls.Add(this.dtp记录日期);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.lbRecordMan);
-            this.Controls.Add(this.txbRecordMan);
+            this.Controls.Add(this.txb记录人);
             this.Controls.Add(this.lbTitle);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
@@ -404,35 +409,35 @@
         #endregion
 
         private System.Windows.Forms.Label lbTitle;
-        private System.Windows.Forms.TextBox txbProductInstruction;
+        private System.Windows.Forms.TextBox txb生产指令;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox txbBalence;
-        private System.Windows.Forms.TextBox txbNote;
-        private System.Windows.Forms.DateTimePicker dtpRecord;
+        private System.Windows.Forms.TextBox txb物料平衡;
+        private System.Windows.Forms.TextBox txb备注;
+        private System.Windows.Forms.DateTimePicker dtp记录日期;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lbRecordMan;
-        private System.Windows.Forms.TextBox txbRecordMan;
+        private System.Windows.Forms.TextBox txb记录人;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label lbRecheckMan;
-        private System.Windows.Forms.TextBox txbRecheckMan;
+        private System.Windows.Forms.TextBox txb审核人;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DateTimePicker dtpRecheck;
+        private System.Windows.Forms.DateTimePicker dtp审核日期;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox txbGoodWeight;
+        private System.Windows.Forms.TextBox txb成品重量合计;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox txbWasteWeight;
-        private System.Windows.Forms.TextBox txbIn;
+        private System.Windows.Forms.TextBox txb废品量合计;
+        private System.Windows.Forms.TextBox txb领料量;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox txbRate;
+        private System.Windows.Forms.TextBox txb重量比成品率;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button btnReview;
+        private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.TextBox txbDate;
+        private System.Windows.Forms.DateTimePicker dtp生产日期;
     }
 }

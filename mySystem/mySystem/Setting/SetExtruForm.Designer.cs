@@ -86,7 +86,6 @@
             this.procClearPanel.Name = "procClearPanel";
             this.procClearPanel.Size = new System.Drawing.Size(1123, 269);
             this.procClearPanel.TabIndex = 25;
-            this.procClearPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.procClearPanel_Paint);
             // 
             // label4
             // 
@@ -155,7 +154,6 @@
             this.cleanPanel.Name = "cleanPanel";
             this.cleanPanel.Size = new System.Drawing.Size(1123, 251);
             this.cleanPanel.TabIndex = 17;
-            this.cleanPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.cleanPanel_Paint);
             // 
             // label1
             // 
@@ -173,9 +171,9 @@
             this.label6.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.label6.Location = new System.Drawing.Point(13, 1689);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(135, 20);
+            this.label6.Size = new System.Drawing.Size(177, 20);
             this.label6.TabIndex = 27;
-            this.label6.Text = "产品系数设置";
+            this.label6.Text = "生产指令参数设置";
             // 
             // label7
             // 

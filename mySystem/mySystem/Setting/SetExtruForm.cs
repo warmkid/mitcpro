@@ -21,10 +21,10 @@ namespace mySystem
         PreheatParameterForm preheatDlg = null;
         Setting_CleanSite setsiteDlg = null;
         SettingHandOver handoverDlg = null;
-        string para1 = null;
-        string para2 = null;
-        string para3 = null;
-        string para4 = null;
+        int para1 = 0;
+        double para2 = 0;
+        double para3 = 0;
+        double para4 = 0;
 
         public SetExtruForm(MainForm mainform):base(mainform)
         {
@@ -57,7 +57,7 @@ namespace mySystem
             preHeatPanel.Controls.Add(preheatDlg);
             preheatDlg.Show();
 
-            //清场点设置
+            //清场设置
             setsiteDlg = new Setting_CleanSite(base.mainform);
             setsiteDlg.TopLevel = false;
             setsiteDlg.FormBorderStyle = FormBorderStyle.None;
@@ -78,8 +78,8 @@ namespace mySystem
         private void InitParameter()
         { 
             //读取数据库并显示
-            String tblName = "setting_parameter";
-            List<String> readqueryCols = new List<String>(new String[] { "matface_num", "matdens", "ration1", "ration2" });
+            String tblName = "设置生产指令参数";
+            List<String> readqueryCols = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
             List<String> whereCols = new List<String>(new String[] { "ID" });
             List<Object> whereVals = new List<Object>(new Object[] { 1 });
             List<List<Object>> queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
@@ -96,12 +96,12 @@ namespace mySystem
 
         private void ParaSave()
         {
-            para1 = tB面数.Text.Trim();
-            para2 = tB厚度密度.Text.Trim();
-            para3 = tB参数1.Text.Trim();
-            para4 = tB参数2.Text.Trim();
-            String tblName = "setting_parameter";
-            List<String> updateCols = new List<String>(new String[] { "matface_num", "matdens", "ration1", "ration2" });
+            para1 = Convert.ToInt32(tB面数.Text.Trim());
+            para2 = Convert.ToDouble(tB厚度密度.Text.Trim());
+            para3 = Convert.ToDouble(tB参数1.Text.Trim());
+            para4 = Convert.ToDouble(tB参数2.Text.Trim());
+            String tblName = "设置生产指令参数";
+            List<String> updateCols = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
             List<Object> updateVals = new List<Object>(new Object[] { para1, para2, para3, para4 });
             List<String> whereCols = new List<String>(new String[] { "ID" });
             List<Object> whereVals = new List<Object>(new Object[] { 1 });
@@ -136,17 +136,6 @@ namespace mySystem
                 ParaSave();
             }
         }
-
-        private void procClearPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void cleanPanel_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
 
     }
 }
