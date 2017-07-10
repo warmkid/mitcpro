@@ -28,7 +28,7 @@ namespace mySystem.Setting
             }
             else
             {
-                string accessql = "select * from feedingprocess_cleansite";
+                string accessql = "select * from 设置供料工序清场项目";
                 OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 OleDbDataAdapter data = new OleDbDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -48,7 +48,7 @@ namespace mySystem.Setting
                 cmd.Dispose();
                 data.Dispose();
                 dt.Clear();
-                accessql = "select * from extrusion_cleansite";
+                accessql = "select * from 设置吹膜工序清场项目";
                 cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 data = new OleDbDataAdapter(cmd);
                 data.Fill(dt);
@@ -130,19 +130,19 @@ namespace mySystem.Setting
             }
             else
             {
-                string accessql = "delete * from feedingprocess_cleansite";
+                string accessql = "delete * from 设置供料工序清场项目";
                 OleDbCommand cmd = new OleDbCommand(accessql, mySystem.Parameter.connOle);
                 cmd.ExecuteNonQuery();
                 for(int i=0;i<dataGridView1.Rows.Count;i++)
                 {
-                    cmd.CommandText = "insert into feedingprocess_cleansite(id,clean_cont) values ('" + dataGridView1.Rows[i].Cells[0].Value+"','" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "')";
+                    cmd.CommandText = "insert into 设置供料工序清场项目(ID,清场内容) values ('" + dataGridView1.Rows[i].Cells[0].Value + "','" + dataGridView1.Rows[i].Cells[1].Value.ToString() + "')";
                     cmd.ExecuteNonQuery();
                 }
-                cmd.CommandText = "delete * from extrusion_cleansite";
+                cmd.CommandText = "delete * from 设置吹膜工序清场项目";
                 cmd.ExecuteNonQuery();
                 for (int i = 0; i < dataGridView2.Rows.Count; i++)
                 {
-                    cmd.CommandText = "insert into extrusion_cleansite(id,clean_cont) values ('" + dataGridView2.Rows[i].Cells[0].Value + "','" + dataGridView2.Rows[i].Cells[1].Value.ToString() + "')";
+                    cmd.CommandText = "insert into 设置吹膜工序清场项目(ID,清场内容) values ('" + dataGridView2.Rows[i].Cells[0].Value + "','" + dataGridView2.Rows[i].Cells[1].Value.ToString() + "')";
                     cmd.ExecuteNonQuery();
                 }
                 cmd.Dispose();

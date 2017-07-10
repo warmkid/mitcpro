@@ -26,6 +26,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 
+using WindowsFormsApplication1;
+
 namespace BatchProductRecord
 {
     public partial class ProcessProductInstru : mySystem.BaseForm
@@ -39,7 +41,7 @@ namespace BatchProductRecord
         //新的版本
         int index = 0;//判断是插入模式还是更新模式，0代表插入，1代表更新
         int id;
-        int label = 0;
+        int label = 0;//1代表插入成功
         OleDbConnection connOle;
         private DataTable dt_prodinstr,dt_prodlist;//讲师
         private OleDbDataAdapter da_prodinstr,da_prodlist;
@@ -59,7 +61,7 @@ namespace BatchProductRecord
             #endregion
 
             init();
-            bind();
+            //bind();
             
         }
         private void init()
@@ -125,6 +127,11 @@ namespace BatchProductRecord
 
             //BindingSource到控件的绑定
             dataGridView1.DataSource = bs_prodlist.DataSource;
+
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[4].ReadOnly = true;
+            
         }
 
         //初次绑定数据库表
@@ -595,6 +602,18 @@ namespace BatchProductRecord
 //            button2.Enabled = true;
             #endregion
             //判断合法性
+            //计算合计
+            //float sum_mi=0,sum_juan=0,sum_weight=0;
+            //for(int i=0;i<dataGridView1.Rows.Count)
+            //{
+            //    sum_mi+=float.Parse(dataGridView1.Rows[i][]);
+            //}
+            //if (textBox6.Text == "" || textBox8.Text == "" || textBox10.Text == "")
+            //{
+            //    textBox6.Text="0";
+            //    textBox8.Text="0";
+            //    textBox10.Text="0";
+            //}
             if (textBox21.Text == "" || int.Parse(textBox21.Text) < 20)
             {
                 MessageBox.Show("输入不合法");
@@ -605,25 +624,102 @@ namespace BatchProductRecord
             id = getid(textBox2.Text);
             if (id == -1)//进行插入
             {
+                //保存原来的值
+                string s1=textBox2.Text;
+                string s2 = textBox3.Text;
+                string s3 = textBox4.Text;
+                DateTime d1 = dateTimePicker1.Value;
+                string s4 = textBox15.Text;
+                string s5 = textBox17.Text;
+                string s6 = textBox19.Text;
+                string s7 = textBox21.Text;
+                string s8 = textBox16.Text;
+                string s9 = textBox18.Text;
+                string s10 = textBox20.Text;
+                string s11 = textBox22.Text;
+                string s12 = textBox12.Text;
+                string s13 = textBox13.Text;
+                string s14 = textBox14.Text;
+                string s15 = textBox9.Text;
+                string s16 = textBox11.Text;
+                
+                string s17 = textBox5.Text;
+                string s18 = textBox24.Text;
+                DateTime d2 = dateTimePicker2.Value;
+               
+                string s19 = textBox25.Text;
+                DateTime d3 = dateTimePicker3.Value;
+                string s20 = textBox26.Text;
+                DateTime d4= dateTimePicker4.Value;
+                string s21 = textBox23.Text;
+
                 // 保存非DataGridView中的数据必须先执行EndEdit;
+                bind();
+                label = 1;
+                dt_prodinstr.Rows[0]["生产指令编号"] = s1;
+                dt_prodinstr.Rows[0]["生产工艺"] = s2;
+                dt_prodinstr.Rows[0]["生产设备编号"] = s3;
+                dt_prodinstr.Rows[0]["开始生产日期"] = dateTimePicker1.Value;
+                dt_prodinstr.Rows[0]["内外层物料代码"] = s4;
+                dt_prodinstr.Rows[0]["内外层物料批号"] = s5;
+                dt_prodinstr.Rows[0]["内外层包装规格"] = s6;
+                dt_prodinstr.Rows[0]["内外层领料量"] = int.Parse(s7);
+                dt_prodinstr.Rows[0]["中层物料代码"] = s8;
+                dt_prodinstr.Rows[0]["中层物料批号"] = s9;
+                dt_prodinstr.Rows[0]["中层包装规格"] = s10;
+                dt_prodinstr.Rows[0]["中层领料量"] = int.Parse(s11);
+                dt_prodinstr.Rows[0]["卷心管"] = s12;
+                dt_prodinstr.Rows[0]["卷心管规格"] = s13;
+                dt_prodinstr.Rows[0]["卷心管领料量"] = int.Parse(s14);
+                dt_prodinstr.Rows[0]["双层洁净包装包装规格"] = s15;
+                dt_prodinstr.Rows[0]["双层洁净包装领料量"] = int.Parse(s16);
+                dt_prodinstr.Rows[0]["负责人"] = s17;
+                dt_prodinstr.Rows[0]["编制人"] = s18;
+                dt_prodinstr.Rows[0]["编制时间"] = d2;
+                dt_prodinstr.Rows[0]["审批人"] = s19;
+                dt_prodinstr.Rows[0]["审批时间"] = d3;
+                dt_prodinstr.Rows[0]["接收人"] = s20;
+                dt_prodinstr.Rows[0]["接收时间"] = d4;
+                //dt_prodinstr.Rows[0]["审核意见"] = textBox17.Text;
+                //dt_prodinstr.Rows[0]["审核是否通过"] = textBox17.Text;
+                dt_prodinstr.Rows[0]["备注"] = s21;
+
+                dt_prodinstr.Rows[0]["计划产量合计米"] = textBox6.Text;
+                dt_prodinstr.Rows[0]["用料重量合计"] = textBox8.Text;
+                dt_prodinstr.Rows[0]["计划产量合计卷"] = textBox10.Text;
+
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                bind();
-                id = getid();            
+                id = getid();  
+
+                for (int i = 0; i < dt_prodlist.Rows.Count; i++)
+                {
+                    dt_prodlist.Rows[i][1] = id;
+                }
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                //dt_prodlist;     
                 bind_list(id);
-                dataGridView1.Columns[0].Visible = false;
-                dataGridView1.Columns[1].Visible = false;
-                dataGridView1.Columns[4].ReadOnly = true;
-                fill(id);
+
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                //fill(id);
                 MessageBox.Show("添加成功");
             }
             else//进行更新
             {
                 if (index == 0)
+                {
                     bind2(id);
+                    bind_list(id);
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[1].Visible = false;
+                }
+                    
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                fill(id);
+
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                label = 0;
+                //fill(id);
                 MessageBox.Show("更新成功");
             }
 
@@ -723,9 +819,8 @@ namespace BatchProductRecord
         {
             //if (e.RowIndex < 0)
             //    return;
-            //if (e.RowIndex == dataGridView1.Rows.Count - 1)
-            //    addrows();
-
+            ////if (e.RowIndex == dataGridView1.Rows.Count - 1)
+            ////    addrows();
             //if (e.ColumnIndex == 3)
             //{
             //    string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
@@ -743,7 +838,7 @@ namespace BatchProductRecord
             //    leng = float.Parse(array2[2]);
             //}
             ////用料重量自己计算
-            //if (e.ColumnIndex == 4)
+            //if (e.ColumnIndex == 7)
             //{
 
             //    float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
@@ -847,6 +942,31 @@ namespace BatchProductRecord
                 da_prodlist.Update((DataTable)bs_prodlist.DataSource);
 
             }
+        }
+
+        private void button6_Click(object sender, System.EventArgs e)
+        {
+            mySystem.Setting.Setting_CleanSite s = new mySystem.Setting.Setting_CleanSite(mainform);
+            s.Show();
+        }
+
+        private void button7_Click(object sender, System.EventArgs e)
+        {
+            Setting_CleanArea s = new Setting_CleanArea(mainform);
+            s.Show();
+        }
+
+        private void textBox2_TextChanged(object sender, System.EventArgs e)
+        {
+            if (textBox2.Text == "")
+                return;
+            if(label==0)
+                bind_list(getid(textBox2.Text));
+        }
+
+        private void dataGridView1_CellContentClick_1(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
