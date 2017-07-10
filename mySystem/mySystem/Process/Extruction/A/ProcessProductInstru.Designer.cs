@@ -94,7 +94,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button5 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
@@ -199,6 +198,7 @@
             this.textBox2.Size = new System.Drawing.Size(96, 23);
             this.textBox2.TabIndex = 5;
             this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.textBox2.Validated += new System.EventHandler(this.textBox2_Validated);
             // 
             // label5
             // 
@@ -223,7 +223,6 @@
             this.textBox4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBox4.Location = new System.Drawing.Point(383, 87);
             this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(87, 23);
             this.textBox4.TabIndex = 8;
             // 
@@ -783,6 +782,7 @@
             this.textBox26.Name = "textBox26";
             this.textBox26.Size = new System.Drawing.Size(110, 23);
             this.textBox26.TabIndex = 19;
+            this.textBox26.TextChanged += new System.EventHandler(this.textBox26_TextChanged);
             // 
             // label26
             // 
@@ -830,7 +830,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.textBox10);
             this.panel1.Controls.Add(this.label31);
@@ -843,17 +842,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(888, 42);
             this.panel1.TabIndex = 19;
-            // 
-            // button5
-            // 
-            this.button5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button5.Location = new System.Drawing.Point(108, 10);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(62, 23);
-            this.button5.TabIndex = 23;
-            this.button5.Text = "保存";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
@@ -951,6 +939,7 @@
             this.button6.TabIndex = 21;
             this.button6.Text = "button6";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Visible = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button7
@@ -961,6 +950,7 @@
             this.button7.TabIndex = 22;
             this.button7.Text = "button7";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Visible = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // ProcessProductInstru
@@ -1121,7 +1111,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
     }

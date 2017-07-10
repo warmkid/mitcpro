@@ -113,6 +113,21 @@ namespace WindowsFormsApplication1
                 return tempdt.Rows[0][0].ToString();
         }
 
+       //供界面显示,参数为数据库中对应记录的id
+        public void show(int paraid)
+        {
+            string asql = "select 生产指令ID from 吹膜机组清洁记录表 where ID=" + paraid;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+                return;
+            else
+                fill_by_id((int)tempdt.Rows[0][0]);
+        }
+
         //根据生产指令id将数据填写到各控件中
         private int fill_by_id(int id)
         {

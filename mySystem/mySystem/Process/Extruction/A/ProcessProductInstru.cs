@@ -61,6 +61,7 @@ namespace BatchProductRecord
             #endregion
 
             init();
+
             //bind();
             
         }
@@ -106,7 +107,7 @@ namespace BatchProductRecord
             da_prodlist = new OleDbDataAdapter();
             cb_prodlist = new OleDbCommandBuilder();
 
-
+            textBox24.Text = mySystem.Parameter.userName;
         }
         //产品列表绑定
         private void bind_list(int id)
@@ -130,7 +131,7 @@ namespace BatchProductRecord
 
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[4].ReadOnly = true;
+            dataGridView1.Columns[5].ReadOnly = true;
             
         }
 
@@ -319,6 +320,7 @@ namespace BatchProductRecord
             // 获取选中的列，然后提示
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             MessageBox.Show(name + "填写错误");
+            //dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "";
         }
 
         //添加编辑行
@@ -353,47 +355,68 @@ namespace BatchProductRecord
         }
         public override void CheckResult()
         {
+            #region 以前
+            //base.CheckResult();
+            ////获得审核信息
+            ////string opinion = checkform.opinion;
+            ////bool isok = checkform.ischeckOk;
+            //textBox25.Text = name_findby_id(checkform.userID);
+            //dateTimePicker3.Value = checkform.time;
+
+            ////选择刚才的表中对应的记录，并更新里面的记录
+            //string asql = "select production_instruction_id from production_instruction where production_instruction_code='"+last_code+"'";
+            //OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            //OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            //DataTable tempdt = new DataTable();
+            //da.Fill(tempdt);
+            //if (tempdt.Rows.Count == 0)
+            //{
+            //    MessageBox.Show("对应的记录未找到");
+            //    return;
+            //}
+            //int id = Int32.Parse(tempdt.Rows[0][0].ToString());
+            //comm.CommandText = "update production_instruction set reviewer_id=@id,review_date=@date,review_opinion=@opinion,is_review_qualified=@isok where production_instruction_id="+id;
+            //comm.Parameters.Add("@id", System.Data.OleDb.OleDbType.Integer);
+            //comm.Parameters.Add("@date", System.Data.OleDb.OleDbType.Date);
+            //comm.Parameters.Add("@opinion", System.Data.OleDb.OleDbType.VarChar);
+            //comm.Parameters.Add("@isok", System.Data.OleDb.OleDbType.Boolean);
+
+            //comm.Parameters["@id"].Value = checkform.userID;
+            //comm.Parameters["@date"].Value = checkform.time;
+            //comm.Parameters["@opinion"].Value = checkform.opinion;
+            //comm.Parameters["@isok"].Value = checkform.ischeckOk;
+            //int result = comm.ExecuteNonQuery();
+            //if (result<=0)
+            //{
+            //    MessageBox.Show("添加错误");
+            //}
+
+            //button3.Enabled = true;
+            //da.Dispose();
+            //comm.Dispose();
+            //tempdt.Dispose();
+            #endregion
             base.CheckResult();
             //获得审核信息
-            //string opinion = checkform.opinion;
-            //bool isok = checkform.ischeckOk;
-            textBox25.Text = name_findby_id(checkform.userID);
+            textBox25.Text = checkform.userName;
             dateTimePicker3.Value = checkform.time;
-
-            //选择刚才的表中对应的记录，并更新里面的记录
-            string asql = "select production_instruction_id from production_instruction where production_instruction_code='"+last_code+"'";
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
-            if (tempdt.Rows.Count == 0)
+            dt_prodinstr.Rows[0][22] = checkform.userName;
+            dt_prodinstr.Rows[0][23] = checkform.time;
+            dt_prodinstr.Rows[0][26] = checkform.opinion;
+            dt_prodinstr.Rows[0][27] = checkform.ischeckOk;
+            //状态
+            if (checkform.ischeckOk)
             {
-                MessageBox.Show("对应的记录未找到");
-                return;
+                dt_prodinstr.Rows[0][28] = 1;//带接收
             }
-            int id = Int32.Parse(tempdt.Rows[0][0].ToString());
-            comm.CommandText = "update production_instruction set reviewer_id=@id,review_date=@date,review_opinion=@opinion,is_review_qualified=@isok where production_instruction_id="+id;
-            comm.Parameters.Add("@id", System.Data.OleDb.OleDbType.Integer);
-            comm.Parameters.Add("@date", System.Data.OleDb.OleDbType.Date);
-            comm.Parameters.Add("@opinion", System.Data.OleDb.OleDbType.VarChar);
-            comm.Parameters.Add("@isok", System.Data.OleDb.OleDbType.Boolean);
-
-            comm.Parameters["@id"].Value = checkform.userID;
-            comm.Parameters["@date"].Value = checkform.time;
-            comm.Parameters["@opinion"].Value = checkform.opinion;
-            comm.Parameters["@isok"].Value = checkform.ischeckOk;
-            int result = comm.ExecuteNonQuery();
-            if (result<=0)
+            else
             {
-                MessageBox.Show("添加错误");
+                dt_prodinstr.Rows[0][28] = 0;//未审核，草稿
             }
 
-            button3.Enabled = true;
-            da.Dispose();
-            comm.Dispose();
-            tempdt.Dispose();
-
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -602,22 +625,55 @@ namespace BatchProductRecord
 //            button2.Enabled = true;
             #endregion
             //判断合法性
-            //计算合计
+            int nameid = mySystem.Parameter.NametoID(textBox5.Text);
+            if (nameid <= 0)
+            {
+                MessageBox.Show("负责人id不存在");
+                return;
+            }
+            ////计算合计
             //float sum_mi=0,sum_juan=0,sum_weight=0;
-            //for(int i=0;i<dataGridView1.Rows.Count)
+            //for(int i=0;i<dataGridView1.Rows.Count;i++)
             //{
-            //    sum_mi+=float.Parse(dataGridView1.Rows[i][]);
+            //    sum_mi+=float.Parse(dataGridView1.Rows[i].Cells[4].ToString());
+            //    sum_weight = float.Parse(dataGridView1.Rows[i].Cells[5].ToString());
+            //    sum_juan=float.Parse(dataGridView1.Rows[i].Cells[8].ToString());
             //}
-            //if (textBox6.Text == "" || textBox8.Text == "" || textBox10.Text == "")
-            //{
-            //    textBox6.Text="0";
-            //    textBox8.Text="0";
-            //    textBox10.Text="0";
-            //}
-            if (textBox21.Text == "" || int.Parse(textBox21.Text) < 20)
+            //textBox6.Text = sum_mi.ToString();
+            //textBox8.Text = sum_weight.ToString();
+            //textBox10.Text = sum_juan.ToString();
+
+            if (textBox6.Text == "" || textBox8.Text == "" || textBox10.Text == "")
+            {
+                textBox6.Text = "0";
+                textBox8.Text = "0";
+                textBox10.Text = "0";
+            }
+            
+            if (textBox21.Text == "" || int.Parse(textBox21.Text) < float.Parse(textBox8.Text))
             {
                 MessageBox.Show("输入不合法");
                 textBox21.Text = "";
+                return;
+            }
+            //判断领料量是否是合法
+            int tempvalue;
+            if (!int.TryParse(textBox22.Text,out tempvalue))
+            {
+                MessageBox.Show("输入不合法");
+                textBox22.Text = "";
+                return;
+            }
+            if (!int.TryParse(textBox14.Text, out tempvalue))
+            {
+                MessageBox.Show("输入不合法");
+                textBox14.Text = "";
+                return;
+            }
+            if (!int.TryParse(textBox11.Text, out tempvalue))
+            {
+                MessageBox.Show("输入不合法");
+                textBox11.Text = "";
                 return;
             }
             //判断是更新还是插入
@@ -625,6 +681,7 @@ namespace BatchProductRecord
             if (id == -1)//进行插入
             {
                 //保存原来的值
+                string s0 = textBox1.Text;
                 string s1=textBox2.Text;
                 string s2 = textBox3.Text;
                 string s3 = textBox4.Text;
@@ -653,9 +710,12 @@ namespace BatchProductRecord
                 DateTime d4= dateTimePicker4.Value;
                 string s21 = textBox23.Text;
 
+                string s22=textBox26.Text;//接收人
+
                 // 保存非DataGridView中的数据必须先执行EndEdit;
                 bind();
                 label = 1;
+                dt_prodinstr.Rows[0]["产品名称"] = s1;
                 dt_prodinstr.Rows[0]["生产指令编号"] = s1;
                 dt_prodinstr.Rows[0]["生产工艺"] = s2;
                 dt_prodinstr.Rows[0]["生产设备编号"] = s3;
@@ -687,6 +747,14 @@ namespace BatchProductRecord
                 dt_prodinstr.Rows[0]["计划产量合计米"] = textBox6.Text;
                 dt_prodinstr.Rows[0]["用料重量合计"] = textBox8.Text;
                 dt_prodinstr.Rows[0]["计划产量合计卷"] = textBox10.Text;
+                //状态为草稿
+                dt_prodinstr.Rows[0]["状态"] = 0;
+                dt_prodinstr.Rows[0]["接收人"] = s22;
+                if (s22 != "")//合法
+                {
+                    dt_prodinstr.Rows[0]["状态"] = 2;
+                }
+
 
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
@@ -710,8 +778,6 @@ namespace BatchProductRecord
                 {
                     bind2(id);
                     bind_list(id);
-                    dataGridView1.Columns[0].Visible = false;
-                    dataGridView1.Columns[1].Visible = false;
                 }
                     
                 bs_prodinstr.EndEdit();
@@ -808,12 +874,27 @@ namespace BatchProductRecord
 
             }
             //用料重量自己计算
-            if (e.ColumnIndex == 7)
+            if (e.ColumnIndex == 4)
             {
 
-                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString());
-                dataGridView1.Rows[e.RowIndex].Cells[4].Value = a * leng / 1000.0 * 2 * 0.093;
+                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
+                dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 2 * 0.093;
             }
+
+            //计算合计
+            float sum_mi = 0, sum_juan = 0, sum_weight = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString()!="")
+                    sum_mi += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[8].Value.ToString() != "")
+                    sum_juan += float.Parse(dataGridView1.Rows[i].Cells[8].Value.ToString());
+            }
+            textBox6.Text = sum_mi.ToString();
+            textBox8.Text = sum_weight.ToString();
+            textBox10.Text = sum_juan.ToString();
         }
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -901,6 +982,37 @@ namespace BatchProductRecord
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
+            if (tempdt.Rows.Count == 0)
+            {
+                textBox1.Text = "";
+                //textBox2.Text = mySystem.Parameter.userName;
+                textBox3.Text = "";
+                textBox4.Text = "";
+                dateTimePicker1.Value = DateTime.Now;
+
+                textBox15.Text = "";
+                textBox17.Text = "";
+                textBox19.Text = "";
+                textBox21.Text = "";
+                textBox16.Text = "";
+                textBox18.Text = "";
+                textBox20.Text = "";
+                textBox22.Text = "";
+                textBox12.Text = "";
+                textBox13.Text = "";
+                textBox14.Text = "";
+                textBox9.Text = "";
+                textBox11.Text = "";
+                textBox5.Text = "";
+
+                textBox24.Text = mySystem.Parameter.userName;
+                dateTimePicker2.Value = DateTime.Now;
+                textBox25.Text = "";
+                dateTimePicker3.Value = DateTime.Now;
+                textBox26.Text = "";
+                dateTimePicker4.Value = DateTime.Now;
+                textBox23.Text = "";
+            }
             if (tempdt.Rows.Count == 1)
             {
                 textBox1.Text=(string)tempdt.Rows[0][1];
@@ -934,12 +1046,6 @@ namespace BatchProductRecord
 
                 da.Dispose();
                 tempdt.Dispose();
-                //填datagridview,填datatable
-                comm.CommandText = "select * from 生产指令产品列表 where 生产指令ID=" + id;
-                da = new OleDbDataAdapter(comm);
-                da.Fill(dt_prodlist);
-                bs_prodlist.DataSource = dt_prodlist;
-                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
 
             }
         }
@@ -960,11 +1066,36 @@ namespace BatchProductRecord
         {
             if (textBox2.Text == "")
                 return;
-            if(label==0)
-                bind_list(getid(textBox2.Text));
+            if (label == 0)
+            {
+                int tempid = getid(textBox2.Text);
+                bind_list(tempid);
+                fill(tempid);
+            }
+                
+        }
+        private void textBox2_Leave(object sender, System.EventArgs e)
+        {
+
+        }
+        private void textBox2_Validated(object sender, System.EventArgs e)
+        {
+            //if (textBox2.Text == "")
+            //    return;
+            //if (label == 0)
+            //{
+            //    int tempid = getid(textBox2.Text);
+            //    bind_list(tempid);
+            //    fill(tempid);
+            //}
+
+        }
+        private void dataGridView1_CellContentClick_1(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        {
+
         }
 
-        private void dataGridView1_CellContentClick_1(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
+        private void textBox26_TextChanged(object sender, System.EventArgs e)
         {
 
         }

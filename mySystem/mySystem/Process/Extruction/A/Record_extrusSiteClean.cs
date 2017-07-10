@@ -64,6 +64,13 @@ namespace mySystem.Extruction.Process
 
 
 
+        //供界面显示,参数为数据库中对应记录的id
+        public void show(int paraid)
+        {
+            bind2(paraid);
+            bind_list1(paraid);
+            bind_list2(paraid);
+        }
 
         //得到最新插入的行的id
         private int getid()
