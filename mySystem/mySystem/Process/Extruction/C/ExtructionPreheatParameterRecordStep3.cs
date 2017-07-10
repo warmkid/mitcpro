@@ -14,28 +14,27 @@ namespace mySystem.Extruction.Process
 {
     public partial class ExtructionPreheatParameterRecordStep3 : BaseForm
     {
-        private String table = "extrusion_s3_preheat";
-        private String tableSetting = "extrusion_s3_preheat";
+        private String table = "吹膜机组预热参数记录表";
+        private String tableSet = "设置吹膜机组预热参数记录表";
 
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
-        private int Instructionid;
-
-        private int operator_id;
-        private string operator_name;
-        private DateTime operate_date;
-        private int review_id;
-        private string reviewer_name;
-
+        
         private CheckForm check = null;
         private bool ischeckOk = false;
         private bool isSaveOk = false;
 
-        List<Control> TemConsList = new List<Control> { };//各种温度的控件
-        List<String> TemValdata = new List<String> { };//设置界面内存储的各种温度
+        List<Control> SettingConsList = new List<Control> { };//各种温度的控件
+        List<String> SettingValdata = new List<String> { };//设置界面内存储的各种温度
         private int TemTolerance;//温度公差
 
+        private DataTable dt设置, dt预热;
+        private OleDbDataAdapter da预热;
+        private BindingSource bs预热;
+        private OleDbCommandBuilder cb预热;
+
+        //已完成的预热表，那些数据也是读取设置界面吗？
         public ExtructionPreheatParameterRecordStep3(MainForm mainform): base(mainform)
         {
             InitializeComponent();
@@ -43,496 +42,376 @@ namespace mySystem.Extruction.Process
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
-            operator_id = Parameter.userID;
-            operator_name = Parameter.userName;
-            Instructionid = Parameter.proInstruID;
 
             //温度控件的初始化
-            TemConsList = new List<Control> (new Control[] { label_s3_hw_set1, label_s3_ld_set1, label_s3_mj_set1, label_s3_jt1_set1, label_s3_jt2_set1, 
-                    label_s3_km_set1, label_s3_region1_set1, label_s3_region2_set1, label_s3_region3_set1, label_s3_region4_set1, label_s3_hw_set2, 
-                    label_s3_ld_set2, label_s3_mj_set2, label_s3_jt1_set2, label_s3_jt2_set2, label_s3_km_set2, label_s3_region1_set2, label_s3_region2_set2, 
-                    label_s3_region3_set2, label_s3_region4_set2 }); 
 
-            Init();
-            TempInit();
-
-            DataShow(Instructionid);   
-            
+            GetSettingInfo();
+            DSBinding(Parameter.proInstruID); 
         }
 
-        private void Init()
+        private void IDShow(Int32 ID)
         {
-            ///***********************数据初始化************************///
-            this.PSbox.AutoSize = false;
-            this.PSbox.Height = 32;
+            OleDbCommand comm1 = new OleDbCommand();
+            comm1.Connection = Parameter.connOle;
+            comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
+            OleDbDataReader reader1 = comm1.ExecuteReader();
+            if (reader1.Read())
+            {
+                //MessageBox.Show("有数据");
+                DSBinding(Convert.ToInt32(reader1["生产指令ID"].ToString()));
+            }
+        }
 
-            //基本信息的初始化
-            phiBox.Text = "";
-            gapBox.Text = "";
-            operator_id = Parameter.userID;
-            operator_name = Parameter.userName;
-            recorderBox.Text = operator_name;
-            operate_date = DateTime.Now;
-            dateTimePicker1.Value = operate_date.Date;
-            PSbox.Text = "";
+        //******************************初始化******************************//
+        
+        //读取设置内容
+        private void GetSettingInfo()
+        {
+            //连数据库
+            dt设置 = new DataTable("设置");
+            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from " + tableSet, connOle);
+            datemp.Fill(dt设置);
+            datemp.Dispose();
+
+            List<Control> SettingConsList = new List<Control>(new Control[] { tb换网预热参数设定1, tb流道预热参数设定1, tb模颈预热参数设定1, tb机头1预热参数设定1, tb机头2预热参数设定1, tb口模预热参数设定1, 
+                tb一区预热参数设定1, tb二区预热参数设定1, tb三区预热参数设定1, tb四区预热参数设定1, 
+                tb换网预热参数设定2, tb流道预热参数设定2, tb模颈预热参数设定2, tb机头1预热参数设定2, tb机头2预热参数设定2, tb口模预热参数设定2, 
+                tb一区预热参数设定2, tb二区预热参数设定2, tb三区预热参数设定2, tb四区预热参数设定2, 
+                tb加热保温时间1, tb加热保温时间2, tb加热保温时间3});
+
+            List<String> queryCols = new List<String>(new String[] { "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", "口模预热参数设定1", 
+                "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1",
+                "换网预热参数设定2", "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", 
+                "一区预热参数设定2", "二区预热参数设定2", "三区预热参数设定2", "四区预热参数设定2", 
+                "加热保温时间1", "加热保温时间2", "加热保温时间3"});
+            List<List<Object>> queValsList = Utility.selectAccess(connOle, tableSet, queryCols, null, null, null, null, null, null, null);
+
+            List<String> SettingValdata = new List<String> { };//设置界面内存储的各种温度
+            if (queValsList.Count != 0)
+            {
+                for (int i = 0; i < queValsList[0].Count; i++)
+                {
+                    SettingValdata.Add(queValsList[0][i].ToString());
+                    ((TextBox)SettingConsList[i]).ReadOnly = true;
+                }
+                Utility.fillControl(SettingConsList, SettingValdata);
+            }
+        }
+
+        //控件属性（先绑定！！！）
+        private void formatInit() 
+        {
+            this.tb备注.AutoSize = false;
+            this.tb备注.Height = 32;
 
             //时间控件初始化
-            this.Time1Picker.ShowUpDown = true;
-            this.Time1Picker.Format = DateTimePickerFormat.Custom;
-            this.Time1Picker.CustomFormat = "HH:mm";
-            this.Time2Picker.ShowUpDown = true;
-            this.Time2Picker.Format = DateTimePickerFormat.Custom;
-            this.Time2Picker.CustomFormat = "HH:mm";
-            this.Time3Picker.ShowUpDown = true;
-            this.Time3Picker.Format = DateTimePickerFormat.Custom;
-            this.Time3Picker.CustomFormat = "HH:mm";
-            this.Time4Picker.ShowUpDown = true;
-            this.Time4Picker.Format = DateTimePickerFormat.Custom;
-            this.Time4Picker.CustomFormat = "HH:mm";
-            this.Time5Picker.ShowUpDown = true;
-            this.Time5Picker.Format = DateTimePickerFormat.Custom;
-            this.Time5Picker.CustomFormat = "HH:mm";            
-
-            /*
-            if (isSqlOk)
-            {
-                //若已有数据，向内部添加现有数据
-                SqlCommand comm = new SqlCommand(sql, conn);
-                SqlDataAdapter daSQL = new SqlDataAdapter(comm);
-                DataTable dtSQL = new DataTable();
-                daSQL.Fill(dtSQL);
-
-                this.phiBox.Text = dtSQL.Rows[0]["s3_core_specifications_1"].ToString();
-                this.gapBox.Text = dtSQL.Rows[0]["s3_core_specifications_2"].ToString();
-                this.timeBox1.Text = dtSQL.Rows[0]["s3_start_preheat_time"].ToString();
-                this.timeBox2.Text = dtSQL.Rows[0]["s3_end_preheat_time"].ToString();
-                this.timeBox3.Text = dtSQL.Rows[0]["s3_start_insulation_time"].ToString();
-                this.timeBox4.Text = dtSQL.Rows[0]["s3_end_insulation_time_1"].ToString();
-                this.timeBox5.Text = dtSQL.Rows[0]["s3_end_insulation_time_2"].ToString();
-
-                comm.Dispose();
-                daSQL.Dispose();
-                dtSQL.Dispose();
-            }
-            else
-            {
-                //若已有数据，向内部添加现有数据
-                OleDbCommand comm = new OleDbCommand(sql, connOle);
-                OleDbDataAdapter daOle = new OleDbDataAdapter(comm);
-                DataTable dtOle = new DataTable();
-                daOle.Fill(dtOle);
-
-                this.phiBox.Text = dtOle.Rows[0]["s3_core_specifications_1"].ToString();
-                this.gapBox.Text = dtOle.Rows[0]["s3_core_specifications_2"].ToString();
-                this.timeBox1.Text = dtOle.Rows[0]["s3_start_preheat_time"].ToString();
-                this.timeBox2.Text = dtOle.Rows[0]["s3_end_preheat_time"].ToString();
-                this.timeBox3.Text = dtOle.Rows[0]["s3_start_insulation_time"].ToString();
-                this.timeBox4.Text = dtOle.Rows[0]["s3_end_insulation_time_1"].ToString();
-                this.timeBox5.Text = dtOle.Rows[0]["s3_end_insulation_time_2"].ToString();
-
-                comm.Dispose();
-                daOle.Dispose();
-                dtOle.Dispose();
-            }*/
-            
-
-           //this.PSbox.Text = "时间输入的格式示例为：2003-12-24 14:34:08";
-
+            this.dtp预热开始时间.ShowUpDown = true;
+            this.dtp预热开始时间.Format = DateTimePickerFormat.Custom;
+            this.dtp预热开始时间.CustomFormat = "yyyy/MM/dd    HH:mm";
+            this.dtp保温结束时间1.ShowUpDown = true;
+            this.dtp保温结束时间1.Format = DateTimePickerFormat.Custom;
+            this.dtp保温结束时间1.CustomFormat = "yyyy/MM/dd    HH:mm";
+            this.dtp保温开始时间.ShowUpDown = true;
+            this.dtp保温开始时间.Format = DateTimePickerFormat.Custom;
+            this.dtp保温开始时间.CustomFormat = "yyyy/MM/dd    HH:mm";
+            this.dtp保温结束时间2.ShowUpDown = true;
+            this.dtp保温结束时间2.Format = DateTimePickerFormat.Custom;
+            this.dtp保温结束时间2.CustomFormat = "yyyy/MM/dd    HH:mm";
+            this.dtp保温结束时间3.ShowUpDown = true;
+            this.dtp保温结束时间3.Format = DateTimePickerFormat.Custom;
+            this.dtp保温结束时间3.CustomFormat = "yyyy/MM/dd    HH:mm";     
         }
 
-        private void otherConsChanged(bool canChanged)
+        //******************************显示数据******************************//
+
+        private void DSBinding(int InstructionID) 
         {
-
-            List<TextBox> TextBoxList = new List<TextBox> { };//各种温度的控件
-            TextBoxList = new List<TextBox> { label_s3_hw_set1, label_s3_ld_set1, label_s3_mj_set1, label_s3_jt1_set1, label_s3_jt2_set1, 
-                    label_s3_km_set1, label_s3_region1_set1, label_s3_region2_set1, label_s3_region3_set1, label_s3_region4_set1, label_s3_hw_set2, 
-                    label_s3_ld_set2, label_s3_mj_set2, label_s3_jt1_set2, label_s3_jt2_set2, label_s3_km_set2, label_s3_region1_set2, label_s3_region2_set2, 
-                    label_s3_region3_set2, label_s3_region4_set2 };
-
-            if (canChanged == true)
+            //生产指令ID
+            //Dispose
+            if (da预热 != null)
             {
-                phiBox.ReadOnly = false;
-                gapBox.ReadOnly = false;
-                recorderBox.ReadOnly = false;
-                checkerBox.ReadOnly = false;
-                PSbox.ReadOnly = false;           
-                Time1Picker.Enabled = true;
-                Time2Picker.Enabled = true;
-                Time3Picker.Enabled = true;
-                Time4Picker.Enabled = true;
-                Time5Picker.Enabled = true;
-                for (int i = 0; i < TextBoxList.Count; i++)
-                {
-                    TextBoxList[i].ReadOnly = false;
-                }
+                bs预热.Dispose();
+                dt预热.Dispose();
+                da预热.Dispose();
+                cb预热.Dispose();
             }
-            else
+
+            // 新建
+            bs预热 = new BindingSource();
+            dt预热 = new DataTable(table);
+            //连数据库
+            da预热 = new OleDbDataAdapter("select * from " + table + " where 生产指令id = " + InstructionID.ToString(), connOle);
+            cb预热 = new OleDbCommandBuilder(da预热);
+            da预热.Fill(dt预热);
+            bs预热.DataSource = dt预热;
+            // 绑定（先解除绑定）
+            dtp日期.DataBindings.Clear();
+            dtp日期.DataBindings.Add("Text", bs预热.DataSource, "日期");
+            tb模芯规格参数1.DataBindings.Clear();
+            tb模芯规格参数1.DataBindings.Add("Text", bs预热.DataSource, "模芯规格参数1");
+            tb模芯规格参数2.DataBindings.Clear();
+            tb模芯规格参数2.DataBindings.Add("Text", bs预热.DataSource, "模芯规格参数2");
+            tb记录人.DataBindings.Clear();
+            tb记录人.DataBindings.Add("Text", bs预热.DataSource, "记录人");
+            tb审核人.DataBindings.Clear();
+            tb审核人.DataBindings.Add("Text", bs预热.DataSource, "审核人");
+            dtp预热开始时间.DataBindings.Clear();
+            dtp预热开始时间.DataBindings.Add("Text", bs预热.DataSource, "预热开始时间");
+            dtp保温结束时间1.DataBindings.Clear();
+            dtp保温结束时间1.DataBindings.Add("Text", bs预热.DataSource, "保温结束时间1");
+            dtp保温开始时间.DataBindings.Clear();
+            dtp保温开始时间.DataBindings.Add("Text", bs预热.DataSource, "保温开始时间");
+            dtp保温结束时间2.DataBindings.Clear();
+            dtp保温结束时间2.DataBindings.Add("Text", bs预热.DataSource, "保温结束时间2");
+            dtp保温结束时间3.DataBindings.Clear();
+            dtp保温结束时间3.DataBindings.Add("Text", bs预热.DataSource, "保温结束时间3");
+            tb备注.DataBindings.Clear();
+            tb备注.DataBindings.Add("Text", bs预热.DataSource, "备注");
+
+            //待注释
+            //MessageBox.Show("记录数目：" + dt预热.Rows.Count.ToString());
+
+            if (dt预热.Rows.Count == 0)
             {
-                phiBox.ReadOnly = true;
-                gapBox.ReadOnly = true;
-                recorderBox.ReadOnly = true;
-                checkerBox.ReadOnly = true;
-                PSbox.ReadOnly = true;
-                Time1Picker.Enabled = false;
-                Time2Picker.Enabled = false;
-                Time3Picker.Enabled = false;
-                Time4Picker.Enabled = false;
-                Time5Picker.Enabled = false;
-                for (int i = 0; i < TextBoxList.Count; i++)
-                {
-                    TextBoxList[i].ReadOnly = true;
-                }
-            }
-        }
+                DataRow dr1 = dt预热.NewRow();
+                dr1["生产指令编号"] = mySystem.Parameter.proInstruction;
+                dr1["生产指令id"] = mySystem.Parameter.proInstruID;
+                dr1["记录人"] = mySystem.Parameter.userName;
+                //防止违反并发性，提前赋值
+                dr1["审核人"] = " ";
+                dr1["审核意见"] = " ";
+                dr1["审核是否通过"] = false;
+                dt预热.Rows.InsertAt(dr1, dt预热.Rows.Count);
 
-        private void TempInit()
-        {
-            //设置界面内温度的初始化
-            List<String> queryCols = new List<String>(new String[] { "s3_hw_set1", "s3_ld_set1", "s3_mj_set1", "s3_jt1_set1", "s3_jt2_set1", 
-                    "s3_km_set1", "s3_region1_set1", "s3_region2_set1", "s3_region3_set1", "s3_region4_set1", "s3_hw_set2", 
-                    "s3_ld_set2", "s3_mj_set2", "s3_jt1_set2", "s3_jt2_set2", "s3_km_set2", "s3_region1_set2", "s3_region2_set2", 
-                    "s3_region3_set2", "s3_region4_set2"});
-            ///***********************以后要改数据库！！！！！***********************///
-            List<String> whereCols = new List<String>(new String[] { "id" });
-            List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            List<List<Object>> queValsList = Utility.selectAccess(connOle, tableSetting, queryCols, whereCols, whereVals, null, null, null, null, null);
-            TemValdata = new List<String> { };
-            for (int i = 0; i < queValsList[0].Count; i++)
-            { TemValdata.Add(queValsList[0][i].ToString()); }
-            Utility.fillControl(TemConsList, TemValdata);   
-            //获取公差
-            queryCols = new List<String>(new String[] { "s3_temperature_tolerance" });
-            queValsList = Utility.selectAccess(connOle, tableSetting, queryCols, whereCols, whereVals, null, null, null, null, null);
-            TemTolerance = Convert.ToInt32(queValsList[0][0].ToString());
-        }
-
-        private void DataShow(int InstructionID)
-        {
-            List<String> queryCols = new List<String>(new String[] { "s3_hw_set1", "s3_ld_set1", "s3_mj_set1", "s3_jt1_set1", "s3_jt2_set1", 
-                    "s3_km_set1", "s3_region1_set1", "s3_region2_set1", "s3_region3_set1", "s3_region4_set1", "s3_hw_set2", 
-                    "s3_ld_set2", "s3_mj_set2", "s3_jt1_set2", "s3_jt2_set2", "s3_km_set2", "s3_region1_set2", "s3_region2_set2", 
-                    "s3_region3_set2", "s3_region4_set2","s3_duration1", "s3_duration2", "s3_duration3" });
-            //顺序：温度->保温时间
-            List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
-            List<Object> whereVals = new List<Object>(new Object[] { InstructionID });
-            List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
-
-            if (queryValsList.Count == 0)
-            {
-                isSaveOk = false;
-                //其他信息                
-                Init();
-                //填写设置界面内的温度
-                Utility.fillControl(TemConsList, TemValdata);
-                //保温时间初始化
-                List<String> queryCols1 = new List<String>(new String[] { "s3_duration1", "s3_duration2", "s3_duration3" });
-                ///***********************以后要改数据库！！！！！***********************///
-                List<String> whereCols1 = new List<String>(new String[] { "id" });
-                List<Object> whereVals1 = new List<Object>(new Object[] { 1 });
-                List<List<Object>> queValsList1 = Utility.selectAccess(connOle, tableSetting, queryCols1, whereCols1, whereVals1, null, null, null, null, null);
-                List<String> data = new List<String> { };
-                for (int i = 0; i < queValsList1[0].Count; i++)
-                { data.Add(queValsList1[0][i].ToString()); }
-                List<Control> Cons = new List<Control> { s3_duration1_label, s3_duration2_label, s3_duration3_label };
-                Utility.fillControl(Cons, data);
-                
                 SaveBtn.Enabled = true;
                 CheckBtn.Enabled = false;
                 printBtn.Enabled = false;
-
-                otherConsChanged(true);
+                cons_change();
             }
             else
             {
-                isSaveOk = true;
-                //填写数据库的温度
-                List<String> data = new List<String> { };
-                for (int i = 0; i < queryValsList[0].Count-3; i++)
-                { data.Add(queryValsList[0][i].ToString()); }
-                Utility.fillControl(TemConsList, data);
-                //保温时间初始化
-                data = new List<String> { };
-                for (int i = queryValsList[0].Count-3; i < queryValsList[0].Count; i++)
-                { data.Add(queryValsList[0][i].ToString()); }
-                List<Control> Cons = new List<Control> { s3_duration1_label, s3_duration2_label, s3_duration3_label };
-                Utility.fillControl(Cons, data);
-                //填写其他的信息
-                queryCols = new List<String>(new String[] { "s3_recorder_id", "s3_record_date", "s3_reviewer_id", "s3_review_opinion", "s3_is_review_qualified", 
-                    "s3_core_specifications_1", "s3_core_specifications_2",
-                    "s3_start_preheat_time", "s3_end_preheat_time", "s3_start_insulation_time", "s3_end_insulation_time_1", "s3_end_insulation_time_2" });
-                List<List<Object>> queryValsList2 = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);                
-                operator_id = Convert.ToInt32(queryValsList2[0][0].ToString());
-                operator_name = Parameter.IDtoName(operator_id);
-                recorderBox.Text = operator_name;
-                operate_date = Convert.ToDateTime(queryValsList2[0][1].ToString());
-                dateTimePicker1.Value = operate_date;
-
-                if (Int32.TryParse(queryValsList[0][2].ToString(), out review_id) == false)
+                if (Convert.ToBoolean(dt预热.Rows[0]["审核是否通过"]) == true)
                 {
-                    reviewer_name = null;
-                    this.checkerBox.Text = "";
-                    ischeckOk = false;
-
-                    otherConsChanged(true);
+                    SaveBtn.Enabled = false;
+                    CheckBtn.Enabled = false;
+                    printBtn.Enabled = true;
+                    cons_change_not();
+                }
+                else
+                {
                     SaveBtn.Enabled = true;
                     CheckBtn.Enabled = true;
                     printBtn.Enabled = false;
+                    cons_change();
                 }
-                else
-                {
-                    //已有审核人信息
-                    reviewer_name = Parameter.IDtoName(review_id);
-                    checkerBox.Text = reviewer_name;
-                    ischeckOk = Convert.ToBoolean(queryValsList2[0][4].ToString());
-                    //审核通过，则确认、保存均不可点
-                    if (ischeckOk)
-                    {
-                        otherConsChanged(false);
-                        SaveBtn.Enabled = false;
-                        CheckBtn.Enabled = false;
-                        printBtn.Enabled = true;
-                    }
-                    else
-                    {
-                        otherConsChanged(true);
-                        SaveBtn.Enabled = true;
-                        CheckBtn.Enabled = true;
-                        printBtn.Enabled = false;
-                    }
-                }
-                
-
-                //填写已有的数据
-                phiBox.Text = queryValsList2[0][5].ToString();
-                gapBox.Text = queryValsList2[0][6].ToString();
-                Time1Picker.Value = Convert.ToDateTime(queryValsList2[0][7].ToString());
-                Time2Picker.Value = Convert.ToDateTime(queryValsList2[0][8].ToString());
-                Time3Picker.Value = Convert.ToDateTime(queryValsList2[0][9].ToString());
-                Time4Picker.Value = Convert.ToDateTime(queryValsList2[0][10].ToString());
-                Time5Picker.Value = Convert.ToDateTime(queryValsList2[0][11].ToString());
-                PSbox.Text = "";
-
-            }
-        }
-
-        private bool CheckTemperature()
-        {
-            Boolean Tempcheck =true ;
-            int numtemp = 0;
-            String[] TemString = new String[20];
-            TemString[0] = "换网预热";
-            TemString[1] = "流道预热";
-            TemString[2] = "模颈预热";
-            TemString[3] = "机头一预热";
-            TemString[4] = "机头二预热";
-            TemString[5] = "口模预热";
-            TemString[6] = "I区预热";
-            TemString[7] = "II区预热";
-            TemString[8] = "III区预热";
-            TemString[9] = "IV区预热";
-            TemString[10] = "换网预热";
-            TemString[11] = "流道预热";
-            TemString[12] = "模颈预热";
-            TemString[13] = "机头一预热";
-            TemString[14] = "机头二预热";
-            TemString[15] = "口模预热";
-            TemString[16] = "I区预热";
-            TemString[17] = "II区预热";
-            TemString[18] = "III区预热";
-            TemString[19] = "IV区预热";
-
-            for (int i = 0; i < TemConsList.Count; i++)
-            {
-                if((Int32.TryParse(TemConsList[i].Text, out numtemp) == false))
-                {
-                    MessageBox.Show("请在" + TemString [i]+ "参数框内填入数字!");
-                    Tempcheck = false;
-                    break;
-                }
-                else if((Convert.ToInt32(TemValdata[i].ToString())-TemTolerance>Convert.ToInt32(TemConsList[i].Text))||(Convert.ToInt32(TemValdata[i].ToString())+TemTolerance<Convert.ToInt32(TemConsList[i].Text)))
-                {
-                    MessageBox.Show(TemString [i] + "参数超出允许范围，请重新设置");
-                    Tempcheck = false;
-                    break;
-                }
-                else
-                {}
             }
 
-            return Tempcheck;
+            formatInit();  
         }
 
-        private void TabelPaint()
-        {
-            Graphics g = this.CreateGraphics();
-            this.Show();
-            //出来一个画笔,这只笔画出来的颜色是红的  
-            Pen p = new Pen(Brushes.Red);
+        private void ConsBind()
+        { }
 
-            //创建两个点  
-            Point p1 = new Point(0, 0);
-            Point p2 = new Point(1000, 1000);
+        //******************************按钮功能******************************//
 
-            //将两个点连起来  
-            g.DrawLine(p, p1, p2);
-        }
-
-        public void DataSaveSql()
-        {
-            /*
-            string[] sqlstr = new string[8];
-            SqlCommand com = null;
-
-            //sqlstr[0] = "update extrusion set s3_core_specifications_1 = " + Convert.ToInt32(this.phiBox.Text).ToString() + "  where id =1";
-  
-          //sqlstr[1] = "update extrusion set s3_core_specifications_2 = " + Convert.ToInt32(this.gapBox.Text).ToString() + "  where id =1";
-            sqlstr[0] = "update extrusion set s3_core_specifications_1 = '" + Convert.ToInt32(this.phiBox.Text).ToString() + "'  where id =1";
-            sqlstr[1] = "update extrusion set s3_core_specifications_2 = '" + Convert.ToInt32(this.gapBox.Text).ToString() + "'  where id =1";
-            sqlstr[2] = "update extrusion set s3_start_preheat_time =  CAST( '"+timeBox1.Text+"' AS datetime)  where id =1";
-            sqlstr[3] = "update extrusion set s3_end_preheat_time =  CAST( '" + timeBox2.Text + "' AS datetime)  where id =1";
-            sqlstr[4] = "update extrusion set s3_start_insulation_time =  CAST( '" + timeBox3.Text + "' AS datetime)  where id =1";
-            sqlstr[5] = "update extrusion set s3_end_insulation_time_1 =  CAST( '" + timeBox4.Text + "' AS datetime)  where id =1";
-            sqlstr[6] = "update extrusion set s3_end_insulation_time_2 =  CAST( '" + timeBox5.Text + "' AS datetime)  where id =1";   
-            sqlstr[7] = "update extrusion set step_status = 3 where id =1";
-            
-            for (int i = 0; i < 8; i++)
-            {
-                com = new SqlCommand(sqlstr[i], conn);
-                com.ExecuteNonQuery();
-                com.Dispose();
-            }  
-             * */
-        }
-
-        public void DataSaveOle()
-        {
-            operator_name = recorderBox.Text;
-            if (operator_name != Parameter.IDtoName(operator_id))
-            {
-                operator_id = Parameter.NametoID(operator_name);
-            }
-            //jason 保存表格
-            /*
-            List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
-            List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), operator_id, recordTimePicker.Value });
-            List<String> whereCols = new List<String>(new String[] { "id" });
-            List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);*/
-            int numtemp = 0;
-            if ((Int32.TryParse(this.phiBox.Text, out numtemp) == false) || (Int32.TryParse(this.gapBox.Text, out numtemp) == false))
-            {
-                MessageBox.Show("请在模芯规格内填入数字!");
-            }
-            else if (CheckTemperature() == false)
-            {   }
-            else if (operator_id == 0)
-            { MessageBox.Show("未找到记录人姓名，请重新输入"); }
-            else
-            {
-                Boolean b = false;
-                List<String> queryCols = new List<String>(new String[] { "s3_recorder_id", "s3_record_date", "s3_core_specifications_1", "s3_core_specifications_2","s3_duration1", "s3_duration2", "s3_duration3", 
-                    "s3_start_preheat_time", "s3_end_preheat_time", "s3_start_insulation_time", "s3_end_insulation_time_1", "s3_end_insulation_time_2" });
-                List<Object> queryVals = new List<Object>(new Object[] { operator_id, operate_date.Date, Convert.ToInt32(this.phiBox.Text).ToString(), Convert.ToInt32(this.gapBox.Text).ToString(),
-                    Convert.ToInt32(s3_duration1_label.Text).ToString(),Convert.ToInt32(s3_duration2_label.Text).ToString(),Convert.ToInt32(s3_duration3_label.Text).ToString() });
-                List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
-                List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
-                queryVals.Add(new DateTime(operate_date.Year, operate_date.Month, operate_date.Day, Time1Picker.Value.Hour, Time1Picker.Value.Minute, operate_date.Second));
-                queryVals.Add(new DateTime(operate_date.Year, operate_date.Month, operate_date.Day, Time2Picker.Value.Hour, Time2Picker.Value.Minute, operate_date.Second));
-                queryVals.Add(new DateTime(operate_date.Year, operate_date.Month, operate_date.Day, Time3Picker.Value.Hour, Time3Picker.Value.Minute, operate_date.Second));
-                queryVals.Add(new DateTime(operate_date.Year, operate_date.Month, operate_date.Day, Time4Picker.Value.Hour, Time4Picker.Value.Minute, operate_date.Second));
-                queryVals.Add(new DateTime(operate_date.Year, operate_date.Month, operate_date.Day, Time5Picker.Value.Hour, Time5Picker.Value.Minute, operate_date.Second));
-
-                if (isSaveOk == false)
-                {
-                    //新建记录                    
-                    queryCols.Add("production_instruction_id");
-                    queryVals.Add(Instructionid);
-                    b = Utility.insertAccess(connOle, table, queryCols, queryVals);
-                }
-                else
-                {
-                    //已有的修改                    
-                    b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-                }
-
-                //添加温度数据
-                queryCols = new List<String>(new String[] { "s3_hw_set1", "s3_ld_set1", "s3_mj_set1", "s3_jt1_set1", "s3_jt2_set1", 
-                    "s3_km_set1", "s3_region1_set1", "s3_region2_set1", "s3_region3_set1", "s3_region4_set1", "s3_hw_set2", 
-                    "s3_ld_set2", "s3_mj_set2", "s3_jt1_set2", "s3_jt2_set2", "s3_km_set2", "s3_region1_set2", "s3_region2_set2", 
-                    "s3_region3_set2", "s3_region4_set2"});
-                List<String> data = new List<String> { };
-                data = Utility.readFromControl(TemConsList);
-                queryVals = new List<Object> { };
-                for (int i = 0; i < queryCols.Count; i++)
-                {
-                    queryVals.Add(data[i]);
-                }
-                b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-
-                CheckBtn.Enabled = true;
-            }            
-        }
-
+        //保存按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
-            if (isSqlOk) { DataSaveSql(); }
-            else { DataSaveOle(); }
+            if (mySystem.Parameter.NametoID(tb记录人.Text) == 0)
+            { MessageBox.Show("请重新填写记录人姓名！"); }
+            else if (CheckType() == false)
+            { /*模芯规格填入的不是数字*/ }
+            else
+            {
+                // 保存非DataGridView中的数据必须先执行EndEdit;
+                dt预热.Rows[0]["日期"] = DateTime.Now;
+
+                dt预热.Rows[0]["保温结束时间1"] = DateTime.Now;
+                dt预热.Rows[0]["保温开始时间"] = DateTime.Now;
+                dt预热.Rows[0]["保温结束时间2"] = DateTime.Now;
+                dt预热.Rows[0]["保温结束时间3"] = DateTime.Now;
+                dt预热.Rows[0]["预热开始时间"] = DateTime.Now;
+
+                bs预热.EndEdit();
+                da预热.Update((DataTable)bs预热.DataSource);
+
+                CheckBtn.Enabled = true;
+            }
         }
 
+        //审核功能
         public override void CheckResult()
         {
             base.CheckResult();
-            review_id = check.userID;
-            reviewer_name = Parameter.IDtoName(review_id);
-            string review_opinion = check.opinion;
-            ischeckOk = check.ischeckOk;
+            dt预热.Rows[0]["日期"] = DateTime.Now;
 
-            if (isSqlOk)
-            {  }
-            else
+            dt预热.Rows[0]["保温结束时间1"] = DateTime.Now;
+            dt预热.Rows[0]["保温开始时间"] = DateTime.Now;
+            dt预热.Rows[0]["保温结束时间2"] = DateTime.Now;
+            dt预热.Rows[0]["保温结束时间3"] = DateTime.Now;
+            dt预热.Rows[0]["预热开始时间"] = DateTime.Now;
+
+
+            dt预热.Rows[0]["审核人"] = Parameter.IDtoName(check.userID);
+            dt预热.Rows[0]["审核意见"] = check.opinion;
+            dt预热.Rows[0]["审核是否通过"] = check.ischeckOk;
+
+            //保存非DataGridView中的数据必须先执行EndEdit;
+            bs预热.EndEdit();
+            da预热.Update((DataTable)bs预热.DataSource);
+
+            if (check.ischeckOk == true)
             {
-                List<String> queryCols = new List<String>(new String[] { "s3_reviewer_id", "s3_review_opinion", "s3_is_review_qualified" });
-                List<Object> queryVals = new List<Object>(new Object[] { review_id, review_opinion, ischeckOk });
-                List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
-                List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
-                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-            }
-            //判断检验合格
-            if (ischeckOk)
-            {
-                otherConsChanged(false);
-                SaveBtn.Enabled = true;
+                SaveBtn.Enabled = false;
                 CheckBtn.Enabled = false;
                 printBtn.Enabled = true;
+                cons_change_not();
             }
             else
             {
-                otherConsChanged(true);
                 SaveBtn.Enabled = true;
                 CheckBtn.Enabled = true;
                 printBtn.Enabled = false;
+                cons_change();
             }
-            checkerBox.Text = reviewer_name;  
-
         }
 
+        //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
             check = new CheckForm(this);
             check.ShowDialog();
-            if (isSqlOk)
-            { }
-            else
-            {
-                List<String> queryCols = new List<String>(new String[] { "s3_reviewer_id" });
-                List<Object> queryVals = new List<Object>(new Object[] { review_id });
-                List<String> whereCols = new List<String>(new String[] { "id" });
-                List<Object> whereVals = new List<Object>(new Object[] { 1 });
-                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-                reviewer_name = Parameter.IDtoName(review_id);
-            }
-            checkerBox.Text = reviewer_name;
         }
+
+        //******************************小功能******************************//
         
+        //数据可修改
+        private void cons_change()
+        {
+            tb模芯规格参数1.ReadOnly = false;
+            tb模芯规格参数2.ReadOnly = false;
+            tb记录人.ReadOnly = false;
+            tb审核人.ReadOnly = false;
+            tb备注.ReadOnly = false;
+            dtp预热开始时间.Enabled = true;
+            dtp保温结束时间1.Enabled = true;
+            dtp保温开始时间.Enabled = true;
+            dtp保温结束时间2.Enabled = true;
+            dtp保温结束时间3.Enabled = true;
+            dtp日期.Enabled = true;
+        }
+
+        //数据不可修改
+        private void cons_change_not()
+        {
+            tb模芯规格参数1.ReadOnly = true;
+            tb模芯规格参数2.ReadOnly = true;
+            tb记录人.ReadOnly = true;
+            tb审核人.ReadOnly = true;
+            tb备注.ReadOnly = true;
+            dtp预热开始时间.Enabled = false;
+            dtp保温结束时间1.Enabled = false;
+            dtp保温开始时间.Enabled = false;
+            dtp保温结束时间2.Enabled = false;
+            dtp保温结束时间3.Enabled = false;
+            dtp日期.Enabled = false;
+        }
+
+        //检查控件内容是否合法
+        private bool CheckType()
+        {
+            bool TypeCheck = true;
+
+            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb模芯规格参数1, tb模芯规格参数2 });
+            List<String> StringList = new List<String>(new String[] { "模芯规格参数φ", "模芯规格参数Gap" });
+
+            int numtemp = 0;
+            for (int i = 0; i < TextBoxList.Count; i++)
+            {
+                if (Int32.TryParse(TextBoxList[i].Text.ToString(), out numtemp) == false)
+                {
+                    MessageBox.Show(StringList[i] + "应填数字，请重新填入！");
+                    TypeCheck = false;
+                    break;
+                }
+            }
+            return TypeCheck;
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// ////////////
+        /// </summary>
+     
+
+        
+
+        //private void otherConsChanged(bool canChanged)
+        //{
+
+        //    List<TextBox> TextBoxList = new List<TextBox> { };//各种温度的控件
+        //    TextBoxList = new List<TextBox> { tb换网预热参数设定1, tb流道预热参数设定1, tb模颈预热参数设定1, tb机头1预热参数设定1, tb机头2预热参数设定1, 
+        //            tb口模预热参数设定1, tb一区预热参数设定1, tb二区预热参数设定1, tb三区预热参数设定1, tb四区预热参数设定1, 
+        //            tb换网预热参数设定2, tb流道预热参数设定2, tb模颈预热参数设定2, tb机头1预热参数设定2, tb机头2预热参数设定2, tb口模预热参数设定2, 
+        //            tb一区预热参数设定2, tb二区预热参数设定2, tb三区预热参数设定2, tb四区预热参数设定2 };
+
+        //    if (canChanged == true)
+        //    {
+        //        tb模芯规格参数1.ReadOnly = false;
+        //        tb模芯规格参数2.ReadOnly = false;
+        //        tb记录人.ReadOnly = false;
+        //        tb审核人.ReadOnly = false;
+        //        tb备注.ReadOnly = false;           
+        //        dtp预热开始时间.Enabled = true;
+        //        dtp保温结束时间1.Enabled = true;
+        //        dtp保温开始时间.Enabled = true;
+        //        dtp保温结束时间2.Enabled = true;
+        //        dtp保温结束时间3.Enabled = true;
+        //        for (int i = 0; i < TextBoxList.Count; i++)
+        //        {
+        //            TextBoxList[i].ReadOnly = false;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        tb模芯规格参数1.ReadOnly = true;
+        //        tb模芯规格参数2.ReadOnly = true;
+        //        tb记录人.ReadOnly = true;
+        //        tb审核人.ReadOnly = true;
+        //        tb备注.ReadOnly = true;
+        //        dtp预热开始时间.Enabled = false;
+        //        dtp保温结束时间1.Enabled = false;
+        //        dtp保温开始时间.Enabled = false;
+        //        dtp保温结束时间2.Enabled = false;
+        //        dtp保温结束时间3.Enabled = false;
+        //        for (int i = 0; i < TextBoxList.Count; i++)
+        //        {
+        //            TextBoxList[i].ReadOnly = true;
+        //        }
+        //    }
+        //}
+
+
+        /*   //TabelPaint
+        //private void TabelPaint()
+        //{
+        //    Graphics g = this.CreateGraphics();
+        //    this.Show();
+        //    //出来一个画笔,这只笔画出来的颜色是红的  
+        //    Pen p = new Pen(Brushes.Red);
+
+        //    //创建两个点  
+        //    Point p1 = new Point(0, 0);
+        //    Point p2 = new Point(1000, 1000);
+
+        //    //将两个点连起来  
+        //    g.DrawLine(p, p1, p2);
+        //}
+        */
+                
     }
 }

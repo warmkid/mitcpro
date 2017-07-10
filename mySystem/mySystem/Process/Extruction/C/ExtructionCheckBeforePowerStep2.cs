@@ -17,29 +17,23 @@ namespace mySystem.Extruction.Process
     {
         private DataTable dt_confirmarea = new DataTable();
 
-        private String table = "extrusion_s2_confirm";
-        private String tableSel = "confirmarea";
+        private String table = "吹膜机组开机前确认表";
+        private String tableInfo = "吹膜机组开机前确认项目记录";
+        private String tableSet = "设置吹膜机组开机前确认项目";
 
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
         private int Instructionid;
         private CheckForm check = null;
-        private bool ischeckOk = false;
-        private bool isSaveOk = false;
-        private bool isReadOnly = false;
+        
+        private Boolean isNewRecord = false;
 
-        //private int checknum = 0;
-        //private bool[] checklist;
-
-        private int operator_id;
-        private string operator_name;
-        private DateTime operate_date;
-        private int review_id;
-        private string reviewer_name;
-        private DateTime review_date;
-
-        //有信息的时候，并未修改operator_id、operator_name
+        private DataTable dt设置, dtCBP, dtCBP详情;
+        private OleDbDataAdapter daCBP, daCBP详情;
+        private BindingSource bsCBP, bsCBP详情;
+        private OleDbCommandBuilder cbCBP, cbCBP详情;
+                
         public ExtructionCheckBeforePowerStep2(MainForm mainform): base(mainform)
         {
             InitializeComponent();
@@ -47,361 +41,351 @@ namespace mySystem.Extruction.Process
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
-            operator_id = Parameter.userID;
-            operator_name = Parameter.userName;
             Instructionid = Parameter.proInstruID;
-            
-            Init();
-            DataTabelInitialize();
-            DataShow(Instructionid);
+
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+
+            GetSettingInfo();
+            DSBinding(Instructionid);
         }
 
-        private void Init() 
+        private void IDShow(Int32 ID)
         {
-            //记录人初始化
-            operator_id = Parameter.userID;
-            operator_name = Parameter.userName;
-            this.recorderBox.Text = operator_name;
-            operate_date = DateTime.Now.Date;
-            recordTimePicker.Value = operate_date;
-            //审核人初始化
-            review_id = 0;
-            reviewer_name = null;
-            this.checkerBox.Text = reviewer_name;
-            review_date = DateTime.Now.Date;
-            checkTimePicker.Value = review_date;
-
-            PSLabel.Text = "注：正常或符合打“√”，不正常或不符合取消勾选。";
-        }
-
-        private void DataShow(int InstructionID)
-        {
-            List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date", "s2_reviewer_id", "s2_review_date", "s2_is_review_qualified" });
-            List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
-            List<Object> whereVals = new List<Object>(new Object[] { InstructionID });
-            List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
-
-            if (queryValsList.Count == 0)
+            OleDbCommand comm1 = new OleDbCommand();
+            comm1.Connection = Parameter.connOle;
+            comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
+            OleDbDataReader reader1 = comm1.ExecuteReader();
+            if (reader1.Read())
             {
-                dt_confirmarea.Clear();
-                CheckBeforePowerView.Rows.Clear();
-                CheckBeforePowerView.ReadOnly = false;
-                isReadOnly = false;
-                Init();
-                ischeckOk = false;
-                isSaveOk = false;
-                ///***********************将设置界面的内容填入************************///
-                OleDbCommand cmd = new OleDbCommand("select * from " + tableSel, connOle);
-                OleDbDataAdapter daOle = new OleDbDataAdapter(cmd);
-                daOle.Fill(dt_confirmarea);
-                daOle.Dispose();
-                ///填写项目内容
+                //MessageBox.Show("有数据");
+                DSBinding(Convert.ToInt32(reader1["生产指令ID"].ToString()));
+            }
+        }
 
-                for (int i = 0; i < dt_confirmarea.Rows.Count; i++)
+        //******************************初始化******************************//
+        
+        //读取设置内容
+        private void GetSettingInfo()
+        {
+            //连数据库
+            dt设置 = new DataTable("设置");
+            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from " + tableSet, connOle);
+            datemp.Fill(dt设置);
+            datemp.Dispose();
+        }
+
+        //控件属性（先绑定！！！）
+        private void formatInit()
+        {
+            //表格界面设置
+            this.dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.ColumnHeadersHeight = 40;
+            for (int i = 0; i < this.dataGridView1.Columns.Count; i++)
+            {
+                this.dataGridView1.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                this.dataGridView1.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            }
+
+            this.dataGridView1.Columns["ID"].Visible = false;
+            this.dataGridView1.Columns["T吹膜机组开机前确认表ID"].Visible = false;
+            
+            this.dataGridView1.Columns["序号"].MinimumWidth = 80;
+            this.dataGridView1.Columns["序号"].ReadOnly = true;
+            this.dataGridView1.Columns["确认项目"].MinimumWidth = 160;
+            this.dataGridView1.Columns["确认项目"].ReadOnly = true;
+            this.dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridView1.Columns["确认内容"].ReadOnly = true;
+            this.dataGridView1.Columns["确认结果_是"].MinimumWidth = 100;
+            this.dataGridView1.Columns["确认结果_否"].MinimumWidth = 100;
+
+            this.dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;  
+        }
+
+        //******************************显示数据******************************//
+        
+        private void DSBinding(int ID)
+        {
+            //生产指令ID
+            //Dispose
+            if (daCBP != null)
+            {
+                bsCBP.Dispose();
+                dtCBP.Dispose();
+                daCBP.Dispose();
+                cbCBP.Dispose();
+            }
+            if (daCBP详情 != null)
+            {
+                bsCBP详情.Dispose();
+                dtCBP详情.Dispose();
+                daCBP详情.Dispose();
+                cbCBP详情.Dispose();
+            }
+            //******************************外部控件******************************//  
+            // 新建
+            bsCBP = new BindingSource();
+            dtCBP = new DataTable(table);
+            //连数据库
+            daCBP = new OleDbDataAdapter("select * from " + table + " where 生产指令id = " + ID.ToString() , connOle);
+            cbCBP = new OleDbCommandBuilder(daCBP);
+            daCBP.Fill(dtCBP);
+            bsCBP.DataSource = dtCBP;
+            // 绑定（先解除绑定）
+            tb确认人.DataBindings.Clear();
+            tb确认人.DataBindings.Add("Text", bsCBP.DataSource, "确认人");
+            dtp确认日期.DataBindings.Clear();
+            dtp确认日期.DataBindings.Add("Text", bsCBP.DataSource, "确认日期");
+            tb审核人.DataBindings.Clear();
+            tb审核人.DataBindings.Add("Text", bsCBP.DataSource, "审核人");
+            dtp审核日期.DataBindings.Clear();
+            dtp审核日期.DataBindings.Add("Text", bsCBP.DataSource, "审核日期");
+
+            //待注释
+            //MessageBox.Show("记录数目：" + dtCBP.Rows.Count.ToString());
+
+            //*******************************表格内部******************************//            
+            // 新建Binding Source
+            bsCBP详情 = new BindingSource();  //表格内部
+            // 新建DataTable
+            dtCBP详情 = new DataTable(tableInfo);  //表格内部
+            // 数据库->DataTable
+            if (dtCBP.Rows.Count == 0)
+            {
+                isNewRecord = true;
+                //为记录新建一行
+                DataRow dr1 = dtCBP.NewRow();
+                dr1["生产指令ID"] = mySystem.Parameter.proInstruID;
+                dr1["确认人"] = mySystem.Parameter.userName;
+                dr1["确认日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+                //防止违反并发性，提前赋值
+                dr1["审核人"] = " ";
+                dr1["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));//违反并发性
+                dr1["审核意见"] = " ";
+                dr1["审核是否通过"] = false;
+                dtCBP.Rows.InsertAt(dr1, dtCBP.Rows.Count);
+
+                // 数据库->DataTable
+                daCBP详情 = new OleDbDataAdapter("select * from " + tableInfo + " where 0 = 1", connOle);
+                cbCBP详情 = new OleDbCommandBuilder(daCBP详情);
+                daCBP详情.Fill(dtCBP详情);
+                // DataTable->BindingSource
+                bsCBP详情.DataSource = dtCBP详情;
+                // 先clear所有bindings
+                dataGridView1.DataBindings.Clear();
+                // 控件->BindingSource
+                dataGridView1.DataSource = bsCBP详情.DataSource;
+
+                dtCBP详情.Rows.Clear();
+                for (int i = 0; i < dt设置.Rows.Count; i++)
                 {
-                    DataGridViewRow dr = new DataGridViewRow();
-                    foreach (DataGridViewColumn c in CheckBeforePowerView.Columns)
-                    {
-                        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-                    }
-                    dr.Cells[0].Value = dt_confirmarea.Rows[i]["确认序号"].ToString(); //序号
-                    dr.Cells[1].Value = dt_confirmarea.Rows[i]["确认项目"].ToString(); //确认项目
-                    dr.Cells[2].Value = " " + dt_confirmarea.Rows[i]["确认内容"].ToString(); ; //确认内容
-                    dr.Cells[3].Value = true;
-                    dr.Cells[4].Value = false;
-                    CheckBeforePowerView.Rows.Add(dr);
+                    DataRow dr2 = dtCBP详情.NewRow();
+                    dr2["序号"] = (i + 1);
+                    dr2["确认项目"] = dt设置.Rows[i]["确认项目"];
+                    dr2["确认内容"] = dt设置.Rows[i]["确认内容"];
+                    dr2["确认结果_是"] = true;
+                    dr2["确认结果_否"] = false;
+                    dtCBP详情.Rows.InsertAt(dr2, dtCBP详情.Rows.Count);                    
                 }
+                
                 SaveBtn.Enabled = true;
                 CheckBtn.Enabled = false;
                 printBtn.Enabled = false;
+                cons_change();
             }
             else
-            {                
-                dt_confirmarea.Clear();
-                CheckBeforePowerView.Rows.Clear();
-                isSaveOk = true;
+            {
+                isNewRecord = false;
+                // 数据库->DataTable
+                daCBP详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T吹膜机组开机前确认表ID = " + dtCBP.Rows[0]["ID"].ToString(), connOle);
+                cbCBP详情 = new OleDbCommandBuilder(daCBP详情);
+                daCBP详情.Fill(dtCBP详情);
+                // DataTable->BindingSource
+                bsCBP详情.DataSource = dtCBP详情;
+                // 先clear所有bindings
+                dataGridView1.DataBindings.Clear();
+                // 控件->BindingSource
+                dataGridView1.DataSource = bsCBP详情.DataSource;
 
-                //记录人初始化
-                operator_id = Convert.ToInt32(queryValsList[0][1].ToString());
-                operator_name = Parameter.IDtoName(operator_id);
-                this.recorderBox.Text = operator_name;
-                operate_date = Convert.ToDateTime(queryValsList[0][2].ToString());
-                recordTimePicker.Value = operate_date;
-                //审核人初始化                
-                if (Int32.TryParse(queryValsList[0][3].ToString(), out review_id) == false)
+                if (Convert.ToBoolean(dtCBP.Rows[0]["审核是否通过"]) == true)
                 {
-                    reviewer_name = null;
-                    this.checkerBox.Text = "";
-                    review_date = DateTime.Now.Date;
-                    checkTimePicker.Value = review_date;
-                    ischeckOk = false;
+                    SaveBtn.Enabled = false;
+                    CheckBtn.Enabled = false;
+                    printBtn.Enabled = true;
+                    cons_change_not();
+                }
+                else
+                {
                     SaveBtn.Enabled = true;
                     CheckBtn.Enabled = true;
                     printBtn.Enabled = false;
-                    CheckBeforePowerView.ReadOnly = false;
-                    isReadOnly = false;
-                }
-                else
-                {
-                    reviewer_name = Parameter.IDtoName(review_id);
-                    this.checkerBox.Text = reviewer_name;
-                    review_date = Convert.ToDateTime(queryValsList[0][4].ToString());
-                    checkTimePicker.Value = review_date;
-                    ischeckOk = Convert.ToBoolean(queryValsList[0][5].ToString());
-                    //审核通过，则确认、保存均不可点
-                    if (ischeckOk)
-                    {
-                        SaveBtn.Enabled = false;
-                        CheckBtn.Enabled = false;
-                        printBtn.Enabled = true;
-                        CheckBeforePowerView.ReadOnly = true;
-                        isReadOnly = true;
-                    }
-                    else
-                    {
-                        SaveBtn.Enabled = true;
-                        CheckBtn.Enabled = true;
-                        printBtn.Enabled = false;
-                        CheckBeforePowerView.ReadOnly = false;
-                        isReadOnly = false;
-                    }
-                    printBtn.Enabled = true;
-                }
-
-                //解析jason
-                JArray jo = JArray.Parse(queryValsList[0][0].ToString());
-                int i = 0;
-                foreach (var ss in jo)  //查找某个字段与值
-                {
-                    DataGridViewRow dr = new DataGridViewRow();
-                    foreach (DataGridViewColumn c in CheckBeforePowerView.Columns)
-                    {
-                        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-                    }
-                    dr.Cells[0].Value = (i + 1).ToString(); //序号
-                    dr.Cells[1].Value = ss["s2_确认项目"].ToString(); //确认项目
-                    dr.Cells[2].Value = " " + ss["s2_确认内容"].ToString(); //确认内容
-                    dr.Cells[3].Value = ss["s2_确认结果"].ToString() == "1" ? true : false;
-                    dr.Cells[4].Value = ss["s2_确认结果"].ToString() == "1" ? false : true;
-                    CheckBeforePowerView.Rows.Add(dr);
-                    i++;
+                    cons_change();
                 }
             }
-        }
-    
-        private void DataTabelInitialize()
-        {
-            ///***********************表格数据初始化************************///
-            //表格界面设置
-            this.CheckBeforePowerView.Font = new Font("宋体", 12, FontStyle.Regular);
-            this.CheckBeforePowerView.RowHeadersVisible = false;
-            this.CheckBeforePowerView.AllowUserToResizeColumns = false;
-            this.CheckBeforePowerView.AllowUserToResizeRows = false;
-            //this.CheckBeforePowerTable.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.CheckBeforePowerView.ColumnHeadersHeight = 40;
-            for (int i = 0; i < this.CheckBeforePowerView.Columns.Count; i++)
-            {
-                this.CheckBeforePowerView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.CheckBeforePowerView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-            }
-            this.CheckBeforePowerView.Columns[0].MinimumWidth = 80;
-            this.CheckBeforePowerView.Columns[1].MinimumWidth = 160;
-            this.CheckBeforePowerView.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.CheckBeforePowerView.Columns[3].MinimumWidth = 80;
-            this.CheckBeforePowerView.Columns[4].MinimumWidth = 80;
-            for (int i = 0; i < this.CheckBeforePowerView.Columns.Count - 3; i++)
-            {
-                this.CheckBeforePowerView.Columns[i].ReadOnly = true;
-            }
-            this.CheckBeforePowerView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.CheckBeforePowerView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            this.CheckBeforePowerView.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;            
-        }
 
-        private void DataSaveSql()
-        {
-            int result = 0;
-            SqlCommand comm = new SqlCommand();
-            comm.Connection = conn;
-            string commext = "update extrusion set ";
-            for (int i = 0; i < 14; i++)
-            { commext = commext + "s2_item" + (i + 1).ToString() + "_qualified = @s2_item" + (i + 1).ToString() + "_qualified, "; }
-            commext = commext + "s2_operator_id=@s2_operator_id, s2_operate_date=@s2_operate_date, s2_reviewer_id=s2_reviewer_id, s2_review_date=s2_review_date where id =1";
-            comm.CommandText = commext;
-            for (int i = 0; i < 14; i++)
-            {
-                comm.Parameters.Add("@s2_item" + (i + 1).ToString() + "_qualified", System.Data.SqlDbType.Bit);
-                comm.Parameters["@s2_item" + (i + 1).ToString() + "_qualified"].Value = (this.CheckBeforePowerView.Rows[i].Cells["确认结果Y"].Value.ToString() == "True" ? true : false);
-            }
-            comm.Parameters.Add("@s2_operator_id", System.Data.SqlDbType.Int);
-            comm.Parameters.Add("@s2_operate_date", System.Data.SqlDbType.Date);
-            comm.Parameters.Add("@s2_reviewer_id", System.Data.SqlDbType.Int);
-            comm.Parameters.Add("@s2_review_date", System.Data.SqlDbType.Date);
-
-            comm.Parameters["@s2_operator_id"].Value = operator_id;
-            comm.Parameters["@s2_operate_date"].Value = recordTimePicker.Value;
-            comm.Parameters["@s2_reviewer_id"].Value = review_id;
-            comm.Parameters["@s2_review_date"].Value = checkTimePicker.Value;
-
-            result = comm.ExecuteNonQuery();
-            if (result > 0)
-            { MessageBox.Show("添加成功"); }
-            else { MessageBox.Show("错误"); }
-
-            comm.Dispose();
+            formatInit();  
 
         }
 
-        private void DataSaveOle()
-        {
-            operator_name = recorderBox.Text;            
-            if (operator_name != Parameter.IDtoName(operator_id))
-            {
-                operator_id = Parameter.NametoID(operator_name);
-            }
-            if (operator_id == 0)
-            {
-                MessageBox.Show("未找到记录人姓名，请重新输入");
-            }
-            else
-            {
-                //jason 保存表格
-                JArray jarray = JArray.Parse("[]");
-                for (int i = 0; i < CheckBeforePowerView.Rows.Count; i++)
-                {
-                    string json = @"{}";
-                    JObject j = JObject.Parse(json);
-                    j.Add("s2_确认项目", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认项目"].Value.ToString()));
-                    j.Add("s2_确认内容", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认内容"].Value.ToString()));
-                    j.Add("s2_确认结果", new JValue(this.CheckBeforePowerView.Rows[i].Cells["确认结果Y"].Value.ToString() == "True" ? "1" : "0"));
-                    jarray.Add(j);
-                }
+        //******************************按钮功能******************************//
 
-                //新建的
-                if (isSaveOk == false)
-                {
-                    List<String> queryCols = new List<String>(new String[] { "production_instruction_id", "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
-                    List<Object> queryVals = new List<Object>(new Object[] { Instructionid, jarray.ToString(), operator_id, Convert.ToDateTime(recordTimePicker.Value.ToString("yyyy/MM/dd")) });
-                    Boolean b = Utility.insertAccess(connOle, table, queryCols, queryVals);
-                }
-                //已经有了
-                else
-                {
-                    List<String> queryCols = new List<String>(new String[] { "s2_is_qualified", "s2_operator_id", "s2_operate_date" });
-                    List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), operator_id, Convert.ToDateTime(recordTimePicker.Value.ToString("yyyy/MM/dd")) });
-                    List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
-                    List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
-                    Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-                }
-                CheckBtn.Enabled = true;
-            }                        
-        }
-
-        private void CheckBeforePowerView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0 && e.RowIndex != -1 && !CheckBeforePowerView.Rows[e.RowIndex].IsNewRow)
-            {
-                if (isReadOnly==false)
-                {
-                    if (e.ColumnIndex == 3)
-                    {
-                        if ((bool)this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value == true)
-                        {
-                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = false;
-                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = true;
-                        }
-                        else
-                        {
-                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = true;
-                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = false;
-                        }
-                    }
-                    else if (e.ColumnIndex == 4)
-                    {
-                        if ((bool)this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value == true)
-                        {
-                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = true;
-                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = false;
-                        }
-                        else
-                        {
-                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[3].Value = false;
-                            this.CheckBeforePowerView.Rows[e.RowIndex].Cells[4].Value = true;
-                        }
-                    }
-                    else
-                    { }
-                }                
-            }      
-        }
-        
+        //保存按钮
         private void SaveBtn_Click(object sender, EventArgs e)
-        {            
-            if (isSqlOk) { DataSaveSql(); }
-            else { DataSaveOle(); }
-        }
-
-        public override void CheckResult()
         {
-            base.CheckResult();
-            review_id = check.userID;
-            reviewer_name = Parameter.IDtoName(review_id);
-            string review_opinion = check.opinion;
-            ischeckOk = check.ischeckOk;
-
-            if (isSqlOk)
-            {
-                int result = 0;
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                comm.CommandText = "update extrusion set s2_reviewer_id=@s2_reviewer_id, s2_review_date=@s2_review_date where id=1";
-
-                comm.Parameters.Add("@s2_reviewer_id", System.Data.SqlDbType.Int);
-                comm.Parameters.Add("@s2_review_date", System.Data.SqlDbType.Date);
-                comm.Parameters["@s2_reviewer_id"].Value = review_id;
-                comm.Parameters["@s2_review_date"].Value = checkTimePicker.Value;
-
-                result = comm.ExecuteNonQuery();
-                /*
-                if (result > 0)
-                { MessageBox.Show("添加成功"); }
-                else { MessageBox.Show("错误"); }
-                 * */
-                comm.Dispose();
-            }
+            if (mySystem.Parameter.NametoID(tb确认人.Text) == 0)
+            { MessageBox.Show("请重新填写确认人姓名！"); }
             else
             {
-                List<String> queryCols = new List<String>(new String[] { "s2_reviewer_id", "s2_review_date", "s2_review_opinion", "s2_is_review_qualified" });
-                List<Object> queryVals = new List<Object>(new Object[] { review_id, Convert.ToDateTime(checkTimePicker.Value.ToString("yyyy/MM/dd")), review_opinion, ischeckOk });
-                List<String> whereCols = new List<String>(new String[] { "production_instruction_id" });
-                List<Object> whereVals = new List<Object>(new Object[] { Instructionid });
-                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
-            }
-            //判断是否检验合格
-            if (ischeckOk)
-            {
-                CheckBeforePowerView.ReadOnly = true;
-                isReadOnly = true;
-                SaveBtn.Enabled = false;
-                CheckBtn.Enabled = false;
-                printBtn.Enabled = true;
-            }
-            else
-            {
-                CheckBeforePowerView.ReadOnly = false;
-                isReadOnly = false;
-                SaveBtn.Enabled = true;
+                // 保存非DataGridView中的数据必须先执行EndEdit;
+                bsCBP.EndEdit();
+                daCBP.Update((DataTable)bsCBP.DataSource);
+
+                // dgv  保存，清空，重读
+                if (isNewRecord == true)
+                {
+                    OleDbCommand comm = new OleDbCommand();
+                    comm.Connection = mySystem.Parameter.connOle;
+                    comm.CommandText = "select @@identity";
+                    Int32 idd = (Int32)comm.ExecuteScalar();
+
+                    daCBP详情.Dispose();
+                    cbCBP详情.Dispose();
+
+                    //重新绑定
+                    daCBP详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T吹膜机组开机前确认表ID = " + idd.ToString(), connOle);
+                    cbCBP详情 = new OleDbCommandBuilder(daCBP详情);
+                    daCBP详情.Fill(dtCBP详情);
+                    // DataTable->BindingSource
+                    bsCBP详情.DataSource = dtCBP详情;
+                    // 先clear所有bindings
+                    dataGridView1.DataBindings.Clear();
+                    // 控件->BindingSource
+                    dataGridView1.DataSource = bsCBP详情.DataSource;
+
+                    for (int i = 0; i < dtCBP详情.Rows.Count; i++)
+                    { dtCBP详情.Rows[i]["T吹膜机组开机前确认表ID"] = idd; }
+
+                    isNewRecord = false;
+                }
+                else
+                {
+                    for (int i = 0; i < dtCBP详情.Rows.Count; i++)
+                    { dtCBP详情.Rows[i]["T吹膜机组开机前确认表ID"] = dtCBP详情.Rows[0]["T吹膜机组开机前确认表ID"]; }
+                }
+                daCBP详情.Update((DataTable)bsCBP详情.DataSource);
+                dtCBP详情.Clear();
+                daCBP详情.Fill(dtCBP详情);
+
                 CheckBtn.Enabled = true;
-                printBtn.Enabled = false;
             }
-            checkerBox.Text = reviewer_name;            
         }
 
+        //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
             check = new CheckForm(this);
             check.ShowDialog();
         }
-               
+
+        //审核功能
+        public override void CheckResult()
+        {
+            base.CheckResult();
+            dtCBP.Rows[0]["审核人"] = Parameter.IDtoName(check.userID);
+            dtCBP.Rows[0]["审核意见"] = check.opinion;
+            dtCBP.Rows[0]["审核是否通过"] = check.ischeckOk;
+
+            // 保存非DataGridView中的数据必须先执行EndEdit;
+            bsCBP.EndEdit();
+            daCBP.Update((DataTable)bsCBP.DataSource);
+
+            if (check.ischeckOk == true)
+            {
+                SaveBtn.Enabled = false;
+                CheckBtn.Enabled = false;
+                printBtn.Enabled = true;
+                cons_change_not();
+            }
+            else
+            {
+                SaveBtn.Enabled = true;
+                CheckBtn.Enabled = true;
+                printBtn.Enabled = false;
+                cons_change();
+            }
+        }
+        
+        //******************************小功能******************************// 
+        
+        //数据可修改
+        private void cons_change()
+        {
+            dataGridView1.ReadOnly = false;
+                        
+            tb确认人.ReadOnly = false;
+            tb审核人.ReadOnly = false;
+
+            dtp确认日期.Enabled = true;
+            dtp审核日期.Enabled = true;   
+        }
+
+        //数据不可修改
+        private void cons_change_not()
+        {
+            dataGridView1.ReadOnly = true;
+
+            tb确认人.ReadOnly = true;
+            tb审核人.ReadOnly = true;
+
+            dtp确认日期.Enabled = false;
+            dtp审核日期.Enabled = false;
+        }
+
+        //******************************datagridview******************************//  
+
+        // 处理DataGridView中是、否相反
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && dtCBP详情.Rows.Count > 0 && dtCBP.Rows.Count > 0 )
+            {
+                if (Convert.ToBoolean(dtCBP.Rows[0]["审核是否通过"]) == false)
+                {
+                    //确认结果是否合格
+                    if (dataGridView1.Columns[e.ColumnIndex].Name == "确认结果_是")
+                    {
+
+                        if (Convert.ToBoolean(dtCBP详情.Rows[e.RowIndex]["确认结果_是"]) == true)
+                        {
+                            dtCBP详情.Rows[e.RowIndex]["确认结果_是"] = false;
+                            dtCBP详情.Rows[e.RowIndex]["确认结果_否"] = true;
+                        }
+                        else
+                        {
+                            dtCBP详情.Rows[e.RowIndex]["确认结果_是"] = true;
+                            dtCBP详情.Rows[e.RowIndex]["确认结果_否"] = false;
+                        }
+                    }
+                    else if (dataGridView1.Columns[e.ColumnIndex].Name == "确认结果_否")
+                    {
+                        if (Convert.ToBoolean(dtCBP详情.Rows[e.RowIndex]["确认结果_否"]) == false)
+                        {
+                            dtCBP详情.Rows[e.RowIndex]["确认结果_是"] = false;
+                            dtCBP详情.Rows[e.RowIndex]["确认结果_否"] = true;
+                        }
+                        else
+                        {
+                            dtCBP详情.Rows[e.RowIndex]["确认结果_是"] = true;
+                            dtCBP详情.Rows[e.RowIndex]["确认结果_否"] = false;
+                        }
+                    }                    
+                    else
+                    { }
+                }
+            }
+        }   
+            
     }
 }

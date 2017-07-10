@@ -17,7 +17,9 @@ namespace mySystem.Extruction.Process
     {
         //private DataTable dtInformation = new DataTable();
 
-        private String table = "extrusion_s6_production_check";
+        private String table = "吹膜工序生产和检验记录";
+        private String tableInfo = "吹膜工序生产和检验记录详细信息";
+
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
@@ -49,7 +51,78 @@ namespace mySystem.Extruction.Process
 
             spot = Parameter.userflight; //需要从Parameter里面读取，暂无
             
-            Init();
+            //Init();
+            IDShow(1);
+
+        }
+
+        public void IDShow(Int32 ID)
+        {
+            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            DataTable dt1 = new DataTable(table);
+            da1.Fill(dt1);
+
+            if (dt1.Rows.Count!=0)
+            {
+                cb产品名称.Text = dt1.Rows[0]["产品名称"].ToString();
+                tb产品批号.Text = dt1.Rows[0]["产品批号"].ToString();
+                tb环境湿度.Text = dt1.Rows[0]["环境湿度"].ToString();
+                tb环境温度.Text = dt1.Rows[0]["环境温度"].ToString();
+                tb累计同规格膜卷长度R.Text = dt1.Rows[0]["累计同规格膜卷长度R"].ToString();
+                tb累计同规格膜卷重量T.Text = dt1.Rows[0]["累计同规格膜卷重量T"].ToString();
+                tb审核人.Text = dt1.Rows[0]["审核人"].ToString();
+                tb生产设备.Text = dt1.Rows[0]["生产设备"].ToString();
+                tb依据工艺.Text = dt1.Rows[0]["依据工艺"].ToString();
+                dtp生产日期.Value = Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString());                
+            }
+
+            BindingSource bs2 = new BindingSource();
+            OleDbDataAdapter da2 = new OleDbDataAdapter("select * from " + tableInfo + " where T吹膜工序生产和检验记录ID = " + ID.ToString(), connOle);
+            OleDbCommandBuilder cb2 = new OleDbCommandBuilder(da2);
+            DataTable dt2 = new DataTable(tableInfo);
+            da2.Fill(dt2);
+            bs2.DataSource = dt2;
+            if (dt2.Rows.Count != 0)
+            {
+                RecordView.DataSource = bs2.DataSource;
+                formatInit();
+            }
+
+            AddLineBtn.Enabled = false;
+            DelLineBtn.Enabled = false;
+            SaveBtn.Enabled = false;
+            CheckBtn.Enabled = false;
+            printBtn.Enabled = true; 
+        }
+
+        private void formatInit()
+        {
+            this.RecordView.Font = new Font("宋体", 12, FontStyle.Regular);
+            this.RecordView.AllowUserToAddRows = false;
+            //添加按钮列
+            /*
+            DataGridViewButtonColumn MyButtonColumn = new DataGridViewButtonColumn();
+            MyButtonColumn.Name = "删除该条记录";
+            MyButtonColumn.UseColumnTextForButtonValue = true;
+            MyButtonColumn.Text = "删除";
+            this.RecordView.Columns.Add(MyButtonColumn);
+            this.RecordView.AllowUserToAddRows = false;*/
+            //设置对齐
+            this.RecordView.RowHeadersVisible = false;
+            for (int i = 0; i < this.RecordView.Columns.Count; i++)
+            {
+                this.RecordView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
+                this.RecordView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                this.RecordView.Columns[i].MinimumWidth = 80;
+            }
+            this.RecordView.Columns[0].MinimumWidth = 40;
+            this.RecordView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.RecordView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.RecordView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            this.RecordView.ColumnHeadersHeight = 40;
+
+            RecordView.Columns["ID"].Visible = false;
+            RecordView.Columns["T吹膜工序生产和检验记录ID"].Visible = false;
 
         }
 
@@ -66,7 +139,7 @@ namespace mySystem.Extruction.Process
                 {
                     while (reader.Read())
                     {
-                        productnamecomboBox.Items.Add(reader["product_name"]);  //下拉框获取生产指令
+                        cb产品名称.Items.Add(reader["product_name"]);  //下拉框获取生产指令
                     }
                 }
             }
@@ -80,17 +153,17 @@ namespace mySystem.Extruction.Process
                 {
                     while (reader.Read())
                     {
-                        productnamecomboBox.Items.Add(reader["product_name"]);
+                        cb产品名称.Items.Add(reader["product_name"]);
                     }
                 }
             }
             //产品名称的初始化
-            productnamecomboBox.SelectedIndex = 0;
+            cb产品名称.SelectedIndex = 0;
             //班次初始化
-            this.DatecheckBox.Checked = spot;
-            this.NightcheckBox.Checked = !spot;
+            this.cb白班.Checked = spot;
+            this.cb夜班.Checked = !spot;
             //生产日期初始化
-            productionDatePicker.Value = DateTime.Now.Date;
+            dtp生产日期.Value = DateTime.Now.Date;
         }
 
         private void RecordViewInitialize()
@@ -286,7 +359,7 @@ namespace mySystem.Extruction.Process
         //日班改变时，夜班也随之改变
         private void DatecheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.DatecheckBox.Checked = spot;
+            this.cb白班.Checked = spot;
             /*
             if (DatecheckBox.Checked)
             {
@@ -299,7 +372,7 @@ namespace mySystem.Extruction.Process
         //夜班改变时，夜班也随之改变
         private void NeightcheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            this.NightcheckBox.Checked = !spot;
+            this.cb夜班.Checked = !spot;
             /*
             if (NightcheckBox.Checked)
             {
@@ -363,11 +436,11 @@ namespace mySystem.Extruction.Process
             int numtemp;           
             //if (batchIdBox.Text.ToString() == "")
             //{ MessageBox.Show("请在产品名称框内输入内容!"); return false; }
-            if (batchIdBox.Text.ToString() == "")
+            if (tb产品批号.Text.ToString() == "")
             { MessageBox.Show("请在产品批号框内输入内容!"); return false; }
-            else if (Int32.TryParse((temperatureBox.Text.ToString()), out numtemp) == false)
+            else if (Int32.TryParse((tb环境温度.Text.ToString()), out numtemp) == false)
             { MessageBox.Show("请在温度框内填入数字!"); return false; }
-            else if (Int32.TryParse((humidityBox.Text.ToString()), out numtemp) == false)
+            else if (Int32.TryParse((tb环境湿度.Text.ToString()), out numtemp) == false)
             { MessageBox.Show("请在湿度框内填入数字!"); return false; }
             else if (Int32.TryParse((RecordView.Rows[Recordnum-1].Cells["膜卷编号"].Value.ToString()), out numtemp) == false)
             { MessageBox.Show("请在膜卷编号框内填入数字!"); return false; }
@@ -413,7 +486,7 @@ namespace mySystem.Extruction.Process
                     }
                     List<String> queryCols = new List<String>(new String[] { "s6_check_info", "product_name", "product_batch_id", "production_instruction_id", "s6_temperature", "s6_relative_humidity", "s6_production_date", "s6_flight" });
                     //List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), Convert.ToInt32(batchIdBox.Text.ToString()), Convert.ToInt32(instructionIdBox.Text.ToString()), Convert.ToInt32(temperatureBox.Text.ToString()),Convert.ToInt32(humidityBox.Text.ToString()), productiondate.Date, DatecheckBox.Checked });
-                    List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), productnamecomboBox.Text.ToString(), Convert.ToInt32(batchIdBox.Text.ToString()), Instructionid, Convert.ToInt32(temperatureBox.Text.ToString()), Convert.ToInt32(humidityBox.Text.ToString()), Convert.ToDateTime(productionDatePicker.Value.ToString("yyyy/MM/dd")), DatecheckBox.Checked });
+                    List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), cb产品名称.Text.ToString(), Convert.ToInt32(tb产品批号.Text.ToString()), Instructionid, Convert.ToInt32(tb环境温度.Text.ToString()), Convert.ToInt32(tb环境湿度.Text.ToString()), Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd")), cb白班.Checked });
                     Boolean b = Utility.insertAccess(connOle, table, queryCols, queryVals);
                     return true;
                 }
@@ -422,7 +495,7 @@ namespace mySystem.Extruction.Process
                     List<String> queryCols = new List<String>(new String[] { "s6_check_info" });
                     List<String> whereCols = new List<String>(new String[] { "product_name", "s6_production_date", "s6_flight" });
                     //List<Object> whereVals = new List<Object>(new Object[] { Convert.ToInt32(batchIdBox.Text.ToString()), Convert.ToInt32(instructionIdBox.Text.ToString()), productiondate.Date, DatecheckBox.Checked });
-                    List<Object> whereVals = new List<Object>(new Object[] { productnamecomboBox.Text.ToString(), Convert.ToDateTime(productionDatePicker.Value.ToString("yyyy/MM/dd")), DatecheckBox.Checked });                    
+                    List<Object> whereVals = new List<Object>(new Object[] { cb产品名称.Text.ToString(), Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd")), cb白班.Checked });                    
                     List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
                     //解析jason
                     JArray jo = JArray.Parse(queryValsList[0][0].ToString());
@@ -506,7 +579,7 @@ namespace mySystem.Extruction.Process
                         jarray.Add(j);
                     }
                     queryCols = new List<String>(new String[] { "s6_check_info", "s6_temperature", "s6_relative_humidity" });
-                    List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), temperatureBox.Text.ToString(), humidityBox.Text.ToString() });
+                    List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString(), tb环境温度.Text.ToString(), tb环境湿度.Text.ToString() });
                     Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);                                       
 
                     return true;
@@ -534,10 +607,10 @@ namespace mySystem.Extruction.Process
                 ischeckOk = false;
                 review_id = 0;
                 reviewer_name = "";
-                CheckerBox.Text = reviewer_name;
-                batchIdBox.Text = "";
-                temperatureBox.Text = "";
-                humidityBox.Text = "";
+                tb审核人.Text = reviewer_name;
+                tb产品批号.Text = "";
+                tb环境温度.Text = "";
+                tb环境湿度.Text = "";
                 
                 AddLineBtn.Enabled = false;
                 DelLineBtn.Enabled = false;
@@ -552,21 +625,21 @@ namespace mySystem.Extruction.Process
                 RecordView.Rows.Clear();
 
                 //显示查询到的信息                
-                batchIdBox.Text = queryValsList[0][1].ToString();
-                temperatureBox.Text = queryValsList[0][2].ToString();
-                humidityBox.Text = queryValsList[0][3].ToString();
+                tb产品批号.Text = queryValsList[0][1].ToString();
+                tb环境温度.Text = queryValsList[0][2].ToString();
+                tb环境湿度.Text = queryValsList[0][3].ToString();
 
                 if (Int32.TryParse(queryValsList[0][4].ToString(), out review_id) == false)
                 {
                     ischeckOk = false;
                     reviewer_name = null;
-                    CheckerBox.Text = "";
+                    tb审核人.Text = "";
                 }
                 else
                 {
                     ischeckOk = Convert.ToBoolean(queryValsList[0][5].ToString());
                     reviewer_name = Parameter.IDtoName(review_id);
-                    CheckerBox.Text = reviewer_name;
+                    tb审核人.Text = reviewer_name;
                 }
 
                 AddLineBtn.Enabled = true;
@@ -687,14 +760,17 @@ namespace mySystem.Extruction.Process
                 List<String> queryCols = new List<String>(new String[] { "s6_reviewer_id", "s6_review_opinion", "s6_is_review_qualified" });
                 List<Object> queryVals = new List<Object>(new Object[] { review_id, review_opinion, ischeckOk });
                 List<String> whereCols = new List<String>(new String[] { "product_name", "s6_production_date", "s6_flight" });
-                List<Object> whereVals = new List<Object>(new Object[] { productnamecomboBox.Text.ToString(), Convert.ToDateTime(productionDatePicker.Value.ToString("yyyy/MM/dd")), DatecheckBox.Checked });
+                List<Object> whereVals = new List<Object>(new Object[] { cb产品名称.Text.ToString(), Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd")), cb白班.Checked });
                 Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
             }
             //检查审核是否过关
-            CheckerBox.Text = reviewer_name;
+            tb审核人.Text = reviewer_name;
             printBtn.Enabled = true;
            
         }
+
+        
+
 
         private void CheckBtn_Click(object sender, EventArgs e)
         {
@@ -704,12 +780,12 @@ namespace mySystem.Extruction.Process
 
         private void productnamecomboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DataShow(productnamecomboBox.Text.ToString(), productionDatePicker.Value, DatecheckBox.Checked);
+            //DataShow(cb产品名称.Text.ToString(), dtp生产日期.Value, cb白班.Checked);
         }
 
         private void productionDatePicker_ValueChanged(object sender, EventArgs e)
         {
-            DataShow(productnamecomboBox.Text.ToString(), productionDatePicker.Value, DatecheckBox.Checked);
+            //DataShow(cb产品名称.Text.ToString(), dtp生产日期.Value, cb白班.Checked);
         }
     }
 }

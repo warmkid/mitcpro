@@ -28,35 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.checkTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.recordTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.dtp确认日期 = new System.Windows.Forms.DateTimePicker();
             this.label3 = new System.Windows.Forms.Label();
-            this.checkerBox = new System.Windows.Forms.TextBox();
+            this.tb审核人 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.recorderBox = new System.Windows.Forms.TextBox();
+            this.tb确认人 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.CheckBtn = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.PSLabel = new System.Windows.Forms.Label();
-            this.CheckBeforePowerView = new System.Windows.Forms.DataGridView();
             this.Title = new System.Windows.Forms.Label();
             this.printBtn = new System.Windows.Forms.Button();
-            this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.确认项目 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.确认内容 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.确认结果Y = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.确认结果N = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.CheckBeforePowerView)).BeginInit();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // checkTimePicker
+            // dtp审核日期
             // 
-            this.checkTimePicker.Font = new System.Drawing.Font("SimSun", 12F);
-            this.checkTimePicker.Location = new System.Drawing.Point(940, 40);
-            this.checkTimePicker.Name = "checkTimePicker";
-            this.checkTimePicker.Size = new System.Drawing.Size(200, 26);
-            this.checkTimePicker.TabIndex = 16;
+            this.dtp审核日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp审核日期.Location = new System.Drawing.Point(940, 40);
+            this.dtp审核日期.Name = "dtp审核日期";
+            this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp审核日期.TabIndex = 16;
             // 
             // label4
             // 
@@ -68,13 +63,13 @@
             this.label4.TabIndex = 15;
             this.label4.Text = "审核日期：";
             // 
-            // recordTimePicker
+            // dtp确认日期
             // 
-            this.recordTimePicker.Font = new System.Drawing.Font("SimSun", 12F);
-            this.recordTimePicker.Location = new System.Drawing.Point(340, 39);
-            this.recordTimePicker.Name = "recordTimePicker";
-            this.recordTimePicker.Size = new System.Drawing.Size(200, 26);
-            this.recordTimePicker.TabIndex = 14;
+            this.dtp确认日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp确认日期.Location = new System.Drawing.Point(340, 39);
+            this.dtp确认日期.Name = "dtp确认日期";
+            this.dtp确认日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp确认日期.TabIndex = 14;
             // 
             // label3
             // 
@@ -86,13 +81,13 @@
             this.label3.TabIndex = 13;
             this.label3.Text = "确认日期：";
             // 
-            // checkerBox
+            // tb审核人
             // 
-            this.checkerBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.checkerBox.Location = new System.Drawing.Point(696, 43);
-            this.checkerBox.Name = "checkerBox";
-            this.checkerBox.Size = new System.Drawing.Size(100, 26);
-            this.checkerBox.TabIndex = 12;
+            this.tb审核人.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb审核人.Location = new System.Drawing.Point(696, 43);
+            this.tb审核人.Name = "tb审核人";
+            this.tb审核人.Size = new System.Drawing.Size(100, 26);
+            this.tb审核人.TabIndex = 12;
             // 
             // label2
             // 
@@ -104,13 +99,13 @@
             this.label2.TabIndex = 11;
             this.label2.Text = "审核人：";
             // 
-            // recorderBox
+            // tb确认人
             // 
-            this.recorderBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.recorderBox.Location = new System.Drawing.Point(95, 39);
-            this.recorderBox.Name = "recorderBox";
-            this.recorderBox.Size = new System.Drawing.Size(100, 26);
-            this.recorderBox.TabIndex = 10;
+            this.tb确认人.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb确认人.Location = new System.Drawing.Point(95, 39);
+            this.tb确认人.Name = "tb确认人";
+            this.tb确认人.Size = new System.Drawing.Size(100, 26);
+            this.tb确认人.TabIndex = 10;
             // 
             // label1
             // 
@@ -153,24 +148,6 @@
             this.PSLabel.TabIndex = 6;
             this.PSLabel.Text = "注：\t正常或符合打“√”，不正常或不符合打“×”。";
             // 
-            // CheckBeforePowerView
-            // 
-            this.CheckBeforePowerView.AllowUserToAddRows = false;
-            this.CheckBeforePowerView.AllowUserToDeleteRows = false;
-            this.CheckBeforePowerView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.CheckBeforePowerView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.序号,
-            this.确认项目,
-            this.确认内容,
-            this.确认结果Y,
-            this.确认结果N});
-            this.CheckBeforePowerView.Location = new System.Drawing.Point(27, 82);
-            this.CheckBeforePowerView.Name = "CheckBeforePowerView";
-            this.CheckBeforePowerView.RowTemplate.Height = 23;
-            this.CheckBeforePowerView.Size = new System.Drawing.Size(1113, 402);
-            this.CheckBeforePowerView.TabIndex = 1;
-            this.CheckBeforePowerView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.CheckBeforePowerView_CellContentClick);
-            // 
             // Title
             // 
             this.Title.AutoSize = true;
@@ -193,56 +170,39 @@
             this.printBtn.Text = "打印";
             this.printBtn.UseVisualStyleBackColor = true;
             // 
-            // 序号
+            // dataGridView1
             // 
-            this.序号.HeaderText = "序号";
-            this.序号.Name = "序号";
-            // 
-            // 确认项目
-            // 
-            this.确认项目.HeaderText = "确认项目";
-            this.确认项目.Name = "确认项目";
-            // 
-            // 确认内容
-            // 
-            this.确认内容.HeaderText = "确认内容";
-            this.确认内容.Name = "确认内容";
-            // 
-            // 确认结果Y
-            // 
-            this.确认结果Y.HeaderText = "确认结果(Y)";
-            this.确认结果Y.Name = "确认结果Y";
-            // 
-            // 确认结果N
-            // 
-            this.确认结果N.HeaderText = "确认结果(N)";
-            this.确认结果N.Name = "确认结果N";
-            this.确认结果N.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.确认结果N.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(27, 75);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(1113, 396);
+            this.dataGridView1.TabIndex = 18;
             // 
             // ExtructionCheckBeforePowerStep2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 532);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.printBtn);
-            this.Controls.Add(this.checkTimePicker);
+            this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.recordTimePicker);
+            this.Controls.Add(this.dtp确认日期);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.checkerBox);
+            this.Controls.Add(this.tb审核人);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.recorderBox);
+            this.Controls.Add(this.tb确认人);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.CheckBtn);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.PSLabel);
-            this.Controls.Add(this.CheckBeforePowerView);
             this.Controls.Add(this.Title);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExtructionCheckBeforePowerStep2";
             this.Text = "ExtructionCheckBeforePowerStep2";
-            ((System.ComponentModel.ISupportInitialize)(this.CheckBeforePowerView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,23 +211,18 @@
         #endregion
 
         private System.Windows.Forms.Label Title;
-        private System.Windows.Forms.DataGridView CheckBeforePowerView;
         private System.Windows.Forms.Label PSLabel;
         private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Button CheckBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox recorderBox;
-        private System.Windows.Forms.TextBox checkerBox;
+        private System.Windows.Forms.TextBox tb确认人;
+        private System.Windows.Forms.TextBox tb审核人;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker recordTimePicker;
-        private System.Windows.Forms.DateTimePicker checkTimePicker;
+        private System.Windows.Forms.DateTimePicker dtp确认日期;
+        private System.Windows.Forms.DateTimePicker dtp审核日期;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button printBtn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 序号;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 确认项目;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 确认内容;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 确认结果Y;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 确认结果N;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

@@ -28,57 +28,61 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.包材 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.批号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.接上班数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.领取数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.剩余数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.使用数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.退库数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CheckBtn = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
-            this.checkerBox = new System.Windows.Forms.TextBox();
+            this.tb审核人 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.recorderBox = new System.Windows.Forms.TextBox();
+            this.tb操作人 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.checkTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
-            this.recordTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.dtp操作日期 = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
             this.DelLineBtn = new System.Windows.Forms.Button();
             this.AddLineBtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.生产时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.内包序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.产品外观 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.包装后外观 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.包装袋热封线 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.贴标签 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.贴指示剂 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.包装人 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productionTimePicker = new System.Windows.Forms.DateTimePicker();
+            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
-            this.batchIdBox = new System.Windows.Forms.TextBox();
+            this.tb产品批号 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.label_release_quantity_Box = new System.Windows.Forms.TextBox();
-            this.label_use_quantiy_Box = new System.Windows.Forms.TextBox();
-            this.label_destroy_quantity_Box = new System.Windows.Forms.TextBox();
+            this.tb标签发放数量 = new System.Windows.Forms.TextBox();
+            this.tb标签使用数量 = new System.Windows.Forms.TextBox();
+            this.tb标签销毁数量 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.packing_pattern_quantity_Box = new System.Windows.Forms.TextBox();
+            this.tb包装规格 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.total_quantiy_Box = new System.Windows.Forms.TextBox();
-            this.quantity_per_piece_Box = new System.Windows.Forms.TextBox();
+            this.tb总计包数 = new System.Windows.Forms.TextBox();
+            this.tb每片只数 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.cb标签语言是否中文 = new System.Windows.Forms.CheckBox();
+            this.cb标签语言是否英文 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tb指示剂退库数量 = new System.Windows.Forms.TextBox();
+            this.tb指示剂使用数量 = new System.Windows.Forms.TextBox();
+            this.tb指示剂剩余数量 = new System.Windows.Forms.TextBox();
+            this.tb指示剂领取数量 = new System.Windows.Forms.TextBox();
+            this.tb指示剂接上班数量 = new System.Windows.Forms.TextBox();
+            this.tb指示剂批号 = new System.Windows.Forms.TextBox();
+            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.tb包材退库数量 = new System.Windows.Forms.TextBox();
+            this.tb包材使用数量 = new System.Windows.Forms.TextBox();
+            this.tb包材剩余数量 = new System.Windows.Forms.TextBox();
+            this.tb包材领取数量 = new System.Windows.Forms.TextBox();
+            this.tb包材接上班数量 = new System.Windows.Forms.TextBox();
+            this.tb包材批号 = new System.Windows.Forms.TextBox();
+            this.tb包材名称 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.productcodeBox = new System.Windows.Forms.ComboBox();
+            this.cb产品代码 = new System.Windows.Forms.ComboBox();
             this.printBtn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label17 = new System.Windows.Forms.Label();
@@ -87,63 +91,11 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.包材,
-            this.批号,
-            this.接上班数量,
-            this.领取数量,
-            this.剩余数量,
-            this.使用数量,
-            this.退库数量});
-            this.dataGridView2.Location = new System.Drawing.Point(24, 402);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(860, 75);
-            this.dataGridView2.TabIndex = 24;
-            // 
-            // 包材
-            // 
-            this.包材.HeaderText = "包材";
-            this.包材.Name = "包材";
-            // 
-            // 批号
-            // 
-            this.批号.HeaderText = "批号";
-            this.批号.Name = "批号";
-            // 
-            // 接上班数量
-            // 
-            this.接上班数量.HeaderText = "接上班数量";
-            this.接上班数量.Name = "接上班数量";
-            // 
-            // 领取数量
-            // 
-            this.领取数量.HeaderText = "领取数量";
-            this.领取数量.Name = "领取数量";
-            // 
-            // 剩余数量
-            // 
-            this.剩余数量.HeaderText = "剩余数量";
-            this.剩余数量.Name = "剩余数量";
-            // 
-            // 使用数量
-            // 
-            this.使用数量.HeaderText = "使用数量";
-            this.使用数量.Name = "使用数量";
-            // 
-            // 退库数量
-            // 
-            this.退库数量.HeaderText = "退库数量";
-            this.退库数量.Name = "退库数量";
             // 
             // CheckBtn
             // 
@@ -154,7 +106,6 @@
             this.CheckBtn.TabIndex = 23;
             this.CheckBtn.Text = "审核";
             this.CheckBtn.UseVisualStyleBackColor = true;
-            this.CheckBtn.Click += new System.EventHandler(this.CheckBtn_Click);
             // 
             // SaveBtn
             // 
@@ -165,15 +116,14 @@
             this.SaveBtn.TabIndex = 22;
             this.SaveBtn.Text = "确认";
             this.SaveBtn.UseVisualStyleBackColor = true;
-            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
-            // checkerBox
+            // tb审核人
             // 
-            this.checkerBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.checkerBox.Location = new System.Drawing.Point(701, 512);
-            this.checkerBox.Name = "checkerBox";
-            this.checkerBox.Size = new System.Drawing.Size(100, 26);
-            this.checkerBox.TabIndex = 21;
+            this.tb审核人.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb审核人.Location = new System.Drawing.Point(701, 512);
+            this.tb审核人.Name = "tb审核人";
+            this.tb审核人.Size = new System.Drawing.Size(100, 26);
+            this.tb审核人.TabIndex = 21;
             // 
             // label8
             // 
@@ -183,15 +133,15 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(72, 16);
             this.label8.TabIndex = 20;
-            this.label8.Text = "复核人：";
+            this.label8.Text = "审核人：";
             // 
-            // recorderBox
+            // tb操作人
             // 
-            this.recorderBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.recorderBox.Location = new System.Drawing.Point(81, 512);
-            this.recorderBox.Name = "recorderBox";
-            this.recorderBox.Size = new System.Drawing.Size(100, 26);
-            this.recorderBox.TabIndex = 19;
+            this.tb操作人.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb操作人.Location = new System.Drawing.Point(81, 512);
+            this.tb操作人.Name = "tb操作人";
+            this.tb操作人.Size = new System.Drawing.Size(100, 26);
+            this.tb操作人.TabIndex = 19;
             // 
             // label7
             // 
@@ -203,13 +153,13 @@
             this.label7.TabIndex = 18;
             this.label7.Text = "操作人：";
             // 
-            // checkTimePicker
+            // dtp审核日期
             // 
-            this.checkTimePicker.Font = new System.Drawing.Font("SimSun", 12F);
-            this.checkTimePicker.Location = new System.Drawing.Point(946, 511);
-            this.checkTimePicker.Name = "checkTimePicker";
-            this.checkTimePicker.Size = new System.Drawing.Size(200, 26);
-            this.checkTimePicker.TabIndex = 17;
+            this.dtp审核日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp审核日期.Location = new System.Drawing.Point(946, 511);
+            this.dtp审核日期.Name = "dtp审核日期";
+            this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp审核日期.TabIndex = 17;
             // 
             // label6
             // 
@@ -219,15 +169,15 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(88, 16);
             this.label6.TabIndex = 16;
-            this.label6.Text = "复核日期：";
+            this.label6.Text = "审核日期：";
             // 
-            // recordTimePicker
+            // dtp操作日期
             // 
-            this.recordTimePicker.Font = new System.Drawing.Font("SimSun", 12F);
-            this.recordTimePicker.Location = new System.Drawing.Point(321, 511);
-            this.recordTimePicker.Name = "recordTimePicker";
-            this.recordTimePicker.Size = new System.Drawing.Size(200, 26);
-            this.recordTimePicker.TabIndex = 15;
+            this.dtp操作日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp操作日期.Location = new System.Drawing.Point(321, 511);
+            this.dtp操作日期.Name = "dtp操作日期";
+            this.dtp操作日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp操作日期.TabIndex = 15;
             // 
             // label5
             // 
@@ -242,107 +192,39 @@
             // DelLineBtn
             // 
             this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.DelLineBtn.Location = new System.Drawing.Point(788, 239);
+            this.DelLineBtn.Location = new System.Drawing.Point(788, 229);
             this.DelLineBtn.Name = "DelLineBtn";
             this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
             this.DelLineBtn.TabIndex = 13;
             this.DelLineBtn.Text = "删除记录";
             this.DelLineBtn.UseVisualStyleBackColor = true;
-            this.DelLineBtn.Click += new System.EventHandler(this.DelLineBtn_Click);
             // 
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(696, 239);
+            this.AddLineBtn.Location = new System.Drawing.Point(696, 229);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 12;
             this.AddLineBtn.Text = "添加记录";
             this.AddLineBtn.UseVisualStyleBackColor = true;
-            this.AddLineBtn.Click += new System.EventHandler(this.AddLineBtn_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.序号,
-            this.生产时间,
-            this.内包序号,
-            this.产品外观,
-            this.包装后外观,
-            this.包装袋热封线,
-            this.贴标签,
-            this.贴指示剂,
-            this.包装人});
             this.dataGridView1.Location = new System.Drawing.Point(26, 115);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(857, 216);
+            this.dataGridView1.Size = new System.Drawing.Size(857, 205);
             this.dataGridView1.TabIndex = 7;
             // 
-            // 序号
+            // dtp生产日期
             // 
-            this.序号.HeaderText = "序号";
-            this.序号.Name = "序号";
-            // 
-            // 生产时间
-            // 
-            this.生产时间.HeaderText = "生产时间";
-            this.生产时间.Name = "生产时间";
-            // 
-            // 内包序号
-            // 
-            this.内包序号.HeaderText = "内包序号";
-            this.内包序号.Name = "内包序号";
-            // 
-            // 产品外观
-            // 
-            this.产品外观.HeaderText = "产品外观";
-            this.产品外观.Name = "产品外观";
-            this.产品外观.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.产品外观.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // 包装后外观
-            // 
-            this.包装后外观.HeaderText = "包装后外观";
-            this.包装后外观.Name = "包装后外观";
-            this.包装后外观.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.包装后外观.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // 包装袋热封线
-            // 
-            this.包装袋热封线.HeaderText = "包装袋热封线";
-            this.包装袋热封线.Name = "包装袋热封线";
-            this.包装袋热封线.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.包装袋热封线.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // 贴标签
-            // 
-            this.贴标签.HeaderText = "贴标签";
-            this.贴标签.Name = "贴标签";
-            this.贴标签.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.贴标签.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // 贴指示剂
-            // 
-            this.贴指示剂.HeaderText = "贴指示剂";
-            this.贴指示剂.Name = "贴指示剂";
-            this.贴指示剂.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.贴指示剂.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // 包装人
-            // 
-            this.包装人.HeaderText = "包装人";
-            this.包装人.Name = "包装人";
-            // 
-            // productionTimePicker
-            // 
-            this.productionTimePicker.Font = new System.Drawing.Font("SimSun", 12F);
-            this.productionTimePicker.Location = new System.Drawing.Point(941, 69);
-            this.productionTimePicker.Name = "productionTimePicker";
-            this.productionTimePicker.Size = new System.Drawing.Size(200, 26);
-            this.productionTimePicker.TabIndex = 6;
-            this.productionTimePicker.ValueChanged += new System.EventHandler(this.productionTimePicker_ValueChanged);
+            this.dtp生产日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp生产日期.Location = new System.Drawing.Point(941, 69);
+            this.dtp生产日期.Name = "dtp生产日期";
+            this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp生产日期.TabIndex = 6;
             // 
             // label4
             // 
@@ -354,13 +236,13 @@
             this.label4.TabIndex = 5;
             this.label4.Text = "生产日期：";
             // 
-            // batchIdBox
+            // tb产品批号
             // 
-            this.batchIdBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.batchIdBox.Location = new System.Drawing.Point(573, 69);
-            this.batchIdBox.Name = "batchIdBox";
-            this.batchIdBox.Size = new System.Drawing.Size(164, 26);
-            this.batchIdBox.TabIndex = 4;
+            this.tb产品批号.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb产品批号.Location = new System.Drawing.Point(573, 69);
+            this.tb产品批号.Name = "tb产品批号";
+            this.tb产品批号.Size = new System.Drawing.Size(164, 26);
+            this.tb产品批号.TabIndex = 4;
             // 
             // label3
             // 
@@ -402,29 +284,29 @@
             this.label9.TabIndex = 25;
             this.label9.Text = "标签： ";
             // 
-            // label_release_quantity_Box
+            // tb标签发放数量
             // 
-            this.label_release_quantity_Box.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_release_quantity_Box.Location = new System.Drawing.Point(103, 39);
-            this.label_release_quantity_Box.Name = "label_release_quantity_Box";
-            this.label_release_quantity_Box.Size = new System.Drawing.Size(90, 26);
-            this.label_release_quantity_Box.TabIndex = 26;
+            this.tb标签发放数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb标签发放数量.Location = new System.Drawing.Point(103, 39);
+            this.tb标签发放数量.Name = "tb标签发放数量";
+            this.tb标签发放数量.Size = new System.Drawing.Size(90, 26);
+            this.tb标签发放数量.TabIndex = 26;
             // 
-            // label_use_quantiy_Box
+            // tb标签使用数量
             // 
-            this.label_use_quantiy_Box.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_use_quantiy_Box.Location = new System.Drawing.Point(103, 74);
-            this.label_use_quantiy_Box.Name = "label_use_quantiy_Box";
-            this.label_use_quantiy_Box.Size = new System.Drawing.Size(90, 26);
-            this.label_use_quantiy_Box.TabIndex = 27;
+            this.tb标签使用数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb标签使用数量.Location = new System.Drawing.Point(103, 74);
+            this.tb标签使用数量.Name = "tb标签使用数量";
+            this.tb标签使用数量.Size = new System.Drawing.Size(90, 26);
+            this.tb标签使用数量.TabIndex = 27;
             // 
-            // label_destroy_quantity_Box
+            // tb标签销毁数量
             // 
-            this.label_destroy_quantity_Box.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label_destroy_quantity_Box.Location = new System.Drawing.Point(103, 109);
-            this.label_destroy_quantity_Box.Name = "label_destroy_quantity_Box";
-            this.label_destroy_quantity_Box.Size = new System.Drawing.Size(90, 26);
-            this.label_destroy_quantity_Box.TabIndex = 28;
+            this.tb标签销毁数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb标签销毁数量.Location = new System.Drawing.Point(103, 109);
+            this.tb标签销毁数量.Name = "tb标签销毁数量";
+            this.tb标签销毁数量.Size = new System.Drawing.Size(90, 26);
+            this.tb标签销毁数量.TabIndex = 28;
             // 
             // label10
             // 
@@ -436,13 +318,13 @@
             this.label10.TabIndex = 29;
             this.label10.Text = "包装规格：";
             // 
-            // packing_pattern_quantity_Box
+            // tb包装规格
             // 
-            this.packing_pattern_quantity_Box.Font = new System.Drawing.Font("SimSun", 12F);
-            this.packing_pattern_quantity_Box.Location = new System.Drawing.Point(33, 176);
-            this.packing_pattern_quantity_Box.Name = "packing_pattern_quantity_Box";
-            this.packing_pattern_quantity_Box.Size = new System.Drawing.Size(90, 26);
-            this.packing_pattern_quantity_Box.TabIndex = 30;
+            this.tb包装规格.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb包装规格.Location = new System.Drawing.Point(33, 176);
+            this.tb包装规格.Name = "tb包装规格";
+            this.tb包装规格.Size = new System.Drawing.Size(90, 26);
+            this.tb包装规格.TabIndex = 30;
             // 
             // label11
             // 
@@ -454,21 +336,21 @@
             this.label11.TabIndex = 31;
             this.label11.Text = "计             只/片。";
             // 
-            // total_quantiy_Box
+            // tb总计包数
             // 
-            this.total_quantiy_Box.Font = new System.Drawing.Font("SimSun", 12F);
-            this.total_quantiy_Box.Location = new System.Drawing.Point(85, 244);
-            this.total_quantiy_Box.Name = "total_quantiy_Box";
-            this.total_quantiy_Box.Size = new System.Drawing.Size(90, 26);
-            this.total_quantiy_Box.TabIndex = 32;
+            this.tb总计包数.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb总计包数.Location = new System.Drawing.Point(85, 244);
+            this.tb总计包数.Name = "tb总计包数";
+            this.tb总计包数.Size = new System.Drawing.Size(90, 26);
+            this.tb总计包数.TabIndex = 32;
             // 
-            // quantity_per_piece_Box
+            // tb每片只数
             // 
-            this.quantity_per_piece_Box.Font = new System.Drawing.Font("SimSun", 12F);
-            this.quantity_per_piece_Box.Location = new System.Drawing.Point(54, 279);
-            this.quantity_per_piece_Box.Name = "quantity_per_piece_Box";
-            this.quantity_per_piece_Box.Size = new System.Drawing.Size(90, 26);
-            this.quantity_per_piece_Box.TabIndex = 33;
+            this.tb每片只数.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb每片只数.Location = new System.Drawing.Point(54, 279);
+            this.tb每片只数.Name = "tb每片只数";
+            this.tb每片只数.Size = new System.Drawing.Size(90, 26);
+            this.tb每片只数.TabIndex = 33;
             // 
             // label12
             // 
@@ -480,35 +362,240 @@
             this.label12.TabIndex = 34;
             this.label12.Text = "标签：";
             // 
-            // checkBox1
+            // cb标签语言是否中文
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.checkBox1.Location = new System.Drawing.Point(36, 354);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(59, 20);
-            this.checkBox1.TabIndex = 35;
-            this.checkBox1.Text = "中文";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cb标签语言是否中文.AutoSize = true;
+            this.cb标签语言是否中文.Font = new System.Drawing.Font("SimSun", 12F);
+            this.cb标签语言是否中文.Location = new System.Drawing.Point(36, 354);
+            this.cb标签语言是否中文.Name = "cb标签语言是否中文";
+            this.cb标签语言是否中文.Size = new System.Drawing.Size(59, 20);
+            this.cb标签语言是否中文.TabIndex = 35;
+            this.cb标签语言是否中文.Text = "中文";
+            this.cb标签语言是否中文.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // cb标签语言是否英文
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.checkBox2.Location = new System.Drawing.Point(101, 354);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(59, 20);
-            this.checkBox2.TabIndex = 36;
-            this.checkBox2.Text = "英文";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cb标签语言是否英文.AutoSize = true;
+            this.cb标签语言是否英文.Font = new System.Drawing.Font("SimSun", 12F);
+            this.cb标签语言是否英文.Location = new System.Drawing.Point(101, 354);
+            this.cb标签语言是否英文.Name = "cb标签语言是否英文";
+            this.cb标签语言是否英文.Size = new System.Drawing.Size(59, 20);
+            this.cb标签语言是否英文.TabIndex = 36;
+            this.cb标签语言是否英文.Text = "英文";
+            this.cb标签语言是否英文.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(15, 387);
+            this.groupBox1.Controls.Add(this.tb指示剂退库数量);
+            this.groupBox1.Controls.Add(this.tb指示剂使用数量);
+            this.groupBox1.Controls.Add(this.tb指示剂剩余数量);
+            this.groupBox1.Controls.Add(this.tb指示剂领取数量);
+            this.groupBox1.Controls.Add(this.tb指示剂接上班数量);
+            this.groupBox1.Controls.Add(this.tb指示剂批号);
+            this.groupBox1.Controls.Add(this.textBox14);
+            this.groupBox1.Controls.Add(this.label25);
+            this.groupBox1.Controls.Add(this.label24);
+            this.groupBox1.Controls.Add(this.label23);
+            this.groupBox1.Controls.Add(this.label22);
+            this.groupBox1.Controls.Add(this.label21);
+            this.groupBox1.Controls.Add(this.label20);
+            this.groupBox1.Controls.Add(this.label19);
+            this.groupBox1.Controls.Add(this.tb包材退库数量);
+            this.groupBox1.Controls.Add(this.tb包材使用数量);
+            this.groupBox1.Controls.Add(this.tb包材剩余数量);
+            this.groupBox1.Controls.Add(this.tb包材领取数量);
+            this.groupBox1.Controls.Add(this.tb包材接上班数量);
+            this.groupBox1.Controls.Add(this.tb包材批号);
+            this.groupBox1.Controls.Add(this.tb包材名称);
+            this.groupBox1.Location = new System.Drawing.Point(15, 377);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(878, 102);
+            this.groupBox1.Size = new System.Drawing.Size(878, 110);
             this.groupBox1.TabIndex = 37;
             this.groupBox1.TabStop = false;
+            // 
+            // tb指示剂退库数量
+            // 
+            this.tb指示剂退库数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb指示剂退库数量.Location = new System.Drawing.Point(765, 71);
+            this.tb指示剂退库数量.Name = "tb指示剂退库数量";
+            this.tb指示剂退库数量.Size = new System.Drawing.Size(80, 26);
+            this.tb指示剂退库数量.TabIndex = 61;
+            // 
+            // tb指示剂使用数量
+            // 
+            this.tb指示剂使用数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb指示剂使用数量.Location = new System.Drawing.Point(665, 71);
+            this.tb指示剂使用数量.Name = "tb指示剂使用数量";
+            this.tb指示剂使用数量.Size = new System.Drawing.Size(80, 26);
+            this.tb指示剂使用数量.TabIndex = 60;
+            // 
+            // tb指示剂剩余数量
+            // 
+            this.tb指示剂剩余数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb指示剂剩余数量.Location = new System.Drawing.Point(565, 71);
+            this.tb指示剂剩余数量.Name = "tb指示剂剩余数量";
+            this.tb指示剂剩余数量.Size = new System.Drawing.Size(80, 26);
+            this.tb指示剂剩余数量.TabIndex = 59;
+            // 
+            // tb指示剂领取数量
+            // 
+            this.tb指示剂领取数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb指示剂领取数量.Location = new System.Drawing.Point(465, 71);
+            this.tb指示剂领取数量.Name = "tb指示剂领取数量";
+            this.tb指示剂领取数量.Size = new System.Drawing.Size(80, 26);
+            this.tb指示剂领取数量.TabIndex = 58;
+            // 
+            // tb指示剂接上班数量
+            // 
+            this.tb指示剂接上班数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb指示剂接上班数量.Location = new System.Drawing.Point(365, 71);
+            this.tb指示剂接上班数量.Name = "tb指示剂接上班数量";
+            this.tb指示剂接上班数量.Size = new System.Drawing.Size(80, 26);
+            this.tb指示剂接上班数量.TabIndex = 57;
+            // 
+            // tb指示剂批号
+            // 
+            this.tb指示剂批号.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb指示剂批号.Location = new System.Drawing.Point(195, 71);
+            this.tb指示剂批号.Name = "tb指示剂批号";
+            this.tb指示剂批号.Size = new System.Drawing.Size(150, 26);
+            this.tb指示剂批号.TabIndex = 56;
+            // 
+            // textBox14
+            // 
+            this.textBox14.Font = new System.Drawing.Font("SimSun", 12F);
+            this.textBox14.Location = new System.Drawing.Point(25, 71);
+            this.textBox14.Name = "textBox14";
+            this.textBox14.ReadOnly = true;
+            this.textBox14.Size = new System.Drawing.Size(150, 26);
+            this.textBox14.TabIndex = 55;
+            this.textBox14.Text = "指示剂";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label25.Location = new System.Drawing.Point(771, 17);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(72, 16);
+            this.label25.TabIndex = 54;
+            this.label25.Text = "退库数量";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label24.Location = new System.Drawing.Point(668, 17);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(72, 16);
+            this.label24.TabIndex = 53;
+            this.label24.Text = "使用数量";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label23.Location = new System.Drawing.Point(572, 17);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(72, 16);
+            this.label23.TabIndex = 52;
+            this.label23.Text = "剩余数量";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label22.Location = new System.Drawing.Point(471, 17);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(72, 16);
+            this.label22.TabIndex = 51;
+            this.label22.Text = "领取数量";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label21.Location = new System.Drawing.Point(364, 17);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(88, 16);
+            this.label21.TabIndex = 50;
+            this.label21.Text = "接上班数量";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label20.Location = new System.Drawing.Point(249, 17);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(40, 16);
+            this.label20.TabIndex = 49;
+            this.label20.Text = "批号";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label19.Location = new System.Drawing.Point(76, 17);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(40, 16);
+            this.label19.TabIndex = 44;
+            this.label19.Text = "包材";
+            // 
+            // tb包材退库数量
+            // 
+            this.tb包材退库数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb包材退库数量.Location = new System.Drawing.Point(765, 39);
+            this.tb包材退库数量.Name = "tb包材退库数量";
+            this.tb包材退库数量.Size = new System.Drawing.Size(80, 26);
+            this.tb包材退库数量.TabIndex = 48;
+            // 
+            // tb包材使用数量
+            // 
+            this.tb包材使用数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb包材使用数量.Location = new System.Drawing.Point(665, 39);
+            this.tb包材使用数量.Name = "tb包材使用数量";
+            this.tb包材使用数量.Size = new System.Drawing.Size(80, 26);
+            this.tb包材使用数量.TabIndex = 47;
+            // 
+            // tb包材剩余数量
+            // 
+            this.tb包材剩余数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb包材剩余数量.Location = new System.Drawing.Point(565, 39);
+            this.tb包材剩余数量.Name = "tb包材剩余数量";
+            this.tb包材剩余数量.Size = new System.Drawing.Size(80, 26);
+            this.tb包材剩余数量.TabIndex = 46;
+            // 
+            // tb包材领取数量
+            // 
+            this.tb包材领取数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb包材领取数量.Location = new System.Drawing.Point(465, 39);
+            this.tb包材领取数量.Name = "tb包材领取数量";
+            this.tb包材领取数量.Size = new System.Drawing.Size(80, 26);
+            this.tb包材领取数量.TabIndex = 45;
+            // 
+            // tb包材接上班数量
+            // 
+            this.tb包材接上班数量.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb包材接上班数量.Location = new System.Drawing.Point(365, 39);
+            this.tb包材接上班数量.Name = "tb包材接上班数量";
+            this.tb包材接上班数量.Size = new System.Drawing.Size(80, 26);
+            this.tb包材接上班数量.TabIndex = 44;
+            // 
+            // tb包材批号
+            // 
+            this.tb包材批号.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb包材批号.Location = new System.Drawing.Point(195, 39);
+            this.tb包材批号.Name = "tb包材批号";
+            this.tb包材批号.Size = new System.Drawing.Size(150, 26);
+            this.tb包材批号.TabIndex = 43;
+            // 
+            // tb包材名称
+            // 
+            this.tb包材名称.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb包材名称.Location = new System.Drawing.Point(25, 39);
+            this.tb包材名称.Name = "tb包材名称";
+            this.tb包材名称.Size = new System.Drawing.Size(150, 26);
+            this.tb包材名称.TabIndex = 42;
             // 
             // groupBox2
             // 
@@ -516,19 +603,18 @@
             this.groupBox2.Controls.Add(this.AddLineBtn);
             this.groupBox2.Location = new System.Drawing.Point(16, 101);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(878, 280);
+            this.groupBox2.Size = new System.Drawing.Size(878, 270);
             this.groupBox2.TabIndex = 38;
             this.groupBox2.TabStop = false;
             // 
-            // productcodeBox
+            // cb产品代码
             // 
-            this.productcodeBox.Font = new System.Drawing.Font("SimSun", 12F);
-            this.productcodeBox.FormattingEnabled = true;
-            this.productcodeBox.Location = new System.Drawing.Point(132, 68);
-            this.productcodeBox.Name = "productcodeBox";
-            this.productcodeBox.Size = new System.Drawing.Size(261, 24);
-            this.productcodeBox.TabIndex = 39;
-            this.productcodeBox.SelectedIndexChanged += new System.EventHandler(this.productIdBox_SelectedIndexChanged);
+            this.cb产品代码.Font = new System.Drawing.Font("SimSun", 12F);
+            this.cb产品代码.FormattingEnabled = true;
+            this.cb产品代码.Location = new System.Drawing.Point(132, 68);
+            this.cb产品代码.Name = "cb产品代码";
+            this.cb产品代码.Size = new System.Drawing.Size(261, 24);
+            this.cb产品代码.TabIndex = 39;
             // 
             // printBtn
             // 
@@ -542,24 +628,24 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.total_quantiy_Box);
+            this.groupBox3.Controls.Add(this.tb总计包数);
             this.groupBox3.Controls.Add(this.label17);
             this.groupBox3.Controls.Add(this.label18);
-            this.groupBox3.Controls.Add(this.checkBox2);
+            this.groupBox3.Controls.Add(this.cb标签语言是否英文);
             this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Controls.Add(this.checkBox1);
-            this.groupBox3.Controls.Add(this.label_destroy_quantity_Box);
+            this.groupBox3.Controls.Add(this.cb标签语言是否中文);
+            this.groupBox3.Controls.Add(this.tb标签销毁数量);
             this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.label_use_quantiy_Box);
-            this.groupBox3.Controls.Add(this.quantity_per_piece_Box);
-            this.groupBox3.Controls.Add(this.label_release_quantity_Box);
+            this.groupBox3.Controls.Add(this.tb标签使用数量);
+            this.groupBox3.Controls.Add(this.tb每片只数);
+            this.groupBox3.Controls.Add(this.tb标签发放数量);
             this.groupBox3.Controls.Add(this.label15);
             this.groupBox3.Controls.Add(this.label14);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.packing_pattern_quantity_Box);
+            this.groupBox3.Controls.Add(this.tb包装规格);
             this.groupBox3.Location = new System.Drawing.Point(901, 101);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(244, 388);
@@ -630,25 +716,24 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1169, 592);
+            this.ClientSize = new System.Drawing.Size(1169, 597);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.printBtn);
-            this.Controls.Add(this.productcodeBox);
-            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.cb产品代码);
             this.Controls.Add(this.CheckBtn);
             this.Controls.Add(this.SaveBtn);
-            this.Controls.Add(this.checkerBox);
+            this.Controls.Add(this.tb审核人);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.recorderBox);
+            this.Controls.Add(this.tb操作人);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.checkTimePicker);
+            this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.recordTimePicker);
+            this.Controls.Add(this.dtp操作日期);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.productionTimePicker);
+            this.Controls.Add(this.dtp生产日期);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.batchIdBox);
+            this.Controls.Add(this.tb产品批号);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -656,8 +741,9 @@
             this.Controls.Add(this.groupBox2);
             this.Name = "ProductInnerPackagingRecord";
             this.Text = "ProductInnerPackagingRecord";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -671,45 +757,37 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox batchIdBox;
+        private System.Windows.Forms.TextBox tb产品批号;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker productionTimePicker;
+        private System.Windows.Forms.DateTimePicker dtp生产日期;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button DelLineBtn;
         private System.Windows.Forms.Button AddLineBtn;
-        private System.Windows.Forms.DateTimePicker recordTimePicker;
+        private System.Windows.Forms.DateTimePicker dtp操作日期;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DateTimePicker checkTimePicker;
+        private System.Windows.Forms.DateTimePicker dtp审核日期;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox recorderBox;
-        private System.Windows.Forms.TextBox checkerBox;
+        private System.Windows.Forms.TextBox tb操作人;
+        private System.Windows.Forms.TextBox tb审核人;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button CheckBtn;
         private System.Windows.Forms.Button SaveBtn;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 包材;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 批号;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 接上班数量;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 领取数量;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 剩余数量;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 使用数量;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 退库数量;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox label_release_quantity_Box;
-        private System.Windows.Forms.TextBox label_use_quantiy_Box;
-        private System.Windows.Forms.TextBox label_destroy_quantity_Box;
+        private System.Windows.Forms.TextBox tb标签发放数量;
+        private System.Windows.Forms.TextBox tb标签使用数量;
+        private System.Windows.Forms.TextBox tb标签销毁数量;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox packing_pattern_quantity_Box;
+        private System.Windows.Forms.TextBox tb包装规格;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox total_quantiy_Box;
-        private System.Windows.Forms.TextBox quantity_per_piece_Box;
+        private System.Windows.Forms.TextBox tb总计包数;
+        private System.Windows.Forms.TextBox tb每片只数;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.CheckBox cb标签语言是否中文;
+        private System.Windows.Forms.CheckBox cb标签语言是否英文;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ComboBox productcodeBox;
+        private System.Windows.Forms.ComboBox cb产品代码;
         private System.Windows.Forms.Button printBtn;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label13;
@@ -718,14 +796,26 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 序号;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 生产时间;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 内包序号;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 产品外观;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 包装后外观;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 包装袋热封线;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 贴标签;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn 贴指示剂;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 包装人;
+        private System.Windows.Forms.TextBox tb包材退库数量;
+        private System.Windows.Forms.TextBox tb包材使用数量;
+        private System.Windows.Forms.TextBox tb包材剩余数量;
+        private System.Windows.Forms.TextBox tb包材领取数量;
+        private System.Windows.Forms.TextBox tb包材接上班数量;
+        private System.Windows.Forms.TextBox tb包材批号;
+        private System.Windows.Forms.TextBox tb包材名称;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.TextBox tb指示剂退库数量;
+        private System.Windows.Forms.TextBox tb指示剂使用数量;
+        private System.Windows.Forms.TextBox tb指示剂剩余数量;
+        private System.Windows.Forms.TextBox tb指示剂领取数量;
+        private System.Windows.Forms.TextBox tb指示剂接上班数量;
+        private System.Windows.Forms.TextBox tb指示剂批号;
+        private System.Windows.Forms.TextBox textBox14;
     }
 }
