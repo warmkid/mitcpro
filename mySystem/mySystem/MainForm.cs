@@ -17,8 +17,6 @@ namespace mySystem
     {
 
         public bool isSqlOk = false;
-        bool isOk;
-        string strCon;
         public SqlConnection conn;
         public OleDbConnection connOle;
         public OleDbConnection connOleCleancut;
@@ -29,7 +27,7 @@ namespace mySystem
         public string proInstruction; //吹膜生产指令
         public string csbagInstruction; //cs制袋生产指令
         public string cleancutInstruction; //清洁分切生产指令
-
+        
 
         public MainForm()
         {
@@ -59,7 +57,6 @@ namespace mySystem
 
         }
 
-
         private void RoleInit()
         {
             switch (Parameter.userRole)
@@ -78,6 +75,46 @@ namespace mySystem
             }
         }
 
+        String Instru = null; //未接受的生产指令
+        //未接收的生产指令
+        private void InstruReceive()
+        {
+            String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
+            OleDbConnection connOle = new OleDbConnection(strConn);
+            connOle.Open();
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = connOle;
+            comm.CommandText = "select * from 生产指令信息表 where 接收人= @接收人 and 状态=1";
+            comm.Parameters.AddWithValue("@接收人", Parameter.userName);
+            
+            OleDbDataReader reader = comm.ExecuteReader();//执行查询
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Instru += reader["生产指令编号"];
+                    Instru += "、"; 
+                }
+                
+            }
+            //去掉最后一个"、"
+            if (Instru != null)
+            { 
+                Instru = Instru.Substring(0, Instru.Length - 1);
+                MessageBox.Show(Parameter.userName + "请接收生产指令：" + Instru, "注意", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            //将状态变为已接收
+            OleDbCommand commnew = new OleDbCommand();
+            commnew.Connection = connOle;
+            commnew.CommandText = "UPDATE 生产指令信息表 SET 状态=2 where 接收人= @接收人 and 状态=1";
+            commnew.Parameters.AddWithValue("@接收人", Parameter.userName);
+            commnew.ExecuteNonQuery();
+
+            comm.Dispose();
+            commnew.Dispose();
+        }
 
         //工序按钮
         private void MainProduceBtn_Click(object sender, EventArgs e)
@@ -167,6 +204,11 @@ namespace mySystem
                 this.Close();
                 Application.ExitThread();
             }
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            InstruReceive();
         }
 
 

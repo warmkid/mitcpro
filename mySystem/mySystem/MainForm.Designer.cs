@@ -171,6 +171,7 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "欢迎使用颇尔奥星管理系统";
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
