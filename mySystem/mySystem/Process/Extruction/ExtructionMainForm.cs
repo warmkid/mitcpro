@@ -96,7 +96,7 @@ namespace mySystem
                 C1Btn.Enabled = true;
                 A3Btn.Enabled = false;
                 C2Btn.Enabled = false;
-                //cleanBtnInit(); //判断清场按钮是否可点
+                cleanBtnInit(); //判断清场按钮是否可点
                 otherBtnInit(false);
                 if (checkBeforePower)
                 {
@@ -123,19 +123,19 @@ namespace mySystem
             //9、吹膜工序物料平衡记录  10、吹膜机组开机前确认表  11、吹膜机组预热参数记录表
             //12、吹膜供料系统运行记录 13、吹膜机组运行记录
             bool b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
-            string str1 = "select * from 批生产记录表 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str2 = "select * from 吹膜机组清洁记录表 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str3 = "select * from 吹膜岗位交接班记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str4 = "select * from 吹膜供料记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str5 = "select * from 吹膜工序废品记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str6 = "select * from 吹膜工序领料退料记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str7 = "select * from 吹膜生产日报表 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str8 = "select * from 吹膜工序生产和检验记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str9 = "select * from 吹膜工序物料平衡记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str10 = "select * from 吹膜机组开机前确认表 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str11 = "select * from 吹膜机组预热参数记录表 where 生产指令id = '" + Parameter.proInstruID.ToString() + "'";
-            string str12 = "select * from 吹膜供料系统运行记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
-            string str13 = "select * from 吹膜机组运行记录 where 生产指令ID = '" + Parameter.proInstruID.ToString() + "'";
+            string str1 = "select * from 批生产记录表 where 生产指令ID =" + Parameter.proInstruID;
+            string str2 = "select * from 吹膜机组清洁记录表 where 生产指令ID = " + Parameter.proInstruID;
+            string str3 = "select * from 吹膜岗位交接班记录 where 生产指令ID = " + Parameter.proInstruID;
+            string str4 = "select * from 吹膜供料记录 where 生产指令ID = " + Parameter.proInstruID;
+            string str5 = "select * from 吹膜工序废品记录 where 生产指令ID = " + Parameter.proInstruID;
+            string str6 = "select * from 吹膜工序领料退料记录 where 生产指令ID = " + Parameter.proInstruID;
+            string str7 = "select * from 吹膜生产日报表 where 生产指令ID = " + Parameter.proInstruID;
+            string str8 = "select * from 吹膜工序生产和检验记录 where 生产指令ID = " + Parameter.proInstruID;
+            string str9 = "select * from 吹膜工序物料平衡记录 where 生产指令ID = " + Parameter.proInstruID;
+            string str10 = "select * from 吹膜机组开机前确认表 where 生产指令ID = " + Parameter.proInstruID;
+            string str11 = "select * from 吹膜机组预热参数记录表 where 生产指令id = " + Parameter.proInstruID;
+            string str12 = "select * from 吹膜供料系统运行记录 where 生产指令ID = " + Parameter.proInstruID;
+            string str13 = "select * from 吹膜机组运行记录 where 生产指令ID = " + Parameter.proInstruID;
 
             OleDbConnection conn = Parameter.connOle;
             OleDbCommand comm1 = new OleDbCommand(str1, conn);

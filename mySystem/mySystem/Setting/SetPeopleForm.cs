@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.OleDb;
 
 namespace mySystem.Setting
 {
@@ -14,10 +15,20 @@ namespace mySystem.Setting
         private int userid = 0;
         private string username = null;
         private string userpw = null;
+        private OleDbConnection connuser;
+        private OleDbDataAdapter dauser;
+        private DataTable dtuser;
+        private BindingSource bsuser;
+        private OleDbCommandBuilder cbuser;
 
         public SetPeopleForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
+            if (!Parameter.isSqlOk)
+            { connuser = Parameter.connOleUser; }
+            else
+            { }
+            
             RoleInit();
             Init();
         }
@@ -43,7 +54,9 @@ namespace mySystem.Setting
                     break;
                 case 3:
                     SetPeoplePanelBottom.Visible = true;
-                    dgvInit();
+                    //dgvInit();
+                    InitUser();
+                    BindUser();
                     break;
                 default:
                     break;
@@ -63,11 +76,11 @@ namespace mySystem.Setting
 
         private Boolean CheckPWbefore(string pw)
         {
-            String tblName = "user_aoxing";
-            List<String> queryCols = new List<String>(new String[] { "user_password" });
-            List<String> whereCols = new List<String>(new String[] { "user_id" });
+            String tblName = "users";
+            List<String> queryCols = new List<String>(new String[] { "密码" });
+            List<String> whereCols = new List<String>(new String[] { "用户ID" });
             List<Object> whereVals = new List<Object>(new Object[] { userid });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOleUser, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             userpw = res[0][0].ToString(); //用户原始密码
             if(pw == userpw)
             {
@@ -106,12 +119,12 @@ namespace mySystem.Setting
         {
             //修改姓名
             username = nameTextBox.Text.Trim();
-            String tblName = "user_aoxing";
-            List<String> updateCols = new List<String>(new String[] { "user_name" });
+            String tblName = "users";
+            List<String> updateCols = new List<String>(new String[] { "姓名" });
             List<Object> updateVals = new List<Object>(new Object[] { username });
-            List<String> whereCols = new List<String>(new String[] { "user_id" });
+            List<String> whereCols = new List<String>(new String[] { "用户ID" });
             List<Object> whereVals = new List<Object>(new Object[] { userid });
-            Boolean b = Utility.updateAccess(Parameter.connOle, tblName, updateCols, updateVals, whereCols, whereVals);
+            Boolean b = Utility.updateAccess(Parameter.connOleUser, tblName, updateCols, updateVals, whereCols, whereVals);
             
             //修改密码
             string pw1 = pw1TextBox.Text.Trim();
@@ -126,9 +139,9 @@ namespace mySystem.Setting
                     if (check2)
                     {
                         //保存密码至数据库
-                        List<String> updateCols2 = new List<String>(new String[] { "user_password" });
+                        List<String> updateCols2 = new List<String>(new String[] { "密码" });
                         List<Object> updateVals2 = new List<Object>(new Object[] { pw3 });
-                        Boolean b2 = Utility.updateAccess(Parameter.connOle, tblName, updateCols2, updateVals2, whereCols, whereVals);
+                        Boolean b2 = Utility.updateAccess(Parameter.connOleUser, tblName, updateCols2, updateVals2, whereCols, whereVals);
                         pw1TextBox.Text = null;
                         pw2TextBox.Text = null;
                         pw3TextBox.Text = null;
@@ -156,52 +169,88 @@ namespace mySystem.Setting
         //*************************下半部分**************************
         public void dgvInit()
         {
-            dataGridView1.Rows.Clear();
-            String usertblName = "user_aoxing";
-            List<String> queryCols = new List<String>(new String[] { "user_id", "user_name", "user_password", "flight", "role_id" });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, usertblName, queryCols, null, null, null, null, null, null, null);
-            Utility.fillDataGridView(dataGridView1, res);
+            dgvUser.Rows.Clear();
+            String usertblName = "users";
+            List<String> queryCols = new List<String>(new String[] { "用户ID", "姓名", "密码", "班次", "角色" });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOleUser, usertblName, queryCols, null, null, null, null, null, null, null);
+            Utility.fillDataGridView(dgvUser, res);
 
             //填入班次和角色
-            int rows = dataGridView1.RowCount - 1;
+            int rows = dgvUser.RowCount - 1;
             for (int i = 0; i < rows; i++)
             {
-                if (Convert.ToInt32(dataGridView1.Rows[i].Cells["flight"].Value) == 0)
+                if (Convert.ToBoolean(dgvUser.Rows[i].Cells["班次"].Value) == true)
                 {
-                    dataGridView1.Rows[i].Cells["flight"].Value = "白班";
-                    if (Convert.ToInt32(dataGridView1.Rows[i].Cells["role_id"].Value) == 3)
-                    {
-                        dataGridView1.Rows[i].Cells["role_id"].Value = "管理员";
-                    }
-                    else if (Convert.ToInt32(dataGridView1.Rows[i].Cells["role_id"].Value) == 2)
-                    {
-                        dataGridView1.Rows[i].Cells["role_id"].Value = "计划员";
-                    }
-                    else 
-                    {
-                        dataGridView1.Rows[i].Cells["role_id"].Value = "操作员";
-                    }
+                    dgvUser.Rows[i].Cells["班次"].Value = "白班";              
                 }
                 else
                 {
-                    dataGridView1.Rows[i].Cells["flight"].Value = "夜班";
-                    if (Convert.ToInt32(dataGridView1.Rows[i].Cells["role_id"].Value) == 3)
-                    {
-                        dataGridView1.Rows[i].Cells["role_id"].Value = "管理员";
-                    }
-                    else if (Convert.ToInt32(dataGridView1.Rows[i].Cells["role_id"].Value) == 2)
-                    {
-                        dataGridView1.Rows[i].Cells["role_id"].Value = "计划员";
-                    }
-                    else
-                    {
-                        dataGridView1.Rows[i].Cells["role_id"].Value = "操作员";
-                    }
+                    dgvUser.Rows[i].Cells["班次"].Value = "夜班";                    
                 }
-
-
             }
  
+        }
+
+        private void InitUser()
+        {
+            bsuser = new BindingSource();
+
+            this.dgvUser.AllowUserToAddRows = false;
+            this.dgvUser.RowHeadersVisible = false;
+            this.dgvUser.ReadOnly = false;
+            this.dgvUser.DataError += this.dgvUser_DataError;
+        }
+
+        private void dgvUser_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            MessageBox.Show(name + "填写错误");
+        }
+
+        private void BindUser()
+        {
+            dtuser = new DataTable("users"); //""中的是表名
+            dauser = new OleDbDataAdapter("select * from users ", connuser);
+            cbuser = new OleDbCommandBuilder(dauser);
+
+            dtuser.Columns.Add("序号", System.Type.GetType("System.String"));
+            dauser.Fill(dtuser);
+            bsuser.DataSource = dtuser;
+            this.dgvUser.DataSource = bsuser.DataSource;
+
+            //显示序号列
+            int coun = this.dgvUser.RowCount;
+            for (int i = 0; i < coun; i++)
+            {
+                dtuser.Rows[i]["序号"] = i + 1;
+            }
+
+            this.dgvUser.Columns["用户ID"].HeaderText = "员工ID";
+            this.dgvUser.Columns["ID"].Visible = false;
+            this.dgvUser.Columns["角色ID"].Visible = false;
+        }
+
+        //角色和角色ID的统一
+        private void changeRoleID()
+        {
+            for (int i = 0; i < dgvUser.Rows.Count; i++)
+            {
+                String role = dgvUser.Rows[i].Cells["角色"].Value.ToString();
+                switch (role)
+                {
+                    case "操作员":
+                        dgvUser.Rows[i].Cells["角色ID"].Value = 1;
+                        break;
+                    case "计划员":
+                        dgvUser.Rows[i].Cells["角色ID"].Value = 2;
+                        break;
+                    case "管理员":
+                        dgvUser.Rows[i].Cells["角色ID"].Value = 3;
+                        break;
+                }
+            }
+
         }
 
         private void AddBtn_Click(object sender, EventArgs e)
@@ -213,11 +262,11 @@ namespace mySystem.Setting
 
         private void DeleteBtn_Click(object sender, EventArgs e)
         {
-            int deleteID = Convert.ToInt32(dataGridView1.CurrentRow.Cells["user_id"].Value);
-            String tblName = "user_aoxing";
-            List<String> whereCols = new List<String>(new String[] { "user_id" });
+            int deleteID = Convert.ToInt32(dgvUser.CurrentRow.Cells["用户ID"].Value);
+            String tblName = "users";
+            List<String> whereCols = new List<String>(new String[] { "用户ID" });
             List<Object> whereVals = new List<Object>(new Object[] { deleteID });
-            Boolean b = Utility.deleteAccess(Parameter.connOle, tblName, whereCols, whereVals);
+            Boolean b = Utility.deleteAccess(Parameter.connOleUser, tblName, whereCols, whereVals);
             if (b)
             {
                 MessageBox.Show("删除成功", "success");
@@ -234,51 +283,16 @@ namespace mySystem.Setting
 
         private void SaveEditBtn_Click(object sender, EventArgs e)
         {
-            int rows = dataGridView1.RowCount - 1;
-            //读取dgv中的数据
-            List<List<Object>> readdgv = Utility.readFromDataGridView(dataGridView1);
-            //将班次和权限换为数字
-            for (int i = 0; i < rows; i++)
+            changeRoleID();
+            dauser.Update((DataTable)bsuser.DataSource);
+            dtuser.Clear();
+            dauser.Fill(dtuser);
+            int coun = this.dgvUser.RowCount;
+            for (int i = 0; i < coun; i++)
             {
-                if (readdgv[i][3] == "白班")
-                {
-                    readdgv[i][3] = 0;
-                }
-                else
-                {
-                    readdgv[i][3] = 1;
-                }
-            }
-            for (int i = 0; i < rows; i++)
-            {
-                if (readdgv[i][4].ToString() == "操作员")
-                {
-                    readdgv[i][4] = 1;
-                }
-                else if ( readdgv[i][4].ToString() == "计划员")
-               {
-                    readdgv[i][4] = 2;
-                }
-                else
-                {
-                    readdgv[i][4] = 3;
-                }
-            }
-
-
-            string tblName = "user_aoxing";
-            List<String> queryCols = new List<String>(new String[] { "user_name", "user_password", "flight", "role_id" });
-            for (int i = 0; i < rows; i++)
-            {
-                List<Object> queryVals = new List<Object>(new Object[] { readdgv[i][1], readdgv[i][2], Convert.ToInt32(readdgv[i][3]), Convert.ToInt32(readdgv[i][4])});
-                List<String> whereCols = new List<String>(new String[] { "user_id" });
-                List<Object> whereVals = new List<Object>(new Object[] { Convert.ToInt32(readdgv[i][0]) });
-                Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
-             
-            }
-            MessageBox.Show("保存成功！", "success");
-            dgvInit();
-
+                dtuser.Rows[i]["序号"] = i + 1;
+            }            
+            
         }
 
 
