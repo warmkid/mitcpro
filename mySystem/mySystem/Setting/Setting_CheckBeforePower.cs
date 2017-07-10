@@ -17,9 +17,10 @@ namespace mySystem.Setting
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
-        private string tableSel = "confirmarea";
-
+        private OleDbDataAdapter da;
         private DataTable dt;
+        private BindingSource bs;
+        private OleDbCommandBuilder cb;
 
         public Setting_CheckBeforePower(mySystem.MainForm mainform) : base(mainform)
         {
@@ -29,62 +30,60 @@ namespace mySystem.Setting
 
             InitializeComponent();
             Init();
+            Bind();
         }
 
-        //内容初始化
+        //dgv样式初始化
         private void Init()
         {
+            bs = new BindingSource();
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.Font = new Font("宋体", 12);
-
-            if (isSqlOk)
-            {
-                SqlCommand comm = new SqlCommand("Select * From " + tableSel, conn);
-                SqlDataAdapter da = new SqlDataAdapter(comm);
-                dt = new DataTable();
-                da.Fill(dt);
-            }
-            else
-            {
-                OleDbCommand cmd = new OleDbCommand("Select * From " + tableSel, connOle);
-                OleDbDataAdapter data = new OleDbDataAdapter(cmd);
-                dt = new DataTable();
-                data.Fill(dt);
-            }
-
+            dataGridView1.ReadOnly = false;
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeColumns = true;
             dataGridView1.AllowUserToResizeRows = false;
-            dataGridView1.Columns["确认项目"].MinimumWidth = 160;
-            dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                DataGridViewRow dr = new DataGridViewRow();
-                foreach (DataGridViewColumn c in dataGridView1.Columns)
-                {
-                    dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-                }
-                dr.Cells[0].Value = dt.Rows[i]["确认序号"].ToString(); 
-                dr.Cells[1].Value = dt.Rows[i]["确认项目"].ToString(); //确认项目
-                dr.Cells[2].Value = dt.Rows[i]["确认内容"].ToString(); //确认内容
-                dataGridView1.Rows.Add(dr);
-            }
+            dataGridView1.Font = new Font("宋体", 12);
+                    
+            this.dataGridView1.DataError += this.dataGridView1_DataError;
         }
 
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            MessageBox.Show(name + "填写错误");
+        }
+
+        private void Bind()
+        {
+            dt = new DataTable("设置吹膜机组开机前确认项目"); //""中的是表名
+            da = new OleDbDataAdapter("select * from 设置吹膜机组开机前确认项目", connOle);
+            cb = new OleDbCommandBuilder(da);
+
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            this.dataGridView1.DataSource = bs.DataSource;
+
+            //显示序号
+            numFresh();
+
+            this.dataGridView1.Columns["确认项目"].MinimumWidth = 160;
+            this.dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dataGridView1.Columns["ID"].Visible = false;
+        }
+
+        //在最后增加一个空白行
         private void add_Click(object sender, EventArgs e)
         {
-            DataGridViewRow dr = new DataGridViewRow();
-            foreach (DataGridViewColumn c in dataGridView1.Columns)
-            {
-                dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            }
-            dr.Cells[0].Value = (dataGridView1.Rows.Count + 1).ToString();
-            dataGridView1.Rows.Add(dr);
+            DataRow dr = dt.NewRow();            
+            dt.Rows.InsertAt(dt.NewRow(), dt.Rows.Count);
+            numFresh();
         }
 
         private void del_Click(object sender, EventArgs e)
@@ -97,8 +96,11 @@ namespace mySystem.Setting
 
         private void numFresh()
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            { dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString(); }
+            int coun = this.dataGridView1.RowCount;
+            for (int i = 0; i < coun; i++)
+            {
+                dataGridView1.Rows[i].Cells[0].Value = (i + 1).ToString(); 
+            }
         }
 
         public void DataSave()
@@ -107,37 +109,16 @@ namespace mySystem.Setting
             { }
             else
             {
-                //先删除数据库内容
-                string strDel = "DELETE  FROM "+tableSel;
-                OleDbCommand inst = new OleDbCommand(strDel, connOle);
-                inst.ExecuteNonQuery();
-
-                for (int i = 0; i < dataGridView1.RowCount; i++)
-                {
-                    List<String> queryCols = new List<String>(new String[] {"确认序号","确认项目","确认内容" });
-                    List<Object> queryVals = new List<Object>(new Object[] { dataGridView1.Rows[i].Cells[0].Value.ToString(), dataGridView1.Rows[i].Cells[1].Value.ToString(), dataGridView1.Rows[i].Cells[2].Value.ToString() });
-                    Boolean b = Utility.insertAccess(connOle, tableSel, queryCols, queryVals);
-                }
-
-                //public static Boolean insertAccess(OleDbConnection conn, String tblName, List<String> insertCols, List<Object> insertVals)
-
-
-                /*
-                List<List<Object>> reasList = Utility.readFromDataGridView(dataGridView1);
-                List<String> queryCols = new List<String>(new String[] {  });
-                for (int i = 0; i < reasList.Count; i++)
-                { queryCols.Add{""}; }
-
-                List<String> queryCols = new List<String>(new String[] { "s4_review_opinion" });
-                List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString() });
-                List<String> whereCols = new List<String>(new String[] { "id" });
-                List<Object> whereVals = new List<Object>(new Object[] { 1 });
-                //Boolean b = Utility.insertAccess(connOle, table, queryCols, queryVals);
-                Boolean b = Utility.updateAccess(connOle, tableSel, queryCols, queryVals, whereCols, whereVals);*/
-
+                da.Update((DataTable)bs.DataSource);
+                dt.Clear();
+                da.Fill(dt);
+                numFresh();
+                
             }
             
         }
+
+        
 
     }
 }

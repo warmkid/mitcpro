@@ -166,32 +166,8 @@ namespace mySystem.Setting
         }
 
 
-        //*************************下半部分**************************
-        public void dgvInit()
-        {
-            dgvUser.Rows.Clear();
-            String usertblName = "users";
-            List<String> queryCols = new List<String>(new String[] { "用户ID", "姓名", "密码", "班次", "角色" });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOleUser, usertblName, queryCols, null, null, null, null, null, null, null);
-            Utility.fillDataGridView(dgvUser, res);
-
-            //填入班次和角色
-            int rows = dgvUser.RowCount - 1;
-            for (int i = 0; i < rows; i++)
-            {
-                if (Convert.ToBoolean(dgvUser.Rows[i].Cells["班次"].Value) == true)
-                {
-                    dgvUser.Rows[i].Cells["班次"].Value = "白班";              
-                }
-                else
-                {
-                    dgvUser.Rows[i].Cells["班次"].Value = "夜班";                    
-                }
-            }
- 
-        }
-
-        private void InitUser()
+        //*************************下半部分*************************        
+        public void InitUser()
         {
             bsuser = new BindingSource();
 
@@ -208,7 +184,7 @@ namespace mySystem.Setting
             MessageBox.Show(name + "填写错误");
         }
 
-        private void BindUser()
+        public void BindUser()
         {
             dtuser = new DataTable("users"); //""中的是表名
             dauser = new OleDbDataAdapter("select * from users ", connuser);
@@ -270,7 +246,8 @@ namespace mySystem.Setting
             if (b)
             {
                 MessageBox.Show("删除成功", "success");
-                dgvInit();
+                InitUser();
+                BindUser();
             }
             else
             {

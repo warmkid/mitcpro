@@ -90,11 +90,12 @@ namespace mySystem.Setting
                 String tblName = "users";
                 List<String> insertCols = new List<String>(new String[] { "角色ID", "姓名", "密码", "班次", "角色", "部门", "用户ID" });
                 List<Object> insertVals = new List<Object>(new Object[] { role_id, username, password, flight_id, role, department, userid });
-                Boolean b = Utility.insertAccess(Parameter.connOle, tblName, insertCols, insertVals);
+                Boolean b = Utility.insertAccess(Parameter.connOleUser, tblName, insertCols, insertVals);
                 if (b)
                 {
                     MessageBox.Show("用户添加成功", "success");
-                    myparent.dgvInit();
+                    myparent.InitUser();
+                    myparent.BindUser();
                     this.Close();
                     this.Dispose();
                     return;
