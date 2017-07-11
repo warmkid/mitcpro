@@ -12,6 +12,7 @@ using mySystem.Process.Bag;
 using mySystem.Process.CleanCut;
 using mySystem.Process.Bag.LDPE;
 using mySystem.Process.Bag.PTV;
+using mySystem.Process.Bag.BTV;
 
 namespace mySystem
 {
@@ -23,6 +24,7 @@ namespace mySystem
         CSBagMainForm csbagform = null;
         LDPEMainForm ldpebagform = null;
         PTVMainForm ptvbagform = null;
+        BTVMainForm btvbagform = null;
 
         public ProcessMainForm(MainForm mainform):base(mainform)
         {
@@ -234,6 +236,15 @@ namespace mySystem
             PTVbagBtn.BackColor = Color.FromName("ControlLightLight");
             BTVbagBtn.BackColor = Color.FromArgb(138, 158, 196);
             bag6Btn.BackColor = Color.FromName("ControlLightLight");
+
+            btvbagform = new BTVMainForm();
+            btvbagform.TopLevel = false;
+            btvbagform.FormBorderStyle = FormBorderStyle.None;
+            btvbagform.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(btvbagform);
+            btvbagform.Show();
+            Parameter.parentBTV = btvbagform;
+
         }
 
         //防护罩
