@@ -71,7 +71,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(255, 13);
+            this.label1.Location = new System.Drawing.Point(457, 13);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(149, 19);
             this.label1.TabIndex = 0;
@@ -139,6 +139,7 @@
             this.Column16});
             this.dataGridView1.Location = new System.Drawing.Point(30, 81);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1037, 150);
             this.dataGridView1.TabIndex = 5;

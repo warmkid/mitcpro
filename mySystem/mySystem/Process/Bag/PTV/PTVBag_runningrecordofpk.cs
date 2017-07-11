@@ -15,5 +15,35 @@ namespace mySystem.Process.Bag.PTV
         {
             InitializeComponent();
         }
+
+        private void label33_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label39_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label40_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label41_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label42_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PTVBag_runningrecordofpk_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

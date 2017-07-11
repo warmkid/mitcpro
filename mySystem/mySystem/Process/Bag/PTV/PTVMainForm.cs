@@ -81,5 +81,11 @@ namespace mySystem.Process.Bag.PTV
             PTVBag_testrecordofdisclose xlDlg = new PTVBag_testrecordofdisclose();
             xlDlg.ShowDialog();
         }
+
+        private void B7Btn_Click(object sender, EventArgs e)
+        {
+            PTVBag_runningrecordofpk pk = new PTVBag_runningrecordofpk();
+            pk.ShowDialog();
+        }
     }
 }
