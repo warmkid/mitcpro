@@ -47,12 +47,14 @@
             // 
             // btn插入
             // 
+            this.btn插入.Enabled = false;
             this.btn插入.Location = new System.Drawing.Point(911, 21);
             this.btn插入.Name = "btn插入";
             this.btn插入.Size = new System.Drawing.Size(75, 23);
             this.btn插入.TabIndex = 58;
             this.btn插入.Text = "插入";
             this.btn插入.UseVisualStyleBackColor = true;
+            this.btn插入.Visible = false;
             // 
             // btn保存
             // 
@@ -62,6 +64,7 @@
             this.btn保存.TabIndex = 57;
             this.btn保存.Text = "保存";
             this.btn保存.UseVisualStyleBackColor = true;
+            this.btn保存.Click += new System.EventHandler(this.btn保存_Click);
             // 
             // label7
             // 
@@ -133,8 +136,10 @@
             // 
             // dtp记录时间
             // 
+            this.dtp记录时间.Format = System.Windows.Forms.DateTimePickerFormat.Time;
             this.dtp记录时间.Location = new System.Drawing.Point(880, 83);
             this.dtp记录时间.Name = "dtp记录时间";
+            this.dtp记录时间.ShowUpDown = true;
             this.dtp记录时间.Size = new System.Drawing.Size(200, 26);
             this.dtp记录时间.TabIndex = 66;
             // 
