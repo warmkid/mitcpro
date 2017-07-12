@@ -847,6 +847,9 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_materialrecord.resx">
       <DependentUpon>PTVBag_materialrecord.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_runningrecordofdf.resx">
+      <DependentUpon>PTVBag_runningrecordofdf.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_testrecordofdisclose.resx">
       <DependentUpon>PTVBag_testrecordofdisclose.cs</DependentUpon>
     </EmbeddedResource>

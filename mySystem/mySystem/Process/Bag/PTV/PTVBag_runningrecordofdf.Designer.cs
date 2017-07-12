@@ -427,7 +427,7 @@
             // 
             this.label47.AutoSize = true;
             this.label47.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label47.Location = new System.Drawing.Point(858, 384);
+            this.label47.Location = new System.Drawing.Point(858, 383);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(25, 16);
             this.label47.TabIndex = 18;
@@ -437,7 +437,7 @@
             // 
             this.label48.AutoSize = true;
             this.label48.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label48.Location = new System.Drawing.Point(857, 410);
+            this.label48.Location = new System.Drawing.Point(857, 411);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(25, 16);
             this.label48.TabIndex = 19;
@@ -465,7 +465,7 @@
             // 
             this.label50.AutoSize = true;
             this.label50.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label50.Location = new System.Drawing.Point(977, 410);
+            this.label50.Location = new System.Drawing.Point(983, 412);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(48, 16);
             this.label50.TabIndex = 22;
@@ -627,7 +627,7 @@
             // label59
             // 
             this.label59.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label59.Location = new System.Drawing.Point(3, 32);
+            this.label59.Location = new System.Drawing.Point(2, 32);
             this.label59.Name = "label59";
             this.label59.Size = new System.Drawing.Size(62, 41);
             this.label59.TabIndex = 21;
@@ -803,7 +803,7 @@
             // label15
             // 
             this.label15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label15.Location = new System.Drawing.Point(5, 32);
+            this.label15.Location = new System.Drawing.Point(3, 32);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(62, 41);
             this.label15.TabIndex = 21;
@@ -907,7 +907,7 @@
             // label19
             // 
             this.label19.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(116, 32);
+            this.label19.Location = new System.Drawing.Point(115, 32);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(54, 41);
             this.label19.TabIndex = 25;
@@ -917,7 +917,7 @@
             // label20
             // 
             this.label20.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(65, 32);
+            this.label20.Location = new System.Drawing.Point(62, 32);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(54, 41);
             this.label20.TabIndex = 23;
@@ -927,12 +927,13 @@
             // label21
             // 
             this.label21.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label21.Location = new System.Drawing.Point(6, 32);
+            this.label21.Location = new System.Drawing.Point(4, 32);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(62, 41);
             this.label21.TabIndex = 21;
             this.label21.Text = "WELDING PRESSURE(bar)";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label21.Click += new System.EventHandler(this.label21_Click);
             // 
             // label22
             // 
