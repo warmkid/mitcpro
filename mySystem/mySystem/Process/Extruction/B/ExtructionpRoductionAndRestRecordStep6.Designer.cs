@@ -49,7 +49,7 @@
             this.cb夜班 = new System.Windows.Forms.CheckBox();
             this.cb白班 = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.RecordView = new System.Windows.Forms.DataGridView();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Title = new System.Windows.Forms.Label();
             this.printBtn = new System.Windows.Forms.Button();
             this.cb产品名称 = new System.Windows.Forms.ComboBox();
@@ -60,16 +60,15 @@
             this.label13 = new System.Windows.Forms.Label();
             this.tb累计同规格膜卷长度R = new System.Windows.Forms.TextBox();
             this.tb累计同规格膜卷重量T = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.RecordView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tb审核人
             // 
-            this.tb审核人.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb审核人.Font = new System.Drawing.Font("SimSun", 12F);
             this.tb审核人.Location = new System.Drawing.Point(887, 67);
             this.tb审核人.Name = "tb审核人";
-            this.tb审核人.Size = new System.Drawing.Size(100, 26);
+            this.tb审核人.Size = new System.Drawing.Size(120, 26);
             this.tb审核人.TabIndex = 30;
             // 
             // dtp生产日期
@@ -80,7 +79,7 @@
             this.dtp生产日期.Name = "dtp生产日期";
             this.dtp生产日期.Size = new System.Drawing.Size(145, 26);
             this.dtp生产日期.TabIndex = 29;
-            this.dtp生产日期.ValueChanged += new System.EventHandler(this.productionDatePicker_ValueChanged);
+            this.dtp生产日期.ValueChanged += new System.EventHandler(this.dtp生产日期_SelectedIndexChanged);
             // 
             // label10
             // 
@@ -137,31 +136,29 @@
             // 
             // tb环境湿度
             // 
-            this.tb环境湿度.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb环境湿度.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb环境湿度.Location = new System.Drawing.Point(438, 96);
+            this.tb环境湿度.Location = new System.Drawing.Point(403, 96);
             this.tb环境湿度.Name = "tb环境湿度";
-            this.tb环境湿度.Size = new System.Drawing.Size(100, 26);
+            this.tb环境湿度.Size = new System.Drawing.Size(120, 26);
             this.tb环境湿度.TabIndex = 23;
             // 
             // tb环境温度
             // 
-            this.tb环境温度.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb环境温度.Font = new System.Drawing.Font("SimSun", 12F);
             this.tb环境温度.Location = new System.Drawing.Point(112, 96);
             this.tb环境温度.Name = "tb环境温度";
-            this.tb环境温度.Size = new System.Drawing.Size(100, 26);
+            this.tb环境温度.Size = new System.Drawing.Size(120, 26);
             this.tb环境温度.TabIndex = 22;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label8.Location = new System.Drawing.Point(362, 100);
+            this.label8.Location = new System.Drawing.Point(327, 100);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(200, 16);
+            this.label8.Size = new System.Drawing.Size(224, 16);
             this.label8.TabIndex = 21;
-            this.label8.Text = "相对湿度：             %";
+            this.label8.Text = "相对湿度：                %";
             // 
             // label7
             // 
@@ -169,15 +166,15 @@
             this.label7.Font = new System.Drawing.Font("SimSun", 12F);
             this.label7.Location = new System.Drawing.Point(30, 100);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(216, 16);
+            this.label7.Size = new System.Drawing.Size(240, 16);
             this.label7.TabIndex = 20;
-            this.label7.Text = "环境温度：             °C";
+            this.label7.Text = "环境温度：                °C";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label6.Location = new System.Drawing.Point(584, 102);
+            this.label6.Location = new System.Drawing.Point(566, 102);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(88, 16);
             this.label6.TabIndex = 19;
@@ -185,18 +182,17 @@
             // 
             // tb产品批号
             // 
-            this.tb产品批号.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb产品批号.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb产品批号.Location = new System.Drawing.Point(438, 66);
+            this.tb产品批号.Location = new System.Drawing.Point(403, 66);
             this.tb产品批号.Name = "tb产品批号";
-            this.tb产品批号.Size = new System.Drawing.Size(100, 26);
+            this.tb产品批号.Size = new System.Drawing.Size(120, 26);
             this.tb产品批号.TabIndex = 18;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label5.Location = new System.Drawing.Point(362, 71);
+            this.label5.Location = new System.Drawing.Point(327, 71);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 16);
             this.label5.TabIndex = 17;
@@ -206,7 +202,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label4.Location = new System.Drawing.Point(584, 71);
+            this.label4.Location = new System.Drawing.Point(566, 71);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 16);
             this.label4.TabIndex = 16;
@@ -253,7 +249,6 @@
             this.cb夜班.TabIndex = 8;
             this.cb夜班.Text = "夜班";
             this.cb夜班.UseVisualStyleBackColor = true;
-            this.cb夜班.CheckedChanged += new System.EventHandler(this.NeightcheckBox_CheckedChanged);
             // 
             // cb白班
             // 
@@ -267,7 +262,6 @@
             this.cb白班.TabIndex = 7;
             this.cb白班.Text = "白班";
             this.cb白班.UseVisualStyleBackColor = true;
-            this.cb白班.CheckedChanged += new System.EventHandler(this.DatecheckBox_CheckedChanged);
             // 
             // label1
             // 
@@ -279,16 +273,16 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "班次：";
             // 
-            // RecordView
+            // dataGridView1
             // 
-            this.RecordView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.RecordView.Location = new System.Drawing.Point(30, 134);
-            this.RecordView.Name = "RecordView";
-            this.RecordView.RowTemplate.Height = 23;
-            this.RecordView.Size = new System.Drawing.Size(1118, 290);
-            this.RecordView.TabIndex = 5;
-            this.RecordView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.RecordView_CellContentClick);
-            this.RecordView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.RecordView_CellEndEdit);
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(30, 134);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(1118, 290);
+            this.dataGridView1.TabIndex = 5;
+            //this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
+            //this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
             // Title
             // 
@@ -316,26 +310,24 @@
             this.cb产品名称.FormattingEnabled = true;
             this.cb产品名称.Location = new System.Drawing.Point(112, 67);
             this.cb产品名称.Name = "cb产品名称";
-            this.cb产品名称.Size = new System.Drawing.Size(220, 24);
+            this.cb产品名称.Size = new System.Drawing.Size(189, 24);
             this.cb产品名称.TabIndex = 32;
-            this.cb产品名称.SelectedIndexChanged += new System.EventHandler(this.productnamecomboBox_SelectedIndexChanged);
+            this.cb产品名称.SelectedIndexChanged += new System.EventHandler(this.cb产品名称_SelectedIndexChanged);
             // 
             // tb依据工艺
             // 
-            this.tb依据工艺.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb依据工艺.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb依据工艺.Location = new System.Drawing.Point(667, 66);
+            this.tb依据工艺.Location = new System.Drawing.Point(649, 66);
             this.tb依据工艺.Name = "tb依据工艺";
-            this.tb依据工艺.Size = new System.Drawing.Size(100, 26);
+            this.tb依据工艺.Size = new System.Drawing.Size(120, 26);
             this.tb依据工艺.TabIndex = 34;
             // 
             // tb生产设备
             // 
-            this.tb生产设备.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb生产设备.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb生产设备.Location = new System.Drawing.Point(667, 96);
+            this.tb生产设备.Location = new System.Drawing.Point(649, 96);
             this.tb生产设备.Name = "tb生产设备";
-            this.tb生产设备.Size = new System.Drawing.Size(100, 26);
+            this.tb生产设备.Size = new System.Drawing.Size(120, 26);
             this.tb生产设备.TabIndex = 36;
             // 
             // label11
@@ -362,7 +354,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label13.Location = new System.Drawing.Point(394, 439);
+            this.label13.Location = new System.Drawing.Point(427, 439);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(168, 16);
             this.label13.TabIndex = 39;
@@ -370,20 +362,18 @@
             // 
             // tb累计同规格膜卷长度R
             // 
-            this.tb累计同规格膜卷长度R.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb累计同规格膜卷长度R.Font = new System.Drawing.Font("SimSun", 12F);
             this.tb累计同规格膜卷长度R.Location = new System.Drawing.Point(260, 434);
             this.tb累计同规格膜卷长度R.Name = "tb累计同规格膜卷长度R";
-            this.tb累计同规格膜卷长度R.Size = new System.Drawing.Size(100, 26);
+            this.tb累计同规格膜卷长度R.Size = new System.Drawing.Size(120, 26);
             this.tb累计同规格膜卷长度R.TabIndex = 40;
             // 
             // tb累计同规格膜卷重量T
             // 
-            this.tb累计同规格膜卷重量T.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tb累计同规格膜卷重量T.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb累计同规格膜卷重量T.Location = new System.Drawing.Point(568, 437);
+            this.tb累计同规格膜卷重量T.Location = new System.Drawing.Point(601, 437);
             this.tb累计同规格膜卷重量T.Name = "tb累计同规格膜卷重量T";
-            this.tb累计同规格膜卷重量T.Size = new System.Drawing.Size(100, 26);
+            this.tb累计同规格膜卷重量T.Size = new System.Drawing.Size(120, 26);
             this.tb累计同规格膜卷重量T.TabIndex = 41;
             // 
             // ExtructionpRoductionAndRestRecordStep6
@@ -420,13 +410,13 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cb夜班);
             this.Controls.Add(this.cb白班);
-            this.Controls.Add(this.RecordView);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.Title);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExtructionpRoductionAndRestRecordStep6";
             this.Text = "ExtructionpRoductionAndRestRecordStep6";
-            ((System.ComponentModel.ISupportInitialize)(this.RecordView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -435,7 +425,7 @@
         #endregion
 
         private System.Windows.Forms.Label Title;
-        private System.Windows.Forms.DataGridView RecordView;
+        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.CheckBox cb白班;
         private System.Windows.Forms.CheckBox cb夜班;
