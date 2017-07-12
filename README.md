@@ -23,6 +23,8 @@ void outerBind();
 void innerBind();
 // 设置DataGridView中各列的格式
 void setDataGridViewColumns();
+// 刷新DataGridView中的列：序号
+void setDataGridViewRowNums();
 ```
 
 
@@ -32,7 +34,7 @@ void setDataGridViewColumns();
 
 
 ```C#
- private void readOuterData(String name)
+        private void readOuterData(String name)
         {
             daOuter = new OleDbDataAdapter("select * from 订单信息 where 订单名称='" + name+"'", conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
@@ -207,6 +209,15 @@ void setDataGridViewColumns();
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
+        }
+
+        private void setDataGridViewRowNums()
+        {
+
+            for(int i=0;i<dataGridView1.Rows.Count;i++)
+            {
+                dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
+            }
         }
 
 
