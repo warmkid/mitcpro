@@ -70,5 +70,10 @@ namespace mySystem.Process.Bag.PTV
         {
 
         }
+
+        private void label21_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
