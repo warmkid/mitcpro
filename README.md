@@ -1,68 +1,214 @@
-12312312321312321# mitcpro
-## 整体设计
-整个系统分为三层：用户界面层，后台逻辑层，数据层。
-
-用户界面层负责窗体的绘制、用户的交互、数据的展示。
-
-后台逻辑层负责本项目的主体功能，根据功能划分为不同模块。每个模块开放若干接口，便于上层（用户界面层）和本层其他模块进行调用。每个模块根据功能会向下连接数据库，并对数据库进行增删改查等操作。
-
-数据层主要为 SQLServer 数据库，需要根据系统功能设计若干张表，用于保存系统的关键数据和方便用户查询。
-
-第一层和第二层部分全部使用 C# 编写，体现为多个类。其中界面类是本系统的主程序，它拥有后台逻辑层各类的实例，当用户在界面进行某些操作后，通过这些实例调用对应的接口完成功能。
 
 
-![ss](pics/proj_diagram.png)
-
-## 用户界面层
-
-### 总体流程图
-进入主界面前的流程如图所示：
-
-
-![ss](pics/ui_whole.png)
-
-
-进入主界面后，根据用户的角色跳转到指定界面，并确定该用户可以访问的界面。
-
-界面用选项卡分成五个部分，分别是：订单管理、库存管理、生产流程管理、系统管理、帮助。
-
-### 角色和界面的关系
-
-
-【**要和甲方确认有哪些角色，每个角色都有什么权限**】
-暂定角色有：系统管理员，仓库管理员，订单管理员，生产计划员，操作员[N]。
-
-系统管理员默认进入系统管理界面，ta 可以访问所有界面。
-
-仓库管理员默认进入库存管理界面，ta 可以访问『库存管理』和『帮助』下的界面。
-
-订单管理员默认进入订单管理界面，ta 可以访问『订单管理』和『帮助』下的界面。
-
-生产计划员默认进入生产流程管理界面下的生产计划计划子界面，ta 可以访问『生产流程管理』下的『生产计划』界面和『帮助』界面。
-
-操作员[N]默认进入生产流程管理界面下的其对应工序的生产子界面，ta 可以访问『生产流程管理』下的『XX』界面和『帮助』界面。
-
-### XXX 界面详细设计
-【**所有细节需要确认**】
-
-## 后台逻辑层
-
-### 用户管理
-
-#### 功能简述
-
-#### 接口列表
-
-### 生产流程
-
-### 库存管理
-
-### 系统管理
-
-### 订单管理
-
-## 数据层
+# 所有窗体视实际需求考虑实现如下函数：
 
 
 
+```C#
+// 给外表的一行写入默认值，包括操作人，时间，班次等
+DataRow writeOuterDefault(DataRow);
+// 给内表的一行写入默认值，包括操作人，时间，Y/N等
+DataRow writeInnerDefault(DataRow);
+// 根据条件从数据库中读取一行外表的数据
+void readOuterData(能唯一确定一行外表数据的参数，一般是生产指令ID或生产指令编号)；
+// 根据条件从数据库中读取多行内表数据
+void readInnerData(int 外表行ID);
+// 移除外表和控件的绑定，建议使用Control.DataBinds.RemoveAt(0)
+void removeOuterBinding();
+// 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
+void removeInner(Binding);
+// 外表和控件的绑定
+void outerBind();
+// 内表和控件的绑定
+void innerBind();
+// 设置DataGridView中各列的格式
+void setDataGridViewColumns();
+```
+
+
+
+# 以下是样例
+
+
+
+```C#
+ private void readOuterData(String name)
+        {
+            daOuter = new OleDbDataAdapter("select * from 订单信息 where 订单名称='" + name+"'", conn);
+            cbOuter = new OleDbCommandBuilder(daOuter);
+            dtOuter = new DataTable("订单信息");
+            bsOuter = new BindingSource();
+            daOuter.Fill(dtOuter);
+        }
+
+         private DataRow writeOuterDefault(DataRow dr)
+        {
+            dr["订单名称"] = tb订单名称.Text;
+            return dr;
+        }
+
+        private void outerBind()
+        {
+            bsOuter.DataSource = dtOuter;
+            tb订单名称.DataBindings.Add("Text", bsOuter.DataSource, "订单名称");
+            tb客户名称.DataBindings.Add("Text", bsOuter.DataSource, "客户名称");
+            cmb产品类型.DataBindings.Add("SelectedItem", bsOuter.DataSource, "产品类型");
+            cmb产品名称.DataBindings.Add("SelectedItem", bsOuter.DataSource, "产品名称");
+        }
+
+        private void removeOuterBinding()
+        {
+            tb订单名称.DataBindings.RemoveAt(0);
+            tb客户名称.DataBindings.RemoveAt(0);
+            cmb产品类型.DataBindings.RemoveAt(0);
+            cmb产品名称.DataBindings.RemoveAt(0);
+        }
+
+        private void readInnerData(int id)
+        {
+            daInner = new OleDbDataAdapter("select * from 订单BOM信息 where 订单信息ID=" + id, conn);
+            cbInner = new OleDbCommandBuilder(daInner);
+            dtInner = new DataTable("订单BOM信息");
+            bsInner = new BindingSource();
+
+            daInner.Fill(dtInner);
+        }
+
+        private void innerBind()
+        {
+            bsInner.DataSource = dtInner;
+            dataGridView1.DataSource = bsInner.DataSource;
+        }
+
+        private void setDataGridViewColumns()
+        {
+            DataGridViewTextBoxColumn tbc;
+            DataGridViewComboBoxColumn cbc;
+            foreach (DataColumn dc in dtInner.Columns)
+            {
+
+                switch (dc.ColumnName)
+                {
+
+                    case "ID":
+                    case "订单信息ID":
+                        tbc = new DataGridViewTextBoxColumn();
+                        tbc.DataPropertyName = dc.ColumnName;
+                        tbc.HeaderText = dc.ColumnName;
+                        tbc.Name = dc.ColumnName;
+                        tbc.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(tbc);
+                        tbc.Visible = false;
+                        break;
+                    case "商品名称":
+                        cbc = new DataGridViewComboBoxColumn();
+                        cbc.DataPropertyName = dc.ColumnName;
+                        cbc.HeaderText = dc.ColumnName;
+                        cbc.Name = dc.ColumnName;
+                        cbc.ValueType = dc.DataType;
+                        HashSet<String> items = new HashSet<string>();
+                        foreach (String s in goodsAndPrice.Keys.OfType<String>().ToList<String>())
+                        {
+                            items.Add(s);
+                        }
+                        foreach (DataRow dr in dtInner.Rows)
+                        {
+                            items.Add(Convert.ToString(dr["商品名称"]));
+                        }
+                        foreach (String s in items)
+                        {
+                            cbc.Items.Add(s);
+                        }
+                        dataGridView1.Columns.Add(cbc);
+                        break;
+                    case "商品数量":
+                        tbc = new DataGridViewTextBoxColumn();
+                        tbc.DataPropertyName = dc.ColumnName;
+                        tbc.HeaderText = dc.ColumnName;
+                        tbc.Name = dc.ColumnName;
+                        tbc.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(tbc);
+                        break;
+                    case "商品单价":
+                        tbc = new DataGridViewTextBoxColumn();
+                        tbc.DataPropertyName = dc.ColumnName;
+                        tbc.HeaderText = dc.ColumnName;
+                        tbc.Name = dc.ColumnName;
+                        tbc.ValueType = dc.DataType;
+                        tbc.ReadOnly = true;
+                        dataGridView1.Columns.Add(tbc);
+                        break;
+                }
+            }
+        }
+
+        
+
+        private DataRow writeInnerDefault(DataRow dr)
+        {
+            dr["订单信息ID"]=dtOuter.Rows[0]["ID"];
+            return dr;
+        }
+
+
+        private void btn保存_Click(object sender, EventArgs e)
+        {
+          	// 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+
+
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            readOuterData(tb订单名称.Text);
+            removeOuterBinding();
+            outerBind();
+
+        }
+
+		
+		private void btn查询插入_Click(object sender, EventArgs e)
+        {
+          	// 先读外表，再读内表的代码
+          
+           	// 读外表，如果行数位0，则插入一行并保存
+            readOuterData(tb订单名称.Text);
+            outerBind();
+            if (dtOuter.Rows.Count <= 0)
+            {
+                DataRow dr = dtOuter.NewRow();
+                dr = writeOuterDefault(dr);
+                dtOuter.Rows.Add(dr);
+                daOuter.Update((DataTable)bsOuter.DataSource);
+                readOuterData(tb订单名称.Text);
+                removeOuterBinding();
+                outerBind();
+            }
+ 
+          	// 读内表，因为我实现了一个“添加”按钮，所以这里可以不用插入空白行
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            setDataGridViewColumns();
+            innerBind();
+          
+            // 控件状态
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = true;
+            }
+            tb订单名称.Enabled = false;
+            btn查询插入.Enabled = false;
+        }
+
+
+		private void btn添加_Click(object sender, EventArgs e)
+        {
+          	// 内表中添加一行
+            DataRow dr = dtInner.NewRow();
+            dr = writeInnerDefault(dr);
+            dtInner.Rows.Add(dr);
+        }
+
+
+```
 
