@@ -43,21 +43,28 @@
             this.熔接时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.硬化熔接时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.操作人 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.tB不合格品数量 = new System.Windows.Forms.TextBox();
-            this.tB合格品数量 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.textBox24 = new System.Windows.Forms.TextBox();
+            this.label42 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox5.SuspendLayout();
+            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -73,16 +80,16 @@
             // dTime生产日期
             // 
             this.dTime生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dTime生产日期.Location = new System.Drawing.Point(764, 64);
+            this.dTime生产日期.Location = new System.Drawing.Point(704, 56);
             this.dTime生产日期.Name = "dTime生产日期";
-            this.dTime生产日期.Size = new System.Drawing.Size(141, 26);
+            this.dTime生产日期.Size = new System.Drawing.Size(200, 26);
             this.dTime生产日期.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(679, 70);
+            this.label4.Location = new System.Drawing.Point(619, 60);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 16);
             this.label4.TabIndex = 6;
@@ -91,7 +98,7 @@
             // tB产品代码
             // 
             this.tB产品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tB产品代码.Location = new System.Drawing.Point(115, 68);
+            this.tB产品代码.Location = new System.Drawing.Point(112, 56);
             this.tB产品代码.Name = "tB产品代码";
             this.tB产品代码.Size = new System.Drawing.Size(179, 26);
             this.tB产品代码.TabIndex = 10;
@@ -100,7 +107,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(29, 72);
+            this.label2.Location = new System.Drawing.Point(29, 60);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 16);
             this.label2.TabIndex = 9;
@@ -109,7 +116,7 @@
             // tB产品批号
             // 
             this.tB产品批号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tB产品批号.Location = new System.Drawing.Point(440, 69);
+            this.tB产品批号.Location = new System.Drawing.Point(405, 56);
             this.tB产品批号.Name = "tB产品批号";
             this.tB产品批号.Size = new System.Drawing.Size(184, 26);
             this.tB产品批号.TabIndex = 12;
@@ -118,7 +125,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(353, 73);
+            this.label3.Location = new System.Drawing.Point(320, 60);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 11;
@@ -135,7 +142,7 @@
             this.熔接时间,
             this.硬化熔接时间,
             this.操作人});
-            this.dataGridView1.Location = new System.Drawing.Point(32, 152);
+            this.dataGridView1.Location = new System.Drawing.Point(32, 132);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
@@ -183,95 +190,33 @@
             this.操作人.Name = "操作人";
             this.操作人.Width = 90;
             // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker2.Location = new System.Drawing.Point(734, 560);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(136, 26);
-            this.dateTimePicker2.TabIndex = 17;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(734, 519);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 26);
-            this.textBox2.TabIndex = 16;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(655, 566);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 16);
-            this.label7.TabIndex = 15;
-            this.label7.Text = "审核日期：";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(655, 522);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(72, 16);
-            this.label6.TabIndex = 14;
-            this.label6.Text = "审核人：";
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.tB不合格品数量);
-            this.groupBox1.Controls.Add(this.tB合格品数量);
-            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(32, 494);
+            this.groupBox1.Location = new System.Drawing.Point(32, 469);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(566, 110);
+            this.groupBox1.Size = new System.Drawing.Size(356, 127);
             this.groupBox1.TabIndex = 18;
             this.groupBox1.TabStop = false;
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(97, 70);
+            this.textBox1.Location = new System.Drawing.Point(87, 41);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(463, 26);
+            this.textBox1.Size = new System.Drawing.Size(255, 70);
             this.textBox1.TabIndex = 24;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(8, 76);
+            this.label9.Location = new System.Drawing.Point(8, 47);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(88, 16);
             this.label9.TabIndex = 23;
             this.label9.Text = "不良描述：";
-            // 
-            // tB不合格品数量
-            // 
-            this.tB不合格品数量.Location = new System.Drawing.Point(318, 37);
-            this.tB不合格品数量.Name = "tB不合格品数量";
-            this.tB不合格品数量.Size = new System.Drawing.Size(81, 26);
-            this.tB不合格品数量.TabIndex = 22;
-            // 
-            // tB合格品数量
-            // 
-            this.tB合格品数量.Location = new System.Drawing.Point(97, 37);
-            this.tB合格品数量.Name = "tB合格品数量";
-            this.tB合格品数量.Size = new System.Drawing.Size(81, 26);
-            this.tB合格品数量.TabIndex = 21;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(8, 42);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(432, 16);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "合格品数量            只，不合格品数量           只，\r\n";
             // 
             // label5
             // 
@@ -285,7 +230,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(135, 127);
+            this.label10.Location = new System.Drawing.Point(142, 105);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(56, 16);
             this.label10.TabIndex = 19;
@@ -293,25 +238,141 @@
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(253, 120);
+            this.textBox3.Location = new System.Drawing.Point(250, 100);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(92, 26);
             this.textBox3.TabIndex = 20;
             this.textBox3.Text = "0.4";
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.dateTimePicker1);
+            this.groupBox5.Controls.Add(this.textBox18);
+            this.groupBox5.Controls.Add(this.label37);
+            this.groupBox5.Controls.Add(this.label36);
+            this.groupBox5.Location = new System.Drawing.Point(615, 469);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(289, 127);
+            this.groupBox5.TabIndex = 35;
+            this.groupBox5.TabStop = false;
+            // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dateTimePicker1.Location = new System.Drawing.Point(76, 77);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
+            this.dateTimePicker1.TabIndex = 35;
+            // 
+            // textBox18
+            // 
+            this.textBox18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox18.Location = new System.Drawing.Point(76, 36);
+            this.textBox18.Name = "textBox18";
+            this.textBox18.Size = new System.Drawing.Size(100, 26);
+            this.textBox18.TabIndex = 34;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label37.Location = new System.Drawing.Point(13, 81);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(48, 16);
+            this.label37.TabIndex = 33;
+            this.label37.Text = "日期:";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label36.Location = new System.Drawing.Point(11, 39);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(64, 16);
+            this.label36.TabIndex = 32;
+            this.label36.Text = "审核人:";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.textBox25);
+            this.groupBox8.Controls.Add(this.textBox24);
+            this.groupBox8.Controls.Add(this.label42);
+            this.groupBox8.Controls.Add(this.label41);
+            this.groupBox8.Controls.Add(this.label40);
+            this.groupBox8.Controls.Add(this.label39);
+            this.groupBox8.Location = new System.Drawing.Point(386, 469);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(232, 127);
+            this.groupBox8.TabIndex = 36;
+            this.groupBox8.TabStop = false;
+            // 
+            // textBox25
+            // 
+            this.textBox25.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox25.Location = new System.Drawing.Point(125, 77);
+            this.textBox25.Name = "textBox25";
+            this.textBox25.Size = new System.Drawing.Size(50, 26);
+            this.textBox25.TabIndex = 31;
+            // 
+            // textBox24
+            // 
+            this.textBox24.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox24.Location = new System.Drawing.Point(125, 36);
+            this.textBox24.Name = "textBox24";
+            this.textBox24.Size = new System.Drawing.Size(50, 26);
+            this.textBox24.TabIndex = 30;
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label42.Location = new System.Drawing.Point(187, 83);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(25, 16);
+            this.label42.TabIndex = 29;
+            this.label42.Text = "只";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label41.Location = new System.Drawing.Point(187, 41);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(25, 16);
+            this.label41.TabIndex = 28;
+            this.label41.Text = "只";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.Location = new System.Drawing.Point(18, 81);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(110, 16);
+            this.label40.TabIndex = 27;
+            this.label40.Text = "不良品数量：";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label39.Location = new System.Drawing.Point(18, 42);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(110, 16);
+            this.label39.TabIndex = 26;
+            this.label39.Text = "合格品数量：";
+            // 
             // PTVBag_weldingrecordofwave
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(936, 638);
+            this.ClientSize = new System.Drawing.Size(936, 613);
+            this.Controls.Add(this.groupBox8);
+            this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.tB产品批号);
             this.Controls.Add(this.label3);
@@ -328,6 +389,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -350,18 +415,23 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 熔接时间;
         private System.Windows.Forms.DataGridViewTextBoxColumn 硬化熔接时间;
         private System.Windows.Forms.DataGridViewTextBoxColumn 操作人;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tB不合格品数量;
-        private System.Windows.Forms.TextBox tB合格品数量;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.TextBox textBox25;
+        private System.Windows.Forms.TextBox textBox24;
+        private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label39;
     }
 }

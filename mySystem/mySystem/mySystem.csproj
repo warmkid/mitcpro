@@ -796,6 +796,12 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTV2DProRecord.resx">
+      <DependentUpon>BTV2DProRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTV2DShipHeat.resx">
+      <DependentUpon>BTV2DShipHeat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTVMainForm.resx">
       <DependentUpon>BTVMainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -841,14 +847,26 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_batchproduction.resx">
       <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_clearance.resx">
+      <DependentUpon>PTVBag_clearance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_dailyreport.resx">
+      <DependentUpon>PTVBag_dailyreport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_innerpackaging.resx">
       <DependentUpon>PTVBag_innerpackaging.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_materialrecord.resx">
       <DependentUpon>PTVBag_materialrecord.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_productioninstruction.resx">
+      <DependentUpon>PTVBag_productioninstruction.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_runningrecordofdf.resx">
       <DependentUpon>PTVBag_runningrecordofdf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_runningrecordofpk.resx">
+      <DependentUpon>PTVBag_runningrecordofpk.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_testrecordofdisclose.resx">
       <DependentUpon>PTVBag_testrecordofdisclose.cs</DependentUpon>
