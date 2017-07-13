@@ -27,18 +27,9 @@ namespace mySystem
         }
 
         private void InitDataTable()
-        {
-            ////初始化显示
-            //String tblName = "production_instruction";
-            //List<String> queryCols = new List<String>(new String[] { "product_name", "production_instruction_code", "production_process", "production_start_date", "operate_date" });
-            //List<List<Object>> res = Utility.selectAccess(connOle, tblName, queryCols, null, null, null, null, null, null, null);
-            
-
-            //Utility.fillDataGridView(dataGridView1, res);
+        {           
  
         }
-
-
 
         private void SearchBtn_Click(object sender, EventArgs e)
         {

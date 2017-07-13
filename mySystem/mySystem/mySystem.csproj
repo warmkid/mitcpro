@@ -79,6 +79,138 @@
     </Compile>
     <Compile Include="Other\common.cs" />
     <Compile Include="Other\Parameter.cs" />
+    <Compile Include="Process\Bag\BTV\BTV2DProRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTV2DProRecord.Designer.cs">
+      <DependentUpon>BTV2DProRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTV2DShipHeat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTV2DShipHeat.Designer.cs">
+      <DependentUpon>BTV2DShipHeat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTV3DProRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTV3DProRecord.Designer.cs">
+      <DependentUpon>BTV3DProRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVAssemblyConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVAssemblyConfirm.Designer.cs">
+      <DependentUpon>BTVAssemblyConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVBatchProduction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVBatchProduction.Designer.cs">
+      <DependentUpon>BTVBatchProduction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVClearanceRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVClearanceRecord.Designer.cs">
+      <DependentUpon>BTVClearanceRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVConfirmBefore.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVConfirmBefore.Designer.cs">
+      <DependentUpon>BTVConfirmBefore.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVCutPipeRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVCutPipeRecord.Designer.cs">
+      <DependentUpon>BTVCutPipeRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVInnerPackage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVInnerPackage.Designer.cs">
+      <DependentUpon>BTVInnerPackage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVKeySizeConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVKeySizeConfirm.Designer.cs">
+      <DependentUpon>BTVKeySizeConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVLeakTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVLeakTest.Designer.cs">
+      <DependentUpon>BTVLeakTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVMainForm.Designer.cs">
+      <DependentUpon>BTVMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVMaterialRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVMaterialRecord.Designer.cs">
+      <DependentUpon>BTVMaterialRecord.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVProInstruction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVProInstruction.Designer.cs">
+      <DependentUpon>BTVProInstruction.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVPunchDrawingConfirm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVPunchDrawingConfirm.Designer.cs">
+      <DependentUpon>BTVPunchDrawingConfirm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRawMaterialDispensing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRawMaterialDispensing.Designer.cs">
+      <DependentUpon>BTVRawMaterialDispensing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordDF.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordDF.Designer.cs">
+      <DependentUpon>BTVRunningRecordDF.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordPK.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordPK.Designer.cs">
+      <DependentUpon>BTVRunningRecordPK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJ90.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJ90.Designer.cs">
+      <DependentUpon>BTVRunningRecordRHJ90.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJMulti.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJMulti.Designer.cs">
+      <DependentUpon>BTVRunningRecordRHJMulti.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJseal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJseal.Designer.cs">
+      <DependentUpon>BTVRunningRecordRHJseal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJsingle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJsingle.Designer.cs">
+      <DependentUpon>BTVRunningRecordRHJsingle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\CS\Bagprocess_prod_instru.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -664,6 +796,21 @@
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTV2DProRecord.resx">
+      <DependentUpon>BTV2DProRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTV2DShipHeat.resx">
+      <DependentUpon>BTV2DShipHeat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTV3DProRecord.resx">
+      <DependentUpon>BTV3DProRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVAssemblyConfirm.resx">
+      <DependentUpon>BTVAssemblyConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVMainForm.resx">
+      <DependentUpon>BTVMainForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
     </EmbeddedResource>
@@ -706,11 +853,26 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_batchproduction.resx">
       <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_clearance.resx">
+      <DependentUpon>PTVBag_clearance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_dailyreport.resx">
+      <DependentUpon>PTVBag_dailyreport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_innerpackaging.resx">
       <DependentUpon>PTVBag_innerpackaging.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_materialrecord.resx">
       <DependentUpon>PTVBag_materialrecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_productioninstruction.resx">
+      <DependentUpon>PTVBag_productioninstruction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_runningrecordofdf.resx">
+      <DependentUpon>PTVBag_runningrecordofdf.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_runningrecordofpk.resx">
+      <DependentUpon>PTVBag_runningrecordofpk.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_testrecordofdisclose.resx">
       <DependentUpon>PTVBag_testrecordofdisclose.cs</DependentUpon>

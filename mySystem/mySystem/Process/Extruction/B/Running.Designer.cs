@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btn插入 = new System.Windows.Forms.Button();
             this.btn保存 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.lb产品代码 = new System.Windows.Forms.Label();
-            this.txb产品代码 = new System.Windows.Forms.TextBox();
             this.lb产品批号 = new System.Windows.Forms.Label();
             this.txb产品批号 = new System.Windows.Forms.TextBox();
             this.lb生产日期 = new System.Windows.Forms.Label();
@@ -43,16 +41,9 @@
             this.txb记录人 = new System.Windows.Forms.TextBox();
             this.lb审核人 = new System.Windows.Forms.Label();
             this.txb审核人 = new System.Windows.Forms.TextBox();
+            this.cmb产品代码 = new System.Windows.Forms.ComboBox();
+            this.btn审核 = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // btn插入
-            // 
-            this.btn插入.Location = new System.Drawing.Point(911, 21);
-            this.btn插入.Name = "btn插入";
-            this.btn插入.Size = new System.Drawing.Size(75, 23);
-            this.btn插入.TabIndex = 58;
-            this.btn插入.Text = "插入";
-            this.btn插入.UseVisualStyleBackColor = true;
             // 
             // btn保存
             // 
@@ -62,6 +53,7 @@
             this.btn保存.TabIndex = 57;
             this.btn保存.Text = "保存";
             this.btn保存.UseVisualStyleBackColor = true;
+            this.btn保存.Click += new System.EventHandler(this.btn保存_Click);
             // 
             // label7
             // 
@@ -82,13 +74,6 @@
             this.lb产品代码.Size = new System.Drawing.Size(72, 16);
             this.lb产品代码.TabIndex = 59;
             this.lb产品代码.Text = "产品代码";
-            // 
-            // txb产品代码
-            // 
-            this.txb产品代码.Location = new System.Drawing.Point(149, 83);
-            this.txb产品代码.Name = "txb产品代码";
-            this.txb产品代码.Size = new System.Drawing.Size(100, 26);
-            this.txb产品代码.TabIndex = 60;
             // 
             // lb产品批号
             // 
@@ -133,8 +118,11 @@
             // 
             // dtp记录时间
             // 
+            this.dtp记录时间.CustomFormat = "HH:mm:ss";
+            this.dtp记录时间.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp记录时间.Location = new System.Drawing.Point(880, 83);
             this.dtp记录时间.Name = "dtp记录时间";
+            this.dtp记录时间.ShowUpDown = true;
             this.dtp记录时间.Size = new System.Drawing.Size(200, 26);
             this.dtp记录时间.TabIndex = 66;
             // 
@@ -170,11 +158,32 @@
             this.txb审核人.Size = new System.Drawing.Size(100, 26);
             this.txb审核人.TabIndex = 70;
             // 
+            // cmb产品代码
+            // 
+            this.cmb产品代码.FormattingEnabled = true;
+            this.cmb产品代码.Location = new System.Drawing.Point(149, 78);
+            this.cmb产品代码.Name = "cmb产品代码";
+            this.cmb产品代码.Size = new System.Drawing.Size(121, 24);
+            this.cmb产品代码.TabIndex = 71;
+            this.cmb产品代码.SelectedIndexChanged += new System.EventHandler(this.cmb产品代码_SelectedIndexChanged);
+            // 
+            // btn审核
+            // 
+            this.btn审核.Location = new System.Drawing.Point(888, 21);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(75, 23);
+            this.btn审核.TabIndex = 72;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
+            // 
             // Running
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1115, 741);
+            this.ClientSize = new System.Drawing.Size(1125, 741);
+            this.Controls.Add(this.btn审核);
+            this.Controls.Add(this.cmb产品代码);
             this.Controls.Add(this.txb审核人);
             this.Controls.Add(this.lb审核人);
             this.Controls.Add(this.txb记录人);
@@ -185,9 +194,7 @@
             this.Controls.Add(this.lb生产日期);
             this.Controls.Add(this.txb产品批号);
             this.Controls.Add(this.lb产品批号);
-            this.Controls.Add(this.txb产品代码);
             this.Controls.Add(this.lb产品代码);
-            this.Controls.Add(this.btn插入);
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.label7);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -201,11 +208,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Button btn插入;
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label lb产品代码;
-        private System.Windows.Forms.TextBox txb产品代码;
         private System.Windows.Forms.Label lb产品批号;
         private System.Windows.Forms.TextBox txb产品批号;
         private System.Windows.Forms.Label lb生产日期;
@@ -216,5 +221,7 @@
         private System.Windows.Forms.TextBox txb记录人;
         private System.Windows.Forms.Label lb审核人;
         private System.Windows.Forms.TextBox txb审核人;
+        private System.Windows.Forms.ComboBox cmb产品代码;
+        private System.Windows.Forms.Button btn审核;
     }
 }
