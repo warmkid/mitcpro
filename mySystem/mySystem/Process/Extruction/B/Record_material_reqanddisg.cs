@@ -12,25 +12,7 @@ namespace mySystem.Extruction.Process
 {
     public partial class Record_material_reqanddisg : mySystem.BaseForm
     {
-        List<cont> list_1=null;
-        List<cont> list_4 = null;
-        List<cont> list_6 = null;
-        List<cont> list_11 = null;
-        int label;//标记哪个物料被选中
-        public class cont
-        {
-            public DateTime date;
-            public float num;
-            public float weight;
-            public float numperw;
-            public int ispatch;
-            public int isclean;
-            public string oper;
-            public string checker;
-        }
-
-        int id;//外键
-        int instrid;
+        private int instrid;
         private DataTable dt_prodinstr, dt_prodlist;
         private OleDbDataAdapter da_prodinstr, da_prodlist;
         private BindingSource bs_prodinstr, bs_prodlist;
@@ -61,26 +43,26 @@ namespace mySystem.Extruction.Process
         public Record_material_reqanddisg(MainForm mainform)
             : base(mainform)
         {
-            InitializeComponent();
+            InitializeComponent();            
             init();
+            addmatcode();
         }
 
         //供界面显示,参数为数据库中对应记录的id
         public void show(int paraid)
         {
-            bind(paraid);
-            bind_list(paraid);
         }
+        //向combox中添加物料代码
+        private void addmatcode()
+        {
+            cB物料代码.Items.Add("SMP-PE-01");
+            cB物料代码.Items.Add("SMP-PE-04");
+            cB物料代码.Items.Add("SMP-PE-06");
+            cB物料代码.Items.Add("SMP-PE-11");
+        }
+
         private void init()
         {
-            list_1 = new List<cont>();
-            list_4 = new List<cont>();
-            list_6 = new List<cont>();
-            list_11 = new List<cont>();
-
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.DataError += dataGridView1_DataError;
-
             dt_prodinstr = new System.Data.DataTable();
             bs_prodinstr = new System.Windows.Forms.BindingSource();
             da_prodinstr = new OleDbDataAdapter();
@@ -92,130 +74,13 @@ namespace mySystem.Extruction.Process
             cb_prodlist = new OleDbCommandBuilder();
 
             instrid = mySystem.Parameter.proInstruID;
-            checkBox1.Checked = true;
-            //addblankrow();
-            label = 1;
-
-            int tempid = getid(instrid, "SPM-PE-01");
-            if ( tempid== -1)
+            foreach (Control c in this.Controls)
             {
-                bind_insert(instrid, "SPM-PE-01");
-                dt_prodinstr.Rows[0][1] = instrid;
-                dt_prodinstr.Rows[0][10] = mySystem.Parameter.userName;//退料操作人
-                bs_prodinstr.EndEdit();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                id = getid();
-                bind_list(id);
+                c.Enabled = false;
             }
-            else
-            {
-                bind(tempid);
-                bind_list(tempid);
-            }
-        
+            cB物料代码.Enabled = true;
         }
 
-        private void bind_insert(int instrid,string matcode)//插入模式
-        {
-            dt_prodinstr.Dispose();
-            bs_prodinstr.Dispose();
-            da_prodinstr.Dispose();
-            cb_prodinstr.Dispose();
-
-            dt_prodinstr = new DataTable("吹膜工序领料退料记录");
-            bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where 1=2", mySystem.Parameter.connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
-
-            DataRow dr = dt_prodinstr.NewRow();
-            dr[1] = instrid;
-            dr[2] = matcode;//物料代码
-            dr[4] = dr[5] = dr[10] = dr[11] = "";
-            dr[3] = DateTime.Now;
-            dr[1] = dr[7] = dr[8] = dr[9] = 0;
-            dr[6] = false;
-            dt_prodinstr.Rows.Add(dr);
-
-            //DataTable到BindingSource的绑定
-            bs_prodinstr.DataSource = dt_prodinstr;
-
-            //解除之前的绑定
-            textBox1.DataBindings.Clear();
-            textBox2.DataBindings.Clear();
-            textBox3.DataBindings.Clear();
-            textBox4.DataBindings.Clear();
-            textBox5.DataBindings.Clear();
-
-            //BindingSource到控件的绑定
-            textBox1.DataBindings.Add("Text", bs_prodinstr.DataSource, "重量合计");
-            textBox2.DataBindings.Add("Text", bs_prodinstr.DataSource, "数量合计");
-            textBox3.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料");
-            textBox4.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料操作人");
-            textBox5.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料审核人");
-        }
-        private void bind(int id)
-        {
-            dt_prodinstr.Dispose();
-            bs_prodinstr.Dispose();
-            da_prodinstr.Dispose();
-            cb_prodinstr.Dispose();
-
-            dt_prodinstr = new DataTable("吹膜工序领料退料记录");
-            bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where ID="+id, mySystem.Parameter.connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
-
-            //if (dt_prodinstr.Rows.Count == 0)
-            //{
-            //    DataRow dr = dt_prodinstr.NewRow();
-            //    dr[2] = dr[4] = dr[5] = dr[10] = dr[11] = "";
-            //    dr[3] = DateTime.Now;
-            //    dr[1] = dr[7] = dr[8] = dr[9] = 0;
-            //    dr[6] = false;
-            //    dt_prodinstr.Rows.Add(dr);
-            //}
-
-            //DataTable到BindingSource的绑定
-            bs_prodinstr.DataSource = dt_prodinstr;
-
-            //解除之前的绑定
-            textBox1.DataBindings.Clear();
-            textBox2.DataBindings.Clear();
-            textBox3.DataBindings.Clear();
-            textBox4.DataBindings.Clear();
-            textBox5.DataBindings.Clear();
-
-            //BindingSource到控件的绑定
-            textBox1.DataBindings.Add("Text", bs_prodinstr.DataSource, "重量合计");
-            textBox2.DataBindings.Add("Text", bs_prodinstr.DataSource, "数量合计");
-            textBox3.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料");
-            textBox4.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料操作人");
-            textBox5.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料审核人");
-        }
-        private void bind_list(int id)
-        {
-            dt_prodlist.Dispose();
-            bs_prodlist.Dispose();
-            da_prodlist.Dispose();
-            cb_prodlist.Dispose();
-
-            dt_prodlist = new DataTable("吹膜工序领料详细记录");
-            bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from 吹膜工序领料详细记录 where T吹膜工序领料退料记录ID=" + id, mySystem.Parameter.connOle);
-            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
-            da_prodlist.Fill(dt_prodlist);
-
-            //DataTable到BindingSource的绑定
-            bs_prodlist.DataSource = dt_prodlist;
-
-            //BindingSource到控件的绑定
-            dataGridView1.DataSource = bs_prodlist.DataSource;
-
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-        }
         void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
@@ -224,24 +89,6 @@ namespace mySystem.Extruction.Process
             //dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "";
         }
 
-        //添加空行
-        private void addblankrow()
-        {
-            DataGridViewRow dr = new DataGridViewRow();
-            foreach (DataGridViewColumn c in dataGridView1.Columns)
-            {
-                dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            }
-            dataGridView1.Rows.Add(dr);
-        }
-
-        private int getid()
-        {
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
-            comm.CommandText = "select @@identity";
-            return (int)comm.ExecuteScalar();
-        }
         //根据筛选条件查找id
         private int getid(int instrid,string matcode)
         {
@@ -264,11 +111,6 @@ namespace mySystem.Extruction.Process
                 return (int)tempdt.Rows[0][0];
             }
         }
-        //保存领料退料数据到数据库中
-        private void save_to_database(List<cont> list)
-        {
-            
-        }
 
         //检查输入人是否合法
         private int queryid(string s)
@@ -288,290 +130,21 @@ namespace mySystem.Extruction.Process
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //判断输入合法性
-            if (queryid(textBox4.Text) == -1)
-            {
-                MessageBox.Show("退料操作人不合法");
+            //判断合法性
+            if (!input_Judge())
                 return;
-            }
 
-            if (textBox1.Text == "")
-            {
-                textBox1.Text = "0";
-            }
-            if (textBox2.Text == "")
-            {
-                textBox2.Text = "0";
-            }
-            if (textBox3.Text == "")
-            {
-                textBox3.Text = "0";
-            }
-            string s1 = textBox1.Text;
-            string s2 = textBox2.Text;
-            string s3 = textBox3.Text;
-            string s4 = textBox4.Text;
-            string s5 = textBox5.Text;
-
-            dt_prodinstr.Rows[0][1] = instrid;
-            dt_prodinstr.Rows[0][7] = float.Parse(s1);
-            dt_prodinstr.Rows[0][8] = float.Parse(s2);
-            dt_prodinstr.Rows[0][9] = float.Parse(s3);
-            dt_prodinstr.Rows[0][10] = s4;
-            dt_prodinstr.Rows[0][11] = s5;
+            //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            readOuterData(instrid,cB物料代码.Text);
+            removeOuterBinding();
+            outerBind();
 
+            //内表保存
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-            MessageBox.Show("添加成功");
-        }
-
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (checkBox1.Checked)
-            //{
-            //    checkBox2.Checked = false;
-            //    checkBox3.Checked = false;
-            //    checkBox4.Checked = false;
-            //    label = 1;
-            //}
-            ////清空表格
-            //while (dataGridView1.Rows.Count != 0)
-            //    dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-            ////填充数据
-            //for (int i = 0; i < list_1.Count; i++)
-            //{
-            //    DataGridViewRow dr = new DataGridViewRow();
-            //    foreach (DataGridViewColumn c in dataGridView1.Columns)
-            //    {
-            //        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            //    }
-            //    dr.Cells[0].Value = list_1[i].date;
-            //    dr.Cells[1].Value = list_1[i].num;
-            //    dr.Cells[2].Value = list_1[i].weight;
-            //    dr.Cells[3].Value = list_1[i].numperw;
-            //    dr.Cells[4].Value = list_1[i].ispatch;
-            //    dr.Cells[5].Value = list_1[i].isclean;
-            //    dr.Cells[6].Value = list_1[i].oper;
-            //    dr.Cells[7].Value = list_1[i].checker;
-
-            //    dataGridView1.Rows.Add(dr);
-            //}
-            //addblankrow();
-
-            if (checkBox1.Checked)
-            {
-                checkBox2.Checked = false;
-                checkBox3.Checked = false;
-                checkBox4.Checked = false;
-                label = 1;
-            }
-            else
-                return;
-            //绑定1
-            id = getid(instrid, "SPM-PE-01");
-            if (id == -1)//没找到就进行插入
-            {
-                bind_insert(instrid,"SPM-PE-01");
-                dt_prodinstr.Rows[0][1] = instrid;
-                dt_prodinstr.Rows[0][2] = "SPM-PE-01";
-                dt_prodinstr.Rows[0][10] = mySystem.Parameter.userName;//退料操作人
-                bs_prodinstr.EndEdit();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                id = getid();
-                bind_list(id);
-            }
-            else
-            {
-                bind(id);
-                bind_list(id);
-            }
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (checkBox2.Checked)
-            //{
-            //    checkBox1.Checked = false;
-            //    checkBox3.Checked = false;
-            //    checkBox4.Checked = false;
-            //    label = 2;
-            //}
-            ////清空表格
-            //while (dataGridView1.Rows.Count != 0)
-            //    dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-            ////填充数据
-            //for (int i = 0; i < list_4.Count; i++)
-            //{
-            //    DataGridViewRow dr = new DataGridViewRow();
-            //    foreach (DataGridViewColumn c in dataGridView1.Columns)
-            //    {
-            //        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            //    }
-            //    dr.Cells[0].Value = list_4[i].date;
-            //    dr.Cells[1].Value = list_4[i].num;
-            //    dr.Cells[2].Value = list_4[i].weight;
-            //    dr.Cells[3].Value = list_4[i].numperw;
-            //    dr.Cells[4].Value = list_4[i].ispatch;
-            //    dr.Cells[5].Value = list_4[i].isclean;
-            //    dr.Cells[6].Value = list_4[i].oper;
-            //    dr.Cells[7].Value = list_4[i].checker;
-
-            //    dataGridView1.Rows.Add(dr);
-            //}
-            //addblankrow();
-
-            if (checkBox2.Checked)
-            {
-                checkBox1.Checked = false;
-                checkBox3.Checked = false;
-                checkBox4.Checked = false;
-                label = 2;
-            }
-            else
-                return;
-            //绑定1
-            id = getid(instrid, "SPM-PE-04");
-            if (id == -1)//没找到就进行插入
-            {
-                bind_insert(instrid, "SPM-PE-04");
-                dt_prodinstr.Rows[0][1] = instrid;
-                dt_prodinstr.Rows[0][2] = "SPM-PE-04";
-                dt_prodinstr.Rows[0][10] = mySystem.Parameter.userName;//退料操作人
-                bs_prodinstr.EndEdit();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                id = getid();
-                bind_list(id);
-            }
-            else
-            {
-                bind(id);
-                bind_list(id);
-            }
-        }
-
-        private void checkBox3_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (checkBox3.Checked)
-            //{
-            //    checkBox2.Checked = false;
-            //    checkBox1.Checked = false;
-            //    checkBox4.Checked = false;
-            //    label = 3;
-            //}
-            ////清空表格
-            //while (dataGridView1.Rows.Count != 0)
-            //    dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-            ////填充数据
-            //for (int i = 0; i < list_6.Count; i++)
-            //{
-            //    DataGridViewRow dr = new DataGridViewRow();
-            //    foreach (DataGridViewColumn c in dataGridView1.Columns)
-            //    {
-            //        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            //    }
-            //    dr.Cells[0].Value = list_6[i].date;
-            //    dr.Cells[1].Value = list_6[i].num;
-            //    dr.Cells[2].Value = list_6[i].weight;
-            //    dr.Cells[3].Value = list_6[i].numperw;
-            //    dr.Cells[4].Value = list_6[i].ispatch;
-            //    dr.Cells[5].Value = list_6[i].isclean;
-            //    dr.Cells[6].Value = list_6[i].oper;
-            //    dr.Cells[7].Value = list_6[i].checker;
-
-            //    dataGridView1.Rows.Add(dr);
-            //}
-            //addblankrow();
-
-            if (checkBox3.Checked)
-            {
-                checkBox1.Checked = false;
-                checkBox2.Checked = false;
-                checkBox4.Checked = false;
-                label = 3;
-            }
-            else
-                return;
-            //绑定1
-            id = getid(instrid, "SPM-PE-06");
-            if (id == -1)//没找到就进行插入
-            {
-                bind_insert(instrid, "SPM-PE-06");
-                dt_prodinstr.Rows[0][1] = instrid;
-                dt_prodinstr.Rows[0][2] = "SPM-PE-06";
-                dt_prodinstr.Rows[0][10] = mySystem.Parameter.userName;//退料操作人
-                bs_prodinstr.EndEdit();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                id = getid();
-                bind_list(id);
-            }
-            else
-            {
-                bind(id);
-                bind_list(id);
-            }
-        }
-
-        private void checkBox4_CheckedChanged(object sender, EventArgs e)
-        {
-            //if (checkBox4.Checked)
-            //{
-            //    checkBox2.Checked = false;
-            //    checkBox3.Checked = false;
-            //    checkBox1.Checked = false;
-            //    label = 4;
-            //}
-            ////清空表格
-            //while (dataGridView1.Rows.Count != 0)
-            //    dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-            ////填充数据
-            //for (int i = 0; i < list_11.Count; i++)
-            //{
-            //    DataGridViewRow dr = new DataGridViewRow();
-            //    foreach (DataGridViewColumn c in dataGridView1.Columns)
-            //    {
-            //        dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            //    }
-            //    dr.Cells[0].Value = list_11[i].date;
-            //    dr.Cells[1].Value = list_11[i].num;
-            //    dr.Cells[2].Value = list_11[i].weight;
-            //    dr.Cells[3].Value = list_11[i].numperw;
-            //    dr.Cells[4].Value = list_11[i].ispatch>0;
-            //    dr.Cells[5].Value = list_11[i].isclean>0;
-            //    dr.Cells[6].Value = list_11[i].oper;
-            //    dr.Cells[7].Value = list_11[i].checker;
-
-            //    dataGridView1.Rows.Add(dr);
-            //}
-            //addblankrow();
-
-            if (checkBox4.Checked)
-            {
-                checkBox1.Checked = false;
-                checkBox2.Checked = false;
-                checkBox3.Checked = false;
-                label = 4;
-            }
-            else
-                return;
-            //绑定1
-            id = getid(instrid, "SPM-PE-011");
-            if (id == -1)//没找到就进行插入
-            {
-                bind_insert(instrid, "SPM-PE-011");
-                dt_prodinstr.Rows[0][1] = instrid;
-                dt_prodinstr.Rows[0][2] = "SPM-PE-011";
-                dt_prodinstr.Rows[0][10] = mySystem.Parameter.userName;//退料操作人
-                bs_prodinstr.EndEdit();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                id = getid();
-                bind_list(id);
-            }
-            else
-            {
-                bind(id);
-                bind_list(id);
-            }
+            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            innerBind();
         }
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -664,6 +237,15 @@ namespace mySystem.Extruction.Process
         }
         private void dataGridView1_Endedit(object sender, DataGridViewCellEventArgs e)
         {
+            //重量自己计算
+            if (e.ColumnIndex == 4)
+            {
+
+                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
+                float b = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
+                dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * b;
+            }
+
             //计算合计
             float sum_num = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -673,80 +255,181 @@ namespace mySystem.Extruction.Process
                 if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
                     sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
             }
-            textBox1.Text = sum_num.ToString();
-            textBox2.Text = sum_weight.ToString();
+            //tb重量.Text = sum_num.ToString();
+            //tb数量.Text = sum_weight.ToString();
+            dt_prodinstr.Rows[0]["重量合计"] = sum_weight;
+            dt_prodinstr.Rows[0]["数量合计"] = sum_num;
         }
 
-        private void addtolist(List<cont> list, int row, int col)
-        {
-            //switch (col)
-            //{
-            //    case 0:
-            //        list[row].date = DateTime.Parse(dataGridView1.Rows[row].Cells[0].Value.ToString());
-            //        break;
-            //    case 1:
-            //        list[row].num = float.Parse(dataGridView1.Rows[row].Cells[1].Value.ToString());
-            //        break;
-            //    case 2:
-            //        list[row].weight = float.Parse(dataGridView1.Rows[row].Cells[2].Value.ToString());
-            //        break;
-            //    case 3:
-            //        list[row].numperw = float.Parse(dataGridView1.Rows[row].Cells[3].Value.ToString());
-            //        break;
-            //    case 4:
-            //        if (dataGridView1.Rows[row].Cells[4].EditedFormattedValue.ToString()=="True")
-            //            list[row].ispatch = 1;
-            //        else
-            //            list[row].ispatch = 0;
-            //        break;
-            //    case 5:
-            //        if (dataGridView1.Rows[row].Cells[5].EditedFormattedValue.ToString() == "True")
-            //            list[row].isclean = 1;
-            //        else
-            //            list[row].isclean = 0;
-            //        break;
-            //    case 6:
-            //        list[row].oper = dataGridView1.Rows[row].Cells[6].Value.ToString();
-            //        break;
-            //    case 7:
-            //        list[row].checker = dataGridView1.Rows[row].Cells[7].Value.ToString();
-            //        break;
-            //}
-        }
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
 
-        private void Record_material_reqanddisg_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        //添加行
         private void button3_Click(object sender, EventArgs e)
         {
             DataRow dr = dt_prodlist.NewRow();
             // 如果行有默认值，在这里写代码填上
-            dr[1] = id;
-            dt_prodlist.Rows.InsertAt(dr, dt_prodlist.Rows.Count);
+            dr = writeInnerDefault(dr);
+
+            dt_prodlist.Rows.Add(dr);
+            setDataGridViewRowNums();
         }
 
         //审核
         public override void CheckResult()
         {
             base.CheckResult();
-            dt_prodinstr.Rows[0][11] = checkform.userName;//退料审核人
-            dt_prodinstr.Rows[0][5] = checkform.opinion;
-            dt_prodinstr.Rows[0][6] = checkform.ischeckOk;
+            dt_prodinstr.Rows[0]["退料审核人"] = checkform.userName;//退料审核人
+            dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
+            dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             checkform = new CheckForm(this);
             checkform.Show();
+
+        }
+
+        // 给外表的一行写入默认值
+        DataRow writeOuterDefault(DataRow dr)
+        {
+            dr["生产指令ID"] = instrid;
+            dr["物料代码"] = cB物料代码.Text;
+            dr["领料日期"] = DateTime.Now;
+            dr["审核是否通过"] = false;
+            dr["重量合计"] = 0;
+            dr["数量合计"] = 0;
+            dr["退料"] = 0;
+            dr["退料操作人"] = mySystem.Parameter.userName;
+            return dr;
+
+        }
+        // 给内表的一行写入默认值
+        DataRow writeInnerDefault(DataRow dr)
+        {
+            dr["T吹膜工序领料退料记录ID"] = dt_prodinstr.Rows[0]["ID"];
+            dr["领料日期"] = DateTime.Now;
+            dr["数量"] = 0;
+            dr["重量每件"] = 0;
+            dr["重量"] = 0;
+            dr["包装完好_是"] = true;
+            dr["包装完好_否"] = false;
+            dr["清洁合格_是"] = true;
+            dr["清洁合格_否"] = false;
+            return dr;
+        }
+        // 根据条件从数据库中读取一行外表的数据
+        void readOuterData(int instrid,string matcode)
+        {
+            dt_prodinstr = new DataTable("吹膜工序领料退料记录");
+            bs_prodinstr = new BindingSource();
+            da_prodinstr = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where 生产指令ID=" + instrid+" and 物料代码='"+ matcode +"'", mySystem.Parameter.connOle);
+            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+            da_prodinstr.Fill(dt_prodinstr);
+        }
+        // 根据条件从数据库中读取多行内表数据
+        void readInnerData(int id)
+        {
+            dt_prodlist = new DataTable("吹膜工序领料详细记录");
+            bs_prodlist = new BindingSource();
+            da_prodlist = new OleDbDataAdapter("select * from 吹膜工序领料详细记录 where T吹膜工序领料退料记录ID=" + id, mySystem.Parameter.connOle);
+            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
+            da_prodlist.Fill(dt_prodlist);
+        }
+        // 移除外表和控件的绑定，建议使用Control.DataBinds.RemoveAt(0)
+        void removeOuterBinding()
+        {
+            //解除之前的绑定
+            tb重量.DataBindings.Clear();
+            tb数量.DataBindings.Clear();
+            tb退料量.DataBindings.Clear();
+            tb退料操作人.DataBindings.Clear();
+            tb退料审核人.DataBindings.Clear();
+        }
+        // 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
+        void removeInnerBinding()
+        { }
+        // 外表和控件的绑定
+        void outerBind()
+        {
+            bs_prodinstr.DataSource = dt_prodinstr;
+            tb重量.DataBindings.Add("Text", bs_prodinstr.DataSource, "重量合计");
+            tb数量.DataBindings.Add("Text", bs_prodinstr.DataSource, "数量合计");
+            tb退料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料");
+            tb退料操作人.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料操作人");
+            tb退料审核人.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料审核人");
+        }
+        // 内表和控件的绑定
+        void innerBind()
+        {
+            bs_prodlist.DataSource = dt_prodlist;
+            dataGridView1.DataSource = bs_prodlist.DataSource;
+            setDataGridViewColumns();
+        }
+        // 设置DataGridView中各列的格式
+        void setDataGridViewColumns()
+        {
+            dataGridView1.Columns[0].Visible = false;//ID
+            dataGridView1.Columns[1].Visible = false;//T吹膜工序领料退料记录ID
+            dataGridView1.Columns[5].ReadOnly = true;//重量
+
+        }
+        //设置datagridview序号
+        void setDataGridViewRowNums()
+        {
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //{
+            //    dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
+            //}
+        }
+
+        //判断数据合法性
+        bool input_Judge()
+        {
+            //判断合法性
+            return true;
+        }
+        private void cB物料代码_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = true;
+            }
+
+            readOuterData(instrid,cB物料代码.Text);
+            removeOuterBinding();
+            outerBind();
+            if (dt_prodinstr.Rows.Count <= 0)
+            {
+                DataRow dr = dt_prodinstr.NewRow();
+                dr = writeOuterDefault(dr);
+                dt_prodinstr.Rows.Add(dr);
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(instrid, cB物料代码.Text);
+                removeOuterBinding();
+                outerBind();
+            }
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+            {
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = false;
+                }
+                cB物料代码.Enabled = true;
+                bt打印.Enabled = true;
+            }
+        }
+
+        private void bt打印_Click(object sender, EventArgs e)
+        {
 
         }
     }

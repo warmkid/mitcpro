@@ -43,56 +43,43 @@ namespace BatchProductRecord
         int id;
         int label = 0;//1代表插入成功
         OleDbConnection connOle;
-        private DataTable dt_prodinstr,dt_prodlist;//讲师
+        private DataTable dt_prodinstr,dt_prodlist;
         private OleDbDataAdapter da_prodinstr,da_prodlist;
         private BindingSource bs_prodinstr,bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr,cb_prodlist;
 
-        private void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        //读取产品列表填入产品名称下拉列表
+        private void fill_prodname()
         {
-
+            DataTable dt = new System.Data.DataTable();
+            OleDbDataAdapter da= new OleDbDataAdapter("select 产品名称 from 生产指令信息表", mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            da.Fill(dt);
+            da.Dispose();
+            cb.Dispose();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                comboBox1.Items.Add(dt.Rows[i][0].ToString());
+            }
         }
+
+
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            #region 之前
-            //init();
-            //addrows();
-            #endregion
-
             init();
 
-            //bind();
-            
+            fill_prodname();
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = false;
+            }
+            tb指令编号.Enabled = true;
+            button5.Enabled = true;
+          
         }
         private void init()
         {
-            #region 之前
-            //textBox4.Text = "AA-EQM-032";
-            //textBox24.Text = mySystem.Parameter.userName;
-            //button2.Enabled = false;
-            //button3.Enabled = false;
-            //sumweight = 0;
-
-            ////从产品表中读数据填入产品代码下拉列表中
-            //if (mainform.isSqlOk)
-            //{
-            //}
-            //else
-            //{
-            //    string asql = "select product_code from product_aoxing";
-            //    OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            //    OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
-            //    dt = new DataTable();
-            //    da.Fill(dt);
-            //    da.Dispose();
-            //    comm.Dispose();
-
-            //}
-            #endregion
-
-
             connOle = mySystem.Parameter.connOle;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataError += dataGridView1_DataError;
@@ -107,121 +94,31 @@ namespace BatchProductRecord
             da_prodlist = new OleDbDataAdapter();
             cb_prodlist = new OleDbCommandBuilder();
 
-            textBox24.Text = mySystem.Parameter.userName;
-        }
-        //产品列表绑定
-        private void bind_list(int id)
-        {
-            dt_prodlist.Dispose();
-            bs_prodlist.Dispose();
-            da_prodlist.Dispose();
-            cb_prodlist.Dispose();
-
-            dt_prodlist = new DataTable("生产指令产品列表");
-            bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID="+id, connOle);
-            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
-            da_prodlist.Fill(dt_prodlist);
-
-            //DataTable到BindingSource的绑定
-            bs_prodlist.DataSource = dt_prodlist;
-
-            //BindingSource到控件的绑定
-            dataGridView1.DataSource = bs_prodlist.DataSource;
-
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[5].ReadOnly = true;
-            
         }
 
-        //初次绑定数据库表
-        private void bind()
-        {
-            dt_prodinstr.Dispose();
-            bs_prodinstr.Dispose();
-            da_prodinstr.Dispose();
-            cb_prodinstr.Dispose();
-
-            dt_prodinstr = new DataTable("生产指令信息表");
-            bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 生产指令信息表 where 1=2", connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
-
-            DataRow dr = dt_prodinstr.NewRow();
-            dr[1] = dr[2] = dr[3] = dr[4] = dr[6] = dr[7] = dr[8] = dr[10] = dr[11] = dr[12] = dr[14] = dr[15] = dr[17] = dr[19] = dr[20] = dr[22] = dr[24] = dr[26] = dr[29] = "";
-            dr[5] = dr[21] = dr[23] = dr[25] = DateTime.Now;
-            dr[9] = dr[13] = dr[16] = dr[18] = dr[28] = dr[30] = dr[31] = dr[32] = 0;
-            dr[27] = false;
-            dt_prodinstr.Rows.Add(dr);
-
-            //DataTable到BindingSource的绑定
-            bs_prodinstr.DataSource = dt_prodinstr;
-
-            //解除之前的绑定
-            textBox1.DataBindings.Clear();
-            textBox2.DataBindings.Clear();
-            textBox3.DataBindings.Clear();
-            textBox4.DataBindings.Clear();
-            dateTimePicker1.DataBindings.Clear();
-
-            textBox15.DataBindings.Clear();
-            textBox17.DataBindings.Clear();
-            textBox19.DataBindings.Clear();
-            textBox21.DataBindings.Clear();
-            textBox16.DataBindings.Clear();
-            textBox18.DataBindings.Clear();
-            textBox20.DataBindings.Clear();
-            textBox22.DataBindings.Clear();
-            textBox12.DataBindings.Clear();
-            textBox13.DataBindings.Clear();
-            textBox14.DataBindings.Clear();
-            textBox9.DataBindings.Clear();
-            textBox11.DataBindings.Clear();
-            textBox5.DataBindings.Clear();
-
-            textBox24.DataBindings.Clear();
-            textBox25.DataBindings.Clear();
-            textBox26.DataBindings.Clear();
-            dateTimePicker2.DataBindings.Clear();
-            dateTimePicker3.DataBindings.Clear();
-            dateTimePicker4.DataBindings.Clear();
-
-            //BindingSource到控件的绑定
-            bind_bs_contr();
-
-            index = 0;
-
-        }
-
-        private void bind_bs_contr_list()
-        {
-            dataGridView1.DataSource = bs_prodlist.DataSource;
- 
-        }
         private void bind_bs_contr()    
         {
-            textBox1.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品名称");
-            textBox2.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令编号");
-            textBox3.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产工艺");
-            textBox4.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产设备编号");
-            dateTimePicker1.DataBindings.Add("Value", bs_prodinstr.DataSource, "开始生产日期");
+            //textBox1.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品名称");
+            comboBox1.DataBindings.Add("Text",bs_prodinstr.DataSource,"产品名称");
+            tb指令编号.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令编号");
+            tb工艺.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产工艺");
+            tb设备编号.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产设备编号");
+            dtp开始生产日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "开始生产日期");
 
-            textBox15.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层物料代码");
-            textBox17.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层物料批号");
+            tb内外层物料代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层物料代码");
+            tb内外层物料批号.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层物料批号");
             textBox19.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层包装规格");
-            textBox21.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层领料量");
+            tb内外领料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "内外层领料量");
             textBox16.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层物料代码");
             textBox18.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层物料批号");
             textBox20.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层包装规格");
-            textBox22.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层领料量");
+            tb中层领料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层领料量");
             textBox12.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管");
             textBox13.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管规格");
-            textBox14.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管领料量");
+            tb卷心管领料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "卷心管领料量");
             textBox9.DataBindings.Add("Text", bs_prodinstr.DataSource, "双层洁净包装包装规格");
-            textBox11.DataBindings.Add("Text", bs_prodinstr.DataSource, "双层洁净包装领料量");
-            textBox5.DataBindings.Add("Text", bs_prodinstr.DataSource, "负责人");
+            tb双层包装领料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "双层洁净包装领料量");
+            tb负责人.DataBindings.Add("Text", bs_prodinstr.DataSource, "负责人");
 
             textBox24.DataBindings.Add("Text", bs_prodinstr.DataSource, "编制人");
             textBox25.DataBindings.Add("Text", bs_prodinstr.DataSource, "审批人");
@@ -229,16 +126,12 @@ namespace BatchProductRecord
             dateTimePicker2.DataBindings.Add("Value", bs_prodinstr.DataSource, "编制时间");
             dateTimePicker3.DataBindings.Add("Value", bs_prodinstr.DataSource, "审批时间");
             dateTimePicker4.DataBindings.Add("Value", bs_prodinstr.DataSource, "接收时间");
+
+            textBox6.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计米");
+            tb用料重量合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "用料重量合计");
+            textBox10.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计卷");
         }
         
-        //得到最新插入的行的id
-        private int getid()
-        {
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
-            comm.CommandText = "select @@identity";
-            return (int)comm.ExecuteScalar();
-        }
         //根据筛选条件得到指令id,没有返回-1
         private int getid(string instrcode)
         {
@@ -260,58 +153,6 @@ namespace BatchProductRecord
                 da.Dispose();
                 return (int)tempdt.Rows[0][0];
             }
-        }
-
-        //再次绑定数据库表，相当与更新
-        private void bind2(int id)
-        {
-            dt_prodinstr.Dispose();
-            bs_prodinstr.Dispose();
-            da_prodinstr.Dispose();
-            cb_prodinstr.Dispose();
-
-            dt_prodinstr = new DataTable("生产指令信息表");
-            bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 生产指令信息表 where ID="+id, connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
-
-            //DataTable到BindingSource的绑定
-            bs_prodinstr.DataSource = dt_prodinstr;
-
-            //解除之前的绑定
-            textBox1.DataBindings.Clear();
-            textBox2.DataBindings.Clear();
-            textBox3.DataBindings.Clear();
-            textBox4.DataBindings.Clear();
-            dateTimePicker1.DataBindings.Clear();
-
-            textBox15.DataBindings.Clear();
-            textBox17.DataBindings.Clear();
-            textBox19.DataBindings.Clear();
-            textBox21.DataBindings.Clear();
-            textBox16.DataBindings.Clear();
-            textBox18.DataBindings.Clear();
-            textBox20.DataBindings.Clear();
-            textBox22.DataBindings.Clear();
-            textBox12.DataBindings.Clear();
-            textBox13.DataBindings.Clear();
-            textBox14.DataBindings.Clear();
-            textBox9.DataBindings.Clear();
-            textBox11.DataBindings.Clear();
-            textBox5.DataBindings.Clear();
-
-            textBox24.DataBindings.Clear();
-            textBox25.DataBindings.Clear();
-            textBox26.DataBindings.Clear();
-            dateTimePicker2.DataBindings.Clear();
-            dateTimePicker3.DataBindings.Clear();
-            dateTimePicker4.DataBindings.Clear();
-
-            //BindingSource到控件的绑定
-            bind_bs_contr();
-
-            index = 1;
         }
 
         //表格错误处理
@@ -339,80 +180,31 @@ namespace BatchProductRecord
             //    combox.Items.Add(dt.Rows[i][0]);
             //}
         }
-        private void textBox12_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void ProcessProductInstru_Load(object sender, EventArgs e)
         {
 
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
+        //审核按钮点击
         public override void CheckResult()
         {
-            #region 以前
-            //base.CheckResult();
-            ////获得审核信息
-            ////string opinion = checkform.opinion;
-            ////bool isok = checkform.ischeckOk;
-            //textBox25.Text = name_findby_id(checkform.userID);
-            //dateTimePicker3.Value = checkform.time;
-
-            ////选择刚才的表中对应的记录，并更新里面的记录
-            //string asql = "select production_instruction_id from production_instruction where production_instruction_code='"+last_code+"'";
-            //OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            //OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
-            //DataTable tempdt = new DataTable();
-            //da.Fill(tempdt);
-            //if (tempdt.Rows.Count == 0)
-            //{
-            //    MessageBox.Show("对应的记录未找到");
-            //    return;
-            //}
-            //int id = Int32.Parse(tempdt.Rows[0][0].ToString());
-            //comm.CommandText = "update production_instruction set reviewer_id=@id,review_date=@date,review_opinion=@opinion,is_review_qualified=@isok where production_instruction_id="+id;
-            //comm.Parameters.Add("@id", System.Data.OleDb.OleDbType.Integer);
-            //comm.Parameters.Add("@date", System.Data.OleDb.OleDbType.Date);
-            //comm.Parameters.Add("@opinion", System.Data.OleDb.OleDbType.VarChar);
-            //comm.Parameters.Add("@isok", System.Data.OleDb.OleDbType.Boolean);
-
-            //comm.Parameters["@id"].Value = checkform.userID;
-            //comm.Parameters["@date"].Value = checkform.time;
-            //comm.Parameters["@opinion"].Value = checkform.opinion;
-            //comm.Parameters["@isok"].Value = checkform.ischeckOk;
-            //int result = comm.ExecuteNonQuery();
-            //if (result<=0)
-            //{
-            //    MessageBox.Show("添加错误");
-            //}
-
-            //button3.Enabled = true;
-            //da.Dispose();
-            //comm.Dispose();
-            //tempdt.Dispose();
-            #endregion
             base.CheckResult();
             //获得审核信息
             textBox25.Text = checkform.userName;
             dateTimePicker3.Value = checkform.time;
-            dt_prodinstr.Rows[0][22] = checkform.userName;
-            dt_prodinstr.Rows[0][23] = checkform.time;
-            dt_prodinstr.Rows[0][26] = checkform.opinion;
-            dt_prodinstr.Rows[0][27] = checkform.ischeckOk;
+            dt_prodinstr.Rows[0]["审批人"] = checkform.userName;
+            dt_prodinstr.Rows[0]["审批时间"] = checkform.time;
+            dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
+            dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
             //状态
             if (checkform.ischeckOk)
             {
-                dt_prodinstr.Rows[0][28] = 1;//带接收
+                dt_prodinstr.Rows[0]["状态"] = 1;//待接收
             }
             else
             {
-                dt_prodinstr.Rows[0][28] = 0;//未审核，草稿
+                dt_prodinstr.Rows[0]["状态"] = 0;//未审核，草稿
             }
 
             bs_prodinstr.EndEdit();
@@ -426,430 +218,26 @@ namespace BatchProductRecord
             
         }
 
+        //确认按钮
         private void button1_Click_1(object sender, EventArgs e)
         {
-
-            #region 之前
-//            float in_amout;
-//            float mid_amout;
-//            float juan_amout;
-//            float extruproc_label_amout;
-//            float doubclean_amout;
-
-//            if (!float.TryParse(textBox21.Text, out  in_amout) || !float.TryParse(textBox22.Text, out mid_amout) || !float.TryParse(textBox14.Text, out juan_amout))
-//            {
-//                MessageBox.Show("领料量必须为数值类型");
-//                return;
-//            }
-
-//            string prodname = textBox1.Text;
-//            string instrcode = textBox2.Text;
-//            if (instrcode == "")
-//            {
-//                MessageBox.Show("生产指令未填写");
-//                return;
-//            }
-//            string art = textBox3.Text;
-//            string number = textBox4.Text;
-//            DateTime d = dateTimePicker1.Value;
-//            string in_matcode = textBox15.Text;//内外层物料代码
-//            string in_matbatch = textBox17.Text;
-//            string in_format = textBox19.Text;
-
-//            string mid_matcode = textBox16.Text;//中层物料代码
-//            string mid_matbatch = textBox18.Text;
-//            string mid_format = textBox20.Text;
-
-//            string juan_extr = textBox12.Text;
-//            string juan_format = textBox13.Text;
-//            string juan_quan = textBox14.Text;
-
-//            //string extruproc_label_format = textBox8.Text;
-//            //string extruproc_label_quan = textBox10.Text;
-//            string doubclean_format = textBox9.Text;//内包形式包装规格
-//            string doubclean_quan = textBox11.Text;//内包形式领料量
-
-//            string chargeman = textBox5.Text;
-//            int chargeman_id = id_findby_code(chargeman);
-//            if (chargeman_id == -1)
-//            {
-//                MessageBox.Show("负责人id不存在");
-//                return;
-//            }
-
-//            string extra = textBox23.Text;
-//            string compman = textBox24.Text;//编制人;
-//            //int compman_id = id_findby_code(compman);
-//            //if (compman_id == -1)
-//            //{
-//            //    MessageBox.Show("编制人id不存在");
-//            //    return;
-//            //}
-
-//            DateTime compdate = dateTimePicker2.Value;
-//            string checkman = textBox25.Text;//审批人
-
-//            DateTime checkdate = dateTimePicker3.Value;
-//            string recman = textBox26.Text;//接收人
-//            int recman_id = id_findby_code(recman);
-//            if (recman_id == -1)
-//            {
-//                MessageBox.Show("接受人id不存在");
-//                return;
-//            }
-
-//            DateTime recdate = dateTimePicker4.Value;
-
-//            //领料量是否合法
-//            sumweight = 0;
-//            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++)
-//            {
-//                sumweight += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
-//            }
-//            if (in_amout < sumweight * 0.75 / 0.9)
-//            {
-//                MessageBox.Show("领料量小于供料重量，请重新填写");
-//                return;
-//            }
-
-
-//            //jason格式产品代码
-//            JArray ret = JArray.Parse("[]");
-//            for (int i = 0; i < dataGridView1.Rows.Count - 1; i++) //最后一行不添加
-//            {
-//                string st = "{'";
-//                string t = dataGridView1.Rows[i].Cells[1].Value.ToString() + "':";
-//                st += t;
-//                st += "[" + dataGridView1.Rows[i].Cells[2].Value.ToString() + "," + dataGridView1.Rows[i].Cells[3].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[4].Value.ToString() + "'," + dataGridView1.Rows[i].Cells[5].Value.ToString() + "," + dataGridView1.Rows[i].Cells[6].Value.ToString() + "," + dataGridView1.Rows[i].Cells[7].Value.ToString() + ",'" + dataGridView1.Rows[i].Cells[8].Value.ToString() + "','" + dataGridView1.Rows[i].Cells[9].Value.ToString() + "']}";
-
-//                JObject temp = JObject.Parse(st);
-//                ret.Add(temp);
-//            }
-//            System.Console.WriteLine(ret.ToString());
-
-//            if (mainform.isSqlOk)
-//            {
-//            }
-//            else
-//            {
-//                int result = 0;
-//                OleDbCommand comm = new OleDbCommand();
-//                comm.Connection = mySystem.Parameter.connOle;
-
-//                //                comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
-//                //    "raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
-//                //    "receive_quantity_in_out,receive_quantity_middle,core_tube_parameter,core_tube_package_specifications,core_tube_receive_the_quantity_of_raw_material,package_specifications,package_receive_the_quantity_of_raw_material,package_specifications_inner,package_receive_the_quantity_of_raw_material_inner,extr," +
-//                //    "principal_id,editor_id,reviewer_id,receiver_id,edit_date,review_date,receive_date)" +
-//                //    " values(@name,@instrcode,@prodcess,@machine,@startdate,@desc,@inout_id,@inout_batch,@mid_id,@mid_batch,@inout_pac,@mid_pac," +
-//                //"@inout_quan,@mid_quan,@tube_para,@tube_pac,@tube_quan,@pac_label,@quan_label,@pac_inner,@quan_inner,@extr,@princ_id,@editor_id,@rev_id,@rec_id,@editdate,@revdate,@recdate)";
-
-//                comm.CommandText = "insert into production_instruction(product_name,production_instruction_code,production_process,machine,production_start_date,instruction_description,raw_material_id_in_out,raw_material_batch_in_out," +
-//"raw_material_id_middle,raw_material_batch_middle,package_specifications_in_out,package_specifications_middle," +
-//"receive_quantity_in_out,receive_quantity_middle,core_tube_parameter,core_tube_package_specifications,core_tube_receive_the_quantity_of_raw_material,package_specifications,package_receive_the_quantity_of_raw_material,extr," +
-//"principal_id,editor_id,reviewer_id,receiver_id,edit_date,review_date,receive_date)" +
-//" values(@name,@instrcode,@prodcess,@machine,@startdate,@desc,@inout_id,@inout_batch,@mid_id,@mid_batch,@inout_pac,@mid_pac," +
-//"@inout_quan,@mid_quan,@tube_para,@tube_pac,@tube_quan,@pac_inner,@quan_inner,@extr,@princ_id,@editor_id,@rev_id,@rec_id,@editdate,@revdate,@recdate)";
-
-
-//                System.Console.WriteLine(comm.CommandText.ToString());
-//                comm.Parameters.Add("@name", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@instrcode", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@prodcess", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@machine", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@startdate", System.Data.OleDb.OleDbType.Date);
-//                comm.Parameters.Add("@desc", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@inout_id", System.Data.OleDb.OleDbType.Integer);
-//                comm.Parameters.Add("@inout_batch", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@mid_id", System.Data.OleDb.OleDbType.Integer);
-//                comm.Parameters.Add("@mid_batch", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@inout_pac", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@mid_pac", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@inout_quan", System.Data.OleDb.OleDbType.Integer);//
-//                comm.Parameters.Add("@mid_quan", System.Data.OleDb.OleDbType.Integer);//
-//                comm.Parameters.Add("@tube_para", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@tube_pac", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@tube_quan", System.Data.OleDb.OleDbType.Integer);//
-//                //comm.Parameters.Add("@pac_label", System.Data.OleDb.OleDbType.VarChar);
-//                //comm.Parameters.Add("@quan_label", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@pac_inner", System.Data.OleDb.OleDbType.VarChar);//内包装 包装规格
-//                comm.Parameters.Add("@quan_inner", System.Data.OleDb.OleDbType.VarChar);//内包装 领量
-//                comm.Parameters.Add("@extr", System.Data.OleDb.OleDbType.VarChar);
-//                comm.Parameters.Add("@princ_id", System.Data.OleDb.OleDbType.Integer);
-//                comm.Parameters.Add("@editor_id", System.Data.OleDb.OleDbType.Integer);
-//                comm.Parameters.Add("@rev_id", System.Data.OleDb.OleDbType.Integer);
-//                comm.Parameters.Add("@rec_id", System.Data.OleDb.OleDbType.Integer);
-//                comm.Parameters.Add("@editdate", System.Data.OleDb.OleDbType.Date);
-//                comm.Parameters.Add("@revdate", System.Data.OleDb.OleDbType.Date);
-//                comm.Parameters.Add("@recdate", System.Data.OleDb.OleDbType.Date);
-
-//                comm.Parameters["@name"].Value = prodname;
-//                comm.Parameters["@instrcode"].Value = instrcode;
-//                comm.Parameters["@prodcess"].Value = art;
-//                comm.Parameters["@machine"].Value = number;
-//                comm.Parameters["@startdate"].Value = d;
-//                comm.Parameters["@desc"].Value = ret.ToString();
-//                comm.Parameters["@inout_id"].Value = id_findby_code(ret.ToString());
-//                comm.Parameters["@inout_batch"].Value = in_matbatch;
-//                comm.Parameters["@mid_id"].Value = id_findby_code(mid_matcode);
-//                comm.Parameters["@mid_batch"].Value = mid_matbatch;
-//                comm.Parameters["@inout_pac"].Value = mid_format;
-//                comm.Parameters["@mid_pac"].Value = ret.ToString();
-//                comm.Parameters["@inout_quan"].Value = Convert.ToInt32(in_amout);//float to int
-//                comm.Parameters["@mid_quan"].Value = Convert.ToInt32(mid_amout);//float to int
-//                comm.Parameters["@tube_para"].Value = juan_extr;
-//                comm.Parameters["@tube_pac"].Value = juan_format;
-//                comm.Parameters["@tube_quan"].Value = juan_quan;
-//                //comm.Parameters["@pac_label"].Value = extruproc_label_format;
-//                //comm.Parameters["@quan_label"].Value = extruproc_label_quan;
-//                comm.Parameters["@pac_inner"].Value = doubclean_format;
-//                comm.Parameters["@quan_inner"].Value = doubclean_quan;
-//                comm.Parameters["@extr"].Value = extra;
-//                comm.Parameters["@princ_id"].Value = id_findby_code(chargeman);
-//                comm.Parameters["@editor_id"].Value = id_findby_code(compman);
-//                comm.Parameters["@rev_id"].Value = id_findby_code(checkman);
-//                comm.Parameters["@rec_id"].Value = id_findby_code(recman);
-//                comm.Parameters["@editdate"].Value = compdate;
-//                comm.Parameters["@revdate"].Value = checkdate;
-//                comm.Parameters["@recdate"].Value = recdate;
-
-//                //System.Console.WriteLine(comm.CommandText.ToString());
-
-//                result = comm.ExecuteNonQuery();
-//                if (result > 0)
-//                {
-//                    last_code = instrcode;
-//                    MessageBox.Show("添加成功");
-//                }
-//                else { MessageBox.Show("错误"); }
-//            }
-//            button2.Enabled = true;
-            #endregion
             //判断合法性
-            int nameid = mySystem.Parameter.NametoID(textBox5.Text);
-            if (nameid <= 0)
-            {
-                MessageBox.Show("负责人id不存在");
+            if (!input_Judge())
                 return;
-            }
-            ////计算合计
-            //float sum_mi=0,sum_juan=0,sum_weight=0;
-            //for(int i=0;i<dataGridView1.Rows.Count;i++)
-            //{
-            //    sum_mi+=float.Parse(dataGridView1.Rows[i].Cells[4].ToString());
-            //    sum_weight = float.Parse(dataGridView1.Rows[i].Cells[5].ToString());
-            //    sum_juan=float.Parse(dataGridView1.Rows[i].Cells[8].ToString());
-            //}
-            //textBox6.Text = sum_mi.ToString();
-            //textBox8.Text = sum_weight.ToString();
-            //textBox10.Text = sum_juan.ToString();
 
-            if (textBox6.Text == "" || textBox8.Text == "" || textBox10.Text == "")
-            {
-                textBox6.Text = "0";
-                textBox8.Text = "0";
-                textBox10.Text = "0";
-            }
-            
-            if (textBox21.Text == "" || int.Parse(textBox21.Text) < float.Parse(textBox8.Text))
-            {
-                MessageBox.Show("输入不合法");
-                textBox21.Text = "";
-                return;
-            }
-            //判断领料量是否是合法
-            int tempvalue;
-            if (!int.TryParse(textBox22.Text,out tempvalue))
-            {
-                MessageBox.Show("输入不合法");
-                textBox22.Text = "";
-                return;
-            }
-            if (!int.TryParse(textBox14.Text, out tempvalue))
-            {
-                MessageBox.Show("输入不合法");
-                textBox14.Text = "";
-                return;
-            }
-            if (!int.TryParse(textBox11.Text, out tempvalue))
-            {
-                MessageBox.Show("输入不合法");
-                textBox11.Text = "";
-                return;
-            }
-            //判断是更新还是插入
-            id = getid(textBox2.Text);
-            if (id == -1)//进行插入
-            {
-                //保存原来的值
-                string s0 = textBox1.Text;
-                string s1=textBox2.Text;
-                string s2 = textBox3.Text;
-                string s3 = textBox4.Text;
-                DateTime d1 = dateTimePicker1.Value;
-                string s4 = textBox15.Text;
-                string s5 = textBox17.Text;
-                string s6 = textBox19.Text;
-                string s7 = textBox21.Text;
-                string s8 = textBox16.Text;
-                string s9 = textBox18.Text;
-                string s10 = textBox20.Text;
-                string s11 = textBox22.Text;
-                string s12 = textBox12.Text;
-                string s13 = textBox13.Text;
-                string s14 = textBox14.Text;
-                string s15 = textBox9.Text;
-                string s16 = textBox11.Text;
-                
-                string s17 = textBox5.Text;
-                string s18 = textBox24.Text;
-                DateTime d2 = dateTimePicker2.Value;
-               
-                string s19 = textBox25.Text;
-                DateTime d3 = dateTimePicker3.Value;
-                string s20 = textBox26.Text;
-                DateTime d4= dateTimePicker4.Value;
-                string s21 = textBox23.Text;
+            //外表保存
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            readOuterData(tb指令编号.Text);
+            removeOuterBinding();
+            outerBind();
 
-                string s22=textBox26.Text;//接收人
-
-                // 保存非DataGridView中的数据必须先执行EndEdit;
-                bind();
-                label = 1;
-                dt_prodinstr.Rows[0]["产品名称"] = s1;
-                dt_prodinstr.Rows[0]["生产指令编号"] = s1;
-                dt_prodinstr.Rows[0]["生产工艺"] = s2;
-                dt_prodinstr.Rows[0]["生产设备编号"] = s3;
-                dt_prodinstr.Rows[0]["开始生产日期"] = dateTimePicker1.Value;
-                dt_prodinstr.Rows[0]["内外层物料代码"] = s4;
-                dt_prodinstr.Rows[0]["内外层物料批号"] = s5;
-                dt_prodinstr.Rows[0]["内外层包装规格"] = s6;
-                dt_prodinstr.Rows[0]["内外层领料量"] = int.Parse(s7);
-                dt_prodinstr.Rows[0]["中层物料代码"] = s8;
-                dt_prodinstr.Rows[0]["中层物料批号"] = s9;
-                dt_prodinstr.Rows[0]["中层包装规格"] = s10;
-                dt_prodinstr.Rows[0]["中层领料量"] = int.Parse(s11);
-                dt_prodinstr.Rows[0]["卷心管"] = s12;
-                dt_prodinstr.Rows[0]["卷心管规格"] = s13;
-                dt_prodinstr.Rows[0]["卷心管领料量"] = int.Parse(s14);
-                dt_prodinstr.Rows[0]["双层洁净包装包装规格"] = s15;
-                dt_prodinstr.Rows[0]["双层洁净包装领料量"] = int.Parse(s16);
-                dt_prodinstr.Rows[0]["负责人"] = s17;
-                dt_prodinstr.Rows[0]["编制人"] = s18;
-                dt_prodinstr.Rows[0]["编制时间"] = d2;
-                dt_prodinstr.Rows[0]["审批人"] = s19;
-                dt_prodinstr.Rows[0]["审批时间"] = d3;
-                dt_prodinstr.Rows[0]["接收人"] = s20;
-                dt_prodinstr.Rows[0]["接收时间"] = d4;
-                //dt_prodinstr.Rows[0]["审核意见"] = textBox17.Text;
-                //dt_prodinstr.Rows[0]["审核是否通过"] = textBox17.Text;
-                dt_prodinstr.Rows[0]["备注"] = s21;
-
-                dt_prodinstr.Rows[0]["计划产量合计米"] = textBox6.Text;
-                dt_prodinstr.Rows[0]["用料重量合计"] = textBox8.Text;
-                dt_prodinstr.Rows[0]["计划产量合计卷"] = textBox10.Text;
-                //状态为草稿
-                dt_prodinstr.Rows[0]["状态"] = 0;
-                dt_prodinstr.Rows[0]["接收人"] = s22;
-                if (s22 != "")//合法
-                {
-                    dt_prodinstr.Rows[0]["状态"] = 2;
-                }
-
-
-                bs_prodinstr.EndEdit();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                id = getid();  
-
-                for (int i = 0; i < dt_prodlist.Rows.Count; i++)
-                {
-                    dt_prodlist.Rows[i][1] = id;
-                }
-                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-                //dt_prodlist;     
-                bind_list(id);
-
-                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-                //fill(id);
-                MessageBox.Show("添加成功");
-            }
-            else//进行更新
-            {
-                if (index == 0)
-                {
-                    bind2(id);
-                    bind_list(id);
-                }
-                    
-                bs_prodinstr.EndEdit();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-
-                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-                label = 0;
-                //fill(id);
-                MessageBox.Show("更新成功");
-            }
-
+            //内表保存
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            innerBind();
         }
-        private int id_findby_code(string code)
-        {
-            if (mainform.isSqlOk)
-            {
-                return -1;
-            }
-            else
-            {
-                string asql = "select user_id from user_aoxing where user_name=" + "'" + code + "'";
-                OleDbCommand comm = new OleDbCommand(asql,mySystem.Parameter.connOle);
-                OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
-                DataTable tempdt = new DataTable();
-                da.Fill(tempdt);
-                if (tempdt.Rows.Count == 0)
-                    return -1;
-                else
-                    return Int32.Parse(tempdt.Rows[0][0].ToString());
-            }
-        }
-        private int matid_findby_code(string code)
-        {
-            if (mainform.isSqlOk)
-            {
-                return -1;
-            }
-            else
-            {
-                string asql = "select raw_material_id from raw_material where raw_material_code=" + "'" + code + "'";
-                OleDbCommand comm = new OleDbCommand(asql,mySystem.Parameter.connOle);
-                OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
-                DataTable tempdt = new DataTable();
-                da.Fill(tempdt);
-                if (tempdt.Rows.Count == 0)
-                    return -1;
-                else
-                    return Int32.Parse(tempdt.Rows[0][0].ToString());
-            }
-        }
-        private string name_findby_id(int id)
-        {
-            if (mainform.isSqlOk)
-            {
-                return "";
-            }
-            else
-            {
-                string asql = "select user_name from user_aoxing where user_id=" +id;
-                OleDbCommand comm = new OleDbCommand(asql,mySystem.Parameter.connOle);
-                OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
-                DataTable tempdt = new DataTable();
-                da.Fill(tempdt);
-                if (tempdt.Rows.Count == 0)
-                    return "";
-                else
-                    return tempdt.Rows[0][0].ToString();
-            }
-        }
         //编辑单元格结束后触发事件
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -892,54 +280,9 @@ namespace BatchProductRecord
                 if (dataGridView1.Rows[i].Cells[8].Value.ToString() != "")
                     sum_juan += float.Parse(dataGridView1.Rows[i].Cells[8].Value.ToString());
             }
-            textBox6.Text = sum_mi.ToString();
-            textBox8.Text = sum_weight.ToString();
-            textBox10.Text = sum_juan.ToString();
-        }
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            //if (e.RowIndex < 0)
-            //    return;
-            ////if (e.RowIndex == dataGridView1.Rows.Count - 1)
-            ////    addrows();
-            //if (e.ColumnIndex == 3)
-            //{
-            //    string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
-            //    string pattern = @"^[a-zA-Z]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
-            //    if (!Regex.IsMatch(str, pattern))
-            //    {
-            //        MessageBox.Show("产品代码输入不符合规定，重新输入，例如 PEQ-QE-500*100");
-            //        //MessageBox.Show("...");
-            //        dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
-            //        leng = 0;
-            //        return;
-            //    }
-            //    string[] array = str.Split('*');
-            //    string[] array2 = array[0].Split('-');
-            //    leng = float.Parse(array2[2]);
-            //}
-            ////用料重量自己计算
-            //if (e.ColumnIndex == 7)
-            //{
-
-            //    float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
-            //    dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 2 * 0.093;
-            //}
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-        public void fill(string prodinstr)
-        {
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-
+            dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
+            dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
+            dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
         }
 
         //datagridview 添加行
@@ -947,31 +290,12 @@ namespace BatchProductRecord
         {
             DataRow dr = dt_prodlist.NewRow();
             // 如果行有默认值，在这里写代码填上
-            dr[1] = id;
-            dr[2] = dt_prodlist.Rows.Count+1;
-            dt_prodlist.Rows.InsertAt(dr, dt_prodlist.Rows.Count);
+            dr = writeInnerDefault(dr);
+
+            dt_prodlist.Rows.Add(dr);
+            setDataGridViewRowNums();
         }
 
-        private void textBox21_TextChanged(object sender, System.EventArgs e)
-        {
-
-            //if (index == 1)
-            //{
-            //    if (textBox21.Text == "")
-            //        return;
-            //    if (int.Parse(textBox21.Text) < 20)
-            //    {
-            //        MessageBox.Show("输入不合法");
-            //        textBox21.Text = "";
-            //    }
-            //}
-        }
-
-        private void button5_Click(object sender, System.EventArgs e)
-        {
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-            MessageBox.Show("添加成功");
-        }
         //根据id填空
         private void fill(int id)
         {
@@ -984,26 +308,24 @@ namespace BatchProductRecord
             da.Fill(tempdt);
             if (tempdt.Rows.Count == 0)
             {
-                textBox1.Text = "";
-                //textBox2.Text = mySystem.Parameter.userName;
-                textBox3.Text = "";
-                textBox4.Text = "";
-                dateTimePicker1.Value = DateTime.Now;
+                tb工艺.Text = "";
+                tb设备编号.Text = "";
+                dtp开始生产日期.Value = DateTime.Now;
 
-                textBox15.Text = "";
-                textBox17.Text = "";
+                tb内外层物料代码.Text = "";
+                tb内外层物料批号.Text = "";
                 textBox19.Text = "";
-                textBox21.Text = "";
+                tb内外领料量.Text = "";
                 textBox16.Text = "";
                 textBox18.Text = "";
                 textBox20.Text = "";
-                textBox22.Text = "";
+                tb中层领料量.Text = "";
                 textBox12.Text = "";
                 textBox13.Text = "";
-                textBox14.Text = "";
+                tb卷心管领料量.Text = "";
                 textBox9.Text = "";
-                textBox11.Text = "";
-                textBox5.Text = "";
+                tb双层包装领料量.Text = "";
+                tb负责人.Text = "";
 
                 textBox24.Text = mySystem.Parameter.userName;
                 dateTimePicker2.Value = DateTime.Now;
@@ -1015,26 +337,25 @@ namespace BatchProductRecord
             }
             if (tempdt.Rows.Count == 1)
             {
-                textBox1.Text=(string)tempdt.Rows[0][1];
-                textBox2.Text = (string)tempdt.Rows[0][2];
-                textBox3.Text = (string)tempdt.Rows[0][3]; 
-                textBox4.Text = (string)tempdt.Rows[0][4];
-                dateTimePicker1.Value = (DateTime)tempdt.Rows[0][5];
+                tb指令编号.Text = (string)tempdt.Rows[0][2];
+                tb工艺.Text = (string)tempdt.Rows[0][3]; 
+                tb设备编号.Text = (string)tempdt.Rows[0][4];
+                dtp开始生产日期.Value = (DateTime)tempdt.Rows[0][5];
 
-                textBox15.Text = (string)tempdt.Rows[0][6]; 
-                textBox17.Text = (string)tempdt.Rows[0][7]; 
+                tb内外层物料代码.Text = (string)tempdt.Rows[0][6]; 
+                tb内外层物料批号.Text = (string)tempdt.Rows[0][7]; 
                 textBox19.Text = (string)tempdt.Rows[0][8];
-                textBox21.Text = ((double)tempdt.Rows[0][9]).ToString();
+                tb内外领料量.Text = ((double)tempdt.Rows[0][9]).ToString();
                 textBox16.Text = (string)tempdt.Rows[0][10]; 
                 textBox18.Text = (string)tempdt.Rows[0][11];
                 textBox20.Text = (string)tempdt.Rows[0][12];
-                textBox22.Text = ((double)tempdt.Rows[0][13]).ToString();
+                tb中层领料量.Text = ((double)tempdt.Rows[0][13]).ToString();
                 textBox12.Text = (string)tempdt.Rows[0][14]; 
                 textBox13.Text = (string)tempdt.Rows[0][15];
-                textBox14.Text = ((double)tempdt.Rows[0][16]).ToString();
+                tb卷心管领料量.Text = ((double)tempdt.Rows[0][16]).ToString();
                 textBox9.Text = (string)tempdt.Rows[0][17];
-                textBox11.Text = ((double)tempdt.Rows[0][18]).ToString();
-                textBox5.Text = (string)tempdt.Rows[0][19];
+                tb双层包装领料量.Text = ((double)tempdt.Rows[0][18]).ToString();
+                tb负责人.Text = (string)tempdt.Rows[0][19];
 
                 textBox24.Text = (string)tempdt.Rows[0][20];
                 dateTimePicker2.Value = (DateTime)tempdt.Rows[0][21];
@@ -1062,42 +383,224 @@ namespace BatchProductRecord
             s.Show();
         }
 
-        private void textBox2_TextChanged(object sender, System.EventArgs e)
+        //通过生产指令查找对应id
+        private int id_findby_instrcode(string code)
         {
-            if (textBox2.Text == "")
-                return;
-            if (label == 0)
+            string acsql = "select ID from 生产指令信息表 where 生产指令编号='" + code + "'";
+            OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable dt1 = new DataTable();
+            da.Fill(dt1);
+            comm.Dispose();
+            da.Dispose();
+            if (dt1.Rows.Count == 0)
             {
-                int tempid = getid(textBox2.Text);
-                bind_list(tempid);
-                fill(tempid);
+                dt1.Dispose();
+                return -1;
             }
-                
-        }
-        private void textBox2_Leave(object sender, System.EventArgs e)
-        {
-
-        }
-        private void textBox2_Validated(object sender, System.EventArgs e)
-        {
-            //if (textBox2.Text == "")
-            //    return;
-            //if (label == 0)
-            //{
-            //    int tempid = getid(textBox2.Text);
-            //    bind_list(tempid);
-            //    fill(tempid);
-            //}
-
-        }
-        private void dataGridView1_CellContentClick_1(object sender, System.Windows.Forms.DataGridViewCellEventArgs e)
-        {
-
+            else
+            {
+                int ret = (int)dt1.Rows[0][0];
+                dt1.Dispose();
+                return ret;
+            }
+            
         }
 
-        private void textBox26_TextChanged(object sender, System.EventArgs e)
+        //查询/插入按钮
+        private void button5_Click_1(object sender, System.EventArgs e)
         {
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = true;
+            }
+            tb指令编号.Enabled = false;
+            bt审核.Enabled = false;
 
+            
+            readOuterData(tb指令编号.Text);
+            outerBind();
+            if (dt_prodinstr.Rows.Count <= 0)
+            {
+                DataRow dr = dt_prodinstr.NewRow();
+                dr = writeOuterDefault(dr);
+                dt_prodinstr.Rows.Add(dr);
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(tb指令编号.Text);
+                removeOuterBinding();
+                outerBind();
+            }
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+            {
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = false;
+                }
+                bt打印.Enabled = true;
+                tb指令编号.Enabled = true;
+            }
+
+        }
+
+        // 给外表的一行写入默认值
+        DataRow writeOuterDefault(DataRow dr)
+        {
+            dr["生产指令编号"] = tb指令编号.Text;
+            dr["开始生产日期"]=DateTime.Now;
+            dr["内外层领料量"]=0;
+            dr["中层领料量"]=0;
+            dr["卷心管领料量"]=0;
+            dr["双层洁净包装领料量"]=0;
+            dr["状态"]=0;
+            dr["计划产量合计米"]=0;
+            dr["用料重量合计"]=0;
+            dr["计划产量合计卷"]=0;
+            dr["编制人"]=mySystem.Parameter.userName;
+            dr["编制时间"]=DateTime.Now;
+            dr["审批时间"]=DateTime.Now;
+            dr["接收时间"]=DateTime.Now;
+            return dr;
+
+        }
+        // 给内表的一行写入默认值
+        DataRow writeInnerDefault(DataRow dr)
+        {
+            dr["生产指令ID"]=dt_prodinstr.Rows[0]["ID"];
+            dr["计划产量米"]=0;
+            dr["用料重量"]=0;
+            dr["每卷长度"]=0;
+            dr["计划产量卷"]=0;
+            dr["卷心管规格"]=0;
+            dr["标签"]=0;
+            dr["标签领料量"]=0;
+            return dr;
+        }
+        // 根据条件从数据库中读取一行外表的数据
+        void readOuterData(string code)
+        {
+            
+            dt_prodinstr = new DataTable("生产指令信息表");
+            bs_prodinstr = new BindingSource();
+            da_prodinstr = new OleDbDataAdapter("select * from 生产指令信息表 where 生产指令编号='"+code+"'", connOle);
+            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+            da_prodinstr.Fill(dt_prodinstr);
+        }
+        // 根据条件从数据库中读取多行内表数据
+        void readInnerData(int id)
+        {
+            dt_prodlist = new DataTable("生产指令产品列表");
+            bs_prodlist = new BindingSource();
+            da_prodlist = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID="+id, connOle);
+            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
+            da_prodlist.Fill(dt_prodlist);
+        }
+        // 移除外表和控件的绑定，建议使用Control.DataBinds.RemoveAt(0)
+        void removeOuterBinding()
+        {
+            //解除之前的绑定
+            comboBox1.DataBindings.Clear();
+            tb指令编号.DataBindings.Clear();
+            tb工艺.DataBindings.Clear();
+            tb设备编号.DataBindings.Clear();
+            dtp开始生产日期.DataBindings.Clear();
+
+            tb内外层物料代码.DataBindings.Clear();
+            tb内外层物料批号.DataBindings.Clear();
+            textBox19.DataBindings.Clear();
+            tb内外领料量.DataBindings.Clear();
+            textBox16.DataBindings.Clear();
+            textBox18.DataBindings.Clear();
+            textBox20.DataBindings.Clear();
+            tb中层领料量.DataBindings.Clear();
+            textBox12.DataBindings.Clear();
+            textBox13.DataBindings.Clear();
+            tb卷心管领料量.DataBindings.Clear();
+            textBox9.DataBindings.Clear();
+            tb双层包装领料量.DataBindings.Clear();
+            tb负责人.DataBindings.Clear();
+
+            textBox24.DataBindings.Clear();
+            textBox25.DataBindings.Clear();
+            textBox26.DataBindings.Clear();
+            dateTimePicker2.DataBindings.Clear();
+            dateTimePicker3.DataBindings.Clear();
+            dateTimePicker4.DataBindings.Clear();
+
+            textBox6.DataBindings.Clear();
+            tb用料重量合计.DataBindings.Clear();
+            textBox10.DataBindings.Clear();
+        }
+        // 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
+        void removeInnerBinding()
+        { }
+        // 外表和控件的绑定
+        void outerBind() 
+        {
+            bs_prodinstr.DataSource = dt_prodinstr;
+            bind_bs_contr();
+        }
+        // 内表和控件的绑定
+        void innerBind()
+        {
+            bs_prodlist.DataSource = dt_prodlist;
+            dataGridView1.DataSource = bs_prodlist.DataSource;
+            setDataGridViewColumns();
+        }
+        // 设置DataGridView中各列的格式
+        void setDataGridViewColumns()
+        {
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+        }
+        //设置datagridview序号
+        void setDataGridViewRowNums()
+        {
+            for(int i=0;i<dataGridView1.Rows.Count;i++)
+            {
+                dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
+            }
+        }
+
+        //判断数据合法性
+        bool input_Judge()
+        {
+            //判断合法性
+            int nameid = mySystem.Parameter.NametoID(tb负责人.Text);
+            if (nameid <= 0)
+            {
+                MessageBox.Show("负责人id不存在");
+                return false;
+            }
+            if (float.Parse(tb内外领料量.Text) < float.Parse(tb用料重量合计.Text))
+            {
+                MessageBox.Show("输入不合法");
+                tb内外领料量.Text = "0";
+                return false;
+            }
+            //判断领料量是否是合法
+            int tempvalue;
+            if (!int.TryParse(tb中层领料量.Text, out tempvalue))
+            {
+                MessageBox.Show("输入不合法");
+                tb中层领料量.Text = "0";
+                return false;
+            }
+            if (!int.TryParse(tb卷心管领料量.Text, out tempvalue))
+            {
+                MessageBox.Show("输入不合法");
+                tb卷心管领料量.Text = "0";
+                return false;
+            }
+            if (!int.TryParse(tb双层包装领料量.Text, out tempvalue))
+            {
+                MessageBox.Show("输入不合法");
+                tb双层包装领料量.Text = "0";
+                return false;
+            }
+            return true;
         }
     }
 }

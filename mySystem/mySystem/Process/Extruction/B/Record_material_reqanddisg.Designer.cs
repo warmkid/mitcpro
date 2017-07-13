@@ -30,29 +30,23 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.bt保存 = new System.Windows.Forms.Button();
+            this.bt审核 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb重量 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tb数量 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tb退料量 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.tb退料操作人 = new System.Windows.Forms.TextBox();
+            this.tb退料审核人 = new System.Windows.Forms.TextBox();
+            this.bt添加 = new System.Windows.Forms.Button();
+            this.cB物料代码 = new System.Windows.Forms.ComboBox();
+            this.bt打印 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,84 +69,6 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "物料代码：";
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(135, 45);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(70, 14);
-            this.label3.TabIndex = 3;
-            this.label3.Text = "SPM-PE-01";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(291, 44);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 14);
-            this.label4.TabIndex = 4;
-            this.label4.Text = "SPM-PE-04";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(433, 44);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(70, 14);
-            this.label5.TabIndex = 5;
-            this.label5.Text = "SPM-PE-06";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(569, 44);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 14);
-            this.label6.TabIndex = 6;
-            this.label6.Text = "SPM-PE-11";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(212, 45);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 7;
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(367, 46);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(15, 14);
-            this.checkBox2.TabIndex = 8;
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
-            // 
-            // checkBox3
-            // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Location = new System.Drawing.Point(509, 45);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(15, 14);
-            this.checkBox3.TabIndex = 9;
-            this.checkBox3.UseVisualStyleBackColor = true;
-            this.checkBox3.CheckedChanged += new System.EventHandler(this.checkBox3_CheckedChanged);
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(645, 45);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(15, 14);
-            this.checkBox4.TabIndex = 10;
-            this.checkBox4.UseVisualStyleBackColor = true;
-            this.checkBox4.CheckedChanged += new System.EventHandler(this.checkBox4_CheckedChanged);
-            // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -166,25 +82,25 @@
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_Endedit);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
-            // button1
+            // bt保存
             // 
-            this.button1.Location = new System.Drawing.Point(748, 412);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "保存";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bt保存.Location = new System.Drawing.Point(680, 417);
+            this.bt保存.Name = "bt保存";
+            this.bt保存.Size = new System.Drawing.Size(75, 23);
+            this.bt保存.TabIndex = 12;
+            this.bt保存.Text = "保存";
+            this.bt保存.UseVisualStyleBackColor = true;
+            this.bt保存.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // bt审核
             // 
-            this.button2.Location = new System.Drawing.Point(851, 412);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 13;
-            this.button2.Text = "审核";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.bt审核.Location = new System.Drawing.Point(778, 417);
+            this.bt审核.Name = "bt审核";
+            this.bt审核.Size = new System.Drawing.Size(75, 23);
+            this.bt审核.TabIndex = 13;
+            this.bt审核.Text = "审核";
+            this.bt审核.UseVisualStyleBackColor = true;
+            this.bt审核.Click += new System.EventHandler(this.button2_Click);
             // 
             // label7
             // 
@@ -195,13 +111,13 @@
             this.label7.TabIndex = 14;
             this.label7.Text = "合计：";
             // 
-            // textBox1
+            // tb重量
             // 
-            this.textBox1.Location = new System.Drawing.Point(305, 339);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
-            this.textBox1.TabIndex = 15;
+            this.tb重量.Location = new System.Drawing.Point(305, 339);
+            this.tb重量.Name = "tb重量";
+            this.tb重量.ReadOnly = true;
+            this.tb重量.Size = new System.Drawing.Size(100, 23);
+            this.tb重量.TabIndex = 15;
             // 
             // label8
             // 
@@ -221,13 +137,13 @@
             this.label9.TabIndex = 17;
             this.label9.Text = "数量：";
             // 
-            // textBox2
+            // tb数量
             // 
-            this.textBox2.Location = new System.Drawing.Point(522, 339);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(100, 23);
-            this.textBox2.TabIndex = 18;
+            this.tb数量.Location = new System.Drawing.Point(522, 339);
+            this.tb数量.Name = "tb数量";
+            this.tb数量.ReadOnly = true;
+            this.tb数量.Size = new System.Drawing.Size(100, 23);
+            this.tb数量.TabIndex = 18;
             // 
             // label10
             // 
@@ -238,12 +154,12 @@
             this.label10.TabIndex = 19;
             this.label10.Text = "退料量：";
             // 
-            // textBox3
+            // tb退料量
             // 
-            this.textBox3.Location = new System.Drawing.Point(78, 381);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 23);
-            this.textBox3.TabIndex = 20;
+            this.tb退料量.Location = new System.Drawing.Point(78, 381);
+            this.tb退料量.Name = "tb退料量";
+            this.tb退料量.Size = new System.Drawing.Size(100, 23);
+            this.tb退料量.TabIndex = 20;
             // 
             // label11
             // 
@@ -263,64 +179,76 @@
             this.label12.TabIndex = 22;
             this.label12.Text = "退料审核人：";
             // 
-            // textBox4
+            // tb退料操作人
             // 
-            this.textBox4.Location = new System.Drawing.Point(334, 381);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 23);
-            this.textBox4.TabIndex = 23;
+            this.tb退料操作人.Location = new System.Drawing.Point(334, 381);
+            this.tb退料操作人.Name = "tb退料操作人";
+            this.tb退料操作人.Size = new System.Drawing.Size(100, 23);
+            this.tb退料操作人.TabIndex = 23;
             // 
-            // textBox5
+            // tb退料审核人
             // 
-            this.textBox5.Location = new System.Drawing.Point(592, 381);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 23);
-            this.textBox5.TabIndex = 24;
+            this.tb退料审核人.Location = new System.Drawing.Point(592, 381);
+            this.tb退料审核人.Name = "tb退料审核人";
+            this.tb退料审核人.Size = new System.Drawing.Size(100, 23);
+            this.tb退料审核人.TabIndex = 24;
             // 
-            // button3
+            // bt添加
             // 
-            this.button3.Location = new System.Drawing.Point(26, 338);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 25;
-            this.button3.Text = "添加";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.bt添加.Location = new System.Drawing.Point(26, 338);
+            this.bt添加.Name = "bt添加";
+            this.bt添加.Size = new System.Drawing.Size(75, 23);
+            this.bt添加.TabIndex = 25;
+            this.bt添加.Text = "添加";
+            this.bt添加.UseVisualStyleBackColor = true;
+            this.bt添加.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // cB物料代码
+            // 
+            this.cB物料代码.FormattingEnabled = true;
+            this.cB物料代码.Location = new System.Drawing.Point(125, 37);
+            this.cB物料代码.Name = "cB物料代码";
+            this.cB物料代码.Size = new System.Drawing.Size(121, 22);
+            this.cB物料代码.TabIndex = 26;
+            this.cB物料代码.SelectedIndexChanged += new System.EventHandler(this.cB物料代码_SelectedIndexChanged);
+            // 
+            // bt打印
+            // 
+            this.bt打印.Location = new System.Drawing.Point(863, 417);
+            this.bt打印.Name = "bt打印";
+            this.bt打印.Size = new System.Drawing.Size(75, 23);
+            this.bt打印.TabIndex = 27;
+            this.bt打印.Text = "打印";
+            this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 443);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
+            this.ClientSize = new System.Drawing.Size(950, 452);
+            this.Controls.Add(this.bt打印);
+            this.Controls.Add(this.cB物料代码);
+            this.Controls.Add(this.bt添加);
+            this.Controls.Add(this.tb退料审核人);
+            this.Controls.Add(this.tb退料操作人);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.tb退料量);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.tb数量);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb重量);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bt审核);
+            this.Controls.Add(this.bt保存);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "Record_material_reqanddisg";
             this.Text = "Record_material_reqanddisg";
-            this.Load += new System.EventHandler(this.Record_material_reqanddisg_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -331,28 +259,22 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button bt保存;
+        private System.Windows.Forms.Button bt审核;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb重量;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tb数量;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tb退料量;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox tb退料操作人;
+        private System.Windows.Forms.TextBox tb退料审核人;
+        private System.Windows.Forms.Button bt添加;
+        private System.Windows.Forms.ComboBox cB物料代码;
+        private System.Windows.Forms.Button bt打印;
     }
 }
