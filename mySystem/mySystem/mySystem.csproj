@@ -805,6 +805,9 @@
     <EmbeddedResource Include="Process\Bag\BTV\BTV3DProRecord.resx">
       <DependentUpon>BTV3DProRecord.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVAssemblyConfirm.resx">
+      <DependentUpon>BTVAssemblyConfirm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTVMainForm.resx">
       <DependentUpon>BTVMainForm.cs</DependentUpon>
     </EmbeddedResource>
