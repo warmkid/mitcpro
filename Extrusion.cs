@@ -115,6 +115,9 @@ namespace mySystem.db
                 public Double 计划产量合计米;
                 public Double 用料重量合计;
                 public Double 计划产量合计卷;
+                public Double 比例;
+                public String 白班负责人;
+                public String 夜班负责人;
             }
 
             public T生产指令信息()
@@ -131,10 +134,11 @@ namespace mySystem.db
                 public Int32 生产指令ID;
                 public Int32 序号;
                 public String 产品编码;
+                public Double 计划产量米;
                 public Double 用料重量;
                 public String 产品批号;
                 public Double 每卷长度;
-                public Double 计划产量;
+                public Double 计划产量卷;
                 public Double 卷心管规格;
                 public String 产品用途;
                 public Int32 标签;
@@ -179,8 +183,9 @@ namespace mySystem.db
                 public Int32 吹膜机组清洁记录ID;
                 public String 清洁区域;
                 public String 清洁内容;
-                public Boolean 合格_是;
-                public Boolean 合格_否;
+                //public Boolean 合格_是;
+                //public Boolean 合格_否;
+                public String 合格;
                 public String 清洁人;
                 public String 检查人;
             }
@@ -226,8 +231,9 @@ namespace mySystem.db
                 public Int32 吹膜工序清场记录ID;
                 public Int32 序号;
                 public String 清场要点;
-                public Boolean 清场操作_是;
-                public Boolean 清场操作_否;
+                //public Boolean 清场操作_是;
+                //public Boolean 清场操作_否;
+                public String 清场操作;
             }
 
             public T吹膜工序清场供料工序项目记录()
@@ -245,8 +251,9 @@ namespace mySystem.db
                 public Int32 吹膜工序清场记录ID;
                 public Int32 序号;
                 public String 清场要点;
-                public Boolean 清场操作_是;
-                public Boolean 清场操作_否;
+                //public Boolean 清场操作_是;
+                //public Boolean 清场操作_否;
+                public String 清场操作;
             }
 
             public T吹膜工序清场吹膜工序项目记录()
@@ -291,10 +298,12 @@ namespace mySystem.db
                 public Int32 T吹膜岗位交接班记录ID;
                 public Int32 序号;
                 public String 确认项目;
-                public Boolean 确认结果白班_是;
-                public Boolean 确认结果白班_否;
-                public Boolean 确认结果夜班_是;
-                public Boolean 确认结果夜班_否;
+                //public Boolean 确认结果白班_是;
+                //public Boolean 确认结果白班_否;
+                //public Boolean 确认结果夜班_是;
+                //public Boolean 确认结果夜班_否;
+                public String 确认结果白班;
+                public String 确认结果夜班;
             }
 
             public T吹膜岗位交接班项目记录()
@@ -460,7 +469,68 @@ namespace mySystem.db
                 cols = new Cols();
             }
         }
-		
+
+        public class T设置吹膜工序清场项目 : Table
+        {
+            public class Cols : BaseCols
+            {
+                public Int32 序号;
+                public String 清场内容;
+            }
+
+            public T设置吹膜工序清场项目()
+            {
+                tblName = "设置吹膜工序清场项目";
+                cols = new Cols();
+            }
+        }
+
+        public class T设置供料工序清场项目 : Table
+        {
+            public class Cols : BaseCols
+            {
+                public Int32 序号;
+                public String 清场内容;
+            }
+
+            public T设置供料工序清场项目()
+            {
+                tblName = "设置供料工序清场项目";
+                cols = new Cols();
+            }
+        }
+
+        public class T设置生产指令参数 : Table
+        {
+            public class Cols : BaseCols
+            {
+                public Int32 面;
+                public Double 密度;
+                public Double 系数1;
+                public Double 系数2;
+            }
+
+            public T设置生产指令参数()
+            {
+                tblName = "设置生产指令参数";
+                cols = new Cols();
+            }
+        }
+
+        public class T设置废品产生原因 : Table
+        {
+            public class Cols : BaseCols
+            {
+                public String 废品产生原因;
+            }
+
+            public T设置废品产生原因()
+            {
+                tblName = "设置废品产生原因";
+                cols = new Cols();
+            }
+        }
+
         //B下拉菜单
         public class T产品内包装记录 : Table
         {
@@ -594,10 +664,12 @@ namespace mySystem.db
                 public Int32 序号;
                 public Int32 包装箱号;
                 public String 包装明细;
-                public Boolean 是否贴标签_是;
-                public Boolean 是否贴标签_否;
-                public Boolean 是否打开包封箱_是;
-                public Boolean 是否打开包封箱_否;
+                //public Boolean 是否贴标签_是;
+                //public Boolean 是否贴标签_否;
+                public String 是否贴标签;
+                //public Boolean 是否打开包封箱_是;
+                //public Boolean 是否打开包封箱_否;
+                public String 是否打包封箱;
             }
 
             public T产品外包装详细记录()
@@ -765,8 +837,9 @@ namespace mySystem.db
                 public Double 膜卷重量;
                 //public Int32 记录人id;
                 public String 记录人;
-                public Boolean 外观_是;
-                public Boolean 外观_否;
+                //public Boolean 外观_是;
+                //public Boolean 外观_否;
+                public String 外观;//填Y N
                 public Double 宽度;
                 public Double 最大厚度;
                 public Double 最小厚度;
@@ -774,8 +847,9 @@ namespace mySystem.db
                 public Double 厚度公差;
                 //public Int32 检查人id;
                 public String 检查人;
-                public Boolean 判定_是;
-                public Boolean 判定_否;
+                //public Boolean 判定_是;
+                //public Boolean 判定_否;
+                public String 判定;
 
             }
             public T吹膜工序生产和检验记录详细信息()
@@ -932,10 +1006,12 @@ namespace mySystem.db
                 public Int32 数量;
                 public Double 重量每件;
                 public Double 重量;
-                public Boolean 包装完好_是;
-                public Boolean 包装完好_否;
-                public Boolean 清洁合格_是;
-                public Boolean 清洁合格_否;
+                //public Boolean 包装完好_是;
+                //public Boolean 包装完好_否;
+                //public Boolean 清洁合格_是;
+                //public Boolean 清洁合格_否;
+                public String 包装完好;
+                public String 清洁合格;
                 public String 操作人;
                 public String 审核人;
             }
@@ -1022,8 +1098,9 @@ namespace mySystem.db
                 public Int32 序号;
                 public String 确认项目;
                 public String 确认内容;
-                public Boolean 确认结果_是;
-                public Boolean 确认结果_否;
+                //public Boolean 确认结果_是;
+                //public Boolean 确认结果_否;
+                public String 确认结果;
             }
             public T吹膜机组开机前确认项目记录()
             {
@@ -1162,6 +1239,7 @@ namespace mySystem.db
                  public Boolean 审核是否通过;
                  public Double A层一区实际温度;
                  public Double A层二区实际温度;
+                 public Double A层三区实际温度;
                  public Double A层四区实际温度;
                  public Double A层换网实际温度;
                  public Double A层流道实际温度;
@@ -1301,8 +1379,9 @@ namespace mySystem.db
                 public Int32 换模头ID;
                 public String 检查项目;
                 public String 检查标准;
-                public Boolean 检查结果_是;
-                public Boolean 检查结果_否;
+                //public Boolean 检查结果_是;
+                //public Boolean 检查结果_否;
+                public String 检查结果;
             }
             public T吹膜机组换模头检查项目()
             {
@@ -1343,8 +1422,9 @@ namespace mySystem.db
                 public Int32 换模芯ID;
                 public String 检查项目;
                 public String 检查标准;
-                public Boolean 检查结果_是;
-                public Boolean 检查结果_否;
+                //public Boolean 检查结果_是;
+                //public Boolean 检查结果_否;
+                public String 检查结果;
             }
             public T吹膜机组换模芯检查项目()
             {
@@ -1406,6 +1486,10 @@ namespace mySystem.db
         public T设置吹膜机组开机前确认项目 t设置吹膜机组开机前确认项目;
 		public T设置吹膜机组预热参数记录表 t设置吹膜机组预热参数记录表;
         public T设置吹膜工艺 t设置吹膜工艺;
+        public T设置吹膜工序清场项目 t设置吹膜工序清场项目;
+        public T设置供料工序清场项目 t设置供料工序清场项目;
+        public T设置生产指令参数 t设置生产指令参数;
+        public T设置废品产生原因 t设置废品产生原因;
 
         //B下拉菜单
         public T产品内包装记录 t产品内包装记录;
@@ -1483,6 +1567,10 @@ namespace mySystem.db
             t设置吹膜机组开机前确认项目 = new T设置吹膜机组开机前确认项目();
 			t设置吹膜机组预热参数记录表=new T设置吹膜机组预热参数记录表();
             t设置吹膜工艺 = new T设置吹膜工艺();
+            t设置吹膜工序清场项目 = new T设置吹膜工序清场项目();
+            t设置供料工序清场项目 = new T设置供料工序清场项目();
+            t设置生产指令参数 = new T设置生产指令参数();
+            t设置废品产生原因 = new T设置废品产生原因();
 
             //B下拉菜单
             t产品内包装记录 = new T产品内包装记录();
