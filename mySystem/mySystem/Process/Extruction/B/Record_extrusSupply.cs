@@ -49,8 +49,6 @@ namespace WindowsFormsApplication1
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataError += dataGridView1_DataError;
-            tb料仓ab1c.Text = "AB1C";
-            tb料仓b2.Text = "B2";
 
         }
         //表格错误处理
@@ -69,13 +67,14 @@ namespace WindowsFormsApplication1
 
             InitializeComponent();
             init();
+            label_prodcode = 0;
             addprodcode(mySystem.Parameter.proInstruID);
             addmatcode(mySystem.Parameter.proInstruID);
+            label_prodcode = 1;
             foreach (Control c in this.Controls)
             {
                 c.Enabled = false;
             }
-            groupBox2.Enabled = true;
             tb产品批号.Enabled = false;
             tb生产指令.Enabled = false;
             cb产品代码.Enabled = true;
@@ -160,7 +159,26 @@ namespace WindowsFormsApplication1
         //删除一条供料记录
         private void button3_Click(object sender, EventArgs e)
         {
-
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                if (dataGridView1.SelectedRows[0].Index < 0)
+                    return;
+                dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+            }
+            //刷新合计
+            float sum_out = 0, sum_inmid = 0, sum_mid = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")//外层
+                    sum_out += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//中内层
+                    sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//内层
+                    sum_mid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+            }
+            dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
+            dt_prodinstr.Rows[0]["中内层供料量合计b"] = sum_inmid;
+            dt_prodinstr.Rows[0]["中层供料量合计c"] = sum_mid;
         }
 
         //审核信息
@@ -170,12 +188,20 @@ namespace WindowsFormsApplication1
             dt_prodinstr.Rows[0]["审核人"] = checkform.userName;//审核人
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
-            bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             if (checkform.ischeckOk)//审核通过
             {
- 
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = false;
+                }
+                dataGridView1.Enabled = true;
+                dataGridView1.ReadOnly = true;
+                bt打印.Enabled = true;
+                cb产品代码.Enabled = true;
             }
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+
         }
 
         //审核按钮
@@ -197,8 +223,11 @@ namespace WindowsFormsApplication1
             da.Fill(tempdt);
             for (int i = 0; i < tempdt.Rows.Count; i++)
             {
-                cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
-                dict_procode_batch.Add((string)tempdt.Rows[i]["产品编码"], (string)tempdt.Rows[i]["产品批号"]);
+                if (tempdt.Rows[i]["产品编码"] != null && tempdt.Rows[i]["产品批号"] != null)
+                {
+                    cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
+                    dict_procode_batch.Add((string)tempdt.Rows[i]["产品编码"], (string)tempdt.Rows[i]["产品批号"]);
+                }
             }
             da.Dispose();
             tempdt.Dispose();
@@ -217,10 +246,18 @@ namespace WindowsFormsApplication1
             da.Fill(tempdt);
             for (int i = 0; i < tempdt.Rows.Count; i++)
             {
-                cb原料代码ab1c.Items.Add((string)tempdt.Rows[i]["内外层物料代码"]);
-                cb原料代码b2.Items.Add((string)tempdt.Rows[i]["中层物料代码"]);
-                dict_inoutmatcode_batch.Add((string)tempdt.Rows[i]["内外层物料代码"], (string)tempdt.Rows[i]["内外层物料批号"]);
-                dict_midmatcode_batch.Add((string)tempdt.Rows[i]["中层物料代码"], (string)tempdt.Rows[i]["中层物料批号"]);        
+                if (tempdt.Rows[i]["内外层物料代码"] != null && tempdt.Rows[i]["内外层物料批号"] != null)
+                {
+                    cb原料代码ab1c.Items.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]));
+                    dict_inoutmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]), Convert.ToString(tempdt.Rows[i]["内外层物料批号"]));
+                }
+                if (tempdt.Rows[i]["中层物料代码"] != null && tempdt.Rows[i]["中层物料批号"] != null)
+                {
+                    cb原料代码b2.Items.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]));
+                    dict_midmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]), Convert.ToString(tempdt.Rows[i]["中层物料批号"])); 
+ 
+                }
+                       
             }
             da.Dispose();
             tempdt.Dispose();
@@ -230,32 +267,42 @@ namespace WindowsFormsApplication1
         //AB1C用料输入
         private void textBox11_TextChanged(object sender, EventArgs e)
         {
-            if (tb用料ab1c.Text == "")
-                return;
-            float a;
-            if(!float.TryParse(tb用料ab1c.Text,out a))
+            if (label_prodcode == 1)
             {
-                MessageBox.Show("用料量必须为数字");
-                return;
+                if (tb用料ab1c.Text == "")
+                    return;
+                float a;
+                if (!float.TryParse(tb用料ab1c.Text, out a))
+                {
+                    MessageBox.Show("用料量必须为数字");
+                    return;
+                }
+                dt_prodinstr.Rows[0]["外中内层原料用量"] = a;
+                dt_prodinstr.Rows[0]["外中内层原料余量"] = float.Parse(dt_prodinstr.Rows[0]["外层供料量合计a"].ToString()) + float.Parse(dt_prodinstr.Rows[0]["中内层供料量合计b"].ToString()) - a;
+                bs_prodinstr.EndEdit();
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             }
-            dt_prodinstr.Rows[0]["外中内层原料用量"] = a;
-            dt_prodinstr.Rows[0]["外中内层原料余量"] = float.Parse(dt_prodinstr.Rows[0]["外层供料量合计a"].ToString()) + float.Parse(dt_prodinstr.Rows[0]["中内层供料量合计b"].ToString()) - a;
+
         }
 
         //B2用料输入
         private void textBox14_TextChanged(object sender, EventArgs e)
         {
-            //TODO:b2余料不管用
-            if (tb用料b2.Text == "")
-                return;
-            float a;
-            if (!float.TryParse(tb用料b2.Text, out a))
+            if (label_prodcode == 1)
             {
-                MessageBox.Show("用料量必须为数字");
-                return;
+                if (tb用料b2.Text == "")
+                    return;
+                float a;
+                if (!float.TryParse(tb用料b2.Text, out a))
+                {
+                    MessageBox.Show("用料量必须为数字");
+                    return;
+                }
+                dt_prodinstr.Rows[0]["中层原料用量"] = a;
+                dt_prodinstr.Rows[0]["中层原料余量"] = float.Parse(dt_prodinstr.Rows[0]["中层供料量合计c"].ToString()) - a;
+                bs_prodinstr.EndEdit();
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             }
-            dt_prodinstr.Rows[0]["中层原料用量"] = a;
-            dt_prodinstr.Rows[0]["中层原料余量"] = float.Parse(dt_prodinstr.Rows[0]["中层供料量合计c"].ToString()) - a;
         }
 
         // 给外表的一行写入默认值
@@ -287,7 +334,8 @@ namespace WindowsFormsApplication1
             dr["外层供料量"] = 0;
             dr["中内层供料量"] = 0;
             dr["中层供料量"] = 0;
-            dr["原料抽查结果"] = true;
+            dr["原料抽查结果"] = "合格";
+            dr["供料人"] =mySystem.Parameter.userName;
             return dr;
         }
         // 根据条件从数据库中读取一行外表的数据
@@ -320,7 +368,7 @@ namespace WindowsFormsApplication1
             tb原料批号ab1c.DataBindings.Clear();
             tb原料批号b2.DataBindings.Clear();
             tb外层合计.DataBindings.Clear();
-            tb中内层合计.DataBindings.Clear();
+            //tb中内层合计.DataBindings.Clear();
             tb内层合计.DataBindings.Clear();
             tb用料ab1c.DataBindings.Clear();
             tb余料ab1c.DataBindings.Clear();
@@ -347,7 +395,7 @@ namespace WindowsFormsApplication1
             tb用料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料用量");
             tb余料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料余量");
             tb外层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "外层供料量合计a");
-            tb中内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中内层供料量合计b");
+            //tb中内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中内层供料量合计b");
             tb内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层供料量合计c");
             tb复核人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审核人");
 
@@ -355,15 +403,56 @@ namespace WindowsFormsApplication1
         // 内表和控件的绑定
         void innerBind()
         {
+            //移除所有列
+            while (dataGridView1.Columns.Count > 0)
+                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+
+            setDataGridViewCombox();
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
         }
+
+        //设置DataGridView中下拉框
+        void setDataGridViewCombox()
+        {
+            foreach (DataColumn dc in dt_prodlist.Columns)
+            {
+                switch (dc.ColumnName)
+                {
+                    case "原料抽查结果":
+                        DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
+                        c1.DataPropertyName = dc.ColumnName;
+                        c1.HeaderText = dc.ColumnName;
+                        c1.Name = dc.ColumnName;
+                        c1.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c1.ValueType = dc.DataType;
+
+                        c1.Items.Add("合格");
+                        c1.Items.Add("不合格");
+                                                dataGridView1.Columns.Add(c1);
+                        // 重写cell value changed 事件，自动填写id
+                        break;
+
+                    default:
+                        DataGridViewTextBoxColumn c2 = new DataGridViewTextBoxColumn();
+                        c2.DataPropertyName = dc.ColumnName;
+                        c2.HeaderText = dc.ColumnName;
+                        c2.Name = dc.ColumnName;
+                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c2.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c2);
+                        break;
+                }
+            }
+        }
+
         // 设置DataGridView中各列的格式
         void setDataGridViewColumns()
         {
             dataGridView1.Columns[0].Visible = false;//ID
             dataGridView1.Columns[1].Visible = false;//T吹膜供料记录ID
+            dataGridView1.Columns[4].Visible = false;//中内层供料量
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
@@ -378,15 +467,39 @@ namespace WindowsFormsApplication1
         bool input_Judge()
         {
             //判断合法性
+            //ab1c原料批号和b2原料批号
+            string s = tb原料批号ab1c.Text;
+            string[] s1 = s.Split(',');     
+            for (int i = 0; i < s1.Length; i++)
+            {
+                if(!dict_inoutmatcode_batch.ContainsValue(s1[i]))
+                {
+                    MessageBox.Show(cb原料代码ab1c.Text+"中没有对应的批号:"+s1[i]);
+                    return false;
+                }
+            }
+            s = tb原料批号b2.Text;
+            s1 = s.Split(',');
+            for (int i = 0; i < s1.Length; i++)
+            {
+                if (!dict_midmatcode_batch.ContainsValue(s1[i]))
+                {
+                    MessageBox.Show(cb原料代码b2.Text+"中没有对应的批号:"+s1[i]);
+                    return false;
+                }
+            }
             return true;
         }
 
         private void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
         {
+            label_prodcode = 0;
             foreach (Control c in this.Controls)
             {
                 c.Enabled = true;
             }
+            bt审核.Enabled = false;
+            bt打印.Enabled = false;
 
             readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text);
             removeOuterBinding();
@@ -414,6 +527,9 @@ namespace WindowsFormsApplication1
                 bt打印.Enabled = true;
             }
 
+            
+            label_prodcode = 1;
+
         }
 
         private void bt保存_Click(object sender, EventArgs e)
@@ -433,18 +549,32 @@ namespace WindowsFormsApplication1
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
+
+            bt审核.Enabled = true;
         }
 
         private void cb原料代码ab1c_SelectedIndexChanged(object sender, EventArgs e)
         {
             dt_prodinstr.Rows[0]["外中内层原料代码"] = cb原料代码ab1c.Text;
-            dt_prodinstr.Rows[0]["外中内层原料批号"] = dict_inoutmatcode_batch[cb原料代码ab1c.Text];
+            //dt_prodinstr.Rows[0]["外中内层原料批号"] = dict_inoutmatcode_batch[cb原料代码ab1c.Text];
+            if (cb原料代码ab1c.Text != "")
+            {
+                cb原料代码ab1c.Enabled = false;
+                label9.Text = cb原料代码ab1c.Text;
+                label4.Text = cb原料代码ab1c.Text;
+            }
         }
 
         private void cb原料代码b2_SelectedIndexChanged(object sender, EventArgs e)
         {
             dt_prodinstr.Rows[0]["中层原料代码"] = cb原料代码b2.Text;
-            dt_prodinstr.Rows[0]["中层原料批号"] = dict_midmatcode_batch[cb原料代码b2.Text];
+            //dt_prodinstr.Rows[0]["中层原料批号"] = dict_midmatcode_batch[cb原料代码b2.Text];
+            if (cb原料代码b2.Text != "")
+            {
+                cb原料代码b2.Enabled = false;
+                label11.Text = cb原料代码b2.Text;
+                label5.Text = cb原料代码b2.Text;
+            }
         }
 
         //datagridview单元格编辑结束
@@ -454,11 +584,11 @@ namespace WindowsFormsApplication1
             float sum_out = 0, sum_inmid = 0, sum_mid = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")
+                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")//外层
                     sum_out += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//中内层
                     sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//内层
                     sum_mid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
             }
             dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
@@ -489,6 +619,102 @@ namespace WindowsFormsApplication1
             else
                 return (int)tempdt.Rows[0][0];
 
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt上移_Click(object sender, EventArgs e)
+        {
+            int count = dt_prodlist.Rows.Count;
+            int index = dataGridView1.SelectedCells[0].RowIndex;
+            if (0 == index)
+            {
+                return;
+            }
+            DataRow currRow = dt_prodlist.Rows[index];
+            DataRow desRow = dt_prodlist.NewRow();
+            desRow.ItemArray = currRow.ItemArray.Clone() as object[];
+            currRow.Delete();
+            dt_prodlist.Rows.Add(desRow);
+
+            for (int i = index - 1; i < count; ++i)
+            {
+                if (i == index) { continue; }
+                DataRow tcurrRow = dt_prodlist.Rows[i];
+                DataRow tdesRow = dt_prodlist.NewRow();
+                tdesRow.ItemArray = tcurrRow.ItemArray.Clone() as object[];
+                tcurrRow.Delete();
+                dt_prodlist.Rows.Add(tdesRow);
+            }
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            dt_prodlist.Clear();
+            da_prodlist.Fill(dt_prodlist);
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index - 1].Selected = true;
+
+            //计算合计
+            float sum_out = 0, sum_inmid = 0, sum_mid = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")//外层
+                    sum_out += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//中内层
+                    sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//内层
+                    sum_mid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+            }
+            dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
+            dt_prodinstr.Rows[0]["中内层供料量合计b"] = sum_inmid;
+            dt_prodinstr.Rows[0]["中层供料量合计c"] = sum_mid;
+
+        }
+
+        private void bt下移_Click(object sender, EventArgs e)
+        {
+            int count = dt_prodlist.Rows.Count;
+            int index = dataGridView1.SelectedCells[0].RowIndex;
+            if (count - 1 == index)
+            {
+                return;
+            }
+            DataRow currRow = dt_prodlist.Rows[index];
+            DataRow desRow = dt_prodlist.NewRow();
+            desRow.ItemArray = currRow.ItemArray.Clone() as object[];
+            currRow.Delete();
+            dt_prodlist.Rows.Add(desRow);
+
+            for (int i = index + 2; i < count; ++i)
+            {
+                if (i == index) { continue; }
+                DataRow tcurrRow = dt_prodlist.Rows[i];
+                DataRow tdesRow = dt_prodlist.NewRow();
+                tdesRow.ItemArray = tcurrRow.ItemArray.Clone() as object[];
+                tcurrRow.Delete();
+                dt_prodlist.Rows.Add(tdesRow);
+            }
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            dt_prodlist.Clear();
+            da_prodlist.Fill(dt_prodlist);
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index + 1].Selected = true;
+
+            //计算合计
+            float sum_out = 0, sum_inmid = 0, sum_mid = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")//外层
+                    sum_out += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//中内层
+                    sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//内层
+                    sum_mid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+            }
+            dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
+            dt_prodinstr.Rows[0]["中内层供料量合计b"] = sum_inmid;
+            dt_prodinstr.Rows[0]["中层供料量合计c"] = sum_mid;
         }
 
     }
