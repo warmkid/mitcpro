@@ -55,7 +55,7 @@
             // 
             // comboBox1
             // 
-            this.comboBox1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(104, 16);
             this.comboBox1.Name = "comboBox1";
@@ -65,7 +65,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label1.Font = new System.Drawing.Font("宋体", 12F);
             this.label1.Location = new System.Drawing.Point(23, 21);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(88, 16);
@@ -74,7 +74,7 @@
             // 
             // Btn装配确认
             // 
-            this.Btn装配确认.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn装配确认.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn装配确认.Location = new System.Drawing.Point(393, 104);
             this.Btn装配确认.Name = "Btn装配确认";
             this.Btn装配确认.Size = new System.Drawing.Size(200, 38);
@@ -85,7 +85,7 @@
             // 
             // Btn瓶口焊接机
             // 
-            this.Btn瓶口焊接机.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn瓶口焊接机.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn瓶口焊接机.Location = new System.Drawing.Point(726, 104);
             this.Btn瓶口焊接机.Name = "Btn瓶口焊接机";
             this.Btn瓶口焊接机.Size = new System.Drawing.Size(200, 38);
@@ -96,7 +96,7 @@
             // 
             // Btn原材料分装
             // 
-            this.Btn原材料分装.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn原材料分装.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn原材料分装.Location = new System.Drawing.Point(393, 314);
             this.Btn原材料分装.Name = "Btn原材料分装";
             this.Btn原材料分装.Size = new System.Drawing.Size(200, 38);
@@ -107,7 +107,7 @@
             // 
             // Btn2D袋体生产记录
             // 
-            this.Btn2D袋体生产记录.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn2D袋体生产记录.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn2D袋体生产记录.Location = new System.Drawing.Point(393, 174);
             this.Btn2D袋体生产记录.Name = "Btn2D袋体生产记录";
             this.Btn2D袋体生产记录.Size = new System.Drawing.Size(200, 38);
@@ -118,7 +118,7 @@
             // 
             // Btn关键尺寸确认
             // 
-            this.Btn关键尺寸确认.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn关键尺寸确认.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn关键尺寸确认.Location = new System.Drawing.Point(393, 244);
             this.Btn关键尺寸确认.Name = "Btn关键尺寸确认";
             this.Btn关键尺寸确认.Size = new System.Drawing.Size(200, 38);
@@ -129,7 +129,7 @@
             // 
             // Btn清场记录
             // 
-            this.Btn清场记录.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn清场记录.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn清场记录.Location = new System.Drawing.Point(67, 314);
             this.Btn清场记录.Name = "Btn清场记录";
             this.Btn清场记录.Size = new System.Drawing.Size(200, 38);
@@ -140,7 +140,7 @@
             // 
             // Btn批生产记录
             // 
-            this.Btn批生产记录.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn批生产记录.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn批生产记录.Location = new System.Drawing.Point(64, 174);
             this.Btn批生产记录.Name = "Btn批生产记录";
             this.Btn批生产记录.Size = new System.Drawing.Size(200, 38);
@@ -151,7 +151,7 @@
             // 
             // Btn生产领料
             // 
-            this.Btn生产领料.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn生产领料.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Btn生产领料.Location = new System.Drawing.Point(64, 104);
             this.Btn生产领料.Name = "Btn生产领料";
             this.Btn生产领料.Size = new System.Drawing.Size(200, 38);
@@ -162,7 +162,7 @@
             // 
             // Btn内包装
             // 
-            this.Btn内包装.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn内包装.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn内包装.Location = new System.Drawing.Point(67, 244);
             this.Btn内包装.Name = "Btn内包装";
             this.Btn内包装.Size = new System.Drawing.Size(200, 38);
@@ -173,7 +173,7 @@
             // 
             // Btn2D与船型
             // 
-            this.Btn2D与船型.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn2D与船型.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn2D与船型.Location = new System.Drawing.Point(380, 530);
             this.Btn2D与船型.Name = "Btn2D与船型";
             this.Btn2D与船型.Size = new System.Drawing.Size(232, 38);
@@ -184,7 +184,7 @@
             // 
             // Btn底封机运行记录
             // 
-            this.Btn底封机运行记录.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn底封机运行记录.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn底封机运行记录.Location = new System.Drawing.Point(396, 390);
             this.Btn底封机运行记录.Name = "Btn底封机运行记录";
             this.Btn底封机运行记录.Size = new System.Drawing.Size(200, 38);
@@ -195,7 +195,7 @@
             // 
             // Btn泄漏测试记录
             // 
-            this.Btn泄漏测试记录.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn泄漏测试记录.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn泄漏测试记录.Location = new System.Drawing.Point(396, 460);
             this.Btn泄漏测试记录.Name = "Btn泄漏测试记录";
             this.Btn泄漏测试记录.Size = new System.Drawing.Size(200, 38);
@@ -206,29 +206,29 @@
             // 
             // Btn切管记录
             // 
-            this.Btn切管记录.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn切管记录.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn切管记录.Location = new System.Drawing.Point(70, 530);
             this.Btn切管记录.Name = "Btn切管记录";
             this.Btn切管记录.Size = new System.Drawing.Size(200, 38);
             this.Btn切管记录.TabIndex = 31;
-            this.Btn切管记录.Text = "BTV切管记录";
+            this.Btn切管记录.Text = "BPV切管记录";
             this.Btn切管记录.UseVisualStyleBackColor = true;
             this.Btn切管记录.Click += new System.EventHandler(this.Btn切管记录_Click);
             // 
             // Btn生产指令
             // 
-            this.Btn生产指令.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn生产指令.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn生产指令.Location = new System.Drawing.Point(67, 390);
             this.Btn生产指令.Name = "Btn生产指令";
             this.Btn生产指令.Size = new System.Drawing.Size(200, 38);
             this.Btn生产指令.TabIndex = 32;
-            this.Btn生产指令.Text = "BTV制袋生产指令";
+            this.Btn生产指令.Text = "BPV制袋生产指令";
             this.Btn生产指令.UseVisualStyleBackColor = true;
             this.Btn生产指令.Click += new System.EventHandler(this.Btn生产指令_Click);
             // 
             // Btn生产前确认
             // 
-            this.Btn生产前确认.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn生产前确认.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn生产前确认.Location = new System.Drawing.Point(70, 460);
             this.Btn生产前确认.Name = "Btn生产前确认";
             this.Btn生产前确认.Size = new System.Drawing.Size(200, 38);
@@ -239,7 +239,7 @@
             // 
             // Btn打孔及与图纸
             // 
-            this.Btn打孔及与图纸.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn打孔及与图纸.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn打孔及与图纸.Location = new System.Drawing.Point(729, 530);
             this.Btn打孔及与图纸.Name = "Btn打孔及与图纸";
             this.Btn打孔及与图纸.Size = new System.Drawing.Size(200, 38);
@@ -250,7 +250,7 @@
             // 
             // Btn90度热合机
             // 
-            this.Btn90度热合机.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn90度热合机.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn90度热合机.Location = new System.Drawing.Point(729, 390);
             this.Btn90度热合机.Name = "Btn90度热合机";
             this.Btn90度热合机.Size = new System.Drawing.Size(200, 38);
@@ -261,7 +261,7 @@
             // 
             // Btn封口热合机
             // 
-            this.Btn封口热合机.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn封口热合机.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn封口热合机.Location = new System.Drawing.Point(729, 460);
             this.Btn封口热合机.Name = "Btn封口热合机";
             this.Btn封口热合机.Size = new System.Drawing.Size(200, 38);
@@ -272,7 +272,7 @@
             // 
             // Btn单管口热合机
             // 
-            this.Btn单管口热合机.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn单管口热合机.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn单管口热合机.Location = new System.Drawing.Point(726, 314);
             this.Btn单管口热合机.Name = "Btn单管口热合机";
             this.Btn单管口热合机.Size = new System.Drawing.Size(200, 38);
@@ -283,7 +283,7 @@
             // 
             // Btn多功能热合机
             // 
-            this.Btn多功能热合机.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn多功能热合机.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn多功能热合机.Location = new System.Drawing.Point(726, 174);
             this.Btn多功能热合机.Name = "Btn多功能热合机";
             this.Btn多功能热合机.Size = new System.Drawing.Size(200, 38);
@@ -294,7 +294,7 @@
             // 
             // Btn3D袋体生产记录
             // 
-            this.Btn3D袋体生产记录.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn3D袋体生产记录.Font = new System.Drawing.Font("宋体", 12F);
             this.Btn3D袋体生产记录.Location = new System.Drawing.Point(726, 244);
             this.Btn3D袋体生产记录.Name = "Btn3D袋体生产记录";
             this.Btn3D袋体生产记录.Size = new System.Drawing.Size(200, 38);
@@ -331,9 +331,9 @@
             this.Controls.Add(this.Btn内包装);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Font = new System.Drawing.Font("宋体", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "BTVMainForm";
             this.Text = "BTVMainForm";
             this.ResumeLayout(false);

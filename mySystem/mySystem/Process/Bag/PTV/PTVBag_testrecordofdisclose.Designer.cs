@@ -116,7 +116,7 @@
             // tB产品批号
             // 
             this.tB产品批号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tB产品批号.Location = new System.Drawing.Point(567, 76);
+            this.tB产品批号.Location = new System.Drawing.Point(549, 61);
             this.tB产品批号.Name = "tB产品批号";
             this.tB产品批号.Size = new System.Drawing.Size(184, 26);
             this.tB产品批号.TabIndex = 18;
@@ -125,7 +125,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(480, 80);
+            this.label3.Location = new System.Drawing.Point(462, 65);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 17;
@@ -134,7 +134,7 @@
             // tB产品代码
             // 
             this.tB产品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tB产品代码.Location = new System.Drawing.Point(138, 76);
+            this.tB产品代码.Location = new System.Drawing.Point(138, 61);
             this.tB产品代码.Name = "tB产品代码";
             this.tB产品代码.Size = new System.Drawing.Size(260, 26);
             this.tB产品代码.TabIndex = 16;
@@ -143,7 +143,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(9, 79);
+            this.label2.Location = new System.Drawing.Point(12, 65);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(128, 16);
             this.label2.TabIndex = 15;
@@ -152,16 +152,16 @@
             // dTime生产日期
             // 
             this.dTime生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dTime生产日期.Location = new System.Drawing.Point(929, 73);
+            this.dTime生产日期.Location = new System.Drawing.Point(875, 61);
             this.dTime生产日期.Name = "dTime生产日期";
-            this.dTime生产日期.Size = new System.Drawing.Size(146, 26);
+            this.dTime生产日期.Size = new System.Drawing.Size(200, 26);
             this.dTime生产日期.TabIndex = 14;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(844, 79);
+            this.label4.Location = new System.Drawing.Point(790, 65);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 16);
             this.label4.TabIndex = 13;
@@ -187,7 +187,7 @@
             this.不合格,
             this.操作人,
             this.备注});
-            this.dataGridView1.Location = new System.Drawing.Point(9, 193);
+            this.dataGridView1.Location = new System.Drawing.Point(9, 178);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
@@ -333,7 +333,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Location = new System.Drawing.Point(60, 108);
+            this.groupBox1.Location = new System.Drawing.Point(60, 93);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(104, 85);
             this.groupBox1.TabIndex = 23;
@@ -355,7 +355,7 @@
             this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.label10);
-            this.groupBox2.Location = new System.Drawing.Point(161, 108);
+            this.groupBox2.Location = new System.Drawing.Point(161, 93);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(465, 85);
             this.groupBox2.TabIndex = 24;
@@ -496,7 +496,7 @@
             this.groupBox3.Controls.Add(this.label26);
             this.groupBox3.Controls.Add(this.label27);
             this.groupBox3.Controls.Add(this.label28);
-            this.groupBox3.Location = new System.Drawing.Point(624, 108);
+            this.groupBox3.Location = new System.Drawing.Point(624, 93);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(454, 85);
             this.groupBox3.TabIndex = 24;
@@ -575,7 +575,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Location = new System.Drawing.Point(9, 108);
+            this.groupBox4.Location = new System.Drawing.Point(9, 93);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(54, 85);
             this.groupBox4.TabIndex = 24;
@@ -589,7 +589,7 @@
             this.groupBox8.Controls.Add(this.label41);
             this.groupBox8.Controls.Add(this.label40);
             this.groupBox8.Controls.Add(this.label39);
-            this.groupBox8.Location = new System.Drawing.Point(563, 485);
+            this.groupBox8.Location = new System.Drawing.Point(563, 470);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(232, 100);
             this.groupBox8.TabIndex = 33;
@@ -657,7 +657,7 @@
             this.groupBox5.Controls.Add(this.textBox18);
             this.groupBox5.Controls.Add(this.label37);
             this.groupBox5.Controls.Add(this.label36);
-            this.groupBox5.Location = new System.Drawing.Point(793, 485);
+            this.groupBox5.Location = new System.Drawing.Point(793, 470);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(285, 100);
             this.groupBox5.TabIndex = 34;
@@ -702,7 +702,7 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.label15);
-            this.groupBox6.Location = new System.Drawing.Point(9, 485);
+            this.groupBox6.Location = new System.Drawing.Point(9, 470);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(559, 100);
             this.groupBox6.TabIndex = 35;
