@@ -79,7 +79,7 @@
             this.dtp生产日期.Name = "dtp生产日期";
             this.dtp生产日期.Size = new System.Drawing.Size(145, 26);
             this.dtp生产日期.TabIndex = 29;
-            this.dtp生产日期.ValueChanged += new System.EventHandler(this.dtp生产日期_SelectedIndexChanged);
+            this.dtp生产日期.ValueChanged += new System.EventHandler(this.dtp生产日期_ValueChanged);
             // 
             // label10
             // 
@@ -216,7 +216,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 14;
-            this.label3.Text = "产品名称：";
+            this.label3.Text = "产品代码：";
             // 
             // AddLineBtn
             // 
@@ -227,7 +227,7 @@
             this.AddLineBtn.TabIndex = 13;
             this.AddLineBtn.Text = "添加记录";
             this.AddLineBtn.UseVisualStyleBackColor = true;
-            this.AddLineBtn.Click += new System.EventHandler(this.AddLineBtn_Click_1);
+            this.AddLineBtn.Click += new System.EventHandler(this.AddLineBtn_Click);
             // 
             // label2
             // 
@@ -281,8 +281,6 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1118, 290);
             this.dataGridView1.TabIndex = 5;
-            //this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
-            //this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
             // Title
             // 

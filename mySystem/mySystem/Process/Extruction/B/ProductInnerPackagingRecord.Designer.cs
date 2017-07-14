@@ -66,7 +66,7 @@
             this.tb指示剂领取数量 = new System.Windows.Forms.TextBox();
             this.tb指示剂接上班数量 = new System.Windows.Forms.TextBox();
             this.tb指示剂批号 = new System.Windows.Forms.TextBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
+            this.tb指示剂 = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
@@ -91,6 +91,7 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.lb备注 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -106,6 +107,7 @@
             this.CheckBtn.TabIndex = 23;
             this.CheckBtn.Text = "审核";
             this.CheckBtn.UseVisualStyleBackColor = true;
+            this.CheckBtn.Click += new System.EventHandler(this.CheckBtn_Click);
             // 
             // SaveBtn
             // 
@@ -116,6 +118,7 @@
             this.SaveBtn.TabIndex = 22;
             this.SaveBtn.Text = "确认";
             this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
             // tb审核人
             // 
@@ -198,6 +201,7 @@
             this.DelLineBtn.TabIndex = 13;
             this.DelLineBtn.Text = "删除记录";
             this.DelLineBtn.UseVisualStyleBackColor = true;
+            this.DelLineBtn.Click += new System.EventHandler(this.DelLineBtn_Click);
             // 
             // AddLineBtn
             // 
@@ -208,6 +212,7 @@
             this.AddLineBtn.TabIndex = 12;
             this.AddLineBtn.Text = "添加记录";
             this.AddLineBtn.UseVisualStyleBackColor = true;
+            this.AddLineBtn.Click += new System.EventHandler(this.AddLineBtn_Click);
             // 
             // dataGridView1
             // 
@@ -225,6 +230,7 @@
             this.dtp生产日期.Name = "dtp生产日期";
             this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
             this.dtp生产日期.TabIndex = 6;
+            this.dtp生产日期.ValueChanged += new System.EventHandler(this.dtp生产日期_ValueChanged);
             // 
             // label4
             // 
@@ -392,7 +398,7 @@
             this.groupBox1.Controls.Add(this.tb指示剂领取数量);
             this.groupBox1.Controls.Add(this.tb指示剂接上班数量);
             this.groupBox1.Controls.Add(this.tb指示剂批号);
-            this.groupBox1.Controls.Add(this.textBox14);
+            this.groupBox1.Controls.Add(this.tb指示剂);
             this.groupBox1.Controls.Add(this.label25);
             this.groupBox1.Controls.Add(this.label24);
             this.groupBox1.Controls.Add(this.label23);
@@ -461,15 +467,15 @@
             this.tb指示剂批号.Size = new System.Drawing.Size(150, 26);
             this.tb指示剂批号.TabIndex = 56;
             // 
-            // textBox14
+            // tb指示剂
             // 
-            this.textBox14.Font = new System.Drawing.Font("SimSun", 12F);
-            this.textBox14.Location = new System.Drawing.Point(25, 71);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.ReadOnly = true;
-            this.textBox14.Size = new System.Drawing.Size(150, 26);
-            this.textBox14.TabIndex = 55;
-            this.textBox14.Text = "指示剂";
+            this.tb指示剂.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb指示剂.Location = new System.Drawing.Point(25, 71);
+            this.tb指示剂.Name = "tb指示剂";
+            this.tb指示剂.ReadOnly = true;
+            this.tb指示剂.Size = new System.Drawing.Size(150, 26);
+            this.tb指示剂.TabIndex = 55;
+            this.tb指示剂.Text = "指示剂";
             // 
             // label25
             // 
@@ -599,6 +605,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.lb备注);
             this.groupBox2.Controls.Add(this.DelLineBtn);
             this.groupBox2.Controls.Add(this.AddLineBtn);
             this.groupBox2.Location = new System.Drawing.Point(16, 101);
@@ -615,6 +622,7 @@
             this.cb产品代码.Name = "cb产品代码";
             this.cb产品代码.Size = new System.Drawing.Size(261, 24);
             this.cb产品代码.TabIndex = 39;
+            this.cb产品代码.SelectedIndexChanged += new System.EventHandler(this.cb产品代码_SelectedIndexChanged);
             // 
             // printBtn
             // 
@@ -712,6 +720,16 @@
             this.label13.TabIndex = 26;
             this.label13.Text = "发放数量             张；";
             // 
+            // lb备注
+            // 
+            this.lb备注.AutoSize = true;
+            this.lb备注.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb备注.Location = new System.Drawing.Point(11, 229);
+            this.lb备注.Name = "lb备注";
+            this.lb备注.Size = new System.Drawing.Size(480, 16);
+            this.lb备注.TabIndex = 14;
+            this.lb备注.Text = "备注：符合标准填写“0”，不符合填写“1”，不适用填写“2”。\r\n";
+            // 
             // ProductInnerPackagingRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -745,6 +763,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
@@ -816,6 +835,7 @@
         private System.Windows.Forms.TextBox tb指示剂领取数量;
         private System.Windows.Forms.TextBox tb指示剂接上班数量;
         private System.Windows.Forms.TextBox tb指示剂批号;
-        private System.Windows.Forms.TextBox textBox14;
+        private System.Windows.Forms.TextBox tb指示剂;
+        private System.Windows.Forms.Label lb备注;
     }
 }
