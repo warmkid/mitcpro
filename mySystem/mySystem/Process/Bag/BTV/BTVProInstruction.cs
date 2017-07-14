@@ -15,5 +15,10 @@ namespace mySystem.Process.Bag.BTV
         {
             InitializeComponent();
         }
+
+        private void BTVProInstruction_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

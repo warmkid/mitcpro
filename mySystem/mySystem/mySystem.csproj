@@ -823,6 +823,9 @@
     <EmbeddedResource Include="Process\Bag\BTV\BTVInnerPackage.resx">
       <DependentUpon>BTVInnerPackage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVKeySizeConfirm.resx">
+      <DependentUpon>BTVKeySizeConfirm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTVLeakTest.resx">
       <DependentUpon>BTVLeakTest.cs</DependentUpon>
     </EmbeddedResource>
@@ -835,11 +838,29 @@
     <EmbeddedResource Include="Process\Bag\BTV\BTVProInstruction.resx">
       <DependentUpon>BTVProInstruction.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVPunchDrawingConfirm.resx">
+      <DependentUpon>BTVPunchDrawingConfirm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVRawMaterialDispensing.resx">
+      <DependentUpon>BTVRawMaterialDispensing.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordDF.resx">
       <DependentUpon>BTVRunningRecordDF.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordPK.resx">
       <DependentUpon>BTVRunningRecordPK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordRHJ90.resx">
+      <DependentUpon>BTVRunningRecordRHJ90.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordRHJMulti.resx">
+      <DependentUpon>BTVRunningRecordRHJMulti.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordRHJseal.resx">
+      <DependentUpon>BTVRunningRecordRHJseal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordRHJsingle.resx">
+      <DependentUpon>BTVRunningRecordRHJsingle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
