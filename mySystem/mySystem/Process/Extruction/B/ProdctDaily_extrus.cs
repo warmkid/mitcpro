@@ -215,7 +215,7 @@ namespace mySystem
         //一条生产指令下，通过产品代码查找产品批号
         //private string batch_findby_code()
 
-        //查找同一条生产指令下的数据 select [A].*,[C].* from [A] left join ( select * from [B] ) as [C] on [A].id = [C].id
+        //查找同一条生产指令下的数据
         private void query_by_instru(string instru_code)
         {
             #region 以前
@@ -373,7 +373,6 @@ namespace mySystem
             int id = int.Parse(dt1.Rows[0][0].ToString());//获得生产指令id
 
             DataTable dt_检验记录 = new DataTable();
-            DataTable dt_检验记录_详细 = new DataTable();
             DataTable dt_废品记录 = new DataTable();
             DataTable dt_供料记录 = new DataTable();
             DataTable dt_out = new DataTable();
@@ -381,17 +380,7 @@ namespace mySystem
             acsql = "select * from 吹膜工序生产和检验记录 where 生产指令ID=" + id + " order by 生产日期"; ;
             OleDbCommand comm2 = new OleDbCommand(acsql, mySystem.Parameter.connOle);
             OleDbDataAdapter da2 = new OleDbDataAdapter(comm2);
-            da2.Fill(dt_检验记录);
-
-            //if (dt_检验记录.Rows.Count > 0)
-            //{
-            //     acsql = "select * from 吹膜工序生产和检验记录详细信息 where T吹膜工序生产和检验记录ID=" + dt_检验记录.Rows[0]; ;
-            //    OleDbCommand comm2_new = new OleDbCommand(acsql, mySystem.Parameter.connOle);
-            //    OleDbDataAdapter da2_new = new OleDbDataAdapter(comm2_new);
-            //    da2_new.Fill(dt_检验记录_详细);
-            //}
-            //检验记录详细信息
-
+            da2.Fill(dt_检验记录);          
 
             //废品记录
             acsql = "select * from 吹膜工序废品记录详细信息 where T吹膜工序废品记录ID=(select ID from 吹膜工序废品记录 where 生产指令ID="+id+")";
@@ -408,33 +397,91 @@ namespace mySystem
             //根据产品代码和产品批号进行联合,以检验记录的行为标准
             for (int i = 0; i < dt_检验记录.Rows.Count; i++)
             {
+                //检验记录详细信息
+                DataTable dt_检验记录_详细 = new DataTable();
+                acsql = "select count(膜卷编号),sum(膜卷长度),sum(膜卷重量) from 吹膜工序生产和检验记录详细信息 where T吹膜工序生产和检验记录ID=" + (int)dt_检验记录.Rows[i][0];
+                OleDbCommand comm2_new = new OleDbCommand(acsql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da2_new = new OleDbDataAdapter(comm2_new);
+                da2_new.Fill(dt_检验记录_详细);
+                comm2_new.Dispose();
+                da2_new.Dispose();
+                
+
                 DataGridViewRow dr = new DataGridViewRow();
                 foreach (DataGridViewColumn c in dataGridView1.Columns)
                 {
                     dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
                 }
+                string date_temp1 = ((DateTime)dt_检验记录.Rows[i]["生产日期"]).ToShortDateString();//标准
+                string code_temp1 = dt_检验记录.Rows[i]["产品名称"].ToString();//之前表上名字错误，应该是产品代码
+
                 dr.Cells[0].Value = i+1;//序号
-                dr.Cells[1].Value = (DateTime)dt_检验记录.Rows[i]["生产日期"];
+                dr.Cells[1].Value = date_temp1;//生产日期，具体到天
                 dr.Cells[2].Value = (bool)dt_检验记录.Rows[i]["班次"];
-                dr.Cells[3].Value = (string)dt_检验记录.Rows[i]["产品名称"];//产品代码
-                dr.Cells[4].Value = (string)dt_检验记录.Rows[i]["产品批号"];
+                dr.Cells[3].Value = code_temp1;//产品代码
+                dr.Cells[4].Value = dt_检验记录.Rows[i]["产品批号"].ToString();
+                dr.Cells[5].Value = float.Parse(dt_检验记录_详细.Rows[0][0].ToString());//卷号
+                dr.Cells[6].Value = float.Parse(dt_检验记录_详细.Rows[0][1].ToString());//生产数量
+                dr.Cells[7].Value = float.Parse(dt_检验记录_详细.Rows[0][2].ToString());//生产重量
+                dr.Cells[14].Value = dt_检验记录.Rows[i]["审核人"].ToString();//复核人
 
-                //查找详细记录中对应的记录
-                //string acsql_temp = "select count(膜卷编号),sum(膜卷长度),sum(膜卷重量) from 吹膜工序生产和检验记录详细信息 where T吹膜工序生产和检验记录ID=" + id;
-                //OleDbCommand comm4 = new OleDbCommand(acsql, mySystem.Parameter.connOle);
-                //OleDbDataAdapter da4 = new OleDbDataAdapter(comm4);
-                //da4.Fill(dt_供料记录);
 
+                //查找废品记录中对应的记录
+                float sum_废品重量 = 0;
                 for (int j = 0; j < dt_废品记录.Rows.Count; j++)
-                {
-                    string date_temp1=((DateTime)dt_检验记录.Rows[i]["生产日期"]).ToShortDateString();//标准
-                    string date_temp2=((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToShortDateString();
-
-                    string code_temp1 = dt_检验记录.Rows[i]["产品名称"].ToString();//之前表上名字错误，应该是产品代码
+                {                   
+                    string date_temp2=((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToShortDateString();                    
                     string code_temp2 = dt_废品记录.Rows[j]["产品代码"].ToString();
 
-                    //if(==((DateTime)dt_检验记录.Rows[i]["生产日期"]).ToShortDateString()&&)
+                    if (date_temp1 == date_temp2 && code_temp1 == code_temp2)
+                    {
+                        sum_废品重量 += (float)dt_废品记录.Rows[j]["不良品数量"];
+                    }
                 }
+                dr.Cells[8].Value = sum_废品重量;//废品重量
+
+                DataTable dt_废品记录_工时 = new DataTable();
+                acsql = "select 生产开始时间,生产结束时间,记录人 from 吹膜工序废品记录 where 生产指令ID=" + id;
+                OleDbCommand comm2_new_time = new OleDbCommand(acsql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da2_new_time = new OleDbDataAdapter(comm2_new_time);
+                da2_new_time.Fill(dt_废品记录_工时);
+                comm2_new_time.Dispose();
+                da2_new_time.Dispose();
+
+                dr.Cells[12].Value = (DateTime)dt_废品记录_工时.Rows[0][1] - (DateTime)dt_废品记录_工时.Rows[0][0];//工时
+                dr.Cells[13].Value = dt_废品记录_工时.Rows[0][2].ToString();//填报人
+
+                //查找供料记录中对应的记录，由于查看的是当天的产品代码下供料合计，不能直接读合计
+                float sum_A = 0, sum_B1C = 0, sum_B2 = 0;
+                for (int k = 0; k < dt_供料记录.Rows.Count; k++)
+                {
+                    if (dt_供料记录.Rows[k]["产品代码"].ToString() == code_temp1)
+                    {
+                        DataTable dt_供料记录_加料量 = new DataTable();
+                        acsql = "select 外层供料量,中内层供料量,中层供料量 from 吹膜供料记录详细信息 where T吹膜供料记录ID=" + (int)dt_供料记录.Rows[k]["ID"];
+                        OleDbCommand comm2_new_jialiao = new OleDbCommand(acsql, mySystem.Parameter.connOle);
+                        OleDbDataAdapter da2_new_jialiao = new OleDbDataAdapter(comm2_new_jialiao);
+                        da2_new_jialiao.Fill(dt_供料记录_加料量);
+                        comm2_new_jialiao.Dispose();
+                        da2_new_jialiao.Dispose();
+
+                        for (int p = 0; p < dt_供料记录_加料量.Rows.Count; p++)
+                        {
+                            string temptime=((DateTime)dt_供料记录_加料量.Rows[p]["供料时间"]).ToShortDateString();
+                            if (date_temp1 == temptime)
+                            {
+                                sum_A += float.Parse(dt_供料记录_加料量.Rows[p]["外层供料量"].ToString());
+                                sum_B1C += float.Parse(dt_供料记录_加料量.Rows[p]["中内层供料量"].ToString());
+                                sum_B2 += float.Parse(dt_供料记录_加料量.Rows[p]["中层供料量"].ToString());
+                            }
+                        }
+                    }
+                    break;
+                }
+
+                dr.Cells[9].Value = sum_A;//加料A
+                dr.Cells[10].Value = sum_B1C;//加料B1C
+                dr.Cells[11].Value = sum_B2;//加料B2
 
                 dataGridView1.Rows.Add(dr);
             }
