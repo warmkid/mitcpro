@@ -808,8 +808,38 @@
     <EmbeddedResource Include="Process\Bag\BTV\BTVAssemblyConfirm.resx">
       <DependentUpon>BTVAssemblyConfirm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVBatchProduction.resx">
+      <DependentUpon>BTVBatchProduction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVClearanceRecord.resx">
+      <DependentUpon>BTVClearanceRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVConfirmBefore.resx">
+      <DependentUpon>BTVConfirmBefore.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVCutPipeRecord.resx">
+      <DependentUpon>BTVCutPipeRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVInnerPackage.resx">
+      <DependentUpon>BTVInnerPackage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVLeakTest.resx">
+      <DependentUpon>BTVLeakTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTVMainForm.resx">
       <DependentUpon>BTVMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVMaterialRecord.resx">
+      <DependentUpon>BTVMaterialRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVProInstruction.resx">
+      <DependentUpon>BTVProInstruction.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordDF.resx">
+      <DependentUpon>BTVRunningRecordDF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordPK.resx">
+      <DependentUpon>BTVRunningRecordPK.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>

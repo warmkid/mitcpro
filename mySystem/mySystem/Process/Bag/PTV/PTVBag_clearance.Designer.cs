@@ -133,22 +133,22 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox1.Location = new System.Drawing.Point(875, 50);
+            this.checkBox1.Location = new System.Drawing.Point(875, 49);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(59, 20);
             this.checkBox1.TabIndex = 8;
-            this.checkBox1.Text = "中文";
+            this.checkBox1.Text = "白班";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
             this.checkBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox2.Location = new System.Drawing.Point(941, 50);
+            this.checkBox2.Location = new System.Drawing.Point(941, 49);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(59, 20);
             this.checkBox2.TabIndex = 9;
-            this.checkBox2.Text = "英文";
+            this.checkBox2.Text = "夜班";
             this.checkBox2.UseVisualStyleBackColor = true;
             // 
             // button1
@@ -287,7 +287,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1011, 361);
+            this.ClientSize = new System.Drawing.Size(1023, 369);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button2);

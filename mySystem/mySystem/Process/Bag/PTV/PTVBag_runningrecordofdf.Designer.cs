@@ -164,7 +164,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(484, 52);
+            this.label4.Location = new System.Drawing.Point(482, 52);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 16);
             this.label4.TabIndex = 3;
@@ -954,7 +954,7 @@
             // dateTimePicker3
             // 
             this.dateTimePicker3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker3.Location = new System.Drawing.Point(73, 52);
+            this.dateTimePicker3.Location = new System.Drawing.Point(81, 53);
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.Size = new System.Drawing.Size(200, 26);
             this.dateTimePicker3.TabIndex = 27;
@@ -963,18 +963,18 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(17, 56);
+            this.label29.Location = new System.Drawing.Point(3, 58);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(48, 16);
+            this.label29.Size = new System.Drawing.Size(80, 16);
             this.label29.TabIndex = 26;
-            this.label29.Text = "日期:";
+            this.label29.Text = "审核日期:";
             // 
             // textBox13
             // 
             this.textBox13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox13.Location = new System.Drawing.Point(74, 22);
+            this.textBox13.Location = new System.Drawing.Point(80, 22);
             this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(50, 26);
+            this.textBox13.Size = new System.Drawing.Size(100, 26);
             this.textBox13.TabIndex = 25;
             // 
             // label30
