@@ -88,7 +88,7 @@ namespace WindowsFormsApplication1
             checkBox1.Enabled = false;
             checkBox2.Enabled = false;
 
-            checkBox1.Checked = mySystem.Parameter.userflight;
+            //checkBox1.Checked = mySystem.Parameter.userflight;
             checkBox2.Checked = !checkBox1.Checked;
             
         }

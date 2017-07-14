@@ -193,16 +193,10 @@ namespace mySystem.Setting
             dtuser.Columns.Add("序号", System.Type.GetType("System.String"));
             dauser.Fill(dtuser);
             bsuser.DataSource = dtuser;
+            changeColView(); //列改为combobox                    
+
             this.dgvUser.DataSource = bsuser.DataSource;
-
-            //显示序号列
-            int coun = this.dgvUser.RowCount;
-            for (int i = 0; i < coun; i++)
-            {
-                dtuser.Rows[i]["序号"] = i + 1;
-            }
-
-            this.dgvUser.Columns["用户ID"].HeaderText = "员工ID";
+            setDataGridViewRowNums(); //序号           
             this.dgvUser.Columns["ID"].Visible = false;
             this.dgvUser.Columns["角色ID"].Visible = false;
         }
@@ -264,13 +258,79 @@ namespace mySystem.Setting
             dauser.Update((DataTable)bsuser.DataSource);
             dtuser.Clear();
             dauser.Fill(dtuser);
-            int coun = this.dgvUser.RowCount;
-            for (int i = 0; i < coun; i++)
-            {
-                dtuser.Rows[i]["序号"] = i + 1;
-            }            
+            setDataGridViewRowNums();           
             
         }
+
+        private void setDataGridViewRowNums()
+        {
+            int coun = this.dgvUser.Rows.Count;
+            for (int i = 0; i < coun; i++)
+            {
+                this.dgvUser.Rows[i].Cells["序号"].Value = (i + 1).ToString();
+            }
+        }
+
+        //更改列显示形态
+        private void changeColView()
+        {
+            foreach (DataColumn dc in dtuser.Columns)
+            {
+                switch (dc.ColumnName)
+                {
+                    case "班次":
+                        DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
+                        c1.DataPropertyName = dc.ColumnName;
+                        c1.HeaderText = dc.ColumnName;
+                        c1.Name = dc.ColumnName;
+                        c1.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c1.ValueType = dc.DataType;
+                       
+                        c1.Items.Add("白班");
+                        c1.Items.Add("夜班");
+                        dgvUser.Columns.Add(c1);
+
+                        break;
+                    //case "角色":
+                    //    DataGridViewComboBoxColumn c2 = new DataGridViewComboBoxColumn();
+                    //    c2.DataPropertyName = dc.ColumnName;
+                    //    c2.HeaderText = dc.ColumnName;
+                    //    c2.Name = dc.ColumnName;
+                    //    c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                    //    c2.ValueType = dc.DataType;
+                    //    c2.Items.Add("操作员");
+                    //    c2.Items.Add("计划员");
+                    //    c2.Items.Add("管理员");
+                    //    dgvUser.Columns.Add(c2);
+                    //    break;
+                    //case "岗位":
+                    //    DataGridViewComboBoxColumn c3 = new DataGridViewComboBoxColumn();
+                    //    c3.DataPropertyName = dc.ColumnName;
+                    //    c3.HeaderText = dc.ColumnName;
+                    //    c3.Name = dc.ColumnName;
+                    //    c3.SortMode = DataGridViewColumnSortMode.Automatic;
+                    //    c3.ValueType = dc.DataType;
+                    //    c3.Items.Add("岗位1");
+                    //    c3.Items.Add("岗位2");
+                    //    c3.Items.Add("岗位3");
+                    //    dgvUser.Columns.Add(c3);
+                    //    break;
+                    default:
+                        DataGridViewTextBoxColumn c5 = new DataGridViewTextBoxColumn();
+                        c5.DataPropertyName = dc.ColumnName;
+                        c5.HeaderText = dc.ColumnName;
+                        c5.Name = dc.ColumnName;
+                        c5.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c5.ValueType = dc.DataType;
+                        dgvUser.Columns.Add(c5);
+
+                        break;
+                }
+
+
+            }
+        }
+
 
 
     }

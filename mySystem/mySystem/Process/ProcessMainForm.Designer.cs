@@ -152,7 +152,7 @@
             this.BTVbagBtn.Name = "BTVbagBtn";
             this.BTVbagBtn.Size = new System.Drawing.Size(173, 38);
             this.BTVbagBtn.TabIndex = 14;
-            this.BTVbagBtn.Text = "    5.BTV制袋";
+            this.BTVbagBtn.Text = "    5.BPV制袋";
             this.BTVbagBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.BTVbagBtn.UseVisualStyleBackColor = true;
             this.BTVbagBtn.Click += new System.EventHandler(this.BTVbagBtn_Click);

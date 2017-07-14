@@ -50,7 +50,6 @@
             this.AddBtn = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.dgvUser = new System.Windows.Forms.DataGridView();
-            this.label8 = new System.Windows.Forms.Label();
             this.SetPeoplePanelTop.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -213,7 +212,6 @@
             // 
             // SetPeoplePanelBottom
             // 
-            this.SetPeoplePanelBottom.Controls.Add(this.label8);
             this.SetPeoplePanelBottom.Controls.Add(this.SaveEditBtn);
             this.SetPeoplePanelBottom.Controls.Add(this.DeleteBtn);
             this.SetPeoplePanelBottom.Controls.Add(this.AddBtn);
@@ -271,17 +269,8 @@
             this.dgvUser.Name = "dgvUser";
             this.dgvUser.RowHeadersVisible = false;
             this.dgvUser.RowTemplate.Height = 23;
-            this.dgvUser.Size = new System.Drawing.Size(700, 281);
+            this.dgvUser.Size = new System.Drawing.Size(999, 281);
             this.dgvUser.TabIndex = 0;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(774, 335);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(248, 48);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "备注：\r\n\r\n班次中白班为\"√\"，反之为夜班。";
             // 
             // SetPeopleForm
             // 
@@ -332,6 +321,5 @@
         private System.Windows.Forms.Button SaveEditBtn;
         private System.Windows.Forms.Button DeleteBtn;
         private System.Windows.Forms.Button AddBtn;
-        private System.Windows.Forms.Label label8;
     }
 }

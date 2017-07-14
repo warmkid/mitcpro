@@ -134,8 +134,8 @@ namespace mySystem.Extruction.Process
             tb产品批号.Text = dt代码批号.Rows[0]["产品批号"].ToString();
             tb生产设备.Text = dt工艺设备.Rows[0]["生产设备"].ToString();
             tb依据工艺.Text = dt工艺设备.Rows[0]["依据工艺"].ToString();
-            cb白班.Checked = mySystem.Parameter.userflight;
-            cb夜班.Checked = !mySystem.Parameter.userflight;
+            //cb白班.Checked = mySystem.Parameter.userflight;
+            //cb夜班.Checked = !mySystem.Parameter.userflight;
         }
 
         //控件格式（先绑定！！！）

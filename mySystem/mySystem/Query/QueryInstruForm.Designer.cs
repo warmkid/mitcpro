@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgv = new System.Windows.Forms.DataGridView();
             this.SearchBtn = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -38,33 +38,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.product_name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.production_instruction_code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.production_process = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.production_start_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operate_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.principal_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.detail = new System.Windows.Forms.DataGridViewButtonColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dgv
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.product_name,
-            this.production_instruction_code,
-            this.production_process,
-            this.production_start_date,
-            this.operate_date,
-            this.principal_id,
-            this.detail});
-            this.dataGridView1.Location = new System.Drawing.Point(39, 114);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1082, 460);
-            this.dataGridView1.TabIndex = 24;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgv.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv.Location = new System.Drawing.Point(39, 114);
+            this.dgv.Name = "dgv";
+            this.dgv.RowTemplate.Height = 23;
+            this.dgv.Size = new System.Drawing.Size(1082, 460);
+            this.dgv.TabIndex = 24;
+            this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // SearchBtn
             // 
@@ -153,57 +138,12 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "选择工序：";
             // 
-            // product_name
-            // 
-            this.product_name.HeaderText = "产品名称";
-            this.product_name.Name = "product_name";
-            this.product_name.Width = 250;
-            // 
-            // production_instruction_code
-            // 
-            this.production_instruction_code.HeaderText = "生产指令";
-            this.production_instruction_code.Name = "production_instruction_code";
-            this.production_instruction_code.Width = 150;
-            // 
-            // production_process
-            // 
-            this.production_process.HeaderText = "生产工艺";
-            this.production_process.Name = "production_process";
-            this.production_process.Width = 150;
-            // 
-            // production_start_date
-            // 
-            this.production_start_date.HeaderText = "开始生产日期";
-            this.production_start_date.Name = "production_start_date";
-            this.production_start_date.Width = 150;
-            // 
-            // operate_date
-            // 
-            this.operate_date.HeaderText = "编制日期";
-            this.operate_date.Name = "operate_date";
-            this.operate_date.Width = 150;
-            // 
-            // principal_id
-            // 
-            this.principal_id.HeaderText = "编制人";
-            this.principal_id.Name = "principal_id";
-            this.principal_id.Width = 90;
-            // 
-            // detail
-            // 
-            this.detail.HeaderText = "查看详情";
-            this.detail.Name = "detail";
-            this.detail.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.detail.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.detail.Text = "查看详情";
-            this.detail.UseColumnTextForButtonValue = true;
-            // 
             // QueryInstruForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 615);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgv);
             this.Controls.Add(this.SearchBtn);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label5);
@@ -216,7 +156,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "QueryInstruForm";
             this.Text = "QueryInstruForm";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -224,7 +164,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv;
         private System.Windows.Forms.Button SearchBtn;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label5;
@@ -234,12 +174,5 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn product_name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn production_instruction_code;
-        private System.Windows.Forms.DataGridViewTextBoxColumn production_process;
-        private System.Windows.Forms.DataGridViewTextBoxColumn production_start_date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn operate_date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn principal_id;
-        private System.Windows.Forms.DataGridViewButtonColumn detail;
     }
 }

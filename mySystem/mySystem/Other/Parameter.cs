@@ -15,7 +15,7 @@ namespace mySystem
         public static int userID; //登录人ID
         public static string userName; //登录用户名
         public static int userRole; //登录用户角色（权限）
-        public static bool userflight; //登录人班次
+        public static string userflight; //登录人班次
 
         public static SqlConnection conn;
         public static OleDbConnection connOle;
@@ -106,9 +106,9 @@ namespace mySystem
         }
 
         //通过id查班次
-        public static bool IDtoFlight(int id)
+        public static String IDtoFlight(int id)
         {
-            bool flight = false;
+            String flight = null;
             if (!isSqlOk)
             {
                 string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
@@ -120,7 +120,7 @@ namespace mySystem
                 List<String> whereCols = new List<String>(new String[] { "用户ID" });
                 List<Object> whereVals = new List<Object>(new Object[] { id });
                 List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
-                flight = Convert.ToBoolean(res[0][0]);
+                flight = res[0][0].ToString();
                 myConn.Dispose();
             }  
 
