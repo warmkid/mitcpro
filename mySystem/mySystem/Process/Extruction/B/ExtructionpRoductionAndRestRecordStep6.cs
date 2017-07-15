@@ -15,8 +15,6 @@ namespace mySystem.Extruction.Process
 {
     public partial class ExtructionpRoductionAndRestRecordStep6 : BaseForm
     {
-        //private DataTable dtInformation = new DataTable();
-
         private String table = "吹膜工序生产和检验记录";
         private String tableInfo = "吹膜工序生产和检验记录详细信息";
 
@@ -241,7 +239,7 @@ namespace mySystem.Extruction.Process
                     }
                     SaveBtn.Enabled = true;
                     CheckBtn.Enabled = true;
-                    tb审核人.Enabled = true;
+                    tb审核人.Enabled = true;                    
                     AddLineBtn.Enabled = true;
                     DelLineBtn.Enabled = true;
                 }
@@ -255,7 +253,7 @@ namespace mySystem.Extruction.Process
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
 
-            DataShow(mySystem.Parameter.proInstruID, dt1.Rows[0]["产品名称"].ToString(), dt1.Rows[0]["班次"].ToString() == "白班" ? true : false, Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+            DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品名称"].ToString(), dt1.Rows[0]["班次"].ToString() == "白班" ? true : false, Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
         }
         
         //****************************** 嵌套 ******************************//
@@ -337,6 +335,8 @@ namespace mySystem.Extruction.Process
         {
             //DataRow dr = dt记录详情.NewRow();
             dr["T吹膜工序生产和检验记录ID"] = ID;
+            dr["开始时间"] = DateTime.Now;
+            dr["结束时间"] = DateTime.Now;
             dr["记录人"] = mySystem.Parameter.userName;
             dr["检查人"] = " ";
             dr["外观"] = "Yes";
@@ -457,6 +457,7 @@ namespace mySystem.Extruction.Process
                 { 
                     dt记录详情.Rows.RemoveAt(deletenum);
                     getTotal();
+                    setDataGridViewRowNums();
                 }
             }
         }
@@ -466,7 +467,7 @@ namespace mySystem.Extruction.Process
         {
             if (Name_check1() == false)
             { /*记录人不合格*/}
-            if (Name_check2() == false)
+            else if (Name_check2() == false)
             { /*检查人不合格*/}
             else if (TextBox_check() == false)
             {/*环境温度、环境湿度不合格*/ }
@@ -487,6 +488,7 @@ namespace mySystem.Extruction.Process
                     readOuterData(mySystem.Parameter.proInstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
                     outerBind();
                 }
+                CheckBtn.Enabled = true;
                 tb审核人.Enabled = true;
             }            
         }
@@ -598,13 +600,15 @@ namespace mySystem.Extruction.Process
         //产品名称改变
         private void cb产品名称_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DataShow(mySystem.Parameter.proInstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
+            if (cb产品名称.SelectedIndex >= 0)
+            { DataShow(mySystem.Parameter.proInstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value); }            
         }
 
         //生产日期改变
         private void dtp生产日期_ValueChanged(object sender, EventArgs e)
         {
-            DataShow(mySystem.Parameter.proInstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
+            if (cb产品名称.SelectedIndex >= 0)
+            { DataShow(mySystem.Parameter.proInstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value); }            
         }
         
         //******************************datagridview******************************//  
@@ -615,7 +619,7 @@ namespace mySystem.Extruction.Process
             // 获取选中的列，然后提示
             String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
-            MessageBox.Show("第" + rowsname + "行的" + Columnsname + "填写错误");
+            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
         //实时求合计、检查人名合法性

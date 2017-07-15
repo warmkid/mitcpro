@@ -48,7 +48,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cb产品代码 = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tb备注 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tb审核人 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -61,8 +60,9 @@
             this.printBtn = new System.Windows.Forms.Button();
             this.CheckBtn = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
-            this.AddBtn = new System.Windows.Forms.Button();
-            this.DelBtn = new System.Windows.Forms.Button();
+            this.AddLineBtn = new System.Windows.Forms.Button();
+            this.DelLineBtn = new System.Windows.Forms.Button();
+            this.tb备注 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -232,13 +232,6 @@
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             // 
-            // tb备注
-            // 
-            this.tb备注.Location = new System.Drawing.Point(100, 125);
-            this.tb备注.Name = "tb备注";
-            this.tb备注.Size = new System.Drawing.Size(729, 26);
-            this.tb备注.TabIndex = 53;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -352,35 +345,42 @@
             this.SaveBtn.UseVisualStyleBackColor = true;
             this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
             // 
-            // AddBtn
+            // AddLineBtn
             // 
-            this.AddBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddBtn.Location = new System.Drawing.Point(708, 263);
-            this.AddBtn.Name = "AddBtn";
-            this.AddBtn.Size = new System.Drawing.Size(80, 30);
-            this.AddBtn.TabIndex = 53;
-            this.AddBtn.Text = "添加";
-            this.AddBtn.UseVisualStyleBackColor = true;
-            this.AddBtn.Click += new System.EventHandler(this.AddBtn_Click);
+            this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.AddLineBtn.Location = new System.Drawing.Point(708, 263);
+            this.AddLineBtn.Name = "AddLineBtn";
+            this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
+            this.AddLineBtn.TabIndex = 53;
+            this.AddLineBtn.Text = "添加";
+            this.AddLineBtn.UseVisualStyleBackColor = true;
+            this.AddLineBtn.Click += new System.EventHandler(this.AddBtn_Click);
             // 
-            // DelBtn
+            // DelLineBtn
             // 
-            this.DelBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.DelBtn.Location = new System.Drawing.Point(801, 263);
-            this.DelBtn.Name = "DelBtn";
-            this.DelBtn.Size = new System.Drawing.Size(80, 30);
-            this.DelBtn.TabIndex = 54;
-            this.DelBtn.Text = "删除";
-            this.DelBtn.UseVisualStyleBackColor = true;
-            this.DelBtn.Click += new System.EventHandler(this.DelBtn_Click);
+            this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.DelLineBtn.Location = new System.Drawing.Point(801, 263);
+            this.DelLineBtn.Name = "DelLineBtn";
+            this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
+            this.DelLineBtn.TabIndex = 54;
+            this.DelLineBtn.Text = "删除";
+            this.DelLineBtn.UseVisualStyleBackColor = true;
+            this.DelLineBtn.Click += new System.EventHandler(this.DelBtn_Click);
+            // 
+            // tb备注
+            // 
+            this.tb备注.Location = new System.Drawing.Point(100, 125);
+            this.tb备注.Name = "tb备注";
+            this.tb备注.Size = new System.Drawing.Size(723, 26);
+            this.tb备注.TabIndex = 55;
             // 
             // outerpack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 569);
-            this.Controls.Add(this.DelBtn);
-            this.Controls.Add(this.AddBtn);
+            this.Controls.Add(this.DelLineBtn);
+            this.Controls.Add(this.AddLineBtn);
             this.Controls.Add(this.printBtn);
             this.Controls.Add(this.CheckBtn);
             this.Controls.Add(this.SaveBtn);
@@ -460,8 +460,8 @@
         private System.Windows.Forms.Button CheckBtn;
         private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Button AddLineBtn;
+        private System.Windows.Forms.Button DelLineBtn;
         private System.Windows.Forms.TextBox tb备注;
-        private System.Windows.Forms.Button AddBtn;
-        private System.Windows.Forms.Button DelBtn;
     }
 }

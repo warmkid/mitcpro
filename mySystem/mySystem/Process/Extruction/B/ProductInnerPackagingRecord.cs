@@ -52,18 +52,16 @@ namespace mySystem.Extruction.Process
         private void Init()
         {
             //foreach (Control c in this.Controls) { c.Enabled = false; } //后面始终无法恢复
-
             {
                 EnableInit(false);
                 AddLineBtn.Enabled = false;
                 DelLineBtn.Enabled = false;
                 SaveBtn.Enabled = false;
                 CheckBtn.Enabled = false;
-                printBtn.Enabled = false;
                 tb审核人.Enabled = false;
                 dtp审核日期.Enabled = false;
+                printBtn.Enabled = false;
             }
-
             cb产品代码.Enabled = true;
             dtp生产日期.Enabled = true;
             tb产品批号.ReadOnly = true;
@@ -162,7 +160,6 @@ namespace mySystem.Extruction.Process
         private void DataShow(Int32 InstruID, String productCode, DateTime searchTime)
         {
             Init();
-            EnableInit(true);
 
             //******************************外表 根据条件绑定******************************//  
             readOuterData(InstruID, productCode, searchTime);
@@ -226,7 +223,6 @@ namespace mySystem.Extruction.Process
             if (Convert.ToBoolean(dt记录.Rows[0]["审核是否通过"].ToString()) == true)
             {
                 //审核通过表
-                Init();
                 printBtn.Enabled = true;
             }
             else
@@ -260,7 +256,7 @@ namespace mySystem.Extruction.Process
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
 
-            DataShow(mySystem.Parameter.proInstruID, dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));        
+            DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));        
         }
 
         //****************************** 嵌套 ******************************//
@@ -378,6 +374,7 @@ namespace mySystem.Extruction.Process
         {
             //DataRow dr = dt记录详情.NewRow();
             dr["T产品内包装记录ID"] = ID;
+            dr["生产时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
             dr["产品外观"] = 0;
             dr["包装后外观"] = 0;
             dr["包装袋热封线"] = 0;
@@ -446,6 +443,7 @@ namespace mySystem.Extruction.Process
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
                 dt记录详情.Rows.RemoveAt(deletenum);
+                setDataGridViewRowNums();
             }
         }
         
@@ -454,7 +452,7 @@ namespace mySystem.Extruction.Process
         {
             if (Name_check() == false)
             { /*包装人不合格*/}
-            if (mySystem.Parameter.NametoID(tb操作人.Text.ToString()) == 0)
+            else if (mySystem.Parameter.NametoID(tb操作人.Text.ToString()) == 0)
             { 
                 /*操作人不合格*/
                 MessageBox.Show("请重新输入『操作人』信息", "ERROR");
@@ -478,9 +476,17 @@ namespace mySystem.Extruction.Process
                     readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, dtp生产日期.Value);
                     outerBind();
                 }
+                CheckBtn.Enabled = true;
                 tb审核人.Enabled = true;
                 dtp审核日期.Enabled = true;
             }    
+        }
+
+        //审核按钮
+        private void CheckBtn_Click(object sender, EventArgs e)
+        {
+            check = new CheckForm(this);
+            check.Show();
         }
 
         //审核功能
@@ -499,13 +505,6 @@ namespace mySystem.Extruction.Process
                 Init();
                 printBtn.Enabled = true;
             }
-        }
-
-        //审核按钮
-        private void CheckBtn_Click(object sender, EventArgs e)
-        {
-            check = new CheckForm(this);
-            check.Show();
         }
 
         //******************************小功能******************************// 
@@ -555,13 +554,15 @@ namespace mySystem.Extruction.Process
         //产品代码改变
         private void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DataShow(mySystem.Parameter.proInstruID, cb产品代码.Text.ToString(), dtp生产日期.Value);
+            if (cb产品代码.SelectedIndex >= 0)
+            { DataShow(mySystem.Parameter.proInstruID, cb产品代码.Text.ToString(), dtp生产日期.Value); }            
         }
 
         //生产日期改变
         private void dtp生产日期_ValueChanged(object sender, EventArgs e)
         {
-            DataShow(mySystem.Parameter.proInstruID, cb产品代码.Text.ToString(), dtp生产日期.Value);
+            if (cb产品代码.SelectedIndex >= 0)
+            { DataShow(mySystem.Parameter.proInstruID, cb产品代码.Text.ToString(), dtp生产日期.Value); }            
         }
 
         //******************************datagridview******************************//  
@@ -572,7 +573,7 @@ namespace mySystem.Extruction.Process
             // 获取选中的列，然后提示
             String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
-            MessageBox.Show("第" + rowsname + "行的" + Columnsname + "填写错误");
+            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
         //实时检查包装人名合法性
