@@ -39,6 +39,9 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn保存 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
+            this.btn添加 = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txb合计不良品数量 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -137,6 +140,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(860, 329);
             this.dataGridView1.TabIndex = 60;
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
             // btn保存
             // 
@@ -158,11 +162,40 @@
             this.btn审核.UseVisualStyleBackColor = true;
             this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
+            // btn添加
+            // 
+            this.btn添加.Location = new System.Drawing.Point(925, 132);
+            this.btn添加.Name = "btn添加";
+            this.btn添加.Size = new System.Drawing.Size(75, 23);
+            this.btn添加.TabIndex = 63;
+            this.btn添加.Text = "添加";
+            this.btn添加.UseVisualStyleBackColor = true;
+            this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(85, 536);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(120, 16);
+            this.label3.TabIndex = 64;
+            this.label3.Text = "合计不良品数量";
+            // 
+            // txb合计不良品数量
+            // 
+            this.txb合计不良品数量.Location = new System.Drawing.Point(211, 533);
+            this.txb合计不良品数量.Name = "txb合计不良品数量";
+            this.txb合计不良品数量.Size = new System.Drawing.Size(100, 26);
+            this.txb合计不良品数量.TabIndex = 65;
+            // 
             // Waste
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1115, 741);
+            this.Controls.Add(this.txb合计不良品数量);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.btn添加);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.dataGridView1);
@@ -193,5 +226,8 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.Button btn添加;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txb合计不良品数量;
     }
 }

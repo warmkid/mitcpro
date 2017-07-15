@@ -68,7 +68,10 @@ namespace mySystem.Process.Extruction.B
 
         void Running_FormClosing(object sender, FormClosingEventArgs e)
         {
-           
+            if (cmb产品代码.Text == "")
+            {
+                return;
+            }
             if (txb审核人.Text.ToString().Trim() == "")
             {
                 MessageBox.Show("no reviewer checked");
@@ -95,7 +98,7 @@ namespace mySystem.Process.Extruction.B
             //    cmb产品代码.Items.Add(s);
             //}
             
-            dtRunning = new DataTable("吹膜机组运行记录");
+            dtRunning = new DataTable(tablename1);
             daRunning = new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID ="+Id, conOle);
             bsRunning = new BindingSource();
             cbRunning = new OleDbCommandBuilder(daRunning);
@@ -412,9 +415,9 @@ namespace mySystem.Process.Extruction.B
                 newrow = writeOuterDefault(newrow);
                 dtRunning.Rows.Add(newrow);
                 daRunning.Update((DataTable)bsRunning.DataSource);
-                readOuterData(Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date,_Time);
-            removeOuterBinding();
-            outerBind();
+                readOuterData(Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date, _Time);
+                removeOuterBinding();
+                outerBind();
             }
             cmb产品代码.Enabled = false;
             txb产品批号.Enabled = false;

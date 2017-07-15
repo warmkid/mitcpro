@@ -114,6 +114,7 @@
             // 
             // txb重量比成品率
             // 
+            this.txb重量比成品率.Enabled = false;
             this.txb重量比成品率.Location = new System.Drawing.Point(479, 41);
             this.txb重量比成品率.Margin = new System.Windows.Forms.Padding(4);
             this.txb重量比成品率.Name = "txb重量比成品率";
@@ -133,6 +134,7 @@
             // 
             // txb领料量
             // 
+            this.txb领料量.Enabled = false;
             this.txb领料量.Location = new System.Drawing.Point(323, 41);
             this.txb领料量.Margin = new System.Windows.Forms.Padding(4);
             this.txb领料量.Name = "txb领料量";
@@ -142,6 +144,7 @@
             // 
             // txb废品量合计
             // 
+            this.txb废品量合计.Enabled = false;
             this.txb废品量合计.Location = new System.Drawing.Point(165, 41);
             this.txb废品量合计.Margin = new System.Windows.Forms.Padding(4);
             this.txb废品量合计.Name = "txb废品量合计";
@@ -170,6 +173,7 @@
             // 
             // txb物料平衡
             // 
+            this.txb物料平衡.Enabled = false;
             this.txb物料平衡.Location = new System.Drawing.Point(637, 41);
             this.txb物料平衡.Margin = new System.Windows.Forms.Padding(4);
             this.txb物料平衡.Name = "txb物料平衡";
@@ -179,6 +183,7 @@
             // 
             // txb成品重量合计
             // 
+            this.txb成品重量合计.Enabled = false;
             this.txb成品重量合计.Location = new System.Drawing.Point(7, 41);
             this.txb成品重量合计.Margin = new System.Windows.Forms.Padding(4);
             this.txb成品重量合计.Name = "txb成品重量合计";
@@ -215,7 +220,7 @@
             // 
             this.dtp生产日期.CustomFormat = "yyyy-MM-dd";
             this.dtp生产日期.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp生产日期.Location = new System.Drawing.Point(373, 22);
+            this.dtp生产日期.Location = new System.Drawing.Point(373, 18);
             this.dtp生产日期.Name = "dtp生产日期";
             this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
             this.dtp生产日期.TabIndex = 43;
@@ -256,7 +261,7 @@
             this.btn审核.TabIndex = 32;
             this.btn审核.Text = "审核";
             this.btn审核.UseVisualStyleBackColor = true;
-            this.btn审核.Click += new System.EventHandler(this.btnReview_Click);
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
             // label2
             // 
