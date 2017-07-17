@@ -30,8 +30,10 @@
         {
             this.label7 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ckb夜班 = new System.Windows.Forms.CheckBox();
-            this.ckb白班 = new System.Windows.Forms.CheckBox();
+            this.btn打印 = new System.Windows.Forms.Button();
+            this.btn添加 = new System.Windows.Forms.Button();
+            this.cmb班次 = new System.Windows.Forms.ComboBox();
+            this.lb班次 = new System.Windows.Forms.Label();
             this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
             this.btnSave = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
@@ -58,8 +60,10 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.ckb夜班);
-            this.panel1.Controls.Add(this.ckb白班);
+            this.panel1.Controls.Add(this.btn打印);
+            this.panel1.Controls.Add(this.btn添加);
+            this.panel1.Controls.Add(this.cmb班次);
+            this.panel1.Controls.Add(this.lb班次);
             this.panel1.Controls.Add(this.dtp生产日期);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.label11);
@@ -70,30 +74,45 @@
             this.panel1.Controls.Add(this.txb生产指令编号);
             this.panel1.Location = new System.Drawing.Point(53, 93);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(958, 67);
+            this.panel1.Size = new System.Drawing.Size(1060, 67);
             this.panel1.TabIndex = 52;
             // 
-            // ckb夜班
+            // btn打印
             // 
-            this.ckb夜班.AutoSize = true;
-            this.ckb夜班.Location = new System.Drawing.Point(620, 39);
-            this.ckb夜班.Name = "ckb夜班";
-            this.ckb夜班.Size = new System.Drawing.Size(59, 20);
-            this.ckb夜班.TabIndex = 45;
-            this.ckb夜班.Text = "夜班";
-            this.ckb夜班.UseVisualStyleBackColor = true;
-            this.ckb夜班.CheckedChanged += new System.EventHandler(this.ckb夜班_CheckedChanged);
+            this.btn打印.Location = new System.Drawing.Point(966, 21);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(81, 30);
+            this.btn打印.TabIndex = 75;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
-            // ckb白班
+            // btn添加
             // 
-            this.ckb白班.AutoSize = true;
-            this.ckb白班.Location = new System.Drawing.Point(620, 13);
-            this.ckb白班.Name = "ckb白班";
-            this.ckb白班.Size = new System.Drawing.Size(59, 20);
-            this.ckb白班.TabIndex = 44;
-            this.ckb白班.Text = "白班";
-            this.ckb白班.UseVisualStyleBackColor = true;
-            this.ckb白班.CheckedChanged += new System.EventHandler(this.ckb白班_CheckedChanged);
+            this.btn添加.Location = new System.Drawing.Point(770, 21);
+            this.btn添加.Name = "btn添加";
+            this.btn添加.Size = new System.Drawing.Size(92, 30);
+            this.btn添加.TabIndex = 64;
+            this.btn添加.Text = "添加";
+            this.btn添加.UseVisualStyleBackColor = true;
+            this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
+            // 
+            // cmb班次
+            // 
+            this.cmb班次.FormattingEnabled = true;
+            this.cmb班次.Location = new System.Drawing.Point(545, 23);
+            this.cmb班次.Name = "cmb班次";
+            this.cmb班次.Size = new System.Drawing.Size(121, 24);
+            this.cmb班次.TabIndex = 45;
+            // 
+            // lb班次
+            // 
+            this.lb班次.AutoSize = true;
+            this.lb班次.Location = new System.Drawing.Point(499, 25);
+            this.lb班次.Name = "lb班次";
+            this.lb班次.Size = new System.Drawing.Size(40, 16);
+            this.lb班次.TabIndex = 44;
+            this.lb班次.Text = "班次";
             // 
             // dtp生产日期
             // 
@@ -101,12 +120,12 @@
             this.dtp生产日期.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp生产日期.Location = new System.Drawing.Point(373, 22);
             this.dtp生产日期.Name = "dtp生产日期";
-            this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp生产日期.Size = new System.Drawing.Size(110, 26);
             this.dtp生产日期.TabIndex = 43;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(747, 18);
+            this.btnSave.Location = new System.Drawing.Point(672, 22);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(92, 30);
             this.btnSave.TabIndex = 42;
@@ -134,7 +153,7 @@
             // 
             // btn审核
             // 
-            this.btn审核.Location = new System.Drawing.Point(845, 18);
+            this.btn审核.Location = new System.Drawing.Point(868, 21);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(92, 30);
             this.btn审核.TabIndex = 32;
@@ -190,7 +209,7 @@
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Feed";
-            this.Text = "Feed";
+            this.Text = "吹膜供料系统运行记录";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -212,7 +231,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txb生产指令编号;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.CheckBox ckb夜班;
-        private System.Windows.Forms.CheckBox ckb白班;
+        private System.Windows.Forms.ComboBox cmb班次;
+        private System.Windows.Forms.Label lb班次;
+        private System.Windows.Forms.Button btn添加;
+        private System.Windows.Forms.Button btn打印;
     }
 }

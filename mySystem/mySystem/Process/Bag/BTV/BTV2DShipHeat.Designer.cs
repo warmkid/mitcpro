@@ -34,25 +34,25 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.tb生产指令编号 = new System.Windows.Forms.TextBox();
+            this.tb产品代码 = new System.Windows.Forms.TextBox();
+            this.tb产品批号 = new System.Windows.Forms.TextBox();
+            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
+            this.tb不良品数量 = new System.Windows.Forms.TextBox();
+            this.tb合格品数量 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker5 = new System.Windows.Forms.DateTimePicker();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
+            this.dtp操作日期 = new System.Windows.Forms.DateTimePicker();
+            this.tb审核人 = new System.Windows.Forms.TextBox();
+            this.tb操作人 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -123,37 +123,37 @@
             this.dataGridView1.Size = new System.Drawing.Size(1106, 150);
             this.dataGridView1.TabIndex = 15;
             // 
-            // textBox1
+            // tb生产指令编号
             // 
-            this.textBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(135, 50);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 26);
-            this.textBox1.TabIndex = 16;
+            this.tb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb生产指令编号.Location = new System.Drawing.Point(135, 50);
+            this.tb生产指令编号.Name = "tb生产指令编号";
+            this.tb生产指令编号.Size = new System.Drawing.Size(100, 26);
+            this.tb生产指令编号.TabIndex = 16;
             // 
-            // textBox2
+            // tb产品代码
             // 
-            this.textBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(340, 50);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 26);
-            this.textBox2.TabIndex = 17;
+            this.tb产品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品代码.Location = new System.Drawing.Point(340, 50);
+            this.tb产品代码.Name = "tb产品代码";
+            this.tb产品代码.Size = new System.Drawing.Size(100, 26);
+            this.tb产品代码.TabIndex = 17;
             // 
-            // textBox3
+            // tb产品批号
             // 
-            this.textBox3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox3.Location = new System.Drawing.Point(538, 50);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 26);
-            this.textBox3.TabIndex = 18;
+            this.tb产品批号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品批号.Location = new System.Drawing.Point(538, 50);
+            this.tb产品批号.Name = "tb产品批号";
+            this.tb产品批号.Size = new System.Drawing.Size(100, 26);
+            this.tb产品批号.TabIndex = 18;
             // 
-            // dateTimePicker1
+            // dtp生产日期
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(746, 50);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 23;
+            this.dtp生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp生产日期.Location = new System.Drawing.Point(746, 50);
+            this.dtp生产日期.Name = "dtp生产日期";
+            this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp生产日期.TabIndex = 23;
             // 
             // groupBox1
             // 
@@ -186,8 +186,8 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox8);
-            this.groupBox2.Controls.Add(this.textBox9);
+            this.groupBox2.Controls.Add(this.tb不良品数量);
+            this.groupBox2.Controls.Add(this.tb合格品数量);
             this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.label17);
             this.groupBox2.Controls.Add(this.label18);
@@ -198,21 +198,21 @@
             this.groupBox2.TabIndex = 27;
             this.groupBox2.TabStop = false;
             // 
-            // textBox8
+            // tb不良品数量
             // 
-            this.textBox8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox8.Location = new System.Drawing.Point(116, 87);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(50, 26);
-            this.textBox8.TabIndex = 26;
+            this.tb不良品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb不良品数量.Location = new System.Drawing.Point(116, 87);
+            this.tb不良品数量.Name = "tb不良品数量";
+            this.tb不良品数量.Size = new System.Drawing.Size(50, 26);
+            this.tb不良品数量.TabIndex = 26;
             // 
-            // textBox9
+            // tb合格品数量
             // 
-            this.textBox9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox9.Location = new System.Drawing.Point(116, 35);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(50, 26);
-            this.textBox9.TabIndex = 25;
+            this.tb合格品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb合格品数量.Location = new System.Drawing.Point(116, 35);
+            this.tb合格品数量.Name = "tb合格品数量";
+            this.tb合格品数量.Size = new System.Drawing.Size(50, 26);
+            this.tb合格品数量.TabIndex = 25;
             // 
             // label16
             // 
@@ -256,10 +256,10 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.dateTimePicker4);
-            this.groupBox3.Controls.Add(this.dateTimePicker5);
-            this.groupBox3.Controls.Add(this.textBox4);
-            this.groupBox3.Controls.Add(this.textBox5);
+            this.groupBox3.Controls.Add(this.dtp审核日期);
+            this.groupBox3.Controls.Add(this.dtp操作日期);
+            this.groupBox3.Controls.Add(this.tb审核人);
+            this.groupBox3.Controls.Add(this.tb操作人);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.label9);
             this.groupBox3.Controls.Add(this.label10);
@@ -270,37 +270,37 @@
             this.groupBox3.TabIndex = 28;
             this.groupBox3.TabStop = false;
             // 
-            // dateTimePicker4
+            // dtp审核日期
             // 
-            this.dateTimePicker4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker4.Location = new System.Drawing.Point(235, 100);
-            this.dateTimePicker4.Name = "dateTimePicker4";
-            this.dateTimePicker4.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker4.TabIndex = 33;
+            this.dtp审核日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp审核日期.Location = new System.Drawing.Point(235, 100);
+            this.dtp审核日期.Name = "dtp审核日期";
+            this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp审核日期.TabIndex = 33;
             // 
-            // dateTimePicker5
+            // dtp操作日期
             // 
-            this.dateTimePicker5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker5.Location = new System.Drawing.Point(13, 100);
-            this.dateTimePicker5.Name = "dateTimePicker5";
-            this.dateTimePicker5.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker5.TabIndex = 32;
+            this.dtp操作日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp操作日期.Location = new System.Drawing.Point(13, 100);
+            this.dtp操作日期.Name = "dtp操作日期";
+            this.dtp操作日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp操作日期.TabIndex = 32;
             // 
-            // textBox4
+            // tb审核人
             // 
-            this.textBox4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox4.Location = new System.Drawing.Point(235, 41);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 26);
-            this.textBox4.TabIndex = 31;
+            this.tb审核人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核人.Location = new System.Drawing.Point(235, 41);
+            this.tb审核人.Name = "tb审核人";
+            this.tb审核人.Size = new System.Drawing.Size(100, 26);
+            this.tb审核人.TabIndex = 31;
             // 
-            // textBox5
+            // tb操作人
             // 
-            this.textBox5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox5.Location = new System.Drawing.Point(13, 41);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 26);
-            this.textBox5.TabIndex = 30;
+            this.tb操作人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb操作人.Location = new System.Drawing.Point(13, 41);
+            this.tb操作人.Name = "tb操作人";
+            this.tb操作人.Size = new System.Drawing.Size(100, 26);
+            this.tb操作人.TabIndex = 30;
             // 
             // label8
             // 
@@ -350,10 +350,10 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.dtp生产日期);
+            this.Controls.Add(this.tb产品批号);
+            this.Controls.Add(this.tb产品代码);
+            this.Controls.Add(this.tb生产指令编号);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -383,25 +383,25 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.TextBox tb生产指令编号;
+        private System.Windows.Forms.TextBox tb产品代码;
+        private System.Windows.Forms.TextBox tb产品批号;
+        private System.Windows.Forms.DateTimePicker dtp生产日期;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox9;
+        private System.Windows.Forms.TextBox tb不良品数量;
+        private System.Windows.Forms.TextBox tb合格品数量;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker5;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.DateTimePicker dtp审核日期;
+        private System.Windows.Forms.DateTimePicker dtp操作日期;
+        private System.Windows.Forms.TextBox tb审核人;
+        private System.Windows.Forms.TextBox tb操作人;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;

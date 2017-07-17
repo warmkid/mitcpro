@@ -30,23 +30,23 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.tb备注 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.tb检查人 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
+            this.cb不合格 = new System.Windows.Forms.CheckBox();
+            this.cb合格 = new System.Windows.Forms.CheckBox();
             this.label12 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.tb清场人 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.cb夜班 = new System.Windows.Forms.CheckBox();
+            this.cb白班 = new System.Windows.Forms.CheckBox();
+            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
+            this.tb产品批号 = new System.Windows.Forms.TextBox();
+            this.tb产品代码 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -67,14 +67,14 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.textBox6);
+            this.groupBox1.Controls.Add(this.tb备注);
             this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.textBox7);
+            this.groupBox1.Controls.Add(this.tb检查人);
             this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.checkBox5);
-            this.groupBox1.Controls.Add(this.checkBox6);
+            this.groupBox1.Controls.Add(this.cb不合格);
+            this.groupBox1.Controls.Add(this.cb合格);
             this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.textBox8);
+            this.groupBox1.Controls.Add(this.tb清场人);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.Location = new System.Drawing.Point(27, 246);
             this.groupBox1.Name = "groupBox1";
@@ -82,13 +82,13 @@
             this.groupBox1.TabIndex = 36;
             this.groupBox1.TabStop = false;
             // 
-            // textBox6
+            // tb备注
             // 
-            this.textBox6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox6.Location = new System.Drawing.Point(75, 54);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(596, 26);
-            this.textBox6.TabIndex = 28;
+            this.tb备注.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb备注.Location = new System.Drawing.Point(75, 54);
+            this.tb备注.Name = "tb备注";
+            this.tb备注.Size = new System.Drawing.Size(596, 26);
+            this.tb备注.TabIndex = 28;
             // 
             // label10
             // 
@@ -96,17 +96,17 @@
             this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label10.Location = new System.Drawing.Point(11, 58);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 16);
+            this.label10.Size = new System.Drawing.Size(56, 16);
             this.label10.TabIndex = 27;
-            this.label10.Text = "备注";
+            this.label10.Text = "备注：";
             // 
-            // textBox7
+            // tb检查人
             // 
-            this.textBox7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox7.Location = new System.Drawing.Point(522, 18);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 26);
-            this.textBox7.TabIndex = 26;
+            this.tb检查人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb检查人.Location = new System.Drawing.Point(522, 18);
+            this.tb检查人.Name = "tb检查人";
+            this.tb检查人.Size = new System.Drawing.Size(100, 26);
+            this.tb检查人.TabIndex = 26;
             // 
             // label11
             // 
@@ -114,31 +114,31 @@
             this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label11.Location = new System.Drawing.Point(459, 22);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(56, 16);
+            this.label11.Size = new System.Drawing.Size(72, 16);
             this.label11.TabIndex = 25;
-            this.label11.Text = "检查人";
+            this.label11.Text = "检查人：";
             // 
-            // checkBox5
+            // cb不合格
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox5.Location = new System.Drawing.Point(368, 20);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(75, 20);
-            this.checkBox5.TabIndex = 24;
-            this.checkBox5.Text = "不合格";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.cb不合格.AutoSize = true;
+            this.cb不合格.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb不合格.Location = new System.Drawing.Point(368, 20);
+            this.cb不合格.Name = "cb不合格";
+            this.cb不合格.Size = new System.Drawing.Size(75, 20);
+            this.cb不合格.TabIndex = 24;
+            this.cb不合格.Text = "不合格";
+            this.cb不合格.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // cb合格
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox6.Location = new System.Drawing.Point(302, 20);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(59, 20);
-            this.checkBox6.TabIndex = 23;
-            this.checkBox6.Text = "合格";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.cb合格.AutoSize = true;
+            this.cb合格.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb合格.Location = new System.Drawing.Point(302, 20);
+            this.cb合格.Name = "cb合格";
+            this.cb合格.Size = new System.Drawing.Size(59, 20);
+            this.cb合格.TabIndex = 23;
+            this.cb合格.Text = "合格";
+            this.cb合格.UseVisualStyleBackColor = true;
             // 
             // label12
             // 
@@ -146,17 +146,17 @@
             this.label12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label12.Location = new System.Drawing.Point(223, 22);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(72, 16);
+            this.label12.Size = new System.Drawing.Size(88, 16);
             this.label12.TabIndex = 22;
-            this.label12.Text = "检查结果";
+            this.label12.Text = "检查结果：";
             // 
-            // textBox8
+            // tb清场人
             // 
-            this.textBox8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox8.Location = new System.Drawing.Point(76, 18);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 26);
-            this.textBox8.TabIndex = 21;
+            this.tb清场人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb清场人.Location = new System.Drawing.Point(76, 18);
+            this.tb清场人.Name = "tb清场人";
+            this.tb清场人.Size = new System.Drawing.Size(100, 26);
+            this.tb清场人.TabIndex = 21;
             // 
             // label13
             // 
@@ -164,9 +164,9 @@
             this.label13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label13.Location = new System.Drawing.Point(10, 22);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(56, 16);
+            this.label13.Size = new System.Drawing.Size(72, 16);
             this.label13.TabIndex = 20;
-            this.label13.Text = "清场人";
+            this.label13.Text = "清场人：";
             // 
             // dataGridView1
             // 
@@ -197,51 +197,51 @@
             this.button1.Text = "保存";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // cb夜班
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox2.Location = new System.Drawing.Point(932, 53);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(59, 20);
-            this.checkBox2.TabIndex = 32;
-            this.checkBox2.Text = "夜班";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cb夜班.AutoSize = true;
+            this.cb夜班.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb夜班.Location = new System.Drawing.Point(932, 53);
+            this.cb夜班.Name = "cb夜班";
+            this.cb夜班.Size = new System.Drawing.Size(59, 20);
+            this.cb夜班.TabIndex = 32;
+            this.cb夜班.Text = "夜班";
+            this.cb夜班.UseVisualStyleBackColor = true;
             // 
-            // checkBox1
+            // cb白班
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.checkBox1.Location = new System.Drawing.Point(866, 53);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(59, 20);
-            this.checkBox1.TabIndex = 31;
-            this.checkBox1.Text = "白班";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cb白班.AutoSize = true;
+            this.cb白班.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb白班.Location = new System.Drawing.Point(866, 53);
+            this.cb白班.Name = "cb白班";
+            this.cb白班.Size = new System.Drawing.Size(59, 20);
+            this.cb白班.TabIndex = 31;
+            this.cb白班.Text = "白班";
+            this.cb白班.UseVisualStyleBackColor = true;
             // 
-            // dateTimePicker1
+            // dtp生产日期
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(561, 48);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 30;
+            this.dtp生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp生产日期.Location = new System.Drawing.Point(561, 48);
+            this.dtp生产日期.Name = "dtp生产日期";
+            this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp生产日期.TabIndex = 30;
             // 
-            // textBox2
+            // tb产品批号
             // 
-            this.textBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(358, 48);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 26);
-            this.textBox2.TabIndex = 29;
+            this.tb产品批号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品批号.Location = new System.Drawing.Point(358, 48);
+            this.tb产品批号.Name = "tb产品批号";
+            this.tb产品批号.Size = new System.Drawing.Size(100, 26);
+            this.tb产品批号.TabIndex = 29;
             // 
-            // textBox1
+            // tb产品代码
             // 
-            this.textBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(153, 48);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 26);
-            this.textBox1.TabIndex = 28;
+            this.tb产品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品代码.Location = new System.Drawing.Point(153, 48);
+            this.tb产品代码.Name = "tb产品代码";
+            this.tb产品代码.Size = new System.Drawing.Size(100, 26);
+            this.tb产品代码.TabIndex = 28;
             // 
             // label5
             // 
@@ -249,9 +249,9 @@
             this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label5.Location = new System.Drawing.Point(787, 54);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 16);
+            this.label5.Size = new System.Drawing.Size(88, 16);
             this.label5.TabIndex = 27;
-            this.label5.Text = "生产班次";
+            this.label5.Text = "生产班次：";
             // 
             // label4
             // 
@@ -259,9 +259,9 @@
             this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label4.Location = new System.Drawing.Point(483, 54);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 16);
+            this.label4.Size = new System.Drawing.Size(88, 16);
             this.label4.TabIndex = 26;
-            this.label4.Text = "生产日期";
+            this.label4.Text = "生产日期：";
             // 
             // label3
             // 
@@ -269,9 +269,9 @@
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label3.Location = new System.Drawing.Point(282, 54);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 16);
+            this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 25;
-            this.label3.Text = "产品批号";
+            this.label3.Text = "产品批号：";
             // 
             // label2
             // 
@@ -279,9 +279,9 @@
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(24, 54);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(112, 16);
+            this.label2.Size = new System.Drawing.Size(128, 16);
             this.label2.TabIndex = 24;
-            this.label2.Text = "产品代码/规格";
+            this.label2.Text = "产品代码/规格：";
             // 
             // BTVClearanceRecord
             // 
@@ -292,11 +292,11 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.cb夜班);
+            this.Controls.Add(this.cb白班);
+            this.Controls.Add(this.dtp生产日期);
+            this.Controls.Add(this.tb产品批号);
+            this.Controls.Add(this.tb产品代码);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -316,23 +316,23 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox tb检查人;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox cb不合格;
+        private System.Windows.Forms.CheckBox cb合格;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox tb清场人;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.CheckBox cb夜班;
+        private System.Windows.Forms.CheckBox cb白班;
+        private System.Windows.Forms.DateTimePicker dtp生产日期;
+        private System.Windows.Forms.TextBox tb产品批号;
+        private System.Windows.Forms.TextBox tb产品代码;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;

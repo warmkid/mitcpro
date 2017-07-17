@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Extruction.Chart
 {
@@ -30,7 +31,7 @@ namespace mySystem.Extruction.Chart
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
 
-        private Int32 KeyID;
+        private Int32 KeyID; // 用于存储当前记录的主键
 
         //绑定dtp生产日期，会无限死循环？？？
         //删除没有效果
@@ -38,7 +39,7 @@ namespace mySystem.Extruction.Chart
             : base(mainform)
         {
             InitializeComponent();
-
+            
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
@@ -48,6 +49,20 @@ namespace mySystem.Extruction.Chart
             Init();
             GetProductInfo();
         }
+
+        public outerpack(mySystem.MainForm mainform, Int32 ID): base(mainform)
+        {
+            InitializeComponent();
+
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+
+            IDShow(ID);
+            foreach (Control c in this.Controls) { c.Enabled = false; }
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+        }           
 
         //******************************初始化******************************//
         //控件不可用
@@ -65,6 +80,9 @@ namespace mySystem.Extruction.Chart
         {
             this.dataGridView1.Enabled = able;
 
+            this.groupBox1.Enabled = able;
+            label12.Enabled = false;
+            //this.tb备注.Enabled = able;
             this.tb包装规格每包只数.Enabled = able;
             this.tb包装规格每包重量.Enabled = able;
             this.tb包装规格每箱包数.Enabled = able;
@@ -72,8 +90,7 @@ namespace mySystem.Extruction.Chart
             this.tb产品数量箱数.Enabled = able;
             this.tb产品数量只数.Enabled = able;
             this.tb包材用量箱数.Enabled = able;
-            this.tb包材用量标签数量.Enabled = able;
-            this.tb备注.Enabled = able;
+            this.tb包材用量标签数量.Enabled = able;            
 
             this.tb操作人.Enabled = able;
             this.dtp操作日期.Enabled = able;
@@ -98,27 +115,30 @@ namespace mySystem.Extruction.Chart
                     datemp.Fill(dt代码批号);
                     if (dt代码批号.Rows.Count == 0)
                     {
-                        datemp.Dispose();
-                        return;
+                        MessageBox.Show("该生产指令编码下的『生产指令产品列表』尚未生成！");
                     }
                     else
                     {
-                        datemp.Dispose();
                         for (int i = 0; i < dt代码批号.Rows.Count; i++)
                         {
                             cb产品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
                         }
                     }
-                    cb产品代码.SelectedIndex = -1;
+                    datemp.Dispose();                  
                 }
                 else
                 {
-                    reader1.Dispose();
-                    return;
+                    //dt代码批号为空
+                    MessageBox.Show("该生产指令编码下的『生产指令信息表』尚未生成！");
                 }
+                reader1.Dispose();
             }
             else
             { }
+
+            //*********数据填写*********//
+            cb产品代码.SelectedIndex = -1;
+            tb产品批号.Text = "";
         }
         
         //******************************显示数据******************************//
@@ -223,7 +243,11 @@ namespace mySystem.Extruction.Chart
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
 
-            DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["包装日期"].ToString())); 
+            readOuterData(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["包装日期"].ToString()));
+            outerBind();
+            readInnerData(ID);
+            setDataGridViewColumns();
+            innerBind();  
         }
 
         //****************************** 嵌套 ******************************//
@@ -244,7 +268,7 @@ namespace mySystem.Extruction.Chart
             bs记录.DataSource = dt记录;
 
             cb产品代码.DataBindings.Clear();
-            cb产品代码.DataBindings.Add("SelectedItem", bs记录.DataSource, "产品代码");
+            cb产品代码.DataBindings.Add("Text", bs记录.DataSource, "产品代码");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
             //dtp包装日期.DataBindings.Clear();
@@ -288,6 +312,8 @@ namespace mySystem.Extruction.Chart
             dr["包装日期"] = Convert.ToDateTime(dtp包装日期.Value.ToString("yyyy/MM/dd"));
             dr["操作人"] = mySystem.Parameter.userName;
             dr["操作日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+            dr["审核人"] = "";
+            dr["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
             return dr;
         }
@@ -468,6 +494,94 @@ namespace mySystem.Extruction.Chart
             }
         }
 
+        //打印按钮
+        private void printBtn_Click(object sender, EventArgs e)
+        {
+            //print
+            //true->预览
+            //false->打印
+            print(true);
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"D:\excel\SOP-MFG-111-R01A  产品外包装记录_何.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 修改Sheet中某行某列的值
+                my = printValue(my);
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                //false->打印
+                // 设置该进程是否可见
+                oXL.Visible = false;
+                // 修改Sheet中某行某列的值
+                my = printValue(my);
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }
+        }
+        
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet)
+        {
+            //外表信息
+            mysheet.Cells[3, 1].Value = "产品代码/规格：" + dt记录.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[3, 5].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[3, 8].Value = "包装日期：" + Convert.ToDateTime(dt记录.Rows[0]["包装日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["包装日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["包装日期"].ToString()).Day.ToString() + "日";
+            String stringtemp = "";
+            stringtemp = "包装规格：    " + dt记录.Rows[0]["包装规格每包只数"].ToString() + "只(片)/包；   ";
+            stringtemp = stringtemp + dt记录.Rows[0]["包装规格每包重量"].ToString() + "Kg/包";
+            stringtemp = stringtemp + "\n              " + dt记录.Rows[0]["包装规格每箱包数"].ToString() + "包/箱；   ";
+            stringtemp = stringtemp + dt记录.Rows[0]["包装规格每箱重量"].ToString() + "Kg/箱";
+            mysheet.Cells[14, 6].Value = stringtemp;
+            stringtemp = "产品数量：    " + dt记录.Rows[0]["产品数量箱数"].ToString() + "箱；   ";
+            stringtemp = stringtemp + dt记录.Rows[0]["产品数量只数"].ToString() + "只（片）";
+            mysheet.Cells[16, 6].Value = stringtemp;
+            stringtemp = "包材用量：    " + dt记录.Rows[0]["包材用量箱数"].ToString() + "个纸箱；   ";
+            stringtemp = stringtemp + dt记录.Rows[0]["包材用量标签数量"].ToString() + "张标签";
+            mysheet.Cells[17, 6].Value = stringtemp;
+            mysheet.Cells[18, 6].Value = "备注：" + dt记录.Rows[0]["备注"].ToString() ;
+            stringtemp = "操作人：" + dt记录.Rows[0]["操作人"].ToString();
+            stringtemp = stringtemp + "       操作日期：" + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
+            mysheet.Cells[20, 1].Value = stringtemp;
+            stringtemp = "审核人：" + dt记录.Rows[0]["审核人"].ToString();
+            stringtemp = stringtemp + "       审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
+            mysheet.Cells[20, 6].Value = stringtemp;
+
+            //内表信息
+            int rownum = dt记录详情.Rows.Count > 15 ? 15 : dt记录详情.Rows.Count;
+            for (int i = 0; i < rownum; i++)
+            {
+                mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["包装箱号"].ToString();
+                mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["包装明细"].ToString();
+                mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["是否贴标签"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["是否打包封箱"].ToString() == "Yes" ? "√" : "×";
+            }
+            return mysheet;
+        }
+
         //******************************小功能******************************//  
 
         // 检查控件内容是否合法
@@ -520,6 +634,7 @@ namespace mySystem.Extruction.Chart
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex+1).ToString(); ;
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
+    
         
     }
 }

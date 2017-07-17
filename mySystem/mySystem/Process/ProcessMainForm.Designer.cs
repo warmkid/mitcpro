@@ -103,11 +103,11 @@
             // 
             this.ProducePanelLeft.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.ProducePanelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ProducePanelLeft.Controls.Add(this.bagPanel);
             this.ProducePanelLeft.Controls.Add(this.otherPanel);
             this.ProducePanelLeft.Controls.Add(this.BagBtn);
             this.ProducePanelLeft.Controls.Add(this.CleanBtn);
             this.ProducePanelLeft.Controls.Add(this.ExtructionBtn);
+            this.ProducePanelLeft.Controls.Add(this.bagPanel);
             this.ProducePanelLeft.Location = new System.Drawing.Point(4, 2);
             this.ProducePanelLeft.Name = "ProducePanelLeft";
             this.ProducePanelLeft.Size = new System.Drawing.Size(180, 615);

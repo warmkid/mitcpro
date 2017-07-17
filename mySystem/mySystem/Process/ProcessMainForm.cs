@@ -13,6 +13,8 @@ using mySystem.Process.CleanCut;
 using mySystem.Process.Bag.LDPE;
 using mySystem.Process.Bag.PTV;
 using mySystem.Process.Bag.BTV;
+using 订单和库存管理;
+using mySystem.Process.Stock;
 
 namespace mySystem
 {
@@ -304,6 +306,8 @@ namespace mySystem
         //订单管理
         private void OrderBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 4;
+            Parameter.InitCon();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -315,12 +319,19 @@ namespace mySystem
             OrderBtn.BackColor = Color.FromArgb(138, 158, 196);
             StockBtn.BackColor = Color.FromName("ControlLightLight");
             bagBtnColor();
-            
+            订单管理 myDlg = new 订单管理();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         //库存管理
         private void StockBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 4;
+            Parameter.InitCon();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -332,13 +343,13 @@ namespace mySystem
             OrderBtn.BackColor = Color.FromName("ControlLightLight");
             StockBtn.BackColor = Color.FromArgb(138, 158, 196);
             bagBtnColor();
-            
-            //StockCheckForm myDlg = new StockCheckForm();
-            //myDlg.TopLevel = false;
-            //myDlg.FormBorderStyle = FormBorderStyle.None;
-            //myDlg.Size = ProducePanelRight.Size;
-            //ProducePanelRight.Controls.Add(myDlg);
-            //myDlg.Show();
+
+            库存管理主界面 myDlg = new 库存管理主界面();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         

@@ -82,6 +82,7 @@
             this.tb包材批号 = new System.Windows.Forms.TextBox();
             this.tb包材名称 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lb备注 = new System.Windows.Forms.Label();
             this.cb产品代码 = new System.Windows.Forms.ComboBox();
             this.printBtn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -91,7 +92,6 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.lb备注 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -614,6 +614,16 @@
             this.groupBox2.TabIndex = 38;
             this.groupBox2.TabStop = false;
             // 
+            // lb备注
+            // 
+            this.lb备注.AutoSize = true;
+            this.lb备注.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb备注.Location = new System.Drawing.Point(11, 229);
+            this.lb备注.Name = "lb备注";
+            this.lb备注.Size = new System.Drawing.Size(480, 16);
+            this.lb备注.TabIndex = 14;
+            this.lb备注.Text = "备注：符合标准填写“0”，不符合填写“1”，不适用填写“2”。\r\n";
+            // 
             // cb产品代码
             // 
             this.cb产品代码.Font = new System.Drawing.Font("SimSun", 12F);
@@ -633,6 +643,7 @@
             this.printBtn.TabIndex = 40;
             this.printBtn.Text = "打印";
             this.printBtn.UseVisualStyleBackColor = true;
+            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
             // 
             // groupBox3
             // 
@@ -719,16 +730,6 @@
             this.label13.Size = new System.Drawing.Size(208, 16);
             this.label13.TabIndex = 26;
             this.label13.Text = "发放数量             张；";
-            // 
-            // lb备注
-            // 
-            this.lb备注.AutoSize = true;
-            this.lb备注.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb备注.Location = new System.Drawing.Point(11, 229);
-            this.lb备注.Name = "lb备注";
-            this.lb备注.Size = new System.Drawing.Size(480, 16);
-            this.lb备注.TabIndex = 14;
-            this.lb备注.Text = "备注：符合标准填写“0”，不符合填写“1”，不适用填写“2”。\r\n";
             // 
             // ProductInnerPackagingRecord
             // 

@@ -71,6 +71,11 @@
             this.dgv物料代码 = new System.Windows.Forms.DataGridView();
             this.del物料代码 = new System.Windows.Forms.Button();
             this.add物料代码 = new System.Windows.Forms.Button();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.dgv废品 = new System.Windows.Forms.DataGridView();
+            this.del废品 = new System.Windows.Forms.Button();
+            this.add废品 = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).BeginInit();
@@ -80,11 +85,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv工艺)).BeginInit();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv物料代码)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv废品)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(862, 2470);
+            this.panel1.Location = new System.Drawing.Point(862, 2747);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(289, 15);
             this.panel1.TabIndex = 26;
@@ -92,7 +99,7 @@
             // CancelBtn
             // 
             this.CancelBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.CancelBtn.Location = new System.Drawing.Point(1018, 2431);
+            this.CancelBtn.Location = new System.Drawing.Point(1018, 2708);
             this.CancelBtn.Name = "CancelBtn";
             this.CancelBtn.Size = new System.Drawing.Size(81, 33);
             this.CancelBtn.TabIndex = 19;
@@ -102,7 +109,7 @@
             // SaveBtn
             // 
             this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.SaveBtn.Location = new System.Drawing.Point(916, 2431);
+            this.SaveBtn.Location = new System.Drawing.Point(916, 2708);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(82, 33);
             this.SaveBtn.TabIndex = 18;
@@ -228,7 +235,7 @@
             // tB厚度密度
             // 
             this.tB厚度密度.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tB厚度密度.Location = new System.Drawing.Point(331, 29);
+            this.tB厚度密度.Location = new System.Drawing.Point(338, 29);
             this.tB厚度密度.Name = "tB厚度密度";
             this.tB厚度密度.Size = new System.Drawing.Size(86, 26);
             this.tB厚度密度.TabIndex = 31;
@@ -509,12 +516,66 @@
             this.add物料代码.UseVisualStyleBackColor = true;
             this.add物料代码.Click += new System.EventHandler(this.add物料代码_Click);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.dgv废品);
+            this.groupBox6.Controls.Add(this.del废品);
+            this.groupBox6.Controls.Add(this.add废品);
+            this.groupBox6.Location = new System.Drawing.Point(13, 2440);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(1110, 250);
+            this.groupBox6.TabIndex = 46;
+            this.groupBox6.TabStop = false;
+            // 
+            // dgv废品
+            // 
+            this.dgv废品.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv废品.Location = new System.Drawing.Point(12, 51);
+            this.dgv废品.Name = "dgv废品";
+            this.dgv废品.RowTemplate.Height = 23;
+            this.dgv废品.Size = new System.Drawing.Size(1070, 185);
+            this.dgv废品.TabIndex = 2;
+            // 
+            // del废品
+            // 
+            this.del废品.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del废品.Location = new System.Drawing.Point(100, 14);
+            this.del废品.Name = "del废品";
+            this.del废品.Size = new System.Drawing.Size(70, 30);
+            this.del废品.TabIndex = 1;
+            this.del废品.Text = "删除";
+            this.del废品.UseVisualStyleBackColor = true;
+            this.del废品.Click += new System.EventHandler(this.del废品_Click);
+            // 
+            // add废品
+            // 
+            this.add废品.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add废品.Location = new System.Drawing.Point(12, 14);
+            this.add废品.Name = "add废品";
+            this.add废品.Size = new System.Drawing.Size(70, 30);
+            this.add废品.TabIndex = 0;
+            this.add废品.Text = "添加";
+            this.add废品.UseVisualStyleBackColor = true;
+            this.add废品.Click += new System.EventHandler(this.add废品_Click);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label15.Location = new System.Drawing.Point(13, 2413);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(177, 20);
+            this.label15.TabIndex = 45;
+            this.label15.Text = "废品产生原因设置";
+            // 
             // SetExtruForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1170, 615);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
@@ -551,6 +612,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv工艺)).EndInit();
             this.groupBox5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv物料代码)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv废品)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -601,5 +664,10 @@
         private System.Windows.Forms.DataGridView dgv物料代码;
         private System.Windows.Forms.Button del物料代码;
         private System.Windows.Forms.Button add物料代码;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.DataGridView dgv废品;
+        private System.Windows.Forms.Button del废品;
+        private System.Windows.Forms.Button add废品;
+        private System.Windows.Forms.Label label15;
     }
 }

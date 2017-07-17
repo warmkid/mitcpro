@@ -10,6 +10,7 @@ using mySystem.Extruction.Process;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using Newtonsoft.Json.Linq;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Extruction.Process
 {
@@ -49,6 +50,20 @@ namespace mySystem.Extruction.Process
 
             Init();
             GetProductInfo();
+        }
+
+        public ExtructionpRoductionAndRestRecordStep6(MainForm mainform, Int32 ID) : base(mainform)
+        {
+            InitializeComponent();
+
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            
+            IDShow(ID);
+            foreach (Control c in this.Controls) { c.Enabled = false; }
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
         }
 
         //******************************初始化******************************//
@@ -96,6 +111,8 @@ namespace mySystem.Extruction.Process
                 {
                     //填入生产工艺、生产设备编号
                     dt工艺设备.Rows.Add(reader1["生产工艺"].ToString(), reader1["生产设备编号"].ToString());
+                    tb生产设备.Text = dt工艺设备.Rows[0]["生产设备"].ToString();
+                    tb依据工艺.Text = dt工艺设备.Rows[0]["依据工艺"].ToString();
 
                     //查找该生产ID下的产品编码、产品批号
                     OleDbCommand comm2 = new OleDbCommand();
@@ -105,45 +122,36 @@ namespace mySystem.Extruction.Process
                     datemp.Fill(dt代码批号);
                     if (dt代码批号.Rows.Count == 0)
                     {
-                        datemp.Dispose();
-                        return;
+                        MessageBox.Show("该生产指令编码下的『生产指令产品列表』尚未生成！");
                     }
                     else
                     {
-                        datemp.Dispose();
                         for (int i = 0; i < dt代码批号.Rows.Count; i++)
                         {
                             cb产品名称.Items.Add(dt代码批号.Rows[i]["产品编码"].ToString());//添加
                         }
                     }
+                    datemp.Dispose();
                 }
                 else
                 {
-                    //填入生产工艺、生产设备编号
-                    dt工艺设备.Rows.Add(" ", " ");
-
-                    //填入产品编码、批号
-                    dt代码批号.Columns.Add("产品编码", typeof(String));   //新建第一列
-                    dt代码批号.Columns.Add("产品批号", typeof(String));      //新建第二列
-                    dt代码批号.Rows.Add(" ", " ");
+                    MessageBox.Show("该生产指令编码下的『生产指令信息表』尚未生成！");
                 }
                 reader1.Dispose();
             }
             else
             {
-                //从SQL数据库中读取;
-                
+                //从SQL数据库中读取;                
             }
 
             //MessageBox.Show(dt代码批号.Rows.Count.ToString());
 
             //*********数据填写*********//
-            cb产品名称.SelectedIndex = 0;
-            tb产品批号.Text = dt代码批号.Rows[0]["产品批号"].ToString();
-            tb生产设备.Text = dt工艺设备.Rows[0]["生产设备"].ToString();
-            tb依据工艺.Text = dt工艺设备.Rows[0]["依据工艺"].ToString();
+
+            cb产品名称.SelectedIndex = -1;
+            tb产品批号.Text = "";
             cb白班.Checked = (mySystem.Parameter.userflight) == "白班" ? true : false;
-            cb夜班.Checked = !(cb白班.Checked);
+            cb夜班.Checked = !(cb白班.Checked);            
         }
         
         //******************************显示数据******************************//
@@ -252,8 +260,13 @@ namespace mySystem.Extruction.Process
             OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
-
-            DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品名称"].ToString(), dt1.Rows[0]["班次"].ToString() == "白班" ? true : false, Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+            
+            readOuterData(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品名称"].ToString(), Convert.ToBoolean(dt1.Rows[0]["班次"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+            outerBind();
+            readInnerData(ID);
+            setDataGridViewColumns();
+            innerBind();
+            cb夜班.Checked = !cb白班.Checked;
         }
         
         //****************************** 嵌套 ******************************//
@@ -274,7 +287,7 @@ namespace mySystem.Extruction.Process
             bs记录.DataSource = dt记录;
             //控件绑定（先解除，再绑定）
             cb产品名称.DataBindings.Clear();
-            cb产品名称.DataBindings.Add("SelectedItem", bs记录.DataSource, "产品名称");
+            cb产品名称.DataBindings.Add("Text", bs记录.DataSource, "产品名称");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
             tb依据工艺.DataBindings.Clear();
@@ -308,6 +321,7 @@ namespace mySystem.Extruction.Process
             dr["班次"] = cb白班.Checked;
             dr["依据工艺"] = dt工艺设备.Rows[0]["依据工艺"];
             dr["生产设备"] = dt工艺设备.Rows[0]["生产设备"];
+            dr["审核人"] = "";
             dr["审核是否通过"] = false;
             return dr;
         }
@@ -335,7 +349,10 @@ namespace mySystem.Extruction.Process
         {
             //DataRow dr = dt记录详情.NewRow();
             dr["T吹膜工序生产和检验记录ID"] = ID;
-            dr["开始时间"] = DateTime.Now;
+            if (dt记录详情.Rows.Count >= 1)
+            { dr["开始时间"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["结束时间"]; }
+            else
+            { dr["开始时间"] = DateTime.Now; }
             dr["结束时间"] = DateTime.Now;
             dr["记录人"] = mySystem.Parameter.userName;
             dr["检查人"] = " ";
@@ -516,6 +533,91 @@ namespace mySystem.Extruction.Process
         {
             check = new CheckForm(this);
             check.Show();
+        }
+
+        //打印按钮
+        private void printBtn_Click(object sender, EventArgs e)
+        {
+            //print
+            //true->预览
+            //false->打印
+            print(true);
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"D:\excel\SOP-MFG-301-R09 吹膜工序生产和检验记录_何.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 修改Sheet中某行某列的值
+                my = printValue(my);
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                //false->打印
+                // 设置该进程是否可见
+                oXL.Visible = false;
+                // 修改Sheet中某行某列的值
+                my = printValue(my);
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }
+        }
+        
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet)
+        {
+            //外表信息
+            mysheet.Cells[3, 1].Value = "产品名称：" + dt记录.Rows[0]["产品名称"].ToString();
+            mysheet.Cells[3, 5].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[3, 9].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
+            String flighttemp = Convert.ToBoolean(dt记录.Rows[0]["班次"].ToString()) == true ? "白班" : "夜班";
+            mysheet.Cells[3, 13].Value = "班次：" + flighttemp;
+            mysheet.Cells[4, 1].Value = "依据工艺：" + dt记录.Rows[0]["依据工艺"].ToString();
+            mysheet.Cells[4, 5].Value = "生产设备：" + dt记录.Rows[0]["生产设备"].ToString();
+            mysheet.Cells[4, 9].Value = "环境温度：" + dt记录.Rows[0]["环境温度"].ToString() + "℃";
+            mysheet.Cells[4, 11].Value = "相对湿度：" + dt记录.Rows[0]["环境湿度"].ToString() + "%";
+            mysheet.Cells[4, 13].Value = "审核人：" + dt记录.Rows[0]["审核人"].ToString();
+            mysheet.Cells[18, 4].Value = dt记录.Rows[0]["累计同规格膜卷长度R"].ToString();
+            mysheet.Cells[18, 5].Value = dt记录.Rows[0]["累计同规格膜卷重量T"].ToString();
+            //内表信息
+            int rownum = dt记录详情.Rows.Count > 10 ? 10 : dt记录详情.Rows.Count;
+            for (int i = 0; i < rownum; i++)
+            {
+                mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["开始时间"].ToString()).ToString("HH:mm") + " ~ " + Convert.ToDateTime(dt记录详情.Rows[i]["结束时间"].ToString()).ToString("HH:mm");
+                mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["膜卷编号"].ToString();
+                mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["膜卷长度"].ToString();
+                mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["膜卷重量"].ToString();
+                mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["记录人"].ToString();
+                mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["外观"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["宽度"].ToString();
+                mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["最大厚度"].ToString();
+                mysheet.Cells[8 + i, 10].Value = dt记录详情.Rows[i]["最小厚度"].ToString();
+                mysheet.Cells[8 + i, 11].Value = dt记录详情.Rows[i]["平均厚度"].ToString();
+                mysheet.Cells[8 + i, 12].Value = dt记录详情.Rows[i]["厚度公差"].ToString();
+                mysheet.Cells[8 + i, 13].Value = dt记录详情.Rows[i]["检查人"].ToString();
+                mysheet.Cells[8 + i, 14].Value = dt记录详情.Rows[i]["判定"].ToString() == "Yes" ? "√" : "×";
+            }
+            return mysheet;
         }
 
         //******************************小功能******************************//  
@@ -723,7 +825,9 @@ namespace mySystem.Extruction.Process
                     { }
                 }
             }
-        }   
+        }
+
+         
     
     }
 }

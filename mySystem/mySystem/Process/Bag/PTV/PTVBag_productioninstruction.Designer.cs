@@ -33,10 +33,10 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.tb产品名称 = new System.Windows.Forms.TextBox();
+            this.tb生产指令编号 = new System.Windows.Forms.TextBox();
+            this.tb生产设备 = new System.Windows.Forms.TextBox();
+            this.dtp计划生产日期 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
@@ -45,7 +45,7 @@
             this.label27 = new System.Windows.Forms.Label();
             this.label28 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.textBox23 = new System.Windows.Forms.TextBox();
+            this.tb制袋内包负责人 = new System.Windows.Forms.TextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -55,26 +55,26 @@
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tb记录 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.tb外包负责人 = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBox19 = new System.Windows.Forms.TextBox();
+            this.tb备注 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker5 = new System.Windows.Forms.DateTimePicker();
-            this.textBox6 = new System.Windows.Forms.TextBox();
+            this.dtp接收日期 = new System.Windows.Forms.DateTimePicker();
+            this.tb接收人 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
-            this.textBox7 = new System.Windows.Forms.TextBox();
+            this.dtp审批日期 = new System.Windows.Forms.DateTimePicker();
+            this.tb审批人 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.textBox8 = new System.Windows.Forms.TextBox();
+            this.dtp编制日期 = new System.Windows.Forms.DateTimePicker();
+            this.tb编制人 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -141,39 +141,39 @@
             this.label5.TabIndex = 4;
             this.label5.Text = "计划生产日期:";
             // 
-            // textBox1
+            // tb产品名称
             // 
-            this.textBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(118, 37);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 26);
-            this.textBox1.TabIndex = 6;
+            this.tb产品名称.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品名称.Location = new System.Drawing.Point(118, 37);
+            this.tb产品名称.Name = "tb产品名称";
+            this.tb产品名称.Size = new System.Drawing.Size(100, 26);
+            this.tb产品名称.TabIndex = 6;
             // 
-            // textBox2
+            // tb生产指令编号
             // 
-            this.textBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(415, 37);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 26);
-            this.textBox2.TabIndex = 7;
+            this.tb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb生产指令编号.Location = new System.Drawing.Point(415, 37);
+            this.tb生产指令编号.Name = "tb生产指令编号";
+            this.tb生产指令编号.Size = new System.Drawing.Size(100, 26);
+            this.tb生产指令编号.TabIndex = 7;
             // 
-            // textBox3
+            // tb生产设备
             // 
-            this.textBox3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox3.Location = new System.Drawing.Point(118, 73);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.ReadOnly = true;
-            this.textBox3.Size = new System.Drawing.Size(757, 26);
-            this.textBox3.TabIndex = 8;
-            this.textBox3.Text = "接口焊接机AA-EQU-082、底封焊接机AA-EQU-083、泄漏测试仪AA-EQU-077、超声波焊接机AA-EQU-076";
+            this.tb生产设备.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb生产设备.Location = new System.Drawing.Point(118, 73);
+            this.tb生产设备.Name = "tb生产设备";
+            this.tb生产设备.ReadOnly = true;
+            this.tb生产设备.Size = new System.Drawing.Size(757, 26);
+            this.tb生产设备.TabIndex = 8;
+            this.tb生产设备.Text = "接口焊接机AA-EQU-082、底封焊接机AA-EQU-083、泄漏测试仪AA-EQU-077、超声波焊接机AA-EQU-076";
             // 
-            // dateTimePicker1
+            // dtp计划生产日期
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(676, 37);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 9;
+            this.dtp计划生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp计划生产日期.Location = new System.Drawing.Point(676, 37);
+            this.dtp计划生产日期.Name = "dtp计划生产日期";
+            this.dtp计划生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp计划生产日期.TabIndex = 9;
             // 
             // groupBox1
             // 
@@ -258,14 +258,14 @@
             this.dataGridView1.Size = new System.Drawing.Size(836, 123);
             this.dataGridView1.TabIndex = 22;
             // 
-            // textBox23
+            // tb制袋内包负责人
             // 
-            this.textBox23.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox23.Location = new System.Drawing.Point(755, 271);
-            this.textBox23.Multiline = true;
-            this.textBox23.Name = "textBox23";
-            this.textBox23.Size = new System.Drawing.Size(118, 201);
-            this.textBox23.TabIndex = 23;
+            this.tb制袋内包负责人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb制袋内包负责人.Location = new System.Drawing.Point(755, 271);
+            this.tb制袋内包负责人.Multiline = true;
+            this.tb制袋内包负责人.Name = "tb制袋内包负责人";
+            this.tb制袋内包负责人.Size = new System.Drawing.Size(118, 201);
+            this.tb制袋内包负责人.TabIndex = 23;
             // 
             // dataGridView2
             // 
@@ -337,7 +337,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label10);
-            this.groupBox4.Controls.Add(this.textBox4);
+            this.groupBox4.Controls.Add(this.tb记录);
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Location = new System.Drawing.Point(39, 571);
             this.groupBox4.Name = "groupBox4";
@@ -355,15 +355,15 @@
             this.label10.TabIndex = 4;
             this.label10.Text = "记录:";
             // 
-            // textBox4
+            // tb记录
             // 
-            this.textBox4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox4.Location = new System.Drawing.Point(114, 14);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.ReadOnly = true;
-            this.textBox4.Size = new System.Drawing.Size(694, 26);
-            this.textBox4.TabIndex = 3;
-            this.textBox4.Text = "制袋工序记录、内包记录、外包记录";
+            this.tb记录.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb记录.Location = new System.Drawing.Point(114, 14);
+            this.tb记录.Name = "tb记录";
+            this.tb记录.ReadOnly = true;
+            this.tb记录.Size = new System.Drawing.Size(694, 26);
+            this.tb记录.TabIndex = 3;
+            this.tb记录.Text = "制袋工序记录、内包记录、外包记录";
             // 
             // label9
             // 
@@ -384,18 +384,18 @@
             this.dataGridView4.Size = new System.Drawing.Size(600, 96);
             this.dataGridView4.TabIndex = 29;
             // 
-            // textBox5
+            // tb外包负责人
             // 
-            this.textBox5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox5.Location = new System.Drawing.Point(755, 475);
-            this.textBox5.Multiline = true;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(118, 96);
-            this.textBox5.TabIndex = 30;
+            this.tb外包负责人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb外包负责人.Location = new System.Drawing.Point(755, 475);
+            this.tb外包负责人.Multiline = true;
+            this.tb外包负责人.Name = "tb外包负责人";
+            this.tb外包负责人.Size = new System.Drawing.Size(118, 96);
+            this.tb外包负责人.TabIndex = 30;
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.textBox19);
+            this.groupBox5.Controls.Add(this.tb备注);
             this.groupBox5.Controls.Add(this.label16);
             this.groupBox5.Location = new System.Drawing.Point(39, 617);
             this.groupBox5.Name = "groupBox5";
@@ -403,13 +403,13 @@
             this.groupBox5.TabIndex = 31;
             this.groupBox5.TabStop = false;
             // 
-            // textBox19
+            // tb备注
             // 
-            this.textBox19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox19.Location = new System.Drawing.Point(114, 14);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(694, 26);
-            this.textBox19.TabIndex = 18;
+            this.tb备注.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb备注.Location = new System.Drawing.Point(114, 14);
+            this.tb备注.Name = "tb备注";
+            this.tb备注.Size = new System.Drawing.Size(694, 26);
+            this.tb备注.TabIndex = 18;
             // 
             // label16
             // 
@@ -423,8 +423,8 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.dateTimePicker5);
-            this.groupBox6.Controls.Add(this.textBox6);
+            this.groupBox6.Controls.Add(this.dtp接收日期);
+            this.groupBox6.Controls.Add(this.tb接收人);
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Controls.Add(this.label12);
             this.groupBox6.Location = new System.Drawing.Point(595, 664);
@@ -433,21 +433,21 @@
             this.groupBox6.TabIndex = 32;
             this.groupBox6.TabStop = false;
             // 
-            // dateTimePicker5
+            // dtp接收日期
             // 
-            this.dateTimePicker5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker5.Location = new System.Drawing.Point(72, 49);
-            this.dateTimePicker5.Name = "dateTimePicker5";
-            this.dateTimePicker5.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker5.TabIndex = 7;
+            this.dtp接收日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp接收日期.Location = new System.Drawing.Point(72, 49);
+            this.dtp接收日期.Name = "dtp接收日期";
+            this.dtp接收日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp接收日期.TabIndex = 7;
             // 
-            // textBox6
+            // tb接收人
             // 
-            this.textBox6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox6.Location = new System.Drawing.Point(72, 13);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(100, 26);
-            this.textBox6.TabIndex = 6;
+            this.tb接收人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb接收人.Location = new System.Drawing.Point(72, 13);
+            this.tb接收人.Name = "tb接收人";
+            this.tb接收人.Size = new System.Drawing.Size(100, 26);
+            this.tb接收人.TabIndex = 6;
             // 
             // label11
             // 
@@ -471,8 +471,8 @@
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.dateTimePicker4);
-            this.groupBox7.Controls.Add(this.textBox7);
+            this.groupBox7.Controls.Add(this.dtp审批日期);
+            this.groupBox7.Controls.Add(this.tb审批人);
             this.groupBox7.Controls.Add(this.label13);
             this.groupBox7.Controls.Add(this.label14);
             this.groupBox7.Location = new System.Drawing.Point(317, 664);
@@ -481,22 +481,22 @@
             this.groupBox7.TabIndex = 33;
             this.groupBox7.TabStop = false;
             // 
-            // dateTimePicker4
+            // dtp审批日期
             // 
-            this.dateTimePicker4.CalendarFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker4.Location = new System.Drawing.Point(71, 47);
-            this.dateTimePicker4.Name = "dateTimePicker4";
-            this.dateTimePicker4.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker4.TabIndex = 7;
+            this.dtp审批日期.CalendarFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp审批日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp审批日期.Location = new System.Drawing.Point(71, 47);
+            this.dtp审批日期.Name = "dtp审批日期";
+            this.dtp审批日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp审批日期.TabIndex = 7;
             // 
-            // textBox7
+            // tb审批人
             // 
-            this.textBox7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox7.Location = new System.Drawing.Point(71, 11);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 26);
-            this.textBox7.TabIndex = 6;
+            this.tb审批人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审批人.Location = new System.Drawing.Point(71, 11);
+            this.tb审批人.Name = "tb审批人";
+            this.tb审批人.Size = new System.Drawing.Size(100, 26);
+            this.tb审批人.TabIndex = 6;
             // 
             // label13
             // 
@@ -520,8 +520,8 @@
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.dateTimePicker3);
-            this.groupBox8.Controls.Add(this.textBox8);
+            this.groupBox8.Controls.Add(this.dtp编制日期);
+            this.groupBox8.Controls.Add(this.tb编制人);
             this.groupBox8.Controls.Add(this.label15);
             this.groupBox8.Controls.Add(this.label19);
             this.groupBox8.Location = new System.Drawing.Point(39, 664);
@@ -530,22 +530,22 @@
             this.groupBox8.TabIndex = 34;
             this.groupBox8.TabStop = false;
             // 
-            // dateTimePicker3
+            // dtp编制日期
             // 
-            this.dateTimePicker3.CalendarFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker3.Location = new System.Drawing.Point(71, 47);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker3.TabIndex = 7;
+            this.dtp编制日期.CalendarFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp编制日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp编制日期.Location = new System.Drawing.Point(71, 47);
+            this.dtp编制日期.Name = "dtp编制日期";
+            this.dtp编制日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp编制日期.TabIndex = 7;
             // 
-            // textBox8
+            // tb编制人
             // 
-            this.textBox8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox8.Location = new System.Drawing.Point(71, 11);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(100, 26);
-            this.textBox8.TabIndex = 6;
+            this.tb编制人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb编制人.Location = new System.Drawing.Point(71, 11);
+            this.tb编制人.Name = "tb编制人";
+            this.tb编制人.Size = new System.Drawing.Size(100, 26);
+            this.tb编制人.TabIndex = 6;
             // 
             // label15
             // 
@@ -576,20 +576,20 @@
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.tb外包负责人);
             this.Controls.Add(this.dataGridView4);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.dataGridView2);
-            this.Controls.Add(this.textBox23);
+            this.Controls.Add(this.tb制袋内包负责人);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.dtp计划生产日期);
+            this.Controls.Add(this.tb生产设备);
+            this.Controls.Add(this.tb生产指令编号);
+            this.Controls.Add(this.tb产品名称);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -629,10 +629,10 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.TextBox tb产品名称;
+        private System.Windows.Forms.TextBox tb生产指令编号;
+        private System.Windows.Forms.TextBox tb生产设备;
+        private System.Windows.Forms.DateTimePicker dtp计划生产日期;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
@@ -641,7 +641,7 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox textBox23;
+        private System.Windows.Forms.TextBox tb制袋内包负责人;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.GroupBox groupBox2;
@@ -651,26 +651,26 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tb记录;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridView dataGridView4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox tb外包负责人;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox textBox19;
+        private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.DateTimePicker dateTimePicker5;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.DateTimePicker dtp接收日期;
+        private System.Windows.Forms.TextBox tb接收人;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.DateTimePicker dateTimePicker4;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.DateTimePicker dtp审批日期;
+        private System.Windows.Forms.TextBox tb审批人;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.DateTimePicker dtp编制日期;
+        private System.Windows.Forms.TextBox tb编制人;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label19;
     }

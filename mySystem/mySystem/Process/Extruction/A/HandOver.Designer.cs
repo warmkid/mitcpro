@@ -1,4 +1,4 @@
-namespace mySystem.Process.Extruction.A
+﻿namespace mySystem.Process.Extruction.A
 {
     partial class HandOver
     {
@@ -58,6 +58,7 @@ namespace mySystem.Process.Extruction.A
             this.panel2 = new System.Windows.Forms.Panel();
             this.btn保存 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
+            this.btn打印 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -348,11 +349,22 @@ namespace mySystem.Process.Extruction.A
             this.btn审核.UseVisualStyleBackColor = true;
             this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
+            // btn打印
+            // 
+            this.btn打印.Location = new System.Drawing.Point(1004, 62);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(81, 23);
+            this.btn打印.TabIndex = 81;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
+            // 
             // HandOver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1115, 741);
+            this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.panel2);
@@ -366,7 +378,7 @@ namespace mySystem.Process.Extruction.A
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HandOver";
-            this.Text = "HandOver";
+            this.Text = "吹膜岗位交接班记录";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -409,5 +421,6 @@ namespace mySystem.Process.Extruction.A
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.Button btn打印;
     }
 }

@@ -65,41 +65,41 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.Title = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.tb一区预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.tb四区预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.tb三区预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.tb二区预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.tb一区预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.tb四区预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.tb三区预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.tb二区预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.tb机头2预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.tb口模预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.tb机头1预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.label46 = new System.Windows.Forms.Label();
-            this.tb模颈预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.tb流道预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.tb换网预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.tb机头2预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.tb口模预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.tb机头1预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.dtp保温结束时间3 = new System.Windows.Forms.DateTimePicker();
-            this.tb模颈预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.dtp保温结束时间2 = new System.Windows.Forms.DateTimePicker();
-            this.tb流道预热参数设定2 = new System.Windows.Forms.TextBox();
-            this.dtp保温开始时间 = new System.Windows.Forms.DateTimePicker();
-            this.dtp保温结束时间1 = new System.Windows.Forms.DateTimePicker();
-            this.tb换网预热参数设定1 = new System.Windows.Forms.TextBox();
-            this.dtp预热开始时间 = new System.Windows.Forms.DateTimePicker();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.dtp预热开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.tb换网预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.dtp保温结束时间1 = new System.Windows.Forms.DateTimePicker();
+            this.dtp保温开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.tb流道预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.dtp保温结束时间2 = new System.Windows.Forms.DateTimePicker();
+            this.tb模颈预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.dtp保温结束时间3 = new System.Windows.Forms.DateTimePicker();
+            this.tb机头1预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.tb口模预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.tb机头2预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.tb换网预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.tb流道预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.tb模颈预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.label46 = new System.Windows.Forms.Label();
+            this.tb机头1预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.tb口模预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.tb机头2预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.tb二区预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.tb三区预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.tb四区预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.tb一区预热参数设定1 = new System.Windows.Forms.TextBox();
+            this.tb二区预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.tb三区预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.tb四区预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.tb一区预热参数设定2 = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             this.tb加热保温时间1 = new System.Windows.Forms.TextBox();
             this.tb加热保温时间3 = new System.Windows.Forms.TextBox();
             this.tb加热保温时间2 = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -112,6 +112,7 @@
             this.printBtn.TabIndex = 78;
             this.printBtn.Text = "打印";
             this.printBtn.UseVisualStyleBackColor = true;
+            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
             // 
             // CheckBtn
             // 
@@ -465,6 +466,314 @@
             this.Title.TabIndex = 0;
             this.Title.Text = "吹膜机组预热参数记录表";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Location = new System.Drawing.Point(18, 16);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(1090, 38);
+            this.groupBox2.TabIndex = 0;
+            this.groupBox2.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Location = new System.Drawing.Point(135, 70);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(362, 125);
+            this.groupBox3.TabIndex = 1;
+            this.groupBox3.TabStop = false;
+            // 
+            // dtp预热开始时间
+            // 
+            this.dtp预热开始时间.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp预热开始时间.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp预热开始时间.Location = new System.Drawing.Point(532, 104);
+            this.dtp预热开始时间.Name = "dtp预热开始时间";
+            this.dtp预热开始时间.Size = new System.Drawing.Size(565, 26);
+            this.dtp预热开始时间.TabIndex = 2;
+            // 
+            // tb换网预热参数设定1
+            // 
+            this.tb换网预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb换网预热参数设定1.Location = new System.Drawing.Point(532, 67);
+            this.tb换网预热参数设定1.Name = "tb换网预热参数设定1";
+            this.tb换网预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb换网预热参数设定1.TabIndex = 81;
+            this.tb换网预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // dtp保温结束时间1
+            // 
+            this.dtp保温结束时间1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp保温结束时间1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp保温结束时间1.Location = new System.Drawing.Point(532, 168);
+            this.dtp保温结束时间1.Name = "dtp保温结束时间1";
+            this.dtp保温结束时间1.Size = new System.Drawing.Size(565, 26);
+            this.dtp保温结束时间1.TabIndex = 78;
+            // 
+            // dtp保温开始时间
+            // 
+            this.dtp保温开始时间.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp保温开始时间.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp保温开始时间.Location = new System.Drawing.Point(136, 244);
+            this.dtp保温开始时间.Name = "dtp保温开始时间";
+            this.dtp保温开始时间.Size = new System.Drawing.Size(362, 26);
+            this.dtp保温开始时间.TabIndex = 78;
+            // 
+            // tb流道预热参数设定2
+            // 
+            this.tb流道预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb流道预热参数设定2.Location = new System.Drawing.Point(635, 212);
+            this.tb流道预热参数设定2.Name = "tb流道预热参数设定2";
+            this.tb流道预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb流道预热参数设定2.TabIndex = 82;
+            this.tb流道预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // dtp保温结束时间2
+            // 
+            this.dtp保温结束时间2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp保温结束时间2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp保温结束时间2.Location = new System.Drawing.Point(135, 311);
+            this.dtp保温结束时间2.Name = "dtp保温结束时间2";
+            this.dtp保温结束时间2.Size = new System.Drawing.Size(362, 26);
+            this.dtp保温结束时间2.TabIndex = 79;
+            // 
+            // tb模颈预热参数设定2
+            // 
+            this.tb模颈预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb模颈预热参数设定2.Location = new System.Drawing.Point(735, 212);
+            this.tb模颈预热参数设定2.Name = "tb模颈预热参数设定2";
+            this.tb模颈预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb模颈预热参数设定2.TabIndex = 83;
+            this.tb模颈预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // dtp保温结束时间3
+            // 
+            this.dtp保温结束时间3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp保温结束时间3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtp保温结束时间3.Location = new System.Drawing.Point(135, 418);
+            this.dtp保温结束时间3.Name = "dtp保温结束时间3";
+            this.dtp保温结束时间3.Size = new System.Drawing.Size(362, 26);
+            this.dtp保温结束时间3.TabIndex = 80;
+            // 
+            // tb机头1预热参数设定2
+            // 
+            this.tb机头1预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb机头1预热参数设定2.Location = new System.Drawing.Point(835, 212);
+            this.tb机头1预热参数设定2.Name = "tb机头1预热参数设定2";
+            this.tb机头1预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb机头1预热参数设定2.TabIndex = 84;
+            this.tb机头1预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb口模预热参数设定2
+            // 
+            this.tb口模预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb口模预热参数设定2.Location = new System.Drawing.Point(1035, 212);
+            this.tb口模预热参数设定2.Name = "tb口模预热参数设定2";
+            this.tb口模预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb口模预热参数设定2.TabIndex = 86;
+            this.tb口模预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb机头2预热参数设定2
+            // 
+            this.tb机头2预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb机头2预热参数设定2.Location = new System.Drawing.Point(935, 212);
+            this.tb机头2预热参数设定2.Name = "tb机头2预热参数设定2";
+            this.tb机头2预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb机头2预热参数设定2.TabIndex = 85;
+            this.tb机头2预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb换网预热参数设定2
+            // 
+            this.tb换网预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb换网预热参数设定2.Location = new System.Drawing.Point(535, 212);
+            this.tb换网预热参数设定2.Name = "tb换网预热参数设定2";
+            this.tb换网预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb换网预热参数设定2.TabIndex = 87;
+            this.tb换网预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb流道预热参数设定1
+            // 
+            this.tb流道预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb流道预热参数设定1.Location = new System.Drawing.Point(635, 67);
+            this.tb流道预热参数设定1.Name = "tb流道预热参数设定1";
+            this.tb流道预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb流道预热参数设定1.TabIndex = 88;
+            this.tb流道预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb模颈预热参数设定1
+            // 
+            this.tb模颈预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb模颈预热参数设定1.Location = new System.Drawing.Point(735, 67);
+            this.tb模颈预热参数设定1.Name = "tb模颈预热参数设定1";
+            this.tb模颈预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb模颈预热参数设定1.TabIndex = 89;
+            this.tb模颈预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label46.Location = new System.Drawing.Point(734, 338);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(200, 16);
+            this.label46.TabIndex = 52;
+            this.label46.Text = "加热保温至挤出机加热结束";
+            // 
+            // tb机头1预热参数设定1
+            // 
+            this.tb机头1预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb机头1预热参数设定1.Location = new System.Drawing.Point(835, 67);
+            this.tb机头1预热参数设定1.Name = "tb机头1预热参数设定1";
+            this.tb机头1预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb机头1预热参数设定1.TabIndex = 90;
+            this.tb机头1预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb口模预热参数设定1
+            // 
+            this.tb口模预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb口模预热参数设定1.Location = new System.Drawing.Point(1035, 67);
+            this.tb口模预热参数设定1.Name = "tb口模预热参数设定1";
+            this.tb口模预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb口模预热参数设定1.TabIndex = 92;
+            this.tb口模预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb机头2预热参数设定1
+            // 
+            this.tb机头2预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb机头2预热参数设定1.Location = new System.Drawing.Point(935, 67);
+            this.tb机头2预热参数设定1.Name = "tb机头2预热参数设定1";
+            this.tb机头2预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb机头2预热参数设定1.TabIndex = 91;
+            this.tb机头2预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb二区预热参数设定1
+            // 
+            this.tb二区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb二区预热参数设定1.Location = new System.Drawing.Point(235, 212);
+            this.tb二区预热参数设定1.Name = "tb二区预热参数设定1";
+            this.tb二区预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb二区预热参数设定1.TabIndex = 93;
+            this.tb二区预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb三区预热参数设定1
+            // 
+            this.tb三区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb三区预热参数设定1.Location = new System.Drawing.Point(335, 212);
+            this.tb三区预热参数设定1.Name = "tb三区预热参数设定1";
+            this.tb三区预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb三区预热参数设定1.TabIndex = 94;
+            this.tb三区预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb四区预热参数设定1
+            // 
+            this.tb四区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb四区预热参数设定1.Location = new System.Drawing.Point(435, 212);
+            this.tb四区预热参数设定1.Name = "tb四区预热参数设定1";
+            this.tb四区预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb四区预热参数设定1.TabIndex = 95;
+            this.tb四区预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb一区预热参数设定1
+            // 
+            this.tb一区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb一区预热参数设定1.Location = new System.Drawing.Point(135, 212);
+            this.tb一区预热参数设定1.Name = "tb一区预热参数设定1";
+            this.tb一区预热参数设定1.Size = new System.Drawing.Size(62, 26);
+            this.tb一区预热参数设定1.TabIndex = 96;
+            this.tb一区预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb二区预热参数设定2
+            // 
+            this.tb二区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb二区预热参数设定2.Location = new System.Drawing.Point(236, 349);
+            this.tb二区预热参数设定2.Name = "tb二区预热参数设定2";
+            this.tb二区预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb二区预热参数设定2.TabIndex = 97;
+            this.tb二区预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb三区预热参数设定2
+            // 
+            this.tb三区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb三区预热参数设定2.Location = new System.Drawing.Point(336, 349);
+            this.tb三区预热参数设定2.Name = "tb三区预热参数设定2";
+            this.tb三区预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb三区预热参数设定2.TabIndex = 98;
+            this.tb三区预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb四区预热参数设定2
+            // 
+            this.tb四区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb四区预热参数设定2.Location = new System.Drawing.Point(436, 349);
+            this.tb四区预热参数设定2.Name = "tb四区预热参数设定2";
+            this.tb四区预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb四区预热参数设定2.TabIndex = 99;
+            this.tb四区预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb一区预热参数设定2
+            // 
+            this.tb一区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb一区预热参数设定2.Location = new System.Drawing.Point(136, 349);
+            this.tb一区预热参数设定2.Name = "tb一区预热参数设定2";
+            this.tb一区预热参数设定2.Size = new System.Drawing.Size(62, 26);
+            this.tb一区预热参数设定2.TabIndex = 100;
+            this.tb一区预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label23.Location = new System.Drawing.Point(207, 283);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(184, 16);
+            this.label23.TabIndex = 101;
+            this.label23.Text = "加热保温          分钟";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label24.Location = new System.Drawing.Point(207, 388);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(184, 16);
+            this.label24.TabIndex = 102;
+            this.label24.Text = "加热保温          分钟";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label25.Location = new System.Drawing.Point(733, 143);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(184, 16);
+            this.label25.TabIndex = 103;
+            this.label25.Text = "加热保温          分钟";
+            // 
+            // tb加热保温时间1
+            // 
+            this.tb加热保温时间1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb加热保温时间1.Location = new System.Drawing.Point(807, 136);
+            this.tb加热保温时间1.Name = "tb加热保温时间1";
+            this.tb加热保温时间1.Size = new System.Drawing.Size(62, 26);
+            this.tb加热保温时间1.TabIndex = 104;
+            this.tb加热保温时间1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb加热保温时间3
+            // 
+            this.tb加热保温时间3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb加热保温时间3.Location = new System.Drawing.Point(284, 383);
+            this.tb加热保温时间3.Name = "tb加热保温时间3";
+            this.tb加热保温时间3.Size = new System.Drawing.Size(62, 26);
+            this.tb加热保温时间3.TabIndex = 105;
+            this.tb加热保温时间3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // tb加热保温时间2
+            // 
+            this.tb加热保温时间2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb加热保温时间2.Location = new System.Drawing.Point(284, 278);
+            this.tb加热保温时间2.Name = "tb加热保温时间2";
+            this.tb加热保温时间2.Size = new System.Drawing.Size(62, 26);
+            this.tb加热保温时间2.TabIndex = 106;
+            this.tb加热保温时间2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tb加热保温时间2);
@@ -506,314 +815,6 @@
             this.groupBox1.Size = new System.Drawing.Size(1121, 463);
             this.groupBox1.TabIndex = 75;
             this.groupBox1.TabStop = false;
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label25.Location = new System.Drawing.Point(733, 143);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(184, 16);
-            this.label25.TabIndex = 103;
-            this.label25.Text = "加热保温          分钟";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label24.Location = new System.Drawing.Point(207, 388);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(184, 16);
-            this.label24.TabIndex = 102;
-            this.label24.Text = "加热保温          分钟";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label23.Location = new System.Drawing.Point(207, 283);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(184, 16);
-            this.label23.TabIndex = 101;
-            this.label23.Text = "加热保温          分钟";
-            // 
-            // tb一区预热参数设定2
-            // 
-            this.tb一区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb一区预热参数设定2.Location = new System.Drawing.Point(136, 349);
-            this.tb一区预热参数设定2.Name = "tb一区预热参数设定2";
-            this.tb一区预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb一区预热参数设定2.TabIndex = 100;
-            this.tb一区预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb四区预热参数设定2
-            // 
-            this.tb四区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb四区预热参数设定2.Location = new System.Drawing.Point(436, 349);
-            this.tb四区预热参数设定2.Name = "tb四区预热参数设定2";
-            this.tb四区预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb四区预热参数设定2.TabIndex = 99;
-            this.tb四区预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb三区预热参数设定2
-            // 
-            this.tb三区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb三区预热参数设定2.Location = new System.Drawing.Point(336, 349);
-            this.tb三区预热参数设定2.Name = "tb三区预热参数设定2";
-            this.tb三区预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb三区预热参数设定2.TabIndex = 98;
-            this.tb三区预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb二区预热参数设定2
-            // 
-            this.tb二区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb二区预热参数设定2.Location = new System.Drawing.Point(236, 349);
-            this.tb二区预热参数设定2.Name = "tb二区预热参数设定2";
-            this.tb二区预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb二区预热参数设定2.TabIndex = 97;
-            this.tb二区预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb一区预热参数设定1
-            // 
-            this.tb一区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb一区预热参数设定1.Location = new System.Drawing.Point(135, 212);
-            this.tb一区预热参数设定1.Name = "tb一区预热参数设定1";
-            this.tb一区预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb一区预热参数设定1.TabIndex = 96;
-            this.tb一区预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb四区预热参数设定1
-            // 
-            this.tb四区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb四区预热参数设定1.Location = new System.Drawing.Point(435, 212);
-            this.tb四区预热参数设定1.Name = "tb四区预热参数设定1";
-            this.tb四区预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb四区预热参数设定1.TabIndex = 95;
-            this.tb四区预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb三区预热参数设定1
-            // 
-            this.tb三区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb三区预热参数设定1.Location = new System.Drawing.Point(335, 212);
-            this.tb三区预热参数设定1.Name = "tb三区预热参数设定1";
-            this.tb三区预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb三区预热参数设定1.TabIndex = 94;
-            this.tb三区预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb二区预热参数设定1
-            // 
-            this.tb二区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb二区预热参数设定1.Location = new System.Drawing.Point(235, 212);
-            this.tb二区预热参数设定1.Name = "tb二区预热参数设定1";
-            this.tb二区预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb二区预热参数设定1.TabIndex = 93;
-            this.tb二区预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb机头2预热参数设定1
-            // 
-            this.tb机头2预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb机头2预热参数设定1.Location = new System.Drawing.Point(935, 67);
-            this.tb机头2预热参数设定1.Name = "tb机头2预热参数设定1";
-            this.tb机头2预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb机头2预热参数设定1.TabIndex = 91;
-            this.tb机头2预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb口模预热参数设定1
-            // 
-            this.tb口模预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb口模预热参数设定1.Location = new System.Drawing.Point(1035, 67);
-            this.tb口模预热参数设定1.Name = "tb口模预热参数设定1";
-            this.tb口模预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb口模预热参数设定1.TabIndex = 92;
-            this.tb口模预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb机头1预热参数设定1
-            // 
-            this.tb机头1预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb机头1预热参数设定1.Location = new System.Drawing.Point(835, 67);
-            this.tb机头1预热参数设定1.Name = "tb机头1预热参数设定1";
-            this.tb机头1预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb机头1预热参数设定1.TabIndex = 90;
-            this.tb机头1预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label46
-            // 
-            this.label46.AutoSize = true;
-            this.label46.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label46.Location = new System.Drawing.Point(734, 338);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(200, 16);
-            this.label46.TabIndex = 52;
-            this.label46.Text = "加热保温至挤出机加热结束";
-            // 
-            // tb模颈预热参数设定1
-            // 
-            this.tb模颈预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb模颈预热参数设定1.Location = new System.Drawing.Point(735, 67);
-            this.tb模颈预热参数设定1.Name = "tb模颈预热参数设定1";
-            this.tb模颈预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb模颈预热参数设定1.TabIndex = 89;
-            this.tb模颈预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb流道预热参数设定1
-            // 
-            this.tb流道预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb流道预热参数设定1.Location = new System.Drawing.Point(635, 67);
-            this.tb流道预热参数设定1.Name = "tb流道预热参数设定1";
-            this.tb流道预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb流道预热参数设定1.TabIndex = 88;
-            this.tb流道预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb换网预热参数设定2
-            // 
-            this.tb换网预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb换网预热参数设定2.Location = new System.Drawing.Point(535, 212);
-            this.tb换网预热参数设定2.Name = "tb换网预热参数设定2";
-            this.tb换网预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb换网预热参数设定2.TabIndex = 87;
-            this.tb换网预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb机头2预热参数设定2
-            // 
-            this.tb机头2预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb机头2预热参数设定2.Location = new System.Drawing.Point(935, 212);
-            this.tb机头2预热参数设定2.Name = "tb机头2预热参数设定2";
-            this.tb机头2预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb机头2预热参数设定2.TabIndex = 85;
-            this.tb机头2预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb口模预热参数设定2
-            // 
-            this.tb口模预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb口模预热参数设定2.Location = new System.Drawing.Point(1035, 212);
-            this.tb口模预热参数设定2.Name = "tb口模预热参数设定2";
-            this.tb口模预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb口模预热参数设定2.TabIndex = 86;
-            this.tb口模预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb机头1预热参数设定2
-            // 
-            this.tb机头1预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb机头1预热参数设定2.Location = new System.Drawing.Point(835, 212);
-            this.tb机头1预热参数设定2.Name = "tb机头1预热参数设定2";
-            this.tb机头1预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb机头1预热参数设定2.TabIndex = 84;
-            this.tb机头1预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // dtp保温结束时间3
-            // 
-            this.dtp保温结束时间3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp保温结束时间3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp保温结束时间3.Location = new System.Drawing.Point(135, 418);
-            this.dtp保温结束时间3.Name = "dtp保温结束时间3";
-            this.dtp保温结束时间3.Size = new System.Drawing.Size(362, 26);
-            this.dtp保温结束时间3.TabIndex = 80;
-            // 
-            // tb模颈预热参数设定2
-            // 
-            this.tb模颈预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb模颈预热参数设定2.Location = new System.Drawing.Point(735, 212);
-            this.tb模颈预热参数设定2.Name = "tb模颈预热参数设定2";
-            this.tb模颈预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb模颈预热参数设定2.TabIndex = 83;
-            this.tb模颈预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // dtp保温结束时间2
-            // 
-            this.dtp保温结束时间2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp保温结束时间2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp保温结束时间2.Location = new System.Drawing.Point(135, 311);
-            this.dtp保温结束时间2.Name = "dtp保温结束时间2";
-            this.dtp保温结束时间2.Size = new System.Drawing.Size(362, 26);
-            this.dtp保温结束时间2.TabIndex = 79;
-            // 
-            // tb流道预热参数设定2
-            // 
-            this.tb流道预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb流道预热参数设定2.Location = new System.Drawing.Point(635, 212);
-            this.tb流道预热参数设定2.Name = "tb流道预热参数设定2";
-            this.tb流道预热参数设定2.Size = new System.Drawing.Size(62, 26);
-            this.tb流道预热参数设定2.TabIndex = 82;
-            this.tb流道预热参数设定2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // dtp保温开始时间
-            // 
-            this.dtp保温开始时间.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp保温开始时间.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp保温开始时间.Location = new System.Drawing.Point(136, 244);
-            this.dtp保温开始时间.Name = "dtp保温开始时间";
-            this.dtp保温开始时间.Size = new System.Drawing.Size(362, 26);
-            this.dtp保温开始时间.TabIndex = 78;
-            // 
-            // dtp保温结束时间1
-            // 
-            this.dtp保温结束时间1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp保温结束时间1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp保温结束时间1.Location = new System.Drawing.Point(532, 168);
-            this.dtp保温结束时间1.Name = "dtp保温结束时间1";
-            this.dtp保温结束时间1.Size = new System.Drawing.Size(565, 26);
-            this.dtp保温结束时间1.TabIndex = 78;
-            // 
-            // tb换网预热参数设定1
-            // 
-            this.tb换网预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb换网预热参数设定1.Location = new System.Drawing.Point(532, 67);
-            this.tb换网预热参数设定1.Name = "tb换网预热参数设定1";
-            this.tb换网预热参数设定1.Size = new System.Drawing.Size(62, 26);
-            this.tb换网预热参数设定1.TabIndex = 81;
-            this.tb换网预热参数设定1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // dtp预热开始时间
-            // 
-            this.dtp预热开始时间.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp预热开始时间.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp预热开始时间.Location = new System.Drawing.Point(532, 104);
-            this.dtp预热开始时间.Name = "dtp预热开始时间";
-            this.dtp预热开始时间.Size = new System.Drawing.Size(565, 26);
-            this.dtp预热开始时间.TabIndex = 2;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Location = new System.Drawing.Point(135, 70);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(362, 125);
-            this.groupBox3.TabIndex = 1;
-            this.groupBox3.TabStop = false;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Location = new System.Drawing.Point(18, 16);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1090, 38);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            // 
-            // tb加热保温时间1
-            // 
-            this.tb加热保温时间1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb加热保温时间1.Location = new System.Drawing.Point(807, 136);
-            this.tb加热保温时间1.Name = "tb加热保温时间1";
-            this.tb加热保温时间1.Size = new System.Drawing.Size(62, 26);
-            this.tb加热保温时间1.TabIndex = 104;
-            this.tb加热保温时间1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb加热保温时间3
-            // 
-            this.tb加热保温时间3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb加热保温时间3.Location = new System.Drawing.Point(284, 383);
-            this.tb加热保温时间3.Name = "tb加热保温时间3";
-            this.tb加热保温时间3.Size = new System.Drawing.Size(62, 26);
-            this.tb加热保温时间3.TabIndex = 105;
-            this.tb加热保温时间3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // tb加热保温时间2
-            // 
-            this.tb加热保温时间2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb加热保温时间2.Location = new System.Drawing.Point(284, 278);
-            this.tb加热保温时间2.Name = "tb加热保温时间2";
-            this.tb加热保温时间2.Size = new System.Drawing.Size(62, 26);
-            this.tb加热保温时间2.TabIndex = 106;
-            this.tb加热保温时间2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ExtructionPreheatParameterRecordStep3
             // 
@@ -938,9 +939,9 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox tb加热保温时间1;
-        private System.Windows.Forms.TextBox tb加热保温时间2;
         private System.Windows.Forms.TextBox tb加热保温时间3;
+        private System.Windows.Forms.TextBox tb加热保温时间2;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

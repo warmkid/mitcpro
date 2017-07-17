@@ -87,5 +87,10 @@ namespace mySystem.Process.Bag.PTV
             PTVBag_runningrecordofpk pk = new PTVBag_runningrecordofpk();
             pk.ShowDialog();
         }
+
+        private void PTVMainForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

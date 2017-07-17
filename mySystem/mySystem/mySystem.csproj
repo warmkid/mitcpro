@@ -545,6 +545,66 @@
     <Compile Include="Process\Extruction\D\Record_train.Designer.cs">
       <DependentUpon>Record_train.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Order\添加订单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Order\添加订单.Designer.cs">
+      <DependentUpon>添加订单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Order\订单管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Order\订单管理.Designer.cs">
+      <DependentUpon>订单管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\入库.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\入库.Designer.cs">
+      <DependentUpon>入库.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\出库.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\出库.Designer.cs">
+      <DependentUpon>出库.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\商品设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\商品设置.Designer.cs">
+      <DependentUpon>商品设置.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\库存管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\库存管理.Designer.cs">
+      <DependentUpon>库存管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\库存管理主界面.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\库存管理主界面.Designer.cs">
+      <DependentUpon>库存管理主界面.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\添加采购单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\添加采购单.designer.cs">
+      <DependentUpon>添加采购单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\退货.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\退货.Designer.cs">
+      <DependentUpon>退货.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\采购单管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\采购单管理.Designer.cs">
+      <DependentUpon>采购单管理.cs</DependentUpon>
+    </Compile>
     <Compile Include="Query\QueryInstruForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -995,8 +1055,38 @@
     <EmbeddedResource Include="Process\Extruction\D\Record_train.resx">
       <DependentUpon>Record_train.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Order\添加订单.resx">
+      <DependentUpon>添加订单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Order\订单管理.resx">
+      <DependentUpon>订单管理.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\ProcessMainForm.resx">
       <DependentUpon>ProcessMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\入库.resx">
+      <DependentUpon>入库.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\出库.resx">
+      <DependentUpon>出库.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\商品设置.resx">
+      <DependentUpon>商品设置.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\库存管理.resx">
+      <DependentUpon>库存管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\库存管理主界面.resx">
+      <DependentUpon>库存管理主界面.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\添加采购单.resx">
+      <DependentUpon>添加采购单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\退货.resx">
+      <DependentUpon>退货.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\采购单管理.resx">
+      <DependentUpon>采购单管理.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryExtruForm.resx">
       <DependentUpon>QueryExtruForm.cs</DependentUpon>
@@ -1125,6 +1215,7 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram3.cd" />
+    <None Include="ClassDiagram4.cd" />
     <None Include="myDataSet.xsc">
       <DependentUpon>myDataSet.xsd</DependentUpon>
     </None>
