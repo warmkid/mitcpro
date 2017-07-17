@@ -48,6 +48,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cb产品代码 = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tb备注 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.tb审核人 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -62,7 +63,6 @@
             this.SaveBtn = new System.Windows.Forms.Button();
             this.AddLineBtn = new System.Windows.Forms.Button();
             this.DelLineBtn = new System.Windows.Forms.Button();
-            this.tb备注 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -232,6 +232,13 @@
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             // 
+            // tb备注
+            // 
+            this.tb备注.Location = new System.Drawing.Point(100, 125);
+            this.tb备注.Name = "tb备注";
+            this.tb备注.Size = new System.Drawing.Size(723, 26);
+            this.tb备注.TabIndex = 55;
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -322,6 +329,7 @@
             this.printBtn.TabIndex = 52;
             this.printBtn.Text = "打印";
             this.printBtn.UseVisualStyleBackColor = true;
+            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
             // 
             // CheckBtn
             // 
@@ -367,13 +375,6 @@
             this.DelLineBtn.UseVisualStyleBackColor = true;
             this.DelLineBtn.Click += new System.EventHandler(this.DelBtn_Click);
             // 
-            // tb备注
-            // 
-            this.tb备注.Location = new System.Drawing.Point(100, 125);
-            this.tb备注.Name = "tb备注";
-            this.tb备注.Size = new System.Drawing.Size(723, 26);
-            this.tb备注.TabIndex = 55;
-            // 
             // outerpack
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -417,7 +418,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "outerpack";
-            this.Text = "outerpack";
+            this.Text = "产品外包装记录";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
