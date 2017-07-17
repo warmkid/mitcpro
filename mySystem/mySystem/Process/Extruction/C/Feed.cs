@@ -162,6 +162,39 @@ namespace mySystem.Process.Extruction.C
             
             bsItem.EndEdit();
             daItem.Update((DataTable)bsItem.DataSource);
+            fresh1();
+        }
+        private void fresh1()
+        {
+            string txb = this.txb生产指令编号.Text;
+            DateTime start = this.dtp生产日期.Value;
+
+            mySystem.Process.Extruction.C.Feed fresh = new mySystem.Process.Extruction.C.Feed(mainform);
+            fresh.StartPosition = FormStartPosition.Manual;
+            fresh.Location = this.Location;
+            fresh.txb生产指令编号.Text = txb;
+            fresh.dtp生产日期.Value = start;
+            fresh.Show();
+            this.Close();
+        }
+        public static void IdMotivation(int intId)
+        {
+            string tablename1 = "吹膜供料系统运行记录";
+            MainForm mainform = new MainForm();
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            comm.CommandText = "select 生产指令 from " + tablename1 + " where ID =" + intId + ";";
+            //////
+            mySystem.Process.Extruction.C.Feed search = new mySystem.Process.Extruction.C.Feed(mainform);
+            OleDbDataReader reader = null;
+            reader = comm.ExecuteReader();
+            while (reader.Read())
+            {
+                search.txb生产指令编号.Text = reader[0].ToString();
+            }
+            search.InitializeComponent();
+            search.binding1();
+            search.Show();
         }
     }
 }

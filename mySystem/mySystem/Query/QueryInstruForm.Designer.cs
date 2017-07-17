@@ -50,6 +50,7 @@
             this.dgv.Size = new System.Drawing.Size(1082, 460);
             this.dgv.TabIndex = 24;
             this.dgv.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dgv.DoubleClick += new System.EventHandler(this.dgv_DoubleClick);
             // 
             // SearchBtn
             // 

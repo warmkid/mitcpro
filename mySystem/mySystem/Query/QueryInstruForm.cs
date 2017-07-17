@@ -25,7 +25,6 @@ namespace mySystem
         public QueryInstruForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            dgv.Font = new Font("宋体", 12);
             Initdgv();
 
         }
@@ -47,24 +46,14 @@ namespace mySystem
         }
 
         private void Bind()
-        {
-            date1 = dateTimePicker1.Value.Date;
-            date2 = dateTimePicker2.Value.Date;
-            writer = textBox1.Text.Trim();
-            TimeSpan delt = date2 - date1;
-            if (delt.TotalDays < 0)
-            {
-                MessageBox.Show("起止时间有误，请重新输入");
-                return;
-            }
-
+        {            
             dt = new DataTable("生产指令信息表"); //""中的是表名
             da = new OleDbDataAdapter("select * from 生产指令信息表 where 编制人 like" + "'%" + writer + "%'" + "and 编制时间 between" + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
             bs.DataSource = dt;
-
+            this.dgv.DataBindings.Clear();
             this.dgv.DataSource = bs.DataSource; //绑定
             //显示序号
             setDataGridViewRowNums();
@@ -87,7 +76,7 @@ namespace mySystem
             this.dgv.Columns["生产工艺"].MinimumWidth = 150;
             this.dgv.Columns["开始生产日期"].MinimumWidth = 200; 
             this.dgv.Columns["编制时间"].MinimumWidth = 200; 
-            //this.dgv.Columns["ID"].Visible = false;
+            
         }
 
         private void setDataGridViewRowNums()
@@ -101,7 +90,16 @@ namespace mySystem
 
         private void SearchBtn_Click(object sender, EventArgs e)
         {
-            
+            date1 = dateTimePicker1.Value.Date;
+            date2 = dateTimePicker2.Value.Date;
+            writer = textBox1.Text.Trim();
+            TimeSpan delt = date2 - date1;
+            if (delt.TotalDays < 0)
+            {
+                MessageBox.Show("起止时间有误，请重新输入");
+                return;
+            }
+
             Bind();           
             
             #region 旧版
@@ -162,8 +160,17 @@ namespace mySystem
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            
+        }
 
-
+        private void dgv_DoubleClick(object sender, EventArgs e)
+        {
+            int selectIndex = this.dgv.CurrentRow.Index;
+            int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+            //fill函数有错
+            //BatchProductRecord.ProcessProductInstru detailform = new BatchProductRecord.ProcessProductInstru(base.mainform);
+            //detailform.fill(ID);
+            //detailform.Show();
         }
 
 
