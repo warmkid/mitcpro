@@ -51,11 +51,16 @@ namespace BatchProductRecord
         private Dictionary<string, string> dict_白班;
         private Dictionary<string, string> dict_夜班;
 
+        private float 面;
+        private float 密度;
+        private float 系数1;
+        private float 系数2;
+
         //读取产品列表填入产品名称下拉列表
         private void fill_prodname()
         {
             DataTable dt = new System.Data.DataTable();
-            OleDbDataAdapter da= new OleDbDataAdapter("select 产品名称 from 生产指令信息表", mySystem.Parameter.connOle);
+            OleDbDataAdapter da= new OleDbDataAdapter("select 产品名称 from 设置吹膜产品", mySystem.Parameter.connOle);
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             da.Fill(dt);
             da.Dispose();
@@ -63,6 +68,20 @@ namespace BatchProductRecord
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 comboBox1.Items.Add(dt.Rows[i][0].ToString());
+            }
+        }
+        //读取设置中生产工艺到下拉列表中
+        private void fill_prodart()
+        {
+            DataTable dt = new System.Data.DataTable();
+            OleDbDataAdapter da = new OleDbDataAdapter("select 工艺名称 from 设置吹膜工艺", mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            da.Fill(dt);
+            da.Dispose();
+            cb.Dispose();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                cb工艺.Items.Add(dt.Rows[i][0].ToString());
             }
         }
 
@@ -95,11 +114,29 @@ namespace BatchProductRecord
             }
         }
 
+        //读取生产指令参数
+        private void readparam()
+        {
+            DataTable tempdt = new System.Data.DataTable();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置生产指令参数", mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            da.Fill(tempdt);
+            da.Dispose();
+            cb.Dispose();
+            面=float.Parse(tempdt.Rows[0][0].ToString());
+            密度=float.Parse(tempdt.Rows[0][1].ToString());
+            系数1=float.Parse(tempdt.Rows[0][2].ToString());
+            系数2 = float.Parse(tempdt.Rows[0][3].ToString());
+            tempdt.Dispose();
+        }
+
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
             init();
 
+            readparam();
+            fill_prodart();
             fill_prodname();
             fill_matcode();
             fill_respons_user();
@@ -136,7 +173,7 @@ namespace BatchProductRecord
             //textBox1.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品名称");
             comboBox1.DataBindings.Add("Text",bs_prodinstr.DataSource,"产品名称");
             tb指令编号.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令编号");
-            tb工艺.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产工艺");
+            cb工艺.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产工艺");
             tb设备编号.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产设备编号");
             dtp开始生产日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "开始生产日期");
 
@@ -246,15 +283,12 @@ namespace BatchProductRecord
                 {
                     c.Enabled = false;
                 }
-                splitContainer7.Enabled = true;
-                tb编制人.Enabled = false;
-                tb审批人.Enabled = false;
-                dateTimePicker2.Enabled = false;
-                dateTimePicker3.Enabled = false;
+                dataGridView1.Enabled = true;
+                dataGridView1.ReadOnly = true;
 
-                bt确认.Enabled = true;
-                tb接收人.Enabled = true;
-                dateTimePicker4.Enabled = true;
+                bt打印.Enabled = true;
+                bt查询插入.Enabled = true;
+                tb指令编号.Enabled = true;
             }
             else
             {
@@ -283,29 +317,11 @@ namespace BatchProductRecord
             //控件可见性
             bt审核.Enabled = true;
             bt打印.Enabled = false;
-            if ((int)dt_prodinstr.Rows[0]["状态"] == 1)//待接受
-            {
-                bt审核.Enabled = false;
-                if (mySystem.Parameter.NametoID(tb接收人.Text) <= 0)
-                {
-                    MessageBox.Show("接收人ID不存在");
-                    return;
-                }
-                //接受
-                dt_prodinstr.Rows[0]["状态"] = 2;
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                bt打印.Enabled = true;
-                bt查询插入.Enabled = true;
-                tb指令编号.Enabled = true;
-            }
 
             //外表保存
-            if (tb内外领料量.Text != "")
+            if (tb内外层比例.Text != "")
             {
-                dt_prodinstr.Rows[0]["比例"] = float.Parse(tb内外领料量.Text) / float.Parse(tb中层领料量.Text);
+                dt_prodinstr.Rows[0]["比例"] = float.Parse(tb内外层比例.Text);
             }            
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
@@ -351,7 +367,7 @@ namespace BatchProductRecord
                         {
                             break;
                         }
-                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 2 * 0.093;//用料重量
+                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 面 * 密度;//用料重量
                         break;
                     }
 
@@ -409,7 +425,7 @@ namespace BatchProductRecord
                         array = str.Split('*');
                         array2 = array[0].Split('-');
                         leng = float.Parse(array2[2]);
-                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 2 * 0.093;//用料重量
+                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 面 * 密度;//用料重量
                     }
 
                     string s7 = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
@@ -476,6 +492,9 @@ namespace BatchProductRecord
                 dt_prodinstr.Rows[0]["内外层领料量"] = sum_weight / 100 * fbili;
                 dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100-fbili);
             }
+
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
 
         //datagridview 添加行
@@ -501,7 +520,8 @@ namespace BatchProductRecord
             da.Fill(tempdt);
             if (tempdt.Rows.Count == 0)
             {
-                tb工艺.Text = "";
+                //tb工艺.Text = "";
+                cb工艺.Text = "";
                 tb设备编号.Text = "";
                 dtp开始生产日期.Value = DateTime.Now;
 
@@ -531,7 +551,8 @@ namespace BatchProductRecord
             if (tempdt.Rows.Count == 1)
             {
                 tb指令编号.Text = (string)tempdt.Rows[0][2];
-                tb工艺.Text = (string)tempdt.Rows[0][3]; 
+                //tb工艺.Text = (string)tempdt.Rows[0][3]; 
+                cb工艺.Text = (string)tempdt.Rows[0][3]; 
                 tb设备编号.Text = (string)tempdt.Rows[0][4];
                 dtp开始生产日期.Value = (DateTime)tempdt.Rows[0][5];
 
@@ -611,8 +632,6 @@ namespace BatchProductRecord
             bt查询插入.Enabled = false;
             bt审核.Enabled = false;
             bt打印.Enabled = false;
-            tb接收人.Enabled = false;//审核通过之后才能填
-
             
             readOuterData(tb指令编号.Text);
             removeOuterBinding();
@@ -632,31 +651,19 @@ namespace BatchProductRecord
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
-            if ((int)dt_prodinstr.Rows[0]["状态"]==1)//待接受
-            {
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                splitContainer7.Enabled = true;
-                tb编制人.Enabled = false;
-                tb审批人.Enabled = false;
-                dateTimePicker2.Enabled = false;
-                dateTimePicker3.Enabled = false;
 
-                tb接收人.Enabled = true;
-                dateTimePicker4.Enabled = true;
-                bt确认.Enabled = true;
-            }
-            if ((int)dt_prodinstr.Rows[0]["状态"] == 2)//已接受
+            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
             {
                 foreach (Control c in this.Controls)
                 {
                     c.Enabled = false;
                 }
+                dataGridView1.Enabled = true;
+                dataGridView1.ReadOnly = true;
+
+                bt打印.Enabled = true;
                 tb指令编号.Enabled = true;
                 bt查询插入.Enabled = true;
-                bt打印.Enabled = true;
             }
 
             //默认值处理
@@ -686,12 +693,13 @@ namespace BatchProductRecord
         DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令编号"] = tb指令编号.Text;
+            dr["生产设备编号"] = "AA-EQM-032";
             dr["开始生产日期"]=DateTime.Now;
             dr["内外层领料量"]=0;
             dr["中层领料量"]=0;
             dr["卷心管领料量"]=0;
             dr["双层洁净包装领料量"]=0;
-            dr["状态"]=0;
+            dr["状态"]=0;//草稿
             dr["计划产量合计米"]=0;
             dr["用料重量合计"]=0;
             dr["计划产量合计卷"]=0;
@@ -741,7 +749,7 @@ namespace BatchProductRecord
             //解除之前的绑定
             comboBox1.DataBindings.Clear();
             tb指令编号.DataBindings.Clear();
-            tb工艺.DataBindings.Clear();
+            cb工艺.DataBindings.Clear();
             tb设备编号.DataBindings.Clear();
             dtp开始生产日期.DataBindings.Clear();
 
@@ -881,9 +889,9 @@ namespace BatchProductRecord
                 MessageBox.Show("中层领料量输入不合法");
                 return false;
             }
-            if (tempvalue + tempvalue2 <= float.Parse(tb用料重量合计.Text))
+            if (tempvalue + tempvalue2 < float.Parse(tb用料重量合计.Text))
             {
-                MessageBox.Show("内外、中层领料量之和必须大于用料量");
+                MessageBox.Show("内外、中层领料量之和必须大于等于用料量");
                 return false;
             }
             if (!float.TryParse(tb卷心管领料量.Text, out tempvalue))
@@ -901,6 +909,12 @@ namespace BatchProductRecord
             if (mySystem.Parameter.NametoID(tb编制人.Text)<=0)
             {
                 MessageBox.Show("编制人ID不存在");
+                return false;
+            }
+            //接收人
+            if (mySystem.Parameter.NametoID(tb接收人.Text) <= 0)
+            {
+                MessageBox.Show("接受人ID不存在");
                 return false;
             }
             return true;
@@ -943,6 +957,9 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["内外层领料量"] = (sum / 100 * a).ToString();
             dt_prodinstr.Rows[0]["中层领料量"] = (sum / 100 * (100 - a)).ToString();
             dt_prodinstr.Rows[0]["比例"]=(a/(100-a)).ToString();
+
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
 
         //白班按钮
@@ -968,6 +985,126 @@ namespace BatchProductRecord
                 tb夜班.Text += cb负责人.Text + ",";
                 dt_prodinstr.Rows[0]["夜班负责人"] = tb夜班.Text;
             }
+        }
+
+        private void bt删除_Click(object sender, System.EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                if (dataGridView1.SelectedRows[0].Index < 0)
+                    return;
+                dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+            }
+            //刷新合计
+            float sum_mi = 0, sum_juan = 0, sum_weight = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")
+                    sum_mi += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[8].Value.ToString() != "")
+                    sum_juan += float.Parse(dataGridView1.Rows[i].Cells[8].Value.ToString());
+            }
+            dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
+            dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
+            dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
+
+        }
+
+        private void bt上移_Click(object sender, System.EventArgs e)
+        {
+            int count = dt_prodlist.Rows.Count;
+            if (count == 0)
+                return;
+            int index = dataGridView1.SelectedCells[0].RowIndex;
+            if (0 == index)
+            {
+                return;
+            }
+            DataRow currRow = dt_prodlist.Rows[index];
+            DataRow desRow = dt_prodlist.NewRow();
+            desRow.ItemArray = currRow.ItemArray.Clone() as object[];
+            currRow.Delete();
+            dt_prodlist.Rows.Add(desRow);
+
+            for (int i = index - 1; i < count; ++i)
+            {
+                if (i == index) { continue; }
+                DataRow tcurrRow = dt_prodlist.Rows[i];
+                DataRow tdesRow = dt_prodlist.NewRow();
+                tdesRow.ItemArray = tcurrRow.ItemArray.Clone() as object[];
+                tcurrRow.Delete();
+                dt_prodlist.Rows.Add(tdesRow);
+            }
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            dt_prodlist.Clear();
+            da_prodlist.Fill(dt_prodlist);
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index - 1].Selected = true;
+
+            //刷新合计
+            float sum_mi = 0, sum_juan = 0, sum_weight = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")
+                    sum_mi += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[8].Value.ToString() != "")
+                    sum_juan += float.Parse(dataGridView1.Rows[i].Cells[8].Value.ToString());
+            }
+            dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
+            dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
+            dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
+
+        }
+
+        private void bt下移_Click(object sender, System.EventArgs e)
+        {
+            int count = dt_prodlist.Rows.Count;
+            if (count == 0)
+                return;
+            int index = dataGridView1.SelectedCells[0].RowIndex;
+            if (count - 1 == index)
+            {
+                return;
+            }
+            DataRow currRow = dt_prodlist.Rows[index];
+            DataRow desRow = dt_prodlist.NewRow();
+            desRow.ItemArray = currRow.ItemArray.Clone() as object[];
+            currRow.Delete();
+            dt_prodlist.Rows.Add(desRow);
+
+            for (int i = index + 2; i < count; ++i)
+            {
+                if (i == index) { continue; }
+                DataRow tcurrRow = dt_prodlist.Rows[i];
+                DataRow tdesRow = dt_prodlist.NewRow();
+                tdesRow.ItemArray = tcurrRow.ItemArray.Clone() as object[];
+                tcurrRow.Delete();
+                dt_prodlist.Rows.Add(tdesRow);
+            }
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            dt_prodlist.Clear();
+            da_prodlist.Fill(dt_prodlist);
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index + 1].Selected = true;
+
+            //刷新合计
+            float sum_mi = 0, sum_juan = 0, sum_weight = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")
+                    sum_mi += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[8].Value.ToString() != "")
+                    sum_juan += float.Parse(dataGridView1.Rows[i].Cells[8].Value.ToString());
+            }
+            dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
+            dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
+            dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
         }
     }
 }
