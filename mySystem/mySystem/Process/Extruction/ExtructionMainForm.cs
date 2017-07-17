@@ -238,7 +238,7 @@ namespace mySystem
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 where 状态 <> 1 and 状态 <> 4 ";
+                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 where 状态 = 2 ";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
@@ -254,7 +254,7 @@ namespace mySystem
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = Parameter.conn;
-                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 where 状态 <> 1 and 状态 <> 4 ";
+                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 where 状态 = 2 ";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
