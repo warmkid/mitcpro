@@ -10,6 +10,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Configuration;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace mySystem
 {
@@ -24,6 +25,38 @@ namespace mySystem
             InitializeComponent();
             Init();
         }
+
+        public ProdctDaily_extrus(mySystem.MainForm mainform,int id)
+            : base(mainform)
+        {
+            InitializeComponent();
+            Init();
+            string asql = "select * from 吹膜生产日报表 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            int instrid = (int)tempdt.Rows[0]["生产指令ID"];
+
+            readOuterData(instrid);
+            removeOuterBinding();
+            outerBind();
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+            query_by_instru(mySystem.Parameter.proInstruction);
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+
+            DataGridViewsum();
+            dataGridView1.Columns[0].Visible = false;//ID
+
+            foreach (Control c in this.Controls)
+                c.Enabled = false;
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+        }
+
         DataTable dt;
 
         private DataTable dt_prodinstr, dt_prodlist;
@@ -57,21 +90,6 @@ namespace mySystem
             da_prodlist = new OleDbDataAdapter();
             cb_prodlist = new OleDbCommandBuilder();
 
-
-            //dt.Columns.Add("id",System.Type.GetType("System.Int32"));
-            dt.Columns.Add("date", System.Type.GetType("System.DateTime"));
-            dt.Columns.Add("classes", System.Type.GetType("System.Boolean"));
-            dt.Columns.Add("prodcode", System.Type.GetType("System.String"));
-            dt.Columns.Add("prodbatch", System.Type.GetType("System.String"));
-            dt.Columns.Add("number", System.Type.GetType("System.String"));
-            dt.Columns.Add("count", System.Type.GetType("System.String"));
-            dt.Columns.Add("weight", System.Type.GetType("System.String"));
-            dt.Columns.Add("mA", System.Type.GetType("System.String"));
-            dt.Columns.Add("mB1C", System.Type.GetType("System.String"));
-            dt.Columns.Add("mB2", System.Type.GetType("System.String"));
-            dt.Columns.Add("time", System.Type.GetType("System.String"));
-
-            //query_by_instru(mySystem.Parameter.proInstruction);
             begin();
 
         }
@@ -89,13 +107,16 @@ namespace mySystem
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                 readOuterData(mySystem.Parameter.proInstruID);
                 removeOuterBinding();
-                outerBind();
-
-                query_by_instru(mySystem.Parameter.proInstruction);
+                outerBind();              
             }
 
-            readInnerData((int)dt_prodlist.Rows[0]["ID"]);
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
+            query_by_instru(mySystem.Parameter.proInstruction);
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+
+            DataGridViewsum();
+            dataGridView1.Columns[0].Visible = false;//ID
         }
 
 
@@ -246,13 +267,16 @@ namespace mySystem
             //    DistinctValueCount(dt, "rev", comboBox4);
             //}
             #endregion
+            while (dataGridView1.Rows.Count > 0)
+                dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count-1);
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
 
             string acsql = "";
             int id = mySystem.Parameter.proInstruID;//获得生产指令id
 
             DataTable dt_检验记录 = new DataTable();
             DataTable dt_废品记录 = new DataTable();
-            DataTable dt_供料记录 = new DataTable();
+            
             DataTable dt_out = new DataTable();
             //检验记录
             acsql = "select * from 吹膜工序生产和检验记录 where 生产指令ID=" + id + " order by 生产日期"; ;
@@ -266,43 +290,42 @@ namespace mySystem
             OleDbDataAdapter da3 = new OleDbDataAdapter(comm3);
             da3.Fill(dt_废品记录);
 
-            //供料记录
-            acsql = "select * from 吹膜供料记录 where 生产指令ID=" + id;
-            OleDbCommand comm4 = new OleDbCommand(acsql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da4 = new OleDbDataAdapter(comm4);
-            da4.Fill(dt_供料记录);
-
             //根据产品代码和产品批号进行联合,以检验记录的行为标准
             for (int i = 0; i < dt_检验记录.Rows.Count; i++)
             {
                 //检验记录详细信息
                 DataTable dt_检验记录_详细 = new DataTable();
-                acsql = "select count(膜卷编号),sum(膜卷长度),sum(膜卷重量) from 吹膜工序生产和检验记录详细信息 where T吹膜工序生产和检验记录ID=" + (int)dt_检验记录.Rows[i][0];
+                acsql = "select 膜卷编号,膜卷长度,膜卷重量,开始时间,结束时间 from 吹膜工序生产和检验记录详细信息 where T吹膜工序生产和检验记录ID=" + (int)dt_检验记录.Rows[i][0];
                 OleDbCommand comm2_new = new OleDbCommand(acsql, mySystem.Parameter.connOle);
                 OleDbDataAdapter da2_new = new OleDbDataAdapter(comm2_new);
                 da2_new.Fill(dt_检验记录_详细);
                 comm2_new.Dispose();
                 da2_new.Dispose();
-                
-
-                DataGridViewRow dr = new DataGridViewRow();
-                foreach (DataGridViewColumn c in dataGridView1.Columns)
+                string str膜卷编号 = dt_检验记录_详细.Rows[0][0].ToString() + "-" + dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1][0].ToString();
+                float sum_膜卷长度 = 0, sum_膜卷重量 = 0;
+                for (int kk = 0; kk < dt_检验记录_详细.Rows.Count; kk++)
                 {
-                    dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
+                    sum_膜卷长度 += float.Parse(dt_检验记录_详细.Rows[kk][1].ToString());
+                    sum_膜卷重量 += float.Parse(dt_检验记录_详细.Rows[kk][2].ToString());
                 }
+                
+                DataRow dr = dt_prodlist.NewRow();
+
                 string date_temp1 = ((DateTime)dt_检验记录.Rows[i]["生产日期"]).ToShortDateString();//标准
                 string code_temp1 = dt_检验记录.Rows[i]["产品名称"].ToString();//之前表上名字错误，应该是产品代码
 
-                dr.Cells[0].Value = i+1;//序号
-                dr.Cells[1].Value = date_temp1;//生产日期，具体到天
-                dr.Cells[2].Value = (bool)dt_检验记录.Rows[i]["班次"];
-                dr.Cells[3].Value = code_temp1;//产品代码
-                dr.Cells[4].Value = dt_检验记录.Rows[i]["产品批号"].ToString();
-                dr.Cells[5].Value = float.Parse(dt_检验记录_详细.Rows[0][0].ToString());//卷号
-                dr.Cells[6].Value = float.Parse(dt_检验记录_详细.Rows[0][1].ToString());//生产数量
-                dr.Cells[7].Value = float.Parse(dt_检验记录_详细.Rows[0][2].ToString());//生产重量
-                dr.Cells[14].Value = dt_检验记录.Rows[i]["审核人"].ToString();//复核人
+                dr["T吹膜生产日报表ID"] = dt_prodinstr.Rows[0]["ID"];
+                dr["序号"] = i + 1;
+                dr["生产时间"] = date_temp1;//生产日期，具体到天
+                dr["班次"] = ((bool)dt_检验记录.Rows[i]["班次"])==true?"白班":"夜班";
+                dr["产品代码"] = code_temp1;//产品代码
+                dr["产品批号"] = dt_检验记录.Rows[i]["产品批号"].ToString();
+                dr["卷号"]= str膜卷编号;//卷号
+                dr["生产数量"]= sum_膜卷长度;//生产数量
+                dr["生产重量"] = sum_膜卷重量;//生产重量
 
+                TimeSpan delt = (DateTime)dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] - (DateTime)dt_检验记录_详细.Rows[0]["开始时间"];
+                dr["工时"] = delt.TotalHours;//工时
 
                 //查找废品记录中对应的记录
                 float sum_废品重量 = 0;
@@ -313,56 +336,30 @@ namespace mySystem
 
                     if (date_temp1 == date_temp2 && code_temp1 == code_temp2)
                     {
-                        sum_废品重量 += (float)dt_废品记录.Rows[j]["不良品数量"];
+                        sum_废品重量 += float.Parse(dt_废品记录.Rows[j]["不良品数量"].ToString());
                     }
                 }
-                dr.Cells[8].Value = sum_废品重量;//废品重量
+                dr["废品重量"] = sum_废品重量;//废品重量
 
-                DataTable dt_废品记录_工时 = new DataTable();
-                acsql = "select 生产开始时间,生产结束时间,记录人 from 吹膜工序废品记录 where 生产指令ID=" + id;
-                OleDbCommand comm2_new_time = new OleDbCommand(acsql, mySystem.Parameter.connOle);
-                OleDbDataAdapter da2_new_time = new OleDbDataAdapter(comm2_new_time);
-                da2_new_time.Fill(dt_废品记录_工时);
-                comm2_new_time.Dispose();
-                da2_new_time.Dispose();
 
-                dr.Cells[12].Value = (DateTime)dt_废品记录_工时.Rows[0][1] - (DateTime)dt_废品记录_工时.Rows[0][0];//工时
-                dr.Cells[13].Value = dt_废品记录_工时.Rows[0][2].ToString();//填报人
+                //查找供料记录中对应的记录，查看的是当天的产品代码下供料合计
+                DataTable dt_供料记录 = new DataTable();
+                acsql = "select * from 吹膜供料记录 where 生产指令ID=" + id + " and 产品代码='" + code_temp1 + "' and 供料日期=#"+date_temp1+"#";
+                OleDbCommand comm4 = new OleDbCommand(acsql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da4 = new OleDbDataAdapter(comm4);
+                da4.Fill(dt_供料记录);
 
-                //查找供料记录中对应的记录，由于查看的是当天的产品代码下供料合计，不能直接读合计
-                float sum_A = 0, sum_B1C = 0, sum_B2 = 0;
-                for (int k = 0; k < dt_供料记录.Rows.Count; k++)
+                if (dt_供料记录.Rows.Count > 0)
                 {
-                    if (dt_供料记录.Rows[k]["产品代码"].ToString() == code_temp1)
-                    {
-                        DataTable dt_供料记录_加料量 = new DataTable();
-                        acsql = "select 外层供料量,中内层供料量,中层供料量 from 吹膜供料记录详细信息 where T吹膜供料记录ID=" + (int)dt_供料记录.Rows[k]["ID"];
-                        OleDbCommand comm2_new_jialiao = new OleDbCommand(acsql, mySystem.Parameter.connOle);
-                        OleDbDataAdapter da2_new_jialiao = new OleDbDataAdapter(comm2_new_jialiao);
-                        da2_new_jialiao.Fill(dt_供料记录_加料量);
-                        comm2_new_jialiao.Dispose();
-                        da2_new_jialiao.Dispose();
-
-                        for (int p = 0; p < dt_供料记录_加料量.Rows.Count; p++)
-                        {
-                            string temptime=((DateTime)dt_供料记录_加料量.Rows[p]["供料时间"]).ToShortDateString();
-                            if (date_temp1 == temptime)
-                            {
-                                sum_A += float.Parse(dt_供料记录_加料量.Rows[p]["外层供料量"].ToString());
-                                sum_B1C += float.Parse(dt_供料记录_加料量.Rows[p]["中内层供料量"].ToString());
-                                sum_B2 += float.Parse(dt_供料记录_加料量.Rows[p]["中层供料量"].ToString());
-                            }
-                        }
-                    }
-                    break;
+                    dr["加料A"] = float.Parse(dt_供料记录.Rows[0]["外层供料量合计a"].ToString());//加料A
+                    dr["加料B1C"] = float.Parse(dt_供料记录.Rows[0]["中内层供料量合计b"].ToString());//加料B1C
+                    dr["加料B2"] = float.Parse(dt_供料记录.Rows[0]["中层供料量合计c"].ToString());//加料B2
                 }
 
-                dr.Cells[9].Value = sum_A;//加料A
-                dr.Cells[10].Value = sum_B1C;//加料B1C
-                dr.Cells[11].Value = sum_B2;//加料B2
-
-                dataGridView1.Rows.Add(dr);
+                dt_prodlist.Rows.Add(dr);
             }
+
+            dt = dt_prodlist.Copy();
 
             
 
@@ -450,11 +447,103 @@ namespace mySystem
 
         private void button2_Click(object sender, EventArgs e)
         {
+            print(true);
+        }
 
+        public void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //string dir = System.IO.Directory.GetCurrentDirectory();
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"E:\gitpro\mitprodoc\甲方给的吹膜工序文档\B 下拉菜单文件\SOP-MFG-301-R02A 吹膜生产日报表_吴.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[3, 10].Value = "生产指令: "+mySystem.Parameter.proInstruction;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                my.Cells[5 + i, 2] = DateTime.Parse( dataGridView1.Rows[i].Cells[3].Value.ToString()).ToLongDateString();
+                my.Cells[5 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[5 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                my.Cells[5 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[5 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[5 + i, 7] = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                my.Cells[5 + i, 8] = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                my.Cells[5 + i, 9] = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                my.Cells[5 + i, 10] = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                my.Cells[5 + i, 11] = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                my.Cells[5 + i, 12] = dataGridView1.Rows[i].Cells[13].Value.ToString();
+                my.Cells[5 + i, 13] = dataGridView1.Rows[i].Cells[14].Value.ToString();
+            }
+
+            my.Cells[17, 7].Value = tb生产数量.Text;
+            my.Cells[17, 8].Value = tb生产重量.Text;
+            my.Cells[17, 9].Value = tb废品重量.Text;
+            my.Cells[17, 10].Value = tb加料A.Text;
+            my.Cells[17, 11].Value = tb加料B1C.Text;
+            my.Cells[17, 13].Value = tb工时.Text;
+            my.Cells[18, 3].Value = tb工时效率.Text;
+            my.Cells[18, 6].Value = "备注: "+tb备注.Text;
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
+            date1 = dateTimePicker1.Value.Date;//开始时间
+            date2 = dateTimePicker2.Value.Date;//结束时间
+            TimeSpan delt = date2 - date1;
+            if (delt.TotalDays < 0)
+            {
+                MessageBox.Show("起止时间有误，请重新输入");
+                return;
+            }
+
+            string sql = "生产时间>=" + "'" + date1 + "'" + " and " + "生产时间<=" + "'" + date2 + "'";
+
+            DataRow[] arrayDR = dt.Select(sql);
+            //清空表格
+            while (dataGridView1.Rows.Count > 0)
+                dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+            dt_prodlist.Clear();
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            //填充
+            int i = 0;
+            foreach (DataRow drow in arrayDR)
+            {
+                DataRow dr = dt_prodlist.NewRow();
+
+                dr.ItemArray = drow.ItemArray.Clone() as object[];
+                dr["T吹膜生产日报表ID"] = dt_prodinstr.Rows[0]["ID"];
+                dr["序号"] = i++;
+                dt_prodlist.Rows.Add(dr);
+            }
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            DataGridViewsum();
 
         }
 
@@ -534,6 +623,8 @@ namespace mySystem
         // 外表和控件的绑定
         void outerBind()
         {
+            bs_prodinstr.DataSource = dt_prodinstr;
+
             tb生产指令.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令");
             tb中层B2物料占比.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层B2物料占比");
             tb工时效率.DataBindings.Add("Text", bs_prodinstr.DataSource, "工时效率");
@@ -544,7 +635,7 @@ namespace mySystem
             tb加料B1C.DataBindings.Add("Text", bs_prodinstr.DataSource, "加料B1C合计");
             tb加料B2.DataBindings.Add("Text", bs_prodinstr.DataSource, "加料B2合计");
             tb工时.DataBindings.Add("Text", bs_prodinstr.DataSource, "工时合计");
-            tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "tb备注");
+            tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "备注");
 
         }
         // 内表和控件的绑定
@@ -565,6 +656,7 @@ namespace mySystem
         {
             dataGridView1.Columns[0].Visible = false;//ID
             dataGridView1.Columns[1].Visible = false;//T吹膜生产日报表ID
+            dataGridView1.Columns["加料B2"].Visible = false;
             dataGridView1.Columns["填报人"].Visible = false;
             dataGridView1.Columns["审核人"].Visible = false;
         }
@@ -575,6 +667,70 @@ namespace mySystem
             {
                 dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
             }
+        }
+
+        //计算合计
+        void DataGridViewsum()
+        {
+            float sum_生产数量=0,sum_生产重量=0,sum_废品重量=0,sum_加料A=0,sum_加料B1C=0,sum_加料B2=0,sum_工时=0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["生产数量"].Value.ToString() != "")
+                {
+                    sum_生产数量 += float.Parse(dataGridView1.Rows[i].Cells["生产数量"].Value.ToString());
+                }
+                if (dataGridView1.Rows[i].Cells["生产重量"].Value.ToString() != "")
+                {
+                    sum_生产重量 += float.Parse(dataGridView1.Rows[i].Cells["生产重量"].Value.ToString());
+                }
+                if (dataGridView1.Rows[i].Cells["废品重量"].Value.ToString() != "")
+                {
+                    sum_废品重量 += float.Parse(dataGridView1.Rows[i].Cells["废品重量"].Value.ToString());
+                }
+                if (dataGridView1.Rows[i].Cells["加料A"].Value.ToString() != "")
+                {
+                    sum_加料A += float.Parse(dataGridView1.Rows[i].Cells["加料A"].Value.ToString());
+                }
+                if (dataGridView1.Rows[i].Cells["加料B1C"].Value.ToString() != "")
+                {
+                    sum_加料B1C += float.Parse(dataGridView1.Rows[i].Cells["加料B1C"].Value.ToString());
+                }
+                if (dataGridView1.Rows[i].Cells["加料B2"].Value.ToString() != "")
+                {
+                    sum_加料B2 += float.Parse(dataGridView1.Rows[i].Cells["加料B2"].Value.ToString());
+                }
+                if (dataGridView1.Rows[i].Cells["工时"].Value.ToString() != "")
+                {
+                    sum_工时 += float.Parse(dataGridView1.Rows[i].Cells["工时"].Value.ToString());
+                }
+            }
+            dt_prodinstr.Rows[0]["生产数量合计"] = sum_生产数量;
+            dt_prodinstr.Rows[0]["生产重量合计"] = sum_生产重量;
+            dt_prodinstr.Rows[0]["废品重量合计"] = sum_废品重量;
+            dt_prodinstr.Rows[0]["加料A合计"] = sum_加料A;
+            dt_prodinstr.Rows[0]["加料B1C合计"] = sum_加料B1C;
+            dt_prodinstr.Rows[0]["加料B2合计"] = sum_加料B2;
+            dt_prodinstr.Rows[0]["工时合计"] = Math.Round((float)sum_工时, 2);
+
+            float temp=(sum_生产数量 + sum_生产重量) / sum_工时;
+            dt_prodinstr.Rows[0]["工时效率"] =Math.Round((float)temp, 2) ;
+
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value= (DateTime)dt.Rows[0]["生产时间"];
+            dateTimePicker2.Value = DateTime.Now;
+
+            button1.PerformClick();
+            setDataGridViewRowNums();
+            dataGridView1.Columns["ID"].Visible = false;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            (new ProdctDaily_extrus(mainform, 2)).Show();
         }
 
     }

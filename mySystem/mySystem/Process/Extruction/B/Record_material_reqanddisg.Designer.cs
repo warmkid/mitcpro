@@ -32,7 +32,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bt保存 = new System.Windows.Forms.Button();
-            this.bt审核 = new System.Windows.Forms.Button();
+            this.bt退料审核 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.tb重量 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -47,6 +47,7 @@
             this.bt添加 = new System.Windows.Forms.Button();
             this.cB物料代码 = new System.Windows.Forms.ComboBox();
             this.bt打印 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -54,7 +55,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(167, 10);
+            this.label1.Location = new System.Drawing.Point(348, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(322, 16);
             this.label1.TabIndex = 1;
@@ -92,15 +93,15 @@
             this.bt保存.UseVisualStyleBackColor = true;
             this.bt保存.Click += new System.EventHandler(this.button1_Click);
             // 
-            // bt审核
+            // bt退料审核
             // 
-            this.bt审核.Location = new System.Drawing.Point(778, 417);
-            this.bt审核.Name = "bt审核";
-            this.bt审核.Size = new System.Drawing.Size(75, 23);
-            this.bt审核.TabIndex = 13;
-            this.bt审核.Text = "审核";
-            this.bt审核.UseVisualStyleBackColor = true;
-            this.bt审核.Click += new System.EventHandler(this.button2_Click);
+            this.bt退料审核.Location = new System.Drawing.Point(778, 417);
+            this.bt退料审核.Name = "bt退料审核";
+            this.bt退料审核.Size = new System.Drawing.Size(75, 23);
+            this.bt退料审核.TabIndex = 13;
+            this.bt退料审核.Text = "审核";
+            this.bt退料审核.UseVisualStyleBackColor = true;
+            this.bt退料审核.Click += new System.EventHandler(this.button2_Click);
             // 
             // label7
             // 
@@ -222,11 +223,23 @@
             this.bt打印.UseVisualStyleBackColor = true;
             this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(26, 426);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "测试";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 452);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.bt打印);
             this.Controls.Add(this.cB物料代码);
             this.Controls.Add(this.bt添加);
@@ -241,14 +254,14 @@
             this.Controls.Add(this.label8);
             this.Controls.Add(this.tb重量);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.bt审核);
+            this.Controls.Add(this.bt退料审核);
             this.Controls.Add(this.bt保存);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "Record_material_reqanddisg";
-            this.Text = "Record_material_reqanddisg";
+            this.Text = "吹膜工序领料退料记录";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -261,7 +274,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button bt保存;
-        private System.Windows.Forms.Button bt审核;
+        private System.Windows.Forms.Button bt退料审核;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tb重量;
         private System.Windows.Forms.Label label8;
@@ -276,5 +289,6 @@
         private System.Windows.Forms.Button bt添加;
         private System.Windows.Forms.ComboBox cB物料代码;
         private System.Windows.Forms.Button bt打印;
+        private System.Windows.Forms.Button button1;
     }
 }

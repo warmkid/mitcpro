@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsApplication1
 {
@@ -41,8 +42,43 @@ namespace WindowsFormsApplication1
             Init();
             readset();
             begin();
-
         }
+
+        public Record_extrusClean(mySystem.MainForm mainform,int id)
+            : base(mainform)
+        {
+            conn = mainform.conn;
+            connOle = mainform.connOle;
+            isSqlOk = mainform.isSqlOk;
+
+            InitializeComponent();
+            Init();
+            readset();
+
+            string asql = "select * from 吹膜机组清洁记录表 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            int instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+
+            readOuterData(instrid);
+            removeOuterBinding();
+            outerBind();
+
+            ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
+            ckb夜班.Checked = !ckb白班.Checked;
+
+            readInnerData((int)dt_out.Rows[0]["ID"]);
+            innerBind();
+
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = false;
+            }
+        }
+
         //读取设置里面的清洁内容
         private void readset()
         {
@@ -584,6 +620,65 @@ namespace WindowsFormsApplication1
         private void Record_extrusClean_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            (new Record_extrusClean(mainform, 4)).Show();
+        }
+
+        private void bt打印_Click(object sender, EventArgs e)
+        {
+            print(true);
+        }
+
+        public void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //string dir = System.IO.Directory.GetCurrentDirectory();
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"E:\gitpro\mitprodoc\甲方给的吹膜工序文档\A 下拉菜单文件\SOP-MFG-301-R03 吹膜机组清洁记录_吴.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];   
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }                       
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[3, 2].Value = dtp清洁日期.Value.ToLongDateString();
+            my.Cells[3, 7].Value = ckb白班.Checked==true?"白班":"夜班";
+            my.Cells[3, 11].Value = dtp复核日期.Value.ToLongDateString() ;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                my.Cells[5 + i, 1] = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                my.Cells[5 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[5 + i, 9] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[5 + i, 11] = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                my.Cells[5 + i, 12] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+
+            }
         }
     }
 }

@@ -48,6 +48,7 @@
             this.bt审核 = new System.Windows.Forms.Button();
             this.bt打印 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -235,6 +236,7 @@
             this.bt打印.TabIndex = 12;
             this.bt打印.Text = "打印";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // button4
             // 
@@ -246,11 +248,23 @@
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(144, 424);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 14;
+            this.button1.Text = "测试";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Record_extrusClean
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 459);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.bt打印);
             this.Controls.Add(this.bt审核);
@@ -259,7 +273,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
             this.Name = "Record_extrusClean";
-            this.Text = "Record_extrusClean";
+            this.Text = "吹模机组清洁记录";
             this.Load += new System.EventHandler(this.Record_extrusClean_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -288,5 +302,6 @@
         private System.Windows.Forms.CheckBox ckb夜班;
         private System.Windows.Forms.CheckBox ckb白班;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button1;
     }
 }

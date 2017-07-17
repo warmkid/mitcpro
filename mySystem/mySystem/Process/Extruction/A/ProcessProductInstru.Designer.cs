@@ -119,6 +119,7 @@
             this.bt查询插入 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.cb工艺 = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -929,6 +930,7 @@
             this.bt打印.TabIndex = 18;
             this.bt打印.Text = "打印";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // panel1
             // 
@@ -1115,11 +1117,24 @@
             this.cb工艺.Size = new System.Drawing.Size(121, 20);
             this.cb工艺.TabIndex = 25;
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(521, 667);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 26;
+            this.button1.Text = "测试";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 702);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.cb工艺);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.bt查询插入);
@@ -1144,7 +1159,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "ProcessProductInstru";
-            this.Text = "ProcessProductInstru";
+            this.Text = "吹膜工序生产指令";
             this.Load += new System.EventHandler(this.ProcessProductInstru_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
@@ -1290,5 +1305,6 @@
         private System.Windows.Forms.Button bt上移;
         private System.Windows.Forms.Button bt删除;
         private System.Windows.Forms.ComboBox cb工艺;
+        private System.Windows.Forms.Button button1;
     }
 }

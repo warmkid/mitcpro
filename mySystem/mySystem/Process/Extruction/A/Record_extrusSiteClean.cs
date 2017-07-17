@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 //using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 
 
@@ -21,7 +22,7 @@ namespace mySystem.Extruction.Process
     /// </summary>
     public partial class Record_extrusSiteClean : mySystem.BaseForm
     {
-
+        bool checkout;//检查结果
         mySystem.CheckForm checkform;
 
         //OleDbConnection connOle;
@@ -127,6 +128,9 @@ namespace mySystem.Extruction.Process
 
         private void begin()
         {
+            bt打印.Enabled = false;
+            bt审核.Enabled = false;
+
             readOuterData(mySystem.Parameter.proInstruID);
             removeOuterBinding();
             outerBind();
@@ -223,6 +227,41 @@ namespace mySystem.Extruction.Process
 
         }
 
+        public Record_extrusSiteClean(mySystem.MainForm mainform, int id)
+            : base(mainform)
+        {
+            InitializeComponent();
+            Init();
+            readsetting();
+            query_prodandbatch();
+
+            string asql = "select * from 吹膜工序清场记录 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            int instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+
+            readOuterData(instrid);
+            removeOuterBinding();
+            outerBind();
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+            dataGridView1.Columns[0].Visible = false;
+
+            readInnerData2((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind2();
+            dataGridView2.Columns[0].Visible = false;
+
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = false;
+            }
+            
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             bt审核.Enabled = false;
@@ -266,15 +305,20 @@ namespace mySystem.Extruction.Process
             base.CheckResult();
             tb检查人.Text = checkform.userName;
             dt_prodinstr.Rows[0]["检查人"] = checkform.userName;
+            dt_prodinstr.Rows[0]["审核人"] = checkform.userName;
             ckb合格.Checked = checkform.ischeckOk;
             ckb不合格.Checked = !ckb合格.Checked;
             dt_prodinstr.Rows[0]["检查结果"] = checkform.ischeckOk;
+            dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+            dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             bt打印.Enabled = true;
 
+            checkout = checkform.ischeckOk;
             if (checkform.ischeckOk)
             {
+                bt打印.Enabled = true;
                 bt保存.Enabled = false;
                 bt审核.Enabled = false;
                 dataGridView1.ReadOnly = true;
@@ -284,6 +328,22 @@ namespace mySystem.Extruction.Process
                 tb备注.Enabled = false;
                 tb产品批号.Enabled = false;
                 dtp清场日期.Enabled = false;
+
+                new mySystem.ProdctDaily_extrus(mainform);
+                new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform);
+
+                DialogResult result;
+                result = MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    DataTable dt_tempdt = new DataTable("生产指令信息");
+                    OleDbDataAdapter da_tempdt = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+                    OleDbCommandBuilder cb_prodinstr = new OleDbCommandBuilder(da_tempdt);
+                    da_tempdt.Fill(dt_tempdt);
+
+                    dt_tempdt.Rows[0]["状态"] = 4;
+                    da_tempdt.Update(dt_tempdt);
+                }
             }
 
         }
@@ -307,6 +367,7 @@ namespace mySystem.Extruction.Process
             dr["清场人"] = mySystem.Parameter.userName;
             dr["审核时间"] = DateTime.Now;
             //缺少备注....................
+            
             return dr;
 
         }
@@ -411,6 +472,7 @@ namespace mySystem.Extruction.Process
             tb清场人.DataBindings.Add("Text", bs_prodinstr.DataSource, "清场人");
             tb检查人.DataBindings.Add("Text", bs_prodinstr.DataSource, "检查人");
             dtp清场日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "清场日期");
+            tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "备注");
         }
         // 内表和控件的绑定
         void innerBind()
@@ -535,5 +597,68 @@ namespace mySystem.Extruction.Process
             }
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            (new Record_extrusSiteClean(mainform, 1)).Show();
+        }
+
+        private void bt打印_Click(object sender, EventArgs e)
+        {
+            print(true);
+        }
+        public void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //string dir = System.IO.Directory.GetCurrentDirectory();
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"E:\gitpro\mitprodoc\甲方给的吹膜工序文档\A 下拉菜单文件\SOP-MFG-301-R11 吹膜工序清场记录_吴.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[3, 1].Value = "生产指令："+mySystem.Parameter.proInstruction;
+            my.Cells[3, 3].Value = "清场前产品代码及批号：" + tb产品代码.Text + "  " + tb产品批号.Text ;
+            my.Cells[3, 5].Value = "清场日期：" + dtp清场日期.Value.ToLongDateString();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                my.Cells[5 + i, 2].Value = i+1;
+                my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+            }
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            {
+                my.Cells[11 + i, 2].Value = i + 1;
+                my.Cells[11 + i, 3].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[11 + i, 4].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+            }
+            my.Cells[5, 5].Value = tb清场人.Text;
+            my.Cells[5, 6].Value = checkout==true?"合格":"不合格";
+            my.Cells[5, 7].Value = tb检查人.Text;
+        }
     }
 }

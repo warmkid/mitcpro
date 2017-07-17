@@ -75,6 +75,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.ckb白班 = new System.Windows.Forms.CheckBox();
             this.ckb夜班 = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -87,6 +88,7 @@
             this.bt打印.TabIndex = 4;
             this.bt打印.Text = "打印";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // bt删除
             // 
@@ -438,7 +440,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(391, 24);
+            this.label12.Location = new System.Drawing.Point(440, 22);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(144, 16);
             this.label12.TabIndex = 6;
@@ -534,11 +536,24 @@
             this.ckb夜班.Text = "夜班";
             this.ckb夜班.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(362, 487);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 30;
+            this.button1.Text = "测试 ";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Record_extrusSupply
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 528);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.ckb夜班);
             this.Controls.Add(this.ckb白班);
             this.Controls.Add(this.label14);
@@ -584,7 +599,7 @@
             this.Controls.Add(this.label19);
             this.Controls.Add(this.tb用料ab1c);
             this.Name = "Record_extrusSupply";
-            this.Text = "Record_extrusSupply";
+            this.Text = "吹膜工序供料记录";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -639,5 +654,6 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.CheckBox ckb白班;
         private System.Windows.Forms.CheckBox ckb夜班;
+        private System.Windows.Forms.Button button1;
     }
 }
