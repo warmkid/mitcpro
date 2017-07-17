@@ -261,6 +261,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "PTVMainForm";
             this.Text = "PTVMainForm";
+            this.Load += new System.EventHandler(this.PTVMainForm_Load);
             this.groupBox2.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
