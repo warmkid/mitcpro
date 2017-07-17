@@ -565,7 +565,7 @@ namespace mySystem.Process.Extruction.A
 			if(preview)
 			{
 				my.Select();   
-				oXL.Visible=true //加上这一行  就相当于预览功能            
+				oXL.Visible=true; //加上这一行  就相当于预览功能            
 			}
 			else
 			{
@@ -578,10 +578,10 @@ namespace mySystem.Process.Extruction.A
             // 关闭Excel进程
             oXL.Quit();
             // 释放COM资源
-			}
+			
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(oXL);
-        
+			}
 			
 				
 		}

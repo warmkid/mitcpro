@@ -285,7 +285,11 @@ namespace mySystem.Extruction.Process
 
          private void btn打印_Click(object sender, EventArgs e)
          {
-             // 打开一个Excel进程
+             print(true);
+         }
+		 public void print(bool preview)
+         {
+		 // 打开一个Excel进程
              Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
              // 利用这个进程打开一个Excel文件
              //System.IO.Directory.GetCurrentDirectory;
@@ -307,11 +311,17 @@ namespace mySystem.Extruction.Process
              my.Cells[8, 1].Value = "记录人/日期：" + txb记录人.Text+"   "+dtp记录日期.Value.ToLongDateString();
              my.Cells[8, 4].Value =  txb审核人.Text+dtp审核日期.Value.ToLongDateString();
 
-
+			if(preview)
+			{
              // 让这个Sheet为被选中状态
-             //    my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
-             // 直接用默认打印机打印该Sheet
-             my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                 my.Select();  
+				 oXL.Visible=true; //加上这一行  就相当于预览功能
+             
+			}
+			else
+			{
+			// 直接用默认打印机打印该Sheet
+			 my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
              // 关闭文件，false表示不保存
              wb.Close(false);
              // 关闭Excel进程
@@ -319,10 +329,9 @@ namespace mySystem.Extruction.Process
              // 释放COM资源
              Marshal.ReleaseComObject(wb);
              Marshal.ReleaseComObject(oXL);
-         }
-        
+			}
 
-         
+         }
        
     }
 }

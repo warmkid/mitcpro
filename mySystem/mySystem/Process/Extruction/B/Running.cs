@@ -794,7 +794,11 @@ namespace mySystem.Process.Extruction.B
 
         private void btn打印_Click(object sender, EventArgs e)
         {
-            // 打开一个Excel进程
+            print(true);
+        }
+        public void print(bool preview)
+		{
+			// 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
@@ -860,10 +864,15 @@ namespace mySystem.Process.Extruction.B
             my.Cells[16, 12] = "B层 "+array1[11][11].Text+"  (℃)";
             my.Cells[16, 14] = "C层 " + array1[13][11].Text + "  (℃)";
 
-
+			if(preview)
+			{
             // 让这个Sheet为被选中状态
-            my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
-            // 直接用默认打印机打印该Sheet
+            my.Select();  
+			 oXL.Visible=true; //加上这一行  就相当于预览功能
+            }
+			else
+			{	
+			// 直接用默认打印机打印该Sheet
            // my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
             // 关闭文件，false表示不保存
             wb.Close(false);
@@ -872,8 +881,8 @@ namespace mySystem.Process.Extruction.B
             // 释放COM资源
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(oXL);
-        }
-        
+			}
+		}
 
         
     }

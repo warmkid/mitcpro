@@ -296,7 +296,11 @@ namespace mySystem.Process.Extruction.C
         }
         private void btn打印_Click(object sender, EventArgs e)
         {
-            // 打开一个Excel进程
+            print(true);
+        }
+		public void print(bool preview)
+		{
+			// 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
@@ -326,7 +330,14 @@ namespace mySystem.Process.Extruction.C
             }
             my.Cells[5, 9].Value = dtFeed.Rows[0]["审核人"];
             // 让这个Sheet为被选中状态
-            my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            
+			if(preview)
+			{
+			my.Select();  
+			 oXL.Visible=true; //加上这一行  就相当于预览功能
+			}
+			else
+			{
             // 直接用默认打印机打印该Sheet
             // my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
             // 关闭文件，false表示不保存
@@ -336,6 +347,8 @@ namespace mySystem.Process.Extruction.C
             // 释放COM资源
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(oXL);
-        }
+			}
+		}
     }
+	
 }
