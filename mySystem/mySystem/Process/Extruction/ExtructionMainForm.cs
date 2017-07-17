@@ -122,88 +122,88 @@ namespace mySystem
             //5、吹膜工序废品记录  6、吹膜工序领料退料记录  7、吹膜生产日报表  8、吹膜工序生产和检验记录
             //9、吹膜工序物料平衡记录  10、吹膜机组开机前确认表  11、吹膜机组预热参数记录表
             //12、吹膜供料系统运行记录 13、吹膜机组运行记录
-            bool b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13;
-            string str1 = "select * from 批生产记录表 where 生产指令ID =" + Parameter.proInstruID;
+            bool b2, b3, b4, b5, b6, b8, b10, b11, b12, b13;
+            //string str1 = "select * from 批生产记录表 where 生产指令ID =" + Parameter.proInstruID;
             string str2 = "select * from 吹膜机组清洁记录表 where 生产指令ID = " + Parameter.proInstruID;
             string str3 = "select * from 吹膜岗位交接班记录 where 生产指令ID = " + Parameter.proInstruID;
             string str4 = "select * from 吹膜供料记录 where 生产指令ID = " + Parameter.proInstruID;
             string str5 = "select * from 吹膜工序废品记录 where 生产指令ID = " + Parameter.proInstruID;
             string str6 = "select * from 吹膜工序领料退料记录 where 生产指令ID = " + Parameter.proInstruID;
-            string str7 = "select * from 吹膜生产日报表 where 生产指令ID = " + Parameter.proInstruID;
+            //string str7 = "select * from 吹膜生产日报表 where 生产指令ID = " + Parameter.proInstruID;
             string str8 = "select * from 吹膜工序生产和检验记录 where 生产指令ID = " + Parameter.proInstruID;
-            string str9 = "select * from 吹膜工序物料平衡记录 where 生产指令ID = " + Parameter.proInstruID;
+            //string str9 = "select * from 吹膜工序物料平衡记录 where 生产指令ID = " + Parameter.proInstruID;
             string str10 = "select * from 吹膜机组开机前确认表 where 生产指令ID = " + Parameter.proInstruID;
             string str11 = "select * from 吹膜机组预热参数记录表 where 生产指令id = " + Parameter.proInstruID;
             string str12 = "select * from 吹膜供料系统运行记录 where 生产指令ID = " + Parameter.proInstruID;
             string str13 = "select * from 吹膜机组运行记录 where 生产指令ID = " + Parameter.proInstruID;
 
             OleDbConnection conn = Parameter.connOle;
-            OleDbCommand comm1 = new OleDbCommand(str1, conn);
+            //OleDbCommand comm1 = new OleDbCommand(str1, conn);
             OleDbCommand comm2 = new OleDbCommand(str2, conn);
             OleDbCommand comm3 = new OleDbCommand(str3, conn);
             OleDbCommand comm4 = new OleDbCommand(str4, conn);
             OleDbCommand comm5 = new OleDbCommand(str5, conn);
             OleDbCommand comm6 = new OleDbCommand(str6, conn);
-            OleDbCommand comm7 = new OleDbCommand(str7, conn);
+            //OleDbCommand comm7 = new OleDbCommand(str7, conn);
             OleDbCommand comm8 = new OleDbCommand(str8, conn);
-            OleDbCommand comm9 = new OleDbCommand(str9, conn);
+            //OleDbCommand comm9 = new OleDbCommand(str9, conn);
             OleDbCommand comm10 = new OleDbCommand(str10, conn);
             OleDbCommand comm11 = new OleDbCommand(str11, conn);
             OleDbCommand comm12 = new OleDbCommand(str12, conn);
             OleDbCommand comm13 = new OleDbCommand(str13, conn);
-            OleDbDataReader reader1 = comm1.ExecuteReader();
+            //OleDbDataReader reader1 = comm1.ExecuteReader();
             OleDbDataReader reader2 = comm2.ExecuteReader();
             OleDbDataReader reader3 = comm3.ExecuteReader();
             OleDbDataReader reader4 = comm4.ExecuteReader();
             OleDbDataReader reader5 = comm5.ExecuteReader();
             OleDbDataReader reader6 = comm6.ExecuteReader();
-            OleDbDataReader reader7 = comm7.ExecuteReader();
+            //OleDbDataReader reader7 = comm7.ExecuteReader();
             OleDbDataReader reader8 = comm8.ExecuteReader();
-            OleDbDataReader reader9 = comm9.ExecuteReader();
+            //OleDbDataReader reader9 = comm9.ExecuteReader();
             OleDbDataReader reader10 = comm10.ExecuteReader();
             OleDbDataReader reader11 = comm11.ExecuteReader();
             OleDbDataReader reader12 = comm12.ExecuteReader();
             OleDbDataReader reader13 = comm13.ExecuteReader();
-            b1 = reader1.HasRows == true ? true : false;
+            //b1 = reader1.HasRows == true ? true : false;
             b2 = reader2.HasRows == true ? true : false;
             b3 = reader3.HasRows == true ? true : false;
             b4 = reader4.HasRows == true ? true : false;
             b5 = reader5.HasRows == true ? true : false;
             b6 = reader6.HasRows == true ? true : false;
-            b7 = reader7.HasRows == true ? true : false;
+            //b7 = reader7.HasRows == true ? true : false;
             b8 = reader8.HasRows == true ? true : false;
-            b9 = reader9.HasRows == true ? true : false;
+            //b9 = reader9.HasRows == true ? true : false;
             b10 = reader10.HasRows == true ? true : false;
             b11 = reader11.HasRows == true ? true : false;
             b12 = reader12.HasRows == true ? true : false;
             b13 = reader13.HasRows == true ? true : false;
-            if (b1 && b2 && b3 && b4 && b5 && b6 && b7 && b8 && b9 && b10 && b11 && b12 && b13)
+            if (b2 && b3 && b4 && b5 && b6 && b8 && b10 && b11 && b12 && b13)
             { A5Btn.Enabled = true; }
             else
             { A5Btn.Enabled = false; }
 
-            reader1.Dispose();
+            //reader1.Dispose();
             reader2.Dispose();
             reader3.Dispose();
             reader4.Dispose();
             reader5.Dispose();
             reader6.Dispose();
-            reader7.Dispose();
+            //reader7.Dispose();
             reader8.Dispose();
-            reader9.Dispose();
+            //reader9.Dispose();
             reader10.Dispose();
             reader11.Dispose();
             reader12.Dispose();
             reader13.Dispose();
-            comm1.Dispose();
+            //comm1.Dispose();
             comm2.Dispose();
             comm3.Dispose();
             comm4.Dispose();
             comm5.Dispose();
             comm6.Dispose();
-            comm7.Dispose();
+            //comm7.Dispose();
             comm8.Dispose();
-            comm9.Dispose();
+            //comm9.Dispose();
             comm10.Dispose();
             comm11.Dispose();
             comm12.Dispose();
