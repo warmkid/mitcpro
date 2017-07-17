@@ -65,56 +65,56 @@
             this.label31 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.textBox14 = new System.Windows.Forms.TextBox();
-            this.textBox15 = new System.Windows.Forms.TextBox();
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.textBox18 = new System.Windows.Forms.TextBox();
+            this.tb控制器3参数5 = new System.Windows.Forms.TextBox();
+            this.tb控制器3参数4 = new System.Windows.Forms.TextBox();
+            this.tb控制器3参数3 = new System.Windows.Forms.TextBox();
+            this.tb控制器3参数2 = new System.Windows.Forms.TextBox();
+            this.tb控制器3参数1 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
-            this.textBox25 = new System.Windows.Forms.TextBox();
-            this.textBox24 = new System.Windows.Forms.TextBox();
+            this.tb不良品数量 = new System.Windows.Forms.TextBox();
+            this.tb合格品数量 = new System.Windows.Forms.TextBox();
             this.label42 = new System.Windows.Forms.Label();
             this.label41 = new System.Windows.Forms.Label();
-            this.textBox27 = new System.Windows.Forms.TextBox();
+            this.tb审核人 = new System.Windows.Forms.TextBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
+            this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.label40 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox10 = new System.Windows.Forms.TextBox();
+            this.tb控制器1参数5 = new System.Windows.Forms.TextBox();
+            this.tb控制器1参数4 = new System.Windows.Forms.TextBox();
+            this.tb控制器2参数4 = new System.Windows.Forms.TextBox();
             this.label28 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.tb控制器1参数3 = new System.Windows.Forms.TextBox();
+            this.tb控制器2参数5 = new System.Windows.Forms.TextBox();
+            this.tb控制器2参数2 = new System.Windows.Forms.TextBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label45 = new System.Windows.Forms.Label();
             this.label46 = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.tb控制器2参数3 = new System.Windows.Forms.TextBox();
+            this.tb控制器2参数1 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.textBox19 = new System.Windows.Forms.TextBox();
-            this.textBox23 = new System.Windows.Forms.TextBox();
+            this.tb控制器4参数5 = new System.Windows.Forms.TextBox();
+            this.tb控制器4参数1 = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.tb控制器1参数2 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.tb控制器1参数1 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -123,17 +123,17 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.textBox21 = new System.Windows.Forms.TextBox();
+            this.tb控制器4参数3 = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox22 = new System.Windows.Forms.TextBox();
+            this.tb控制器4参数2 = new System.Windows.Forms.TextBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.textBox20 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.textBox26 = new System.Windows.Forms.TextBox();
-            this.textBox28 = new System.Windows.Forms.TextBox();
+            this.tb控制器4参数4 = new System.Windows.Forms.TextBox();
+            this.tb电压 = new System.Windows.Forms.TextBox();
+            this.tb组件代码 = new System.Windows.Forms.TextBox();
+            this.tb袋体代码 = new System.Windows.Forms.TextBox();
+            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
+            this.tb产品批号 = new System.Windows.Forms.TextBox();
+            this.tb产品代码 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -442,11 +442,11 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.textBox14);
-            this.groupBox4.Controls.Add(this.textBox15);
-            this.groupBox4.Controls.Add(this.textBox16);
-            this.groupBox4.Controls.Add(this.textBox17);
-            this.groupBox4.Controls.Add(this.textBox18);
+            this.groupBox4.Controls.Add(this.tb控制器3参数5);
+            this.groupBox4.Controls.Add(this.tb控制器3参数4);
+            this.groupBox4.Controls.Add(this.tb控制器3参数3);
+            this.groupBox4.Controls.Add(this.tb控制器3参数2);
+            this.groupBox4.Controls.Add(this.tb控制器3参数1);
             this.groupBox4.Controls.Add(this.label18);
             this.groupBox4.Controls.Add(this.label19);
             this.groupBox4.Controls.Add(this.label20);
@@ -459,50 +459,50 @@
             this.groupBox4.TabIndex = 81;
             this.groupBox4.TabStop = false;
             // 
-            // textBox14
+            // tb控制器3参数5
             // 
-            this.textBox14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox14.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox14.Location = new System.Drawing.Point(223, 75);
-            this.textBox14.Name = "textBox14";
-            this.textBox14.Size = new System.Drawing.Size(50, 26);
-            this.textBox14.TabIndex = 10;
+            this.tb控制器3参数5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器3参数5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器3参数5.Location = new System.Drawing.Point(223, 75);
+            this.tb控制器3参数5.Name = "tb控制器3参数5";
+            this.tb控制器3参数5.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器3参数5.TabIndex = 10;
             // 
-            // textBox15
+            // tb控制器3参数4
             // 
-            this.textBox15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox15.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox15.Location = new System.Drawing.Point(168, 75);
-            this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(50, 26);
-            this.textBox15.TabIndex = 9;
+            this.tb控制器3参数4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器3参数4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器3参数4.Location = new System.Drawing.Point(168, 75);
+            this.tb控制器3参数4.Name = "tb控制器3参数4";
+            this.tb控制器3参数4.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器3参数4.TabIndex = 9;
             // 
-            // textBox16
+            // tb控制器3参数3
             // 
-            this.textBox16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox16.Location = new System.Drawing.Point(114, 75);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(50, 26);
-            this.textBox16.TabIndex = 8;
+            this.tb控制器3参数3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器3参数3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器3参数3.Location = new System.Drawing.Point(114, 75);
+            this.tb控制器3参数3.Name = "tb控制器3参数3";
+            this.tb控制器3参数3.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器3参数3.TabIndex = 8;
             // 
-            // textBox17
+            // tb控制器3参数2
             // 
-            this.textBox17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox17.Location = new System.Drawing.Point(60, 75);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(50, 26);
-            this.textBox17.TabIndex = 7;
+            this.tb控制器3参数2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器3参数2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器3参数2.Location = new System.Drawing.Point(60, 75);
+            this.tb控制器3参数2.Name = "tb控制器3参数2";
+            this.tb控制器3参数2.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器3参数2.TabIndex = 7;
             // 
-            // textBox18
+            // tb控制器3参数1
             // 
-            this.textBox18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox18.Location = new System.Drawing.Point(5, 75);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(50, 26);
-            this.textBox18.TabIndex = 6;
+            this.tb控制器3参数1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器3参数1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器3参数1.Location = new System.Drawing.Point(5, 75);
+            this.tb控制器3参数1.Name = "tb控制器3参数1";
+            this.tb控制器3参数1.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器3参数1.TabIndex = 6;
             // 
             // label18
             // 
@@ -554,21 +554,21 @@
             this.label22.Text = "WELDING PRESSURE (bar)";
             this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox25
+            // tb不良品数量
             // 
-            this.textBox25.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox25.Location = new System.Drawing.Point(145, 55);
-            this.textBox25.Name = "textBox25";
-            this.textBox25.Size = new System.Drawing.Size(50, 26);
-            this.textBox25.TabIndex = 31;
+            this.tb不良品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb不良品数量.Location = new System.Drawing.Point(145, 55);
+            this.tb不良品数量.Name = "tb不良品数量";
+            this.tb不良品数量.Size = new System.Drawing.Size(50, 26);
+            this.tb不良品数量.TabIndex = 31;
             // 
-            // textBox24
+            // tb合格品数量
             // 
-            this.textBox24.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox24.Location = new System.Drawing.Point(145, 20);
-            this.textBox24.Name = "textBox24";
-            this.textBox24.Size = new System.Drawing.Size(50, 26);
-            this.textBox24.TabIndex = 30;
+            this.tb合格品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb合格品数量.Location = new System.Drawing.Point(145, 20);
+            this.tb合格品数量.Name = "tb合格品数量";
+            this.tb合格品数量.Size = new System.Drawing.Size(50, 26);
+            this.tb合格品数量.TabIndex = 30;
             // 
             // label42
             // 
@@ -590,18 +590,18 @@
             this.label41.TabIndex = 28;
             this.label41.Text = "只";
             // 
-            // textBox27
+            // tb审核人
             // 
-            this.textBox27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox27.Location = new System.Drawing.Point(87, 19);
-            this.textBox27.Name = "textBox27";
-            this.textBox27.Size = new System.Drawing.Size(100, 26);
-            this.textBox27.TabIndex = 30;
+            this.tb审核人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核人.Location = new System.Drawing.Point(87, 19);
+            this.tb审核人.Name = "tb审核人";
+            this.tb审核人.Size = new System.Drawing.Size(100, 26);
+            this.tb审核人.TabIndex = 30;
             // 
             // groupBox9
             // 
-            this.groupBox9.Controls.Add(this.dateTimePicker3);
-            this.groupBox9.Controls.Add(this.textBox27);
+            this.groupBox9.Controls.Add(this.dtp审核日期);
+            this.groupBox9.Controls.Add(this.tb审核人);
             this.groupBox9.Controls.Add(this.label37);
             this.groupBox9.Controls.Add(this.label38);
             this.groupBox9.Location = new System.Drawing.Point(1052, 354);
@@ -610,13 +610,13 @@
             this.groupBox9.TabIndex = 87;
             this.groupBox9.TabStop = false;
             // 
-            // dateTimePicker3
+            // dtp审核日期
             // 
-            this.dateTimePicker3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker3.Location = new System.Drawing.Point(87, 55);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker3.TabIndex = 31;
+            this.dtp审核日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp审核日期.Location = new System.Drawing.Point(87, 55);
+            this.dtp审核日期.Name = "dtp审核日期";
+            this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp审核日期.TabIndex = 31;
             // 
             // label37
             // 
@@ -640,8 +640,8 @@
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.textBox25);
-            this.groupBox8.Controls.Add(this.textBox24);
+            this.groupBox8.Controls.Add(this.tb不良品数量);
+            this.groupBox8.Controls.Add(this.tb合格品数量);
             this.groupBox8.Controls.Add(this.label42);
             this.groupBox8.Controls.Add(this.label41);
             this.groupBox8.Controls.Add(this.label40);
@@ -682,32 +682,32 @@
             this.label29.TabIndex = 11;
             this.label29.Text = "控制器4#";
             // 
-            // textBox8
+            // tb控制器1参数5
             // 
-            this.textBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox8.Location = new System.Drawing.Point(222, 75);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(50, 26);
-            this.textBox8.TabIndex = 10;
+            this.tb控制器1参数5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器1参数5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器1参数5.Location = new System.Drawing.Point(222, 75);
+            this.tb控制器1参数5.Name = "tb控制器1参数5";
+            this.tb控制器1参数5.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器1参数5.TabIndex = 10;
             // 
-            // textBox7
+            // tb控制器1参数4
             // 
-            this.textBox7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox7.Location = new System.Drawing.Point(167, 75);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(50, 26);
-            this.textBox7.TabIndex = 9;
+            this.tb控制器1参数4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器1参数4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器1参数4.Location = new System.Drawing.Point(167, 75);
+            this.tb控制器1参数4.Name = "tb控制器1参数4";
+            this.tb控制器1参数4.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器1参数4.TabIndex = 9;
             // 
-            // textBox10
+            // tb控制器2参数4
             // 
-            this.textBox10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox10.Location = new System.Drawing.Point(167, 75);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(50, 26);
-            this.textBox10.TabIndex = 9;
+            this.tb控制器2参数4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器2参数4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器2参数4.Location = new System.Drawing.Point(167, 75);
+            this.tb控制器2参数4.Name = "tb控制器2参数4";
+            this.tb控制器2参数4.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器2参数4.TabIndex = 9;
             // 
             // label28
             // 
@@ -719,32 +719,32 @@
             this.label28.Text = "WELDING PRESSURE (bar)";
             this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox6
+            // tb控制器1参数3
             // 
-            this.textBox6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox6.Location = new System.Drawing.Point(113, 75);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(50, 26);
-            this.textBox6.TabIndex = 8;
+            this.tb控制器1参数3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器1参数3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器1参数3.Location = new System.Drawing.Point(113, 75);
+            this.tb控制器1参数3.Name = "tb控制器1参数3";
+            this.tb控制器1参数3.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器1参数3.TabIndex = 8;
             // 
-            // textBox9
+            // tb控制器2参数5
             // 
-            this.textBox9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox9.Location = new System.Drawing.Point(221, 75);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(50, 26);
-            this.textBox9.TabIndex = 10;
+            this.tb控制器2参数5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器2参数5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器2参数5.Location = new System.Drawing.Point(221, 75);
+            this.tb控制器2参数5.Name = "tb控制器2参数5";
+            this.tb控制器2参数5.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器2参数5.TabIndex = 10;
             // 
-            // textBox12
+            // tb控制器2参数2
             // 
-            this.textBox12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox12.Location = new System.Drawing.Point(59, 75);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(50, 26);
-            this.textBox12.TabIndex = 7;
+            this.tb控制器2参数2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器2参数2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器2参数2.Location = new System.Drawing.Point(59, 75);
+            this.tb控制器2参数2.Name = "tb控制器2参数2";
+            this.tb控制器2参数2.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器2参数2.TabIndex = 7;
             // 
             // groupBox7
             // 
@@ -776,23 +776,23 @@
             this.label46.TabIndex = 18;
             this.label46.Text = "备注：参数确认栏内符合划√,不符合填写实际数值。";
             // 
-            // textBox11
+            // tb控制器2参数3
             // 
-            this.textBox11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox11.Location = new System.Drawing.Point(113, 75);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(50, 26);
-            this.textBox11.TabIndex = 8;
+            this.tb控制器2参数3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器2参数3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器2参数3.Location = new System.Drawing.Point(113, 75);
+            this.tb控制器2参数3.Name = "tb控制器2参数3";
+            this.tb控制器2参数3.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器2参数3.TabIndex = 8;
             // 
-            // textBox13
+            // tb控制器2参数1
             // 
-            this.textBox13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox13.Location = new System.Drawing.Point(4, 75);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(50, 26);
-            this.textBox13.TabIndex = 6;
+            this.tb控制器2参数1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器2参数1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器2参数1.Location = new System.Drawing.Point(4, 75);
+            this.tb控制器2参数1.Name = "tb控制器2参数1";
+            this.tb控制器2参数1.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器2参数1.TabIndex = 6;
             // 
             // label12
             // 
@@ -834,23 +834,23 @@
             this.label16.Text = "WELDING PRESSURE (bar)";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox19
+            // tb控制器4参数5
             // 
-            this.textBox19.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox19.Location = new System.Drawing.Point(222, 75);
-            this.textBox19.Name = "textBox19";
-            this.textBox19.Size = new System.Drawing.Size(50, 26);
-            this.textBox19.TabIndex = 21;
+            this.tb控制器4参数5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器4参数5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器4参数5.Location = new System.Drawing.Point(222, 75);
+            this.tb控制器4参数5.Name = "tb控制器4参数5";
+            this.tb控制器4参数5.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器4参数5.TabIndex = 21;
             // 
-            // textBox23
+            // tb控制器4参数1
             // 
-            this.textBox23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox23.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox23.Location = new System.Drawing.Point(4, 75);
-            this.textBox23.Name = "textBox23";
-            this.textBox23.Size = new System.Drawing.Size(50, 26);
-            this.textBox23.TabIndex = 17;
+            this.tb控制器4参数1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器4参数1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器4参数1.Location = new System.Drawing.Point(4, 75);
+            this.tb控制器4参数1.Name = "tb控制器4参数1";
+            this.tb控制器4参数1.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器4参数1.TabIndex = 17;
             // 
             // label27
             // 
@@ -912,22 +912,22 @@
             this.label26.Text = "COOLING  TEMP  (°C)";
             this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // textBox5
+            // tb控制器1参数2
             // 
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox5.Location = new System.Drawing.Point(59, 75);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(50, 26);
-            this.textBox5.TabIndex = 7;
+            this.tb控制器1参数2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器1参数2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器1参数2.Location = new System.Drawing.Point(59, 75);
+            this.tb控制器1参数2.Name = "tb控制器1参数2";
+            this.tb控制器1参数2.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器1参数2.TabIndex = 7;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.textBox8);
-            this.groupBox2.Controls.Add(this.textBox7);
-            this.groupBox2.Controls.Add(this.textBox6);
-            this.groupBox2.Controls.Add(this.textBox5);
-            this.groupBox2.Controls.Add(this.textBox4);
+            this.groupBox2.Controls.Add(this.tb控制器1参数5);
+            this.groupBox2.Controls.Add(this.tb控制器1参数4);
+            this.groupBox2.Controls.Add(this.tb控制器1参数3);
+            this.groupBox2.Controls.Add(this.tb控制器1参数2);
+            this.groupBox2.Controls.Add(this.tb控制器1参数1);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.label9);
@@ -936,18 +936,18 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(83, 118);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(280, 113);
+            this.groupBox2.Size = new System.Drawing.Size(278, 113);
             this.groupBox2.TabIndex = 79;
             this.groupBox2.TabStop = false;
             // 
-            // textBox4
+            // tb控制器1参数1
             // 
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox4.Location = new System.Drawing.Point(4, 75);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(50, 26);
-            this.textBox4.TabIndex = 6;
+            this.tb控制器1参数1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器1参数1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器1参数1.Location = new System.Drawing.Point(4, 75);
+            this.tb控制器1参数1.Name = "tb控制器1参数1";
+            this.tb控制器1参数1.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器1参数1.TabIndex = 6;
             // 
             // label11
             // 
@@ -1030,22 +1030,22 @@
             this.groupBox1.TabIndex = 78;
             this.groupBox1.TabStop = false;
             // 
-            // textBox21
+            // tb控制器4参数3
             // 
-            this.textBox21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox21.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox21.Location = new System.Drawing.Point(113, 75);
-            this.textBox21.Name = "textBox21";
-            this.textBox21.Size = new System.Drawing.Size(50, 26);
-            this.textBox21.TabIndex = 19;
+            this.tb控制器4参数3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器4参数3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器4参数3.Location = new System.Drawing.Point(113, 75);
+            this.tb控制器4参数3.Name = "tb控制器4参数3";
+            this.tb控制器4参数3.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器4参数3.TabIndex = 19;
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.textBox9);
-            this.groupBox3.Controls.Add(this.textBox10);
-            this.groupBox3.Controls.Add(this.textBox11);
-            this.groupBox3.Controls.Add(this.textBox12);
-            this.groupBox3.Controls.Add(this.textBox13);
+            this.groupBox3.Controls.Add(this.tb控制器2参数5);
+            this.groupBox3.Controls.Add(this.tb控制器2参数4);
+            this.groupBox3.Controls.Add(this.tb控制器2参数3);
+            this.groupBox3.Controls.Add(this.tb控制器2参数2);
+            this.groupBox3.Controls.Add(this.tb控制器2参数1);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.label13);
             this.groupBox3.Controls.Add(this.label14);
@@ -1058,22 +1058,22 @@
             this.groupBox3.TabIndex = 80;
             this.groupBox3.TabStop = false;
             // 
-            // textBox22
+            // tb控制器4参数2
             // 
-            this.textBox22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox22.Location = new System.Drawing.Point(59, 75);
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(50, 26);
-            this.textBox22.TabIndex = 18;
+            this.tb控制器4参数2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器4参数2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器4参数2.Location = new System.Drawing.Point(59, 75);
+            this.tb控制器4参数2.Name = "tb控制器4参数2";
+            this.tb控制器4参数2.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器4参数2.TabIndex = 18;
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.textBox19);
-            this.groupBox5.Controls.Add(this.textBox20);
-            this.groupBox5.Controls.Add(this.textBox21);
-            this.groupBox5.Controls.Add(this.textBox22);
-            this.groupBox5.Controls.Add(this.textBox23);
+            this.groupBox5.Controls.Add(this.tb控制器4参数5);
+            this.groupBox5.Controls.Add(this.tb控制器4参数4);
+            this.groupBox5.Controls.Add(this.tb控制器4参数3);
+            this.groupBox5.Controls.Add(this.tb控制器4参数2);
+            this.groupBox5.Controls.Add(this.tb控制器4参数1);
             this.groupBox5.Controls.Add(this.label24);
             this.groupBox5.Controls.Add(this.label25);
             this.groupBox5.Controls.Add(this.label26);
@@ -1086,62 +1086,62 @@
             this.groupBox5.TabIndex = 82;
             this.groupBox5.TabStop = false;
             // 
-            // textBox20
+            // tb控制器4参数4
             // 
-            this.textBox20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox20.Location = new System.Drawing.Point(167, 75);
-            this.textBox20.Name = "textBox20";
-            this.textBox20.Size = new System.Drawing.Size(50, 26);
-            this.textBox20.TabIndex = 20;
+            this.tb控制器4参数4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb控制器4参数4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb控制器4参数4.Location = new System.Drawing.Point(167, 75);
+            this.tb控制器4参数4.Name = "tb控制器4参数4";
+            this.tb控制器4参数4.Size = new System.Drawing.Size(50, 26);
+            this.tb控制器4参数4.TabIndex = 20;
             // 
-            // textBox1
+            // tb电压
             // 
-            this.textBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(605, 83);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 26);
-            this.textBox1.TabIndex = 101;
+            this.tb电压.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb电压.Location = new System.Drawing.Point(605, 83);
+            this.tb电压.Name = "tb电压";
+            this.tb电压.Size = new System.Drawing.Size(100, 26);
+            this.tb电压.TabIndex = 101;
             // 
-            // textBox2
+            // tb组件代码
             // 
-            this.textBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(360, 81);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 26);
-            this.textBox2.TabIndex = 100;
+            this.tb组件代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb组件代码.Location = new System.Drawing.Point(360, 81);
+            this.tb组件代码.Name = "tb组件代码";
+            this.tb组件代码.Size = new System.Drawing.Size(100, 26);
+            this.tb组件代码.TabIndex = 100;
             // 
-            // textBox3
+            // tb袋体代码
             // 
-            this.textBox3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox3.Location = new System.Drawing.Point(104, 81);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 26);
-            this.textBox3.TabIndex = 99;
+            this.tb袋体代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb袋体代码.Location = new System.Drawing.Point(104, 81);
+            this.tb袋体代码.Name = "tb袋体代码";
+            this.tb袋体代码.Size = new System.Drawing.Size(100, 26);
+            this.tb袋体代码.TabIndex = 99;
             // 
-            // dateTimePicker1
+            // dtp生产日期
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(606, 49);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 98;
+            this.dtp生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp生产日期.Location = new System.Drawing.Point(606, 49);
+            this.dtp生产日期.Name = "dtp生产日期";
+            this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp生产日期.TabIndex = 98;
             // 
-            // textBox26
+            // tb产品批号
             // 
-            this.textBox26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox26.Location = new System.Drawing.Point(360, 49);
-            this.textBox26.Name = "textBox26";
-            this.textBox26.Size = new System.Drawing.Size(100, 26);
-            this.textBox26.TabIndex = 97;
+            this.tb产品批号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品批号.Location = new System.Drawing.Point(360, 49);
+            this.tb产品批号.Name = "tb产品批号";
+            this.tb产品批号.Size = new System.Drawing.Size(100, 26);
+            this.tb产品批号.TabIndex = 97;
             // 
-            // textBox28
+            // tb产品代码
             // 
-            this.textBox28.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox28.Location = new System.Drawing.Point(105, 49);
-            this.textBox28.Name = "textBox28";
-            this.textBox28.Size = new System.Drawing.Size(100, 26);
-            this.textBox28.TabIndex = 96;
+            this.tb产品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品代码.Location = new System.Drawing.Point(105, 49);
+            this.tb产品代码.Name = "tb产品代码";
+            this.tb产品代码.Size = new System.Drawing.Size(100, 26);
+            this.tb产品代码.TabIndex = 96;
             // 
             // label2
             // 
@@ -1218,12 +1218,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1368, 491);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox26);
-            this.Controls.Add(this.textBox28);
+            this.Controls.Add(this.tb电压);
+            this.Controls.Add(this.tb组件代码);
+            this.Controls.Add(this.tb袋体代码);
+            this.Controls.Add(this.dtp生产日期);
+            this.Controls.Add(this.tb产品批号);
+            this.Controls.Add(this.tb产品代码);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
@@ -1306,56 +1306,56 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.TextBox textBox14;
-        private System.Windows.Forms.TextBox textBox15;
-        private System.Windows.Forms.TextBox textBox16;
-        private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox textBox18;
+        private System.Windows.Forms.TextBox tb控制器3参数5;
+        private System.Windows.Forms.TextBox tb控制器3参数4;
+        private System.Windows.Forms.TextBox tb控制器3参数3;
+        private System.Windows.Forms.TextBox tb控制器3参数2;
+        private System.Windows.Forms.TextBox tb控制器3参数1;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox textBox25;
-        private System.Windows.Forms.TextBox textBox24;
+        private System.Windows.Forms.TextBox tb不良品数量;
+        private System.Windows.Forms.TextBox tb合格品数量;
         private System.Windows.Forms.Label label42;
         private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.TextBox textBox27;
+        private System.Windows.Forms.TextBox tb审核人;
         private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
+        private System.Windows.Forms.DateTimePicker dtp审核日期;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox tb控制器1参数5;
+        private System.Windows.Forms.TextBox tb控制器1参数4;
+        private System.Windows.Forms.TextBox tb控制器2参数4;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox9;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox tb控制器1参数3;
+        private System.Windows.Forms.TextBox tb控制器2参数5;
+        private System.Windows.Forms.TextBox tb控制器2参数2;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label45;
         private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox tb控制器2参数3;
+        private System.Windows.Forms.TextBox tb控制器2参数1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox textBox19;
-        private System.Windows.Forms.TextBox textBox23;
+        private System.Windows.Forms.TextBox tb控制器4参数5;
+        private System.Windows.Forms.TextBox tb控制器4参数1;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox tb控制器1参数2;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tb控制器1参数1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label9;
@@ -1364,17 +1364,17 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox textBox21;
+        private System.Windows.Forms.TextBox tb控制器4参数3;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox22;
+        private System.Windows.Forms.TextBox tb控制器4参数2;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.TextBox textBox20;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox textBox26;
-        private System.Windows.Forms.TextBox textBox28;
+        private System.Windows.Forms.TextBox tb控制器4参数4;
+        private System.Windows.Forms.TextBox tb电压;
+        private System.Windows.Forms.TextBox tb组件代码;
+        private System.Windows.Forms.TextBox tb袋体代码;
+        private System.Windows.Forms.DateTimePicker dtp生产日期;
+        private System.Windows.Forms.TextBox tb产品批号;
+        private System.Windows.Forms.TextBox tb产品代码;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

@@ -30,26 +30,26 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox22 = new System.Windows.Forms.TextBox();
-            this.textBox23 = new System.Windows.Forms.TextBox();
-            this.textBox24 = new System.Windows.Forms.TextBox();
-            this.textBox26 = new System.Windows.Forms.TextBox();
+            this.tb焊线1参数5 = new System.Windows.Forms.TextBox();
+            this.tb焊线1参数4 = new System.Windows.Forms.TextBox();
+            this.tb焊线1参数3 = new System.Windows.Forms.TextBox();
+            this.tb焊线1参数1 = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.textBox25 = new System.Windows.Forms.TextBox();
+            this.tb焊线1参数2 = new System.Windows.Forms.TextBox();
             this.label54 = new System.Windows.Forms.Label();
             this.label55 = new System.Windows.Forms.Label();
             this.label57 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.textBox12 = new System.Windows.Forms.TextBox();
+            this.tb不良品数量 = new System.Windows.Forms.TextBox();
+            this.tb合格品数量 = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
+            this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.label28 = new System.Windows.Forms.Label();
             this.label29 = new System.Windows.Forms.Label();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.textBox13 = new System.Windows.Forms.TextBox();
+            this.tb审核人 = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label24 = new System.Windows.Forms.Label();
@@ -58,35 +58,6 @@
             this.label12 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.textBox18 = new System.Windows.Forms.TextBox();
-            this.textBox17 = new System.Windows.Forms.TextBox();
-            this.textBox16 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label59 = new System.Windows.Forms.Label();
-            this.label60 = new System.Windows.Forms.Label();
-            this.label53 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -104,6 +75,35 @@
             this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
+            this.tb产品批号 = new System.Windows.Forms.TextBox();
+            this.tb产品代码 = new System.Windows.Forms.TextBox();
+            this.tb袋体代码 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label59 = new System.Windows.Forms.Label();
+            this.label60 = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.tb焊线2参数5 = new System.Windows.Forms.TextBox();
+            this.tb焊线2参数4 = new System.Windows.Forms.TextBox();
+            this.tb焊线2参数3 = new System.Windows.Forms.TextBox();
+            this.tb焊线2参数2 = new System.Windows.Forms.TextBox();
+            this.tb焊线2参数1 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -134,41 +134,41 @@
             this.label2.TabIndex = 42;
             this.label2.Text = "袋体代码:";
             // 
-            // textBox22
+            // tb焊线1参数5
             // 
-            this.textBox22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox22.Location = new System.Drawing.Point(285, 78);
-            this.textBox22.Name = "textBox22";
-            this.textBox22.Size = new System.Drawing.Size(60, 26);
-            this.textBox22.TabIndex = 34;
+            this.tb焊线1参数5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线1参数5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线1参数5.Location = new System.Drawing.Point(285, 78);
+            this.tb焊线1参数5.Name = "tb焊线1参数5";
+            this.tb焊线1参数5.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线1参数5.TabIndex = 34;
             // 
-            // textBox23
+            // tb焊线1参数4
             // 
-            this.textBox23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox23.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox23.Location = new System.Drawing.Point(215, 78);
-            this.textBox23.Name = "textBox23";
-            this.textBox23.Size = new System.Drawing.Size(60, 26);
-            this.textBox23.TabIndex = 33;
+            this.tb焊线1参数4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线1参数4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线1参数4.Location = new System.Drawing.Point(215, 78);
+            this.tb焊线1参数4.Name = "tb焊线1参数4";
+            this.tb焊线1参数4.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线1参数4.TabIndex = 33;
             // 
-            // textBox24
+            // tb焊线1参数3
             // 
-            this.textBox24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox24.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox24.Location = new System.Drawing.Point(145, 78);
-            this.textBox24.Name = "textBox24";
-            this.textBox24.Size = new System.Drawing.Size(60, 26);
-            this.textBox24.TabIndex = 32;
+            this.tb焊线1参数3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线1参数3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线1参数3.Location = new System.Drawing.Point(145, 78);
+            this.tb焊线1参数3.Name = "tb焊线1参数3";
+            this.tb焊线1参数3.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线1参数3.TabIndex = 32;
             // 
-            // textBox26
+            // tb焊线1参数1
             // 
-            this.textBox26.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox26.Location = new System.Drawing.Point(5, 78);
-            this.textBox26.Name = "textBox26";
-            this.textBox26.Size = new System.Drawing.Size(60, 26);
-            this.textBox26.TabIndex = 30;
+            this.tb焊线1参数1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线1参数1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线1参数1.Location = new System.Drawing.Point(5, 78);
+            this.tb焊线1参数1.Name = "tb焊线1参数1";
+            this.tb焊线1参数1.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线1参数1.TabIndex = 30;
             // 
             // label8
             // 
@@ -180,14 +180,14 @@
             this.label8.TabIndex = 27;
             this.label8.Text = "TCR";
             // 
-            // textBox25
+            // tb焊线1参数2
             // 
-            this.textBox25.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox25.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox25.Location = new System.Drawing.Point(75, 78);
-            this.textBox25.Name = "textBox25";
-            this.textBox25.Size = new System.Drawing.Size(60, 26);
-            this.textBox25.TabIndex = 31;
+            this.tb焊线1参数2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线1参数2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线1参数2.Location = new System.Drawing.Point(75, 78);
+            this.tb焊线1参数2.Name = "tb焊线1参数2";
+            this.tb焊线1参数2.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线1参数2.TabIndex = 31;
             // 
             // label54
             // 
@@ -249,21 +249,21 @@
             this.label23.TabIndex = 15;
             this.label23.Text = "外观检查：合格划√，不合格写数量，并在备注中写不良项。";
             // 
-            // textBox11
+            // tb不良品数量
             // 
-            this.textBox11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox11.Location = new System.Drawing.Point(122, 56);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(50, 26);
-            this.textBox11.TabIndex = 23;
+            this.tb不良品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb不良品数量.Location = new System.Drawing.Point(122, 56);
+            this.tb不良品数量.Name = "tb不良品数量";
+            this.tb不良品数量.Size = new System.Drawing.Size(50, 26);
+            this.tb不良品数量.TabIndex = 23;
             // 
-            // textBox12
+            // tb合格品数量
             // 
-            this.textBox12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox12.Location = new System.Drawing.Point(122, 22);
-            this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(50, 26);
-            this.textBox12.TabIndex = 22;
+            this.tb合格品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb合格品数量.Location = new System.Drawing.Point(122, 22);
+            this.tb合格品数量.Name = "tb合格品数量";
+            this.tb合格品数量.Size = new System.Drawing.Size(50, 26);
+            this.tb合格品数量.TabIndex = 22;
             // 
             // label27
             // 
@@ -275,13 +275,13 @@
             this.label27.TabIndex = 21;
             this.label27.Text = "不良品数量：";
             // 
-            // dateTimePicker3
+            // dtp审核日期
             // 
-            this.dateTimePicker3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker3.Location = new System.Drawing.Point(81, 53);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker3.TabIndex = 27;
+            this.dtp审核日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp审核日期.Location = new System.Drawing.Point(81, 53);
+            this.dtp审核日期.Name = "dtp审核日期";
+            this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp审核日期.TabIndex = 27;
             // 
             // label28
             // 
@@ -297,17 +297,17 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(3, 58);
+            this.label29.Location = new System.Drawing.Point(12, 58);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(80, 16);
+            this.label29.Size = new System.Drawing.Size(48, 16);
             this.label29.TabIndex = 26;
-            this.label29.Text = "审核日期:";
+            this.label29.Text = "日期:";
             // 
             // groupBox8
             // 
-            this.groupBox8.Controls.Add(this.dateTimePicker3);
+            this.groupBox8.Controls.Add(this.dtp审核日期);
             this.groupBox8.Controls.Add(this.label29);
-            this.groupBox8.Controls.Add(this.textBox13);
+            this.groupBox8.Controls.Add(this.tb审核人);
             this.groupBox8.Controls.Add(this.label30);
             this.groupBox8.Location = new System.Drawing.Point(919, 354);
             this.groupBox8.Name = "groupBox8";
@@ -315,13 +315,13 @@
             this.groupBox8.TabIndex = 58;
             this.groupBox8.TabStop = false;
             // 
-            // textBox13
+            // tb审核人
             // 
-            this.textBox13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox13.Location = new System.Drawing.Point(80, 22);
-            this.textBox13.Name = "textBox13";
-            this.textBox13.Size = new System.Drawing.Size(100, 26);
-            this.textBox13.TabIndex = 25;
+            this.tb审核人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核人.Location = new System.Drawing.Point(80, 22);
+            this.tb审核人.Name = "tb审核人";
+            this.tb审核人.Size = new System.Drawing.Size(100, 26);
+            this.tb审核人.TabIndex = 25;
             // 
             // label30
             // 
@@ -337,8 +337,8 @@
             // 
             this.groupBox7.Controls.Add(this.label25);
             this.groupBox7.Controls.Add(this.label26);
-            this.groupBox7.Controls.Add(this.textBox11);
-            this.groupBox7.Controls.Add(this.textBox12);
+            this.groupBox7.Controls.Add(this.tb不良品数量);
+            this.groupBox7.Controls.Add(this.tb合格品数量);
             this.groupBox7.Controls.Add(this.label27);
             this.groupBox7.Controls.Add(this.label28);
             this.groupBox7.Location = new System.Drawing.Point(692, 354);
@@ -426,306 +426,6 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1183, 150);
             this.dataGridView1.TabIndex = 50;
-            // 
-            // dateTimePicker1
-            // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(762, 52);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 49;
-            // 
-            // textBox18
-            // 
-            this.textBox18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox18.Location = new System.Drawing.Point(556, 52);
-            this.textBox18.Name = "textBox18";
-            this.textBox18.Size = new System.Drawing.Size(100, 26);
-            this.textBox18.TabIndex = 48;
-            // 
-            // textBox17
-            // 
-            this.textBox17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox17.Location = new System.Drawing.Point(338, 52);
-            this.textBox17.Name = "textBox17";
-            this.textBox17.Size = new System.Drawing.Size(100, 26);
-            this.textBox17.TabIndex = 47;
-            // 
-            // textBox16
-            // 
-            this.textBox16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox16.Location = new System.Drawing.Point(111, 52);
-            this.textBox16.Name = "textBox16";
-            this.textBox16.Size = new System.Drawing.Size(100, 26);
-            this.textBox16.TabIndex = 46;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(682, 56);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 16);
-            this.label5.TabIndex = 45;
-            this.label5.Text = "生产日期:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(258, 56);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(80, 16);
-            this.label3.TabIndex = 43;
-            this.label3.Text = "产品代码:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(479, 56);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 16);
-            this.label4.TabIndex = 44;
-            this.label4.Text = "产品批号:";
-            // 
-            // label51
-            // 
-            this.label51.AutoSize = true;
-            this.label51.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label51.Location = new System.Drawing.Point(66, 82);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(40, 16);
-            this.label51.TabIndex = 5;
-            this.label51.Text = "设定";
-            // 
-            // label52
-            // 
-            this.label52.AutoSize = true;
-            this.label52.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label52.Location = new System.Drawing.Point(51, 42);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(72, 16);
-            this.label52.TabIndex = 4;
-            this.label52.Text = "生产时间";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.textBox22);
-            this.groupBox2.Controls.Add(this.textBox23);
-            this.groupBox2.Controls.Add(this.textBox24);
-            this.groupBox2.Controls.Add(this.textBox25);
-            this.groupBox2.Controls.Add(this.textBox26);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.label54);
-            this.groupBox2.Controls.Add(this.label55);
-            this.groupBox2.Controls.Add(this.label57);
-            this.groupBox2.Controls.Add(this.label59);
-            this.groupBox2.Controls.Add(this.label60);
-            this.groupBox2.Location = new System.Drawing.Point(157, 85);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(352, 113);
-            this.groupBox2.TabIndex = 52;
-            this.groupBox2.TabStop = false;
-            // 
-            // label59
-            // 
-            this.label59.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label59.Location = new System.Drawing.Point(4, 32);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(62, 41);
-            this.label59.TabIndex = 21;
-            this.label59.Text = "WELDING PRESSURE(bar)";
-            this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label60
-            // 
-            this.label60.AutoSize = true;
-            this.label60.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label60.Location = new System.Drawing.Point(107, 10);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(136, 16);
-            this.label60.TabIndex = 20;
-            this.label60.Text = "焊线 1 号 Line 1";
-            // 
-            // label53
-            // 
-            this.label53.AutoSize = true;
-            this.label53.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label53.Location = new System.Drawing.Point(2, 63);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(40, 16);
-            this.label53.TabIndex = 3;
-            this.label53.Text = "序号";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label17);
-            this.groupBox4.Controls.Add(this.label9);
-            this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.label12);
-            this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Location = new System.Drawing.Point(857, 85);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(352, 113);
-            this.groupBox4.TabIndex = 53;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
-            // 
-            // label9
-            // 
-            this.label9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(229, 50);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(57, 23);
-            this.label9.TabIndex = 11;
-            this.label9.Text = "操作人";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label51);
-            this.groupBox1.Controls.Add(this.label52);
-            this.groupBox1.Controls.Add(this.label53);
-            this.groupBox1.Location = new System.Drawing.Point(26, 85);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(133, 113);
-            this.groupBox1.TabIndex = 51;
-            this.groupBox1.TabStop = false;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.textBox1);
-            this.groupBox3.Controls.Add(this.textBox2);
-            this.groupBox3.Controls.Add(this.textBox3);
-            this.groupBox3.Controls.Add(this.textBox4);
-            this.groupBox3.Controls.Add(this.textBox5);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.label14);
-            this.groupBox3.Controls.Add(this.label15);
-            this.groupBox3.Controls.Add(this.label16);
-            this.groupBox3.Location = new System.Drawing.Point(507, 85);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(352, 113);
-            this.groupBox3.TabIndex = 59;
-            this.groupBox3.TabStop = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(285, 78);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(60, 26);
-            this.textBox1.TabIndex = 34;
-            // 
-            // textBox2
-            // 
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(215, 78);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(60, 26);
-            this.textBox2.TabIndex = 33;
-            // 
-            // textBox3
-            // 
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox3.Location = new System.Drawing.Point(145, 78);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(60, 26);
-            this.textBox3.TabIndex = 32;
-            // 
-            // textBox4
-            // 
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox4.Location = new System.Drawing.Point(75, 78);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(60, 26);
-            this.textBox4.TabIndex = 31;
-            // 
-            // textBox5
-            // 
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox5.Location = new System.Drawing.Point(5, 78);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(60, 26);
-            this.textBox5.TabIndex = 30;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(295, 45);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(35, 16);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "TCR";
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(218, 32);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(54, 41);
-            this.label7.TabIndex = 26;
-            this.label7.Text = "COOLING  TEMP  (°C)";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label10
-            // 
-            this.label10.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(148, 32);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(54, 41);
-            this.label10.TabIndex = 25;
-            this.label10.Text = "SEALING TIME (s)";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label14
-            // 
-            this.label14.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(79, 32);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(54, 41);
-            this.label14.TabIndex = 23;
-            this.label14.Text = "SEALING  TEMP  (°C)";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label15
-            // 
-            this.label15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label15.Location = new System.Drawing.Point(4, 32);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(62, 41);
-            this.label15.TabIndex = 21;
-            this.label15.Text = "WELDING PRESSURE(bar)";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(107, 10);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(136, 16);
-            this.label16.TabIndex = 20;
-            this.label16.Text = "焊线 2 号 Line 2";
-            // 
-            // label17
-            // 
-            this.label17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(290, 51);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(57, 23);
-            this.label17.TabIndex = 12;
-            this.label17.Text = "备注";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // Column1
             // 
@@ -829,6 +529,306 @@
             this.Column17.Name = "Column17";
             this.Column17.Width = 60;
             // 
+            // dtp生产日期
+            // 
+            this.dtp生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp生产日期.Location = new System.Drawing.Point(762, 52);
+            this.dtp生产日期.Name = "dtp生产日期";
+            this.dtp生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp生产日期.TabIndex = 49;
+            // 
+            // tb产品批号
+            // 
+            this.tb产品批号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品批号.Location = new System.Drawing.Point(556, 52);
+            this.tb产品批号.Name = "tb产品批号";
+            this.tb产品批号.Size = new System.Drawing.Size(100, 26);
+            this.tb产品批号.TabIndex = 48;
+            // 
+            // tb产品代码
+            // 
+            this.tb产品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品代码.Location = new System.Drawing.Point(338, 52);
+            this.tb产品代码.Name = "tb产品代码";
+            this.tb产品代码.Size = new System.Drawing.Size(100, 26);
+            this.tb产品代码.TabIndex = 47;
+            // 
+            // tb袋体代码
+            // 
+            this.tb袋体代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb袋体代码.Location = new System.Drawing.Point(111, 52);
+            this.tb袋体代码.Name = "tb袋体代码";
+            this.tb袋体代码.Size = new System.Drawing.Size(100, 26);
+            this.tb袋体代码.TabIndex = 46;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(682, 56);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(80, 16);
+            this.label5.TabIndex = 45;
+            this.label5.Text = "生产日期:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(258, 56);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(80, 16);
+            this.label3.TabIndex = 43;
+            this.label3.Text = "产品代码:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(479, 56);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 16);
+            this.label4.TabIndex = 44;
+            this.label4.Text = "产品批号:";
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label51.Location = new System.Drawing.Point(66, 82);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(40, 16);
+            this.label51.TabIndex = 5;
+            this.label51.Text = "设定";
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label52.Location = new System.Drawing.Point(51, 42);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(72, 16);
+            this.label52.TabIndex = 4;
+            this.label52.Text = "生产时间";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.tb焊线1参数5);
+            this.groupBox2.Controls.Add(this.tb焊线1参数4);
+            this.groupBox2.Controls.Add(this.tb焊线1参数3);
+            this.groupBox2.Controls.Add(this.tb焊线1参数2);
+            this.groupBox2.Controls.Add(this.tb焊线1参数1);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.label54);
+            this.groupBox2.Controls.Add(this.label55);
+            this.groupBox2.Controls.Add(this.label57);
+            this.groupBox2.Controls.Add(this.label59);
+            this.groupBox2.Controls.Add(this.label60);
+            this.groupBox2.Location = new System.Drawing.Point(157, 85);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(352, 113);
+            this.groupBox2.TabIndex = 52;
+            this.groupBox2.TabStop = false;
+            // 
+            // label59
+            // 
+            this.label59.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label59.Location = new System.Drawing.Point(4, 32);
+            this.label59.Name = "label59";
+            this.label59.Size = new System.Drawing.Size(62, 41);
+            this.label59.TabIndex = 21;
+            this.label59.Text = "WELDING PRESSURE(bar)";
+            this.label59.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label60
+            // 
+            this.label60.AutoSize = true;
+            this.label60.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label60.Location = new System.Drawing.Point(107, 10);
+            this.label60.Name = "label60";
+            this.label60.Size = new System.Drawing.Size(136, 16);
+            this.label60.TabIndex = 20;
+            this.label60.Text = "焊线 1 号 Line 1";
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label53.Location = new System.Drawing.Point(2, 63);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(40, 16);
+            this.label53.TabIndex = 3;
+            this.label53.Text = "序号";
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label17);
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.label12);
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Location = new System.Drawing.Point(857, 85);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(352, 113);
+            this.groupBox4.TabIndex = 53;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Enter += new System.EventHandler(this.groupBox4_Enter);
+            // 
+            // label17
+            // 
+            this.label17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label17.Location = new System.Drawing.Point(290, 51);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(57, 23);
+            this.label17.TabIndex = 12;
+            this.label17.Text = "备注";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label9
+            // 
+            this.label9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Location = new System.Drawing.Point(229, 50);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(57, 23);
+            this.label9.TabIndex = 11;
+            this.label9.Text = "操作人";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.label51);
+            this.groupBox1.Controls.Add(this.label52);
+            this.groupBox1.Controls.Add(this.label53);
+            this.groupBox1.Location = new System.Drawing.Point(26, 85);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(133, 113);
+            this.groupBox1.TabIndex = 51;
+            this.groupBox1.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.tb焊线2参数5);
+            this.groupBox3.Controls.Add(this.tb焊线2参数4);
+            this.groupBox3.Controls.Add(this.tb焊线2参数3);
+            this.groupBox3.Controls.Add(this.tb焊线2参数2);
+            this.groupBox3.Controls.Add(this.tb焊线2参数1);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.label7);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.label14);
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Location = new System.Drawing.Point(507, 85);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(352, 113);
+            this.groupBox3.TabIndex = 59;
+            this.groupBox3.TabStop = false;
+            // 
+            // tb焊线2参数5
+            // 
+            this.tb焊线2参数5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线2参数5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线2参数5.Location = new System.Drawing.Point(285, 78);
+            this.tb焊线2参数5.Name = "tb焊线2参数5";
+            this.tb焊线2参数5.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线2参数5.TabIndex = 34;
+            // 
+            // tb焊线2参数4
+            // 
+            this.tb焊线2参数4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线2参数4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线2参数4.Location = new System.Drawing.Point(215, 78);
+            this.tb焊线2参数4.Name = "tb焊线2参数4";
+            this.tb焊线2参数4.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线2参数4.TabIndex = 33;
+            // 
+            // tb焊线2参数3
+            // 
+            this.tb焊线2参数3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线2参数3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线2参数3.Location = new System.Drawing.Point(145, 78);
+            this.tb焊线2参数3.Name = "tb焊线2参数3";
+            this.tb焊线2参数3.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线2参数3.TabIndex = 32;
+            // 
+            // tb焊线2参数2
+            // 
+            this.tb焊线2参数2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线2参数2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线2参数2.Location = new System.Drawing.Point(75, 78);
+            this.tb焊线2参数2.Name = "tb焊线2参数2";
+            this.tb焊线2参数2.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线2参数2.TabIndex = 31;
+            // 
+            // tb焊线2参数1
+            // 
+            this.tb焊线2参数1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tb焊线2参数1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb焊线2参数1.Location = new System.Drawing.Point(5, 78);
+            this.tb焊线2参数1.Name = "tb焊线2参数1";
+            this.tb焊线2参数1.Size = new System.Drawing.Size(60, 26);
+            this.tb焊线2参数1.TabIndex = 30;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(295, 45);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(35, 16);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "TCR";
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(218, 32);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(54, 41);
+            this.label7.TabIndex = 26;
+            this.label7.Text = "COOLING  TEMP  (°C)";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(148, 32);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(54, 41);
+            this.label10.TabIndex = 25;
+            this.label10.Text = "SEALING TIME (s)";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label14
+            // 
+            this.label14.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label14.Location = new System.Drawing.Point(79, 32);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(54, 41);
+            this.label14.TabIndex = 23;
+            this.label14.Text = "SEALING  TEMP  (°C)";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label15
+            // 
+            this.label15.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label15.Location = new System.Drawing.Point(4, 32);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(62, 41);
+            this.label15.TabIndex = 21;
+            this.label15.Text = "WELDING PRESSURE(bar)";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label16.Location = new System.Drawing.Point(107, 10);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(136, 16);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "焊线 2 号 Line 2";
+            // 
             // BTVRunningRecordRHJseal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -840,10 +840,10 @@
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox18);
-            this.Controls.Add(this.textBox17);
-            this.Controls.Add(this.textBox16);
+            this.Controls.Add(this.dtp生产日期);
+            this.Controls.Add(this.tb产品批号);
+            this.Controls.Add(this.tb产品代码);
+            this.Controls.Add(this.tb袋体代码);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
@@ -877,26 +877,26 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox22;
-        private System.Windows.Forms.TextBox textBox23;
-        private System.Windows.Forms.TextBox textBox24;
-        private System.Windows.Forms.TextBox textBox26;
+        private System.Windows.Forms.TextBox tb焊线1参数5;
+        private System.Windows.Forms.TextBox tb焊线1参数4;
+        private System.Windows.Forms.TextBox tb焊线1参数3;
+        private System.Windows.Forms.TextBox tb焊线1参数1;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox25;
+        private System.Windows.Forms.TextBox tb焊线1参数2;
         private System.Windows.Forms.Label label54;
         private System.Windows.Forms.Label label55;
         private System.Windows.Forms.Label label57;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox textBox11;
-        private System.Windows.Forms.TextBox textBox12;
+        private System.Windows.Forms.TextBox tb不良品数量;
+        private System.Windows.Forms.TextBox tb合格品数量;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
+        private System.Windows.Forms.DateTimePicker dtp审核日期;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.TextBox textBox13;
+        private System.Windows.Forms.TextBox tb审核人;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label24;
@@ -905,10 +905,10 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox textBox18;
-        private System.Windows.Forms.TextBox textBox17;
-        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.DateTimePicker dtp生产日期;
+        private System.Windows.Forms.TextBox tb产品批号;
+        private System.Windows.Forms.TextBox tb产品代码;
+        private System.Windows.Forms.TextBox tb袋体代码;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -922,11 +922,11 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.TextBox tb焊线2参数5;
+        private System.Windows.Forms.TextBox tb焊线2参数4;
+        private System.Windows.Forms.TextBox tb焊线2参数3;
+        private System.Windows.Forms.TextBox tb焊线2参数2;
+        private System.Windows.Forms.TextBox tb焊线2参数1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label10;

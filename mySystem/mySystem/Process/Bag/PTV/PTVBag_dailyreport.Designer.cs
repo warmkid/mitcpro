@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.b打印 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -44,15 +44,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "PTV生产日报表";
             // 
-            // button1
+            // b打印
             // 
-            this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(760, 245);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "打印";
-            this.button1.UseVisualStyleBackColor = true;
+            this.b打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.b打印.Location = new System.Drawing.Point(760, 238);
+            this.b打印.Name = "b打印";
+            this.b打印.Size = new System.Drawing.Size(75, 38);
+            this.b打印.TabIndex = 2;
+            this.b打印.Text = "打印";
+            this.b打印.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
@@ -69,7 +69,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(908, 295);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.b打印);
             this.Controls.Add(this.label1);
             this.Name = "PTVBag_dailyreport";
             this.Text = "PTVBag_dailyreport";
@@ -82,7 +82,7 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button b打印;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
