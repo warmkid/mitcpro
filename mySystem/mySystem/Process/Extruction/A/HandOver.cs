@@ -528,7 +528,13 @@ namespace mySystem.Process.Extruction.A
         
          private void btn打印_Click(object sender, EventArgs e)
         {
-            // 打开一个Excel进程
+            
+            print(true);
+        
+        }
+		public void print(bool preview)
+		{
+			// 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
@@ -556,7 +562,13 @@ namespace mySystem.Process.Extruction.A
            my.Cells[5, 6].Value = txb白班异常情况处理.Text;
            my.Cells[15, 6].Value = txb夜班异常情况处理.Text;
 
-
+			if(preview)
+			{
+				my.Select();   
+				oXL.Visible=true //加上这一行  就相当于预览功能            
+			}
+			else
+			{
             // 让这个Sheet为被选中状态
             my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
             // 直接用默认打印机打印该Sheet
@@ -566,11 +578,13 @@ namespace mySystem.Process.Extruction.A
             // 关闭Excel进程
             oXL.Quit();
             // 释放COM资源
+			}
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(oXL);
         
-        }
-
+			
+				
+		}
        
 
        
