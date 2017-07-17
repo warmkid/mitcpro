@@ -34,7 +34,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.tb指令编号 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.tb工艺 = new System.Windows.Forms.TextBox();
             this.tb设备编号 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -103,6 +102,9 @@
             this.bt审核 = new System.Windows.Forms.Button();
             this.bt打印 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bt下移 = new System.Windows.Forms.Button();
+            this.bt上移 = new System.Windows.Forms.Button();
+            this.bt删除 = new System.Windows.Forms.Button();
             this.bt添加 = new System.Windows.Forms.Button();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
@@ -116,9 +118,7 @@
             this.button7 = new System.Windows.Forms.Button();
             this.bt查询插入 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.bt删除 = new System.Windows.Forms.Button();
-            this.bt上移 = new System.Windows.Forms.Button();
-            this.bt下移 = new System.Windows.Forms.Button();
+            this.cb工艺 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -212,14 +212,6 @@
             this.label5.Size = new System.Drawing.Size(63, 14);
             this.label5.TabIndex = 6;
             this.label5.Text = "依据工艺";
-            // 
-            // tb工艺
-            // 
-            this.tb工艺.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb工艺.Location = new System.Drawing.Point(125, 87);
-            this.tb工艺.Name = "tb工艺";
-            this.tb工艺.Size = new System.Drawing.Size(91, 23);
-            this.tb工艺.TabIndex = 7;
             // 
             // tb设备编号
             // 
@@ -956,6 +948,39 @@
             this.panel1.Size = new System.Drawing.Size(888, 42);
             this.panel1.TabIndex = 19;
             // 
+            // bt下移
+            // 
+            this.bt下移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt下移.Location = new System.Drawing.Point(208, 10);
+            this.bt下移.Name = "bt下移";
+            this.bt下移.Size = new System.Drawing.Size(46, 23);
+            this.bt下移.TabIndex = 25;
+            this.bt下移.Text = "下移";
+            this.bt下移.UseVisualStyleBackColor = true;
+            this.bt下移.Click += new System.EventHandler(this.bt下移_Click);
+            // 
+            // bt上移
+            // 
+            this.bt上移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt上移.Location = new System.Drawing.Point(141, 10);
+            this.bt上移.Name = "bt上移";
+            this.bt上移.Size = new System.Drawing.Size(46, 23);
+            this.bt上移.TabIndex = 24;
+            this.bt上移.Text = "上移";
+            this.bt上移.UseVisualStyleBackColor = true;
+            this.bt上移.Click += new System.EventHandler(this.bt上移_Click);
+            // 
+            // bt删除
+            // 
+            this.bt删除.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt删除.Location = new System.Drawing.Point(78, 10);
+            this.bt删除.Name = "bt删除";
+            this.bt删除.Size = new System.Drawing.Size(46, 23);
+            this.bt删除.TabIndex = 23;
+            this.bt删除.Text = "删除";
+            this.bt删除.UseVisualStyleBackColor = true;
+            this.bt删除.Click += new System.EventHandler(this.bt删除_Click);
+            // 
             // bt添加
             // 
             this.bt添加.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -1082,44 +1107,20 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 24;
             // 
-            // bt删除
+            // cb工艺
             // 
-            this.bt删除.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt删除.Location = new System.Drawing.Point(78, 10);
-            this.bt删除.Name = "bt删除";
-            this.bt删除.Size = new System.Drawing.Size(46, 23);
-            this.bt删除.TabIndex = 23;
-            this.bt删除.Text = "删除";
-            this.bt删除.UseVisualStyleBackColor = true;
-            this.bt删除.Click += new System.EventHandler(this.bt删除_Click);
-            // 
-            // bt上移
-            // 
-            this.bt上移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt上移.Location = new System.Drawing.Point(141, 10);
-            this.bt上移.Name = "bt上移";
-            this.bt上移.Size = new System.Drawing.Size(46, 23);
-            this.bt上移.TabIndex = 24;
-            this.bt上移.Text = "上移";
-            this.bt上移.UseVisualStyleBackColor = true;
-            this.bt上移.Click += new System.EventHandler(this.bt上移_Click);
-            // 
-            // bt下移
-            // 
-            this.bt下移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt下移.Location = new System.Drawing.Point(208, 10);
-            this.bt下移.Name = "bt下移";
-            this.bt下移.Size = new System.Drawing.Size(46, 23);
-            this.bt下移.TabIndex = 25;
-            this.bt下移.Text = "下移";
-            this.bt下移.UseVisualStyleBackColor = true;
-            this.bt下移.Click += new System.EventHandler(this.bt下移_Click);
+            this.cb工艺.FormattingEnabled = true;
+            this.cb工艺.Location = new System.Drawing.Point(125, 84);
+            this.cb工艺.Name = "cb工艺";
+            this.cb工艺.Size = new System.Drawing.Size(121, 20);
+            this.cb工艺.TabIndex = 25;
             // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 702);
+            this.Controls.Add(this.cb工艺);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.bt查询插入);
             this.Controls.Add(this.button7);
@@ -1136,7 +1137,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.tb设备编号);
-            this.Controls.Add(this.tb工艺);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tb指令编号);
             this.Controls.Add(this.label4);
@@ -1205,7 +1205,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tb指令编号;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tb工艺;
         private System.Windows.Forms.TextBox tb设备编号;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -1290,5 +1289,6 @@
         private System.Windows.Forms.Button bt下移;
         private System.Windows.Forms.Button bt上移;
         private System.Windows.Forms.Button bt删除;
+        private System.Windows.Forms.ComboBox cb工艺;
     }
 }
