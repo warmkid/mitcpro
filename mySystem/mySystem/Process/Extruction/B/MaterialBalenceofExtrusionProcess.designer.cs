@@ -42,6 +42,7 @@
             this.txb成品重量合计 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn打印 = new System.Windows.Forms.Button();
             this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
             this.btnSave = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
@@ -59,7 +60,6 @@
             this.lbRecordMan = new System.Windows.Forms.Label();
             this.txb记录人 = new System.Windows.Forms.TextBox();
             this.lbTitle = new System.Windows.Forms.Label();
-            this.btn打印 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -217,6 +217,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(958, 67);
             this.panel1.TabIndex = 30;
+            // 
+            // btn打印
+            // 
+            this.btn打印.Location = new System.Drawing.Point(833, 16);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(81, 30);
+            this.btn打印.TabIndex = 76;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // dtp生产日期
             // 
@@ -383,16 +393,6 @@
             this.lbTitle.TabIndex = 0;
             this.lbTitle.Text = "吹膜工序物料平衡记录";
             // 
-            // btn打印
-            // 
-            this.btn打印.Location = new System.Drawing.Point(833, 16);
-            this.btn打印.Name = "btn打印";
-            this.btn打印.Size = new System.Drawing.Size(81, 30);
-            this.btn打印.TabIndex = 76;
-            this.btn打印.Text = "打印";
-            this.btn打印.UseVisualStyleBackColor = true;
-            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
-            // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -414,6 +414,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MaterialBalenceofExtrusionProcess";
+            this.Text = "吹膜工序物料平衡记录";
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);

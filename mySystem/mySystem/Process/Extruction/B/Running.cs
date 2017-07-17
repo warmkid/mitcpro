@@ -75,7 +75,7 @@ namespace mySystem.Process.Extruction.B
             }
             if (txb审核人.Text.ToString().Trim() == "")
             {
-                MessageBox.Show("no reviewer checked");
+                MessageBox.Show("没有审核人信息");
                 e.Cancel = true;
                
             }
@@ -477,7 +477,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -494,7 +494,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -511,7 +511,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -528,7 +528,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -545,7 +545,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -562,7 +562,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -579,7 +579,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -596,7 +596,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -613,7 +613,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -630,7 +630,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -651,7 +651,7 @@ namespace mySystem.Process.Extruction.B
             }
             catch
             {
-                MessageBox.Show("format error");
+                MessageBox.Show("格式错误");
                 ((TextBox)sender).Focus();
             }
         }

@@ -13,6 +13,9 @@ using System.Data.OleDb;
 using System.Collections;
 using System.Runtime.InteropServices;
 
+//this form haven't check the usr information before save
+
+
 namespace mySystem.Process.Extruction.B
 {
 
@@ -388,6 +391,15 @@ namespace mySystem.Process.Extruction.B
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < dtItem.Rows.Count; i++)
+            {
+                if ((usrList.IndexOf(dtItem.Rows[i]["记录人"].ToString().Trim()) < 0) || (usrList.IndexOf(dtItem.Rows[i]["审核人"].ToString().Trim()) < 0))
+                {
+                    MessageBox.Show("用户不存在");
+                    return;
+                }
+            }
+
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
             daItem.Update((DataTable)bsItem.DataSource);
             readItemData(Convert.ToInt32(dtWaste.Rows[0]["ID"]));
@@ -471,7 +483,7 @@ namespace mySystem.Process.Extruction.B
             {
                 if(usrList.IndexOf(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Trim())<0)
                 {
-                    MessageBox.Show("usr doesn't exist");                    
+                    MessageBox.Show("用户不存在");                    
                 }
             }
             

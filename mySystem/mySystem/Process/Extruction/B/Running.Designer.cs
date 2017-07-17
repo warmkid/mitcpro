@@ -212,7 +212,7 @@
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Running";
-            this.Text = "Running";
+            this.Text = "吹膜机组运行记录";
             this.ResumeLayout(false);
             this.PerformLayout();
 

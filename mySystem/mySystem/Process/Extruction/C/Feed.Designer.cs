@@ -30,6 +30,7 @@
         {
             this.label7 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btn打印 = new System.Windows.Forms.Button();
             this.btn添加 = new System.Windows.Forms.Button();
             this.cmb班次 = new System.Windows.Forms.ComboBox();
             this.lb班次 = new System.Windows.Forms.Label();
@@ -42,7 +43,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txb生产指令编号 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btn打印 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -76,6 +76,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1060, 67);
             this.panel1.TabIndex = 52;
+            // 
+            // btn打印
+            // 
+            this.btn打印.Location = new System.Drawing.Point(966, 21);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(81, 30);
+            this.btn打印.TabIndex = 75;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn添加
             // 
@@ -188,16 +198,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(921, 192);
             this.dataGridView1.TabIndex = 53;
             // 
-            // btn打印
-            // 
-            this.btn打印.Location = new System.Drawing.Point(966, 21);
-            this.btn打印.Name = "btn打印";
-            this.btn打印.Size = new System.Drawing.Size(81, 30);
-            this.btn打印.TabIndex = 75;
-            this.btn打印.Text = "打印";
-            this.btn打印.UseVisualStyleBackColor = true;
-            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
-            // 
             // Feed
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -209,7 +209,7 @@
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Feed";
-            this.Text = "Feed";
+            this.Text = "吹膜供料系统运行记录";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
