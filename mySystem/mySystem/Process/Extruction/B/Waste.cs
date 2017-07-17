@@ -11,6 +11,7 @@ using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Extruction.B
 {
@@ -68,35 +69,75 @@ namespace mySystem.Process.Extruction.B
             btn审核.Enabled = false;
             readItemData(Convert.ToInt32( dtWaste.Rows[0]["ID"]));
             setDataGridViewColumns();
+            setRowNums();
             ItemBind();            
-            setDataGridViewRowNums();
+            
             //judgeReview();
-            forzen();
+            //forzen();
         }
-        public override void CheckResult()
+        public Waste(mySystem.MainForm mainform, int Id)
+            : base(mainform)
         {
-            base.CheckResult();
-
-            dtWaste.Rows[0]["审核人"] = check.userName.ToString();
-            dtWaste.Rows[0]["审核意见"] = check.opinion.ToString();
-            dtWaste.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
-            daWaste.Update((DataTable)bsWaste.DataSource);
-            readWasteData(txb生产指令.Text);
+            InitializeComponent();
+            conOle = Parameter.connOle;
+            dtWaste = new DataTable(tablename1);
+            daWaste = new OleDbDataAdapter("SELECT * FROM 吹膜工序废品记录 WHERE ID =" + Id, conOle);
+            bsWaste = new BindingSource();
+            cbWaste = new OleDbCommandBuilder(daWaste);
+            daWaste.Fill(dtWaste);
             removeWasteBinding();
             WasteBind();
 
-            //fill reviewer in inner table
-            for (int i = 0; i < dtItem.Rows.Count; i++)
+            readItemData(Convert.ToInt32(dtWaste.Rows[0]["ID"]));
+            setDataGridViewColumns();
+            setRowNums();
+            ItemBind();
+
+            this.btn保存.Visible = false;
+            this.btn删除.Visible = false;
+            this.btn审核.Visible = false;
+            this.btn添加.Visible = false;
+            foreach (Control c in this.Controls)
             {
-                if (Convert.ToString(dtItem.Rows[i]["审核人"]).ToString().Trim() =="")
-                {
-                    dtItem.Rows[i]["审核人"] = check.userName.ToString();
-                }
-                continue;
+                c.Enabled = false;
             }
-            daItem.Update((DataTable)bsItem.DataSource);
-            forzen();
-            btn保存.Enabled = false;
+            
+            
+
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = false;
+            }
+        }
+        public override void CheckResult()
+        {
+            if (check.ischeckOk)
+            {
+                base.CheckResult();
+
+                dtWaste.Rows[0]["审核人"] = check.userName.ToString();
+                dtWaste.Rows[0]["审核意见"] = check.opinion.ToString();
+                dtWaste.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
+                daWaste.Update((DataTable)bsWaste.DataSource);
+                readWasteData(txb生产指令.Text);
+                removeWasteBinding();
+                WasteBind();
+
+                //fill reviewer in inner table
+                for (int i = 0; i < dtItem.Rows.Count; i++)
+                {
+                    if (Convert.ToString(dtItem.Rows[i]["审核人"]).ToString().Trim() == "")
+                    {
+                        dtItem.Rows[i]["审核人"] = check.userName.ToString();
+                    }
+                    continue;
+                }
+                daItem.Update((DataTable)bsItem.DataSource);
+                readItemData(Convert.ToInt32(dtWaste.Rows[0]["ID"]));
+                ItemBind();
+                forzen();
+                btn保存.Enabled = false;
+            }
         }
         private void judgeReview()
         {
@@ -148,6 +189,7 @@ namespace mySystem.Process.Extruction.B
 			dr["生产指令"]=txb生产指令.Text;
 			dr["生产开始时间"]=Convert.ToDateTime(dtp生产开始时间.Value.ToString());
 			dr["生产结束时间"]=Convert.ToDateTime(dtp生产结束时间.Value.ToString());
+            dr["审核人"] = "";
             dr["合计不良品数量"] = 0;
             return dr;
         }
@@ -262,10 +304,10 @@ namespace mySystem.Process.Extruction.B
                         cbc.HeaderText = dc.ColumnName;
                         cbc.Name = dc.ColumnName;
                         cbc.ValueType = dc.DataType;
-                        foreach (String s in productCodeLst)
-                        {
-                            cbc.Items.Add(s);
-                        }
+                        //foreach (String s in productCodeLst)
+                        //{
+                        //    cbc.Items.Add(s);
+                        //}
                         dataGridView1.Columns.Add(cbc);
                         break;
                     //case "不良品数量":
@@ -283,10 +325,10 @@ namespace mySystem.Process.Extruction.B
                         cbc.HeaderText = dc.ColumnName;
                         cbc.Name = dc.ColumnName;
                         cbc.ValueType = dc.DataType;
-                        foreach (String s in wasteReason)
-                        {
-                            cbc.Items.Add(s);
-                        }
+                        //foreach (String s in wasteReason)
+                        //{
+                        //    cbc.Items.Add(s);
+                        //}
                         dataGridView1.Columns.Add(cbc);
                         break;
                     //case "记录人":
@@ -319,9 +361,9 @@ namespace mySystem.Process.Extruction.B
 
                         break;
                 }
-            }            
+            }
             dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.RowHeadersVisible = false;
+            //dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
             dataGridView1.DataError += new DataGridViewDataErrorEventHandler(dataGridView1_DataError);
@@ -334,11 +376,12 @@ namespace mySystem.Process.Extruction.B
             dr["T吹膜工序废品记录ID"] = dtWaste.Rows[0]["ID"];
             dr["序号"]=0;
             dr["生产日期"] = Convert.ToDateTime(DateTime.Now.ToString());
-            dr["班次"] = "";
+            dr["班次"] = Parameter.userflight;
             dr["产品代码"] = "";
             dr["不良品数量"] = 0;
             dr["废品产生原因"] = "";
             dr["记录人"] = Parameter.userName;
+            dr["审核人"] = "";
             return dr;
         }
 
@@ -349,7 +392,7 @@ namespace mySystem.Process.Extruction.B
             daItem.Update((DataTable)bsItem.DataSource);
             readItemData(Convert.ToInt32(dtWaste.Rows[0]["ID"]));
             ItemBind();
-            setDataGridViewRowNums();
+            setRowNums();
 
             //find the uncheck item in inner list and reset the review information
             for (int i = 0; i < dtItem.Rows.Count; i++)
@@ -377,7 +420,7 @@ namespace mySystem.Process.Extruction.B
             DataRow dr = dtItem.NewRow();
             dr = writeItemDefault(dr);
             dtItem.Rows.Add(dr);
-            setDataGridViewRowNums();
+            setRowNums();
             btn保存.Enabled = true;
             btn审核.Enabled = false;
         }
@@ -391,11 +434,20 @@ namespace mySystem.Process.Extruction.B
             }
         }
 
+        private void setRowNums()
+        {
+            for (int i = 0; i < dtItem.Rows.Count; i++)
+            {
+                dtItem.Rows[i]["序号"] = i + 1;
+            }
+        }
+
+
         private void forzen()
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            { 
-                if (dtItem.Rows[i]["审核人"].ToString().Trim() == "")
+            {
+                if (dataGridView1.Rows[i].Cells["审核人"].ToString().Trim() == "")
                 {
                     continue;
                 }
@@ -433,7 +485,75 @@ namespace mySystem.Process.Extruction.B
             }
             MessageBox.Show(name + "填写错误");
         }
-        
+
+        private void btn删除_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            
+            //dtItem.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            
+            
+            //this line disable
+            daItem.Update((DataTable)bsItem.DataSource);
+            readItemData(Convert.ToInt32(dtWaste.Rows[0]["ID"]));
+            ItemBind();
+
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.Columns[0].Visible = false;
+            forzen();
+
+        }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-301-R10 吹膜工序废品记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+
+            my.Cells[3, 1].Value = "生产指令：" + txb生产指令.Text;
+            my.Cells[3, 6].Value = "生产时段：" + dtp生产开始时间.Value.ToLongDateString() + "--" + dtp生产结束时间.Value.ToLongDateString();
+            
+
+            for (int i = 0; i < dtItem.Rows.Count; i++)
+            {
+                my.Cells[i + 5, 1].Value = dtItem.Rows[i]["序号"];
+                my.Cells[i + 5, 2].Value = Convert.ToDateTime(dtItem.Rows[i]["生产日期"]).ToLongDateString();
+                my.Cells[i + 5, 3].Value = dtItem.Rows[i]["班次"];
+                my.Cells[i + 5, 4].Value = dtItem.Rows[i]["产品代码"];
+                my.Cells[i + 5, 5].Value = dtItem.Rows[i]["不良品数量"].ToString();
+                my.Cells[i + 5, 6].Value = dtItem.Rows[i]["废品产生原因"];
+                my.Cells[i + 5, 7].Value = dtItem.Rows[i]["记录人"];
+                my.Cells[i + 5, 8].Value = dtItem.Rows[i]["审核人"];               
+            }
+
+            //my.Cells[16, 10] = "A层 " + array1[9][11].Text + "  (℃)";
+            //my.Cells[16, 12] = "B层 " + array1[11][11].Text + "  (℃)";
+            //my.Cells[16, 14] = "C层 " + array1[13][11].Text + "  (℃)";
+
+
+            // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            // 直接用默认打印机打印该Sheet
+            //my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+            // 关闭文件，false表示不保存
+            wb.Close(false);
+            // 关闭Excel进程
+            oXL.Quit();
+            // 释放COM资源
+            Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(oXL);
+        }
    
     }
 }

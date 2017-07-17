@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 //main functions are listed below
 //1.this system will automatically judge the flight of user and fill default values of confirm items.
@@ -78,6 +79,79 @@ namespace mySystem.Process.Extruction.A
 
             writeName();
             readItemData(Convert.ToInt32(dtHandOver.Rows[0]["ID"]));
+            askToReload();
+            
+            setDataGridViewColumns();
+            if (0 == dtItem.Rows.Count)
+            {
+                writeItemDefault(dtItem, (Convert.ToString(Parameter.userflight) == "白班") ? true : false);
+            }
+            finishReview();
+            
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[3].Width = 300;
+            writeDayNightCheck();
+            ItemBind();
+            setDataGridViewRowNums();
+            btn审核.Enabled = false;
+        }
+
+        public HandOver(mySystem.MainForm mainform, int Id)
+            : base(mainform)
+        {
+            InitializeComponent();
+            conOle = Parameter.connOle;
+            dtHandOver = new DataTable(tablename1);
+            daHandOver = new OleDbDataAdapter("SELECT * FROM 吹膜岗位交接班记录 WHERE ID =" + Id, conOle);
+            bsHandOver = new BindingSource();
+            cbHandOver = new OleDbCommandBuilder(daHandOver);
+            daHandOver.Fill(dtHandOver);
+            removeHandOverBinding();
+            handOverBind();
+
+            readItemData(Convert.ToInt32(dtHandOver.Rows[0]["ID"]));           
+            ItemBind();
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.RowHeadersVisible = false;
+            this.btn保存.Visible = false;
+           
+            this.btn审核.Visible = false;
+            
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = false;
+            }
+            
+            
+
+        }
+
+        private void finishReview()
+        {
+            if(     Convert.ToString    (Parameter.userflight)  == "白班")  
+            {
+                dataGridView1.Columns[5].ReadOnly=true;
+            }
+            else
+            {
+                dataGridView1.Columns[4].ReadOnly=true;
+            }
+
+            if (Convert.ToString(dtHandOver.Rows[0]["夜班接班人"]).Trim() != "")     //
+            {
+                dataGridView1.Columns[4].ReadOnly = true;
+                txb白班异常情况处理.Enabled = false;
+            }
+            if (Convert.ToString(dtHandOver.Rows[0]["白班接班人"]).Trim() != "")
+            {
+                dataGridView1.Columns[5].ReadOnly = true;
+                txb夜班异常情况处理.Enabled = false;
+            }
+        }
+    
+        private void askToReload()
+        {
             if (dtItem.Rows.Count > 0)  //when there are some items 
             {
                 if (!matchDt_List())
@@ -87,9 +161,14 @@ namespace mySystem.Process.Extruction.A
                         //this part will override the history
                         if (settingItem.Count < dtItem.Rows.Count)  // reduce confirm items and the cut item get ""
                         {
+
                             for (int i = 0; i < settingItem.Count; i++)
                             {
                                 dtItem.Rows[i]["确认项目"] = settingItem[i];
+                            }
+                            for (int i = dtItem.Rows.Count - 1; i >= settingItem.Count; i--)
+                            {
+                                dtItem.Rows.RemoveAt(i);
                             }
                         }
                         if (settingItem.Count > dtItem.Rows.Count)
@@ -110,24 +189,6 @@ namespace mySystem.Process.Extruction.A
                     }
                 }
             }
-            setDataGridViewColumns();
-            if (0 == dtItem.Rows.Count)
-            {
-                writeItemDefault(dtItem, (Convert.ToString(Parameter.userflight) == "白班") ? true : false);
-            }
-
-            if(     Convert.ToString    (Parameter.userflight)  == "白班")  
-            {
-                dataGridView1.Columns[5].ReadOnly=true;
-            }
-            else
-            {
-                dataGridView1.Columns[4].ReadOnly=true;
-            }
-
-            writeDayNightCheck();
-            ItemBind();
-            setDataGridViewRowNums();
         }
 
         private bool matchDt_List()
@@ -216,11 +277,11 @@ namespace mySystem.Process.Extruction.A
         }
         private void writeName()
         {
-            if ((Convert.ToString(Parameter.userflight) == "白班") && (txb白班交班人.Text == ""))
+            if ((Convert.ToString(Parameter.userflight) == "白班") && (dtHandOver.Rows[0]["白班交班人"].ToString() == ""))
             {
                 dtHandOver.Rows[0]["白班交班人"] = Parameter.userName;
             }
-            if ((Convert.ToString(Parameter.userflight) == "夜班") && (txb夜班交班人.Text == ""))
+            if ((Convert.ToString(Parameter.userflight) == "夜班") && (dtHandOver.Rows[0]["夜班交班人"].ToString() == ""))
             {
                 dtHandOver.Rows[0]["夜班交班人"] = Parameter.userName;
             }
@@ -294,6 +355,9 @@ namespace mySystem.Process.Extruction.A
             txb夜班接班人.DataBindings.Add("Text", bsHandOver.DataSource, "夜班接班人");
             dtp夜班交接班时间.DataBindings.Add("Value", bsHandOver.DataSource, "夜班交接班时间");
 
+
+            
+
         }
 
         private void ItemBind()
@@ -353,54 +417,20 @@ namespace mySystem.Process.Extruction.A
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            //dataGridView1.Columns[2].Visible = false;  //序号
-            //dataGridView1.Columns[].Visible = false;
+            dataGridView1.Columns[2].ReadOnly=true;  //序号
+            dataGridView1.Columns[3].ReadOnly = true; ;
         }
 
         private void setDataGridViewRowNums()
         {
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < dtItem.Rows.Count; i++)
             {
-                dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
+                dtItem.Rows[i]["序号"] = i + 1;
             }
         }
         
-        private void binding()
-        {
-            bsHandOver = new BindingSource();
-            dtHandOver = new DataTable(tablename1);
-            daHandOver = new OleDbDataAdapter("select * from " + tablename1 + " where 生产指令编号 ='" + txb生产指令编号.Text + "' and 生产日期 = #"+dtp生产日期.Value.ToShortDateString()+"#;", conOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
-            cbHandOver = new OleDbCommandBuilder(daHandOver);
-            daHandOver.Fill(dtHandOver);
-
-            if (dtHandOver.Rows.Count < 1)
-            {
-                status = 1;
-                DataRow newrow = dtHandOver.NewRow();
-                dtHandOver.Rows.Add(newrow);
-                binding2(0, false);
-            }
-            else
-            {
-                status = 2;
-                binding2(getId(), true);
-            }
-            bsHandOver.DataSource = dtHandOver;
-            // 
-            txb生产指令编号.DataBindings.Add("Text", bsHandOver.DataSource, "生产指令编号");
-            dtp生产日期.DataBindings.Add("Value", bsHandOver.DataSource, "生产日期");
-            txb白班产品代码批号数量.DataBindings.Add("Text", bsHandOver.DataSource, "白班产品代码批号数量");
-            txb夜班产品代码批号数量.DataBindings.Add("Text", bsHandOver.DataSource, "夜班产品代码批号数量");
-            txb白班异常情况处理.DataBindings.Add("Text", bsHandOver.DataSource, "白班异常情况处理");
-            txb白班交班人.DataBindings.Add("Text", bsHandOver.DataSource, "白班交班人");
-            txb白班接班人.DataBindings.Add("Text", bsHandOver.DataSource, "白班接班人");
-            dtp白班交接班时间.DataBindings.Add("Value", bsHandOver.DataSource, "白班交接班时间");
-            txb夜班异常情况处理.DataBindings.Add("Text", bsHandOver.DataSource, "夜班异常情况处理");
-            txb夜班交班人.DataBindings.Add("Text", bsHandOver.DataSource, "夜班交班人");
-            txb夜班接班人.DataBindings.Add("Text", bsHandOver.DataSource, "夜班接班人");
-            dtp夜班交接班时间.DataBindings.Add("Value", bsHandOver.DataSource, "夜班交接班时间");
-        }
+     
         private int getId()
         {
             OleDbCommand comm = new OleDbCommand();
@@ -408,35 +438,7 @@ namespace mySystem.Process.Extruction.A
             comm.CommandText = "select ID from " + tablename1 + " where 生产指令编号 ='" + txb生产指令编号.Text + "' and 生产日期 = #" + dtp生产日期.Value.ToShortDateString() + "#;";
             return (int)comm.ExecuteScalar();
         }
-        private void binding2(int outerId, bool flag)
-        {
-            bsItem = new BindingSource();
-            dtItem = new DataTable(tablename2);
-            if (flag)
-            {
-                daItem = new OleDbDataAdapter("select * from " + tablename2 + " where T吹膜岗位交接班记录ID = " + outerId, conOle);// +" where T吹膜岗位交接班记录ID in (select ID from " + tablename1 + " where 生产日期 = '" + dtp生产日期.Value.Date+"');",conOle);
-            }
-            else
-            {
-                daItem = new OleDbDataAdapter("select * from " + tablename2 + " where false", conOle);
-            }
-
-            cbItem = new OleDbCommandBuilder(daItem);
-            daItem.Fill(dtItem);
-            if (dtItem.Rows.Count < 1)  //dtItem is NULL
-            {
-                //DataRow newrow = dtItem.NewRow();
-                //dtItem.Rows.Add(newrow);
-                
-                if (flag)
-                {
-                    dtItem.Rows[0]["T吹膜岗位交接班记录ID"] = outerId;
-                }
-            }
-            bsItem.DataSource = dtItem;
-            dataGridView1.DataSource = bsItem.DataSource;
-            
-        }
+      
         private List<string> getSettingItem()
         {
             List<string> settingList = new List<string>();
@@ -454,121 +456,123 @@ namespace mySystem.Process.Extruction.A
             return settingList;
         }
 
-        private void pullData()
-        {
-            dtHandOver.Rows[0]["生产指令编号"] = txb生产指令编号.Text;
-            dtHandOver.Rows[0]["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToShortDateString());
-            dtHandOver.Rows[0]["白班产品代码批号数量"] = txb白班产品代码批号数量.Text;
-            dtHandOver.Rows[0]["夜班产品代码批号数量"] = txb夜班产品代码批号数量.Text;
-            dtHandOver.Rows[0]["白班异常情况处理"] = txb白班异常情况处理.Text;
-            dtHandOver.Rows[0]["白班交班人"] = txb白班交班人.Text;
-            dtHandOver.Rows[0]["白班接班人"] = txb白班接班人.Text;
-            dtHandOver.Rows[0]["白班交接班时间"] = Convert.ToDateTime(dtp白班交接班时间.Value.ToShortTimeString());
-            dtHandOver.Rows[0]["夜班异常情况处理"] = txb夜班异常情况处理.Text;
-            dtHandOver.Rows[0]["夜班交班人"] = txb夜班交班人.Text;
-            dtHandOver.Rows[0]["夜班接班人"] = txb夜班接班人.Text;
-            dtHandOver.Rows[0]["夜班交接班时间"] = Convert.ToDateTime(dtp夜班交接班时间.Value.ToShortTimeString());
-        }
+       
 
         private void btn保存_Click(object sender, EventArgs e)
         {
-            pullData();
-            
-
-            bsHandOver.EndEdit();
-            daHandOver.Update((DataTable)bsHandOver.DataSource);
-            if (1 == status)
-            {
-                OleDbCommand comm = new OleDbCommand();
-                comm.Connection = conOle;
-                comm.CommandText = "select @@identity";
-                outerId = (int)comm.ExecuteScalar();
-                dtItem.Rows[0]["T吹膜岗位交接班记录ID"] = Convert.ToInt32(outerId);
-            }
-            for (int i = 1; i < dtItem.Rows.Count; i++)
-            {
-                dtItem.Rows[i]["T吹膜岗位交接班记录ID"] = dtItem.Rows[0]["T吹膜岗位交接班记录ID"];
-            }
-            bsItem.EndEdit();
+           
             daItem.Update((DataTable)bsItem.DataSource);
-            fresh1();
-        }
-
-        private void fresh1()
-        {
-            string txb = this.txb生产指令编号.Text;
-            DateTime start = this.dtp生产日期.Value;
-            mySystem.Process.Extruction.A.HandOver fresh = new mySystem.Process.Extruction.A.HandOver(mainform);
-            fresh.StartPosition = FormStartPosition.Manual;
-            fresh.Location = this.Location;
-            fresh.txb生产指令编号.Text = txb;
-            fresh.dtp生产日期.Value = start;
-            fresh.Show();
-            this.Close();
-        }
-
-        public static void IdMotivation(int intId)
-        {
-            string tablename1 = "吹膜岗位交接班记录";
-            MainForm mainform = new MainForm();
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
-            comm.CommandText = "select 生产指令编号,生产日期 from " + tablename1 + " where ID =" + intId + ";";
-            //////
-            mySystem.Process.Extruction.A.HandOver search = new mySystem.Process.Extruction.A.HandOver(mainform);
-            OleDbDataReader reader = null;
-            reader=comm.ExecuteReader();
-            while (reader.Read())
-            {
-                search.txb生产指令编号.Text = reader[0].ToString();
-                search.dtp生产日期.Value = Convert.ToDateTime( reader[1]);
-            }
-            search.InitializeComponent();
-            search.init();
-            //txb生产指令编号.Text = Parameter.proInstruction;
-            //dtp生产日期.Value = Convert.ToDateTime("2017/7/12"); ;
-            search.binding();
-            search.Show();
+            ItemBind();
+           
             
-        }
-        public override void CheckResult()
-        {
-            base.CheckResult();
-            string sqlstr = "SELECT 班次 FROM users WHERE 用户ID=" + check.userID.ToString() + ";";
-            OleDbCommand CHECK_FLIGHT = new OleDbCommand(sqlstr, Parameter.connOleUser);
-            string checkFlight = Convert.ToString(CHECK_FLIGHT.ExecuteScalar());
-            if (Parameter.userflight == "白班" && dtHandOver.Rows[0]["夜班接班人"] == "")
-            {
-                if (checkFlight == "夜班")
-                {
-                    dtHandOver.Rows[0]["夜班接班人"] = check.userName;
-                }
-                else
-                {
-                    MessageBox.Show("审核人班次不匹配");
-                }
-            }
-            if (Parameter.userflight == "夜班" && dtHandOver.Rows[0]["白班接班人"] == "")
-            {
-                if (checkFlight == "白班")
-                {
-                    dtHandOver.Rows[0]["白班接班人"] = check.userName;
-                }
-                else
-                {
-                    MessageBox.Show("审核人班次不匹配");
-                }
-            }
+
             bsHandOver.EndEdit();
             daHandOver.Update((DataTable)bsHandOver.DataSource);
             readHandOverData(txb生产指令编号.Text, dtp生产日期.Value.Date);
             removeHandOverBinding();
             handOverBind();
+
+            btn审核.Enabled = true;
+           
+        }
+
+    
+
+      
+        public override void CheckResult()
+        {
+            if (check.ischeckOk)
+            {
+                base.CheckResult();
+                string sqlstr = "SELECT 班次 FROM users WHERE 用户ID=" + check.userID.ToString() + ";";
+                OleDbCommand CHECK_FLIGHT = new OleDbCommand(sqlstr, Parameter.connOleUser);
+                string checkFlight = Convert.ToString(CHECK_FLIGHT.ExecuteScalar());
+                if (Parameter.userflight == "白班" && dtHandOver.Rows[0]["夜班接班人"].ToString() == "")
+                {
+                    if (checkFlight == "夜班")
+                    {
+                        dtHandOver.Rows[0]["夜班接班人"] = check.userName;
+                        txb白班异常情况处理.Enabled = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("审核人班次不匹配");
+                    }
+                }
+                if (Parameter.userflight == "夜班" && dtHandOver.Rows[0]["白班接班人"].ToString() == "")
+                {
+                    if (checkFlight == "白班")
+                    {
+                        dtHandOver.Rows[0]["白班接班人"] = check.userName;
+                        txb白班异常情况处理.Enabled = false;
+                    }
+                    else
+                    {
+                        MessageBox.Show("审核人班次不匹配");
+                    }
+                }
+                bsHandOver.EndEdit();
+                daHandOver.Update((DataTable)bsHandOver.DataSource);
+                readHandOverData(txb生产指令编号.Text, dtp生产日期.Value.Date);
+                removeHandOverBinding();
+                handOverBind();
+                finishReview();
+            }
         }
         private void btn审核_Click(object sender, EventArgs e)
         {
             check = new CheckForm(this);
             check.Show();
         }
+
+        
+         private void btn打印_Click(object sender, EventArgs e)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\A\SOP-MFG-301-R13 吹膜岗位交接班记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+
+            my.Cells[3, 1].Value = "生产指令编号：" + txb生产指令编号.Text;
+            my.Cells[3, 5].Value = "生产日期：" + dtp生产日期.Value.ToLongDateString();
+
+
+            for (int i = 0; i < dtItem.Rows.Count; i++)
+            {
+                my.Cells[i + 6, 1].Value = dtItem.Rows[i]["序号"];
+                my.Cells[i + 6, 2].Value = dtItem.Rows[i]["确认项目"];
+                my.Cells[i + 6, 3].Value = dtItem.Rows[i]["确认结果白班"];
+                my.Cells[i + 6, 4].Value = dtItem.Rows[i]["确认结果夜班"];
+         
+            }
+            my.Cells[12,6].Value="交班人："+txb白班交班人.Text+"   接班人："+txb夜班接班人.Text+"   时间："+dtp白班交接班时间.Value.ToShortTimeString();
+           my.Cells[21,6].Value="交班人："+txb夜班交班人.Text+"   接班人："+txb白班接班人.Text+"   时间："+dtp夜班交接班时间.Value.ToShortTimeString();
+           my.Cells[5, 6].Value = txb白班异常情况处理.Text;
+           my.Cells[15, 6].Value = txb夜班异常情况处理.Text;
+
+
+            // 让这个Sheet为被选中状态
+            my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            // 直接用默认打印机打印该Sheet
+            //my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+            // 关闭文件，false表示不保存
+            wb.Close(false);
+            // 关闭Excel进程
+            oXL.Quit();
+            // 释放COM资源
+            Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(oXL);
+        
+        }
+
+       
+
+       
     }
 }

@@ -43,6 +43,7 @@
             this.txb审核人 = new System.Windows.Forms.TextBox();
             this.cmb产品代码 = new System.Windows.Forms.ComboBox();
             this.btn审核 = new System.Windows.Forms.Button();
+            this.btn打印 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn保存
@@ -177,11 +178,22 @@
             this.btn审核.UseVisualStyleBackColor = true;
             this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
+            // btn打印
+            // 
+            this.btn打印.Location = new System.Drawing.Point(969, 21);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(75, 23);
+            this.btn打印.TabIndex = 73;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
+            // 
             // Running
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1125, 741);
+            this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.cmb产品代码);
             this.Controls.Add(this.txb审核人);
@@ -223,5 +235,6 @@
         private System.Windows.Forms.TextBox txb审核人;
         private System.Windows.Forms.ComboBox cmb产品代码;
         private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.Button btn打印;
     }
 }

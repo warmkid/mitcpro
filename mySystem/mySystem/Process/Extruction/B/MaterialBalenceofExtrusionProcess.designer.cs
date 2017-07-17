@@ -59,6 +59,7 @@
             this.lbRecordMan = new System.Windows.Forms.Label();
             this.txb记录人 = new System.Windows.Forms.TextBox();
             this.lbTitle = new System.Windows.Forms.Label();
+            this.btn打印 = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -203,6 +204,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btn打印);
             this.panel1.Controls.Add(this.dtp生产日期);
             this.panel1.Controls.Add(this.btnSave);
             this.panel1.Controls.Add(this.label11);
@@ -381,6 +383,16 @@
             this.lbTitle.TabIndex = 0;
             this.lbTitle.Text = "吹膜工序物料平衡记录";
             // 
+            // btn打印
+            // 
+            this.btn打印.Location = new System.Drawing.Point(833, 16);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(81, 30);
+            this.btn打印.TabIndex = 76;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
+            // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -444,5 +456,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.DateTimePicker dtp生产日期;
+        private System.Windows.Forms.Button btn打印;
     }
 }

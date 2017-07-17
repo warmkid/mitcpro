@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 //this form is about the 12th picture of the extrusion step
 //READ ME :
@@ -90,20 +91,23 @@ namespace mySystem.Extruction.Process
 
         public override void CheckResult()
         {
-            base.CheckResult();
-
-            dtBalance.Rows[0]["审核人"] = check.userName;
-            dtBalance.Rows[0]["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString());
-            dtBalance.Rows[0]["审核意见"] = check.opinion.ToString();
-            dtBalance.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
-            bsBalance.EndEdit();
-            daBalance.Update((DataTable)bsBalance.DataSource);
-            readBalance(txb生产指令.Text);
-            removeBindBalance();
-            BindBalance();
-            foreach (Control ctrl in this.Controls)
+            if (check.ischeckOk)
             {
-                ctrl.Enabled = false;
+                base.CheckResult();
+
+                dtBalance.Rows[0]["审核人"] = check.userName;
+                dtBalance.Rows[0]["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString());
+                dtBalance.Rows[0]["审核意见"] = check.opinion.ToString();
+                dtBalance.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
+                bsBalance.EndEdit();
+                daBalance.Update((DataTable)bsBalance.DataSource);
+                readBalance(txb生产指令.Text);
+                removeBindBalance();
+                BindBalance();
+                foreach (Control ctrl in this.Controls)
+                {
+                    ctrl.Enabled = false;
+                }
             }
         }
 
@@ -270,6 +274,7 @@ namespace mySystem.Extruction.Process
              removeBindBalance();
              BindBalance();
              btn审核.Enabled = true;
+             btn打印.Enabled = true;
          }
 
          private void btn审核_Click(object sender, EventArgs e)
@@ -278,6 +283,44 @@ namespace mySystem.Extruction.Process
              check.Show();
          }
 
+         private void btn打印_Click(object sender, EventArgs e)
+         {
+             // 打开一个Excel进程
+             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+             // 利用这个进程打开一个Excel文件
+             //System.IO.Directory.GetCurrentDirectory;
+             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-301-R12 吹膜工序物料平衡记录.xlsx");
+             // 选择一个Sheet，注意Sheet的序号是从1开始的
+             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
+             // 设置该进程是否可见
+             oXL.Visible = true;
+             // 修改Sheet中某行某列的值
+
+             my.Cells[3, 2].Value = txb生产指令.Text.ToString();
+             my.Cells[3, 4].Value = dtp生产日期.Value.ToLongDateString();
+             my.Cells[6, 1].Value = txb成品重量合计.Text;
+             my.Cells[6, 2].Value = txb废品量合计.Text;
+             my.Cells[6, 3].Value = txb领料量.Text;
+             my.Cells[6, 4].Value = txb重量比成品率.Text;
+             my.Cells[6, 5].Value = txb物料平衡.Text;
+             my.Cells[7, 2].Value = txb备注.Text;
+             my.Cells[8, 1].Value = "记录人/日期：" + txb记录人.Text+"   "+dtp记录日期.Value.ToLongDateString();
+             my.Cells[8, 4].Value =  txb审核人.Text+dtp审核日期.Value.ToLongDateString();
+
+
+             // 让这个Sheet为被选中状态
+             //    my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+             // 直接用默认打印机打印该Sheet
+             my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+             // 关闭文件，false表示不保存
+             wb.Close(false);
+             // 关闭Excel进程
+             oXL.Quit();
+             // 释放COM资源
+             Marshal.ReleaseComObject(wb);
+             Marshal.ReleaseComObject(oXL);
+         }
+        
 
          
        
