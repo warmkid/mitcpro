@@ -53,7 +53,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.tb内层合计 = new System.Windows.Forms.TextBox();
+            this.tb中内层合计 = new System.Windows.Forms.TextBox();
             this.tb外层合计 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.bt下移 = new System.Windows.Forms.Button();
@@ -296,14 +296,14 @@
             this.label9.TabIndex = 18;
             this.label9.Text = "SPM-PE-04";
             // 
-            // tb内层合计
+            // tb中内层合计
             // 
-            this.tb内层合计.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb内层合计.Location = new System.Drawing.Point(780, 140);
-            this.tb内层合计.Name = "tb内层合计";
-            this.tb内层合计.ReadOnly = true;
-            this.tb内层合计.Size = new System.Drawing.Size(87, 23);
-            this.tb内层合计.TabIndex = 17;
+            this.tb中内层合计.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb中内层合计.Location = new System.Drawing.Point(780, 140);
+            this.tb中内层合计.Name = "tb中内层合计";
+            this.tb中内层合计.ReadOnly = true;
+            this.tb中内层合计.Size = new System.Drawing.Size(87, 23);
+            this.tb中内层合计.TabIndex = 17;
             // 
             // tb外层合计
             // 
@@ -568,7 +568,7 @@
             this.Controls.Add(this.tb产品批号);
             this.Controls.Add(this.cb产品代码);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.tb内层合计);
+            this.Controls.Add(this.tb中内层合计);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bt下移);
             this.Controls.Add(this.label11);
@@ -641,7 +641,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tb内层合计;
+        private System.Windows.Forms.TextBox tb中内层合计;
         private System.Windows.Forms.TextBox tb外层合计;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label12;

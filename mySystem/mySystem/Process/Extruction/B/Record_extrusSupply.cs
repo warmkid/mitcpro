@@ -422,7 +422,7 @@ namespace WindowsFormsApplication1
             tb原料批号b2.DataBindings.Clear();
             tb外层合计.DataBindings.Clear();
             //tb中内层合计.DataBindings.Clear();
-            tb内层合计.DataBindings.Clear();
+            tb中内层合计.DataBindings.Clear();
             tb用料ab1c.DataBindings.Clear();
             tb余料ab1c.DataBindings.Clear();
             tb用料b2.DataBindings.Clear();
@@ -450,8 +450,8 @@ namespace WindowsFormsApplication1
             tb用料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料用量");
             tb余料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料余量");
             tb外层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "外层供料量合计a");
-            //tb中内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中内层供料量合计b");
-            tb内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层供料量合计c");
+            tb中内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中内层供料量合计b");
+            //tb内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层供料量合计c");
             tb复核人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审核人");
 
         }
@@ -475,6 +475,25 @@ namespace WindowsFormsApplication1
             {
                 switch (dc.ColumnName)
                 {
+                    //case "外层供料量":
+                    //    DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                    //    c3.DataPropertyName = dc.ColumnName;
+                    //    c3.HeaderText = dc.ColumnName;
+                    //    c3.Name = cb原料代码ab1c.Text;
+                    //    c3.SortMode = DataGridViewColumnSortMode.Automatic;
+                    //    c3.ValueType = dc.DataType;
+                    //    dataGridView1.Columns.Add(c3);
+                    //    break;
+
+                    //case "中内层供料量":
+                    //    DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
+                    //    c4.DataPropertyName = dc.ColumnName;
+                    //    c4.HeaderText =cb原料代码b2.Text;
+                    //    c4.Name =  dc.ColumnName;
+                    //    c4.SortMode = DataGridViewColumnSortMode.Automatic;
+                    //    c4.ValueType = dc.DataType;
+                    //    dataGridView1.Columns.Add(c4);
+                    //    break;
                     case "原料抽查结果":
                         DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
                         c1.DataPropertyName = dc.ColumnName;
@@ -485,7 +504,7 @@ namespace WindowsFormsApplication1
 
                         c1.Items.Add("合格");
                         c1.Items.Add("不合格");
-                                                dataGridView1.Columns.Add(c1);
+                        dataGridView1.Columns.Add(c1);
                         // 重写cell value changed 事件，自动填写id
                         break;
 
@@ -507,7 +526,7 @@ namespace WindowsFormsApplication1
         {
             dataGridView1.Columns[0].Visible = false;//ID
             dataGridView1.Columns[1].Visible = false;//T吹膜供料记录ID
-            dataGridView1.Columns[4].Visible = false;//中内层供料量
+            dataGridView1.Columns[5].Visible = false;//中内层供料量
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
@@ -858,7 +877,7 @@ namespace WindowsFormsApplication1
             my.Cells[10, 9].Value = tb余料b2.Text;
             my.Cells[9, 10].Value = tb复核人.Text;
             my.Cells[13, 2].Value = tb外层合计.Text ;
-            my.Cells[13, 3].Value = tb内层合计.Text;
+            my.Cells[13, 3].Value = tb中内层合计.Text;
         }
 
     }

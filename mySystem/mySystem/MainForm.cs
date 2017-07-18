@@ -34,23 +34,7 @@ namespace mySystem
             Parameter.InitConnUser(); //初始化连接到有用户表的数据库
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
-
-            if (Parameter.userID != 0)
-            {
-                if (Parameter.isSqlOk)
-                {
-                    //Parameter.userName = Parameter.IDtoName(Parameter.userID);
-                    //Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
-                    //Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
-                }
-                else
-                {
-                    Parameter.userName = Parameter.IDtoName(Parameter.userID);
-                    Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
-                    Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
-                }
-            }
-
+            
             InitializeComponent();
             RoleInit();
             userLabel.Text = Parameter.userName;
@@ -75,46 +59,49 @@ namespace mySystem
             }
         }
 
-        String Instru = null; //未接受的生产指令
+
+        #region 接收生产指令
+//        String Instru = null; //未接受的生产指令
         //未接收的生产指令
         private void InstruReceive()
         {
-            String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
-            OleDbConnection connOle = new OleDbConnection(strConn);
-            connOle.Open();
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = connOle;
-            comm.CommandText = "select * from 生产指令信息表 where 接收人= @接收人 and 状态=1";
-            comm.Parameters.AddWithValue("@接收人", Parameter.userName);
+//            String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
+//            OleDbConnection connOle = new OleDbConnection(strConn);
+//            connOle.Open();
+//            OleDbCommand comm = new OleDbCommand();
+//            comm.Connection = connOle;
+//            comm.CommandText = "select * from 生产指令信息表 where 接收人= @接收人 and 状态=1";
+//            comm.Parameters.AddWithValue("@接收人", Parameter.userName);
             
-            OleDbDataReader reader = comm.ExecuteReader();//执行查询
-            if (reader.HasRows)
-            {
-                while (reader.Read())
-                {
-                    Instru += reader["生产指令编号"];
-                    Instru += "、"; 
-                }
+//            OleDbDataReader reader = comm.ExecuteReader();//执行查询
+//            if (reader.HasRows)
+//            {
+//                while (reader.Read())
+//                {
+//                    Instru += reader["生产指令编号"];
+//                    Instru += "、"; 
+//                }
                 
-            }
-            //去掉最后一个"、"
-            if (Instru != null)
-            { 
-                Instru = Instru.Substring(0, Instru.Length - 1);
-                MessageBox.Show(Parameter.userName + "请接收生产指令：" + Instru, "注意", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-            }
+//            }
+//            //去掉最后一个"、"
+//            if (Instru != null)
+//            { 
+//                Instru = Instru.Substring(0, Instru.Length - 1);
+//                MessageBox.Show(Parameter.userName + "请接收生产指令：" + Instru, "注意", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+//            }
 
-            //将状态变为已接收
-            OleDbCommand commnew = new OleDbCommand();
-            commnew.Connection = connOle;
-            commnew.CommandText = "UPDATE 生产指令信息表 SET 状态=2 where 接收人= @接收人 and 状态=1";
-            commnew.Parameters.AddWithValue("@接收人", Parameter.userName);
-            commnew.ExecuteNonQuery();
+//            //将状态变为已接收
+//            OleDbCommand commnew = new OleDbCommand();
+//            commnew.Connection = connOle;
+//            commnew.CommandText = "UPDATE 生产指令信息表 SET 状态=2 where 接收人= @接收人 and 状态=1";
+//            commnew.Parameters.AddWithValue("@接收人", Parameter.userName);
+//            commnew.ExecuteNonQuery();
 
-            comm.Dispose();
-            commnew.Dispose();
+//            comm.Dispose();
+//            commnew.Dispose();
         }
+        #endregion
 
         //工序按钮
         private void MainProduceBtn_Click(object sender, EventArgs e)
@@ -139,7 +126,6 @@ namespace mySystem
             foreach (Control control in MainPanel.Controls)
             { control.Dispose(); }   
             MainPanel.Controls.Clear();
-            //MainPanel.Controls[0].Left.controls[0].dis
             MainProduceBtn.BackColor = Color.FromName("Control");
             MainSettingBtn.BackColor = Color.FromArgb(138, 158, 196);
             MainQueryBtn.BackColor = Color.FromName("Control");
@@ -180,18 +166,6 @@ namespace mySystem
             
             if (Parameter.userName != null)
             {
-                if (Parameter.isSqlOk)
-                {
-                    //Parameter.userName = Parameter.IDtoName(Parameter.userID);
-                    //Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
-                    //Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
-                }
-                else
-                {
-                    Parameter.userName = Parameter.IDtoName(Parameter.userID);
-                    Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
-                    Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
-                }
                 userLabel.Text = Parameter.userName;
                 RoleInit();
                 MainProduceBtn.BackColor = Color.FromName("Control");
@@ -208,7 +182,7 @@ namespace mySystem
 
         private void MainForm_Shown(object sender, EventArgs e)
         {
-            InstruReceive();
+            //InstruReceive();
         }
 
 
