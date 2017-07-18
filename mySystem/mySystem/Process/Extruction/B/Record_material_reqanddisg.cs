@@ -269,7 +269,7 @@ namespace mySystem.Extruction.Process
         }
         private void dataGridView1_Endedit(object sender, DataGridViewCellEventArgs e)
         {
-            //重量自己计算
+            //重量计算
             if (e.ColumnIndex == 4)
             {
 
@@ -277,7 +277,32 @@ namespace mySystem.Extruction.Process
                 float b = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
                 dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * b;
             }
-
+            //操作人
+            if (e.ColumnIndex == 8)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[8].Value == null || dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString() == "")
+                    return;
+                int rt = mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
+                if (rt <= 0)
+                {
+                    MessageBox.Show("操作人ID不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[8].Value = "";
+                }
+                return;
+            }
+            //审核人
+            if (e.ColumnIndex == 9)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[9].Value == null || dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString() == "")
+                    return;
+                int rt = mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString());
+                if (rt <= 0)
+                {
+                    MessageBox.Show("审核人ID不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[9].Value = "";
+                }
+                return;
+            }
             //计算合计
             float sum_num = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -491,6 +516,20 @@ namespace mySystem.Extruction.Process
         bool input_Judge()
         {
             //判断合法性
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[8].Value == null || dataGridView1.Rows[i].Cells[8].Value.ToString() == "")
+                {
+                    MessageBox.Show("操作人不能为空");
+                    return false;
+                }
+                if (dataGridView1.Rows[i].Cells[9].Value == null || dataGridView1.Rows[i].Cells[9].Value.ToString() == "")
+                {
+                    MessageBox.Show("审核人不能为空");
+                    return false;
+                }
+                    
+            }
             return true;
         }
         private void cB物料代码_SelectedIndexChanged(object sender, EventArgs e)
