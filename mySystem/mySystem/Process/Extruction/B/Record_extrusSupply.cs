@@ -820,8 +820,9 @@ namespace WindowsFormsApplication1
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            //string dir = System.IO.Directory.GetCurrentDirectory();
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"E:\gitpro\mitprodoc\甲方给的吹膜工序文档\B 下拉菜单文件\SOP-MFG-301-R06 吹膜供料记录_吴.xlsx");
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            dir += "./../../xls/Extrusion/B/SOP-MFG-301-R06 吹膜供料记录.xlsx";
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 修改Sheet中某行某列的值

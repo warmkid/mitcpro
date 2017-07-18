@@ -189,5 +189,10 @@ namespace mySystem.Process.CleanCut
                 dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
             }
         }
+
+        private void bt保存_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
