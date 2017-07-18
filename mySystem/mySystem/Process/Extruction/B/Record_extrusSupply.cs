@@ -475,6 +475,25 @@ namespace WindowsFormsApplication1
             {
                 switch (dc.ColumnName)
                 {
+                    //case "外层供料量":
+                    //    DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                    //    c3.DataPropertyName = dc.ColumnName;
+                    //    c3.HeaderText = dc.ColumnName;
+                    //    c3.Name = cb原料代码ab1c.Text;
+                    //    c3.SortMode = DataGridViewColumnSortMode.Automatic;
+                    //    c3.ValueType = dc.DataType;
+                    //    dataGridView1.Columns.Add(c3);
+                    //    break;
+
+                    //case "中内层供料量":
+                    //    DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
+                    //    c4.DataPropertyName = dc.ColumnName;
+                    //    c4.HeaderText =cb原料代码b2.Text;
+                    //    c4.Name =  dc.ColumnName;
+                    //    c4.SortMode = DataGridViewColumnSortMode.Automatic;
+                    //    c4.ValueType = dc.DataType;
+                    //    dataGridView1.Columns.Add(c4);
+                    //    break;
                     case "原料抽查结果":
                         DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
                         c1.DataPropertyName = dc.ColumnName;
@@ -485,7 +504,7 @@ namespace WindowsFormsApplication1
 
                         c1.Items.Add("合格");
                         c1.Items.Add("不合格");
-                                                dataGridView1.Columns.Add(c1);
+                        dataGridView1.Columns.Add(c1);
                         // 重写cell value changed 事件，自动填写id
                         break;
 
