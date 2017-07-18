@@ -187,6 +187,11 @@ namespace mySystem
                                 Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
                         connOle = Init(strConn, connOle);
                         break;
+                    case 4: //订单、库存
+                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                        connOle = Init(strConn, connOle);
+                        break;
                 }
             }
             else

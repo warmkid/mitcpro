@@ -76,6 +76,7 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -333,25 +334,27 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(38, 348);
+            this.label9.Location = new System.Drawing.Point(280, 348);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(105, 14);
             this.label9.TabIndex = 11;
             this.label9.Text = "中层B2物料占比";
+            this.label9.Visible = false;
             // 
             // tb中层B2物料占比
             // 
-            this.tb中层B2物料占比.Location = new System.Drawing.Point(159, 341);
+            this.tb中层B2物料占比.Location = new System.Drawing.Point(401, 341);
             this.tb中层B2物料占比.Name = "tb中层B2物料占比";
             this.tb中层B2物料占比.ReadOnly = true;
             this.tb中层B2物料占比.Size = new System.Drawing.Size(100, 21);
             this.tb中层B2物料占比.TabIndex = 12;
+            this.tb中层B2物料占比.Visible = false;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(336, 348);
+            this.label10.Location = new System.Drawing.Point(48, 348);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(63, 14);
             this.label10.TabIndex = 13;
@@ -359,7 +362,7 @@
             // 
             // tb工时效率
             // 
-            this.tb工时效率.Location = new System.Drawing.Point(405, 341);
+            this.tb工时效率.Location = new System.Drawing.Point(117, 341);
             this.tb工时效率.Name = "tb工时效率";
             this.tb工时效率.ReadOnly = true;
             this.tb工时效率.Size = new System.Drawing.Size(100, 21);
@@ -407,15 +410,16 @@
             // 
             // tb加料B2
             // 
-            this.tb加料B2.Location = new System.Drawing.Point(1060, 390);
+            this.tb加料B2.Location = new System.Drawing.Point(606, 346);
             this.tb加料B2.Name = "tb加料B2";
             this.tb加料B2.ReadOnly = true;
             this.tb加料B2.Size = new System.Drawing.Size(68, 21);
             this.tb加料B2.TabIndex = 20;
+            this.tb加料B2.Visible = false;
             // 
             // tb工时
             // 
-            this.tb工时.Location = new System.Drawing.Point(1213, 390);
+            this.tb工时.Location = new System.Drawing.Point(1035, 390);
             this.tb工时.Name = "tb工时";
             this.tb工时.ReadOnly = true;
             this.tb工时.Size = new System.Drawing.Size(68, 21);
@@ -485,17 +489,18 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(1001, 392);
+            this.label17.Location = new System.Drawing.Point(547, 348);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(49, 14);
             this.label17.TabIndex = 28;
             this.label17.Text = "加料B2";
+            this.label17.Visible = false;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(1172, 392);
+            this.label18.Location = new System.Drawing.Point(994, 392);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(35, 14);
             this.label18.TabIndex = 29;
@@ -512,12 +517,28 @@
             this.button3.TabIndex = 30;
             this.button3.Text = "保存";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button4.Location = new System.Drawing.Point(25, 483);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 31;
+            this.button4.Text = "测试";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Visible = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // ProdctDaily_extrus
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1327, 516);
+            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label18);
@@ -543,7 +564,7 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "ProdctDaily_extrus";
-            this.Text = "Form1";
+            this.Text = "吹膜生产日报表";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
@@ -605,6 +626,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
         private System.Windows.Forms.TextBox tb生产指令;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
 
     }
 }

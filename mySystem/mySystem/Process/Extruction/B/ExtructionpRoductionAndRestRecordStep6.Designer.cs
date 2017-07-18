@@ -301,6 +301,7 @@
             this.printBtn.TabIndex = 31;
             this.printBtn.Text = "打印";
             this.printBtn.UseVisualStyleBackColor = true;
+            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
             // 
             // cb产品名称
             // 

@@ -25,7 +25,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-
+using System.Runtime.InteropServices;
 using WindowsFormsApplication1;
 
 namespace BatchProductRecord
@@ -148,6 +148,43 @@ namespace BatchProductRecord
             bt查询插入.Enabled = true;
           
         }
+
+        public ProcessProductInstru(mySystem.MainForm mainform,int id)
+            : base(mainform)
+        {
+            InitializeComponent();
+            init();
+
+            //readparam();
+            //fill_prodart();
+            //fill_prodname();
+            //fill_matcode();
+            //fill_respons_user();
+            string asql = "select * from 生产指令信息表 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            string instrcode = tempdt.Rows[0]["生产指令编号"].ToString();
+
+
+            readOuterData(instrcode);
+            removeOuterBinding();
+            outerBind();
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = false;
+            }
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+
+        }
+
         private void init()
         {
             connOle = mySystem.Parameter.connOle;
@@ -951,15 +988,19 @@ namespace BatchProductRecord
                 return;
             }
             tb中层比例.Text = (100 - a).ToString() ;
-            float sum = float.Parse(tb用料重量合计.Text);
-            //tb内外领料量.Text = (sum / 100 * a).ToString();
-            //tb中层领料量.Text = (sum / 100 * (100 - a)).ToString();
-            dt_prodinstr.Rows[0]["内外层领料量"] = (sum / 100 * a).ToString();
-            dt_prodinstr.Rows[0]["中层领料量"] = (sum / 100 * (100 - a)).ToString();
-            dt_prodinstr.Rows[0]["比例"]=(a/(100-a)).ToString();
+            if (tb用料重量合计.Text != "")
+            {
+                float sum = float.Parse(tb用料重量合计.Text);
+                //tb内外领料量.Text = (sum / 100 * a).ToString();
+                //tb中层领料量.Text = (sum / 100 * (100 - a)).ToString();
+                dt_prodinstr.Rows[0]["内外层领料量"] = (sum / 100 * a).ToString();
+                dt_prodinstr.Rows[0]["中层领料量"] = (sum / 100 * (100 - a)).ToString();
+                dt_prodinstr.Rows[0]["比例"] = (a / (100 - a)).ToString();
 
-            bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                bs_prodinstr.EndEdit();
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+
         }
 
         //白班按钮
@@ -1105,6 +1146,96 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
             dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
             dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
+        }
+
+        private void button1_Click(object sender, System.EventArgs e)
+        {
+            (new ProcessProductInstru(mainform, 2)).Show();
+        }
+
+        private void bt打印_Click(object sender, System.EventArgs e)
+        {
+            print(true);
+        }
+
+        public void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //string dir = System.IO.Directory.GetCurrentDirectory();
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"E:\gitpro\mitprodoc\甲方给的吹膜工序文档\A 下拉菜单文件\SOP-MFG-301-R01 吹膜工序生产指令_吴.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[2, 1].Value = "PEF 吹膜工序生产指令";
+            my.Cells[3, 1].Value = "产品名称："+comboBox1.Text;
+            my.Cells[3, 9].Value = "生产指令编号：" + tb指令编号.Text;
+            my.Cells[4, 1].Value = "生产工艺：" + cb工艺.Text;          
+            my.Cells[4, 6].Value = "生产设备编号：" + tb设备编号.Text;
+            my.Cells[4, 9].Value = "开始生产日期：" + dtp开始生产日期.Value.ToLongDateString();
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                my.Cells[7 + i, 8] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[7 + i, 9] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[7 + i, 10] = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                my.Cells[7 + i, 11] = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[10].Value.ToString();
+            }
+
+            my.Cells[16, 6].Value = cb内外层物料代码.Text;
+            my.Cells[16, 8].Value = tb内外层物料批号.Text;
+            my.Cells[16, 9].Value = tb内外层包装规格.Text;
+            my.Cells[16, 10].Value = tb内外领料量.Text;
+
+            my.Cells[17, 6].Value = cb中层物料代码.Text;
+            my.Cells[17, 8].Value = tb中层物料批号.Text;
+            my.Cells[17, 9].Value = tb中层包装规格.Text;
+            my.Cells[17, 10].Value = tb中层领料量.Text;
+
+            my.Cells[18, 6].Value = textBox12.Text;
+            my.Cells[18, 9].Value = textBox13.Text;
+            my.Cells[18, 10].Value = tb卷心管领料量.Text;
+
+            my.Cells[20, 6].Value = textBox7.Text;
+            my.Cells[20, 9].Value = textBox9.Text;
+            my.Cells[20, 10].Value = tb双层包装领料量.Text;
+
+            my.Cells[16, 12].Value = "白班："+tb白班.Text+"\n"+"夜班："+tb夜班.Text;
+            my.Cells[21, 2].Value = tb备注.Text;
+
+            my.Cells[22, 1].Value = "编制人：" + tb编制人.Text + "\n" +dateTimePicker2.Value.ToLongDateString();
+            my.Cells[22, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToLongDateString();
+            my.Cells[22, 9].Value = "接受人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToLongDateString();
         }
     }
 }

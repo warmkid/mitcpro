@@ -427,10 +427,10 @@
     <Compile Include="Process\CleanCut\Record_cleansite_cut.Designer.cs">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\CleanCut\A\HandOver.cs">
+    <Compile Include="Process\Extruction\A\HandOver.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\CleanCut\A\HandOver.Designer.cs">
+    <Compile Include="Process\Extruction\A\HandOver.Designer.cs">
       <DependentUpon>HandOver.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\B\Running.cs">
@@ -497,10 +497,10 @@
     <Compile Include="Process\Extruction\ExtructionMainForm.Designer.cs">
       <DependentUpon>ExtructionMainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\CleanCut\A\BatchProductRecord.cs">
+    <Compile Include="Process\Extruction\A\BatchProductRecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\CleanCut\A\BatchProductRecord.Designer.cs">
+    <Compile Include="Process\Extruction\A\BatchProductRecord.Designer.cs">
       <DependentUpon>BatchProductRecord.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\Label.cs">
@@ -521,10 +521,10 @@
     <Compile Include="Process\Extruction\D\ExtructionReplaceCore.Designer.cs">
       <DependentUpon>ExtructionReplaceCore.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\CleanCut\A\ProcessProductInstru.cs">
+    <Compile Include="Process\Extruction\A\ProcessProductInstru.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\CleanCut\A\ProcessProductInstru.Designer.cs">
+    <Compile Include="Process\Extruction\A\ProcessProductInstru.Designer.cs">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\B\ProductInnerPackagingRecord.cs">
@@ -544,6 +544,66 @@
     </Compile>
     <Compile Include="Process\Extruction\D\Record_train.Designer.cs">
       <DependentUpon>Record_train.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Order\添加订单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Order\添加订单.Designer.cs">
+      <DependentUpon>添加订单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Order\订单管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Order\订单管理.Designer.cs">
+      <DependentUpon>订单管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\入库.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\入库.Designer.cs">
+      <DependentUpon>入库.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\出库.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\出库.Designer.cs">
+      <DependentUpon>出库.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\商品设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\商品设置.Designer.cs">
+      <DependentUpon>商品设置.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\库存管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\库存管理.Designer.cs">
+      <DependentUpon>库存管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\库存管理主界面.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\库存管理主界面.Designer.cs">
+      <DependentUpon>库存管理主界面.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\添加采购单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\添加采购单.designer.cs">
+      <DependentUpon>添加采购单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\退货.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\退货.Designer.cs">
+      <DependentUpon>退货.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\采购单管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\采购单管理.Designer.cs">
+      <DependentUpon>采购单管理.cs</DependentUpon>
     </Compile>
     <Compile Include="Query\QueryInstruForm.cs">
       <SubType>Form</SubType>
@@ -593,10 +653,10 @@
     <Compile Include="Setting\CleanArea_add.designer.cs">
       <DependentUpon>CleanArea_add.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\CleanCut\A\HandoverRecordofExtrusionProcess.cs">
+    <Compile Include="Process\Extruction\A\HandoverRecordofExtrusionProcess.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\CleanCut\A\HandoverRecordofExtrusionProcess.designer.cs">
+    <Compile Include="Process\Extruction\A\HandoverRecordofExtrusionProcess.designer.cs">
       <DependentUpon>HandoverRecordofExtrusionProcess.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\B\MaterialBalenceofExtrusionProcess.cs">
@@ -683,16 +743,16 @@
     <Compile Include="Process\Extruction\B\ExtructionTransportRecordStep4.Designer.cs">
       <DependentUpon>ExtructionTransportRecordStep4.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\CleanCut\A\Record_extrusClean.cs">
+    <Compile Include="Process\Extruction\A\Record_extrusClean.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\CleanCut\A\Record_extrusClean.designer.cs">
+    <Compile Include="Process\Extruction\A\Record_extrusClean.designer.cs">
       <DependentUpon>Record_extrusClean.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\CleanCut\A\Record_extrusSiteClean.cs">
+    <Compile Include="Process\Extruction\A\Record_extrusSiteClean.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\CleanCut\A\Record_extrusSiteClean.Designer.cs">
+    <Compile Include="Process\Extruction\A\Record_extrusSiteClean.Designer.cs">
       <DependentUpon>Record_extrusSiteClean.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\B\Record_extrusSupply.cs">
@@ -904,9 +964,6 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_batchproduction.resx">
       <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_checklist.resx">
-      <DependentUpon>PTVBag_checklist.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_clearance.resx">
       <DependentUpon>PTVBag_clearance.cs</DependentUpon>
     </EmbeddedResource>
@@ -949,7 +1006,7 @@
     <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\CleanCut\A\HandOver.resx">
+    <EmbeddedResource Include="Process\Extruction\A\HandOver.resx">
       <DependentUpon>HandOver.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\outerpack.resx">
@@ -974,7 +1031,7 @@
     <EmbeddedResource Include="Process\Extruction\ExtructionMainForm.resx">
       <DependentUpon>ExtructionMainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\CleanCut\A\BatchProductRecord.resx">
+    <EmbeddedResource Include="Process\Extruction\A\BatchProductRecord.resx">
       <DependentUpon>BatchProductRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\Label.resx">
@@ -986,7 +1043,7 @@
     <EmbeddedResource Include="Process\Extruction\D\ExtructionReplaceCore.resx">
       <DependentUpon>ExtructionReplaceCore.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\CleanCut\A\ProcessProductInstru.resx">
+    <EmbeddedResource Include="Process\Extruction\A\ProcessProductInstru.resx">
       <DependentUpon>ProcessProductInstru.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\ProductInnerPackagingRecord.resx">
@@ -998,8 +1055,38 @@
     <EmbeddedResource Include="Process\Extruction\D\Record_train.resx">
       <DependentUpon>Record_train.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Order\添加订单.resx">
+      <DependentUpon>添加订单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Order\订单管理.resx">
+      <DependentUpon>订单管理.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\ProcessMainForm.resx">
       <DependentUpon>ProcessMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\入库.resx">
+      <DependentUpon>入库.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\出库.resx">
+      <DependentUpon>出库.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\商品设置.resx">
+      <DependentUpon>商品设置.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\库存管理.resx">
+      <DependentUpon>库存管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\库存管理主界面.resx">
+      <DependentUpon>库存管理主界面.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\添加采购单.resx">
+      <DependentUpon>添加采购单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\退货.resx">
+      <DependentUpon>退货.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\采购单管理.resx">
+      <DependentUpon>采购单管理.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryExtruForm.resx">
       <DependentUpon>QueryExtruForm.cs</DependentUpon>
@@ -1022,7 +1109,7 @@
     <EmbeddedResource Include="Setting\CleanArea_add.resx">
       <DependentUpon>CleanArea_add.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\CleanCut\A\HandoverRecordofExtrusionProcess.resx">
+    <EmbeddedResource Include="Process\Extruction\A\HandoverRecordofExtrusionProcess.resx">
       <DependentUpon>HandoverRecordofExtrusionProcess.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\MaterialBalenceofExtrusionProcess.resx">
@@ -1067,10 +1154,10 @@
     <EmbeddedResource Include="Process\Extruction\B\ExtructionTransportRecordStep4.resx">
       <DependentUpon>ExtructionTransportRecordStep4.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\CleanCut\A\Record_extrusClean.resx">
+    <EmbeddedResource Include="Process\Extruction\A\Record_extrusClean.resx">
       <DependentUpon>Record_extrusClean.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\CleanCut\A\Record_extrusSiteClean.resx">
+    <EmbeddedResource Include="Process\Extruction\A\Record_extrusSiteClean.resx">
       <DependentUpon>Record_extrusSiteClean.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\Record_extrusSupply.resx">
@@ -1128,6 +1215,7 @@
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram3.cd" />
+    <None Include="ClassDiagram4.cd" />
     <None Include="myDataSet.xsc">
       <DependentUpon>myDataSet.xsd</DependentUpon>
     </None>

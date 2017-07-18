@@ -169,6 +169,7 @@
             this.printBtn.TabIndex = 17;
             this.printBtn.Text = "打印";
             this.printBtn.UseVisualStyleBackColor = true;
+            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
             // 
             // dataGridView1
             // 

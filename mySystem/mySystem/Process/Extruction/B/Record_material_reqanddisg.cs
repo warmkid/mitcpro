@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Extruction.Process
 {
@@ -46,6 +47,36 @@ namespace mySystem.Extruction.Process
             InitializeComponent();            
             init();
             addmatcode();
+        }
+
+        public Record_material_reqanddisg(MainForm mainform,int id)
+            : base(mainform)
+        {
+            InitializeComponent();
+            init();
+            //addmatcode();
+            string asql = "select * from 吹膜工序领料退料记录 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            cB物料代码.Text = tempdt.Rows[0]["物料代码"].ToString();
+            readOuterData(instrid, tempdt.Rows[0]["物料代码"].ToString());
+            removeOuterBinding();
+            outerBind();
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = false;
+            }
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+
         }
 
         //供界面显示,参数为数据库中对应记录的id
@@ -133,7 +164,7 @@ namespace mySystem.Extruction.Process
             //判断合法性
             if (!input_Judge())
                 return;
-
+            
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
@@ -145,6 +176,7 @@ namespace mySystem.Extruction.Process
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
+            bt退料审核.Enabled = true;
         }
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -237,7 +269,7 @@ namespace mySystem.Extruction.Process
         }
         private void dataGridView1_Endedit(object sender, DataGridViewCellEventArgs e)
         {
-            //重量自己计算
+            //重量计算
             if (e.ColumnIndex == 4)
             {
 
@@ -245,7 +277,32 @@ namespace mySystem.Extruction.Process
                 float b = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
                 dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * b;
             }
-
+            //操作人
+            if (e.ColumnIndex == 8)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[8].Value == null || dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString() == "")
+                    return;
+                int rt = mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
+                if (rt <= 0)
+                {
+                    MessageBox.Show("操作人ID不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[8].Value = "";
+                }
+                return;
+            }
+            //审核人
+            if (e.ColumnIndex == 9)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[9].Value == null || dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString() == "")
+                    return;
+                int rt = mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString());
+                if (rt <= 0)
+                {
+                    MessageBox.Show("审核人ID不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[9].Value = "";
+                }
+                return;
+            }
             //计算合计
             float sum_num = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -285,7 +342,17 @@ namespace mySystem.Extruction.Process
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);            
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+
+            if (checkform.ischeckOk)
+            {
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = false;
+                }
+                cB物料代码.Enabled = true;
+                bt打印.Enabled = true;
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -317,10 +384,13 @@ namespace mySystem.Extruction.Process
             dr["数量"] = 0;
             dr["重量每件"] = 0;
             dr["重量"] = 0;
-            dr["包装完好_是"] = true;
-            dr["包装完好_否"] = false;
-            dr["清洁合格_是"] = true;
-            dr["清洁合格_否"] = false;
+            dr["包装完好"] = "是";
+            dr["清洁合格"] = "合格";
+            dr["操作人"] = mySystem.Parameter.userName;
+            //dr["包装完好_是"] = true;
+            //dr["包装完好_否"] = false;
+            //dr["清洁合格_是"] = true;
+            //dr["清洁合格_否"] = false;
             return dr;
         }
         // 根据条件从数据库中读取一行外表的数据
@@ -367,16 +437,66 @@ namespace mySystem.Extruction.Process
         // 内表和控件的绑定
         void innerBind()
         {
+            while (dataGridView1.Columns.Count > 0)
+            {
+                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+            }
+            setDataGridViewColumns();
+
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
-            setDataGridViewColumns();
+            setDataGridViewRowNums();
         }
         // 设置DataGridView中各列的格式
         void setDataGridViewColumns()
         {
-            dataGridView1.Columns[0].Visible = false;//ID
-            dataGridView1.Columns[1].Visible = false;//T吹膜工序领料退料记录ID
-            dataGridView1.Columns[5].ReadOnly = true;//重量
+            foreach (DataColumn dc in dt_prodlist.Columns)
+            {
+                switch (dc.ColumnName)
+                {
+                    case "包装完好":
+                        DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
+                        c1.DataPropertyName = dc.ColumnName;
+                        c1.HeaderText = dc.ColumnName;
+                        c1.Name = dc.ColumnName;
+                        c1.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c1.ValueType = dc.DataType;
+                        // 如果换了名字会报错，把当前值也加上就好了
+                        // 加序号，按序号显示
+                        c1.Items.Add("是");
+                        c1.Items.Add("否");
+                        dataGridView1.Columns.Add(c1);
+                        // 重写cell value changed 事件，自动填写id
+                        break;
+
+                    case "清洁合格":
+                        DataGridViewComboBoxColumn c3 = new DataGridViewComboBoxColumn();
+                        c3.DataPropertyName = dc.ColumnName;
+                        c3.HeaderText = dc.ColumnName;
+                        c3.Name = dc.ColumnName;
+                        c3.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c3.ValueType = dc.DataType;
+                        // 如果换了名字会报错，把当前值也加上就好了
+                        // 加序号，按序号显示
+                        c3.Items.Add("合格");
+                        c3.Items.Add("不合格");
+                        dataGridView1.Columns.Add(c3);
+                        // 重写cell value changed 事件，自动填写id
+                        break;
+
+                    default:
+                        DataGridViewTextBoxColumn c2 = new DataGridViewTextBoxColumn();
+                        c2.DataPropertyName = dc.ColumnName;
+                        c2.HeaderText = dc.ColumnName;
+                        c2.Name = dc.ColumnName;
+                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c2.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c2);
+                        break;
+                }
+            }
+
+
 
         }
         //设置datagridview序号
@@ -386,12 +506,30 @@ namespace mySystem.Extruction.Process
             //{
             //    dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
             //}
+
+            dataGridView1.Columns[0].Visible = false;//ID
+            dataGridView1.Columns[1].Visible = false;//T吹膜工序领料退料记录ID
+            dataGridView1.Columns[5].ReadOnly = true;//重量
         }
 
         //判断数据合法性
         bool input_Judge()
         {
             //判断合法性
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[8].Value == null || dataGridView1.Rows[i].Cells[8].Value.ToString() == "")
+                {
+                    MessageBox.Show("操作人不能为空");
+                    return false;
+                }
+                if (dataGridView1.Rows[i].Cells[9].Value == null || dataGridView1.Rows[i].Cells[9].Value.ToString() == "")
+                {
+                    MessageBox.Show("审核人不能为空");
+                    return false;
+                }
+                    
+            }
             return true;
         }
         private void cB物料代码_SelectedIndexChanged(object sender, EventArgs e)
@@ -400,6 +538,8 @@ namespace mySystem.Extruction.Process
             {
                 c.Enabled = true;
             }
+            bt退料审核.Enabled = false;
+            bt打印.Enabled = false;
 
             readOuterData(instrid,cB物料代码.Text);
             removeOuterBinding();
@@ -430,7 +570,69 @@ namespace mySystem.Extruction.Process
 
         private void bt打印_Click(object sender, EventArgs e)
         {
+            print(true);
+        }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            (new Record_material_reqanddisg(mainform, 4)).Show();
+        }
+
+        public void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //string dir = System.IO.Directory.GetCurrentDirectory();
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"E:\gitpro\mitprodoc\甲方给的吹膜工序文档\B 下拉菜单文件\SOP-MFG-301-R14 吹膜工序领料退料记录_吴.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[3, 1].Value = "物料代码："+cB物料代码.Text;
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DateTime tempdt = DateTime.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString());
+                my.Cells[5 + i, 1] = tempdt.ToLongDateString();
+                my.Cells[5 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[5 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[5 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                my.Cells[5 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[5 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[5 + i, 7] = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                my.Cells[5 + i, 8] = dataGridView1.Rows[i].Cells[9].Value.ToString();
+            }
+
+            my.Cells[29, 2].Value = tb数量.Text;
+            my.Cells[29, 4].Value = tb重量.Text;
+            my.Cells[29, 5].Value = "退料："+tb退料量.Text;
+            my.Cells[29, 7].Value = tb退料操作人.Text;
+            my.Cells[29, 8].Value = tb退料审核人.Text;
         }
     }
 }

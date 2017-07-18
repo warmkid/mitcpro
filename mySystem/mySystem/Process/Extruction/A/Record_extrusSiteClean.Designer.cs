@@ -53,6 +53,7 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -180,6 +181,7 @@
             this.bt打印.TabIndex = 12;
             this.bt打印.Text = "打印";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // bt审核
             // 
@@ -308,11 +310,24 @@
             this.label11.TabIndex = 16;
             this.label11.Text = "供料工序清场项目";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(12, 440);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 17;
+            this.button1.Text = "测试";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // Record_extrusSiteClean
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1026, 475);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label2);
@@ -332,7 +347,7 @@
             this.Controls.Add(this.bt审核);
             this.Controls.Add(this.bt保存);
             this.Name = "Record_extrusSiteClean";
-            this.Text = "Record_extrusSiteClean";
+            this.Text = "吹膜工序清场记录";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
@@ -369,5 +384,6 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button button1;
     }
 }

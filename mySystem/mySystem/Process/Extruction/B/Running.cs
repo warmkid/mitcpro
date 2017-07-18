@@ -11,6 +11,7 @@ using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Extruction.B
 {
@@ -74,11 +75,13 @@ namespace mySystem.Process.Extruction.B
             }
             if (txb审核人.Text.ToString().Trim() == "")
             {
-                MessageBox.Show("no reviewer checked");
+                MessageBox.Show("没有审核人信息");
                 e.Cancel = true;
                
             }
-            
+
+            //test for print
+            btn打印.Enabled = true;
         }
 
         public Running(mySystem.MainForm mainform, int Id)
@@ -107,10 +110,13 @@ namespace mySystem.Process.Extruction.B
             outerBind();
             cmb产品代码.Text = dtRunning.Rows[0]["产品代码"].ToString();
 
+            btn保存.Visible = false;
+            btn审核.Visible = false;
             foreach (Control c in this.Controls)
             {
                 c.Enabled = false;
             }
+            btn打印.Enabled = true;
         }
 
         private void getSetting()
@@ -457,6 +463,10 @@ namespace mySystem.Process.Extruction.B
             btn保存.Enabled = true;
             setAble(true);
             btn审核.Enabled = false;
+
+
+            //test for print
+            btn打印.Enabled = true;
         }
         void Running_Leave10(object sender, EventArgs e)
         {
@@ -467,7 +477,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -484,7 +494,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -501,7 +511,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -518,7 +528,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -535,7 +545,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -552,7 +562,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -569,7 +579,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -586,7 +596,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -603,7 +613,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -620,7 +630,7 @@ namespace mySystem.Process.Extruction.B
                 double diff = Convert.ToDouble(dtSetting.Rows[0]["温度公差"]);
                 if (System.Math.Abs(content - setting) > diff)
                 {
-                    MessageBox.Show("beyond standard");
+                    MessageBox.Show("超出标准");
                     ((TextBox)sender).Focus();
                 }
             }
@@ -641,7 +651,7 @@ namespace mySystem.Process.Extruction.B
             }
             catch
             {
-                MessageBox.Show("format error");
+                MessageBox.Show("格式错误");
                 ((TextBox)sender).Focus();
             }
         }
@@ -662,6 +672,7 @@ namespace mySystem.Process.Extruction.B
             dr["生产日期"] = _Date;
             dr["记录时间"] = _Time;
             dr["记录人"] = Parameter.userName;
+            dr["审核人"] = "";
             return dr;
         }
         void outerBind()
@@ -756,19 +767,23 @@ namespace mySystem.Process.Extruction.B
         }
         public override void CheckResult()
         {
-            base.CheckResult();
-            txb审核人.Text = check.userName.ToString();
-            dtRunning.Rows[0]["审核人"] = check.userName.ToString();
-            dtRunning.Rows[0]["审核意见"] = check.opinion.ToString();
-            dtRunning.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
-            bsRunning.EndEdit();
-            daRunning.Update((DataTable)bsRunning.DataSource);
-            readOuterData(Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date, _Time);
-            removeOuterBinding();
-            outerBind();
-            foreach (Control c in this.Controls)
+            if (check.ischeckOk)
             {
-                c.Enabled = false;
+                base.CheckResult();
+                txb审核人.Text = check.userName.ToString();
+                dtRunning.Rows[0]["审核人"] = check.userName.ToString();
+                dtRunning.Rows[0]["审核意见"] = check.opinion.ToString();
+                dtRunning.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
+                bsRunning.EndEdit();
+                daRunning.Update((DataTable)bsRunning.DataSource);
+                readOuterData(Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date, _Time);
+                removeOuterBinding();
+                outerBind();
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = false;
+                }
+                btn打印.Enabled = true;
             }
         }
         private void btn审核_Click(object sender, EventArgs e)
@@ -776,7 +791,98 @@ namespace mySystem.Process.Extruction.B
             check = new CheckForm(this);
             check.Show();
         }
-        
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            print(true);
+        }
+        public void print(bool preview)
+		{
+			// 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\C\SOP-MFG-301-R08 吹膜机组运行记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
+            // 设置该进程是否可见
+            oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+
+            my.Cells[3, 1].Value = "产品代码：" + cmb产品代码.Text.ToString();
+            my.Cells[3, 5].Value = "批号：" + txb产品批号.Text;
+            my.Cells[3, 7].Value = "生产日期：" + dtp生产日期.Value.ToLongDateString();
+            my.Cells[3, 10].Value = "记录时间：" + dtp记录时间.Value.ToShortTimeString();
+            my.Cells[3, 12].Value = "记录人：" + txb记录人.Text;
+            my.Cells[3, 14].Value = "复核人：" + txb审核人.Text;
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    my.Cells[6+j, 2+i].Value = array1[i+1][j+1].Text;
+                }
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                my.Cells[10, 2 + i].Value = array1[i + 1][5].Text;
+            }
+
+            my.Cells[9, 7] = array1[6][4].Text;
+
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    my.Cells[14 + j, 2 + i].Value = array1[i + 1][j + 9].Text;
+                }
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    my.Cells[7 + j, 10 + i].Value = array1[i + 8][j + 2].Text;
+                }
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    my.Cells[8 + j, 12 + i].Value = array1[i + 10][j + 3].Text;
+                }
+            }
+
+            for (int j = 0; j < 4; j++)
+            {
+                my.Cells[7 + j, 14].Value = array1[12][j + 2].Text;
+            }
+
+            my.Cells[16, 10] =  "A层 "+array1[9][11].Text+"  (℃)";
+            my.Cells[16, 12] = "B层 "+array1[11][11].Text+"  (℃)";
+            my.Cells[16, 14] = "C层 " + array1[13][11].Text + "  (℃)";
+
+			if(preview)
+			{
+            // 让这个Sheet为被选中状态
+            my.Select();  
+			 oXL.Visible=true; //加上这一行  就相当于预览功能
+            }
+			else
+			{	
+			// 直接用默认打印机打印该Sheet
+           // my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+            // 关闭文件，false表示不保存
+            wb.Close(false);
+            // 关闭Excel进程
+            oXL.Quit();
+            // 释放COM资源
+            Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(oXL);
+			}
+		}
 
         
     }

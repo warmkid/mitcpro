@@ -140,6 +140,10 @@ namespace mySystem
         private DataTable dt工艺;
         private BindingSource bs工艺;
         private OleDbCommandBuilder cb工艺;
+        private OleDbDataAdapter da废品;
+        private DataTable dt废品;
+        private BindingSource bs废品;
+        private OleDbCommandBuilder cb废品;
         //dgv样式初始化
         private void Initdgv()
         {
@@ -186,6 +190,18 @@ namespace mySystem
             dgv工艺.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv工艺.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv工艺.Font = new Font("宋体", 12);
+
+
+            bs废品 = new BindingSource();
+            dgv废品.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv废品.AllowUserToAddRows = false;
+            dgv废品.ReadOnly = false;
+            dgv废品.RowHeadersVisible = false;
+            dgv废品.AllowUserToResizeColumns = true;
+            dgv废品.AllowUserToResizeRows = false;
+            dgv废品.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv废品.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv废品.Font = new Font("宋体", 12);
 
         }
 
@@ -251,6 +267,21 @@ namespace mySystem
             this.dgv工艺.Columns["工艺名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv工艺.Columns["ID"].Visible = false;
 
+            //**************************   废品    ***********************************
+            dt废品 = new DataTable("设置废品产生原因"); //""中的是表名
+            da废品 = new OleDbDataAdapter("select * from 设置废品产生原因", mySystem.Parameter.connOle);
+            cb废品 = new OleDbCommandBuilder(da废品);
+            dt废品.Columns.Add("序号", System.Type.GetType("System.String"));
+            da废品.Fill(dt废品);
+            bs废品.DataSource = dt废品;
+            this.dgv废品.DataSource = bs废品.DataSource;
+            //显示序号
+            numFresh(this.dgv废品);
+            this.dgv废品.Columns["废品产生原因"].MinimumWidth = 250;
+            this.dgv废品.Columns["废品产生原因"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv废品.Columns["废品产生原因"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv废品.Columns["ID"].Visible = false;
+
         }
 
         private void add产品_Click(object sender, EventArgs e)
@@ -309,6 +340,19 @@ namespace mySystem
             numFresh(this.dgv工艺);
         }
 
+        private void add废品_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt废品.NewRow();
+            dt废品.Rows.InsertAt(dt废品.NewRow(), dt废品.Rows.Count);
+            numFresh(this.dgv废品);
+        }
+
+        private void del废品_Click(object sender, EventArgs e)
+        {
+            int deletenum = this.dgv废品.CurrentRow.Index;
+            this.dgv废品.Rows.RemoveAt(deletenum);
+            numFresh(this.dgv废品);
+        }
 
         private void numFresh(DataGridView dgv)
         {
@@ -319,7 +363,7 @@ namespace mySystem
             }
         }
 
-        private void dgv4Save()
+        private void dgv5Save()
         {
             if (isSqlOk)
             { }
@@ -344,6 +388,11 @@ namespace mySystem
                 dt工艺.Clear();
                 da工艺.Fill(dt工艺);
                 numFresh(this.dgv工艺);
+
+                da废品.Update((DataTable)bs废品.DataSource);
+                dt废品.Clear();
+                da废品.Fill(dt废品);
+                numFresh(this.dgv废品);
             }
         }
 
@@ -364,13 +413,15 @@ namespace mySystem
                     setcleanDlg.DataSave();
                     handoverDlg.DataSave();
                     ParaSave();
-                    dgv4Save();
+                    dgv5Save();
                 }
                 MessageBox.Show("保存成功！");
             }
             catch
             { MessageBox.Show("保存失败！"); }
         }
+
+        
         
 
     }

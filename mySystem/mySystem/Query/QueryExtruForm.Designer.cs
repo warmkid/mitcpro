@@ -145,7 +145,6 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "批生产记录（吹膜）",
-            "吹膜工序生产指令",
             "吹膜机组清洁记录",
             "吹膜岗位交接班记录",
             "吹膜工序清场记录",

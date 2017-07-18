@@ -152,5 +152,11 @@ namespace mySystem.Process.CleanCut
             //mySystem.CheckForm checkform = new mySystem.CheckForm(mainform);
             //checkform.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            
+        }
+
     }
 }

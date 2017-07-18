@@ -10,6 +10,7 @@ using mySystem.Extruction.Process;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace WindowsFormsApplication1
 {
@@ -21,7 +22,6 @@ namespace WindowsFormsApplication1
         mySystem.CheckForm checkform;
 
         private int label_prodcode;//0代表往里填列表项
-        private int label_matcode;//0代表往里填列表项
         private DataTable dt_prodinstr, dt_prodlist;
         private OleDbDataAdapter da_prodinstr, da_prodlist;
         private BindingSource bs_prodinstr, bs_prodlist;
@@ -78,6 +78,51 @@ namespace WindowsFormsApplication1
             cb产品代码.Enabled = true;
             dtp供料日期.Enabled = true;
         }
+
+        public Record_extrusSupply(mySystem.MainForm mainform,int id)
+            : base(mainform)
+        {
+            conn = mainform.conn;
+            connOle = mainform.connOle;
+            isSqlOk = mainform.isSqlOk;
+
+            InitializeComponent();
+            foreach (Control c in this.Controls)
+            {
+                c.Enabled = false;
+            }
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+
+            init();
+            label_prodcode = 0;
+            //addprodcode(mySystem.Parameter.proInstruID);
+            //addmatcode(mySystem.Parameter.proInstruID);
+            label_prodcode = 1;
+
+            string asql = "select * from 吹膜供料记录 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            int instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+            string prodcode = tempdt.Rows[0]["产品代码"].ToString();
+            DateTime time = (DateTime)tempdt.Rows[0]["供料日期"];
+            bool flight = (bool)tempdt.Rows[0]["班次"];
+
+            readOuterData(instrid, prodcode, time, flight);
+            removeOuterBinding();
+            outerBind();
+
+            ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["班次"];
+            ckb夜班.Checked = !ckb白班.Checked;
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+        }
+
         //根据id填表
         public void show(int paraid)
         {
@@ -738,6 +783,82 @@ namespace WindowsFormsApplication1
             //dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
             //dt_prodinstr.Rows[0]["中内层供料量合计b"] = sum_inmid;
             //dt_prodinstr.Rows[0]["中层供料量合计c"] = sum_mid;
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            Record_extrusSupply s=new Record_extrusSupply(mainform, 5);           
+            s.Show();
+        }
+
+        private void bt打印_Click(object sender, EventArgs e)
+        {
+            print(true);
+        }
+
+        public void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //string dir = System.IO.Directory.GetCurrentDirectory();
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"E:\gitpro\mitprodoc\甲方给的吹膜工序文档\B 下拉菜单文件\SOP-MFG-301-R06 吹膜供料记录_吴.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[3, 1].Value = "产品代码: "+cb产品代码.Text;
+            my.Cells[3, 5].Value = "产品批号: " + tb产品批号.Text ;
+            my.Cells[3, 7].Value = "生产指令编号: " + tb生产指令.Text ;
+            my.Cells[5, 6].Value = cb原料代码ab1c.Text;
+            my.Cells[5, 8].Value = tb原料批号ab1c.Text;
+            my.Cells[6, 6].Value = cb原料代码b2.Text;
+            my.Cells[6, 8].Value = tb原料批号b2.Text;
+
+            my.Cells[7, 1].Value = "供料日期时间: "+dtp供料日期.Value.ToLongDateString();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DateTime tempdt=DateTime.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString());
+                string time = string.Format("{0}:{1}:{2}", tempdt.Hour.ToString(), tempdt.Minute.ToString(), tempdt.Second.ToString());
+                my.Cells[9 + i, 1] = time;
+                my.Cells[9 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[9 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[9 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[9 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+            }
+
+            my.Cells[9, 8].Value = tb用料ab1c.Text;
+            my.Cells[9, 9].Value = tb余料ab1c.Text;
+
+            my.Cells[10, 8].Value = tb用料b2.Text;
+            my.Cells[10, 9].Value = tb余料b2.Text;
+            my.Cells[9, 10].Value = tb复核人.Text;
+            my.Cells[13, 2].Value = tb外层合计.Text ;
+            my.Cells[13, 3].Value = tb内层合计.Text;
         }
 
     }
