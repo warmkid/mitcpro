@@ -33,14 +33,18 @@ namespace mySystem
                 String mypassword = this.UserPWTextBox.Text;
                 if (Parameter.isSqlOk)
                 {
-                    Parameter.userID = CheckUser(Parameter.connUser, myID, mypassword);
+                    //Parameter.userID = CheckUser(Parameter.connUser, myID, mypassword);
                 }
                 else
                 {
                     Parameter.userID = CheckUser(Parameter.connOleUser, myID, mypassword);
+                    Parameter.userName = Parameter.IDtoName(Parameter.userID);
+                    Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
+                    Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
                 }
-
             }
+
+            InstruReceive();
 
         }
 
@@ -139,6 +143,47 @@ namespace mySystem
             Application.ExitThread();
         }
 
+
+        String Instru = null; //未接受的生产指令
+        //未接收的生产指令
+        private void InstruReceive()
+        {
+            String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
+            OleDbConnection connOle = new OleDbConnection(strConn);
+            connOle.Open();
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = connOle;
+            comm.CommandText = "select * from 生产指令信息表 where 接收人= @接收人 and 状态=1";
+            comm.Parameters.AddWithValue("@接收人", Parameter.userName);
+
+            OleDbDataReader reader = comm.ExecuteReader();//执行查询
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Instru += reader["生产指令编号"];
+                    Instru += "、";
+                }
+
+            }
+            //去掉最后一个"、"
+            if (Instru != null)
+            {
+                Instru = Instru.Substring(0, Instru.Length - 1);
+                MessageBox.Show(Parameter.userName + "请接收生产指令：" + Instru, "注意", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+            //将状态变为已接收
+            OleDbCommand commnew = new OleDbCommand();
+            commnew.Connection = connOle;
+            commnew.CommandText = "UPDATE 生产指令信息表 SET 状态=2 where 接收人= @接收人 and 状态=1";
+            commnew.Parameters.AddWithValue("@接收人", Parameter.userName);
+            commnew.ExecuteNonQuery();
+
+            comm.Dispose();
+            commnew.Dispose();
+        }
 
         private void UserIDTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
