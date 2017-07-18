@@ -15,6 +15,7 @@ using mySystem.Process.Bag.PTV;
 using mySystem.Process.Bag.BTV;
 using 订单和库存管理;
 using mySystem.Process.Stock;
+using mySystem.Process.灭菌;
 
 namespace mySystem
 {
@@ -278,7 +279,13 @@ namespace mySystem
             OrderBtn.BackColor = Color.FromName("ControlLightLight");
             StockBtn.BackColor = Color.FromName("ControlLightLight");
             bagBtnColor();
-            
+
+            灭菌mainform myDlg = new 灭菌mainform();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = ProducePanelRight.Size;
+            ProducePanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         //生产计划
