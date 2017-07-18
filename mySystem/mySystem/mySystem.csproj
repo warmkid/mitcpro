@@ -605,6 +605,30 @@
     <Compile Include="Process\Stock\采购单管理.Designer.cs">
       <DependentUpon>采购单管理.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\灭菌\Gamma射线辐射灭菌委托单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\灭菌\Gamma射线辐射灭菌委托单.Designer.cs">
+      <DependentUpon>Gamma射线辐射灭菌委托单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\灭菌\灭菌mainform.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\灭菌\灭菌mainform.Designer.cs">
+      <DependentUpon>灭菌mainform.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\灭菌\辐照灭菌产品验收记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\灭菌\辐照灭菌产品验收记录.Designer.cs">
+      <DependentUpon>辐照灭菌产品验收记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\灭菌\辐照灭菌台帐.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\灭菌\辐照灭菌台帐.Designer.cs">
+      <DependentUpon>辐照灭菌台帐.cs</DependentUpon>
+    </Compile>
     <Compile Include="Query\QueryInstruForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1087,6 +1111,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\采购单管理.resx">
       <DependentUpon>采购单管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\灭菌\Gamma射线辐射灭菌委托单.resx">
+      <DependentUpon>Gamma射线辐射灭菌委托单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\灭菌\灭菌mainform.resx">
+      <DependentUpon>灭菌mainform.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\灭菌\辐照灭菌产品验收记录.resx">
+      <DependentUpon>辐照灭菌产品验收记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\灭菌\辐照灭菌台帐.resx">
+      <DependentUpon>辐照灭菌台帐.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryExtruForm.resx">
       <DependentUpon>QueryExtruForm.cs</DependentUpon>
