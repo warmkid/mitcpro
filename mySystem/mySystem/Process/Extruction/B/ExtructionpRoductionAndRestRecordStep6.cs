@@ -72,6 +72,8 @@ namespace mySystem.Extruction.Process
         private void Init()
         {     
             foreach(Control c in this.Controls){c.Enabled = false;}
+            this.dataGridView1.Enabled = true;
+            this.dataGridView1.ReadOnly = true;
             this.cb产品名称.Enabled = true;
             this.dtp生产日期.Enabled = true;
             this.cb白班.Enabled = false;
@@ -83,7 +85,8 @@ namespace mySystem.Extruction.Process
         //可编辑，控件初始化
         private void EnableInit(bool able)
         {
-            dataGridView1.Enabled = able;
+            //dataGridView1.Enabled = able;
+            dataGridView1.ReadOnly = !able;
 
             this.tb环境湿度.Enabled = able;
             this.tb环境温度.Enabled = able;
@@ -230,6 +233,7 @@ namespace mySystem.Extruction.Process
                 {
                     //新建表
                     EnableInit(true);
+                    setDataGridViewFormat();
                     dataGridView1.ReadOnly = false;
                     SaveBtn.Enabled = true;
                     AddLineBtn.Enabled = true;
@@ -239,6 +243,7 @@ namespace mySystem.Extruction.Process
                 {
                     //非新建表
                     EnableInit(true);
+                    setDataGridViewFormat();
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dt记录详情.Rows.Count; i++)
                     {
@@ -348,6 +353,7 @@ namespace mySystem.Extruction.Process
         private DataRow writeInnerDefault(Int32 ID, DataRow dr)
         {
             //DataRow dr = dt记录详情.NewRow();
+            dr["序号"] = 0;
             dr["T吹膜工序生产和检验记录ID"] = ID;
             if (dt记录详情.Rows.Count >= 1)
             { dr["开始时间"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["结束时间"]; }
@@ -355,13 +361,13 @@ namespace mySystem.Extruction.Process
             { dr["开始时间"] = DateTime.Now; }
             dr["结束时间"] = DateTime.Now;
             dr["记录人"] = mySystem.Parameter.userName;
-            dr["检查人"] = " ";
+            dr["检查人"] = mySystem.Parameter.userName;
             dr["外观"] = "Yes";
             dr["判定"] = "Yes";
             //dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             return dr;
         }
-                
+        
         //序号刷新
         private void setDataGridViewRowNums()
         {
@@ -416,7 +422,13 @@ namespace mySystem.Extruction.Process
                         tbc.MinimumWidth = 80;
                         break;
                 }
-            } 
+            }
+            setDataGridViewFormat();
+        }
+
+        //设置DataGridView中各列的格式+设置datagridview基本属性
+        private void setDataGridViewFormat()
+        {
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
@@ -470,12 +482,15 @@ namespace mySystem.Extruction.Process
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
-                if (mySystem.Parameter.NametoID(dt记录详情.Rows[deletenum]["检查人"].ToString()) == 0)
-                { 
-                    dt记录详情.Rows.RemoveAt(deletenum);
-                    getTotal();
-                    setDataGridViewRowNums();
-                }
+                //dt记录详情.Rows.RemoveAt(deletenum);
+                dt记录详情.Rows[deletenum].Delete();
+                // 保存
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind(); 
+                //求合计
+                getTotal();
+                setDataGridViewRowNums();
             }
         }
 
@@ -550,7 +565,7 @@ namespace mySystem.Extruction.Process
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"D:\excel\SOP-MFG-301-R09 吹膜工序生产和检验记录_何.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-301-R09 吹膜工序生产和检验记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
 

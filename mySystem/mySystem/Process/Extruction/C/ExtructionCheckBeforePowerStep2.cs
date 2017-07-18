@@ -72,6 +72,8 @@ namespace mySystem.Extruction.Process
         private void Init()
         {
             foreach (Control c in this.Controls) { c.Enabled = false; }
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
         }
 
         //可编辑，控件初始化
@@ -79,7 +81,7 @@ namespace mySystem.Extruction.Process
         {
             tb确认人.Enabled = able;
             dtp确认日期.Enabled = able;
-            dataGridView1.Enabled = able;
+            dataGridView1.ReadOnly = !able;
             SaveBtn.Enabled = able;
         }
 
@@ -170,12 +172,14 @@ namespace mySystem.Extruction.Process
                 {
                     //新建表
                     EnableInit(true);
+                    setDataGridViewFormat();
                     SaveBtn.Enabled = true;
                 }
                 else
                 {
                     //非新建表
                     EnableInit(true);
+                    setDataGridViewFormat();
                     SaveBtn.Enabled = true;
                     CheckBtn.Enabled = true;
                     tb审核人.Enabled = true;
@@ -282,7 +286,7 @@ namespace mySystem.Extruction.Process
             { dt记录详情.Rows[i]["序号"] = (i + 1); }
         }
 
-        //设置DataGridView中各列的格式+设置datagridview基本属性
+        //设置DataGridView中各列的格式
         private void setDataGridViewColumns()
         {
             DataGridViewTextBoxColumn tbc;
@@ -317,6 +321,12 @@ namespace mySystem.Extruction.Process
                         break;
                 }
             }
+            setDataGridViewFormat();
+        }
+
+        //设置datagridview基本属性
+        private void setDataGridViewFormat()
+        {
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
@@ -326,10 +336,12 @@ namespace mySystem.Extruction.Process
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T吹膜机组开机前确认表ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
-            this.dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;  
+            dataGridView1.Columns["确认内容"].ReadOnly = true;
+            dataGridView1.Columns["确认项目"].ReadOnly = true;
+            dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; 
         }
-        
+
         //******************************按钮功能******************************//
 
         //保存按钮
@@ -403,7 +415,8 @@ namespace mySystem.Extruction.Process
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"D:\excel\SOP-MFG-301-R04 吹膜机组开机前确认表_何.xlsx");
+            //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"D:\excel\SOP-MFG-301-R04 吹膜机组开机前确认表_何.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\C\SOP-MFG-301-R04 吹膜机组开机前确认表.xlsx");            
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
 

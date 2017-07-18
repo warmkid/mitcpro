@@ -322,7 +322,7 @@ namespace mySystem.Extruction.Process
             dr["日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["记录人"] = mySystem.Parameter.userName;
             dr["审核人"] = "";
-            dr["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+            //dr["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
 
             //dr["模芯规格参数1"] = 0;

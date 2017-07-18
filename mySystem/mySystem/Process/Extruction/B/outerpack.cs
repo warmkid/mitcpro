@@ -69,7 +69,8 @@ namespace mySystem.Extruction.Chart
         private void Init()
         {
             foreach (Control c in this.Controls) { c.Enabled = false; }
-
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
             tb产品批号.ReadOnly = true;
             cb产品代码.Enabled = true;
             dtp包装日期.Enabled = true;
@@ -78,7 +79,8 @@ namespace mySystem.Extruction.Chart
         //可编辑，控件初始化
         private void EnableInit(bool able)
         {
-            this.dataGridView1.Enabled = able;
+            //this.dataGridView1.Enabled = able;
+            dataGridView1.ReadOnly = !able;
 
             this.groupBox1.Enabled = able;
             label12.Enabled = false;
@@ -151,7 +153,7 @@ namespace mySystem.Extruction.Chart
             //******************************外表 根据条件绑定******************************//  
             readOuterData(InstruID, productCode, searchTime);
             outerBind();
-            MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
+            //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
             //*******************************表格内部******************************// 
             Boolean isnew = true;
@@ -218,6 +220,7 @@ namespace mySystem.Extruction.Chart
                 {
                     //新建表
                     EnableInit(true);
+                    setDataGridViewFormat();
                     SaveBtn.Enabled = true;
                     AddLineBtn.Enabled = true;
                     DelLineBtn.Enabled = true;
@@ -226,6 +229,7 @@ namespace mySystem.Extruction.Chart
                 {
                     //非新建表
                     EnableInit(true);
+                    setDataGridViewFormat();
                     SaveBtn.Enabled = true;
                     CheckBtn.Enabled = true;
                     tb审核人.Enabled = true;
@@ -340,6 +344,7 @@ namespace mySystem.Extruction.Chart
         private DataRow writeInnerDefault(Int32 ID, DataRow dr)
         {
             //DataRow dr = dt记录详情.NewRow();
+            dr["序号"] = 0;
             dr["T产品外包装记录ID"] = ID;
             dr["是否贴标签"] = "Yes";
             dr["是否打包封箱"] = "Yes";
@@ -402,6 +407,12 @@ namespace mySystem.Extruction.Chart
                         break;
                 }
             }
+            setDataGridViewFormat();
+        }
+        
+        //设置datagridview基本属性
+        private void setDataGridViewFormat()
+        {
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
@@ -413,7 +424,7 @@ namespace mySystem.Extruction.Chart
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["包装明细"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
-        
+
         //******************************按钮功能******************************//
 
         //添加按钮
@@ -431,7 +442,14 @@ namespace mySystem.Extruction.Chart
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
-                dt记录详情.Rows.RemoveAt(deletenum);
+                //dt记录详情.Rows.RemoveAt(deletenum);
+                dt记录详情.Rows[deletenum].Delete();
+
+                // 保存
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind(); 
+
                 setDataGridViewRowNums();
             }
         }
@@ -509,7 +527,7 @@ namespace mySystem.Extruction.Chart
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"D:\excel\SOP-MFG-111-R01A  产品外包装记录_何.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-111-R01A  产品外包装记录.xlsx"); 
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
 
