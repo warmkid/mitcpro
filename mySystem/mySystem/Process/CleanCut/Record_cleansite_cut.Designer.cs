@@ -34,12 +34,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.tb产品代码 = new System.Windows.Forms.TextBox();
+            this.tb产品规格 = new System.Windows.Forms.TextBox();
+            this.tb产品批号 = new System.Windows.Forms.TextBox();
+            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
+            this.ckb白班 = new System.Windows.Forms.CheckBox();
+            this.ckb夜班 = new System.Windows.Forms.CheckBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,14 +48,16 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.tb清场人 = new System.Windows.Forms.TextBox();
+            this.tb检查人 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.tb备注 = new System.Windows.Forms.TextBox();
+            this.bt保存 = new System.Windows.Forms.Button();
+            this.bt审核 = new System.Windows.Forms.Button();
+            this.bt打印 = new System.Windows.Forms.Button();
+            this.cb产品代码 = new System.Windows.Forms.ComboBox();
+            this.ckb合格 = new System.Windows.Forms.CheckBox();
+            this.ckb不合格 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -114,57 +116,55 @@
             this.label6.TabIndex = 5;
             this.label6.Text = "生产班次";
             // 
-            // textBox1
+            // tb产品代码
             // 
-            this.textBox1.Location = new System.Drawing.Point(129, 60);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(100, 23);
-            this.textBox1.TabIndex = 6;
+            this.tb产品代码.Location = new System.Drawing.Point(259, 12);
+            this.tb产品代码.Name = "tb产品代码";
+            this.tb产品代码.Size = new System.Drawing.Size(100, 23);
+            this.tb产品代码.TabIndex = 6;
             // 
-            // textBox2
+            // tb产品规格
             // 
-            this.textBox2.Location = new System.Drawing.Point(339, 59);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 23);
-            this.textBox2.TabIndex = 7;
+            this.tb产品规格.Location = new System.Drawing.Point(339, 59);
+            this.tb产品规格.Name = "tb产品规格";
+            this.tb产品规格.Size = new System.Drawing.Size(100, 23);
+            this.tb产品规格.TabIndex = 7;
             // 
-            // textBox3
+            // tb产品批号
             // 
-            this.textBox3.Location = new System.Drawing.Point(550, 59);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 23);
-            this.textBox3.TabIndex = 8;
+            this.tb产品批号.Location = new System.Drawing.Point(550, 59);
+            this.tb产品批号.Name = "tb产品批号";
+            this.tb产品批号.Size = new System.Drawing.Size(100, 23);
+            this.tb产品批号.TabIndex = 8;
             // 
-            // dateTimePicker1
+            // dtp生产日期
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(757, 60);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(141, 23);
-            this.dateTimePicker1.TabIndex = 9;
+            this.dtp生产日期.Location = new System.Drawing.Point(757, 60);
+            this.dtp生产日期.Name = "dtp生产日期";
+            this.dtp生产日期.Size = new System.Drawing.Size(141, 23);
+            this.dtp生产日期.TabIndex = 9;
             // 
-            // checkBox1
+            // ckb白班
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Checked = true;
-            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox1.Location = new System.Drawing.Point(994, 64);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(54, 18);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "白班";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.ckb白班.AutoSize = true;
+            this.ckb白班.Checked = true;
+            this.ckb白班.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckb白班.Location = new System.Drawing.Point(994, 64);
+            this.ckb白班.Name = "ckb白班";
+            this.ckb白班.Size = new System.Drawing.Size(54, 18);
+            this.ckb白班.TabIndex = 10;
+            this.ckb白班.Text = "白班";
+            this.ckb白班.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // ckb夜班
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(1066, 64);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(54, 18);
-            this.checkBox2.TabIndex = 11;
-            this.checkBox2.Text = "夜班";
-            this.checkBox2.UseVisualStyleBackColor = true;
-            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            this.ckb夜班.AutoSize = true;
+            this.ckb夜班.Location = new System.Drawing.Point(1066, 64);
+            this.ckb夜班.Name = "ckb夜班";
+            this.ckb夜班.Size = new System.Drawing.Size(54, 18);
+            this.ckb夜班.TabIndex = 11;
+            this.ckb夜班.Text = "夜班";
+            this.ckb夜班.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
             // 
@@ -222,7 +222,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(296, 353);
+            this.label8.Location = new System.Drawing.Point(452, 353);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(63, 14);
             this.label8.TabIndex = 14;
@@ -231,37 +231,25 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(536, 353);
+            this.label9.Location = new System.Drawing.Point(243, 356);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 14);
             this.label9.TabIndex = 15;
             this.label9.Text = "检查人";
             // 
-            // textBox4
+            // tb清场人
             // 
-            this.textBox4.Location = new System.Drawing.Point(99, 350);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 23);
-            this.textBox4.TabIndex = 16;
+            this.tb清场人.Location = new System.Drawing.Point(99, 350);
+            this.tb清场人.Name = "tb清场人";
+            this.tb清场人.Size = new System.Drawing.Size(100, 23);
+            this.tb清场人.TabIndex = 16;
             // 
-            // textBox5
+            // tb检查人
             // 
-            this.textBox5.Location = new System.Drawing.Point(591, 344);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(100, 23);
-            this.textBox5.TabIndex = 17;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "合格",
-            "不合格"});
-            this.comboBox1.Location = new System.Drawing.Point(365, 350);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(105, 22);
-            this.comboBox1.TabIndex = 18;
-            this.comboBox1.Text = "合格";
+            this.tb检查人.Location = new System.Drawing.Point(298, 347);
+            this.tb检查人.Name = "tb检查人";
+            this.tb检查人.Size = new System.Drawing.Size(100, 23);
+            this.tb检查人.TabIndex = 17;
             // 
             // label10
             // 
@@ -272,69 +260,98 @@
             this.label10.TabIndex = 19;
             this.label10.Text = "备注";
             // 
-            // textBox6
+            // tb备注
             // 
-            this.textBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.tb备注.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox6.Location = new System.Drawing.Point(53, 392);
-            this.textBox6.Multiline = true;
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(1099, 54);
-            this.textBox6.TabIndex = 20;
+            this.tb备注.Location = new System.Drawing.Point(53, 392);
+            this.tb备注.Multiline = true;
+            this.tb备注.Name = "tb备注";
+            this.tb备注.Size = new System.Drawing.Size(1099, 54);
+            this.tb备注.TabIndex = 20;
             // 
-            // button1
+            // bt保存
             // 
-            this.button1.Location = new System.Drawing.Point(882, 464);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "保存";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.bt保存.Location = new System.Drawing.Point(882, 464);
+            this.bt保存.Name = "bt保存";
+            this.bt保存.Size = new System.Drawing.Size(75, 23);
+            this.bt保存.TabIndex = 21;
+            this.bt保存.Text = "保存";
+            this.bt保存.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // bt审核
             // 
-            this.button2.Location = new System.Drawing.Point(973, 464);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 22;
-            this.button2.Text = "审核";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.bt审核.Location = new System.Drawing.Point(973, 464);
+            this.bt审核.Name = "bt审核";
+            this.bt审核.Size = new System.Drawing.Size(75, 23);
+            this.bt审核.TabIndex = 22;
+            this.bt审核.Text = "审核";
+            this.bt审核.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // bt打印
             // 
-            this.button3.Location = new System.Drawing.Point(1066, 464);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 23;
-            this.button3.Text = "打印";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.bt打印.Location = new System.Drawing.Point(1066, 464);
+            this.bt打印.Name = "bt打印";
+            this.bt打印.Size = new System.Drawing.Size(75, 23);
+            this.bt打印.TabIndex = 23;
+            this.bt打印.Text = "打印";
+            this.bt打印.UseVisualStyleBackColor = true;
+            // 
+            // cb产品代码
+            // 
+            this.cb产品代码.FormattingEnabled = true;
+            this.cb产品代码.Location = new System.Drawing.Point(113, 59);
+            this.cb产品代码.Name = "cb产品代码";
+            this.cb产品代码.Size = new System.Drawing.Size(101, 22);
+            this.cb产品代码.TabIndex = 24;
+            // 
+            // ckb合格
+            // 
+            this.ckb合格.AutoSize = true;
+            this.ckb合格.Checked = true;
+            this.ckb合格.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ckb合格.Location = new System.Drawing.Point(521, 352);
+            this.ckb合格.Name = "ckb合格";
+            this.ckb合格.Size = new System.Drawing.Size(54, 18);
+            this.ckb合格.TabIndex = 25;
+            this.ckb合格.Text = "合格";
+            this.ckb合格.UseVisualStyleBackColor = true;
+            // 
+            // ckb不合格
+            // 
+            this.ckb不合格.AutoSize = true;
+            this.ckb不合格.Location = new System.Drawing.Point(581, 350);
+            this.ckb不合格.Name = "ckb不合格";
+            this.ckb不合格.Size = new System.Drawing.Size(68, 18);
+            this.ckb不合格.TabIndex = 26;
+            this.ckb不合格.Text = "不合格";
+            this.ckb不合格.UseVisualStyleBackColor = true;
             // 
             // Record_cleansite_cut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 499);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox6);
+            this.Controls.Add(this.ckb不合格);
+            this.Controls.Add(this.ckb合格);
+            this.Controls.Add(this.cb产品代码);
+            this.Controls.Add(this.bt打印);
+            this.Controls.Add(this.bt审核);
+            this.Controls.Add(this.bt保存);
+            this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.textBox5);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.tb检查人);
+            this.Controls.Add(this.tb清场人);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.ckb夜班);
+            this.Controls.Add(this.ckb白班);
+            this.Controls.Add(this.dtp生产日期);
+            this.Controls.Add(this.tb产品批号);
+            this.Controls.Add(this.tb产品规格);
+            this.Controls.Add(this.tb产品代码);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -358,27 +375,29 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
+        private System.Windows.Forms.TextBox tb产品代码;
+        private System.Windows.Forms.TextBox tb产品规格;
+        private System.Windows.Forms.TextBox tb产品批号;
+        private System.Windows.Forms.DateTimePicker dtp生产日期;
+        private System.Windows.Forms.CheckBox ckb白班;
+        private System.Windows.Forms.CheckBox ckb夜班;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.TextBox tb清场人;
+        private System.Windows.Forms.TextBox tb检查人;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox tb备注;
+        private System.Windows.Forms.Button bt保存;
+        private System.Windows.Forms.Button bt审核;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button bt打印;
+        private System.Windows.Forms.ComboBox cb产品代码;
+        private System.Windows.Forms.CheckBox ckb合格;
+        private System.Windows.Forms.CheckBox ckb不合格;
     }
 }

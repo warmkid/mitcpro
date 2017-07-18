@@ -431,7 +431,7 @@ namespace WindowsFormsApplication1
         //重写函数，获得审查人信息
         public override void CheckResult()
         {
-            base.CheckResult();
+            
             dt_out.Rows[0]["审核人"] = checkform.userName;
             dt_out.Rows[0]["审核时间"] = checkform.time;
             dt_out.Rows[0]["审核意见"] = checkform.opinion;
@@ -445,10 +445,14 @@ namespace WindowsFormsApplication1
                 dataGridView1.Enabled = true;
                 dataGridView1.ReadOnly = true;
                 bt打印.Enabled = true;
+
+                
             }
 
             bs_out.EndEdit();
             da_out.Update((DataTable)bs_out.DataSource);
+
+            base.CheckResult();
 
         }
 
