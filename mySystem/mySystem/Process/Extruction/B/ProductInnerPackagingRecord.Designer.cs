@@ -38,8 +38,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.dtp操作日期 = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
-            this.DelLineBtn = new System.Windows.Forms.Button();
-            this.AddLineBtn = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
@@ -81,8 +79,6 @@
             this.tb包材接上班数量 = new System.Windows.Forms.TextBox();
             this.tb包材批号 = new System.Windows.Forms.TextBox();
             this.tb包材名称 = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.lb备注 = new System.Windows.Forms.Label();
             this.cb产品代码 = new System.Windows.Forms.ComboBox();
             this.printBtn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -92,10 +88,14 @@
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
+            this.AddLineBtn = new System.Windows.Forms.Button();
+            this.DelLineBtn = new System.Windows.Forms.Button();
+            this.lb备注 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // CheckBtn
@@ -191,28 +191,6 @@
             this.label5.Size = new System.Drawing.Size(88, 16);
             this.label5.TabIndex = 14;
             this.label5.Text = "确认日期：";
-            // 
-            // DelLineBtn
-            // 
-            this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.DelLineBtn.Location = new System.Drawing.Point(788, 229);
-            this.DelLineBtn.Name = "DelLineBtn";
-            this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
-            this.DelLineBtn.TabIndex = 13;
-            this.DelLineBtn.Text = "删除记录";
-            this.DelLineBtn.UseVisualStyleBackColor = true;
-            this.DelLineBtn.Click += new System.EventHandler(this.DelLineBtn_Click);
-            // 
-            // AddLineBtn
-            // 
-            this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(696, 229);
-            this.AddLineBtn.Name = "AddLineBtn";
-            this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
-            this.AddLineBtn.TabIndex = 12;
-            this.AddLineBtn.Text = "添加记录";
-            this.AddLineBtn.UseVisualStyleBackColor = true;
-            this.AddLineBtn.Click += new System.EventHandler(this.AddLineBtn_Click);
             // 
             // dataGridView1
             // 
@@ -603,27 +581,6 @@
             this.tb包材名称.Size = new System.Drawing.Size(150, 26);
             this.tb包材名称.TabIndex = 42;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.lb备注);
-            this.groupBox2.Controls.Add(this.DelLineBtn);
-            this.groupBox2.Controls.Add(this.AddLineBtn);
-            this.groupBox2.Location = new System.Drawing.Point(16, 101);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(878, 270);
-            this.groupBox2.TabIndex = 38;
-            this.groupBox2.TabStop = false;
-            // 
-            // lb备注
-            // 
-            this.lb备注.AutoSize = true;
-            this.lb备注.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lb备注.Location = new System.Drawing.Point(11, 229);
-            this.lb备注.Name = "lb备注";
-            this.lb备注.Size = new System.Drawing.Size(480, 16);
-            this.lb备注.TabIndex = 14;
-            this.lb备注.Text = "备注：符合标准填写“0”，不符合填写“1”，不适用填写“2”。\r\n";
-            // 
             // cb产品代码
             // 
             this.cb产品代码.Font = new System.Drawing.Font("SimSun", 12F);
@@ -731,6 +688,49 @@
             this.label13.TabIndex = 26;
             this.label13.Text = "发放数量             张；";
             // 
+            // AddLineBtn
+            // 
+            this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.AddLineBtn.Location = new System.Drawing.Point(696, 229);
+            this.AddLineBtn.Name = "AddLineBtn";
+            this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
+            this.AddLineBtn.TabIndex = 12;
+            this.AddLineBtn.Text = "添加记录";
+            this.AddLineBtn.UseVisualStyleBackColor = true;
+            this.AddLineBtn.Click += new System.EventHandler(this.AddLineBtn_Click);
+            // 
+            // DelLineBtn
+            // 
+            this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.DelLineBtn.Location = new System.Drawing.Point(788, 229);
+            this.DelLineBtn.Name = "DelLineBtn";
+            this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
+            this.DelLineBtn.TabIndex = 13;
+            this.DelLineBtn.Text = "删除记录";
+            this.DelLineBtn.UseVisualStyleBackColor = true;
+            this.DelLineBtn.Click += new System.EventHandler(this.DelLineBtn_Click);
+            // 
+            // lb备注
+            // 
+            this.lb备注.AutoSize = true;
+            this.lb备注.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb备注.Location = new System.Drawing.Point(11, 229);
+            this.lb备注.Name = "lb备注";
+            this.lb备注.Size = new System.Drawing.Size(480, 16);
+            this.lb备注.TabIndex = 14;
+            this.lb备注.Text = "备注：符合标准填写“0”，不符合填写“1”，不适用填写“2”。\r\n";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lb备注);
+            this.groupBox2.Controls.Add(this.DelLineBtn);
+            this.groupBox2.Controls.Add(this.AddLineBtn);
+            this.groupBox2.Location = new System.Drawing.Point(16, 101);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(878, 270);
+            this.groupBox2.TabIndex = 38;
+            this.groupBox2.TabStop = false;
+            // 
             // ProductInnerPackagingRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -763,10 +763,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -781,8 +781,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dtp生产日期;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button DelLineBtn;
-        private System.Windows.Forms.Button AddLineBtn;
         private System.Windows.Forms.DateTimePicker dtp操作日期;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DateTimePicker dtp审核日期;
@@ -806,7 +804,6 @@
         private System.Windows.Forms.CheckBox cb标签语言是否中文;
         private System.Windows.Forms.CheckBox cb标签语言是否英文;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox cb产品代码;
         private System.Windows.Forms.Button printBtn;
         private System.Windows.Forms.GroupBox groupBox3;
@@ -837,6 +834,9 @@
         private System.Windows.Forms.TextBox tb指示剂接上班数量;
         private System.Windows.Forms.TextBox tb指示剂批号;
         private System.Windows.Forms.TextBox tb指示剂;
+        private System.Windows.Forms.Button AddLineBtn;
+        private System.Windows.Forms.Button DelLineBtn;
         private System.Windows.Forms.Label lb备注;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

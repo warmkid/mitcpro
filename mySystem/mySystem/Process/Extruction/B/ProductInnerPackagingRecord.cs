@@ -68,17 +68,8 @@ namespace mySystem.Extruction.Process
         private void Init()
         {
             foreach (Control c in this.Controls) { c.Enabled = false; } //后面始终无法恢复
-
-            {
-                //EnableInit(false);
-                //AddLineBtn.Enabled = false;
-                //DelLineBtn.Enabled = false;
-                //SaveBtn.Enabled = false;
-                //CheckBtn.Enabled = false;
-                //tb审核人.Enabled = false;
-                //dtp审核日期.Enabled = false;
-                //printBtn.Enabled = false;
-            }
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
             cb产品代码.Enabled = true;
             dtp生产日期.Enabled = true;
             tb产品批号.ReadOnly = true;
@@ -88,7 +79,8 @@ namespace mySystem.Extruction.Process
         private void EnableInit(bool able)
         {
             this.groupBox2.Enabled = true;
-            this.dataGridView1.Enabled = able;
+            //this.dataGridView1.Enabled = able;
+            this.dataGridView1.ReadOnly = !able;
 
             this.groupBox1.Enabled = able;
             //this.tb包材名称.Enabled = able;
@@ -225,7 +217,7 @@ namespace mySystem.Extruction.Process
 
                 //立马保存内表
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
-                //内表重新绑定
+                //内表重新绑定      
                 dataGridView1.Columns.Clear();
                 readInnerData(KeyID);
                 setDataGridViewColumns();
@@ -242,7 +234,7 @@ namespace mySystem.Extruction.Process
                 innerBind();
             }
 
-            //********* 控件可用性 *********//   
+            //********* 控件可用性 *********//     
          
             if (Convert.ToBoolean(dt记录.Rows[0]["审核是否通过"].ToString()) == true)
             {
@@ -255,6 +247,7 @@ namespace mySystem.Extruction.Process
                 {
                     //新建表
                     EnableInit(true);
+                    setDataGridViewFormat();
                     SaveBtn.Enabled = true;
                     AddLineBtn.Enabled = true;
                     DelLineBtn.Enabled = true;
@@ -263,6 +256,7 @@ namespace mySystem.Extruction.Process
                 {
                     //非新建表
                     EnableInit(true);
+                    setDataGridViewFormat();
                     SaveBtn.Enabled = true;
                     CheckBtn.Enabled = true;
                     tb审核人.Enabled = true;
@@ -373,6 +367,8 @@ namespace mySystem.Extruction.Process
             dr["产品代码"] = cb产品代码.Text;
             dr["产品批号"] = dt代码批号.Rows[cb产品代码.FindString(cb产品代码.Text)]["产品批号"].ToString();
             dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
+            dr["标签语言是否中文"] = true;
+            dr["标签语言是否英文"] = true;
             dr["操作人"] = mySystem.Parameter.userName;
             dr["操作日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["审核人"] = "";
@@ -403,6 +399,7 @@ namespace mySystem.Extruction.Process
         private DataRow writeInnerDefault(Int32 ID, DataRow dr)
         {
             //DataRow dr = dt记录详情.NewRow();
+            dr["序号"] = 0;
             dr["T产品内包装记录ID"] = ID;
             dr["生产时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
             dr["产品外观"] = 0;
@@ -426,10 +423,81 @@ namespace mySystem.Extruction.Process
         private void setDataGridViewColumns()
         {
             DataGridViewTextBoxColumn tbc;
+            DataGridViewComboBoxColumn cbc;
             foreach (DataColumn dc in dt记录详情.Columns)
             {
                 switch (dc.ColumnName)
                 {
+                    case "产品外观":
+                        cbc = new DataGridViewComboBoxColumn();
+                        cbc.DataPropertyName = dc.ColumnName;
+                        cbc.HeaderText = dc.ColumnName;
+                        cbc.Name = dc.ColumnName;
+                        cbc.ValueType = dc.DataType;
+                        cbc.Items.Add("0");
+                        cbc.Items.Add("1");
+                        cbc.Items.Add("2");
+                        dataGridView1.Columns.Add(cbc);
+                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 120;
+                        break;
+                    case "包装后外观":
+                        cbc = new DataGridViewComboBoxColumn();
+                        cbc.DataPropertyName = dc.ColumnName;
+                        cbc.HeaderText = dc.ColumnName;
+                        cbc.Name = dc.ColumnName;
+                        cbc.ValueType = dc.DataType;
+                        cbc.Items.Add("0");
+                        cbc.Items.Add("1");
+                        cbc.Items.Add("2");
+                        dataGridView1.Columns.Add(cbc);
+                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 120;
+                        break;
+                    case "包装袋热封线":
+                        cbc = new DataGridViewComboBoxColumn();
+                        cbc.DataPropertyName = dc.ColumnName;
+                        cbc.HeaderText = dc.ColumnName;
+                        cbc.Name = dc.ColumnName;
+                        cbc.ValueType = dc.DataType;
+                        cbc.Items.Add("0");
+                        cbc.Items.Add("1");
+                        cbc.Items.Add("2");
+                        dataGridView1.Columns.Add(cbc);
+                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 120;
+                        break;
+                    case "贴标签":
+                        cbc = new DataGridViewComboBoxColumn();
+                        cbc.DataPropertyName = dc.ColumnName;
+                        cbc.HeaderText = dc.ColumnName;
+                        cbc.Name = dc.ColumnName;
+                        cbc.ValueType = dc.DataType;
+                        cbc.Items.Add("0");
+                        cbc.Items.Add("1");
+                        cbc.Items.Add("2");
+                        dataGridView1.Columns.Add(cbc);
+                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 120;
+                        break;
+                    case "贴指示剂":
+                        cbc = new DataGridViewComboBoxColumn();
+                        cbc.DataPropertyName = dc.ColumnName;
+                        cbc.HeaderText = dc.ColumnName;
+                        cbc.Name = dc.ColumnName;
+                        cbc.ValueType = dc.DataType;
+                        cbc.Items.Add("0");
+                        cbc.Items.Add("1");
+                        cbc.Items.Add("2");
+                        dataGridView1.Columns.Add(cbc);
+                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 120;
+                        break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
                         tbc.DataPropertyName = dc.ColumnName;
@@ -443,6 +511,12 @@ namespace mySystem.Extruction.Process
                         break;
                 }
             }
+            setDataGridViewFormat();
+        }
+
+        //设置datagridview基本属性
+        private void setDataGridViewFormat()
+        {
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
@@ -452,7 +526,6 @@ namespace mySystem.Extruction.Process
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T产品内包装记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.Columns["生产时间"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         //******************************按钮功能******************************//
@@ -472,7 +545,14 @@ namespace mySystem.Extruction.Process
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
-                dt记录详情.Rows.RemoveAt(deletenum);
+                //dt记录详情.Rows.RemoveAt(deletenum);
+                dt记录详情.Rows[deletenum].Delete();
+
+                // 保存
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind(); 
+
                 setDataGridViewRowNums();
             }
         }
@@ -552,7 +632,7 @@ namespace mySystem.Extruction.Process
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(@"D:\excel\SOP-MFG-109-R01A 产品内包装记录_何.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-109-R01A 产品内包装记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];            
 
@@ -725,9 +805,11 @@ namespace mySystem.Extruction.Process
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
-            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
-            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
-            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+                String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+                String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString();
+                String val = dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误：" + val);
+            //MessageBox.Show("")
         }
 
         //实时检查包装人名合法性
