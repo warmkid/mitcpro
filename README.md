@@ -59,10 +59,12 @@ void computer();
 //         如果审核结果为『通过』，则为『审核通过』
 //         如果审核结果为『不通过』，则为『审核未通过』
 // 这个函数可以放在父类中？
-void setState()
+void setFormState();
+// 设置用户状态，用户状态有3个：0--操作员，1--审核员，2--管理员
+void setUserState();
 // 设置控件可用性，根据状态设置，状态是每个窗体的变量，放在父类中
 // 0：未保存；1：待审核；2：审核通过；3：审核未通过
-void setEnableReadOnly()
+void setEnableReadOnly();
 
   
 // 窗口下的按钮：审核                   保存，发送审核，打印，查看记录
@@ -73,9 +75,9 @@ void setEnableReadOnly()
 流程图：
 
 1. 带ID的构造函数：getPeople()-->判断用户是否可以查看界面-->根据ID读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)--> addOtherEvnetHandler()
-2. 不带ID的构造函数，直接读取数据类型：getPeople()--> 判断用户是否可以查看界面--> getOtherData()-->读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)--> addComputerEventHandler()--> setState()--> setEnableReadOnly() --> addOtherEvnetHandler()
-3. 不带ID的构造函数，通过控件的值读取数据类型：getPeople()--> 判断用户是否可以查看界面--> getOtherData()--> addDataEventHandler()  {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->addComputerEventHandler()-->setState()-->setEnableReadOnly() --> addOtherEvnetHandler()}
-4. 不带ID的构造函数，纯计算类型：getPeople()--> 判断用户是否可以查看界面--> getOtherData()--> Computer() --> addOtherEvnetHandler()
+2. 不带ID的构造函数，直接读取数据类型：getPeople()--> setUserState()--> getOtherData()-->读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)--> addComputerEventHandler()--> setFormState()--> setEnableReadOnly() --> addOtherEvnetHandler()
+3. 不带ID的构造函数，通过控件的值读取数据类型：getPeople()--> setUserState()--> getOtherData()--> addDataEventHandler()  {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->addComputerEventHandler()-->setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()}
+4. 不带ID的构造函数，纯计算类型：getPeople()--> setUserState()--> getOtherData()--> Computer() --> addOtherEvnetHandler()-->setFormState()-->setEnableReadOnly()
 
 
 
