@@ -76,7 +76,7 @@ void setEnableReadOnly();
 
 1. 带ID的构造函数：getPeople()-->判断用户是否可以查看界面-->根据ID读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)--> addOtherEvnetHandler()
 2. 不带ID的构造函数，直接读取数据类型：getPeople()--> setUserState()--> getOtherData()-->读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)--> addComputerEventHandler()--> setFormState()--> setEnableReadOnly() --> addOtherEvnetHandler()
-3. 不带ID的构造函数，通过控件的值读取数据类型：getPeople()--> setUserState()--> getOtherData()--> addDataEventHandler()  {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->addComputerEventHandler()-->setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()}
+3. 不带ID的构造函数，通过控件的值读取数据类型：getPeople()--> setUserState()--> getOtherData()--> addDataEventHandler()-->只让部分控件可点击  {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->addComputerEventHandler()-->setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()}
 4. 不带ID的构造函数，纯计算类型：getPeople()--> setUserState()--> getOtherData()--> Computer() --> addOtherEvnetHandler()-->setFormState()-->setEnableReadOnly()
 
 
