@@ -36,7 +36,6 @@ namespace mySystem.Extruction.Process
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
 
-            //DgvInitialize();
             GetSettingInfo();
             DataNew();
         }

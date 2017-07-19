@@ -128,7 +128,7 @@
             // dtp审核日期
             // 
             this.dtp审核日期.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp审核日期.Location = new System.Drawing.Point(939, 450);
+            this.dtp审核日期.Location = new System.Drawing.Point(939, 477);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
             this.dtp审核日期.TabIndex = 36;
@@ -137,7 +137,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label4.Location = new System.Drawing.Point(858, 457);
+            this.label4.Location = new System.Drawing.Point(858, 484);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 16);
             this.label4.TabIndex = 35;
@@ -146,7 +146,7 @@
             // dtp检查日期
             // 
             this.dtp检查日期.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp检查日期.Location = new System.Drawing.Point(337, 449);
+            this.dtp检查日期.Location = new System.Drawing.Point(337, 476);
             this.dtp检查日期.Name = "dtp检查日期";
             this.dtp检查日期.Size = new System.Drawing.Size(200, 26);
             this.dtp检查日期.TabIndex = 34;
@@ -155,7 +155,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label3.Location = new System.Drawing.Point(256, 456);
+            this.label3.Location = new System.Drawing.Point(256, 483);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 33;
@@ -164,7 +164,7 @@
             // tb审核人
             // 
             this.tb审核人.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb审核人.Location = new System.Drawing.Point(693, 453);
+            this.tb审核人.Location = new System.Drawing.Point(693, 480);
             this.tb审核人.Name = "tb审核人";
             this.tb审核人.Size = new System.Drawing.Size(100, 26);
             this.tb审核人.TabIndex = 32;
@@ -173,7 +173,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label2.Location = new System.Drawing.Point(625, 460);
+            this.label2.Location = new System.Drawing.Point(625, 487);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 31;
@@ -182,7 +182,7 @@
             // tb检查人
             // 
             this.tb检查人.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb检查人.Location = new System.Drawing.Point(92, 449);
+            this.tb检查人.Location = new System.Drawing.Point(92, 476);
             this.tb检查人.Name = "tb检查人";
             this.tb检查人.Size = new System.Drawing.Size(100, 26);
             this.tb检查人.TabIndex = 30;
@@ -191,7 +191,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label1.Location = new System.Drawing.Point(24, 456);
+            this.label1.Location = new System.Drawing.Point(24, 483);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
             this.label1.TabIndex = 29;
@@ -200,7 +200,7 @@
             // CheckBtn
             // 
             this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.CheckBtn.Location = new System.Drawing.Point(965, 488);
+            this.CheckBtn.Location = new System.Drawing.Point(965, 515);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);
             this.CheckBtn.TabIndex = 28;
@@ -211,7 +211,7 @@
             // SaveBtn
             // 
             this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.SaveBtn.Location = new System.Drawing.Point(873, 488);
+            this.SaveBtn.Location = new System.Drawing.Point(873, 515);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
             this.SaveBtn.TabIndex = 27;
@@ -227,7 +227,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(27, 103);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1113, 308);
+            this.dataGridView1.Size = new System.Drawing.Size(1113, 337);
             this.dataGridView1.TabIndex = 26;
             // 
             // Title
@@ -245,7 +245,7 @@
             // PSLabel
             // 
             this.PSLabel.Font = new System.Drawing.Font("SimSun", 12F);
-            this.PSLabel.Location = new System.Drawing.Point(27, 416);
+            this.PSLabel.Location = new System.Drawing.Point(27, 443);
             this.PSLabel.Name = "PSLabel";
             this.PSLabel.Size = new System.Drawing.Size(498, 15);
             this.PSLabel.TabIndex = 45;
@@ -254,7 +254,7 @@
             // printBtn
             // 
             this.printBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.printBtn.Location = new System.Drawing.Point(1059, 487);
+            this.printBtn.Location = new System.Drawing.Point(1059, 514);
             this.printBtn.Name = "printBtn";
             this.printBtn.Size = new System.Drawing.Size(80, 30);
             this.printBtn.TabIndex = 46;
@@ -266,7 +266,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1166, 533);
+            this.ClientSize = new System.Drawing.Size(1166, 558);
             this.Controls.Add(this.printBtn);
             this.Controls.Add(this.PSLabel);
             this.Controls.Add(this.dtp更换日期);
