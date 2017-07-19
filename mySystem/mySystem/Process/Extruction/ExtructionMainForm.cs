@@ -612,7 +612,7 @@ namespace mySystem
 
         private void D2Btn_Click(object sender, EventArgs e)
         {
-            form19 = new ReplaceHeadForm();
+            form19 = new ReplaceHeadForm(mainform);
             form19.ShowDialog();
         }
 

@@ -438,6 +438,14 @@ namespace mySystem.Extruction.Process
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T吹膜工序生产和检验记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
+            dataGridView1.Columns["膜卷编号"].HeaderText = "膜卷编号\r(卷)";
+            dataGridView1.Columns["膜卷长度"].HeaderText = "膜卷长度\r(m)";
+            dataGridView1.Columns["膜卷重量"].HeaderText = "膜卷重量\r(kg)";
+            dataGridView1.Columns["宽度"].HeaderText = "宽度\r(mm)";
+            dataGridView1.Columns["最大厚度"].HeaderText = "最大厚度\r(μm)";
+            dataGridView1.Columns["最小厚度"].HeaderText = "最小厚度\r(μm)";
+            dataGridView1.Columns["平均厚度"].HeaderText = "平均厚度\r(μm)";
+            dataGridView1.Columns["厚度公差"].HeaderText = "厚度公差\r(%)";
         }
 
         //******************************按钮功能******************************//
