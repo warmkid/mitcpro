@@ -26,16 +26,121 @@ namespace mySystem.Process.CleanCut
             : base(mainform)
         {
             InitializeComponent();
+            Init();
+            readsetting();
         }
 
+        //判断之前的内容是否与设置表中内容一致
+        private bool is_sameto_setting()
+        {
+            if (dt_清场设置.Rows.Count != dt_prodlist.Rows.Count)
+                return false;
+            for (int i = 0; i < dt_清场设置.Rows.Count; i++)
+            {
+                if (dt_清场设置.Rows[i]["清场项目"].ToString() != dt_prodlist.Rows[i]["清场项目"].ToString() || dt_清场设置.Rows[i]["清场要点"].ToString() != dt_prodlist.Rows[i]["清场要点"].ToString())
+                    return false;
+            }
+            return true;
+        }
+
+        private void begin()
+        {
+            readOuterData(mySystem.Parameter.proInstruID);
+            removeOuterBinding();
+            outerBind();
+            if (dt_prodinstr.Rows.Count <= 0)
+            {
+                DataRow dr = dt_prodinstr.NewRow();
+                dr = writeOuterDefault(dr);
+                dt_prodinstr.Rows.Add(dr);
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(mySystem.Parameter.proInstruID);
+                removeOuterBinding();
+                outerBind();
+            }
+
+            ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["生产班次"];
+            ckb夜班.Checked = !ckb白班.Checked;
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            DialogResult result;
+            if (!is_sameto_setting())
+            {
+                result = MessageBox.Show("检测到之前的记录与目前设置中不一致，保留当前设置选择是，保留之前记录设置选择否", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)//保留当前设置
+                {
+                    while (dataGridView1.Rows.Count > 0)
+                        dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+                    da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                    int tempi = 1;
+                    foreach (DataRow dr in dt_清场设置.Rows)
+                    {
+                        DataRow ndr = dt_prodlist.NewRow();
+                        ndr[1] = (int)dt_prodinstr.Rows[0]["ID"];
+                        ndr[2] = tempi++;//序号
+                        // 注意ID不要复制过去了，所以从1开始
+                        for (int i = 2; i < dr.Table.Columns.Count; ++i)
+                        {
+                            ndr[i + 1] = dr[i];
+                        }
+                        // 这里添加检查是否合格、检查人、审核人等默认信息
+                        ndr["清洁操作"] = "合格";
+
+                        dt_prodlist.Rows.Add(ndr);
+                    }
+                    dataGridView1.Columns[0].Visible = false;
+                    dataGridView1.Columns[1].Visible = false;
+                    //da_in.Update((DataTable)bs_in.DataSource);
+
+                }
+
+            }
+
+
+            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+            {
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = false;
+                }
+                dataGridView1.Enabled = true;
+                dataGridView1.ReadOnly = true;
+                bt打印.Enabled = true;
+            }
+        }
+
+        //初始化
+        private void Init()
+        {
+            bt审核.Enabled = false;
+            bt打印.Enabled = false;
+            ckb不合格.Enabled = false;
+            ckb合格.Enabled = false;
+            ckb白班.Enabled = false;
+            ckb夜班.Enabled = false;
+
+            dt_清场设置 = new DataTable();
+
+            dt_prodinstr = new DataTable();
+            dt_prodlist = new DataTable();
+            da_prodinstr = new OleDbDataAdapter();
+            da_prodlist = new OleDbDataAdapter();
+            bs_prodinstr = new BindingSource();
+            bs_prodlist = new BindingSource();
+            cb_prodinstr = new OleDbCommandBuilder();
+            cb_prodlist = new OleDbCommandBuilder();
+
+        }
+
+        //读取设置中清场项目
         private void readsetting()
         {
-            //先读取供料工序清场设置，拷贝到上面table中
-            string asql = "select 序号,清场内容 from 设置供料工序清场项目";
+            string asql = "select * from 设置清场项目";
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
             da.Fill(dt_清场设置);
-
         }
 
         // 给外表的一行写入默认值
@@ -190,9 +295,76 @@ namespace mySystem.Process.CleanCut
             }
         }
 
+
+
+        //保存按钮
         private void bt保存_Click(object sender, EventArgs e)
         {
+            bt审核.Enabled = false;
+            //判断合法性
+            if (!input_Judge())
+            {
+                return;
+            }
 
+            //外表保存
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            readOuterData(mySystem.Parameter.proInstruID);
+            removeOuterBinding();
+            outerBind();
+
+            //内表保存
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            innerBind();
+
+            bt审核.Enabled = true;
+        }
+
+        //判断合法性
+        private bool input_Judge()
+        {
+            if (mySystem.Parameter.NametoID(tb清场人.Text) <= 0)
+            {
+                MessageBox.Show("清场人ID不存在");
+                return false;
+            }
+            return true;
+        }
+
+        //审核按钮
+        private void bt审核_Click(object sender, EventArgs e)
+        {
+            checkform = new CheckForm(this);
+            checkform.Show();
+        }
+
+        public override void CheckResult()
+        {
+            dt_prodinstr.Rows[0]["审核人"] = checkform.userName;
+            dt_prodinstr.Rows[0]["检查人"] = checkform.userName;
+
+            dt_prodinstr.Rows[0]["检查结果"] = checkform.ischeckOk==true?"合格":"不合格" ;
+            dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+
+            dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
+            if (checkform.ischeckOk)
+            {
+                foreach (Control c in this.Controls)
+                {
+                    c.Enabled = false;
+                }
+                dataGridView1.Enabled = true;
+                dataGridView1.ReadOnly = true;
+                bt打印.Enabled = true;
+
+            }
+
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+
+            base.CheckResult();
         }
     }
 }

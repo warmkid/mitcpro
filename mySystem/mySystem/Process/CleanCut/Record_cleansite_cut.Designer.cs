@@ -248,6 +248,7 @@
             // 
             this.tb检查人.Location = new System.Drawing.Point(298, 347);
             this.tb检查人.Name = "tb检查人";
+            this.tb检查人.ReadOnly = true;
             this.tb检查人.Size = new System.Drawing.Size(100, 23);
             this.tb检查人.TabIndex = 17;
             // 
@@ -288,6 +289,7 @@
             this.bt审核.TabIndex = 22;
             this.bt审核.Text = "审核";
             this.bt审核.UseVisualStyleBackColor = true;
+            this.bt审核.Click += new System.EventHandler(this.bt审核_Click);
             // 
             // bt打印
             // 
