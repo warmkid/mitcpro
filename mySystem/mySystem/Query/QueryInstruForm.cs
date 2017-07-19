@@ -167,10 +167,8 @@ namespace mySystem
         {
             int selectIndex = this.dgv.CurrentRow.Index;
             int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-            //fill函数有错
-            //BatchProductRecord.ProcessProductInstru detailform = new BatchProductRecord.ProcessProductInstru(base.mainform);
-            //detailform.fill(ID);
-            //detailform.Show();
+            BatchProductRecord.ProcessProductInstru detailform = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
+            detailform.Show();
         }
 
 

@@ -280,7 +280,7 @@ namespace mySystem
             Parameter.proInstruID = instruID;
             InitBtn();
   
-            //CheckHour(); //立即执行一次 
+            CheckHour(); //立即执行一次 
             //定时器开始计时
             timer1.Interval = 300000; //五分钟
             timer1.Start();
@@ -296,7 +296,7 @@ namespace mySystem
         private void timer1_Tick(object sender, EventArgs e)
         {
             //test();
-            //CheckHour();
+            CheckHour();
         }
         
         //定时器调用的函数，判断时间，查看是否填写
@@ -612,7 +612,7 @@ namespace mySystem
 
         private void D2Btn_Click(object sender, EventArgs e)
         {
-            form19 = new ReplaceHeadForm();
+            form19 = new ReplaceHeadForm(mainform);
             form19.ShowDialog();
         }
 
