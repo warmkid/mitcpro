@@ -57,6 +57,7 @@
             this.bt上移 = new System.Windows.Forms.Button();
             this.bt下移 = new System.Windows.Forms.Button();
             this.bt发送审核 = new System.Windows.Forms.Button();
+            this.bt日志 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -171,42 +172,43 @@
             // 
             // dtp编制日期
             // 
-            this.dtp编制日期.Location = new System.Drawing.Point(31, 492);
+            this.dtp编制日期.Location = new System.Drawing.Point(31, 482);
             this.dtp编制日期.Name = "dtp编制日期";
             this.dtp编制日期.Size = new System.Drawing.Size(158, 26);
             this.dtp编制日期.TabIndex = 8;
             // 
             // dtp审批日期
             // 
-            this.dtp审批日期.Location = new System.Drawing.Point(244, 489);
+            this.dtp审批日期.Location = new System.Drawing.Point(356, 486);
             this.dtp审批日期.Name = "dtp审批日期";
             this.dtp审批日期.Size = new System.Drawing.Size(157, 26);
             this.dtp审批日期.TabIndex = 9;
             // 
             // dtp接收日期
             // 
-            this.dtp接收日期.Location = new System.Drawing.Point(477, 489);
+            this.dtp接收日期.Location = new System.Drawing.Point(655, 486);
             this.dtp接收日期.Name = "dtp接收日期";
             this.dtp接收日期.Size = new System.Drawing.Size(156, 26);
             this.dtp接收日期.TabIndex = 10;
             // 
             // tb编制人
             // 
-            this.tb编制人.Location = new System.Drawing.Point(106, 460);
+            this.tb编制人.Location = new System.Drawing.Point(106, 450);
             this.tb编制人.Name = "tb编制人";
             this.tb编制人.Size = new System.Drawing.Size(83, 26);
             this.tb编制人.TabIndex = 11;
             // 
             // tb审批人
             // 
-            this.tb审批人.Location = new System.Drawing.Point(319, 456);
+            this.tb审批人.Location = new System.Drawing.Point(431, 453);
             this.tb审批人.Name = "tb审批人";
+            this.tb审批人.ReadOnly = true;
             this.tb审批人.Size = new System.Drawing.Size(82, 26);
             this.tb审批人.TabIndex = 12;
             // 
             // tb接收人
             // 
-            this.tb接收人.Location = new System.Drawing.Point(552, 456);
+            this.tb接收人.Location = new System.Drawing.Point(730, 453);
             this.tb接收人.Name = "tb接收人";
             this.tb接收人.Size = new System.Drawing.Size(80, 26);
             this.tb接收人.TabIndex = 13;
@@ -214,7 +216,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 463);
+            this.label3.Location = new System.Drawing.Point(28, 453);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 32;
@@ -223,7 +225,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(241, 463);
+            this.label5.Location = new System.Drawing.Point(353, 460);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 16);
             this.label5.TabIndex = 33;
@@ -232,7 +234,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(474, 463);
+            this.label9.Location = new System.Drawing.Point(652, 460);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(72, 16);
             this.label9.TabIndex = 34;
@@ -240,7 +242,7 @@
             // 
             // bt确认
             // 
-            this.bt确认.Location = new System.Drawing.Point(686, 456);
+            this.bt确认.Location = new System.Drawing.Point(569, 536);
             this.bt确认.Name = "bt确认";
             this.bt确认.Size = new System.Drawing.Size(63, 23);
             this.bt确认.TabIndex = 35;
@@ -250,7 +252,7 @@
             // 
             // bt审核
             // 
-            this.bt审核.Location = new System.Drawing.Point(776, 456);
+            this.bt审核.Location = new System.Drawing.Point(37, 536);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(63, 23);
             this.bt审核.TabIndex = 36;
@@ -260,7 +262,7 @@
             // 
             // bt打印
             // 
-            this.bt打印.Location = new System.Drawing.Point(776, 492);
+            this.bt打印.Location = new System.Drawing.Point(126, 536);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(63, 23);
             this.bt打印.TabIndex = 37;
@@ -309,7 +311,7 @@
             // 
             // bt发送审核
             // 
-            this.bt发送审核.Location = new System.Drawing.Point(674, 493);
+            this.bt发送审核.Location = new System.Drawing.Point(648, 536);
             this.bt发送审核.Name = "bt发送审核";
             this.bt发送审核.Size = new System.Drawing.Size(89, 23);
             this.bt发送审核.TabIndex = 42;
@@ -317,11 +319,22 @@
             this.bt发送审核.UseVisualStyleBackColor = true;
             this.bt发送审核.Click += new System.EventHandler(this.bt发送审核_Click);
             // 
+            // bt日志
+            // 
+            this.bt日志.Location = new System.Drawing.Point(750, 536);
+            this.bt日志.Name = "bt日志";
+            this.bt日志.Size = new System.Drawing.Size(89, 23);
+            this.bt日志.TabIndex = 43;
+            this.bt日志.Text = "查看日志";
+            this.bt日志.UseVisualStyleBackColor = true;
+            this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
+            // 
             // Instru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(863, 533);
+            this.ClientSize = new System.Drawing.Size(863, 571);
+            this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.bt下移);
             this.Controls.Add(this.bt上移);
@@ -392,5 +405,6 @@
         private System.Windows.Forms.Button bt上移;
         private System.Windows.Forms.Button bt下移;
         private System.Windows.Forms.Button bt发送审核;
+        private System.Windows.Forms.Button bt日志;
     }
 }

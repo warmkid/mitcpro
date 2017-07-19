@@ -25,7 +25,6 @@ namespace mySystem
 
         public virtual void CheckResult()
         {
-            mySystem.Parameter.parentExtru.InitBtn();
         }
 
 
