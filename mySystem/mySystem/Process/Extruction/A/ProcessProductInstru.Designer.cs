@@ -51,6 +51,9 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.label15 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
             this.tb中层比例 = new System.Windows.Forms.TextBox();
             this.tb内外层比例 = new System.Windows.Forms.TextBox();
             this.cb中层物料代码 = new System.Windows.Forms.ComboBox();
@@ -378,7 +381,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Panel2.Controls.Add(this.cb负责人);
             this.splitContainer2.Size = new System.Drawing.Size(888, 135);
-            this.splitContainer2.SplitterDistance = 652;
+            this.splitContainer2.SplitterDistance = 668;
             this.splitContainer2.TabIndex = 0;
             // 
             // splitContainer3
@@ -395,7 +398,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer3.Size = new System.Drawing.Size(652, 135);
+            this.splitContainer3.Size = new System.Drawing.Size(668, 135);
             this.splitContainer3.SplitterDistance = 101;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -411,6 +414,9 @@
             // 
             // splitContainer4.Panel2
             // 
+            this.splitContainer4.Panel2.Controls.Add(this.label38);
+            this.splitContainer4.Panel2.Controls.Add(this.label37);
+            this.splitContainer4.Panel2.Controls.Add(this.label36);
             this.splitContainer4.Panel2.Controls.Add(this.tb中层比例);
             this.splitContainer4.Panel2.Controls.Add(this.tb内外层比例);
             this.splitContainer4.Panel2.Controls.Add(this.cb中层物料代码);
@@ -427,8 +433,8 @@
             this.splitContainer4.Panel2.Controls.Add(this.textBox13);
             this.splitContainer4.Panel2.Controls.Add(this.textBox12);
             this.splitContainer4.Panel2.Controls.Add(this.label19);
-            this.splitContainer4.Size = new System.Drawing.Size(652, 101);
-            this.splitContainer4.SplitterDistance = 54;
+            this.splitContainer4.Size = new System.Drawing.Size(668, 101);
+            this.splitContainer4.SplitterDistance = 55;
             this.splitContainer4.TabIndex = 0;
             // 
             // label15
@@ -440,6 +446,36 @@
             this.label15.Size = new System.Drawing.Size(35, 14);
             this.label15.TabIndex = 8;
             this.label15.Text = "吹膜";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label38.Location = new System.Drawing.Point(573, 78);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(21, 14);
+            this.label38.TabIndex = 29;
+            this.label38.Text = "根";
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label37.Location = new System.Drawing.Point(573, 44);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(21, 14);
+            this.label37.TabIndex = 28;
+            this.label37.Text = "kg";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label36.Location = new System.Drawing.Point(573, 15);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(21, 14);
+            this.label36.TabIndex = 27;
+            this.label36.Text = "kg";
             // 
             // tb中层比例
             // 
@@ -585,8 +621,8 @@
             this.splitContainer5.Panel2.Controls.Add(this.textBox9);
             this.splitContainer5.Panel2.Controls.Add(this.textBox7);
             this.splitContainer5.Panel2.Controls.Add(this.label18);
-            this.splitContainer5.Size = new System.Drawing.Size(652, 30);
-            this.splitContainer5.SplitterDistance = 54;
+            this.splitContainer5.Size = new System.Drawing.Size(668, 30);
+            this.splitContainer5.SplitterDistance = 55;
             this.splitContainer5.TabIndex = 0;
             // 
             // label16
@@ -601,10 +637,11 @@
             // 
             // tb双层包装领料量
             // 
-            this.tb双层包装领料量.Location = new System.Drawing.Point(497, 0);
+            this.tb双层包装领料量.Location = new System.Drawing.Point(497, 3);
             this.tb双层包装领料量.Name = "tb双层包装领料量";
             this.tb双层包装领料量.Size = new System.Drawing.Size(70, 23);
             this.tb双层包装领料量.TabIndex = 16;
+            this.tb双层包装领料量.Visible = false;
             // 
             // textBox9
             // 
@@ -612,6 +649,7 @@
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(68, 23);
             this.textBox9.TabIndex = 14;
+            this.textBox9.Visible = false;
             // 
             // textBox7
             // 
@@ -636,7 +674,7 @@
             // 
             this.label35.AutoSize = true;
             this.label35.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label35.Location = new System.Drawing.Point(13, 21);
+            this.label35.Location = new System.Drawing.Point(3, 21);
             this.label35.Name = "label35";
             this.label35.Size = new System.Drawing.Size(35, 14);
             this.label35.TabIndex = 31;
@@ -646,7 +684,7 @@
             // 
             this.tb夜班.Enabled = false;
             this.tb夜班.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb夜班.Location = new System.Drawing.Point(54, 83);
+            this.tb夜班.Location = new System.Drawing.Point(44, 83);
             this.tb夜班.Name = "tb夜班";
             this.tb夜班.ReadOnly = true;
             this.tb夜班.Size = new System.Drawing.Size(165, 23);
@@ -656,7 +694,7 @@
             // 
             this.tb白班.Enabled = false;
             this.tb白班.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb白班.Location = new System.Drawing.Point(54, 54);
+            this.tb白班.Location = new System.Drawing.Point(44, 54);
             this.tb白班.Name = "tb白班";
             this.tb白班.ReadOnly = true;
             this.tb白班.Size = new System.Drawing.Size(165, 23);
@@ -666,7 +704,7 @@
             // 
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label34.Location = new System.Drawing.Point(13, 87);
+            this.label34.Location = new System.Drawing.Point(3, 87);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(35, 14);
             this.label34.TabIndex = 28;
@@ -676,7 +714,7 @@
             // 
             this.label33.AutoSize = true;
             this.label33.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label33.Location = new System.Drawing.Point(13, 57);
+            this.label33.Location = new System.Drawing.Point(3, 57);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(35, 14);
             this.label33.TabIndex = 27;
@@ -685,7 +723,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button3.Location = new System.Drawing.Point(172, 15);
+            this.button3.Location = new System.Drawing.Point(162, 15);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(47, 23);
             this.button3.TabIndex = 26;
@@ -696,7 +734,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button2.Location = new System.Drawing.Point(119, 15);
+            this.button2.Location = new System.Drawing.Point(109, 15);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(47, 23);
             this.button2.TabIndex = 25;
@@ -707,7 +745,7 @@
             // cb负责人
             // 
             this.cb负责人.FormattingEnabled = true;
-            this.cb负责人.Location = new System.Drawing.Point(54, 15);
+            this.cb负责人.Location = new System.Drawing.Point(44, 15);
             this.cb负责人.Name = "cb负责人";
             this.cb负责人.Size = new System.Drawing.Size(56, 22);
             this.cb负责人.TabIndex = 24;
@@ -1306,5 +1344,8 @@
         private System.Windows.Forms.Button bt删除;
         private System.Windows.Forms.ComboBox cb工艺;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label36;
     }
 }

@@ -179,7 +179,7 @@ namespace mySystem
                         break;
                     case 2:  //清洁分切
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Cleancut.mdb;Persist Security Info=False";
+                                Data Source=../../database/welding.mdb;Persist Security Info=False";
                         connOle = Init(strConn, connOle);
                         break;
                     case 3:  //CS制袋

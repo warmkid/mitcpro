@@ -28,47 +28,203 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.bt保存 = new System.Windows.Forms.Button();
-            this.bt退料审核 = new System.Windows.Forms.Button();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tb重量 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tb数量 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.tb退料量 = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.tb退料操作人 = new System.Windows.Forms.TextBox();
-            this.tb退料审核人 = new System.Windows.Forms.TextBox();
-            this.bt添加 = new System.Windows.Forms.Button();
-            this.cB物料代码 = new System.Windows.Forms.ComboBox();
-            this.bt打印 = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.bt打印 = new System.Windows.Forms.Button();
+            this.cB物料代码 = new System.Windows.Forms.ComboBox();
+            this.bt添加 = new System.Windows.Forms.Button();
+            this.tb退料审核人 = new System.Windows.Forms.TextBox();
+            this.tb退料操作人 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tb退料量 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tb数量 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tb重量 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.bt退料审核 = new System.Windows.Forms.Button();
+            this.bt保存 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.bt删除 = new System.Windows.Forms.Button();
+            this.bt上移 = new System.Windows.Forms.Button();
+            this.bt下移 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // label4
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(348, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(322, 16);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "SOP-MFG-301-R14A吹膜工序领料退料记录";
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(682, 342);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(21, 14);
+            this.label4.TabIndex = 30;
+            this.label4.Text = "kg";
             // 
-            // label2
+            // label3
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(42, 45);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 14);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "物料代码：";
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(899, 342);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(21, 14);
+            this.label3.TabIndex = 29;
+            this.label3.Text = "件";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(845, 41);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 28;
+            this.button1.Text = "测试";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
+            // bt打印
+            // 
+            this.bt打印.Location = new System.Drawing.Point(868, 381);
+            this.bt打印.Name = "bt打印";
+            this.bt打印.Size = new System.Drawing.Size(75, 23);
+            this.bt打印.TabIndex = 27;
+            this.bt打印.Text = "打印";
+            this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
+            // 
+            // cB物料代码
+            // 
+            this.cB物料代码.FormattingEnabled = true;
+            this.cB物料代码.Location = new System.Drawing.Point(125, 37);
+            this.cB物料代码.Name = "cB物料代码";
+            this.cB物料代码.Size = new System.Drawing.Size(121, 22);
+            this.cB物料代码.TabIndex = 26;
+            this.cB物料代码.SelectedIndexChanged += new System.EventHandler(this.cB物料代码_SelectedIndexChanged);
+            // 
+            // bt添加
+            // 
+            this.bt添加.Location = new System.Drawing.Point(26, 338);
+            this.bt添加.Name = "bt添加";
+            this.bt添加.Size = new System.Drawing.Size(75, 23);
+            this.bt添加.TabIndex = 25;
+            this.bt添加.Text = "添加";
+            this.bt添加.UseVisualStyleBackColor = true;
+            this.bt添加.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // tb退料审核人
+            // 
+            this.tb退料审核人.Location = new System.Drawing.Point(551, 378);
+            this.tb退料审核人.Name = "tb退料审核人";
+            this.tb退料审核人.Size = new System.Drawing.Size(100, 23);
+            this.tb退料审核人.TabIndex = 24;
+            // 
+            // tb退料操作人
+            // 
+            this.tb退料操作人.Location = new System.Drawing.Point(322, 378);
+            this.tb退料操作人.Name = "tb退料操作人";
+            this.tb退料操作人.Size = new System.Drawing.Size(100, 23);
+            this.tb退料操作人.TabIndex = 23;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(454, 384);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(91, 14);
+            this.label12.TabIndex = 22;
+            this.label12.Text = "退料审核人：";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(227, 384);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(91, 14);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "退料操作人：";
+            // 
+            // tb退料量
+            // 
+            this.tb退料量.Location = new System.Drawing.Point(78, 381);
+            this.tb退料量.Name = "tb退料量";
+            this.tb退料量.Size = new System.Drawing.Size(100, 23);
+            this.tb退料量.TabIndex = 20;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(23, 387);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(63, 14);
+            this.label10.TabIndex = 19;
+            this.label10.Text = "退料量：";
+            // 
+            // tb数量
+            // 
+            this.tb数量.Location = new System.Drawing.Point(793, 339);
+            this.tb数量.Name = "tb数量";
+            this.tb数量.ReadOnly = true;
+            this.tb数量.Size = new System.Drawing.Size(100, 23);
+            this.tb数量.TabIndex = 18;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(737, 342);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(49, 14);
+            this.label9.TabIndex = 17;
+            this.label9.Text = "数量：";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(521, 342);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(49, 14);
+            this.label8.TabIndex = 16;
+            this.label8.Text = "重量：";
+            // 
+            // tb重量
+            // 
+            this.tb重量.Location = new System.Drawing.Point(576, 339);
+            this.tb重量.Name = "tb重量";
+            this.tb重量.ReadOnly = true;
+            this.tb重量.Size = new System.Drawing.Size(100, 23);
+            this.tb重量.TabIndex = 15;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(466, 342);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(49, 14);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "合计：";
+            // 
+            // bt退料审核
+            // 
+            this.bt退料审核.Location = new System.Drawing.Point(783, 381);
+            this.bt退料审核.Name = "bt退料审核";
+            this.bt退料审核.Size = new System.Drawing.Size(75, 23);
+            this.bt退料审核.TabIndex = 13;
+            this.bt退料审核.Text = "审核";
+            this.bt退料审核.UseVisualStyleBackColor = true;
+            this.bt退料审核.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // bt保存
+            // 
+            this.bt保存.Location = new System.Drawing.Point(685, 381);
+            this.bt保存.Name = "bt保存";
+            this.bt保存.Size = new System.Drawing.Size(75, 23);
+            this.bt保存.TabIndex = 12;
+            this.bt保存.Text = "保存";
+            this.bt保存.UseVisualStyleBackColor = true;
+            this.bt保存.Click += new System.EventHandler(this.button1_Click);
             // 
             // dataGridView1
             // 
@@ -83,162 +239,75 @@
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_Endedit);
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             // 
-            // bt保存
+            // label2
             // 
-            this.bt保存.Location = new System.Drawing.Point(680, 417);
-            this.bt保存.Name = "bt保存";
-            this.bt保存.Size = new System.Drawing.Size(75, 23);
-            this.bt保存.TabIndex = 12;
-            this.bt保存.Text = "保存";
-            this.bt保存.UseVisualStyleBackColor = true;
-            this.bt保存.Click += new System.EventHandler(this.button1_Click);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(42, 45);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 14);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "物料代码：";
             // 
-            // bt退料审核
+            // label1
             // 
-            this.bt退料审核.Location = new System.Drawing.Point(778, 417);
-            this.bt退料审核.Name = "bt退料审核";
-            this.bt退料审核.Size = new System.Drawing.Size(75, 23);
-            this.bt退料审核.TabIndex = 13;
-            this.bt退料审核.Text = "审核";
-            this.bt退料审核.UseVisualStyleBackColor = true;
-            this.bt退料审核.Click += new System.EventHandler(this.button2_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(348, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(322, 16);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "SOP-MFG-301-R14A吹膜工序领料退料记录";
             // 
-            // label7
+            // label5
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(156, 342);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(49, 14);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "合计：";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(184, 384);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(21, 14);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "kg";
             // 
-            // tb重量
+            // bt删除
             // 
-            this.tb重量.Location = new System.Drawing.Point(305, 339);
-            this.tb重量.Name = "tb重量";
-            this.tb重量.ReadOnly = true;
-            this.tb重量.Size = new System.Drawing.Size(100, 23);
-            this.tb重量.TabIndex = 15;
+            this.bt删除.Location = new System.Drawing.Point(130, 338);
+            this.bt删除.Name = "bt删除";
+            this.bt删除.Size = new System.Drawing.Size(75, 23);
+            this.bt删除.TabIndex = 32;
+            this.bt删除.Text = "删除";
+            this.bt删除.UseVisualStyleBackColor = true;
+            this.bt删除.Click += new System.EventHandler(this.bt删除_Click);
             // 
-            // label8
+            // bt上移
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(250, 342);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(49, 14);
-            this.label8.TabIndex = 16;
-            this.label8.Text = "重量：";
+            this.bt上移.Location = new System.Drawing.Point(230, 338);
+            this.bt上移.Name = "bt上移";
+            this.bt上移.Size = new System.Drawing.Size(75, 23);
+            this.bt上移.TabIndex = 33;
+            this.bt上移.Text = "上移";
+            this.bt上移.UseVisualStyleBackColor = true;
+            this.bt上移.Click += new System.EventHandler(this.bt上移_Click);
             // 
-            // label9
+            // bt下移
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(466, 342);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(49, 14);
-            this.label9.TabIndex = 17;
-            this.label9.Text = "数量：";
-            // 
-            // tb数量
-            // 
-            this.tb数量.Location = new System.Drawing.Point(522, 339);
-            this.tb数量.Name = "tb数量";
-            this.tb数量.ReadOnly = true;
-            this.tb数量.Size = new System.Drawing.Size(100, 23);
-            this.tb数量.TabIndex = 18;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(23, 387);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(63, 14);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "退料量：";
-            // 
-            // tb退料量
-            // 
-            this.tb退料量.Location = new System.Drawing.Point(78, 381);
-            this.tb退料量.Name = "tb退料量";
-            this.tb退料量.Size = new System.Drawing.Size(100, 23);
-            this.tb退料量.TabIndex = 20;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(239, 387);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(91, 14);
-            this.label11.TabIndex = 21;
-            this.label11.Text = "退料操作人：";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(506, 387);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(91, 14);
-            this.label12.TabIndex = 22;
-            this.label12.Text = "退料审核人：";
-            // 
-            // tb退料操作人
-            // 
-            this.tb退料操作人.Location = new System.Drawing.Point(334, 381);
-            this.tb退料操作人.Name = "tb退料操作人";
-            this.tb退料操作人.Size = new System.Drawing.Size(100, 23);
-            this.tb退料操作人.TabIndex = 23;
-            // 
-            // tb退料审核人
-            // 
-            this.tb退料审核人.Location = new System.Drawing.Point(592, 381);
-            this.tb退料审核人.Name = "tb退料审核人";
-            this.tb退料审核人.Size = new System.Drawing.Size(100, 23);
-            this.tb退料审核人.TabIndex = 24;
-            // 
-            // bt添加
-            // 
-            this.bt添加.Location = new System.Drawing.Point(26, 338);
-            this.bt添加.Name = "bt添加";
-            this.bt添加.Size = new System.Drawing.Size(75, 23);
-            this.bt添加.TabIndex = 25;
-            this.bt添加.Text = "添加";
-            this.bt添加.UseVisualStyleBackColor = true;
-            this.bt添加.Click += new System.EventHandler(this.button3_Click);
-            // 
-            // cB物料代码
-            // 
-            this.cB物料代码.FormattingEnabled = true;
-            this.cB物料代码.Location = new System.Drawing.Point(125, 37);
-            this.cB物料代码.Name = "cB物料代码";
-            this.cB物料代码.Size = new System.Drawing.Size(121, 22);
-            this.cB物料代码.TabIndex = 26;
-            this.cB物料代码.SelectedIndexChanged += new System.EventHandler(this.cB物料代码_SelectedIndexChanged);
-            // 
-            // bt打印
-            // 
-            this.bt打印.Location = new System.Drawing.Point(863, 417);
-            this.bt打印.Name = "bt打印";
-            this.bt打印.Size = new System.Drawing.Size(75, 23);
-            this.bt打印.TabIndex = 27;
-            this.bt打印.Text = "打印";
-            this.bt打印.UseVisualStyleBackColor = true;
-            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(26, 426);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 28;
-            this.button1.Text = "测试";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            this.bt下移.Location = new System.Drawing.Point(334, 338);
+            this.bt下移.Name = "bt下移";
+            this.bt下移.Size = new System.Drawing.Size(75, 23);
+            this.bt下移.TabIndex = 34;
+            this.bt下移.Text = "下移";
+            this.bt下移.UseVisualStyleBackColor = true;
+            this.bt下移.Click += new System.EventHandler(this.bt下移_Click);
             // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 452);
+            this.ClientSize = new System.Drawing.Size(950, 411);
+            this.Controls.Add(this.bt下移);
+            this.Controls.Add(this.bt上移);
+            this.Controls.Add(this.bt删除);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.bt打印);
             this.Controls.Add(this.cB物料代码);
@@ -290,5 +359,11 @@
         private System.Windows.Forms.ComboBox cB物料代码;
         private System.Windows.Forms.Button bt打印;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button bt删除;
+        private System.Windows.Forms.Button bt上移;
+        private System.Windows.Forms.Button bt下移;
     }
 }

@@ -28,6 +28,7 @@ namespace mySystem.Process.CleanCut
             InitializeComponent();
             Init();
             readsetting();
+            begin();
         }
 
         //判断之前的内容是否与设置表中内容一致
@@ -240,7 +241,7 @@ namespace mySystem.Process.CleanCut
             setDataGridViewCombox();
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
-            setDataGridViewColumns();
+            //setDataGridViewColumns();
             setDataGridViewRowNums();
         }
         //设置DataGridView中下拉框
@@ -293,6 +294,9 @@ namespace mySystem.Process.CleanCut
             {
                 dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
             }
+
+            dataGridView1.Columns[0].Visible = false;//ID
+            dataGridView1.Columns[1].Visible = false;//外键
         }
 
 

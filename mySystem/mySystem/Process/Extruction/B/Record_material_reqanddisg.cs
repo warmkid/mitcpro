@@ -459,7 +459,7 @@ namespace mySystem.Extruction.Process
                         c1.DataPropertyName = dc.ColumnName;
                         c1.HeaderText = dc.ColumnName;
                         c1.Name = dc.ColumnName;
-                        c1.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c1.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c1.ValueType = dc.DataType;
                         // 如果换了名字会报错，把当前值也加上就好了
                         // 加序号，按序号显示
@@ -474,7 +474,7 @@ namespace mySystem.Extruction.Process
                         c3.DataPropertyName = dc.ColumnName;
                         c3.HeaderText = dc.ColumnName;
                         c3.Name = dc.ColumnName;
-                        c3.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c3.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c3.ValueType = dc.DataType;
                         // 如果换了名字会报错，把当前值也加上就好了
                         // 加序号，按序号显示
@@ -484,12 +484,42 @@ namespace mySystem.Extruction.Process
                         // 重写cell value changed 事件，自动填写id
                         break;
 
+                    case "数量":
+                        DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
+                        c4.DataPropertyName = dc.ColumnName;
+                        c4.HeaderText = "数量(件)";
+                        c4.Name = dc.ColumnName;
+                        c4.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c4.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c4);
+                        break;
+
+                    case "重量每件":
+                        DataGridViewTextBoxColumn c5 = new DataGridViewTextBoxColumn();
+                        c5.DataPropertyName = dc.ColumnName;
+                        c5.HeaderText = "kg/件";
+                        c5.Name = dc.ColumnName;
+                        c5.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c5.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c5);
+                        break;
+
+                    case "重量":
+                        DataGridViewTextBoxColumn c6 = new DataGridViewTextBoxColumn();
+                        c6.DataPropertyName = dc.ColumnName;
+                        c6.HeaderText = "重量(kg)";
+                        c6.Name = dc.ColumnName;
+                        c6.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c6.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c6);
+                        break;
+
                     default:
                         DataGridViewTextBoxColumn c2 = new DataGridViewTextBoxColumn();
                         c2.DataPropertyName = dc.ColumnName;
                         c2.HeaderText = dc.ColumnName;
                         c2.Name = dc.ColumnName;
-                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c2.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c2.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(c2);
                         break;
@@ -634,6 +664,94 @@ namespace mySystem.Extruction.Process
             my.Cells[29, 5].Value = "退料："+tb退料量.Text;
             my.Cells[29, 7].Value = tb退料操作人.Text;
             my.Cells[29, 8].Value = tb退料审核人.Text;
+        }
+
+        private void bt删除_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                if (dataGridView1.SelectedRows[0].Index < 0)
+                    return;
+                dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+            }
+
+            //计算合计
+            float sum_num = 0, sum_weight = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")
+                    sum_num += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+            }
+            //tb重量.Text = sum_num.ToString();
+            //tb数量.Text = sum_weight.ToString();
+            dt_prodinstr.Rows[0]["重量合计"] = sum_weight;
+            dt_prodinstr.Rows[0]["数量合计"] = sum_num;
+        }
+
+        private void bt上移_Click(object sender, EventArgs e)
+        {
+            int count = dt_prodlist.Rows.Count;
+            if (count == 0)
+                return;
+            int index = dataGridView1.SelectedCells[0].RowIndex;
+            if (0 == index)
+            {
+                return;
+            }
+            DataRow currRow = dt_prodlist.Rows[index];
+            DataRow desRow = dt_prodlist.NewRow();
+            desRow.ItemArray = currRow.ItemArray.Clone() as object[];
+            currRow.Delete();
+            dt_prodlist.Rows.Add(desRow);
+
+            for (int i = index - 1; i < count; ++i)
+            {
+                if (i == index) { continue; }
+                DataRow tcurrRow = dt_prodlist.Rows[i];
+                DataRow tdesRow = dt_prodlist.NewRow();
+                tdesRow.ItemArray = tcurrRow.ItemArray.Clone() as object[];
+                tcurrRow.Delete();
+                dt_prodlist.Rows.Add(tdesRow);
+            }
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            dt_prodlist.Clear();
+            da_prodlist.Fill(dt_prodlist);
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index - 1].Selected = true;
+        }
+
+        private void bt下移_Click(object sender, EventArgs e)
+        {
+            int count = dt_prodlist.Rows.Count;
+            if (count == 0)
+                return;
+            int index = dataGridView1.SelectedCells[0].RowIndex;
+            if (count - 1 == index)
+            {
+                return;
+            }
+            DataRow currRow = dt_prodlist.Rows[index];
+            DataRow desRow = dt_prodlist.NewRow();
+            desRow.ItemArray = currRow.ItemArray.Clone() as object[];
+            currRow.Delete();
+            dt_prodlist.Rows.Add(desRow);
+
+            for (int i = index + 2; i < count; ++i)
+            {
+                if (i == index) { continue; }
+                DataRow tcurrRow = dt_prodlist.Rows[i];
+                DataRow tdesRow = dt_prodlist.NewRow();
+                tdesRow.ItemArray = tcurrRow.ItemArray.Clone() as object[];
+                tcurrRow.Delete();
+                dt_prodlist.Rows.Add(tdesRow);
+            }
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            dt_prodlist.Clear();
+            da_prodlist.Fill(dt_prodlist);
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index + 1].Selected = true;
         }
     }
 }

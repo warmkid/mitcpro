@@ -34,7 +34,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.tb产品代码 = new System.Windows.Forms.TextBox();
             this.tb产品规格 = new System.Windows.Forms.TextBox();
             this.tb产品批号 = new System.Windows.Forms.TextBox();
             this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
@@ -115,13 +114,6 @@
             this.label6.Size = new System.Drawing.Size(63, 14);
             this.label6.TabIndex = 5;
             this.label6.Text = "生产班次";
-            // 
-            // tb产品代码
-            // 
-            this.tb产品代码.Location = new System.Drawing.Point(259, 12);
-            this.tb产品代码.Name = "tb产品代码";
-            this.tb产品代码.Size = new System.Drawing.Size(100, 23);
-            this.tb产品代码.TabIndex = 6;
             // 
             // tb产品规格
             // 
@@ -354,7 +346,6 @@
             this.Controls.Add(this.dtp生产日期);
             this.Controls.Add(this.tb产品批号);
             this.Controls.Add(this.tb产品规格);
-            this.Controls.Add(this.tb产品代码);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
@@ -378,7 +369,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tb产品代码;
         private System.Windows.Forms.TextBox tb产品规格;
         private System.Windows.Forms.TextBox tb产品批号;
         private System.Windows.Forms.DateTimePicker dtp生产日期;

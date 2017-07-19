@@ -1027,6 +1027,9 @@
     <EmbeddedResource Include="Process\CleanCut\CleanCut_CheckBeforePower.resx">
       <DependentUpon>CleanCut_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\Instru.resx">
+      <DependentUpon>Instru.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
     </EmbeddedResource>
