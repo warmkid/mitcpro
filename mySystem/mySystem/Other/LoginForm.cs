@@ -38,13 +38,16 @@ namespace mySystem
                 else
                 {
                     Parameter.userID = CheckUser(Parameter.connOleUser, myID, mypassword);
-                    Parameter.userName = Parameter.IDtoName(Parameter.userID);
-                    Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
-                    Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
+                    if (Parameter.userID != 0)
+                    {
+                        Parameter.userName = Parameter.IDtoName(Parameter.userID);
+                        Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
+                        Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
+                        InstruReceive();
+                    }
+                    
                 }
             }
-
-            InstruReceive();
 
         }
 

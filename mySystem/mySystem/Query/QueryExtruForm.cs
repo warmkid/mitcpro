@@ -865,12 +865,12 @@ namespace mySystem.Query
                     //detailform17.Show();
                     break;
                 case "吹膜机更换模头记录及安装检查表":
-                    //ReplaceHeadForm detailform18 = new ReplaceHeadForm(base.mainform, ID);
-                    //detailform18.Show();
+                    ReplaceHeadForm detailform18 = new ReplaceHeadForm(base.mainform, ID);
+                    detailform18.Show();
                     break;
                 case "吹膜机更换模芯记录及安装检查表":
-                    //ExtructionReplaceCore detailform19 = new ExtructionReplaceCore(base.mainform, ID);
-                    //detailform19.Show();
+                    ExtructionReplaceCore detailform19 = new ExtructionReplaceCore(base.mainform, ID);
+                    detailform19.Show();
                     break;
                 case "吹膜机更换过滤网记录":
                     //Process.Extruction.D.NetExchange detailform20 = new Process.Extruction.D.NetExchange(base.mainform, ID);
