@@ -28,16 +28,22 @@ namespace mySystem.Setting
                     PeopleSetBtn.Enabled = true;
                     SystemSetBtn.Enabled = false;
                     ExtruSetBtn.Enabled = false;
+                    Btn清洁分切.Enabled = false;
+                    Btn灭菌.Enabled = false;
                     break;
                 case 2:
                     PeopleSetBtn.Enabled = true;
                     SystemSetBtn.Enabled = false;
                     ExtruSetBtn.Enabled = false;
+                    Btn清洁分切.Enabled = false;
+                    Btn灭菌.Enabled = false;
                     break;
                 case 3:
                     PeopleSetBtn.Enabled = true;
                     SystemSetBtn.Enabled = true;
                     ExtruSetBtn.Enabled = true;
+                    Btn清洁分切.Enabled = true;
+                    Btn灭菌.Enabled = true;
                     break;
                 default:
                     break;
@@ -51,6 +57,8 @@ namespace mySystem.Setting
             ExtruSetBtn.BackColor = Color.FromArgb(138, 158, 196);
             SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
             PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
+            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
+            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
             SettingPanelRight.Controls.Clear();
             SetExtruForm myDlg = new SetExtruForm(mainform);
             myDlg.TopLevel = false;
@@ -66,6 +74,8 @@ namespace mySystem.Setting
             ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
             SystemSetBtn.BackColor = Color.FromArgb(138, 158, 196);
             PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
+            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
+            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
             SettingPanelRight.Controls.Clear();
             SettingForm myDlg = new SettingForm();
             myDlg.TopLevel = false;
@@ -82,6 +92,8 @@ namespace mySystem.Setting
             Parameter.InitConnUser();
             ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
             SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
+            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
+            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
             PeopleSetBtn.BackColor = Color.FromArgb(138, 158, 196);
             SettingPanelRight.Controls.Clear();
             SetPeopleForm myDlg = new SetPeopleForm(base.mainform);
@@ -91,6 +103,42 @@ namespace mySystem.Setting
             SettingPanelRight.Controls.Add(myDlg);
             myDlg.Show();
 
+        }
+
+        private void Btn清洁分切_Click(object sender, EventArgs e)
+        {
+            Parameter.selectCon = 2;
+            Parameter.InitCon();
+            Btn清洁分切.BackColor = Color.FromArgb(138, 158, 196);
+            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
+            ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
+            SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
+            PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
+            SettingPanelRight.Controls.Clear();
+            清洁分切设置 myDlg = new 清洁分切设置();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
+        }
+
+        private void Btn灭菌_Click(object sender, EventArgs e)
+        {
+            Parameter.selectCon = 2;
+            Parameter.InitCon();
+            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
+            Btn灭菌.BackColor = Color.FromArgb(138, 158, 196);
+            ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
+            SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
+            PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
+            SettingPanelRight.Controls.Clear();
+            灭菌设置 myDlg = new 灭菌设置();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
 

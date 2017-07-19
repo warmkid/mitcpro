@@ -303,7 +303,7 @@ namespace mySystem
         private void CheckHour()
         {
             DateTime now = DateTime.Now;
-            //DateTime now = new DateTime(2017, 7, 4, 18, 14, 30); //测试用，可以跳出界面的时间
+            //DateTime now = new DateTime(2017, 7, 11, 19, 57, 00); //测试用，可以跳出界面的时间
             DateTime preheattime;
             //获取开机时间
             String table = "吹膜机组预热参数记录表";
@@ -330,15 +330,26 @@ namespace mySystem
                     {
                         //检查是否填写
                         String table1 = "吹膜供料系统运行记录"; //吹膜供料系统运行记录
-                        List<String> queryCols1 = new List<String>(new String[] { "ID" });
-                        List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
-                        List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
-                        String betweenCol1 = "检查时间";
                         DateTime right1 = now;
                         DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 5));
                         DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
                         DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
-                        List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
+                        
+                        OleDbCommand comm1 = new OleDbCommand();
+                        comm1.Connection = Parameter.connOle;
+                        comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 = " + "#" + now.Date + "#";
+                        OleDbDataReader reader1 = comm1.ExecuteReader();//执行查询
+                        int instruID = -1;
+                        if (reader1.Read())
+                        {
+                            instruID = Convert.ToInt32(reader1["ID"]); //获取大表ID
+                        }
+
+                        String table11 = "吹膜供料系统运行记录详细信息";
+                        OleDbCommand comm11 = new OleDbCommand();
+                        comm11.Connection = Parameter.connOle;
+                        comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                        OleDbDataReader reader2 = comm11.ExecuteReader();
 
                         String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
                         List<String> queryCols2 = new List<String>(new String[] { "ID" });
@@ -351,16 +362,16 @@ namespace mySystem
                         DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
                         List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
 
-                        if (res1.Count != 0 && res2.Count != 0)
+                        if (reader2.HasRows && res2.Count != 0)
                         {
                             return;
                         }
-                        else if (res1.Count == 0 && res2.Count != 0)
+                        else if (!reader2.HasRows && res2.Count != 0)
                         {
                             MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
                             return;
                         }
-                        else if (res1.Count != 0 && res2.Count == 0)
+                        else if (reader2.HasRows && res2.Count == 0)
                         {
                             MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
                             return;
@@ -375,15 +386,26 @@ namespace mySystem
                     {
                         //检查是否填写
                         String table1 = "吹膜供料系统运行记录"; //吹膜供料系统运行记录
-                        List<String> queryCols1 = new List<String>(new String[] { "ID" });
-                        List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
-                        List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
-                        String betweenCol1 = "检查时间";
                         DateTime right1 = now;
                         DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 125));
                         DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
                         DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
-                        List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
+
+                        OleDbCommand comm1 = new OleDbCommand();
+                        comm1.Connection = Parameter.connOle;
+                        comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 = " + "#" + now.Date + "#";
+                        OleDbDataReader reader1 = comm1.ExecuteReader();//执行查询
+                        int instruID = -1;
+                        if (reader1.Read())
+                        {
+                            instruID = Convert.ToInt32(reader1["ID"]); //获取大表ID
+                        }
+
+                        String table11 = "吹膜供料系统运行记录详细信息";
+                        OleDbCommand comm11 = new OleDbCommand();
+                        comm11.Connection = Parameter.connOle;
+                        comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                        OleDbDataReader reader2 = comm11.ExecuteReader();
 
                         String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
                         List<String> queryCols2 = new List<String>(new String[] { "ID" });
@@ -396,16 +418,16 @@ namespace mySystem
                         DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
                         List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
 
-                        if (res1.Count != 0 && res2.Count != 0)
+                        if (reader2.HasRows && res2.Count != 0)
                         {
                             return;
                         }
-                        else if (res1.Count == 0 && res2.Count != 0)
+                        else if (!reader2.HasRows && res2.Count != 0)
                         {
                             MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
                             return;
                         }
-                        else if (res1.Count != 0 && res2.Count == 0)
+                        else if (reader2.HasRows && res2.Count == 0)
                         {
                             MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
                             return;
@@ -420,15 +442,25 @@ namespace mySystem
                     {
                         //检查是否填写
                         String table1 = "吹膜供料系统运行记录"; //吹膜供料系统运行记录
-                        List<String> queryCols1 = new List<String>(new String[] { "ID" });
-                        List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
-                        List<Object> whereVals1 = new List<Object>(new Object[] { Convert.ToInt32(Parameter.proInstruID) });
-                        String betweenCol1 = "检查时间";
                         DateTime right1 = now;
                         DateTime left1 = right1.AddMinutes(-(delt.TotalMinutes % 120 + 125));
                         DateTime right11 = new DateTime(right1.Year, right1.Month, right1.Day, right1.Hour, right1.Minute, right1.Second); //格式
                         DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
-                        List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, table1, queryCols1, whereCols1, whereVals1, null, null, betweenCol1, left11, right11);
+                        OleDbCommand comm1 = new OleDbCommand();
+                        comm1.Connection = Parameter.connOle;
+                        comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 = " + "#" + now.Date + "#";
+                        OleDbDataReader reader1 = comm1.ExecuteReader();//执行查询
+                        int instruID = -1;
+                        if (reader1.Read())
+                        {
+                            instruID = Convert.ToInt32(reader1["ID"]); //获取大表ID
+                        }
+
+                        String table11 = "吹膜供料系统运行记录详细信息";
+                        OleDbCommand comm11 = new OleDbCommand();
+                        comm11.Connection = Parameter.connOle;
+                        comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                        OleDbDataReader reader2 = comm11.ExecuteReader();
 
                         String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
                         List<String> queryCols2 = new List<String>(new String[] { "ID" });
@@ -441,17 +473,17 @@ namespace mySystem
                         DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
                         List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
 
-                        if (res1.Count != 0 && res2.Count != 0)
+                        if (reader2.HasRows && res2.Count != 0)
                         {
                             return;
                         }
-                        else if (res1.Count == 0 && res2.Count != 0)
+                        else if (!reader2.HasRows && res2.Count != 0)
                         {
                             MessageBox.Show("请填写“吹膜供料系统运行记录”！", "警告");
                             form16.ShowDialog();
                             return;
                         }
-                        else if (res1.Count != 0 && res2.Count == 0)
+                        else if (reader2.HasRows && res2.Count == 0)
                         {
                             MessageBox.Show("请填写“吹膜机组运行记录”！", "警告");
                             form17.ShowDialog();

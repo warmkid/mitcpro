@@ -31,6 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingMainForm));
             this.SettingPanelRight = new System.Windows.Forms.Panel();
             this.SettingPanelLeft = new System.Windows.Forms.Panel();
+            this.Btn灭菌 = new System.Windows.Forms.Button();
+            this.Btn清洁分切 = new System.Windows.Forms.Button();
             this.ExtruSetBtn = new System.Windows.Forms.Button();
             this.PeopleSetBtn = new System.Windows.Forms.Button();
             this.SystemSetBtn = new System.Windows.Forms.Button();
@@ -49,6 +51,8 @@
             // 
             this.SettingPanelLeft.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.SettingPanelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.SettingPanelLeft.Controls.Add(this.Btn灭菌);
+            this.SettingPanelLeft.Controls.Add(this.Btn清洁分切);
             this.SettingPanelLeft.Controls.Add(this.ExtruSetBtn);
             this.SettingPanelLeft.Controls.Add(this.PeopleSetBtn);
             this.SettingPanelLeft.Controls.Add(this.SystemSetBtn);
@@ -56,6 +60,36 @@
             this.SettingPanelLeft.Name = "SettingPanelLeft";
             this.SettingPanelLeft.Size = new System.Drawing.Size(180, 615);
             this.SettingPanelLeft.TabIndex = 2;
+            // 
+            // Btn灭菌
+            // 
+            this.Btn灭菌.FlatAppearance.BorderSize = 0;
+            this.Btn灭菌.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn灭菌.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn灭菌.Image = ((System.Drawing.Image)(resources.GetObject("Btn灭菌.Image")));
+            this.Btn灭菌.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn灭菌.Location = new System.Drawing.Point(3, 90);
+            this.Btn灭菌.Name = "Btn灭菌";
+            this.Btn灭菌.Size = new System.Drawing.Size(172, 43);
+            this.Btn灭菌.TabIndex = 6;
+            this.Btn灭菌.Text = " 灭菌设置";
+            this.Btn灭菌.UseVisualStyleBackColor = true;
+            this.Btn灭菌.Click += new System.EventHandler(this.Btn灭菌_Click);
+            // 
+            // Btn清洁分切
+            // 
+            this.Btn清洁分切.FlatAppearance.BorderSize = 0;
+            this.Btn清洁分切.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn清洁分切.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn清洁分切.Image = ((System.Drawing.Image)(resources.GetObject("Btn清洁分切.Image")));
+            this.Btn清洁分切.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn清洁分切.Location = new System.Drawing.Point(3, 47);
+            this.Btn清洁分切.Name = "Btn清洁分切";
+            this.Btn清洁分切.Size = new System.Drawing.Size(172, 43);
+            this.Btn清洁分切.TabIndex = 5;
+            this.Btn清洁分切.Text = "  清洁分切设置";
+            this.Btn清洁分切.UseVisualStyleBackColor = true;
+            this.Btn清洁分切.Click += new System.EventHandler(this.Btn清洁分切_Click);
             // 
             // ExtruSetBtn
             // 
@@ -79,7 +113,7 @@
             this.PeopleSetBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.PeopleSetBtn.Image = ((System.Drawing.Image)(resources.GetObject("PeopleSetBtn.Image")));
             this.PeopleSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.PeopleSetBtn.Location = new System.Drawing.Point(3, 90);
+            this.PeopleSetBtn.Location = new System.Drawing.Point(3, 176);
             this.PeopleSetBtn.Name = "PeopleSetBtn";
             this.PeopleSetBtn.Size = new System.Drawing.Size(172, 43);
             this.PeopleSetBtn.TabIndex = 3;
@@ -94,7 +128,7 @@
             this.SystemSetBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.SystemSetBtn.Image = ((System.Drawing.Image)(resources.GetObject("SystemSetBtn.Image")));
             this.SystemSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.SystemSetBtn.Location = new System.Drawing.Point(3, 47);
+            this.SystemSetBtn.Location = new System.Drawing.Point(3, 133);
             this.SystemSetBtn.Name = "SystemSetBtn";
             this.SystemSetBtn.Size = new System.Drawing.Size(172, 43);
             this.SystemSetBtn.TabIndex = 0;
@@ -124,5 +158,7 @@
         private System.Windows.Forms.Button SystemSetBtn;
         private System.Windows.Forms.Button ExtruSetBtn;
         private System.Windows.Forms.Button PeopleSetBtn;
+        private System.Windows.Forms.Button Btn灭菌;
+        private System.Windows.Forms.Button Btn清洁分切;
     }
 }
