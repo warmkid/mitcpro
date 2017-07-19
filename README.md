@@ -9,7 +9,6 @@
 // Parameter中不需要为OleDB和SQL写两个连接变量，写一个:
 DbConnection conn;
 // 利用isSQL来判断是用SQLConnection还是OleDBConnection来new这个对象
-// 以下函数都在父类中写一个虚函数
 // 带 ID 的构造函数
 // 注意，如果当前登录人既不是操作员也不是审核员，则提示，然后不显示界面(管理员例外）
 // 父类的变量
