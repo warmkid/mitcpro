@@ -62,9 +62,7 @@ namespace mySystem.Extruction.Process
             isSqlOk = Parameter.isSqlOk;
 
             IDShow(ID);
-            foreach (Control c in this.Controls) { c.Enabled = false; }
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
+            Init();
         }
 
         //******************************初始化******************************//
@@ -98,7 +96,7 @@ namespace mySystem.Extruction.Process
         //******************************显示数据******************************//
          
         //显示根据信息查找
-        private void DataShow(int InstruID)
+        private void DataShow(Int32 InstruID)
         {
 
             Init();
@@ -403,7 +401,6 @@ namespace mySystem.Extruction.Process
         //打印按钮
         private void printBtn_Click(object sender, EventArgs e)
         {
-            //print
             //true->预览
             //false->打印
             print(true);
