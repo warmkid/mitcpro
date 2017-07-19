@@ -56,6 +56,7 @@
             this.bt删除 = new System.Windows.Forms.Button();
             this.bt上移 = new System.Windows.Forms.Button();
             this.bt下移 = new System.Windows.Forms.Button();
+            this.bt发送审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -306,11 +307,22 @@
             this.bt下移.UseVisualStyleBackColor = true;
             this.bt下移.Click += new System.EventHandler(this.bt下移_Click);
             // 
+            // bt发送审核
+            // 
+            this.bt发送审核.Location = new System.Drawing.Point(674, 493);
+            this.bt发送审核.Name = "bt发送审核";
+            this.bt发送审核.Size = new System.Drawing.Size(89, 23);
+            this.bt发送审核.TabIndex = 42;
+            this.bt发送审核.Text = "发送审核";
+            this.bt发送审核.UseVisualStyleBackColor = true;
+            this.bt发送审核.Click += new System.EventHandler(this.bt发送审核_Click);
+            // 
             // Instru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 533);
+            this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.bt下移);
             this.Controls.Add(this.bt上移);
             this.Controls.Add(this.bt删除);
@@ -379,5 +391,6 @@
         private System.Windows.Forms.Button bt删除;
         private System.Windows.Forms.Button bt上移;
         private System.Windows.Forms.Button bt下移;
+        private System.Windows.Forms.Button bt发送审核;
     }
 }

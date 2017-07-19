@@ -28,11 +28,22 @@ namespace mySystem.Process.CleanCut
         private OleDbDataAdapter da_prodinstr, da_prodlist;
         private BindingSource bs_prodinstr, bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
+        private string person_操作员;
+        private string person_审核员;
 
         public Instru(mySystem.MainForm mainform)
             : base(mainform)
         {
+            getPeople(2);
+            //if (person_操作员 != mySystem.Parameter.userName)
+            //{
+            //    MessageBox.Show("当前操作员没有权限操作该界面");
+            //    //this.Dispose();
+            //    return;
+            //}
             InitializeComponent();
+
+
             Init();
 
             foreach (Control c in this.Controls)
@@ -41,6 +52,21 @@ namespace mySystem.Process.CleanCut
             }
             tb指令编号.Enabled = true;
             bt查询插入.Enabled = true;
+        }
+
+        //// 获取操作员和审核员
+        void getPeople(int id)
+        {
+            DataTable dt = new DataTable("用户权限");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=" + id, mySystem.Parameter.connOle);
+            da.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                person_操作员 = dt.Rows[0]["操作员"].ToString();
+                person_审核员 = dt.Rows[0]["审核员"].ToString();
+            }
+
         }
 
         //public Instru()
@@ -418,12 +444,6 @@ namespace mySystem.Process.CleanCut
             setDataGridViewRowNums();
         }
 
-        private void bt审核_Click(object sender, EventArgs e)
-        {
-            checkform = new CheckForm(this);
-            checkform.Show();
-        }
-
         public override void CheckResult()
         {
             //获得审核信息
@@ -459,6 +479,16 @@ namespace mySystem.Process.CleanCut
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
 
             base.CheckResult();
+        }
+
+        private void bt审核_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt发送审核_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
