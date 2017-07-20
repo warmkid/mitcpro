@@ -419,6 +419,25 @@ namespace mySystem.Process.Extruction.A
             dataGridView1.Columns[1].Visible = false;
             dataGridView1.Columns[2].ReadOnly=true;  //序号
             dataGridView1.Columns[3].ReadOnly = true; ;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+        }
+
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 4||e.ColumnIndex==5)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "Yes")
+                {
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                }
+                if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString() == "No")
+                {
+                    //dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Style.BackColor = Color.Red;
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+
+                }
+            }
+           
         }
 
         private void setDataGridViewRowNums()
@@ -521,6 +540,16 @@ namespace mySystem.Process.Extruction.A
         }
         private void btn审核_Click(object sender, EventArgs e)
         {
+            // 如果有不是yes的，就不准审核
+            foreach (DataGridViewRow gdvr in dataGridView1.Rows)
+            {
+                if(gdvr.DefaultCellStyle.BackColor==Color.Red)
+                {
+                    MessageBox.Show("有条目待确认");
+                    return;
+                }
+
+            }
             check = new CheckForm(this);
             check.Show();
         }
