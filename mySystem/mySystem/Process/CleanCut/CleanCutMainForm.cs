@@ -65,35 +65,80 @@ namespace mySystem.Process.CleanCut
         CleanCut_RunRecord form8 = null;
 
 
-
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            form4 = new Instru(base.mainform);             
-            form4.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切生产指令");
+            if (b)
+            {
+                form4 = new Instru(base.mainform);
+                form4.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }                    
         }
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            form6 = new Record_cleansite_cut(base.mainform);            
-            form6.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清场记录");
+            if (b)
+            {
+                form6 = new Record_cleansite_cut(base.mainform);
+                form6.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }            
         }
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            form5 = new CleanCut_CheckBeforePower(mainform);            
-            form5.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切开机确认");
+            if (b)
+            {
+                form5 = new CleanCut_CheckBeforePower(mainform);
+                form5.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }            
         }
 
         private void A4Btn_Click(object sender, EventArgs e)
         {
-            form1 = new CleanCut_Productrecord(mainform);           
-            form1.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切生产记录表");
+            if (b)
+            {
+                form1 = new CleanCut_Productrecord(mainform);
+                form1.ShowDialog();
+            }
+            else
+            { 
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
         }
 
         private void A5Btn_Click(object sender, EventArgs e)
         {
-            form2 = new DailyRecord();
-            form2.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切日报表");
+            if (b)
+            {
+                form2 = new DailyRecord();
+                form2.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
         }
 
 
@@ -124,12 +169,49 @@ namespace mySystem.Process.CleanCut
 
         private void A8Btn_Click(object sender, EventArgs e)
         {
-            form8 = new CleanCut_RunRecord(mainform);
-            form8.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切运行记录");
+            if (b)
+            {
+                form8 = new CleanCut_RunRecord(mainform);
+                form8.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
         }
 
+        //判断是否能查看
+        private Boolean checkUser(String user, int role, String tblName)
+        {
+            Boolean b = false;
+            String name1 = null;
+            String name2 = null;           
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
+            OleDbDataReader reader = comm.ExecuteReader();
+            while (reader.Read())
+            {
+                name1 = reader["操作员"].ToString();
+                name2 = reader["审核员"].ToString();
+            }
 
-
+            if (role == 3)
+            {
+                b = true;
+            }
+            else
+            {
+                if (user == name1)
+                { b = true; }
+                if (user == name2)
+                { b = true; }
+            }
+            return b;
+        }
 
     }
 }
