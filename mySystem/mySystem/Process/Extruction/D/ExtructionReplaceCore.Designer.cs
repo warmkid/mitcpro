@@ -159,7 +159,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 33;
-            this.label3.Text = "检查日期：";
+            this.label3.Text = "操作日期：";
             // 
             // tb审核人
             // 
@@ -177,7 +177,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 31;
-            this.label2.Text = "审核人：";
+            this.label2.Text = "审核员：";
             // 
             // tb检查人
             // 
@@ -195,7 +195,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
             this.label1.TabIndex = 29;
-            this.label1.Text = "检查人：";
+            this.label1.Text = "操作员：";
             // 
             // CheckBtn
             // 
@@ -233,11 +233,11 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Title.Location = new System.Drawing.Point(432, 21);
+            this.Title.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.Title.Location = new System.Drawing.Point(425, 21);
             this.Title.Name = "Title";
             this.Title.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Title.Size = new System.Drawing.Size(309, 19);
+            this.Title.Size = new System.Drawing.Size(324, 20);
             this.Title.TabIndex = 25;
             this.Title.Text = "吹膜机更换模芯记录及安装检查表";
             this.Title.TextAlign = System.Drawing.ContentAlignment.TopCenter;

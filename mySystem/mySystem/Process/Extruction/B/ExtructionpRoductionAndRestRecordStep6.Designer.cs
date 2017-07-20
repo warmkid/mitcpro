@@ -89,7 +89,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(64, 16);
             this.label10.TabIndex = 28;
-            this.label10.Text = "审核人:";
+            this.label10.Text = "审核员:";
             // 
             // label9
             // 
