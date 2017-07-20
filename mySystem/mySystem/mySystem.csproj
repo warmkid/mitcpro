@@ -415,6 +415,12 @@
     <Compile Include="Process\CleanCut\CleanCut_Productrecord.Designer.cs">
       <DependentUpon>CleanCut_Productrecord.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\CleanCut\CleanCut_RunRecord.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\CleanCut\CleanCut_RunRecord.designer.cs">
+      <DependentUpon>CleanCut_RunRecord.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\CleanCut\DailyRecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1053,6 +1059,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCut_Cover.resx">
       <DependentUpon>CleanCut_Cover.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\CleanCut_RunRecord.resx">
+      <DependentUpon>CleanCut_RunRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\DailyRecord.resx">
       <DependentUpon>DailyRecord.cs</DependentUpon>

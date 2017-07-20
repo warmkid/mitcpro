@@ -49,10 +49,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.add清洁 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.Btn取消区域设置 = new System.Windows.Forms.Button();
             this.Btn保存区域设置 = new System.Windows.Forms.Button();
             this.tabPage确认项目设置 = new System.Windows.Forms.TabPage();
-            this.Btn取消项目设置 = new System.Windows.Forms.Button();
             this.Btn保存项目设置 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dgv交接班 = new System.Windows.Forms.DataGridView();
@@ -65,7 +63,6 @@
             this.add开机 = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage参数设置 = new System.Windows.Forms.TabPage();
-            this.Btn取消参数设置 = new System.Windows.Forms.Button();
             this.Btn保存参数设置 = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -156,7 +153,6 @@
             this.label39 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.Btn取消产品设置 = new System.Windows.Forms.Button();
             this.Btn保存产品设置 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage区域设置.SuspendLayout();
@@ -208,7 +204,6 @@
             this.tabPage区域设置.Controls.Add(this.label34);
             this.tabPage区域设置.Controls.Add(this.groupBox1);
             this.tabPage区域设置.Controls.Add(this.label1);
-            this.tabPage区域设置.Controls.Add(this.Btn取消区域设置);
             this.tabPage区域设置.Controls.Add(this.Btn保存区域设置);
             this.tabPage区域设置.Location = new System.Drawing.Point(4, 29);
             this.tabPage区域设置.Name = "tabPage区域设置";
@@ -430,23 +425,12 @@
             this.label1.TabIndex = 64;
             this.label1.Text = "清洁区域设置";
             // 
-            // Btn取消区域设置
-            // 
-            this.Btn取消区域设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn取消区域设置.Location = new System.Drawing.Point(999, 539);
-            this.Btn取消区域设置.Name = "Btn取消区域设置";
-            this.Btn取消区域设置.Size = new System.Drawing.Size(81, 33);
-            this.Btn取消区域设置.TabIndex = 60;
-            this.Btn取消区域设置.Text = "取消";
-            this.Btn取消区域设置.UseVisualStyleBackColor = true;
-            this.Btn取消区域设置.Click += new System.EventHandler(this.Btn取消区域设置_Click);
-            // 
             // Btn保存区域设置
             // 
             this.Btn保存区域设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存区域设置.Location = new System.Drawing.Point(900, 539);
+            this.Btn保存区域设置.Location = new System.Drawing.Point(972, 536);
             this.Btn保存区域设置.Name = "Btn保存区域设置";
-            this.Btn保存区域设置.Size = new System.Drawing.Size(82, 33);
+            this.Btn保存区域设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存区域设置.TabIndex = 59;
             this.Btn保存区域设置.Text = "保存设置";
             this.Btn保存区域设置.UseVisualStyleBackColor = true;
@@ -455,7 +439,6 @@
             // tabPage确认项目设置
             // 
             this.tabPage确认项目设置.AutoScroll = true;
-            this.tabPage确认项目设置.Controls.Add(this.Btn取消项目设置);
             this.tabPage确认项目设置.Controls.Add(this.Btn保存项目设置);
             this.tabPage确认项目设置.Controls.Add(this.groupBox3);
             this.tabPage确认项目设置.Controls.Add(this.label3);
@@ -469,23 +452,12 @@
             this.tabPage确认项目设置.Text = "确认项目设置";
             this.tabPage确认项目设置.UseVisualStyleBackColor = true;
             // 
-            // Btn取消项目设置
-            // 
-            this.Btn取消项目设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn取消项目设置.Location = new System.Drawing.Point(989, 535);
-            this.Btn取消项目设置.Name = "Btn取消项目设置";
-            this.Btn取消项目设置.Size = new System.Drawing.Size(81, 33);
-            this.Btn取消项目设置.TabIndex = 63;
-            this.Btn取消项目设置.Text = "取消";
-            this.Btn取消项目设置.UseVisualStyleBackColor = true;
-            this.Btn取消项目设置.Click += new System.EventHandler(this.Btn取消项目设置_Click);
-            // 
             // Btn保存项目设置
             // 
             this.Btn保存项目设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存项目设置.Location = new System.Drawing.Point(890, 535);
+            this.Btn保存项目设置.Location = new System.Drawing.Point(972, 536);
             this.Btn保存项目设置.Name = "Btn保存项目设置";
-            this.Btn保存项目设置.Size = new System.Drawing.Size(82, 33);
+            this.Btn保存项目设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存项目设置.TabIndex = 62;
             this.Btn保存项目设置.Text = "保存设置";
             this.Btn保存项目设置.UseVisualStyleBackColor = true;
@@ -597,7 +569,6 @@
             // 
             // tabPage参数设置
             // 
-            this.tabPage参数设置.Controls.Add(this.Btn取消参数设置);
             this.tabPage参数设置.Controls.Add(this.Btn保存参数设置);
             this.tabPage参数设置.Controls.Add(this.label19);
             this.tabPage参数设置.Controls.Add(this.label18);
@@ -628,23 +599,12 @@
             this.tabPage参数设置.Text = "参数设置";
             this.tabPage参数设置.UseVisualStyleBackColor = true;
             // 
-            // Btn取消参数设置
-            // 
-            this.Btn取消参数设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn取消参数设置.Location = new System.Drawing.Point(1018, 525);
-            this.Btn取消参数设置.Name = "Btn取消参数设置";
-            this.Btn取消参数设置.Size = new System.Drawing.Size(81, 33);
-            this.Btn取消参数设置.TabIndex = 150;
-            this.Btn取消参数设置.Text = "取消";
-            this.Btn取消参数设置.UseVisualStyleBackColor = true;
-            this.Btn取消参数设置.Click += new System.EventHandler(this.Btn取消参数设置_Click);
-            // 
             // Btn保存参数设置
             // 
             this.Btn保存参数设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存参数设置.Location = new System.Drawing.Point(919, 525);
+            this.Btn保存参数设置.Location = new System.Drawing.Point(972, 518);
             this.Btn保存参数设置.Name = "Btn保存参数设置";
-            this.Btn保存参数设置.Size = new System.Drawing.Size(82, 33);
+            this.Btn保存参数设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存参数设置.TabIndex = 149;
             this.Btn保存参数设置.Text = "保存设置";
             this.Btn保存参数设置.UseVisualStyleBackColor = true;
@@ -1290,7 +1250,6 @@
             this.tabPage产品设置.Controls.Add(this.label39);
             this.tabPage产品设置.Controls.Add(this.label40);
             this.tabPage产品设置.Controls.Add(this.panel1);
-            this.tabPage产品设置.Controls.Add(this.Btn取消产品设置);
             this.tabPage产品设置.Controls.Add(this.Btn保存产品设置);
             this.tabPage产品设置.Location = new System.Drawing.Point(4, 29);
             this.tabPage产品设置.Name = "tabPage产品设置";
@@ -1562,28 +1521,17 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(861, 942);
+            this.panel1.Location = new System.Drawing.Point(861, 930);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(289, 15);
+            this.panel1.Size = new System.Drawing.Size(289, 10);
             this.panel1.TabIndex = 49;
-            // 
-            // Btn取消产品设置
-            // 
-            this.Btn取消产品设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn取消产品设置.Location = new System.Drawing.Point(984, 903);
-            this.Btn取消产品设置.Name = "Btn取消产品设置";
-            this.Btn取消产品设置.Size = new System.Drawing.Size(81, 33);
-            this.Btn取消产品设置.TabIndex = 48;
-            this.Btn取消产品设置.Text = "取消";
-            this.Btn取消产品设置.UseVisualStyleBackColor = true;
-            this.Btn取消产品设置.Click += new System.EventHandler(this.Btn取消产品设置_Click);
             // 
             // Btn保存产品设置
             // 
             this.Btn保存产品设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存产品设置.Location = new System.Drawing.Point(882, 903);
+            this.Btn保存产品设置.Location = new System.Drawing.Point(972, 893);
             this.Btn保存产品设置.Name = "Btn保存产品设置";
-            this.Btn保存产品设置.Size = new System.Drawing.Size(82, 33);
+            this.Btn保存产品设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存产品设置.TabIndex = 47;
             this.Btn保存产品设置.Text = "保存设置";
             this.Btn保存产品设置.UseVisualStyleBackColor = true;
@@ -1645,7 +1593,6 @@
         private System.Windows.Forms.TabPage tabPage区域设置;
         private System.Windows.Forms.TabPage tabPage确认项目设置;
         private System.Windows.Forms.TabPage tabPage参数设置;
-        private System.Windows.Forms.Button Btn取消区域设置;
         private System.Windows.Forms.Button Btn保存区域设置;
         private System.Windows.Forms.TabPage tabPage产品设置;
         private System.Windows.Forms.GroupBox groupBox1;
@@ -1666,7 +1613,6 @@
         private System.Windows.Forms.Button del开机;
         private System.Windows.Forms.Button add开机;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button Btn取消项目设置;
         private System.Windows.Forms.Button Btn保存项目设置;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label7;
@@ -1730,7 +1676,6 @@
         private System.Windows.Forms.TextBox hw1;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Button Btn取消参数设置;
         private System.Windows.Forms.Button Btn保存参数设置;
         private System.Windows.Forms.Label label34;
         private System.Windows.Forms.GroupBox groupBox8;
@@ -1769,7 +1714,6 @@
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button Btn取消产品设置;
         private System.Windows.Forms.Button Btn保存产品设置;
     }
 }

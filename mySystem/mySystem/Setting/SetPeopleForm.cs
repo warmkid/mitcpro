@@ -54,7 +54,6 @@ namespace mySystem.Setting
                     break;
                 case 3:
                     SetPeoplePanelBottom.Visible = true;
-                    //dgvInit();
                     InitUser();
                     BindUser();
                     break;
@@ -147,15 +146,10 @@ namespace mySystem.Setting
                         pw3TextBox.Text = null;
                     }
                     else
-                    {
-                        return;
-                    }
-
+                    {  return;}
                 }
                 else
-                {
-                    return;
-                }
+                {  return; }
             }
             else
             {
@@ -186,6 +180,10 @@ namespace mySystem.Setting
 
         public void BindUser()
         {
+            this.dgvUser.DataBindings.Clear();
+            for (int i = this.dgvUser.Columns.Count; i > 0; i--)
+            { this.dgvUser.Columns.RemoveAt(i - 1); }  
+
             dtuser = new DataTable("users"); //""中的是表名
             dauser = new OleDbDataAdapter("select * from users ", connuser);
             cbuser = new OleDbCommandBuilder(dauser);
@@ -193,8 +191,8 @@ namespace mySystem.Setting
             dtuser.Columns.Add("序号", System.Type.GetType("System.String"));
             dauser.Fill(dtuser);
             bsuser.DataSource = dtuser;
+           
             changeColView(); //列改为combobox                    
-
             this.dgvUser.DataSource = bsuser.DataSource;
             setDataGridViewRowNums(); //序号           
             this.dgvUser.Columns["ID"].Visible = false;
@@ -232,24 +230,13 @@ namespace mySystem.Setting
 
         private void DeleteBtn_Click(object sender, EventArgs e)
         {
-            int deleteID = Convert.ToInt32(dgvUser.CurrentRow.Cells["用户ID"].Value);
-            String tblName = "users";
-            List<String> whereCols = new List<String>(new String[] { "用户ID" });
-            List<Object> whereVals = new List<Object>(new Object[] { deleteID });
-            Boolean b = Utility.deleteAccess(Parameter.connOleUser, tblName, whereCols, whereVals);
-            if (b)
-            {
-                MessageBox.Show("删除成功", "success");
-                InitUser();
-                BindUser();
-            }
-            else
-            {
-                MessageBox.Show("删除失败", "错误");
-                return;
-            }
-
-            
+            int idx = this.dgvUser.CurrentRow.Index;
+            dtuser.Rows[idx].Delete();
+            dauser.Update((DataTable)bsuser.DataSource);
+            dtuser.Clear();
+            dauser.Fill(dtuser);
+            setDataGridViewRowNums();
+            MessageBox.Show("删除成功", "success");                      
         }
 
         private void SaveEditBtn_Click(object sender, EventArgs e)

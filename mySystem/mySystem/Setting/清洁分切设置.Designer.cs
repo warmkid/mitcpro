@@ -38,7 +38,6 @@
             this.button2 = new System.Windows.Forms.Button();
             this.add清场 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.Btn取消项目 = new System.Windows.Forms.Button();
             this.Btn保存项目 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.dgv开机 = new System.Windows.Forms.DataGridView();
@@ -46,7 +45,6 @@
             this.add开机 = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage产品 = new System.Windows.Forms.TabPage();
-            this.Btn取消产品 = new System.Windows.Forms.Button();
             this.Btn保存产品 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dgv产品编码 = new System.Windows.Forms.DataGridView();
@@ -64,7 +62,6 @@
             this.add物料代码 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.tabPage人员 = new System.Windows.Forms.TabPage();
-            this.Btn取消人员 = new System.Windows.Forms.Button();
             this.Btn保存人员 = new System.Windows.Forms.Button();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -114,7 +111,6 @@
             this.tabPage项目.AutoScroll = true;
             this.tabPage项目.Controls.Add(this.groupBox1);
             this.tabPage项目.Controls.Add(this.label1);
-            this.tabPage项目.Controls.Add(this.Btn取消项目);
             this.tabPage项目.Controls.Add(this.Btn保存项目);
             this.tabPage项目.Controls.Add(this.groupBox6);
             this.tabPage项目.Controls.Add(this.label15);
@@ -136,7 +132,7 @@
             this.groupBox1.Controls.Add(this.add清场);
             this.groupBox1.Location = new System.Drawing.Point(17, 299);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1081, 225);
+            this.groupBox1.Size = new System.Drawing.Size(846, 225);
             this.groupBox1.TabIndex = 52;
             this.groupBox1.TabStop = false;
             // 
@@ -153,7 +149,7 @@
             this.dgv清场.Location = new System.Drawing.Point(12, 53);
             this.dgv清场.Name = "dgv清场";
             this.dgv清场.RowTemplate.Height = 23;
-            this.dgv清场.Size = new System.Drawing.Size(1041, 165);
+            this.dgv清场.Size = new System.Drawing.Size(813, 165);
             this.dgv清场.TabIndex = 2;
             // 
             // button1
@@ -208,23 +204,12 @@
             this.label1.TabIndex = 51;
             this.label1.Text = "清场项目设置";
             // 
-            // Btn取消项目
-            // 
-            this.Btn取消项目.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn取消项目.Location = new System.Drawing.Point(989, 533);
-            this.Btn取消项目.Name = "Btn取消项目";
-            this.Btn取消项目.Size = new System.Drawing.Size(81, 33);
-            this.Btn取消项目.TabIndex = 54;
-            this.Btn取消项目.Text = "取消";
-            this.Btn取消项目.UseVisualStyleBackColor = true;
-            this.Btn取消项目.Click += new System.EventHandler(this.Btn取消项目_Click);
-            // 
             // Btn保存项目
             // 
             this.Btn保存项目.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存项目.Location = new System.Drawing.Point(887, 533);
+            this.Btn保存项目.Location = new System.Drawing.Point(936, 526);
             this.Btn保存项目.Name = "Btn保存项目";
-            this.Btn保存项目.Size = new System.Drawing.Size(82, 33);
+            this.Btn保存项目.Size = new System.Drawing.Size(90, 33);
             this.Btn保存项目.TabIndex = 53;
             this.Btn保存项目.Text = "保存设置";
             this.Btn保存项目.UseVisualStyleBackColor = true;
@@ -237,7 +222,7 @@
             this.groupBox6.Controls.Add(this.add开机);
             this.groupBox6.Location = new System.Drawing.Point(17, 34);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1081, 225);
+            this.groupBox6.Size = new System.Drawing.Size(846, 225);
             this.groupBox6.TabIndex = 50;
             this.groupBox6.TabStop = false;
             // 
@@ -247,7 +232,7 @@
             this.dgv开机.Location = new System.Drawing.Point(12, 51);
             this.dgv开机.Name = "dgv开机";
             this.dgv开机.RowTemplate.Height = 23;
-            this.dgv开机.Size = new System.Drawing.Size(1041, 165);
+            this.dgv开机.Size = new System.Drawing.Size(813, 165);
             this.dgv开机.TabIndex = 2;
             // 
             // del开机
@@ -285,7 +270,6 @@
             // tabPage产品
             // 
             this.tabPage产品.AutoScroll = true;
-            this.tabPage产品.Controls.Add(this.Btn取消产品);
             this.tabPage产品.Controls.Add(this.Btn保存产品);
             this.tabPage产品.Controls.Add(this.groupBox3);
             this.tabPage产品.Controls.Add(this.groupBox4);
@@ -301,23 +285,12 @@
             this.tabPage产品.Text = "产品设置";
             this.tabPage产品.UseVisualStyleBackColor = true;
             // 
-            // Btn取消产品
-            // 
-            this.Btn取消产品.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn取消产品.Location = new System.Drawing.Point(989, 533);
-            this.Btn取消产品.Name = "Btn取消产品";
-            this.Btn取消产品.Size = new System.Drawing.Size(81, 33);
-            this.Btn取消产品.TabIndex = 65;
-            this.Btn取消产品.Text = "取消";
-            this.Btn取消产品.UseVisualStyleBackColor = true;
-            this.Btn取消产品.Click += new System.EventHandler(this.Btn取消产品_Click);
-            // 
             // Btn保存产品
             // 
             this.Btn保存产品.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存产品.Location = new System.Drawing.Point(887, 533);
+            this.Btn保存产品.Location = new System.Drawing.Point(936, 526);
             this.Btn保存产品.Name = "Btn保存产品";
-            this.Btn保存产品.Size = new System.Drawing.Size(82, 33);
+            this.Btn保存产品.Size = new System.Drawing.Size(90, 33);
             this.Btn保存产品.TabIndex = 64;
             this.Btn保存产品.Text = "保存设置";
             this.Btn保存产品.UseVisualStyleBackColor = true;
@@ -481,7 +454,6 @@
             // 
             // tabPage人员
             // 
-            this.tabPage人员.Controls.Add(this.Btn取消人员);
             this.tabPage人员.Controls.Add(this.Btn保存人员);
             this.tabPage人员.Controls.Add(this.groupBox5);
             this.tabPage人员.Controls.Add(this.label3);
@@ -495,23 +467,12 @@
             this.tabPage人员.Text = "人员设置";
             this.tabPage人员.UseVisualStyleBackColor = true;
             // 
-            // Btn取消人员
-            // 
-            this.Btn取消人员.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn取消人员.Location = new System.Drawing.Point(989, 532);
-            this.Btn取消人员.Name = "Btn取消人员";
-            this.Btn取消人员.Size = new System.Drawing.Size(81, 33);
-            this.Btn取消人员.TabIndex = 58;
-            this.Btn取消人员.Text = "取消";
-            this.Btn取消人员.UseVisualStyleBackColor = true;
-            this.Btn取消人员.Click += new System.EventHandler(this.Btn取消人员_Click);
-            // 
             // Btn保存人员
             // 
             this.Btn保存人员.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存人员.Location = new System.Drawing.Point(887, 532);
+            this.Btn保存人员.Location = new System.Drawing.Point(936, 526);
             this.Btn保存人员.Name = "Btn保存人员";
-            this.Btn保存人员.Size = new System.Drawing.Size(82, 33);
+            this.Btn保存人员.Size = new System.Drawing.Size(90, 33);
             this.Btn保存人员.TabIndex = 57;
             this.Btn保存人员.Text = "保存设置";
             this.Btn保存人员.UseVisualStyleBackColor = true;
@@ -525,7 +486,7 @@
             this.groupBox5.Controls.Add(this.button5);
             this.groupBox5.Location = new System.Drawing.Point(17, 313);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(1081, 213);
+            this.groupBox5.Size = new System.Drawing.Size(802, 213);
             this.groupBox5.TabIndex = 56;
             this.groupBox5.TabStop = false;
             // 
@@ -542,7 +503,7 @@
             this.dgv权限.Location = new System.Drawing.Point(12, 17);
             this.dgv权限.Name = "dgv权限";
             this.dgv权限.RowTemplate.Height = 23;
-            this.dgv权限.Size = new System.Drawing.Size(1041, 187);
+            this.dgv权限.Size = new System.Drawing.Size(772, 187);
             this.dgv权限.TabIndex = 2;
             // 
             // button3
@@ -582,7 +543,7 @@
             this.groupBox7.Controls.Add(this.add人员);
             this.groupBox7.Location = new System.Drawing.Point(17, 34);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(1081, 241);
+            this.groupBox7.Size = new System.Drawing.Size(802, 241);
             this.groupBox7.TabIndex = 54;
             this.groupBox7.TabStop = false;
             // 
@@ -592,7 +553,7 @@
             this.dgv人员.Location = new System.Drawing.Point(12, 51);
             this.dgv人员.Name = "dgv人员";
             this.dgv人员.RowTemplate.Height = 23;
-            this.dgv人员.Size = new System.Drawing.Size(1041, 184);
+            this.dgv人员.Size = new System.Drawing.Size(772, 184);
             this.dgv人员.TabIndex = 2;
             // 
             // del人员
@@ -697,12 +658,9 @@
         private System.Windows.Forms.Button del物料代码;
         private System.Windows.Forms.Button add物料代码;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button Btn取消项目;
         private System.Windows.Forms.Button Btn保存项目;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button Btn取消产品;
         private System.Windows.Forms.Button Btn保存产品;
-        private System.Windows.Forms.Button Btn取消人员;
         private System.Windows.Forms.Button Btn保存人员;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Panel panel1;

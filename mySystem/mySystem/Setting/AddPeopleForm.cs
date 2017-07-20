@@ -96,7 +96,6 @@ namespace mySystem.Setting
                 if (b)
                 {
                     MessageBox.Show("用户添加成功", "success");
-                    myparent.InitUser();
                     myparent.BindUser();
                     this.Close();
                     this.Dispose();
