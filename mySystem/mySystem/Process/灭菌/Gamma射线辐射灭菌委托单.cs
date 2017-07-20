@@ -29,7 +29,6 @@ namespace mySystem.Process.灭菌
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
         private string person_操作员;
         private string person_审核员;
-        private List<string> prodcode;
 
         private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
         private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -37,7 +36,7 @@ namespace mySystem.Process.灭菌
             : base(mainform)
         {
             InitializeComponent();
-            getPeople(8);
+            getPeople(1);
             setUserState();
             getOtherData();
             addDataEventHandler();
@@ -85,6 +84,7 @@ namespace mySystem.Process.灭菌
         {
             tb委托单号.DataBindings.Clear();
             tb辐照单位.DataBindings.Clear();
+            tb产品名称.DataBindings.Clear();
             tb箱数.DataBindings.Clear();
             tb托数.DataBindings.Clear();
             tb其他说明.DataBindings.Clear();
@@ -100,7 +100,7 @@ namespace mySystem.Process.灭菌
 
             tb委托单号.DataBindings.Add("Text", bs_prodinstr.DataSource, "委托单号");
             tb辐照单位.DataBindings.Add("Text", bs_prodinstr.DataSource, "辐照单位");
-
+            tb产品名称.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品名称");
             tb箱数.DataBindings.Add("Text", bs_prodinstr.DataSource, "合计箱数");
             tb托数.DataBindings.Add("Text", bs_prodinstr.DataSource, "合计托数");
             tb其他说明.DataBindings.Add("Text", bs_prodinstr.DataSource, "其他说明");
@@ -226,8 +226,11 @@ namespace mySystem.Process.灭菌
         // 设置各控件的事件
 	    // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
         void addDateEventHandler(){}
-	        // 设置自动计算类事件
-        void addComputerEventHandler(){}
+	    // 设置自动计算类事件
+        void addComputerEventHandler()
+        {
+
+        }
 	        // 其他事件，比如按钮的点击，数据有效性判断
         void addOtherEvnetHandler(){}
         // 打印函数
@@ -531,6 +534,34 @@ namespace mySystem.Process.灭菌
             setDataGridViewRowNums();
 
             //刷新合计
+            sumDataGridView1();
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+             if (e.RowIndex < 0)
+                return;
+             sumDataGridView1();
+        }
+
+        //刷新合计
+        private void sumDataGridView1()
+        {
+            float sum_箱 = 0, sum_托 = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() != "")
+                    sum_箱 += float.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[7].Value.ToString() != "")
+                    sum_托 += float.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());              
+            }
+
+            dt_prodinstr.Rows[0]["合计箱数"] = sum_箱;
+            dt_prodinstr.Rows[0]["合计托数"] = sum_托;
+
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+
         }
     }
 }

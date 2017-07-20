@@ -76,6 +76,8 @@
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.textBox11 = new System.Windows.Forms.TextBox();
+            this.bt打印 = new System.Windows.Forms.Button();
+            this.bt保存 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,7 +85,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(478, 23);
+            this.label1.Location = new System.Drawing.Point(376, 22);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(149, 19);
@@ -459,11 +461,34 @@
             this.textBox11.Size = new System.Drawing.Size(843, 26);
             this.textBox11.TabIndex = 49;
             // 
+            // bt打印
+            // 
+            this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt打印.Location = new System.Drawing.Point(814, 535);
+            this.bt打印.Name = "bt打印";
+            this.bt打印.Size = new System.Drawing.Size(63, 25);
+            this.bt打印.TabIndex = 51;
+            this.bt打印.Text = "打印";
+            this.bt打印.UseVisualStyleBackColor = true;
+            // 
+            // bt保存
+            // 
+            this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Location = new System.Drawing.Point(719, 535);
+            this.bt保存.Name = "bt保存";
+            this.bt保存.Size = new System.Drawing.Size(63, 25);
+            this.bt保存.TabIndex = 50;
+            this.bt保存.Text = "保存";
+            this.bt保存.UseVisualStyleBackColor = true;
+            this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
+            // 
             // DailyRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(908, 580);
+            this.ClientSize = new System.Drawing.Size(908, 566);
+            this.Controls.Add(this.bt打印);
+            this.Controls.Add(this.bt保存);
             this.Controls.Add(this.textBox11);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.textBox10);
@@ -558,5 +583,7 @@
         private System.Windows.Forms.TextBox textBox10;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.Button bt打印;
+        private System.Windows.Forms.Button bt保存;
     }
 }
