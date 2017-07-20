@@ -37,7 +37,7 @@ namespace mySystem.Process.灭菌
             : base(mainform)
         {
             InitializeComponent();
-            getPeople(1);
+            getPeople(8);
             setUserState();
             getOtherData();
             addDataEventHandler();
@@ -106,7 +106,7 @@ namespace mySystem.Process.灭菌
             tb其他说明.DataBindings.Add("Text", bs_prodinstr.DataSource, "其他说明");
             tb委托人.DataBindings.Add("Text", bs_prodinstr.DataSource, "委托人");          
             dtp委托日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "委托日期");
-            tb运输商.DataBindings.Add("Value", bs_prodinstr.DataSource, "运输商");
+            tb运输商.DataBindings.Add("Text", bs_prodinstr.DataSource, "运输商");
             tb审批人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审批");
             dtp审批日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "审批日期");
             tb操作人.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作人");
@@ -120,7 +120,7 @@ namespace mySystem.Process.灭菌
         {
             dt_prodlist = new DataTable("Gamma射线辐射灭菌委托单详细信息");
             bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单详细信息 where TGamma射线辐射灭菌委托单详细信息ID" + 外表行ID, mySystem.Parameter.connOle);
+            da_prodlist = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单详细信息 where TGamma射线辐射灭菌委托单详细信息ID=" + 外表行ID, mySystem.Parameter.connOle);
             cb_prodlist = new OleDbCommandBuilder(da_prodlist);
             da_prodlist.Fill(dt_prodlist);
         }
@@ -136,12 +136,82 @@ namespace mySystem.Process.灭菌
             return dr;
         }
         // 内表和控件的绑定
-        void innerBind(){}
+        void innerBind()
+        {
+            //移除所有列
+            while (dataGridView1.Columns.Count > 0)
+                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+            setDataGridViewCombox();
+            bs_prodlist.DataSource = dt_prodlist;
+            dataGridView1.DataSource = bs_prodlist.DataSource;
+            setDataGridViewColumns();
+        }
+
+        //设置DataGridView中下拉框
+        void setDataGridViewCombox()
+        {
+            foreach (DataColumn dc in dt_prodlist.Columns)
+            {
+                switch (dc.ColumnName)
+                {
+                    //case "清洁前产品代码":
+                    //    DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
+                    //    c1.DataPropertyName = dc.ColumnName;
+                    //    c1.HeaderText = "清洁前产品代码(规格型号)";
+                    //    c1.Name = dc.ColumnName;
+                    //    c1.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    c1.ValueType = dc.DataType;
+                    //    // 如果换了名字会报错，把当前值也加上就好了
+                    //    // 加序号，按序号显示
+                    //    OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置清洁分切产品编码", mySystem.Parameter.connOle);
+                    //    DataTable tdt = new DataTable("产品编码");
+                    //    tda.Fill(tdt);
+                    //    foreach (DataRow tdr in tdt.Rows)
+                    //    {
+                    //        c1.Items.Add(tdr["产品编码"]);
+                    //    }
+                    //    dataGridView1.Columns.Add(c1);
+                    //    // 重写cell value changed 事件，自动填写id
+                    //    break;
+
+                    case "数量箱":
+                        DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                        c3.DataPropertyName = dc.ColumnName;
+                        c3.HeaderText = "数量(箱)";
+                        c3.Name = dc.ColumnName;
+                        c3.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c3.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c3);
+                        break;
+
+                    case "数量只":
+                        DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
+                        c4.DataPropertyName = dc.ColumnName;
+                        c4.HeaderText = "数量(只)";
+                        c4.Name = dc.ColumnName;
+                        c4.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c4.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c4);
+                        break;
+
+                    default:
+                        DataGridViewTextBoxColumn c2 = new DataGridViewTextBoxColumn();
+                        c2.DataPropertyName = dc.ColumnName;
+                        c2.HeaderText = dc.ColumnName;
+                        c2.Name = dc.ColumnName;
+                        c2.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c2.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c2);
+                        break;
+                }
+            }
+        }
 
         // 设置DataGridView中各列的格式，包括列类型，列名，是否可以排序
         void setDataGridViewColumns()
         {
-
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
         }
 
         // 刷新DataGridView中的列：序号
@@ -258,6 +328,9 @@ namespace mySystem.Process.灭菌
                 {
                     //空间都不能点
                     setControlsFalse();
+                    //可以操作其他的委托单情况
+                    tb委托单号.Enabled = true;
+                    bt查询插入.Enabled = true;
                 }
                 else
                 {
@@ -272,19 +345,18 @@ namespace mySystem.Process.灭菌
 
         private void bt保存_Click(object sender, EventArgs e)
         {
-            save();
-
+            bool rt=save();
             //控件可见性
-            if (stat_user == 0)
+            if (rt && stat_user == 0)
                 bt发送审核.Enabled = true;
         }
 
         //保存内外表数据
-        private void save()
+        private bool save()
         {
             //判断合法性
             if (!input_Judge())
-                return;
+                return false;
 
             //外表保存
             bs_prodinstr.EndEdit();
@@ -296,9 +368,21 @@ namespace mySystem.Process.灭菌
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
+
+            return true;
         }
         private bool input_Judge()
         {
+            if (mySystem.Parameter.NametoID(tb委托人.Text) <= 0)
+            {
+                MessageBox.Show("委托人ID不存在");
+                return false;
+            }
+            if (mySystem.Parameter.NametoID(tb操作人.Text) <= 0)
+            {
+                MessageBox.Show("操作人ID不存在");
+                return false;
+            }
             return true;
         }
 
@@ -337,6 +421,10 @@ namespace mySystem.Process.灭菌
 
             //空间都不能点
             setControlsFalse();
+
+            //可以操作其他委托单情况
+            bt查询插入.Enabled = true;
+            tb委托单号.Enabled = true;
         }
 
         private void bt日志_Click(object sender, EventArgs e)
@@ -359,6 +447,7 @@ namespace mySystem.Process.灭菌
             //改变控件状态
             setControlsFalse();
 
+            //可以操作其他委托单情况
             bt查询插入.Enabled = true;
             tb委托单号.Enabled = true;
 
@@ -417,6 +506,31 @@ namespace mySystem.Process.灭菌
             setFormState();
             setEnableReadOnly();
             addOtherEvnetHandler();
+        }
+
+        private void bt添加_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt_prodlist.NewRow();
+            // 如果行有默认值，在这里写代码填上
+            dr = writeInnerDefault(dr);
+
+            dt_prodlist.Rows.Add(dr);
+            setDataGridViewRowNums();
+        }
+
+        private void bt删除_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count > 0)
+            {
+                if (dataGridView1.SelectedCells[0].RowIndex < 0)
+                    return;
+                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            }
+
+            //刷新序号
+            setDataGridViewRowNums();
+
+            //刷新合计
         }
     }
 }

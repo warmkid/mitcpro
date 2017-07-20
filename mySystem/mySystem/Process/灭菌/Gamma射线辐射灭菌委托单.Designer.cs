@@ -66,6 +66,10 @@
             this.tb托数 = new System.Windows.Forms.TextBox();
             this.bt发送审核 = new System.Windows.Forms.Button();
             this.bt日志 = new System.Windows.Forms.Button();
+            this.bt添加 = new System.Windows.Forms.Button();
+            this.bt删除 = new System.Windows.Forms.Button();
+            this.label18 = new System.Windows.Forms.Label();
+            this.tb产品名称 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,9 +115,11 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(28, 143);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(879, 150);
             this.dataGridView1.TabIndex = 4;
@@ -261,7 +267,7 @@
             this.tb辐照单位.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb辐照单位.Location = new System.Drawing.Point(106, 108);
             this.tb辐照单位.Name = "tb辐照单位";
-            this.tb辐照单位.Size = new System.Drawing.Size(801, 26);
+            this.tb辐照单位.Size = new System.Drawing.Size(146, 26);
             this.tb辐照单位.TabIndex = 12;
             // 
             // tb辐照剂量
@@ -365,7 +371,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label15.Location = new System.Drawing.Point(29, 307);
+            this.label15.Location = new System.Drawing.Point(483, 307);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(56, 16);
             this.label15.TabIndex = 20;
@@ -374,7 +380,7 @@
             // tb箱数
             // 
             this.tb箱数.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb箱数.Location = new System.Drawing.Point(165, 304);
+            this.tb箱数.Location = new System.Drawing.Point(607, 304);
             this.tb箱数.Name = "tb箱数";
             this.tb箱数.Size = new System.Drawing.Size(100, 26);
             this.tb箱数.TabIndex = 21;
@@ -383,7 +389,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(103, 307);
+            this.label16.Location = new System.Drawing.Point(545, 307);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(56, 16);
             this.label16.TabIndex = 22;
@@ -393,7 +399,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(333, 307);
+            this.label17.Location = new System.Drawing.Point(729, 307);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(56, 16);
             this.label17.TabIndex = 23;
@@ -402,7 +408,7 @@
             // tb托数
             // 
             this.tb托数.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb托数.Location = new System.Drawing.Point(384, 304);
+            this.tb托数.Location = new System.Drawing.Point(780, 304);
             this.tb托数.Name = "tb托数";
             this.tb托数.Size = new System.Drawing.Size(100, 26);
             this.tb托数.TabIndex = 24;
@@ -429,11 +435,55 @@
             this.bt日志.UseVisualStyleBackColor = true;
             this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
             // 
+            // bt添加
+            // 
+            this.bt添加.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt添加.Location = new System.Drawing.Point(39, 307);
+            this.bt添加.Name = "bt添加";
+            this.bt添加.Size = new System.Drawing.Size(63, 25);
+            this.bt添加.TabIndex = 27;
+            this.bt添加.Text = "添加";
+            this.bt添加.UseVisualStyleBackColor = true;
+            this.bt添加.Click += new System.EventHandler(this.bt添加_Click);
+            // 
+            // bt删除
+            // 
+            this.bt删除.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt删除.Location = new System.Drawing.Point(127, 307);
+            this.bt删除.Name = "bt删除";
+            this.bt删除.Size = new System.Drawing.Size(63, 25);
+            this.bt删除.TabIndex = 28;
+            this.bt删除.Text = "删除";
+            this.bt删除.UseVisualStyleBackColor = true;
+            this.bt删除.Click += new System.EventHandler(this.bt删除_Click);
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.Location = new System.Drawing.Point(298, 113);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(72, 16);
+            this.label18.TabIndex = 29;
+            this.label18.Text = "产品名称";
+            // 
+            // tb产品名称
+            // 
+            this.tb产品名称.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb产品名称.Location = new System.Drawing.Point(376, 108);
+            this.tb产品名称.Name = "tb产品名称";
+            this.tb产品名称.Size = new System.Drawing.Size(146, 26);
+            this.tb产品名称.TabIndex = 30;
+            // 
             // Gamma射线辐射灭菌委托单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(944, 562);
+            this.Controls.Add(this.tb产品名称);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.bt删除);
+            this.Controls.Add(this.bt添加);
             this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.tb托数);
@@ -520,5 +570,9 @@
         private System.Windows.Forms.TextBox tb托数;
         private System.Windows.Forms.Button bt发送审核;
         private System.Windows.Forms.Button bt日志;
+        private System.Windows.Forms.Button bt添加;
+        private System.Windows.Forms.Button bt删除;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox tb产品名称;
     }
 }

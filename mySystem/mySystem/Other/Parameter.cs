@@ -194,7 +194,7 @@ namespace mySystem
                         break;
                     case 5: //灭菌
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/灭菌.mdb;Persist Security Info=False";
+                                Data Source=../../database/miejun.mdb;Persist Security Info=False";
                         connOle = Init(strConn, connOle);
                         break;
                 }

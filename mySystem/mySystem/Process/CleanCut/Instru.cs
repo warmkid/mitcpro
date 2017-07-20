@@ -135,18 +135,18 @@ namespace mySystem.Process.CleanCut
         //确认按钮
         private void button1_Click(object sender, EventArgs e)
         {
-            save();
+            bool rt=save();
 
             //控件可见性
-            if(stat_user==0)
+            if(rt && stat_user==0)
                 bt发送审核.Enabled = true;
         }
 
-        private void save()
+        private bool save()
         {
             //判断合法性
             if (!input_Judge())
-                return;
+                return false;
 
             //外表保存
             bs_prodinstr.EndEdit();
@@ -159,6 +159,8 @@ namespace mySystem.Process.CleanCut
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
+
+            return true;
         }
 
         private void bt查询插入_Click(object sender, EventArgs e)
@@ -222,7 +224,7 @@ namespace mySystem.Process.CleanCut
             }
             else if (stat_user == 1)//审核人
             {
-                if (stat_form == 0 || stat_form == 3)//未保存
+                if (stat_form == 0 || stat_form == 3 || stat_form == 2)//草稿,审核不通过，审核通过
                 {
                     //空间都不能点
                     foreach (Control c in this.Controls)
@@ -233,17 +235,7 @@ namespace mySystem.Process.CleanCut
                     bt打印.Enabled = true;
 
                 }
-                else if (stat_form == 2)//审核通过
-                {
-                    //只有打印,日志可点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = false;
-                    dataGridView1.Enabled = true;
-                    dataGridView1.ReadOnly = true;
-                    bt打印.Enabled = true;
-                    bt日志.Enabled = true;
-                }
-                else
+                else//待审核
                 {
                     //发送审核不可点，其他都可点
                     foreach (Control c in this.Controls)
@@ -254,7 +246,7 @@ namespace mySystem.Process.CleanCut
             }
             else//操作员
             {
-                if (stat_form == 1 || stat_form == 2)
+                if (stat_form == 1 || stat_form == 2)//待接收，审核通过
                 {
                     //空间都不能点
                     foreach (Control c in this.Controls)
@@ -264,15 +256,18 @@ namespace mySystem.Process.CleanCut
                     bt日志.Enabled = true;
                     bt打印.Enabled = true;
 
+                    bt查询插入.Enabled = true;
+                    tb指令编号.Enabled = true;
+
                 }
-                else
+                else//未审核与审核不通过
                 {
-                    //发送审核，审核，打印不能点
+                    //发送审核，审核不能点
                     foreach (Control c in this.Controls)
                         c.Enabled = true;
                     bt发送审核.Enabled = false;
                     bt审核.Enabled = false;
-                    bt打印.Enabled = false;
+
                 }
             }
         }
@@ -461,11 +456,11 @@ namespace mySystem.Process.CleanCut
 
         private void bt删除_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (dataGridView1.SelectedCells.Count > 0)
             {
-                if (dataGridView1.SelectedRows[0].Index < 0)
+                if (dataGridView1.SelectedCells[0].RowIndex < 0)
                     return;
-                dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
             //刷新序号

@@ -504,7 +504,33 @@ namespace mySystem.Setting
         private Boolean checkPeopleRight()
         {
             Boolean b = true;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            foreach (DataRow dr in dt权限.Rows)
+            {
+                String name1 = dr["操作员"].ToString();
+                comm.CommandText = "select * from 用户 where 用户名 = " + "'" + name1 + "' ";
+                OleDbDataReader reader1 = comm.ExecuteReader();
+                if (reader1.HasRows)
+                {
+                    String name2 = dr["审核员"].ToString();
+                    comm.CommandText = "select * from 用户 where 用户名 = " + "'" + name2 + "' ";
+                    OleDbDataReader reader2 = comm.ExecuteReader();
+                    if (!reader2.HasRows)
+                    {
+                        b = false;
+                        MessageBox.Show("员工" + "“" + name2 + "”" + "无操作清洁分切权限！"); 
+                    }
+                }
+                else
+                {
+                    b = false;
+                    MessageBox.Show("员工" + "“" + name1 + "”" + "无操作清洁分切权限！"); 
+                }
+                reader1.Dispose();
+            }
 
+            comm.Dispose();
             return b;
         }
 
