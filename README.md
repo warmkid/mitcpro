@@ -68,6 +68,11 @@ void setEnableReadOnly();
 
   
 // 窗口下的按钮：审核                   保存，发送审核，打印，查看记录
+特例：需要单行审核的表
+点击『提交审核』后，上面部分不能改，但是可以继续修改下面部分（要为每一行单独设置状态）
+setDataGridViewColumnReadOnly() //读 datagridview 的每一行，设置并记录每一行是否是 readonly，该函数至少要在 DataGridView 的 DataBindingComplete事件中调用。
+bool isRowEditable(int) 判断某一行是否可编辑
+
 ```
 
 
