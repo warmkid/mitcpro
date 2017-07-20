@@ -403,6 +403,12 @@
     <Compile Include="Process\CleanCut\CleanCut_CheckBeforePower.Designer.cs">
       <DependentUpon>CleanCut_CheckBeforePower.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\CleanCut\CleanCut_Cover.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\CleanCut\CleanCut_Cover.Designer.cs">
+      <DependentUpon>CleanCut_Cover.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\CleanCut\CleanCut_Productrecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1044,6 +1050,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCut_CheckBeforePower.resx">
       <DependentUpon>CleanCut_CheckBeforePower.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\CleanCut_Cover.resx">
+      <DependentUpon>CleanCut_Cover.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\DailyRecord.resx">
+      <DependentUpon>DailyRecord.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\Instru.resx">
+      <DependentUpon>Instru.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>

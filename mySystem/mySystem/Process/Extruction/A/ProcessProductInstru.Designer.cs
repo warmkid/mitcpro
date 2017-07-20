@@ -105,6 +105,7 @@
             this.bt审核 = new System.Windows.Forms.Button();
             this.bt打印 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bt复制 = new System.Windows.Forms.Button();
             this.bt下移 = new System.Windows.Forms.Button();
             this.bt上移 = new System.Windows.Forms.Button();
             this.bt删除 = new System.Windows.Forms.Button();
@@ -838,7 +839,7 @@
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(49, 14);
             this.label22.TabIndex = 11;
-            this.label22.Text = "编制人";
+            this.label22.Text = "操作员";
             // 
             // splitContainer8
             // 
@@ -898,7 +899,7 @@
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(49, 14);
             this.label24.TabIndex = 12;
-            this.label24.Text = "审批人";
+            this.label24.Text = "审核员";
             // 
             // dateTimePicker4
             // 
@@ -972,6 +973,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.bt复制);
             this.panel1.Controls.Add(this.bt下移);
             this.panel1.Controls.Add(this.bt上移);
             this.panel1.Controls.Add(this.bt删除);
@@ -988,10 +990,21 @@
             this.panel1.Size = new System.Drawing.Size(888, 42);
             this.panel1.TabIndex = 19;
             // 
+            // bt复制
+            // 
+            this.bt复制.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt复制.Location = new System.Drawing.Point(225, 10);
+            this.bt复制.Name = "bt复制";
+            this.bt复制.Size = new System.Drawing.Size(46, 23);
+            this.bt复制.TabIndex = 26;
+            this.bt复制.Text = "复制";
+            this.bt复制.UseVisualStyleBackColor = true;
+            this.bt复制.Click += new System.EventHandler(this.bt复制_Click);
+            // 
             // bt下移
             // 
             this.bt下移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt下移.Location = new System.Drawing.Point(208, 10);
+            this.bt下移.Location = new System.Drawing.Point(173, 10);
             this.bt下移.Name = "bt下移";
             this.bt下移.Size = new System.Drawing.Size(46, 23);
             this.bt下移.TabIndex = 25;
@@ -1002,7 +1015,7 @@
             // bt上移
             // 
             this.bt上移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt上移.Location = new System.Drawing.Point(141, 10);
+            this.bt上移.Location = new System.Drawing.Point(121, 10);
             this.bt上移.Name = "bt上移";
             this.bt上移.Size = new System.Drawing.Size(46, 23);
             this.bt上移.TabIndex = 24;
@@ -1013,7 +1026,7 @@
             // bt删除
             // 
             this.bt删除.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt删除.Location = new System.Drawing.Point(78, 10);
+            this.bt删除.Location = new System.Drawing.Point(62, 10);
             this.bt删除.Name = "bt删除";
             this.bt删除.Size = new System.Drawing.Size(46, 23);
             this.bt删除.TabIndex = 23;
@@ -1024,7 +1037,7 @@
             // bt添加
             // 
             this.bt添加.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt添加.Location = new System.Drawing.Point(19, 10);
+            this.bt添加.Location = new System.Drawing.Point(10, 10);
             this.bt添加.Name = "bt添加";
             this.bt添加.Size = new System.Drawing.Size(46, 23);
             this.bt添加.TabIndex = 22;
@@ -1034,7 +1047,7 @@
             // 
             // textBox10
             // 
-            this.textBox10.Location = new System.Drawing.Point(816, 10);
+            this.textBox10.Location = new System.Drawing.Point(822, 10);
             this.textBox10.Name = "textBox10";
             this.textBox10.ReadOnly = true;
             this.textBox10.Size = new System.Drawing.Size(59, 21);
@@ -1044,7 +1057,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label31.Location = new System.Drawing.Point(705, 14);
+            this.label31.Location = new System.Drawing.Point(711, 14);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(105, 14);
             this.label31.TabIndex = 20;
@@ -1052,7 +1065,7 @@
             // 
             // tb用料重量合计
             // 
-            this.tb用料重量合计.Location = new System.Drawing.Point(625, 10);
+            this.tb用料重量合计.Location = new System.Drawing.Point(636, 10);
             this.tb用料重量合计.Name = "tb用料重量合计";
             this.tb用料重量合计.ReadOnly = true;
             this.tb用料重量合计.Size = new System.Drawing.Size(60, 21);
@@ -1062,7 +1075,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label30.Location = new System.Drawing.Point(514, 14);
+            this.label30.Location = new System.Drawing.Point(525, 14);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(105, 14);
             this.label30.TabIndex = 18;
@@ -1070,7 +1083,7 @@
             // 
             // textBox6
             // 
-            this.textBox6.Location = new System.Drawing.Point(437, 10);
+            this.textBox6.Location = new System.Drawing.Point(455, 10);
             this.textBox6.Name = "textBox6";
             this.textBox6.ReadOnly = true;
             this.textBox6.Size = new System.Drawing.Size(59, 21);
@@ -1080,7 +1093,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(326, 14);
+            this.label29.Location = new System.Drawing.Point(344, 14);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(105, 14);
             this.label29.TabIndex = 9;
@@ -1090,7 +1103,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(277, 14);
+            this.label17.Location = new System.Drawing.Point(296, 14);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(42, 14);
             this.label17.TabIndex = 8;
@@ -1101,6 +1114,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(4, 116);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(897, 196);
             this.dataGridView1.TabIndex = 20;
@@ -1347,5 +1361,6 @@
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Button bt复制;
     }
 }

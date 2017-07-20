@@ -203,11 +203,11 @@ namespace WindowsFormsApplication1
         //删除一条供料记录
         private void button3_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (dataGridView1.SelectedCells.Count > 0)
             {
-                if (dataGridView1.SelectedRows[0].Index < 0)
+                if (dataGridView1.SelectedCells[0].RowIndex < 0)
                     return;
-                dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
             //刷新合计
             float sum_out = 0, sum_inmid = 0, sum_mid = 0;
@@ -254,6 +254,15 @@ namespace WindowsFormsApplication1
         //审核按钮
         private void button4_Click(object sender, EventArgs e)
         {
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "不合格")
+                {
+                    MessageBox.Show("有条目待确认");
+                    return;
+                }
+            }
             checkform = new mySystem.CheckForm(this);
             checkform.Show();
         }
@@ -633,6 +642,7 @@ namespace WindowsFormsApplication1
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
 
+            setUndoColor();
             bt审核.Enabled = true;
         }
 
@@ -697,7 +707,14 @@ namespace WindowsFormsApplication1
 
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            
+
+            if (e.ColumnIndex == 6)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString() == "合格")
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString() == "不合格")
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+            }
         }
 
         //检查输入人是否合法
@@ -892,6 +909,18 @@ namespace WindowsFormsApplication1
             my.Cells[9, 10].Value = tb复核人.Text;
             my.Cells[13, 2].Value = tb外层合计.Text ;
             my.Cells[13, 3].Value = tb中内层合计.Text;
+        }
+
+        private void setUndoColor()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "合格")
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "不合格")
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+            }
+
         }
 
     }

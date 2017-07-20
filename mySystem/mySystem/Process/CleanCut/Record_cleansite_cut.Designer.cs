@@ -57,6 +57,8 @@
             this.cb产品代码 = new System.Windows.Forms.ComboBox();
             this.ckb合格 = new System.Windows.Forms.CheckBox();
             this.ckb不合格 = new System.Windows.Forms.CheckBox();
+            this.bt发送审核 = new System.Windows.Forms.Button();
+            this.bt日志 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -265,7 +267,7 @@
             // 
             // bt保存
             // 
-            this.bt保存.Location = new System.Drawing.Point(882, 464);
+            this.bt保存.Location = new System.Drawing.Point(897, 464);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(75, 23);
             this.bt保存.TabIndex = 21;
@@ -275,7 +277,7 @@
             // 
             // bt审核
             // 
-            this.bt审核.Location = new System.Drawing.Point(973, 464);
+            this.bt审核.Location = new System.Drawing.Point(18, 464);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(75, 23);
             this.bt审核.TabIndex = 22;
@@ -285,7 +287,7 @@
             // 
             // bt打印
             // 
-            this.bt打印.Location = new System.Drawing.Point(1066, 464);
+            this.bt打印.Location = new System.Drawing.Point(113, 464);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 23;
@@ -322,11 +324,33 @@
             this.ckb不合格.Text = "不合格";
             this.ckb不合格.UseVisualStyleBackColor = true;
             // 
+            // bt发送审核
+            // 
+            this.bt发送审核.Location = new System.Drawing.Point(985, 464);
+            this.bt发送审核.Name = "bt发送审核";
+            this.bt发送审核.Size = new System.Drawing.Size(75, 23);
+            this.bt发送审核.TabIndex = 27;
+            this.bt发送审核.Text = "发送审核";
+            this.bt发送审核.UseVisualStyleBackColor = true;
+            this.bt发送审核.Click += new System.EventHandler(this.bt发送审核_Click);
+            // 
+            // bt日志
+            // 
+            this.bt日志.Location = new System.Drawing.Point(1066, 464);
+            this.bt日志.Name = "bt日志";
+            this.bt日志.Size = new System.Drawing.Size(75, 23);
+            this.bt日志.TabIndex = 28;
+            this.bt日志.Text = "查看日志";
+            this.bt日志.UseVisualStyleBackColor = true;
+            this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
+            // 
             // Record_cleansite_cut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 499);
+            this.Controls.Add(this.bt日志);
+            this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.ckb不合格);
             this.Controls.Add(this.ckb合格);
             this.Controls.Add(this.cb产品代码);
@@ -392,5 +416,7 @@
         private System.Windows.Forms.ComboBox cb产品代码;
         private System.Windows.Forms.CheckBox ckb合格;
         private System.Windows.Forms.CheckBox ckb不合格;
+        private System.Windows.Forms.Button bt发送审核;
+        private System.Windows.Forms.Button bt日志;
     }
 }
