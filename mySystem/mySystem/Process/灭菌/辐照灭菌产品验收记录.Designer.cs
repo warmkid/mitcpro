@@ -34,6 +34,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tb说明 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.cb不符合要求 = new System.Windows.Forms.CheckBox();
             this.cb符合要求 = new System.Windows.Forms.CheckBox();
@@ -56,7 +57,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tb灭菌委托单编号 = new System.Windows.Forms.TextBox();
             this.dtp运回日期 = new System.Windows.Forms.DateTimePicker();
-            this.tb说明 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -99,6 +99,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(32, 114);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(876, 165);
             this.dataGridView1.TabIndex = 3;
@@ -122,6 +123,14 @@
             this.groupBox1.Size = new System.Drawing.Size(876, 45);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
+            // 
+            // tb说明
+            // 
+            this.tb说明.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb说明.Location = new System.Drawing.Point(80, 12);
+            this.tb说明.Name = "tb说明";
+            this.tb说明.Size = new System.Drawing.Size(783, 26);
+            this.tb说明.TabIndex = 5;
             // 
             // groupBox2
             // 
@@ -337,14 +346,6 @@
             this.dtp运回日期.Name = "dtp运回日期";
             this.dtp运回日期.Size = new System.Drawing.Size(200, 26);
             this.dtp运回日期.TabIndex = 10;
-            // 
-            // tb说明
-            // 
-            this.tb说明.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb说明.Location = new System.Drawing.Point(80, 12);
-            this.tb说明.Name = "tb说明";
-            this.tb说明.Size = new System.Drawing.Size(783, 26);
-            this.tb说明.TabIndex = 5;
             // 
             // 辐照灭菌产品验收记录
             // 

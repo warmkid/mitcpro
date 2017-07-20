@@ -67,13 +67,13 @@ namespace mySystem.Process.灭菌
         // 根据条件从数据库中读取多行内表数据
         private void readInnerData()
         {
-            String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/miejun.mdb;Persist Security Info=False";
-            OleDbConnection connOle = new OleDbConnection(strConn);
-            connOle.Open();
+//            String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/miejun.mdb;Persist Security Info=False";
+//            OleDbConnection connOle = new OleDbConnection(strConn);
+//            connOle.Open();
             dt_taizhang = new DataTable("辐照灭菌台帐");
             bs_taizhang = new BindingSource();
-            da_taizhang = new OleDbDataAdapter(@"select * from 辐照灭菌台账", connOle);
+            da_taizhang = new OleDbDataAdapter(@"select * from 辐照灭菌台帐",mySystem.Parameter.connOle);
             cb_taizhang = new OleDbCommandBuilder(da_taizhang);
             da_taizhang.Fill(dt_taizhang);
         }

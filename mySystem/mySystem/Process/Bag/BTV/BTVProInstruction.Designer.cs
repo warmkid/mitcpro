@@ -128,6 +128,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(26, 84);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(836, 150);
             this.dataGridView1.TabIndex = 4;
@@ -175,6 +176,7 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(97, 240);
             this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowTemplate.Height = 23;
             this.dataGridView2.Size = new System.Drawing.Size(765, 117);
             this.dataGridView2.TabIndex = 7;
@@ -222,6 +224,7 @@
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Location = new System.Drawing.Point(98, 363);
             this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.RowTemplate.Height = 23;
             this.dataGridView3.Size = new System.Drawing.Size(764, 78);
             this.dataGridView3.TabIndex = 10;
@@ -231,6 +234,7 @@
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView4.Location = new System.Drawing.Point(99, 448);
             this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.RowHeadersVisible = false;
             this.dataGridView4.RowTemplate.Height = 23;
             this.dataGridView4.Size = new System.Drawing.Size(763, 78);
             this.dataGridView4.TabIndex = 11;
