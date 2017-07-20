@@ -60,7 +60,7 @@ namespace mySystem.Setting
             Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
             Btn灭菌.BackColor = Color.FromName("ControlLightLight");
             SettingPanelRight.Controls.Clear();
-            SetExtruForm myDlg = new SetExtruForm(mainform);
+            吹膜设置 myDlg = new 吹膜设置();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = SettingPanelRight.Size;

@@ -40,6 +40,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.A7Btn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.A8Btn = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -79,7 +80,7 @@
             // A2Btn
             // 
             this.A2Btn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.A2Btn.Location = new System.Drawing.Point(15, 182);
+            this.A2Btn.Location = new System.Drawing.Point(15, 250);
             this.A2Btn.Name = "A2Btn";
             this.A2Btn.Size = new System.Drawing.Size(269, 38);
             this.A2Btn.TabIndex = 16;
@@ -141,12 +142,13 @@
             this.A3Btn.Name = "A3Btn";
             this.A3Btn.Size = new System.Drawing.Size(269, 38);
             this.A3Btn.TabIndex = 11;
-            this.A3Btn.Text = "清洁分切机开机确认及运行记录";
+            this.A3Btn.Text = "清洁分切机开机前确认";
             this.A3Btn.UseVisualStyleBackColor = true;
             this.A3Btn.Click += new System.EventHandler(this.A3Btn_Click);
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.A8Btn);
             this.groupBox1.Controls.Add(this.A3Btn);
             this.groupBox1.Controls.Add(this.A2Btn);
             this.groupBox1.Controls.Add(this.A1Btn);
@@ -154,7 +156,7 @@
             this.groupBox1.Location = new System.Drawing.Point(464, 110);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(302, 294);
+            this.groupBox1.Size = new System.Drawing.Size(302, 324);
             this.groupBox1.TabIndex = 22;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "管理类";
@@ -181,6 +183,17 @@
             this.groupBox3.TabIndex = 23;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "封面";
+            // 
+            // A8Btn
+            // 
+            this.A8Btn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.A8Btn.Location = new System.Drawing.Point(15, 182);
+            this.A8Btn.Name = "A8Btn";
+            this.A8Btn.Size = new System.Drawing.Size(269, 38);
+            this.A8Btn.TabIndex = 17;
+            this.A8Btn.Text = "清洁分切运行记录";
+            this.A8Btn.UseVisualStyleBackColor = true;
+            this.A8Btn.Click += new System.EventHandler(this.A8Btn_Click);
             // 
             // CleanCutMainForm
             // 
@@ -219,5 +232,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button A7Btn;
         private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Button A8Btn;
     }
 }

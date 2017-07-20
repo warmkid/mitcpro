@@ -268,6 +268,8 @@ namespace mySystem
         //灭菌
         private void KillBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 5;
+            Parameter.InitCon();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();

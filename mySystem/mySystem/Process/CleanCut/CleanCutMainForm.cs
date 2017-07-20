@@ -67,9 +67,7 @@ namespace mySystem.Process.CleanCut
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            //form4 = new Instru();             
-            //form4.ShowDialog();
-            form4 = new Instru(mainform);
+            form4 = new Instru(base.mainform);             
             form4.ShowDialog();
         }
 
@@ -119,6 +117,11 @@ namespace mySystem.Process.CleanCut
         }
 
         private void A7Btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void A8Btn_Click(object sender, EventArgs e)
         {
 
         }

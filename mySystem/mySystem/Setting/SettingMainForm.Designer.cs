@@ -42,9 +42,9 @@
             // SettingPanelRight
             // 
             this.SettingPanelRight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.SettingPanelRight.Location = new System.Drawing.Point(185, 2);
+            this.SettingPanelRight.Location = new System.Drawing.Point(195, 2);
             this.SettingPanelRight.Name = "SettingPanelRight";
-            this.SettingPanelRight.Size = new System.Drawing.Size(1170, 615);
+            this.SettingPanelRight.Size = new System.Drawing.Size(1160, 615);
             this.SettingPanelRight.TabIndex = 3;
             // 
             // SettingPanelLeft
@@ -58,7 +58,7 @@
             this.SettingPanelLeft.Controls.Add(this.SystemSetBtn);
             this.SettingPanelLeft.Location = new System.Drawing.Point(4, 2);
             this.SettingPanelLeft.Name = "SettingPanelLeft";
-            this.SettingPanelLeft.Size = new System.Drawing.Size(180, 615);
+            this.SettingPanelLeft.Size = new System.Drawing.Size(190, 615);
             this.SettingPanelLeft.TabIndex = 2;
             // 
             // Btn灭菌
@@ -70,9 +70,10 @@
             this.Btn灭菌.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn灭菌.Location = new System.Drawing.Point(3, 90);
             this.Btn灭菌.Name = "Btn灭菌";
-            this.Btn灭菌.Size = new System.Drawing.Size(172, 43);
+            this.Btn灭菌.Size = new System.Drawing.Size(186, 43);
             this.Btn灭菌.TabIndex = 6;
-            this.Btn灭菌.Text = " 灭菌设置";
+            this.Btn灭菌.Text = "    灭菌设置";
+            this.Btn灭菌.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn灭菌.UseVisualStyleBackColor = true;
             this.Btn灭菌.Click += new System.EventHandler(this.Btn灭菌_Click);
             // 
@@ -85,9 +86,10 @@
             this.Btn清洁分切.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn清洁分切.Location = new System.Drawing.Point(3, 47);
             this.Btn清洁分切.Name = "Btn清洁分切";
-            this.Btn清洁分切.Size = new System.Drawing.Size(172, 43);
+            this.Btn清洁分切.Size = new System.Drawing.Size(198, 43);
             this.Btn清洁分切.TabIndex = 5;
-            this.Btn清洁分切.Text = "  清洁分切设置";
+            this.Btn清洁分切.Text = "    清洁分切设置";
+            this.Btn清洁分切.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn清洁分切.UseVisualStyleBackColor = true;
             this.Btn清洁分切.Click += new System.EventHandler(this.Btn清洁分切_Click);
             // 
@@ -100,9 +102,10 @@
             this.ExtruSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ExtruSetBtn.Location = new System.Drawing.Point(2, 3);
             this.ExtruSetBtn.Name = "ExtruSetBtn";
-            this.ExtruSetBtn.Size = new System.Drawing.Size(172, 43);
+            this.ExtruSetBtn.Size = new System.Drawing.Size(187, 43);
             this.ExtruSetBtn.TabIndex = 4;
-            this.ExtruSetBtn.Text = "  吹膜设置 ";
+            this.ExtruSetBtn.Text = "    吹膜设置 ";
+            this.ExtruSetBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ExtruSetBtn.UseVisualStyleBackColor = true;
             this.ExtruSetBtn.Click += new System.EventHandler(this.ExtruSetBtn_Click);
             // 
@@ -115,9 +118,10 @@
             this.PeopleSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.PeopleSetBtn.Location = new System.Drawing.Point(3, 176);
             this.PeopleSetBtn.Name = "PeopleSetBtn";
-            this.PeopleSetBtn.Size = new System.Drawing.Size(172, 43);
+            this.PeopleSetBtn.Size = new System.Drawing.Size(186, 43);
             this.PeopleSetBtn.TabIndex = 3;
-            this.PeopleSetBtn.Text = " 人员管理";
+            this.PeopleSetBtn.Text = "    人员管理";
+            this.PeopleSetBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.PeopleSetBtn.UseVisualStyleBackColor = true;
             this.PeopleSetBtn.Click += new System.EventHandler(this.PeopleSetBtn_Click);
             // 
@@ -130,9 +134,10 @@
             this.SystemSetBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.SystemSetBtn.Location = new System.Drawing.Point(3, 133);
             this.SystemSetBtn.Name = "SystemSetBtn";
-            this.SystemSetBtn.Size = new System.Drawing.Size(172, 43);
+            this.SystemSetBtn.Size = new System.Drawing.Size(186, 43);
             this.SystemSetBtn.TabIndex = 0;
-            this.SystemSetBtn.Text = " 参数设置";
+            this.SystemSetBtn.Text = "    参数设置";
+            this.SystemSetBtn.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.SystemSetBtn.UseVisualStyleBackColor = true;
             this.SystemSetBtn.Click += new System.EventHandler(this.SystemSetBtn_Click);
             // 
