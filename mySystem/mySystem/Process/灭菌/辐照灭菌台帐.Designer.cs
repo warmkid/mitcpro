@@ -50,13 +50,14 @@
             this.dataGridView1.Location = new System.Drawing.Point(26, 52);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(712, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(712, 253);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // b打印
             // 
             this.b打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.b打印.Location = new System.Drawing.Point(658, 231);
+            this.b打印.Location = new System.Drawing.Point(663, 322);
             this.b打印.Name = "b打印";
             this.b打印.Size = new System.Drawing.Size(75, 23);
             this.b打印.TabIndex = 2;
@@ -67,7 +68,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(770, 273);
+            this.ClientSize = new System.Drawing.Size(770, 361);
             this.Controls.Add(this.b打印);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);

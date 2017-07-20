@@ -9,8 +9,9 @@ using System.Windows.Forms;
 
 namespace mySystem.Process.灭菌
 {
-    public partial class 灭菌mainform : Form
+    public partial class 灭菌mainform : BaseForm
     {
+
         public 灭菌mainform()
         {
             InitializeComponent();
@@ -30,7 +31,7 @@ namespace mySystem.Process.灭菌
 
         private void button3_Click(object sender, EventArgs e)
         {
-            辐照灭菌台帐 mydlg = new 辐照灭菌台帐();
+            辐照灭菌台帐 mydlg = new 辐照灭菌台帐(mainform);
             mydlg.ShowDialog();
         }
     }
