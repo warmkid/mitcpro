@@ -22,13 +22,88 @@ namespace mySystem.Process.CleanCut
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
         DataTable dt_清场设置;
 
+        private string person_操作员;
+        private string person_审核员;
+        private List<string> prodcode;
+
+        private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
+        private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        private Dictionary<string, string> dict_prod;//产品代码与产品批号对应字典
+
         public Record_cleansite_cut(mySystem.MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
-            Init();
-            readsetting();
+            //Init();
+            //Init();
+            //readsetting();
+            //begin();
+
+            //getPeople()--> setUserState()--> getOtherData()-->
+            //addDataEventHandler() {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->
+            //addComputerEventHandler()-->setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()}
+            
+            getPeople(1);//清场记录权限
+            setUserState();
+            getOtherData();
+            addDataEventHandler();
             begin();
+
+        }
+
+        void addDataEventHandler()
+        {
+            cb产品代码.SelectedIndexChanged += new EventHandler(cb产品代码_SelectedIndexChanged);
+        }
+
+        void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dt_prodinstr.Rows[0]["清洁前批号"] = dict_prod[cb产品代码.Text];
+            tb产品批号.Text = dict_prod[cb产品代码.Text];
+            throw new NotImplementedException();
+        }
+
+        void setUserState()
+        {
+            if (mySystem.Parameter.userName == person_操作员)
+                stat_user = 0;
+            else if (mySystem.Parameter.userName == person_审核员)
+                stat_user = 1;
+            else
+                stat_user = 2;
+        }
+
+        //// 获取操作员和审核员
+        void getPeople(int id)
+        {
+            DataTable dt = new DataTable("用户权限");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=" + id, mySystem.Parameter.connOle);
+            da.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                person_操作员 = dt.Rows[0]["操作员"].ToString();
+                person_审核员 = dt.Rows[0]["审核员"].ToString();
+            }
+
+        }
+
+        
+        private void getOtherData()
+        {
+            //获取设置表中清场项目
+            readsetting();
+
+            //获取该生产指令下的产品代码 
+            dict_prod = new Dictionary<string, string>();
+            OleDbDataAdapter tda = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID="+mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            DataTable tdt = new DataTable("清洁分切工序生产指令详细信息");
+            tda.Fill(tdt);
+            foreach (DataRow tdr in tdt.Rows)
+            {
+                cb产品代码.Items.Add(tdr["清洁前产品代码"].ToString());
+                dict_prod.Add(tdr["清洁前产品代码"].ToString(), tdr["清洁前批号"].ToString());
+            }
         }
 
         //判断之前的内容是否与设置表中内容一致
@@ -66,6 +141,17 @@ namespace mySystem.Process.CleanCut
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
+            addComputerEventHandler();
+
+            setFormState();
+            setEnableReadOnly();
+            addOtherEvnetHandler();
+        }
+
+        // 其他事件，比如按钮的点击，数据有效性判断
+        void addOtherEvnetHandler()
+        {
+            //判断是否与设置中数据一致
             DialogResult result;
             if (!is_sameto_setting())
             {
@@ -98,46 +184,98 @@ namespace mySystem.Process.CleanCut
                 }
 
             }
-
-
-            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
-            {
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                dataGridView1.Enabled = true;
-                dataGridView1.ReadOnly = true;
-                bt打印.Enabled = true;
-            }
         }
 
-        //初始化
-        private void Init()
+        // 设置自动计算类事件
+        void addComputerEventHandler()
+        { }
+
+        //设置窗口状态
+        void setFormState()
         {
-            bt审核.Enabled = false;
-            bt打印.Enabled = false;
+            if (dt_prodinstr.Rows[0]["审核人"].ToString() == "")//草稿
+                stat_form = 0;
+            else if (dt_prodinstr.Rows[0]["审核人"].ToString() == "__待审核")//待审核
+                stat_form = 1;
+            else if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])//审核通过
+                stat_form = 2;
+            else//审核未通过
+                stat_form = 3;
+        }
+
+        //设置控件可见
+        private void setControlTrue()
+        {
+            //控件都能点,除不可点控件
+            foreach (Control c in this.Controls)
+                c.Enabled = true;
             ckb不合格.Enabled = false;
             ckb合格.Enabled = false;
             ckb白班.Enabled = false;
             ckb夜班.Enabled = false;
+            bt发送审核.Enabled = false;
 
-            dt_清场设置 = new DataTable();
+            if (stat_user != 1)
+                bt审核.Enabled = false;
+        }
+        //设置控件不可见
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+                c.Enabled = false;
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            bt日志.Enabled = true;
+            bt打印.Enabled = true;
+        }
 
-            dt_prodinstr = new DataTable();
-            dt_prodlist = new DataTable();
-            da_prodinstr = new OleDbDataAdapter();
-            da_prodlist = new OleDbDataAdapter();
-            bs_prodinstr = new BindingSource();
-            bs_prodlist = new BindingSource();
-            cb_prodinstr = new OleDbCommandBuilder();
-            cb_prodlist = new OleDbCommandBuilder();
+        //设置控件可读性
+        void setEnableReadOnly()
+        {
+            if (stat_user == 2)//管理员
+            {
+                setControlTrue();
+            }
+            else if (stat_user == 1)//审核人
+            {
+                if (stat_form == 2 || stat_form == 3)//审核通过或审核不通过
+                {
+                    //都不可点
+                    setControlFalse();
+                }
+                else if (stat_form == 1)//待审核
+                {
+                    //都可点
+                    setControlTrue();
+                    bt审核.Enabled = true;
+                }
+                else//草稿
+                {
+                    //都不可点
+                    setControlFalse();
+                }
 
+            }
+            else//操作员
+            {
+                if (stat_form == 1 || stat_form == 2)//待审核，审核通过
+                {
+                    //都不能点
+                    setControlFalse();
+
+                }
+                else//草稿，审核不通过
+                {
+                    //都能点，发送审核不能点
+                    setControlTrue();
+                }
+            }
         }
 
         //读取设置中清场项目
         private void readsetting()
         {
+            dt_清场设置 = new DataTable("设置清场项目");
             string asql = "select * from 设置清场项目";
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
@@ -299,17 +437,12 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns[1].Visible = false;//外键
         }
 
-
-
-        //保存按钮
-        private void bt保存_Click(object sender, EventArgs e)
+        //保存外表和内表数据
+        private void save()
         {
-            bt审核.Enabled = false;
             //判断合法性
             if (!input_Judge())
-            {
                 return;
-            }
 
             //外表保存
             bs_prodinstr.EndEdit();
@@ -322,8 +455,15 @@ namespace mySystem.Process.CleanCut
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
+        }
 
-            bt审核.Enabled = true;
+        //保存按钮
+        private void bt保存_Click(object sender, EventArgs e)
+        {
+            save();
+            //控件可见性
+            if (stat_user == 0)//操作员
+                bt发送审核.Enabled = true;
         }
 
         //判断合法性
@@ -344,6 +484,7 @@ namespace mySystem.Process.CleanCut
             checkform.Show();
         }
 
+        //审核
         public override void CheckResult()
         {
             dt_prodinstr.Rows[0]["审核人"] = checkform.userName;
@@ -353,22 +494,72 @@ namespace mySystem.Process.CleanCut
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
 
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
-            if (checkform.ischeckOk)
-            {
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                dataGridView1.Enabled = true;
-                dataGridView1.ReadOnly = true;
-                bt打印.Enabled = true;
 
-            }
+            setControlFalse();
+
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='清场记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            //写日志
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion;
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
 
             base.CheckResult();
+        }
+
+        private void bt发送审核_Click(object sender, EventArgs e)
+        {
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='清场记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "清场记录";
+                dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                dt_temp.Rows.Add(dr);
+            }
+            bs_temp.DataSource = dt_temp;
+            da_temp.Update((DataTable)bs_temp.DataSource);
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
+            dt_prodinstr.Rows[0]["审核人"] = "__待审核";
+            //dt_prodinstr.Rows[0]["审批时间"] = DateTime.Now;
+            dt_prodinstr.Rows[0]["检查人"] = "__待审核";
+
+            save();
+
+            //空间都不能点
+            setControlFalse();
+        }
+
+        private void bt日志_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
         }
     }
 }
