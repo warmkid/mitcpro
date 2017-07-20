@@ -370,6 +370,16 @@ namespace WindowsFormsApplication1
                 }
                 return;
             }
+
+            //不合格标红，合格标白
+            if (e.ColumnIndex == 4)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString()=="合格" )
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                if (dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString() == "不合格")
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+            }
+            
         }
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -425,6 +435,7 @@ namespace WindowsFormsApplication1
             readInnerData(Convert.ToInt32(dt_out.Rows[0]["ID"]));
             innerBind();
 
+            setUndoColor();
             bt审核.Enabled = true;
         }
 
@@ -458,6 +469,14 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                {
+                    MessageBox.Show("有条目待确认");
+                    return;
+                }
+            }
             checkform = new mySystem.CheckForm(this);
             checkform.Show();
         }
@@ -683,6 +702,17 @@ namespace WindowsFormsApplication1
                 my.Cells[5 + i, 11] = dataGridView1.Rows[i].Cells[5].Value.ToString();
                 my.Cells[5 + i, 12] = dataGridView1.Rows[i].Cells[6].Value.ToString();
 
+            }
+        }
+
+        private void setUndoColor()
+        {
+            for(int i=0;i<dataGridView1.Rows.Count;i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
             }
         }
     }

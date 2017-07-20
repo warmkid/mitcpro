@@ -54,6 +54,7 @@
             this.bt删除 = new System.Windows.Forms.Button();
             this.bt上移 = new System.Windows.Forms.Button();
             this.bt下移 = new System.Windows.Forms.Button();
+            this.bt领料审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -107,9 +108,9 @@
             // 
             // bt添加
             // 
-            this.bt添加.Location = new System.Drawing.Point(26, 338);
+            this.bt添加.Location = new System.Drawing.Point(12, 339);
             this.bt添加.Name = "bt添加";
-            this.bt添加.Size = new System.Drawing.Size(75, 23);
+            this.bt添加.Size = new System.Drawing.Size(57, 23);
             this.bt添加.TabIndex = 25;
             this.bt添加.Text = "添加";
             this.bt添加.UseVisualStyleBackColor = true;
@@ -136,7 +137,7 @@
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(91, 14);
             this.label12.TabIndex = 22;
-            this.label12.Text = "退料审核人：";
+            this.label12.Text = "退料审核员：";
             // 
             // label11
             // 
@@ -145,7 +146,7 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(91, 14);
             this.label11.TabIndex = 21;
-            this.label11.Text = "退料操作人：";
+            this.label11.Text = "退料操作员：";
             // 
             // tb退料量
             // 
@@ -208,11 +209,11 @@
             // 
             // bt退料审核
             // 
-            this.bt退料审核.Location = new System.Drawing.Point(783, 381);
+            this.bt退料审核.Location = new System.Drawing.Point(778, 380);
             this.bt退料审核.Name = "bt退料审核";
             this.bt退料审核.Size = new System.Drawing.Size(75, 23);
             this.bt退料审核.TabIndex = 13;
-            this.bt退料审核.Text = "审核";
+            this.bt退料审核.Text = "退料审核";
             this.bt退料审核.UseVisualStyleBackColor = true;
             this.bt退料审核.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -232,6 +233,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(2, 78);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(941, 248);
             this.dataGridView1.TabIndex = 11;
@@ -269,9 +271,9 @@
             // 
             // bt删除
             // 
-            this.bt删除.Location = new System.Drawing.Point(130, 338);
+            this.bt删除.Location = new System.Drawing.Point(94, 339);
             this.bt删除.Name = "bt删除";
-            this.bt删除.Size = new System.Drawing.Size(75, 23);
+            this.bt删除.Size = new System.Drawing.Size(55, 23);
             this.bt删除.TabIndex = 32;
             this.bt删除.Text = "删除";
             this.bt删除.UseVisualStyleBackColor = true;
@@ -279,9 +281,9 @@
             // 
             // bt上移
             // 
-            this.bt上移.Location = new System.Drawing.Point(230, 338);
+            this.bt上移.Location = new System.Drawing.Point(174, 339);
             this.bt上移.Name = "bt上移";
-            this.bt上移.Size = new System.Drawing.Size(75, 23);
+            this.bt上移.Size = new System.Drawing.Size(45, 23);
             this.bt上移.TabIndex = 33;
             this.bt上移.Text = "上移";
             this.bt上移.UseVisualStyleBackColor = true;
@@ -289,19 +291,29 @@
             // 
             // bt下移
             // 
-            this.bt下移.Location = new System.Drawing.Point(334, 338);
+            this.bt下移.Location = new System.Drawing.Point(240, 338);
             this.bt下移.Name = "bt下移";
-            this.bt下移.Size = new System.Drawing.Size(75, 23);
+            this.bt下移.Size = new System.Drawing.Size(56, 23);
             this.bt下移.TabIndex = 34;
             this.bt下移.Text = "下移";
             this.bt下移.UseVisualStyleBackColor = true;
             this.bt下移.Click += new System.EventHandler(this.bt下移_Click);
             // 
+            // bt领料审核
+            // 
+            this.bt领料审核.Location = new System.Drawing.Point(336, 339);
+            this.bt领料审核.Name = "bt领料审核";
+            this.bt领料审核.Size = new System.Drawing.Size(75, 23);
+            this.bt领料审核.TabIndex = 35;
+            this.bt领料审核.Text = "领料审核";
+            this.bt领料审核.UseVisualStyleBackColor = true;
+            // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 411);
+            this.ClientSize = new System.Drawing.Size(950, 419);
+            this.Controls.Add(this.bt领料审核);
             this.Controls.Add(this.bt下移);
             this.Controls.Add(this.bt上移);
             this.Controls.Add(this.bt删除);
@@ -365,5 +377,6 @@
         private System.Windows.Forms.Button bt删除;
         private System.Windows.Forms.Button bt上移;
         private System.Windows.Forms.Button bt下移;
+        private System.Windows.Forms.Button bt领料审核;
     }
 }

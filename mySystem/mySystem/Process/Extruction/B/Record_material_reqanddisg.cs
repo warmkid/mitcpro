@@ -176,6 +176,8 @@ namespace mySystem.Extruction.Process
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
+
+            setUndoColor();
             bt退料审核.Enabled = true;
         }
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -316,6 +318,23 @@ namespace mySystem.Extruction.Process
             //tb数量.Text = sum_weight.ToString();
             dt_prodinstr.Rows[0]["重量合计"] = sum_weight;
             dt_prodinstr.Rows[0]["数量合计"] = sum_num;
+
+            if (e.ColumnIndex == 6)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString() == "是" && dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString() == "合格")
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                else
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+            }
+
+            if (e.ColumnIndex == 7)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString() == "是" && dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString() == "合格")
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                else
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+            }
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -357,6 +376,14 @@ namespace mySystem.Extruction.Process
 
         private void button2_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "否" || dataGridView1.Rows[i].Cells[7].Value.ToString()=="不合格")
+                {
+                    MessageBox.Show("有条目待确认");
+                    return;
+                }
+            }
             checkform = new CheckForm(this);
             checkform.Show();
 
@@ -668,11 +695,11 @@ namespace mySystem.Extruction.Process
 
         private void bt删除_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (dataGridView1.SelectedCells.Count > 0)
             {
-                if (dataGridView1.SelectedRows[0].Index < 0)
+                if (dataGridView1.SelectedCells[0].RowIndex < 0)
                     return;
-                dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
             //计算合计
@@ -752,6 +779,18 @@ namespace mySystem.Extruction.Process
             da_prodlist.Fill(dt_prodlist);
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index + 1].Selected = true;
+        }
+
+        private void setUndoColor()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "是" && dataGridView1.Rows[i].Cells[7].Value.ToString() == "合格")
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                else
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+            }
+
         }
     }
 }

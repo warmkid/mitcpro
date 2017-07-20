@@ -152,7 +152,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 16);
             this.label4.TabIndex = 7;
-            this.label4.Text = "复核人/日期";
+            this.label4.Text = "审核员/日期";
             // 
             // groupBox2
             // 

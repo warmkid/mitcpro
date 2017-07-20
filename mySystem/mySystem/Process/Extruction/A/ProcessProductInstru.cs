@@ -1076,11 +1076,11 @@ namespace BatchProductRecord
 
         private void bt删除_Click(object sender, System.EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count > 0)
+            if (dataGridView1.SelectedCells.Count > 0)
             {
-                if (dataGridView1.SelectedRows[0].Index < 0)
+                if (dataGridView1.SelectedCells[0].RowIndex< 0)
                     return;
-                dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
+                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
             //刷新序号
@@ -1101,6 +1101,19 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
             dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
 
+            //更新领料量
+            string bili = tb内外层比例.Text;
+            if (bili == "")
+                return;
+            float fbili = float.Parse(bili);
+            if (fbili <= 100 && fbili >= 0)
+            {
+                dt_prodinstr.Rows[0]["内外层领料量"] = sum_weight / 100 * fbili;
+                dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100 - fbili);
+            }
+
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
 
         private void bt上移_Click(object sender, System.EventArgs e)
@@ -1292,6 +1305,46 @@ namespace BatchProductRecord
             my.Cells[22, 1].Value = "编制人：" + tb编制人.Text + "\n" +dateTimePicker2.Value.ToLongDateString();
             my.Cells[22, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToLongDateString();
             my.Cells[22, 9].Value = "接受人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToLongDateString();
+        }
+
+        private void bt复制_Click(object sender, System.EventArgs e)
+        {
+
+            if (dataGridView1.SelectedCells.Count <= 0)
+                return;
+            DataRow dr = dt_prodlist.NewRow();
+            dr.ItemArray = dt_prodlist.Rows[dataGridView1.SelectedCells[0].RowIndex].ItemArray.Clone() as object[];
+            dt_prodlist.Rows.Add(dr);
+            setDataGridViewRowNums();
+           
+            //刷新合计
+            //计算合计
+            float sum_mi = 0, sum_juan = 0, sum_weight = 0;
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")
+                    sum_mi += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[8].Value.ToString() != "")
+                    sum_juan += float.Parse(dataGridView1.Rows[i].Cells[8].Value.ToString());
+            }
+            dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
+            dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
+            dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
+            //更新领料量
+            string bili = tb内外层比例.Text;
+            if (bili == "")
+                return;
+            float fbili = float.Parse(bili);
+            if (fbili <= 100 && fbili >= 0)
+            {
+                dt_prodinstr.Rows[0]["内外层领料量"] = sum_weight / 100 * fbili;
+                dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100 - fbili);
+            }
+
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
     }
 }
