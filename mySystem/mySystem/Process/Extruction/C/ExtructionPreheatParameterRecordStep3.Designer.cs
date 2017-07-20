@@ -160,7 +160,7 @@
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(72, 16);
             this.label51.TabIndex = 72;
-            this.label51.Text = "审核人：";
+            this.label51.Text = "审核员：";
             // 
             // label50
             // 
@@ -170,7 +170,7 @@
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(72, 16);
             this.label50.TabIndex = 71;
-            this.label50.Text = "记录人：";
+            this.label50.Text = "操作员：";
             // 
             // dtp日期
             // 

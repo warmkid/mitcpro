@@ -28,7 +28,7 @@ namespace mySystem.Process.CleanCut
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select * from [清洁/分切工序生产指令] where 状态 = 2";
+                comm.CommandText = "select * from 清洁分切工序生产指令 where 状态 = 2";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
@@ -42,7 +42,7 @@ namespace mySystem.Process.CleanCut
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = Parameter.conn;
-                comm.CommandText = "select * from [清洁/分切工序生产指令] where 状态 = 2";
+                comm.CommandText = "select * from 清洁分切工序生产指令 where 状态 = 2";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
@@ -67,7 +67,9 @@ namespace mySystem.Process.CleanCut
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            form4 = new Instru();             
+            //form4 = new Instru();             
+            //form4.ShowDialog();
+            form4 = new Instru(mainform);
             form4.ShowDialog();
         }
 
@@ -101,7 +103,7 @@ namespace mySystem.Process.CleanCut
         {
             instruction = comboBox1.SelectedItem.ToString();
             Parameter.cleancutInstruction = instruction;
-            String tblName = "[清洁/分切工序生产指令]";
+            String tblName = "清洁分切工序生产指令";
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });

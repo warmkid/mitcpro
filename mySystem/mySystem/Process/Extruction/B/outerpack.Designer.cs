@@ -156,12 +156,12 @@
             this.dataGridView1.Location = new System.Drawing.Point(31, 107);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(850, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(910, 150);
             this.dataGridView1.TabIndex = 7;
             // 
             // dtp包装日期
             // 
-            this.dtp包装日期.Location = new System.Drawing.Point(721, 69);
+            this.dtp包装日期.Location = new System.Drawing.Point(781, 69);
             this.dtp包装日期.Name = "dtp包装日期";
             this.dtp包装日期.Size = new System.Drawing.Size(160, 26);
             this.dtp包装日期.TabIndex = 6;
@@ -170,7 +170,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(643, 72);
+            this.label4.Location = new System.Drawing.Point(683, 72);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 16);
             this.label4.TabIndex = 5;
@@ -178,7 +178,7 @@
             // 
             // tb产品批号
             // 
-            this.tb产品批号.Location = new System.Drawing.Point(505, 69);
+            this.tb产品批号.Location = new System.Drawing.Point(525, 69);
             this.tb产品批号.Name = "tb产品批号";
             this.tb产品批号.Size = new System.Drawing.Size(100, 26);
             this.tb产品批号.TabIndex = 4;
@@ -186,7 +186,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(410, 72);
+            this.label3.Location = new System.Drawing.Point(430, 72);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(104, 16);
             this.label3.TabIndex = 3;
@@ -205,7 +205,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(377, 24);
+            this.label1.Location = new System.Drawing.Point(412, 24);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(149, 19);
@@ -228,7 +228,7 @@
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Location = new System.Drawing.Point(31, 295);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(850, 165);
+            this.groupBox1.Size = new System.Drawing.Size(910, 165);
             this.groupBox1.TabIndex = 41;
             this.groupBox1.TabStop = false;
             // 
@@ -251,7 +251,7 @@
             // tb审核人
             // 
             this.tb审核人.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb审核人.Location = new System.Drawing.Point(548, 477);
+            this.tb审核人.Location = new System.Drawing.Point(578, 477);
             this.tb审核人.Name = "tb审核人";
             this.tb审核人.Size = new System.Drawing.Size(100, 26);
             this.tb审核人.TabIndex = 49;
@@ -260,11 +260,11 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label5.Location = new System.Drawing.Point(483, 481);
+            this.label5.Location = new System.Drawing.Point(513, 481);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 16);
             this.label5.TabIndex = 48;
-            this.label5.Text = "审核人：";
+            this.label5.Text = "审核员：";
             // 
             // tb操作人
             // 
@@ -282,12 +282,12 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(72, 16);
             this.label6.TabIndex = 46;
-            this.label6.Text = "操作人：";
+            this.label6.Text = "操作员：";
             // 
             // dtp审核日期
             // 
             this.dtp审核日期.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp审核日期.Location = new System.Drawing.Point(731, 476);
+            this.dtp审核日期.Location = new System.Drawing.Point(791, 476);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(150, 26);
             this.dtp审核日期.TabIndex = 45;
@@ -296,16 +296,16 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label10.Location = new System.Drawing.Point(679, 481);
+            this.label10.Location = new System.Drawing.Point(709, 481);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(56, 16);
+            this.label10.Size = new System.Drawing.Size(88, 16);
             this.label10.TabIndex = 44;
-            this.label10.Text = "日期：";
+            this.label10.Text = "审核日期：";
             // 
             // dtp操作日期
             // 
             this.dtp操作日期.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp操作日期.Location = new System.Drawing.Point(274, 476);
+            this.dtp操作日期.Location = new System.Drawing.Point(304, 476);
             this.dtp操作日期.Name = "dtp操作日期";
             this.dtp操作日期.Size = new System.Drawing.Size(150, 26);
             this.dtp操作日期.TabIndex = 43;
@@ -316,14 +316,14 @@
             this.label11.Font = new System.Drawing.Font("SimSun", 12F);
             this.label11.Location = new System.Drawing.Point(222, 481);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(56, 16);
+            this.label11.Size = new System.Drawing.Size(88, 16);
             this.label11.TabIndex = 42;
-            this.label11.Text = "日期：";
+            this.label11.Text = "操作日期：";
             // 
             // printBtn
             // 
             this.printBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.printBtn.Location = new System.Drawing.Point(802, 523);
+            this.printBtn.Location = new System.Drawing.Point(861, 523);
             this.printBtn.Name = "printBtn";
             this.printBtn.Size = new System.Drawing.Size(80, 30);
             this.printBtn.TabIndex = 52;
@@ -334,7 +334,7 @@
             // CheckBtn
             // 
             this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.CheckBtn.Location = new System.Drawing.Point(708, 524);
+            this.CheckBtn.Location = new System.Drawing.Point(767, 524);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);
             this.CheckBtn.TabIndex = 51;
@@ -345,7 +345,7 @@
             // SaveBtn
             // 
             this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.SaveBtn.Location = new System.Drawing.Point(616, 524);
+            this.SaveBtn.Location = new System.Drawing.Point(675, 524);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
             this.SaveBtn.TabIndex = 50;
@@ -356,7 +356,7 @@
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(708, 263);
+            this.AddLineBtn.Location = new System.Drawing.Point(768, 263);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 53;
@@ -367,7 +367,7 @@
             // DelLineBtn
             // 
             this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.DelLineBtn.Location = new System.Drawing.Point(801, 263);
+            this.DelLineBtn.Location = new System.Drawing.Point(861, 263);
             this.DelLineBtn.Name = "DelLineBtn";
             this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
             this.DelLineBtn.TabIndex = 54;
@@ -379,7 +379,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(915, 569);
+            this.ClientSize = new System.Drawing.Size(972, 569);
             this.Controls.Add(this.DelLineBtn);
             this.Controls.Add(this.AddLineBtn);
             this.Controls.Add(this.printBtn);

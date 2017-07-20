@@ -302,8 +302,7 @@ namespace BatchProductRecord
 
         //审核按钮点击
         public override void CheckResult()
-        {
-            base.CheckResult();
+        {           
             //获得审核信息
             tb审批人.Text = checkform.userName;
             dateTimePicker3.Value = checkform.time;
@@ -334,6 +333,8 @@ namespace BatchProductRecord
 
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+
+            base.CheckResult();
 
         }
         private void button2_Click(object sender, EventArgs e)
@@ -396,6 +397,38 @@ namespace BatchProductRecord
                     string[] array2 = array[0].Split('-');
                     leng = float.Parse(array2[2]);
 
+                    //产品批号
+                    string temp = array[1];
+                    if (temp == "100")
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "1";
+                    }
+                    else if (temp == "80")
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "2";
+                    }
+                    else if (temp == "60")
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "3";
+                    }
+                    else if (temp == "120")
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "4";
+                    }
+                    else if (temp == "200")
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "5";
+                    }
+                    else if (temp == "110")
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "6";
+                    }
+                    else if (temp == "70")
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "7";
+                    }
+                    else { };
+
                     while (true)
                     {
                         string s4 = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
@@ -407,38 +440,6 @@ namespace BatchProductRecord
                         dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 面 * 密度;//用料重量
                         break;
                     }
-
-                    //产品批号
-                    string temp = array[1];
-                    if (temp == "100")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = DateTime.Now.ToString("yyyyMMdd") + "1";
-                    }
-                    else if (temp == "80")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = DateTime.Now.ToString("yyyyMMdd") + "2";
-                    }
-                    else if (temp == "60")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = DateTime.Now.ToString("yyyyMMdd") + "3";
-                    }
-                    else if (temp == "120")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = DateTime.Now.ToString("yyyyMMdd") + "4";
-                    }
-                    else if (temp == "200")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = DateTime.Now.ToString("yyyyMMdd") + "5";
-                    }
-                    else if (temp == "110")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = DateTime.Now.ToString("yyyyMMdd") + "6";
-                    }
-                    else if (temp == "70")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = DateTime.Now.ToString("yyyyMMdd") + "7";
-                    }
-                    else { };
                     break;
                 }
             }
@@ -847,12 +848,62 @@ namespace BatchProductRecord
             {
                 switch (dc.ColumnName)
                 {
+                    case "计划产量米":
+                        DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                        c3.DataPropertyName = dc.ColumnName;
+                        c3.HeaderText = "计划产量(米)";
+                        c3.Name = dc.ColumnName;
+                        c3.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c3.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c3);
+                        break;
+
+                    case "用料重量":
+                        DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
+                        c4.DataPropertyName = dc.ColumnName;
+                        c4.HeaderText = "用料重量(kg)";
+                        c4.Name = dc.ColumnName;
+                        c4.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c4.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c4);
+                        break;
+
+                    case "每卷长度":
+                        DataGridViewTextBoxColumn c5 = new DataGridViewTextBoxColumn();
+                        c5.DataPropertyName = dc.ColumnName;
+                        c5.HeaderText = "每卷长度(米/卷)";
+                        c5.Name = dc.ColumnName;
+                        c5.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c5.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c5);
+                        break;
+
+                    case "计划产量卷":
+                        DataGridViewTextBoxColumn c6= new DataGridViewTextBoxColumn();
+                        c6.DataPropertyName = dc.ColumnName;
+                        c6.HeaderText = "计划产量卷(卷)";
+                        c6.Name = dc.ColumnName;
+                        c6.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c6.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c6);
+                        break;
+
+                    case "卷心管规格":
+                        DataGridViewTextBoxColumn c7 = new DataGridViewTextBoxColumn();
+                        c7.DataPropertyName = dc.ColumnName;
+                        c7.HeaderText = "卷心管规格mm";
+                        c7.Name = dc.ColumnName;
+                        c7.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c7.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c7);
+                        break;
+
                     case "产品编码":
                         DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
                         c1.DataPropertyName = dc.ColumnName;
-                        c1.HeaderText = dc.ColumnName;
+                        c1.HeaderText = "产品代码（规格型号）";
                         c1.Name = dc.ColumnName;
-                        c1.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c1.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c1.ValueType = dc.DataType;
                         // 如果换了名字会报错，把当前值也加上就好了
                         // 加序号，按序号显示
@@ -872,7 +923,7 @@ namespace BatchProductRecord
                         c2.DataPropertyName = dc.ColumnName;
                         c2.HeaderText = dc.ColumnName;
                         c2.Name = dc.ColumnName;
-                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c2.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c2.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(c2);
                         break;
@@ -934,11 +985,6 @@ namespace BatchProductRecord
             if (!float.TryParse(tb卷心管领料量.Text, out tempvalue))
             {
                 MessageBox.Show("卷心管领料量输入不合法");
-                return false;
-            }
-            if (!float.TryParse(tb双层包装领料量.Text, out tempvalue))
-            {
-                MessageBox.Show("双层包装领料量输入不合法");
                 return false;
             }
 
@@ -1036,6 +1082,10 @@ namespace BatchProductRecord
                     return;
                 dataGridView1.Rows.Remove(dataGridView1.SelectedRows[0]);
             }
+
+            //刷新序号
+            setDataGridViewRowNums();
+
             //刷新合计
             float sum_mi = 0, sum_juan = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -1083,6 +1133,9 @@ namespace BatchProductRecord
             da_prodlist.Fill(dt_prodlist);
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index - 1].Selected = true;
+
+            //刷新序号
+            setDataGridViewRowNums();
 
             //刷新合计
             float sum_mi = 0, sum_juan = 0, sum_weight = 0;
@@ -1132,6 +1185,8 @@ namespace BatchProductRecord
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index + 1].Selected = true;
 
+            //刷新序号
+            setDataGridViewRowNums();
             //刷新合计
             float sum_mi = 0, sum_juan = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -1203,7 +1258,7 @@ namespace BatchProductRecord
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
                 my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[5].Value.ToString();
                 my.Cells[7 + i, 8] = dataGridView1.Rows[i].Cells[6].Value.ToString();

@@ -421,6 +421,11 @@ namespace mySystem
             { MessageBox.Show("保存失败！"); }
         }
 
+        private void CancelBtn_Click(object sender, EventArgs e)
+        {
+
+        }
+
         
         
 

@@ -136,7 +136,7 @@
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(72, 16);
             this.label8.TabIndex = 20;
-            this.label8.Text = "审核人：";
+            this.label8.Text = "审核员：";
             // 
             // tb操作人
             // 
@@ -154,7 +154,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(72, 16);
             this.label7.TabIndex = 18;
-            this.label7.Text = "操作人：";
+            this.label7.Text = "操作员：";
             // 
             // dtp审核日期
             // 
@@ -190,7 +190,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 16);
             this.label5.TabIndex = 14;
-            this.label5.Text = "确认日期：";
+            this.label5.Text = "操作日期：";
             // 
             // dataGridView1
             // 

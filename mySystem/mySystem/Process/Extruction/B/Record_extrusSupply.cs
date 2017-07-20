@@ -295,7 +295,7 @@ namespace WindowsFormsApplication1
             {
                 if (tempdt.Rows[i]["内外层物料代码"] != null && tempdt.Rows[i]["内外层物料批号"] != null)
                 {
-                    cb原料代码ab1c.Items.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]));
+                    cb原料代码ab1c.Items.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]));        
                     dict_inoutmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]), Convert.ToString(tempdt.Rows[i]["内外层物料批号"]));
                 }
                 if (tempdt.Rows[i]["中层物料代码"] != null && tempdt.Rows[i]["中层物料批号"] != null)
@@ -303,9 +303,14 @@ namespace WindowsFormsApplication1
                     cb原料代码b2.Items.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]));
                     dict_midmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]), Convert.ToString(tempdt.Rows[i]["中层物料批号"])); 
  
-                }
-                       
+                }                     
             }
+            if(tempdt.Rows.Count>0)
+            {
+                cb原料代码ab1c.Text = Convert.ToString(tempdt.Rows[0]["内外层物料代码"]);
+                cb原料代码b2.Text=Convert.ToString(tempdt.Rows[0]["中层物料代码"]);
+            }
+                
             da.Dispose();
             tempdt.Dispose();
             comm.Dispose();
@@ -475,31 +480,31 @@ namespace WindowsFormsApplication1
             {
                 switch (dc.ColumnName)
                 {
-                    //case "外层供料量":
-                    //    DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
-                    //    c3.DataPropertyName = dc.ColumnName;
-                    //    c3.HeaderText = dc.ColumnName;
-                    //    c3.Name = cb原料代码ab1c.Text;
-                    //    c3.SortMode = DataGridViewColumnSortMode.Automatic;
-                    //    c3.ValueType = dc.DataType;
-                    //    dataGridView1.Columns.Add(c3);
-                    //    break;
+                    case "外层供料量":
+                        DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                        c3.DataPropertyName = dc.ColumnName;
+                        c3.HeaderText = cb原料代码ab1c.Text;
+                        c3.Name = dc.ColumnName;
+                        c3.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c3.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c3);
+                        break;
 
-                    //case "中内层供料量":
-                    //    DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
-                    //    c4.DataPropertyName = dc.ColumnName;
-                    //    c4.HeaderText =cb原料代码b2.Text;
-                    //    c4.Name =  dc.ColumnName;
-                    //    c4.SortMode = DataGridViewColumnSortMode.Automatic;
-                    //    c4.ValueType = dc.DataType;
-                    //    dataGridView1.Columns.Add(c4);
-                    //    break;
+                    case "中内层供料量":
+                        DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
+                        c4.DataPropertyName = dc.ColumnName;
+                        c4.HeaderText = cb原料代码b2.Text;
+                        c4.Name = dc.ColumnName;
+                        c4.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c4.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c4);
+                        break;
                     case "原料抽查结果":
                         DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
                         c1.DataPropertyName = dc.ColumnName;
                         c1.HeaderText = dc.ColumnName;
                         c1.Name = dc.ColumnName;
-                        c1.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c1.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c1.ValueType = dc.DataType;
 
                         c1.Items.Add("合格");
@@ -513,7 +518,7 @@ namespace WindowsFormsApplication1
                         c2.DataPropertyName = dc.ColumnName;
                         c2.HeaderText = dc.ColumnName;
                         c2.Name = dc.ColumnName;
-                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c2.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c2.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(c2);
                         break;
@@ -633,26 +638,34 @@ namespace WindowsFormsApplication1
 
         private void cb原料代码ab1c_SelectedIndexChanged(object sender, EventArgs e)
         {
-            dt_prodinstr.Rows[0]["外中内层原料代码"] = cb原料代码ab1c.Text;
-            //dt_prodinstr.Rows[0]["外中内层原料批号"] = dict_inoutmatcode_batch[cb原料代码ab1c.Text];
-            if (cb原料代码ab1c.Text != "")
+            if (dt_prodinstr.Rows.Count > 0)
             {
-                cb原料代码ab1c.Enabled = false;
-                label9.Text = cb原料代码ab1c.Text;
-                label4.Text = cb原料代码ab1c.Text;
+                dt_prodinstr.Rows[0]["外中内层原料代码"] = cb原料代码ab1c.Text;
+                //dt_prodinstr.Rows[0]["外中内层原料批号"] = dict_inoutmatcode_batch[cb原料代码ab1c.Text];
+                if (cb原料代码ab1c.Text != "")
+                {
+                    cb原料代码ab1c.Enabled = false;
+                    label9.Text = cb原料代码ab1c.Text;
+                    label4.Text = cb原料代码ab1c.Text;
+                }
             }
+
         }
 
         private void cb原料代码b2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            dt_prodinstr.Rows[0]["中层原料代码"] = cb原料代码b2.Text;
-            //dt_prodinstr.Rows[0]["中层原料批号"] = dict_midmatcode_batch[cb原料代码b2.Text];
-            if (cb原料代码b2.Text != "")
+            if (dt_prodinstr.Rows.Count > 0)
             {
-                cb原料代码b2.Enabled = false;
-                label11.Text = cb原料代码b2.Text;
-                label5.Text = cb原料代码b2.Text;
+                dt_prodinstr.Rows[0]["中层原料代码"] = cb原料代码b2.Text;
+                //dt_prodinstr.Rows[0]["中层原料批号"] = dict_midmatcode_batch[cb原料代码b2.Text];
+                if (cb原料代码b2.Text != "")
+                {
+                    cb原料代码b2.Enabled = false;
+                    label11.Text = cb原料代码b2.Text;
+                    label5.Text = cb原料代码b2.Text;
+                }
             }
+
         }
 
         //datagridview单元格编辑结束

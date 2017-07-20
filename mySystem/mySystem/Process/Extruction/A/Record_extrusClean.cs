@@ -397,6 +397,7 @@ namespace WindowsFormsApplication1
             {
                 if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "" || dataGridView1.Rows[i].Cells[6].Value.ToString() == "")
                 {
+                    MessageBox.Show("清洁人与审核人均不能为空");
                     return false;
                 }
             }
@@ -408,8 +409,7 @@ namespace WindowsFormsApplication1
             bt审核.Enabled = false;
             //判断合法性
             if (!input_Judge())
-            {
-                MessageBox.Show("清洁人与审核人均不能为空");
+           {             
                 return;
             }
                 
