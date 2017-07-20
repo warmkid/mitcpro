@@ -79,7 +79,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
             this.label3.TabIndex = 13;
-            this.label3.Text = "确认日期：";
+            this.label3.Text = "操作日期：";
             // 
             // tb审核人
             // 
@@ -97,7 +97,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 11;
-            this.label2.Text = "审核人：";
+            this.label2.Text = "审核员：";
             // 
             // tb确认人
             // 
@@ -115,7 +115,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
             this.label1.TabIndex = 9;
-            this.label1.Text = "确认人：";
+            this.label1.Text = "操作员：";
             // 
             // CheckBtn
             // 

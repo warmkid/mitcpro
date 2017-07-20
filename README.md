@@ -68,6 +68,11 @@ void setEnableReadOnly();
 
   
 // 窗口下的按钮：审核                   保存，发送审核，打印，查看记录
+特例：需要单行审核的表
+点击『提交审核』后，上面部分不能改，但是可以继续修改下面部分（要为每一行单独设置状态）
+setDataGridViewColumnReadOnly() //读 datagridview 的每一行，设置并记录每一行是否是 readonly，该函数至少要在 DataGridView 的 DataBindingComplete事件中调用。
+bool isRowEditable(int) 判断某一行是否可编辑
+
 ```
 
 
@@ -76,7 +81,7 @@ void setEnableReadOnly();
 
 1. 带ID的构造函数：getPeople()-->判断用户是否可以查看界面-->根据ID读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)--> addOtherEvnetHandler()
 2. 不带ID的构造函数，直接读取数据类型：getPeople()--> setUserState()--> getOtherData()-->读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)--> addComputerEventHandler()--> setFormState()--> setEnableReadOnly() --> addOtherEvnetHandler()
-3. 不带ID的构造函数，通过控件的值读取数据类型：getPeople()--> setUserState()--> getOtherData()--> addDataEventHandler()  {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->addComputerEventHandler()-->setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()}
+3. 不带ID的构造函数，通过控件的值读取数据类型：getPeople()--> setUserState()--> getOtherData()--> addDataEventHandler()-->只让部分控件可点击  {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->addComputerEventHandler()-->setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()}
 4. 不带ID的构造函数，纯计算类型：getPeople()--> setUserState()--> getOtherData()--> Computer() --> addOtherEvnetHandler()-->setFormState()-->setEnableReadOnly()
 
 

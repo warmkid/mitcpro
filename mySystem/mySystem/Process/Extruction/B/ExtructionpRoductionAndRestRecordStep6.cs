@@ -850,7 +850,20 @@ namespace mySystem.Extruction.Process
             }
         }
 
-         
-    
+
+        //private void setOtherEventHandler()
+        //{
+        //    tb产品批号.TextChanged += new EventHandler(tb产品批号_TextChanged);
+        //    tb环境湿度.TextChanged += new EventHandler(tb产品批号_TextChanged);
+        //}
+
+        //void tb产品批号_TextChanged(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        Int16.Parse(((TextBox)sender).Text);
+        //    }
+        //    catch { }
+        //}
     }
 }

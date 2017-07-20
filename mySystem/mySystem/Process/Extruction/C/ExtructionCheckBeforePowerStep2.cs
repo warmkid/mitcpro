@@ -43,6 +43,8 @@ namespace mySystem.Extruction.Process
             isSqlOk = Parameter.isSqlOk;
 
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
 
             GetSettingInfo();
             if (dt设置.Rows.Count > 0)
@@ -170,14 +172,12 @@ namespace mySystem.Extruction.Process
                 {
                     //新建表
                     EnableInit(true);
-                    setDataGridViewFormat();
                     SaveBtn.Enabled = true;
                 }
                 else
                 {
                     //非新建表
                     EnableInit(true);
-                    setDataGridViewFormat();
                     SaveBtn.Enabled = true;
                     CheckBtn.Enabled = true;
                     tb审核人.Enabled = true;
@@ -340,6 +340,23 @@ namespace mySystem.Extruction.Process
             dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft; 
         }
 
+        //设置datagridview背景颜色
+        private void setDataGridViewBackColor()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["确认结果"].Value.ToString() == "Yes")
+                {
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                }
+                if (dataGridView1.Rows[i].Cells["确认结果"].Value.ToString() == "No")
+                {
+                    //dataGridView1.Rows[i].Cells["确认结果"].Style.BackColor = Color.Red;
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                }
+            }
+        }
+
         //******************************按钮功能******************************//
 
         //保存按钮
@@ -371,11 +388,20 @@ namespace mySystem.Extruction.Process
                 tb审核人.Enabled = true;
                 dtp审核日期.Enabled = true;
             }
+            setDataGridViewBackColor();
         }
 
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
+            foreach (DataGridViewRow gdvr in dataGridView1.Rows)
+            {
+                if(gdvr.DefaultCellStyle.BackColor==Color.Red)
+                {
+                    MessageBox.Show("有条目待确认");
+                    return;
+                } 
+            }
             check = new CheckForm(this);
             check.ShowDialog();
         }
@@ -485,7 +511,20 @@ namespace mySystem.Extruction.Process
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
-                
-        
+
+        //检查是否为合格，下拉框不是Yes/合格/是，则标红，并不准审核
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            setDataGridViewBackColor();
+        }
+
+        //数据绑定结束，设置背景颜色
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            //throw new NotImplementedException();
+            setDataGridViewBackColor();
+            setDataGridViewFormat();
+        }
+
     }
 }
