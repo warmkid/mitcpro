@@ -19,7 +19,7 @@ namespace mySystem.Process.灭菌
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Gamma射线辐射灭菌委托单 mydlg = new Gamma射线辐射灭菌委托单();
+            Gamma射线辐射灭菌委托单 mydlg = new Gamma射线辐射灭菌委托单(mainform);
             mydlg.ShowDialog();
         }
 

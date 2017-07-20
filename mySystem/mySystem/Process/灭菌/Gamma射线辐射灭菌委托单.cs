@@ -37,8 +37,22 @@ namespace mySystem.Process.灭菌
             : base(mainform)
         {
             InitializeComponent();
+            getPeople(1);
+            setUserState();
+            getOtherData();
+            addDataEventHandler();
+
+            foreach (Control c in this.Controls)
+                c.Enabled = false;
+            tb委托单号.Enabled = true;
+            bt查询插入.Enabled = true;
         }
 
+        // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+        void addDataEventHandler()
+        {
+
+        }
 
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(string str_委托单号)
@@ -178,7 +192,14 @@ namespace mySystem.Process.灭菌
         // 这个函数可以放在父类中？
         void setFormState()
         {
- 
+            if (dt_prodinstr.Rows[0]["审批"].ToString() == "")//未保存
+                stat_form = 0;
+            else if (dt_prodinstr.Rows[0]["审批"].ToString() == "__待审核")
+                stat_form = 1;
+            else if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])//审核通过
+                stat_form = 2;
+            else//审核未通过
+                stat_form = 3;
         }
         // 设置用户状态，用户状态有3个：0--操作员，1--审核员，2--管理员
         void setUserState()
@@ -190,17 +211,212 @@ namespace mySystem.Process.灭菌
             else
                 stat_user = 2;
         }
+
+        void setControlsTrue()
+        {
+            //控件都能点
+            foreach (Control c in this.Controls)
+                c.Enabled = true;
+        }
+        void setControlsFalse()
+        {
+            //空间都不能点
+            foreach (Control c in this.Controls)
+                c.Enabled = false;
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            bt日志.Enabled = true;
+            bt打印.Enabled = true;
+        }
         // 设置控件可用性，根据状态设置，状态是每个窗体的变量，放在父类中
         // 0：未保存；1：待审核；2：审核通过；3：审核未通过
         void setEnableReadOnly()
         {
- 
+            if (stat_user == 2)//管理员
+            {
+                //控件都能点
+                setControlsTrue();
+            }
+            else if (stat_user == 1)//审核人
+            {
+                if (stat_form == 0 || stat_form == 3 || stat_form == 2)//未保存,审核不通过，审核通过
+                {
+                    //空间都不能点
+                    setControlsFalse();
+                }
+                else
+                {
+                    //发送审核不可点，其他都可点
+                    setControlsTrue();
+                    bt发送审核.Enabled = false;
+                }
+
+            }
+            else//操作员
+            {
+                if (stat_form == 1 || stat_form == 2)//待审核，审核通过
+                {
+                    //空间都不能点
+                    setControlsFalse();
+                }
+                else
+                {
+                    //发送审核，审核不能点
+                    setControlsTrue();
+                    bt发送审核.Enabled = false;
+                    bt审核.Enabled = false;
+                }
+            }
         }
 
 
         private void bt保存_Click(object sender, EventArgs e)
         {
+            save();
 
+            //控件可见性
+            if (stat_user == 0)
+                bt发送审核.Enabled = true;
+        }
+
+        //保存内外表数据
+        private void save()
+        {
+            //判断合法性
+            if (!input_Judge())
+                return;
+
+            //外表保存
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            readOuterData(tb委托单号.Text);
+            outerBind();
+
+            //内表保存
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            innerBind();
+        }
+        private bool input_Judge()
+        {
+            return true;
+        }
+
+        //发送审核
+        private void bt发送审核_Click(object sender, EventArgs e)
+        {
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='Gamma射线辐射灭菌委托单' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "Gamma射线辐射灭菌委托单";
+                dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                dt_temp.Rows.Add(dr);
+            }
+            bs_temp.DataSource = dt_temp;
+            da_temp.Update((DataTable)bs_temp.DataSource);
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
+            dt_prodinstr.Rows[0]["审批"] = "__待审核";
+            dt_prodinstr.Rows[0]["审批日期"] = DateTime.Now;
+
+            save();
+
+            //空间都不能点
+            setControlsFalse();
+        }
+
+        private void bt日志_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+        }
+
+        //审核
+        public override void CheckResult()
+        {
+            base.CheckResult();
+
+            //获得审核信息
+            dt_prodinstr.Rows[0]["审批"] = checkform.userName;
+            dt_prodinstr.Rows[0]["审批日期"] = checkform.time;
+            dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
+            dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+            //状态,不论是否通过,都不能再点
+
+            //改变控件状态
+            setControlsFalse();
+
+            bt查询插入.Enabled = true;
+            tb委托单号.Enabled = true;
+
+
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='Gamma射线辐射灭菌委托单' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            //写日志
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion;
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+        }
+
+        //审核按钮
+        private void bt审核_Click(object sender, EventArgs e)
+        {
+            checkform = new CheckForm(this);
+            checkform.Show();
+        }
+
+        private void bt打印_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void bt查询插入_Click(object sender, EventArgs e)
+        {
+            readOuterData(tb委托单号.Text);
+            outerBind();
+            if (dt_prodinstr.Rows.Count <= 0)
+            {
+                DataRow dr = dt_prodinstr.NewRow();
+                dr = writeOuterDefault(dr);
+                dt_prodinstr.Rows.Add(dr);
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(tb委托单号.Text);
+                outerBind();
+            }
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            addComputerEventHandler();
+            setFormState();
+            setEnableReadOnly();
+            addOtherEvnetHandler();
         }
     }
 }

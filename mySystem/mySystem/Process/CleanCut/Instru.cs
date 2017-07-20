@@ -52,6 +52,7 @@ namespace mySystem.Process.CleanCut
 
         }
 
+        // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
         void addDataEventHandler()
         {
  
@@ -552,26 +553,15 @@ namespace mySystem.Process.CleanCut
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
             //状态
-            if (checkform.ischeckOk)//审核通过
+            foreach (Control c in this.Controls)
             {
-                dt_prodinstr.Rows[0]["状态"] = 1;//待接收
-                //改变控件状态
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                dataGridView1.Enabled = true;
-                dataGridView1.ReadOnly = true;
+                c.Enabled = false;
+            }
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            bt打印.Enabled = true;
+            bt日志.Enabled = true;
 
-                bt打印.Enabled = true;
-                bt日志.Enabled = true;
-                bt查询插入.Enabled = true;
-                tb指令编号.Enabled = true;
-            }
-            else
-            {
-                dt_prodinstr.Rows[0]["状态"] = 0;//未审核，草稿
-            }
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -592,8 +582,6 @@ namespace mySystem.Process.CleanCut
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
 
-            bt审核.Enabled = false;
-            bt日志.Enabled = true;
             base.CheckResult();
         }
 
@@ -643,6 +631,9 @@ namespace mySystem.Process.CleanCut
             dataGridView1.ReadOnly = true;
             bt日志.Enabled = true;
             bt打印.Enabled = true;
+
+            bt查询插入.Enabled = true;
+            tb指令编号.Enabled = true;
             
         }
 

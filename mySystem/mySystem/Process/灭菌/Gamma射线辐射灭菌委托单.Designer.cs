@@ -58,12 +58,14 @@
             this.bt保存 = new System.Windows.Forms.Button();
             this.bt审核 = new System.Windows.Forms.Button();
             this.bt打印 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bt查询插入 = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.tb箱数 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.tb托数 = new System.Windows.Forms.TextBox();
+            this.bt发送审核 = new System.Windows.Forms.Button();
+            this.bt日志 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -318,7 +320,7 @@
             // bt保存
             // 
             this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt保存.Location = new System.Drawing.Point(708, 522);
+            this.bt保存.Location = new System.Drawing.Point(683, 525);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(63, 25);
             this.bt保存.TabIndex = 16;
@@ -329,32 +331,35 @@
             // bt审核
             // 
             this.bt审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt审核.Location = new System.Drawing.Point(791, 522);
+            this.bt审核.Location = new System.Drawing.Point(32, 525);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(63, 25);
             this.bt审核.TabIndex = 17;
             this.bt审核.Text = "审核";
             this.bt审核.UseVisualStyleBackColor = true;
+            this.bt审核.Click += new System.EventHandler(this.bt审核_Click);
             // 
             // bt打印
             // 
             this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(870, 522);
+            this.bt打印.Location = new System.Drawing.Point(111, 525);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(63, 25);
             this.bt打印.TabIndex = 18;
             this.bt打印.Text = "打印";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
-            // button1
+            // bt查询插入
             // 
-            this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(825, 43);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(82, 25);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "查询/插入";
-            this.button1.UseVisualStyleBackColor = true;
+            this.bt查询插入.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查询插入.Location = new System.Drawing.Point(825, 43);
+            this.bt查询插入.Name = "bt查询插入";
+            this.bt查询插入.Size = new System.Drawing.Size(82, 25);
+            this.bt查询插入.TabIndex = 19;
+            this.bt查询插入.Text = "查询/插入";
+            this.bt查询插入.UseVisualStyleBackColor = true;
+            this.bt查询插入.Click += new System.EventHandler(this.bt查询插入_Click);
             // 
             // label15
             // 
@@ -402,11 +407,35 @@
             this.tb托数.Size = new System.Drawing.Size(100, 26);
             this.tb托数.TabIndex = 24;
             // 
+            // bt发送审核
+            // 
+            this.bt发送审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt发送审核.Location = new System.Drawing.Point(752, 525);
+            this.bt发送审核.Name = "bt发送审核";
+            this.bt发送审核.Size = new System.Drawing.Size(78, 25);
+            this.bt发送审核.TabIndex = 25;
+            this.bt发送审核.Text = "发送审核";
+            this.bt发送审核.UseVisualStyleBackColor = true;
+            this.bt发送审核.Click += new System.EventHandler(this.bt发送审核_Click);
+            // 
+            // bt日志
+            // 
+            this.bt日志.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt日志.Location = new System.Drawing.Point(844, 525);
+            this.bt日志.Name = "bt日志";
+            this.bt日志.Size = new System.Drawing.Size(79, 25);
+            this.bt日志.TabIndex = 26;
+            this.bt日志.Text = "查看日志";
+            this.bt日志.UseVisualStyleBackColor = true;
+            this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
+            // 
             // Gamma射线辐射灭菌委托单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 553);
+            this.ClientSize = new System.Drawing.Size(944, 562);
+            this.Controls.Add(this.bt日志);
+            this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.tb托数);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
@@ -419,7 +448,7 @@
             this.Controls.Add(this.tb委托人);
             this.Controls.Add(this.tb操作人);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bt查询插入);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label8);
@@ -483,11 +512,13 @@
         private System.Windows.Forms.Button bt保存;
         private System.Windows.Forms.Button bt审核;
         private System.Windows.Forms.Button bt打印;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bt查询插入;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox tb箱数;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox tb托数;
+        private System.Windows.Forms.Button bt发送审核;
+        private System.Windows.Forms.Button bt日志;
     }
 }
