@@ -16,6 +16,7 @@ namespace mySystem.Process.灭菌
         private BindingSource bs_taizhang;
         private OleDbDataAdapter da_taizhang;
         private OleDbCommandBuilder cb_taizhang;
+        private List<string> weituodanhao;
 
         public 辐照灭菌台帐(mySystem.MainForm mainform): base(mainform)
         {
@@ -51,8 +52,15 @@ namespace mySystem.Process.灭菌
         }
         // 获取其他需要的数据，比如产品代码，产生废品原因等
         private void getOtherData()
-        { 
-        
+        {
+            weituodanhao = new List<string>();
+            OleDbDataAdapter danhao_search = new OleDbDataAdapter("select 委托单号 from Gamma射线辐射灭菌委托单",mySystem.Parameter.connOle);
+            DataTable da_danhao = new DataTable("委托单号查询");
+            danhao_search.Fill(da_danhao);
+            foreach (DataRow tdr in da_danhao.Rows)
+            {
+                weituodanhao.Add(tdr["委托单号"].ToString());
+            }
         }
         // 根据条件从数据库中读取一行外表的数据
         private void readOuterData()
@@ -108,6 +116,34 @@ namespace mySystem.Process.灭菌
         private void addOtherEventHandler()
         { 
         
+        }
+        // 设置DataGridView中各列的格式，包括列类型，列名，是否可以排序
+        private void setDataGridViewColumns()
+        {
+            DataGridViewComboBoxColumn cbc;
+         foreach (DataColumn dc in dt_taizhang.Columns)
+            {
+             switch(dc.ColumnName)
+            { 
+                 case "委托单号" :
+                     cbc = new DataGridViewComboBoxColumn();
+                     cbc.DataPropertyName = dc.ColumnName;
+                     cbc.HeaderText = dc.ColumnName;
+                     cbc.DataPropertyName = dc.ColumnName;
+                     cbc.ValueType = dc.DataType;
+                     weituodanhao = new List<string>();
+                     OleDbDataAdapter danhao_search = new OleDbDataAdapter("select 委托单号 from Gamma射线辐射灭菌委托单", mySystem.Parameter.connOle);
+                     DataTable da_danhao = new DataTable("委托单号查询");
+                     danhao_search.Fill(da_danhao);
+                     foreach (DataRow tdr in da_danhao.Rows)
+                    {
+                        cbc.Items.Add(tdr["委托单号"]);
+                    }
+                break;
+
+            }
+            }
+
         }
     }
 }
