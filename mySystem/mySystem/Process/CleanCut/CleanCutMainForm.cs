@@ -62,6 +62,7 @@ namespace mySystem.Process.CleanCut
         Instru form4 = null;
         CleanCut_CheckBeforePower form5 = null;
         Record_cleansite_cut form6 = null;
+        CleanCut_RunRecord form8 = null;
 
 
 
@@ -123,7 +124,8 @@ namespace mySystem.Process.CleanCut
 
         private void A8Btn_Click(object sender, EventArgs e)
         {
-
+            form8 = new CleanCut_RunRecord(mainform);
+            form8.ShowDialog();
         }
 
 
