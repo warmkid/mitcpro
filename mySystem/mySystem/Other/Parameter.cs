@@ -92,7 +92,7 @@ namespace mySystem
                 }
                 else if (res.Count == 0)
                 {
-                    MessageBox.Show("未找到结果", "错误");
+                    //MessageBox.Show("未找到结果", "错误");
                     id = 0;
                 }
                 else
@@ -190,6 +190,11 @@ namespace mySystem
                     case 4: //订单、库存
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                        connOle = Init(strConn, connOle);
+                        break;
+                    case 5: //灭菌
+                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/灭菌.mdb;Persist Security Info=False";
                         connOle = Init(strConn, connOle);
                         break;
                 }

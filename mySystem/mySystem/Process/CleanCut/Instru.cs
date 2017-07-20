@@ -650,5 +650,10 @@ namespace mySystem.Process.CleanCut
         {
             MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

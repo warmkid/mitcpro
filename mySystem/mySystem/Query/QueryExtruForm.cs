@@ -449,7 +449,8 @@ namespace mySystem.Query
                         }
                         this.dgv.Columns["序号"].MinimumWidth = 50;
                         this.dgv.Columns["产品批号"].MinimumWidth = 100;
-                        this.dgv.Columns["生产日期"].MinimumWidth = 150;
+                        //this.dgv.Columns["生产日期"].MinimumWidth = 150;
+                        this.dgv.Columns["标签语言是否英文"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
                         this.dgv.Columns["包材名称"].MinimumWidth = 100;
                         this.dgv.Columns["包材批号"].MinimumWidth = 100;
                         this.dgv.Columns["指示剂批号"].MinimumWidth = 120;
@@ -550,7 +551,8 @@ namespace mySystem.Query
                         this.dgv.Columns["模芯规格参数2"].MinimumWidth = 150;
                         this.dgv.Columns["预热开始时间"].MinimumWidth = 170;
                         this.dgv.Columns["保温开始时间"].MinimumWidth = 170;
-                        this.dgv.Columns["保温结束时间1"].MinimumWidth = 170;
+                        //this.dgv.Columns["保温结束时间1"].MinimumWidth = 170;
+                        this.dgv.Columns["保温结束时间1"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
                         this.dgv.Columns["保温结束时间2"].MinimumWidth = 170;
                         this.dgv.Columns["保温结束时间3"].MinimumWidth = 170;
                         this.dgv.Columns["记录人"].MinimumWidth = 100;
@@ -670,6 +672,7 @@ namespace mySystem.Query
                         this.dgv.Columns["序号"].MinimumWidth = 50;
                         this.dgv.Columns["更换原因"].MinimumWidth = 150;
                         this.dgv.Columns["更换前模头型号"].MinimumWidth = 170;
+                        //this.dgv.Columns["更换前模头型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         this.dgv.Columns["更换日期"].MinimumWidth = 150;
                         this.dgv.Columns["更换后模头型号"].MinimumWidth = 170;
                         this.dgv.Columns["检查人"].MinimumWidth = 100;

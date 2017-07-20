@@ -13,7 +13,7 @@ namespace mySystem
 {
     public partial class PreheatParameterForm : BaseForm
     {
-        string tblName = "设置吹膜机组预热参数记录表";
+        
 
         public PreheatParameterForm(MainForm mainform):base(mainform)
         {
@@ -23,6 +23,7 @@ namespace mySystem
 
         private void FillNum()
         {
+            string tblName = "设置吹膜机组预热参数记录表";
             List<String> readqueryCols = new List<String>(new String[] { "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
                     "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
                     "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
@@ -39,7 +40,6 @@ namespace mySystem
             List<Control> textboxes = new List<Control> { hw1, ld1, mj1, jt11, jt21, km1, duration1, region11, region21, region31, region41, hw2, 
                     ld2, mj2, jt12, jt22, km2, duration2, region12, region22, region32, region42, duration3, tolerance};
             Utility.fillControl(textboxes, data);
-
 
         }
 

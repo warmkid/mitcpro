@@ -874,6 +874,12 @@
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\Utility.cs" />
+    <Compile Include="Setting\吹膜设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\吹膜设置.Designer.cs">
+      <DependentUpon>吹膜设置.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\清洁分切设置.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1039,12 +1045,15 @@
     <EmbeddedResource Include="Process\CleanCut\CleanCut_CheckBeforePower.resx">
       <DependentUpon>CleanCut_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
+<<<<<<< HEAD
     <EmbeddedResource Include="Process\CleanCut\DailyRecord.resx">
       <DependentUpon>DailyRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\Instru.resx">
       <DependentUpon>Instru.cs</DependentUpon>
     </EmbeddedResource>
+=======
+>>>>>>> 75a610de169b33c7f6951704d669694f5760060b
     <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
     </EmbeddedResource>
@@ -1265,6 +1274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\吹膜设置.resx">
+      <DependentUpon>吹膜设置.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\清洁分切设置.resx">
       <DependentUpon>清洁分切设置.cs</DependentUpon>
