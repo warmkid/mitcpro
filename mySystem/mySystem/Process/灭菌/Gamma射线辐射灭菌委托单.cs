@@ -492,6 +492,11 @@ namespace mySystem.Process.灭菌
         {
             readOuterData(tb委托单号.Text);
             outerBind();
+            if (dt_prodinstr.Rows.Count <= 0 && stat_user != 0)
+            {
+                MessageBox.Show("只有操作员可以新建指令");
+                return;
+            }
             if (dt_prodinstr.Rows.Count <= 0)
             {
                 DataRow dr = dt_prodinstr.NewRow();

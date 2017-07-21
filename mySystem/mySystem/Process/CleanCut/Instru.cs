@@ -55,7 +55,7 @@ namespace mySystem.Process.CleanCut
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
         void addDataEventHandler()
         {
- 
+            
         }
 
         void setUserState()
@@ -168,6 +168,11 @@ namespace mySystem.Process.CleanCut
             readOuterData(tb指令编号.Text);
             removeOuterBinding();
             outerBind();
+            if (dt_prodinstr.Rows.Count <= 0 && stat_user != 0)
+            {
+                MessageBox.Show("只有操作员可以新建指令");
+                return;
+            }
             if (dt_prodinstr.Rows.Count <= 0)
             {
                 DataRow dr = dt_prodinstr.NewRow();
