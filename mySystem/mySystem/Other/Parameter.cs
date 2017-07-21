@@ -226,11 +226,11 @@ namespace mySystem
                                 Data Source=../../database/miejun.mdb;Persist Security Info=False";
                         Conn = InitOle(strCon5);
                         break;
-                    case 6: //BPV制袋
-                        String strCon6 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/BPV_Bag.mdb;Persist Security Info=False";
-                        Conn = InitOle(strCon6);
-                        break;
+//                    case 6: //BPV制袋
+//                        String strCon6 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/BPV_Bag.mdb;Persist Security Info=False";
+//                        Conn = InitOle(strCon6);
+//                        break;
                 }
             }
             else
@@ -295,11 +295,11 @@ namespace mySystem
                                 Data Source=../../database/miejun.mdb;Persist Security Info=False";
                         connOle = InitOle(strConn);
                         break;
-                    case 6: //BPV制袋
-                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/BPV_Bag.mdb;Persist Security Info=False";
-                        connOle = InitOle(strConn);
-                        break;
+//                    case 6: //BPV制袋
+//                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/BPV_Bag.mdb;Persist Security Info=False";
+//                        connOle = InitOle(strConn);
+//                        break;
                 }
             }
             else
