@@ -57,6 +57,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.bt日志 = new System.Windows.Forms.Button();
             this.bt发送审核 = new System.Windows.Forms.Button();
+            this.bt查询新建 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -252,16 +253,16 @@
             // dtp生产日期
             // 
             this.dtp生产日期.Font = new System.Drawing.Font("SimSun", 12F);
-            this.dtp生产日期.Location = new System.Drawing.Point(476, 54);
+            this.dtp生产日期.Location = new System.Drawing.Point(430, 54);
             this.dtp生产日期.Name = "dtp生产日期";
-            this.dtp生产日期.Size = new System.Drawing.Size(169, 26);
+            this.dtp生产日期.Size = new System.Drawing.Size(146, 26);
             this.dtp生产日期.TabIndex = 99;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label9.Location = new System.Drawing.Point(395, 61);
+            this.label9.Location = new System.Drawing.Point(349, 61);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(88, 16);
             this.label9.TabIndex = 98;
@@ -271,7 +272,7 @@
             // 
             this.cb夜班.AutoSize = true;
             this.cb夜班.Font = new System.Drawing.Font("SimSun", 12F);
-            this.cb夜班.Location = new System.Drawing.Point(835, 63);
+            this.cb夜班.Location = new System.Drawing.Point(735, 63);
             this.cb夜班.Name = "cb夜班";
             this.cb夜班.Size = new System.Drawing.Size(59, 20);
             this.cb夜班.TabIndex = 102;
@@ -285,7 +286,7 @@
             this.cb白班.Checked = true;
             this.cb白班.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb白班.Font = new System.Drawing.Font("SimSun", 12F);
-            this.cb白班.Location = new System.Drawing.Point(772, 63);
+            this.cb白班.Location = new System.Drawing.Point(672, 63);
             this.cb白班.Name = "cb白班";
             this.cb白班.Size = new System.Drawing.Size(59, 20);
             this.cb白班.TabIndex = 101;
@@ -297,7 +298,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label10.Location = new System.Drawing.Point(679, 64);
+            this.label10.Location = new System.Drawing.Point(589, 64);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(88, 16);
             this.label10.TabIndex = 100;
@@ -335,11 +336,23 @@
             this.bt发送审核.UseVisualStyleBackColor = true;
             this.bt发送审核.Click += new System.EventHandler(this.bt发送审核_Click);
             // 
+            // bt查询新建
+            // 
+            this.bt查询新建.Font = new System.Drawing.Font("SimSun", 12F);
+            this.bt查询新建.Location = new System.Drawing.Point(800, 54);
+            this.bt查询新建.Name = "bt查询新建";
+            this.bt查询新建.Size = new System.Drawing.Size(96, 30);
+            this.bt查询新建.TabIndex = 106;
+            this.bt查询新建.Text = "查询/新建";
+            this.bt查询新建.UseVisualStyleBackColor = true;
+            this.bt查询新建.Click += new System.EventHandler(this.bt查询新建_Click);
+            // 
             // CleanCut_CheckBeforePower
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(915, 569);
+            this.Controls.Add(this.bt查询新建);
             this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.tb备注);
@@ -407,5 +420,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button bt日志;
         private System.Windows.Forms.Button bt发送审核;
+        private System.Windows.Forms.Button bt查询新建;
     }
 }

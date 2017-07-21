@@ -36,6 +36,10 @@ namespace mySystem.Process.CleanCut
 
         //数据库： 班次改为长文本 （不改不影响）
         //待审核的ID应为自增数字，报错：由于其 Required 属性设置为真(True),字段 '待审核.ID' 不能包含 Null 值.
+        //判断当登录人是操作员时，写入数据，如果dt记录.Rows.Count <= 0 && stat_user != 0 不填写任何数据，数据库为空
+        //班次有必要吗？班次要怎么新建？！！！！！班次可以修改吗？生产日期有必要吗？
+        //要不要都添加“查询/插入”按钮？
+
         public CleanCut_CheckBeforePower(MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -43,12 +47,23 @@ namespace mySystem.Process.CleanCut
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            cb白班.Checked = Parameter.userflight == "白班" ? true : false; //生产班次的初始化？？？？？
+            cb夜班.Checked = !cb白班.Checked;
 
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
             getOtherData();  //读取设置内容
+            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            DataShow(mySystem.Parameter.cleancutInstruID);  //根据信息查找显示
+            foreach (Control c in this.Controls)
+                c.Enabled = false;
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            dtp生产日期.Enabled = true;
+            bt查询新建.Enabled = true;
+            cb白班.Enabled = true;
+            cb夜班.Enabled = true;
         }
 
         //******************************初始化******************************//
@@ -112,7 +127,7 @@ namespace mySystem.Process.CleanCut
                 dataGridView1.ReadOnly = false;
             }
             else if (stat_user == 1)//审核人
-            {          
+            {
                 if (stat_form == 0 || stat_form == 3 || stat_form == 2)  //0未保存||2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
@@ -128,6 +143,7 @@ namespace mySystem.Process.CleanCut
                     //发送审核不可点，其他都可点
                     foreach (Control c in this.Controls)
                         c.Enabled = true;
+                    dataGridView1.ReadOnly = false;
                     bt发送审核.Enabled = false;
                 }
             }
@@ -148,14 +164,21 @@ namespace mySystem.Process.CleanCut
                     //发送审核，审核，打印不能点
                     foreach (Control c in this.Controls)
                         c.Enabled = true;
+                    dataGridView1.ReadOnly = false;
                     bt发送审核.Enabled = false;
                     bt审核.Enabled = false;
                     bt打印.Enabled = false;
                 }
             }
-
+            //查询条件始终可编辑
+            dtp生产日期.Enabled = true;
+            bt查询新建.Enabled = true;
+            cb白班.Enabled = true;
+            cb夜班.Enabled = true;
             //生产指令编码不可改
-            //tb生产指令编号.Enabled = false;
+            tb生产指令编号.Enabled = false;
+            //包含序号不可编辑
+            setDataGridViewFormat(); 
         }
 
         // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
@@ -175,11 +198,25 @@ namespace mySystem.Process.CleanCut
         //******************************显示数据******************************//
 
         //根据信息查找显示
-        private void DataShow(Int32 InstruID)
+        private void DataShow(Int32 InstruID, DateTime searchTime, Boolean flight)
         {
             //******************************外表 根据条件绑定******************************// 
-            readOuterData(InstruID);
+            readOuterData(InstruID, searchTime, flight);
             outerBind();
+
+            if (dt记录.Rows.Count <= 0 && stat_user != 0)
+            {                
+                foreach (Control c in this.Controls)
+                    c.Enabled = false;
+                //MessageBox.Show("什么也没有");
+
+                //查询条件始终可编辑
+                bt查询新建.Enabled = true;
+                cb白班.Enabled = true;
+                cb夜班.Enabled = true;
+                return;
+            }
+
             if (dt记录.Rows.Count <= 0)
             {
                 //********* 外表新建、保存、重新绑定 *********//                
@@ -191,7 +228,7 @@ namespace mySystem.Process.CleanCut
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
                 //外表重新绑定
-                readOuterData(InstruID);
+                readOuterData(InstruID, searchTime, flight);
                 outerBind();
 
                 //********* 内表新建、保存 *********//
@@ -204,6 +241,7 @@ namespace mySystem.Process.CleanCut
                 setDataGridViewRowNums();
                 //立马保存内表
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
+                //内表重新绑定                
             }
             dataGridView1.Columns.Clear();
             readInnerData((int)dt记录.Rows[0]["ID"]);
@@ -212,18 +250,18 @@ namespace mySystem.Process.CleanCut
 
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
-            setEnableReadOnly();  //根据状态设置可读写性
-            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            setEnableReadOnly();  //根据状态设置可读写性  
+            setDataGridViewFormat(); //包含序号不可编辑
         }
         
         //****************************** 嵌套 ******************************//
 
         //外表读数据，填datatable
-        private void readOuterData(Int32 InstruID)
+        private void readOuterData(Int32 InstruID, DateTime searchTime, Boolean flight)
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), connOle);
+            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# and 生产班次 = " + flight.ToString(), connOle);
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -388,6 +426,12 @@ namespace mySystem.Process.CleanCut
         }
         
         //******************************按钮功能******************************//
+        
+        //用于显示/新建数据
+        private void bt查询新建_Click(object sender, EventArgs e)
+        {
+            DataShow(mySystem.Parameter.cleancutInstruID, dtp生产日期.Value, cb白班.Checked);
+        }
 
         //保存按钮
         private void bt确认_Click(object sender, EventArgs e)
@@ -422,7 +466,7 @@ namespace mySystem.Process.CleanCut
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(mySystem.Parameter.cleancutInstruID);
+                readOuterData(mySystem.Parameter.cleancutInstruID, dtp生产日期.Value, cb白班.Checked);
                 outerBind();
 
                 setDataGridViewBackColor();
@@ -469,6 +513,7 @@ namespace mySystem.Process.CleanCut
             Save();
             stat_form = 1;
             setEnableReadOnly();
+            setDataGridViewFormat(); //包含序号不可编辑
         }
 
         //日志按钮
@@ -526,6 +571,7 @@ namespace mySystem.Process.CleanCut
             else
             { stat_form = 3; }//审核未通过            
             setEnableReadOnly();
+            setDataGridViewFormat(); //包含序号不可编辑
         }
 
         //****************************** 小功能 ******************************//  
@@ -587,6 +633,7 @@ namespace mySystem.Process.CleanCut
             setDataGridViewBackColor();
             setDataGridViewFormat();
         }
+
                  
     }
 }
