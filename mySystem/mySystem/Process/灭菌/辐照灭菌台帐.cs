@@ -34,6 +34,7 @@ namespace mySystem.Process.灭菌
             setFormState();
             setEnableReadOnly();
             addOtherEventHandler();
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -81,13 +82,16 @@ namespace mySystem.Process.灭菌
 //            connOle.Open();
             dt_taizhang = new DataTable("辐照灭菌台帐");
             bs_taizhang = new BindingSource();
-            da_taizhang = new OleDbDataAdapter(@"select * from 辐照灭菌台帐",mySystem.Parameter.connOle);
+            da_taizhang = new OleDbDataAdapter(@"select * from 辐照灭菌台帐", mySystem.Parameter.connOle);
             cb_taizhang = new OleDbCommandBuilder(da_taizhang);
             da_taizhang.Fill(dt_taizhang);
         }
         // 内表和控件的绑定
         private void innerBind()
         {
+            while (dataGridView1.Columns.Count > 0)
+                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+            setDataGridViewColumns();
             bs_taizhang.DataSource = dt_taizhang;
             dataGridView1.DataSource = bs_taizhang.DataSource;
         }
@@ -120,25 +124,73 @@ namespace mySystem.Process.灭菌
         // 设置DataGridView中各列的格式，包括列类型，列名，是否可以排序
         private void setDataGridViewColumns()
         {
-            DataGridViewComboBoxColumn cbc;
+            DataGridViewComboBoxColumn c1;
+            DataGridViewTextBoxColumn c2,c3,c4,c5,c6;
          foreach (DataColumn dc in dt_taizhang.Columns)
             {
              switch(dc.ColumnName)
-            { 
-                 case "委托单号" :
-                     cbc = new DataGridViewComboBoxColumn();
-                     cbc.DataPropertyName = dc.ColumnName;
-                     cbc.HeaderText = dc.ColumnName;
-                     cbc.DataPropertyName = dc.ColumnName;
-                     cbc.ValueType = dc.DataType;
-                     weituodanhao = new List<string>();
-                     OleDbDataAdapter danhao_search = new OleDbDataAdapter("select 委托单号 from Gamma射线辐射灭菌委托单", mySystem.Parameter.connOle);
-                     DataTable da_danhao = new DataTable("委托单号查询");
-                     danhao_search.Fill(da_danhao);
-                     foreach (DataRow tdr in da_danhao.Rows)
+            {
+                case "委托单号":
+                    c1 = new DataGridViewComboBoxColumn();
+                    c1.DataPropertyName = dc.ColumnName;
+                    c1.HeaderText = dc.ColumnName;
+                    c1.Name = dc.ColumnName;
+                    c1.DataPropertyName = dc.ColumnName;
+                    c1.SortMode = DataGridViewColumnSortMode.Automatic;
+                    c1.ValueType = dc.DataType;
+                    OleDbDataAdapter danhao_search = new OleDbDataAdapter("select 委托单号 from Gamma射线辐射灭菌委托单", mySystem.Parameter.connOle);
+                    DataTable da_danhao = new DataTable("委托单号查询");
+                    danhao_search.Fill(da_danhao);
+                    foreach (DataRow tdr in da_danhao.Rows)
                     {
-                        cbc.Items.Add(tdr["委托单号"]);
+                        c1.Items.Add(tdr["委托单号"]);
                     }
+                    dataGridView1.Columns.Add(c1);
+                    break;
+                 case "产品数量箱":
+                c2= new DataGridViewTextBoxColumn();
+                c2.DataPropertyName = dc.ColumnName;
+                c2.HeaderText = "产品数量(箱)";
+                c2.Name = dc.ColumnName;
+                c2.SortMode = DataGridViewColumnSortMode.NotSortable;
+                c2.ValueType = dc.DataType;
+                dataGridView1.Columns.Add(c2);
+                break;
+                 case "产品数量只":
+                c3 = new DataGridViewTextBoxColumn();
+                c3.DataPropertyName = dc.ColumnName;
+                c3.HeaderText = "产品数量(只)";
+                c3.Name = dc.ColumnName;
+                c3.SortMode = DataGridViewColumnSortMode.NotSortable;
+                c3.ValueType = dc.DataType;
+                dataGridView1.Columns.Add(c3);
+                break;
+                 case "送去产品托盘数量个":
+                c4 = new DataGridViewTextBoxColumn();
+                c4.DataPropertyName = dc.ColumnName;
+                c4.HeaderText = "送去产品托盘数量(个)";
+                c4.Name = dc.ColumnName;
+                c4.SortMode = DataGridViewColumnSortMode.NotSortable;
+                c4.ValueType = dc.DataType;
+                dataGridView1.Columns.Add(c4);
+                break;
+                 case "拉回产品托盘数量个":
+                c5 = new DataGridViewTextBoxColumn();
+                c5.DataPropertyName = dc.ColumnName;
+                c5.HeaderText = "拉回产品托盘数量(个)";
+                c5.Name = dc.ColumnName;
+                c5.SortMode = DataGridViewColumnSortMode.NotSortable;
+                c5.ValueType = dc.DataType;
+                dataGridView1.Columns.Add(c5);
+                break;
+                 default:
+                c6 = new DataGridViewTextBoxColumn();
+                c6.DataPropertyName = dc.ColumnName;
+                c6.HeaderText = dc.ColumnName;
+                c6.Name = dc.ColumnName;
+                c6.SortMode = DataGridViewColumnSortMode.Automatic;
+                c6.ValueType = dc.DataType;
+                dataGridView1.Columns.Add(c6);
                 break;
 
             }
