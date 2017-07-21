@@ -28,14 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label2 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.textBox7 = new System.Windows.Forms.TextBox();
@@ -59,13 +59,20 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.bt日志 = new System.Windows.Forms.Button();
+            this.bt发送审核 = new System.Windows.Forms.Button();
+            this.bt打印 = new System.Windows.Forms.Button();
+            this.bt审核 = new System.Windows.Forms.Button();
+            this.bt确认 = new System.Windows.Forms.Button();
+            this.dateTimePicker5 = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
+            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -100,6 +107,9 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker5);
+            this.splitContainer1.Panel2.Controls.Add(this.label11);
+            this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker4);
             this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker3);
             this.splitContainer1.Panel2.Controls.Add(this.textBox6);
             this.splitContainer1.Panel2.Controls.Add(this.label9);
@@ -110,7 +120,6 @@
             this.splitContainer1.Panel2.Controls.Add(this.textBox4);
             this.splitContainer1.Panel2.Controls.Add(this.label7);
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView2);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox3);
             this.splitContainer1.Panel2.Controls.Add(this.label6);
             this.splitContainer1.Panel2.Controls.Add(this.textBox2);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
@@ -154,14 +163,14 @@
             this.Column4});
             this.dataGridView1.Location = new System.Drawing.Point(3, 50);
             this.dataGridView1.Name = "dataGridView1";
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.RowHeadersDefaultCellStyle = dataGridViewCellStyle21;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(595, 330);
@@ -169,32 +178,32 @@
             // 
             // Column1
             // 
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle17;
             this.Column1.HeaderText = "序号";
             this.Column1.Name = "Column1";
             this.Column1.Width = 70;
             // 
             // Column2
             // 
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle18;
             this.Column2.HeaderText = "记录";
             this.Column2.Name = "Column2";
             this.Column2.Width = 400;
             // 
             // Column3
             // 
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle19;
             this.Column3.HeaderText = "页数";
             this.Column3.Name = "Column3";
             this.Column3.Width = 60;
             // 
             // Column4
             // 
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle20;
             this.Column4.HeaderText = "备注";
             this.Column4.Name = "Column4";
             // 
@@ -304,41 +313,33 @@
             // 
             // Column5
             // 
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column5.DefaultCellStyle = dataGridViewCellStyle22;
             this.Column5.HeaderText = "产品编码";
             this.Column5.Name = "Column5";
             this.Column5.Width = 150;
             // 
             // Column6
             // 
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle23;
             this.Column6.HeaderText = "产品批号";
             this.Column6.Name = "Column6";
             this.Column6.Width = 150;
             // 
             // Column7
             // 
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column7.DefaultCellStyle = dataGridViewCellStyle24;
             this.Column7.HeaderText = "生产数量（米）";
             this.Column7.Name = "Column7";
             this.Column7.Width = 150;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox3.Location = new System.Drawing.Point(135, 123);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(275, 23);
-            this.textBox3.TabIndex = 6;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(46, 133);
+            this.label6.Location = new System.Drawing.Point(27, 130);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 14);
             this.label6.TabIndex = 5;
@@ -347,7 +348,7 @@
             // textBox2
             // 
             this.textBox2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(135, 87);
+            this.textBox2.Location = new System.Drawing.Point(101, 85);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(170, 23);
             this.textBox2.TabIndex = 4;
@@ -356,7 +357,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(46, 97);
+            this.label5.Location = new System.Drawing.Point(27, 94);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 14);
             this.label5.TabIndex = 3;
@@ -365,7 +366,7 @@
             // textBox1
             // 
             this.textBox1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(135, 50);
+            this.textBox1.Location = new System.Drawing.Point(101, 50);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(170, 23);
             this.textBox1.TabIndex = 2;
@@ -374,7 +375,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(46, 53);
+            this.label4.Location = new System.Drawing.Point(27, 50);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 14);
             this.label4.TabIndex = 1;
@@ -390,11 +391,84 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "汇总审批";
             // 
+            // bt日志
+            // 
+            this.bt日志.Location = new System.Drawing.Point(966, 586);
+            this.bt日志.Name = "bt日志";
+            this.bt日志.Size = new System.Drawing.Size(89, 23);
+            this.bt日志.TabIndex = 53;
+            this.bt日志.Text = "查看日志";
+            this.bt日志.UseVisualStyleBackColor = true;
+            // 
+            // bt发送审核
+            // 
+            this.bt发送审核.Location = new System.Drawing.Point(856, 586);
+            this.bt发送审核.Name = "bt发送审核";
+            this.bt发送审核.Size = new System.Drawing.Size(89, 23);
+            this.bt发送审核.TabIndex = 52;
+            this.bt发送审核.Text = "发送审核";
+            this.bt发送审核.UseVisualStyleBackColor = true;
+            // 
+            // bt打印
+            // 
+            this.bt打印.Location = new System.Drawing.Point(115, 586);
+            this.bt打印.Name = "bt打印";
+            this.bt打印.Size = new System.Drawing.Size(63, 23);
+            this.bt打印.TabIndex = 51;
+            this.bt打印.Text = "打印";
+            this.bt打印.UseVisualStyleBackColor = true;
+            // 
+            // bt审核
+            // 
+            this.bt审核.Location = new System.Drawing.Point(26, 586);
+            this.bt审核.Name = "bt审核";
+            this.bt审核.Size = new System.Drawing.Size(63, 23);
+            this.bt审核.TabIndex = 50;
+            this.bt审核.Text = "审核";
+            this.bt审核.UseVisualStyleBackColor = true;
+            // 
+            // bt确认
+            // 
+            this.bt确认.Location = new System.Drawing.Point(777, 586);
+            this.bt确认.Name = "bt确认";
+            this.bt确认.Size = new System.Drawing.Size(63, 23);
+            this.bt确认.TabIndex = 49;
+            this.bt确认.Text = "确认";
+            this.bt确认.UseVisualStyleBackColor = true;
+            // 
+            // dateTimePicker5
+            // 
+            this.dateTimePicker5.Location = new System.Drawing.Point(291, 118);
+            this.dateTimePicker5.Name = "dateTimePicker5";
+            this.dateTimePicker5.Size = new System.Drawing.Size(153, 26);
+            this.dateTimePicker5.TabIndex = 22;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(261, 125);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(24, 16);
+            this.label11.TabIndex = 21;
+            this.label11.Text = "到";
+            // 
+            // dateTimePicker4
+            // 
+            this.dateTimePicker4.Location = new System.Drawing.Point(101, 118);
+            this.dateTimePicker4.Name = "dateTimePicker4";
+            this.dateTimePicker4.Size = new System.Drawing.Size(154, 26);
+            this.dateTimePicker4.TabIndex = 20;
+            // 
             // CleanCut_Cover
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1083, 575);
+            this.ClientSize = new System.Drawing.Size(1083, 621);
+            this.Controls.Add(this.bt日志);
+            this.Controls.Add(this.bt发送审核);
+            this.Controls.Add(this.bt打印);
+            this.Controls.Add(this.bt审核);
+            this.Controls.Add(this.bt确认);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label2);
             this.Name = "CleanCut_Cover";
@@ -437,12 +511,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button bt日志;
+        private System.Windows.Forms.Button bt发送审核;
+        private System.Windows.Forms.Button bt打印;
+        private System.Windows.Forms.Button bt审核;
+        private System.Windows.Forms.Button bt确认;
+        private System.Windows.Forms.DateTimePicker dateTimePicker5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.DateTimePicker dateTimePicker4;
     }
 }
