@@ -498,14 +498,14 @@ namespace mySystem.Setting
                     if (!reader2.HasRows)
                     {
                         b = false;
-                        MessageBox.Show("员工" + "“" + name2 + "”" + "无操作清洁分切权限！");
+                        MessageBox.Show("员工" + "“" + name2 + "”" + "无操作清洁分切工序权限！");
                     }
                     reader2.Dispose();
                 }
                 else
                 {
                     b = false;
-                    MessageBox.Show("员工" + "“" + name1 + "”" + "无操作清洁分切权限！"); 
+                    MessageBox.Show("员工" + "“" + name1 + "”" + "无操作清洁分切工序权限！"); 
                 }
                 reader1.Dispose();               
             }

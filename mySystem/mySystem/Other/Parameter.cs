@@ -5,6 +5,7 @@ using System.Text;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using System.Windows.Forms;
+using System.Data.Common;
 
 namespace mySystem
 {
@@ -21,6 +22,8 @@ namespace mySystem
         public static OleDbConnection connOle;
         public static SqlConnection connUser;
         public static OleDbConnection connOleUser;
+        public static DbConnection Conn;
+        public static DbConnection ConnUser;
 
         public static string proInstruction; //吹膜生产指令
         public static int proInstruID; //吹膜生产指令编号
@@ -28,9 +31,11 @@ namespace mySystem
         public static int csbagInstruID; //cs制袋生产指令编号
         public static string cleancutInstruction; //清洁分切生产指令
         public static int cleancutInstruID; //清洁分切生产指令编号
+        public static string bpvbagInstruction; //BPV制袋生产指令
+        public static int bpvbagInstruID; //BPV制袋生产指令编号
 
         public static int selectCon;
-        static string strConn;
+        static string strConn; //sql连接地址
         static bool isOk = false;
 
         public static ExtructionMainForm parentExtru; //吹膜mainform
@@ -38,7 +43,7 @@ namespace mySystem
         public static mySystem.Process.Bag.CSBagMainForm parentCS; //cs制袋mainform
         public static mySystem.Process.Bag.LDPE.LDPEMainForm parentLDPE; //LDPE制袋mainform
         public static mySystem.Process.Bag.PTV.PTVMainForm parentPTV; //PTV制袋mainform
-        public static mySystem.Process.Bag.BTV.BTVMainForm parentBTV; //BPV制袋mainform
+        public static mySystem.Process.Bag.BTV.BTVMainForm parentBPV; //BPV制袋mainform
 
 
         //通过id查名字
@@ -149,6 +154,91 @@ namespace mySystem
         }
 
 
+        #region DbConnection
+        //初始化连接有用户表的数据库
+        public static void ConnUserInit()
+        {
+            if (!isSqlOk)  //access
+            {
+                string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/user.mdb;Persist Security Info=False";
+                try
+                {
+                    ConnUser = new OleDbConnection(strCon);
+                    ConnUser.Open();
+                }
+                catch
+                {
+                    ConnUser = null;
+                    MessageBox.Show("连接数据库失败", "error");
+                    return;
+                }
+            }
+            else  //sql
+            {
+                //要改数据库！！！
+                strConn = @"server=10.105.223.19,56625;database=ProductionPlan;
+                                MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                isOk = false;
+                ConnUser = connToServer(strConn);
+                while (!isOk)
+                {
+                    MessageBox.Show("连接数据库失败", "error");
+                    Connect2SqlForm con2sql = new Connect2SqlForm();
+                    con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
+                    con2sql.ShowDialog();
+
+                    ConnUser = connToServer(strConn);
+                }
+                
+            }
+        }
+
+        //通过按钮点击选择连接
+        public static void ConInit()
+        {
+            if (!isSqlOk)
+            {
+                switch (selectCon)
+                {
+                    case 1:
+                        String strCon1 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
+                        Conn = InitOle(strCon1);
+                        break;
+                    case 2:  //清洁分切
+                        String strCon2 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/welding.mdb;Persist Security Info=False";
+                        Conn = InitOle(strCon2);
+                        break;
+                    case 3:  //CS制袋
+                        String strCon3 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
+                        Conn = InitOle(strCon3);
+                        break;
+                    case 4: //订单、库存
+                        String strCon4 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                        Conn = InitOle(strCon4);
+                        break;
+                    case 5: //灭菌
+                        String strCon5 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/miejun.mdb;Persist Security Info=False";
+                        Conn = InitOle(strCon5);
+                        break;
+                    case 6: //BPV制袋
+                        String strCon6 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/BPV_Bag.mdb;Persist Security Info=False";
+                        Conn = InitOle(strCon6);
+                        break;
+                }
+            }
+            else
+            { }
+        }
+
+        #endregion
+
 
         //初始化连接有用户表的数据库
         public static void InitConnUser()
@@ -157,15 +247,23 @@ namespace mySystem
             {
                 string strsql = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/user.mdb;Persist Security Info=False";
-                connOleUser = Init(strsql, connOleUser);
+                isOk = false;
+                connOleUser = connToServerOle(strsql);
+                while (!isOk)
+                {
+                    MessageBox.Show("连接数据库失败", "error");
+                    return ;
+                }
 
             }
             else
             {
-                connUser = Init(connUser);
+                //connUser = Init(connUser);
+
             }
         }
 
+        //通过按钮点击选择连接
         public static void InitCon()
         {
             if (!isSqlOk)
@@ -175,38 +273,42 @@ namespace mySystem
                     case 1:  //吹膜
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
-                        connOle = Init(strConn, connOle);
+                        connOle = InitOle(strConn);
                         break;
                     case 2:  //清洁分切
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/welding.mdb;Persist Security Info=False";
-                        connOle = Init(strConn, connOle);
+                        connOle = InitOle(strConn);
                         break;
                     case 3:  //CS制袋
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
-                        connOle = Init(strConn, connOle);
+                        connOle = InitOle(strConn);
                         break;
                     case 4: //订单、库存
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-                        connOle = Init(strConn, connOle);
+                        connOle = InitOle(strConn);
                         break;
                     case 5: //灭菌
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/miejun.mdb;Persist Security Info=False";
-                        connOle = Init(strConn, connOle);
+                        connOle = InitOle(strConn);
+                        break;
+                    case 6: //BPV制袋
+                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/BPV_Bag.mdb;Persist Security Info=False";
+                        connOle = InitOle(strConn);
                         break;
                 }
             }
             else
             {
-                conn = Init(conn);
+                //conn = Init(conn);
             }
 
         }
-
-
+       
         private static SqlConnection connToServer(string connectStr)
         {
             SqlConnection myConnection;
@@ -239,41 +341,50 @@ namespace mySystem
             return myConn;
         }  
 
-        private static SqlConnection Init(SqlConnection myConnection)
-        {
-            //错误IP测试
-            //strCon = @"server=10.105.223.14,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
-            //正确IP
-            strConn = @"server=10.105.223.19,56625;database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-            isOk = false;
-            myConnection = connToServer(strConn);
-            while (!isOk)
-            {
-                MessageBox.Show("连接数据库失败", "error");
-                Connect2SqlForm con2sql = new Connect2SqlForm();
-                con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
-                con2sql.ShowDialog();
+        //private static SqlConnection Init(SqlConnection myConnection)
+        //{
+        //    //错误IP测试
+        //    //strCon = @"server=10.105.223.14,56625;database=ProductionPlan;Uid=sa;Pwd=mitc";
+        //    //正确IP
+        //    strConn = @"server=10.105.223.19,56625;database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+        //    isOk = false;
+        //    myConnection = connToServer(strConn);
+        //    while (!isOk)
+        //    {
+        //        MessageBox.Show("连接数据库失败", "error");
+        //        Connect2SqlForm con2sql = new Connect2SqlForm();
+        //        con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
+        //        con2sql.ShowDialog();
 
-                myConnection = connToServer(strConn);
-            }
-            //MessageBox.Show("连接数据库成功", "success");
-            return myConnection;
-        }
+        //        myConnection = connToServer(strConn);
+        //    }
+        //    //MessageBox.Show("连接数据库成功", "success");
+        //    return myConnection;
+        //}      
 
-        private static OleDbConnection Init(string strConnect, OleDbConnection myConnection)
+        private static SqlConnection Init(string strConnect)
         {
             isOk = false;
-            myConnection = connToServerOle(strConnect);
+            SqlConnection myConnection = connToServer(strConnect);
             while (!isOk)
             {
                 MessageBox.Show("连接数据库失败", "error");
                 return null;
-
             }
-            //MessageBox.Show("连接数据库成功", "success");
             return myConnection;
         }
- 
+
+        private static OleDbConnection InitOle(string strConnect)
+        {
+            isOk = false;
+            OleDbConnection myConnection = connToServerOle(strConnect);
+            while (!isOk)
+            {
+                MessageBox.Show("连接数据库失败", "error");
+                return null;
+            }
+            return myConnection;
+        }
 
         public static void IPChanged(string IP, string port)
         {

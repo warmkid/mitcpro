@@ -31,7 +31,8 @@ namespace mySystem
 
         public MainForm()
         {
-            Parameter.InitConnUser(); //初始化连接到有用户表的数据库
+            //Parameter.InitConnUser(); //初始化连接到有用户表的数据库
+            Parameter.ConnUserInit();
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
             
