@@ -125,7 +125,7 @@ namespace mySystem.Setting
 
         private void Btn灭菌_Click(object sender, EventArgs e)
         {
-            Parameter.selectCon = 2;
+            Parameter.selectCon = 5;
             Parameter.InitCon();
             Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
             Btn灭菌.BackColor = Color.FromArgb(138, 158, 196);

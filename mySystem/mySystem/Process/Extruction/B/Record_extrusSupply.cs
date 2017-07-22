@@ -339,7 +339,7 @@ namespace WindowsFormsApplication1
                     return;
                 }
                 dt_prodinstr.Rows[0]["外中内层原料用量"] = a;
-                dt_prodinstr.Rows[0]["外中内层原料余量"] = float.Parse(dt_prodinstr.Rows[0]["外层供料量合计a"].ToString()) + float.Parse(dt_prodinstr.Rows[0]["中内层供料量合计b"].ToString()) - a;
+                dt_prodinstr.Rows[0]["外中内层原料余量"] = float.Parse(dt_prodinstr.Rows[0]["外层供料量合计a"].ToString())  - a;
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             }
@@ -360,7 +360,7 @@ namespace WindowsFormsApplication1
                     return;
                 }
                 dt_prodinstr.Rows[0]["中层原料用量"] = a;
-                dt_prodinstr.Rows[0]["中层原料余量"] = float.Parse(dt_prodinstr.Rows[0]["中层供料量合计c"].ToString()) - a;
+                dt_prodinstr.Rows[0]["中层原料余量"] = float.Parse(dt_prodinstr.Rows[0]["中内层供料量合计b"].ToString()) - a;
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             }
@@ -550,6 +550,22 @@ namespace WindowsFormsApplication1
             //    dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
             //}
         }
+        //中文逗号转英文逗号
+        public static string ToDBC(string input)
+        {
+            char[] c = input.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                if (c[i] == 12288)
+                {
+                    c[i] = (char)32;
+                    continue;
+                }
+                if (c[i] > 65280 && c[i] < 65375)
+                    c[i] = (char)(c[i] - 65248);
+            }
+            return new string(c);
+        }
 
         //判断数据合法性
         bool input_Judge()
@@ -557,20 +573,25 @@ namespace WindowsFormsApplication1
             //判断合法性
             //ab1c原料批号和b2原料批号
             string s = tb原料批号ab1c.Text;
-            string[] s1 = s.Split(',');     
+            s = ToDBC(s);
+            string[] s1 = s.Split(',');
+            string[] str_inout = dict_inoutmatcode_batch.Values.ToArray();
+            string[] strlist_inout = str_inout[0].Split(',');
             for (int i = 0; i < s1.Length; i++)
             {
-                if(!dict_inoutmatcode_batch.ContainsValue(s1[i]))
+                if (Array.IndexOf(strlist_inout,s1[i]) < 0)
                 {
                     MessageBox.Show(cb原料代码ab1c.Text+"中没有对应的批号:"+s1[i]);
                     return false;
                 }
             }
             s = tb原料批号b2.Text;
-            s1 = s.Split(',');
+            s = ToDBC(s);
+            s1 = s.Split(',');         
+            string[] strlist_mid = dict_midmatcode_batch.Values.ToArray()[0].Split(',');
             for (int i = 0; i < s1.Length; i++)
             {
-                if (!dict_midmatcode_batch.ContainsValue(s1[i]))
+                if (Array.IndexOf(strlist_mid, s1[i]) < 0)
                 {
                     MessageBox.Show(cb原料代码b2.Text+"中没有对应的批号:"+s1[i]);
                     return false;
@@ -609,6 +630,22 @@ namespace WindowsFormsApplication1
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
+            if (dataGridView1.Rows.Count == 0)
+            {
+                dt_prodinstr.Rows[0]["外层供料量合计a"] = 0;
+                dt_prodinstr.Rows[0]["中内层供料量合计b"] = 0;
+                dt_prodinstr.Rows[0]["外中内层原料用量"] = 0;
+                dt_prodinstr.Rows[0]["外中内层原料余量"] = 0;
+                dt_prodinstr.Rows[0]["中层原料用量"] = 0;
+                dt_prodinstr.Rows[0]["中层原料余量"] = 0;
+
+                tb外层合计.Text = "0";
+                tb中内层合计.Text = "0";
+                tb用料ab1c.Text = "0";
+                tb余料ab1c.Text = "0";
+                tb用料b2.Text = "0";
+                tb余料b2.Text = "0";                
+            }
             if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
             {
                 foreach (Control c in this.Controls)

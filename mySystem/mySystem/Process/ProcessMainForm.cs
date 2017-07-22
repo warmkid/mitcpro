@@ -226,9 +226,11 @@ namespace mySystem
             Parameter.parentPTV = ptvbagform;
         }
 
-        //BTV制袋
+        //BPV制袋
         private void BTVbagBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 6;
+            Parameter.InitCon();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -246,7 +248,7 @@ namespace mySystem
             btvbagform.Size = ProducePanelRight.Size;
             ProducePanelRight.Controls.Add(btvbagform);
             btvbagform.Show();
-            Parameter.parentBTV = btvbagform;
+            Parameter.parentBPV = btvbagform;
 
         }
 

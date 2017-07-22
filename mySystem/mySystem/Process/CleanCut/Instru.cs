@@ -187,7 +187,6 @@ namespace mySystem.Process.CleanCut
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
-            addComputerEventHandler();
             setFormState();
             setEnableReadOnly();
             addOtherEvnetHandler();
@@ -387,7 +386,7 @@ namespace mySystem.Process.CleanCut
                         c1.HeaderText = "清洁前产品代码(规格型号)";
                         c1.Name = dc.ColumnName;
                         c1.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c1.ValueType = dc.DataType;
+                            c1.ValueType = dc.DataType;
                         // 如果换了名字会报错，把当前值也加上就好了
                         // 加序号，按序号显示
                         OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置清洁分切产品编码", mySystem.Parameter.connOle);
