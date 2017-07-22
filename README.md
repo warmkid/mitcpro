@@ -75,14 +75,24 @@ void setControlFalse();
 // 以上两个函数的写法见示例
 
 
-// 如果有需要单行审核的表，在DataGridView下加一个“提交数据审核”按钮，点击该按钮后，DataGridView中无“审核人”的行都填入：__待审核，同时设为ReadOnly
+// 如果有需要单行审核的表，在DataGridView下加一个“提交数据审核”按钮和“数据审核”，点击该按钮后，DataGridView中无“审核人”的行都填入：__待审核，同时设为ReadOnly
 // 下面这个函数完成功能：遍历DataGridView的行：只要审核人不为空，则该行ReadOnly
 // 该函数需要在DataGridView的DataBindingComplete事件中和“提交数据审核”点击事件中调用
-setDataGridViewColumnReadOnly();
+void setDataGridViewColumnReadOnly();
 // 注意：删除按钮点击是要判断：如果该行有审核人信息，则无法删除
 /// 控件状态类 ================================================
 
+/// 需要单行审核的审核事件 ================================================
+// 下面函数当碰到审核人时，将审核人不为空也不为“__待审核”的设为只读（也就是有了审核结果的）
+void setDataGridViewColumnReadOnly();
+// “数据审核按钮”点击事件遍历整个DataGridView，找到“审核人”为“__待审核”的行，修改“审核人”为自己
+// 然后调用setDataGridViewColumnReadOnly();
+/// 需要单行审核的审核事件 ================================================
+
 // 窗口下的按钮：审核                   保存，提交审核，打印，查看记录
+
+// 工序界面只有操作员可以进入
+// 审核员从查询界面进入，所以它只能是通过带ID的构造函数进来。
 ```
 
 
