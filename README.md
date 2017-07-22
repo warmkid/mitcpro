@@ -93,6 +93,7 @@ void setDataGridViewColumnReadOnly();
 
 // 工序界面只有操作员可以进入
 // 审核员从查询界面进入，所以它只能是通过带ID的构造函数进来。
+// TODO:内表如何审核？
 ```
 
 
@@ -308,5 +309,38 @@ oXL.Quit();
 // 释放COM资源
 Marshal.ReleaseComObject(wb);
 Marshal.ReleaseComObject(oXL);
+```
+
+
+
+# 快速绑定控件的方法
+
+```C#
+// 循环绑定和解绑
+// 前提，控件的Name符合如下要求：控件类型+数据库中字段名称，例如:tb审核员
+// tb=textbox , lbl=label, cmb=combobox,dtp=datetimepicker
+foreach (Control c in this.Controls)
+{
+  if (c.Name.StartsWith("tb"))
+  {
+    (c as TextBox).DataBindings.Clear();
+    (c as TextBox).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(2));
+  }
+  else if (c.Name.StartsWith("lbl"))
+  {
+    (c as Label).DataBindings.Clear();
+    (c as Label).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(3));
+  }
+  else if (c.Name.StartsWith("cmb"))
+  {
+    (c as ComboBox).DataBindings.Clear();
+    (c as ComboBox).DataBindings.Add("SelectedItem", bsOuter.DataSource, c.Name.Substring(3));
+  }
+  else if (c.Name.StartsWith("dtp"))
+  {
+    (c as DateTimePicker).DataBindings.Clear();
+    (c as DateTimePicker).DataBindings.Add("Value", bsOuter.DataSource, c.Name.Substring(3));
+  }
+}
 ```
 
