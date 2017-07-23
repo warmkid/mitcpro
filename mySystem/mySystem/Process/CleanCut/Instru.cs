@@ -55,7 +55,8 @@ namespace mySystem.Process.CleanCut
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
         void addDataEventHandler()
         {
-            
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.DataError += dataGridView1_DataError;
         }
 
         void setUserState()
@@ -214,8 +215,7 @@ namespace mySystem.Process.CleanCut
         // 其他事件，比如按钮的点击，数据有效性判断
         void addOtherEvnetHandler()
         {
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.DataError += dataGridView1_DataError;
+            
         }
 
         void setEnableReadOnly()

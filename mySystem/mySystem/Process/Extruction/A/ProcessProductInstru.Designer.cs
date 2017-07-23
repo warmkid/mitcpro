@@ -124,6 +124,8 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.cb工艺 = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.bt提交审核 = new System.Windows.Forms.Button();
+            this.bt日志 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -940,7 +942,7 @@
             // bt确认
             // 
             this.bt确认.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt确认.Location = new System.Drawing.Point(614, 667);
+            this.bt确认.Location = new System.Drawing.Point(625, 675);
             this.bt确认.Name = "bt确认";
             this.bt确认.Size = new System.Drawing.Size(75, 23);
             this.bt确认.TabIndex = 16;
@@ -952,7 +954,7 @@
             // 
             this.bt审核.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.bt审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt审核.Location = new System.Drawing.Point(709, 667);
+            this.bt审核.Location = new System.Drawing.Point(12, 675);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(75, 23);
             this.bt审核.TabIndex = 17;
@@ -963,7 +965,7 @@
             // bt打印
             // 
             this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(808, 667);
+            this.bt打印.Location = new System.Drawing.Point(108, 675);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 18;
@@ -1172,7 +1174,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(521, 667);
+            this.button1.Location = new System.Drawing.Point(521, 675);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 26;
@@ -1181,11 +1183,35 @@
             this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // bt提交审核
+            // 
+            this.bt提交审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt提交审核.Location = new System.Drawing.Point(709, 675);
+            this.bt提交审核.Name = "bt提交审核";
+            this.bt提交审核.Size = new System.Drawing.Size(75, 23);
+            this.bt提交审核.TabIndex = 27;
+            this.bt提交审核.Text = "提交审核";
+            this.bt提交审核.UseVisualStyleBackColor = true;
+            this.bt提交审核.Click += new System.EventHandler(this.bt提交审核_Click);
+            // 
+            // bt日志
+            // 
+            this.bt日志.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt日志.Location = new System.Drawing.Point(804, 675);
+            this.bt日志.Name = "bt日志";
+            this.bt日志.Size = new System.Drawing.Size(75, 23);
+            this.bt日志.TabIndex = 28;
+            this.bt日志.Text = "查看日志";
+            this.bt日志.UseVisualStyleBackColor = true;
+            this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
+            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(904, 702);
+            this.ClientSize = new System.Drawing.Size(904, 704);
+            this.Controls.Add(this.bt日志);
+            this.Controls.Add(this.bt提交审核);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.cb工艺);
             this.Controls.Add(this.comboBox1);
@@ -1362,5 +1388,7 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Button bt复制;
+        private System.Windows.Forms.Button bt提交审核;
+        private System.Windows.Forms.Button bt日志;
     }
 }

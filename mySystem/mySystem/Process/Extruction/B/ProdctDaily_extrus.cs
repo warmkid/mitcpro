@@ -305,10 +305,11 @@ namespace mySystem
                 float sum_膜卷长度 = 0, sum_膜卷重量 = 0;
                 for (int kk = 0; kk < dt_检验记录_详细.Rows.Count; kk++)
                 {
-                    sum_膜卷长度 += float.Parse(dt_检验记录_详细.Rows[kk][1].ToString());
-                    sum_膜卷重量 += float.Parse(dt_检验记录_详细.Rows[kk][2].ToString());
-                }
-                
+                    if (dt_检验记录_详细.Rows[kk][1] != null && dt_检验记录_详细.Rows[kk][1].ToString()!="")
+                        sum_膜卷长度 += float.Parse(dt_检验记录_详细.Rows[kk][1].ToString());
+                    if (dt_检验记录_详细.Rows[kk][2] != null && dt_检验记录_详细.Rows[kk][2].ToString()!="")
+                        sum_膜卷重量 += float.Parse(dt_检验记录_详细.Rows[kk][2].ToString());
+                }                
                 DataRow dr = dt_prodlist.NewRow();
 
                 string date_temp1 = ((DateTime)dt_检验记录.Rows[i]["生产日期"]).ToShortDateString();//标准
@@ -336,7 +337,8 @@ namespace mySystem
 
                     if (date_temp1 == date_temp2 && code_temp1 == code_temp2)
                     {
-                        sum_废品重量 += float.Parse(dt_废品记录.Rows[j]["不良品数量"].ToString());
+                        if (dt_废品记录.Rows[j]["不良品数量"] != null && dt_废品记录.Rows[j]["不良品数量"].ToString()!="")
+                            sum_废品重量 += float.Parse(dt_废品记录.Rows[j]["不良品数量"].ToString());
                     }
                 }
                 dr["废品重量"] = sum_废品重量;//废品重量
@@ -351,9 +353,12 @@ namespace mySystem
 
                 if (dt_供料记录.Rows.Count > 0)
                 {
-                    dr["加料A"] = float.Parse(dt_供料记录.Rows[0]["外层供料量合计a"].ToString());//加料A
-                    dr["加料B1C"] = float.Parse(dt_供料记录.Rows[0]["中内层供料量合计b"].ToString());//加料B1C
-                    dr["加料B2"] = float.Parse(dt_供料记录.Rows[0]["中层供料量合计c"].ToString());//加料B2
+                    if (dt_供料记录.Rows[0]["外层供料量合计a"]!=null && dt_供料记录.Rows[0]["外层供料量合计a"].ToString()!="")
+                        dr["加料A"] = float.Parse(dt_供料记录.Rows[0]["外层供料量合计a"].ToString());//加料A
+                    if (dt_供料记录.Rows[0]["中内层供料量合计b"] != null && dt_供料记录.Rows[0]["中内层供料量合计b"].ToString() != "")
+                        dr["加料B1C"] = float.Parse(dt_供料记录.Rows[0]["中内层供料量合计b"].ToString());//加料B1C
+                    if (dt_供料记录.Rows[0]["中层供料量合计c"] != null && dt_供料记录.Rows[0]["中层供料量合计c"].ToString() != "")
+                        dr["加料B2"] = float.Parse(dt_供料记录.Rows[0]["中层供料量合计c"].ToString());//加料B2
                 }
 
                 dt_prodlist.Rows.Add(dr);

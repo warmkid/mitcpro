@@ -82,13 +82,15 @@
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
+            this.bt提交审核 = new System.Windows.Forms.Button();
+            this.bt日志 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // bt打印
             // 
             this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(258, 488);
+            this.bt打印.Location = new System.Drawing.Point(424, 488);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 4;
@@ -206,7 +208,7 @@
             // bt审核
             // 
             this.bt审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt审核.Location = new System.Drawing.Point(144, 488);
+            this.bt审核.Location = new System.Drawing.Point(234, 488);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(75, 23);
             this.bt审核.TabIndex = 3;
@@ -270,7 +272,7 @@
             this.cb产品代码.Name = "cb产品代码";
             this.cb产品代码.Size = new System.Drawing.Size(110, 22);
             this.cb产品代码.TabIndex = 1;
-            this.cb产品代码.SelectedIndexChanged += new System.EventHandler(this.cb产品代码_SelectedIndexChanged);
+            //this.cb产品代码.SelectedIndexChanged += new System.EventHandler(this.cb产品代码_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -410,6 +412,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -546,7 +549,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(362, 487);
+            this.button1.Location = new System.Drawing.Point(31, 20);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 30;
@@ -615,11 +618,35 @@
             this.label25.TabIndex = 36;
             this.label25.Text = "kg";
             // 
+            // bt提交审核
+            // 
+            this.bt提交审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt提交审核.Location = new System.Drawing.Point(135, 488);
+            this.bt提交审核.Name = "bt提交审核";
+            this.bt提交审核.Size = new System.Drawing.Size(75, 23);
+            this.bt提交审核.TabIndex = 37;
+            this.bt提交审核.Text = "提交审核";
+            this.bt提交审核.UseVisualStyleBackColor = true;
+            this.bt提交审核.Click += new System.EventHandler(this.bt提交审核_Click);
+            // 
+            // bt日志
+            // 
+            this.bt日志.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt日志.Location = new System.Drawing.Point(327, 488);
+            this.bt日志.Name = "bt日志";
+            this.bt日志.Size = new System.Drawing.Size(75, 23);
+            this.bt日志.TabIndex = 38;
+            this.bt日志.Text = "查看日志";
+            this.bt日志.UseVisualStyleBackColor = true;
+            this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
+            // 
             // Record_extrusSupply
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1059, 528);
+            this.Controls.Add(this.bt日志);
+            this.Controls.Add(this.bt提交审核);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
@@ -734,5 +761,7 @@
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button bt提交审核;
+        private System.Windows.Forms.Button bt日志;
     }
 }

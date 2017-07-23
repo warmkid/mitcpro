@@ -56,6 +56,141 @@ namespace BatchProductRecord
         private float 系数1;
         private float 系数2;
 
+        private string person_操作员;
+        private string person_审核员;
+
+        //用于带id参数构造函数，存储已存在记录的相关信息
+        string instrcode;
+
+        /// <summary>
+        /// 登录人状态，0 操作员， 1 审核员， 2管理员
+        /// </summary>
+        private int stat_user;//
+        /// <summary>
+        /// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        private int stat_form;
+
+        //设置登录人状态
+        void setUserState()
+        {
+            if (mySystem.Parameter.userName == person_操作员)
+                stat_user = 0;
+            else if (mySystem.Parameter.userName == person_审核员)
+                stat_user = 1;
+            else
+                stat_user = 2;
+        }
+
+        //设置窗口状态
+        void setFormState()
+        {
+            if (dt_prodinstr.Rows[0]["审批人"].ToString() == "")
+                stat_form = 0;
+            else if (dt_prodinstr.Rows[0]["审批人"].ToString() == "__待审核")
+                stat_form = 1;
+            else if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+                stat_form = 2;
+            else
+                stat_form = 3;
+        }
+
+        void setEnableReadOnly()
+        {
+            if (stat_user == 2)//管理员
+            {
+                //控件都能点
+                setControlTrue();
+            }
+            else if (stat_user == 1)//审核人
+            {
+                if (stat_form == 0 || stat_form == 3 || stat_form == 2)//草稿,审核不通过，审核通过
+                {
+                    //空间都不能点
+                    setControlFalse();
+                }
+                else//待审核
+                {
+                    //发送审核不可点，其他都可点
+                    setControlTrue();
+                    bt审核.Enabled = true;
+
+                }
+
+            }
+            else//操作员
+            {
+                if (stat_form == 1 || stat_form == 2)//待审核，审核通过
+                {
+                    //空间都不能点
+                    setControlFalse(); 
+                }
+                else//未审核与审核不通过
+                {
+                    //发送审核，审核不能点
+                    setControlTrue();
+                }
+            }
+        }
+
+        private void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            // 保证这两个按钮一直是false
+            bt审核.Enabled = false;
+            bt提交审核.Enabled = false;
+        }
+
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            bt日志.Enabled = true;
+            bt打印.Enabled = true;
+        }
+
+        //// 获取操作员和审核员
+        void getPeople()
+        {
+            DataTable dt = new DataTable("用户权限");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=1", mySystem.Parameter.connOle);
+            da.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                person_操作员 = dt.Rows[0]["操作员"].ToString();
+                person_审核员 = dt.Rows[0]["审核员"].ToString();
+            }
+        }
+
+        private void getOtherData()
+        {
+            readparam();
+            fill_prodart();
+            fill_prodname();
+            fill_matcode();
+            fill_respons_user();
+        }
+
         //读取产品列表填入产品名称下拉列表
         private void fill_prodname()
         {
@@ -134,18 +269,17 @@ namespace BatchProductRecord
         {
             InitializeComponent();
             init();
+            getPeople();
+            setUserState();
+            getOtherData();
 
-            readparam();
-            fill_prodart();
-            fill_prodname();
-            fill_matcode();
-            fill_respons_user();
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
+            setControlFalse();
+            tb指令编号.ReadOnly = false;
+            bt打印.Enabled = false;
+            bt日志.Enabled = false;
+
             tb指令编号.Enabled = true;
-            bt查询插入.Enabled = true;
+            bt查询插入.Enabled = true;           
           
         }
 
@@ -155,34 +289,33 @@ namespace BatchProductRecord
             InitializeComponent();
             init();
 
-            //readparam();
-            //fill_prodart();
-            //fill_prodname();
-            //fill_matcode();
-            //fill_respons_user();
+            getPeople();
+            setUserState();
+            getOtherData();
+
             string asql = "select * from 生产指令信息表 where ID=" + id;
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
-            string instrcode = tempdt.Rows[0]["生产指令编号"].ToString();
-
+            instrcode = tempdt.Rows[0]["生产指令编号"].ToString();           
 
             readOuterData(instrcode);
             removeOuterBinding();
             outerBind();
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
-
+            setFormState();
+            setEnableReadOnly();
+            if (stat_form == 1)
+                bt审核.Enabled = true;
+            tb指令编号.Enabled = false;
+            bt查询插入.Enabled = false;
         }
 
         private void init()
@@ -304,36 +437,41 @@ namespace BatchProductRecord
         public override void CheckResult()
         {           
             //获得审核信息
-            tb审批人.Text = checkform.userName;
-            dateTimePicker3.Value = checkform.time;
             dt_prodinstr.Rows[0]["审批人"] = checkform.userName;
             dt_prodinstr.Rows[0]["审批时间"] = checkform.time;
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
-            //状态
+
             if (checkform.ischeckOk)//审核通过
             {
                 dt_prodinstr.Rows[0]["状态"] = 1;//待接收
-                //改变控件状态
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                dataGridView1.Enabled = true;
-                dataGridView1.ReadOnly = true;
-
-                bt打印.Enabled = true;
-                bt查询插入.Enabled = true;
-                tb指令编号.Enabled = true;
             }
             else
             {
                 dt_prodinstr.Rows[0]["状态"] = 0;//未审核，草稿
             }
 
+            //状态
+            setControlFalse();
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='生产指令信息表' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            //写日志
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion;
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-
             base.CheckResult();
 
         }
@@ -348,22 +486,29 @@ namespace BatchProductRecord
         //确认按钮
         private void button1_Click_1(object sender, EventArgs e)
         {
+            bool rt = save();
+            //控件可见性
+            if (rt && stat_user == 0)
+                bt提交审核.Enabled = true;
+        }
+
+        private bool save()
+        {
             //判断合法性
             if (!input_Judge())
-                return;
-
-            //控件可见性
-            bt审核.Enabled = true;
-            bt打印.Enabled = false;
+                return false;
 
             //外表保存
             if (tb内外层比例.Text != "")
             {
                 dt_prodinstr.Rows[0]["比例"] = float.Parse(tb内外层比例.Text);
-            }            
+            }
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(tb指令编号.Text);
+            if (stat_user != 1)
+                readOuterData(tb指令编号.Text);
+            else
+                readOuterData(instrcode);
             removeOuterBinding();
             outerBind();
 
@@ -371,6 +516,7 @@ namespace BatchProductRecord
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
+            return true;
         }
 
         //编辑单元格结束后触发事件
@@ -662,14 +808,9 @@ namespace BatchProductRecord
         //查询/插入按钮
         private void button5_Click_1(object sender, System.EventArgs e)
         {
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = true;
-            }
+            setControlTrue();
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
-            bt审核.Enabled = false;
-            bt打印.Enabled = false;
             
             readOuterData(tb指令编号.Text);
             removeOuterBinding();
@@ -689,20 +830,6 @@ namespace BatchProductRecord
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
-
-            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
-            {
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                dataGridView1.Enabled = true;
-                dataGridView1.ReadOnly = true;
-
-                bt打印.Enabled = true;
-                tb指令编号.Enabled = true;
-                bt查询插入.Enabled = true;
-            }
 
             //默认值处理
             tb内外层比例.Text = "25";
@@ -724,6 +851,9 @@ namespace BatchProductRecord
             {
                 dict_夜班.Add(s1[i], s1[i]);
             }
+
+            setFormState();
+            setEnableReadOnly();
 
         }
 
@@ -1345,6 +1475,47 @@ namespace BatchProductRecord
 
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+        }
+
+        private void bt日志_Click(object sender, System.EventArgs e)
+        {
+            MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+        }
+
+        private void bt提交审核_Click(object sender, System.EventArgs e)
+        {
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='生产指令信息表' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "生产指令信息表";
+                dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                dt_temp.Rows.Add(dr);
+            }
+            bs_temp.DataSource = dt_temp;
+            da_temp.Update((DataTable)bs_temp.DataSource);
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
+            dt_prodinstr.Rows[0]["审批人"] = "__待审核";
+            dt_prodinstr.Rows[0]["审批时间"] = DateTime.Now;
+
+            save();
+
+            //空间都不能点
+            setControlFalse();
         }
     }
 }

@@ -28,6 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.bt日志 = new System.Windows.Forms.Button();
+            this.bt提交审核 = new System.Windows.Forms.Button();
+            this.bt领料审核 = new System.Windows.Forms.Button();
+            this.bt下移 = new System.Windows.Forms.Button();
+            this.bt上移 = new System.Windows.Forms.Button();
+            this.bt删除 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
@@ -50,18 +57,83 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.bt删除 = new System.Windows.Forms.Button();
-            this.bt上移 = new System.Windows.Forms.Button();
-            this.bt下移 = new System.Windows.Forms.Button();
-            this.bt领料审核 = new System.Windows.Forms.Button();
+            this.bt领料提交审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // bt日志
+            // 
+            this.bt日志.Location = new System.Drawing.Point(863, 427);
+            this.bt日志.Name = "bt日志";
+            this.bt日志.Size = new System.Drawing.Size(75, 23);
+            this.bt日志.TabIndex = 37;
+            this.bt日志.Text = "查看日志";
+            this.bt日志.UseVisualStyleBackColor = true;
+            this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
+            // 
+            // bt提交审核
+            // 
+            this.bt提交审核.Location = new System.Drawing.Point(766, 427);
+            this.bt提交审核.Name = "bt提交审核";
+            this.bt提交审核.Size = new System.Drawing.Size(75, 23);
+            this.bt提交审核.TabIndex = 36;
+            this.bt提交审核.Text = "提交审核";
+            this.bt提交审核.UseVisualStyleBackColor = true;
+            this.bt提交审核.Click += new System.EventHandler(this.bt提交审核_Click);
+            // 
+            // bt领料审核
+            // 
+            this.bt领料审核.Location = new System.Drawing.Point(385, 339);
+            this.bt领料审核.Name = "bt领料审核";
+            this.bt领料审核.Size = new System.Drawing.Size(75, 23);
+            this.bt领料审核.TabIndex = 35;
+            this.bt领料审核.Text = "领料审核";
+            this.bt领料审核.UseVisualStyleBackColor = true;
+            this.bt领料审核.Click += new System.EventHandler(this.bt领料审核_Click);
+            // 
+            // bt下移
+            // 
+            this.bt下移.Location = new System.Drawing.Point(199, 338);
+            this.bt下移.Name = "bt下移";
+            this.bt下移.Size = new System.Drawing.Size(56, 23);
+            this.bt下移.TabIndex = 34;
+            this.bt下移.Text = "下移";
+            this.bt下移.UseVisualStyleBackColor = true;
+            this.bt下移.Click += new System.EventHandler(this.bt下移_Click);
+            // 
+            // bt上移
+            // 
+            this.bt上移.Location = new System.Drawing.Point(148, 338);
+            this.bt上移.Name = "bt上移";
+            this.bt上移.Size = new System.Drawing.Size(45, 23);
+            this.bt上移.TabIndex = 33;
+            this.bt上移.Text = "上移";
+            this.bt上移.UseVisualStyleBackColor = true;
+            this.bt上移.Click += new System.EventHandler(this.bt上移_Click);
+            // 
+            // bt删除
+            // 
+            this.bt删除.Location = new System.Drawing.Point(78, 339);
+            this.bt删除.Name = "bt删除";
+            this.bt删除.Size = new System.Drawing.Size(55, 23);
+            this.bt删除.TabIndex = 32;
+            this.bt删除.Text = "删除";
+            this.bt删除.UseVisualStyleBackColor = true;
+            this.bt删除.Click += new System.EventHandler(this.bt删除_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(184, 384);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(21, 14);
+            this.label5.TabIndex = 31;
+            this.label5.Text = "kg";
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(682, 342);
+            this.label4.Location = new System.Drawing.Point(712, 342);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(21, 14);
             this.label4.TabIndex = 30;
@@ -70,7 +142,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(899, 342);
+            this.label3.Location = new System.Drawing.Point(914, 342);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(21, 14);
             this.label3.TabIndex = 29;
@@ -89,7 +161,7 @@
             // 
             // bt打印
             // 
-            this.bt打印.Location = new System.Drawing.Point(868, 381);
+            this.bt打印.Location = new System.Drawing.Point(103, 427);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 27;
@@ -104,7 +176,6 @@
             this.cB物料代码.Name = "cB物料代码";
             this.cB物料代码.Size = new System.Drawing.Size(121, 22);
             this.cB物料代码.TabIndex = 26;
-            this.cB物料代码.SelectedIndexChanged += new System.EventHandler(this.cB物料代码_SelectedIndexChanged);
             // 
             // bt添加
             // 
@@ -166,7 +237,7 @@
             // 
             // tb数量
             // 
-            this.tb数量.Location = new System.Drawing.Point(793, 339);
+            this.tb数量.Location = new System.Drawing.Point(808, 339);
             this.tb数量.Name = "tb数量";
             this.tb数量.ReadOnly = true;
             this.tb数量.Size = new System.Drawing.Size(100, 23);
@@ -175,7 +246,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(737, 342);
+            this.label9.Location = new System.Drawing.Point(752, 342);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 14);
             this.label9.TabIndex = 17;
@@ -184,7 +255,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(521, 342);
+            this.label8.Location = new System.Drawing.Point(551, 342);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(49, 14);
             this.label8.TabIndex = 16;
@@ -192,7 +263,7 @@
             // 
             // tb重量
             // 
-            this.tb重量.Location = new System.Drawing.Point(576, 339);
+            this.tb重量.Location = new System.Drawing.Point(606, 339);
             this.tb重量.Name = "tb重量";
             this.tb重量.ReadOnly = true;
             this.tb重量.Size = new System.Drawing.Size(100, 23);
@@ -201,7 +272,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(466, 342);
+            this.label7.Location = new System.Drawing.Point(496, 342);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 14);
             this.label7.TabIndex = 14;
@@ -209,7 +280,7 @@
             // 
             // bt退料审核
             // 
-            this.bt退料审核.Location = new System.Drawing.Point(778, 380);
+            this.bt退料审核.Location = new System.Drawing.Point(12, 427);
             this.bt退料审核.Name = "bt退料审核";
             this.bt退料审核.Size = new System.Drawing.Size(75, 23);
             this.bt退料审核.TabIndex = 13;
@@ -219,7 +290,7 @@
             // 
             // bt保存
             // 
-            this.bt保存.Location = new System.Drawing.Point(685, 381);
+            this.bt保存.Location = new System.Drawing.Point(675, 427);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(75, 23);
             this.bt保存.TabIndex = 12;
@@ -260,59 +331,24 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "SOP-MFG-301-R14A吹膜工序领料退料记录";
             // 
-            // label5
+            // bt领料提交审核
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(184, 384);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(21, 14);
-            this.label5.TabIndex = 31;
-            this.label5.Text = "kg";
-            // 
-            // bt删除
-            // 
-            this.bt删除.Location = new System.Drawing.Point(94, 339);
-            this.bt删除.Name = "bt删除";
-            this.bt删除.Size = new System.Drawing.Size(55, 23);
-            this.bt删除.TabIndex = 32;
-            this.bt删除.Text = "删除";
-            this.bt删除.UseVisualStyleBackColor = true;
-            this.bt删除.Click += new System.EventHandler(this.bt删除_Click);
-            // 
-            // bt上移
-            // 
-            this.bt上移.Location = new System.Drawing.Point(174, 339);
-            this.bt上移.Name = "bt上移";
-            this.bt上移.Size = new System.Drawing.Size(45, 23);
-            this.bt上移.TabIndex = 33;
-            this.bt上移.Text = "上移";
-            this.bt上移.UseVisualStyleBackColor = true;
-            this.bt上移.Click += new System.EventHandler(this.bt上移_Click);
-            // 
-            // bt下移
-            // 
-            this.bt下移.Location = new System.Drawing.Point(240, 338);
-            this.bt下移.Name = "bt下移";
-            this.bt下移.Size = new System.Drawing.Size(56, 23);
-            this.bt下移.TabIndex = 34;
-            this.bt下移.Text = "下移";
-            this.bt下移.UseVisualStyleBackColor = true;
-            this.bt下移.Click += new System.EventHandler(this.bt下移_Click);
-            // 
-            // bt领料审核
-            // 
-            this.bt领料审核.Location = new System.Drawing.Point(336, 339);
-            this.bt领料审核.Name = "bt领料审核";
-            this.bt领料审核.Size = new System.Drawing.Size(75, 23);
-            this.bt领料审核.TabIndex = 35;
-            this.bt领料审核.Text = "领料审核";
-            this.bt领料审核.UseVisualStyleBackColor = true;
+            this.bt领料提交审核.Location = new System.Drawing.Point(270, 338);
+            this.bt领料提交审核.Name = "bt领料提交审核";
+            this.bt领料提交审核.Size = new System.Drawing.Size(109, 23);
+            this.bt领料提交审核.TabIndex = 38;
+            this.bt领料提交审核.Text = "领料提交审核";
+            this.bt领料提交审核.UseVisualStyleBackColor = true;
+            this.bt领料提交审核.Click += new System.EventHandler(this.bt领料提交审核_Click);
             // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(950, 419);
+            this.ClientSize = new System.Drawing.Size(950, 462);
+            this.Controls.Add(this.bt领料提交审核);
+            this.Controls.Add(this.bt日志);
+            this.Controls.Add(this.bt提交审核);
             this.Controls.Add(this.bt领料审核);
             this.Controls.Add(this.bt下移);
             this.Controls.Add(this.bt上移);
@@ -378,5 +414,8 @@
         private System.Windows.Forms.Button bt上移;
         private System.Windows.Forms.Button bt下移;
         private System.Windows.Forms.Button bt领料审核;
+        private System.Windows.Forms.Button bt提交审核;
+        private System.Windows.Forms.Button bt日志;
+        private System.Windows.Forms.Button bt领料提交审核;
     }
 }

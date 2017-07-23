@@ -13,12 +13,152 @@ namespace mySystem.Extruction.Process
 {
     public partial class Record_material_reqanddisg : mySystem.BaseForm
     {
-        private int instrid;
+        //private int instrid;
         private DataTable dt_prodinstr, dt_prodlist;
         private OleDbDataAdapter da_prodinstr, da_prodlist;
         private BindingSource bs_prodinstr, bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
         CheckForm checkform;
+
+        private string person_操作员;
+        private string person_审核员;
+
+        //用于带id参数构造函数，存储已存在记录的相关信息
+        int instrid;
+        string matcode;
+
+        /// <summary>
+        /// 登录人状态，0 操作员， 1 审核员， 2管理员
+        /// </summary>
+        private int stat_user;//
+        /// <summary>
+        /// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        private int stat_form;
+
+        //设置登录人状态
+        void setUserState()
+        {
+            if (mySystem.Parameter.userName == person_操作员)
+                stat_user = 0;
+            else if (mySystem.Parameter.userName == person_审核员)
+                stat_user = 1;
+            else
+                stat_user = 2;
+        }
+
+        //设置窗口状态
+        void setFormState()
+        {
+            if (dt_prodinstr.Rows[0]["审核人"].ToString() == "")
+                stat_form = 0;
+            else if (dt_prodinstr.Rows[0]["审核人"].ToString() == "__待审核")
+                stat_form = 1;
+            else if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+                stat_form = 2;
+            else
+                stat_form = 3;
+        }
+
+        //判断内表是否完全审核
+        bool is_inner_checked()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "" || dataGridView1.Rows[i].Cells["审核人"].Value.ToString()=="__待审核")
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        void setEnableReadOnly()
+        {
+            if (stat_user == 2)//管理员
+            {
+                //控件都能点  TODO:控件状态*********************************
+                setControlTrue();
+            }
+            else if (stat_user == 1)//审核人
+            {
+                if (stat_form == 3 || stat_form == 2)//审核不通过，审核通过
+                {
+                    //空间都不能点
+                    setControlFalse();
+                }
+                else if (stat_form == 0)//草稿
+                {
+                    //其他控件不能点，内表审核可点
+                    setControlFalse();
+                    bt领料审核.Enabled = true;
+                }
+                else//待审核
+                {
+                    //发送审核，提交领料审核不可点，其他都可点
+                    setControlTrue();
+                    bt退料审核.Enabled = true;
+                    bt领料审核.Enabled = true;
+                }
+
+            }
+            else//操作员
+            {
+                if (stat_form == 1 || stat_form == 2)//待审核，审核通过
+                {
+                    //空间都不能点
+                    setControlFalse();
+
+                    cB物料代码.Enabled = true;
+
+                }
+                else//未审核与审核不通过
+                {
+                    //发送审核，审核不能点
+                    setControlTrue();
+                    bt领料提交审核.Enabled = true;
+                }
+            }
+        }
+
+        private void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            // 保证这两个按钮一直是false
+            bt退料审核.Enabled = false;
+            bt提交审核.Enabled = false;
+
+            bt领料提交审核.Enabled = false;
+            bt领料审核.Enabled = false;
+        }
+
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            bt日志.Enabled = true;
+            bt打印.Enabled = true;
+        }
+
         //通过原料代码查找原料id
         private int id_findby_matcode(string matcode)
         {
@@ -44,17 +184,57 @@ namespace mySystem.Extruction.Process
         public Record_material_reqanddisg(MainForm mainform)
             : base(mainform)
         {
-            InitializeComponent();            
-            init();
-            addmatcode();
+            InitializeComponent();
+            getPeople();
+            setUserState();
+            getOtherData();
+            addDataEventHandler();
+
+            setControlFalse();
+            bt打印.Enabled = false;
+            bt日志.Enabled = false;
+
+            cB物料代码.Enabled = true;
+            //init();
+            //addmatcode();
+        }
+
+        void addDataEventHandler()
+        {
+            this.cB物料代码.SelectedIndexChanged += new System.EventHandler(this.cB物料代码_SelectedIndexChanged);
+        }
+
+        //获取设置中物料代码
+        private void getOtherData()
+        {
+            if (stat_user != 1)
+            {
+                addmatcode();
+            }
+        }
+
+        //// 获取操作员和审核员
+        void getPeople()
+        {
+            DataTable dt = new DataTable("用户权限");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=4", mySystem.Parameter.connOle);
+            da.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                person_操作员 = dt.Rows[0]["操作员"].ToString();
+                person_审核员 = dt.Rows[0]["审核员"].ToString();
+            }
         }
 
         public Record_material_reqanddisg(MainForm mainform,int id)
             : base(mainform)
         {
             InitializeComponent();
-            init();
-            //addmatcode();
+            getPeople();
+            setUserState();
+            setControlFalse();
+
             string asql = "select * from 吹膜工序领料退料记录 where ID=" + id;
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
@@ -62,54 +242,51 @@ namespace mySystem.Extruction.Process
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
 
+            //TODO instrid matcode可以放在读外表函数内************************
             cB物料代码.Text = tempdt.Rows[0]["物料代码"].ToString();
-            readOuterData(instrid, tempdt.Rows[0]["物料代码"].ToString());
+            matcode = tempdt.Rows[0]["物料代码"].ToString();
+            instrid = (int)tempdt.Rows[0]["生产指令ID"];
+
+            readOuterData(instrid, matcode);
             removeOuterBinding();
             outerBind();
+
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
+            setFormState();
+            setEnableReadOnly();
+            if(stat_form==1)
+                bt退料审核.Enabled = true;
+
+            cB物料代码.Enabled = false;
 
         }
 
-        //供界面显示,参数为数据库中对应记录的id
-        public void show(int paraid)
-        {
-        }
         //向combox中添加物料代码
         private void addmatcode()
         {
-            cB物料代码.Items.Add("SMP-PE-01");
-            cB物料代码.Items.Add("SMP-PE-04");
-            cB物料代码.Items.Add("SMP-PE-06");
-            cB物料代码.Items.Add("SMP-PE-11");
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select * from 设置物料代码";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+            {
+                cB物料代码.Items.Add(tempdt.Rows[i]["物料代码"].ToString());
+            }
+            da.Dispose();
+            tempdt.Dispose();
+            comm.Dispose();
         }
 
         private void init()
         {
-            dt_prodinstr = new System.Data.DataTable();
-            bs_prodinstr = new System.Windows.Forms.BindingSource();
-            da_prodinstr = new OleDbDataAdapter();
-            cb_prodinstr = new OleDbCommandBuilder();
-
-            dt_prodlist = new System.Data.DataTable();
-            bs_prodlist = new System.Windows.Forms.BindingSource();
-            da_prodlist = new OleDbDataAdapter();
-            cb_prodlist = new OleDbCommandBuilder();
-
-            instrid = mySystem.Parameter.proInstruID;
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
-            cB物料代码.Enabled = true;
         }
 
         void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -161,14 +338,30 @@ namespace mySystem.Extruction.Process
 
         private void button1_Click(object sender, EventArgs e)
         {
+            bool rt = save();
+            //控件可见性
+            if (rt && stat_user == 0)
+                bt提交审核.Enabled = true;
+        }
+        //保存内表和外表数据
+        private bool save()
+        {
             //判断合法性
             if (!input_Judge())
-                return;
-            
+                return false;
+
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(instrid,cB物料代码.Text);
+            if (stat_user != 1)
+            {
+                readOuterData(mySystem.Parameter.proInstruID, cB物料代码.Text);
+            }
+            else
+            {
+                readOuterData(instrid, matcode);
+            }
+            
             removeOuterBinding();
             outerBind();
 
@@ -178,8 +371,9 @@ namespace mySystem.Extruction.Process
             innerBind();
 
             setUndoColor();
-            bt退料审核.Enabled = true;
+            return true;
         }
+
         private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
             #region 之前
@@ -292,19 +486,7 @@ namespace mySystem.Extruction.Process
                 }
                 return;
             }
-            //审核人
-            if (e.ColumnIndex == 9)
-            {
-                if (dataGridView1.Rows[e.RowIndex].Cells[9].Value == null || dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString() == "")
-                    return;
-                int rt = mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString());
-                if (rt <= 0)
-                {
-                    MessageBox.Show("审核人ID不存在，请重新输入");
-                    dataGridView1.Rows[e.RowIndex].Cells[9].Value = "";
-                }
-                return;
-            }
+
             //计算合计
             float sum_num = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -356,43 +538,54 @@ namespace mySystem.Extruction.Process
         //审核
         public override void CheckResult()
         {
-            base.CheckResult();
-            dt_prodinstr.Rows[0]["退料审核人"] = checkform.userName;//退料审核人
+
+            //获得审核信息
+            //dtp审批日期.Value = checkform.time;
+            dt_prodinstr.Rows[0]["审核人"] = checkform.userName;
+            dt_prodinstr.Rows[0]["审核日期"] = checkform.time;
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+            //状态
+            setControlFalse();
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜工序领料退料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            //写日志
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion;
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
 
-            if (checkform.ischeckOk)
-            {
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                cB物料代码.Enabled = true;
-                bt打印.Enabled = true;
-            }
+            base.CheckResult();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //判断内表是否完全审核
+            if (!is_inner_checked())
             {
-                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "否" || dataGridView1.Rows[i].Cells[7].Value.ToString()=="不合格")
-                {
-                    MessageBox.Show("有条目待确认");
-                    return;
-                }
+                MessageBox.Show("领料没有完全审核，请先审核领料");
+                return;
             }
             checkform = new CheckForm(this);
             checkform.Show();
-
         }
 
         // 给外表的一行写入默认值
         DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = instrid;
+            dr["生产指令ID"] = mySystem.Parameter.proInstruID;
             dr["物料代码"] = cB物料代码.Text;
             dr["领料日期"] = DateTime.Now;
             dr["审核是否通过"] = false;
@@ -400,6 +593,7 @@ namespace mySystem.Extruction.Process
             dr["数量合计"] = 0;
             dr["退料"] = 0;
             dr["退料操作人"] = mySystem.Parameter.userName;
+            dr["审核日期"] = DateTime.Now;
             return dr;
 
         }
@@ -414,10 +608,6 @@ namespace mySystem.Extruction.Process
             dr["包装完好"] = "是";
             dr["清洁合格"] = "合格";
             dr["操作人"] = mySystem.Parameter.userName;
-            //dr["包装完好_是"] = true;
-            //dr["包装完好_否"] = false;
-            //dr["清洁合格_是"] = true;
-            //dr["清洁合格_否"] = false;
             return dr;
         }
         // 根据条件从数据库中读取一行外表的数据
@@ -459,7 +649,7 @@ namespace mySystem.Extruction.Process
             tb数量.DataBindings.Add("Text", bs_prodinstr.DataSource, "数量合计");
             tb退料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料");
             tb退料操作人.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料操作人");
-            tb退料审核人.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料审核人");
+            tb退料审核人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审核人");
         }
         // 内表和控件的绑定
         void innerBind()
@@ -567,6 +757,16 @@ namespace mySystem.Extruction.Process
             dataGridView1.Columns[0].Visible = false;//ID
             dataGridView1.Columns[1].Visible = false;//T吹膜工序领料退料记录ID
             dataGridView1.Columns[5].ReadOnly = true;//重量
+            dataGridView1.Columns[9].ReadOnly = true;//领料审核人
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() != "")//审核过或者待审核
+                {
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+            }
+            
         }
 
         //判断数据合法性
@@ -579,26 +779,15 @@ namespace mySystem.Extruction.Process
                 {
                     MessageBox.Show("操作人不能为空");
                     return false;
-                }
-                if (dataGridView1.Rows[i].Cells[9].Value == null || dataGridView1.Rows[i].Cells[9].Value.ToString() == "")
-                {
-                    MessageBox.Show("审核人不能为空");
-                    return false;
-                }
-                    
+                }                
             }
             return true;
         }
         private void cB物料代码_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = true;
-            }
-            bt退料审核.Enabled = false;
-            bt打印.Enabled = false;
+            setControlTrue();
 
-            readOuterData(instrid,cB物料代码.Text);
+            readOuterData(mySystem.Parameter.proInstruID,cB物料代码.Text);
             removeOuterBinding();
             outerBind();
             if (dt_prodinstr.Rows.Count <= 0)
@@ -607,22 +796,25 @@ namespace mySystem.Extruction.Process
                 dr = writeOuterDefault(dr);
                 dt_prodinstr.Rows.Add(dr);
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                readOuterData(instrid, cB物料代码.Text);
+                readOuterData(mySystem.Parameter.proInstruID, cB物料代码.Text);
                 removeOuterBinding();
                 outerBind();
             }
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
-            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+
+            if (dataGridView1.Rows.Count == 0)
             {
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                cB物料代码.Enabled = true;
-                bt打印.Enabled = true;
+                dt_prodinstr.Rows[0]["重量合计"] = 0;
+                dt_prodinstr.Rows[0]["数量合计"] = 0;
+
+                tb重量.Text = "0";
+                tb数量.Text = "0";
             }
+
+            setFormState();
+            setEnableReadOnly();
         }
 
         private void bt打印_Click(object sender, EventArgs e)
@@ -699,6 +891,8 @@ namespace mySystem.Extruction.Process
             {
                 if (dataGridView1.SelectedCells[0].RowIndex < 0)
                     return;
+                if (dataGridView1.Rows[dataGridView1.SelectedCells[0].RowIndex].ReadOnly == true)
+                    return;
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
@@ -747,6 +941,15 @@ namespace mySystem.Extruction.Process
             da_prodlist.Fill(dt_prodlist);
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index - 1].Selected = true;
+
+            //设置readonly
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() != "")
+                {
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+            }
         }
 
         private void bt下移_Click(object sender, EventArgs e)
@@ -779,6 +982,15 @@ namespace mySystem.Extruction.Process
             da_prodlist.Fill(dt_prodlist);
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index + 1].Selected = true;
+
+            //设置readonly
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() != "")
+                {
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+            }
         }
 
         private void setUndoColor()
@@ -791,6 +1003,109 @@ namespace mySystem.Extruction.Process
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
             }
 
+        }
+
+        private void bt日志_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+        }
+
+        private void bt提交审核_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "否" || dataGridView1.Rows[i].Cells[7].Value.ToString() == "不合格")
+                {
+                    MessageBox.Show("有条目待确认");
+                    return;
+                }
+            }
+
+            //判断内表审核人是否有空值
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[9].Value.ToString() == "")
+                {
+                    MessageBox.Show("未提交领料审核");
+                    return;
+                }
+            }
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜工序领料退料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "吹膜工序领料退料记录";
+                dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                dt_temp.Rows.Add(dr);
+            }
+            bs_temp.DataSource = dt_temp;
+            da_temp.Update((DataTable)bs_temp.DataSource);
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
+            dt_prodinstr.Rows[0]["审核人"] = "__待审核";
+            dt_prodinstr.Rows[0]["审核日期"] = DateTime.Now;
+
+            save();
+
+            //空间都不能点
+            setControlFalse();
+
+            //可以处理其他物料情况
+            cB物料代码.Enabled = true;
+        }
+
+        //遍历DataGridView的行：只要审核人不为空，则该行ReadOnly
+        void setDataGridViewColumnReadOnly()
+        {
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //{
+            //    if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() != "")
+            //        dataGridView1.Rows[i].ReadOnly = true;
+            //}
+        }
+
+        private void bt领料审核_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
+                {
+                    //dataGridView1.Rows[i].Cells["审核人"].Value = person_审核员;
+                    dt_prodlist.Rows[i]["审核人"] = person_审核员;
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+            }
+            bs_prodlist.DataSource = dt_prodlist;
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+        }
+
+        private void bt领料提交审核_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "")
+                {
+                    //dataGridView1.Rows[i].Cells["审核人"].Value = "__待审核";
+                    dt_prodlist.Rows[i]["审核人"] = "__待审核";
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }                    
+            }
+            bs_prodlist.DataSource = dt_prodlist;
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
         }
     }
 }

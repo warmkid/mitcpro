@@ -5,18 +5,7 @@
 
 
 ```C#
-
-// Parameter中不需要为OleDB和SQL写两个连接变量，写一个:
-DbConnection conn;
-// 利用isSQL来判断是用SQLConnection还是OleDBConnection来new这个对象
-// 带 ID 的构造函数
-// 注意，如果当前登录人既不是操作员也不是审核员，则提示，然后不显示界面(管理员例外）
-// 父类的变量
-DbDataAdapter daOuter, daInner;
-DbCommandBuilder cbOuter, cbInner;
-BindingSource bsOuter, bsInner;
-DataTable dtOuter, dtInner;
-
+/// 数据读取类函数 ================================================
 // 根据条件从数据库中读取一行外表的数据
 void readOuterData(能唯一确定一行外表数据的参数，一般是生产指令ID或生产指令编号);
 // 给外表的一行写入默认值，包括操作人，时间，班次等
@@ -32,12 +21,26 @@ DataRow writeInnerDefault(DataRow dr);
 // 内表和控件的绑定
 void innerBind();
 
+
+// 获取其他需要的数据，比如产品代码，产生废品原因等
+void getOtherData();
+// 获取操作员和审核员
+void getPeople();
+// 计算，主要用于日报表、物料平衡记录中的计算
+void compute();
+
+
+/// 数据读取类函数 ================================================
+
+
+/// 主要事件处理，格式处理
 // 设置DataGridView中各列的格式，包括列类型，列名，是否可以排序
+// 这个函数中先通过遍历把列加全，并设置全局属性（列的类型，是否可排序）； 然后再设置各类的可见性等属性
 void setDataGridViewColumns();
 // 刷新DataGridView中的列：序号
 void setDataGridViewRowNums();
 
-// 设置各控件的事件
+// 设置各控件的事件 ================================================
 	// 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 void addDateEventHandler();
 	// 设置自动计算类事件
@@ -46,33 +49,40 @@ void addComputerEventHandler();
 void addOtherEvnetHandler();
 // 打印函数
 void print(bool);
-// 获取其他需要的数据，比如产品代码，产生废品原因等
-void getOtherData();
-// 获取操作员和审核员
-void getPeople();
-// 计算，主要用于日报表、物料平衡记录中的计算
-void computer();
+/// 主要事件处理，格式处理 ================================================
+
+
+
+
+/// 控件状态类 ================================================
 // 获取当前窗体状态：
 // 如果『审核人』为空，则为未保存
 // 否则，如果『审核人』为『__待审核』，则为『待审核』
 // 否则
 //         如果审核结果为『通过』，则为『审核通过』
 //         如果审核结果为『不通过』，则为『审核未通过』
-// 这个函数可以放在父类中？
 void setFormState();
 // 设置用户状态，用户状态有3个：0--操作员，1--审核员，2--管理员
 void setUserState();
 // 设置控件可用性，根据状态设置，状态是每个窗体的变量，放在父类中
 // 0：未保存；1：待审核；2：审核通过；3：审核未通过
 void setEnableReadOnly();
+// 为了方便设置控件状态，完成如下两个函数：分别用于设置所有控件可用和所有控件不可用
+void setControlTrue();
+void setControlFalse();
+// “审核”和“提交审核”按钮特殊，在以上两个函数中要设为false。
+// 当登陆人是审核人时，在外面设置它为true
+// 以上两个函数的写法见示例
 
-  
-// 窗口下的按钮：审核                   保存，发送审核，打印，查看记录
-特例：需要单行审核的表
-点击『提交审核』后，上面部分不能改，但是可以继续修改下面部分（要为每一行单独设置状态）
-setDataGridViewColumnReadOnly() //读 datagridview 的每一行，设置并记录每一行是否是 readonly，该函数至少要在 DataGridView 的 DataBindingComplete事件中调用。
-bool isRowEditable(int) 判断某一行是否可编辑
 
+// 如果有需要单行审核的表，在DataGridView下加一个“提交数据审核”按钮，点击该按钮后，DataGridView中无“审核人”的行都填入：__待审核，同时设为ReadOnly
+// 下面这个函数完成功能：遍历DataGridView的行：只要审核人不为空，则该行ReadOnly
+// 该函数需要在DataGridView的DataBindingComplete事件中和“提交数据审核”点击事件中调用
+setDataGridViewColumnReadOnly();
+// 注意：删除按钮点击是要判断：如果该行有审核人信息，则无法删除
+/// 控件状态类 ================================================
+
+// 窗口下的按钮：审核                   保存，提交审核，打印，查看记录
 ```
 
 
@@ -215,6 +225,49 @@ private void setDataGridViewRowNums()
   }
 }
 
+
+
+ void setControlTrue()
+ {
+   foreach (Control c in this.Controls)
+   {
+     if (c is TextBox)
+     {
+       (c as TextBox).ReadOnly = false;
+     }
+     else if (c is DataGridView)
+     {
+       (c as DataGridView).ReadOnly = false;
+     }
+     else
+     {
+       c.Enabled = true;
+     }
+   }
+   // 保证这两个按钮一直是false
+   btn审核.Enabled = false;
+   btn提交审核.Enabled = false;
+ }
+
+void setControlFalse()
+{
+  foreach (Control c in this.Controls)
+  {
+    if (c is TextBox)
+    {
+      (c as TextBox).ReadOnly = true;
+    }
+    else if (c is DataGridView)
+    {
+      (c as DataGridView).ReadOnly = true;
+    }
+    else
+    {
+      c.Enabled = false;
+    }
+  }
+  btn查看日志.Enabled = true;
+}
 ```
 
 

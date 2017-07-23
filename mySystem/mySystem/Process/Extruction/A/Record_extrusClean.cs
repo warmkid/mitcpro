@@ -21,8 +21,6 @@ namespace WindowsFormsApplication1
         OleDbConnection connOle = null;//连接access
         bool isSqlOk;//使用sql还是access
 
-        int instrid;//生产指令id
-
         mySystem.CheckForm checkform;//审核信息
         private DataTable dt;//之前清洁项目
 
@@ -30,6 +28,21 @@ namespace WindowsFormsApplication1
         private OleDbDataAdapter da_out, da_in;
         private BindingSource bs_out, bs_in;
         private OleDbCommandBuilder cb_out, cb_in;
+
+        private string person_操作员;
+        private string person_审核员;
+
+        //用于带id参数构造函数，存储已存在记录的相关信息
+        int instrid;
+
+        /// <summary>
+        /// 登录人状态，0 操作员， 1 审核员， 2管理员
+        /// </summary>
+        private int stat_user;//
+        /// <summary>
+        /// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        private int stat_form;
 
         public Record_extrusClean(mySystem.MainForm mainform)
             : base(mainform)
@@ -40,8 +53,13 @@ namespace WindowsFormsApplication1
 
             InitializeComponent();
             Init();
-            readset();
+            getPeople();
+            setUserState();
+            getOtherData();
+
             begin();
+            //readset();
+            //begin();
         }
 
         public Record_extrusClean(mySystem.MainForm mainform,int id)
@@ -53,7 +71,9 @@ namespace WindowsFormsApplication1
 
             InitializeComponent();
             Init();
-            readset();
+            getPeople();
+            setUserState();
+            getOtherData();
 
             string asql = "select * from 吹膜机组清洁记录表 where ID=" + id;
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
@@ -61,7 +81,7 @@ namespace WindowsFormsApplication1
 
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
-            int instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+            instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
 
             readOuterData(instrid);
             removeOuterBinding();
@@ -73,10 +93,127 @@ namespace WindowsFormsApplication1
             readInnerData((int)dt_out.Rows[0]["ID"]);
             innerBind();
 
+            setFormState();
+            setEnableReadOnly();
+
+            if (stat_form == 1)
+                bt审核.Enabled = true;
+        }
+
+        //获取设置清洁项目
+        private void getOtherData()
+        {
+            readset();
+        }
+        //// 获取操作员和审核员
+        void getPeople()
+        {
+            DataTable dt = new DataTable("用户权限");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=2", mySystem.Parameter.connOle);
+            da.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                person_操作员 = dt.Rows[0]["操作员"].ToString();
+                person_审核员 = dt.Rows[0]["审核员"].ToString();
+            }
+        }
+
+        //设置登录人状态
+        void setUserState()
+        {
+            if (mySystem.Parameter.userName == person_操作员)
+                stat_user = 0;
+            else if (mySystem.Parameter.userName == person_审核员)
+                stat_user = 1;
+            else
+                stat_user = 2;
+        }
+
+        //设置窗口状态
+        void setFormState()
+        {
+            if (dt_out.Rows[0]["审核人"].ToString() == "")
+                stat_form = 0;
+            else if (dt_out.Rows[0]["审核人"].ToString() == "__待审核")
+                stat_form = 1;
+            else if ((bool)dt_out.Rows[0]["审核是否通过"])
+                stat_form = 2;
+            else
+                stat_form = 3;
+        }
+
+        void setEnableReadOnly()
+        {
+            if (stat_user == 2)//管理员
+            {
+                //控件都能点
+                setControlTrue();
+            }
+            else if (stat_user == 1)//审核人
+            {
+                if (stat_form == 0 || stat_form == 3 || stat_form == 2)//草稿,审核不通过，审核通过
+                {
+                    //空间都不能点
+                    setControlFalse();
+                }
+                else//待审核
+                {
+                    //发送审核不可点，其他都可点
+                    setControlTrue();
+                    bt审核.Enabled = true;
+
+                }
+
+            }
+            else//操作员
+            {
+                if (stat_form == 1 || stat_form == 2)//待审核，审核通过
+                {
+                    //空间都不能点
+                    setControlFalse();
+                }
+                else//未审核与审核不通过
+                {
+                    //发送审核，审核不能点
+                    setControlTrue();
+                }
+            }
+        }
+
+        private void setControlTrue()
+        {
             foreach (Control c in this.Controls)
             {
-                c.Enabled = false;
+                if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
             }
+            // 保证这两个按钮一直是false
+            bt审核.Enabled = false;
+            bt提交审核.Enabled = false;
+        }
+
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            bt日志.Enabled = true;
+            bt打印.Enabled = true;
         }
 
         //读取设置里面的清洁内容
@@ -115,8 +252,9 @@ namespace WindowsFormsApplication1
                 readOuterData(mySystem.Parameter.proInstruID);
                 removeOuterBinding();
                 outerBind();
+                instrid = mySystem.Parameter.proInstruID;
             }
-
+            instrid = mySystem.Parameter.proInstruID;
             ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
             ckb夜班.Checked = !ckb白班.Checked;
 
@@ -154,18 +292,8 @@ namespace WindowsFormsApplication1
                 }
 
             }
-
-
-            if ((bool)dt_out.Rows[0]["审核是否通过"])
-            {
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                dataGridView1.Enabled = true;
-                dataGridView1.ReadOnly = true;
-                bt打印.Enabled = true;
-            }
+            setFormState();
+            setEnableReadOnly();
         }
         //初始化
         private void Init()
@@ -175,7 +303,6 @@ namespace WindowsFormsApplication1
             bt审核.Enabled = false;
             tb复核人.Enabled = false;
 
-            instrid = mySystem.Parameter.proInstruID;
             ckb白班.Enabled = false;
             ckb夜班.Enabled = false;
             dtp复核日期.Enabled = false;
@@ -190,9 +317,6 @@ namespace WindowsFormsApplication1
             bs_in = new BindingSource();
             cb_out = new OleDbCommandBuilder();
             cb_in = new OleDbCommandBuilder();
-
-            bt打印.Enabled = false;
-            bt审核.Enabled = false;
             
         }
 
@@ -352,21 +476,8 @@ namespace WindowsFormsApplication1
                 int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
                 if (rt <= 0)
                 {
-                    MessageBox.Show("清洁人id不存在，请重新输入");
-                    dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
-                }
-                return;
-            }
-            //更改审核人项
-            if (e.ColumnIndex == 6)
-            {
-                if (dataGridView1.Rows[e.RowIndex].Cells[6].Value == null || dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString() == "")
-                    return;
-                int rt = queryid(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
-                if (rt <= 0)
-                {
-                    MessageBox.Show("审核人id不存在，请重新输入");
-                    dataGridView1.Rows[e.RowIndex].Cells[6].Value = "";
+                    MessageBox.Show("清洁员id不存在，请重新输入");
+                    dataGridView1.Rows[e.RowIndex].Cells[5].Value = "";
                 }
                 return;
             }
@@ -405,28 +516,28 @@ namespace WindowsFormsApplication1
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "" || dataGridView1.Rows[i].Cells[6].Value.ToString() == "")
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "")
                 {
-                    MessageBox.Show("清洁人与审核人均不能为空");
+                    MessageBox.Show("清洁员不能为空");
                     return false;
                 }
             }
             return true;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        //保存内表和外表数据
+        private bool save()
         {
-            bt审核.Enabled = false;
             //判断合法性
             if (!input_Judge())
-           {             
-                return;
+            {
+                return false;
             }
-                
+
             //外表保存
             bs_out.EndEdit();
             da_out.Update((DataTable)bs_out.DataSource);
-            readOuterData(mySystem.Parameter.proInstruID);
+            readOuterData(instrid);
             removeOuterBinding();
             outerBind();
 
@@ -436,47 +547,52 @@ namespace WindowsFormsApplication1
             innerBind();
 
             setUndoColor();
-            bt审核.Enabled = true;
+            return true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            bool rt = save();
+            //控件可见性
+            if (rt && stat_user == 0)
+                bt提交审核.Enabled = true;
         }
 
         //重写函数，获得审查人信息
         public override void CheckResult()
         {
-            
+            //获得审核信息
             dt_out.Rows[0]["审核人"] = checkform.userName;
             dt_out.Rows[0]["审核时间"] = checkform.time;
             dt_out.Rows[0]["审核意见"] = checkform.opinion;
             dt_out.Rows[0]["审核是否通过"] = checkform.ischeckOk;
-            if (checkform.ischeckOk)
-            {
-                foreach (Control c in this.Controls)
-                {
-                    c.Enabled = false;
-                }
-                dataGridView1.Enabled = true;
-                dataGridView1.ReadOnly = true;
-                bt打印.Enabled = true;
+            //状态
+            setControlFalse();
 
-                
-            }
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            //写日志
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion;
+            dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
 
             bs_out.EndEdit();
             da_out.Update((DataTable)bs_out.DataSource);
-
             base.CheckResult();
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
-                {
-                    MessageBox.Show("有条目待确认");
-                    return;
-                }
-            }
             checkform = new mySystem.CheckForm(this);
             checkform.Show();
         }
@@ -521,7 +637,6 @@ namespace WindowsFormsApplication1
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(int instrid)
         {
-
             dt_out = new DataTable("吹膜机组清洁记录表");
             bs_out = new BindingSource();
             da_out = new OleDbDataAdapter("select * from 吹膜机组清洁记录表 where 生产指令ID=" +instrid, connOle);
@@ -602,7 +717,7 @@ namespace WindowsFormsApplication1
                         c1.DataPropertyName = dc.ColumnName;
                         c1.HeaderText = dc.ColumnName;
                         c1.Name = dc.ColumnName;
-                        c1.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c1.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c1.ValueType = dc.DataType;
                         // 如果换了名字会报错，把当前值也加上就好了
                         // 加序号，按序号显示
@@ -612,12 +727,22 @@ namespace WindowsFormsApplication1
                         // 重写cell value changed 事件，自动填写id
                         break;
 
+                    case "清洁人":
+                        DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
+                        c3.DataPropertyName = dc.ColumnName;
+                        c3.HeaderText = "清洁员";
+                        c3.Name = dc.ColumnName;
+                        c3.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c3.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c3);
+                        break;
+
                     default:
                         DataGridViewTextBoxColumn c2 = new DataGridViewTextBoxColumn();
                         c2.DataPropertyName = dc.ColumnName;
                         c2.HeaderText = dc.ColumnName;
                         c2.Name = dc.ColumnName;
-                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c2.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c2.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(c2);
                         break;
@@ -629,7 +754,7 @@ namespace WindowsFormsApplication1
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-
+            dataGridView1.Columns[6].Visible = false;
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
@@ -714,6 +839,56 @@ namespace WindowsFormsApplication1
                 if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
             }
+        }
+
+        private void bt提交审核_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                {
+                    MessageBox.Show("有条目待确认");
+                    return;
+                }
+            }
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "吹膜机组清洁记录表";
+                dr["对应ID"] = (int)dt_out.Rows[0]["ID"];
+                dt_temp.Rows.Add(dr);
+            }
+            bs_temp.DataSource = dt_temp;
+            da_temp.Update((DataTable)bs_temp.DataSource);
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
+
+            dt_out.Rows[0]["审核人"] = "__待审核";
+            dt_out.Rows[0]["审核时间"] = DateTime.Now;
+
+            save();
+
+            //空间都不能点
+            setControlFalse();
+        }
+
+        private void bt日志_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(dt_out.Rows[0]["日志"].ToString());
         }
     }
 }
