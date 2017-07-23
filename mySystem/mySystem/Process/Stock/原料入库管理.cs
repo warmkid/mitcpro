@@ -1,0 +1,142 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.Data.OleDb;
+
+namespace mySystem.Process.Stock
+{
+    public partial class 原料入库管理 : Form
+    {
+
+        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+        OleDbConnection conn;
+        DataTable dt物资验收记录, dt物资请验单, dt检查记录, dt不合格品处理记录;
+
+        public 原料入库管理()
+        {
+            InitializeComponent();
+            conn = new OleDbConnection(strConn);
+            conn.Open();
+
+            read物资验收记录Data();
+            物资验收记录Bind();
+            addOtherEventHandler();
+        }
+
+        private void btn增加物资验收记录_Click(object sender, EventArgs e)
+        {
+            物资验收记录 form = new 物资验收记录();
+            form.Show();
+        }
+
+        void read物资验收记录Data()
+        {
+
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资验收记录", conn);
+            dt物资验收记录 = new DataTable("物资验收记录");
+            da.Fill(dt物资验收记录);
+        }
+
+        void 物资验收记录Bind()
+        {
+            dataGridView1.DataSource = dt物资验收记录;
+        }
+
+        void addOtherEventHandler()
+        {
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView3.AllowUserToAddRows = false;
+            dataGridView4.AllowUserToAddRows = false;
+            // TODO  加一个绑定完成事件，把需要审核的行标记
+
+            dataGridView2.CellDoubleClick += dataGridView2_CellDoubleClick;
+            dataGridView3.CellDoubleClick += dataGridView3_CellDoubleClick;
+            dataGridView4.CellDoubleClick += dataGridView4_CellDoubleClick;
+        }
+
+        void dataGridView4_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = Convert.ToInt32(dt不合格品处理记录.Rows[e.RowIndex][0]);
+            不合格品处理记录 form = new 不合格品处理记录(id);
+            form.Show();
+        }
+
+        void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = Convert.ToInt32(dt检查记录.Rows[e.RowIndex][0]);
+            检查记录 form = new 检查记录(id);
+            form.Show();
+        }
+
+        void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //双击 显示请验单
+            int id = Convert.ToInt32(dt物资请验单.Rows[e.RowIndex][0]);
+            物资请验单 form = new 物资请验单(id);
+            form.Show();
+        }
+
+        private void btn读取_Click(object sender, EventArgs e)
+        {
+            read物资请验单Data();
+            物资请验单Bind();
+            
+            
+        }
+
+        void read物资请验单Data()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单", conn);
+            dt物资请验单 = new DataTable("物资请验单");
+            da.Fill(dt物资请验单);
+        }
+
+        void 物资请验单Bind()
+        {
+            dataGridView2.DataSource = dt物资请验单;
+        }
+
+        private void btn读取检查记录_Click(object sender, EventArgs e)
+        {
+            read检查记录Data();
+            检查记录Bind();
+        }
+
+        void read检查记录Data()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检查记录", conn);
+            dt检查记录 = new DataTable("检查记录");
+            da.Fill(dt检查记录);
+        }
+
+        void 检查记录Bind()
+        {
+            dataGridView3.DataSource = dt检查记录;
+        }
+
+        void read不合格品记录Data()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 不合格品处理记录", conn);
+            dt不合格品处理记录 = new DataTable("不合格品处理记录");
+            da.Fill(dt不合格品处理记录);
+        }
+
+        void 不合格品记录Bind()
+        {
+            dataGridView4.DataSource = dt不合格品处理记录;
+        }
+
+        private void btn读取不合格品记录_Click(object sender, EventArgs e)
+        {
+            read不合格品记录Data();
+            不合格品记录Bind();
+        }
+    }
+}
