@@ -569,6 +569,12 @@
     <Compile Include="Process\Order\订单管理.Designer.cs">
       <DependentUpon>订单管理.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\不合格品处理记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\不合格品处理记录.Designer.cs">
+      <DependentUpon>不合格品处理记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\入库.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -581,11 +587,23 @@
     <Compile Include="Process\Stock\出库.Designer.cs">
       <DependentUpon>出库.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\原料入库管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\原料入库管理.Designer.cs">
+      <DependentUpon>原料入库管理.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\商品设置.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Process\Stock\商品设置.Designer.cs">
       <DependentUpon>商品设置.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\物资验收记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\物资验收记录.Designer.cs">
+      <DependentUpon>物资验收记录.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Stock\库存管理.cs">
       <SubType>Form</SubType>
@@ -599,11 +617,23 @@
     <Compile Include="Process\Stock\库存管理主界面.Designer.cs">
       <DependentUpon>库存管理主界面.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\检查记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\检查记录.Designer.cs">
+      <DependentUpon>检查记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\添加采购单.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Process\Stock\添加采购单.designer.cs">
       <DependentUpon>添加采购单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\物资请验单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\物资请验单.Designer.cs">
+      <DependentUpon>物资请验单.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Stock\退货.cs">
       <SubType>Form</SubType>
@@ -1130,14 +1160,23 @@
     <EmbeddedResource Include="Process\ProcessMainForm.resx">
       <DependentUpon>ProcessMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\不合格品处理记录.resx">
+      <DependentUpon>不合格品处理记录.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\入库.resx">
       <DependentUpon>入库.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\出库.resx">
       <DependentUpon>出库.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\原料入库管理.resx">
+      <DependentUpon>原料入库管理.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\商品设置.resx">
       <DependentUpon>商品设置.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\物资验收记录.resx">
+      <DependentUpon>物资验收记录.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\库存管理.resx">
       <DependentUpon>库存管理.cs</DependentUpon>
@@ -1145,8 +1184,14 @@
     <EmbeddedResource Include="Process\Stock\库存管理主界面.resx">
       <DependentUpon>库存管理主界面.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\检查记录.resx">
+      <DependentUpon>检查记录.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\添加采购单.resx">
       <DependentUpon>添加采购单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\物资请验单.resx">
+      <DependentUpon>物资请验单.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\退货.resx">
       <DependentUpon>退货.cs</DependentUpon>

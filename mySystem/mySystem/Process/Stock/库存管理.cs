@@ -68,5 +68,11 @@ namespace 订单和库存管理
             退货 form = new 退货();
             form.Show();
         }
+
+        private void btn原料入库_Click(object sender, EventArgs e)
+        {
+            mySystem.Process.Stock.原料入库管理 form = new mySystem.Process.Stock.原料入库管理();
+            form.ShowDialog();
+        }
     }
 }
