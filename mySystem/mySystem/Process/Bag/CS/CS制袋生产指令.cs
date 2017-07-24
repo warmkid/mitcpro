@@ -15,7 +15,9 @@ namespace mySystem.Process.Bag.CS
 
 
         // TODO : 注意处理生产指令的状态
+        // TODO ：要加到Mainform中去
         // TODO： 审核时要调用赵梦的函数
+        // TODO: 打印
 
         // 需要保存的状态
         /// <summary>
@@ -82,7 +84,7 @@ namespace mySystem.Process.Bag.CS
             innerBind();
 
             // 获取和显示内容有关的变量
-            getFormVariable(id);
+            setFormVariable(id);
 
             // 设置状态和控件可用性
             getPeople();
@@ -115,7 +117,7 @@ namespace mySystem.Process.Bag.CS
             innerBind();
 
             // 获取和显示内容有关的变量
-            getFormVariable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            setFormVariable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
 
             // 设置状态和控件可用性
             setFormState();
@@ -142,7 +144,7 @@ namespace mySystem.Process.Bag.CS
             li可选可输的列.Add(8);
         }
 
-        void getFormVariable(int id)
+        void setFormVariable(int id)
         {
 
             _id = id;
@@ -626,6 +628,7 @@ namespace mySystem.Process.Bag.CS
             dr["计划产量只"] = 0;
             dr["内包装规格每包只数"] = 0;
             dr["外包规格"] = 0;
+            dr["封边"] = "底封";
             return dr;
         }
 
@@ -740,11 +743,12 @@ namespace mySystem.Process.Bag.CS
             da.Update(dt);
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
+            dtOuter.Rows[0]["审核是否通过"] = true;
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
             log += "审核结果为：通过\n";
-            log += "审核意见为：无";
+            log += "审核意见为：无\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             btn保存.PerformClick();
             setFormState();
@@ -753,10 +757,7 @@ namespace mySystem.Process.Bag.CS
             btn审核.Enabled = false;
         }
 
-        private void btn上移_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void btn添加_Click(object sender, EventArgs e)
         {
