@@ -126,6 +126,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.bt提交审核 = new System.Windows.Forms.Button();
             this.bt日志 = new System.Windows.Forms.Button();
+            this.tb操作员备注 = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -795,6 +797,8 @@
             // 
             // splitContainer7.Panel1
             // 
+            this.splitContainer7.Panel1.Controls.Add(this.tb操作员备注);
+            this.splitContainer7.Panel1.Controls.Add(this.label39);
             this.splitContainer7.Panel1.Controls.Add(this.dateTimePicker2);
             this.splitContainer7.Panel1.Controls.Add(this.label23);
             this.splitContainer7.Panel1.Controls.Add(this.tb编制人);
@@ -804,13 +808,13 @@
             // 
             this.splitContainer7.Panel2.Controls.Add(this.splitContainer8);
             this.splitContainer7.Size = new System.Drawing.Size(888, 72);
-            this.splitContainer7.SplitterDistance = 255;
+            this.splitContainer7.SplitterDistance = 413;
             this.splitContainer7.TabIndex = 15;
             // 
             // dateTimePicker2
             // 
             this.dateTimePicker2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker2.Location = new System.Drawing.Point(83, 41);
+            this.dateTimePicker2.Location = new System.Drawing.Point(79, 39);
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(136, 23);
             this.dateTimePicker2.TabIndex = 19;
@@ -828,7 +832,7 @@
             // tb编制人
             // 
             this.tb编制人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb编制人.Location = new System.Drawing.Point(92, 8);
+            this.tb编制人.Location = new System.Drawing.Point(79, 10);
             this.tb编制人.Name = "tb编制人";
             this.tb编制人.Size = new System.Drawing.Size(110, 23);
             this.tb编制人.TabIndex = 17;
@@ -862,14 +866,14 @@
             this.splitContainer8.Panel2.Controls.Add(this.label27);
             this.splitContainer8.Panel2.Controls.Add(this.tb接收人);
             this.splitContainer8.Panel2.Controls.Add(this.label26);
-            this.splitContainer8.Size = new System.Drawing.Size(629, 72);
-            this.splitContainer8.SplitterDistance = 320;
+            this.splitContainer8.Size = new System.Drawing.Size(471, 72);
+            this.splitContainer8.SplitterDistance = 244;
             this.splitContainer8.TabIndex = 0;
             // 
             // dateTimePicker3
             // 
             this.dateTimePicker3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker3.Location = new System.Drawing.Point(131, 39);
+            this.dateTimePicker3.Location = new System.Drawing.Point(102, 39);
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.Size = new System.Drawing.Size(136, 23);
             this.dateTimePicker3.TabIndex = 20;
@@ -878,7 +882,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label25.Location = new System.Drawing.Point(67, 41);
+            this.label25.Location = new System.Drawing.Point(38, 41);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(35, 14);
             this.label25.TabIndex = 19;
@@ -888,7 +892,7 @@
             // 
             this.tb审批人.Enabled = false;
             this.tb审批人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审批人.Location = new System.Drawing.Point(136, 8);
+            this.tb审批人.Location = new System.Drawing.Point(107, 8);
             this.tb审批人.Name = "tb审批人";
             this.tb审批人.Size = new System.Drawing.Size(110, 23);
             this.tb审批人.TabIndex = 18;
@@ -897,7 +901,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label24.Location = new System.Drawing.Point(63, 13);
+            this.label24.Location = new System.Drawing.Point(34, 13);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(49, 14);
             this.label24.TabIndex = 12;
@@ -906,7 +910,7 @@
             // dateTimePicker4
             // 
             this.dateTimePicker4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker4.Location = new System.Drawing.Point(131, 38);
+            this.dateTimePicker4.Location = new System.Drawing.Point(78, 38);
             this.dateTimePicker4.Name = "dateTimePicker4";
             this.dateTimePicker4.Size = new System.Drawing.Size(136, 23);
             this.dateTimePicker4.TabIndex = 21;
@@ -915,7 +919,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(67, 39);
+            this.label27.Location = new System.Drawing.Point(14, 39);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(35, 14);
             this.label27.TabIndex = 20;
@@ -924,7 +928,7 @@
             // tb接收人
             // 
             this.tb接收人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb接收人.Location = new System.Drawing.Point(140, 8);
+            this.tb接收人.Location = new System.Drawing.Point(87, 8);
             this.tb接收人.Name = "tb接收人";
             this.tb接收人.Size = new System.Drawing.Size(110, 23);
             this.tb接收人.TabIndex = 19;
@@ -933,7 +937,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label26.Location = new System.Drawing.Point(67, 13);
+            this.label26.Location = new System.Drawing.Point(14, 13);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(49, 14);
             this.label26.TabIndex = 13;
@@ -1205,6 +1209,25 @@
             this.bt日志.UseVisualStyleBackColor = true;
             this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
             // 
+            // tb操作员备注
+            // 
+            this.tb操作员备注.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb操作员备注.Location = new System.Drawing.Point(293, 10);
+            this.tb操作员备注.Multiline = true;
+            this.tb操作员备注.Name = "tb操作员备注";
+            this.tb操作员备注.Size = new System.Drawing.Size(116, 54);
+            this.tb操作员备注.TabIndex = 21;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label39.Location = new System.Drawing.Point(216, 13);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(77, 14);
+            this.label39.TabIndex = 20;
+            this.label39.Text = "操作员备注";
+            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1390,5 +1413,7 @@
         private System.Windows.Forms.Button bt复制;
         private System.Windows.Forms.Button bt提交审核;
         private System.Windows.Forms.Button bt日志;
+        private System.Windows.Forms.TextBox tb操作员备注;
+        private System.Windows.Forms.Label label39;
     }
 }

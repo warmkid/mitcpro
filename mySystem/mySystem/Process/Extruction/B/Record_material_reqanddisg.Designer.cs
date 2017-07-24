@@ -58,6 +58,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.bt领料提交审核 = new System.Windows.Forms.Button();
+            this.tb退料操作员备注 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -189,8 +191,9 @@
             // 
             // tb退料审核人
             // 
-            this.tb退料审核人.Location = new System.Drawing.Point(551, 378);
+            this.tb退料审核人.Location = new System.Drawing.Point(807, 378);
             this.tb退料审核人.Name = "tb退料审核人";
+            this.tb退料审核人.ReadOnly = true;
             this.tb退料审核人.Size = new System.Drawing.Size(100, 23);
             this.tb退料审核人.TabIndex = 24;
             // 
@@ -204,7 +207,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(454, 384);
+            this.label12.Location = new System.Drawing.Point(710, 384);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(91, 14);
             this.label12.TabIndex = 22;
@@ -341,11 +344,29 @@
             this.bt领料提交审核.UseVisualStyleBackColor = true;
             this.bt领料提交审核.Click += new System.EventHandler(this.bt领料提交审核_Click);
             // 
+            // tb退料操作员备注
+            // 
+            this.tb退料操作员备注.Location = new System.Drawing.Point(574, 378);
+            this.tb退料操作员备注.Name = "tb退料操作员备注";
+            this.tb退料操作员备注.Size = new System.Drawing.Size(100, 23);
+            this.tb退料操作员备注.TabIndex = 40;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(448, 384);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(119, 14);
+            this.label6.TabIndex = 39;
+            this.label6.Text = "退料操作员备注：";
+            // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 462);
+            this.Controls.Add(this.tb退料操作员备注);
+            this.Controls.Add(this.label6);
             this.Controls.Add(this.bt领料提交审核);
             this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt提交审核);
@@ -417,5 +438,7 @@
         private System.Windows.Forms.Button bt提交审核;
         private System.Windows.Forms.Button bt日志;
         private System.Windows.Forms.Button bt领料提交审核;
+        private System.Windows.Forms.TextBox tb退料操作员备注;
+        private System.Windows.Forms.Label label6;
     }
 }

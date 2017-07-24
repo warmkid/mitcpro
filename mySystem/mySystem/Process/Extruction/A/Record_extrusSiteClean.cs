@@ -274,9 +274,6 @@ namespace mySystem.Extruction.Process
 
             setFormState();
             setEnableReadOnly();
-
-            if (stat_form == 1)
-                bt审核.Enabled = true;
             
         }
 
@@ -630,6 +627,8 @@ namespace mySystem.Extruction.Process
             tb检查人.DataBindings.Clear();
 
             tb备注.DataBindings.Clear();
+            tb操作员备注.DataBindings.Clear();
+
 
         }
         // 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
@@ -647,6 +646,8 @@ namespace mySystem.Extruction.Process
             tb检查人.DataBindings.Add("Text", bs_prodinstr.DataSource, "检查人");
             dtp清场日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "清场日期");
             tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "备注");
+            tb操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作员备注");
+
         }
         // 内表和控件的绑定
         void innerBind()

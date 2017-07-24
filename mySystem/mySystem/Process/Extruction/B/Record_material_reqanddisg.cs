@@ -101,6 +101,16 @@ namespace mySystem.Extruction.Process
                     bt领料审核.Enabled = true;
                 }
 
+                dataGridView1.ReadOnly = false;
+                //遍历datagridview，如果有一行为未审核，则该行可以修改
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
+                        dataGridView1.Rows[i].ReadOnly = false;
+                    else
+                        dataGridView1.Rows[i].ReadOnly = true;
+                }
+
             }
             else//操作员
             {
@@ -118,7 +128,21 @@ namespace mySystem.Extruction.Process
                     setControlTrue();
                     bt领料提交审核.Enabled = true;
                 }
+                dataGridView1.ReadOnly = false;
+                //遍历datagridview，如果有一行为未审核，则该行可以修改
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() != "")
+                        dataGridView1.Rows[i].ReadOnly = true;
+                    else
+                        dataGridView1.Rows[i].ReadOnly = false;
+                }
             }
+        }
+
+        private void addOtherEventHandler()
+        {
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
 
         private void setControlTrue()
@@ -195,6 +219,9 @@ namespace mySystem.Extruction.Process
             bt日志.Enabled = false;
 
             cB物料代码.Enabled = true;
+            instrid = mySystem.Parameter.proInstruID;
+
+            addOtherEventHandler();
             //init();
             //addmatcode();
         }
@@ -207,10 +234,7 @@ namespace mySystem.Extruction.Process
         //获取设置中物料代码
         private void getOtherData()
         {
-            if (stat_user != 1)
-            {
-                addmatcode();
-            }
+             addmatcode();
         }
 
         //// 获取操作员和审核员
@@ -233,6 +257,7 @@ namespace mySystem.Extruction.Process
             InitializeComponent();
             getPeople();
             setUserState();
+
             setControlFalse();
 
             string asql = "select * from 吹膜工序领料退料记录 where ID=" + id;
@@ -243,7 +268,7 @@ namespace mySystem.Extruction.Process
             da.Fill(tempdt);
 
             //TODO instrid matcode可以放在读外表函数内************************
-            cB物料代码.Text = tempdt.Rows[0]["物料代码"].ToString();
+            //cB物料代码.Text = tempdt.Rows[0]["物料代码"].ToString();
             matcode = tempdt.Rows[0]["物料代码"].ToString();
             instrid = (int)tempdt.Rows[0]["生产指令ID"];
 
@@ -259,11 +284,16 @@ namespace mySystem.Extruction.Process
 
             setFormState();
             setEnableReadOnly();
-            if(stat_form==1)
-                bt退料审核.Enabled = true;
 
             cB物料代码.Enabled = false;
 
+            addOtherEventHandler();
+
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            setEnableReadOnly();
         }
 
         //向combox中添加物料代码
@@ -353,14 +383,8 @@ namespace mySystem.Extruction.Process
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            if (stat_user != 1)
-            {
-                readOuterData(mySystem.Parameter.proInstruID, cB物料代码.Text);
-            }
-            else
-            {
-                readOuterData(instrid, matcode);
-            }
+
+            readOuterData(instrid, matcode);
             
             removeOuterBinding();
             outerBind();
@@ -632,11 +656,13 @@ namespace mySystem.Extruction.Process
         void removeOuterBinding()
         {
             //解除之前的绑定
+            cB物料代码.DataBindings.Clear();
             tb重量.DataBindings.Clear();
             tb数量.DataBindings.Clear();
             tb退料量.DataBindings.Clear();
             tb退料操作人.DataBindings.Clear();
             tb退料审核人.DataBindings.Clear();
+            tb退料操作员备注.DataBindings.Clear();
         }
         // 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
         void removeInnerBinding()
@@ -645,11 +671,13 @@ namespace mySystem.Extruction.Process
         void outerBind()
         {
             bs_prodinstr.DataSource = dt_prodinstr;
+            cB物料代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "物料代码");
             tb重量.DataBindings.Add("Text", bs_prodinstr.DataSource, "重量合计");
             tb数量.DataBindings.Add("Text", bs_prodinstr.DataSource, "数量合计");
             tb退料量.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料");
             tb退料操作人.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料操作人");
             tb退料审核人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审核人");
+            tb退料操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "退料操作员备注");
         }
         // 内表和控件的绑定
         void innerBind()
@@ -786,8 +814,8 @@ namespace mySystem.Extruction.Process
         private void cB物料代码_SelectedIndexChanged(object sender, EventArgs e)
         {
             setControlTrue();
-
-            readOuterData(mySystem.Parameter.proInstruID,cB物料代码.Text);
+            matcode = cB物料代码.Text;
+            readOuterData(instrid,matcode);
             removeOuterBinding();
             outerBind();
             if (dt_prodinstr.Rows.Count <= 0)
@@ -796,11 +824,12 @@ namespace mySystem.Extruction.Process
                 dr = writeOuterDefault(dr);
                 dt_prodinstr.Rows.Add(dr);
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                readOuterData(mySystem.Parameter.proInstruID, cB物料代码.Text);
+                readOuterData(instrid, matcode);
                 removeOuterBinding();
                 outerBind();
             }
-
+            instrid = mySystem.Parameter.proInstruID;
+            matcode = cB物料代码.Text;
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
@@ -891,11 +920,12 @@ namespace mySystem.Extruction.Process
             {
                 if (dataGridView1.SelectedCells[0].RowIndex < 0)
                     return;
-                if (dataGridView1.Rows[dataGridView1.SelectedCells[0].RowIndex].ReadOnly == true)
+                if (dataGridView1.Rows[dataGridView1.SelectedCells[0].RowIndex].Cells["审核人"].Value.ToString() != "")
                     return;
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             //计算合计
             float sum_num = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)

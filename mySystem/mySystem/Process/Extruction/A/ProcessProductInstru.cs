@@ -10,22 +10,12 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Microsoft.Office;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-using System.Runtime.InteropServices;
 using WindowsFormsApplication1;
 
 namespace BatchProductRecord
@@ -33,15 +23,9 @@ namespace BatchProductRecord
     public partial class ProcessProductInstru : mySystem.BaseForm
     {
         mySystem.CheckForm checkform;
-        DataTable dt=null;//存储从产品表中读到的产品代码
-        string last_code;//最后一次保存数据库时生产指令编码,默认该表内不会重复
         float leng;
-        float sumweight;
-
-        //新的版本
-        int index = 0;//判断是插入模式还是更新模式，0代表插入，1代表更新
-        int id;
-        int label = 0;//1代表插入成功
+   
+        int label = 0;
         OleDbConnection connOle;
         private DataTable dt_prodinstr,dt_prodlist;
         private OleDbDataAdapter da_prodinstr,da_prodlist;
@@ -184,11 +168,16 @@ namespace BatchProductRecord
 
         private void getOtherData()
         {
-            readparam();
-            fill_prodart();
-            fill_prodname();
-            fill_matcode();
-            fill_respons_user();
+            if (label == 0)
+            {
+                readparam();
+                fill_prodart();
+                fill_prodname();
+                fill_matcode();
+                fill_respons_user();
+            }
+            label = 1;
+
         }
 
         //读取产品列表填入产品名称下拉列表
@@ -299,23 +288,42 @@ namespace BatchProductRecord
 
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
-            instrcode = tempdt.Rows[0]["生产指令编号"].ToString();           
+            instrcode = tempdt.Rows[0]["生产指令编号"].ToString();
+            
 
             readOuterData(instrcode);
             removeOuterBinding();
             outerBind();
-            bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            
+            //readOuterData(instrcode);
+            //dt_prodinstr.Rows[0].EndEdit();
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
+            string s = tb白班.Text;
+            string[] s1 = s.Split(',');
+            dict_白班.Clear();
+            dict_夜班.Clear();
+            for (int i = 0; i < s1.Length - 1; i++)
+            {
+                dict_白班.Add(s1[i], s1[i]);
+            }
+            s = tb夜班.Text;
+            s1 = s.Split(',');
+            for (int i = 0; i < s1.Length - 1; i++)
+            {
+                dict_夜班.Add(s1[i], s1[i]);
+            }
+
             setFormState();
             setEnableReadOnly();
-            if (stat_form == 1)
-                bt审核.Enabled = true;
+
+
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
+
+
         }
 
         private void init()
@@ -377,6 +385,8 @@ namespace BatchProductRecord
             textBox6.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计米");
             tb用料重量合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "用料重量合计");
             textBox10.DataBindings.Add("Text", bs_prodinstr.DataSource, "计划产量合计卷");
+            tb操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作员备注");
+            tb内外层比例.DataBindings.Add("Text", bs_prodinstr.DataSource, "比例");
         }
         
         //根据筛选条件得到指令id,没有返回-1
@@ -470,6 +480,7 @@ namespace BatchProductRecord
             log += "审核意见：" + checkform.opinion;
             dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
+            bs_prodinstr.DataSource = dt_prodinstr;
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             base.CheckResult();
@@ -503,6 +514,7 @@ namespace BatchProductRecord
             {
                 dt_prodinstr.Rows[0]["比例"] = float.Parse(tb内外层比例.Text);
             }
+            bs_prodinstr.DataSource = dt_prodinstr;
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             if (stat_user != 1)
@@ -825,17 +837,17 @@ namespace BatchProductRecord
                 removeOuterBinding();
                 outerBind();
             }
-            string s_out = dt_prodinstr.Rows[0]["内外层领料量"].ToString();
-            string s_mid = dt_prodinstr.Rows[0]["中层领料量"].ToString();
+            //string s_out = dt_prodinstr.Rows[0]["内外层领料量"].ToString();
+            //string s_mid = dt_prodinstr.Rows[0]["中层领料量"].ToString();
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
             //默认值处理
-            tb内外层比例.Text = "25";
-            tb中层比例.Text = "75";
-            dt_prodinstr.Rows[0]["内外层领料量"]=s_out;
-            dt_prodinstr.Rows[0]["中层领料量"]=s_mid;
+            //tb内外层比例.Text = "25";
+            //tb中层比例.Text = "75";
+            //dt_prodinstr.Rows[0]["内外层领料量"]=s_out;
+            //dt_prodinstr.Rows[0]["中层领料量"]=s_mid;
 
             string s = tb白班.Text;
             string[] s1 = s.Split(',');
@@ -876,6 +888,7 @@ namespace BatchProductRecord
             dr["审批时间"]=DateTime.Now;
             dr["接收时间"]=DateTime.Now;
             dr["备注"] = "批号末尾数字代表膜的厚度，分别为：100um-1,80um-2,60um-3,120um-4,200um-5,110um-6,70um-7";
+            dr["比例"] = 25;
             return dr;
 
         }
@@ -950,6 +963,8 @@ namespace BatchProductRecord
             textBox6.DataBindings.Clear();
             tb用料重量合计.DataBindings.Clear();
             textBox10.DataBindings.Clear();
+            tb操作员备注.DataBindings.Clear();
+            tb内外层比例.DataBindings.Clear();
         }
         // 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
         void removeInnerBinding()
@@ -1069,17 +1084,7 @@ namespace BatchProductRecord
             dataGridView1.Columns[6].ReadOnly = true;//产品批号
             dataGridView1.Columns[8].ReadOnly = true;//计划产量卷
             dataGridView1.Columns[12].ReadOnly = true;//标签领料量
-            //for (int i = 0; i < 13; i++)
-            //{
-            //    dataGridView1.Columns[i].Visible = false;
-            //}
 
-            //dataGridView1.Columns[0 + 13].Visible = false;
-            //dataGridView1.Columns[1 + 13].Visible = false;
-            //dataGridView1.Columns[5 + 13].ReadOnly = true;//用料重量
-            //dataGridView1.Columns[6 + 13].ReadOnly = true;//产品批号
-            //dataGridView1.Columns[8 + 13].ReadOnly = true;//计划产量卷
-            //dataGridView1.Columns[12 + 13].ReadOnly = true;//标签领料量
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
@@ -1137,12 +1142,14 @@ namespace BatchProductRecord
 
         private void cb内外层物料代码_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            dt_prodinstr.Rows[0]["内外层物料代码"] = cb内外层物料代码.Text;
+            //if (label == 1)
+            //    dt_prodinstr.Rows[0]["内外层物料代码"] = cb内外层物料代码.Text;
         }
 
         private void cb中层物料代码_SelectedIndexChanged(object sender, System.EventArgs e)
         {
-            dt_prodinstr.Rows[0]["中层物料代码"] = cb中层物料代码.Text;
+            //if(label==1)
+            //    dt_prodinstr.Rows[0]["中层物料代码"] = cb中层物料代码.Text;
         }
 
         private void tb内外层比例_TextChanged(object sender, System.EventArgs e)
@@ -1171,7 +1178,7 @@ namespace BatchProductRecord
                 //tb中层领料量.Text = (sum / 100 * (100 - a)).ToString();
                 dt_prodinstr.Rows[0]["内外层领料量"] = (sum / 100 * a).ToString();
                 dt_prodinstr.Rows[0]["中层领料量"] = (sum / 100 * (100 - a)).ToString();
-                dt_prodinstr.Rows[0]["比例"] = (a / (100 - a)).ToString();
+                dt_prodinstr.Rows[0]["比例"] = a;
 
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
@@ -1498,6 +1505,7 @@ namespace BatchProductRecord
                 dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
                 dt_temp.Rows.Add(dr);
             }
+            bs_prodinstr.DataSource = dt_prodinstr;
             bs_temp.DataSource = dt_temp;
             da_temp.Update((DataTable)bs_temp.DataSource);
 

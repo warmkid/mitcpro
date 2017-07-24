@@ -662,7 +662,7 @@ namespace mySystem
         {
             dataGridView1.Columns[0].Visible = false;//ID
             dataGridView1.Columns[1].Visible = false;//T吹膜生产日报表ID
-            dataGridView1.Columns["加料B2"].Visible = false;
+            dataGridView1.Columns["加料B1C"].Visible = false;
             dataGridView1.Columns["填报人"].Visible = false;
             dataGridView1.Columns["审核人"].Visible = false;
         }

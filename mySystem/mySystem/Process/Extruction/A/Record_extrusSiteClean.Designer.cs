@@ -56,6 +56,8 @@
             this.bt保存 = new System.Windows.Forms.Button();
             this.bt提交审核 = new System.Windows.Forms.Button();
             this.bt日志 = new System.Windows.Forms.Button();
+            this.tb操作员备注 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox6.SuspendLayout();
@@ -221,6 +223,8 @@
             // 
             // groupBox6
             // 
+            this.groupBox6.Controls.Add(this.tb操作员备注);
+            this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.ckb不合格);
             this.groupBox6.Controls.Add(this.ckb合格);
             this.groupBox6.Controls.Add(this.tb检查人);
@@ -239,7 +243,7 @@
             this.ckb不合格.AutoSize = true;
             this.ckb不合格.Enabled = false;
             this.ckb不合格.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ckb不合格.Location = new System.Drawing.Point(736, 18);
+            this.ckb不合格.Location = new System.Drawing.Point(934, 15);
             this.ckb不合格.Name = "ckb不合格";
             this.ckb不合格.Size = new System.Drawing.Size(68, 18);
             this.ckb不合格.TabIndex = 11;
@@ -251,7 +255,7 @@
             this.ckb合格.AutoSize = true;
             this.ckb合格.Enabled = false;
             this.ckb合格.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ckb合格.Location = new System.Drawing.Point(676, 17);
+            this.ckb合格.Location = new System.Drawing.Point(874, 16);
             this.ckb合格.Name = "ckb合格";
             this.ckb合格.Size = new System.Drawing.Size(54, 18);
             this.ckb合格.TabIndex = 10;
@@ -261,7 +265,7 @@
             // tb检查人
             // 
             this.tb检查人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb检查人.Location = new System.Drawing.Point(397, 13);
+            this.tb检查人.Location = new System.Drawing.Point(663, 11);
             this.tb检查人.Name = "tb检查人";
             this.tb检查人.ReadOnly = true;
             this.tb检查人.Size = new System.Drawing.Size(113, 23);
@@ -270,7 +274,7 @@
             // tb清场人
             // 
             this.tb清场人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb清场人.Location = new System.Drawing.Point(118, 13);
+            this.tb清场人.Location = new System.Drawing.Point(109, 10);
             this.tb清场人.Name = "tb清场人";
             this.tb清场人.Size = new System.Drawing.Size(113, 23);
             this.tb清场人.TabIndex = 8;
@@ -279,7 +283,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(328, 20);
+            this.label8.Location = new System.Drawing.Point(594, 18);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(63, 14);
             this.label8.TabIndex = 7;
@@ -289,17 +293,17 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(40, 20);
+            this.label6.Location = new System.Drawing.Point(31, 17);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 14);
             this.label6.TabIndex = 6;
-            this.label6.Text = "清场人：";
+            this.label6.Text = "操作员：";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(593, 17);
+            this.label7.Location = new System.Drawing.Point(791, 16);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(77, 14);
             this.label7.TabIndex = 4;
@@ -348,6 +352,25 @@
             this.bt日志.Text = "查看日志";
             this.bt日志.UseVisualStyleBackColor = true;
             this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
+            // 
+            // tb操作员备注
+            // 
+            this.tb操作员备注.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb操作员备注.Location = new System.Drawing.Point(342, 13);
+            this.tb操作员备注.Multiline = true;
+            this.tb操作员备注.Name = "tb操作员备注";
+            this.tb操作员备注.Size = new System.Drawing.Size(233, 21);
+            this.tb操作员备注.TabIndex = 13;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Location = new System.Drawing.Point(245, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(91, 14);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "操作员备注：";
             // 
             // Record_extrusSiteClean
             // 
@@ -416,5 +439,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button bt提交审核;
         private System.Windows.Forms.Button bt日志;
+        private System.Windows.Forms.TextBox tb操作员备注;
+        private System.Windows.Forms.Label label9;
     }
 }

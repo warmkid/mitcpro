@@ -81,11 +81,8 @@ namespace WindowsFormsApplication1
         private void getOtherData()
         {
             label_prodcode = 0;
-            if (stat_user != 1)
-            {
-                addprodcode(mySystem.Parameter.proInstruID);
-                addmatcode(mySystem.Parameter.proInstruID);
-            }
+            addprodcode(instrid);
+            addmatcode(instrid);
             label_prodcode = 1;
         }
 
@@ -120,6 +117,7 @@ namespace WindowsFormsApplication1
         public Record_extrusSupply(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
+            instrid = mySystem.Parameter.proInstruID;
             getPeople();
             setUserState();
             getOtherData();
@@ -140,8 +138,6 @@ namespace WindowsFormsApplication1
             getPeople();
             setUserState();
             
-            //addDataEventHandler();
-
             setControlFalse();
 
             string asql = "select * from 吹膜供料记录 where ID=" + id;
@@ -156,7 +152,6 @@ namespace WindowsFormsApplication1
             time = (DateTime)tempdt.Rows[0]["供料日期"];
             flight = (bool)tempdt.Rows[0]["班次"];
 
-            addprodcode(instrid);
             addmatcode(instrid);
 
             readOuterData(instrid, prodcode, time, flight);
@@ -176,12 +171,9 @@ namespace WindowsFormsApplication1
 
             setFormState();
             setEnableReadOnly();
-            if(stat_form==1)
-                bt审核.Enabled = true;
 
             cb产品代码.Enabled = false;
             dtp供料日期.Enabled = false;
-
         }
 
         //根据id填表
@@ -692,6 +684,11 @@ namespace WindowsFormsApplication1
             ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["班次"];
             ckb夜班.Checked = !ckb白班.Checked;
 
+            instrid = mySystem.Parameter.proInstruID;
+            prodcode = cb产品代码.Text;
+            time = DateTime.Parse(dtp供料日期.Value.ToShortDateString());
+            flight = mySystem.Parameter.userflight == "白班";
+
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
             if (dataGridView1.Rows.Count == 0)
@@ -750,7 +747,7 @@ namespace WindowsFormsApplication1
                 {
                     //发送审核不可点，其他都可点
                     setControlTrue();
-                    bt提交审核.Enabled = false;
+                    bt审核.Enabled = true;
                     
                 }
 
@@ -770,9 +767,6 @@ namespace WindowsFormsApplication1
                 {
                     //发送审核，审核不能点
                     setControlTrue();
-                    bt提交审核.Enabled = false;
-                    bt审核.Enabled = false;
-
                 }
             }
         }
@@ -787,14 +781,7 @@ namespace WindowsFormsApplication1
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            if (stat_user != 1)
-            {
-                readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, DateTime.Parse(dtp供料日期.Value.ToShortDateString()), mySystem.Parameter.userflight == "白班");
-            }
-            else//审核人
-            {
-                readOuterData(instrid, prodcode, time, flight);
-            }
+            readOuterData(instrid, prodcode, time, flight);
             
             removeOuterBinding();
             outerBind();
