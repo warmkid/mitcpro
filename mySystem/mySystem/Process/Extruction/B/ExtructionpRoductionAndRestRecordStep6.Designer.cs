@@ -33,7 +33,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.DelLineBtn = new System.Windows.Forms.Button();
-            this.CheckBtn = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
             this.SaveBtn = new System.Windows.Forms.Button();
             this.tb环境湿度 = new System.Windows.Forms.TextBox();
             this.tb环境温度 = new System.Windows.Forms.TextBox();
@@ -51,7 +51,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Title = new System.Windows.Forms.Label();
-            this.printBtn = new System.Windows.Forms.Button();
+            this.btn打印 = new System.Windows.Forms.Button();
             this.cb产品名称 = new System.Windows.Forms.ComboBox();
             this.tb依据工艺 = new System.Windows.Forms.TextBox();
             this.tb生产设备 = new System.Windows.Forms.TextBox();
@@ -60,6 +60,9 @@
             this.label13 = new System.Windows.Forms.Label();
             this.tb累计同规格膜卷长度R = new System.Windows.Forms.TextBox();
             this.tb累计同规格膜卷重量T = new System.Windows.Forms.TextBox();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn查询新建 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,7 +82,6 @@
             this.dtp生产日期.Name = "dtp生产日期";
             this.dtp生产日期.Size = new System.Drawing.Size(145, 26);
             this.dtp生产日期.TabIndex = 29;
-            this.dtp生产日期.ValueChanged += new System.EventHandler(this.dtp生产日期_ValueChanged);
             // 
             // label10
             // 
@@ -104,7 +106,7 @@
             // DelLineBtn
             // 
             this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.DelLineBtn.Location = new System.Drawing.Point(1070, 433);
+            this.DelLineBtn.Location = new System.Drawing.Point(1133, 433);
             this.DelLineBtn.Name = "DelLineBtn";
             this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
             this.DelLineBtn.TabIndex = 26;
@@ -112,21 +114,21 @@
             this.DelLineBtn.UseVisualStyleBackColor = true;
             this.DelLineBtn.Click += new System.EventHandler(this.DelLineBtn_Click);
             // 
-            // CheckBtn
+            // btn审核
             // 
-            this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.CheckBtn.Location = new System.Drawing.Point(978, 473);
-            this.CheckBtn.Name = "CheckBtn";
-            this.CheckBtn.Size = new System.Drawing.Size(80, 30);
-            this.CheckBtn.TabIndex = 25;
-            this.CheckBtn.Text = "审核";
-            this.CheckBtn.UseVisualStyleBackColor = true;
-            this.CheckBtn.Click += new System.EventHandler(this.CheckBtn_Click);
+            this.btn审核.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn审核.Location = new System.Drawing.Point(30, 504);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(80, 30);
+            this.btn审核.TabIndex = 25;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.CheckBtn_Click);
             // 
             // SaveBtn
             // 
             this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.SaveBtn.Location = new System.Drawing.Point(886, 473);
+            this.SaveBtn.Location = new System.Drawing.Point(950, 504);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
             this.SaveBtn.TabIndex = 24;
@@ -221,7 +223,7 @@
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(978, 433);
+            this.AddLineBtn.Location = new System.Drawing.Point(1041, 433);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 13;
@@ -243,7 +245,7 @@
             // 
             this.cb夜班.AutoSize = true;
             this.cb夜班.Font = new System.Drawing.Font("SimSun", 12F);
-            this.cb夜班.Location = new System.Drawing.Point(1089, 100);
+            this.cb夜班.Location = new System.Drawing.Point(1154, 66);
             this.cb夜班.Name = "cb夜班";
             this.cb夜班.Size = new System.Drawing.Size(59, 20);
             this.cb夜班.TabIndex = 8;
@@ -279,29 +281,29 @@
             this.dataGridView1.Location = new System.Drawing.Point(30, 134);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1118, 290);
+            this.dataGridView1.Size = new System.Drawing.Size(1183, 290);
             this.dataGridView1.TabIndex = 5;
             // 
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
+            this.Title.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.Title.Location = new System.Drawing.Point(501, 24);
             this.Title.Name = "Title";
-            this.Title.Size = new System.Drawing.Size(229, 19);
+            this.Title.Size = new System.Drawing.Size(240, 20);
             this.Title.TabIndex = 3;
             this.Title.Text = "吹膜工序生产和检验记录";
             // 
-            // printBtn
+            // btn打印
             // 
-            this.printBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.printBtn.Location = new System.Drawing.Point(1070, 473);
-            this.printBtn.Name = "printBtn";
-            this.printBtn.Size = new System.Drawing.Size(80, 30);
-            this.printBtn.TabIndex = 31;
-            this.printBtn.Text = "打印";
-            this.printBtn.UseVisualStyleBackColor = true;
-            this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
+            this.btn打印.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn打印.Location = new System.Drawing.Point(122, 504);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(80, 30);
+            this.btn打印.TabIndex = 31;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.printBtn_Click);
             // 
             // cb产品名称
             // 
@@ -311,7 +313,6 @@
             this.cb产品名称.Name = "cb产品名称";
             this.cb产品名称.Size = new System.Drawing.Size(189, 24);
             this.cb产品名称.TabIndex = 32;
-            this.cb产品名称.SelectedIndexChanged += new System.EventHandler(this.cb产品名称_SelectedIndexChanged);
             // 
             // tb依据工艺
             // 
@@ -353,7 +354,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label13.Location = new System.Drawing.Point(427, 439);
+            this.label13.Location = new System.Drawing.Point(383, 439);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(168, 16);
             this.label13.TabIndex = 39;
@@ -364,22 +365,58 @@
             this.tb累计同规格膜卷长度R.Font = new System.Drawing.Font("SimSun", 12F);
             this.tb累计同规格膜卷长度R.Location = new System.Drawing.Point(260, 434);
             this.tb累计同规格膜卷长度R.Name = "tb累计同规格膜卷长度R";
-            this.tb累计同规格膜卷长度R.Size = new System.Drawing.Size(120, 26);
+            this.tb累计同规格膜卷长度R.Size = new System.Drawing.Size(100, 26);
             this.tb累计同规格膜卷长度R.TabIndex = 40;
             // 
             // tb累计同规格膜卷重量T
             // 
             this.tb累计同规格膜卷重量T.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb累计同规格膜卷重量T.Location = new System.Drawing.Point(601, 437);
+            this.tb累计同规格膜卷重量T.Location = new System.Drawing.Point(557, 437);
             this.tb累计同规格膜卷重量T.Name = "tb累计同规格膜卷重量T";
-            this.tb累计同规格膜卷重量T.Size = new System.Drawing.Size(120, 26);
+            this.tb累计同规格膜卷重量T.Size = new System.Drawing.Size(100, 26);
             this.tb累计同规格膜卷重量T.TabIndex = 41;
+            // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn查看日志.Location = new System.Drawing.Point(1133, 504);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(80, 30);
+            this.btn查看日志.TabIndex = 128;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
+            // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn提交审核.Location = new System.Drawing.Point(1041, 504);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(80, 30);
+            this.btn提交审核.TabIndex = 127;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            // 
+            // btn查询新建
+            // 
+            this.btn查询新建.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn查询新建.Location = new System.Drawing.Point(1117, 93);
+            this.btn查询新建.Name = "btn查询新建";
+            this.btn查询新建.Size = new System.Drawing.Size(96, 30);
+            this.btn查询新建.TabIndex = 129;
+            this.btn查询新建.Text = "查询/新建";
+            this.btn查询新建.UseVisualStyleBackColor = true;
+            this.btn查询新建.Click += new System.EventHandler(this.btn查询新建_Click);
             // 
             // ExtructionpRoductionAndRestRecordStep6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1168, 514);
+            this.ClientSize = new System.Drawing.Size(1248, 554);
+            this.Controls.Add(this.btn查询新建);
+            this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.tb累计同规格膜卷重量T);
             this.Controls.Add(this.tb累计同规格膜卷长度R);
             this.Controls.Add(this.label13);
@@ -388,13 +425,13 @@
             this.Controls.Add(this.tb生产设备);
             this.Controls.Add(this.tb依据工艺);
             this.Controls.Add(this.cb产品名称);
-            this.Controls.Add(this.printBtn);
+            this.Controls.Add(this.btn打印);
             this.Controls.Add(this.tb审核人);
             this.Controls.Add(this.dtp生产日期);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.DelLineBtn);
-            this.Controls.Add(this.CheckBtn);
+            this.Controls.Add(this.btn审核);
             this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.tb环境湿度);
             this.Controls.Add(this.tb环境温度);
@@ -414,7 +451,7 @@
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExtructionpRoductionAndRestRecordStep6";
-            this.Text = "ExtructionpRoductionAndRestRecordStep6";
+            this.Text = "吹膜工序生产和检验记录";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -439,14 +476,14 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tb环境温度;
         private System.Windows.Forms.TextBox tb环境湿度;
-        private System.Windows.Forms.Button CheckBtn;
+        private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button SaveBtn;
         private System.Windows.Forms.Button DelLineBtn;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.DateTimePicker dtp生产日期;
         private System.Windows.Forms.TextBox tb审核人;
-        private System.Windows.Forms.Button printBtn;
+        private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.ComboBox cb产品名称;
         private System.Windows.Forms.TextBox tb依据工艺;
         private System.Windows.Forms.TextBox tb生产设备;
@@ -455,5 +492,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox tb累计同规格膜卷长度R;
         private System.Windows.Forms.TextBox tb累计同规格膜卷重量T;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn查询新建;
     }
 }
