@@ -325,8 +325,12 @@ namespace mySystem
                 dr["生产数量"]= sum_膜卷长度;//生产数量
                 dr["生产重量"] = sum_膜卷重量;//生产重量
 
-                TimeSpan delt = (DateTime)dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] - (DateTime)dt_检验记录_详细.Rows[0]["开始时间"];
-                dr["工时"] = delt.TotalHours;//工时
+                if (dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] != null && dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"].ToString() != "")
+                {
+                    TimeSpan delt = (DateTime)dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] - (DateTime)dt_检验记录_详细.Rows[0]["开始时间"];
+                    dr["工时"] = delt.TotalHours;//工时
+                }
+
 
                 //查找废品记录中对应的记录
                 float sum_废品重量 = 0;

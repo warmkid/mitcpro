@@ -20,17 +20,28 @@ namespace mySystem.Extruction.Process
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
-        
-        private CheckForm check = null;
+
+        private CheckForm checkform = null;
 
         //List<Control> SettingConsList = new List<Control> { };//各种温度的控件
         //List<String> SettingValdata = new List<String> { };//设置界面内存储的各种温度
 
-        private DataTable dt设置, dt记录;
+        private DataTable dtusers, dt设置, dt记录;
         private OleDbDataAdapter da记录;
         private BindingSource bs记录;
         private OleDbCommandBuilder cb记录;
-                
+
+        private string person_操作员;
+        private string person_审核员;
+        /// <summary>
+        /// 登录人状态，0 操作员， 1 审核员， 2管理员
+        /// </summary>
+        private int stat_user;
+        /// <summary>
+        /// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        private int stat_form;
+        
         public ExtructionPreheatParameterRecordStep3(MainForm mainform): base(mainform)
         {
             InitializeComponent();
@@ -39,20 +50,16 @@ namespace mySystem.Extruction.Process
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
 
-            //温度控件的初始化
+            getPeople();  // 获取操作员和审核员
+            setUserState();  // 根据登录人，设置stat_user
+            getOtherData();  //读取设置内容
+            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            GetSettingInfo();
-            if (dt设置.Rows.Count > 0)
-            {
-                DataShow(mySystem.Parameter.proInstruID);
-            }
-            else
-            { MessageBox.Show("预热参数设置尚未完成，请先去设置！"); }
-            
+            DataShow(mySystem.Parameter.proInstruID);
         }
         
-        public ExtructionPreheatParameterRecordStep3(MainForm mainform, Int32 ID)
-            : base(mainform)
+        public ExtructionPreheatParameterRecordStep3(MainForm mainform, Int32 ID) : base(mainform)
         {
             InitializeComponent();
 
@@ -60,113 +67,209 @@ namespace mySystem.Extruction.Process
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
 
-            //温度控件的初始化
+            getPeople();  // 获取操作员和审核员
+            setUserState();  // 根据登录人，设置stat_user
+            getOtherData();  //读取设置内容
+            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged  
+
             IDShow(ID);
-            foreach (Control c in this.Controls) { c.Enabled = false; }
         }
 
         //******************************初始化******************************//
-        //控件不可用 + DTP格式设置
-        private void Init()
-        {
-            foreach (Control c in this.Controls) { c.Enabled = false; }
-
-            this.tb备注.AutoSize = false;
-            this.tb备注.Height = 32;
-
-            //时间控件初始化
-            this.dtp预热开始时间.ShowUpDown = true;
-            this.dtp预热开始时间.Format = DateTimePickerFormat.Custom;
-            this.dtp预热开始时间.CustomFormat = "yyyy/MM/dd HH:mm";
-            this.dtp保温结束时间1.ShowUpDown = true;
-            this.dtp保温结束时间1.Format = DateTimePickerFormat.Custom;
-            this.dtp保温结束时间1.CustomFormat = "yyyy/MM/dd HH:mm";
-            this.dtp保温开始时间.ShowUpDown = true;
-            this.dtp保温开始时间.Format = DateTimePickerFormat.Custom;
-            this.dtp保温开始时间.CustomFormat = "yyyy/MM/dd HH:mm";
-            this.dtp保温结束时间2.ShowUpDown = true;
-            this.dtp保温结束时间2.Format = DateTimePickerFormat.Custom;
-            this.dtp保温结束时间2.CustomFormat = "yyyy/MM/dd HH:mm";
-            this.dtp保温结束时间3.ShowUpDown = true;
-            this.dtp保温结束时间3.Format = DateTimePickerFormat.Custom;
-            this.dtp保温结束时间3.CustomFormat = "yyyy/MM/dd HH:mm";    
-        }
-
-        //可编辑，控件初始化
-        private void EnableInit(bool able)
-        {
-            dtp日期.Enabled = able;
-            tb模芯规格参数1.Enabled = able;
-            tb模芯规格参数2.Enabled = able;
-            tb记录人.Enabled = able;
-            groupBox1.Enabled = able;
-            foreach (Control c in groupBox1.Controls)
-            {
-                if (c is TextBox)
-                {
-                    c.Enabled = false;
-                }
-            }
-            dtp保温结束时间1.Enabled = able;
-            dtp保温结束时间2.Enabled = able;
-            dtp保温结束时间3.Enabled = able;
-            dtp保温开始时间.Enabled = able;
-            dtp预热开始时间.Enabled = able;
-            tb备注.Enabled = able;
-            SaveBtn.Enabled = able;
-        }
         
-        //读取设置内容
-        private void GetSettingInfo()
+        // 获取操作员和审核员
+        private void getPeople()
+        {
+            dtusers = new DataTable("用户权限");
+            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from 用户权限 where 步骤 = '清洁分切开机确认'", connOle);
+            datemp.Fill(dtusers);
+            datemp.Dispose();
+            if (dtusers.Rows.Count > 0)
+            {
+                person_操作员 = dtusers.Rows[0]["操作员"].ToString();
+                person_审核员 = dtusers.Rows[0]["审核员"].ToString();
+            }
+        }
+
+        // 根据登录人，设置stat_user
+        private void setUserState()
+        {
+            if (mySystem.Parameter.userName == person_操作员)
+                stat_user = 0;
+            else if (mySystem.Parameter.userName == person_审核员)
+                stat_user = 1;
+            else
+                stat_user = 2;
+        }
+
+        // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        private void setFormState()
+        {
+            if (dt记录.Rows[0]["审核人"].ToString() == "")
+                stat_form = 0;
+            else if (dt记录.Rows[0]["审核人"].ToString() == "__待审核")
+                stat_form = 1;
+            else if ((bool)dt记录.Rows[0]["审核是否通过"])
+                stat_form = 2;
+            else
+                stat_form = 3;
+        }
+
+        //读取设置内容  //GetSettingInfo()
+        private void getOtherData()
         {
             //连数据库
             dt设置 = new DataTable("设置");
             OleDbDataAdapter datemp = new OleDbDataAdapter("select * from " + tableSet, connOle);
             datemp.Fill(dt设置);
             datemp.Dispose();
+        }
 
-            //List<Control> SettingConsList = new List<Control>(new Control[] { tb换网预热参数设定1, tb流道预热参数设定1, tb模颈预热参数设定1, tb机头1预热参数设定1, tb机头2预热参数设定1, tb口模预热参数设定1, 
-            //    tb一区预热参数设定1, tb二区预热参数设定1, tb三区预热参数设定1, tb四区预热参数设定1, 
-            //    tb换网预热参数设定2, tb流道预热参数设定2, tb模颈预热参数设定2, tb机头1预热参数设定2, tb机头2预热参数设定2, tb口模预热参数设定2, 
-            //    tb一区预热参数设定2, tb二区预热参数设定2, tb三区预热参数设定2, tb四区预热参数设定2, 
-            //    tb加热保温时间1, tb加热保温时间2, tb加热保温时间3});
+        //根据状态设置可读写性
+        private void setEnableReadOnly()
+        {
+            if (stat_user == 2)//管理员
+            {
+                //控件都能点
+                setControlTrue();
+            }
+            else if (stat_user == 1)//审核人
+            {
+                if (stat_form == 0 || stat_form == 3 || stat_form == 2)  //0未保存||2审核通过||3审核未通过
+                {
+                    //控件都不能点，只有打印,日志可点
+                    setControlFalse();
+                }
+                else //1待审核
+                {
+                    //发送审核不可点，其他都可点
+                    setControlTrue();
+                    btn审核.Enabled = true;
+                }
+            }
+            else//操作员
+            {
+                if (stat_form == 1 || stat_form == 2 || stat_form == 3) //1待审核||2审核通过||3审核未通过
+                {
+                    //控件都不能点
+                    setControlFalse();
+                }
+                else //0未保存
+                {
+                    //发送审核，审核，打印不能点
+                    setControlTrue();
+                    btn打印.Enabled = false;
+                }
+            }
+            //datagridview格式，包含序号不可编辑
+        }
 
-            //List<String> queryCols = new List<String>(new String[] { "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", "口模预热参数设定1", 
-            //    "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1",
-            //    "换网预热参数设定2", "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", 
-            //    "一区预热参数设定2", "二区预热参数设定2", "三区预热参数设定2", "四区预热参数设定2", 
-            //    "加热保温时间1", "加热保温时间2", "加热保温时间3"});
-            //List<List<Object>> queValsList = Utility.selectAccess(connOle, tableSet, queryCols, null, null, null, null, null, null, null);
+        /// <summary>
+        /// 设置所有控件可用；
+        /// btn审核、btn提交审核两个按钮一直是false；
+        /// 部分控件防作弊，不可改；
+        /// 查询条件始终不可编辑
+        /// </summary>
+        private void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = false;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            // 保证这两个按钮一直是false
+            btn审核.Enabled = false;
+            btn提交审核.Enabled = false;
+            TextboxReadOnly();
+        }
 
-            //List<String> SettingValdata = new List<String> { };//设置界面内存储的各种温度
-            //if (queValsList.Count != 0)
-            //{
-            //    for (int i = 0; i < queValsList[0].Count; i++)
-            //    {
-            //        SettingValdata.Add(queValsList[0][i].ToString());
-            //        ((TextBox)SettingConsList[i]).ReadOnly = true;
-            //    }
-            //    Utility.fillControl(SettingConsList, SettingValdata);
-            //}
+        /// <summary>
+        /// 设置所有控件不可用；
+        /// 查看日志、打印始终可用
+        /// </summary>
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = true;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            //查看日志、打印始终可用
+            btn查看日志.Enabled = true;
+            btn打印.Enabled = true;
+        }
+
+        //textbox不可用，仅可读取
+        private void TextboxReadOnly()
+        {
+            tb换网预热参数设定1.ReadOnly = true;
+            tb流道预热参数设定1.ReadOnly = true;
+            tb模颈预热参数设定1.ReadOnly = true;
+            tb机头1预热参数设定1.ReadOnly = true;
+            tb机头2预热参数设定1.ReadOnly = true;
+            tb口模预热参数设定1.ReadOnly = true;
+            tb一区预热参数设定1.ReadOnly = true;
+            tb二区预热参数设定1.ReadOnly = true;
+            tb三区预热参数设定1.ReadOnly = true;
+            tb四区预热参数设定1.ReadOnly = true;
+            tb换网预热参数设定2.ReadOnly = true;
+            tb流道预热参数设定2.ReadOnly = true;
+            tb模颈预热参数设定2.ReadOnly = true;
+            tb机头1预热参数设定2.ReadOnly = true;
+            tb机头2预热参数设定2.ReadOnly = true;
+            tb口模预热参数设定2.ReadOnly = true;
+            tb一区预热参数设定2.ReadOnly = true;
+            tb二区预热参数设定2.ReadOnly = true;
+            tb三区预热参数设定2.ReadOnly = true;
+            tb四区预热参数设定2.ReadOnly = true;
+            tb加热保温时间1.ReadOnly = true;
+            tb加热保温时间2.ReadOnly = true;
+            tb加热保温时间3.ReadOnly = true;
         }
         
+        // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+        private void addOtherEvnetHandler() { }
+
+        // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+        private void addDataEventHandler() { }
+
+        // 设置自动计算类事件
+        private void addComputerEventHandler() { }
+
         //******************************显示数据******************************//
         
         //显示根据信息查找
         private void DataShow(int InstruID) 
         {
-            Init();
-
             //******************************外表 根据条件绑定******************************//  
             readOuterData(InstruID);
             outerBind();
             //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
             //*******************************表格内部******************************// 
-            Boolean isnew = true;
             if (dt记录.Rows.Count <= 0)
             {
-                isnew = true;
                 //********* 外表新建、保存、重新绑定 *********//                
                 //初始化外表这一行
                 DataRow dr1 = dt记录.NewRow();
@@ -179,37 +282,10 @@ namespace mySystem.Extruction.Process
                 readOuterData(InstruID);
                 outerBind();
             }
-            else
-            {
-                isnew = false;
-            }
 
-
-            //********* 控件可用性 *********//   
-
-            if (Convert.ToBoolean(dt记录.Rows[0]["审核是否通过"].ToString()) == true)
-            {
-                //审核通过表
-                printBtn.Enabled = true;
-            }
-            else
-            {
-                if (isnew == true)
-                {
-                    //新建表
-                    EnableInit(true);
-                    SaveBtn.Enabled = true;
-                }
-                else
-                {
-                    //非新建表
-                    EnableInit(true);
-                    SaveBtn.Enabled = true;
-                    CheckBtn.Enabled = true;
-                    tb审核人.Enabled = true;
-                }
-            }
-
+            addComputerEventHandler();  // 设置自动计算类事件
+            setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+            setEnableReadOnly();  //根据状态设置可读写性  
         }
 
         //根据主键显示
@@ -219,11 +295,8 @@ namespace mySystem.Extruction.Process
             comm1.Connection = Parameter.connOle;
             comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
             OleDbDataReader reader1 = comm1.ExecuteReader();
-            if (reader1.Read())
-            {
-                readOuterData(Convert.ToInt32(reader1["生产指令ID"].ToString()));
-                outerBind();
-            }
+
+            DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()));
         }
 
         //****************************** 嵌套 ******************************//
@@ -251,6 +324,8 @@ namespace mySystem.Extruction.Process
             tb模芯规格参数2.DataBindings.Add("Text", bs记录.DataSource, "模芯规格参数2");
             tb记录人.DataBindings.Clear();
             tb记录人.DataBindings.Add("Text", bs记录.DataSource, "记录人");
+            tb操作员备注.DataBindings.Clear();
+            tb操作员备注.DataBindings.Add("Text", bs记录.DataSource, "操作员备注");
             tb审核人.DataBindings.Clear();
             tb审核人.DataBindings.Add("Text", bs记录.DataSource, "审核人");
             dtp预热开始时间.DataBindings.Clear();
@@ -319,20 +394,19 @@ namespace mySystem.Extruction.Process
         {
             dr["生产指令编号"] = mySystem.Parameter.proInstruction;
             dr["生产指令id"] = mySystem.Parameter.proInstruID;
-            dr["日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+            dr["日期"] = Convert.ToDateTime(dtp日期.Value.ToString("yyyy/MM/dd"));
             dr["记录人"] = mySystem.Parameter.userName;
             dr["审核人"] = "";
-            //dr["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
 
             //dr["模芯规格参数1"] = 0;
             //dr["模芯规格参数2"] = 0;
 
-            //dr["预热开始时间"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
-            //dr["保温结束时间1"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
-            //dr["保温开始时间"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
-            //dr["保温结束时间2"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
-            //dr["保温结束时间3"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd HH:mm"));
+            dr["预热开始时间"] = Convert.ToDateTime(dtp预热开始时间.Value.ToString("yyyy/MM/dd HH:mm"));
+            dr["保温结束时间1"] = Convert.ToDateTime(dtp保温结束时间1.Value.ToString("yyyy/MM/dd HH:mm"));
+            dr["保温开始时间"] = Convert.ToDateTime(dtp保温开始时间.Value.ToString("yyyy/MM/dd HH:mm"));
+            dr["保温结束时间2"] = Convert.ToDateTime(dtp保温结束时间2.Value.ToString("yyyy/MM/dd HH:mm"));
+            dr["保温结束时间3"] = Convert.ToDateTime(dtp保温结束时间3.Value.ToString("yyyy/MM/dd HH:mm"));
 
             dr["换网预热参数设定1"] = Convert.ToInt32(dt设置.Rows[0]["换网预热参数设定1"].ToString());
             dr["流道预热参数设定1"] = Convert.ToInt32(dt设置.Rows[0]["流道预热参数设定1"].ToString());
@@ -370,53 +444,126 @@ namespace mySystem.Extruction.Process
         //保存按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
+            bool isSaved = Save();
+            //控件可见性
+            if (stat_user == 0 && isSaved == true)
+                btn提交审核.Enabled = true;
+        }
+
+        //保存功能
+        private bool Save()
+        {
             if (mySystem.Parameter.NametoID(tb记录人.Text.ToString()) == 0)
             {
                 /*操作人不合格*/
-                MessageBox.Show("请重新输入『记录人』信息", "ERROR");
+                MessageBox.Show("请重新输入『操作员』信息", "ERROR");
+                return false;
             }
             else if (TextBox_check() == false)
-            { /*模芯规格填入的不是数字*/ }
+            {
+                /*模芯规格填入的不是数字*/
+                return false;
+            }
             else
             {
-                if (isSqlOk)
-                { }
-                else
-                {
-                    //外表保存
-                    bs记录.EndEdit();
-                    da记录.Update((DataTable)bs记录.DataSource);
-                    readOuterData(mySystem.Parameter.proInstruID);
-                    outerBind();
-                }
-                CheckBtn.Enabled = true;
-                tb审核人.Enabled = true;
-            }
-        }
-
-        //审核功能
-        public override void CheckResult()
-        {
-            base.CheckResult();
-            if (check.ischeckOk == true)
-            {
-                dt记录.Rows[0]["审核人"] = Parameter.IDtoName(check.userID);
-                dt记录.Rows[0]["审核意见"] = check.opinion;
-                dt记录.Rows[0]["审核是否通过"] = check.ischeckOk;
-
+                //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
+                readOuterData(mySystem.Parameter.proInstruID);
+                outerBind();
 
-                Init();
-                printBtn.Enabled = true;
+                return true;
             }
         }
 
+        //提交审核按钮
+        private void btn提交审核_Click(object sender, EventArgs e)
+        {
+            //保存
+            bool isSaved = Save();
+            if (isSaved == false)
+                return;
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜预热参数记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "吹膜预热参数记录表";
+                dr["对应ID"] = Convert.ToInt32(dt记录.Rows[0]["ID"]);
+                dt_temp.Rows.Add(dr);
+            }
+            da_temp.Update(dt_temp);
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+            dt记录.Rows[0]["审核人"] = "__待审核";
+
+            Save();
+            stat_form = 1;
+            setEnableReadOnly();
+        }
+
+        //日志按钮
+        private void btn查看日志_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(dt记录.Rows[0]["日志"].ToString());
+        }
+        
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            check = new CheckForm(this);
-            check.ShowDialog();
+            checkform = new CheckForm(this);
+            checkform.ShowDialog();
+        }
+        
+        //审核功能
+        public override void CheckResult()
+        {
+            //保存
+            bool isSaved = Save();
+            if (isSaved == false)
+                return;
+
+            base.CheckResult();
+
+            dt记录.Rows[0]["审核人"] = Parameter.IDtoName(checkform.userID);
+            dt记录.Rows[0]["审核意见"] = checkform.opinion;
+            dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜预热参数记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            //写日志
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion;
+            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+            Save();
+
+            //修改状态，设置可控性
+            if (checkform.ischeckOk)
+            { stat_form = 2; }//审核通过
+            else
+            { stat_form = 3; }//审核未通过            
+            setEnableReadOnly();
         }
 
         //打印按钮
@@ -447,24 +594,6 @@ namespace mySystem.Extruction.Process
             }
             return TypeCheck;
         }
-        
-
-        /*   //TabelPaint
-        //private void TabelPaint()
-        //{
-        //    Graphics g = this.CreateGraphics();
-        //    this.Show();
-        //    //出来一个画笔,这只笔画出来的颜色是红的  
-        //    Pen p = new Pen(Brushes.Red);
-
-        //    //创建两个点  
-        //    Point p1 = new Point(0, 0);
-        //    Point p2 = new Point(1000, 1000);
-
-        //    //将两个点连起来  
-        //    g.DrawLine(p, p1, p2);
-        //}
-        */
-                
+                        
     }
 }

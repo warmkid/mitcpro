@@ -22,17 +22,24 @@ namespace mySystem.Extruction.Process
         private OleDbConnection connOle = null;
         private bool isSqlOk;
 
-        private CheckForm check = null;
+        private CheckForm checkform = null;
 
-        private DataTable dt记录, dt记录详情, dt代码批号; 
+        private DataTable dtusers, dt记录, dt记录详情, dt代码批号; 
         private OleDbDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
 
-        private Int32 KeyID;
-        
-        //绑定dtp生产日期，会无限死循环？？？
-        //Init()后，后面始终无法恢复 ---> groupbox的问题
+        private string person_操作员;
+        private string person_审核员;
+        /// <summary>
+        /// 登录人状态，0 操作员， 1 审核员， 2管理员
+        /// </summary>
+        private int stat_user;
+        /// <summary>
+        /// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        private int stat_form;
+
         public ProductInnerPackagingRecord(MainForm mainform): base(mainform)
         {
             InitializeComponent();
@@ -40,12 +47,21 @@ namespace mySystem.Extruction.Process
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            
+            getPeople();  // 获取操作员和审核员
+            setUserState();  // 根据登录人，设置stat_user
+            getOtherData();  //读取设置内容
+            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            dataGridView1.DataError += dataGridView1_DataError;
-            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
-
-            Init(); 
-            GetProductInfo();
+            setControlFalse();
+            //查询条件可编辑
+            cb产品代码.Enabled = true;
+            dtp生产日期.Enabled = true;
+            btn查询新建.Enabled = true;
+            //打印、查看日志按钮不可用
+            btn打印.Enabled = false;
+            btn查看日志.Enabled = false;
         }
 
         public ProductInnerPackagingRecord(MainForm mainform, Int32 ID) : base(mainform)
@@ -56,63 +72,57 @@ namespace mySystem.Extruction.Process
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
 
-            Init();
+            getPeople();  // 获取操作员和审核员
+            setUserState();  // 根据登录人，设置stat_user
+            getOtherData();  //读取设置内容
+            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+                        
             IDShow(ID);
-            foreach (Control c in this.Controls) { c.Enabled = false; }
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
         }
-
+        
         //******************************初始化******************************//
-        //控件不可用
-        private void Init()
+
+        // 获取操作员和审核员
+        private void getPeople()
         {
-            foreach (Control c in this.Controls) { c.Enabled = false; } //后面始终无法恢复
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
-            cb产品代码.Enabled = true;
-            dtp生产日期.Enabled = true;
-            tb产品批号.ReadOnly = true;
+            dtusers = new DataTable("用户权限");
+            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from 用户权限 where 步骤 = '清洁分切开机确认'", connOle);
+            datemp.Fill(dtusers);
+            datemp.Dispose();
+            if (dtusers.Rows.Count > 0)
+            {
+                person_操作员 = dtusers.Rows[0]["操作员"].ToString();
+                person_审核员 = dtusers.Rows[0]["审核员"].ToString();
+            }
         }
 
-        //可编辑，控件初始化
-        private void EnableInit(bool able)
+        // 根据登录人，设置stat_user
+        private void setUserState()
         {
-            this.groupBox2.Enabled = true;
-            //this.dataGridView1.Enabled = able;
-            this.dataGridView1.ReadOnly = !able;
-
-            this.groupBox1.Enabled = able;
-            //this.tb包材名称.Enabled = able;
-            //this.tb包材批号.Enabled = able;
-            //this.tb包材接上班数量.Enabled = able;
-            //this.tb包材领取数量.Enabled = able;
-            //this.tb包材剩余数量.Enabled = able;
-            //this.tb包材使用数量.Enabled = able;
-            //this.tb包材退库数量.Enabled = able;
-            //this.tb指示剂批号.Enabled = able;
-            //this.tb指示剂接上班数量.Enabled = able;
-            //this.tb指示剂领取数量.Enabled = able;
-            //this.tb指示剂剩余数量.Enabled = able;
-            //this.tb指示剂使用数量.Enabled = able;
-            //this.tb指示剂退库数量.Enabled = able;
-
-            this.groupBox3.Enabled = able;
-            //this.tb标签发放数量.Enabled = able;
-            //this.tb标签使用数量.Enabled = able;
-            //this.tb标签销毁数量.Enabled = able;
-            //this.tb包装规格.Enabled = able;
-            //this.tb总计包数.Enabled = able;
-            //this.tb每片只数.Enabled = able;
-            //this.cb标签语言是否中文.Enabled = able;
-            //this.cb标签语言是否英文.Enabled = able;
-
-            this.tb操作人.Enabled = able;
-            this.dtp操作日期.Enabled = able;
+            if (mySystem.Parameter.userName == person_操作员)
+                stat_user = 0;
+            else if (mySystem.Parameter.userName == person_审核员)
+                stat_user = 1;
+            else
+                stat_user = 2;
         }
 
-        //产品名称、产品批号列表获取+产品工艺、设备、班次填写
-        private void GetProductInfo()
+        // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        private void setFormState()
+        {
+            if (dt记录.Rows[0]["审核人"].ToString() == "")
+                stat_form = 0;
+            else if (dt记录.Rows[0]["审核人"].ToString() == "__待审核")
+                stat_form = 1;
+            else if ((bool)dt记录.Rows[0]["审核是否通过"])
+                stat_form = 2;
+            else
+                stat_form = 3;
+        }
+
+        //读取设置内容  //GetProductInfo //产品代码、产品批号初始化
+        private void getOtherData()
         {
             dt代码批号 = new DataTable("代码批号");
 
@@ -133,7 +143,7 @@ namespace mySystem.Extruction.Process
                     OleDbDataAdapter datemp = new OleDbDataAdapter(comm2);
                     datemp.Fill(dt代码批号);
                     if (dt代码批号.Rows.Count == 0)
-                    { 
+                    {
                         /* 尚未生成该生产指令下的信息 */
                         MessageBox.Show("该生产指令编码下的『生产指令产品列表』尚未生成！");
                     }
@@ -170,23 +180,134 @@ namespace mySystem.Extruction.Process
             tb产品批号.Text = "";
         }
 
+        //根据状态设置可读写性
+        private void setEnableReadOnly()
+        {
+            if (stat_user == 2)//管理员
+            {
+                //控件都能点
+                setControlTrue();
+            }
+            else if (stat_user == 1)//审核人
+            {
+                if (stat_form == 0 || stat_form == 3 || stat_form == 2)  //0未保存||2审核通过||3审核未通过
+                {
+                    //控件都不能点，只有打印,日志可点
+                    setControlFalse();
+                }
+                else //1待审核
+                {
+                    //发送审核不可点，其他都可点
+                    setControlTrue();
+                    btn审核.Enabled = true;
+                }
+            }
+            else//操作员
+            {
+                if (stat_form == 1 || stat_form == 2 || stat_form == 3) //1待审核||2审核通过||3审核未通过
+                {
+                    //控件都不能点
+                    setControlFalse();
+                }
+                else //0未保存
+                {
+                    //发送审核，审核，打印不能点
+                    setControlTrue();
+                    btn打印.Enabled = false;
+                }
+            }
+            //datagridview格式，包含序号不可编辑
+            setDataGridViewFormat();
+        }
+
+        /// <summary>
+        /// 设置所有控件可用；
+        /// btn审核、btn提交审核两个按钮一直是false；
+        /// 部分控件防作弊，不可改；
+        /// 查询条件始终不可编辑
+        /// </summary>
+        void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = false;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            // 保证这两个按钮一直是false
+            btn审核.Enabled = false;
+            btn提交审核.Enabled = false;
+            //部分空间防作弊，不可改
+            tb产品批号.ReadOnly = true;
+            tb指示剂.ReadOnly = true;
+            //查询条件始终不可编辑
+            cb产品代码.Enabled = false;
+            dtp生产日期.Enabled = false;
+            btn查询新建.Enabled = false;
+        }
+
+        /// <summary>
+        /// 设置所有控件不可用；
+        /// 查看日志、打印始终可用
+        /// </summary>
+        void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = true;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            //查看日志、打印始终可用
+            btn查看日志.Enabled = true;
+            btn打印.Enabled = true;
+        }
+
+        // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+        private void addOtherEvnetHandler()
+        {
+            dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+        }
+
+        // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+        private void addDataEventHandler() { }
+
+        // 设置自动计算类事件
+        private void addComputerEventHandler() { }
+        
         //******************************显示数据******************************//
 
         //显示根据信息查找
         private void DataShow(Int32 InstruID, String productCode, DateTime searchTime)
         {
-            Init();
-
             //******************************外表 根据条件绑定******************************//  
             readOuterData(InstruID, productCode, searchTime);
             outerBind();
             //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
             //*******************************表格内部******************************// 
-            Boolean isnew = true;
             if (dt记录.Rows.Count <= 0)
             {
-                isnew = true;
                 //********* 外表新建、保存、重新绑定 *********//                
                 //初始化外表这一行
                 DataRow dr1 = dt记录.NewRow();
@@ -198,73 +319,28 @@ namespace mySystem.Extruction.Process
                 //外表重新绑定
                 readOuterData(InstruID, productCode, searchTime);
                 outerBind();
-                
+
                 //********* 内表新建、保存、重新绑定 *********//
 
-                //获取外表主键
-                OleDbCommand comm = new OleDbCommand();
-                comm.Connection = mySystem.Parameter.connOle;
-                comm.CommandText = "select @@identity";
-                Int32 idd1 = (Int32)comm.ExecuteScalar();
-                KeyID = idd1;
                 //内表绑定
-                readInnerData(KeyID);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
                 DataRow dr2 = dt记录详情.NewRow();
-                dr2 = writeInnerDefault(KeyID, dr2);
+                dr2 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr2);
                 dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
                 setDataGridViewRowNums();
-
                 //立马保存内表
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
-                //内表重新绑定      
-                dataGridView1.Columns.Clear();
-                readInnerData(KeyID);
-                setDataGridViewColumns();
-                innerBind();
             }
-            else
-            {
-                isnew = false;
-                KeyID = Convert.ToInt32(dt记录.Rows[0]["ID"].ToString());
-                //内表绑定
-                dataGridView1.Columns.Clear();
-                readInnerData(KeyID);
-                setDataGridViewColumns();
-                innerBind();
-            }
+            //内表绑定
+            dataGridView1.Columns.Clear();
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            setDataGridViewColumns();
+            innerBind();
 
-            //********* 控件可用性 *********//     
-         
-            if (Convert.ToBoolean(dt记录.Rows[0]["审核是否通过"].ToString()) == true)
-            {
-                //审核通过表
-                printBtn.Enabled = true;
-            }
-            else
-            {
-                if (isnew == true)
-                {
-                    //新建表
-                    EnableInit(true);
-                    setDataGridViewFormat();
-                    SaveBtn.Enabled = true;
-                    AddLineBtn.Enabled = true;
-                    DelLineBtn.Enabled = true;
-                }
-                else
-                {
-                    //非新建表
-                    EnableInit(true);
-                    setDataGridViewFormat();
-                    SaveBtn.Enabled = true;
-                    CheckBtn.Enabled = true;
-                    tb审核人.Enabled = true;
-                    dtp审核日期.Enabled = true;
-                    AddLineBtn.Enabled = true;
-                    DelLineBtn.Enabled = true;
-                }
-            }
+            addComputerEventHandler();  // 设置自动计算类事件
+            setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+            setEnableReadOnly();  //根据状态设置可读写性  
         }
 
         //根据主键显示
@@ -274,11 +350,7 @@ namespace mySystem.Extruction.Process
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
 
-            readOuterData(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
-            outerBind();
-            readInnerData(ID);
-            setDataGridViewColumns();
-            innerBind();  
+            DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
         }
 
         //****************************** 嵌套 ******************************//
@@ -303,8 +375,8 @@ namespace mySystem.Extruction.Process
             cb产品代码.DataBindings.Add("Text", bs记录.DataSource, "产品代码");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
-            //dtp生产日期.DataBindings.Clear();
-            //dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
+            dtp生产日期.DataBindings.Clear();
+            dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
             //左中（包材、指示剂）
             tb包材名称.DataBindings.Clear();
             tb包材名称.DataBindings.Add("Text", bs记录.DataSource, "包材名称");
@@ -354,6 +426,8 @@ namespace mySystem.Extruction.Process
             tb操作人.DataBindings.Add("Text", bs记录.DataSource, "操作人");
             dtp操作日期.DataBindings.Clear();
             dtp操作日期.DataBindings.Add("Text", bs记录.DataSource, "操作日期");
+            tb操作员备注.DataBindings.Clear();
+            tb操作员备注.DataBindings.Add("Text", bs记录.DataSource, "操作员备注");
             tb审核人.DataBindings.Clear();
             tb审核人.DataBindings.Add("Text", bs记录.DataSource, "审核人");
             dtp审核日期.DataBindings.Clear();
@@ -370,9 +444,9 @@ namespace mySystem.Extruction.Process
             dr["标签语言是否中文"] = true;
             dr["标签语言是否英文"] = true;
             dr["操作人"] = mySystem.Parameter.userName;
-            dr["操作日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+            dr["操作日期"] = Convert.ToDateTime(dtp操作日期.Value.ToString("yyyy/MM/dd"));
             dr["审核人"] = "";
-            dr["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+            dr["审核日期"] = Convert.ToDateTime(dtp审核日期.Value.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
             return dr;
         }
@@ -511,7 +585,6 @@ namespace mySystem.Extruction.Process
                         break;
                 }
             }
-            setDataGridViewFormat();
         }
 
         //设置datagridview基本属性
@@ -530,16 +603,23 @@ namespace mySystem.Extruction.Process
 
         //******************************按钮功能******************************//
 
-        //添加行按钮
+        //用于显示/新建数据
+        private void btn查询新建_Click(object sender, EventArgs e)
+        {
+            if (cb产品代码.SelectedIndex >= 0)
+            { DataShow(mySystem.Parameter.proInstruID, cb产品代码.Text.ToString(), dtp生产日期.Value); }
+        }
+
+        //添加按钮
         private void AddLineBtn_Click(object sender, EventArgs e)
         {
             DataRow dr = dt记录详情.NewRow();
-            dr = writeInnerDefault(KeyID, dr);
+            dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             setDataGridViewRowNums();
         }
 
-        //删除行按钮 
+        //删除按钮
         private void DelLineBtn_Click(object sender, EventArgs e)
         {
             if (dt记录详情.Rows.Count >= 2)
@@ -551,7 +631,7 @@ namespace mySystem.Extruction.Process
                 // 保存
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-                innerBind(); 
+                innerBind();
 
                 setDataGridViewRowNums();
             }
@@ -560,61 +640,136 @@ namespace mySystem.Extruction.Process
         //保存按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
+            bool isSaved = Save();
+            //控件可见性
+            if (stat_user == 0 && isSaved == true)
+                btn提交审核.Enabled = true;
+        }
+
+        //保存功能
+        private bool Save()
+        {
             if (Name_check() == false)
-            { /*包装人不合格*/}
-            else if (mySystem.Parameter.NametoID(tb操作人.Text.ToString()) == 0)
             { 
+                /*包装人不合格*/
+                return false;
+            }
+            else if (mySystem.Parameter.NametoID(tb操作人.Text.ToString()) == 0)
+            {
                 /*操作人不合格*/
-                MessageBox.Show("请重新输入『操作人』信息", "ERROR");
+                MessageBox.Show("请重新输入『操作员』信息", "ERROR");
+                return false;
             }
             else if (TextBox_check() == false)
-            { /*各种数量填写不合格*/ }
+            { 
+                /*各种数量填写不合格*/
+                return false;
+            }
             else
             {
-                if (isSqlOk)
-                { }
-                else
-                {
-                    // 内表保存
-                    da记录详情.Update((DataTable)bs记录详情.DataSource);
-                    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-                    innerBind();
+                // 内表保存
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind();
 
-                    //外表保存
-                    bs记录.EndEdit();
-                    da记录.Update((DataTable)bs记录.DataSource);
-                    readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, dtp生产日期.Value);
-                    outerBind();
-                }
-                CheckBtn.Enabled = true;
-                tb审核人.Enabled = true;
-                dtp审核日期.Enabled = true;
-            }    
+                //外表保存
+                bs记录.EndEdit();
+                da记录.Update((DataTable)bs记录.DataSource);
+                readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, dtp生产日期.Value);
+                outerBind();
+
+                return true;
+            }
+        }
+
+        //提交审核按钮
+        private void btn提交审核_Click(object sender, EventArgs e)
+        {
+            //保存
+            bool isSaved = Save();
+            if (isSaved == false)
+                return;
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜产品内包装记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "吹膜产品内包装记录表";
+                dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
+                dt_temp.Rows.Add(dr);
+            }
+            da_temp.Update(dt_temp);
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+            dt记录.Rows[0]["审核人"] = "__待审核";
+
+            Save();
+            stat_form = 1;
+            setEnableReadOnly();
+        }
+
+        //查看日志按钮
+        private void btn查看日志_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(dt记录.Rows[0]["日志"].ToString());
         }
 
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            check = new CheckForm(this);
-            check.Show();
+            checkform = new CheckForm(this);
+            checkform.Show();
         }
 
         //审核功能
         public override void CheckResult()
         {
+            //保存
+            bool isSaved = Save();
+            if (isSaved == false)
+                return;
+
             base.CheckResult();
-            if (check.ischeckOk == true)
-            {
-                dt记录.Rows[0]["审核人"] = Parameter.IDtoName(check.userID);
-                dt记录.Rows[0]["审核意见"] = check.opinion;
-                dt记录.Rows[0]["审核是否通过"] = check.ischeckOk;
 
-                bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
+            dt记录.Rows[0]["审核人"] = Parameter.IDtoName(checkform.userID);
+            dt记录.Rows[0]["审核意见"] = checkform.opinion;
+            dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
 
-                Init();
-                printBtn.Enabled = true;
-            }
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜产品内包装记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            //写日志
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion;
+            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+            Save();
+
+            //修改状态，设置可控性
+            if (checkform.ischeckOk)
+            { stat_form = 2; }//审核通过
+            else
+            { stat_form = 3; }//审核未通过            
+            setEnableReadOnly();
         }
         
         //打印按钮
@@ -783,22 +938,6 @@ namespace mySystem.Extruction.Process
             return TypeCheck;
         }
         
-        //******************************选择条件******************************//  
-        
-        //产品代码改变
-        private void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cb产品代码.SelectedIndex >= 0)
-            { DataShow(mySystem.Parameter.proInstruID, cb产品代码.Text.ToString(), dtp生产日期.Value); }            
-        }
-
-        //生产日期改变
-        private void dtp生产日期_ValueChanged(object sender, EventArgs e)
-        {
-            if (cb产品代码.SelectedIndex >= 0)
-            { DataShow(mySystem.Parameter.proInstruID, cb产品代码.Text.ToString(), dtp生产日期.Value); }            
-        }
-
         //******************************datagridview******************************//  
 
         // 处理DataGridView中数据类型输错的函数
@@ -821,7 +960,7 @@ namespace mySystem.Extruction.Process
                 {
                     if (mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) == 0)
                     {
-                        dt记录详情.Rows[e.RowIndex]["包装人"] = "";
+                        dt记录详情.Rows[e.RowIndex]["包装人"] = mySystem.Parameter.userName;
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『包装人』信息", "ERROR");
                     }
                 }
@@ -829,6 +968,13 @@ namespace mySystem.Extruction.Process
                 { }
             }
         }
-        
+
+        //数据绑定结束，设置表格格式
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            setDataGridViewFormat();
+        }
+
+
     }
 }

@@ -31,8 +31,15 @@ namespace mySystem.Process.CleanCut
 
         private string person_操作员;
         private string person_审核员;
-        private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
-        private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+
+        /// <summary>
+        /// 登录人状态，0 操作员， 1 审核员， 2管理员
+        /// </summary>
+        private int stat_user;//
+        /// <summary>
+        /// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        private int stat_form;//
 
         //数据库： 班次改为长文本 （不改不影响）
         //待审核的ID应为自增数字，报错：由于其 Required 属性设置为真(True),字段 '待审核.ID' 不能包含 Null 值.
@@ -49,6 +56,28 @@ namespace mySystem.Process.CleanCut
             isSqlOk = Parameter.isSqlOk;
             cb白班.Checked = Parameter.userflight == "白班" ? true : false; //生产班次的初始化？？？？？
             cb夜班.Checked = !cb白班.Checked;
+            
+            getPeople();  // 获取操作员和审核员
+            setUserState();  // 根据登录人，设置stat_user
+            getOtherData();  //读取设置内容
+            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+
+            setControlFalse();
+            dtp生产日期.Enabled = true;
+            btn查询新建.Enabled = true;
+            //打印、查看日志按钮不可用
+            btn打印.Enabled = false;
+            btn查看日志.Enabled = false;
+        }
+
+        public CleanCut_CheckBeforePower(mySystem.MainForm mainform, Int32 ID) : base(mainform)
+        {
+            InitializeComponent();
+
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
 
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
@@ -56,15 +85,8 @@ namespace mySystem.Process.CleanCut
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            foreach (Control c in this.Controls)
-                c.Enabled = false;
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
-            dtp生产日期.Enabled = true;
-            bt查询新建.Enabled = true;
-            cb白班.Enabled = true;
-            cb夜班.Enabled = true;
-        }
+            IDShow(ID);
+        }           
 
         //******************************初始化******************************//
         
@@ -122,29 +144,20 @@ namespace mySystem.Process.CleanCut
             if (stat_user == 2)//管理员
             {
                 //控件都能点
-                foreach (Control c in this.Controls)
-                    c.Enabled = true;
-                dataGridView1.ReadOnly = false;
+                setControlTrue();
             }
             else if (stat_user == 1)//审核人
             {
                 if (stat_form == 0 || stat_form == 3 || stat_form == 2)  //0未保存||2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = false;
-                    dataGridView1.Enabled = true;
-                    dataGridView1.ReadOnly = true;
-                    bt日志.Enabled = true;
-                    bt打印.Enabled = true;
+                    setControlFalse();
                 }
                 else //1待审核
                 {
                     //发送审核不可点，其他都可点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = true;
-                    dataGridView1.ReadOnly = false;
-                    bt发送审核.Enabled = false;
+                    setControlTrue();
+                    btn审核.Enabled = true;
                 }
             }
             else//操作员
@@ -152,35 +165,80 @@ namespace mySystem.Process.CleanCut
                 if (stat_form == 1 || stat_form == 2 || stat_form == 3) //1待审核||2审核通过||3审核未通过
                 {
                     //控件都不能点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = false;
-                    dataGridView1.Enabled = true;
-                    dataGridView1.ReadOnly = true;
-                    bt日志.Enabled = true;
-                    bt打印.Enabled = true;
+                    setControlFalse();
                 }
                 else //0未保存
                 {
                     //发送审核，审核，打印不能点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = true;
-                    dataGridView1.ReadOnly = false;
-                    bt发送审核.Enabled = false;
-                    bt审核.Enabled = false;
-                    bt打印.Enabled = false;
+                    setControlTrue();
+                    btn打印.Enabled = false;
                 }
             }
-            //查询条件始终可编辑
-            dtp生产日期.Enabled = true;
-            bt查询新建.Enabled = true;
-            cb白班.Enabled = true;
-            cb夜班.Enabled = true;
-            //生产指令编码不可改
-            tb生产指令编号.Enabled = false;
-            //包含序号不可编辑
+            //datagridview格式，包含序号不可编辑
             setDataGridViewFormat(); 
         }
 
+        /// <summary>
+        /// 设置所有控件可用；
+        /// btn审核、btn提交审核两个按钮一直是false；
+        /// 部分控件防作弊，不可改；
+        /// 查询条件始终不可编辑
+        /// </summary>
+        void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = false;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            // 保证这两个按钮一直是false
+            btn审核.Enabled = false;
+            btn提交审核.Enabled = false;
+            //部分空间防作弊，不可改
+            tb生产指令编号.Enabled = false;
+            cb白班.Enabled = false;
+            cb夜班.Enabled = false;
+            //查询条件始终不可编辑
+            dtp生产日期.Enabled = false;
+            btn查询新建.Enabled = false;
+        }
+
+        /// <summary>
+        /// 设置所有控件不可用；
+        /// 查看日志、打印始终可用
+        /// </summary>
+        void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = true;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            //查看日志、打印始终可用
+            btn查看日志.Enabled = true;
+            btn打印.Enabled = true;
+        }
+        
         // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
         private void addOtherEvnetHandler()
         {
@@ -204,19 +262,6 @@ namespace mySystem.Process.CleanCut
             readOuterData(InstruID, searchTime, flight);
             outerBind();
 
-            if (dt记录.Rows.Count <= 0 && stat_user != 0)
-            {                
-                foreach (Control c in this.Controls)
-                    c.Enabled = false;
-                //MessageBox.Show("什么也没有");
-
-                //查询条件始终可编辑
-                bt查询新建.Enabled = true;
-                cb白班.Enabled = true;
-                cb夜班.Enabled = true;
-                return;
-            }
-
             if (dt记录.Rows.Count <= 0)
             {
                 //********* 外表新建、保存、重新绑定 *********//                
@@ -234,26 +279,36 @@ namespace mySystem.Process.CleanCut
                 //********* 内表新建、保存 *********//
 
                 //内表绑定
-                readInnerData((int)dt记录.Rows[0]["ID"]);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
                 dt记录详情.Rows.Clear();
-                dt记录详情 = writeInnerDefault((int)dt记录.Rows[0]["ID"], dt记录详情);
+                dt记录详情 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dt记录详情);
                 setDataGridViewRowNums();
                 //立马保存内表
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
-                //内表重新绑定                
+             
             }
             dataGridView1.Columns.Clear();
-            readInnerData((int)dt记录.Rows[0]["ID"]);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             setDataGridViewColumns();
             innerBind();
 
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
             setEnableReadOnly();  //根据状态设置可读写性  
-            setDataGridViewFormat(); //包含序号不可编辑
         }
         
+        //根据主键显示
+        public void IDShow(Int32 ID)
+        {
+            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            DataTable dt1 = new DataTable(table);
+            da1.Fill(dt1);
+
+            DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()), Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString()));
+            cb夜班.Checked = !cb白班.Checked;
+        }
+
         //****************************** 嵌套 ******************************//
 
         //外表读数据，填datatable
@@ -289,6 +344,8 @@ namespace mySystem.Process.CleanCut
             tb确认人.DataBindings.Add("Text", bs记录.DataSource, "确认人");
             tb审核人.DataBindings.Clear();
             tb审核人.DataBindings.Add("Text", bs记录.DataSource, "审核人");
+            tb操作员备注.DataBindings.Clear();
+            tb操作员备注.DataBindings.Add("Text", bs记录.DataSource, "操作员备注");
             dtp确认日期.DataBindings.Clear();
             dtp确认日期.DataBindings.Add("Text", bs记录.DataSource, "确认日期");
             dtp审核日期.DataBindings.Clear();
@@ -300,7 +357,7 @@ namespace mySystem.Process.CleanCut
         {
             dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
             dr["生产指令编号"] = mySystem.Parameter.cleancutInstruction;
-            dr["生产日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
+            dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
             dr["生产班次"] = cb白班.Checked;
             dr["确认人"] = mySystem.Parameter.userName;
             dr["确认日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
@@ -387,7 +444,6 @@ namespace mySystem.Process.CleanCut
                         break;
                 }
             }
-            setDataGridViewFormat();
         }
 
         //设置datagridview基本属性
@@ -428,18 +484,18 @@ namespace mySystem.Process.CleanCut
         //******************************按钮功能******************************//
         
         //用于显示/新建数据
-        private void bt查询新建_Click(object sender, EventArgs e)
+        private void btn查询新建_Click(object sender, EventArgs e)
         {
             DataShow(mySystem.Parameter.cleancutInstruID, dtp生产日期.Value, cb白班.Checked);
         }
 
         //保存按钮
-        private void bt确认_Click(object sender, EventArgs e)
+        private void btn确认_Click(object sender, EventArgs e)
         {
             bool isSaved = Save();
             //控件可见性
             if (stat_user == 0 && isSaved == true)
-                bt发送审核.Enabled = true;
+                btn提交审核.Enabled = true;
         }
 
         //保存功能
@@ -473,9 +529,9 @@ namespace mySystem.Process.CleanCut
                 return true;
             }
         }
-        
-        //发送审核按钮
-        private void bt发送审核_Click(object sender, EventArgs e)
+
+        //提交审核按钮
+        private void btn提交审核_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow gdvr in dataGridView1.Rows)
             {
@@ -485,6 +541,11 @@ namespace mySystem.Process.CleanCut
                     return;
                 }
             }
+
+            //保存
+            bool isSaved = Save();
+            if (isSaved == false)
+                return;
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -513,17 +574,16 @@ namespace mySystem.Process.CleanCut
             Save();
             stat_form = 1;
             setEnableReadOnly();
-            setDataGridViewFormat(); //包含序号不可编辑
         }
 
         //日志按钮
-        private void bt日志_Click(object sender, EventArgs e)
+        private void btn查看日志_Click(object sender, EventArgs e)
         {
             MessageBox.Show(dt记录.Rows[0]["日志"].ToString());
         }
-
+        
         //审核按钮
-        private void bt审核_Click(object sender, EventArgs e)
+        private void btn审核_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewRow gdvr in dataGridView1.Rows)
             {
@@ -540,6 +600,11 @@ namespace mySystem.Process.CleanCut
         //审核功能
         public override void CheckResult()
         {
+            //保存
+            bool isSaved = Save();
+            if (isSaved == false)
+                return;
+
             base.CheckResult();
 
             dt记录.Rows[0]["审核人"] = Parameter.IDtoName(checkform.userID);
@@ -562,8 +627,7 @@ namespace mySystem.Process.CleanCut
             log += "审核意见：" + checkform.opinion;
             dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
 
-            bs记录.EndEdit();
-            da记录.Update((DataTable)bs记录.DataSource);
+            Save();
 
             //修改状态，设置可控性
             if (checkform.ischeckOk)
@@ -571,23 +635,10 @@ namespace mySystem.Process.CleanCut
             else
             { stat_form = 3; }//审核未通过            
             setEnableReadOnly();
-            setDataGridViewFormat(); //包含序号不可编辑
         }
 
         //****************************** 小功能 ******************************//  
-
-        //白班、夜班
-        private void cb白班_CheckedChanged(object sender, EventArgs e)
-        {
-            cb夜班.Checked = !cb白班.Checked;
-        }
-
-        //白班、夜班
-        private void cb夜班_CheckedChanged(object sender, EventArgs e)
-        {
-            cb白班.Checked = !cb夜班.Checked;
-        }
-
+        
         //检查温度、湿度内容是否合法
         private bool TextBox_check()
         {
@@ -627,13 +678,12 @@ namespace mySystem.Process.CleanCut
         }
 
         //数据绑定结束，设置背景颜色
-        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             //throw new NotImplementedException();
             setDataGridViewBackColor();
             setDataGridViewFormat();
         }
-
-                 
+                         
     }
 }

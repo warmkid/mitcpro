@@ -156,7 +156,7 @@ namespace BatchProductRecord
         void getPeople()
         {
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=1", mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.connOle);
             da.Fill(dt);
 
             if (dt.Rows.Count > 0)

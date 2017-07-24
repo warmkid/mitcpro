@@ -287,7 +287,7 @@ namespace mySystem.Extruction.Process
         void getPeople()
         {
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=7", mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序清场记录'", mySystem.Parameter.connOle);
             da.Fill(dt);
 
             if (dt.Rows.Count > 0)
@@ -489,8 +489,13 @@ namespace mySystem.Extruction.Process
             //审核通过
             if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
             {
-                //TODO: 日报表调用带ID的
-                new mySystem.ProdctDaily_extrus(mainform);
+                //日报表调用带ID的
+                DataTable dt_日报表 = new DataTable("吹膜生产日报表");
+                OleDbDataAdapter da_日报表 = new OleDbDataAdapter("select * from 吹膜生产日报表 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_日报表 = new OleDbCommandBuilder(da_日报表);
+                da_日报表.Fill(dt_日报表);
+                int id_日报表 = (int)dt_日报表.Rows[0]["ID"];
+                new mySystem.ProdctDaily_extrus(mainform,id_日报表);
 
                 //查找该生产指令ID下对应的物料平衡表记录的ID
                 DataTable dt_物料 = new DataTable("吹膜工序物料平衡记录");
