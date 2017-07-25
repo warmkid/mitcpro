@@ -44,6 +44,9 @@
             this.cmb产品代码 = new System.Windows.Forms.ComboBox();
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn打印 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.btn新建 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn保存
@@ -180,7 +183,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(969, 21);
+            this.btn打印.Location = new System.Drawing.Point(1061, 21);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 23);
             this.btn打印.TabIndex = 73;
@@ -188,11 +191,44 @@
             this.btn打印.UseVisualStyleBackColor = true;
             this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Location = new System.Drawing.Point(969, 21);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(86, 23);
+            this.btn提交审核.TabIndex = 74;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Location = new System.Drawing.Point(969, 50);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(86, 23);
+            this.btn查看日志.TabIndex = 75;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
+            // 
+            // btn新建
+            // 
+            this.btn新建.Location = new System.Drawing.Point(807, 50);
+            this.btn新建.Name = "btn新建";
+            this.btn新建.Size = new System.Drawing.Size(75, 23);
+            this.btn新建.TabIndex = 76;
+            this.btn新建.Text = "新建";
+            this.btn新建.UseVisualStyleBackColor = true;
+            this.btn新建.Click += new System.EventHandler(this.btn新建_Click);
+            // 
             // Running
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1125, 741);
+            this.ClientSize = new System.Drawing.Size(1170, 585);
+            this.Controls.Add(this.btn新建);
+            this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.cmb产品代码);
@@ -236,5 +272,8 @@
         private System.Windows.Forms.ComboBox cmb产品代码;
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button btn打印;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.Button btn新建;
     }
 }

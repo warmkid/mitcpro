@@ -13,12 +13,7 @@ using System.Data.OleDb;
 using System.Runtime.InteropServices;
 
 //main functions are listed below
-//1.this system will automatically judge the flight of user and fill default values of confirm items.
-//2.the take_in operator act as reviewer, and operator with the same flight can not review the record.
-//3.when the confirm items have benn reset, there will be a reload warnning message, choose 'yes' to reload the items, and the strategy will fill blank to the unmatched item;
-//
-//there are also some difficulties that haven't been solved
-//when visiable the "ID" column, can not get it's columnIndex, see the end of function setDataGridViewColumns()
+//wneh the form showed, the information bust bind again so that can display
 
 namespace mySystem.Process.Extruction.A
 {
@@ -44,9 +39,25 @@ namespace mySystem.Process.Extruction.A
         OleDbCommandBuilder cbSettingHandOver;
 
         List<string> settingItem;
-        List<string> flight = new List<string>(new string[] { "Yes", "No" });
+        List<string> flight = new List<string>(new string[] { "是","否" });
+        List<string> list操作员;// = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
+        List<string> list审核员;//= new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
+        int __生产指令ID;
+        string __生产指令编号;
+        DateTime __dtp生产日期;
         private CheckForm check = null;
+        string __待审核 = "__待审核";
 
+
+        /// <summary>
+        /// 0--操作员，1--审核员，2--管理员
+        /// </summary>
+        int userState;
+        /// <summary>
+        /// 0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        int formState;
+        int searchId;
         int status;
         int outerId;
         
@@ -55,12 +66,40 @@ namespace mySystem.Process.Extruction.A
         {
             InitializeComponent();
             conOle = Parameter.connOle;
+            getPeople();
+            setUserState();
+            getOtherData();
+            searchRecord();
+
+            readItemData(Convert.ToInt32(dtHandOver.Rows[0]["ID"]));
+            setDataGridViewColumns();
+
+
+
+            if (0 == dtItem.Rows.Count)
+            {
+                writeItemDefault(dtItem, (Convert.ToString(Parameter.userflight) == "白班") ? true : false);
+            }
+            setDataGridViewRowNums();
+            ItemBind();
+            askToReload();
+            writeName();
+            daHandOver.Update((DataTable)bsHandOver.DataSource);
+            readHandOverData(__生产指令编号, __dtp生产日期);
+            removeHandOverBinding();
+            handOverBind();
+            setEnableReadOnly(true);
+
+
+            /*
             init();            
             txb生产指令编号.Text = Parameter.proInstruction;
             txb生产指令编号.Enabled = false;
             dtp生产日期.Value = DateTime.Now.Date;
             dtp生产日期.Enabled = false;
             settingItem = getSettingItem();
+             * 
+             * 
             readHandOverData(txb生产指令编号.Text, dtp生产日期.Value.Date);
             removeHandOverBinding();
             handOverBind();
@@ -95,6 +134,7 @@ namespace mySystem.Process.Extruction.A
             ItemBind();
             setDataGridViewRowNums();
             btn审核.Enabled = false;
+             */
         }
 
         public HandOver(mySystem.MainForm mainform, int Id)
@@ -102,6 +142,40 @@ namespace mySystem.Process.Extruction.A
         {
             InitializeComponent();
             conOle = Parameter.connOle;
+            searchId=Id;
+            
+            getPeople();
+            setUserState();
+            settingItem= getSettingItem();
+            readHandOverData(searchId);
+            __生产指令编号 = Convert.ToString(dtHandOver.Rows[0]["生产指令编号"]);
+            __dtp生产日期 = Convert.ToDateTime(dtHandOver.Rows[0]["生产日期"]);
+            removeHandOverBinding();
+            handOverBind();
+           
+            readItemData(Convert.ToInt32(dtHandOver.Rows[0]["ID"]));
+            setDataGridViewColumns();
+
+
+
+            if (0 == dtItem.Rows.Count)
+            {
+                writeItemDefault(dtItem, (Convert.ToString(Parameter.userflight) == "白班") ? true : false);
+            }
+            setDataGridViewRowNums();
+            ItemBind();
+            askToReload();
+            writeName();
+            daHandOver.Update((DataTable)bsHandOver.DataSource);
+            readHandOverData(__生产指令编号, __dtp生产日期);
+            removeHandOverBinding();
+            handOverBind();
+            setEnableReadOnly(true);
+
+
+
+
+            /*
             dtHandOver = new DataTable(tablename1);
             daHandOver = new OleDbDataAdapter("SELECT * FROM 吹膜岗位交接班记录 WHERE ID =" + Id, conOle);
             bsHandOver = new BindingSource();
@@ -122,9 +196,41 @@ namespace mySystem.Process.Extruction.A
             {
                 c.Enabled = false;
             }
-            
+            */
             
 
+        }
+
+        /// <summary>
+        /// this function read database and try to find a record, if not, insert a new record
+        /// </summary>
+        private void searchRecord()
+        {
+            readHandOverData(__生产指令编号,__dtp生产日期);
+            removeHandOverBinding();
+            handOverBind();
+            if (0 == dtHandOver.Rows.Count)
+            {
+                DataRow newrow = dtHandOver.NewRow();
+                newrow = writeHandOverDefault(newrow, (Convert.ToString(Parameter.userflight) == "白班") ? true : false);
+                dtHandOver.Rows.Add(newrow);
+                daHandOver.Update((DataTable)bsHandOver.DataSource);
+                readHandOverData(__生产指令编号, __dtp生产日期);
+                removeHandOverBinding();
+                handOverBind();
+            }
+        }
+
+
+        /// <summary>
+        /// get settings anf fetch checking items
+        /// </summary>
+        private void getOtherData()
+        {
+            __生产指令ID = Parameter.proInstruID;
+            __生产指令编号 = Parameter.proInstruction;
+            __dtp生产日期 = DateTime.Now.Date;
+            settingItem = getSettingItem();
         }
 
         private void finishReview()
@@ -256,8 +362,8 @@ namespace mySystem.Process.Extruction.A
 
         DataRow writeHandOverDefault(DataRow dr,bool day)
         {
-            dr["生产指令ID"] = Parameter.proInstruID;
-            dr["生产指令编号"] = txb生产指令编号.Text;
+            dr["生产指令ID"] = __生产指令ID;
+            dr["生产指令编号"] = __生产指令编号;
             dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.Date.ToString());
             if (day)
             {
@@ -279,7 +385,7 @@ namespace mySystem.Process.Extruction.A
         {
             if ((Convert.ToString(Parameter.userflight) == "白班") && (dtHandOver.Rows[0]["白班交班人"].ToString() == ""))
             {
-                dtHandOver.Rows[0]["白班交班人"] = Parameter.userName;
+                dtHandOver.Rows[0]["白班交班人"] = Parameter.userName;                
             }
             if ((Convert.ToString(Parameter.userflight) == "夜班") && (dtHandOver.Rows[0]["夜班交班人"].ToString() == ""))
             {
@@ -313,6 +419,14 @@ namespace mySystem.Process.Extruction.A
         void readHandOverData(string 生产指令编号, DateTime 生产日期)
         {
             daHandOver = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期=#" + 生产日期.ToString() + "#;", conOle);
+            cbHandOver = new OleDbCommandBuilder(daHandOver);
+            dtHandOver = new DataTable(tablename1);
+            bsHandOver = new BindingSource();
+            daHandOver.Fill(dtHandOver);
+        }
+        void readHandOverData(int searchId)
+        {
+            daHandOver = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID=" +searchId+ ";", conOle);
             cbHandOver = new OleDbCommandBuilder(daHandOver);
             dtHandOver = new DataTable(tablename1);
             bsHandOver = new BindingSource();
@@ -487,11 +601,11 @@ namespace mySystem.Process.Extruction.A
 
             bsHandOver.EndEdit();
             daHandOver.Update((DataTable)bsHandOver.DataSource);
-            readHandOverData(txb生产指令编号.Text, dtp生产日期.Value.Date);
+            readHandOverData(__生产指令编号,__dtp生产日期);
             removeHandOverBinding();
             handOverBind();
 
-            btn审核.Enabled = true;
+            btn提交审核.Enabled = true;
            
         }
 
@@ -503,39 +617,64 @@ namespace mySystem.Process.Extruction.A
             if (check.ischeckOk)
             {
                 base.CheckResult();
-                string sqlstr = "SELECT 班次 FROM users WHERE 用户ID=" + check.userID.ToString() + ";";
-                OleDbCommand CHECK_FLIGHT = new OleDbCommand(sqlstr, Parameter.connOleUser);
-                string checkFlight = Convert.ToString(CHECK_FLIGHT.ExecuteScalar());
-                if (Parameter.userflight == "白班" && dtHandOver.Rows[0]["夜班接班人"].ToString() == "")
+
+                if (Parameter.userflight == "夜班" && dtHandOver.Rows[0]["夜班接班人"].ToString() == __待审核)
                 {
-                    if (checkFlight == "夜班")
-                    {
-                        dtHandOver.Rows[0]["夜班接班人"] = check.userName;
-                        txb白班异常情况处理.Enabled = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show("审核人班次不匹配");
-                    }
+
+                    dtHandOver.Rows[0]["夜班接班人"] = check.userName;
+                    txb白班异常情况处理.Enabled = false;
+
                 }
-                if (Parameter.userflight == "夜班" && dtHandOver.Rows[0]["白班接班人"].ToString() == "")
+                if (Parameter.userflight == "白班" && dtHandOver.Rows[0]["白班接班人"].ToString() == __待审核)
                 {
-                    if (checkFlight == "白班")
-                    {
-                        dtHandOver.Rows[0]["白班接班人"] = check.userName;
-                        txb白班异常情况处理.Enabled = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show("审核人班次不匹配");
-                    }
+
+                    dtHandOver.Rows[0]["白班接班人"] = check.userName;
+                    txb白班异常情况处理.Enabled = false;
+
                 }
+
+                //this part to add log 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 审核
+                string log = "=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 审核通过\n";
+                dtHandOver.Rows[0]["日志"] = dtHandOver.Rows[0]["日志"].ToString() + log;
+
                 bsHandOver.EndEdit();
                 daHandOver.Update((DataTable)bsHandOver.DataSource);
-                readHandOverData(txb生产指令编号.Text, dtp生产日期.Value.Date);
+                readHandOverData(__生产指令编号, __dtp生产日期);
                 removeHandOverBinding();
                 handOverBind();
-                finishReview();
+
+                //to delete the unchecked table
+                //read from database table and find current record
+                string checkName = "待审核";
+                DataTable dtCheck = new DataTable(checkName);
+                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                BindingSource bsCheck = new BindingSource();
+                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                daCheck.Fill(dtCheck);
+
+                //this part will never be run, for there must be a unchecked recird before this button becomes enable
+                if (0 == dtCheck.Rows.Count)
+                {
+                    DataRow newrow = dtCheck.NewRow();
+                    newrow["表名"] = tablename1;
+                    newrow["对应ID"] = dtHandOver.Rows[0]["ID"];
+                    dtCheck.Rows.Add(newrow);
+                }
+                //remove the record
+                dtCheck.Rows[0].Delete();
+                bsCheck.DataSource = dtCheck;
+                daCheck.Update((DataTable)bsCheck.DataSource);
+
+                setEnableReadOnly(true);
+
+            }
+            else 
+            {
+                MessageBox.Show("必须通过");
             }
         }
         private void btn审核_Click(object sender, EventArgs e)
@@ -614,8 +753,318 @@ namespace mySystem.Process.Extruction.A
 			
 				
 		}
-       
+        private void btn查看日志_Click(object sender, EventArgs e)
+        {
+            try
+            { MessageBox.Show(dtHandOver.Rows[0]["日志"].ToString()); }
+            catch
+            { MessageBox.Show(" !"); }
+        }
+        private void btn提交审核_Click(object sender, EventArgs e)
+        {
+            //read from database table and find current record
+            string checkName = "待审核";
+            DataTable dtCheck = new DataTable(checkName);
+            OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+            BindingSource bsCheck = new BindingSource();
+            OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+            daCheck.Fill(dtCheck);
 
-       
+            //if current hasn't been stored, insert a record in table
+            if (0 == dtCheck.Rows.Count)
+            {
+                DataRow newrow = dtCheck.NewRow();
+                newrow["表名"] = tablename1;
+                newrow["对应ID"] = dtHandOver.Rows[0]["ID"];
+                dtCheck.Rows.Add(newrow);
+            }
+            bsCheck.DataSource = dtCheck;
+            daCheck.Update((DataTable)bsCheck.DataSource);
+
+            //this part to add log 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtHandOver.Rows[0]["日志"] = dtHandOver.Rows[0]["日志"].ToString() + log;
+
+            //fill reviwer information
+
+            if ((Convert.ToString(Parameter.userflight) == "白班") && (dtHandOver.Rows[0]["夜班接班人"].ToString() == ""))
+            {
+                dtHandOver.Rows[0]["夜班接班人"] = __待审核;
+                dtHandOver.Rows[0]["白班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+            }
+            if ((Convert.ToString(Parameter.userflight) == "夜班") && (dtHandOver.Rows[0]["白班接班人"].ToString() == ""))
+            {
+                dtHandOver.Rows[0]["白班接班人"] = __待审核;
+                dtHandOver.Rows[0]["夜班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToShortTimeString());
+            }
+
+
+
+            
+            //update log into table
+            bsHandOver.EndEdit();
+            daHandOver.Update((DataTable)bsHandOver.DataSource);
+            
+            readHandOverData(__生产指令编号,__dtp生产日期);
+           
+            removeHandOverBinding();
+            handOverBind();
+
+            formState = 1;
+            setEnableReadOnly(true);
+            btn提交审核.Enabled = false;
+            btn保存.Enabled = false;
+        }
+
+        private void setEnableReadOnly(bool bl)
+        {
+            if ("白班" == Parameter.userflight)
+            {
+                setNightReadOnly(false);
+                if (dtHandOver.Rows[0]["夜班接班人"].ToString().Trim() != "")
+                {
+                    setDayReadOnly(false);
+                    //dataGridView1.Columns[4].ReadOnly = true;
+                    btn保存.Enabled = false;
+                }
+                else
+                {
+                    setDayReadOnly(true);
+                    btn保存.Enabled=true;
+                }
+
+                //this part to control the buttons
+                if ("" ==dtHandOver.Rows[0]["白班接班人"].ToString().Trim())
+                {
+                    allButtonDisable();
+                }
+                else if (__待审核 ==dtHandOver.Rows[0]["白班接班人"].ToString().Trim())
+                {
+                    onlyCheckEnable();
+                }
+                else
+                {
+                    checkDisable();
+                }
+            }
+            else
+            {
+                setDayReadOnly(false);
+                {
+                    if (dtHandOver.Rows[0]["白班接班人"].ToString().Trim() != "")
+                    {
+                        setNightReadOnly(false);
+                        //dataGridView1.Columns[5].ReadOnly = true;
+                        btn保存.Enabled = false;
+                    }
+                    else
+                    {
+                        setNightReadOnly(true);
+                        btn保存.Enabled = true;
+                    }
+                }
+                if ("" ==dtHandOver.Rows[0]["夜班接班人"].ToString().Trim())
+                {
+                    allButtonDisable();
+                }
+                else if (__待审核 ==dtHandOver.Rows[0]["夜班接班人"].ToString().Trim())
+                {
+                    onlyCheckEnable();
+                }
+                else
+                {
+                    checkDisable();
+                }
+            }
+
+        }
+        private void setNightReadOnly(bool night)
+        {
+            txb夜班异常情况处理.Enabled = night;
+            txb夜班交班人.Enabled = night;
+            txb白班接班人.Enabled = night;
+            dtp夜班交接班时间.Enabled = night;
+            //this is part of day, but logically works here
+            dataGridView1.Columns[5].ReadOnly = (true==night) ?false : true ;
+        }
+        private void setDayReadOnly(bool day)
+        {
+            txb白班交班人.Enabled = day;
+            txb白班异常情况处理.Enabled = day;
+            txb夜班接班人.Enabled = day;
+            dtp白班交接班时间.Enabled = day;
+            //this is part of night, but logically works here
+            dataGridView1.Columns[4].ReadOnly = (true == day) ? false : true;
+        }
+        private void allButtonDisable()
+        {
+            btn审核.Enabled=false;
+            btn提交审核.Enabled=false;
+            //btn保存.Enabled=false;
+            btn查看日志.Enabled=true;
+            btn打印.Enabled=true;
+        }
+        private void onlyCheckEnable()
+        {
+            //btn保存.Enabled = false;
+            btn提交审核.Enabled = false;
+            btn审核.Enabled=true;
+        }
+        private void checkDisable()
+        {
+            //btn保存.Enabled = true;
+            btn提交审核.Enabled = false;
+            btn审核.Enabled=false;
+        }
+        private void setEnableReadOnly()
+        {
+            switch (userState)
+            {
+                case 0: //0--操作员
+                    //In this situation,operator could edit all the information and the send button is active
+                    if (0 == formState || 3 == formState)
+                    {
+                        setControlTrue();
+                    }
+                    //Once the record send to the reviewer or the record has passed check, all the controls are forbidden
+                    else if (1 == formState || 2 == formState)
+                    {
+                        setControlFalse();
+                    }
+                    break;
+                case 1: //1--审核员
+                    //the formState is to be checked
+                    if (1 == formState)
+                    {
+                        setControlTrue();
+                        btn审核.Enabled = true;
+                        //one more button should be avtive here!
+                    }
+                    //the formState do not have to be checked
+                    else if (0 == formState || 2 == formState || 3 == formState)
+                    {
+                        setControlFalse();
+                    }
+                    break;
+                case 2: //2--管理员
+                    setControlTrue();
+                    break;
+                default:
+                    break;
+            }
+        }
+        // 为了方便设置控件状态，完成如下两个函数：分别用于设置所有控件可用和所有控件不可用
+
+        //this guarantee the controls are editable
+        private void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = false;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            //some textboxes act as column name and row name, so these shoule be forbidden
+            
+            // 保证这两个按钮一直是false
+            btn审核.Enabled = false;
+            btn提交审核.Enabled = false;
+        }
+
+
+        /// <summary>
+        /// this guarantees the controls are uneditable
+        /// </summary>
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = true;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            //this act as the same in function upper
+            
+            btn查看日志.Enabled = true;
+        }
+        private void getPeople()
+        {
+            string tabName = "用户权限";
+            DataTable dtUser = new DataTable(tabName);
+            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", conOle);
+            BindingSource bsUser = new BindingSource();
+            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+            daUser.Fill(dtUser);
+            if (dtUser.Rows.Count != 1)
+            {
+                MessageBox.Show("请确认表单权限信息");
+                this.Close();
+            }
+
+            //the getPeople and setUserState combine here
+            list操作员 = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
+            list审核员 = new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
+
+        }
+        private void setUserState()
+        {
+            if (list操作员.IndexOf(Parameter.userName) >= 0)
+            {
+                userState = 0;
+            }
+            else if (list审核员.IndexOf(Parameter.userName) >= 0)
+            {
+                userState = 1;
+            }
+            else
+            {
+                userState = 2;
+            }
+        }
+        private void setFormState()
+        {
+            if ("" == dtHandOver.Rows[0]["审核人"].ToString().Trim())
+            {
+                //this means the record hasn't been saved
+                formState = 0;
+            }
+            else if (__待审核 == dtHandOver.Rows[0]["审核人"].ToString().Trim())
+            {
+                //this means this record should be checked
+                formState = 1;
+            }
+            else if (Convert.ToBoolean(dtHandOver.Rows[0]["审核是否通过"]))
+            {
+                //this means this record has been checked
+                formState = 2;
+            }
+            else
+            {
+                //this means the record has been checked but need more modification
+                formState = 3;
+            }
+        }
     }
 }

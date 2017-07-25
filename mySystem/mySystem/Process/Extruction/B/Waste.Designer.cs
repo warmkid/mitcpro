@@ -44,6 +44,12 @@
             this.txb合计不良品数量 = new System.Windows.Forms.TextBox();
             this.btn删除 = new System.Windows.Forms.Button();
             this.btn打印 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn数据审核 = new System.Windows.Forms.Button();
+            this.btn提交数据审核 = new System.Windows.Forms.Button();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.txb审核人 = new System.Windows.Forms.TextBox();
+            this.lb审核人 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -194,7 +200,7 @@
             // 
             // btn删除
             // 
-            this.btn删除.Location = new System.Drawing.Point(925, 167);
+            this.btn删除.Location = new System.Drawing.Point(925, 161);
             this.btn删除.Name = "btn删除";
             this.btn删除.Size = new System.Drawing.Size(75, 23);
             this.btn删除.TabIndex = 66;
@@ -204,7 +210,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(925, 196);
+            this.btn打印.Location = new System.Drawing.Point(925, 190);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 23);
             this.btn打印.TabIndex = 74;
@@ -212,11 +218,73 @@
             this.btn打印.UseVisualStyleBackColor = true;
             this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Location = new System.Drawing.Point(925, 268);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(83, 23);
+            this.btn提交审核.TabIndex = 75;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            // 
+            // btn数据审核
+            // 
+            this.btn数据审核.Location = new System.Drawing.Point(925, 297);
+            this.btn数据审核.Name = "btn数据审核";
+            this.btn数据审核.Size = new System.Drawing.Size(83, 23);
+            this.btn数据审核.TabIndex = 76;
+            this.btn数据审核.Text = "数据审核";
+            this.btn数据审核.UseVisualStyleBackColor = true;
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
+            // 
+            // btn提交数据审核
+            // 
+            this.btn提交数据审核.Location = new System.Drawing.Point(925, 326);
+            this.btn提交数据审核.Name = "btn提交数据审核";
+            this.btn提交数据审核.Size = new System.Drawing.Size(122, 23);
+            this.btn提交数据审核.TabIndex = 77;
+            this.btn提交数据审核.Text = "提交数据审核";
+            this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
+            // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Location = new System.Drawing.Point(925, 355);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(83, 23);
+            this.btn查看日志.TabIndex = 78;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
+            // 
+            // txb审核人
+            // 
+            this.txb审核人.Location = new System.Drawing.Point(467, 526);
+            this.txb审核人.Name = "txb审核人";
+            this.txb审核人.Size = new System.Drawing.Size(100, 26);
+            this.txb审核人.TabIndex = 80;
+            // 
+            // lb审核人
+            // 
+            this.lb审核人.AutoSize = true;
+            this.lb审核人.Location = new System.Drawing.Point(389, 534);
+            this.lb审核人.Name = "lb审核人";
+            this.lb审核人.Size = new System.Drawing.Size(56, 16);
+            this.lb审核人.TabIndex = 79;
+            this.lb审核人.Text = "审核人";
+            // 
             // Waste
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1115, 741);
+            this.ClientSize = new System.Drawing.Size(1059, 585);
+            this.Controls.Add(this.txb审核人);
+            this.Controls.Add(this.lb审核人);
+            this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.btn提交数据审核);
+            this.Controls.Add(this.btn数据审核);
+            this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn删除);
             this.Controls.Add(this.txb合计不良品数量);
@@ -257,5 +325,11 @@
         private System.Windows.Forms.TextBox txb合计不良品数量;
         private System.Windows.Forms.Button btn删除;
         private System.Windows.Forms.Button btn打印;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn数据审核;
+        private System.Windows.Forms.Button btn提交数据审核;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.TextBox txb审核人;
+        private System.Windows.Forms.Label lb审核人;
     }
 }
