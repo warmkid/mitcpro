@@ -147,7 +147,7 @@ namespace mySystem.Process.CleanCut
         {
             instruction = comboBox1.SelectedItem.ToString();
             Parameter.cleancutInstruction = instruction;
-            String tblName = "清洁分切工序生产指令";
+            String tblName = "生产指令";
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });

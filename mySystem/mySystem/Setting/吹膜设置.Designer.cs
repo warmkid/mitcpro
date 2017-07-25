@@ -154,6 +154,19 @@
             this.label40 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Btn保存产品设置 = new System.Windows.Forms.Button();
+            this.tabPage人员设置 = new System.Windows.Forms.TabPage();
+            this.Btn保存人员 = new System.Windows.Forms.Button();
+            this.groupBox14 = new System.Windows.Forms.GroupBox();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.dgv权限 = new System.Windows.Forms.DataGridView();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label41 = new System.Windows.Forms.Label();
+            this.groupBox15 = new System.Windows.Forms.GroupBox();
+            this.dgv人员 = new System.Windows.Forms.DataGridView();
+            this.del人员 = new System.Windows.Forms.Button();
+            this.add人员 = new System.Windows.Forms.Button();
+            this.label42 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage区域设置.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -181,6 +194,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品编码)).BeginInit();
             this.groupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).BeginInit();
+            this.tabPage人员设置.SuspendLayout();
+            this.groupBox14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).BeginInit();
+            this.groupBox15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -190,6 +208,7 @@
             this.tabControl1.Controls.Add(this.tabPage确认项目设置);
             this.tabControl1.Controls.Add(this.tabPage参数设置);
             this.tabControl1.Controls.Add(this.tabPage产品设置);
+            this.tabControl1.Controls.Add(this.tabPage人员设置);
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1537,6 +1556,142 @@
             this.Btn保存产品设置.UseVisualStyleBackColor = true;
             this.Btn保存产品设置.Click += new System.EventHandler(this.Btn保存产品设置_Click);
             // 
+            // tabPage人员设置
+            // 
+            this.tabPage人员设置.Controls.Add(this.Btn保存人员);
+            this.tabPage人员设置.Controls.Add(this.groupBox14);
+            this.tabPage人员设置.Controls.Add(this.label41);
+            this.tabPage人员设置.Controls.Add(this.groupBox15);
+            this.tabPage人员设置.Controls.Add(this.label42);
+            this.tabPage人员设置.Location = new System.Drawing.Point(4, 29);
+            this.tabPage人员设置.Name = "tabPage人员设置";
+            this.tabPage人员设置.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage人员设置.Size = new System.Drawing.Size(1147, 577);
+            this.tabPage人员设置.TabIndex = 4;
+            this.tabPage人员设置.Text = "人员设置";
+            this.tabPage人员设置.UseVisualStyleBackColor = true;
+            // 
+            // Btn保存人员
+            // 
+            this.Btn保存人员.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn保存人员.Location = new System.Drawing.Point(936, 525);
+            this.Btn保存人员.Name = "Btn保存人员";
+            this.Btn保存人员.Size = new System.Drawing.Size(90, 33);
+            this.Btn保存人员.TabIndex = 62;
+            this.Btn保存人员.Text = "保存设置";
+            this.Btn保存人员.UseVisualStyleBackColor = true;
+            this.Btn保存人员.Click += new System.EventHandler(this.Btn保存人员_Click);
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Controls.Add(this.panel3);
+            this.groupBox14.Controls.Add(this.dgv权限);
+            this.groupBox14.Controls.Add(this.button3);
+            this.groupBox14.Controls.Add(this.button5);
+            this.groupBox14.Location = new System.Drawing.Point(17, 312);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(802, 213);
+            this.groupBox14.TabIndex = 61;
+            this.groupBox14.TabStop = false;
+            // 
+            // panel3
+            // 
+            this.panel3.Location = new System.Drawing.Point(819, 401);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(289, 15);
+            this.panel3.TabIndex = 55;
+            // 
+            // dgv权限
+            // 
+            this.dgv权限.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv权限.Location = new System.Drawing.Point(12, 17);
+            this.dgv权限.Name = "dgv权限";
+            this.dgv权限.RowTemplate.Height = 23;
+            this.dgv权限.Size = new System.Drawing.Size(772, 187);
+            this.dgv权限.TabIndex = 2;
+            // 
+            // button3
+            // 
+            this.button3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button3.Location = new System.Drawing.Point(975, 362);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(81, 33);
+            this.button3.TabIndex = 54;
+            this.button3.Text = "取消";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            this.button5.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button5.Location = new System.Drawing.Point(873, 362);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(82, 33);
+            this.button5.TabIndex = 53;
+            this.button5.Text = "保存设置";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label41.Location = new System.Drawing.Point(17, 291);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(177, 20);
+            this.label41.TabIndex = 60;
+            this.label41.Text = "吹膜人员权限设置";
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Controls.Add(this.dgv人员);
+            this.groupBox15.Controls.Add(this.del人员);
+            this.groupBox15.Controls.Add(this.add人员);
+            this.groupBox15.Location = new System.Drawing.Point(17, 33);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(802, 241);
+            this.groupBox15.TabIndex = 59;
+            this.groupBox15.TabStop = false;
+            // 
+            // dgv人员
+            // 
+            this.dgv人员.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv人员.Location = new System.Drawing.Point(12, 51);
+            this.dgv人员.Name = "dgv人员";
+            this.dgv人员.RowTemplate.Height = 23;
+            this.dgv人员.Size = new System.Drawing.Size(772, 184);
+            this.dgv人员.TabIndex = 2;
+            // 
+            // del人员
+            // 
+            this.del人员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del人员.Location = new System.Drawing.Point(100, 14);
+            this.del人员.Name = "del人员";
+            this.del人员.Size = new System.Drawing.Size(70, 30);
+            this.del人员.TabIndex = 1;
+            this.del人员.Text = "删除";
+            this.del人员.UseVisualStyleBackColor = true;
+            this.del人员.Click += new System.EventHandler(this.del人员_Click);
+            // 
+            // add人员
+            // 
+            this.add人员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add人员.Location = new System.Drawing.Point(12, 14);
+            this.add人员.Name = "add人员";
+            this.add人员.Size = new System.Drawing.Size(70, 30);
+            this.add人员.TabIndex = 0;
+            this.add人员.Text = "添加";
+            this.add人员.UseVisualStyleBackColor = true;
+            this.add人员.Click += new System.EventHandler(this.add人员_Click);
+            // 
+            // label42
+            // 
+            this.label42.AutoSize = true;
+            this.label42.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label42.Location = new System.Drawing.Point(17, 14);
+            this.label42.Name = "label42";
+            this.label42.Size = new System.Drawing.Size(135, 20);
+            this.label42.TabIndex = 58;
+            this.label42.Text = "吹膜人员设置";
+            // 
             // 吹膜设置
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1583,6 +1738,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品编码)).EndInit();
             this.groupBox13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).EndInit();
+            this.tabPage人员设置.ResumeLayout(false);
+            this.tabPage人员设置.PerformLayout();
+            this.groupBox14.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).EndInit();
+            this.groupBox15.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1715,5 +1876,18 @@
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button Btn保存产品设置;
+        private System.Windows.Forms.TabPage tabPage人员设置;
+        private System.Windows.Forms.Button Btn保存人员;
+        private System.Windows.Forms.GroupBox groupBox14;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.DataGridView dgv权限;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.GroupBox groupBox15;
+        private System.Windows.Forms.DataGridView dgv人员;
+        private System.Windows.Forms.Button del人员;
+        private System.Windows.Forms.Button add人员;
+        private System.Windows.Forms.Label label42;
     }
 }

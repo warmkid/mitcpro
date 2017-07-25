@@ -42,6 +42,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.button1 = new System.Windows.Forms.Button();
+            this.Btn外观及检验 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -57,7 +58,7 @@
             this.groupBox1.Location = new System.Drawing.Point(443, 105);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(260, 321);
+            this.groupBox1.Size = new System.Drawing.Size(260, 399);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "管理类";
@@ -108,6 +109,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.Btn外观及检验);
             this.groupBox2.Controls.Add(this.A1Btn);
             this.groupBox2.Controls.Add(this.A2Btn);
             this.groupBox2.Controls.Add(this.A4Btn);
@@ -116,7 +118,7 @@
             this.groupBox2.Location = new System.Drawing.Point(112, 105);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox2.Size = new System.Drawing.Size(260, 321);
+            this.groupBox2.Size = new System.Drawing.Size(260, 399);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "物料流转";
@@ -192,7 +194,7 @@
             this.groupBox3.Location = new System.Drawing.Point(796, 105);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox3.Size = new System.Drawing.Size(260, 321);
+            this.groupBox3.Size = new System.Drawing.Size(260, 399);
             this.groupBox3.TabIndex = 22;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "封面";
@@ -207,6 +209,17 @@
             this.button1.Text = "制袋工序批生产记录";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Btn外观及检验
+            // 
+            this.Btn外观及检验.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn外观及检验.Location = new System.Drawing.Point(28, 324);
+            this.Btn外观及检验.Name = "Btn外观及检验";
+            this.Btn外观及检验.Size = new System.Drawing.Size(200, 38);
+            this.Btn外观及检验.TabIndex = 17;
+            this.Btn外观及检验.Text = "产品外观和尺寸检验记录";
+            this.Btn外观及检验.UseVisualStyleBackColor = true;
+            this.Btn外观及检验.Click += new System.EventHandler(this.Btn外观及检验_Click);
             // 
             // CSBagMainForm
             // 
@@ -247,5 +260,6 @@
         private System.Windows.Forms.Button B3Btn;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button Btn外观及检验;
     }
 }

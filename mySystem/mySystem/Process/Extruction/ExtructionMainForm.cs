@@ -340,9 +340,14 @@ namespace mySystem
                         comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 = " + "#" + now.Date + "#";
                         OleDbDataReader reader1 = comm1.ExecuteReader();//执行查询
                         int instruID = -1;
+
+                        //TODO
+                        //若大表当日无记录怎么办？？？
+
+
                         if (reader1.Read())
                         {
-                            instruID = Convert.ToInt32(reader1["ID"]); //获取大表ID
+                            instruID = Convert.ToInt32(reader1["ID"]); //获取大表ID   
                         }
 
                         String table11 = "吹膜供料系统运行记录详细信息";
@@ -542,98 +547,255 @@ namespace mySystem
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            form2 = new BatchProductRecord.ProcessProductInstru(mainform);
-            form2.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序生产指令");
+            if (b)
+            {
+                form2 = new BatchProductRecord.ProcessProductInstru(mainform);
+                form2.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            form3 = new Record_extrusClean(mainform);
-            form3.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组清洁记录");
+            if (b)
+            {
+                form3 = new Record_extrusClean(mainform);
+                form3.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }             
         }
 
         private void A5Btn_Click(object sender, EventArgs e)
         {
-            form4 = new Record_extrusSiteClean(mainform);
-            form4.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序清场记录");
+            if (b)
+            {
+                form4 = new Record_extrusSiteClean(mainform);
+                form4.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void A4Btn_Click(object sender, EventArgs e)
         {
-            form5 = new mySystem.Process.Extruction.A.HandOver(mainform);
-            form5.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜岗位交接班记录");
+            if (b)
+            {
+                form5 = new mySystem.Process.Extruction.A.HandOver(mainform);
+                form5.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void B2Btn_Click(object sender, EventArgs e)
         {
-            form6 = new Record_extrusSupply(mainform);
-            form6.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料记录");
+            if (b)
+            {
+                form6 = new Record_extrusSupply(mainform);
+                form6.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }     
+            
         }
 
         private void B3Btn_Click(object sender, EventArgs e)
         {
-            form7 = new mySystem.Process.Extruction.B.Waste(mainform);
-            form7.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序废品记录");
+            if (b)
+            {
+                form7 = new mySystem.Process.Extruction.B.Waste(mainform);
+                form7.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void B4Btn_Click(object sender, EventArgs e)
         {
-            form8 = new Record_material_reqanddisg(mainform);
-            form8.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序领料退料记录");
+            if (b)
+            {
+                form8 = new Record_material_reqanddisg(mainform);
+                form8.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void B5Btn_Click(object sender, EventArgs e)
         {
-            form9 = new ProdctDaily_extrus(mainform);
-            form9.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜生产日报表");
+            if (b)
+            {
+                form9 = new ProdctDaily_extrus(mainform);
+                form9.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }                     
         }
 
         private void B6Btn_Click(object sender, EventArgs e)
         {
-            form10 = new ExtructionpRoductionAndRestRecordStep6(mainform);
-            form10.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜生产和检验记录表");
+            if (b)
+            {
+                form10 = new ExtructionpRoductionAndRestRecordStep6(mainform);
+                form10.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }  
+            
         }
 
         private void B7Btn_Click(object sender, EventArgs e)
         {
-            form11 = new MaterialBalenceofExtrusionProcess(mainform);
-            form11.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序物料平衡记录");
+            if (b)
+            {
+                form11 = new MaterialBalenceofExtrusionProcess(mainform);
+                form11.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void B8Btn_Click(object sender, EventArgs e)
         {
-            form12 = new ProductInnerPackagingRecord(mainform);
-            form12.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜产品内包装记录表");
+            if (b)
+            {
+                form12 = new ProductInnerPackagingRecord(mainform);
+                form12.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void B9Btn_Click(object sender, EventArgs e)
         {
-            form13 = new Extruction.Chart.outerpack(mainform);
-            form13.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜产品外包装记录表");
+            if (b)
+            {
+                form13 = new Extruction.Chart.outerpack(mainform);
+                form13.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void C1Btn_Click(object sender, EventArgs e)
         {
-            form14 = new ExtructionCheckBeforePowerStep2(mainform);
-            form14.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜开机前确认表");
+            if (b)
+            {
+                form14 = new ExtructionCheckBeforePowerStep2(mainform);
+                form14.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }             
         }
 
         private void C2Btn_Click(object sender, EventArgs e)
         {
-            form15 = new ExtructionPreheatParameterRecordStep3(mainform);
-            form15.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜预热参数记录表");
+            if (b)
+            {
+                form15 = new ExtructionPreheatParameterRecordStep3(mainform);
+                form15.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }     
+            
         }
 
         private void C3Btn_Click(object sender, EventArgs e)
         {
-            form16 = new mySystem.Process.Extruction.C.Feed(mainform);
-            form16.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料系统运行记录");
+            if (b)
+            {
+                form16 = new mySystem.Process.Extruction.C.Feed(mainform);
+                form16.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }  
+            
         }
 
         private void C4Btn_Click(object sender, EventArgs e)
         {
-            form17 = new mySystem.Process.Extruction.B.Running(mainform);
-            form17.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组运行记录");
+            if (b)
+            {
+                form17 = new mySystem.Process.Extruction.B.Running(mainform);
+                form17.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }  
+            
         }
 
         private void D1Btn_Click(object sender, EventArgs e)
@@ -672,7 +834,36 @@ namespace mySystem
             form24.ShowDialog();
         }
 
-        
+
+        //判断是否能查看
+        private Boolean checkUser(String user, int role, String tblName)
+        {
+            Boolean b = false;
+            String name1 = null;
+            String name2 = null;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
+            OleDbDataReader reader = comm.ExecuteReader();
+            while (reader.Read())
+            {
+                name1 = reader["操作员"].ToString();
+                name2 = reader["审核员"].ToString();
+            }
+
+            if (role == 3)
+            {
+                b = true;
+            }
+            else
+            {
+                if (user == name1)
+                { b = true; }
+                if (user == name2)
+                { b = true; }
+            }
+            return b;
+        }
 
         
     }

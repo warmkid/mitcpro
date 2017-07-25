@@ -213,7 +213,7 @@ namespace mySystem
                         break;
                     case 3:  //CS制袋
                         String strCon3 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
+                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
                         Conn = InitOle(strCon3);
                         break;
                     case 4: //订单、库存
@@ -282,7 +282,7 @@ namespace mySystem
                         break;
                     case 3:  //CS制袋
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/db_Bag.mdb;Persist Security Info=False";
+                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
                         connOle = InitOle(strConn);
                         break;
                     case 4: //订单、库存
