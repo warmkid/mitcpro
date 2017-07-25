@@ -21,6 +21,7 @@ namespace mySystem.Process.灭菌
         public 辐照灭菌台帐(mySystem.MainForm mainform): base(mainform)
         {
             InitializeComponent();
+           // dataGridView1.Columns[1].Visible = false;
             getPeople();
             setUserState();
             getOtherData();
@@ -196,6 +197,12 @@ namespace mySystem.Process.灭菌
             }
             }
 
+        }
+
+        private void bt添加_Click(object sender, EventArgs e)
+        {
+            DataRow dr= dt_taizhang.NewRow();
+            dt_taizhang.Rows.Add(dr);
         }
     }
 }
