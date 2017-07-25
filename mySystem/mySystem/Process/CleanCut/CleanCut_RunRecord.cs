@@ -83,7 +83,7 @@ namespace mySystem.Process.CleanCut
         private void getPeople()
         {
             dtusers = new DataTable("用户权限");
-            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from 用户权限 where 步骤 = '清洁分切开机确认'", connOle);
+            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from 用户权限 where 步骤 = '清洁分切运行记录'", connOle);
             datemp.Fill(dtusers);
             datemp.Dispose();
             if (dtusers.Rows.Count > 0)
@@ -144,16 +144,15 @@ namespace mySystem.Process.CleanCut
             }
             else//操作员
             {
-                if (stat_form == 1 || stat_form == 2 || stat_form == 3) //1待审核||2审核通过||3审核未通过
+                if (stat_form == 1 || stat_form == 2) //1待审核||2审核通过
                 {
                     //控件都不能点
                     setControlFalse();
                 }
-                else //0未保存
+                else //0未保存||3审核未通过
                 {
-                    //发送审核，审核，打印不能点
+                    //发送审核，审核不能点
                     setControlTrue();
-                    btn打印.Enabled = false;
                 }
             }
             //datagridview格式，包含序号不可编辑
@@ -183,9 +182,10 @@ namespace mySystem.Process.CleanCut
                     c.Enabled = true;
                 }
             }
-            // btn审核、btn提交审核两个按钮一直是false
+            // 保证这两个按钮、审核人姓名框一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+            tb审核人.Enabled = false;
             //部分控件防作弊，不可改
             tb生产指令编号.Enabled = false;
             cb白班.Enabled = false;
@@ -479,7 +479,7 @@ namespace mySystem.Process.CleanCut
             if (mySystem.Parameter.NametoID(tb确认人.Text.ToString()) == 0)
             {
                 /*操作人不合格*/
-                MessageBox.Show("请重新输入『确认人』信息", "ERROR");
+                MessageBox.Show("请重新输入『操作员』信息", "ERROR");
                 return false;
             }
             else if (Name_check1() == false)
