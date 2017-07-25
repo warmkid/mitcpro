@@ -59,6 +59,8 @@
             this.ckb不合格 = new System.Windows.Forms.CheckBox();
             this.bt发送审核 = new System.Windows.Forms.Button();
             this.bt日志 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -141,8 +143,6 @@
             // ckb白班
             // 
             this.ckb白班.AutoSize = true;
-            this.ckb白班.Checked = true;
-            this.ckb白班.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ckb白班.Location = new System.Drawing.Point(994, 64);
             this.ckb白班.Name = "ckb白班";
             this.ckb白班.Size = new System.Drawing.Size(54, 18);
@@ -211,12 +211,12 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 14);
             this.label7.TabIndex = 13;
-            this.label7.Text = "清场人";
+            this.label7.Text = "操作员";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(452, 353);
+            this.label8.Location = new System.Drawing.Point(657, 353);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(63, 14);
             this.label8.TabIndex = 14;
@@ -225,11 +225,11 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(243, 356);
+            this.label9.Location = new System.Drawing.Point(495, 353);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 14);
             this.label9.TabIndex = 15;
-            this.label9.Text = "检查人";
+            this.label9.Text = "审核员";
             // 
             // tb清场人
             // 
@@ -240,7 +240,7 @@
             // 
             // tb检查人
             // 
-            this.tb检查人.Location = new System.Drawing.Point(298, 347);
+            this.tb检查人.Location = new System.Drawing.Point(550, 347);
             this.tb检查人.Name = "tb检查人";
             this.tb检查人.ReadOnly = true;
             this.tb检查人.Size = new System.Drawing.Size(100, 23);
@@ -305,9 +305,7 @@
             // ckb合格
             // 
             this.ckb合格.AutoSize = true;
-            this.ckb合格.Checked = true;
-            this.ckb合格.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckb合格.Location = new System.Drawing.Point(521, 352);
+            this.ckb合格.Location = new System.Drawing.Point(726, 352);
             this.ckb合格.Name = "ckb合格";
             this.ckb合格.Size = new System.Drawing.Size(54, 18);
             this.ckb合格.TabIndex = 25;
@@ -317,7 +315,7 @@
             // ckb不合格
             // 
             this.ckb不合格.AutoSize = true;
-            this.ckb不合格.Location = new System.Drawing.Point(581, 350);
+            this.ckb不合格.Location = new System.Drawing.Point(786, 352);
             this.ckb不合格.Name = "ckb不合格";
             this.ckb不合格.Size = new System.Drawing.Size(68, 18);
             this.ckb不合格.TabIndex = 26;
@@ -344,11 +342,30 @@
             this.bt日志.UseVisualStyleBackColor = true;
             this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(300, 347);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(171, 23);
+            this.textBox1.TabIndex = 30;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(217, 353);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 14);
+            this.label11.TabIndex = 29;
+            this.label11.Text = "操作员备注";
+            // 
             // Record_cleansite_cut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 499);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.ckb不合格);
@@ -418,5 +435,7 @@
         private System.Windows.Forms.CheckBox ckb不合格;
         private System.Windows.Forms.Button bt发送审核;
         private System.Windows.Forms.Button bt日志;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label11;
     }
 }

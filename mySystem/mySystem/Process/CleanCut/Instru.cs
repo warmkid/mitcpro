@@ -33,14 +33,14 @@ namespace mySystem.Process.CleanCut
 
         private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
         private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
-
+        private string instrcode;//指令编号
 
         public Instru(mySystem.MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
 
-            getPeople(2);
+            getPeople();
             setUserState();
             getOtherData();
             addDataEventHandler();
@@ -52,11 +52,75 @@ namespace mySystem.Process.CleanCut
 
         }
 
-        // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+        public Instru(mySystem.MainForm mainform, int id)
+            : base(mainform)
+        {
+            InitializeComponent();
+            getPeople();
+            setUserState();
+            getOtherData();
+            addDataEventHandler();
+
+            string asql = "select * from 清洁分切工序生产指令 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            instrcode = tempdt.Rows[0]["生产指令编号"].ToString();
+
+            readOuterData(instrcode);
+            removeOuterBinding();
+            outerBind();
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            setFormState();
+            setEnableReadOnly();
+            addOtherEvnetHandler();
+
+            bt查询插入.Enabled = false;
+            tb指令编号.Enabled = false;
+
+        }
+
+        // 设置读取数据的事件
         void addDataEventHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataError += dataGridView1_DataError;
+
+            dataGridView1.EditingControlShowing +=new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
+        }
+
+        void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            DataGridView d = (DataGridView)sender;
+            if (e.ColumnIndex == 3)
+            {
+                object eFV = e.FormattedValue;
+                DataGridViewComboBoxColumn cboCol = (DataGridViewComboBoxColumn)d.Columns[d.CurrentCell.ColumnIndex];
+                if (!cboCol.Items.Contains(eFV))
+                {
+                    cboCol.Items.Add(eFV);
+                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = eFV;
+                }
+            }
+        }
+
+        private void dataGridView1_EditingControlShowing(object sender,
+        DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (((DataGridView)sender).SelectedCells.Count <= 0)
+                return;
+            if (((DataGridView)sender).SelectedCells[0].ColumnIndex == 3)
+            {
+                ComboBox c = e.Control as ComboBox;
+                if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+
         }
 
         void setUserState()
@@ -70,10 +134,10 @@ namespace mySystem.Process.CleanCut
         }
 
         //// 获取操作员和审核员
-        void getPeople(int id)
+        void getPeople()
         {
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=" + id, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='清洁分切生产指令'", mySystem.Parameter.connOle);
             da.Fill(dt);
 
             if (dt.Rows.Count > 0)
@@ -152,7 +216,7 @@ namespace mySystem.Process.CleanCut
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(tb指令编号.Text);
+            readOuterData(instrcode);
             removeOuterBinding();
             outerBind();
 
@@ -185,6 +249,7 @@ namespace mySystem.Process.CleanCut
                 outerBind();
             }
 
+            instrcode = tb指令编号.Text;
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
@@ -260,8 +325,7 @@ namespace mySystem.Process.CleanCut
                     bt日志.Enabled = true;
                     bt打印.Enabled = true;
 
-                    bt查询插入.Enabled = true;
-                    tb指令编号.Enabled = true;
+
 
                 }
                 else//未审核与审核不通过
@@ -373,6 +437,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
         }
+
         //设置DataGridView中下拉框
         void setDataGridViewCombox()
         {
@@ -386,7 +451,7 @@ namespace mySystem.Process.CleanCut
                         c1.HeaderText = "清洁前产品代码(规格型号)";
                         c1.Name = dc.ColumnName;
                         c1.SortMode = DataGridViewColumnSortMode.NotSortable;
-                            c1.ValueType = dc.DataType;
+                        c1.ValueType = dc.DataType;
                         // 如果换了名字会报错，把当前值也加上就好了
                         // 加序号，按序号显示
                         OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置清洁分切产品编码", mySystem.Parameter.connOle);
@@ -430,14 +495,15 @@ namespace mySystem.Process.CleanCut
                         dataGridView1.Columns.Add(c2);
                         break;
                 }
-            }
+            }          
         }
         // 设置DataGridView中各列的格式
         void setDataGridViewColumns()
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-
+            dataGridView1.Columns[6].ReadOnly = true;//数量米
+            dataGridView1.Columns[7].ReadOnly = true;//分切后产品代码
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
@@ -470,11 +536,13 @@ namespace mySystem.Process.CleanCut
             //刷新序号
             setDataGridViewRowNums();
         }
-
+        //TODO：对于其他有上移下移的表都这样处理*************
         private void bt上移_Click(object sender, EventArgs e)
         {
             int count = dt_prodlist.Rows.Count;
             if (count == 0)
+                return;
+            if (dataGridView1.SelectedCells.Count <= 0)
                 return;
             int index = dataGridView1.SelectedCells[0].RowIndex;
             if (0 == index)
@@ -510,6 +578,8 @@ namespace mySystem.Process.CleanCut
         {
             int count = dt_prodlist.Rows.Count;
             if (count == 0)
+                return;
+            if (dataGridView1.SelectedCells.Count <= 0)
                 return;
             int index = dataGridView1.SelectedCells[0].RowIndex;
             if (count - 1 == index)
@@ -643,6 +713,36 @@ namespace mySystem.Process.CleanCut
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+        }
+
+        private void bt复制_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count <= 0)
+                return;
+            DataRow dr = dt_prodlist.NewRow();
+            dr.ItemArray = dt_prodlist.Rows[dataGridView1.SelectedCells[0].RowIndex].ItemArray.Clone() as object[];
+            dt_prodlist.Rows.Add(dr);
+            setDataGridViewRowNums();
+        }
+
+        private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+              if (e.RowIndex < 0)
+                return;
+
+            //产品编码
+            if (e.ColumnIndex == 3)
+            {
+                string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+                str += "C";
+                dataGridView1.Rows[e.RowIndex].Cells[7].Value = str;
+            }
+            if (e.ColumnIndex == 5)
+            {
+                float num_卷=float.Parse(dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString());
+                dataGridView1.Rows[e.RowIndex].Cells[6].Value = num_卷 * 1000;
+            }
 
         }
     }

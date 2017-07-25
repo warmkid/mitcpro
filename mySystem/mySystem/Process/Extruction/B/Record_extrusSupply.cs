@@ -899,6 +899,8 @@ namespace WindowsFormsApplication1
             int count = dt_prodlist.Rows.Count;
             if (count <= 0)
                 return;
+            if (dataGridView1.SelectedCells.Count <= 0)
+                return;
             int index = dataGridView1.SelectedCells[0].RowIndex;
             if (0 == index)
             {
@@ -947,6 +949,8 @@ namespace WindowsFormsApplication1
         {
             int count = dt_prodlist.Rows.Count;
             if (count <= 0)
+                return;
+            if (dataGridView1.SelectedCells.Count <= 0)
                 return;
             int index = dataGridView1.SelectedCells[0].RowIndex;
             if (count - 1 == index)

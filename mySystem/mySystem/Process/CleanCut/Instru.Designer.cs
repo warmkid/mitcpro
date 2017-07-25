@@ -58,6 +58,7 @@
             this.bt下移 = new System.Windows.Forms.Button();
             this.bt发送审核 = new System.Windows.Forms.Button();
             this.bt日志 = new System.Windows.Forms.Button();
+            this.bt复制 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,6 +81,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(838, 162);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
             // label4
             // 
@@ -221,7 +223,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 32;
-            this.label3.Text = "编制人：";
+            this.label3.Text = "操作员：";
             // 
             // label5
             // 
@@ -230,7 +232,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 16);
             this.label5.TabIndex = 33;
-            this.label5.Text = "审批人：";
+            this.label5.Text = "审核员：";
             // 
             // label9
             // 
@@ -239,7 +241,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(72, 16);
             this.label9.TabIndex = 34;
-            this.label9.Text = "接收人：";
+            this.label9.Text = "接收员：";
             // 
             // bt确认
             // 
@@ -330,11 +332,22 @@
             this.bt日志.UseVisualStyleBackColor = true;
             this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
             // 
+            // bt复制
+            // 
+            this.bt复制.Location = new System.Drawing.Point(376, 285);
+            this.bt复制.Name = "bt复制";
+            this.bt复制.Size = new System.Drawing.Size(63, 23);
+            this.bt复制.TabIndex = 44;
+            this.bt复制.Text = "复制";
+            this.bt复制.UseVisualStyleBackColor = true;
+            this.bt复制.Click += new System.EventHandler(this.bt复制_Click);
+            // 
             // Instru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 571);
+            this.Controls.Add(this.bt复制);
             this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.bt下移);
@@ -407,5 +420,6 @@
         private System.Windows.Forms.Button bt下移;
         private System.Windows.Forms.Button bt发送审核;
         private System.Windows.Forms.Button bt日志;
+        private System.Windows.Forms.Button bt复制;
     }
 }
