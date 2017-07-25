@@ -362,7 +362,7 @@ namespace mySystem
                     if (dt_供料记录.Rows[0]["外层供料量合计a"]!=null && dt_供料记录.Rows[0]["外层供料量合计a"].ToString()!="")
                         dr["加料A"] = float.Parse(dt_供料记录.Rows[0]["外层供料量合计a"].ToString());//加料A
                     if (dt_供料记录.Rows[0]["中内层供料量合计b"] != null && dt_供料记录.Rows[0]["中内层供料量合计b"].ToString() != "")
-                        dr["加料B1C"] = float.Parse(dt_供料记录.Rows[0]["中内层供料量合计b"].ToString());//加料B1C
+                        dr["加料B"] = float.Parse(dt_供料记录.Rows[0]["中内层供料量合计b"].ToString());//加料B1C
                     if (dt_供料记录.Rows[0]["中层供料量合计c"] != null && dt_供料记录.Rows[0]["中层供料量合计c"].ToString() != "")
                         dr["加料B2"] = float.Parse(dt_供料记录.Rows[0]["中层供料量合计c"].ToString());//加料B2
                 }
@@ -589,7 +589,7 @@ namespace mySystem
             dr["生产重量"] = 0;
             dr["废品重量"] = 0;
             dr["加料A"] = 0;
-            dr["加料B1C"] = 0;
+            dr["加料B"] = 0;
             dr["加料B2"] = 0;
             dr["工时"] = 0;
             return dr;
@@ -703,9 +703,9 @@ namespace mySystem
                 {
                     sum_加料A += float.Parse(dataGridView1.Rows[i].Cells["加料A"].Value.ToString());
                 }
-                if (dataGridView1.Rows[i].Cells["加料B1C"].Value.ToString() != "")
+                if (dataGridView1.Rows[i].Cells["加料B"].Value.ToString() != "")
                 {
-                    sum_加料B1C += float.Parse(dataGridView1.Rows[i].Cells["加料B1C"].Value.ToString());
+                    sum_加料B1C += float.Parse(dataGridView1.Rows[i].Cells["加料B"].Value.ToString());
                 }
                 if (dataGridView1.Rows[i].Cells["加料B2"].Value.ToString() != "")
                 {

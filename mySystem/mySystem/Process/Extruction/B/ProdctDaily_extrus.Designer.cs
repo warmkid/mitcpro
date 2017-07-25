@@ -352,7 +352,7 @@
             // 
             // tb加料B1C
             // 
-            this.tb加料B1C.Location = new System.Drawing.Point(884, 390);
+            this.tb加料B1C.Location = new System.Drawing.Point(863, 390);
             this.tb加料B1C.Name = "tb加料B1C";
             this.tb加料B1C.ReadOnly = true;
             this.tb加料B1C.Size = new System.Drawing.Size(68, 21);
@@ -369,7 +369,7 @@
             // 
             // tb工时
             // 
-            this.tb工时.Location = new System.Drawing.Point(1035, 390);
+            this.tb工时.Location = new System.Drawing.Point(1021, 390);
             this.tb工时.Name = "tb工时";
             this.tb工时.ReadOnly = true;
             this.tb工时.Size = new System.Drawing.Size(68, 21);
@@ -431,9 +431,9 @@
             this.label16.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label16.Location = new System.Drawing.Point(815, 392);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(63, 14);
+            this.label16.Size = new System.Drawing.Size(42, 14);
             this.label16.TabIndex = 27;
-            this.label16.Text = "加料B1+C";
+            this.label16.Text = "加料B";
             // 
             // label17
             // 
@@ -450,7 +450,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(994, 392);
+            this.label18.Location = new System.Drawing.Point(980, 392);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(35, 14);
             this.label18.TabIndex = 29;
@@ -516,12 +516,12 @@
             // 
             // Column10
             // 
-            this.Column10.HeaderText = "外层";
+            this.Column10.HeaderText = "加料A";
             this.Column10.Name = "Column10";
             // 
             // Column11
             // 
-            this.Column11.HeaderText = "内层";
+            this.Column11.HeaderText = "加料B";
             this.Column11.Name = "Column11";
             // 
             // Column12

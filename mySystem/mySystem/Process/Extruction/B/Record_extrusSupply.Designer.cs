@@ -161,7 +161,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(854, 450);
+            this.label20.Location = new System.Drawing.Point(682, 449);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(49, 14);
             this.label20.TabIndex = 6;
@@ -180,7 +180,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(682, 450);
+            this.label19.Location = new System.Drawing.Point(854, 450);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(49, 14);
             this.label19.TabIndex = 3;
@@ -272,7 +272,6 @@
             this.cb产品代码.Name = "cb产品代码";
             this.cb产品代码.Size = new System.Drawing.Size(110, 22);
             this.cb产品代码.TabIndex = 1;
-            //this.cb产品代码.SelectedIndexChanged += new System.EventHandler(this.cb产品代码_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -480,7 +479,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(682, 487);
+            this.label6.Location = new System.Drawing.Point(854, 481);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(49, 14);
             this.label6.TabIndex = 23;
@@ -490,7 +489,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(854, 484);
+            this.label10.Location = new System.Drawing.Point(682, 484);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(49, 14);
             this.label10.TabIndex = 24;
