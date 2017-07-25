@@ -123,11 +123,14 @@
             this.comboBox1.Font = new System.Drawing.Font("SimSun", 12F);
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Items.AddRange(new object[] {
-            "吹膜"});
+            "吹膜",
+            "清洁分切",
+            "CS制袋"});
             this.comboBox1.Location = new System.Drawing.Point(130, 22);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(154, 24);
             this.comboBox1.TabIndex = 16;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 

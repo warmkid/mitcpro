@@ -90,9 +90,7 @@ namespace mySystem
 
         //生产指令查询
         private void PlanBtn_Click(object sender, EventArgs e)
-        {
-            Parameter.selectCon = 1;
-            Parameter.InitCon();
+        {           
             ExtructionBtn.BackColor = Color.FromName("ControlLightLight");
             CleanBtn.BackColor = Color.FromName("ControlLightLight");
             BagBtn.BackColor = Color.FromName("ControlLightLight");
