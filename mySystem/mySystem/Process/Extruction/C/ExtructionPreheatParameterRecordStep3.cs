@@ -82,7 +82,7 @@ namespace mySystem.Extruction.Process
         private void getPeople()
         {
             dtusers = new DataTable("用户权限");
-            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from 用户权限 where 步骤 = '清洁分切开机确认'", connOle);
+            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from 用户权限 where 步骤 = '吹膜预热参数记录表'", connOle);
             datemp.Fill(dtusers);
             datemp.Dispose();
             if (dtusers.Rows.Count > 0)
@@ -150,16 +150,15 @@ namespace mySystem.Extruction.Process
             }
             else//操作员
             {
-                if (stat_form == 1 || stat_form == 2 || stat_form == 3) //1待审核||2审核通过||3审核未通过
+                if (stat_form == 1 || stat_form == 2) //1待审核||2审核通过
                 {
                     //控件都不能点
                     setControlFalse();
                 }
-                else //0未保存
+                else //0未保存||3审核未通过
                 {
-                    //发送审核，审核，打印不能点
+                    //发送审核，审核不能点
                     setControlTrue();
-                    btn打印.Enabled = false;
                 }
             }
             //datagridview格式，包含序号不可编辑
@@ -188,9 +187,10 @@ namespace mySystem.Extruction.Process
                     c.Enabled = true;
                 }
             }
-            // 保证这两个按钮一直是false
+            // 保证这两个按钮、审核人姓名框一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+            tb审核人.Enabled = false;
             TextboxReadOnly();
         }
 
