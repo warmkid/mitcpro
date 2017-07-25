@@ -48,6 +48,7 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(26, 52);
             this.dataGridView1.Name = "dataGridView1";
@@ -76,6 +77,7 @@
             this.bt添加.TabIndex = 3;
             this.bt添加.Text = "添加";
             this.bt添加.UseVisualStyleBackColor = true;
+            this.bt添加.Click += new System.EventHandler(this.bt添加_Click);
             // 
             // bt保存
             // 
