@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="StockBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Btn库存.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAJASURBVEhLpZaxbxoxFMY9dWKBGSakDkwZGTt06ICQEEthqjplqjp1RIiwNAE6oKrT5QQoYqju
@@ -134,7 +134,7 @@
         YII=
 </value>
   </data>
-  <data name="PlanBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Btn生产指令.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAUuSURBVEhLnVYLTJNXFL7GKKgjqwha8W+CSmGIPEyRIe0kKIjyKE0dUpBWBELltWIHinMousRk
@@ -162,7 +162,7 @@
         crmdfgj+K0YIXvkHwFYrCc/h168AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="OrderBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Btn订单.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAQdSURBVEhLrVVfSFtnFD/b6igyISV9sGZNGzuCGqdhpjZqWEWhpmDALprGkKCtskabWGtTshqV
@@ -185,7 +185,7 @@
         KBSKOZqoL7P3eU0lzLNpj31q/TpXJMX0M1ruoeH4ITAyMrKnGf8Bj6QL2J4LH2AAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="KillBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Btn灭菌.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAANlSURBVEhLnZZdSBRRFMcv6yKbLREqFSElZhE9WUQIfSASPUhIiPggayyV2IOUgcWKttzaTYlC
@@ -205,7 +205,7 @@
         cR2DxHjvZNaRmfMLcWzDcqWwzpOcA+Tyovw/4EuajCna/gNUvgT+bHuQSwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="BagBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Btn制袋.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAS6SURBVEhLpVR/SFVnGH4QZ7a5WVIqJampSJa4flhXdtcqNUtBwnTWbenF1ERDRURliSZObmM4
@@ -231,7 +231,7 @@
         hOs0Ufg/8caNvK42m/3zL77n2DhbDlxWAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="CleanBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Btn清洁分切.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAASKSURBVEhLlZV/SNR3GMffoM0faDOZzMJ0NDIJFdcUjZYixdpkDFljSF0qWfM4/BFyeLey4444
@@ -256,7 +256,7 @@
         c9ckW/5WAbnnNvVPF8o0UfmxCKxH2kY7DvX5f2jQgIVkGzywAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="ExtructionBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Btn吹膜.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAQhSURBVEhLrVZrKOV5GP5/mna2GbOrWVbI/RYzR8KREUmbyyK5jDBukXs57rfklFtCJ5cPOCGX
