@@ -25,23 +25,23 @@ namespace mySystem.Setting
             switch (Parameter.userRole)
             {
                 case 1:
-                    PeopleSetBtn.Enabled = true;
-                    SystemSetBtn.Enabled = false;
-                    ExtruSetBtn.Enabled = false;
+                    Btn人员.Enabled = true;
+                    Btn制袋.Enabled = false;
+                    Btn吹膜.Enabled = false;
                     Btn清洁分切.Enabled = false;
                     Btn灭菌.Enabled = false;
                     break;
                 case 2:
-                    PeopleSetBtn.Enabled = true;
-                    SystemSetBtn.Enabled = false;
-                    ExtruSetBtn.Enabled = false;
+                    Btn人员.Enabled = true;
+                    Btn制袋.Enabled = false;
+                    Btn吹膜.Enabled = false;
                     Btn清洁分切.Enabled = false;
                     Btn灭菌.Enabled = false;
                     break;
                 case 3:
-                    PeopleSetBtn.Enabled = true;
-                    SystemSetBtn.Enabled = true;
-                    ExtruSetBtn.Enabled = true;
+                    Btn人员.Enabled = true;
+                    Btn制袋.Enabled = true;
+                    Btn吹膜.Enabled = true;
                     Btn清洁分切.Enabled = true;
                     Btn灭菌.Enabled = true;
                     break;
@@ -54,11 +54,12 @@ namespace mySystem.Setting
         {
             Parameter.selectCon = 1;
             Parameter.InitCon();
-            ExtruSetBtn.BackColor = Color.FromArgb(138, 158, 196);
-            SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
-            PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
+            Btn吹膜.BackColor = Color.FromArgb(138, 158, 196);
+            Btn制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn人员.BackColor = Color.FromName("ControlLightLight");
             Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
             Btn灭菌.BackColor = Color.FromName("ControlLightLight");
+            bagBtnColor();
             SettingPanelRight.Controls.Clear();
             吹膜设置 myDlg = new 吹膜设置();
             myDlg.TopLevel = false;
@@ -69,32 +70,41 @@ namespace mySystem.Setting
         }
 
 
-        private void SystemSetBtn_Click(object sender, EventArgs e)
+        private void Btn制袋_Click(object sender, EventArgs e)
         {
-            ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
-            SystemSetBtn.BackColor = Color.FromArgb(138, 158, 196);
-            PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
+            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
+            Btn制袋.BackColor = Color.FromArgb(138, 158, 196);
+            Btn人员.BackColor = Color.FromName("ControlLightLight");
             Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
             Btn灭菌.BackColor = Color.FromName("ControlLightLight");
+            bagBtnColor();
             SettingPanelRight.Controls.Clear();
-            SettingForm myDlg = new SettingForm();
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = SettingPanelRight.Size;
-            SettingPanelRight.Controls.Add(myDlg);
-            myDlg.Show();
-            
+                   
+            if (Panel制袋.Visible == true)
+            {
+                Btn灭菌.Location = new Point(3, 130);
+                Btn人员.Location = new Point(3, 176);
+                Panel制袋.Visible = false;
+            }
+            else
+            {
+                Btn灭菌.Location = new Point(3, 366);
+                Btn人员.Location = new Point(3, 409);
+                Panel制袋.Visible = true;
+
+            }    
         }
 
 
         private void PeopleSetBtn_Click(object sender, EventArgs e)
         {
             Parameter.InitConnUser();
-            ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
-            SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
+            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
+            Btn制袋.BackColor = Color.FromName("ControlLightLight");
             Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
             Btn灭菌.BackColor = Color.FromName("ControlLightLight");
-            PeopleSetBtn.BackColor = Color.FromArgb(138, 158, 196);
+            Btn人员.BackColor = Color.FromArgb(138, 158, 196);
+            bagBtnColor();
             SettingPanelRight.Controls.Clear();
             SetPeopleForm myDlg = new SetPeopleForm(base.mainform);
             myDlg.TopLevel = false;
@@ -111,9 +121,10 @@ namespace mySystem.Setting
             Parameter.InitCon();
             Btn清洁分切.BackColor = Color.FromArgb(138, 158, 196);
             Btn灭菌.BackColor = Color.FromName("ControlLightLight");
-            ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
-            SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
-            PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
+            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
+            Btn制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn人员.BackColor = Color.FromName("ControlLightLight");
+            bagBtnColor();
             SettingPanelRight.Controls.Clear();
             清洁分切设置 myDlg = new 清洁分切设置();
             myDlg.TopLevel = false;
@@ -129,9 +140,10 @@ namespace mySystem.Setting
             Parameter.InitCon();
             Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
             Btn灭菌.BackColor = Color.FromArgb(138, 158, 196);
-            ExtruSetBtn.BackColor = Color.FromName("ControlLightLight");
-            SystemSetBtn.BackColor = Color.FromName("ControlLightLight");
-            PeopleSetBtn.BackColor = Color.FromName("ControlLightLight");
+            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
+            Btn制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn人员.BackColor = Color.FromName("ControlLightLight");
+            bagBtnColor();
             SettingPanelRight.Controls.Clear();
             灭菌设置 myDlg = new 灭菌设置();
             myDlg.TopLevel = false;
@@ -141,7 +153,109 @@ namespace mySystem.Setting
             myDlg.Show();
         }
 
+        private void BtnCS制袋_Click(object sender, EventArgs e)
+        {
+            Parameter.selectCon = 3;
+            Parameter.InitCon();
+            otherBtnColor();
+            BtnCS制袋.BackColor = Color.FromArgb(138, 158, 196);
+            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
+            SettingPanelRight.Controls.Clear();
 
+            CS制袋设置 csbagform = new CS制袋设置();
+            csbagform.TopLevel = false;
+            csbagform.FormBorderStyle = FormBorderStyle.None;
+            csbagform.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(csbagform);
+            csbagform.Show();
+        }
         
+        private void BtnPE制袋_Click(object sender, EventArgs e)
+        {
+            otherBtnColor();
+            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPE制袋.BackColor = Color.FromArgb(138, 158, 196);
+            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
+            SettingPanelRight.Controls.Clear();
+
+        }
+
+        private void Btn连续袋_Click(object sender, EventArgs e)
+        {
+            otherBtnColor();
+            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn连续袋.BackColor = Color.FromArgb(138, 158, 196);
+            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
+            SettingPanelRight.Controls.Clear();
+        }
+
+        private void BtnPTV制袋_Click(object sender, EventArgs e)
+        {
+            otherBtnColor();
+            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPTV制袋.BackColor = Color.FromArgb(138, 158, 196);
+            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
+            SettingPanelRight.Controls.Clear();
+        }
+
+        private void BtnBPV制袋_Click(object sender, EventArgs e)
+        {
+            otherBtnColor();
+            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnBPV制袋.BackColor = Color.FromArgb(138, 158, 196);
+            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
+            SettingPanelRight.Controls.Clear();
+        }
+
+        private void Btn防护罩_Click(object sender, EventArgs e)
+        {
+            otherBtnColor();
+            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn防护罩.BackColor = Color.FromArgb(138, 158, 196);
+            SettingPanelRight.Controls.Clear();
+        }
+
+        //其他按钮背景色不高亮
+        private void otherBtnColor()
+        {
+            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
+            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
+            Btn制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
+            Btn人员.BackColor = Color.FromName("ControlLightLight");
+        }
+
+        //制袋组按钮背景色不高亮
+        private void bagBtnColor()
+        {
+            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
+            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
+            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
+        }
+
+
     }
 }

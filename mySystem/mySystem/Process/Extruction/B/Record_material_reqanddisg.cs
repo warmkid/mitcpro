@@ -301,14 +301,15 @@ namespace mySystem.Extruction.Process
         {
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = mySystem.Parameter.connOle;
-            comm.CommandText = "select * from 设置物料代码";
+            comm.CommandText = "select * from 生产指令信息表 where ID="+mySystem.Parameter.proInstruID;
 
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             for (int i = 0; i < tempdt.Rows.Count; i++)
             {
-                cB物料代码.Items.Add(tempdt.Rows[i]["物料代码"].ToString());
+                cB物料代码.Items.Add(tempdt.Rows[i]["内外层物料代码"].ToString());
+                cB物料代码.Items.Add(tempdt.Rows[i]["中层物料代码"].ToString());
             }
             da.Dispose();
             tempdt.Dispose();

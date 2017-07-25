@@ -521,10 +521,10 @@ namespace WindowsFormsApplication1
             cb原料代码b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料代码");
             tb原料批号ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料批号");
             tb原料批号b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料批号");
-            tb用料ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料用量");
-            tb余料ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料余量");
-            tb用料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料用量");
-            tb余料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料余量");
+            tb用料ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料余量");
+            tb余料ab1c.DataBindings.Add("Text", bs_prodinstr.DataSource, "外中内层原料用量");
+            tb用料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料余量");
+            tb余料b2.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层原料用量");
             tb外层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "外层供料量合计a");
             tb中内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中内层供料量合计b");
             //tb内层合计.DataBindings.Add("Text", bs_prodinstr.DataSource, "中层供料量合计c");

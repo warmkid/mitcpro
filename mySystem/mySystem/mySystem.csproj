@@ -701,6 +701,12 @@
     <Compile Include="Setting\AddPeopleForm.Designer.cs">
       <DependentUpon>AddPeopleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting\CS制袋设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\CS制袋设置.Designer.cs">
+      <DependentUpon>CS制袋设置.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\PreheatParameterForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1249,6 +1255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\AddPeopleForm.resx">
       <DependentUpon>AddPeopleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\CS制袋设置.resx">
+      <DependentUpon>CS制袋设置.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\PreheatParameterForm.resx">
       <DependentUpon>PreheatParameterForm.cs</DependentUpon>

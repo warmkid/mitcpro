@@ -98,7 +98,7 @@ namespace mySystem.Query
             dgv.ReadOnly = true;
             dgv.RowHeadersVisible = false;
             dgv.AllowUserToResizeColumns = true;
-            dgv.AllowUserToResizeRows = false;
+            dgv.AllowUserToResizeRows = true;
             dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.Font = new Font("宋体", 12);
@@ -113,637 +113,86 @@ namespace mySystem.Query
                 {
                     #region case
                     case "批生产记录（吹膜）":
-                        dt = new DataTable("批生产记录表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 批生产记录表 where 汇总人 like " + "'%" + writer + "%'" + " and 开始生产时间 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID")
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;  //没用？？？？？
-                        this.dgv.Columns["生产指令编号"].MinimumWidth = 150;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-                        this.dgv.Columns["使用物料"].MinimumWidth = 150;
-                        this.dgv.Columns["开始生产时间"].MinimumWidth = 170;
-                        this.dgv.Columns["结束生产时间"].MinimumWidth = 170;
-                        this.dgv.Columns["汇总人"].MinimumWidth = 100;
-                        this.dgv.Columns["批准人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", "生产指令ID");
+                        
                         break;
                     case "吹膜机组清洁记录":
-                        dt = new DataTable("吹膜机组清洁记录表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜机组清洁记录表 where 审核人 like " + "'%" + writer + "%'" + " and 清洁日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["清洁日期"].MinimumWidth = 170;
-                        this.dgv.Columns["班次"].MinimumWidth = 100;
-                        this.dgv.Columns["审核时间"].MinimumWidth = 170;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
+                        EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期", "生产指令ID");
+                        
                         break;
-
                     case "吹膜岗位交接班记录":
-                        dt = new DataTable("吹膜岗位交接班记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜岗位交接班记录 where 生产日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["生产指令编号"].MinimumWidth = 150;
-                        this.dgv.Columns["生产日期"].MinimumWidth = 150;
-                        this.dgv.Columns["白班产品代码批号数量"].MinimumWidth = 200;
-                        this.dgv.Columns["白班交班人"].MinimumWidth = 120;
-                        this.dgv.Columns["白班接班人"].MinimumWidth = 120;
-                        this.dgv.Columns["夜班产品代码批号数量"].MinimumWidth = 200;
-                        this.dgv.Columns["夜班交班人"].MinimumWidth = 120;
-                        this.dgv.Columns["夜班接班人"].MinimumWidth = 120;
-                        this.dgv.Columns["白班交接班时间"].MinimumWidth = 170;
-                        this.dgv.Columns["夜班交接班时间"].MinimumWidth = 170;
-                        this.dgv.Columns["白班异常情况处理"].MinimumWidth = 200;
-                        this.dgv.Columns["夜班异常情况处理"].MinimumWidth = 200;
-
+                        EachBind(this.dgv, "吹膜岗位交接班记录", "生产日期", "生产指令ID", 1);
+                        
                         break;
                     case "吹膜工序清场记录":
-                        dt = new DataTable("吹膜工序清场记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜工序清场记录 where 清场人 like " + "'%" + writer + "%'" + " and 清场日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-                        this.dgv.Columns["清场前产品代码"].MinimumWidth = 150;
-                        this.dgv.Columns["清场前产品批号"].MinimumWidth = 150;
-                        this.dgv.Columns["清场日期"].MinimumWidth = 150;
-                        this.dgv.Columns["检查结果"].MinimumWidth = 120;
-                        this.dgv.Columns["清场人"].MinimumWidth = 100;
-                        this.dgv.Columns["检查人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期", "生产指令ID");
+                        
                         break;  
                     case "吹膜供料记录":
-                        dt = new DataTable("吹膜供料记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜供料记录 where 审核人 like " + "'%" + writer + "%'" + " and 供料日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["生产指令编号"].MinimumWidth = 150;
-                        this.dgv.Columns["产品代码"].MinimumWidth = 120;
-                        this.dgv.Columns["产品批号"].MinimumWidth = 120;
-                        this.dgv.Columns["外中内层原料代码"].MinimumWidth = 200;
-                        this.dgv.Columns["中层原料代码"].MinimumWidth = 150;
-                        this.dgv.Columns["外中内层原料批号"].MinimumWidth = 200;
-                        this.dgv.Columns["中层原料批号"].MinimumWidth = 150;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 100;
-
+                        EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期", "生产指令ID");
+                        
                         break;
                     case "吹膜工序废品记录":
-                        dt = new DataTable("吹膜工序废品记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where 生产指令ID= " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;  
-                        this.dgv.Columns["生产开始时间"].MinimumWidth = 170;
-                        this.dgv.Columns["生产结束时间"].MinimumWidth = 170;
-                        this.dgv.Columns["合计不良品数量"].MinimumWidth = 170;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-
-                        break;
-                    
+                        EachBind(this.dgv, "吹膜工序废品记录", "生产指令ID", 1);
+                        
+                        break;                   
                     case "吹膜工序领料退料记录":
-                        dt = new DataTable("吹膜工序领料退料记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where 退料操作人 like " + "'%" + writer + "%'" + " and 领料日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["物料代码"].MinimumWidth = 120;
-                        this.dgv.Columns["领料日期"].MinimumWidth = 150;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 100;
-                        this.dgv.Columns["重量合计"].MinimumWidth = 100;
-                        this.dgv.Columns["数量合计"].MinimumWidth = 100;
-                        this.dgv.Columns["退料"].MinimumWidth = 100;
-                        this.dgv.Columns["退料操作人"].MinimumWidth = 120;
-                        this.dgv.Columns["退料审核人"].MinimumWidth = 120;
-
-                        break;
-                    
+                        EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期", "生产指令ID");
+                        
+                        break;                   
                     case "吹膜生产日报表":
-                        dt = new DataTable("吹膜生产日报表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜生产日报表 where 生产指令ID= " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["生产数量合计"].MinimumWidth = 150;
-                        this.dgv.Columns["生产重量合计"].MinimumWidth = 150;
-                        this.dgv.Columns["废品重量合计"].MinimumWidth = 150;
-                        this.dgv.Columns["加料A合计"].MinimumWidth = 120;
-                        this.dgv.Columns["加料B1C合计"].MinimumWidth = 150;
-                        this.dgv.Columns["加料B2合计"].MinimumWidth = 120;
-                        this.dgv.Columns["工时合计"].MinimumWidth = 100;
-                        this.dgv.Columns["中层B2物料占比"].MinimumWidth = 150;
-                        this.dgv.Columns["工时效率"].MinimumWidth = 100;
+                        EachBind(this.dgv, "吹膜生产日报表", "生产指令ID", 1);                   
 
                         break;
                     case "吹膜工序生产和检验记录":
-                        dt = new DataTable("吹膜工序生产和检验记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where 审核人 like " + "'%" + writer + "%'" + " and 生产日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50; 
-                        this.dgv.Columns["产品名称"].MinimumWidth = 200;
-                        this.dgv.Columns["产品批号"].MinimumWidth = 100;
-                        this.dgv.Columns["生产日期"].MinimumWidth = 170;
-                        this.dgv.Columns["依据工艺"].MinimumWidth = 150;
-                        this.dgv.Columns["生产设备"].MinimumWidth = 150;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期", "生产指令ID");
+                        
                         break;
                     case "吹膜工序物料平衡记录":
-                        dt = new DataTable("吹膜工序物料平衡记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜工序物料平衡记录 where 记录人 like " + "'%" + writer + "%'" + " and 生产日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["生产日期"].MinimumWidth = 170;
-                        this.dgv.Columns["成品重量合计"].MinimumWidth = 150;
-                        this.dgv.Columns["废品量合计"].MinimumWidth = 120;
-                        this.dgv.Columns["领料量"].MinimumWidth = 100;
-                        this.dgv.Columns["重量比成品率"].MinimumWidth = 150;
-                        this.dgv.Columns["记录人"].MinimumWidth = 100;
-                        this.dgv.Columns["记录日期"].MinimumWidth = 170;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核日期"].MinimumWidth = 170;
-
+                        EachBind(this.dgv, "吹膜工序物料平衡记录", "记录人", "生产日期", "生产指令ID");
+                        
                         break;
                     case "产品内包装记录":
-                        dt = new DataTable("产品内包装记录表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 产品内包装记录表 where 操作人 like " + "'%" + writer + "%'" + " and 生产日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["产品批号"].MinimumWidth = 100;
-                        //this.dgv.Columns["生产日期"].MinimumWidth = 150;
-                        this.dgv.Columns["标签语言是否英文"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-                        this.dgv.Columns["包材名称"].MinimumWidth = 100;
-                        this.dgv.Columns["包材批号"].MinimumWidth = 100;
-                        this.dgv.Columns["指示剂批号"].MinimumWidth = 120;
-                        this.dgv.Columns["包装规格"].MinimumWidth = 100;
-                        this.dgv.Columns["总计包数"].MinimumWidth = 100;
-                        this.dgv.Columns["操作人"].MinimumWidth = 100;
-                        this.dgv.Columns["操作日期"].MinimumWidth = 150;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核日期"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期", "生产指令ID");
+                        
                         break;
                     case "产品外包装记录":
-                        dt = new DataTable("产品外包装记录表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 产品外包装记录表 where 操作人 like " + "'%" + writer + "%'" + " and 操作日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["产品代码"].MinimumWidth = 100;
-                        this.dgv.Columns["产品批号"].MinimumWidth = 100;
-                        this.dgv.Columns["包装日期"].MinimumWidth = 150;
-                        this.dgv.Columns["包装规格每包只数"].MinimumWidth = 170;
-                        this.dgv.Columns["包装规格每箱包数"].MinimumWidth = 170;
-                        this.dgv.Columns["产品数量箱数"].MinimumWidth = 140;
-                        this.dgv.Columns["产品数量只数"].MinimumWidth = 140;
-                        this.dgv.Columns["操作人"].MinimumWidth = 100;
-                        this.dgv.Columns["操作日期"].MinimumWidth = 150;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核日期"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期", "生产指令ID");
+                        
                         break;
                     case "吹膜机组开机前确认表":
-                        dt = new DataTable("吹膜机组开机前确认表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜机组开机前确认表 where 确认人 like " + "'%" + writer + "%'" + " and 确认日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["确认人"].MinimumWidth = 100;
-                        this.dgv.Columns["确认日期"].MinimumWidth = 150;                       
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核日期"].MinimumWidth = 150;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期", "生产指令ID");
+                        
                         break;
                     case "吹膜机组预热参数记录表":
-                        dt = new DataTable("吹膜机组预热参数记录表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜机组预热参数记录表 where 记录人 like " + "'%" + writer + "%'" + " and 日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令id = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID" || colname == "生产指令id") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["生产指令编号"].MinimumWidth = 150;
-                        this.dgv.Columns["模芯规格参数1"].MinimumWidth = 150;
-                        this.dgv.Columns["模芯规格参数2"].MinimumWidth = 150;
-                        this.dgv.Columns["预热开始时间"].MinimumWidth = 170;
-                        this.dgv.Columns["保温开始时间"].MinimumWidth = 170;
-                        //this.dgv.Columns["保温结束时间1"].MinimumWidth = 170;
-                        this.dgv.Columns["保温结束时间1"].AutoSizeMode = DataGridViewAutoSizeColumnMode.ColumnHeader;
-                        this.dgv.Columns["保温结束时间2"].MinimumWidth = 170;
-                        this.dgv.Columns["保温结束时间3"].MinimumWidth = 170;
-                        this.dgv.Columns["记录人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜机组预热参数记录表", "记录人", "日期", "生产指令id");
+                        
                         break;
                     case "吹膜供料系统运行记录":
-                        dt = new DataTable("吹膜供料系统运行记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜供料系统运行记录 where 审核人 like " + "'%" + writer + "%'" + " and 生产日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["生产指令编号"].MinimumWidth = 150;
-                        this.dgv.Columns["生产日期"].MinimumWidth = 150;
-                        this.dgv.Columns["班次"].MinimumWidth = 100;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜供料系统运行记录", "审核人", "生产日期", "生产指令ID");
+                        
                         break;
                     case "吹膜机组运行记录":
-                        dt = new DataTable("吹膜机组运行记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where 记录人 like " + "'%" + writer + "%'" + " and 生产日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and 生产指令ID = " + InstruID, mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["产品代码"].MinimumWidth = 150;
-                        this.dgv.Columns["产品批号"].MinimumWidth = 150;
-                        this.dgv.Columns["生产日期"].MinimumWidth = 150;
-                        this.dgv.Columns["记录时间"].MinimumWidth = 150;
-                        this.dgv.Columns["记录人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜机组运行记录", "记录人", "生产日期", "生产指令ID");
+                        
                         break;
                     case "培训记录表":
-                        dt = new DataTable("吹膜机安全培训记录"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜机安全培训记录 where 培训日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["讲师"].MinimumWidth = 100;
-                        this.dgv.Columns["培训地点"].MinimumWidth = 300;
-                        this.dgv.Columns["培训日期"].MinimumWidth = 170;
-                        this.dgv.Columns["备注"].MinimumWidth = 200;                        
-
+                        EachBind(this.dgv, "吹膜机安全培训记录", "培训日期");
+                        
                         break;
-#endregion
                     case "吹膜机更换模头记录及安装检查表":
-                        dt = new DataTable("吹膜机组换模头检查表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜机组换模头检查表 where 检查人 like " + "'%" + writer + "%'" + " and 更换日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["更换原因"].MinimumWidth = 150;
-                        this.dgv.Columns["更换前模头型号"].MinimumWidth = 170;
-                        //this.dgv.Columns["更换前模头型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        this.dgv.Columns["更换日期"].MinimumWidth = 150;
-                        this.dgv.Columns["更换后模头型号"].MinimumWidth = 170;
-                        this.dgv.Columns["检查人"].MinimumWidth = 100;
-                        this.dgv.Columns["检查日期"].MinimumWidth = 150;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核日期"].MinimumWidth = 150;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜机组换模头检查表", "检查人", "更换日期");
+                        
                         break;
                     case "吹膜机更换模芯记录及安装检查表":
-                        dt = new DataTable("吹膜机组换模芯检查表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜机组换模芯检查表 where 检查人 like " + "'%" + writer + "%'" + " and 更换日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["更换原因"].MinimumWidth = 150;
-                        this.dgv.Columns["更换前模芯型号"].MinimumWidth = 170;
-                        this.dgv.Columns["更换日期"].MinimumWidth = 150;
-                        this.dgv.Columns["更换后模芯型号"].MinimumWidth = 170;
-                        this.dgv.Columns["检查人"].MinimumWidth = 100;
-                        this.dgv.Columns["检查日期"].MinimumWidth = 150;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核日期"].MinimumWidth = 150;
-                        this.dgv.Columns["审核是否通过"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜机组换模芯检查表", "检查人", "更换日期");
+                        
                         break;
                     case "吹膜机更换过滤网记录":
-                        dt = new DataTable("吹膜机更换过滤网记录表"); //""中的是表名
-                        da = new OleDbDataAdapter("select * from 吹膜机更换过滤网记录表 where 更换人 like " + "'%" + writer + "%'" + " and 更换日期 between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
-                        cb = new OleDbCommandBuilder(da);
-                        dt.Columns.Add("序号", System.Type.GetType("System.String"));
-                        da.Fill(dt);
-                        bs.DataSource = dt;
-                        this.dgv.DataBindings.Clear();
-                        this.dgv.DataSource = bs.DataSource; //绑定
-                        //显示序号
-                        setDataGridViewRowNums();
-
-                        for (int i = 0; i < this.dgv.Columns.Count; i++)
-                        {
-                            string colname = this.dgv.Columns[i].Name;
-                            if (colname == "ID" || colname == "生产指令ID") 
-                            { this.dgv.Columns[colname].Visible = false; }
-                            else
-                            {  this.dgv.Columns[colname].Visible = true; }
-                        }
-                        this.dgv.Columns["序号"].MinimumWidth = 50;
-                        this.dgv.Columns["更换日期"].MinimumWidth = 150;
-                        this.dgv.Columns["更换原因"].MinimumWidth = 200;
-                        this.dgv.Columns["滤网目数层数"].MinimumWidth = 150;
-                        this.dgv.Columns["更换人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核人"].MinimumWidth = 100;
-                        this.dgv.Columns["审核意见"].MinimumWidth = 150;
-
+                        EachBind(this.dgv, "吹膜机更换过滤网记录表", "更换人", "更换日期");
+                        
                         break;
-
+                    #endregion
                     default:
                         break;
                 }
@@ -757,6 +206,178 @@ namespace mySystem.Query
 
         }
 
+
+        // 各表查询
+        // 人、日期、生产指令
+        private void EachBind(DataGridView dgv, String tblName, String person, String startDate, String instruID)
+        {
+            dt = new DataTable(tblName); //""中的是表名
+            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            dgv.DataBindings.Clear();
+            dgv.DataSource = bs.DataSource; //绑定
+            //显示序号
+            setDataGridViewRowNums();
+
+            //TODO:
+            //写在BindingComplete事件里
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                string colname = dgv.Columns[i].Name;
+                if (colname == "ID" || colname == "生产指令ID")
+                { dgv.Columns[colname].Visible = false; }
+                else
+                { dgv.Columns[colname].Visible = true; }
+            }
+
+            //设置列宽
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                String colName = dgv.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                dgv.Columns[i].MinimumWidth = strlen * 25;
+            }
+        }
+
+        // 人、日期
+        private void EachBind(DataGridView dgv, String tblName, String person, String startDate)
+        {
+            dt = new DataTable(tblName); //""中的是表名
+            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            dgv.DataBindings.Clear();
+            dgv.DataSource = bs.DataSource; //绑定
+            //显示序号
+            setDataGridViewRowNums();
+
+            //TODO:
+            //写在BindingComplete事件里
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                string colname = dgv.Columns[i].Name;
+                if (colname == "ID" || colname == "生产指令ID")
+                { dgv.Columns[colname].Visible = false; }
+                else
+                { dgv.Columns[colname].Visible = true; }
+            }
+
+            //设置列宽
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                String colName = dgv.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                dgv.Columns[i].MinimumWidth = strlen * 25;
+            }
+        }
+
+        // 日期、生产指令
+        private void EachBind(DataGridView dgv, String tblName, String startDate, String instruID, int m)
+        {
+            dt = new DataTable(tblName); //""中的是表名
+            da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            dgv.DataBindings.Clear();
+            dgv.DataSource = bs.DataSource; //绑定
+            //显示序号
+            setDataGridViewRowNums();
+
+            //TODO:
+            //写在BindingComplete事件里
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                string colname = dgv.Columns[i].Name;
+                if (colname == "ID" || colname == "生产指令ID")
+                { dgv.Columns[colname].Visible = false; }
+                else
+                { dgv.Columns[colname].Visible = true; }
+            }
+
+            //设置列宽
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                String colName = dgv.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                dgv.Columns[i].MinimumWidth = strlen * 25;
+            }
+        }
+
+        // 日期
+        private void EachBind(DataGridView dgv, String tblName, String startDate)
+        {
+            dt = new DataTable(tblName); //""中的是表名
+            da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            dgv.DataBindings.Clear();
+            dgv.DataSource = bs.DataSource; //绑定
+            //显示序号
+            setDataGridViewRowNums();
+
+            //TODO:
+            //写在BindingComplete事件里
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                string colname = dgv.Columns[i].Name;
+                if (colname == "ID" || colname == "生产指令ID")
+                { dgv.Columns[colname].Visible = false; }
+                else
+                { dgv.Columns[colname].Visible = true; }
+            }
+
+            //设置列宽
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                String colName = dgv.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                dgv.Columns[i].MinimumWidth = strlen * 25;
+            }
+        }
+
+        // 生产指令
+        private void EachBind(DataGridView dgv, String tblName, String instruID, int m)
+        {
+            dt = new DataTable(tblName); //""中的是表名
+            da = new OleDbDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            dgv.DataBindings.Clear();
+            dgv.DataSource = bs.DataSource; //绑定
+            //显示序号
+            setDataGridViewRowNums();
+
+            //TODO:
+            //写在BindingComplete事件里
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                string colname = dgv.Columns[i].Name;
+                if (colname == "ID" || colname == "生产指令ID")
+                { dgv.Columns[colname].Visible = false; }
+                else
+                { dgv.Columns[colname].Visible = true; }
+            }
+
+            //设置列宽
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                String colName = dgv.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                dgv.Columns[i].MinimumWidth = strlen * 25;
+            }
+        }
+
         //填序号列的值
         private void setDataGridViewRowNums()
         {
@@ -766,7 +387,6 @@ namespace mySystem.Query
                 this.dgv.Rows[i].Cells["序号"].Value = (i + 1).ToString();
             }
         }
-
 
 
 
@@ -786,6 +406,7 @@ namespace mySystem.Query
             if (this.comboBox2.SelectedIndex == -1)
             {
                 MessageBox.Show("请选择表单！", "提示");
+                return;
             }
 
             Bind();
