@@ -199,10 +199,40 @@ namespace mySystem.Process.灭菌
 
         }
 
+        //添加新行
         private void bt添加_Click(object sender, EventArgs e)
         {
             DataRow dr= dt_taizhang.NewRow();
             dt_taizhang.Rows.Add(dr);
+            setDataGridViewRowNums();
+        }
+
+        //设置序号递增
+        void setDataGridViewRowNums()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
+            }
+        }
+
+        //写默认行数据
+        DataRow writeInnerDefault(DataRow dr)
+        {
+            dr["T生产指令表ID"] = dt_taizhang.Rows[0]["ID"];
+            dr["序号"] = 0;
+            dr["数量卷"] = 0;
+            dr["数量米"] = 0;
+            return dr;
+        }
+
+        //保存数据到数据库
+        private void bt保存_Click(object sender, EventArgs e)
+        {
+            bs_taizhang.EndEdit();
+            da_taizhang.Update((DataTable)bs_taizhang.DataSource);
+            readInnerData();
+            innerBind();
         }
     }
 }

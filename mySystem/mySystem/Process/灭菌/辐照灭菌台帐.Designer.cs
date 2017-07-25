@@ -88,6 +88,7 @@
             this.bt保存.TabIndex = 4;
             this.bt保存.Text = "保存";
             this.bt保存.UseVisualStyleBackColor = true;
+            this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
             // 
             // 辐照灭菌台帐
             // 

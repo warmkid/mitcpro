@@ -102,8 +102,10 @@ namespace mySystem.Process.Bag
 
         private void B1Btn_Click(object sender, EventArgs e)
         {
-            form5 = new Bagprocess_prod_instru();           
-            form5.ShowDialog();
+            //form5 = new Bagprocess_prod_instru();           
+            //form5.ShowDialog();
+            CS.CS制袋生产指令 form = new CS.CS制袋生产指令();
+            form.ShowDialog();
         }
 
         private void B2Btn_Click(object sender, EventArgs e)
