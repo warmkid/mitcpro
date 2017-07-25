@@ -29,15 +29,17 @@ namespace mySystem.Process.CleanCut
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
         private string person_操作员;
         private string person_审核员;
-        private List<string> prodcode;
 
         private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
         private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
         private string instrcode;//指令编号
 
+        HashSet<string> hs_产品代码;//存储内表产品代码下拉框内容
+
         public Instru(mySystem.MainForm mainform)
             : base(mainform)
         {
+            hs_产品代码 = new HashSet<string>();
             InitializeComponent();
 
             getPeople();
@@ -55,6 +57,7 @@ namespace mySystem.Process.CleanCut
         public Instru(mySystem.MainForm mainform, int id)
             : base(mainform)
         {
+            hs_产品代码 = new HashSet<string>();
             InitializeComponent();
             getPeople();
             setUserState();
@@ -97,28 +100,28 @@ namespace mySystem.Process.CleanCut
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            //if (e.ColumnIndex == 3)
-            //{
-            //    object eFV = e.FormattedValue;
-            //    DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;
-            //    if (!cbc.Items.Contains(eFV))
-            //    {
-            //        cbc.Items.Add(eFV);
-            //        dataGridView1.SelectedCells[0].Value = eFV;
-            //    }
-            //}
+            if (e.ColumnIndex == 3)
+            {
+                object eFV = e.FormattedValue;
+                DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;
+                if (!cbc.Items.Contains(eFV))
+                {
+                    cbc.Items.Add(eFV);
+                    dataGridView1.SelectedCells[0].Value = eFV;
+                }
+            }
         }
 
         private void dataGridView1_EditingControlShowing(object sender,
         DataGridViewEditingControlShowingEventArgs e)
         {
-            //if (((DataGridView)sender).SelectedCells.Count <= 0)
-            //    return;
-            //if (((DataGridView)sender).SelectedCells[0].ColumnIndex == 3)
-            //{
-            //    ComboBox c = e.Control as ComboBox;
-            //    if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
-            //}
+            if (((DataGridView)sender).SelectedCells.Count <= 0)
+                return;
+            if (((DataGridView)sender).SelectedCells[0].ColumnIndex == 3)
+            {
+                ComboBox c = e.Control as ComboBox;
+                if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            }
         }
 
         void setUserState()
@@ -149,13 +152,12 @@ namespace mySystem.Process.CleanCut
         //获取设置中产品代码
         private void getOtherData()
         {
-            prodcode = new List<string>();
             OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置清洁分切产品编码", mySystem.Parameter.connOle);
             DataTable tdt = new DataTable("产品编码");
             tda.Fill(tdt);
             foreach (DataRow tdr in tdt.Rows)
             {
-                prodcode.Add(tdr["产品编码"].ToString());
+                hs_产品代码.Add(tdr["产品编码"].ToString());
             }
         }
 
@@ -172,7 +174,6 @@ namespace mySystem.Process.CleanCut
             // 获取选中的列，然后提示
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             MessageBox.Show(name + "填写错误");
-            //dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "";
         }
 
         bool input_Judge()
@@ -189,6 +190,17 @@ namespace mySystem.Process.CleanCut
             {
                 MessageBox.Show("接受人ID不存在");
                 return false;
+            }
+            //产品代码是否重复
+            HashSet<string> hs_temp = new HashSet<string>();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (hs_temp.Contains(dataGridView1.Rows[i].Cells[3].Value.ToString()))
+                {
+                    MessageBox.Show("产品编码不能重复");
+                    return false;
+                }                    
+                hs_temp.Add(dataGridView1.Rows[i].Cells[3].Value.ToString());
             }
             return true;
 
@@ -449,14 +461,16 @@ namespace mySystem.Process.CleanCut
                         c1.Name = dc.ColumnName;
                         c1.SortMode = DataGridViewColumnSortMode.NotSortable;
                         c1.ValueType = dc.DataType;
-                        // 如果换了名字会报错，把当前值也加上就好了
-                        // 加序号，按序号显示
-                        OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置清洁分切产品编码", mySystem.Parameter.connOle);
-                        DataTable tdt = new DataTable("产品编码");
-                        tda.Fill(tdt);
-                        foreach (DataRow tdr in tdt.Rows)
+                        HashSet<string> hs_temp = new HashSet<string>();
+                        foreach (string temp in hs_产品代码)
+                            hs_temp.Add(temp);
+                        for (int i = 0; i < dt_prodlist.Rows.Count; i++)
                         {
-                            c1.Items.Add(tdr["产品编码"]);
+                            hs_temp.Add(dt_prodlist.Rows[i][3].ToString());
+                        }
+                        foreach (string hstr in hs_temp)
+                        {
+                            c1.Items.Add(hstr);
                         }
                         dataGridView1.Columns.Add(c1);
                         // 重写cell value changed 事件，自动填写id

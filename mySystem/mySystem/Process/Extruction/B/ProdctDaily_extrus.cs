@@ -45,15 +45,15 @@ namespace mySystem
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
-            query_by_instru(mySystem.Parameter.proInstruction);
+            query_by_instru(instrid);
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
 
             DataGridViewsum();
             dataGridView1.Columns[0].Visible = false;//ID
 
-            foreach (Control c in this.Controls)
-                c.Enabled = false;
-            dataGridView1.Enabled = true;
+            //foreach (Control c in this.Controls)
+            //    c.Enabled = false;
+            //dataGridView1.Enabled = true;
             dataGridView1.ReadOnly = true;
         }
 
@@ -112,7 +112,7 @@ namespace mySystem
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
-            query_by_instru(mySystem.Parameter.proInstruction);
+            query_by_instru(mySystem.Parameter.proInstruID);
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
 
             DataGridViewsum();
@@ -121,7 +121,7 @@ namespace mySystem
 
 
         //查找同一条生产指令下的数据
-        private void query_by_instru(string instru_code)
+        private void query_by_instru(int para_instrid)
         {
             #region 以前
             //if (mainform.isSqlOk)
@@ -272,7 +272,7 @@ namespace mySystem
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
 
             string acsql = "";
-            int id = mySystem.Parameter.proInstruID;//获得生产指令id
+            int id = para_instrid;//获得生产指令id
 
             DataTable dt_检验记录 = new DataTable();
             DataTable dt_废品记录 = new DataTable();
@@ -301,7 +301,9 @@ namespace mySystem
                 da2_new.Fill(dt_检验记录_详细);
                 comm2_new.Dispose();
                 da2_new.Dispose();
-                string str膜卷编号 = dt_检验记录_详细.Rows[0][0].ToString() + "-" + dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1][0].ToString();
+                string str膜卷编号 = "";
+                if( dt_检验记录_详细.Rows.Count>0)
+                    str膜卷编号 += dt_检验记录_详细.Rows[0][0].ToString() + "-" + dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1][0].ToString();
                 float sum_膜卷长度 = 0, sum_膜卷重量 = 0;
                 for (int kk = 0; kk < dt_检验记录_详细.Rows.Count; kk++)
                 {
@@ -549,7 +551,7 @@ namespace mySystem
 
                 dr.ItemArray = drow.ItemArray.Clone() as object[];
                 dr["T吹膜生产日报表ID"] = dt_prodinstr.Rows[0]["ID"];
-                dr["序号"] = i++;
+                dr["序号"] = ++i;
                 dt_prodlist.Rows.Add(dr);
             }
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
@@ -666,7 +668,7 @@ namespace mySystem
         {
             dataGridView1.Columns[0].Visible = false;//ID
             dataGridView1.Columns[1].Visible = false;//T吹膜生产日报表ID
-            dataGridView1.Columns["加料B1C"].Visible = false;
+            dataGridView1.Columns["加料B2"].Visible = false;
             dataGridView1.Columns["填报人"].Visible = false;
             dataGridView1.Columns["审核人"].Visible = false;
         }

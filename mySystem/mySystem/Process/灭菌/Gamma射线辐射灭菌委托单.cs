@@ -575,8 +575,8 @@ namespace mySystem.Process.灭菌
             setFormState();
             setEnableReadOnly();
 
-            //tb委托单号.Enabled = false;
-            //bt查询插入.Enabled = false;
+            tb委托单号.Enabled = false;
+            bt查询插入.Enabled = false;
         }
 
         private void bt添加_Click(object sender, EventArgs e)
