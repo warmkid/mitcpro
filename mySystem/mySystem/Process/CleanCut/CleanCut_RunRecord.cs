@@ -47,7 +47,7 @@ namespace mySystem.Process.CleanCut
 
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
-            getOtherData();  //读取设置内容
+            //getOtherData();  //读取设置内容
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
@@ -285,9 +285,12 @@ namespace mySystem.Process.CleanCut
             OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
-
-            DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()), Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString()));
-            cb夜班.Checked = !cb白班.Checked;        
+            if (dt1.Rows.Count > 0)
+            {
+                cb白班.Checked = Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString());
+                cb夜班.Checked = !cb白班.Checked;
+                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()), Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString()));
+            }     
         }
         
         //****************************** 嵌套 ******************************//
@@ -581,7 +584,7 @@ namespace mySystem.Process.CleanCut
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
             log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
-            log += "审核意见：" + checkform.opinion;
+            log += "审核意见：" + checkform.opinion + "\n";
             dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
 
             Save();

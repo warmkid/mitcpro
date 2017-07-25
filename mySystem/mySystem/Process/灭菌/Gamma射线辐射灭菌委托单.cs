@@ -28,10 +28,11 @@ namespace mySystem.Process.灭菌
         private BindingSource bs_prodinstr, bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
 
-        private List<string> list_辐照单位;
-        private List<string> list_运输商;
+        private List<string> list_产品代码;
         private string person_操作员;
         private string person_审核员;
+
+        private string str_委托单;
 
         private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
         private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -50,10 +51,49 @@ namespace mySystem.Process.灭菌
             bt查询插入.Enabled = true;
         }
 
+        public Gamma射线辐射灭菌委托单(mySystem.MainForm mainform,int id)
+            : base(mainform)
+        {
+            InitializeComponent();
+            getPeople();
+            setUserState();
+            getOtherData();
+            addDataEventHandler();
+
+            string asql = "select * from Gamma射线辐射灭菌委托单 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            str_委托单 = tempdt.Rows[0]["委托单号"].ToString();
+
+            readOuterData(str_委托单);
+            outerBind();
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            setFormState();
+            setEnableReadOnly();
+
+            tb委托单号.Enabled = false;
+            bt查询插入.Enabled = false;
+        }
+
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
         void addDataEventHandler()
         {
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.DataError += dataGridView1_DataError;
+        }
 
+        //表格填写错误提示
+        void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            MessageBox.Show(name + "填写错误");
         }
 
         // 根据条件从数据库中读取一行外表的数据
@@ -130,7 +170,6 @@ namespace mySystem.Process.灭菌
         DataRow writeInnerDefault(DataRow dr)
         {
             dr["TGamma射线辐射灭菌委托单详细信息ID"] = dt_prodinstr.Rows[0]["ID"];
-            dr["序号"] = 0;
             dr["数量箱"] = 0;
             dr["数量只"] = 0;
             dr["每箱重量"] = 0;
@@ -155,25 +194,19 @@ namespace mySystem.Process.灭菌
             {
                 switch (dc.ColumnName)
                 {
-                    //case "清洁前产品代码":
-                    //    DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
-                    //    c1.DataPropertyName = dc.ColumnName;
-                    //    c1.HeaderText = "清洁前产品代码(规格型号)";
-                    //    c1.Name = dc.ColumnName;
-                    //    c1.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    //    c1.ValueType = dc.DataType;
-                    //    // 如果换了名字会报错，把当前值也加上就好了
-                    //    // 加序号，按序号显示
-                    //    OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置清洁分切产品编码", mySystem.Parameter.connOle);
-                    //    DataTable tdt = new DataTable("产品编码");
-                    //    tda.Fill(tdt);
-                    //    foreach (DataRow tdr in tdt.Rows)
-                    //    {
-                    //        c1.Items.Add(tdr["产品编码"]);
-                    //    }
-                    //    dataGridView1.Columns.Add(c1);
-                    //    // 重写cell value changed 事件，自动填写id
-                    //    break;
+                    case "产品代码":
+                        DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
+                        c1.DataPropertyName = dc.ColumnName;
+                        c1.HeaderText = "产品代码";
+                        c1.Name = dc.ColumnName;
+                        c1.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c1.ValueType = dc.DataType;
+                        foreach (string sdr in list_产品代码)
+                        {
+                            c1.Items.Add(sdr);
+                        }
+                        dataGridView1.Columns.Add(c1);
+                        break;
 
                     case "数量箱":
                         DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
@@ -218,22 +251,17 @@ namespace mySystem.Process.灭菌
         // 刷新DataGridView中的列：序号
         void setDataGridViewRowNums()
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
-            }
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //{
+            //    dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
+            //}
         }
 
         // 设置各控件的事件
 	    // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
         void addDateEventHandler(){}
 	    // 设置自动计算类事件
-        void addComputerEventHandler()
-        {
 
-        }
-	        // 其他事件，比如按钮的点击，数据有效性判断
-        void addOtherEvnetHandler(){}
         // 打印函数
         void print(bool label){}
         // 获取其他需要的数据，比如产品代码，产生废品原因等
@@ -241,28 +269,38 @@ namespace mySystem.Process.灭菌
         {
             get_辐照单位();
             get_运输商();
+            get_产品代码();
         }
 
         private void get_辐照单位()
         {
-            list_辐照单位 = new List<string>();
             DataTable dt = new DataTable("设置辐照单位");
             OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置辐照单位", mySystem.Parameter.connOle);
             da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                list_辐照单位.Add(dt.Rows[i][1].ToString());
+                cb辐照单位.Items.Add(dt.Rows[i][1].ToString());
             }
         }
         private void get_运输商()
         {
-            list_运输商 = new List<string>();
             DataTable dt = new DataTable("设置运输商");
             OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置运输商", mySystem.Parameter.connOle);
             da.Fill(dt);
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                list_运输商.Add(dt.Rows[i][1].ToString());
+                cb运输商.Items.Add(dt.Rows[i][1].ToString());
+            }
+        }
+        private void get_产品代码()
+        {
+            list_产品代码 = new List<string>();
+            DataTable dt = new DataTable("设置灭菌产品代码");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置灭菌产品代码", mySystem.Parameter.connOle);
+            da.Fill(dt);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                list_产品代码.Add(dt.Rows[i][1].ToString());
             }
         }
         // 获取操作员和审核员
@@ -315,6 +353,9 @@ namespace mySystem.Process.灭菌
             //控件都能点
             foreach (Control c in this.Controls)
                 c.Enabled = true;
+            dataGridView1.ReadOnly = false;
+            bt发送审核.Enabled = false;
+            bt审核.Enabled = false;
         }
         void setControlsFalse()
         {
@@ -346,7 +387,7 @@ namespace mySystem.Process.灭菌
                 {
                     //发送审核不可点，其他都可点
                     setControlsTrue();
-                    bt发送审核.Enabled = false;
+                    bt审核.Enabled = true;
                 }
 
             }
@@ -356,16 +397,11 @@ namespace mySystem.Process.灭菌
                 {
                     //空间都不能点
                     setControlsFalse();
-                    //可以操作其他的委托单情况
-                    tb委托单号.Enabled = true;
-                    bt查询插入.Enabled = true;
                 }
                 else
                 {
                     //发送审核，审核不能点
                     setControlsTrue();
-                    bt发送审核.Enabled = false;
-                    bt审核.Enabled = false;
                 }
             }
         }
@@ -389,7 +425,7 @@ namespace mySystem.Process.灭菌
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(tb委托单号.Text);
+            readOuterData(str_委托单);
             outerBind();
 
             //内表保存
@@ -401,9 +437,9 @@ namespace mySystem.Process.灭菌
         }
         private bool input_Judge()
         {
-            if (mySystem.Parameter.NametoID(tb委托人.Text) <= 0)
+            if (tb委托人.Text == "")
             {
-                MessageBox.Show("委托人ID不存在");
+                MessageBox.Show("委托人不能为空");
                 return false;
             }
             if (mySystem.Parameter.NametoID(tb操作人.Text) <= 0)
@@ -515,7 +551,8 @@ namespace mySystem.Process.灭菌
 
         private void bt查询插入_Click(object sender, EventArgs e)
         {
-            readOuterData(tb委托单号.Text);
+            str_委托单 = tb委托单号.Text;
+            readOuterData(str_委托单);
             outerBind();
             if (dt_prodinstr.Rows.Count <= 0 && stat_user != 0)
             {
@@ -528,17 +565,18 @@ namespace mySystem.Process.灭菌
                 dr = writeOuterDefault(dr);
                 dt_prodinstr.Rows.Add(dr);
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                readOuterData(tb委托单号.Text);
+                readOuterData(str_委托单);
                 outerBind();
             }
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
-            addComputerEventHandler();
             setFormState();
             setEnableReadOnly();
-            addOtherEvnetHandler();
+
+            //tb委托单号.Enabled = false;
+            //bt查询插入.Enabled = false;
         }
 
         private void bt添加_Click(object sender, EventArgs e)
@@ -567,27 +605,61 @@ namespace mySystem.Process.灭菌
             sumDataGridView1();
         }
 
+        //中文逗号转英文逗号
+        public static string ToDBC(string input)
+        {
+            char[] c = input.ToCharArray();
+            for (int i = 0; i < c.Length; i++)
+            {
+                if (c[i] == 12288)
+                {
+                    c[i] = (char)32;
+                    continue;
+                }
+                if (c[i] > 65280 && c[i] < 65375)
+                    c[i] = (char)(c[i] - 65248);
+            }
+            return new string(c);
+        }
+
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
              if (e.RowIndex < 0)
                 return;
+             if (e.ColumnIndex == 2)
+             {
+                 string str=ToDBC(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
+                 string pattern = "([0-9][,]?)+";//正则表达式
+                 if (!Regex.IsMatch(str, pattern))
+                 {
+                     MessageBox.Show("产品代码格式不符合规定，重新输入，例如 1,2,4");
+                     dataGridView1.Rows[e.RowIndex].Cells[2].Value = "";
+                     return;   
+                 }
+             }
              sumDataGridView1();
         }
 
         //刷新合计
         private void sumDataGridView1()
         {
-            float sum_箱 = 0, sum_托 = 0;
+            List<int> list_托 = new List<int>();
+            float sum_箱 = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
+                if (dataGridView1.Rows[i].Cells[2].Value.ToString() != "")//托盘号
+                {
+                    string[] a = dataGridView1.Rows[i].Cells[2].Value.ToString().Split(',');
+                    for (int k = 0; k < a.Length; k++)
+                        list_托.Add(int.Parse(a[k]));
+                }
                 if (dataGridView1.Rows[i].Cells[6].Value.ToString() != "")
-                    sum_箱 += float.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[7].Value.ToString() != "")
-                    sum_托 += float.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());              
+                    sum_箱 += float.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());            
             }
 
             dt_prodinstr.Rows[0]["合计箱数"] = sum_箱;
-            dt_prodinstr.Rows[0]["合计托数"] = sum_托;
+            if(list_托.Count>0)
+                dt_prodinstr.Rows[0]["合计托数"] = list_托.Max();
 
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);

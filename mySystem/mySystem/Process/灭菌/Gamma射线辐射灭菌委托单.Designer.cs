@@ -309,7 +309,7 @@
             // bt保存
             // 
             this.bt保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt保存.Location = new System.Drawing.Point(689, 537);
+            this.bt保存.Location = new System.Drawing.Point(663, 537);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(63, 25);
             this.bt保存.TabIndex = 16;
@@ -399,9 +399,9 @@
             // bt发送审核
             // 
             this.bt发送审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt发送审核.Location = new System.Drawing.Point(758, 537);
+            this.bt发送审核.Location = new System.Drawing.Point(741, 537);
             this.bt发送审核.Name = "bt发送审核";
-            this.bt发送审核.Size = new System.Drawing.Size(78, 25);
+            this.bt发送审核.Size = new System.Drawing.Size(90, 25);
             this.bt发送审核.TabIndex = 25;
             this.bt发送审核.Text = "发送审核";
             this.bt发送审核.UseVisualStyleBackColor = true;
@@ -412,7 +412,7 @@
             this.bt日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt日志.Location = new System.Drawing.Point(850, 537);
             this.bt日志.Name = "bt日志";
-            this.bt日志.Size = new System.Drawing.Size(79, 25);
+            this.bt日志.Size = new System.Drawing.Size(82, 25);
             this.bt日志.TabIndex = 26;
             this.bt日志.Text = "查看日志";
             this.bt日志.UseVisualStyleBackColor = true;

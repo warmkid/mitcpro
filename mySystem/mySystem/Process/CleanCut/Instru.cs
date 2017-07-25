@@ -171,8 +171,6 @@ namespace mySystem.Process.CleanCut
         {
             // 获取选中的列，然后提示
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
-            if (name == "ID")
-                return;
             MessageBox.Show(name + "填写错误");
             //dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "";
         }

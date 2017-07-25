@@ -30,22 +30,41 @@ namespace mySystem.Process.Extruction.C
         OleDbCommandBuilder cbItem;
 
         List<string> flight = new List<string>(new string[] { "白班", "夜班" });
+        List<string> list操作员;// = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
+        List<string> list审核员;//= new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
+        string __待审核 = "__待审核";
+        int searchId;
+        string __生产指令编号, __班次;
+        DateTime __生产日期;
         private CheckForm check = null;
         int outerId;
         int status;
+        /// <summary>
+        /// 0--操作员，1--审核员，2--管理员
+        /// </summary>
+        int userState;
+        /// <summary>
+        /// 0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        int formState;
         public Feed(mySystem.MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
             conOle = Parameter.connOle;
-            txb生产指令编号.Text = Parameter.proInstruction;
-            dtp生产日期.Value = Convert.ToDateTime(DateTime.Now.Date.ToString());
+            getPeople();
+            setUserState();
+            __生产指令编号 = Parameter.proInstruction;
+            __生产日期 = Convert.ToDateTime(DateTime.Now.Date.ToString());
+            __班次 = Parameter.userflight;
+            txb生产指令编号.Text = __生产指令编号;
+            dtp生产日期.Value =__生产日期;
             for (int i = 0; i < flight.Count; i++)
             {
                 cmb班次.Items.Add(flight[i]);
             }
-            cmb班次.SelectedItem = Parameter.userflight;
-            readFeedData(txb生产指令编号.Text, dtp生产日期.Value, cmb班次.SelectedItem.ToString());
+            cmb班次.SelectedItem = __班次;
+            readFeedData(__生产指令编号, __生产日期, __班次);
             removeFeedBinding();
             feedBinding();
             if (0 == dtFeed.Rows.Count)
@@ -54,21 +73,15 @@ namespace mySystem.Process.Extruction.C
                 newrow = writeFeedDefault(newrow);
                 dtFeed.Rows.Add(newrow);
                 daFeed.Update((DataTable)bsFeed.DataSource);
-                readFeedData(txb生产指令编号.Text, dtp生产日期.Value, cmb班次.SelectedItem.ToString());
+                readFeedData(__生产指令编号, __生产日期, __班次);
                 removeFeedBinding();
                 feedBinding();
             }
-            btn审核.Enabled = false;
-            txb生产指令编号.Enabled = false;
-            dtp生产日期.Enabled = false;
-            cmb班次.Enabled = false;
-            readItemData(Convert.ToInt32( dtFeed.Rows[0]["ID"]));
+            searchId = Convert.ToInt32(dtFeed.Rows[0]["ID"]);
+            readItemData(searchId);
             ItemBind();
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[2].Width = 220;
+            setFormState();
+            setEnableReadOnly();
         }
 
         public Feed(mySystem.MainForm mainform, int Id)
@@ -76,6 +89,8 @@ namespace mySystem.Process.Extruction.C
         {
             InitializeComponent();
             conOle = Parameter.connOle;
+            getPeople();
+            setUserState();
             dtFeed = new DataTable(tablename1);
             daFeed = new OleDbDataAdapter("SELECT * FROM 吹膜供料系统运行记录 WHERE ID =" + Id, conOle);
             bsFeed = new BindingSource();
@@ -83,22 +98,18 @@ namespace mySystem.Process.Extruction.C
             daFeed.Fill(dtFeed);
             removeFeedBinding();
             feedBinding();
-            cmb班次.Text =Convert.ToString( dtFeed.Rows[0]["班次"]);
-            readItemData(Convert.ToInt32(dtFeed.Rows[0]["ID"]));
+            __生产指令编号 = Convert.ToString(dtFeed.Rows[0]["生产指令编号"]);
+            __生产日期=Convert.ToDateTime(dtFeed.Rows[0]["生产日期"]);
+            __班次=Convert.ToString( dtFeed.Rows[0]["班次"]);
+            searchId = Id;
+            cmb班次.Text = __班次;
+            
+            readItemData(searchId);
             
             ItemBind();
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-            this.btnSave.Visible = false;
-           
-            this.btn审核.Visible = false;
-            this.btn添加.Visible = false;
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
+
+            setFormState();
+            setEnableReadOnly();
         }
 
         private DataRow writeFeedDefault(DataRow dr)
@@ -131,6 +142,161 @@ namespace mySystem.Process.Extruction.C
             bsFeed = new BindingSource();
             daFeed.Fill(dtFeed);
         }
+        void readFeedData(int Id)
+        {
+            daFeed = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID="+Id+";", conOle);
+            cbFeed = new OleDbCommandBuilder(daFeed);
+            dtFeed = new DataTable(tablename1);
+            bsFeed = new BindingSource();
+            daFeed.Fill(dtFeed);
+        }
+        private void setEnableReadOnly()
+        {
+            switch (userState)
+            {
+                case 0: //0--操作员
+                    //In this situation,operator could edit all the information and the send button is active
+                    if (0 == formState || 3 == formState)
+                    {
+                        setControlTrue();
+                    }
+                    //Once the record send to the reviewer or the record has passed check, all the controls are forbidden
+                    else if (1 == formState || 2 == formState)
+                    {
+                        setControlFalse();
+                    }
+                    break;
+                case 1: //1--审核员
+                    //the formState is to be checked
+                    if (1 == formState)
+                    {
+                        setControlTrue();
+                        btn审核.Enabled = true;
+                        //one more button should be avtive here!
+                    }
+                    //the formState do not have to be checked
+                    else if (0 == formState || 2 == formState || 3 == formState)
+                    {
+                        setControlFalse();
+                    }
+                    break;
+                case 2: //2--管理员
+                    setControlTrue();
+                    break;
+                default:
+                    break;
+            }
+        }
+        // 为了方便设置控件状态，完成如下两个函数：分别用于设置所有控件可用和所有控件不可用
+
+        //this guarantee the controls are editable
+        private void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = false;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            //some textboxes act as column name and row name, so these shoule be forbidden
+           
+            // 保证这两个按钮一直是false
+            btn审核.Enabled = false;
+            btn提交审核.Enabled = false;
+        }
+
+
+        /// <summary>
+        /// this guarantees the controls are uneditable
+        /// </summary>
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = true;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            //this act as the same in function upper
+            
+            btn查看日志.Enabled = true;
+            btn打印.Enabled = true;
+        }
+        private void getPeople()
+        {
+            string tabName = "用户权限";
+            DataTable dtUser = new DataTable(tabName);
+            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", conOle);
+            BindingSource bsUser = new BindingSource();
+            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+            daUser.Fill(dtUser);
+            if (dtUser.Rows.Count != 1)
+            {
+                MessageBox.Show("请确认表单权限信息");
+                this.Close();
+            }
+
+            //the getPeople and setUserState combine here
+            list操作员 = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
+            list审核员 = new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
+
+        }
+        private void setUserState()
+        {
+            if (list操作员.IndexOf(Parameter.userName) >= 0)
+            {
+                userState = 0;
+            }
+            else if (list审核员.IndexOf(Parameter.userName) >= 0)
+            {
+                userState = 1;
+            }
+            else
+            {
+                userState = 2;
+            }
+        }
+        private void setFormState()
+        {
+            if ("" == dtFeed.Rows[0]["审核人"].ToString().Trim())
+            {
+                //this means the record hasn't been saved
+                formState = 0;
+            }
+            else if (__待审核 == dtFeed.Rows[0]["审核人"].ToString().Trim())
+            {
+                //this means this record should be checked
+                formState = 1;
+            }
+            else if (Convert.ToBoolean(dtFeed.Rows[0]["审核是否通过"]))
+            {
+                //this means this record has been checked
+                formState = 2;
+            }
+            else
+            {
+                //this means the record has been checked but need more modification
+                formState = 3;
+            }
+        }
 
         private void readItemData(int id)
         {
@@ -145,7 +311,8 @@ namespace mySystem.Process.Extruction.C
         {
             txb生产指令编号.DataBindings.Clear();
             dtp生产日期.DataBindings.Clear();
-            cmb班次.DataBindings.Clear();        
+            cmb班次.DataBindings.Clear();
+            txb审核人.DataBindings.Clear();
         }
         private void feedBinding()
         {
@@ -153,6 +320,7 @@ namespace mySystem.Process.Extruction.C
             txb生产指令编号.DataBindings.Add("Text", bsFeed.DataSource, "生产指令编号");
             dtp生产日期.DataBindings.Add("Value", bsFeed.DataSource, "生产日期");
             cmb班次.DataBindings.Add("SelectedItem", bsFeed.DataSource, "班次");
+            txb审核人.DataBindings.Add("Text", bsFeed.DataSource, "审核人");
         }
         private void ItemBind()
         {
@@ -252,19 +420,142 @@ namespace mySystem.Process.Extruction.C
         {
             if (check.ischeckOk)
             {
+                //to update the Feed record
                 base.CheckResult();
-
-                dtFeed.Rows[0]["审核人"] = check.userName;
+                txb审核人.Text = check.userName.ToString();
+                dtFeed.Rows[0]["审核人"] = check.userName.ToString();
                 dtFeed.Rows[0]["审核意见"] = check.opinion.ToString();
                 dtFeed.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
 
+                //this part to add log 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 审核
+                string log = "=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 审核通过\n";
+                dtFeed.Rows[0]["日志"] = dtFeed.Rows[0]["日志"].ToString() + log;
+
+
+                bsFeed.EndEdit();
                 daFeed.Update((DataTable)bsFeed.DataSource);
-                readFeedData(txb生产指令编号.Text, dtp生产日期.Value, cmb班次.SelectedItem.ToString());
+
+                readFeedData(searchId);
+
                 removeFeedBinding();
                 feedBinding();
-                this.dataGridView1.Enabled = false;
+
+                //to delete the unchecked table
+                //read from database table and find current record
+                string checkName = "待审核";
+                DataTable dtCheck = new DataTable(checkName);
+                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                BindingSource bsCheck = new BindingSource();
+                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                daCheck.Fill(dtCheck);
+
+                //this part will never be run, for there must be a unchecked recird before this button becomes enable
+                if (0 == dtCheck.Rows.Count)
+                {
+                    DataRow newrow = dtCheck.NewRow();
+                    newrow["表名"] = tablename1;
+                    newrow["对应ID"] = dtFeed.Rows[0]["ID"];
+                    dtCheck.Rows.Add(newrow);
+                }
+                //remove the record
+                dtCheck.Rows[0].Delete();
+                bsCheck.DataSource = dtCheck;
+                daCheck.Update((DataTable)bsCheck.DataSource);
+                formState = 2;
+                setEnableReadOnly();
+            }
+            else
+            {
+                //check unpassed
+                base.CheckResult();
+                txb审核人.Text = check.userName.ToString();
+                dtFeed.Rows[0]["审核人"] = check.userName.ToString();
+                dtFeed.Rows[0]["审核意见"] = check.opinion.ToString();
+                dtFeed.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
+
+
+                //this part to add log 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 审核
+                string log = "=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 审核不通过\n";
+                dtFeed.Rows[0]["日志"] = dtFeed.Rows[0]["日志"].ToString() + log;
+
+
+                bsFeed.EndEdit();
+                daFeed.Update((DataTable)bsFeed.DataSource);
+
+                readFeedData(searchId);
+
+                removeFeedBinding();
+                feedBinding();
+                formState = 3;
+                setEnableReadOnly();
             }
         }
+
+        private void btn提交审核_Click(object sender, EventArgs e)
+        {
+            //read from database table and find current record
+            string checkName = "待审核";
+            DataTable dtCheck = new DataTable(checkName);
+            OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+            BindingSource bsCheck = new BindingSource();
+            OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+            daCheck.Fill(dtCheck);
+
+            //if current hasn't been stored, insert a record in table
+            if (0 == dtCheck.Rows.Count)
+            {
+                DataRow newrow = dtCheck.NewRow();
+                newrow["表名"] = tablename1;
+                newrow["对应ID"] = dtFeed.Rows[0]["ID"];
+                dtCheck.Rows.Add(newrow);
+            }
+            bsCheck.DataSource = dtCheck;
+            daCheck.Update((DataTable)bsCheck.DataSource);
+
+            //this part to add log 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtFeed.Rows[0]["日志"] = dtFeed.Rows[0]["日志"].ToString() + log;
+
+            //fill reviwer information
+            dtFeed.Rows[0]["审核人"] = __待审核;
+            //update log into table
+            bsFeed.EndEdit();
+            daFeed.Update((DataTable)bsFeed.DataSource);
+            try
+            {
+                readFeedData(searchId);
+            }
+            catch
+            {
+                readFeedData(__生产指令编号,__生产日期,__班次);
+            }
+            removeFeedBinding();
+            feedBinding();
+
+            formState = 1;
+            setEnableReadOnly();
+            btn提交审核.Enabled = false;
+        }
+        private void btn查看日志_Click(object sender, EventArgs e)
+        {
+            try
+            { MessageBox.Show(dtFeed.Rows[0]["日志"].ToString()); }
+            catch
+            { MessageBox.Show(" !"); }
+        }
+
         private void btn审核_Click(object sender, EventArgs e)
         {
             check = new CheckForm(this);
@@ -274,7 +565,7 @@ namespace mySystem.Process.Extruction.C
         {           
             bsFeed.EndEdit();
             daFeed.Update((DataTable)bsFeed.DataSource);
-            readFeedData(txb生产指令编号.Text, dtp生产日期.Value, cmb班次.SelectedItem.ToString());
+            readFeedData(__生产指令编号, __生产日期, __班次);
             removeFeedBinding();
             feedBinding();
 
@@ -282,7 +573,10 @@ namespace mySystem.Process.Extruction.C
             readItemData(Convert.ToInt32(dtFeed.Rows[0]["ID"]));
             ItemBind();
             btnSave.Enabled = false;
-            btn审核.Enabled = true;
+            if (0== userState)
+            {
+                btn提交审核.Enabled = true;
+            }
         }
 
         private void btn添加_Click(object sender, EventArgs e)
@@ -349,6 +643,14 @@ namespace mySystem.Process.Extruction.C
             Marshal.ReleaseComObject(oXL);
 			}
 		}
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+        }
     }
 	
 }

@@ -35,12 +35,26 @@ namespace mySystem.Process.Extruction.B
         List<string> namecol = new List<string>(new string[] { "第一牵引", "第二牵引", "外表面电机", "外冷进风机", "内冷排风机", "内冷进风机", "外中心电机", "内表面电机", "内中心电机", "下料口温度" });
         List<string> nameright = new List<string>(new string[] { "设置频率", "实际频率", "设定张力", "实际张力", "电流", "转矩" });
         List<string> weightright = new List<string>(new string[] { "(Hz)", "(Hz)", "(kg)", "(kg)", "(A)", "(%)" });
+        List<string> list操作员;// = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
+        List<string> list审核员;//= new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
         string note = "--------";
+        string __待审核 = "__待审核";
+        int searchId;
         DataTable dtSetting;
         Hashtable productCode;
         DateTime _Date,_Time;
+        int instructionId;
+        string productStr;
         private CheckForm check = null;
-       
+
+        /// <summary>
+        /// 0--操作员，1--审核员，2--管理员
+        /// </summary>
+        int userState;
+        /// <summary>
+        /// 0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// </summary>
+        int formState;
         
         public Running(mySystem.MainForm mainform)
             : base(mainform)
@@ -48,25 +62,27 @@ namespace mySystem.Process.Extruction.B
             InitializeComponent();
             
             conOle = Parameter.connOle;
-            dtSetting = new DataTable("setting");
-            getProductCode();
-            foreach (string s in productCode.Keys.OfType<string>().ToList<string>())
-            {
-                cmb产品代码.Items.Add(s);
-            }
-
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
-            
-            cmb产品代码.Enabled = true;
             init1();
-            setAble(false);
-            getSetting();
+            getPeople();
+            setUserState();
+            
+            //getOtherData()--> -->只让部分控件可点击 {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->addComputerEventHandler()-->setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()
+
+            //Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date, _Time
+            instructionId = Parameter.proInstruID;
+            productStr=cmb产品代码.SelectedItem.ToString();
+            _Date=Convert.ToDateTime( dtp生产日期.Value.ToString());
+            _Time = Convert.ToDateTime(dtp记录时间.Value.ToString());
+            getOtherData();
+            addDataEventHandler();
+            addOtherEvnetHandler();
+            cmb产品代码.Enabled = true;
+            
+            
             this.FormClosing += new FormClosingEventHandler(Running_FormClosing);
         }
-
+        private void addDataEventHandler()
+        { }
         void Running_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (cmb产品代码.Text == "")
@@ -75,50 +91,67 @@ namespace mySystem.Process.Extruction.B
             }
             if (txb审核人.Text.ToString().Trim() == "")
             {
-                MessageBox.Show("没有审核人信息");
-                e.Cancel = true;
-               
+                MessageBox.Show("请提交审核");
+                e.Cancel = true;               
             }
 
             //test for print
             btn打印.Enabled = true;
+            btn查看日志.Enabled = true;
         }
 
         public Running(mySystem.MainForm mainform, int Id)
             : base(mainform)
         {
             InitializeComponent();
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
-            init1();
             conOle = Parameter.connOle;
+            searchId = Id;
+            init1();
+            getPeople();
+            setUserState();
 
-            //getProductCode();
-            //foreach (string s in productCode.Keys.OfType<string>().ToList<string>())
-            //{
-            //    cmb产品代码.Items.Add(s);
-            //}
-            
+            getOtherData();
+            addDataEventHandler();
+            //btn提交审核.PerformClick();
             dtRunning = new DataTable(tablename1);
-            daRunning = new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID ="+Id, conOle);
+            daRunning = new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID =" + Id, conOle);
             bsRunning = new BindingSource();
             cbRunning = new OleDbCommandBuilder(daRunning);
             daRunning.Fill(dtRunning);
             removeOuterBinding();
+
+
+            instructionId =Convert.ToInt32( dtRunning.Rows[0]["生产指令ID"]);
+            productStr =Convert.ToString( dtRunning.Rows[0]["产品代码"]);
+            _Date = Convert.ToDateTime(dtRunning.Rows[0]["生产日期"]);
+            _Time = Convert.ToDateTime(dtRunning.Rows[0]["记录时间"]);
+            //add item in cmb
+            cmb产品代码.Items.Add(dtRunning.Rows[0]["产品代码"].ToString());
             outerBind();
-            cmb产品代码.Text = dtRunning.Rows[0]["产品代码"].ToString();
 
-            btn保存.Visible = false;
-            btn审核.Visible = false;
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
-            btn打印.Enabled = true;
+            setFormState();
+            setEnableReadOnly();
+            
+
+            //btn保存.Visible = false;
+            
+
+
         }
-
+        /// <summary>
+        /// get settings and so on
+        /// </summary>
+        private void getOtherData()
+        {
+            dtSetting = new DataTable("setting");
+            getSetting();
+            getProductCode();
+            foreach (string s in productCode.Keys.OfType<string>().ToList<string>())
+            {
+                cmb产品代码.Items.Add(s);
+            }
+            
+        }
         private void getSetting()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM 设置吹膜机组预热参数记录表",conOle);
@@ -136,9 +169,11 @@ namespace mySystem.Process.Extruction.B
             }
             
         }
+        /// <summary>
+        /// this function will automatically draw the textboxs in the form
+        /// </summary>
         private void init1()
-        {
-            
+        {            
             int x = 10, y = 150;
             int wider = 100, slimer = 70,marginy=10,marginx=2,middleMargin=30;
             int  diff = wider-slimer;
@@ -179,14 +214,6 @@ namespace mySystem.Process.Extruction.B
                         }
                     }
                     tb.BorderStyle = BorderStyle.Fixed3D;
-                    //if (0 == j % 2)
-                    //{
-                    //    tb.BackColor = Color.LightBlue;
-                    //}
-                    //else
-                    //{
-                    //    tb.BackColor = Color.LightSteelBlue;
-                    //}
                     row.Add(tb);
                     this.Controls.Add(tb);
                 }
@@ -213,6 +240,10 @@ namespace mySystem.Process.Extruction.B
             hide();
             line();
         }
+
+        /// <summary>
+        /// this function fill some textboxes the rows name anf columns name
+        /// </summary>
         private void addname1()
         {
             for (int i = 0; i < namelsft1.Count; i++)
@@ -269,6 +300,10 @@ namespace mySystem.Process.Extruction.B
             array1[12][11].Enabled = false;
             array1[12][11].BorderStyle = BorderStyle.None;
         }
+
+        /// <summary>
+        /// this function hide some unused textboxes
+        /// </summary>
         private void hide()
         {
             for (int i = 0; i < 7; i++)
@@ -276,6 +311,9 @@ namespace mySystem.Process.Extruction.B
                 this.Controls.Remove(array1[i][6]);
             }
         }
+        /// <summary>
+        /// this function fills textboxes with lines 
+        /// </summary>
         private void line()
         {
             for (int i = 0; i < 6; i++)
@@ -306,10 +344,17 @@ namespace mySystem.Process.Extruction.B
             //pullData();
             bsRunning.EndEdit();
             daRunning.Update((DataTable)bsRunning.DataSource);
-            readOuterData(Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date, _Time);
+            try
+            {
+                readOuterData(searchId);
+            }
+            catch
+            {
+                readOuterData(instructionId,productStr,_Date,_Time);
+            }
             removeOuterBinding();
             outerBind();
-            btn审核.Enabled = true;
+            btn提交审核.Enabled = true;
         }
 
         private void btn插入_Click(object sender, EventArgs e)
@@ -317,8 +362,20 @@ namespace mySystem.Process.Extruction.B
             //DataRow newDataRow = dtRunning.NewRow();
             //dtRunning.Rows.Add(newDataRow);
         }
+
+        /// <summary>
+        /// this function controls the enable and disable status of the textbox array
+        /// </summary>
+        /// <param name="flag">true means enable and false opposite</param>
         private void setAble(bool flag)
         {
+            for (int i = 0; i < 14; i++)
+            {
+                for (int j = 0; j < 12; j++)
+                {
+                    array1[i][j].Enabled = false;
+                }
+            }
             if (flag)
             {
                 for (int i = 0; i < 6; i++)
@@ -408,27 +465,23 @@ namespace mySystem.Process.Extruction.B
                 }
             }
         }
-        private void cmb产品代码_SelectedIndexChanged(object sender, EventArgs e)
+
+        /// <summary>
+        /// 设置自动计算类事件
+        /// </summary>
+        private void addComputerEventHandler()
+        { }
+
+        /// <summary>
+        /// 其他事件，比如按钮的点击，数据有效性判断
+        /// </summary>
+        private void addOtherEvnetHandler()
         {
-            _Date = DateTime.Now.Date;
-            _Time = Convert.ToDateTime(DateTime.Now.ToString());
-            readOuterData(Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date, _Time);
-            removeOuterBinding();
-            outerBind();
-            if (0 == dtRunning.Rows.Count)
+            //when operator login,new a record;
+            if (0 == userState)
             {
-                DataRow newrow = dtRunning.NewRow();
-                newrow = writeOuterDefault(newrow);
-                dtRunning.Rows.Add(newrow);
-                daRunning.Update((DataTable)bsRunning.DataSource);
-                readOuterData(Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date, _Time);
-                removeOuterBinding();
-                outerBind();
+                //this.Shown += new EventHandler(Running_Shown);
             }
-            cmb产品代码.Enabled = false;
-            txb产品批号.Enabled = false;
-            dtp生产日期.Enabled = false;
-            dtp记录时间.Enabled = false;
             for (int i = 0; i < 14; i++)
             {
                 for (int j = 0; j < 12; j++)
@@ -441,32 +494,35 @@ namespace mySystem.Process.Extruction.B
             array1[1][1].Leave += new EventHandler(Running_Leave1);
             array1[1][2].Leave += new EventHandler(Running_Leave1);
             array1[1][3].Leave += new EventHandler(Running_Leave1);
-            array1[2][1].Leave+=new EventHandler(Running_Leave2);
+            array1[2][1].Leave += new EventHandler(Running_Leave2);
             array1[2][2].Leave += new EventHandler(Running_Leave2);
             array1[2][3].Leave += new EventHandler(Running_Leave2);
-            array1[3][1].Leave+=new EventHandler(Running_Leave3);
+            array1[3][1].Leave += new EventHandler(Running_Leave3);
             array1[3][2].Leave += new EventHandler(Running_Leave3);
             array1[3][3].Leave += new EventHandler(Running_Leave3);
-            array1[4][1].Leave+=new EventHandler(Running_Leave4);
+            array1[4][1].Leave += new EventHandler(Running_Leave4);
             array1[4][2].Leave += new EventHandler(Running_Leave4);
             array1[4][3].Leave += new EventHandler(Running_Leave4);
-            array1[5][1].Leave+=new EventHandler(Running_Leave5);
+            array1[5][1].Leave += new EventHandler(Running_Leave5);
             array1[5][2].Leave += new EventHandler(Running_Leave5);
             array1[5][3].Leave += new EventHandler(Running_Leave5);
-            array1[6][1].Leave+=new EventHandler(Running_Leave6);
+            array1[6][1].Leave += new EventHandler(Running_Leave6);
             array1[6][2].Leave += new EventHandler(Running_Leave6);
             array1[6][3].Leave += new EventHandler(Running_Leave6);
-            array1[1][5].Leave+=new EventHandler(Running_Leave7);
-            array1[2][5].Leave+=new EventHandler(Running_Leave8);
-            array1[3][5].Leave+=new EventHandler(Running_Leave9);
-            array1[4][5].Leave+=new EventHandler(Running_Leave10);
-            btn保存.Enabled = true;
-            setAble(true);
-            btn审核.Enabled = false;
+            array1[1][5].Leave += new EventHandler(Running_Leave7);
+            array1[2][5].Leave += new EventHandler(Running_Leave8);
+            array1[3][5].Leave += new EventHandler(Running_Leave9);
+            array1[4][5].Leave += new EventHandler(Running_Leave10);
+        }
 
-
-            //test for print
-            btn打印.Enabled = true;
+        void Running_Shown(object sender, EventArgs e)
+        {
+            MessageBox.Show("new form!");
+            //btn新建.PerformClick();
+        }
+        private void cmb产品代码_SelectedIndexChanged(object sender, EventArgs e)
+        {
+           
         }
         void Running_Leave10(object sender, EventArgs e)
         {
@@ -664,6 +720,14 @@ namespace mySystem.Process.Extruction.B
             cbRunning = new OleDbCommandBuilder(daRunning);
             daRunning.Fill(dtRunning);
         }
+        void readOuterData(int ID)
+        {
+            dtRunning = new DataTable("吹膜机组运行记录");
+            daRunning = new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID =" +ID+";", conOle);
+            bsRunning = new BindingSource();
+            cbRunning = new OleDbCommandBuilder(daRunning);
+            daRunning.Fill(dtRunning);
+        }
         DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = Parameter.proInstruID;
@@ -676,8 +740,16 @@ namespace mySystem.Process.Extruction.B
             return dr;
         }
         void outerBind()
-        { 
-             cmb产品代码.DataBindings.Add("SelectedItem",bsRunning.DataSource,colname[0]);
+        {
+            if (userState == 1)
+            {
+                cmb产品代码.DataBindings.Add("Text", bsRunning.DataSource, colname[0]);
+            }
+            else
+            {
+                cmb产品代码.DataBindings.Add("SelectedItem", bsRunning.DataSource, colname[0]);
+            }
+             //cmb产品代码.DataBindings.Add("SelectedItem",bsRunning.DataSource,colname[0]);
              txb产品批号.DataBindings.Add("Text", bsRunning.DataSource, colname[1]);
              dtp生产日期.DataBindings.Add("Value", bsRunning.DataSource, colname[2]);
              dtp记录时间.DataBindings.Add("Value", bsRunning.DataSource, colname[3]);
@@ -769,21 +841,82 @@ namespace mySystem.Process.Extruction.B
         {
             if (check.ischeckOk)
             {
+                //to update the running record
                 base.CheckResult();
                 txb审核人.Text = check.userName.ToString();
                 dtRunning.Rows[0]["审核人"] = check.userName.ToString();
                 dtRunning.Rows[0]["审核意见"] = check.opinion.ToString();
                 dtRunning.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
+
+                //this part to add log 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 审核
+                string log = "=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 审核通过\n";
+                dtRunning.Rows[0]["日志"] = dtRunning.Rows[0]["日志"].ToString() + log;
+
+
                 bsRunning.EndEdit();
                 daRunning.Update((DataTable)bsRunning.DataSource);
-                readOuterData(Parameter.proInstruID, cmb产品代码.SelectedItem.ToString(), _Date, _Time);
+
+                readOuterData(searchId);
+
                 removeOuterBinding();
                 outerBind();
-                foreach (Control c in this.Controls)
+
+                //to delete the unchecked table
+                //read from database table and find current record
+                string checkName = "待审核";
+                DataTable dtCheck = new DataTable(checkName);
+                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                BindingSource bsCheck = new BindingSource();
+                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                daCheck.Fill(dtCheck);
+
+                //this part will never be run, for there must be a unchecked recird before this button becomes enable
+                if (0 == dtCheck.Rows.Count)
                 {
-                    c.Enabled = false;
+                    DataRow newrow = dtCheck.NewRow();
+                    newrow["表名"] = tablename1;
+                    newrow["对应ID"] = dtRunning.Rows[0]["ID"];
+                    dtCheck.Rows.Add(newrow);
                 }
-                btn打印.Enabled = true;
+                //remove the record
+                dtCheck.Rows[0].Delete();
+                bsCheck.DataSource = dtCheck;
+                daCheck.Update((DataTable)bsCheck.DataSource);
+                formState = 2;
+                setEnableReadOnly();
+            }
+            else
+            {
+                //check unpassed
+                base.CheckResult();
+                txb审核人.Text = check.userName.ToString();
+                dtRunning.Rows[0]["审核人"] = check.userName.ToString();
+                dtRunning.Rows[0]["审核意见"] = check.opinion.ToString();
+                dtRunning.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
+
+
+                //this part to add log 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 审核
+                string log = "=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 审核不通过\n";
+                dtRunning.Rows[0]["日志"] = dtRunning.Rows[0]["日志"].ToString() + log;
+
+
+                bsRunning.EndEdit();
+                daRunning.Update((DataTable)bsRunning.DataSource);
+
+                readOuterData(searchId);
+
+                removeOuterBinding();
+                outerBind();
+                formState = 3;
+                setEnableReadOnly();
             }
         }
         private void btn审核_Click(object sender, EventArgs e)
@@ -884,6 +1017,263 @@ namespace mySystem.Process.Extruction.B
 			}
 		}
 
+        private void btn提交审核_Click(object sender, EventArgs e)
+        {
+            //read from database table and find current record
+            string checkName = "待审核";
+            DataTable dtCheck = new DataTable(checkName);
+            OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+            BindingSource bsCheck = new BindingSource();
+            OleDbCommandBuilder cbCheck= new OleDbCommandBuilder(daCheck);
+            daCheck.Fill(dtCheck);
+
+            //if current hasn't been stored, insert a record in table
+            if (0 == dtCheck.Rows.Count)
+            {
+                DataRow newrow = dtCheck.NewRow();
+                newrow["表名"] = tablename1;
+                newrow["对应ID"] = dtRunning.Rows[0]["ID"];
+                dtCheck.Rows.Add(newrow);
+            }
+            bsCheck.DataSource = dtCheck;
+            daCheck.Update((DataTable)bsCheck.DataSource);
+
+            //this part to add log 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtRunning.Rows[0]["日志"] = dtRunning.Rows[0]["日志"].ToString() + log;
+
+            //fill reviwer information
+            dtRunning.Rows[0]["审核人"] = __待审核;
+            //update log into table
+            bsRunning.EndEdit();
+            daRunning.Update((DataTable)bsRunning.DataSource);
+            try
+            {
+                readOuterData(searchId);
+            }
+            catch
+            {
+                readOuterData(instructionId, productStr, _Date, _Time);
+            }
+            removeOuterBinding();
+            outerBind();
+
+            formState = 1;
+            setEnableReadOnly();
+            btn提交审核.Enabled = false;
+        }
+       /// <summary>
+       ///  for different user, the form will open different controls
+       /// </summary>
+        private void setEnableReadOnly()
+        {
+            switch (userState)
+            {
+                case 0: //0--操作员
+                    //In this situation,operator could edit all the information and the send button is active
+                    if (0 == formState || 3 == formState)
+                    {
+                        setControlTrue();
+                    }
+                    //Once the record send to the reviewer or the record has passed check, all the controls are forbidden
+                    else if (1 == formState || 2 == formState)
+                    {
+                        setControlFalse();
+                    }
+                    break;
+                case 1: //1--审核员
+                    //the formState is to be checked
+                    if (1 == formState)
+                    {
+                        setControlTrue();
+                        btn审核.Enabled = true;
+                        //one more button should be avtive here!
+                    }
+                    //the formState do not have to be checked
+                    else if (0 == formState || 2 == formState || 3 == formState)
+                    {
+                        setControlFalse();
+                    }
+                    break;
+                case 2: //2--管理员
+                    setControlTrue();
+                    break;
+                default:
+                    break;
+            }
+        }
+        // 为了方便设置控件状态，完成如下两个函数：分别用于设置所有控件可用和所有控件不可用
+
+        //this guarantee the controls are editable
+        private void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = false;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            //some textboxes act as column name and row name, so these shoule be forbidden
+            setAble(true);
+            // 保证这两个按钮一直是false
+            btn审核.Enabled = false;
+            btn提交审核.Enabled = false;
+        }
+
         
+        /// <summary>
+        /// this guarantees the controls are uneditable
+        /// </summary>
+        private void setControlFalse()
+        
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = true;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            //this act as the same in function upper
+            setAble(false);
+            btn查看日志.Enabled = true;
+            btn打印.Enabled = true;
+        }
+        private void getPeople()
+        {
+            string tabName ="用户权限";
+            DataTable dtUser = new DataTable(tabName);
+            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM "+tabName+" WHERE 步骤 = '"+tablename1+"';",conOle);
+            BindingSource bsUser = new BindingSource();
+            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+            daUser.Fill(dtUser);
+            if (dtUser.Rows.Count !=1)
+            {
+                MessageBox.Show("请确认表单权限信息");
+                this.Close();
+            }
+
+            //the getPeople and setUserState combine here
+            list操作员 =new List<string>(new string[]{dtUser.Rows[0]["操作员"].ToString()});
+            list审核员 =new List<string>(new string[]{dtUser.Rows[0]["审核员"].ToString()});
+            
+        }
+        private void setUserState()
+        {
+            if (list操作员.IndexOf(Parameter.userName) >= 0)
+            {
+                userState = 0;
+            }
+            else if (list审核员.IndexOf(Parameter.userName) >= 0)
+            {
+                userState = 1;
+            }
+            else
+            {
+                userState = 2;
+            }
+        }
+        private void setFormState()
+        {
+            if ("" == dtRunning.Rows[0]["审核人"].ToString().Trim())
+            {
+                //this means the record hasn't been saved
+                formState = 0;
+            }
+            else if (__待审核 == dtRunning.Rows[0]["审核人"].ToString().Trim())
+            {
+                //this means this record should be checked
+                formState = 1;
+            }
+            else if (Convert.ToBoolean(dtRunning.Rows[0]["审核是否通过"]))
+            {
+                //this means this record has been checked
+                formState = 2;
+            }
+            else
+            {
+                //this means the record has been checked but need more modification
+                formState = 3;
+            }
+        }
+
+        private void btn新建_Click(object sender, EventArgs e)
+        {
+            _Date = DateTime.Now.Date;
+            _Time = Convert.ToDateTime(DateTime.Now.ToString());
+            try
+            {
+                readOuterData(searchId);
+            }
+            catch
+            {
+                readOuterData(instructionId, productStr, _Date, _Time);
+            }
+            removeOuterBinding();
+            outerBind();
+            if (0 == dtRunning.Rows.Count)
+            {
+                DataRow newrow = dtRunning.NewRow();
+                newrow = writeOuterDefault(newrow);
+                dtRunning.Rows.Add(newrow);
+                daRunning.Update((DataTable)bsRunning.DataSource);
+                try
+                {
+                    readOuterData(searchId);
+                }
+                catch
+                {
+                    readOuterData(instructionId, productStr, _Date, _Time);
+                }
+                removeOuterBinding();
+                outerBind();
+            }
+            //setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()
+            addComputerEventHandler();
+            setFormState();
+            setEnableReadOnly();
+            addOtherEvnetHandler();
+            //cmb产品代码.Enabled = false;
+            //txb产品批号.Enabled = false;
+            //dtp生产日期.Enabled = false;
+            //dtp记录时间.Enabled = false;
+
+            //btn保存.Enabled = true;
+            //setAble(true);
+            //btn审核.Enabled = false;
+
+            //test for print
+            btn打印.Enabled = true;
+            MessageBox.Show("new!");
+        }
+
+        private void btn查看日志_Click(object sender, EventArgs e)
+        {
+            try
+            { MessageBox.Show(dtRunning.Rows[0]["日志"].ToString()); }
+            catch
+            { MessageBox.Show(" !"); }
+        }
     }
 }

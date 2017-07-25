@@ -39,29 +39,29 @@
             this.txb夜班产品代码批号数量 = new System.Windows.Forms.TextBox();
             this.txb白班产品代码批号数量 = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lb白班异常情况处理 = new System.Windows.Forms.Label();
-            this.txb白班异常情况处理 = new System.Windows.Forms.TextBox();
-            this.lb白班交班人 = new System.Windows.Forms.Label();
-            this.txb白班交班人 = new System.Windows.Forms.TextBox();
-            this.lb白班接班人 = new System.Windows.Forms.Label();
-            this.txb白班接班人 = new System.Windows.Forms.TextBox();
-            this.lb白班交接班时间 = new System.Windows.Forms.Label();
-            this.dtp白班交接班时间 = new System.Windows.Forms.DateTimePicker();
-            this.lb夜班异常情况处理 = new System.Windows.Forms.Label();
-            this.txb夜班异常情况处理 = new System.Windows.Forms.TextBox();
-            this.lb夜班交班人 = new System.Windows.Forms.Label();
-            this.txb夜班交班人 = new System.Windows.Forms.TextBox();
-            this.lb夜班接班人 = new System.Windows.Forms.Label();
-            this.txb夜班接班人 = new System.Windows.Forms.TextBox();
-            this.夜班交接班时间 = new System.Windows.Forms.Label();
-            this.dtp夜班交接班时间 = new System.Windows.Forms.DateTimePicker();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.btn保存 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn打印 = new System.Windows.Forms.Button();
+            this.dtp夜班交接班时间 = new System.Windows.Forms.DateTimePicker();
+            this.夜班交接班时间 = new System.Windows.Forms.Label();
+            this.txb白班接班人 = new System.Windows.Forms.TextBox();
+            this.lb白班接班人 = new System.Windows.Forms.Label();
+            this.txb夜班交班人 = new System.Windows.Forms.TextBox();
+            this.lb夜班交班人 = new System.Windows.Forms.Label();
+            this.txb夜班异常情况处理 = new System.Windows.Forms.TextBox();
+            this.lb夜班异常情况处理 = new System.Windows.Forms.Label();
+            this.dtp白班交接班时间 = new System.Windows.Forms.DateTimePicker();
+            this.lb白班交接班时间 = new System.Windows.Forms.Label();
+            this.lb白班异常情况处理 = new System.Windows.Forms.Label();
+            this.txb夜班接班人 = new System.Windows.Forms.TextBox();
+            this.lb夜班接班人 = new System.Windows.Forms.Label();
+            this.txb白班交班人 = new System.Windows.Forms.TextBox();
+            this.lb白班交班人 = new System.Windows.Forms.Label();
+            this.txb白班异常情况处理 = new System.Windows.Forms.TextBox();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label7
@@ -174,161 +174,6 @@
             this.panel1.TabIndex = 61;
             this.panel1.Visible = false;
             // 
-            // lb白班异常情况处理
-            // 
-            this.lb白班异常情况处理.AutoSize = true;
-            this.lb白班异常情况处理.Location = new System.Drawing.Point(25, 14);
-            this.lb白班异常情况处理.Name = "lb白班异常情况处理";
-            this.lb白班异常情况处理.Size = new System.Drawing.Size(136, 16);
-            this.lb白班异常情况处理.TabIndex = 62;
-            this.lb白班异常情况处理.Text = "白班异常情况处理";
-            // 
-            // txb白班异常情况处理
-            // 
-            this.txb白班异常情况处理.Location = new System.Drawing.Point(28, 33);
-            this.txb白班异常情况处理.Multiline = true;
-            this.txb白班异常情况处理.Name = "txb白班异常情况处理";
-            this.txb白班异常情况处理.Size = new System.Drawing.Size(288, 120);
-            this.txb白班异常情况处理.TabIndex = 63;
-            // 
-            // lb白班交班人
-            // 
-            this.lb白班交班人.AutoSize = true;
-            this.lb白班交班人.Location = new System.Drawing.Point(25, 167);
-            this.lb白班交班人.Name = "lb白班交班人";
-            this.lb白班交班人.Size = new System.Drawing.Size(88, 16);
-            this.lb白班交班人.TabIndex = 64;
-            this.lb白班交班人.Text = "白班交班人";
-            // 
-            // txb白班交班人
-            // 
-            this.txb白班交班人.Location = new System.Drawing.Point(119, 159);
-            this.txb白班交班人.Name = "txb白班交班人";
-            this.txb白班交班人.Size = new System.Drawing.Size(100, 26);
-            this.txb白班交班人.TabIndex = 65;
-            // 
-            // lb白班接班人
-            // 
-            this.lb白班接班人.AutoSize = true;
-            this.lb白班接班人.Location = new System.Drawing.Point(25, 456);
-            this.lb白班接班人.Name = "lb白班接班人";
-            this.lb白班接班人.Size = new System.Drawing.Size(88, 16);
-            this.lb白班接班人.TabIndex = 66;
-            this.lb白班接班人.Text = "白班接班人";
-            // 
-            // txb白班接班人
-            // 
-            this.txb白班接班人.Location = new System.Drawing.Point(119, 453);
-            this.txb白班接班人.Name = "txb白班接班人";
-            this.txb白班接班人.Size = new System.Drawing.Size(100, 26);
-            this.txb白班接班人.TabIndex = 67;
-            // 
-            // lb白班交接班时间
-            // 
-            this.lb白班交接班时间.AutoSize = true;
-            this.lb白班交接班时间.Location = new System.Drawing.Point(25, 231);
-            this.lb白班交接班时间.Name = "lb白班交接班时间";
-            this.lb白班交接班时间.Size = new System.Drawing.Size(120, 16);
-            this.lb白班交接班时间.TabIndex = 68;
-            this.lb白班交接班时间.Text = "白班交接班时间";
-            // 
-            // dtp白班交接班时间
-            // 
-            this.dtp白班交接班时间.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp白班交接班时间.Location = new System.Drawing.Point(151, 224);
-            this.dtp白班交接班时间.Name = "dtp白班交接班时间";
-            this.dtp白班交接班时间.Size = new System.Drawing.Size(165, 26);
-            this.dtp白班交接班时间.TabIndex = 69;
-            // 
-            // lb夜班异常情况处理
-            // 
-            this.lb夜班异常情况处理.AutoSize = true;
-            this.lb夜班异常情况处理.Location = new System.Drawing.Point(25, 277);
-            this.lb夜班异常情况处理.Name = "lb夜班异常情况处理";
-            this.lb夜班异常情况处理.Size = new System.Drawing.Size(136, 16);
-            this.lb夜班异常情况处理.TabIndex = 70;
-            this.lb夜班异常情况处理.Text = "夜班异常情况处理";
-            // 
-            // txb夜班异常情况处理
-            // 
-            this.txb夜班异常情况处理.Location = new System.Drawing.Point(28, 296);
-            this.txb夜班异常情况处理.Multiline = true;
-            this.txb夜班异常情况处理.Name = "txb夜班异常情况处理";
-            this.txb夜班异常情况处理.Size = new System.Drawing.Size(288, 120);
-            this.txb夜班异常情况处理.TabIndex = 71;
-            // 
-            // lb夜班交班人
-            // 
-            this.lb夜班交班人.AutoSize = true;
-            this.lb夜班交班人.Location = new System.Drawing.Point(25, 428);
-            this.lb夜班交班人.Name = "lb夜班交班人";
-            this.lb夜班交班人.Size = new System.Drawing.Size(88, 16);
-            this.lb夜班交班人.TabIndex = 72;
-            this.lb夜班交班人.Text = "夜班交班人";
-            // 
-            // txb夜班交班人
-            // 
-            this.txb夜班交班人.Location = new System.Drawing.Point(119, 422);
-            this.txb夜班交班人.Name = "txb夜班交班人";
-            this.txb夜班交班人.Size = new System.Drawing.Size(100, 26);
-            this.txb夜班交班人.TabIndex = 73;
-            // 
-            // lb夜班接班人
-            // 
-            this.lb夜班接班人.AutoSize = true;
-            this.lb夜班接班人.Location = new System.Drawing.Point(25, 194);
-            this.lb夜班接班人.Name = "lb夜班接班人";
-            this.lb夜班接班人.Size = new System.Drawing.Size(88, 16);
-            this.lb夜班接班人.TabIndex = 74;
-            this.lb夜班接班人.Text = "夜班接班人";
-            // 
-            // txb夜班接班人
-            // 
-            this.txb夜班接班人.Location = new System.Drawing.Point(119, 191);
-            this.txb夜班接班人.Name = "txb夜班接班人";
-            this.txb夜班接班人.Size = new System.Drawing.Size(100, 26);
-            this.txb夜班接班人.TabIndex = 75;
-            // 
-            // 夜班交接班时间
-            // 
-            this.夜班交接班时间.AutoSize = true;
-            this.夜班交接班时间.Location = new System.Drawing.Point(25, 491);
-            this.夜班交接班时间.Name = "夜班交接班时间";
-            this.夜班交接班时间.Size = new System.Drawing.Size(120, 16);
-            this.夜班交接班时间.TabIndex = 76;
-            this.夜班交接班时间.Text = "夜班交接班时间";
-            // 
-            // dtp夜班交接班时间
-            // 
-            this.dtp夜班交接班时间.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtp夜班交接班时间.Location = new System.Drawing.Point(151, 484);
-            this.dtp夜班交接班时间.Name = "dtp夜班交接班时间";
-            this.dtp夜班交接班时间.Size = new System.Drawing.Size(165, 26);
-            this.dtp夜班交接班时间.TabIndex = 77;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.dtp夜班交接班时间);
-            this.panel2.Controls.Add(this.夜班交接班时间);
-            this.panel2.Controls.Add(this.txb夜班接班人);
-            this.panel2.Controls.Add(this.lb夜班接班人);
-            this.panel2.Controls.Add(this.txb夜班交班人);
-            this.panel2.Controls.Add(this.lb夜班交班人);
-            this.panel2.Controls.Add(this.txb夜班异常情况处理);
-            this.panel2.Controls.Add(this.lb夜班异常情况处理);
-            this.panel2.Controls.Add(this.dtp白班交接班时间);
-            this.panel2.Controls.Add(this.lb白班交接班时间);
-            this.panel2.Controls.Add(this.txb白班接班人);
-            this.panel2.Controls.Add(this.lb白班接班人);
-            this.panel2.Controls.Add(this.txb白班交班人);
-            this.panel2.Controls.Add(this.lb白班交班人);
-            this.panel2.Controls.Add(this.txb白班异常情况处理);
-            this.panel2.Controls.Add(this.lb白班异常情况处理);
-            this.panel2.Location = new System.Drawing.Point(769, 108);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(334, 621);
-            this.panel2.TabIndex = 78;
-            // 
             // btn保存
             // 
             this.btn保存.Location = new System.Drawing.Point(819, 62);
@@ -341,7 +186,7 @@
             // 
             // btn审核
             // 
-            this.btn审核.Location = new System.Drawing.Point(920, 62);
+            this.btn审核.Location = new System.Drawing.Point(910, 62);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 23);
             this.btn审核.TabIndex = 80;
@@ -351,7 +196,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(1004, 62);
+            this.btn打印.Location = new System.Drawing.Point(991, 62);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(81, 23);
             this.btn打印.TabIndex = 81;
@@ -359,22 +204,191 @@
             this.btn打印.UseVisualStyleBackColor = true;
             this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
+            // dtp夜班交接班时间
+            // 
+            this.dtp夜班交接班时间.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtp夜班交接班时间.Location = new System.Drawing.Point(942, 578);
+            this.dtp夜班交接班时间.Name = "dtp夜班交接班时间";
+            this.dtp夜班交接班时间.Size = new System.Drawing.Size(165, 26);
+            this.dtp夜班交接班时间.TabIndex = 77;
+            // 
+            // 夜班交接班时间
+            // 
+            this.夜班交接班时间.AutoSize = true;
+            this.夜班交接班时间.Location = new System.Drawing.Point(816, 585);
+            this.夜班交接班时间.Name = "夜班交接班时间";
+            this.夜班交接班时间.Size = new System.Drawing.Size(120, 16);
+            this.夜班交接班时间.TabIndex = 76;
+            this.夜班交接班时间.Text = "夜班交接班时间";
+            // 
+            // txb白班接班人
+            // 
+            this.txb白班接班人.Location = new System.Drawing.Point(910, 547);
+            this.txb白班接班人.Name = "txb白班接班人";
+            this.txb白班接班人.Size = new System.Drawing.Size(100, 26);
+            this.txb白班接班人.TabIndex = 67;
+            // 
+            // lb白班接班人
+            // 
+            this.lb白班接班人.AutoSize = true;
+            this.lb白班接班人.Location = new System.Drawing.Point(816, 550);
+            this.lb白班接班人.Name = "lb白班接班人";
+            this.lb白班接班人.Size = new System.Drawing.Size(88, 16);
+            this.lb白班接班人.TabIndex = 66;
+            this.lb白班接班人.Text = "白班接班人";
+            // 
+            // txb夜班交班人
+            // 
+            this.txb夜班交班人.Location = new System.Drawing.Point(910, 516);
+            this.txb夜班交班人.Name = "txb夜班交班人";
+            this.txb夜班交班人.Size = new System.Drawing.Size(100, 26);
+            this.txb夜班交班人.TabIndex = 73;
+            // 
+            // lb夜班交班人
+            // 
+            this.lb夜班交班人.AutoSize = true;
+            this.lb夜班交班人.Location = new System.Drawing.Point(816, 522);
+            this.lb夜班交班人.Name = "lb夜班交班人";
+            this.lb夜班交班人.Size = new System.Drawing.Size(88, 16);
+            this.lb夜班交班人.TabIndex = 72;
+            this.lb夜班交班人.Text = "夜班交班人";
+            // 
+            // txb夜班异常情况处理
+            // 
+            this.txb夜班异常情况处理.Location = new System.Drawing.Point(819, 390);
+            this.txb夜班异常情况处理.Multiline = true;
+            this.txb夜班异常情况处理.Name = "txb夜班异常情况处理";
+            this.txb夜班异常情况处理.Size = new System.Drawing.Size(288, 120);
+            this.txb夜班异常情况处理.TabIndex = 71;
+            // 
+            // lb夜班异常情况处理
+            // 
+            this.lb夜班异常情况处理.AutoSize = true;
+            this.lb夜班异常情况处理.Location = new System.Drawing.Point(816, 371);
+            this.lb夜班异常情况处理.Name = "lb夜班异常情况处理";
+            this.lb夜班异常情况处理.Size = new System.Drawing.Size(136, 16);
+            this.lb夜班异常情况处理.TabIndex = 70;
+            this.lb夜班异常情况处理.Text = "夜班异常情况处理";
+            // 
+            // dtp白班交接班时间
+            // 
+            this.dtp白班交接班时间.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtp白班交接班时间.Location = new System.Drawing.Point(942, 321);
+            this.dtp白班交接班时间.Name = "dtp白班交接班时间";
+            this.dtp白班交接班时间.Size = new System.Drawing.Size(165, 26);
+            this.dtp白班交接班时间.TabIndex = 69;
+            // 
+            // lb白班交接班时间
+            // 
+            this.lb白班交接班时间.AutoSize = true;
+            this.lb白班交接班时间.Location = new System.Drawing.Point(816, 328);
+            this.lb白班交接班时间.Name = "lb白班交接班时间";
+            this.lb白班交接班时间.Size = new System.Drawing.Size(120, 16);
+            this.lb白班交接班时间.TabIndex = 68;
+            this.lb白班交接班时间.Text = "白班交接班时间";
+            // 
+            // lb白班异常情况处理
+            // 
+            this.lb白班异常情况处理.AutoSize = true;
+            this.lb白班异常情况处理.Location = new System.Drawing.Point(816, 111);
+            this.lb白班异常情况处理.Name = "lb白班异常情况处理";
+            this.lb白班异常情况处理.Size = new System.Drawing.Size(136, 16);
+            this.lb白班异常情况处理.TabIndex = 62;
+            this.lb白班异常情况处理.Text = "白班异常情况处理";
+            // 
+            // txb夜班接班人
+            // 
+            this.txb夜班接班人.Location = new System.Drawing.Point(910, 288);
+            this.txb夜班接班人.Name = "txb夜班接班人";
+            this.txb夜班接班人.Size = new System.Drawing.Size(100, 26);
+            this.txb夜班接班人.TabIndex = 75;
+            // 
+            // lb夜班接班人
+            // 
+            this.lb夜班接班人.AutoSize = true;
+            this.lb夜班接班人.Location = new System.Drawing.Point(816, 291);
+            this.lb夜班接班人.Name = "lb夜班接班人";
+            this.lb夜班接班人.Size = new System.Drawing.Size(88, 16);
+            this.lb夜班接班人.TabIndex = 74;
+            this.lb夜班接班人.Text = "夜班接班人";
+            // 
+            // txb白班交班人
+            // 
+            this.txb白班交班人.Location = new System.Drawing.Point(910, 256);
+            this.txb白班交班人.Name = "txb白班交班人";
+            this.txb白班交班人.Size = new System.Drawing.Size(100, 26);
+            this.txb白班交班人.TabIndex = 65;
+            // 
+            // lb白班交班人
+            // 
+            this.lb白班交班人.AutoSize = true;
+            this.lb白班交班人.Location = new System.Drawing.Point(816, 264);
+            this.lb白班交班人.Name = "lb白班交班人";
+            this.lb白班交班人.Size = new System.Drawing.Size(88, 16);
+            this.lb白班交班人.TabIndex = 64;
+            this.lb白班交班人.Text = "白班交班人";
+            // 
+            // txb白班异常情况处理
+            // 
+            this.txb白班异常情况处理.Location = new System.Drawing.Point(819, 130);
+            this.txb白班异常情况处理.Multiline = true;
+            this.txb白班异常情况处理.Name = "txb白班异常情况处理";
+            this.txb白班异常情况处理.Size = new System.Drawing.Size(288, 120);
+            this.txb白班异常情况处理.TabIndex = 63;
+            // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Location = new System.Drawing.Point(1170, 62);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(86, 23);
+            this.btn查看日志.TabIndex = 83;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
+            // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Location = new System.Drawing.Point(1078, 62);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(86, 23);
+            this.btn提交审核.TabIndex = 82;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            // 
             // HandOver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1115, 741);
+            this.ClientSize = new System.Drawing.Size(1370, 741);
+            this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.btn提交审核);
+            this.Controls.Add(this.dtp夜班交接班时间);
             this.Controls.Add(this.btn打印);
+            this.Controls.Add(this.夜班交接班时间);
             this.Controls.Add(this.btn审核);
+            this.Controls.Add(this.txb夜班接班人);
             this.Controls.Add(this.btn保存);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.lb夜班接班人);
+            this.Controls.Add(this.txb夜班交班人);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.lb夜班交班人);
             this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.txb夜班异常情况处理);
             this.Controls.Add(this.label7);
+            this.Controls.Add(this.lb夜班异常情况处理);
             this.Controls.Add(this.dtp生产日期);
+            this.Controls.Add(this.dtp白班交接班时间);
             this.Controls.Add(this.lb生产日期);
+            this.Controls.Add(this.lb白班交接班时间);
             this.Controls.Add(this.txb生产指令编号);
+            this.Controls.Add(this.txb白班接班人);
             this.Controls.Add(this.lb生产指令编号);
+            this.Controls.Add(this.lb白班接班人);
+            this.Controls.Add(this.lb白班异常情况处理);
+            this.Controls.Add(this.txb白班交班人);
+            this.Controls.Add(this.txb白班异常情况处理);
+            this.Controls.Add(this.lb白班交班人);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HandOver";
@@ -382,8 +396,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -402,25 +414,26 @@
         private System.Windows.Forms.TextBox txb夜班产品代码批号数量;
         private System.Windows.Forms.TextBox txb白班产品代码批号数量;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lb白班异常情况处理;
-        private System.Windows.Forms.TextBox txb白班异常情况处理;
-        private System.Windows.Forms.Label lb白班交班人;
-        private System.Windows.Forms.TextBox txb白班交班人;
-        private System.Windows.Forms.Label lb白班接班人;
-        private System.Windows.Forms.TextBox txb白班接班人;
-        private System.Windows.Forms.Label lb白班交接班时间;
-        private System.Windows.Forms.DateTimePicker dtp白班交接班时间;
-        private System.Windows.Forms.Label lb夜班异常情况处理;
-        private System.Windows.Forms.TextBox txb夜班异常情况处理;
-        private System.Windows.Forms.Label lb夜班交班人;
-        private System.Windows.Forms.TextBox txb夜班交班人;
-        private System.Windows.Forms.Label lb夜班接班人;
-        private System.Windows.Forms.TextBox txb夜班接班人;
-        private System.Windows.Forms.Label 夜班交接班时间;
-        private System.Windows.Forms.DateTimePicker dtp夜班交接班时间;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button btn打印;
+        private System.Windows.Forms.DateTimePicker dtp夜班交接班时间;
+        private System.Windows.Forms.Label 夜班交接班时间;
+        private System.Windows.Forms.TextBox txb白班接班人;
+        private System.Windows.Forms.Label lb白班接班人;
+        private System.Windows.Forms.TextBox txb夜班交班人;
+        private System.Windows.Forms.Label lb夜班交班人;
+        private System.Windows.Forms.TextBox txb夜班异常情况处理;
+        private System.Windows.Forms.Label lb夜班异常情况处理;
+        private System.Windows.Forms.DateTimePicker dtp白班交接班时间;
+        private System.Windows.Forms.Label lb白班交接班时间;
+        private System.Windows.Forms.Label lb白班异常情况处理;
+        private System.Windows.Forms.TextBox txb夜班接班人;
+        private System.Windows.Forms.Label lb夜班接班人;
+        private System.Windows.Forms.TextBox txb白班交班人;
+        private System.Windows.Forms.Label lb白班交班人;
+        private System.Windows.Forms.TextBox txb白班异常情况处理;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.Button btn提交审核;
     }
 }
