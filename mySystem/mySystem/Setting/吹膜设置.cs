@@ -403,100 +403,10 @@ namespace mySystem.Setting
             {
                 dgv.Rows[i].Cells[0].Value = (i + 1).ToString();
             }
-        }
+        }       
 
-        //初始填预热参数textbox
-        private void FillNum()
-        {
-            string tblName = "设置吹膜机组预热参数记录表";
-            List<String> readqueryCols = new List<String>(new String[] { "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
-                    "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
-                    "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
-                    "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" ,"温度公差"});
-            List<String> whereCols = new List<String>(new String[] { "ID" });
-            List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            List<List<Object>> queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
-
-            List<String> data = new List<String> { };
-            for (int i = 0; i < queryValsList[0].Count; i++)
-            {
-                data.Add(queryValsList[0][i].ToString());
-            }
-            List<Control> textboxes = new List<Control> { hw1, ld1, mj1, jt11, jt21, km1, duration1, region11, region21, region31, region41, hw2, 
-                    ld2, mj2, jt12, jt22, km2, duration2, region12, region22, region32, region42, duration3, tolerance};
-            Utility.fillControl(textboxes, data);
-
-
-            //读取数据库并显示
-            String tblName2 = "设置生产指令参数";
-            List<String> readqueryCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
-            List<String> whereCols2 = new List<String>(new String[] { "ID" });
-            List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
-            List<List<Object>> queryValsList2 = Utility.selectAccess(Parameter.connOle, tblName2, readqueryCols2, whereCols2, whereVals2, null, null, null, null, null);
-
-            List<String> data2 = new List<String> { };
-            for (int i = 0; i < queryValsList2[0].Count; i++)
-            {
-                data2.Add(queryValsList2[0][i].ToString());
-            }
-            List<Control> textboxes2 = new List<Control> { tB面数, tB厚度密度, tB参数1, tB参数2 };
-            Utility.fillControl(textboxes2, data2);
-
-        }
-
-        //参数保存
-        private void DataSave()
-        {
-            try
-            {
-                string tblName = "设置吹膜机组预热参数记录表";
-                List<String> queryCols = new List<String>(new String[] { "温度公差" , "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
-                    "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
-                    "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
-                    "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" });
-                List<Object> queryVals = new List<Object>(new Object[] { Convert.ToDouble(tolerance.Text), Convert.ToDouble(hw1.Text), Convert.ToDouble(ld1.Text), 
-                Convert.ToDouble(mj1.Text), Convert.ToDouble(jt11.Text), Convert.ToDouble(jt21.Text), Convert.ToDouble(km1.Text), 
-                Convert.ToDouble(duration1.Text), Convert.ToDouble(region11.Text), Convert.ToDouble(region21.Text), 
-                Convert.ToDouble(region31.Text), Convert.ToDouble(region41.Text), Convert.ToDouble(hw2.Text), Convert.ToDouble(ld2.Text), 
-                Convert.ToDouble(mj2.Text), Convert.ToDouble(jt12.Text), Convert.ToDouble(jt22.Text), Convert.ToDouble(km2.Text), 
-                Convert.ToDouble(duration2.Text), Convert.ToDouble(region12.Text), Convert.ToDouble(region22.Text), 
-                Convert.ToDouble(region32.Text), Convert.ToDouble(region42.Text), Convert.ToDouble(duration3.Text)});
-                List<String> whereCols = new List<String>(new String[] { "ID" });
-                List<Object> whereVals = new List<Object>(new Object[] { 1 });
-                Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
-                if (!b)
-                {
-                    MessageBox.Show("预热参数设置保存失败！", "错误");
-                    return;
-                }
-
-                para1 = Convert.ToInt32(tB面数.Text.Trim());
-                para2 = Convert.ToDouble(tB厚度密度.Text.Trim());
-                para3 = Convert.ToDouble(tB参数1.Text.Trim());
-                para4 = Convert.ToDouble(tB参数2.Text.Trim());
-                String tblName2 = "设置生产指令参数";
-                List<String> updateCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
-                List<Object> updateVals2 = new List<Object>(new Object[] { para1, para2, para3, para4 });
-                List<String> whereCols2 = new List<String>(new String[] { "ID" });
-                List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
-                Boolean b2 = Utility.updateAccess(Parameter.connOle, tblName2, updateCols2, updateVals2, whereCols2, whereVals2);
-                if (!b2)
-                {
-                    MessageBox.Show("参数保存失败", "错误");
-                    return;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("参数保存失败", "错误");
-                return; 
-            }
-            
-
-            MessageBox.Show("保存成功");          
-        }
-
-
+  
+        #region 区域设置
         private void add清洁_Click(object sender, EventArgs e)
         {
             DataRow dr = dt清洁.NewRow();
@@ -577,7 +487,9 @@ namespace mySystem.Setting
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+        #endregion
 
+        #region 项目设置
         private void add开机_Click(object sender, EventArgs e)
         {
             DataRow dr = dt开机.NewRow();
@@ -635,12 +547,103 @@ namespace mySystem.Setting
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+        #endregion
+
+        #region 参数设置
+
+        //初始填预热参数textbox
+        private void FillNum()
+        {
+            string tblName = "设置吹膜机组预热参数记录表";
+            List<String> readqueryCols = new List<String>(new String[] { "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
+                    "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
+                    "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
+                    "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" ,"温度公差"});
+            List<String> whereCols = new List<String>(new String[] { "ID" });
+            List<Object> whereVals = new List<Object>(new Object[] { 1 });
+            List<List<Object>> queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
+
+            List<String> data = new List<String> { };
+            for (int i = 0; i < queryValsList[0].Count; i++)
+            {
+                data.Add(queryValsList[0][i].ToString());
+            }
+            List<Control> textboxes = new List<Control> { hw1, ld1, mj1, jt11, jt21, km1, duration1, region11, region21, region31, region41, hw2, 
+                    ld2, mj2, jt12, jt22, km2, duration2, region12, region22, region32, region42, duration3, tolerance};
+            Utility.fillControl(textboxes, data);
+
+
+            //读取数据库并显示
+            String tblName2 = "设置生产指令参数";
+            List<String> readqueryCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
+            List<String> whereCols2 = new List<String>(new String[] { "ID" });
+            List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
+            List<List<Object>> queryValsList2 = Utility.selectAccess(Parameter.connOle, tblName2, readqueryCols2, whereCols2, whereVals2, null, null, null, null, null);
+
+            List<String> data2 = new List<String> { };
+            for (int i = 0; i < queryValsList2[0].Count; i++)
+            {
+                data2.Add(queryValsList2[0][i].ToString());
+            }
+            List<Control> textboxes2 = new List<Control> { tB面数, tB厚度密度, tB参数1, tB参数2 };
+            Utility.fillControl(textboxes2, data2);
+
+        }
 
         private void Btn保存参数设置_Click(object sender, EventArgs e)
         {
-            DataSave();
+            try
+            {
+                string tblName = "设置吹膜机组预热参数记录表";
+                List<String> queryCols = new List<String>(new String[] { "温度公差" , "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
+                    "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
+                    "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
+                    "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" });
+                List<Object> queryVals = new List<Object>(new Object[] { Convert.ToDouble(tolerance.Text), Convert.ToDouble(hw1.Text), Convert.ToDouble(ld1.Text), 
+                Convert.ToDouble(mj1.Text), Convert.ToDouble(jt11.Text), Convert.ToDouble(jt21.Text), Convert.ToDouble(km1.Text), 
+                Convert.ToDouble(duration1.Text), Convert.ToDouble(region11.Text), Convert.ToDouble(region21.Text), 
+                Convert.ToDouble(region31.Text), Convert.ToDouble(region41.Text), Convert.ToDouble(hw2.Text), Convert.ToDouble(ld2.Text), 
+                Convert.ToDouble(mj2.Text), Convert.ToDouble(jt12.Text), Convert.ToDouble(jt22.Text), Convert.ToDouble(km2.Text), 
+                Convert.ToDouble(duration2.Text), Convert.ToDouble(region12.Text), Convert.ToDouble(region22.Text), 
+                Convert.ToDouble(region32.Text), Convert.ToDouble(region42.Text), Convert.ToDouble(duration3.Text)});
+                List<String> whereCols = new List<String>(new String[] { "ID" });
+                List<Object> whereVals = new List<Object>(new Object[] { 1 });
+                Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
+                if (!b)
+                {
+                    MessageBox.Show("预热参数设置保存失败！", "错误");
+                    return;
+                }
+
+                para1 = Convert.ToInt32(tB面数.Text.Trim());
+                para2 = Convert.ToDouble(tB厚度密度.Text.Trim());
+                para3 = Convert.ToDouble(tB参数1.Text.Trim());
+                para4 = Convert.ToDouble(tB参数2.Text.Trim());
+                String tblName2 = "设置生产指令参数";
+                List<String> updateCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
+                List<Object> updateVals2 = new List<Object>(new Object[] { para1, para2, para3, para4 });
+                List<String> whereCols2 = new List<String>(new String[] { "ID" });
+                List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
+                Boolean b2 = Utility.updateAccess(Parameter.connOle, tblName2, updateCols2, updateVals2, whereCols2, whereVals2);
+                if (!b2)
+                {
+                    MessageBox.Show("参数保存失败", "错误");
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("参数保存失败", "错误");
+                return;
+            }
+
+
+            MessageBox.Show("保存成功");    
         }
 
+        #endregion
+
+        #region 产品设置
         private void add产品_Click(object sender, EventArgs e)
         {
             DataRow dr = dt产品.NewRow();
@@ -766,6 +769,9 @@ namespace mySystem.Setting
             { MessageBox.Show("保存失败！", "错误"); }
         }
 
+        #endregion
+
+        #region 人员设置
         private void add人员_Click(object sender, EventArgs e)
         {
             DataRow dr = dt人员.NewRow();
@@ -891,6 +897,7 @@ namespace mySystem.Setting
             return b;
         }
 
+        #endregion
 
     }
 }

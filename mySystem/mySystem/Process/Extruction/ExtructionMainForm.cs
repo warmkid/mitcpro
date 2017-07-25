@@ -282,6 +282,8 @@ namespace mySystem
   
             CheckHour(); //立即执行一次 
             //定时器开始计时
+
+            //TODO: 时间间隔设置为参数
             timer1.Interval = 300000; //五分钟
             timer1.Start();
 
@@ -614,7 +616,7 @@ namespace mySystem
             if (b)
             {
                 form6 = new Record_extrusSupply(mainform);
-                form6.ShowDialog();
+                form6.ShowDialog(this);
             }
             else
             {
@@ -756,7 +758,7 @@ namespace mySystem
             if (b)
             {
                 form15 = new ExtructionPreheatParameterRecordStep3(mainform);
-                form15.ShowDialog();
+                form15.ShowDialog(this);
             }
             else
             {
