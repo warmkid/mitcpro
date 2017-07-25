@@ -97,30 +97,28 @@ namespace mySystem.Process.CleanCut
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            DataGridView d = (DataGridView)sender;
-            if (e.ColumnIndex == 3)
-            {
-                object eFV = e.FormattedValue;
-                DataGridViewComboBoxColumn cboCol = (DataGridViewComboBoxColumn)d.Columns[d.CurrentCell.ColumnIndex];
-                if (!cboCol.Items.Contains(eFV))
-                {
-                    cboCol.Items.Add(eFV);
-                    dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = eFV;
-                }
-            }
+            //if (e.ColumnIndex == 3)
+            //{
+            //    object eFV = e.FormattedValue;
+            //    DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;
+            //    if (!cbc.Items.Contains(eFV))
+            //    {
+            //        cbc.Items.Add(eFV);
+            //        dataGridView1.SelectedCells[0].Value = eFV;
+            //    }
+            //}
         }
 
         private void dataGridView1_EditingControlShowing(object sender,
         DataGridViewEditingControlShowingEventArgs e)
         {
-            if (((DataGridView)sender).SelectedCells.Count <= 0)
-                return;
-            if (((DataGridView)sender).SelectedCells[0].ColumnIndex == 3)
-            {
-                ComboBox c = e.Control as ComboBox;
-                if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
-            }
-
+            //if (((DataGridView)sender).SelectedCells.Count <= 0)
+            //    return;
+            //if (((DataGridView)sender).SelectedCells[0].ColumnIndex == 3)
+            //{
+            //    ComboBox c = e.Control as ComboBox;
+            //    if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            //}
         }
 
         void setUserState()
@@ -173,6 +171,8 @@ namespace mySystem.Process.CleanCut
         {
             // 获取选中的列，然后提示
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            if (name == "ID")
+                return;
             MessageBox.Show(name + "填写错误");
             //dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "";
         }
@@ -283,6 +283,23 @@ namespace mySystem.Process.CleanCut
             
         }
 
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+                c.Enabled = false;
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
+            bt日志.Enabled = true;
+            bt打印.Enabled = true;
+        }
+        private void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+                c.Enabled = true;
+            dataGridView1.ReadOnly = false;
+            bt发送审核.Enabled = false;
+            bt审核.Enabled = false;
+        }
         void setEnableReadOnly()
         {
             if (stat_user == 2)//管理员
@@ -296,20 +313,14 @@ namespace mySystem.Process.CleanCut
                 if (stat_form == 0 || stat_form == 3 || stat_form == 2)//草稿,审核不通过，审核通过
                 {
                     //空间都不能点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = false;
-                    dataGridView1.Enabled = true;
-                    dataGridView1.ReadOnly = true;
-                    bt日志.Enabled = true;
-                    bt打印.Enabled = true;
+                    setControlFalse();
 
                 }
                 else//待审核
                 {
                     //发送审核不可点，其他都可点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = true;
-                    bt发送审核.Enabled = false;
+                    setControlTrue();
+                    bt审核.Enabled = true;
                 }
 
             }
@@ -318,24 +329,12 @@ namespace mySystem.Process.CleanCut
                 if (stat_form == 1 || stat_form == 2)//待接收，审核通过
                 {
                     //空间都不能点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = false;
-                    dataGridView1.Enabled = true;
-                    dataGridView1.ReadOnly = true;
-                    bt日志.Enabled = true;
-                    bt打印.Enabled = true;
-
-
-
+                    setControlFalse();
                 }
                 else//未审核与审核不通过
                 {
                     //发送审核，审核不能点
-                    foreach (Control c in this.Controls)
-                        c.Enabled = true;
-                    bt发送审核.Enabled = false;
-                    bt审核.Enabled = false;
-
+                    setControlTrue();
                 }
             }
         }

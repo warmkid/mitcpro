@@ -27,6 +27,9 @@ namespace mySystem.Process.灭菌
         private OleDbDataAdapter da_prodinstr, da_prodlist;
         private BindingSource bs_prodinstr, bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
+
+        private List<string> list_辐照单位;
+        private List<string> list_运输商;
         private string person_操作员;
         private string person_审核员;
 
@@ -36,7 +39,7 @@ namespace mySystem.Process.灭菌
             : base(mainform)
         {
             InitializeComponent();
-            getPeople(1);
+            getPeople();
             setUserState();
             getOtherData();
             addDataEventHandler();
@@ -83,14 +86,13 @@ namespace mySystem.Process.灭菌
         void outerBind()
         {
             tb委托单号.DataBindings.Clear();
-            tb辐照单位.DataBindings.Clear();
-            tb产品名称.DataBindings.Clear();
+            cb辐照单位.DataBindings.Clear();
             tb箱数.DataBindings.Clear();
             tb托数.DataBindings.Clear();
             tb其他说明.DataBindings.Clear();
             tb委托人.DataBindings.Clear();
             dtp委托日期.DataBindings.Clear();
-            tb运输商.DataBindings.Clear();
+            cb运输商.DataBindings.Clear();
             tb审批人.DataBindings.Clear();
             dtp审批日期.DataBindings.Clear();
             tb操作人.DataBindings.Clear();
@@ -99,14 +101,13 @@ namespace mySystem.Process.灭菌
             bs_prodinstr.DataSource = dt_prodinstr;
 
             tb委托单号.DataBindings.Add("Text", bs_prodinstr.DataSource, "委托单号");
-            tb辐照单位.DataBindings.Add("Text", bs_prodinstr.DataSource, "辐照单位");
-            tb产品名称.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品名称");
+            cb辐照单位.DataBindings.Add("Text", bs_prodinstr.DataSource, "辐照单位");
             tb箱数.DataBindings.Add("Text", bs_prodinstr.DataSource, "合计箱数");
             tb托数.DataBindings.Add("Text", bs_prodinstr.DataSource, "合计托数");
             tb其他说明.DataBindings.Add("Text", bs_prodinstr.DataSource, "其他说明");
             tb委托人.DataBindings.Add("Text", bs_prodinstr.DataSource, "委托人");          
             dtp委托日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "委托日期");
-            tb运输商.DataBindings.Add("Text", bs_prodinstr.DataSource, "运输商");
+            cb运输商.DataBindings.Add("Text", bs_prodinstr.DataSource, "运输商");
             tb审批人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审批");
             dtp审批日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "审批日期");
             tb操作人.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作人");
@@ -238,13 +239,37 @@ namespace mySystem.Process.灭菌
         // 获取其他需要的数据，比如产品代码，产生废品原因等
         void getOtherData()
         {
- 
+            get_辐照单位();
+            get_运输商();
+        }
+
+        private void get_辐照单位()
+        {
+            list_辐照单位 = new List<string>();
+            DataTable dt = new DataTable("设置辐照单位");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置辐照单位", mySystem.Parameter.connOle);
+            da.Fill(dt);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                list_辐照单位.Add(dt.Rows[i][1].ToString());
+            }
+        }
+        private void get_运输商()
+        {
+            list_运输商 = new List<string>();
+            DataTable dt = new DataTable("设置运输商");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置运输商", mySystem.Parameter.connOle);
+            da.Fill(dt);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                list_运输商.Add(dt.Rows[i][1].ToString());
+            }
         }
         // 获取操作员和审核员
-        void getPeople(int id)
+        void getPeople()
         {
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=" + id, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='Gamma射线辐射灭菌委托单'", mySystem.Parameter.connOle);
             da.Fill(dt);
 
             if (dt.Rows.Count > 0)
