@@ -54,7 +54,7 @@ namespace mySystem.Extruction.Process
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
             getOtherData();  //读取设置内容
-            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete 
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             DataShow(mySystem.Parameter.proInstruID);
@@ -287,8 +287,8 @@ namespace mySystem.Extruction.Process
             comm1.Connection = Parameter.connOle;
             comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
             OleDbDataReader reader1 = comm1.ExecuteReader();
-
-            DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()));
+            if (reader1.Read())
+            { DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString())); }            
         }
 
         //****************************** 嵌套 ******************************//
@@ -579,7 +579,7 @@ namespace mySystem.Extruction.Process
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
             log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
-            log += "审核意见：" + checkform.opinion;
+            log += "审核意见：" + checkform.opinion + "\n";
             dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
 
             Save();
