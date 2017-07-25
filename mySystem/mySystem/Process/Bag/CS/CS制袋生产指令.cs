@@ -525,7 +525,10 @@ namespace mySystem.Process.Bag.CS
 
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            int colIdx = (sender as DataGridView).SelectedCells[0].ColumnIndex;
+            DataGridView dgv =  (sender as DataGridView);
+
+            if (dgv.SelectedCells.Count == 0) return;
+            int colIdx = dgv.SelectedCells[0].ColumnIndex;
             if (li可选可输的列.IndexOf(colIdx) >= 0)
             {
                 ComboBox c = e.Control as ComboBox;
