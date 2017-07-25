@@ -17,11 +17,11 @@ namespace mySystem.Process.灭菌
         private OleDbDataAdapter da_taizhang;
         private OleDbCommandBuilder cb_taizhang;
         private List<string> weituodanhao;
+        DataGridViewComboBoxColumn c1;
 
         public 辐照灭菌台帐(mySystem.MainForm mainform): base(mainform)
         {
             InitializeComponent();
-           // dataGridView1.Columns[1].Visible = false;
             getPeople();
             setUserState();
             getOtherData();
@@ -93,13 +93,27 @@ namespace mySystem.Process.灭菌
             while (dataGridView1.Columns.Count > 0)
                 dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
             setDataGridViewColumns();
+            setDataGridViewFormat();
             bs_taizhang.DataSource = dt_taizhang;
             dataGridView1.DataSource = bs_taizhang.DataSource;
+            //第一列ID不显示
+            dataGridView1.Columns[0].Visible = false;
         }
         // 设置自动计算类事件
         private void addComputerEventHandler()
-        { 
-        
+        {
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+        }
+
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (e.ColumnIndex)
+            { 
+                case 3:
+                    
+                    break;
+
+            }
         }
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
         // 如果『审核人』为空，则为未保存
@@ -124,9 +138,9 @@ namespace mySystem.Process.灭菌
         }
         // 设置DataGridView中各列的格式，包括列类型，列名，是否可以排序
         private void setDataGridViewColumns()
-        {
-            DataGridViewComboBoxColumn c1;
-            DataGridViewTextBoxColumn c2,c3,c4,c5,c6;
+        {          
+            
+            DataGridViewTextBoxColumn c2;
          foreach (DataColumn dc in dt_taizhang.Columns)
             {
              switch(dc.ColumnName)
@@ -148,50 +162,14 @@ namespace mySystem.Process.灭菌
                     }
                     dataGridView1.Columns.Add(c1);
                     break;
-                 case "产品数量箱":
-                c2= new DataGridViewTextBoxColumn();
+                 default:
+                c2 = new DataGridViewTextBoxColumn();
                 c2.DataPropertyName = dc.ColumnName;
-                c2.HeaderText = "产品数量(箱)";
+                c2.HeaderText = dc.ColumnName;
                 c2.Name = dc.ColumnName;
-                c2.SortMode = DataGridViewColumnSortMode.NotSortable;
+                c2.SortMode = DataGridViewColumnSortMode.Automatic;
                 c2.ValueType = dc.DataType;
                 dataGridView1.Columns.Add(c2);
-                break;
-                 case "产品数量只":
-                c3 = new DataGridViewTextBoxColumn();
-                c3.DataPropertyName = dc.ColumnName;
-                c3.HeaderText = "产品数量(只)";
-                c3.Name = dc.ColumnName;
-                c3.SortMode = DataGridViewColumnSortMode.NotSortable;
-                c3.ValueType = dc.DataType;
-                dataGridView1.Columns.Add(c3);
-                break;
-                 case "送去产品托盘数量个":
-                c4 = new DataGridViewTextBoxColumn();
-                c4.DataPropertyName = dc.ColumnName;
-                c4.HeaderText = "送去产品托盘数量(个)";
-                c4.Name = dc.ColumnName;
-                c4.SortMode = DataGridViewColumnSortMode.NotSortable;
-                c4.ValueType = dc.DataType;
-                dataGridView1.Columns.Add(c4);
-                break;
-                 case "拉回产品托盘数量个":
-                c5 = new DataGridViewTextBoxColumn();
-                c5.DataPropertyName = dc.ColumnName;
-                c5.HeaderText = "拉回产品托盘数量(个)";
-                c5.Name = dc.ColumnName;
-                c5.SortMode = DataGridViewColumnSortMode.NotSortable;
-                c5.ValueType = dc.DataType;
-                dataGridView1.Columns.Add(c5);
-                break;
-                 default:
-                c6 = new DataGridViewTextBoxColumn();
-                c6.DataPropertyName = dc.ColumnName;
-                c6.HeaderText = dc.ColumnName;
-                c6.Name = dc.ColumnName;
-                c6.SortMode = DataGridViewColumnSortMode.Automatic;
-                c6.ValueType = dc.DataType;
-                dataGridView1.Columns.Add(c6);
                 break;
 
             }
@@ -199,10 +177,29 @@ namespace mySystem.Process.灭菌
 
         }
 
+        //设置DataGridView中各列的格式+设置datagridview基本属性
+        private void setDataGridViewFormat()
+        {
+            //dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
+            //dataGridView1.AllowUserToAddRows = false;
+            //dataGridView1.RowHeadersVisible = false;
+            dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridView1.ColumnHeadersHeight = 40;
+            //dataGridView1.Columns["ID"].Visible = false;
+            //dataGridView1.Columns["T吹膜工序生产和检验记录ID"].Visible = false;
+            //dataGridView1.Columns["序号"].ReadOnly = true;
+            dataGridView1.Columns["送去产品托盘数量个"].HeaderText = "送去产品托盘数量(个)";
+            dataGridView1.Columns["拉回产品托盘数量个"].HeaderText = "拉回产品托盘数量(个)";
+            dataGridView1.Columns["产品数量只"].HeaderText = "产品数量(只)";
+            dataGridView1.Columns["产品数量箱"].HeaderText = "产品数量(箱)";
+        }
+
         //添加新行
         private void bt添加_Click(object sender, EventArgs e)
         {
             DataRow dr= dt_taizhang.NewRow();
+            dr = writeInnerDefault(dr);
             dt_taizhang.Rows.Add(dr);
             setDataGridViewRowNums();
         }
@@ -219,10 +216,14 @@ namespace mySystem.Process.灭菌
         //写默认行数据
         DataRow writeInnerDefault(DataRow dr)
         {
-            dr["T生产指令表ID"] = dt_taizhang.Rows[0]["ID"];
-            dr["序号"] = 0;
-            dr["数量卷"] = 0;
-            dr["数量米"] = 0;
+            
+           // dr["产品名称"] = c1.Text;
+           // dr["产品批号"] = dt_taizhang.Rows[c1.FindString(cb_taizhang.Text)]["产品批号"].ToString();
+            dr["委托单号"]=dataGridView1[0,0].Value.ToString();
+            //dr["序号"] = dt_taizhang.Rows[0]["ID"];
+            //dr["序号"] = 0;
+            //dr["数量卷"] = 0;
+            //dr["数量米"] = 0;
             return dr;
         }
 
