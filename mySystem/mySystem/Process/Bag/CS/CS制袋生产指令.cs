@@ -21,7 +21,7 @@ namespace mySystem.Process.Bag.CS
 
         // 需要保存的状态
         /// <summary>
-        /// 0:操作员，1：审核员，2：管理员
+        /// 1:操作员，2：审核员，4：管理员
         /// </summary>
         int _userState;
         /// <summary>
@@ -32,11 +32,13 @@ namespace mySystem.Process.Bag.CS
         String _code;
 
         // 显示界面需要的信息
+        
+        // TODO:1.产品代码和封边由List改成HashSet   2. 把自定义的产品代码和封边也加到 ‘Hashset’中去
         List<String> ls产品名称;
         List<String> ls工艺;
-        List<String> ls产品代码;
+        HashSet<String> hs产品代码;
+        HashSet<String> hs封边;
         List<String> ls负责人;
-        List<String> ls封边;
         List<String> ls操作员;
         List<String> ls审核员;
         HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs外包白班负责人, hs外包夜班负责人;
@@ -58,10 +60,9 @@ namespace mySystem.Process.Bag.CS
         {
             InitializeComponent();
             variableInit();
-            getOtherData();
+            getOuterOtherData();
             getPeople();
             setUseState();
-
             // 为了控制新界面的控件可用性，必须加的
             setFormState(true);
             setEnableReadOnly();
@@ -72,7 +73,7 @@ namespace mySystem.Process.Bag.CS
             // 待显示
             InitializeComponent();
             variableInit();
-            getOtherData();
+            getOuterOtherData();
             getPeople();
             setUseState();
 
@@ -80,6 +81,7 @@ namespace mySystem.Process.Bag.CS
             readOuterData(id);
             outerBind();
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
 
@@ -113,6 +115,7 @@ namespace mySystem.Process.Bag.CS
                 outerBind();
             }
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
 
@@ -166,16 +169,15 @@ namespace mySystem.Process.Bag.CS
             ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
 
         }
-        void getOtherData()
+        void getOuterOtherData()
         {
             OleDbDataAdapter da;
             DataTable dt;
-            ls产品代码 = new List<string>();
+            
             ls产品名称 = new List<string>();
             ls负责人 = new List<string>();
             ls工艺 = new List<string>();
-            ls封边 = new List<string>();
-
+            
             da = new OleDbDataAdapter("select * from 用户", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -193,14 +195,7 @@ namespace mySystem.Process.Bag.CS
                 cmb产品名称.Items.Add(dr["产品名称"].ToString());
             }
             
-            //　产品代码
-            da = new OleDbDataAdapter("select * from 设置CS制袋产品代码", conn);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
-            {
-                ls产品代码.Add(dr["产品代码"].ToString());
-            }
+            
             // 工艺
             da = new OleDbDataAdapter("select * from 设置CS制袋工艺", conn);
             dt = new DataTable("temp");
@@ -210,15 +205,40 @@ namespace mySystem.Process.Bag.CS
                 ls工艺.Add(dr["工艺名称"].ToString());
                 cmb生产工艺.Items.Add(dr["工艺名称"].ToString());
             }
+
+
+        }
+
+        void getInnerOtherData()
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            hs产品代码 = new HashSet<string>();
+            hs封边 = new HashSet<string>();
+            //　产品代码
+            da = new OleDbDataAdapter("select * from 设置CS制袋产品代码", conn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                hs产品代码.Add(dr["产品代码"].ToString());
+            }
+            
             // 封边
             da = new OleDbDataAdapter("select * from 设置CS制袋封边", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                ls封边.Add(dr["封边名称"].ToString());
+                hs封边.Add(dr["封边名称"].ToString());
             }
 
+            // 自定义数据
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                hs产品代码.Add(dr["产品代码"].ToString());
+                hs封边.Add(dr["封边"].ToString());
+            }
         }
         void readOuterData(int id)
         {
@@ -249,7 +269,7 @@ namespace mySystem.Process.Bag.CS
                 if (c.Name.StartsWith("tb"))
                 {
                     (c as TextBox).DataBindings.Clear();
-                    (c as TextBox).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(2));
+                    (c as TextBox).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(2),false, DataSourceUpdateMode.OnPropertyChanged);
                 }
                 else if (c.Name.StartsWith("lbl"))
                 {
@@ -260,11 +280,15 @@ namespace mySystem.Process.Bag.CS
                 {
                     (c as ComboBox).DataBindings.Clear();
                     (c as ComboBox).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(3));
+                    ControlUpdateMode cm = (c as ComboBox).DataBindings["Text"].ControlUpdateMode;
+                    DataSourceUpdateMode dm = (c as ComboBox).DataBindings["Text"].DataSourceUpdateMode;
                 }
                 else if (c.Name.StartsWith("dtp"))
                 {
                     (c as DateTimePicker).DataBindings.Clear();
                     (c as DateTimePicker).DataBindings.Add("Value", bsOuter.DataSource, c.Name.Substring(3));
+                    ControlUpdateMode cm = (c as DateTimePicker).DataBindings["Value"].ControlUpdateMode;
+                    DataSourceUpdateMode dm = (c as DateTimePicker).DataBindings["Value"].DataSourceUpdateMode;
                 }
             }
         }
@@ -304,7 +328,7 @@ namespace mySystem.Process.Bag.CS
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (String s in ls产品代码)
+                    foreach (String s in hs产品代码)
                     {
                         cbc.Items.Add(s);
                     }
@@ -319,7 +343,7 @@ namespace mySystem.Process.Bag.CS
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (String s in ls封边)
+                    foreach (String s in hs封边)
                     {
                         cbc.Items.Add(s);
                     }
@@ -381,24 +405,30 @@ namespace mySystem.Process.Bag.CS
             }
 
             // 然后修改其他特殊属性
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[2].HeaderText = "产品代码（规格型号）";
-            dataGridView1.Columns[3].HeaderText = "计划产量（只）";
-            dataGridView1.Columns[4].HeaderText = "内包装规格（只/包）";
-            dataGridView1.Columns[9].HeaderText = "外包装规格（只/箱）";
+            
            
         }
 
-        void assignNOToRowInDataGridView()
-        {
-
-        }
         void setUseState()
         {
-            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 0;
-            else if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 1;
-            else _userState = 2;
+            _userState = 0;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState += 1;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState += 2;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (0 == _userState)
+            {
+                _userState = 4;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (3 == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = 1;
+                else _userState = 2;
+
+            }
+            if (1 == _userState) label角色.Text = "操作员";
+            if (2 == _userState) label角色.Text = "审核员";
         }
         // 如果给了一个参数为true，则表示处于无数据状态
         void setFormState(bool newForm = false)
@@ -507,6 +537,19 @@ namespace mySystem.Process.Bag.CS
             // 实现下拉框可选可输
             dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
             dataGridView1.CellValidating += dataGridView1_CellValidating;
+
+            // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
+            dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[2].HeaderText = "产品代码（规格型号）";
+            dataGridView1.Columns[3].HeaderText = "计划产量（只）";
+            dataGridView1.Columns[4].HeaderText = "内包装规格（只/包）";
+            dataGridView1.Columns[9].HeaderText = "外包装规格（只/箱）";
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -542,7 +585,8 @@ namespace mySystem.Process.Bag.CS
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            int i计划产量只 = Convert.ToInt32( dataGridView1[3,e.RowIndex].Value);
+
+            int i计划产量只 = Convert.ToInt32(dataGridView1[3, e.RowIndex].Value);
             int i内包装规格 = Convert.ToInt32(dataGridView1[4, e.RowIndex].Value);
             int i外包装规格 = Convert.ToInt32(dataGridView1[9, e.RowIndex].Value);
             try
@@ -550,54 +594,77 @@ namespace mySystem.Process.Bag.CS
 
 
                 switch (e.ColumnIndex)
-                {
+                {       
                     // 计划产量
                     case 3:
                         //灭菌指示剂
-                        dtOuter.Rows[0]["制袋物料领料量3"] = i计划产量只.ToString();
-                        //tb制袋物料领料量3.Text = i计划产量只.ToString();
+                        //dtOuter.Rows[0]["制袋物料领料量3"] = i计划产量只.ToString();
+                        outerDataSync("tb制袋物料领料量3", i计划产量只.ToString());
                         //内包装
                         //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
-                        dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
+                        //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
+                        outerDataSync("tb内包物料领料量1", (i计划产量只 / i内包装规格 * 2).ToString());
                         // 内标签
                         //tb内包物料领料量2.Text = (i计划产量只 / i内包装规格).ToString();
-                        dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
+                        //dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
+                        outerDataSync("tb内包物料领料量2", (i计划产量只 / i内包装规格).ToString());
                         // 外标签
                         //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
-                        dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
+                        //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
+                        outerDataSync("tb外包物料领料量1", (i计划产量只 / i外包装规格 * 2).ToString());
                         // 纸箱
                         //tb外包物料领料量2.Text = (i计划产量只 / i外包装规格).ToString();
-                        dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
+                        //dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
+                        outerDataSync("tb外包物料领料量2", (i计划产量只 / i外包装规格).ToString());
                         // 内衬袋
-                        dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
+                        //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
+                        outerDataSync("tb外包物料领料量3", (i计划产量只 / i外包装规格).ToString());
                         //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
                         break;
                     // 内包装规格
                     case 4:
                         //内包装
                         //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
-                        dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
+                        //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
+                        outerDataSync("tb内包物料领料量1", (i计划产量只 / i内包装规格 * 2).ToString());
                         // 内标签
                         //tb内包物料领料量2.Text = (i计划产量只 / i内包装规格).ToString();
-                        dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
+                        //dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
+                        outerDataSync("tb内包物料领料量2", (i计划产量只 / i内包装规格).ToString());
                         break;
                     // 外包装规格
                     case 9:
                         // 外标签
                         //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
-                        dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
+                        //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
+                        outerDataSync("tb外包物料领料量1", (i计划产量只 / i外包装规格 * 2).ToString());
                         // 纸箱
                         //tb外包物料领料量2.Text = (i计划产量只 / i外包装规格).ToString();
-                        dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
+                        //dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
+                        outerDataSync("tb外包物料领料量2", (i计划产量只 / i外包装规格).ToString());
                         // 内衬袋
                         //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
-                        dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
+                        //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
+                        outerDataSync("tb外包物料领料量3", (i计划产量只 / i外包装规格).ToString());
                         break;
                 }
+                //String a = cmb产品名称.Text;
             }
             catch (System.DivideByZeroException)
             {
 
+            }
+        }
+
+        void outerDataSync(String name, String val)
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c.Name == name)
+                {
+                    c.Text = val;
+                    c.DataBindings[0].WriteValue();
+                }
             }
         }
 
@@ -656,28 +723,32 @@ namespace mySystem.Process.Bag.CS
         private void btn外包白班_Click(object sender, EventArgs e)
         {
             hs外包白班负责人.Add(cmb负责人.SelectedItem.ToString());
-            dtOuter.Rows[0]["外包白班负责人"] = String.Join(",", hs外包白班负责人.ToList<String>().ToArray());
+            //dtOuter.Rows[0]["外包白班负责人"] = String.Join(",", hs外包白班负责人.ToList<String>().ToArray());
+            outerDataSync("tb外包白班负责人", String.Join(",", hs外包白班负责人.ToList<String>().ToArray()));
             //tb外包白班负责人.Text = 
         }
 
         private void btn外包夜班_Click(object sender, EventArgs e)
         {
             hs外包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
-            dtOuter.Rows[0]["外包夜班负责人"] = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
+            //dtOuter.Rows[0]["外包夜班负责人"] = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
+            outerDataSync("tb外包夜班负责人", String.Join(",", hs外包夜班负责人.ToList<String>().ToArray()));
             //tb外包夜班负责人.Text = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
         }
 
         private void btn制袋内包白班_Click(object sender, EventArgs e)
         {
             hs制袋内包白班负责人.Add(cmb负责人.SelectedItem.ToString());
-            dtOuter.Rows[0]["制袋内包白班负责人"] = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
+            //dtOuter.Rows[0]["制袋内包白班负责人"] = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
+            outerDataSync("tb制袋内包白班负责人", String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray()));
             //tb制袋内包白班负责人.Text = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
         }
 
         private void btn制袋内包夜班_Click(object sender, EventArgs e)
         {
             hs制袋内包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
-            dtOuter.Rows[0]["制袋内包夜班负责人"] = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
+            //dtOuter.Rows[0]["制袋内包夜班负责人"] = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
+            outerDataSync("tb制袋内包夜班负责人", String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray()));
             //tb制袋内包夜班负责人.Text = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
         }
 
@@ -764,6 +835,10 @@ namespace mySystem.Process.Bag.CS
 
         private void btn添加_Click(object sender, EventArgs e)
         {
+            ////
+            //dtOuter.Rows[0]["操作员"] = "ly";
+            //tb操作员.DataBindings[0].ReadValue();
+            ////
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
