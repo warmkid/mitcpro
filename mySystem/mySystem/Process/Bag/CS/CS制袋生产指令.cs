@@ -23,11 +23,11 @@ namespace mySystem.Process.Bag.CS
         /// <summary>
         /// 1:操作员，2：审核员，4：管理员
         /// </summary>
-        int _userState;
+        Parameter.UserState _userState;
         /// <summary>
         /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
         /// </summary>
-        int _formState;
+        Parameter.FormState _formState;
         int _id;
         String _code;
 
@@ -411,24 +411,24 @@ namespace mySystem.Process.Bag.CS
 
         void setUseState()
         {
-            _userState = 0;
-            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState += 1;
-            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState += 2;
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |=Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |=Parameter.UserState.审核员;
             // 如果即不是操作员也不是审核员，则是管理员
-            if (0 == _userState)
+            if ( Parameter.UserState.NoBody== _userState)
             {
-                _userState = 4;
+                _userState = Parameter.UserState.管理员;
                 label角色.Text = "管理员";
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
-            if (3 == _userState)
+            if (Parameter.UserState.Both == _userState)
             {
-                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = 1;
-                else _userState = 2;
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
 
             }
-            if (1 == _userState) label角色.Text = "操作员";
-            if (2 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
         // 如果给了一个参数为true，则表示处于无数据状态
         void setFormState(bool newForm = false)
@@ -436,44 +436,45 @@ namespace mySystem.Process.Bag.CS
             if (newForm)
             {
 
-                _formState = -1;
+                _formState = Parameter.FormState.无数据;
                 return;
             }
             string s = dtOuter.Rows[0]["审核员"].ToString();
             bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核是否通过"]);
             if (s == "") _formState = 0;
-            else if (s == "__待审核") _formState = 1;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
             else
             {
-                if (b) _formState = 2;
-                else _formState = 3;
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
             }
         }
         void setEnableReadOnly()
         {
-            
-            if(-1==_formState){
+
+            if (Parameter.FormState.无数据 == _formState)
+            {
                 setControlFalse();
                 btn查询插入.Enabled = true;
                 tb生产指令编号.ReadOnly = false;
                 return ;
             }
-            if (2 == _userState)
+            if (Parameter.UserState.管理员 == _userState)
             {
                 setControlTrue();
             }
-            if (1 == _userState)
+            if (Parameter.UserState.审核员 == _userState)
             {
-                if (1 == _formState)
+                if (Parameter.FormState.待审核 == _formState)
                 {
                     setControlTrue();
                     btn审核.Enabled = true;
                 }
                 else setControlFalse();
             }
-            if (0 == _userState)
+            if (Parameter.UserState.操作员 == _userState)
             {
-                if (0 == _formState || 3 == _formState) setControlTrue();
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState) setControlTrue();
                 else setControlFalse();
             }
 
@@ -716,7 +717,7 @@ namespace mySystem.Process.Bag.CS
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
 
-            if (_userState == 0) btn提交审核.Enabled = true;
+            if (_userState == Parameter.UserState.操作员) btn提交审核.Enabled = true;
             
         }
 
@@ -835,10 +836,11 @@ namespace mySystem.Process.Bag.CS
 
         private void btn添加_Click(object sender, EventArgs e)
         {
-            ////
-            //dtOuter.Rows[0]["操作员"] = "ly";
-            //tb操作员.DataBindings[0].ReadValue();
-            ////
+            if (dtInner.Rows.Count >= 1)
+            {
+                MessageBox.Show("请勿添加多行！");
+                return;
+            }
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
@@ -848,12 +850,21 @@ namespace mySystem.Process.Bag.CS
         // 验证数据有效性
         private bool dataValidate()
         {
+            dataGridView1.DataError += dataGridView1_DataError;
+
             // TODO 更多条件有待补充
             if (cmb产品名称.Text == "") return false;
             if (cmb生产工艺.Text == "") return false;
             if (dataGridView1.Rows.Count == 0 || dataGridView1.Rows.Count > 1) return false;
             if (tb接收人.Text == "") return false;
             return true;
+        }
+
+        void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            MessageBox.Show(name + "填写错误");
         }
  
     }
