@@ -60,6 +60,8 @@
             this.bt领料提交审核 = new System.Windows.Forms.Button();
             this.tb退料操作员备注 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -163,7 +165,7 @@
             // 
             // bt打印
             // 
-            this.bt打印.Location = new System.Drawing.Point(103, 427);
+            this.bt打印.Location = new System.Drawing.Point(304, 428);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 27;
@@ -360,11 +362,31 @@
             this.label6.TabIndex = 39;
             this.label6.Text = "退料操作员备注：";
             // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.Location = new System.Drawing.Point(102, 431);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(91, 14);
+            this.label40.TabIndex = 42;
+            this.label40.Text = "选择打印机：";
+            // 
+            // cb打印机
+            // 
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(195, 428);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(95, 22);
+            this.cb打印机.TabIndex = 41;
+            // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 462);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.tb退料操作员备注);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.bt领料提交审核);
@@ -440,5 +462,7 @@
         private System.Windows.Forms.Button bt领料提交审核;
         private System.Windows.Forms.TextBox tb退料操作员备注;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox cb打印机;
     }
 }

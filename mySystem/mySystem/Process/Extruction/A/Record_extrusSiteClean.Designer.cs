@@ -45,6 +45,8 @@
             this.tb产品代码 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.tb操作员备注 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.ckb不合格 = new System.Windows.Forms.CheckBox();
             this.ckb合格 = new System.Windows.Forms.CheckBox();
             this.tb检查人 = new System.Windows.Forms.TextBox();
@@ -56,8 +58,8 @@
             this.bt保存 = new System.Windows.Forms.Button();
             this.bt提交审核 = new System.Windows.Forms.Button();
             this.bt日志 = new System.Windows.Forms.Button();
-            this.tb操作员备注 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox6.SuspendLayout();
@@ -195,7 +197,7 @@
             // bt打印
             // 
             this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(115, 440);
+            this.bt打印.Location = new System.Drawing.Point(316, 439);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 12;
@@ -237,6 +239,25 @@
             this.groupBox6.Size = new System.Drawing.Size(1014, 44);
             this.groupBox6.TabIndex = 13;
             this.groupBox6.TabStop = false;
+            // 
+            // tb操作员备注
+            // 
+            this.tb操作员备注.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb操作员备注.Location = new System.Drawing.Point(342, 13);
+            this.tb操作员备注.Multiline = true;
+            this.tb操作员备注.Name = "tb操作员备注";
+            this.tb操作员备注.Size = new System.Drawing.Size(233, 21);
+            this.tb操作员备注.TabIndex = 13;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Location = new System.Drawing.Point(245, 16);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(91, 14);
+            this.label9.TabIndex = 12;
+            this.label9.Text = "操作员备注：";
             // 
             // ckb不合格
             // 
@@ -353,30 +374,31 @@
             this.bt日志.UseVisualStyleBackColor = true;
             this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
             // 
-            // tb操作员备注
+            // label40
             // 
-            this.tb操作员备注.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb操作员备注.Location = new System.Drawing.Point(342, 13);
-            this.tb操作员备注.Multiline = true;
-            this.tb操作员备注.Name = "tb操作员备注";
-            this.tb操作员备注.Size = new System.Drawing.Size(233, 21);
-            this.tb操作员备注.TabIndex = 13;
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.Location = new System.Drawing.Point(122, 444);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(91, 14);
+            this.label40.TabIndex = 32;
+            this.label40.Text = "选择打印机：";
             // 
-            // label9
+            // cb打印机
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(245, 16);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(91, 14);
-            this.label9.TabIndex = 12;
-            this.label9.Text = "操作员备注：";
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(215, 441);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(95, 20);
+            this.cb打印机.TabIndex = 31;
             // 
             // Record_extrusSiteClean
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1026, 475);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt提交审核);
             this.Controls.Add(this.button1);
@@ -441,5 +463,7 @@
         private System.Windows.Forms.Button bt日志;
         private System.Windows.Forms.TextBox tb操作员备注;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox cb打印机;
     }
 }
