@@ -18,6 +18,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using WindowsFormsApplication1;
 
+
 namespace BatchProductRecord
 {
     public partial class ProcessProductInstru : mySystem.BaseForm
@@ -150,6 +151,7 @@ namespace BatchProductRecord
             }
             bt日志.Enabled = true;
             bt打印.Enabled = true;
+            cb打印机.Enabled = true;
         }
 
         //// 获取操作员和审核员
@@ -165,6 +167,19 @@ namespace BatchProductRecord
                 person_审核员 = dt.Rows[0]["审核员"].ToString();
             }
         }
+       
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        //添加打印机
+        private void fill_printer()
+        {
+
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument() ;
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            } 
+        }
 
         private void getOtherData()
         {
@@ -175,6 +190,7 @@ namespace BatchProductRecord
                 fill_prodname();
                 fill_matcode();
                 fill_respons_user();
+                fill_printer();
             }
             label = 1;
 
@@ -1357,7 +1373,13 @@ namespace BatchProductRecord
 
         private void bt打印_Click(object sender, System.EventArgs e)
         {
-            print(true);
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
         }
 
         public void print(bool b)
@@ -1383,14 +1405,22 @@ namespace BatchProductRecord
             else
             {
                 // 直接用默认打印机打印该Sheet
-                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
-                // 关闭文件，false表示不保存
-                wb.Close(false);
-                // 关闭Excel进程
-                oXL.Quit();
-                // 释放COM资源
-                Marshal.ReleaseComObject(wb);
-                Marshal.ReleaseComObject(oXL);
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                { }
+                finally
+                {
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                }
             }
         }
 
