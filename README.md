@@ -62,7 +62,7 @@ void print(bool);
 //         如果审核结果为『通过』，则为『审核通过』
 //         如果审核结果为『不通过』，则为『审核未通过』
 void setFormState();
-// 设置用户状态，用户状态有3个：0--操作员，1--审核员，2--管理员
+// 设置用户状态，用户状态有3个：1--操作员，2--审核员，4--管理员
 void setUserState();
 // 设置控件可用性，根据状态设置，状态是每个窗体的变量，放在父类中
 // 0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -89,11 +89,23 @@ void setDataGridViewColumnReadOnly();
 // 然后调用setDataGridViewColumnReadOnly();
 /// 需要单行审核的审核事件 ================================================
 
-// 窗口下的按钮：审核                   保存，提交审核，打印，查看记录
+// 窗口下的按钮：审核，打印                   保存，提交审核，查看日志
 
-// 工序界面只有操作员可以进入
-// 审核员从查询界面进入，所以它只能是通过带ID的构造函数进来。
-// TODO:内表如何审核？
+// 每次打印要记入日志
+// TODO 写一个窗口专门用于显示日志，每个新表建立时要写入日志，写入生产指令编号，写入日期
+// 针对控件和DataTable数据无法更新的问题，我写了一个函数outerDataSync(String, String)
+// 第一个参数是控件的变量名，第二个参数是要希望控件上显示的值
+ void outerDataSync(String name, String val)
+ {
+   foreach (Control c in this.Controls)
+   {
+     if (c.Name == name)
+     {
+       c.Text = val;
+       c.DataBindings[0].WriteValue();
+     }
+   }
+ }
 ```
 
 

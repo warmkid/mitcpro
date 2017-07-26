@@ -11,6 +11,23 @@ namespace mySystem
 {
     class Parameter
     {
+        public enum UserState
+        {
+            NoBody = 0,
+            操作员 = 1, 
+            审核员 = 2, 
+            Both = 3,
+            管理员 = 4,
+        }
+        public enum FormState
+        {
+            无数据 = -1,
+            未保存 = 0,
+            待审核 = 1,
+            审核通过 = 2,
+            审核未通过 = 3,
+        }
+
         public static int i = 0;
         public static bool isSqlOk = false; //sql or access
         public static int userID; //登录人ID
