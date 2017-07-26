@@ -36,7 +36,6 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.tb运输商 = new System.Windows.Forms.TextBox();
             this.dtp委托日期 = new System.Windows.Forms.DateTimePicker();
             this.tb委托人 = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -48,7 +47,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.tb委托单号 = new System.Windows.Forms.TextBox();
             this.tb委托单位 = new System.Windows.Forms.TextBox();
-            this.tb辐照单位 = new System.Windows.Forms.TextBox();
             this.tb辐照剂量 = new System.Windows.Forms.TextBox();
             this.tb其他说明 = new System.Windows.Forms.TextBox();
             this.dtp操作日期 = new System.Windows.Forms.DateTimePicker();
@@ -68,8 +66,8 @@
             this.bt日志 = new System.Windows.Forms.Button();
             this.bt添加 = new System.Windows.Forms.Button();
             this.bt删除 = new System.Windows.Forms.Button();
-            this.label18 = new System.Windows.Forms.Label();
-            this.tb产品名称 = new System.Windows.Forms.TextBox();
+            this.cb辐照单位 = new System.Windows.Forms.ComboBox();
+            this.cb运输商 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -154,14 +152,6 @@
             this.label7.Size = new System.Drawing.Size(72, 16);
             this.label7.TabIndex = 7;
             this.label7.Text = "其他说明";
-            // 
-            // tb运输商
-            // 
-            this.tb运输商.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb运输商.Location = new System.Drawing.Point(110, 491);
-            this.tb运输商.Name = "tb运输商";
-            this.tb运输商.Size = new System.Drawing.Size(100, 26);
-            this.tb运输商.TabIndex = 5;
             // 
             // dtp委托日期
             // 
@@ -263,14 +253,6 @@
             this.tb委托单位.TabIndex = 11;
             this.tb委托单位.Text = "颇尔奥星包装科技（北京）有限责任公司";
             // 
-            // tb辐照单位
-            // 
-            this.tb辐照单位.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb辐照单位.Location = new System.Drawing.Point(106, 108);
-            this.tb辐照单位.Name = "tb辐照单位";
-            this.tb辐照单位.Size = new System.Drawing.Size(146, 26);
-            this.tb辐照单位.TabIndex = 12;
-            // 
             // tb辐照剂量
             // 
             this.tb辐照剂量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -326,8 +308,8 @@
             // 
             // bt保存
             // 
-            this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt保存.Location = new System.Drawing.Point(683, 525);
+            this.bt保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Location = new System.Drawing.Point(663, 537);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(63, 25);
             this.bt保存.TabIndex = 16;
@@ -337,8 +319,8 @@
             // 
             // bt审核
             // 
-            this.bt审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt审核.Location = new System.Drawing.Point(32, 525);
+            this.bt审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt审核.Location = new System.Drawing.Point(28, 537);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(63, 25);
             this.bt审核.TabIndex = 17;
@@ -348,8 +330,8 @@
             // 
             // bt打印
             // 
-            this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(111, 525);
+            this.bt打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt打印.Location = new System.Drawing.Point(107, 537);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(63, 25);
             this.bt打印.TabIndex = 18;
@@ -416,10 +398,10 @@
             // 
             // bt发送审核
             // 
-            this.bt发送审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt发送审核.Location = new System.Drawing.Point(752, 525);
+            this.bt发送审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt发送审核.Location = new System.Drawing.Point(741, 537);
             this.bt发送审核.Name = "bt发送审核";
-            this.bt发送审核.Size = new System.Drawing.Size(78, 25);
+            this.bt发送审核.Size = new System.Drawing.Size(90, 25);
             this.bt发送审核.TabIndex = 25;
             this.bt发送审核.Text = "发送审核";
             this.bt发送审核.UseVisualStyleBackColor = true;
@@ -427,10 +409,10 @@
             // 
             // bt日志
             // 
-            this.bt日志.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt日志.Location = new System.Drawing.Point(844, 525);
+            this.bt日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt日志.Location = new System.Drawing.Point(850, 537);
             this.bt日志.Name = "bt日志";
-            this.bt日志.Size = new System.Drawing.Size(79, 25);
+            this.bt日志.Size = new System.Drawing.Size(82, 25);
             this.bt日志.TabIndex = 26;
             this.bt日志.Text = "查看日志";
             this.bt日志.UseVisualStyleBackColor = true;
@@ -458,31 +440,31 @@
             this.bt删除.UseVisualStyleBackColor = true;
             this.bt删除.Click += new System.EventHandler(this.bt删除_Click);
             // 
-            // label18
+            // cb辐照单位
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(298, 113);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(72, 16);
-            this.label18.TabIndex = 29;
-            this.label18.Text = "产品名称";
+            this.cb辐照单位.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb辐照单位.FormattingEnabled = true;
+            this.cb辐照单位.Location = new System.Drawing.Point(106, 113);
+            this.cb辐照单位.Name = "cb辐照单位";
+            this.cb辐照单位.Size = new System.Drawing.Size(131, 24);
+            this.cb辐照单位.TabIndex = 31;
             // 
-            // tb产品名称
+            // cb运输商
             // 
-            this.tb产品名称.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb产品名称.Location = new System.Drawing.Point(376, 108);
-            this.tb产品名称.Name = "tb产品名称";
-            this.tb产品名称.Size = new System.Drawing.Size(146, 26);
-            this.tb产品名称.TabIndex = 30;
+            this.cb运输商.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb运输商.FormattingEnabled = true;
+            this.cb运输商.Location = new System.Drawing.Point(111, 496);
+            this.cb运输商.Name = "cb运输商";
+            this.cb运输商.Size = new System.Drawing.Size(131, 24);
+            this.cb运输商.TabIndex = 32;
             // 
             // Gamma射线辐射灭菌委托单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(944, 562);
-            this.Controls.Add(this.tb产品名称);
-            this.Controls.Add(this.label18);
+            this.ClientSize = new System.Drawing.Size(944, 574);
+            this.Controls.Add(this.cb运输商);
+            this.Controls.Add(this.cb辐照单位);
             this.Controls.Add(this.bt删除);
             this.Controls.Add(this.bt添加);
             this.Controls.Add(this.bt日志);
@@ -492,7 +474,6 @@
             this.Controls.Add(this.label16);
             this.Controls.Add(this.tb箱数);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.tb运输商);
             this.Controls.Add(this.dtp操作日期);
             this.Controls.Add(this.dtp委托日期);
             this.Controls.Add(this.dtp审批日期);
@@ -512,7 +493,6 @@
             this.Controls.Add(this.bt保存);
             this.Controls.Add(this.tb其他说明);
             this.Controls.Add(this.tb辐照剂量);
-            this.Controls.Add(this.tb辐照单位);
             this.Controls.Add(this.tb委托单位);
             this.Controls.Add(this.tb委托单号);
             this.Controls.Add(this.label7);
@@ -546,14 +526,12 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox tb运输商;
         private System.Windows.Forms.DateTimePicker dtp委托日期;
         private System.Windows.Forms.TextBox tb委托人;
         private System.Windows.Forms.DateTimePicker dtp审批日期;
         private System.Windows.Forms.TextBox tb审批人;
         private System.Windows.Forms.TextBox tb委托单号;
         private System.Windows.Forms.TextBox tb委托单位;
-        private System.Windows.Forms.TextBox tb辐照单位;
         private System.Windows.Forms.TextBox tb辐照剂量;
         private System.Windows.Forms.TextBox tb其他说明;
         private System.Windows.Forms.DateTimePicker dtp操作日期;
@@ -573,7 +551,7 @@
         private System.Windows.Forms.Button bt日志;
         private System.Windows.Forms.Button bt添加;
         private System.Windows.Forms.Button bt删除;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox tb产品名称;
+        private System.Windows.Forms.ComboBox cb辐照单位;
+        private System.Windows.Forms.ComboBox cb运输商;
     }
 }

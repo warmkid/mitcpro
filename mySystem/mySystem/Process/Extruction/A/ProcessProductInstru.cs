@@ -295,9 +295,6 @@ namespace BatchProductRecord
             removeOuterBinding();
             outerBind();
             
-            //readOuterData(instrcode);
-            //dt_prodinstr.Rows[0].EndEdit();
-
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
@@ -315,15 +312,11 @@ namespace BatchProductRecord
             {
                 dict_夜班.Add(s1[i], s1[i]);
             }
-
             setFormState();
             setEnableReadOnly();
 
-
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
-
-
         }
 
         private void init()
@@ -821,9 +814,7 @@ namespace BatchProductRecord
         private void button5_Click_1(object sender, System.EventArgs e)
         {
             setControlTrue();
-            tb指令编号.Enabled = false;
-            bt查询插入.Enabled = false;
-            
+           
             readOuterData(tb指令编号.Text);
             removeOuterBinding();
             outerBind();
@@ -867,6 +858,8 @@ namespace BatchProductRecord
             setFormState();
             setEnableReadOnly();
 
+            tb指令编号.Enabled = false;
+            bt查询插入.Enabled = false;
         }
 
         // 给外表的一行写入默认值
@@ -1258,6 +1251,8 @@ namespace BatchProductRecord
             int count = dt_prodlist.Rows.Count;
             if (count == 0)
                 return;
+            if (dataGridView1.SelectedCells.Count <= 0)
+                return;
             int index = dataGridView1.SelectedCells[0].RowIndex;
             if (0 == index)
             {
@@ -1308,6 +1303,8 @@ namespace BatchProductRecord
         {
             int count = dt_prodlist.Rows.Count;
             if (count == 0)
+                return;
+            if (dataGridView1.SelectedCells.Count <= 0)
                 return;
             int index = dataGridView1.SelectedCells[0].RowIndex;
             if (count - 1 == index)

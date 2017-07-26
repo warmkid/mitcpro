@@ -64,6 +64,14 @@ namespace mySystem.Setting
         private DataTable dt废品;
         private BindingSource bs废品;
         private OleDbCommandBuilder cb废品;
+        private OleDbDataAdapter da人员;
+        private DataTable dt人员;
+        private BindingSource bs人员;
+        private OleDbCommandBuilder cb人员;
+        private OleDbDataAdapter da权限;
+        private DataTable dt权限;
+        private BindingSource bs权限;
+        private OleDbCommandBuilder cb权限;
 
         //dgv样式初始化
         private void Initdgv()
@@ -176,6 +184,28 @@ namespace mySystem.Setting
             dgv废品.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv废品.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv废品.Font = new Font("宋体", 12);
+
+            bs人员 = new BindingSource();
+            dgv人员.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv人员.AllowUserToAddRows = false;
+            dgv人员.ReadOnly = false;
+            dgv人员.RowHeadersVisible = false;
+            dgv人员.AllowUserToResizeColumns = true;
+            dgv人员.AllowUserToResizeRows = false;
+            dgv人员.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv人员.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv人员.Font = new Font("宋体", 12);
+
+            bs权限 = new BindingSource();
+            dgv权限.AllowUserToAddRows = false;
+            dgv权限.ReadOnly = false;
+            dgv权限.RowHeadersVisible = false;
+            dgv权限.AllowUserToResizeColumns = true;
+            dgv权限.AllowUserToResizeRows = false;
+            dgv权限.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv权限.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv权限.Font = new Font("宋体", 12);
+        
         }
 
         private void Bind()
@@ -332,6 +362,38 @@ namespace mySystem.Setting
             this.dgv废品.Columns["废品产生原因"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv废品.Columns["ID"].Visible = false;
 
+            //**************************   人员设置    ***********************************
+            dt人员 = new DataTable("用户"); //""中的是表名
+            da人员 = new OleDbDataAdapter("select * from 用户", mySystem.Parameter.connOle);
+            cb人员 = new OleDbCommandBuilder(da人员);
+            dt人员.Columns.Add("序号", System.Type.GetType("System.String"));
+            da人员.Fill(dt人员);
+            bs人员.DataSource = dt人员;
+            this.dgv人员.DataSource = bs人员.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv人员);
+            this.dgv人员.Columns["用户名"].MinimumWidth = 150;
+            this.dgv人员.Columns["用户名"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv人员.Columns["ID"].Visible = false;
+
+            //************************    人员权限     *******************************************
+            dt权限 = new DataTable("用户权限"); //""中的是表名
+            da权限 = new OleDbDataAdapter("select * from 用户权限", mySystem.Parameter.connOle);
+            cb权限 = new OleDbCommandBuilder(da权限);
+            dt权限.Columns.Add("序号", System.Type.GetType("System.String"));
+            da权限.Fill(dt权限);
+            bs权限.DataSource = dt权限;
+            this.dgv权限.DataSource = bs权限.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv权限);
+            this.dgv权限.Columns["步骤"].MinimumWidth = 250;
+            this.dgv权限.Columns["操作员"].MinimumWidth = 150;
+            this.dgv权限.Columns["审核员"].MinimumWidth = 150;
+            this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv权限.Columns["ID"].Visible = false;
+
         }
 
         private void setDataGridViewRowNums(DataGridView dgv)
@@ -341,100 +403,10 @@ namespace mySystem.Setting
             {
                 dgv.Rows[i].Cells[0].Value = (i + 1).ToString();
             }
-        }
+        }       
 
-        //初始填预热参数textbox
-        private void FillNum()
-        {
-            string tblName = "设置吹膜机组预热参数记录表";
-            List<String> readqueryCols = new List<String>(new String[] { "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
-                    "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
-                    "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
-                    "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" ,"温度公差"});
-            List<String> whereCols = new List<String>(new String[] { "ID" });
-            List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            List<List<Object>> queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
-
-            List<String> data = new List<String> { };
-            for (int i = 0; i < queryValsList[0].Count; i++)
-            {
-                data.Add(queryValsList[0][i].ToString());
-            }
-            List<Control> textboxes = new List<Control> { hw1, ld1, mj1, jt11, jt21, km1, duration1, region11, region21, region31, region41, hw2, 
-                    ld2, mj2, jt12, jt22, km2, duration2, region12, region22, region32, region42, duration3, tolerance};
-            Utility.fillControl(textboxes, data);
-
-
-            //读取数据库并显示
-            String tblName2 = "设置生产指令参数";
-            List<String> readqueryCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
-            List<String> whereCols2 = new List<String>(new String[] { "ID" });
-            List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
-            List<List<Object>> queryValsList2 = Utility.selectAccess(Parameter.connOle, tblName2, readqueryCols2, whereCols2, whereVals2, null, null, null, null, null);
-
-            List<String> data2 = new List<String> { };
-            for (int i = 0; i < queryValsList2[0].Count; i++)
-            {
-                data2.Add(queryValsList2[0][i].ToString());
-            }
-            List<Control> textboxes2 = new List<Control> { tB面数, tB厚度密度, tB参数1, tB参数2 };
-            Utility.fillControl(textboxes2, data2);
-
-        }
-
-
-        private void DataSave()
-        {
-            try
-            {
-                string tblName = "设置吹膜机组预热参数记录表";
-                List<String> queryCols = new List<String>(new String[] { "温度公差" , "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
-                    "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
-                    "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
-                    "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" });
-                List<Object> queryVals = new List<Object>(new Object[] { Convert.ToDouble(tolerance.Text), Convert.ToDouble(hw1.Text), Convert.ToDouble(ld1.Text), 
-                Convert.ToDouble(mj1.Text), Convert.ToDouble(jt11.Text), Convert.ToDouble(jt21.Text), Convert.ToDouble(km1.Text), 
-                Convert.ToDouble(duration1.Text), Convert.ToDouble(region11.Text), Convert.ToDouble(region21.Text), 
-                Convert.ToDouble(region31.Text), Convert.ToDouble(region41.Text), Convert.ToDouble(hw2.Text), Convert.ToDouble(ld2.Text), 
-                Convert.ToDouble(mj2.Text), Convert.ToDouble(jt12.Text), Convert.ToDouble(jt22.Text), Convert.ToDouble(km2.Text), 
-                Convert.ToDouble(duration2.Text), Convert.ToDouble(region12.Text), Convert.ToDouble(region22.Text), 
-                Convert.ToDouble(region32.Text), Convert.ToDouble(region42.Text), Convert.ToDouble(duration3.Text)});
-                List<String> whereCols = new List<String>(new String[] { "ID" });
-                List<Object> whereVals = new List<Object>(new Object[] { 1 });
-                Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
-                if (!b)
-                {
-                    MessageBox.Show("预热参数设置保存失败！", "错误");
-                    return;
-                }
-
-                para1 = Convert.ToInt32(tB面数.Text.Trim());
-                para2 = Convert.ToDouble(tB厚度密度.Text.Trim());
-                para3 = Convert.ToDouble(tB参数1.Text.Trim());
-                para4 = Convert.ToDouble(tB参数2.Text.Trim());
-                String tblName2 = "设置生产指令参数";
-                List<String> updateCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
-                List<Object> updateVals2 = new List<Object>(new Object[] { para1, para2, para3, para4 });
-                List<String> whereCols2 = new List<String>(new String[] { "ID" });
-                List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
-                Boolean b2 = Utility.updateAccess(Parameter.connOle, tblName2, updateCols2, updateVals2, whereCols2, whereVals2);
-                if (!b2)
-                {
-                    MessageBox.Show("参数保存失败", "错误");
-                    return;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("参数保存失败", "错误");
-                return; 
-            }
-            
-
-            MessageBox.Show("保存成功");          
-        }
-
-
+  
+        #region 区域设置
         private void add清洁_Click(object sender, EventArgs e)
         {
             DataRow dr = dt清洁.NewRow();
@@ -515,7 +487,9 @@ namespace mySystem.Setting
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+        #endregion
 
+        #region 项目设置
         private void add开机_Click(object sender, EventArgs e)
         {
             DataRow dr = dt开机.NewRow();
@@ -573,12 +547,103 @@ namespace mySystem.Setting
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+        #endregion
+
+        #region 参数设置
+
+        //初始填预热参数textbox
+        private void FillNum()
+        {
+            string tblName = "设置吹膜机组预热参数记录表";
+            List<String> readqueryCols = new List<String>(new String[] { "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
+                    "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
+                    "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
+                    "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" ,"温度公差"});
+            List<String> whereCols = new List<String>(new String[] { "ID" });
+            List<Object> whereVals = new List<Object>(new Object[] { 1 });
+            List<List<Object>> queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
+
+            List<String> data = new List<String> { };
+            for (int i = 0; i < queryValsList[0].Count; i++)
+            {
+                data.Add(queryValsList[0][i].ToString());
+            }
+            List<Control> textboxes = new List<Control> { hw1, ld1, mj1, jt11, jt21, km1, duration1, region11, region21, region31, region41, hw2, 
+                    ld2, mj2, jt12, jt22, km2, duration2, region12, region22, region32, region42, duration3, tolerance};
+            Utility.fillControl(textboxes, data);
+
+
+            //读取数据库并显示
+            String tblName2 = "设置生产指令参数";
+            List<String> readqueryCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
+            List<String> whereCols2 = new List<String>(new String[] { "ID" });
+            List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
+            List<List<Object>> queryValsList2 = Utility.selectAccess(Parameter.connOle, tblName2, readqueryCols2, whereCols2, whereVals2, null, null, null, null, null);
+
+            List<String> data2 = new List<String> { };
+            for (int i = 0; i < queryValsList2[0].Count; i++)
+            {
+                data2.Add(queryValsList2[0][i].ToString());
+            }
+            List<Control> textboxes2 = new List<Control> { tB面数, tB厚度密度, tB参数1, tB参数2 };
+            Utility.fillControl(textboxes2, data2);
+
+        }
 
         private void Btn保存参数设置_Click(object sender, EventArgs e)
         {
-            DataSave();
+            try
+            {
+                string tblName = "设置吹膜机组预热参数记录表";
+                List<String> queryCols = new List<String>(new String[] { "温度公差" , "换网预热参数设定1", "流道预热参数设定1", "模颈预热参数设定1", "机头1预热参数设定1", "机头2预热参数设定1", 
+                    "口模预热参数设定1", "加热保温时间1", "一区预热参数设定1", "二区预热参数设定1", "三区预热参数设定1", "四区预热参数设定1", "换网预热参数设定2", 
+                    "流道预热参数设定2", "模颈预热参数设定2", "机头1预热参数设定2", "机头2预热参数设定2", "口模预热参数设定2", "加热保温时间2", "一区预热参数设定2", "二区预热参数设定2", 
+                    "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" });
+                List<Object> queryVals = new List<Object>(new Object[] { Convert.ToDouble(tolerance.Text), Convert.ToDouble(hw1.Text), Convert.ToDouble(ld1.Text), 
+                Convert.ToDouble(mj1.Text), Convert.ToDouble(jt11.Text), Convert.ToDouble(jt21.Text), Convert.ToDouble(km1.Text), 
+                Convert.ToDouble(duration1.Text), Convert.ToDouble(region11.Text), Convert.ToDouble(region21.Text), 
+                Convert.ToDouble(region31.Text), Convert.ToDouble(region41.Text), Convert.ToDouble(hw2.Text), Convert.ToDouble(ld2.Text), 
+                Convert.ToDouble(mj2.Text), Convert.ToDouble(jt12.Text), Convert.ToDouble(jt22.Text), Convert.ToDouble(km2.Text), 
+                Convert.ToDouble(duration2.Text), Convert.ToDouble(region12.Text), Convert.ToDouble(region22.Text), 
+                Convert.ToDouble(region32.Text), Convert.ToDouble(region42.Text), Convert.ToDouble(duration3.Text)});
+                List<String> whereCols = new List<String>(new String[] { "ID" });
+                List<Object> whereVals = new List<Object>(new Object[] { 1 });
+                Boolean b = Utility.updateAccess(Parameter.connOle, tblName, queryCols, queryVals, whereCols, whereVals);
+                if (!b)
+                {
+                    MessageBox.Show("预热参数设置保存失败！", "错误");
+                    return;
+                }
+
+                para1 = Convert.ToInt32(tB面数.Text.Trim());
+                para2 = Convert.ToDouble(tB厚度密度.Text.Trim());
+                para3 = Convert.ToDouble(tB参数1.Text.Trim());
+                para4 = Convert.ToDouble(tB参数2.Text.Trim());
+                String tblName2 = "设置生产指令参数";
+                List<String> updateCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
+                List<Object> updateVals2 = new List<Object>(new Object[] { para1, para2, para3, para4 });
+                List<String> whereCols2 = new List<String>(new String[] { "ID" });
+                List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
+                Boolean b2 = Utility.updateAccess(Parameter.connOle, tblName2, updateCols2, updateVals2, whereCols2, whereVals2);
+                if (!b2)
+                {
+                    MessageBox.Show("参数保存失败", "错误");
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("参数保存失败", "错误");
+                return;
+            }
+
+
+            MessageBox.Show("保存成功");    
         }
 
+        #endregion
+
+        #region 产品设置
         private void add产品_Click(object sender, EventArgs e)
         {
             DataRow dr = dt产品.NewRow();
@@ -703,6 +768,136 @@ namespace mySystem.Setting
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+
+        #endregion
+
+        #region 人员设置
+        private void add人员_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt人员.NewRow();
+            dt人员.Rows.InsertAt(dt人员.NewRow(), dt人员.Rows.Count);
+            setDataGridViewRowNums(this.dgv人员);
+        }
+
+        private void del人员_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv人员.SelectedCells[0].RowIndex;
+            dt人员.Rows[idx].Delete();
+            da人员.Update((DataTable)bs人员.DataSource);
+            dt人员.Clear();
+            da人员.Fill(dt人员);
+            setDataGridViewRowNums(this.dgv人员);
+        }
+
+        private void Btn保存人员_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Parameter.isSqlOk)
+                { }
+                else
+                {
+                    Boolean b = checkPeopleExist(); //判断用户是否在用户大表中
+                    if (b)
+                    {
+                        da人员.Update((DataTable)bs人员.DataSource);
+                        dt人员.Clear();
+                        da人员.Fill(dt人员);
+                        setDataGridViewRowNums(this.dgv人员);
+
+                        Boolean c = checkPeopleRight(); //判断用户是否在清洁分切用户表中
+                        if (c)
+                        {
+                            da权限.Update((DataTable)bs权限.DataSource);
+                            dt权限.Clear();
+                            da权限.Fill(dt权限);
+                            setDataGridViewRowNums(this.dgv权限);
+
+                            MessageBox.Show("保存成功！");
+                        }
+                    }
+                }
+
+            }
+            catch
+            { MessageBox.Show("保存失败！", "错误"); }
+        }
+
+        //检查添加的人员是否在总的用户表中
+        private Boolean checkPeopleExist()
+        {
+            Boolean b = true;
+            string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/user.mdb;Persist Security Info=False";
+            OleDbConnection conn = new OleDbConnection(strCon);
+            conn.Open();
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = conn;
+
+            foreach (DataRow dr in dt人员.Rows)
+            {
+                //判断行状态
+                DataRowState state = dr.RowState;
+                if (state.Equals(DataRowState.Deleted))
+                { continue; }
+                else
+                {
+                    String name = dr["用户名"].ToString();
+                    comm.CommandText = "select * from [users] where 姓名 = " + "'" + name + "'";
+                    OleDbDataReader reader = comm.ExecuteReader();
+                    if (!reader.HasRows)
+                    {
+                        b = false;
+                        MessageBox.Show("员工" + "“" + name + "”" + "不存在！");
+                    }
+                    reader.Dispose();
+                }
+            }
+
+            comm.Dispose();
+            conn.Dispose();
+            return b;
+        }
+
+        //检查人员是否在清洁分切人员中
+        private Boolean checkPeopleRight()
+        {
+            Boolean b = true;
+            OleDbCommand comm1 = new OleDbCommand();
+            comm1.Connection = Parameter.connOle;
+            OleDbCommand comm2 = new OleDbCommand();
+            comm2.Connection = Parameter.connOle;
+            foreach (DataRow dr in dt权限.Rows)
+            {
+                String name1 = dr["操作员"].ToString();
+                comm1.CommandText = "select * from 用户 where 用户名 = " + "'" + name1 + "' ";
+                OleDbDataReader reader1 = comm1.ExecuteReader();
+                if (reader1.HasRows)
+                {
+                    String name2 = dr["审核员"].ToString();
+                    comm2.CommandText = "select * from 用户 where 用户名 = " + "'" + name2 + "' ";
+                    OleDbDataReader reader2 = comm2.ExecuteReader();
+                    if (!reader2.HasRows)
+                    {
+                        b = false;
+                        MessageBox.Show("员工" + "“" + name2 + "”" + "无操作清洁分切工序权限！");
+                    }
+                    reader2.Dispose();
+                }
+                else
+                {
+                    b = false;
+                    MessageBox.Show("员工" + "“" + name1 + "”" + "无操作清洁分切工序权限！");
+                }
+                reader1.Dispose();
+            }
+
+            comm1.Dispose();
+            comm2.Dispose();
+            return b;
+        }
+
+        #endregion
 
     }
 }

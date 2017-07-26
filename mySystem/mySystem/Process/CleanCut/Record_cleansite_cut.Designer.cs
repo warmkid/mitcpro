@@ -59,6 +59,9 @@
             this.ckb不合格 = new System.Windows.Forms.CheckBox();
             this.bt发送审核 = new System.Windows.Forms.Button();
             this.bt日志 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.bt插入查询 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -75,7 +78,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(44, 63);
+            this.label2.Location = new System.Drawing.Point(15, 68);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(63, 14);
             this.label2.TabIndex = 1;
@@ -84,7 +87,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(270, 63);
+            this.label3.Location = new System.Drawing.Point(319, 66);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 14);
             this.label3.TabIndex = 2;
@@ -93,7 +96,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(481, 63);
+            this.label4.Location = new System.Drawing.Point(498, 67);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 14);
             this.label4.TabIndex = 3;
@@ -102,7 +105,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(688, 63);
+            this.label5.Location = new System.Drawing.Point(705, 67);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 14);
             this.label5.TabIndex = 4;
@@ -111,7 +114,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(925, 63);
+            this.label6.Location = new System.Drawing.Point(942, 67);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(63, 14);
             this.label6.TabIndex = 5;
@@ -119,21 +122,22 @@
             // 
             // tb产品规格
             // 
-            this.tb产品规格.Location = new System.Drawing.Point(339, 59);
+            this.tb产品规格.Location = new System.Drawing.Point(388, 62);
             this.tb产品规格.Name = "tb产品规格";
             this.tb产品规格.Size = new System.Drawing.Size(100, 23);
             this.tb产品规格.TabIndex = 7;
             // 
             // tb产品批号
             // 
-            this.tb产品批号.Location = new System.Drawing.Point(550, 59);
+            this.tb产品批号.Location = new System.Drawing.Point(567, 63);
             this.tb产品批号.Name = "tb产品批号";
+            this.tb产品批号.ReadOnly = true;
             this.tb产品批号.Size = new System.Drawing.Size(100, 23);
             this.tb产品批号.TabIndex = 8;
             // 
             // dtp生产日期
             // 
-            this.dtp生产日期.Location = new System.Drawing.Point(757, 60);
+            this.dtp生产日期.Location = new System.Drawing.Point(774, 64);
             this.dtp生产日期.Name = "dtp生产日期";
             this.dtp生产日期.Size = new System.Drawing.Size(141, 23);
             this.dtp生产日期.TabIndex = 9;
@@ -141,9 +145,7 @@
             // ckb白班
             // 
             this.ckb白班.AutoSize = true;
-            this.ckb白班.Checked = true;
-            this.ckb白班.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckb白班.Location = new System.Drawing.Point(994, 64);
+            this.ckb白班.Location = new System.Drawing.Point(1011, 68);
             this.ckb白班.Name = "ckb白班";
             this.ckb白班.Size = new System.Drawing.Size(54, 18);
             this.ckb白班.TabIndex = 10;
@@ -153,7 +155,7 @@
             // ckb夜班
             // 
             this.ckb夜班.AutoSize = true;
-            this.ckb夜班.Location = new System.Drawing.Point(1066, 64);
+            this.ckb夜班.Location = new System.Drawing.Point(1083, 68);
             this.ckb夜班.Name = "ckb夜班";
             this.ckb夜班.Size = new System.Drawing.Size(54, 18);
             this.ckb夜班.TabIndex = 11;
@@ -211,12 +213,12 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 14);
             this.label7.TabIndex = 13;
-            this.label7.Text = "清场人";
+            this.label7.Text = "操作员";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(452, 353);
+            this.label8.Location = new System.Drawing.Point(657, 353);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(63, 14);
             this.label8.TabIndex = 14;
@@ -225,11 +227,11 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(243, 356);
+            this.label9.Location = new System.Drawing.Point(495, 353);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(49, 14);
             this.label9.TabIndex = 15;
-            this.label9.Text = "检查人";
+            this.label9.Text = "审核员";
             // 
             // tb清场人
             // 
@@ -240,7 +242,7 @@
             // 
             // tb检查人
             // 
-            this.tb检查人.Location = new System.Drawing.Point(298, 347);
+            this.tb检查人.Location = new System.Drawing.Point(550, 347);
             this.tb检查人.Name = "tb检查人";
             this.tb检查人.ReadOnly = true;
             this.tb检查人.Size = new System.Drawing.Size(100, 23);
@@ -297,7 +299,7 @@
             // cb产品代码
             // 
             this.cb产品代码.FormattingEnabled = true;
-            this.cb产品代码.Location = new System.Drawing.Point(113, 59);
+            this.cb产品代码.Location = new System.Drawing.Point(84, 64);
             this.cb产品代码.Name = "cb产品代码";
             this.cb产品代码.Size = new System.Drawing.Size(101, 22);
             this.cb产品代码.TabIndex = 24;
@@ -305,9 +307,7 @@
             // ckb合格
             // 
             this.ckb合格.AutoSize = true;
-            this.ckb合格.Checked = true;
-            this.ckb合格.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.ckb合格.Location = new System.Drawing.Point(521, 352);
+            this.ckb合格.Location = new System.Drawing.Point(726, 352);
             this.ckb合格.Name = "ckb合格";
             this.ckb合格.Size = new System.Drawing.Size(54, 18);
             this.ckb合格.TabIndex = 25;
@@ -317,7 +317,7 @@
             // ckb不合格
             // 
             this.ckb不合格.AutoSize = true;
-            this.ckb不合格.Location = new System.Drawing.Point(581, 350);
+            this.ckb不合格.Location = new System.Drawing.Point(786, 352);
             this.ckb不合格.Name = "ckb不合格";
             this.ckb不合格.Size = new System.Drawing.Size(68, 18);
             this.ckb不合格.TabIndex = 26;
@@ -344,11 +344,41 @@
             this.bt日志.UseVisualStyleBackColor = true;
             this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(300, 347);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(171, 23);
+            this.textBox1.TabIndex = 30;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(217, 353);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 14);
+            this.label11.TabIndex = 29;
+            this.label11.Text = "操作员备注";
+            // 
+            // bt插入查询
+            // 
+            this.bt插入查询.Location = new System.Drawing.Point(206, 63);
+            this.bt插入查询.Name = "bt插入查询";
+            this.bt插入查询.Size = new System.Drawing.Size(88, 23);
+            this.bt插入查询.TabIndex = 31;
+            this.bt插入查询.Text = "插入/查询";
+            this.bt插入查询.UseVisualStyleBackColor = true;
+            this.bt插入查询.Click += new System.EventHandler(this.bt插入查询_Click);
+            // 
             // Record_cleansite_cut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 499);
+            this.Controls.Add(this.bt插入查询);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt发送审核);
             this.Controls.Add(this.ckb不合格);
@@ -418,5 +448,8 @@
         private System.Windows.Forms.CheckBox ckb不合格;
         private System.Windows.Forms.Button bt发送审核;
         private System.Windows.Forms.Button bt日志;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button bt插入查询;
     }
 }

@@ -24,43 +24,89 @@ namespace mySystem.Process.CleanCut
 
         private string person_操作员;
         private string person_审核员;
-        private List<string> prodcode;
 
         private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
         private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
         private Dictionary<string, string> dict_prod;//产品代码与产品批号对应字典
 
+        private int instrid;
+        private string prodcode;
         public Record_cleansite_cut(mySystem.MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
-            //Init();
-            //Init();
-            //readsetting();
-            //begin();
-
-            //getPeople()--> setUserState()--> getOtherData()-->
-            //addDataEventHandler() {当combobox或datetimepicker取到值后：读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->
-            //addComputerEventHandler()-->setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()}
             
-            getPeople(1);//清场记录权限
+            getPeople();//清场记录权限
             setUserState();
             getOtherData();
             addDataEventHandler();
-            begin();
 
+            instrid = mySystem.Parameter.cleancutInstruID;            
+
+            setControlFalse();
+            cb产品代码.Enabled = true;
+            bt插入查询.Enabled = true;
+        }
+
+        public Record_cleansite_cut(mySystem.MainForm mainform, int id)
+            : base(mainform)
+        {
+            InitializeComponent();
+
+            getPeople();//清场记录权限
+            setUserState();
+            getOtherData();
+
+            string asql = "select * from 清场记录 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+            prodcode = tempdt.Rows[0]["产品代码"].ToString();
+
+            cb产品代码.Enabled = false;
+            bt插入查询.Enabled = false;
+
+            readOuterData(instrid, prodcode);
+            removeOuterBinding();
+            outerBind();
+
+            ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["生产班次"];
+            ckb夜班.Checked = !ckb白班.Checked;
+
+            if (dt_prodinstr.Rows[0]["审核人"].ToString() != "" && dt_prodinstr.Rows[0]["审核人"].ToString() != "__待审核")
+            {
+                ckb合格.Checked = (bool)dt_prodinstr.Rows[0]["审核是否通过"];
+                ckb不合格.Checked = !ckb合格.Checked;
+            }
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            addOtherEvnetHandler();
+            setFormState();
+            setEnableReadOnly();
         }
 
         void addDataEventHandler()
         {
-            cb产品代码.SelectedIndexChanged += new EventHandler(cb产品代码_SelectedIndexChanged);
+            //cb产品代码.SelectedIndexChanged += new EventHandler(cb产品代码_SelectedIndexChanged);
+            //dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
         }
 
-        void cb产品代码_SelectedIndexChanged(object sender, EventArgs e)
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            dt_prodinstr.Rows[0]["清洁前批号"] = dict_prod[cb产品代码.Text];
-            tb产品批号.Text = dict_prod[cb产品代码.Text];
-            throw new NotImplementedException();
+            if (e.ColumnIndex < 0)
+                return;
+            if (e.ColumnIndex == 5)
+            {
+                if (dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString() == "合格")
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                else
+                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+            }
         }
 
         void setUserState()
@@ -74,10 +120,10 @@ namespace mySystem.Process.CleanCut
         }
 
         //// 获取操作员和审核员
-        void getPeople(int id)
+        void getPeople()
         {
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where ID=" + id, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='清场记录'", mySystem.Parameter.connOle);
             da.Fill(dt);
 
             if (dt.Rows.Count > 0)
@@ -96,7 +142,7 @@ namespace mySystem.Process.CleanCut
 
             //获取该生产指令下的产品代码 
             dict_prod = new Dictionary<string, string>();
-            OleDbDataAdapter tda = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID="+mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            OleDbDataAdapter tda = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID="+mySystem.Parameter.cleancutInstruID, mySystem.Parameter.connOle);
             DataTable tdt = new DataTable("清洁分切工序生产指令详细信息");
             tda.Fill(tdt);
             foreach (DataRow tdr in tdt.Rows)
@@ -119,34 +165,6 @@ namespace mySystem.Process.CleanCut
             return true;
         }
 
-        private void begin()
-        {
-            readOuterData(mySystem.Parameter.proInstruID);
-            removeOuterBinding();
-            outerBind();
-            if (dt_prodinstr.Rows.Count <= 0)
-            {
-                DataRow dr = dt_prodinstr.NewRow();
-                dr = writeOuterDefault(dr);
-                dt_prodinstr.Rows.Add(dr);
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                readOuterData(mySystem.Parameter.proInstruID);
-                removeOuterBinding();
-                outerBind();
-            }
-
-            ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["生产班次"];
-            ckb夜班.Checked = !ckb白班.Checked;
-
-            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
-            innerBind();
-
-            addComputerEventHandler();
-
-            setFormState();
-            setEnableReadOnly();
-            addOtherEvnetHandler();
-        }
 
         // 其他事件，比如按钮的点击，数据有效性判断
         void addOtherEvnetHandler()
@@ -168,9 +186,9 @@ namespace mySystem.Process.CleanCut
                         ndr[1] = (int)dt_prodinstr.Rows[0]["ID"];
                         ndr[2] = tempi++;//序号
                         // 注意ID不要复制过去了，所以从1开始
-                        for (int i = 2; i < dr.Table.Columns.Count; ++i)
+                        for (int i = 1; i < dr.Table.Columns.Count; ++i)
                         {
-                            ndr[i + 1] = dr[i];
+                            ndr[i + 2] = dr[i];
                         }
                         // 这里添加检查是否合格、检查人、审核人等默认信息
                         ndr["清洁操作"] = "合格";
@@ -179,7 +197,6 @@ namespace mySystem.Process.CleanCut
                     }
                     dataGridView1.Columns[0].Visible = false;
                     dataGridView1.Columns[1].Visible = false;
-                    //da_in.Update((DataTable)bs_in.DataSource);
 
                 }
 
@@ -209,14 +226,13 @@ namespace mySystem.Process.CleanCut
             //控件都能点,除不可点控件
             foreach (Control c in this.Controls)
                 c.Enabled = true;
+            dataGridView1.ReadOnly = false;
             ckb不合格.Enabled = false;
             ckb合格.Enabled = false;
             ckb白班.Enabled = false;
             ckb夜班.Enabled = false;
             bt发送审核.Enabled = false;
-
-            if (stat_user != 1)
-                bt审核.Enabled = false;
+            bt审核.Enabled = false;
         }
         //设置控件不可见
         private void setControlFalse()
@@ -268,6 +284,7 @@ namespace mySystem.Process.CleanCut
                 {
                     //都能点，发送审核不能点
                     setControlTrue();
+                    bt发送审核.Enabled = true;
                 }
             }
         }
@@ -285,32 +302,22 @@ namespace mySystem.Process.CleanCut
         // 给外表的一行写入默认值
         DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.proInstruID;
+            dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
+            dr["产品代码"] = prodcode;
+            dr["产品批号"] = dict_prod[prodcode];
             dr["生产日期"] = DateTime.Now;
             dr["生产班次"] = mySystem.Parameter.userflight=="白班"?true:false;
             dr["清场人"] = mySystem.Parameter.userName;
             return dr;
 
         }
-        // 给内表的一行写入默认值 datagridview1
-        DataRow writeInnerDefault(DataRow dr)
-        {
-            dr["T清洁分切运行记录ID"] = dt_prodinstr.Rows[0]["ID"];
-            dr["生产时间"] = DateTime.Now;
-            dr["分切速度"] = 0;
-            dr["自动张力设定"] = 0;
-            dr["自动张力显示"] = 0;
-            dr["张力输出显示"] = 0;
-            dr["操作人"] =mySystem.Parameter.userName;
-            return dr;
-        }
 
         // 根据条件从数据库中读取一行外表的数据
-        void readOuterData(int instrid)
+        void readOuterData(int instrid,string prodcode)
         {
             dt_prodinstr = new DataTable("清场记录");
             bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+            da_prodinstr = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid + " and 产品代码='"+prodcode+"'", mySystem.Parameter.connOle);
             cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
             da_prodinstr.Fill(dt_prodinstr);
         }
@@ -438,16 +445,16 @@ namespace mySystem.Process.CleanCut
         }
 
         //保存外表和内表数据
-        private void save()
+        private bool save()
         {
             //判断合法性
             if (!input_Judge())
-                return;
+                return false;
 
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(mySystem.Parameter.proInstruID);
+            readOuterData(instrid,prodcode);
             removeOuterBinding();
             outerBind();
 
@@ -455,14 +462,29 @@ namespace mySystem.Process.CleanCut
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
+
+            setUndoColor();
+            return true;
+        }
+
+        //给不合格记录标记颜色
+        private void setUndoColor()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "合格")
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "不合格")
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+            }
         }
 
         //保存按钮
         private void bt保存_Click(object sender, EventArgs e)
         {
-            save();
+            bool rt = save();
             //控件可见性
-            if (stat_user == 0)//操作员
+            if (rt && stat_user == 0)
                 bt发送审核.Enabled = true;
         }
 
@@ -471,7 +493,7 @@ namespace mySystem.Process.CleanCut
         {
             if (mySystem.Parameter.NametoID(tb清场人.Text) <= 0)
             {
-                MessageBox.Show("清场人ID不存在");
+                MessageBox.Show("操作员ID不存在");
                 return false;
             }
             return true;
@@ -522,6 +544,15 @@ namespace mySystem.Process.CleanCut
 
         private void bt发送审核_Click(object sender, EventArgs e)
         {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "不合格")
+                {
+                    MessageBox.Show("有条目待确认");
+                    return;
+                }
+            }
+
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
@@ -560,6 +591,50 @@ namespace mySystem.Process.CleanCut
         private void bt日志_Click(object sender, EventArgs e)
         {
             MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+        }
+
+        private void bt插入查询_Click(object sender, EventArgs e)
+        {
+            if (cb产品代码.Text == "")
+            {
+                MessageBox.Show("选择一条产品代码");
+                return;
+            }
+            cb产品代码.Enabled = false;
+            bt插入查询.Enabled = false;
+
+            instrid = mySystem.Parameter.cleancutInstruID;
+            prodcode = cb产品代码.Text;
+            readOuterData(instrid,prodcode);
+            removeOuterBinding();
+            outerBind();
+            if (dt_prodinstr.Rows.Count <= 0)
+            {
+                DataRow dr = dt_prodinstr.NewRow();
+                dr = writeOuterDefault(dr);
+                dt_prodinstr.Rows.Add(dr);
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(instrid,prodcode);
+                removeOuterBinding();
+                outerBind();
+            }
+
+            ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["生产班次"];
+            ckb夜班.Checked = !ckb白班.Checked;
+
+            if (dt_prodinstr.Rows[0]["审核人"].ToString() != "")
+            {
+                ckb合格.Checked = (bool)dt_prodinstr.Rows[0]["审核是否通过"];
+                ckb不合格.Checked = !ckb合格.Checked;
+            }
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            addOtherEvnetHandler();
+            setFormState();
+            setEnableReadOnly();
+            
         }
     }
 }

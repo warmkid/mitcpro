@@ -10,15 +10,23 @@ using System.Data.OleDb;
 
 namespace mySystem.Setting
 {
-    public partial class 灭菌设置 : Form
+    public partial class CS制袋设置 : Form
     {
-        public 灭菌设置()
+        public CS制袋设置()
         {
             InitializeComponent();
             Initdgv();
             Bind();
         }
 
+        private OleDbDataAdapter da开机;
+        private DataTable dt开机;
+        private BindingSource bs开机;
+        private OleDbCommandBuilder cb开机;
+        private OleDbDataAdapter da清场;
+        private DataTable dt清场;
+        private BindingSource bs清场;
+        private OleDbCommandBuilder cb清场;
         private OleDbDataAdapter da产品;
         private DataTable dt产品;
         private BindingSource bs产品;
@@ -31,6 +39,18 @@ namespace mySystem.Setting
         private DataTable dt产品规格;
         private BindingSource bs产品规格;
         private OleDbCommandBuilder cb产品规格;
+        private OleDbDataAdapter da封边;
+        private DataTable dt封边;
+        private BindingSource bs封边;
+        private OleDbCommandBuilder cb封边;
+        private OleDbDataAdapter da工艺;
+        private DataTable dt工艺;
+        private BindingSource bs工艺;
+        private OleDbCommandBuilder cb工艺;
+        private OleDbDataAdapter da物料代码;
+        private DataTable dt物料代码;
+        private BindingSource bs物料代码;
+        private OleDbCommandBuilder cb物料代码;
         private OleDbDataAdapter da人员;
         private DataTable dt人员;
         private BindingSource bs人员;
@@ -40,9 +60,32 @@ namespace mySystem.Setting
         private BindingSource bs权限;
         private OleDbCommandBuilder cb权限;
 
+
         //dgv样式初始化
         private void Initdgv()
-        {           
+        {
+            bs开机 = new BindingSource();
+            dgv开机.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv开机.AllowUserToAddRows = false;
+            dgv开机.ReadOnly = false;
+            dgv开机.RowHeadersVisible = false;
+            dgv开机.AllowUserToResizeColumns = true;
+            dgv开机.AllowUserToResizeRows = false;
+            dgv开机.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv开机.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv开机.Font = new Font("宋体", 12);
+
+            bs清场 = new BindingSource();
+            dgv清场.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv清场.AllowUserToAddRows = false;
+            dgv清场.ReadOnly = false;
+            dgv清场.RowHeadersVisible = false;
+            dgv清场.AllowUserToResizeColumns = true;
+            dgv清场.AllowUserToResizeRows = false;
+            dgv清场.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv清场.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv清场.Font = new Font("宋体", 12);
+
             bs产品 = new BindingSource();
             dgv产品.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv产品.AllowUserToAddRows = false;
@@ -65,6 +108,7 @@ namespace mySystem.Setting
             dgv产品编码.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv产品编码.Font = new Font("宋体", 12);
 
+
             bs产品规格 = new BindingSource();
             dgv产品规格.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv产品规格.AllowUserToAddRows = false;
@@ -75,6 +119,37 @@ namespace mySystem.Setting
             dgv产品规格.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv产品规格.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv产品规格.Font = new Font("宋体", 12);
+
+            bs封边 = new BindingSource();
+            dgv封边.AllowUserToAddRows = false;
+            dgv封边.ReadOnly = false;
+            dgv封边.RowHeadersVisible = false;
+            dgv封边.AllowUserToResizeColumns = true;
+            dgv封边.AllowUserToResizeRows = false;
+            dgv封边.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv封边.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv封边.Font = new Font("宋体", 12);
+
+            bs工艺 = new BindingSource();
+            dgv工艺.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv工艺.AllowUserToAddRows = false;
+            dgv工艺.ReadOnly = false;
+            dgv工艺.RowHeadersVisible = false;
+            dgv工艺.AllowUserToResizeColumns = true;
+            dgv工艺.AllowUserToResizeRows = false;
+            dgv工艺.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv工艺.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv工艺.Font = new Font("宋体", 12);
+
+            bs物料代码 = new BindingSource();
+            dgv物料代码.AllowUserToAddRows = false;
+            dgv物料代码.ReadOnly = false;
+            dgv物料代码.RowHeadersVisible = false;
+            dgv物料代码.AllowUserToResizeColumns = true;
+            dgv物料代码.AllowUserToResizeRows = false;
+            dgv物料代码.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv物料代码.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv物料代码.Font = new Font("宋体", 12);
 
             bs人员 = new BindingSource();
             dgv人员.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -100,9 +175,41 @@ namespace mySystem.Setting
 
         private void Bind()
         {
+            //**************************   开机    ***********************************
+            dt开机 = new DataTable("设置制袋机组开机前确认项目"); //""中的是表名
+            da开机 = new OleDbDataAdapter("select * from 设置制袋机组开机前确认项目", mySystem.Parameter.connOle);
+            cb开机 = new OleDbCommandBuilder(da开机);
+            dt开机.Columns.Add("序号", System.Type.GetType("System.String"));
+            da开机.Fill(dt开机);
+            bs开机.DataSource = dt开机;
+            this.dgv开机.DataSource = bs开机.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv开机);
+            this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv开机.Columns["ID"].Visible = false;
+
+            //**************************   清场    ***********************************
+            dt清场 = new DataTable("设置清场记录"); //""中的是表名
+            da清场 = new OleDbDataAdapter("select * from 设置清场记录", mySystem.Parameter.connOle);
+            cb清场 = new OleDbCommandBuilder(da清场);
+            dt清场.Columns.Add("序号", System.Type.GetType("System.String"));
+            da清场.Fill(dt清场);
+            bs清场.DataSource = dt清场;
+            this.dgv清场.DataSource = bs清场.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv清场);
+            this.dgv清场.Columns["清场项目"].MinimumWidth = 200;
+            this.dgv清场.Columns["清场要点"].MinimumWidth = 250;
+            this.dgv清场.Columns["清场要点"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv清场.Columns["清场要点"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv清场.Columns["ID"].Visible = false;
+
             //************************    产品     *******************************************
-            dt产品 = new DataTable("设置灭菌产品"); //""中的是表名
-            da产品 = new OleDbDataAdapter("select * from 设置灭菌产品", mySystem.Parameter.connOle);
+            dt产品 = new DataTable("设置CS制袋产品"); //""中的是表名
+            da产品 = new OleDbDataAdapter("select * from 设置CS制袋产品", mySystem.Parameter.connOle);
             cb产品 = new OleDbCommandBuilder(da产品);
             dt产品.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品.Fill(dt产品);
@@ -116,8 +223,8 @@ namespace mySystem.Setting
             this.dgv产品.Columns["ID"].Visible = false;
 
             //**************************   产品编码    ***********************************
-            dt产品编码 = new DataTable("设置灭菌产品代码"); //""中的是表名
-            da产品编码 = new OleDbDataAdapter("select * from 设置灭菌产品代码", mySystem.Parameter.connOle);
+            dt产品编码 = new DataTable("设置CS制袋产品代码"); //""中的是表名
+            da产品编码 = new OleDbDataAdapter("select * from 设置CS制袋产品代码", mySystem.Parameter.connOle);
             cb产品编码 = new OleDbCommandBuilder(da产品编码);
             dt产品编码.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品编码.Fill(dt产品编码);
@@ -125,14 +232,14 @@ namespace mySystem.Setting
             this.dgv产品编码.DataSource = bs产品编码.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv产品编码);
-            this.dgv产品编码.Columns["产品编码"].MinimumWidth = 200;
-            this.dgv产品编码.Columns["产品编码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.dgv产品编码.Columns["产品编码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv产品编码.Columns["产品代码"].MinimumWidth = 200;
+            this.dgv产品编码.Columns["产品代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv产品编码.Columns["产品代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品编码.Columns["ID"].Visible = false;
 
-            //************************    产品规格     *******************************************
-            dt产品规格 = new DataTable("设置灭菌产品规格"); //""中的是表名
-            da产品规格 = new OleDbDataAdapter("select * from 设置灭菌产品规格", mySystem.Parameter.connOle);
+            //**************************   产品规格    ***********************************
+            dt产品规格 = new DataTable("设置CS制袋产品规格"); //""中的是表名
+            da产品规格 = new OleDbDataAdapter("select * from 设置CS制袋产品规格", mySystem.Parameter.connOle);
             cb产品规格 = new OleDbCommandBuilder(da产品规格);
             dt产品规格.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品规格.Fill(dt产品规格);
@@ -144,6 +251,52 @@ namespace mySystem.Setting
             this.dgv产品规格.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品规格.Columns["ID"].Visible = false;
+
+            //**************************   封边    ***********************************
+            dt封边 = new DataTable("设置CS制袋封边"); //""中的是表名
+            da封边 = new OleDbDataAdapter("select * from 设置CS制袋封边", mySystem.Parameter.connOle);
+            cb封边 = new OleDbCommandBuilder(da封边);
+            dt封边.Columns.Add("序号", System.Type.GetType("System.String"));
+            da封边.Fill(dt封边);
+            bs封边.DataSource = dt封边;
+            this.dgv封边.DataSource = bs封边.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv封边);
+            this.dgv封边.Columns["封边名称"].MinimumWidth = 200;
+            this.dgv封边.Columns["封边名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv封边.Columns["封边名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv封边.Columns["ID"].Visible = false;
+
+
+            //**************************   工艺    ***********************************
+            dt工艺 = new DataTable("设置CS制袋工艺"); //""中的是表名
+            da工艺 = new OleDbDataAdapter("select * from 设置CS制袋工艺", mySystem.Parameter.connOle);
+            cb工艺 = new OleDbCommandBuilder(da工艺);
+            dt工艺.Columns.Add("序号", System.Type.GetType("System.String"));
+            da工艺.Fill(dt工艺);
+            bs工艺.DataSource = dt工艺;
+            this.dgv工艺.DataSource = bs工艺.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv工艺);
+            this.dgv工艺.Columns["工艺名称"].MinimumWidth = 200;
+            this.dgv工艺.Columns["工艺名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv工艺.Columns["工艺名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv工艺.Columns["ID"].Visible = false;
+
+            //************************    物料代码     *******************************************
+            dt物料代码 = new DataTable("设置物料代码"); //""中的是表名
+            da物料代码 = new OleDbDataAdapter("select * from 设置物料代码", mySystem.Parameter.connOle);
+            cb物料代码 = new OleDbCommandBuilder(da物料代码);
+            dt物料代码.Columns.Add("序号", System.Type.GetType("System.String"));
+            da物料代码.Fill(dt物料代码);
+            bs物料代码.DataSource = dt物料代码;
+            this.dgv物料代码.DataSource = bs物料代码.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv物料代码);
+            this.dgv物料代码.Columns["物料代码"].MinimumWidth = 200;
+            this.dgv物料代码.Columns["物料代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv物料代码.Columns["物料代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv物料代码.Columns["ID"].Visible = false;
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("用户"); //""中的是表名
@@ -188,6 +341,67 @@ namespace mySystem.Setting
             }
         }
 
+        #region 项目设置
+        private void add开机_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt开机.NewRow();
+            dt开机.Rows.InsertAt(dt开机.NewRow(), dt开机.Rows.Count);
+            setDataGridViewRowNums(this.dgv开机);
+        }
+
+        private void del开机_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv开机.CurrentRow.Index;
+            dt开机.Rows[idx].Delete();
+            da开机.Update((DataTable)bs开机.DataSource);
+            dt开机.Clear();
+            da开机.Fill(dt开机);
+            setDataGridViewRowNums(this.dgv开机);
+        }
+
+        private void add清场_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt清场.NewRow();
+            dt清场.Rows.InsertAt(dt清场.NewRow(), dt清场.Rows.Count);
+            setDataGridViewRowNums(this.dgv清场);
+        }
+
+        private void del清场_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv清场.CurrentRow.Index;
+            dt清场.Rows[idx].Delete();
+            da清场.Update((DataTable)bs清场.DataSource);
+            dt清场.Clear();
+            da清场.Fill(dt清场);
+            setDataGridViewRowNums(this.dgv清场);
+        }
+
+        private void Btn保存项目_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Parameter.isSqlOk)
+                { }
+                else
+                {
+                    da开机.Update((DataTable)bs开机.DataSource);
+                    dt开机.Clear();
+                    da开机.Fill(dt开机);
+                    setDataGridViewRowNums(this.dgv开机);
+
+                    da清场.Update((DataTable)bs清场.DataSource);
+                    dt清场.Clear();
+                    da清场.Fill(dt清场);
+                    setDataGridViewRowNums(this.dgv清场);
+
+                }
+                MessageBox.Show("保存成功！");
+            }
+            catch
+            { MessageBox.Show("保存失败！", "错误"); }
+        }
+        #endregion
+
         #region 产品设置
         private void add产品_Click(object sender, EventArgs e)
         {
@@ -202,7 +416,7 @@ namespace mySystem.Setting
             dt产品.Rows[idx].Delete();
             da产品.Update((DataTable)bs产品.DataSource);
             dt产品.Clear();
-            da产品.Fill(dt产品);
+            da产品.Fill(dt开机);
             setDataGridViewRowNums(this.dgv产品);
         }
 
@@ -223,14 +437,14 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv产品编码);
         }
 
-        private void add规格_Click(object sender, EventArgs e)
+        private void add产品规格_Click(object sender, EventArgs e)
         {
             DataRow dr = dt产品规格.NewRow();
             dt产品规格.Rows.InsertAt(dt产品规格.NewRow(), dt产品规格.Rows.Count);
             setDataGridViewRowNums(this.dgv产品规格);
         }
 
-        private void del规格_Click(object sender, EventArgs e)
+        private void del产品规格_Click(object sender, EventArgs e)
         {
             int idx = this.dgv产品规格.CurrentRow.Index;
             dt产品规格.Rows[idx].Delete();
@@ -238,6 +452,57 @@ namespace mySystem.Setting
             dt产品规格.Clear();
             da产品规格.Fill(dt产品规格);
             setDataGridViewRowNums(this.dgv产品规格);
+        }
+
+        private void add封边_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt封边.NewRow();
+            dt封边.Rows.InsertAt(dt封边.NewRow(), dt封边.Rows.Count);
+            setDataGridViewRowNums(this.dgv封边);
+        }
+
+        private void del封边_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv封边.CurrentRow.Index;
+            dt封边.Rows[idx].Delete();
+            da封边.Update((DataTable)bs封边.DataSource);
+            dt封边.Clear();
+            da封边.Fill(dt封边);
+            setDataGridViewRowNums(this.dgv封边);
+        }
+
+        private void add工艺_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt工艺.NewRow();
+            dt工艺.Rows.InsertAt(dt工艺.NewRow(), dt工艺.Rows.Count);
+            setDataGridViewRowNums(this.dgv工艺);
+        }
+
+        private void del工艺_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv工艺.CurrentRow.Index;
+            dt工艺.Rows[idx].Delete();
+            da工艺.Update((DataTable)bs工艺.DataSource);
+            dt工艺.Clear();
+            da工艺.Fill(dt工艺);
+            setDataGridViewRowNums(this.dgv工艺);
+        }
+
+        private void add物料代码_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt物料代码.NewRow();
+            dt物料代码.Rows.InsertAt(dt物料代码.NewRow(), dt物料代码.Rows.Count);
+            setDataGridViewRowNums(this.dgv物料代码);
+        }
+
+        private void del物料代码_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv物料代码.CurrentRow.Index;
+            dt物料代码.Rows[idx].Delete();
+            da物料代码.Update((DataTable)bs物料代码.DataSource);
+            dt物料代码.Clear();
+            da物料代码.Fill(dt物料代码);
+            setDataGridViewRowNums(this.dgv物料代码);
         }
 
         private void Btn保存产品_Click(object sender, EventArgs e)
@@ -263,13 +528,27 @@ namespace mySystem.Setting
                     da产品规格.Fill(dt产品规格);
                     setDataGridViewRowNums(this.dgv产品规格);
 
+                    da封边.Update((DataTable)bs封边.DataSource);
+                    dt封边.Clear();
+                    da封边.Fill(dt封边);
+                    setDataGridViewRowNums(this.dgv封边);
+
+                    da工艺.Update((DataTable)bs工艺.DataSource);
+                    dt工艺.Clear();
+                    da工艺.Fill(dt工艺);
+                    setDataGridViewRowNums(this.dgv工艺);
+
+                    da物料代码.Update((DataTable)bs物料代码.DataSource);
+                    dt物料代码.Clear();
+                    da物料代码.Fill(dt物料代码);
+                    setDataGridViewRowNums(this.dgv物料代码);
+
                 }
                 MessageBox.Show("保存成功！");
             }
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
-
         #endregion
 
         #region 人员设置
@@ -360,7 +639,7 @@ namespace mySystem.Setting
             return b;
         }
 
-        //检查人员是否在灭菌人员中
+        //检查人员是否在清洁分切人员中
         private Boolean checkPeopleRight()
         {
             Boolean b = true;
@@ -381,14 +660,14 @@ namespace mySystem.Setting
                     if (!reader2.HasRows)
                     {
                         b = false;
-                        MessageBox.Show("员工" + "“" + name2 + "”" + "无操作灭菌工序权限！");
+                        MessageBox.Show("员工" + "“" + name2 + "”" + "无操作清洁分切工序权限！");
                     }
                     reader2.Dispose();
                 }
                 else
                 {
                     b = false;
-                    MessageBox.Show("员工" + "“" + name1 + "”" + "无操作灭菌工序权限！");
+                    MessageBox.Show("员工" + "“" + name1 + "”" + "无操作清洁分切工序权限！");
                 }
                 reader1.Dispose();
             }
@@ -397,9 +676,7 @@ namespace mySystem.Setting
             comm2.Dispose();
             return b;
         }
-
         #endregion
-
 
     }
 }

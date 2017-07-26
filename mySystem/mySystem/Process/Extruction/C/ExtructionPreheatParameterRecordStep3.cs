@@ -44,8 +44,7 @@ namespace mySystem.Extruction.Process
         
         public ExtructionPreheatParameterRecordStep3(MainForm mainform): base(mainform)
         {
-            InitializeComponent();
-
+            InitializeComponent();          
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
