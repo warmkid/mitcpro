@@ -14,10 +14,10 @@ namespace mySystem.Process.Bag.CS
     {
 
 
-        // TODO : 注意处理生产指令的状态
+        // TODO : 注意处理生产指令的状态（是否接收等状态）
         // TODO ：要加到Mainform中去
         // TODO： 审核时要调用赵梦的函数
-        // TODO: 打印
+        // TODO: 打印  选打印机
 
         // 需要保存的状态
         /// <summary>
@@ -792,7 +792,8 @@ namespace mySystem.Process.Bag.CS
         {
             try
             {
-                MessageBox.Show(dtOuter.Rows[0]["日志"].ToString());
+                mySystem.Other.LogForm logForm = new Other.LogForm();
+                logForm.setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
             }
             catch (Exception exp)
             {

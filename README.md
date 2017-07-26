@@ -2,6 +2,7 @@
 
 # 近期任务
 
+- [ ] 所有窗体的状态改用Parameters中的枚举类型，setUserState函数参加下面的样例
 - [ ] 加入打印机选择的下拉框
 - [ ] 打印时Excel的每页要加编号。编号规则：生产指令-步骤序号- 表序号。步骤序号参见 吹膜 工序的主界面，例如 清洁记录  就是03；表序号就是当前打印的这张表在同一生产指令同一步骤下的第几张，例如第3天的交接班记录就是03。**通过插入页脚的方式来实现**。my.PageSetup.RightFooter = "生产指令-步骤序号- 表序号   /&P";   // &P 是页码
 - [ ] 打印后关闭Excel进程。具体实现方法口头描述
@@ -129,6 +130,8 @@ void setDataGridViewColumnReadOnly();
      }
    }
  }
+
+
 
 ```
 
@@ -315,6 +318,29 @@ void setControlFalse()
   }
   btn查看日志.Enabled = true;
 }
+
+
+ void setUseState()
+ {
+   _userState = Parameter.UserState.NoBody;
+   if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |=Parameter.UserState.操作员;
+   if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |=Parameter.UserState.审核员;
+   // 如果即不是操作员也不是审核员，则是管理员
+   if ( Parameter.UserState.NoBody== _userState)
+   {
+     _userState = Parameter.UserState.管理员;
+     label角色.Text = "管理员";
+   }
+   // 让用户选择操作员还是审核员，选“是”表示操作员
+   if (Parameter.UserState.Both == _userState)
+   {
+     if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+     else _userState = Parameter.UserState.审核员;
+
+   }
+   if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+   if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+ }
 ```
 
 
