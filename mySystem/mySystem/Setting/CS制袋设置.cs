@@ -529,7 +529,7 @@ namespace mySystem.Setting
                             setDataGridViewRowNums(this.dgv权限);
 
                             MessageBox.Show("保存成功！");
-                        }
+                        }                                        
                     }
                 }
 
@@ -574,43 +574,54 @@ namespace mySystem.Setting
             return b;
         }
 
-        //检查人员是否在清洁分切人员中
+        //检查人员是否在CS制袋人员中
         private Boolean checkPeopleRight()
         {
-            Boolean b = true;
-            OleDbCommand comm1 = new OleDbCommand();
-            comm1.Connection = Parameter.connOle;
-            OleDbCommand comm2 = new OleDbCommand();
-            comm2.Connection = Parameter.connOle;
+            Boolean b;
+            String[] list操作员;
+            String[] list审核员;
             foreach (DataRow dr in dt权限.Rows)
             {
-                String name1 = dr["操作员"].ToString();
-                comm1.CommandText = "select * from 用户 where 用户名 = " + "'" + name1 + "' ";
-                OleDbDataReader reader1 = comm1.ExecuteReader();
-                if (reader1.HasRows)
+                list操作员 = dr["操作员"].ToString().Split(new char[] { '，', ',' });
+                foreach (String name in list操作员)
                 {
-                    String name2 = dr["审核员"].ToString();
-                    comm2.CommandText = "select * from 用户 where 用户名 = " + "'" + name2 + "' ";
-                    OleDbDataReader reader2 = comm2.ExecuteReader();
-                    if (!reader2.HasRows)
-                    {
-                        b = false;
-                        MessageBox.Show("员工" + "“" + name2 + "”" + "无操作清洁分切工序权限！");
-                    }
-                    reader2.Dispose();
+                    Boolean eachbool = EachPeopleRightCheck(name);
+                    if (!eachbool)
+                    { return b = false; }
                 }
-                else
+                list审核员 = dr["审核员"].ToString().Split(new char[] { '，', ',' });
+                foreach (String name in list审核员)
                 {
-                    b = false;
-                    MessageBox.Show("员工" + "“" + name1 + "”" + "无操作清洁分切工序权限！");
+                    Boolean eachbool = EachPeopleRightCheck(name);
+                    if (!eachbool)
+                    { return b = false; }
                 }
-                reader1.Dispose();
             }
 
-            comm1.Dispose();
-            comm2.Dispose();
+            return b = true;
+        }
+
+        private Boolean EachPeopleRightCheck(String name)
+        {
+            Boolean b;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            comm.CommandText = "select * from 用户 where 用户名 = " + "'" + name + "' ";
+            OleDbDataReader reader = comm.ExecuteReader();
+            if (reader.HasRows)
+            { b = true; }
+            else
+            {
+                b = false;
+                MessageBox.Show("员工" + "“" + name + "”" + "无操作CS制袋工序权限，保存失败！");
+            }
+
+            reader.Dispose();
+            comm.Dispose();
             return b;
         }
+
+
         #endregion
 
     }

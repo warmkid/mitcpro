@@ -842,7 +842,7 @@ namespace mySystem
             form24.ShowDialog();
         }
 
-
+        //TODO：多人
         //判断是否能查看
         private Boolean checkUser(String user, int role, String tblName)
         {
