@@ -284,7 +284,8 @@ namespace mySystem
             //定时器开始计时
 
             //TODO: 时间间隔设置为参数
-            timer1.Interval = 300000; //五分钟
+            int interval = 300000; //毫秒
+            timer1.Interval = interval; //五分钟
             timer1.Start();
 
         }
@@ -487,12 +488,14 @@ namespace mySystem
                         else if (!reader2.HasRows && res2.Count != 0)
                         {
                             MessageBox.Show("请填写“吹膜供料系统运行记录”！", "警告");
+                            form16 = new Process.Extruction.C.Feed(mainform);
                             form16.ShowDialog();
                             return;
                         }
                         else if (reader2.HasRows && res2.Count == 0)
                         {
                             MessageBox.Show("请填写“吹膜机组运行记录”！", "警告");
+                            form17 = new Process.Extruction.B.Running(mainform);
                             form17.ShowDialog();
                             return;
                         }
