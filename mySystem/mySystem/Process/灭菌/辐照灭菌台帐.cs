@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.灭菌
 {
@@ -360,5 +361,56 @@ namespace mySystem.Process.灭菌
             else
                 return true;
         }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-301-R09 吹膜工序生产和检验记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 修改Sheet中某行某列的值
+                my = printValue(my);
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                //false->打印
+                // 设置该进程是否可见
+                oXL.Visible = false;
+                // 修改Sheet中某行某列的值
+                my = printValue(my);
+                // 直接用默认打印机打印该Sheet
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+            }
+        }
+
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet)
+        {
+
+            return mysheet;
+        }
+
+        private void b打印_Click(object sender, EventArgs e)
+        {
+            print(true);
+        }
+
     }
 }
