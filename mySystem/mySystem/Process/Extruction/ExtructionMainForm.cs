@@ -664,19 +664,12 @@ namespace mySystem
             
         }
 
+        //日报表，谁都可以看
         private void B5Btn_Click(object sender, EventArgs e)
         {
-            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜生产日报表");
-            if (b)
-            {
-                form9 = new ProdctDaily_extrus(mainform);
-                form9.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("您无权查看该页面！");
-                return;
-            }                     
+            form9 = new ProdctDaily_extrus(mainform);
+            form9.ShowDialog();
+                              
         }
 
         private void B6Btn_Click(object sender, EventArgs e)
@@ -842,35 +835,41 @@ namespace mySystem
             form24.ShowDialog();
         }
 
-        //TODO：多人
         //判断是否能查看
         private Boolean checkUser(String user, int role, String tblName)
         {
             Boolean b = false;
-            String name1 = null;
-            String name2 = null;
+            String[] name操作员 = null;
+            String[] name审核员 = null;
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Parameter.connOle;
             comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
             OleDbDataReader reader = comm.ExecuteReader();
             while (reader.Read())
             {
-                name1 = reader["操作员"].ToString();
-                name2 = reader["审核员"].ToString();
+                name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
+                name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
             }
 
             if (role == 3)
             {
-                b = true;
+                return b = true;
             }
             else
             {
-                if (user == name1)
-                { b = true; }
-                if (user == name2)
-                { b = true; }
+                foreach (String name in name操作员)
+                {
+                    if (user == name)
+                    { return b = true; }
+                }
+                foreach (String name in name审核员)
+                {
+                    if (user == name)
+                    { return b = true; }
+                }
+
             }
-            return b;
+            return b = false;
         }
 
         
