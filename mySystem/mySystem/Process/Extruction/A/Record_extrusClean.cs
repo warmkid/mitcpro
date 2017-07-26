@@ -11,6 +11,8 @@ using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+using mySystem;
 
 namespace WindowsFormsApplication1
 {
@@ -31,18 +33,21 @@ namespace WindowsFormsApplication1
 
         private string person_操作员;
         private string person_审核员;
+        private List<string> list_操作员;
+        private List<string> list_审核员;
 
         //用于带id参数构造函数，存储已存在记录的相关信息
         int instrid;
 
+        // 需要保存的状态
         /// <summary>
-        /// 登录人状态，0 操作员， 1 审核员， 2管理员
+        /// 1:操作员，2：审核员，4：管理员
         /// </summary>
-        private int stat_user;//
+        Parameter.UserState _userState;
         /// <summary>
-        /// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
         /// </summary>
-        private int stat_form;
+        Parameter.FormState _formState;
 
         public Record_extrusClean(mySystem.MainForm mainform)
             : base(mainform)
@@ -137,6 +142,8 @@ namespace WindowsFormsApplication1
         //// 获取操作员和审核员
         void getPeople()
         {
+            list_操作员 = new List<string>();
+            list_审核员 = new List<string>();
             DataTable dt = new DataTable("用户权限");
             OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.connOle);
             da.Fill(dt);
@@ -145,68 +152,92 @@ namespace WindowsFormsApplication1
             {
                 person_操作员 = dt.Rows[0]["操作员"].ToString();
                 person_审核员 = dt.Rows[0]["审核员"].ToString();
+                string[] s=Regex.Split(person_操作员, ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        list_操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(person_审核员, ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        list_审核员.Add(s1[i]);
+                }
             }
+            
         }
 
         //设置登录人状态
         void setUserState()
         {
-            if (mySystem.Parameter.userName == person_操作员)
-                stat_user = 0;
-            else if (mySystem.Parameter.userName == person_审核员)
-                stat_user = 1;
-            else
-                stat_user = 2;
+            //if (mySystem.Parameter.userName == person_操作员)
+            //    stat_user = 0;
+            //else if (mySystem.Parameter.userName == person_审核员)
+            //    stat_user = 1;
+            //else
+            //    stat_user = 2;
+
+            _userState = Parameter.UserState.NoBody;
+            if (list_操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (list_审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
-        //设置窗口状态
+        // 如果给了一个参数为true，则表示处于无数据状态
         void setFormState()
         {
-            if (dt_out.Rows[0]["审核人"].ToString() == "")
-                stat_form = 0;
-            else if (dt_out.Rows[0]["审核人"].ToString() == "__待审核")
-                stat_form = 1;
-            else if ((bool)dt_out.Rows[0]["审核是否通过"])
-                stat_form = 2;
+            string s = dt_out.Rows[0]["审核人"].ToString();
+            bool b = Convert.ToBoolean(dt_out.Rows[0]["审核是否通过"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
             else
-                stat_form = 3;
+            {
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
+            }
         }
 
         void setEnableReadOnly()
         {
-            if (stat_user == 2)//管理员
+            //if (Parameter.FormState.无数据 == _formState)
+            //{
+            //    setControlFalse();
+            //    btn查询插入.Enabled = true;
+            //    tb生产指令编号.ReadOnly = false;
+            //    return;
+            //}
+            if (Parameter.UserState.管理员 == _userState)
             {
-                //控件都能点
                 setControlTrue();
             }
-            else if (stat_user == 1)//审核人
+            if (Parameter.UserState.审核员 == _userState)
             {
-                if (stat_form == 0 || stat_form == 3 || stat_form == 2)//草稿,审核不通过，审核通过
+                if (Parameter.FormState.待审核 == _formState)
                 {
-                    //空间都不能点
-                    setControlFalse();
-                }
-                else//待审核
-                {
-                    //发送审核不可点，其他都可点
                     setControlTrue();
                     bt审核.Enabled = true;
-
                 }
-
+                else setControlFalse();
             }
-            else//操作员
+            if (Parameter.UserState.操作员 == _userState)
             {
-                if (stat_form == 1 || stat_form == 2)//待审核，审核通过
-                {
-                    //空间都不能点
-                    setControlFalse();
-                }
-                else//未审核与审核不通过
-                {
-                    //发送审核，审核不能点
-                    setControlTrue();
-                }
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                else setControlFalse();
             }
         }
 
@@ -329,7 +360,6 @@ namespace WindowsFormsApplication1
         //初始化
         private void Init()
         {
-
             dataGridView1.Font = new Font("宋体", 10);
             bt审核.Enabled = false;
             tb复核人.Enabled = false;
@@ -585,7 +615,7 @@ namespace WindowsFormsApplication1
         {
             bool rt = save();
             //控件可见性
-            if (rt && stat_user == 0)
+            if (rt && _userState == Parameter.UserState.操作员)
                 bt提交审核.Enabled = true;
         }
 

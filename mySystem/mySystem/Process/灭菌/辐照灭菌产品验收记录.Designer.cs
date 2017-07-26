@@ -78,6 +78,11 @@
             this.label29 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label33 = new System.Windows.Forms.Label();
+            this.label34 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -416,7 +421,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(45, 390);
+            this.label19.Location = new System.Drawing.Point(45, 401);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(96, 16);
             this.label19.TabIndex = 38;
@@ -524,19 +529,19 @@
             this.label28.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label28.Location = new System.Drawing.Point(397, 350);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(552, 16);
+            this.label28.Size = new System.Drawing.Size(360, 32);
             this.label28.TabIndex = 49;
-            this.label28.Text = "每批照射产品均应有照射报告，且报告中辐照批号与辐照标签上的批号一致。";
+            this.label28.Text = "每批照射产品均应有照射报告，且报告中辐照批号\r\n与辐照标签上的批号一致。";
             // 
             // label29
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(397, 380);
+            this.label29.Location = new System.Drawing.Point(397, 401);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(112, 16);
+            this.label29.Size = new System.Drawing.Size(248, 32);
             this.label29.TabIndex = 50;
-            this.label29.Text = "1. 辐照供应商";
+            this.label29.Text = "每批照射产品收到后通知QC取样，\r\n同时附照射报告给QC。";
             // 
             // label30
             // 
@@ -558,11 +563,62 @@
             this.label31.TabIndex = 52;
             this.label31.Text = "运输商：";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(594, 151);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(83, 20);
+            this.comboBox1.TabIndex = 53;
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(594, 181);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(83, 20);
+            this.comboBox2.TabIndex = 54;
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label32.Location = new System.Drawing.Point(139, 122);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(72, 16);
+            this.label32.TabIndex = 55;
+            this.label32.Text = "检查项目";
+            // 
+            // label33
+            // 
+            this.label33.AutoSize = true;
+            this.label33.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label33.Location = new System.Drawing.Point(418, 122);
+            this.label33.Name = "label33";
+            this.label33.Size = new System.Drawing.Size(40, 16);
+            this.label33.TabIndex = 56;
+            this.label33.Text = "要求";
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label34.Location = new System.Drawing.Point(819, 122);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(72, 16);
+            this.label34.TabIndex = 57;
+            this.label34.Text = "检验结果";
+            // 
             // 辐照灭菌产品验收记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(935, 714);
+            this.Controls.Add(this.label34);
+            this.Controls.Add(this.label33);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label31);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.label29);
@@ -672,5 +728,10 @@
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Label label34;
     }
 }

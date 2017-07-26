@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Bag.CS
 {
@@ -167,6 +168,7 @@ namespace mySystem.Process.Bag.CS
             ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
 
             ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            //string[] s=Regex.Split("张三，,赵一,赵二", ",|，");
 
         }
         void getOuterOtherData()
