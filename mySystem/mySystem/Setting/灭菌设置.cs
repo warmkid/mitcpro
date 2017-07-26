@@ -69,8 +69,20 @@ namespace mySystem.Setting
         private void Bind()
         {
             //************************    运输商     *******************************************
-            EachBind("设置运输商", dt运输商, da运输商, cb运输商, bs运输商, dgv运输商);
-
+            //EachBind("设置运输商", dt运输商, da运输商, cb运输商, bs运输商, dgv运输商);
+            dt运输商 = new DataTable("设置运输商"); //""中的是表名
+            da运输商 = new OleDbDataAdapter("select * from 设置运输商", mySystem.Parameter.connOle);
+            cb运输商 = new OleDbCommandBuilder(da运输商);
+            dt运输商.Columns.Add("序号", System.Type.GetType("System.String"));
+            da运输商.Fill(dt运输商);
+            bs运输商.DataSource = dt运输商;
+            this.dgv运输商.DataSource = bs运输商.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv运输商);
+            this.dgv运输商.Columns["运输商"].MinimumWidth = 200;
+            this.dgv运输商.Columns["运输商"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv运输商.Columns["运输商"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv运输商.Columns["ID"].Visible = false;
             //************************    产品     *******************************************
             dt产品 = new DataTable("设置灭菌产品"); //""中的是表名
             da产品 = new OleDbDataAdapter("select * from 设置灭菌产品", mySystem.Parameter.connOle);

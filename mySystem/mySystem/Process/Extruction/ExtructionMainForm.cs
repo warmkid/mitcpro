@@ -344,13 +344,16 @@ namespace mySystem
                         OleDbDataReader reader1 = comm1.ExecuteReader();//执行查询
                         int instruID = -1;
 
-                        //TODO
-                        //若大表当日无记录怎么办？？？
-
-
                         if (reader1.Read())
                         {
                             instruID = Convert.ToInt32(reader1["ID"]); //获取大表ID   
+                        }
+                        else
+                        {
+                            //TODO
+                            //若大表当日无记录怎么办？？？
+
+ 
                         }
 
                         String table11 = "吹膜供料系统运行记录详细信息";

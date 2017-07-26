@@ -22,6 +22,7 @@ namespace mySystem.Process.Bag
         {
             InitializeComponent();
             Init();
+            InitBtn();
         }
 
         private void Init()
@@ -68,7 +69,31 @@ namespace mySystem.Process.Bag
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.csbagInstruID = instruID;
+            InitBtn();
 
+        }
+
+        //初始化按钮状态
+        public void InitBtn()
+        {
+            if (comboBox1.SelectedIndex == -1)
+            { otherBtnInit(false); }
+            else
+            { otherBtnInit(true); }
+        }
+
+        private void otherBtnInit(bool b)
+        {
+            Btn领料记录.Enabled = b;
+            Btn内包装.Enabled = b;
+            Btn日报表.Enabled = b;
+            Btn标签.Enabled = b;
+            Btn外观及检验.Enabled = b;
+            Btn开机确认.Enabled = b;
+            Btn运行记录.Enabled = b;
+            Btn清场.Enabled = b;
+            Btn批生产.Enabled = b;
+            
         }
 
 

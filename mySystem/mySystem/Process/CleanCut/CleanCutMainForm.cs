@@ -20,6 +20,7 @@ namespace mySystem.Process.CleanCut
         {
             InitializeComponent();
             Init();
+            InitBtn();
         }
 
         private void Init()
@@ -55,6 +56,39 @@ namespace mySystem.Process.CleanCut
             }
         }
 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            instruction = comboBox1.SelectedItem.ToString();
+            Parameter.cleancutInstruction = instruction;
+            String tblName = "清洁分切工序生产指令";
+            List<String> queryCols = new List<String>(new String[] { "ID" });
+            List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
+            List<Object> whereVals = new List<Object>(new Object[] { instruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            instruID = Convert.ToInt32(res[0][0]);
+            Parameter.cleancutInstruID = instruID;
+            InitBtn();
+        }
+
+        //初始化按钮状态
+        public void InitBtn()
+        {
+            if (comboBox1.SelectedIndex == -1)
+            { otherBtnInit(false); }
+            else
+            { otherBtnInit(true); }
+        }
+
+        private void otherBtnInit(bool b)
+        {
+            Btn生产记录.Enabled = b;
+            Btn日报表.Enabled = b;
+            Btn标签.Enabled = b;
+            Btn开机确认.Enabled = b;
+            Btn运行记录.Enabled = b;
+            Btn清场.Enabled = b;
+            Btn批生产.Enabled = b;
+        }
 
         //定义各窗体变量
         CleanCut_Productrecord form1 = null;
@@ -143,19 +177,7 @@ namespace mySystem.Process.CleanCut
 
 
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            instruction = comboBox1.SelectedItem.ToString();
-            Parameter.cleancutInstruction = instruction;
-            String tblName = "生产指令";
-            List<String> queryCols = new List<String>(new String[] { "ID" });
-            List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
-            List<Object> whereVals = new List<Object>(new Object[] { instruction });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
-            instruID = Convert.ToInt32(res[0][0]);
-            Parameter.cleancutInstruID = instruID;
-
-        }
+        
 
         private void A6Btn_Click(object sender, EventArgs e)
         {
