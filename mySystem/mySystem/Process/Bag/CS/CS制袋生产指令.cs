@@ -19,6 +19,7 @@ namespace mySystem.Process.Bag.CS
         // TODO： 审核时要调用赵梦的函数
         // TODO: 打印  选打印机
         // TODO：构造函数添加参数mainform
+        // TODO: 用正则表达式获取操作员和审核员姓名
 
         // 需要保存的状态
         Parameter.UserState _userState;
@@ -68,11 +69,11 @@ namespace mySystem.Process.Bag.CS
             // 读取数据并显示
             readOuterData(id);
             outerBind();
+            setKeyInfoFromDataTable(id);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
-            setKeyInfoFromDataTable(id);
             getPeople();
             setFormState();
             setEnableReadOnly();
@@ -101,11 +102,11 @@ namespace mySystem.Process.Bag.CS
                 readOuterData(dtOuter.Rows[0]["生产指令编号"].ToString());
                 outerBind();
             }
+            setKeyInfoFromDataTable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
-            setKeyInfoFromDataTable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             setFormState();
             setEnableReadOnly();
 

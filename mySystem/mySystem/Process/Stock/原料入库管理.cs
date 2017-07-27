@@ -16,7 +16,7 @@ namespace mySystem.Process.Stock
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
         OleDbConnection conn;
-        DataTable dt物资验收记录, dt物资请验单, dt检查记录, dt不合格品处理记录;
+        DataTable dt物资验收记录, dt物资请验单, dt检验记录, dt不合格品处理记录;
 
         public 原料入库管理()
         {
@@ -70,8 +70,8 @@ namespace mySystem.Process.Stock
 
         void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dt检查记录.Rows[e.RowIndex][0]);
-            检查记录 form = new 检查记录(id);
+            int id = Convert.ToInt32(dt检验记录.Rows[e.RowIndex][0]);
+            检验记录 form = new 检验记录(id);
             form.Show();
         }
 
@@ -103,22 +103,22 @@ namespace mySystem.Process.Stock
             dataGridView2.DataSource = dt物资请验单;
         }
 
-        private void btn读取检查记录_Click(object sender, EventArgs e)
+        private void btn读取检验记录_Click(object sender, EventArgs e)
         {
-            read检查记录Data();
-            检查记录Bind();
+            read检验记录Data();
+            检验记录Bind();
         }
 
-        void read检查记录Data()
+        void read检验记录Data()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检查记录", conn);
-            dt检查记录 = new DataTable("检查记录");
-            da.Fill(dt检查记录);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录", conn);
+            dt检验记录 = new DataTable("检验记录");
+            da.Fill(dt检验记录);
         }
 
-        void 检查记录Bind()
+        void 检验记录Bind()
         {
-            dataGridView3.DataSource = dt检查记录;
+            dataGridView3.DataSource = dt检验记录;
         }
 
         void read不合格品记录Data()

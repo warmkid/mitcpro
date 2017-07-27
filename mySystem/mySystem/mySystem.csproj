@@ -277,6 +277,12 @@
     <Compile Include="Process\Bag\CS\产品外观和尺寸检验记录.Designer.cs">
       <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\CS\产品热合强度检验记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\CS\产品热合强度检验记录.designer.cs">
+      <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\CS\清场记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -623,6 +629,12 @@
     <Compile Include="Process\Stock\商品设置.Designer.cs">
       <DependentUpon>商品设置.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\检验记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\检验记录.Designer.cs">
+      <DependentUpon>检验记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\物资验收记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -640,12 +652,6 @@
     </Compile>
     <Compile Include="Process\Stock\库存管理主界面.Designer.cs">
       <DependentUpon>库存管理主界面.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\检查记录.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\检查记录.Designer.cs">
-      <DependentUpon>检查记录.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Stock\添加采购单.cs">
       <SubType>Form</SubType>
@@ -1033,6 +1039,9 @@
     <EmbeddedResource Include="Process\Bag\CS\产品外观和尺寸检验记录.resx">
       <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\CS\产品热合强度检验记录.resx">
+      <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\清场记录.resx">
       <DependentUpon>清场记录.cs</DependentUpon>
     </EmbeddedResource>
@@ -1193,6 +1202,9 @@
     <EmbeddedResource Include="Process\Stock\商品设置.resx">
       <DependentUpon>商品设置.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\检验记录.resx">
+      <DependentUpon>检验记录.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\物资验收记录.resx">
       <DependentUpon>物资验收记录.cs</DependentUpon>
     </EmbeddedResource>
@@ -1201,9 +1213,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\库存管理主界面.resx">
       <DependentUpon>库存管理主界面.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\检查记录.resx">
-      <DependentUpon>检查记录.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\添加采购单.resx">
       <DependentUpon>添加采购单.cs</DependentUpon>

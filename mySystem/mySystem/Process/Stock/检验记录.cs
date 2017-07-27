@@ -10,7 +10,7 @@ using System.Data.OleDb;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 检查记录 : Form
+    public partial class 检验记录 : Form
     {
 
         List<String> ls操作员 = new List<string>();
@@ -40,7 +40,7 @@ namespace mySystem.Process.Stock
 
         int _id;
 
-        public 检查记录(int id)
+        public 检验记录(int id)
         {
             InitializeComponent();
             _id = id;
@@ -80,9 +80,9 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 检查记录 where ID=" + id, conn);
+            daOuter = new OleDbDataAdapter("select * from 检验记录 where ID=" + id, conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable("检查记录");
+            dtOuter = new DataTable("检验记录");
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -303,7 +303,7 @@ namespace mySystem.Process.Stock
                     dr["物资验收记录ID"] = dtOuter.Rows[0]["物资验收记录ID"];
                     dr["产品名称"] = dtOuter.Rows[0]["产品名称"];
                     dr["产品代码"] = dtOuter.Rows[0]["产品代码"];
-                    dr["编号"] = create检查记录编号();
+                    dr["编号"] = create检验记录编号();
                     dr["产品批号"] = dtOuter.Rows[0]["产品批号"];
                     dr["数量"] = dtOuter.Rows[0]["数量"];
                     dr["生产日期"] = DateTime.Now;
@@ -326,7 +326,7 @@ namespace mySystem.Process.Stock
         }
 
 
-        string create检查记录编号()
+        string create检验记录编号()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select top 1 编号 from 不合格品处理记录 order by ID DESC", conn);
             DataTable dt = new DataTable("不合格品处理记录");
