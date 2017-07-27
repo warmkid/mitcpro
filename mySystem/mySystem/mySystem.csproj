@@ -521,10 +521,10 @@
     <Compile Include="Process\Extruction\D\ReplaceHeadForm.Designer.cs">
       <DependentUpon>ReplaceHeadForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Extruction\B\wasterecord.cs">
+    <Compile Include="Process\Extruction\wasterecord.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Extruction\B\wasterecord.Designer.cs">
+    <Compile Include="Process\Extruction\wasterecord.Designer.cs">
       <DependentUpon>wasterecord.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\ExtructionMainForm.cs">

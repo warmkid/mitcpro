@@ -33,6 +33,8 @@
             this.b打印 = new System.Windows.Forms.Button();
             this.bt添加 = new System.Windows.Forms.Button();
             this.bt保存 = new System.Windows.Forms.Button();
+            this.label40 = new System.Windows.Forms.Label();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -67,11 +69,12 @@
             this.b打印.TabIndex = 2;
             this.b打印.Text = "打印";
             this.b打印.UseVisualStyleBackColor = true;
+            this.b打印.Click += new System.EventHandler(this.b打印_Click);
             // 
             // bt添加
             // 
             this.bt添加.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt添加.Location = new System.Drawing.Point(422, 326);
+            this.bt添加.Location = new System.Drawing.Point(28, 329);
             this.bt添加.Name = "bt添加";
             this.bt添加.Size = new System.Drawing.Size(75, 37);
             this.bt添加.TabIndex = 3;
@@ -82,7 +85,7 @@
             // bt保存
             // 
             this.bt保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt保存.Location = new System.Drawing.Point(534, 326);
+            this.bt保存.Location = new System.Drawing.Point(140, 329);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(75, 37);
             this.bt保存.TabIndex = 4;
@@ -90,11 +93,32 @@
             this.bt保存.UseVisualStyleBackColor = true;
             this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
             // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.Location = new System.Drawing.Point(331, 336);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(104, 16);
+            this.label40.TabIndex = 32;
+            this.label40.Text = "选择打印机：";
+            // 
+            // cb打印机
+            // 
+            this.cb打印机.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(441, 333);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(205, 24);
+            this.cb打印机.TabIndex = 31;
+            // 
             // 辐照灭菌台帐
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(770, 403);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.bt保存);
             this.Controls.Add(this.bt添加);
             this.Controls.Add(this.b打印);
@@ -115,5 +139,7 @@
         private System.Windows.Forms.Button b打印;
         private System.Windows.Forms.Button bt添加;
         private System.Windows.Forms.Button bt保存;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox cb打印机;
     }
 }

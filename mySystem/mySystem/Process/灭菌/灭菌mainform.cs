@@ -69,30 +69,39 @@ namespace mySystem.Process.灭菌
         private Boolean checkUser(String user, int role, String tblName)
         {
             Boolean b = false;
-            String name1 = null;
-            String name2 = null;
+            String[] name操作员 = null;
+            String[] name审核员 = null;
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Parameter.connOle;
             comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
             OleDbDataReader reader = comm.ExecuteReader();
             while (reader.Read())
             {
-                name1 = reader["操作员"].ToString();
-                name2 = reader["审核员"].ToString();
+                name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
+                name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
             }
 
             if (role == 3)
             {
-                b = true;
+                return b = true;
             }
             else
             {
-                if (user == name1)
-                { b = true; }
-                if (user == name2)
-                { b = true; }
+                foreach (String name in name操作员)
+                {
+                    if (user == name)
+                    { return b = true; }
+                }
+                foreach (String name in name审核员)
+                {
+                    if (user == name)
+                    { return b = true; }
+                }
+
             }
-            return b;
+            return b = false;
         }
+
+
     }
 }

@@ -69,8 +69,20 @@ namespace mySystem.Setting
         private void Bind()
         {
             //************************    运输商     *******************************************
-            EachBind("设置运输商", dt运输商, da运输商, cb运输商, bs运输商, dgv运输商);
-
+            //EachBind("设置运输商", dt运输商, da运输商, cb运输商, bs运输商, dgv运输商);
+            dt运输商 = new DataTable("设置运输商"); //""中的是表名
+            da运输商 = new OleDbDataAdapter("select * from 设置运输商", mySystem.Parameter.connOle);
+            cb运输商 = new OleDbCommandBuilder(da运输商);
+            dt运输商.Columns.Add("序号", System.Type.GetType("System.String"));
+            da运输商.Fill(dt运输商);
+            bs运输商.DataSource = dt运输商;
+            this.dgv运输商.DataSource = bs运输商.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv运输商);
+            this.dgv运输商.Columns["运输商"].MinimumWidth = 200;
+            this.dgv运输商.Columns["运输商"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv运输商.Columns["运输商"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv运输商.Columns["ID"].Visible = false;
             //************************    产品     *******************************************
             dt产品 = new DataTable("设置灭菌产品"); //""中的是表名
             da产品 = new OleDbDataAdapter("select * from 设置灭菌产品", mySystem.Parameter.connOle);
@@ -326,7 +338,7 @@ namespace mySystem.Setting
                         da人员.Update((DataTable)bs人员.DataSource);
                         dt人员.Clear();
                         da人员.Fill(dt人员);
-                        setDataGridViewRowNums(this.dgv人员);
+                        setDataGridViewRowNums(this.dgv人员);                       
 
                         Boolean c = checkPeopleRight(); //判断用户是否在清洁分切用户表中
                         if (c)
@@ -385,38 +397,47 @@ namespace mySystem.Setting
         //检查人员是否在灭菌人员中
         private Boolean checkPeopleRight()
         {
-            Boolean b = true;
-            OleDbCommand comm1 = new OleDbCommand();
-            comm1.Connection = Parameter.connOle;
-            OleDbCommand comm2 = new OleDbCommand();
-            comm2.Connection = Parameter.connOle;
+            Boolean b;
+            String[] list操作员;
+            String[] list审核员;
             foreach (DataRow dr in dt权限.Rows)
             {
-                String name1 = dr["操作员"].ToString();
-                comm1.CommandText = "select * from 用户 where 用户名 = " + "'" + name1 + "' ";
-                OleDbDataReader reader1 = comm1.ExecuteReader();
-                if (reader1.HasRows)
+                list操作员 = dr["操作员"].ToString().Split(new char[] { '，', ',' });
+                foreach (String name in list操作员)
                 {
-                    String name2 = dr["审核员"].ToString();
-                    comm2.CommandText = "select * from 用户 where 用户名 = " + "'" + name2 + "' ";
-                    OleDbDataReader reader2 = comm2.ExecuteReader();
-                    if (!reader2.HasRows)
-                    {
-                        b = false;
-                        MessageBox.Show("员工" + "“" + name2 + "”" + "无操作灭菌工序权限！");
-                    }
-                    reader2.Dispose();
+                    Boolean eachbool = EachPeopleRightCheck(name);
+                    if (!eachbool)
+                    { return b = false; }
                 }
-                else
+                list审核员 = dr["审核员"].ToString().Split(new char[] { '，', ',' });
+                foreach (String name in list审核员)
                 {
-                    b = false;
-                    MessageBox.Show("员工" + "“" + name1 + "”" + "无操作灭菌工序权限！");
+                    Boolean eachbool = EachPeopleRightCheck(name);
+                    if (!eachbool)
+                    { return b = false; }
                 }
-                reader1.Dispose();
             }
 
-            comm1.Dispose();
-            comm2.Dispose();
+            return b = true;
+        }
+
+        private Boolean EachPeopleRightCheck(String name)
+        {
+            Boolean b;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            comm.CommandText = "select * from 用户 where 用户名 = " + "'" + name + "' ";
+            OleDbDataReader reader = comm.ExecuteReader();
+            if (reader.HasRows)
+            { b = true; }
+            else
+            {
+                b = false;
+                MessageBox.Show("员工" + "“" + name + "”" + "无操作灭菌工序权限，保存失败！");
+            }
+
+            reader.Dispose();
+            comm.Dispose();
             return b;
         }
 

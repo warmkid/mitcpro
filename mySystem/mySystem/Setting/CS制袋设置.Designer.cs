@@ -2,6 +2,7 @@
 {
     partial class CS制袋设置
     {
+        //
         /// <summary>
         /// Required designer variable.
         /// </summary>

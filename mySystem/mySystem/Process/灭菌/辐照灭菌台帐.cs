@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.灭菌
 {
@@ -64,6 +65,7 @@ namespace mySystem.Process.灭菌
             //    weituodanhao.Add(tdr["委托单号"].ToString());
             //}
             dt委托单 = dt委托单数据源.DefaultView.ToTable(false,new string[]{"委托单号","委托日期"});
+            fill_printer();
         }
         // 根据条件从数据库中读取一行外表的数据
         private void readOuterData()
@@ -82,9 +84,9 @@ namespace mySystem.Process.灭菌
 //                                Data Source=../../database/miejun.mdb;Persist Security Info=False";
 //            OleDbConnection connOle = new OleDbConnection(strConn);
 //            connOle.Open();
-            dt台帐 = new DataTable("辐照灭菌台帐");
+            dt台帐 = new DataTable("辐照灭菌台帐详细信息");
             bs台帐 = new BindingSource();
-            da台帐 = new OleDbDataAdapter(@"select * from 辐照灭菌台帐", mySystem.Parameter.connOle);
+            da台帐 = new OleDbDataAdapter(@"select * from 辐照灭菌台帐详细信息", mySystem.Parameter.connOle);
             cb台帐 = new OleDbCommandBuilder(da台帐);
             da台帐.Fill(dt台帐);
         }
@@ -127,15 +129,24 @@ namespace mySystem.Process.灭菌
         private void addOtherEventHandler()
         {
             dataGridView1.DataError += dataGridView1_DataError;
-            //dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
         }
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
-            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            int columnindex = ((DataGridView)sender).SelectedCells[0].ColumnIndex;
+            String Columnsname = ((DataGridView)sender).Columns[columnindex].Name;
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+
+            if (Columnsname == "登记人" || Columnsname == "审核人")
+            {
+                string str人员 = dt台帐.Rows[columnindex][rowsname].ToString();
+                if (mySystem.Parameter.NametoID(str人员) <= 0)
+                    MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+            }
+            
         }
 
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -163,8 +174,8 @@ namespace mySystem.Process.灭菌
             //dt台帐.Rows[index]["产品数量只"] = 0;
             //dt台帐.Rows[index]["送去产品托盘数量个"] = 0;
             //dt台帐.Rows[index]["拉回产品托盘数量个"] = 0;
-            string str委托日期 = dr委托单号[0]["委托日期"].ToString();
-            MessageBox.Show(string.Format("选中：{0}", str委托日期));
+           // string str委托日期 = dr委托单号[0]["委托日期"].ToString();
+           // MessageBox.Show(string.Format("选中：{0}", str委托日期));
             
             //DataRow drtemp = dt台帐.NewRow();
             //drtemp["委托单号"] = str委托单号显示;
@@ -174,18 +185,18 @@ namespace mySystem.Process.灭菌
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-           
-           // if (dataGridView1.Columns[e.ColumnIndex].Name == "委托日期")
-           // {
-                //实时根据“委托单号”，显示“委托日期”
-                //dt台帐.Rows[e.RowIndex]["委托单号"] = dt委托单.Rows[];
-                //ComboBox cbc = new ComboBox();
-                //for (int i = 0; i < dt台帐.Rows.Count; i++)
-                //{ cbc.Items.Add(dt台帐.Rows[i]["委托日期"]); }
-                //Int32 index = cbc.FindString(dt委托单.Rows[e.RowIndex]["委托单号"].ToString());
-                //dt台帐.Rows[e.RowIndex]["委托日期"] = dt委托单.Rows[index]["委托日期"];
-                //MessageBox.Show(dt委托单.Rows[index]["委托日期"].ToString());
-           // }
+
+            //int columnindex = ((DataGridView)sender).SelectedCells[0].ColumnIndex;
+            //String Columnsname = ((DataGridView)sender).Columns[columnindex].Name;
+            //String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString();
+            
+            //if (Columnsname == "登记人" || Columnsname == "审核人")
+            //{
+            //    string str人员减一 = dt台帐.Rows[columnindex - 1][rowsname].ToString();
+            //    string str人员 = dt台帐.Rows[columnindex][rowsname].ToString();
+            //    if (mySystem.Parameter.NametoID(str人员) <= 0)
+            //        MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+            //}
             
         }
 
@@ -235,30 +246,28 @@ namespace mySystem.Process.灭菌
         private void setDataGridViewFormat()
         {
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
-            //dataGridView1.AllowUserToAddRows = false;
-            //dataGridView1.RowHeadersVisible = false;
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ColumnHeadersHeight = 40;
-            //dataGridView1.Columns["ID"].Visible = false;
-            //dataGridView1.Columns["T吹膜工序生产和检验记录ID"].Visible = false;
-            //dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["送去产品托盘数量个"].HeaderText = "送去产品托盘数量(个)";
             dataGridView1.Columns["拉回产品托盘数量个"].HeaderText = "拉回产品托盘数量(个)";
             dataGridView1.Columns["产品数量只"].HeaderText = "产品数量(只)";
             dataGridView1.Columns["产品数量箱"].HeaderText = "产品数量(箱)";
-            dataGridView1.Columns["审核意见"].Visible = false;
-            dataGridView1.Columns["审核是否通过"].Visible = false;
+            //dataGridView1.Columns["审核意见"].Visible = false;
+            //dataGridView1.Columns["审核是否通过"].Visible = false;
+            //dataGridView1.Columns["日志"].Visible = false;
         }
 
         //添加新行
         private void bt添加_Click(object sender, EventArgs e)
         {
-            int index = dataGridView1.Rows.Count - 1;
-            DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
-            DataRow dr最后一行 = dt台帐.NewRow();
-            dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
-            bool is填满 = is_filled(dr最后一行);
+            //最后一行是否填满
+            //int index = dataGridView1.Rows.Count - 1;
+            //DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
+            //DataRow dr最后一行 = dt台帐.NewRow();
+            //dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
+            bool is填满 = is_filled();
+          
             if (is填满)
             {
                 DataRow dr新行 = dt台帐.NewRow();
@@ -283,39 +292,52 @@ namespace mySystem.Process.灭菌
         //写默认行数据
         DataRow writeInnerDefault(DataRow dr)
         {
-            
-           // dr["产品名称"] = c1.Text;
-           // dr["产品批号"] = dt_taizhang.Rows[c1.FindString(cb_taizhang.Text)]["产品批号"].ToString();
-            //dr["委托单号"]=dataGridView1[0,0].Value.ToString();
-            //dr["序号"] = dt_taizhang.Rows[0]["ID"];
             dr["产品数量箱"] = 0;
             dr["产品数量只"] = 0;
             dr["送去产品托盘数量个"] = 0;
             dr["拉回产品托盘数量个"] = 0;
+            dr["备注"] = "无";
+           // dr["日志"] = "无";
             return dr;
         }
 
         //保存数据到数据库
         private void bt保存_Click(object sender, EventArgs e)
         {
-            bs台帐.EndEdit();
-            da台帐.Update((DataTable)bs台帐.DataSource);
-            readInnerData();
-            innerBind();
+            bool is填满 = is_filled();
+             bool is合法 = input_Judge();
+             if (is填满 && is合法)
+             {
+                 bs台帐.EndEdit();
+                 da台帐.Update((DataTable)bs台帐.DataSource);
+                 readInnerData();
+                 innerBind();
+             }
+             else if (!is合法 && is填满)
+                 MessageBox.Show("信息填写错误");
+             else if (is合法 && !is填满)
+                 MessageBox.Show("信息填写不完整");
+             else
+                 MessageBox.Show("信息填写错误且不完整");
         }
 
         //某行数据是否填满
-        private bool is_filled(DataRow dr)
+        private bool is_filled()
         {
+            int index = dataGridView1.Rows.Count - 1;
+            DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
+            DataRow dr最后一行 = dt台帐.NewRow();
+            dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
+            
             int sum=0;//空白单元格个数
-            for (int i = 0; i < dr.ItemArray.Length; i++)
+            for (int i = 0; i < dr最后一行.ItemArray.Length; i++)
             {
-                string suibian = dr[i].ToString();
+                //string suibian = dr[i].ToString();
                 //if (dr[i] != dr["审核意见"] && dr[i] != dr["审核是否通过"])
                 //if (dr[i].Equals(dr["审核意见"]) || dr[i].Equals(dr["审核是否通过"]))
-                if(i!=11&&i!=12)
+                if(i!=0)
                 {
-                    if (dr[i].ToString() == "")
+                    if (dr最后一行[i].ToString() == "")
                         sum += 1;                    
                 }
                 else
@@ -328,5 +350,109 @@ namespace mySystem.Process.灭菌
             else
                 return true;
         }
+        //输入用户姓名是否合法
+        private bool input_Judge()
+        {
+            int index = dataGridView1.Rows.Count - 1;
+            string str登记员=dt台帐.Rows[index]["登记员"].ToString();
+            string str审核员 = dt台帐.Rows[index]["审核员"].ToString();
+            if (mySystem.Parameter.NametoID(str登记员) <= 0 || mySystem.Parameter.NametoID(str审核员)<=0)
+            {              
+                return false;
+            }
+            else
+                return true;
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\miejun\SOP-MFG-106-R03A 辐照灭菌台帐.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 修改Sheet中某行某列的值
+                my = printValue(my);
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                //false->打印
+                // 设置该进程是否可见
+                oXL.Visible = false;
+                // 修改Sheet中某行某列的值
+                my = printValue(my);
+                try
+                {
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                { }
+                finally
+                {
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                }
+            }
+        }
+
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet)
+        {
+            int rownum = dt台帐.Rows.Count;
+            for (int i = 0; i < rownum; i++)
+            {
+                mysheet.Cells[i + 4, 2].Value = dt台帐.Rows[i]["委托单号"].ToString();
+                mysheet.Cells[i + 4, 3].Value = Convert.ToDateTime( dt台帐.Rows[i]["委托日期"]).ToString("D");//去掉时分秒，且显示为****年**月**日
+                mysheet.Cells[i + 4, 4].Value = dt台帐.Rows[i]["产品数量箱"].ToString();
+                mysheet.Cells[i + 4, 5].Value = dt台帐.Rows[i]["产品数量只"].ToString();
+                mysheet.Cells[i + 4, 6].Value = dt台帐.Rows[i]["送去产品托盘数量个"].ToString();
+                mysheet.Cells[i + 4, 7].Value = dt台帐.Rows[i]["拉回产品托盘数量个"].ToString();
+                mysheet.Cells[i + 4, 8].Value = dt台帐.Rows[i]["备注"].ToString();
+                mysheet.Cells[i + 4, 9].Value = dt台帐.Rows[i]["登记人"].ToString();
+                mysheet.Cells[i + 4, 10].Value = dt台帐.Rows[i]["审核人"].ToString();
+            }
+                
+            return mysheet;
+        }
+
+        private void b打印_Click(object sender, EventArgs e)
+        {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(true);
+        }
+
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        //添加打印机
+        private void fill_printer()
+        {
+
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
+        }
+
     }
 }
