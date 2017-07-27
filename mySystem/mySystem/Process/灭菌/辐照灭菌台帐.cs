@@ -438,7 +438,10 @@ namespace mySystem.Process.灭菌
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(true);
+            print(false);
+            //写日志
+            string str日志 = DateTime.Now + "保存";
+            MessageBox.Show(str日志);
         }
 
         [DllImport("winspool.drv")]
