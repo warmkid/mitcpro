@@ -65,6 +65,7 @@ namespace mySystem.Process.灭菌
             //    weituodanhao.Add(tdr["委托单号"].ToString());
             //}
             dt委托单 = dt委托单数据源.DefaultView.ToTable(false,new string[]{"委托单号","委托日期"});
+            fill_printer();
         }
         // 根据条件从数据库中读取一行外表的数据
         private void readOuterData()
@@ -83,9 +84,9 @@ namespace mySystem.Process.灭菌
 //                                Data Source=../../database/miejun.mdb;Persist Security Info=False";
 //            OleDbConnection connOle = new OleDbConnection(strConn);
 //            connOle.Open();
-            dt台帐 = new DataTable("辐照灭菌台帐");
+            dt台帐 = new DataTable("辐照灭菌台帐详细信息");
             bs台帐 = new BindingSource();
-            da台帐 = new OleDbDataAdapter(@"select * from 辐照灭菌台帐", mySystem.Parameter.connOle);
+            da台帐 = new OleDbDataAdapter(@"select * from 辐照灭菌台帐详细信息", mySystem.Parameter.connOle);
             cb台帐 = new OleDbCommandBuilder(da台帐);
             da台帐.Fill(dt台帐);
         }
@@ -252,8 +253,9 @@ namespace mySystem.Process.灭菌
             dataGridView1.Columns["拉回产品托盘数量个"].HeaderText = "拉回产品托盘数量(个)";
             dataGridView1.Columns["产品数量只"].HeaderText = "产品数量(只)";
             dataGridView1.Columns["产品数量箱"].HeaderText = "产品数量(箱)";
-            dataGridView1.Columns["审核意见"].Visible = false;
-            dataGridView1.Columns["审核是否通过"].Visible = false;
+            //dataGridView1.Columns["审核意见"].Visible = false;
+            //dataGridView1.Columns["审核是否通过"].Visible = false;
+            //dataGridView1.Columns["日志"].Visible = false;
         }
 
         //添加新行
@@ -295,7 +297,7 @@ namespace mySystem.Process.灭菌
             dr["送去产品托盘数量个"] = 0;
             dr["拉回产品托盘数量个"] = 0;
             dr["备注"] = "无";
-            dr["日志"] = "无";
+           // dr["日志"] = "无";
             return dr;
         }
 
@@ -333,7 +335,7 @@ namespace mySystem.Process.灭菌
                 //string suibian = dr[i].ToString();
                 //if (dr[i] != dr["审核意见"] && dr[i] != dr["审核是否通过"])
                 //if (dr[i].Equals(dr["审核意见"]) || dr[i].Equals(dr["审核是否通过"]))
-                if(i!=0&&i!=11&&i!=12)
+                if(i!=0)
                 {
                     if (dr最后一行[i].ToString() == "")
                         sum += 1;                    
@@ -352,9 +354,9 @@ namespace mySystem.Process.灭菌
         private bool input_Judge()
         {
             int index = dataGridView1.Rows.Count - 1;
-            string str登记人=dt台帐.Rows[index]["登记人"].ToString();
-            string str审核人 = dt台帐.Rows[index]["审核人"].ToString();
-            if (mySystem.Parameter.NametoID(str登记人) <= 0 || mySystem.Parameter.NametoID(str审核人)<=0)
+            string str登记员=dt台帐.Rows[index]["登记员"].ToString();
+            string str审核员 = dt台帐.Rows[index]["审核员"].ToString();
+            if (mySystem.Parameter.NametoID(str登记员) <= 0 || mySystem.Parameter.NametoID(str审核员)<=0)
             {              
                 return false;
             }
@@ -370,7 +372,7 @@ namespace mySystem.Process.灭菌
             // 利用这个进程打开一个Excel文件
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\miejun\SOP-MFG-106-R03A 辐照灭菌台帐.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
 
             if (isShow)
             {
@@ -389,15 +391,23 @@ namespace mySystem.Process.灭菌
                 oXL.Visible = false;
                 // 修改Sheet中某行某列的值
                 my = printValue(my);
-                // 直接用默认打印机打印该Sheet
-                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
-                // 关闭文件，false表示不保存
-                wb.Close(false);
-                // 关闭Excel进程
-                oXL.Quit();
-                // 释放COM资源
-                Marshal.ReleaseComObject(wb);
-                Marshal.ReleaseComObject(oXL);
+                try
+                {
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                { }
+                finally
+                {
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                }
             }
         }
 
@@ -422,7 +432,26 @@ namespace mySystem.Process.灭菌
 
         private void b打印_Click(object sender, EventArgs e)
         {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
             print(true);
+        }
+
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        //添加打印机
+        private void fill_printer()
+        {
+
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
         }
 
     }
