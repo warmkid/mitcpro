@@ -306,6 +306,7 @@ namespace WindowsFormsApplication1
             outerBind();
             if (dt_out.Rows.Count <= 0)
             {
+                //新建记录
                 DataRow dr = dt_out.NewRow();
                 dr = writeOuterDefault(dr);
                 dt_out.Rows.Add(dr);
@@ -314,6 +315,7 @@ namespace WindowsFormsApplication1
                 removeOuterBinding();
                 outerBind();
                 instrid = mySystem.Parameter.proInstruID;
+
             }
             instrid = mySystem.Parameter.proInstruID;
             ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
@@ -623,7 +625,7 @@ namespace WindowsFormsApplication1
         public override void CheckResult()
         {
             //获得审核信息
-            dt_out.Rows[0]["审核人"] = checkform.userName;
+            dt_out.Rows[0]["审核人"] = mySystem.Parameter.userName;
             dt_out.Rows[0]["审核时间"] = checkform.time;
             dt_out.Rows[0]["审核意见"] = checkform.opinion;
             dt_out.Rows[0]["审核是否通过"] = checkform.ischeckOk;
@@ -684,6 +686,10 @@ namespace WindowsFormsApplication1
             dr["审核是否通过"] = false;
             ckb白班.Checked = (bool)dr["班次"];
             ckb夜班.Checked = !ckb白班.Checked;
+
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
+            dr["日志"] = log;
             return dr;
 
         }
@@ -863,6 +869,7 @@ namespace WindowsFormsApplication1
 
         public void print(bool b)
         {
+            int label_打印成功 = 1;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -882,17 +889,26 @@ namespace WindowsFormsApplication1
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
             }
             else
-            {
-                
+            {                
                 // 直接用默认打印机打印该Sheet
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
                 }
                 catch
-                { }
+                {
+                    label_打印成功 = 0;
+                }
                 finally
                 {
+                    if (1==label_打印成功)
+                    {
+                        string log = "\n=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
+                        bs_out.EndEdit();
+                        da_out.Update((DataTable)bs_out.DataSource);
+                    }
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -979,7 +995,8 @@ namespace WindowsFormsApplication1
 
         private void bt日志_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(dt_out.Rows[0]["日志"].ToString());
+            //MessageBox.Show(dt_out.Rows[0]["日志"].ToString());
+            (new mySystem.Other.LogForm()).setLog(dt_out.Rows[0]["日志"].ToString()).Show();
         }
     }
 }

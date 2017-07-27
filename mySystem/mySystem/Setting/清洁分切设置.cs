@@ -52,80 +52,25 @@ namespace mySystem.Setting
         private void Initdgv()
         {
             bs开机 = new BindingSource();
-            dgv开机.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgv开机.AllowUserToAddRows = false;
-            dgv开机.ReadOnly = false;
-            dgv开机.RowHeadersVisible = false;
-            dgv开机.AllowUserToResizeColumns = true;
-            dgv开机.AllowUserToResizeRows = false;
-            dgv开机.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv开机.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv开机.Font = new Font("宋体", 12);
+            EachInitdgv(dgv开机);
 
             bs清场 = new BindingSource();
-            dgv清场.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgv清场.AllowUserToAddRows = false;
-            dgv清场.ReadOnly = false;
-            dgv清场.RowHeadersVisible = false;
-            dgv清场.AllowUserToResizeColumns = true;
-            dgv清场.AllowUserToResizeRows = false;
-            dgv清场.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv清场.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv清场.Font = new Font("宋体", 12);
+            EachInitdgv(dgv清场);
 
             bs产品 = new BindingSource();
-            dgv产品.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgv产品.AllowUserToAddRows = false;
-            dgv产品.ReadOnly = false;
-            dgv产品.RowHeadersVisible = false;
-            dgv产品.AllowUserToResizeColumns = true;
-            dgv产品.AllowUserToResizeRows = false;
-            dgv产品.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv产品.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv产品.Font = new Font("宋体", 12);
+            EachInitdgv(dgv产品);
 
             bs产品编码 = new BindingSource();
-            dgv产品编码.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgv产品编码.AllowUserToAddRows = false;
-            dgv产品编码.ReadOnly = false;
-            dgv产品编码.RowHeadersVisible = false;
-            dgv产品编码.AllowUserToResizeColumns = true;
-            dgv产品编码.AllowUserToResizeRows = false;
-            dgv产品编码.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv产品编码.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv产品编码.Font = new Font("宋体", 12);
+            EachInitdgv(dgv产品编码);
 
             bs物料代码 = new BindingSource();
-            dgv物料代码.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgv物料代码.AllowUserToAddRows = false;
-            dgv物料代码.ReadOnly = false;
-            dgv物料代码.RowHeadersVisible = false;
-            dgv物料代码.AllowUserToResizeColumns = true;
-            dgv物料代码.AllowUserToResizeRows = false;
-            dgv物料代码.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv物料代码.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv物料代码.Font = new Font("宋体", 12);
+            EachInitdgv(dgv物料代码);
 
             bs人员 = new BindingSource();
-            dgv人员.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgv人员.AllowUserToAddRows = false;
-            dgv人员.ReadOnly = false;
-            dgv人员.RowHeadersVisible = false;
-            dgv人员.AllowUserToResizeColumns = true;
-            dgv人员.AllowUserToResizeRows = false;
-            dgv人员.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv人员.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv人员.Font = new Font("宋体", 12);
+            EachInitdgv(dgv人员);
 
             bs权限 = new BindingSource();
-            dgv权限.AllowUserToAddRows = false;
-            dgv权限.ReadOnly = false;
-            dgv权限.RowHeadersVisible = false;
-            dgv权限.AllowUserToResizeColumns = true;
-            dgv权限.AllowUserToResizeRows = false;
-            dgv权限.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv权限.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dgv权限.Font = new Font("宋体", 12);
+            EachInitdgv(dgv权限);
         }
 
         private void Bind()
@@ -239,6 +184,19 @@ namespace mySystem.Setting
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
 
+        }
+
+        private void EachInitdgv(DataGridView dgv)
+        {
+            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dgv.AllowUserToAddRows = false;
+            dgv.ReadOnly = false;
+            dgv.RowHeadersVisible = false;
+            dgv.AllowUserToResizeColumns = true;
+            dgv.AllowUserToResizeRows = false;
+            dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dgv.Font = new Font("宋体", 12);
         }
 
         private void setDataGridViewRowNums(DataGridView dgv)

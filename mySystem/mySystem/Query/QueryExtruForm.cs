@@ -70,6 +70,12 @@ namespace mySystem.Query
             }
         }
 
+        //TODO:
+        //不选生产指令怎么办？？？
+
+
+
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Instruction = comboBox1.SelectedItem.ToString();
@@ -358,17 +364,6 @@ namespace mySystem.Query
             //显示序号
             setDataGridViewRowNums();
 
-            //TODO:
-            //写在BindingComplete事件里
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                string colname = dgv.Columns[i].Name;
-                if (colname == "ID" || colname == "生产指令ID")
-                { dgv.Columns[colname].Visible = false; }
-                else
-                { dgv.Columns[colname].Visible = true; }
-            }
-
             //设置列宽
             for (int i = 0; i < dgv.Columns.Count; i++)
             {
@@ -506,6 +501,16 @@ namespace mySystem.Query
 
 
             }
+        }
+
+        //TODO：待审核标红
+        private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv.Columns["ID"].Visible = false;
+            try
+            { dgv.Columns["生产指令ID"].Visible = false; }
+            catch
+            { return; }
         }
 
         

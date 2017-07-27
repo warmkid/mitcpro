@@ -62,6 +62,8 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -154,7 +156,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(845, 41);
+            this.button1.Location = new System.Drawing.Point(279, 36);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 28;
@@ -380,11 +382,33 @@
             this.cb打印机.Size = new System.Drawing.Size(95, 22);
             this.cb打印机.TabIndex = 41;
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label13.Location = new System.Drawing.Point(782, 43);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(93, 16);
+            this.label13.TabIndex = 44;
+            this.label13.Text = "登录角色：";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(879, 43);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 43;
+            this.label角色.Text = "角色";
+            // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 462);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.tb退料操作员备注);
@@ -464,5 +488,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.ComboBox cb打印机;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label角色;
     }
 }

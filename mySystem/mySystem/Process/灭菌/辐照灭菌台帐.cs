@@ -226,7 +226,6 @@ namespace mySystem.Process.灭菌
                 c2.ValueType = dc.DataType;
                 dataGridView1.Columns.Add(c2);
                 break;
-
             }
             }
 
@@ -255,13 +254,21 @@ namespace mySystem.Process.灭菌
         //添加新行
         private void bt添加_Click(object sender, EventArgs e)
         {
-            DataRow dr= dt台帐.NewRow();
-           // dr = writeInnerDefault(dr);
-            //dt台帐.Rows.Add(dr);
-            setDataGridViewRowNums();
-            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
-            dr = writeInnerDefault(dr);
-            dt台帐.Rows.Add(dr);
+            int index = dataGridView1.Rows.Count - 1;
+            DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
+            DataRow dr最后一行 = dt台帐.NewRow();
+            dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
+            bool is填满 = is_filled(dr最后一行);
+            if (is填满)
+            {
+                DataRow dr新行 = dt台帐.NewRow();
+                dr新行 = writeInnerDefault(dr新行);
+                dt台帐.Rows.Add(dr新行);
+                setDataGridViewRowNums();
+                dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            }
+            else
+                MessageBox.Show("未填完");
         }
 
         //设置序号递增
@@ -295,6 +302,31 @@ namespace mySystem.Process.灭菌
             da台帐.Update((DataTable)bs台帐.DataSource);
             readInnerData();
             innerBind();
+        }
+
+        //某行数据是否填满
+        private bool is_filled(DataRow dr)
+        {
+            int sum=0;//空白单元格个数
+            for (int i = 0; i < dr.ItemArray.Length; i++)
+            {
+                string suibian = dr[i].ToString();
+                //if (dr[i] != dr["审核意见"] && dr[i] != dr["审核是否通过"])
+                //if (dr[i].Equals(dr["审核意见"]) || dr[i].Equals(dr["审核是否通过"]))
+                if(i!=11&&i!=12)
+                {
+                    if (dr[i].ToString() == "")
+                        sum += 1;                    
+                }
+                else
+                {
+                    sum += 0;
+                }
+            }
+            if (sum != 0)
+                return false;
+            else
+                return true;
         }
     }
 }

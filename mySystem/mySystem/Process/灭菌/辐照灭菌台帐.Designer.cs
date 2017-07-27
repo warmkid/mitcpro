@@ -61,7 +61,7 @@
             // b打印
             // 
             this.b打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.b打印.Location = new System.Drawing.Point(663, 322);
+            this.b打印.Location = new System.Drawing.Point(663, 324);
             this.b打印.Name = "b打印";
             this.b打印.Size = new System.Drawing.Size(75, 41);
             this.b打印.TabIndex = 2;

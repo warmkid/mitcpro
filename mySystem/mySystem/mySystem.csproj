@@ -78,6 +78,12 @@
       <DependentUpon>CheckForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\common.cs" />
+    <Compile Include="Other\LogForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\LogForm.Designer.cs">
+      <DependentUpon>LogForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\Parameter.cs" />
     <Compile Include="Process\Bag\BTV\BTV2DProRecord.cs">
       <SubType>Form</SubType>
@@ -707,12 +713,6 @@
     <Compile Include="Setting\CS制袋设置.Designer.cs">
       <DependentUpon>CS制袋设置.cs</DependentUpon>
     </Compile>
-    <Compile Include="Setting\PreheatParameterForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Setting\PreheatParameterForm.Designer.cs">
-      <DependentUpon>PreheatParameterForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\ProcessMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -730,12 +730,6 @@
     </Compile>
     <Compile Include="Query\QueryMainForm.Designer.cs">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Setting\SetExtruForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Setting\SetExtruForm.Designer.cs">
-      <DependentUpon>SetExtruForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\CleanArea_add.cs">
       <SubType>Form</SubType>
@@ -779,23 +773,11 @@
     <Compile Include="Setting\SetPeopleForm.Designer.cs">
       <DependentUpon>SetPeopleForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Setting\SettingHandOver.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Setting\SettingHandOver.Designer.cs">
-      <DependentUpon>SettingHandOver.cs</DependentUpon>
-    </Compile>
     <Compile Include="Setting\SettingMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Setting\SettingMainForm.Designer.cs">
       <DependentUpon>SettingMainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Setting\Setting_CheckBeforePower.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Setting\Setting_CheckBeforePower.designer.cs">
-      <DependentUpon>Setting_CheckBeforePower.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\Setting_CleanArea.cs">
       <SubType>Form</SubType>
@@ -963,6 +945,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\LogForm.resx">
+      <DependentUpon>LogForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTV2DProRecord.resx">
       <DependentUpon>BTV2DProRecord.cs</DependentUpon>
@@ -1259,12 +1244,6 @@
     <EmbeddedResource Include="Setting\CS制袋设置.resx">
       <DependentUpon>CS制袋设置.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Setting\PreheatParameterForm.resx">
-      <DependentUpon>PreheatParameterForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Setting\SetExtruForm.resx">
-      <DependentUpon>SetExtruForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Setting\CleanArea_add.resx">
       <DependentUpon>CleanArea_add.cs</DependentUpon>
     </EmbeddedResource>
@@ -1286,14 +1265,8 @@
     <EmbeddedResource Include="Setting\SetPeopleForm.resx">
       <DependentUpon>SetPeopleForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Setting\SettingHandOver.resx">
-      <DependentUpon>SettingHandOver.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Setting\SettingMainForm.resx">
       <DependentUpon>SettingMainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Setting\Setting_CheckBeforePower.resx">
-      <DependentUpon>Setting_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\Setting_CleanArea.resx">
       <DependentUpon>Setting_CleanArea.cs</DependentUpon>

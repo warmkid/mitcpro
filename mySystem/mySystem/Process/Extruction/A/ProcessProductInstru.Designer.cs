@@ -130,6 +130,9 @@
             this.bt日志 = new System.Windows.Forms.Button();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.label40 = new System.Windows.Forms.Label();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.bt更改 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -190,7 +193,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(46, 48);
+            this.label3.Location = new System.Drawing.Point(46, 52);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 14);
             this.label3.TabIndex = 2;
@@ -990,7 +993,7 @@
             // bt打印
             // 
             this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(310, 675);
+            this.bt打印.Location = new System.Drawing.Point(375, 675);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 18;
@@ -1149,9 +1152,9 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(727, 12);
+            this.button6.Location = new System.Drawing.Point(756, 48);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
+            this.button6.Size = new System.Drawing.Size(38, 23);
             this.button6.TabIndex = 21;
             this.button6.Text = "button6";
             this.button6.UseVisualStyleBackColor = true;
@@ -1160,9 +1163,9 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(817, 12);
+            this.button7.Location = new System.Drawing.Point(804, 49);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
+            this.button7.Size = new System.Drawing.Size(37, 23);
             this.button7.TabIndex = 22;
             this.button7.Text = "button7";
             this.button7.UseVisualStyleBackColor = true;
@@ -1183,7 +1186,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(125, 41);
+            this.comboBox1.Location = new System.Drawing.Point(125, 45);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 20);
             this.comboBox1.TabIndex = 24;
@@ -1233,7 +1236,7 @@
             // cb打印机
             // 
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(202, 678);
+            this.cb打印机.Location = new System.Drawing.Point(267, 678);
             this.cb打印机.Name = "cb打印机";
             this.cb打印机.Size = new System.Drawing.Size(95, 20);
             this.cb打印机.TabIndex = 29;
@@ -1242,17 +1245,52 @@
             // 
             this.label40.AutoSize = true;
             this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label40.Location = new System.Drawing.Point(109, 681);
+            this.label40.Location = new System.Drawing.Point(174, 681);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(91, 14);
             this.label40.TabIndex = 30;
             this.label40.Text = "选择打印机：";
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label41.Location = new System.Drawing.Point(727, 19);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(93, 16);
+            this.label41.TabIndex = 32;
+            this.label41.Text = "登录角色：";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(842, 19);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 31;
+            this.label角色.Text = "角色";
+            // 
+            // bt更改
+            // 
+            this.bt更改.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.bt更改.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt更改.Location = new System.Drawing.Point(94, 675);
+            this.bt更改.Name = "bt更改";
+            this.bt更改.Size = new System.Drawing.Size(75, 23);
+            this.bt更改.TabIndex = 33;
+            this.bt更改.Text = "更改";
+            this.bt更改.UseVisualStyleBackColor = true;
+            this.bt更改.Click += new System.EventHandler(this.bt更改_Click);
             // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(904, 704);
+            this.Controls.Add(this.bt更改);
+            this.Controls.Add(this.label41);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.bt日志);
@@ -1439,5 +1477,8 @@
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.Button bt更改;
     }
 }

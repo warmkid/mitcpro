@@ -58,19 +58,13 @@ namespace mySystem
             //显示序号
             setDataGridViewRowNums();
 
+            //设置列宽
             for (int i = 0; i < this.dgv.Columns.Count; i++)
             {
-                string colname = this.dgv.Columns[i].Name;
-                if (colname == "ID")
-                {
-                    this.dgv.Columns[colname].Visible = false;
-                }
-                else
-                {
-                    this.dgv.Columns[colname].Visible = true;
-                }
-            }
-            this.dgv.Columns["序号"].MinimumWidth = 40;  //没用？？？？？            
+                String colName = this.dgv.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                this.dgv.Columns[i].MinimumWidth = strlen * 25;
+            }        
             
         }
 
@@ -118,17 +112,10 @@ namespace mySystem
 
             }
 
-               
-            
-
+ 
         }
 
 
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            
-        }
 
         private void dgv_DoubleClick(object sender, EventArgs e)
         {
@@ -154,6 +141,7 @@ namespace mySystem
             
         }
 
+        //根据不同工序连接不同数据库
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {            
             String process = comboBox1.SelectedItem.ToString();
@@ -176,6 +164,11 @@ namespace mySystem
                     break;
 
             }
+        }
+
+        private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv.Columns["ID"].Visible = false;
         }
 
 

@@ -15,33 +15,21 @@ namespace mySystem.Process.Bag.CS
     {
 
 
-        // TODO : 注意处理生产指令的状态
+        // TODO : 注意处理生产指令的状态（是否接收等状态）
         // TODO ：要加到Mainform中去
         // TODO： 审核时要调用赵梦的函数
-        // TODO: 打印
+        // TODO: 打印  选打印机
+        // TODO：构造函数添加参数mainform
 
         // 需要保存的状态
-        /// <summary>
-        /// 1:操作员，2：审核员，4：管理员
-        /// </summary>
         Parameter.UserState _userState;
-        /// <summary>
-        /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
-        /// </summary>
         Parameter.FormState _formState;
         int _id;
         String _code;
 
         // 显示界面需要的信息
-        
-        // TODO:1.产品代码和封边由List改成HashSet   2. 把自定义的产品代码和封边也加到 ‘Hashset’中去
-        List<String> ls产品名称;
-        List<String> ls工艺;
-        HashSet<String> hs产品代码;
-        HashSet<String> hs封边;
-        List<String> ls负责人;
-        List<String> ls操作员;
-        List<String> ls审核员;
+        List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员;
+        HashSet<String> hs产品代码,hs封边;
         HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs外包白班负责人, hs外包夜班负责人;
 
         // DataGridView 中用到的一些变量
@@ -57,6 +45,7 @@ namespace mySystem.Process.Bag.CS
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
+
         public CS制袋生产指令()
         {
             InitializeComponent();
@@ -64,40 +53,38 @@ namespace mySystem.Process.Bag.CS
             getOuterOtherData();
             getPeople();
             setUseState();
-            // 为了控制新界面的控件可用性，必须加的
             setFormState(true);
             setEnableReadOnly();
         }
 
         public CS制袋生产指令(int id)
         {
-            // 待显示
+            // 显示前的准备工作
             InitializeComponent();
             variableInit();
             getOuterOtherData();
             getPeople();
             setUseState();
 
-            // 读取数据
+            // 读取数据并显示
             readOuterData(id);
             outerBind();
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
-
-            // 获取和显示内容有关的变量
-            setFormVariable(id);
-
-            // 设置状态和控件可用性
+            setKeyInfoFromDataTable(id);
             getPeople();
-            
             setFormState();
             setEnableReadOnly();
 
             // 事件部分
             addComputerEventHandler();
             addOtherEvenHandler();
+
+            // 禁用
+            btn查询插入.Enabled = false;
+            tb生产指令编号.Enabled = false;
         }
 
         private void btn查询插入_Click(object sender, EventArgs e)
@@ -119,11 +106,7 @@ namespace mySystem.Process.Bag.CS
             getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
-
-            // 获取和显示内容有关的变量
-            setFormVariable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-
-            // 设置状态和控件可用性
+            setKeyInfoFromDataTable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             setFormState();
             setEnableReadOnly();
 
@@ -136,24 +119,40 @@ namespace mySystem.Process.Bag.CS
             tb生产指令编号.Enabled = false;
         }
 
+        /// <summary>
+        /// 所有变量实例化，一些固定的变量赋值
+        /// </summary>
         void variableInit()
         {
             conn = new OleDbConnection(strConn);
+
+            ls产品名称 = new List<string>();
+            ls负责人 = new List<string>();
+            ls工艺 = new List<string>();
             hs外包白班负责人 = new HashSet<string>();
             hs外包夜班负责人 = new HashSet<string>();
             hs制袋内包白班负责人 = new HashSet<string>();
             hs制袋内包夜班负责人 = new HashSet<string>();
+
             li可选可输的列 = new List<int>();
             li可选可输的列.Add(2);
             li可选可输的列.Add(8);
         }
 
-        void setFormVariable(int id)
+        /// <summary>
+        /// 获取当期显示的数据的关键信息，包括但不限于ID
+        /// </summary>
+        /// <param name="id"></param>
+        void setKeyInfoFromDataTable(int id)
         {
 
             _id = id;
             _code = dtOuter.Rows[0]["生产指令编号"].ToString();
         }
+
+        /// <summary>
+        /// 获取操作员和审核员名单
+        /// </summary>
         void getPeople()
         {
             OleDbDataAdapter da;
@@ -171,14 +170,14 @@ namespace mySystem.Process.Bag.CS
             //string[] s=Regex.Split("张三，,赵一,赵二", ",|，");
 
         }
+
+        /// <summary>
+        /// 和外表显示相关的数据赋值，主要是下拉框的Items
+        /// </summary>
         void getOuterOtherData()
         {
             OleDbDataAdapter da;
             DataTable dt;
-            
-            ls产品名称 = new List<string>();
-            ls负责人 = new List<string>();
-            ls工艺 = new List<string>();
             
             da = new OleDbDataAdapter("select * from 用户", conn);
             dt = new DataTable("temp");
@@ -211,6 +210,10 @@ namespace mySystem.Process.Bag.CS
 
         }
 
+        /// <summary>
+        /// 和内表显示相关的数据赋值，主要是下拉框的Items
+        /// 对可选可输的控件要记得将DataTable中的值也加入Items
+        /// </summary>
         void getInnerOtherData()
         {
             OleDbDataAdapter da;
@@ -242,6 +245,11 @@ namespace mySystem.Process.Bag.CS
                 hs封边.Add(dr["封边"].ToString());
             }
         }
+
+        /// <summary>
+        /// 根据外表ID读取外表数据
+        /// </summary>
+        /// <param name="id"></param>
         void readOuterData(int id)
         {
             daOuter = new OleDbDataAdapter("select * from 生产指令 where ID=" + id + "", conn);
@@ -251,6 +259,11 @@ namespace mySystem.Process.Bag.CS
 
             daOuter.Fill(dtOuter);
         }
+
+        /// <summary>
+        /// 根据其他条件读取外表数据
+        /// </summary>
+        /// <param name="code"></param>
         void readOuterData(String code)
         {
             
@@ -261,6 +274,42 @@ namespace mySystem.Process.Bag.CS
 
             daOuter.Fill(dtOuter);
         }
+
+
+        /// <summary>
+        /// 外表写入默认值
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <returns></returns>
+        DataRow writeOuterDefault(DataRow dr)
+        {
+            dr["生产指令编号"] = _code;
+            dr["生产设备"] = "制袋机 AA-EQU-001";
+            dr["计划生产日期"] = DateTime.Now;
+            dr["制袋物料名称1"] = "Tyvek印刷卷材";
+            dr["制袋物料名称2"] = "药品包装用聚乙烯膜（XP1）";
+            dr["制袋物料名称3"] = "蒸汽灭菌指示剂";
+            dr["内包物料名称1"] = "内包装袋";
+            dr["内包物料名称2"] = "内标签";
+            dr["外包物料名称1"] = "外标签";
+            dr["外包物料名称2"] = "纸箱";
+            dr["外包物料批号2"] = "————————";
+            dr["外包物料名称3"] = "内衬袋";
+            dr["外包物料代码3"] = "专用袋";
+            dr["外包物料批号3"] = "————————";
+            dr["操作员"] = mySystem.Parameter.userName;
+            dr["操作时间"] = DateTime.Now;
+            dr["审核时间"] = DateTime.Now;
+            dr["接收时间"] = DateTime.Now;
+            dr["状态"] = 0;
+            return dr;
+        }
+
+
+        /// <summary>
+        /// 外表和控件的绑定
+        /// 注意变量名命名规则，区分该绑定的和不该绑定控件
+        /// </summary>
         void outerBind()
         {
             bsOuter.DataSource = dtOuter;
@@ -294,6 +343,11 @@ namespace mySystem.Process.Bag.CS
                 }
             }
         }
+
+        /// <summary>
+        /// 根据外表ID读取内表信息
+        /// </summary>
+        /// <param name="outerID"></param>
         void readInnerData(int outerID)
         {
             daInner = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + outerID, conn);
@@ -303,6 +357,26 @@ namespace mySystem.Process.Bag.CS
 
             daInner.Fill(dtInner);
         }
+
+
+        /// <summary>
+        /// 内表写默认值
+        /// </summary>
+        /// <param name="dr"></param>
+        /// <returns></returns>
+        DataRow writeInnerDefault(DataRow dr)
+        {
+            dr["T生产指令ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            dr["计划产量只"] = 0;
+            dr["内包装规格每包只数"] = 0;
+            dr["外包规格"] = 0;
+            dr["封边"] = "底封";
+            return dr;
+        }
+
+        /// <summary>
+        /// 内表绑定
+        /// </summary>
         void innerBind()
         {
             bsInner.DataSource = dtInner;
@@ -311,6 +385,11 @@ namespace mySystem.Process.Bag.CS
 
         }
 
+        /// <summary>
+        /// 设置DataGridView的列
+        /// 该函数主要设置列的类型，尤其要注意变成下拉框的列
+        /// 列的可见性，只读性，HeadText都不要在这里设置，放在DataBindComplete事件中处理
+        /// </summary>
         void setDataGridViewColumn()
         {
             dataGridView1.Columns.Clear();
@@ -405,12 +484,11 @@ namespace mySystem.Process.Bag.CS
                         break;
                 }
             }
-
-            // 然后修改其他特殊属性
-            
-           
         }
 
+        /// <summary>
+        /// 设置用户状态
+        /// </summary>
         void setUseState()
         {
             _userState = Parameter.UserState.NoBody;
@@ -432,7 +510,14 @@ namespace mySystem.Process.Bag.CS
             if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
             if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
-        // 如果给了一个参数为true，则表示处于无数据状态
+
+        /// <summary>
+        /// 设置窗体状态，传true表示无数据状态，不传参数则根据 审核员 信息自动判断
+        /// 如果点开窗体后，需要操作控件才能显示数据的，增加一个 无数据 状态，例如生产指令
+        /// 点开窗体就能显示值的，没有这个状态，例如运行记录
+        /// </summary>
+        /// <param name="newForm"></param>
+        
         void setFormState(bool newForm = false)
         {
             if (newForm)
@@ -451,6 +536,10 @@ namespace mySystem.Process.Bag.CS
                 else _formState = Parameter.FormState.审核未通过;
             }
         }
+
+        /// <summary>
+        /// 根据用户和窗体状态，设置控件的Enable和ReadOnly
+        /// </summary>
         void setEnableReadOnly()
         {
 
@@ -483,6 +572,9 @@ namespace mySystem.Process.Bag.CS
   
         }
 
+        /// <summary>
+        /// 默认控件可用状态
+        /// </summary>
         void setControlTrue()
         {
             // 查询插入，审核，提交审核，生产指令编码 在这里不用管
@@ -509,6 +601,9 @@ namespace mySystem.Process.Bag.CS
             
         }
 
+        /// <summary>
+        /// 默认控件不可用状态
+        /// </summary>
         void setControlFalse()
         {
             // 查询插入，审核，提交审核，生产指令编码 在这里不用管
@@ -533,6 +628,10 @@ namespace mySystem.Process.Bag.CS
             btn打印.Enabled = true;
 
         }
+
+        /// <summary>
+        /// 不好归类的属性设置或者事件注册
+        /// </summary>
         void addOtherEvenHandler()
         {
             // TODO 其他无法分类的代码放在这里
@@ -544,6 +643,51 @@ namespace mySystem.Process.Bag.CS
             // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
         }
+
+        /// <summary>
+        /// 计算类事件的注册
+        /// </summary>
+        void addComputerEventHandler()
+        {
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+        }
+
+
+        /// <summary>
+        /// 确保控件和DataTable中的数据能同步的方法
+        /// 凡是需要在程序中通过代码来改变控件值时，请用本方法避免不同步的情况
+        /// 第一个参数是控件的变量名，第二个参数是要填入的值
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="val"></param>
+        void outerDataSync(String name, String val)
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c.Name == name)
+                {
+                    c.Text = val;
+                    c.DataBindings[0].WriteValue();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 数据有效性验证
+        /// </summary>
+        /// <returns></returns>
+        private bool dataValidate()
+        {
+            dataGridView1.DataError += dataGridView1_DataError;
+
+            // TODO 更多条件有待补充
+            if (cmb产品名称.Text == "") return false;
+            if (cmb生产工艺.Text == "") return false;
+            if (dataGridView1.Rows.Count == 0 || dataGridView1.Rows.Count > 1) return false;
+            if (tb接收人.Text == "") return false;
+            return true;
+        }
+
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -581,10 +725,7 @@ namespace mySystem.Process.Bag.CS
                 if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
             }
         }
-        void addComputerEventHandler()
-        {
-            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
-        }
+       
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -659,51 +800,8 @@ namespace mySystem.Process.Bag.CS
             }
         }
 
-        void outerDataSync(String name, String val)
-        {
-            foreach (Control c in this.Controls)
-            {
-                if (c.Name == name)
-                {
-                    c.Text = val;
-                    c.DataBindings[0].WriteValue();
-                }
-            }
-        }
 
-        DataRow writeOuterDefault(DataRow dr)
-        {
-            dr["生产指令编号"] = _code;
-            dr["生产设备"] = "制袋机 AA-EQU-001";
-            dr["计划生产日期"] = DateTime.Now;
-            dr["制袋物料名称1"] = "Tyvek印刷卷材";
-            dr["制袋物料名称2"] = "药品包装用聚乙烯膜（XP1）";
-            dr["制袋物料名称3"] = "蒸汽灭菌指示剂";
-            dr["内包物料名称1"] = "内包装袋";
-            dr["内包物料名称2"] = "内标签";
-            dr["外包物料名称1"] = "外标签";
-            dr["外包物料名称2"] = "纸箱";
-            dr["外包物料批号2"] = "————————";
-            dr["外包物料名称3"] = "内衬袋";
-            dr["外包物料代码3"] = "专用袋";
-            dr["外包物料批号3"] = "————————";
-            dr["操作员"] = mySystem.Parameter.userName;
-            dr["操作时间"] = DateTime.Now;
-            dr["审核时间"] = DateTime.Now;
-            dr["接收时间"] = DateTime.Now;
-            dr["状态"] = 0;
-            return dr;
-        }
-
-        DataRow writeInnerDefault(DataRow dr)
-        {
-            dr["T生产指令ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
-            dr["计划产量只"] = 0;
-            dr["内包装规格每包只数"] = 0;
-            dr["外包规格"] = 0;
-            dr["封边"] = "底封";
-            return dr;
-        }
+        
 
        
 
@@ -794,7 +892,8 @@ namespace mySystem.Process.Bag.CS
         {
             try
             {
-                MessageBox.Show(dtOuter.Rows[0]["日志"].ToString());
+                mySystem.Other.LogForm logForm = new Other.LogForm();
+                logForm.setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
             }
             catch (Exception exp)
             {
@@ -850,17 +949,7 @@ namespace mySystem.Process.Bag.CS
 
 
         // 验证数据有效性
-        private bool dataValidate()
-        {
-            dataGridView1.DataError += dataGridView1_DataError;
 
-            // TODO 更多条件有待补充
-            if (cmb产品名称.Text == "") return false;
-            if (cmb生产工艺.Text == "") return false;
-            if (dataGridView1.Rows.Count == 0 || dataGridView1.Rows.Count > 1) return false;
-            if (tb接收人.Text == "") return false;
-            return true;
-        }
 
         void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
