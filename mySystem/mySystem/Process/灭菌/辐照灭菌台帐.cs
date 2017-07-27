@@ -173,8 +173,8 @@ namespace mySystem.Process.灭菌
             //dt台帐.Rows[index]["产品数量只"] = 0;
             //dt台帐.Rows[index]["送去产品托盘数量个"] = 0;
             //dt台帐.Rows[index]["拉回产品托盘数量个"] = 0;
-            string str委托日期 = dr委托单号[0]["委托日期"].ToString();
-            MessageBox.Show(string.Format("选中：{0}", str委托日期));
+           // string str委托日期 = dr委托单号[0]["委托日期"].ToString();
+           // MessageBox.Show(string.Format("选中：{0}", str委托日期));
             
             //DataRow drtemp = dt台帐.NewRow();
             //drtemp["委托单号"] = str委托单号显示;
@@ -368,7 +368,7 @@ namespace mySystem.Process.灭菌
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-301-R09 吹膜工序生产和检验记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\miejun\SOP-MFG-106-R03A 辐照灭菌台帐.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
 
@@ -403,7 +403,20 @@ namespace mySystem.Process.灭菌
 
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet)
         {
-
+            int rownum = dt台帐.Rows.Count;
+            for (int i = 0; i < rownum; i++)
+            {
+                mysheet.Cells[i + 4, 2].Value = dt台帐.Rows[i]["委托单号"].ToString();
+                mysheet.Cells[i + 4, 3].Value = Convert.ToDateTime( dt台帐.Rows[i]["委托日期"]).ToString("D");//去掉时分秒，且显示为****年**月**日
+                mysheet.Cells[i + 4, 4].Value = dt台帐.Rows[i]["产品数量箱"].ToString();
+                mysheet.Cells[i + 4, 5].Value = dt台帐.Rows[i]["产品数量只"].ToString();
+                mysheet.Cells[i + 4, 6].Value = dt台帐.Rows[i]["送去产品托盘数量个"].ToString();
+                mysheet.Cells[i + 4, 7].Value = dt台帐.Rows[i]["拉回产品托盘数量个"].ToString();
+                mysheet.Cells[i + 4, 8].Value = dt台帐.Rows[i]["备注"].ToString();
+                mysheet.Cells[i + 4, 9].Value = dt台帐.Rows[i]["登记人"].ToString();
+                mysheet.Cells[i + 4, 10].Value = dt台帐.Rows[i]["审核人"].ToString();
+            }
+                
             return mysheet;
         }
 
