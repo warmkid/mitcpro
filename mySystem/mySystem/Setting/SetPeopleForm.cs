@@ -63,6 +63,7 @@ namespace mySystem.Setting
 
         }
 
+        #region 上半部分
         //*************************上半部分**************************
         private void CancelBtn_Click(object sender, EventArgs e)
         {
@@ -158,8 +159,9 @@ namespace mySystem.Setting
             
             
         }
+        #endregion
 
-
+        #region 下半部分
         //*************************下半部分*************************        
         public void InitUser()
         {
@@ -195,8 +197,7 @@ namespace mySystem.Setting
             changeColView(); //列改为combobox                    
             this.dgvUser.DataSource = bsuser.DataSource;
             setDataGridViewRowNums(); //序号           
-            this.dgvUser.Columns["ID"].Visible = false;
-            this.dgvUser.Columns["角色ID"].Visible = false;
+            
         }
 
         //角色和角色ID的统一
@@ -318,7 +319,22 @@ namespace mySystem.Setting
             }
         }
 
+        private void dgvUser_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            this.dgvUser.Columns["ID"].Visible = false;
+            this.dgvUser.Columns["角色ID"].Visible = false;
 
+            //设置列宽
+            for (int i = 0; i < this.dgvUser.Columns.Count; i++)
+            {
+                String colName = this.dgvUser.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                this.dgvUser.Columns[i].MinimumWidth = strlen * 25;
+            }  
+
+        }
+
+        #endregion
 
     }
 }

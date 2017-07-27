@@ -21,7 +21,7 @@ namespace mySystem
     {
         string instruction = null;
         int instruID = 0;
-        System.Timers.Timer timer = new System.Timers.Timer();//实例化Timer类
+        //System.Timers.Timer timer = new System.Timers.Timer();//实例化Timer类
 
         public ExtructionMainForm(MainForm mainform): base(mainform)
         {
@@ -234,36 +234,32 @@ namespace mySystem
         //下拉框获取生产指令
         public void comboInit()
         {
+            HashSet<String> hash = new HashSet<String>();
             if (!Parameter.isSqlOk)
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 where 状态 = 2 ";
+                comm.CommandText = "select * from 生产指令信息表 where 状态 = 2 ";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
                     comboBox1.Items.Clear();
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["生产指令编号"]);
+                        //comboBox1.Items.Add(reader["生产指令编号"]);
+                        hash.Add(reader["生产指令编号"].ToString());
                     }
+                    foreach (String code in hash)
+                    {
+                        comboBox1.Items.Add(code);
+                    }
+
                 }
                 comm.Dispose();
             }
             else
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = Parameter.conn;
-                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 where 状态 = 2 ";
-                SqlDataReader reader = comm.ExecuteReader();//执行查询
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        comboBox1.Items.Add(reader["生产指令编号"]);
-                    }
-                }
-                comm.Dispose();
+                
             }
         }
 
@@ -277,6 +273,7 @@ namespace mySystem
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
+            //instruID = Convert.ToInt32(res[res.Count-1][0]);
             Parameter.proInstruID = instruID;
             InitBtn();
   
@@ -289,16 +286,9 @@ namespace mySystem
             timer1.Start();
 
         }
-        int num = Parameter.i;
-        void test()
-        {
-            label1.Text = Convert.ToString((++num)); //显示到lable 
-            Parameter.i = num;
-        }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //test();
             CheckHour();
         }
         
@@ -350,39 +340,45 @@ namespace mySystem
                         }
                         else
                         {
-                            //TODO
-                            //若大表当日无记录怎么办？？？
+                            //若大表当日无记录则新建一条
+                            OleDbCommand commInsert = new OleDbCommand();
+                            commInsert.Connection = Parameter.connOle;
+                            //String mySql = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核人) VALUES ('";
+                            //mySql += Parameter.proInstruction + "', ";
+                            //mySql += Parameter.proInstruID + ", #";
+                            //mySql += now.Date + "#, '";
+                            //mySql += Parameter.userflight + "', ";
+                            //mySql += "'');";
+                            //commInsert.CommandText = mySql;
+                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核人) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";      
+                            commInsert.ExecuteNonQuery();
+                            //获取ID
+                            commInsert.CommandText = "SELECT @@IDENTITY";
+                            object n = commInsert.ExecuteScalar();
+                            instruID = Convert.ToInt32(n);
 
- 
                         }
 
                         String table11 = "吹膜供料系统运行记录详细信息";
                         OleDbCommand comm11 = new OleDbCommand();
                         comm11.Connection = Parameter.connOle;
                         comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
-                        OleDbDataReader reader2 = comm11.ExecuteReader();
+                        OleDbDataReader reader11 = comm11.ExecuteReader();
 
                         String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
-                        List<String> queryCols2 = new List<String>(new String[] { "ID" });
-                        List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
-                        List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                        String betweenCol2 = "记录时间";
-                        DateTime right2 = now;
-                        DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 5));
-                        DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);
-                        DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
-                        List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
+                        OleDbCommand comm2 = new OleDbCommand();
+                        comm2.Connection = Parameter.connOle;
+                        comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                        OleDbDataReader reader2 = comm2.ExecuteReader();
 
-                        if (reader2.HasRows && res2.Count != 0)
-                        {
-                            return;
-                        }
-                        else if (!reader2.HasRows && res2.Count != 0)
+                        if (reader11.HasRows && reader2.HasRows)
+                        { return; }
+                        else if (!reader11.HasRows && reader2.HasRows)
                         {
                             MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
                             return;
                         }
-                        else if (reader2.HasRows && res2.Count == 0)
+                        else if (reader11.HasRows && !reader2.HasRows)
                         {
                             MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
                             return;
@@ -411,34 +407,39 @@ namespace mySystem
                         {
                             instruID = Convert.ToInt32(reader1["ID"]); //获取大表ID
                         }
+                        else
+                        {
+                            //若大表当日无记录则新建一条
+                            OleDbCommand commInsert = new OleDbCommand();
+                            commInsert.Connection = Parameter.connOle;
+                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核人) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";
+                            commInsert.ExecuteNonQuery();
+                            //获取ID
+                            commInsert.CommandText = "SELECT @@IDENTITY";
+                            object n = commInsert.ExecuteScalar();
+                            instruID = Convert.ToInt32(n);
+                        }
 
                         String table11 = "吹膜供料系统运行记录详细信息";
                         OleDbCommand comm11 = new OleDbCommand();
                         comm11.Connection = Parameter.connOle;
                         comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
-                        OleDbDataReader reader2 = comm11.ExecuteReader();
+                        OleDbDataReader reader11 = comm11.ExecuteReader();
 
                         String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
-                        List<String> queryCols2 = new List<String>(new String[] { "ID" });
-                        List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
-                        List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                        String betweenCol2 = "记录时间";
-                        DateTime right2 = now;
-                        DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 125));
-                        DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);
-                        DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
-                        List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
+                        OleDbCommand comm2 = new OleDbCommand();
+                        comm2.Connection = Parameter.connOle;
+                        comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                        OleDbDataReader reader2 = comm2.ExecuteReader();
 
-                        if (reader2.HasRows && res2.Count != 0)
-                        {
-                            return;
-                        }
-                        else if (!reader2.HasRows && res2.Count != 0)
+                        if (reader11.HasRows && reader2.HasRows)
+                        { return; }
+                        else if (!reader11.HasRows && reader2.HasRows)
                         {
                             MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
                             return;
                         }
-                        else if (reader2.HasRows && res2.Count == 0)
+                        else if (reader11.HasRows && !reader2.HasRows)
                         {
                             MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
                             return;
@@ -466,90 +467,94 @@ namespace mySystem
                         {
                             instruID = Convert.ToInt32(reader1["ID"]); //获取大表ID
                         }
+                        else
+                        {
+                            //若大表当日无记录则新建一条
+                            OleDbCommand commInsert = new OleDbCommand();
+                            commInsert.Connection = Parameter.connOle;
+                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核人) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";
+                            commInsert.ExecuteNonQuery();
+                            //获取ID
+                            commInsert.CommandText = "SELECT @@IDENTITY";
+                            object n = commInsert.ExecuteScalar();
+                            instruID = Convert.ToInt32(n);
+                        }
 
                         String table11 = "吹膜供料系统运行记录详细信息";
                         OleDbCommand comm11 = new OleDbCommand();
                         comm11.Connection = Parameter.connOle;
                         comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
-                        OleDbDataReader reader2 = comm11.ExecuteReader();
+                        OleDbDataReader reader11 = comm11.ExecuteReader();
 
                         String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
-                        List<String> queryCols2 = new List<String>(new String[] { "ID" });
-                        List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
-                        List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
-                        String betweenCol2 = "记录时间";
-                        DateTime right2 = now;
-                        DateTime left2 = right2.AddMinutes(-(delt.TotalMinutes % 120 + 125));
-                        DateTime right21 = new DateTime(right2.Year, right2.Month, right2.Day, right2.Hour, right2.Minute, right2.Second);
-                        DateTime left21 = new DateTime(left2.Year, left2.Month, left2.Day, left2.Hour, left2.Minute, left2.Second);
-                        List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, table2, queryCols2, whereCols2, whereVals2, null, null, betweenCol2, left21, right21);
+                        OleDbCommand comm2 = new OleDbCommand();
+                        comm2.Connection = Parameter.connOle;
+                        comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                        OleDbDataReader reader2 = comm2.ExecuteReader();
 
-                        if (reader2.HasRows && res2.Count != 0)
-                        {
-                            return;
-                        }
-                        else if (!reader2.HasRows && res2.Count != 0)
+                        if (reader11.HasRows && reader2.HasRows)
+                        { return; }
+                        else if (!reader11.HasRows && reader2.HasRows)
                         {
                             MessageBox.Show("请填写“吹膜供料系统运行记录”！", "警告");
-                            form16 = new Process.Extruction.C.Feed(mainform);
-                            form16.ShowDialog();
+                            Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料系统运行记录");
+                            if (a)
+                            {
+                                Process.Extruction.C.Feed form16 = new Process.Extruction.C.Feed(mainform);
+                                form16.ShowDialog();
+                            }
+                            else
+                            { MessageBox.Show("您无权填写“吹膜供料系统运行记录”"); }
                             return;
                         }
-                        else if (reader2.HasRows && res2.Count == 0)
+                        else if (reader11.HasRows && !reader2.HasRows)
                         {
                             MessageBox.Show("请填写“吹膜机组运行记录”！", "警告");
-                            form17 = new Process.Extruction.B.Running(mainform);
-                            form17.ShowDialog();
+                            Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组运行记录");
+                            if (a)
+                            {
+                                Process.Extruction.B.Running form17 = new Process.Extruction.B.Running(mainform);
+                                form17.ShowDialog();
+                            }
+                            else
+                            { MessageBox.Show("您无权填写“吹膜机组运行记录”"); }
                             return;
                         }
                         else
                         {
                             MessageBox.Show("请填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
-                            form16 = new Process.Extruction.C.Feed(mainform);
-                            form16.ShowDialog();
-                            form17 = new Process.Extruction.B.Running(mainform);
-                            form17.ShowDialog();
+                            Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料系统运行记录");
+                            if (a)
+                            {
+                                Process.Extruction.C.Feed form16 = new Process.Extruction.C.Feed(mainform);
+                                form16.ShowDialog();
+                            }
+                            else
+                            { MessageBox.Show("您无权填写“吹膜供料系统运行记录”"); }
+
+                            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组运行记录");
+                            if (b)
+                            {
+                                Process.Extruction.B.Running form17 = new Process.Extruction.B.Running(mainform);
+                                form17.ShowDialog();
+                            }
+                            else
+                            { MessageBox.Show("您无权填写“吹膜机组运行记录”"); }
                             return;
                         }
                     }
                     else //未到时间
                     {
-                        return;
+                        return;                          
                     }
                 }
             }
         }
 
-
-        //定义各窗体变量
-        BatchProductRecord.BatchProductRecord form1 = null;
-        BatchProductRecord.ProcessProductInstru form2 = null;
-        Record_extrusClean form3 = null;
-        Record_extrusSiteClean form4 = null;
-        mySystem.Process.Extruction.A.HandOver form5 = null;
-        Record_extrusSupply form6 = null;
-        mySystem.Process.Extruction.B.Waste form7 = null;
-        Record_material_reqanddisg form8 = null;
-        ProdctDaily_extrus form9 = null;
-        ExtructionpRoductionAndRestRecordStep6 form10 = null;
-        MaterialBalenceofExtrusionProcess form11 = null;
-        ProductInnerPackagingRecord form12 = null;
-        mySystem.Extruction.Chart.outerpack form13 = null;
-        ExtructionCheckBeforePowerStep2 form14 = null;
-        ExtructionPreheatParameterRecordStep3 form15 = null;
-        new mySystem.Process.Extruction.C.Feed form16 = null;
-        mySystem.Process.Extruction.B.Running form17 = null;
-        Record_train form18 = null;
-        ReplaceHeadForm form19 = null;
-        ExtructionReplaceCore form20 = null;
-        mySystem.Process.Extruction.D.NetExchange form24 = null;
         
-        
-        ExtructionTransportRecordStep4 form22 = null;
-
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            form1 = new BatchProductRecord.BatchProductRecord(mainform);
+            BatchProductRecord.BatchProductRecord form1 = new BatchProductRecord.BatchProductRecord(mainform);
             form1.ShowDialog();
         }
 
@@ -558,7 +563,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序生产指令");
             if (b)
             {
-                form2 = new BatchProductRecord.ProcessProductInstru(mainform);
+                BatchProductRecord.ProcessProductInstru form2 = new BatchProductRecord.ProcessProductInstru(mainform);
                 form2.ShowDialog();
             }
             else
@@ -574,7 +579,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组清洁记录");
             if (b)
             {
-                form3 = new Record_extrusClean(mainform);
+                Record_extrusClean form3 = new Record_extrusClean(mainform);
                 form3.ShowDialog();
             }
             else
@@ -589,7 +594,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序清场记录");
             if (b)
             {
-                form4 = new Record_extrusSiteClean(mainform);
+                Record_extrusSiteClean form4 = new Record_extrusSiteClean(mainform);
                 form4.ShowDialog();
             }
             else
@@ -605,7 +610,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜岗位交接班记录");
             if (b)
             {
-                form5 = new mySystem.Process.Extruction.A.HandOver(mainform);
+                mySystem.Process.Extruction.A.HandOver form5 = new mySystem.Process.Extruction.A.HandOver(mainform);
                 form5.ShowDialog();
             }
             else
@@ -621,7 +626,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料记录");
             if (b)
             {
-                form6 = new Record_extrusSupply(mainform);
+                Record_extrusSupply form6 = new Record_extrusSupply(mainform);
                 form6.ShowDialog(this);
             }
             else
@@ -637,7 +642,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序废品记录");
             if (b)
             {
-                form7 = new mySystem.Process.Extruction.B.Waste(mainform);
+                mySystem.Process.Extruction.B.Waste form7 = new mySystem.Process.Extruction.B.Waste(mainform);
                 form7.ShowDialog();
             }
             else
@@ -653,7 +658,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序领料退料记录");
             if (b)
             {
-                form8 = new Record_material_reqanddisg(mainform);
+                Record_material_reqanddisg form8 = new Record_material_reqanddisg(mainform);
                 form8.ShowDialog();
             }
             else
@@ -667,7 +672,7 @@ namespace mySystem
         //日报表，谁都可以看
         private void B5Btn_Click(object sender, EventArgs e)
         {
-            form9 = new ProdctDaily_extrus(mainform);
+            ProdctDaily_extrus form9 = new ProdctDaily_extrus(mainform);
             form9.ShowDialog();
                               
         }
@@ -677,7 +682,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜生产和检验记录表");
             if (b)
             {
-                form10 = new ExtructionpRoductionAndRestRecordStep6(mainform);
+                ExtructionpRoductionAndRestRecordStep6 form10 = new ExtructionpRoductionAndRestRecordStep6(mainform);
                 form10.ShowDialog();
             }
             else
@@ -693,7 +698,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序物料平衡记录");
             if (b)
             {
-                form11 = new MaterialBalenceofExtrusionProcess(mainform);
+                MaterialBalenceofExtrusionProcess form11 = new MaterialBalenceofExtrusionProcess(mainform);
                 form11.ShowDialog();
             }
             else
@@ -709,7 +714,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜产品内包装记录表");
             if (b)
             {
-                form12 = new ProductInnerPackagingRecord(mainform);
+                ProductInnerPackagingRecord form12 = new ProductInnerPackagingRecord(mainform);
                 form12.ShowDialog();
             }
             else
@@ -725,7 +730,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜产品外包装记录表");
             if (b)
             {
-                form13 = new Extruction.Chart.outerpack(mainform);
+                Extruction.Chart.outerpack form13 = new Extruction.Chart.outerpack(mainform);
                 form13.ShowDialog();
             }
             else
@@ -741,7 +746,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜开机前确认表");
             if (b)
             {
-                form14 = new ExtructionCheckBeforePowerStep2(mainform);
+                ExtructionCheckBeforePowerStep2 form14 = new ExtructionCheckBeforePowerStep2(mainform);
                 form14.ShowDialog();
             }
             else
@@ -756,7 +761,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜预热参数记录表");
             if (b)
             {
-                form15 = new ExtructionPreheatParameterRecordStep3(mainform);
+                ExtructionPreheatParameterRecordStep3 form15 = new ExtructionPreheatParameterRecordStep3(mainform);
                 form15.ShowDialog(this);
             }
             else
@@ -772,7 +777,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料系统运行记录");
             if (b)
             {
-                form16 = new mySystem.Process.Extruction.C.Feed(mainform);
+                mySystem.Process.Extruction.C.Feed form16 = new mySystem.Process.Extruction.C.Feed(mainform);
                 form16.ShowDialog();
             }
             else
@@ -788,7 +793,7 @@ namespace mySystem
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组运行记录");
             if (b)
             {
-                form17 = new mySystem.Process.Extruction.B.Running(mainform);
+                mySystem.Process.Extruction.B.Running form17 = new mySystem.Process.Extruction.B.Running(mainform);
                 form17.ShowDialog();
             }
             else
@@ -801,25 +806,25 @@ namespace mySystem
 
         private void D1Btn_Click(object sender, EventArgs e)
         {
-            form18 = new Record_train(mainform);
+            Record_train form18 = new Record_train(mainform);
             form18.ShowDialog();
         }
 
         private void D2Btn_Click(object sender, EventArgs e)
         {
-            form19 = new ReplaceHeadForm(mainform);
+            ReplaceHeadForm form19 = new ReplaceHeadForm(mainform);
             form19.ShowDialog();
         }
 
         private void D3Btn_Click(object sender, EventArgs e)
         {
-            form20 = new ExtructionReplaceCore(mainform);
+            ExtructionReplaceCore form20 = new ExtructionReplaceCore(mainform);
             form20.ShowDialog();
         }
 
         private void B1Btn_Click(object sender, EventArgs e)
         {
-            form22 = new ExtructionTransportRecordStep4(mainform);
+            ExtructionTransportRecordStep4 form22 = new ExtructionTransportRecordStep4(mainform);
             form22.ShowDialog();
         }
 
@@ -831,7 +836,7 @@ namespace mySystem
 
         private void D4Btn_Click(object sender, EventArgs e)
         {
-            form24 = new Process.Extruction.D.NetExchange(mainform);
+            Process.Extruction.D.NetExchange form24 = new Process.Extruction.D.NetExchange(mainform);
             form24.ShowDialog();
         }
 

@@ -271,6 +271,7 @@
             this.dgvUser.RowTemplate.Height = 23;
             this.dgvUser.Size = new System.Drawing.Size(999, 281);
             this.dgvUser.TabIndex = 0;
+            this.dgvUser.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvUser_DataBindingComplete);
             // 
             // SetPeopleForm
             // 

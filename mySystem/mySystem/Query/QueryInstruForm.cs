@@ -56,15 +56,7 @@ namespace mySystem
             this.dgv.DataBindings.Clear();
             this.dgv.DataSource = bs.DataSource; //绑定
             //显示序号
-            setDataGridViewRowNums();
-
-            //设置列宽
-            for (int i = 0; i < this.dgv.Columns.Count; i++)
-            {
-                String colName = this.dgv.Columns[i].HeaderText;
-                int strlen = colName.Length;
-                this.dgv.Columns[i].MinimumWidth = strlen * 25;
-            }        
+            setDataGridViewRowNums();      
             
         }
 
@@ -114,8 +106,6 @@ namespace mySystem
 
  
         }
-
-
 
         private void dgv_DoubleClick(object sender, EventArgs e)
         {
@@ -169,6 +159,13 @@ namespace mySystem
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dgv.Columns["ID"].Visible = false;
+            //设置列宽
+            for (int i = 0; i < this.dgv.Columns.Count; i++)
+            {
+                String colName = this.dgv.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                this.dgv.Columns[i].MinimumWidth = strlen * 25;
+            }  
         }
 
 

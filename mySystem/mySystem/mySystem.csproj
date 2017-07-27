@@ -881,15 +881,6 @@
     <Compile Include="Process\Order\AddOrderForm.designer.cs">
       <DependentUpon>AddOrderForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="myDataSet.cs">
-      <DependentUpon>myDataSet.xsd</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="myDataSet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>myDataSet.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Process\Plan\PlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1366,17 +1357,6 @@
     <None Include="ClassDiagram2.cd" />
     <None Include="ClassDiagram3.cd" />
     <None Include="ClassDiagram4.cd" />
-    <None Include="myDataSet.xsc">
-      <DependentUpon>myDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="myDataSet.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>myDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="myDataSet.xss">
-      <DependentUpon>myDataSet.xsd</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

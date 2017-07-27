@@ -30,8 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.myDataSet = new mySystem.myDataSet();
-            this.库存信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.MainProduceBtn = new System.Windows.Forms.Button();
             this.MainSettingBtn = new System.Windows.Forms.Button();
             this.MainQueryBtn = new System.Windows.Forms.Button();
@@ -40,20 +38,9 @@
             this.ExitBtn = new System.Windows.Forms.Button();
             this.userLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).BeginInit();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // myDataSet
-            // 
-            this.myDataSet.DataSetName = "myDataSet";
-            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // 库存信息BindingSource
-            // 
-            this.库存信息BindingSource.DataMember = "库存信息";
-            this.库存信息BindingSource.DataSource = this.myDataSet;
             // 
             // MainProduceBtn
             // 
@@ -157,6 +144,10 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "操作员：";
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -171,9 +162,6 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "欢迎使用颇尔奥星管理系统";
-            this.Shown += new System.EventHandler(this.MainForm_Shown);
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
@@ -182,8 +170,6 @@
 
         #endregion
 
-        private myDataSet myDataSet;
-        private System.Windows.Forms.BindingSource 库存信息BindingSource;
         private System.Windows.Forms.Button MainProduceBtn;
         private System.Windows.Forms.Button MainSettingBtn;
         private System.Windows.Forms.Button MainQueryBtn;
@@ -192,6 +178,7 @@
         private System.Windows.Forms.Label userLabel;
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Panel MainPanel;
+        private System.Windows.Forms.Timer timer1;
 
 
     }

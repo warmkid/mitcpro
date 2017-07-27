@@ -44,7 +44,6 @@
             this.供应商服务水平DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.是否特定DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.采购信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.myDataSet = new mySystem.myDataSet();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
@@ -52,7 +51,6 @@
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.采购信息BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -161,12 +159,6 @@
             // 采购信息BindingSource
             // 
             this.采购信息BindingSource.DataMember = "采购信息";
-            this.采购信息BindingSource.DataSource = this.myDataSet;
-            // 
-            // myDataSet
-            // 
-            this.myDataSet.DataSetName = "myDataSet";
-            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // toolStrip1
             // 
@@ -226,7 +218,6 @@
             this.Text = "BuyForm";
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.采购信息BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -238,7 +229,6 @@
 
         private System.Windows.Forms.DataGridView StockCheckdataGrid;
         private System.Windows.Forms.BindingSource 采购信息BindingSource;
-        private myDataSet myDataSet;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;

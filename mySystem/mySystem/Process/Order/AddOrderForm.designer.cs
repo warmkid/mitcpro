@@ -57,7 +57,6 @@
             this.数量DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.单位DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.订单组件信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.myDataSet = new mySystem.myDataSet();
             this.商品信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             商品编号Label = new System.Windows.Forms.Label();
             商品名称Label = new System.Windows.Forms.Label();
@@ -70,7 +69,6 @@
             label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.订单组件信息BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.商品信息BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -313,12 +311,6 @@
             // 订单组件信息BindingSource
             // 
             this.订单组件信息BindingSource.DataMember = "订单组件信息";
-            this.订单组件信息BindingSource.DataSource = this.myDataSet;
-            // 
-            // myDataSet
-            // 
-            this.myDataSet.DataSetName = "myDataSet";
-            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // 商品信息BindingSource
             // 
@@ -355,7 +347,6 @@
             this.Text = "添加订单";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.订单组件信息BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.商品信息BindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -395,7 +386,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 数量DataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn 单位DataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource 订单组件信息BindingSource;
-        private myDataSet myDataSet;
         private System.Windows.Forms.BindingSource 商品信息BindingSource;
 
 
