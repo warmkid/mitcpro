@@ -1,6 +1,6 @@
 ﻿namespace mySystem.Process.Stock
 {
-    partial class 检查记录
+    partial class 检验记录
     {
         /// <summary>
         /// Required designer variable.
@@ -87,11 +87,11 @@
             // 
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
-            this.Title.Location = new System.Drawing.Point(196, 23);
+            this.Title.Location = new System.Drawing.Point(238, 23);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(89, 19);
             this.Title.TabIndex = 36;
-            this.Title.Text = "检查记录";
+            this.Title.Text = "检验记录";
             // 
             // label2
             // 
@@ -273,7 +273,7 @@
             this.cmb检验结论.Size = new System.Drawing.Size(121, 20);
             this.cmb检验结论.TabIndex = 57;
             // 
-            // 检查记录
+            // 检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -304,8 +304,8 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tb检查项目);
-            this.Name = "检查记录";
-            this.Text = "检查记录";
+            this.Name = "检验记录";
+            this.Text = "检验记录";
             this.ResumeLayout(false);
             this.PerformLayout();
 

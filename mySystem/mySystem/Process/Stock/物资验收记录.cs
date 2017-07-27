@@ -253,7 +253,7 @@ namespace mySystem.Process.Stock
         {
             dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
             dr["数量"] = 0;
-            dr["是否需要检查"] = "否";
+            dr["是否需要检验"] = "否";
             return dr;
         }
 
@@ -397,13 +397,13 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             setControlFalse();
 
-            // TODO 判断，然后决定是新建 请验单 还是  检查记录
+            // TODO 判断，然后决定是新建 请验单 还是  检验记录
             
             bool isAllOK = true;
             List<Int32> RowToCheck = new List<int>();
             for (int i = 0; i < dataGridView1.Rows.Count; ++i)
             {
-                if (dataGridView1.Rows[i].Cells["是否需要检查"].Value.ToString() == "是")
+                if (dataGridView1.Rows[i].Cells["是否需要检验"].Value.ToString() == "是")
                 {
                     isAllOK = false;
                     RowToCheck.Add(i);
@@ -414,13 +414,13 @@ namespace mySystem.Process.Stock
             {
                 create请验单();
             }
-            // 开检查记录
+            // 开检验记录
             else
             {
                 foreach (int r in RowToCheck)
                 {
-                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 检查记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"]+" and 产品名称='"+dtInner.Rows[r]["产品名称"]+"'", conn);
-                    DataTable dt = new DataTable("检查记录");
+                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"]+" and 产品名称='"+dtInner.Rows[r]["产品名称"]+"'", conn);
+                    DataTable dt = new DataTable("检验记录");
                     OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
                     BindingSource bs = new BindingSource();
                     da.Fill(dt);
@@ -436,7 +436,7 @@ namespace mySystem.Process.Stock
                     dt.Rows.Add(dr);
                     da.Update(dt);
                 }
-                MessageBox.Show("已自动生产" + RowToCheck.Count + "张检查记录");
+                MessageBox.Show("已自动生产" + RowToCheck.Count + "张检验记录");
             }
 
           
