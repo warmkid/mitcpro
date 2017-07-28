@@ -167,9 +167,9 @@ namespace mySystem.Query
                         break;
                     case "吹膜工序物料平衡记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录人", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录人", "生产日期"); }
+                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期"); }
                         break;
                     case "产品内包装记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -197,15 +197,15 @@ namespace mySystem.Query
                         break;
                     case "吹膜供料系统运行记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "吹膜供料系统运行记录", "审核人", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "吹膜供料系统运行记录", "审核员", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜供料系统运行记录", "审核人", "生产日期"); }
+                        { EachBind(this.dgv, "吹膜供料系统运行记录", "审核员", "生产日期"); }
                         break;
                     case "吹膜机组运行记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "吹膜机组运行记录", "记录人", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "吹膜机组运行记录", "记录员", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜机组运行记录", "记录人", "生产日期"); }
+                        { EachBind(this.dgv, "吹膜机组运行记录", "记录员", "生产日期"); }
                         break;
                     case "培训记录表":
                         EachBind(this.dgv, "吹膜机安全培训记录", "培训日期");
@@ -478,11 +478,28 @@ namespace mySystem.Query
             try
             { dgv.Columns["生产指令ID"].Visible = false; }
             catch
-            { return; }
-
+            {  }
+            try
+            { setDataGridViewBackColor("审核人"); }
+            catch
+            { }
+            try
+            { setDataGridViewBackColor("审核员"); }
+            catch
+            { }
         }
 
-        
+        //设置datagridview背景颜色，待审核标红
+        private void setDataGridViewBackColor(String checker)
+        {
+            for (int i = 0; i < dgv.Rows.Count; i++)
+            {
+                if (dgv.Rows[i].Cells[checker].Value.ToString() == "__待审核")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                }
+            }
+        }
 
         
 

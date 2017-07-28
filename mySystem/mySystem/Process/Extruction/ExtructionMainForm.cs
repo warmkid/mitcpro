@@ -13,6 +13,7 @@ using WindowsFormsApplication1;
 using System.Threading;
 using BatchProductRecord;
 using mySystem.Process.Extruction;
+using CustomUIControls;
 
 
 namespace mySystem
@@ -21,6 +22,7 @@ namespace mySystem
     {
         string instruction = null;
         int instruID = 0;
+        TaskbarNotifier taskbarNotifier1; //右下角提示框
         //System.Timers.Timer timer = new System.Timers.Timer();//实例化Timer类
 
         public ExtructionMainForm(MainForm mainform): base(mainform)
@@ -28,8 +30,10 @@ namespace mySystem
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
             InitBtn();
+            InitTaskBar();
         }
 
+        #region 按钮状态
         //初始化按钮状态
         public void InitBtn()
         {
@@ -231,6 +235,10 @@ namespace mySystem
             D4Btn.Enabled = b;
         }
 
+        #endregion
+
+        #region 下拉框生产指令 
+
         //下拉框获取生产指令
         public void comboInit()
         {
@@ -287,6 +295,9 @@ namespace mySystem
 
         }
 
+        #endregion
+
+        #region 定时器
         private void timer1_Tick(object sender, EventArgs e)
         {
             CheckHour();
@@ -296,7 +307,7 @@ namespace mySystem
         private void CheckHour()
         {
             DateTime now = DateTime.Now;
-            //DateTime now = new DateTime(2017, 7, 11, 19, 57, 00); //测试用，可以跳出界面的时间
+            //DateTime now = new DateTime(2017, 7, 28, 17, 57, 00); //测试用
             DateTime preheattime;
             //获取开机时间
             String table = "吹膜机组预热参数记录表";
@@ -343,14 +354,14 @@ namespace mySystem
                             //若大表当日无记录则新建一条
                             OleDbCommand commInsert = new OleDbCommand();
                             commInsert.Connection = Parameter.connOle;
-                            //String mySql = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核人) VALUES ('";
+                            //String mySql = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES ('";
                             //mySql += Parameter.proInstruction + "', ";
                             //mySql += Parameter.proInstruID + ", #";
                             //mySql += now.Date + "#, '";
                             //mySql += Parameter.userflight + "', ";
                             //mySql += "'');";
                             //commInsert.CommandText = mySql;
-                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核人) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";      
+                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";      
                             commInsert.ExecuteNonQuery();
                             //获取ID
                             commInsert.CommandText = "SELECT @@IDENTITY";
@@ -375,17 +386,20 @@ namespace mySystem
                         { return; }
                         else if (!reader11.HasRows && reader2.HasRows)
                         {
-                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); //提示框显示10s
+                            //MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
                             return;
                         }
                         else if (reader11.HasRows && !reader2.HasRows)
                         {
-                            MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            //MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
                             return;
                         }
                         else
                         {
-                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            //MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
                             return;
                         }
                     }
@@ -412,7 +426,7 @@ namespace mySystem
                             //若大表当日无记录则新建一条
                             OleDbCommand commInsert = new OleDbCommand();
                             commInsert.Connection = Parameter.connOle;
-                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核人) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";
+                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";
                             commInsert.ExecuteNonQuery();
                             //获取ID
                             commInsert.CommandText = "SELECT @@IDENTITY";
@@ -436,17 +450,20 @@ namespace mySystem
                         { return; }
                         else if (!reader11.HasRows && reader2.HasRows)
                         {
-                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); 
+                            //MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
                             return;
                         }
                         else if (reader11.HasRows && !reader2.HasRows)
                         {
-                            MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            //MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
                             return;
                         }
                         else
                         {
-                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            //MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
                             return;
                         }
                     }
@@ -472,7 +489,7 @@ namespace mySystem
                             //若大表当日无记录则新建一条
                             OleDbCommand commInsert = new OleDbCommand();
                             commInsert.Connection = Parameter.connOle;
-                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核人) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";
+                            commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";
                             commInsert.ExecuteNonQuery();
                             //获取ID
                             commInsert.CommandText = "SELECT @@IDENTITY";
@@ -496,7 +513,8 @@ namespace mySystem
                         { return; }
                         else if (!reader11.HasRows && reader2.HasRows)
                         {
-                            MessageBox.Show("请填写“吹膜供料系统运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); 
+                            //MessageBox.Show("请填写“吹膜供料系统运行记录”！", "警告");
                             Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料系统运行记录");
                             if (a)
                             {
@@ -509,7 +527,8 @@ namespace mySystem
                         }
                         else if (reader11.HasRows && !reader2.HasRows)
                         {
-                            MessageBox.Show("请填写“吹膜机组运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请填写 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            //MessageBox.Show("请填写“吹膜机组运行记录”！", "警告");
                             Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组运行记录");
                             if (a)
                             {
@@ -522,7 +541,8 @@ namespace mySystem
                         }
                         else
                         {
-                            MessageBox.Show("请填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            taskbarNotifier1.Show("提示", "请填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            //MessageBox.Show("请填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
                             Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料系统运行记录");
                             if (a)
                             {
@@ -551,7 +571,9 @@ namespace mySystem
             }
         }
 
-        
+        #endregion
+
+        #region 按钮new窗口
         private void A1Btn_Click(object sender, EventArgs e)
         {
             BatchProductRecord.BatchProductRecord form1 = new BatchProductRecord.BatchProductRecord(mainform);
@@ -840,6 +862,8 @@ namespace mySystem
             form24.ShowDialog();
         }
 
+        #endregion
+
         //判断是否能查看
         private Boolean checkUser(String user, int role, String tblName)
         {
@@ -877,6 +901,21 @@ namespace mySystem
             return b = false;
         }
 
+        //右下角提示框状态初始化
+        private void InitTaskBar()
+        {
+            taskbarNotifier1 = new TaskbarNotifier();
+            taskbarNotifier1.SetBackgroundBitmap(new Bitmap(Image.FromFile(@"../../pic/skin_logo.bmp")), Color.FromArgb(255, 0, 255));
+            taskbarNotifier1.SetCloseBitmap(new Bitmap(Image.FromFile(@"../../pic/close_big.bmp")), Color.FromArgb(255, 0, 255), new Point(190, 12));
+            taskbarNotifier1.TitleRectangle = new Rectangle(65, 25, 135, 60);
+            taskbarNotifier1.ContentRectangle = new Rectangle(15, 65, 205, 150);
+            taskbarNotifier1.CloseClickable = true;
+            taskbarNotifier1.TitleClickable = false;
+            taskbarNotifier1.ContentClickable = false;
+            taskbarNotifier1.EnableSelectionRectangle = false;
+            taskbarNotifier1.KeepVisibleOnMousOver = true;
+            taskbarNotifier1.ReShowOnMouseOver = true;
+        }
         
     }
 }
