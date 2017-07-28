@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CleanCut_Productrecord));
             this.cb夜班 = new System.Windows.Forms.CheckBox();
             this.cb白班 = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -69,7 +70,13 @@
             this.btn分切 = new System.Windows.Forms.Button();
             this.tb备注 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // cb夜班
@@ -146,7 +153,7 @@
             // 
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.Title.Location = new System.Drawing.Point(441, 27);
+            this.Title.Location = new System.Drawing.Point(437, 23);
             this.Title.Name = "Title";
             this.Title.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Title.Size = new System.Drawing.Size(177, 20);
@@ -472,11 +479,65 @@
             this.label13.TabIndex = 147;
             this.label13.Text = "备注：";
             // 
+            // cb打印机
+            // 
+            this.cb打印机.Font = new System.Drawing.Font("SimSun", 12F);
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(312, 636);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(279, 24);
+            this.cb打印机.TabIndex = 178;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label40.Location = new System.Drawing.Point(216, 641);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(104, 16);
+            this.label40.TabIndex = 179;
+            this.label40.Text = "选择打印机：";
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label27.Location = new System.Drawing.Point(886, 27);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(93, 16);
+            this.label27.TabIndex = 177;
+            this.label27.Text = "登录角色：";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(991, 27);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 176;
+            this.label角色.Text = "角色";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(7, 2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(174, 53);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 175;
+            this.pictureBox1.TabStop = false;
+            // 
             // CleanCut_Productrecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1065, 676);
+            this.ClientSize = new System.Drawing.Size(1063, 676);
+            this.Controls.Add(this.cb打印机);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.label27);
+            this.Controls.Add(this.label角色);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.btn分切);
@@ -521,6 +582,7 @@
             this.Name = "CleanCut_Productrecord";
             this.Text = "清洁分切生产记录\t";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -569,5 +631,10 @@
         private System.Windows.Forms.Button btn分切;
         private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cb打印机;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

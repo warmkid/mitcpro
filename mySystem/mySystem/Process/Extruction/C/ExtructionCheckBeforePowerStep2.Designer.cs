@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtructionCheckBeforePowerStep2));
             this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.label4 = new System.Windows.Forms.Label();
             this.dtp操作日期 = new System.Windows.Forms.DateTimePicker();
@@ -46,7 +47,13 @@
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.tb操作员备注 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // dtp审核日期
@@ -225,11 +232,65 @@
             this.label5.TabIndex = 108;
             this.label5.Text = "操作员备注：";
             // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(1063, 23);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 146;
+            this.label角色.Text = "角色";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label40.Location = new System.Drawing.Point(220, 536);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(104, 16);
+            this.label40.TabIndex = 148;
+            this.label40.Text = "选择打印机：";
+            // 
+            // cb打印机
+            // 
+            this.cb打印机.Font = new System.Drawing.Font("SimSun", 12F);
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(316, 531);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(279, 24);
+            this.cb打印机.TabIndex = 147;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(958, 23);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(93, 16);
+            this.label6.TabIndex = 149;
+            this.label6.Text = "登录角色：";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(174, 53);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 150;
+            this.pictureBox1.TabStop = false;
+            // 
             // ExtructionCheckBeforePowerStep2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1168, 568);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.cb打印机);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.tb操作员备注);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btn查看日志);
@@ -252,6 +313,7 @@
             this.Name = "ExtructionCheckBeforePowerStep2";
             this.Text = "吹膜机组开机前确认表";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -277,5 +339,10 @@
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.TextBox tb操作员备注;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox cb打印机;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
