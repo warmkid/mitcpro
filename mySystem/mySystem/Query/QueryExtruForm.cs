@@ -70,12 +70,6 @@ namespace mySystem.Query
             }
         }
 
-        //TODO:
-        //不选生产指令怎么办？？？
-
-
-
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Instruction = comboBox1.SelectedItem.ToString();
@@ -117,70 +111,101 @@ namespace mySystem.Query
             {
                 switch (tableName)
                 {
-                    #region case
                     case "批生产记录（吹膜）":
-                        EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间"); }
                         break;
                     case "吹膜机组清洁记录":
-                        EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期"); }
                         break;
                     case "吹膜岗位交接班记录":
-                        EachBind(this.dgv, "吹膜岗位交接班记录", "生产日期", "生产指令ID", 1);
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜岗位交接班记录", "生产日期", "生产指令ID", 1); }
+                        else
+                        { EachBind(this.dgv, "吹膜岗位交接班记录", "生产日期"); }
                         break;
                     case "吹膜工序清场记录":
-                        EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期"); }                       
                         break;  
                     case "吹膜供料记录":
-                        EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期"); }
                         break;
                     case "吹膜工序废品记录":
-                        EachBind(this.dgv, "吹膜工序废品记录", "生产指令ID", 1);
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜工序废品记录", "生产指令ID", 1); }
+                        else
+                        { EachBind(this.dgv, "吹膜工序废品记录"); }
                         break;                   
                     case "吹膜工序领料退料记录":
-                        EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期"); }
                         break;                   
                     case "吹膜生产日报表":
-                        EachBind(this.dgv, "吹膜生产日报表", "生产指令ID", 1);                   
-
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜生产日报表", "生产指令ID", 1); }
+                        else
+                        { EachBind(this.dgv, "吹膜生产日报表"); }
                         break;
                     case "吹膜工序生产和检验记录":
-                        EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期"); }
                         break;
                     case "吹膜工序物料平衡记录":
-                        EachBind(this.dgv, "吹膜工序物料平衡记录", "记录人", "生产日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录人", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录人", "生产日期"); }
                         break;
                     case "产品内包装记录":
-                        EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期"); }
                         break;
                     case "产品外包装记录":
-                        EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期"); }
                         break;
                     case "吹膜机组开机前确认表":
-                        EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期"); }
                         break;
                     case "吹膜机组预热参数记录表":
-                        EachBind(this.dgv, "吹膜机组预热参数记录表", "记录人", "日期", "生产指令id");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜机组预热参数记录表", "记录人", "日期", "生产指令id"); }
+                        else
+                        { EachBind(this.dgv, "吹膜机组预热参数记录表", "记录人", "日期"); }
                         break;
                     case "吹膜供料系统运行记录":
-                        EachBind(this.dgv, "吹膜供料系统运行记录", "审核人", "生产日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜供料系统运行记录", "审核人", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜供料系统运行记录", "审核人", "生产日期"); }
                         break;
                     case "吹膜机组运行记录":
-                        EachBind(this.dgv, "吹膜机组运行记录", "记录人", "生产日期", "生产指令ID");
-                        
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "吹膜机组运行记录", "记录人", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "吹膜机组运行记录", "记录人", "生产日期"); }
                         break;
                     case "培训记录表":
                         EachBind(this.dgv, "吹膜机安全培训记录", "培训日期");
@@ -198,7 +223,7 @@ namespace mySystem.Query
                         EachBind(this.dgv, "吹膜机更换过滤网记录表", "更换人", "更换日期");
                         
                         break;
-                    #endregion
+
                     default:
                         break;
                 }
@@ -226,26 +251,7 @@ namespace mySystem.Query
             dgv.DataBindings.Clear();
             dgv.DataSource = bs.DataSource; //绑定
             //显示序号
-            setDataGridViewRowNums();
-
-            //TODO:
-            //写在BindingComplete事件里
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                string colname = dgv.Columns[i].Name;
-                if (colname == "ID" || colname == "生产指令ID")
-                { dgv.Columns[colname].Visible = false; }
-                else
-                { dgv.Columns[colname].Visible = true; }
-            }
-
-            //设置列宽
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                String colName = dgv.Columns[i].HeaderText;
-                int strlen = colName.Length;
-                dgv.Columns[i].MinimumWidth = strlen * 25;
-            }
+            setDataGridViewRowNums();                       
         }
 
         // 人、日期
@@ -262,24 +268,6 @@ namespace mySystem.Query
             //显示序号
             setDataGridViewRowNums();
 
-            //TODO:
-            //写在BindingComplete事件里
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                string colname = dgv.Columns[i].Name;
-                if (colname == "ID" || colname == "生产指令ID")
-                { dgv.Columns[colname].Visible = false; }
-                else
-                { dgv.Columns[colname].Visible = true; }
-            }
-
-            //设置列宽
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                String colName = dgv.Columns[i].HeaderText;
-                int strlen = colName.Length;
-                dgv.Columns[i].MinimumWidth = strlen * 25;
-            }
         }
 
         // 日期、生产指令
@@ -296,24 +284,6 @@ namespace mySystem.Query
             //显示序号
             setDataGridViewRowNums();
 
-            //TODO:
-            //写在BindingComplete事件里
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                string colname = dgv.Columns[i].Name;
-                if (colname == "ID" || colname == "生产指令ID")
-                { dgv.Columns[colname].Visible = false; }
-                else
-                { dgv.Columns[colname].Visible = true; }
-            }
-
-            //设置列宽
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                String colName = dgv.Columns[i].HeaderText;
-                int strlen = colName.Length;
-                dgv.Columns[i].MinimumWidth = strlen * 25;
-            }
         }
 
         // 日期
@@ -330,24 +300,6 @@ namespace mySystem.Query
             //显示序号
             setDataGridViewRowNums();
 
-            //TODO:
-            //写在BindingComplete事件里
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                string colname = dgv.Columns[i].Name;
-                if (colname == "ID" || colname == "生产指令ID")
-                { dgv.Columns[colname].Visible = false; }
-                else
-                { dgv.Columns[colname].Visible = true; }
-            }
-
-            //设置列宽
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                String colName = dgv.Columns[i].HeaderText;
-                int strlen = colName.Length;
-                dgv.Columns[i].MinimumWidth = strlen * 25;
-            }
         }
 
         // 生产指令
@@ -363,14 +315,22 @@ namespace mySystem.Query
             dgv.DataSource = bs.DataSource; //绑定
             //显示序号
             setDataGridViewRowNums();
+          
+        }
 
-            //设置列宽
-            for (int i = 0; i < dgv.Columns.Count; i++)
-            {
-                String colName = dgv.Columns[i].HeaderText;
-                int strlen = colName.Length;
-                dgv.Columns[i].MinimumWidth = strlen * 25;
-            }
+        //只有表名
+        private void EachBind(DataGridView dgv, String tblName)
+        {
+            dt = new DataTable(tblName); //""中的是表名
+            da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
+            da.Fill(dt);
+            bs.DataSource = dt;
+            dgv.DataBindings.Clear();
+            dgv.DataSource = bs.DataSource; //绑定
+            //显示序号
+            setDataGridViewRowNums();
         }
 
         //填序号列的值
@@ -506,11 +466,20 @@ namespace mySystem.Query
         //TODO：待审核标红
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            //设置列宽
+            for (int i = 0; i < dgv.Columns.Count; i++)
+            {
+                String colName = dgv.Columns[i].HeaderText;
+                int strlen = colName.Length;
+                dgv.Columns[i].MinimumWidth = strlen * 25;
+            }
+
             dgv.Columns["ID"].Visible = false;
             try
             { dgv.Columns["生产指令ID"].Visible = false; }
             catch
             { return; }
+
         }
 
         

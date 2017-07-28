@@ -54,14 +54,12 @@
             this.缺货数量DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.物品状态DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.库存信息BindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.myDataSet = new mySystem.myDataSet();
             this.库存信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.StockChecktoolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -275,17 +273,10 @@
             // 库存信息BindingSource1
             // 
             this.库存信息BindingSource1.DataMember = "库存信息";
-            this.库存信息BindingSource1.DataSource = this.myDataSet;
-            // 
-            // myDataSet
-            // 
-            this.myDataSet.DataSetName = "myDataSet";
-            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // 库存信息BindingSource
             // 
             this.库存信息BindingSource.DataMember = "库存信息";
-            this.库存信息BindingSource.DataSource = this.myDataSet;
             // 
             // comboBox2
             // 
@@ -329,7 +320,6 @@
             this.StockChecktoolStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.库存信息BindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -354,7 +344,6 @@
         private System.Windows.Forms.ToolStripButton RefreshStockBtn;
         private System.Windows.Forms.DataGridView StockCheckdataGrid;
         private System.Windows.Forms.BindingSource 库存信息BindingSource;
-        private myDataSet myDataSet;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DataGridViewTextBoxColumn 物品类别DataGridViewTextBoxColumn;

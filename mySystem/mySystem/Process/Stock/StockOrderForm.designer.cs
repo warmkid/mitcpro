@@ -52,7 +52,6 @@
             this.单位DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.质量DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.出库信息BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.myDataSet = new mySystem.myDataSet();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -61,7 +60,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.商品信息BindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StockOrderDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.出库信息BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // PrintStockOrderBtn
@@ -252,12 +250,6 @@
             // 出库信息BindingSource
             // 
             this.出库信息BindingSource.DataMember = "出库信息";
-            this.出库信息BindingSource.DataSource = this.myDataSet;
-            // 
-            // myDataSet
-            // 
-            this.myDataSet.DataSetName = "myDataSet";
-            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // textBox1
             // 
@@ -333,7 +325,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.商品信息BindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StockOrderDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.出库信息BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -366,7 +357,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 单位DataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn 质量DataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource 出库信息BindingSource;
-        private myDataSet myDataSet;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button EditStockOrderBtn;

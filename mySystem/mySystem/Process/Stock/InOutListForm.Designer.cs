@@ -41,14 +41,12 @@
             this.物品编码DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.经手人DataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.出入库记录BindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.myDataSet = new mySystem.myDataSet();
             this.SearchStockCheckBtn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.出入库记录BindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).BeginInit();
             this.SuspendLayout();
             // 
             // radioButton1
@@ -150,12 +148,6 @@
             // 出入库记录BindingSource
             // 
             this.出入库记录BindingSource.DataMember = "出入库记录";
-            this.出入库记录BindingSource.DataSource = this.myDataSet;
-            // 
-            // myDataSet
-            // 
-            this.myDataSet.DataSetName = "myDataSet";
-            this.myDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // SearchStockCheckBtn
             // 
@@ -214,7 +206,6 @@
             this.Text = "InOutListForm";
             ((System.ComponentModel.ISupportInitialize)(this.StockCheckdataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.出入库记录BindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.myDataSet)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -234,7 +225,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 物品编码DataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn 经手人DataGridViewTextBoxColumn;
         private System.Windows.Forms.BindingSource 出入库记录BindingSource;
-        private myDataSet myDataSet;
         private System.Windows.Forms.Button SearchStockCheckBtn;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ComboBox comboBox1;

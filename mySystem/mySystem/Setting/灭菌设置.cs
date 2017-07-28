@@ -82,7 +82,6 @@ namespace mySystem.Setting
             this.dgv运输商.Columns["运输商"].MinimumWidth = 200;
             this.dgv运输商.Columns["运输商"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv运输商.Columns["运输商"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgv运输商.Columns["ID"].Visible = false;
             //************************    产品     *******************************************
             dt产品 = new DataTable("设置灭菌产品"); //""中的是表名
             da产品 = new OleDbDataAdapter("select * from 设置灭菌产品", mySystem.Parameter.connOle);
@@ -93,10 +92,8 @@ namespace mySystem.Setting
             this.dgv产品.DataSource = bs产品.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv产品);
-            this.dgv产品.Columns["产品名称"].MinimumWidth = 200;
             this.dgv产品.Columns["产品名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv产品.Columns["产品名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgv产品.Columns["ID"].Visible = false;
 
             //**************************   产品编码    ***********************************
             dt产品编码 = new DataTable("设置灭菌产品代码"); //""中的是表名
@@ -108,10 +105,8 @@ namespace mySystem.Setting
             this.dgv产品编码.DataSource = bs产品编码.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv产品编码);
-            this.dgv产品编码.Columns["产品编码"].MinimumWidth = 200;
             this.dgv产品编码.Columns["产品编码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv产品编码.Columns["产品编码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgv产品编码.Columns["ID"].Visible = false;
 
             //************************    产品规格     *******************************************
             dt产品规格 = new DataTable("设置灭菌产品规格"); //""中的是表名
@@ -123,10 +118,8 @@ namespace mySystem.Setting
             this.dgv产品规格.DataSource = bs产品规格.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv产品规格);
-            this.dgv产品规格.Columns["产品规格"].MinimumWidth = 200;
             this.dgv产品规格.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgv产品规格.Columns["ID"].Visible = false;
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("用户"); //""中的是表名
@@ -138,10 +131,8 @@ namespace mySystem.Setting
             this.dgv人员.DataSource = bs人员.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv人员);
-            this.dgv人员.Columns["用户名"].MinimumWidth = 150;
             this.dgv人员.Columns["用户名"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgv人员.Columns["ID"].Visible = false;
 
             //************************    人员权限     *******************************************
             dt权限 = new DataTable("用户权限"); //""中的是表名
@@ -153,12 +144,10 @@ namespace mySystem.Setting
             this.dgv权限.DataSource = bs权限.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv权限);
-            this.dgv权限.Columns["步骤"].MinimumWidth = 250;
             this.dgv权限.Columns["操作员"].MinimumWidth = 150;
             this.dgv权限.Columns["审核员"].MinimumWidth = 150;
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgv权限.Columns["ID"].Visible = false;
 
         }
 
@@ -175,6 +164,7 @@ namespace mySystem.Setting
             dgv.Font = new Font("宋体", 12);
         }
 
+        //有误
         private void EachBind(String tblName, DataTable dt, OleDbDataAdapter da, OleDbCommandBuilder cb, BindingSource bs, DataGridView dgv)
         {
             dt = new DataTable(tblName); //""中的是表名
@@ -188,7 +178,6 @@ namespace mySystem.Setting
             setDataGridViewRowNums(dgv);
             dgv.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dgv.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dgv.Columns["ID"].Visible = false;
         }
        
         private void setDataGridViewRowNums(DataGridView dgv)

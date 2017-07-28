@@ -31,15 +31,35 @@ namespace mySystem
 
         public MainForm()
         {
-            //Parameter.InitConnUser(); //初始化连接到有用户表的数据库
-            Parameter.ConnUserInit();
+            Parameter.InitConnUser(); //初始化连接到有用户表的数据库
+            //Parameter.ConnUserInit();
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
             
             InitializeComponent();
             RoleInit();
             userLabel.Text = Parameter.userName;
+            
+            //TODO:时间间隔设置
+            int interval = 1000; 
+            timer1.Interval = interval;
+            timer1.Start();
+        }
 
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            //SearchUnchecked();
+        }
+
+        //定时器代码
+        int num = Parameter.i;
+        private void SearchUnchecked()
+        {
+            //test
+            label1.Text = (++num).ToString();
+            Parameter.i = num;
+            //正式部分
+ 
         }
 
         private void RoleInit()
@@ -59,50 +79,7 @@ namespace mySystem
                     break;
             }
         }
-
-
-        #region 接收生产指令
-//        String Instru = null; //未接受的生产指令
-        //未接收的生产指令
-        private void InstruReceive()
-        {
-//            String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-//                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
-//            OleDbConnection connOle = new OleDbConnection(strConn);
-//            connOle.Open();
-//            OleDbCommand comm = new OleDbCommand();
-//            comm.Connection = connOle;
-//            comm.CommandText = "select * from 生产指令信息表 where 接收人= @接收人 and 状态=1";
-//            comm.Parameters.AddWithValue("@接收人", Parameter.userName);
-            
-//            OleDbDataReader reader = comm.ExecuteReader();//执行查询
-//            if (reader.HasRows)
-//            {
-//                while (reader.Read())
-//                {
-//                    Instru += reader["生产指令编号"];
-//                    Instru += "、"; 
-//                }
-                
-//            }
-//            //去掉最后一个"、"
-//            if (Instru != null)
-//            { 
-//                Instru = Instru.Substring(0, Instru.Length - 1);
-//                MessageBox.Show(Parameter.userName + "请接收生产指令：" + Instru, "注意", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-//            }
-
-//            //将状态变为已接收
-//            OleDbCommand commnew = new OleDbCommand();
-//            commnew.Connection = connOle;
-//            commnew.CommandText = "UPDATE 生产指令信息表 SET 状态=2 where 接收人= @接收人 and 状态=1";
-//            commnew.Parameters.AddWithValue("@接收人", Parameter.userName);
-//            commnew.ExecuteNonQuery();
-
-//            comm.Dispose();
-//            commnew.Dispose();
-        }
-        #endregion
+        
 
         //工序按钮
         private void MainProduceBtn_Click(object sender, EventArgs e)
@@ -158,6 +135,7 @@ namespace mySystem
 
         private void ExitBtn_Click(object sender, EventArgs e)
         {
+            timer1.Stop();
             this.Hide();
             foreach (Control control in MainPanel.Controls)
             { control.Dispose(); }
@@ -172,6 +150,7 @@ namespace mySystem
                 MainProduceBtn.BackColor = Color.FromName("Control");
                 MainSettingBtn.BackColor = Color.FromName("Control");
                 MainQueryBtn.BackColor = Color.FromName("Control");
+                timer1.Start();
                 this.Show();
             }
             else
@@ -181,10 +160,7 @@ namespace mySystem
             }
         }
 
-        private void MainForm_Shown(object sender, EventArgs e)
-        {
-            //InstruReceive();
-        }
+        
 
 
 

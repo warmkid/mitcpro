@@ -253,7 +253,7 @@ namespace mySystem.Process.灭菌
             dataGridView1.Columns["拉回产品托盘数量个"].HeaderText = "拉回产品托盘数量(个)";
             dataGridView1.Columns["产品数量只"].HeaderText = "产品数量(只)";
             dataGridView1.Columns["产品数量箱"].HeaderText = "产品数量(箱)";
-            //dataGridView1.Columns["审核意见"].Visible = false;
+            dataGridView1.Columns["T辐照灭菌台帐ID"].Visible = false;
             //dataGridView1.Columns["审核是否通过"].Visible = false;
             //dataGridView1.Columns["日志"].Visible = false;
         }
@@ -335,7 +335,7 @@ namespace mySystem.Process.灭菌
                 //string suibian = dr[i].ToString();
                 //if (dr[i] != dr["审核意见"] && dr[i] != dr["审核是否通过"])
                 //if (dr[i].Equals(dr["审核意见"]) || dr[i].Equals(dr["审核是否通过"]))
-                if(i!=0)
+                if(i!=0&&i!=1)
                 {
                     if (dr最后一行[i].ToString() == "")
                         sum += 1;                    
@@ -438,7 +438,10 @@ namespace mySystem.Process.灭菌
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(true);
+            print(false);
+            //写日志
+            string str日志 = DateTime.Now + "保存";
+            MessageBox.Show(str日志);
         }
 
         [DllImport("winspool.drv")]
