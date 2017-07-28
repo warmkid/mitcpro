@@ -318,6 +318,7 @@ namespace WindowsFormsApplication1
 
             }
             instrid = mySystem.Parameter.proInstruID;
+
             ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
             ckb夜班.Checked = !ckb白班.Checked;
 
@@ -687,6 +688,8 @@ namespace WindowsFormsApplication1
             ckb白班.Checked = (bool)dr["班次"];
             ckb夜班.Checked = !ckb白班.Checked;
 
+            dr["审核人"] = "";
+
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
             dr["日志"] = log;
@@ -865,6 +868,7 @@ namespace WindowsFormsApplication1
             }
             SetDefaultPrinter(cb打印机.Text);
             print(false);
+            GC.Collect();
         }
 
         public void print(bool b)
@@ -880,6 +884,8 @@ namespace WindowsFormsApplication1
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];   
             // 修改Sheet中某行某列的值
             fill_excel(my);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "--" + "步骤序号3--" + "表序号" + find_indexofprint() + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -916,6 +922,8 @@ namespace WindowsFormsApplication1
                     // 释放COM资源
                     Marshal.ReleaseComObject(wb);
                     Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
                 }
 
             }                       
@@ -923,6 +931,17 @@ namespace WindowsFormsApplication1
 
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
+            if (dataGridView1.Rows.Count > 11)
+            {
+                //在第6行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 11;i++ )
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+
             my.Cells[3, 2].Value = dtp清洁日期.Value.ToLongDateString();
             my.Cells[3, 7].Value = ckb白班.Checked==true?"白班":"夜班";
             my.Cells[3, 11].Value = dtp复核日期.Value.ToLongDateString() ;
@@ -933,8 +952,23 @@ namespace WindowsFormsApplication1
                 my.Cells[5 + i, 9] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[5 + i, 11] = dataGridView1.Rows[i].Cells[5].Value.ToString();
                 my.Cells[5 + i, 12] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+            }          
+        }
 
-            }
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from 吹膜机组清洁记录表 where 生产指令ID=" + instrid;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt_out.Rows[0]["ID"])+1;
+
         }
 
         private void setUndoColor()

@@ -183,6 +183,8 @@ namespace mySystem.Extruction.Process
                     setControlTrue();
                     bt退料审核.Enabled = true;
                     bt领料审核.Enabled = true;
+
+                    bt添加.Enabled = false;
                 }
                 else if (Parameter.FormState.未保存 == _formState)
                 {
@@ -196,7 +198,11 @@ namespace mySystem.Extruction.Process
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
+                    {
                         dataGridView1.Rows[i].ReadOnly = false;
+                        dataGridView1.Rows[i].Cells[5].ReadOnly = true;//重量
+                    }
+                        
                     else
                         dataGridView1.Rows[i].ReadOnly = true;
                 }
@@ -222,7 +228,12 @@ namespace mySystem.Extruction.Process
                     if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() != "")
                         dataGridView1.Rows[i].ReadOnly = true;
                     else
+                    {
                         dataGridView1.Rows[i].ReadOnly = false;
+                        dataGridView1.Rows[i].Cells[5].ReadOnly = true;//重量
+
+                    }
+                        
                 }
             }
         }
@@ -595,6 +606,13 @@ namespace mySystem.Extruction.Process
         private void dataGridView1_Endedit(object sender, DataGridViewCellEventArgs e)
         {
             //重量计算
+            if (e.ColumnIndex == 3)
+            {
+
+                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
+                float b = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
+                dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * b;
+            }
             if (e.ColumnIndex == 4)
             {
 
@@ -630,6 +648,9 @@ namespace mySystem.Extruction.Process
             dt_prodinstr.Rows[0]["重量合计"] = sum_weight;
             dt_prodinstr.Rows[0]["数量合计"] = sum_num;
 
+            bs_prodinstr.EndEdit();
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+
             if (e.ColumnIndex == 6)
             {
                 if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString() == "是" && dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString() == "合格")
@@ -662,6 +683,8 @@ namespace mySystem.Extruction.Process
 
             dt_prodlist.Rows.Add(dr);
             setDataGridViewRowNums();
+            //da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            //readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
         }
 
         //审核
@@ -723,6 +746,9 @@ namespace mySystem.Extruction.Process
             dr["退料"] = 0;
             dr["退料操作人"] = mySystem.Parameter.userName;
             dr["审核日期"] = DateTime.Now;
+
+            dr["退料审核人"] = "";
+            dr["审核人"] = "";
 
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
@@ -964,6 +990,7 @@ namespace mySystem.Extruction.Process
             }
             SetDefaultPrinter(cb打印机.Text);
             print(false);
+            GC.Collect();
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -984,6 +1011,22 @@ namespace mySystem.Extruction.Process
             }
         }
 
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from 吹膜工序领料退料记录 where 生产指令ID=" + instrid;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt_prodinstr.Rows[0]["ID"]) + 1;
+
+        }
+
         public void print(bool b)
         {
             int label_打印成功 = 1;
@@ -997,6 +1040,8 @@ namespace mySystem.Extruction.Process
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
             fill_excel(my);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "--" + "步骤序号3--" + "表序号" + find_indexofprint() + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -1031,12 +1076,27 @@ namespace mySystem.Extruction.Process
                     // 释放COM资源
                     Marshal.ReleaseComObject(wb);
                     Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
                 }
             }
         }
 
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
+            int ind = 0;//偏移
+            if (dataGridView1.Rows.Count > 24)
+            {
+                //在第6行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 24; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 24;
+            }
+
             my.Cells[3, 1].Value = "物料代码："+cB物料代码.Text;
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -1052,11 +1112,11 @@ namespace mySystem.Extruction.Process
                 my.Cells[5 + i, 8] = dataGridView1.Rows[i].Cells[9].Value.ToString();
             }
 
-            my.Cells[29, 2].Value = tb数量.Text;
-            my.Cells[29, 4].Value = tb重量.Text;
-            my.Cells[29, 5].Value = "退料："+tb退料量.Text;
-            my.Cells[29, 7].Value = tb退料操作人.Text;
-            my.Cells[29, 8].Value = tb退料审核人.Text;
+            my.Cells[29+ind, 2].Value = tb数量.Text;
+            my.Cells[29+ind, 4].Value = tb重量.Text;
+            my.Cells[29+ind, 5].Value = "退料："+tb退料量.Text;
+            my.Cells[29+ind, 7].Value = tb退料操作人.Text;
+            my.Cells[29+ind, 8].Value = tb退料审核人.Text;
         }
 
         private void bt删除_Click(object sender, EventArgs e)
@@ -1071,6 +1131,8 @@ namespace mySystem.Extruction.Process
             }
 
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
             //计算合计
             float sum_num = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)

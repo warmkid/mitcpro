@@ -969,6 +969,9 @@ namespace BatchProductRecord
             dr["备注"] = "批号末尾数字代表膜的厚度，分别为：100um-1,80um-2,60um-3,120um-4,200um-5,110um-6,70um-7";
             dr["比例"] = 25;
 
+            dr["审批人"] = "";
+            dr["接收人"] = "";
+
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
             dr["日志"] = log;
@@ -1225,8 +1228,19 @@ namespace BatchProductRecord
                 MessageBox.Show("接受人ID不存在");
                 return false;
             }
-            return true;
 
+            //产品代码是否重复
+            HashSet<string> hs_temp = new HashSet<string>();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (hs_temp.Contains(dataGridView1.Rows[i].Cells["产品编码"].Value.ToString()))//产品代码
+                {
+                    MessageBox.Show("产品编码不能重复");
+                    return false;
+                }
+                hs_temp.Add(dataGridView1.Rows[i].Cells["产品编码"].Value.ToString());
+            }
+            return true;
             
         }
 
@@ -1309,6 +1323,10 @@ namespace BatchProductRecord
                     return;
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
+
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
 
             //刷新序号
             setDataGridViewRowNums();
@@ -1478,6 +1496,8 @@ namespace BatchProductRecord
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
             fill_excel(my);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = tb指令编号.Text + "--" + "步骤序号0--" + "表序号" + find_indexofprint() + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -1519,8 +1539,37 @@ namespace BatchProductRecord
             }
         }
 
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from 生产指令信息表 where 生产指令编号='" + tb指令编号.Text+"'";
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.Count-list_id.IndexOf((int)dt_prodinstr.Rows[0]["ID"]);
+
+        }
+
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
+            int ind = 0;
+            if (dataGridView1.Rows.Count > 7)
+            {
+                //在第8行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 7; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[8, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 7;
+            }
+
             my.Cells[2, 1].Value = "PEF 吹膜工序生产指令";
             my.Cells[3, 1].Value = "产品名称："+comboBox1.Text;
             my.Cells[3, 9].Value = "生产指令编号：" + tb指令编号.Text;
@@ -1540,30 +1589,34 @@ namespace BatchProductRecord
                 my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[10].Value.ToString();
             }
 
-            my.Cells[16, 6].Value = cb内外层物料代码.Text;
-            my.Cells[16, 8].Value = tb内外层物料批号.Text;
-            my.Cells[16, 9].Value = tb内外层包装规格.Text;
-            my.Cells[16, 10].Value = tb内外领料量.Text;
+            my.Cells[14 + ind, 6].Value = textBox6.Text;//计划产量米
+            my.Cells[14 + ind, 7].Value = tb用料重量合计.Text;//用料重量
+            my.Cells[14 + ind, 10].Value = textBox10.Text;//计划产量卷
+            my.Cells[16 + ind, 6].Value = cb内外层物料代码.Text;
+            my.Cells[16 + ind, 8].Value = tb内外层物料批号.Text;
+            my.Cells[16 + ind, 9].Value = tb内外层包装规格.Text;
+            my.Cells[16 + ind, 10].Value = tb内外领料量.Text;
 
-            my.Cells[17, 6].Value = cb中层物料代码.Text;
-            my.Cells[17, 8].Value = tb中层物料批号.Text;
-            my.Cells[17, 9].Value = tb中层包装规格.Text;
-            my.Cells[17, 10].Value = tb中层领料量.Text;
+            my.Cells[17 + ind, 6].Value = cb中层物料代码.Text;
+            my.Cells[17 + ind, 8].Value = tb中层物料批号.Text;
+            my.Cells[17 + ind, 9].Value = tb中层包装规格.Text;
+            my.Cells[17 + ind, 10].Value = tb中层领料量.Text;
 
-            my.Cells[18, 6].Value = textBox12.Text;
-            my.Cells[18, 9].Value = textBox13.Text;
-            my.Cells[18, 10].Value = tb卷心管领料量.Text;
+            my.Cells[18 + ind, 6].Value = textBox12.Text;
+            my.Cells[18 + ind, 9].Value = textBox13.Text;
+            my.Cells[18 + ind, 10].Value = tb卷心管领料量.Text;
 
-            my.Cells[20, 6].Value = textBox7.Text;
-            my.Cells[20, 9].Value = textBox9.Text;
-            my.Cells[20, 10].Value = tb双层包装领料量.Text;
+            my.Cells[20 + ind, 6].Value = textBox7.Text;
+            my.Cells[20 + ind, 9].Value = textBox9.Text;
+            my.Cells[20 + ind, 10].Value = tb双层包装领料量.Text;
 
-            my.Cells[16, 12].Value = "白班："+tb白班.Text+"\n"+"夜班："+tb夜班.Text;
-            my.Cells[21, 2].Value = tb备注.Text;
+            my.Cells[16 + ind, 12].Value = "白班：" + tb白班.Text + "\n" + "夜班：" + tb夜班.Text;
+            my.Cells[21 + ind, 2].Value = tb备注.Text;
 
-            my.Cells[22, 1].Value = "编制人：" + tb编制人.Text + "\n" +dateTimePicker2.Value.ToLongDateString();
-            my.Cells[22, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToLongDateString();
-            my.Cells[22, 9].Value = "接受人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToLongDateString();
+            my.Cells[22 + ind, 1].Value = "编制人：" + tb编制人.Text + "\n" + dateTimePicker2.Value.ToLongDateString();
+            my.Cells[22 + ind, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToLongDateString();
+            my.Cells[22 + ind, 9].Value = "接受人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToLongDateString();
+
         }
 
         private void bt复制_Click(object sender, System.EventArgs e)
@@ -1654,6 +1707,12 @@ namespace BatchProductRecord
             DataRow dr = dt_prodinstr.NewRow();
             dr.ItemArray = dt_prodinstr.Rows[0].ItemArray.Clone() as object[];
             dt_prodinstr.Rows[0]["审批人"] = "";
+
+            //写日志
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 更改生产指令计划\n";
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
             dt_prodinstr.Rows.Add(dr);
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
             readOuterData(instrcode);

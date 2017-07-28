@@ -130,7 +130,7 @@ namespace mySystem.Extruction.Process
         //查找清场前产品代码和批号
         private void query_prodandbatch()
         {
-            string asql = "select 产品名称,产品批号 from 吹膜工序生产和检验记录 where 生产指令ID=" + mySystem.Parameter.proInstruID + " ORDER BY 生产日期";
+            string asql = "select 产品名称,产品批号 from 吹膜工序生产和检验记录 where 生产指令ID=" + mySystem.Parameter.proInstruID + " ORDER BY 生产日期 DESC";
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
@@ -167,6 +167,7 @@ namespace mySystem.Extruction.Process
                 outerBind();
                 instrid = mySystem.Parameter.proInstruID;
             }
+           
             ckb合格.Checked = (bool)dt_prodinstr.Rows[0]["审核是否通过"];
             ckb不合格.Checked = !ckb合格.Checked;
             instrid = mySystem.Parameter.proInstruID;
@@ -575,7 +576,9 @@ namespace mySystem.Extruction.Process
             dr["检查结果"]=false;
             dr["清场人"] = mySystem.Parameter.userName;
             dr["审核时间"] = DateTime.Now;
-            //缺少备注....................
+
+            dr["检查人"] = "";
+            dr["审核人"] = "";
 
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
@@ -840,6 +843,7 @@ namespace mySystem.Extruction.Process
             }
             SetDefaultPrinter(cb打印机.Text);
             print(false);
+            GC.Collect();
         }
         public void print(bool b)
         {
@@ -854,6 +858,8 @@ namespace mySystem.Extruction.Process
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 修改Sheet中某行某列的值
             fill_excel(my);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "--" + "步骤序号11--" + "表序号" + find_indexofprint() + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -892,12 +898,39 @@ namespace mySystem.Extruction.Process
                     // 释放COM资源
                     Marshal.ReleaseComObject(wb);
                     Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
                 }
             }
         }
 
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
+            int index = 11;//吹膜起始行号
+            if (dataGridView1.Rows.Count > 6)
+            {
+                //在第6行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 6; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                index += dataGridView1.Rows.Count - 6;
+            }
+
+            if (dataGridView2.Rows.Count > 8)
+            {
+                //在第index+1行插入
+                for (int i = 0; i < dataGridView2.Rows.Count - 8; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[index + 1, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+            
+
             my.Cells[3, 1].Value = "生产指令："+mySystem.Parameter.proInstruction;
             my.Cells[3, 3].Value = "清场前产品代码及批号：" + tb产品代码.Text + "  " + tb产品批号.Text ;
             my.Cells[3, 5].Value = "清场日期：" + dtp清场日期.Value.ToLongDateString();
@@ -909,13 +942,29 @@ namespace mySystem.Extruction.Process
             }
             for (int i = 0; i < dataGridView2.Rows.Count; i++)
             {
-                my.Cells[11 + i, 2].Value = i + 1;
-                my.Cells[11 + i, 3].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[11 + i, 4].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[index + i, 2].Value = i + 1;
+                my.Cells[index + i, 3].Value = dataGridView2.Rows[i].Cells[3].Value.ToString();
+                my.Cells[index + i, 4].Value = dataGridView2.Rows[i].Cells[4].Value.ToString();
             }
             my.Cells[5, 5].Value = tb清场人.Text;
-            my.Cells[5, 6].Value = checkout==true?"合格":"不合格";
+            my.Cells[5, 6].Value = ckb合格.Checked==true?"合格":"不合格";
             my.Cells[5, 7].Value = tb检查人.Text;
+        }
+
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from 吹膜工序清场记录 where 生产指令ID=" + instrid;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt_prodinstr.Rows[0]["ID"]) + 1;
+
         }
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)

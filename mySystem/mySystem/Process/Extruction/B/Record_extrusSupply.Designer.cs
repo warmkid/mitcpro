@@ -31,6 +31,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Record_extrusSupply));
             this.bt打印 = new System.Windows.Forms.Button();
             this.bt删除 = new System.Windows.Forms.Button();
             this.bt添加 = new System.Windows.Forms.Button();
@@ -88,13 +89,16 @@
             this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.label26 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.bt插入查询 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // bt打印
             // 
             this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(934, 506);
+            this.bt打印.Location = new System.Drawing.Point(964, 535);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
             this.bt打印.TabIndex = 4;
@@ -105,7 +109,7 @@
             // bt删除
             // 
             this.bt删除.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt删除.Location = new System.Drawing.Point(740, 431);
+            this.bt删除.Location = new System.Drawing.Point(728, 440);
             this.bt删除.Name = "bt删除";
             this.bt删除.Size = new System.Drawing.Size(75, 23);
             this.bt删除.TabIndex = 1;
@@ -116,7 +120,7 @@
             // bt添加
             // 
             this.bt添加.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt添加.Location = new System.Drawing.Point(635, 431);
+            this.bt添加.Location = new System.Drawing.Point(623, 440);
             this.bt添加.Name = "bt添加";
             this.bt添加.Size = new System.Drawing.Size(75, 23);
             this.bt添加.TabIndex = 0;
@@ -150,7 +154,6 @@
             this.tb用料b2.Name = "tb用料b2";
             this.tb用料b2.Size = new System.Drawing.Size(68, 23);
             this.tb用料b2.TabIndex = 10;
-            this.tb用料b2.TextChanged += new System.EventHandler(this.textBox14_TextChanged);
             // 
             // tb余料ab1c
             // 
@@ -178,7 +181,6 @@
             this.tb用料ab1c.Name = "tb用料ab1c";
             this.tb用料ab1c.Size = new System.Drawing.Size(68, 23);
             this.tb用料ab1c.TabIndex = 5;
-            this.tb用料ab1c.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
             // 
             // label19
             // 
@@ -193,17 +195,17 @@
             // tb复核人
             // 
             this.tb复核人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb复核人.Location = new System.Drawing.Point(961, 140);
+            this.tb复核人.Location = new System.Drawing.Point(426, 464);
             this.tb复核人.Name = "tb复核人";
             this.tb复核人.ReadOnly = true;
-            this.tb复核人.Size = new System.Drawing.Size(68, 23);
+            this.tb复核人.Size = new System.Drawing.Size(83, 23);
             this.tb复核人.TabIndex = 6;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label21.Location = new System.Drawing.Point(906, 143);
+            this.label21.Location = new System.Drawing.Point(371, 467);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(49, 14);
             this.label21.TabIndex = 3;
@@ -212,7 +214,7 @@
             // bt审核
             // 
             this.bt审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt审核.Location = new System.Drawing.Point(635, 508);
+            this.bt审核.Location = new System.Drawing.Point(623, 535);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(75, 23);
             this.bt审核.TabIndex = 3;
@@ -223,7 +225,7 @@
             // bt保存
             // 
             this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt保存.Location = new System.Drawing.Point(635, 473);
+            this.bt保存.Location = new System.Drawing.Point(623, 493);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(75, 23);
             this.bt保存.TabIndex = 2;
@@ -235,7 +237,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(668, 62);
+            this.label16.Location = new System.Drawing.Point(660, 138);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(105, 14);
             this.label16.TabIndex = 0;
@@ -245,7 +247,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(478, 64);
+            this.label3.Location = new System.Drawing.Point(451, 140);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 14);
             this.label3.TabIndex = 0;
@@ -254,7 +256,7 @@
             // tb生产指令
             // 
             this.tb生产指令.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb生产指令.Location = new System.Drawing.Point(779, 59);
+            this.tb生产指令.Location = new System.Drawing.Point(771, 135);
             this.tb生产指令.Name = "tb生产指令";
             this.tb生产指令.ReadOnly = true;
             this.tb生产指令.Size = new System.Drawing.Size(93, 23);
@@ -263,9 +265,9 @@
             // tb产品批号
             // 
             this.tb产品批号.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb产品批号.Location = new System.Drawing.Point(561, 58);
+            this.tb产品批号.Location = new System.Drawing.Point(534, 134);
             this.tb产品批号.Name = "tb产品批号";
-            this.tb产品批号.Size = new System.Drawing.Size(83, 23);
+            this.tb产品批号.Size = new System.Drawing.Size(102, 23);
             this.tb产品批号.TabIndex = 1;
             // 
             // cb产品代码
@@ -274,7 +276,7 @@
             this.cb产品代码.FormattingEnabled = true;
             this.cb产品代码.Location = new System.Drawing.Point(327, 57);
             this.cb产品代码.Name = "cb产品代码";
-            this.cb产品代码.Size = new System.Drawing.Size(110, 22);
+            this.cb产品代码.Size = new System.Drawing.Size(145, 22);
             this.cb产品代码.TabIndex = 1;
             // 
             // label2
@@ -291,7 +293,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(703, 143);
+            this.label11.Location = new System.Drawing.Point(242, 440);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(70, 14);
             this.label11.TabIndex = 20;
@@ -301,7 +303,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(505, 143);
+            this.label9.Location = new System.Drawing.Point(74, 440);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(70, 14);
             this.label9.TabIndex = 18;
@@ -310,26 +312,26 @@
             // tb中内层合计
             // 
             this.tb中内层合计.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb中内层合计.Location = new System.Drawing.Point(779, 140);
+            this.tb中内层合计.Location = new System.Drawing.Point(243, 534);
             this.tb中内层合计.Name = "tb中内层合计";
             this.tb中内层合计.ReadOnly = true;
-            this.tb中内层合计.Size = new System.Drawing.Size(87, 23);
+            this.tb中内层合计.Size = new System.Drawing.Size(69, 23);
             this.tb中内层合计.TabIndex = 17;
             // 
             // tb外层合计
             // 
             this.tb外层合计.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb外层合计.Location = new System.Drawing.Point(581, 140);
+            this.tb外层合计.Location = new System.Drawing.Point(76, 534);
             this.tb外层合计.Name = "tb外层合计";
             this.tb外层合计.ReadOnly = true;
-            this.tb外层合计.Size = new System.Drawing.Size(81, 23);
+            this.tb外层合计.Size = new System.Drawing.Size(68, 23);
             this.tb外层合计.TabIndex = 15;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(450, 143);
+            this.label1.Location = new System.Drawing.Point(21, 537);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(49, 14);
             this.label1.TabIndex = 14;
@@ -338,7 +340,7 @@
             // bt下移
             // 
             this.bt下移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt下移.Location = new System.Drawing.Point(957, 431);
+            this.bt下移.Location = new System.Drawing.Point(945, 440);
             this.bt下移.Name = "bt下移";
             this.bt下移.Size = new System.Drawing.Size(75, 23);
             this.bt下移.TabIndex = 13;
@@ -349,7 +351,7 @@
             // bt上移
             // 
             this.bt上移.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt上移.Location = new System.Drawing.Point(854, 431);
+            this.bt上移.Location = new System.Drawing.Point(842, 440);
             this.bt上移.Name = "bt上移";
             this.bt上移.Size = new System.Drawing.Size(75, 23);
             this.bt上移.TabIndex = 12;
@@ -370,9 +372,9 @@
             // tb原料批号b2
             // 
             this.tb原料批号b2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb原料批号b2.Location = new System.Drawing.Point(225, 158);
+            this.tb原料批号b2.Location = new System.Drawing.Point(214, 158);
             this.tb原料批号b2.Name = "tb原料批号b2";
-            this.tb原料批号b2.Size = new System.Drawing.Size(195, 23);
+            this.tb原料批号b2.Size = new System.Drawing.Size(222, 23);
             this.tb原料批号b2.TabIndex = 2;
             // 
             // cb原料代码ab1c
@@ -388,9 +390,9 @@
             // tb原料批号ab1c
             // 
             this.tb原料批号ab1c.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb原料批号ab1c.Location = new System.Drawing.Point(225, 119);
+            this.tb原料批号ab1c.Location = new System.Drawing.Point(214, 119);
             this.tb原料批号ab1c.Name = "tb原料批号ab1c";
-            this.tb原料批号ab1c.Size = new System.Drawing.Size(195, 23);
+            this.tb原料批号ab1c.Size = new System.Drawing.Size(222, 23);
             this.tb原料批号ab1c.TabIndex = 1;
             // 
             // label8
@@ -453,7 +455,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(440, 22);
+            this.label12.Location = new System.Drawing.Point(441, 20);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(144, 16);
             this.label12.TabIndex = 6;
@@ -463,21 +465,23 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(73, 439);
+            this.label4.Location = new System.Drawing.Point(649, 22);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(70, 14);
             this.label4.TabIndex = 21;
             this.label4.Text = "SPM-PE-04";
+            this.label4.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(242, 439);
+            this.label5.Location = new System.Drawing.Point(755, 22);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(70, 14);
             this.label5.TabIndex = 22;
             this.label5.Text = "SPM-PE-06";
+            this.label5.Visible = false;
             // 
             // label6
             // 
@@ -503,7 +507,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(23, 62);
+            this.label13.Location = new System.Drawing.Point(21, 63);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(77, 14);
             this.label13.TabIndex = 25;
@@ -521,7 +525,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(888, 64);
+            this.label14.Location = new System.Drawing.Point(880, 140);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(49, 14);
             this.label14.TabIndex = 27;
@@ -531,7 +535,7 @@
             // 
             this.ckb白班.AutoSize = true;
             this.ckb白班.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ckb白班.Location = new System.Drawing.Point(934, 62);
+            this.ckb白班.Location = new System.Drawing.Point(926, 138);
             this.ckb白班.Name = "ckb白班";
             this.ckb白班.Size = new System.Drawing.Size(54, 18);
             this.ckb白班.TabIndex = 28;
@@ -542,7 +546,7 @@
             // 
             this.ckb夜班.AutoSize = true;
             this.ckb夜班.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ckb夜班.Location = new System.Drawing.Point(993, 63);
+            this.ckb夜班.Location = new System.Drawing.Point(985, 139);
             this.ckb夜班.Name = "ckb夜班";
             this.ckb夜班.Size = new System.Drawing.Size(54, 18);
             this.ckb夜班.TabIndex = 29;
@@ -552,7 +556,7 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(31, 20);
+            this.button1.Location = new System.Drawing.Point(922, 493);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 30;
@@ -605,7 +609,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label24.Location = new System.Drawing.Point(668, 143);
+            this.label24.Location = new System.Drawing.Point(150, 537);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(21, 14);
             this.label24.TabIndex = 35;
@@ -615,7 +619,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label25.Location = new System.Drawing.Point(872, 143);
+            this.label25.Location = new System.Drawing.Point(318, 537);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(21, 14);
             this.label25.TabIndex = 36;
@@ -624,7 +628,7 @@
             // bt提交审核
             // 
             this.bt提交审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt提交审核.Location = new System.Drawing.Point(741, 473);
+            this.bt提交审核.Location = new System.Drawing.Point(729, 493);
             this.bt提交审核.Name = "bt提交审核";
             this.bt提交审核.Size = new System.Drawing.Size(75, 23);
             this.bt提交审核.TabIndex = 37;
@@ -635,7 +639,7 @@
             // bt日志
             // 
             this.bt日志.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt日志.Location = new System.Drawing.Point(836, 473);
+            this.bt日志.Location = new System.Drawing.Point(824, 493);
             this.bt日志.Name = "bt日志";
             this.bt日志.Size = new System.Drawing.Size(75, 23);
             this.bt日志.TabIndex = 38;
@@ -647,7 +651,7 @@
             // 
             this.label40.AutoSize = true;
             this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label40.Location = new System.Drawing.Point(733, 512);
+            this.label40.Location = new System.Drawing.Point(721, 539);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(91, 14);
             this.label40.TabIndex = 40;
@@ -656,16 +660,16 @@
             // cb打印机
             // 
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(826, 509);
+            this.cb打印机.Location = new System.Drawing.Point(814, 536);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(95, 20);
+            this.cb打印机.Size = new System.Drawing.Size(140, 20);
             this.cb打印机.TabIndex = 39;
             // 
             // label26
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label26.Location = new System.Drawing.Point(871, 20);
+            this.label26.Location = new System.Drawing.Point(871, 64);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(93, 16);
             this.label26.TabIndex = 42;
@@ -675,17 +679,40 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(986, 20);
+            this.label角色.Location = new System.Drawing.Point(986, 64);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
             this.label角色.TabIndex = 41;
             this.label角色.Text = "角色";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(2, 1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(134, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 43;
+            this.pictureBox1.TabStop = false;
+            // 
+            // bt插入查询
+            // 
+            this.bt插入查询.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt插入查询.Location = new System.Drawing.Point(495, 58);
+            this.bt插入查询.Name = "bt插入查询";
+            this.bt插入查询.Size = new System.Drawing.Size(90, 23);
+            this.bt插入查询.TabIndex = 44;
+            this.bt插入查询.Text = "插入/查询";
+            this.bt插入查询.UseVisualStyleBackColor = true;
+            this.bt插入查询.Click += new System.EventHandler(this.bt插入查询_Click);
+            // 
             // Record_extrusSupply
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1059, 537);
+            this.ClientSize = new System.Drawing.Size(1059, 576);
+            this.Controls.Add(this.bt插入查询);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label26);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.label40);
@@ -743,9 +770,11 @@
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.tb用料ab1c);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Record_extrusSupply";
             this.Text = "吹膜工序供料记录";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -812,5 +841,7 @@
         private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button bt插入查询;
     }
 }

@@ -479,6 +479,7 @@ namespace mySystem
             }
             SetDefaultPrinter(cb打印机.Text);
             print(false);
+            GC.Collect();
         }
 
         public void print(bool b)
@@ -519,12 +520,27 @@ namespace mySystem
                     // 释放COM资源
                     Marshal.ReleaseComObject(wb);
                     Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
                 }
             }
         }
 
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
+            int ind = 0;
+            if (dataGridView1.Rows.Count > 12)
+            {
+                //在第6行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 12; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 12;
+            }
+
             my.Cells[3, 10].Value = "生产指令: "+mySystem.Parameter.proInstruction;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -542,14 +558,14 @@ namespace mySystem
                 my.Cells[5 + i, 13] = dataGridView1.Rows[i].Cells[14].Value.ToString();
             }
 
-            my.Cells[17, 7].Value = tb生产数量.Text;
-            my.Cells[17, 8].Value = tb生产重量.Text;
-            my.Cells[17, 9].Value = tb废品重量.Text;
-            my.Cells[17, 10].Value = tb加料A.Text;
-            my.Cells[17, 11].Value = tb加料B1C.Text;
-            my.Cells[17, 13].Value = tb工时.Text;
-            my.Cells[18, 3].Value = tb工时效率.Text;
-            my.Cells[18, 6].Value = "备注: "+tb备注.Text;
+            my.Cells[17+ind, 7].Value = tb生产数量.Text;
+            my.Cells[17+ind, 8].Value = tb生产重量.Text;
+            my.Cells[17+ind, 9].Value = tb废品重量.Text;
+            my.Cells[17+ind, 10].Value = tb加料A.Text;
+            my.Cells[17+ind, 11].Value = tb加料B1C.Text;
+            my.Cells[17+ind, 13].Value = tb工时.Text;
+            my.Cells[18+ind, 3].Value = tb工时效率.Text;
+            my.Cells[18+ind, 6].Value = "备注: "+tb备注.Text;
         }
 
         private void button1_Click_1(object sender, EventArgs e)
