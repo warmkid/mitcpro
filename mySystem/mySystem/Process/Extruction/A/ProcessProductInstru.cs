@@ -903,6 +903,12 @@ namespace BatchProductRecord
             readOuterData(tb指令编号.Text);
             removeOuterBinding();
             outerBind();
+
+            if (dt_prodinstr.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
+            {
+                MessageBox.Show("只有操作员可以新建指令");
+                return;
+            }
             if (dt_prodinstr.Rows.Count <= 0)
             {
                 DataRow dr = dt_prodinstr.NewRow();

@@ -304,6 +304,12 @@ namespace WindowsFormsApplication1
             readOuterData(mySystem.Parameter.proInstruID);
             removeOuterBinding();
             outerBind();
+            if (dt_out.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
+            {
+                MessageBox.Show("只有操作员可以新建记录");
+                return;
+            }
+
             if (dt_out.Rows.Count <= 0)
             {
                 //新建记录

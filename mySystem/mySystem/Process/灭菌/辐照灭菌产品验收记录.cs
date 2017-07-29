@@ -16,5 +16,12 @@ namespace mySystem.Process.灭菌
             InitializeComponent();
         }
 
+        private void bt保存_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
     }
 }

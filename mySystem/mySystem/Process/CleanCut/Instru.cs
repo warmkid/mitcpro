@@ -29,9 +29,22 @@ namespace mySystem.Process.CleanCut
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
         private string person_操作员;
         private string person_审核员;
+        private List<string> list_操作员;
+        private List<string> list_审核员;
 
-        private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
-        private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        //private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
+        //private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+
+        // 需要保存的状态
+        /// <summary>
+        /// 1:操作员，2：审核员，4：管理员
+        /// </summary>
+        Parameter.UserState _userState;
+        /// <summary>
+        /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
+        /// </summary>
+        Parameter.FormState _formState;
+
         private string instrcode;//指令编号
 
         HashSet<string> hs_产品代码;//存储内表产品代码下拉框内容
@@ -126,17 +139,40 @@ namespace mySystem.Process.CleanCut
 
         void setUserState()
         {
-            if (mySystem.Parameter.userName == person_操作员)
-                stat_user = 0;
-            else if (mySystem.Parameter.userName == person_审核员)
-                stat_user = 1;
-            else
-                stat_user = 2;
+            //if (mySystem.Parameter.userName == person_操作员)
+            //    stat_user = 0;
+            //else if (mySystem.Parameter.userName == person_审核员)
+            //    stat_user = 1;
+            //else
+            //    stat_user = 2;
+
+            _userState = Parameter.UserState.NoBody;
+            if (list_操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (list_审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+
         }
 
         //// 获取操作员和审核员
         void getPeople()
         {
+            list_操作员 = new List<string>();
+            list_审核员 = new List<string>();
+
             DataTable dt = new DataTable("用户权限");
             OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='清洁分切生产指令'", mySystem.Parameter.connOle);
             da.Fill(dt);
@@ -145,13 +181,26 @@ namespace mySystem.Process.CleanCut
             {
                 person_操作员 = dt.Rows[0]["操作员"].ToString();
                 person_审核员 = dt.Rows[0]["审核员"].ToString();
+                string[] s = Regex.Split(person_操作员, ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        list_操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(person_审核员, ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        list_审核员.Add(s1[i]);
+                }
             }
 
         }
 
-        //获取设置中产品代码
+        
         private void getOtherData()
         {
+            //获取设置中产品代码
             OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置清洁分切产品编码", mySystem.Parameter.connOle);
             DataTable tdt = new DataTable("产品编码");
             tda.Fill(tdt);
@@ -159,6 +208,8 @@ namespace mySystem.Process.CleanCut
             {
                 hs_产品代码.Add(tdr["产品编码"].ToString());
             }
+            //添加打印机
+            fill_printer();
         }
 
         //public Instru()
@@ -213,7 +264,7 @@ namespace mySystem.Process.CleanCut
             bool rt=save();
 
             //控件可见性
-            if(rt && stat_user==0)
+            if (rt && _userState == Parameter.UserState.操作员)
                 bt发送审核.Enabled = true;
         }
 
@@ -243,7 +294,7 @@ namespace mySystem.Process.CleanCut
             readOuterData(tb指令编号.Text);
             removeOuterBinding();
             outerBind();
-            if (dt_prodinstr.Rows.Count <= 0 && stat_user != 0)
+            if (dt_prodinstr.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
             {
                 MessageBox.Show("只有操作员可以新建指令");
                 return;
@@ -277,14 +328,24 @@ namespace mySystem.Process.CleanCut
         //         如果审核结果为『不通过』，则为『审核未通过』
         void setFormState()
         {
-            if (dt_prodinstr.Rows[0]["审核人"].ToString() == "")
-                stat_form = 0;
-            else if(dt_prodinstr.Rows[0]["审核人"].ToString() =="__待审核")
-                stat_form = 1;
-            else if((bool)dt_prodinstr.Rows[0]["审核是否通过"])
-                stat_form = 2;
+            //if (dt_prodinstr.Rows[0]["审核人"].ToString() == "")
+            //    stat_form = 0;
+            //else if(dt_prodinstr.Rows[0]["审核人"].ToString() =="__待审核")
+            //    stat_form = 1;
+            //else if((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+            //    stat_form = 2;
+            //else
+            //    stat_form = 3;
+
+            string s = dt_prodinstr.Rows[0]["审核人"].ToString();
+            bool b = Convert.ToBoolean(dt_prodinstr.Rows[0]["审核是否通过"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
             else
-                stat_form = 3;
+            {
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
+            }
         }
 
         // 其他事件，比如按钮的点击，数据有效性判断
@@ -301,6 +362,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.ReadOnly = true;
             bt日志.Enabled = true;
             bt打印.Enabled = true;
+            cb打印机.Enabled = true;
         }
         private void setControlTrue()
         {
@@ -309,44 +371,71 @@ namespace mySystem.Process.CleanCut
             dataGridView1.ReadOnly = false;
             bt发送审核.Enabled = false;
             bt审核.Enabled = false;
+            bt更改.Enabled = false;
         }
         void setEnableReadOnly()
         {
-            if (stat_user == 2)//管理员
-            {
-                //控件都能点
-                foreach (Control c in this.Controls)
-                    c.Enabled = true;
-            }
-            else if (stat_user == 1)//审核人
-            {
-                if (stat_form == 0 || stat_form == 3 || stat_form == 2)//草稿,审核不通过，审核通过
-                {
-                    //空间都不能点
-                    setControlFalse();
+            //if (stat_user == 2)//管理员
+            //{
+            //    //控件都能点
+            //    foreach (Control c in this.Controls)
+            //        c.Enabled = true;
+            //}
+            //else if (stat_user == 1)//审核人
+            //{
+            //    if (stat_form == 0 || stat_form == 3 || stat_form == 2)//草稿,审核不通过，审核通过
+            //    {
+            //        //空间都不能点
+            //        setControlFalse();
 
-                }
-                else//待审核
+            //    }
+            //    else//待审核
+            //    {
+            //        //发送审核不可点，其他都可点
+            //        setControlTrue();
+            //        bt审核.Enabled = true;
+            //    }
+
+            //}
+            //else//操作员
+            //{
+            //    if (stat_form == 1 || stat_form == 2)//待接收，审核通过
+            //    {
+            //        //空间都不能点
+            //        setControlFalse();
+            //    }
+            //    else//未审核与审核不通过
+            //    {
+            //        //发送审核，审核不能点
+            //        setControlTrue();
+            //    }
+            //}
+
+            if (Parameter.UserState.管理员 == _userState)
+            {
+                setControlTrue();
+            }
+            if (Parameter.UserState.审核员 == _userState)
+            {
+                if (Parameter.FormState.待审核 == _formState)
                 {
-                    //发送审核不可点，其他都可点
                     setControlTrue();
                     bt审核.Enabled = true;
                 }
-
-            }
-            else//操作员
-            {
-                if (stat_form == 1 || stat_form == 2)//待接收，审核通过
+                else if (Parameter.FormState.审核通过 == _formState)
                 {
-                    //空间都不能点
                     setControlFalse();
+                    bt更改.Enabled = true;
                 }
-                else//未审核与审核不通过
-                {
-                    //发送审核，审核不能点
-                    setControlTrue();
-                }
+                else setControlFalse();
             }
+            if (Parameter.UserState.操作员 == _userState)
+            {
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                else setControlFalse();
+            }
+
+
         }
 
         // 设置自动计算类事件
@@ -544,6 +633,9 @@ namespace mySystem.Process.CleanCut
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
             //刷新序号
             setDataGridViewRowNums();
         }
@@ -756,5 +848,32 @@ namespace mySystem.Process.CleanCut
             }
 
         }
+
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        //添加打印机
+        private void fill_printer()
+        {
+
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
+        }
+        private void bt打印_Click(object sender, EventArgs e)
+        {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
+            GC.Collect();
+        }
+
+        public void print(bool b)
+        { }
     }
 }
