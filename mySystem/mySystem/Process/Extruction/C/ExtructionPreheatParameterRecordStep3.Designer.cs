@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExtructionPreheatParameterRecordStep3));
             this.btn打印 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn确认 = new System.Windows.Forms.Button();
@@ -102,12 +103,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dtp预热开始时间 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label27 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn打印
             // 
             this.btn打印.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn打印.Location = new System.Drawing.Point(128, 624);
+            this.btn打印.Location = new System.Drawing.Point(128, 586);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(80, 30);
             this.btn打印.TabIndex = 78;
@@ -118,7 +125,7 @@
             // btn审核
             // 
             this.btn审核.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn审核.Location = new System.Drawing.Point(34, 624);
+            this.btn审核.Location = new System.Drawing.Point(34, 586);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(80, 30);
             this.btn审核.TabIndex = 77;
@@ -129,7 +136,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn确认.Location = new System.Drawing.Point(889, 624);
+            this.btn确认.Location = new System.Drawing.Point(889, 586);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(80, 30);
             this.btn确认.TabIndex = 76;
@@ -194,7 +201,7 @@
             // tb备注
             // 
             this.tb备注.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb备注.Location = new System.Drawing.Point(101, 577);
+            this.tb备注.Location = new System.Drawing.Point(101, 533);
             this.tb备注.Name = "tb备注";
             this.tb备注.Size = new System.Drawing.Size(1054, 26);
             this.tb备注.TabIndex = 68;
@@ -203,7 +210,7 @@
             // 
             this.label48.AutoSize = true;
             this.label48.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label48.Location = new System.Drawing.Point(44, 581);
+            this.label48.Location = new System.Drawing.Point(44, 537);
             this.label48.Name = "label48";
             this.label48.Size = new System.Drawing.Size(48, 16);
             this.label48.TabIndex = 67;
@@ -240,17 +247,17 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("SimSun", 14F, System.Drawing.FontStyle.Bold);
-            this.Title.Location = new System.Drawing.Point(502, 25);
+            this.Title.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.Title.Location = new System.Drawing.Point(489, 21);
             this.Title.Name = "Title";
-            this.Title.Size = new System.Drawing.Size(229, 19);
+            this.Title.Size = new System.Drawing.Size(240, 20);
             this.Title.TabIndex = 0;
             this.Title.Text = "吹膜机组预热参数记录表";
             // 
             // btn查看日志
             // 
             this.btn查看日志.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn查看日志.Location = new System.Drawing.Point(1075, 624);
+            this.btn查看日志.Location = new System.Drawing.Point(1075, 586);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(80, 30);
             this.btn查看日志.TabIndex = 108;
@@ -261,7 +268,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn提交审核.Location = new System.Drawing.Point(983, 624);
+            this.btn提交审核.Location = new System.Drawing.Point(983, 586);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(80, 30);
             this.btn提交审核.TabIndex = 107;
@@ -290,7 +297,7 @@
             // tb加热保温时间2
             // 
             this.tb加热保温时间2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb加热保温时间2.Location = new System.Drawing.Point(316, 377);
+            this.tb加热保温时间2.Location = new System.Drawing.Point(316, 352);
             this.tb加热保温时间2.Name = "tb加热保温时间2";
             this.tb加热保温时间2.Size = new System.Drawing.Size(62, 26);
             this.tb加热保温时间2.TabIndex = 164;
@@ -299,7 +306,7 @@
             // tb加热保温时间3
             // 
             this.tb加热保温时间3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb加热保温时间3.Location = new System.Drawing.Point(316, 482);
+            this.tb加热保温时间3.Location = new System.Drawing.Point(316, 457);
             this.tb加热保温时间3.Name = "tb加热保温时间3";
             this.tb加热保温时间3.Size = new System.Drawing.Size(62, 26);
             this.tb加热保温时间3.TabIndex = 163;
@@ -308,7 +315,7 @@
             // tb加热保温时间1
             // 
             this.tb加热保温时间1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb加热保温时间1.Location = new System.Drawing.Point(839, 235);
+            this.tb加热保温时间1.Location = new System.Drawing.Point(839, 210);
             this.tb加热保温时间1.Name = "tb加热保温时间1";
             this.tb加热保温时间1.Size = new System.Drawing.Size(62, 26);
             this.tb加热保温时间1.TabIndex = 162;
@@ -318,7 +325,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label25.Location = new System.Drawing.Point(765, 242);
+            this.label25.Location = new System.Drawing.Point(765, 217);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(184, 16);
             this.label25.TabIndex = 161;
@@ -328,7 +335,7 @@
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label24.Location = new System.Drawing.Point(239, 487);
+            this.label24.Location = new System.Drawing.Point(239, 462);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(184, 16);
             this.label24.TabIndex = 160;
@@ -338,7 +345,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label23.Location = new System.Drawing.Point(239, 382);
+            this.label23.Location = new System.Drawing.Point(239, 357);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(184, 16);
             this.label23.TabIndex = 159;
@@ -347,7 +354,7 @@
             // tb一区预热参数设定2
             // 
             this.tb一区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb一区预热参数设定2.Location = new System.Drawing.Point(168, 448);
+            this.tb一区预热参数设定2.Location = new System.Drawing.Point(168, 423);
             this.tb一区预热参数设定2.Name = "tb一区预热参数设定2";
             this.tb一区预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb一区预热参数设定2.TabIndex = 158;
@@ -356,7 +363,7 @@
             // tb四区预热参数设定2
             // 
             this.tb四区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb四区预热参数设定2.Location = new System.Drawing.Point(468, 448);
+            this.tb四区预热参数设定2.Location = new System.Drawing.Point(468, 423);
             this.tb四区预热参数设定2.Name = "tb四区预热参数设定2";
             this.tb四区预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb四区预热参数设定2.TabIndex = 157;
@@ -366,7 +373,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label12.Location = new System.Drawing.Point(56, 524);
+            this.label12.Location = new System.Drawing.Point(56, 499);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(104, 16);
             this.label12.TabIndex = 123;
@@ -375,7 +382,7 @@
             // tb三区预热参数设定2
             // 
             this.tb三区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb三区预热参数设定2.Location = new System.Drawing.Point(368, 448);
+            this.tb三区预热参数设定2.Location = new System.Drawing.Point(368, 423);
             this.tb三区预热参数设定2.Name = "tb三区预热参数设定2";
             this.tb三区预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb三区预热参数设定2.TabIndex = 156;
@@ -384,7 +391,7 @@
             // tb二区预热参数设定2
             // 
             this.tb二区预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb二区预热参数设定2.Location = new System.Drawing.Point(268, 448);
+            this.tb二区预热参数设定2.Location = new System.Drawing.Point(268, 423);
             this.tb二区预热参数设定2.Name = "tb二区预热参数设定2";
             this.tb二区预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb二区预热参数设定2.TabIndex = 155;
@@ -393,7 +400,7 @@
             // tb一区预热参数设定1
             // 
             this.tb一区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb一区预热参数设定1.Location = new System.Drawing.Point(167, 311);
+            this.tb一区预热参数设定1.Location = new System.Drawing.Point(167, 286);
             this.tb一区预热参数设定1.Name = "tb一区预热参数设定1";
             this.tb一区预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb一区预热参数设定1.TabIndex = 154;
@@ -403,7 +410,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label1.Location = new System.Drawing.Point(72, 130);
+            this.label1.Location = new System.Drawing.Point(72, 115);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
             this.label1.TabIndex = 111;
@@ -412,7 +419,7 @@
             // tb四区预热参数设定1
             // 
             this.tb四区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb四区预热参数设定1.Location = new System.Drawing.Point(467, 311);
+            this.tb四区预热参数设定1.Location = new System.Drawing.Point(467, 286);
             this.tb四区预热参数设定1.Name = "tb四区预热参数设定1";
             this.tb四区预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb四区预热参数设定1.TabIndex = 153;
@@ -421,7 +428,7 @@
             // tb三区预热参数设定1
             // 
             this.tb三区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb三区预热参数设定1.Location = new System.Drawing.Point(367, 311);
+            this.tb三区预热参数设定1.Location = new System.Drawing.Point(367, 286);
             this.tb三区预热参数设定1.Name = "tb三区预热参数设定1";
             this.tb三区预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb三区预热参数设定1.TabIndex = 152;
@@ -430,7 +437,7 @@
             // tb二区预热参数设定1
             // 
             this.tb二区预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb二区预热参数设定1.Location = new System.Drawing.Point(267, 311);
+            this.tb二区预热参数设定1.Location = new System.Drawing.Point(267, 286);
             this.tb二区预热参数设定1.Name = "tb二区预热参数设定1";
             this.tb二区预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb二区预热参数设定1.TabIndex = 151;
@@ -439,7 +446,7 @@
             // tb机头2预热参数设定1
             // 
             this.tb机头2预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb机头2预热参数设定1.Location = new System.Drawing.Point(967, 166);
+            this.tb机头2预热参数设定1.Location = new System.Drawing.Point(967, 141);
             this.tb机头2预热参数设定1.Name = "tb机头2预热参数设定1";
             this.tb机头2预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb机头2预热参数设定1.TabIndex = 149;
@@ -448,7 +455,7 @@
             // tb口模预热参数设定1
             // 
             this.tb口模预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb口模预热参数设定1.Location = new System.Drawing.Point(1067, 166);
+            this.tb口模预热参数设定1.Location = new System.Drawing.Point(1067, 141);
             this.tb口模预热参数设定1.Name = "tb口模预热参数设定1";
             this.tb口模预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb口模预热参数设定1.TabIndex = 150;
@@ -457,7 +464,7 @@
             // tb机头1预热参数设定1
             // 
             this.tb机头1预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb机头1预热参数设定1.Location = new System.Drawing.Point(867, 166);
+            this.tb机头1预热参数设定1.Location = new System.Drawing.Point(867, 141);
             this.tb机头1预热参数设定1.Name = "tb机头1预热参数设定1";
             this.tb机头1预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb机头1预热参数设定1.TabIndex = 148;
@@ -467,7 +474,7 @@
             // 
             this.label46.AutoSize = true;
             this.label46.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label46.Location = new System.Drawing.Point(766, 437);
+            this.label46.Location = new System.Drawing.Point(766, 412);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(200, 16);
             this.label46.TabIndex = 134;
@@ -477,7 +484,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label11.Location = new System.Drawing.Point(56, 489);
+            this.label11.Location = new System.Drawing.Point(56, 464);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(104, 16);
             this.label11.TabIndex = 122;
@@ -486,7 +493,7 @@
             // tb模颈预热参数设定1
             // 
             this.tb模颈预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb模颈预热参数设定1.Location = new System.Drawing.Point(767, 166);
+            this.tb模颈预热参数设定1.Location = new System.Drawing.Point(767, 141);
             this.tb模颈预热参数设定1.Name = "tb模颈预热参数设定1";
             this.tb模颈预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb模颈预热参数设定1.TabIndex = 147;
@@ -496,7 +503,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label17.Location = new System.Drawing.Point(575, 130);
+            this.label17.Location = new System.Drawing.Point(575, 115);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(40, 16);
             this.label17.TabIndex = 128;
@@ -506,7 +513,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label10.Location = new System.Drawing.Point(56, 454);
+            this.label10.Location = new System.Drawing.Point(56, 429);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(104, 16);
             this.label10.TabIndex = 121;
@@ -516,7 +523,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label18.Location = new System.Drawing.Point(675, 130);
+            this.label18.Location = new System.Drawing.Point(675, 115);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(40, 16);
             this.label18.TabIndex = 129;
@@ -525,7 +532,7 @@
             // tb流道预热参数设定1
             // 
             this.tb流道预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb流道预热参数设定1.Location = new System.Drawing.Point(667, 166);
+            this.tb流道预热参数设定1.Location = new System.Drawing.Point(667, 141);
             this.tb流道预热参数设定1.Name = "tb流道预热参数设定1";
             this.tb流道预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb流道预热参数设定1.TabIndex = 146;
@@ -534,7 +541,7 @@
             // tb换网预热参数设定2
             // 
             this.tb换网预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb换网预热参数设定2.Location = new System.Drawing.Point(567, 311);
+            this.tb换网预热参数设定2.Location = new System.Drawing.Point(567, 286);
             this.tb换网预热参数设定2.Name = "tb换网预热参数设定2";
             this.tb换网预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb换网预热参数设定2.TabIndex = 145;
@@ -543,7 +550,7 @@
             // tb机头2预热参数设定2
             // 
             this.tb机头2预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb机头2预热参数设定2.Location = new System.Drawing.Point(967, 311);
+            this.tb机头2预热参数设定2.Location = new System.Drawing.Point(967, 286);
             this.tb机头2预热参数设定2.Name = "tb机头2预热参数设定2";
             this.tb机头2预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb机头2预热参数设定2.TabIndex = 143;
@@ -552,7 +559,7 @@
             // tb口模预热参数设定2
             // 
             this.tb口模预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb口模预热参数设定2.Location = new System.Drawing.Point(1067, 311);
+            this.tb口模预热参数设定2.Location = new System.Drawing.Point(1067, 286);
             this.tb口模预热参数设定2.Name = "tb口模预热参数设定2";
             this.tb口模预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb口模预热参数设定2.TabIndex = 144;
@@ -562,7 +569,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label16.Location = new System.Drawing.Point(475, 130);
+            this.label16.Location = new System.Drawing.Point(475, 115);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(40, 16);
             this.label16.TabIndex = 127;
@@ -571,7 +578,7 @@
             // tb机头1预热参数设定2
             // 
             this.tb机头1预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb机头1预热参数设定2.Location = new System.Drawing.Point(867, 311);
+            this.tb机头1预热参数设定2.Location = new System.Drawing.Point(867, 286);
             this.tb机头1预热参数设定2.Name = "tb机头1预热参数设定2";
             this.tb机头1预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb机头1预热参数设定2.TabIndex = 142;
@@ -581,7 +588,7 @@
             // 
             this.dtp保温结束时间3.Font = new System.Drawing.Font("SimSun", 12F);
             this.dtp保温结束时间3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp保温结束时间3.Location = new System.Drawing.Point(167, 517);
+            this.dtp保温结束时间3.Location = new System.Drawing.Point(167, 492);
             this.dtp保温结束时间3.Name = "dtp保温结束时间3";
             this.dtp保温结束时间3.Size = new System.Drawing.Size(362, 26);
             this.dtp保温结束时间3.TabIndex = 138;
@@ -589,7 +596,7 @@
             // tb模颈预热参数设定2
             // 
             this.tb模颈预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb模颈预热参数设定2.Location = new System.Drawing.Point(767, 311);
+            this.tb模颈预热参数设定2.Location = new System.Drawing.Point(767, 286);
             this.tb模颈预热参数设定2.Name = "tb模颈预热参数设定2";
             this.tb模颈预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb模颈预热参数设定2.TabIndex = 141;
@@ -599,7 +606,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label15.Location = new System.Drawing.Point(375, 130);
+            this.label15.Location = new System.Drawing.Point(375, 115);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(48, 16);
             this.label15.TabIndex = 126;
@@ -609,7 +616,7 @@
             // 
             this.dtp保温结束时间2.Font = new System.Drawing.Font("SimSun", 12F);
             this.dtp保温结束时间2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp保温结束时间2.Location = new System.Drawing.Point(167, 410);
+            this.dtp保温结束时间2.Location = new System.Drawing.Point(167, 385);
             this.dtp保温结束时间2.Name = "dtp保温结束时间2";
             this.dtp保温结束时间2.Size = new System.Drawing.Size(362, 26);
             this.dtp保温结束时间2.TabIndex = 137;
@@ -617,7 +624,7 @@
             // tb流道预热参数设定2
             // 
             this.tb流道预热参数设定2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb流道预热参数设定2.Location = new System.Drawing.Point(667, 311);
+            this.tb流道预热参数设定2.Location = new System.Drawing.Point(667, 286);
             this.tb流道预热参数设定2.Name = "tb流道预热参数设定2";
             this.tb流道预热参数设定2.Size = new System.Drawing.Size(62, 26);
             this.tb流道预热参数设定2.TabIndex = 140;
@@ -627,7 +634,7 @@
             // 
             this.dtp保温开始时间.Font = new System.Drawing.Font("SimSun", 12F);
             this.dtp保温开始时间.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp保温开始时间.Location = new System.Drawing.Point(168, 343);
+            this.dtp保温开始时间.Location = new System.Drawing.Point(168, 318);
             this.dtp保温开始时间.Name = "dtp保温开始时间";
             this.dtp保温开始时间.Size = new System.Drawing.Size(362, 26);
             this.dtp保温开始时间.TabIndex = 135;
@@ -636,7 +643,7 @@
             // 
             this.dtp保温结束时间1.Font = new System.Drawing.Font("SimSun", 12F);
             this.dtp保温结束时间1.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp保温结束时间1.Location = new System.Drawing.Point(564, 267);
+            this.dtp保温结束时间1.Location = new System.Drawing.Point(564, 242);
             this.dtp保温结束时间1.Name = "dtp保温结束时间1";
             this.dtp保温结束时间1.Size = new System.Drawing.Size(565, 26);
             this.dtp保温结束时间1.TabIndex = 136;
@@ -645,7 +652,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label14.Location = new System.Drawing.Point(275, 130);
+            this.label14.Location = new System.Drawing.Point(275, 115);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(40, 16);
             this.label14.TabIndex = 125;
@@ -655,7 +662,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label22.Location = new System.Drawing.Point(1075, 130);
+            this.label22.Location = new System.Drawing.Point(1075, 115);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(40, 16);
             this.label22.TabIndex = 133;
@@ -665,7 +672,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label21.Location = new System.Drawing.Point(975, 130);
+            this.label21.Location = new System.Drawing.Point(975, 115);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(56, 16);
             this.label21.TabIndex = 132;
@@ -675,7 +682,7 @@
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label20.Location = new System.Drawing.Point(875, 130);
+            this.label20.Location = new System.Drawing.Point(877, 115);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(48, 16);
             this.label20.TabIndex = 131;
@@ -685,7 +692,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label19.Location = new System.Drawing.Point(775, 130);
+            this.label19.Location = new System.Drawing.Point(775, 115);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(40, 16);
             this.label19.TabIndex = 130;
@@ -695,7 +702,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label13.Location = new System.Drawing.Point(175, 130);
+            this.label13.Location = new System.Drawing.Point(175, 115);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(32, 16);
             this.label13.TabIndex = 124;
@@ -705,7 +712,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label9.Location = new System.Drawing.Point(56, 419);
+            this.label9.Location = new System.Drawing.Point(56, 394);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(104, 16);
             this.label9.TabIndex = 120;
@@ -715,7 +722,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label8.Location = new System.Drawing.Point(56, 384);
+            this.label8.Location = new System.Drawing.Point(56, 359);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(104, 16);
             this.label8.TabIndex = 119;
@@ -724,7 +731,7 @@
             // tb换网预热参数设定1
             // 
             this.tb换网预热参数设定1.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb换网预热参数设定1.Location = new System.Drawing.Point(564, 166);
+            this.tb换网预热参数设定1.Location = new System.Drawing.Point(564, 141);
             this.tb换网预热参数设定1.Name = "tb换网预热参数设定1";
             this.tb换网预热参数设定1.Size = new System.Drawing.Size(62, 26);
             this.tb换网预热参数设定1.TabIndex = 139;
@@ -734,7 +741,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label7.Location = new System.Drawing.Point(56, 314);
+            this.label7.Location = new System.Drawing.Point(56, 289);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(104, 16);
             this.label7.TabIndex = 118;
@@ -744,7 +751,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label6.Location = new System.Drawing.Point(56, 349);
+            this.label6.Location = new System.Drawing.Point(56, 324);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(104, 16);
             this.label6.TabIndex = 117;
@@ -754,7 +761,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label5.Location = new System.Drawing.Point(56, 279);
+            this.label5.Location = new System.Drawing.Point(56, 254);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(104, 16);
             this.label5.TabIndex = 116;
@@ -764,7 +771,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label4.Location = new System.Drawing.Point(56, 244);
+            this.label4.Location = new System.Drawing.Point(56, 219);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(104, 16);
             this.label4.TabIndex = 115;
@@ -774,7 +781,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label3.Location = new System.Drawing.Point(56, 209);
+            this.label3.Location = new System.Drawing.Point(56, 184);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(104, 16);
             this.label3.TabIndex = 114;
@@ -784,7 +791,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label2.Location = new System.Drawing.Point(56, 174);
+            this.label2.Location = new System.Drawing.Point(56, 149);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(104, 16);
             this.label2.TabIndex = 113;
@@ -794,24 +801,78 @@
             // 
             this.dtp预热开始时间.Font = new System.Drawing.Font("SimSun", 12F);
             this.dtp预热开始时间.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp预热开始时间.Location = new System.Drawing.Point(564, 203);
+            this.dtp预热开始时间.Location = new System.Drawing.Point(564, 178);
             this.dtp预热开始时间.Name = "dtp预热开始时间";
             this.dtp预热开始时间.Size = new System.Drawing.Size(565, 26);
             this.dtp预热开始时间.TabIndex = 112;
             // 
             // groupBox1
             // 
-            this.groupBox1.Location = new System.Drawing.Point(178, 168);
+            this.groupBox1.Location = new System.Drawing.Point(178, 143);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(351, 127);
             this.groupBox1.TabIndex = 165;
             this.groupBox1.TabStop = false;
             // 
+            // cb打印机
+            // 
+            this.cb打印机.Font = new System.Drawing.Font("SimSun", 12F);
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(316, 592);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(279, 24);
+            this.cb打印机.TabIndex = 166;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label40.Location = new System.Drawing.Point(220, 597);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(104, 16);
+            this.label40.TabIndex = 167;
+            this.label40.Text = "选择打印机：";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, 2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(174, 53);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 168;
+            this.pictureBox1.TabStop = false;
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label27.Location = new System.Drawing.Point(993, 25);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(93, 16);
+            this.label27.TabIndex = 170;
+            this.label27.Text = "登录角色：";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(1098, 25);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 169;
+            this.label角色.Text = "角色";
+            // 
             // ExtructionPreheatParameterRecordStep3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1192, 672);
+            this.ClientSize = new System.Drawing.Size(1202, 644);
+            this.Controls.Add(this.label27);
+            this.Controls.Add(this.label角色);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.cb打印机);
+            this.Controls.Add(this.label40);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tb加热保温时间2);
             this.Controls.Add(this.tb加热保温时间3);
@@ -889,6 +950,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExtructionPreheatParameterRecordStep3";
             this.Text = "吹膜机组预热参数记录表";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -970,5 +1032,10 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.DateTimePicker dtp预热开始时间;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox cb打印机;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label label角色;
     }
 }

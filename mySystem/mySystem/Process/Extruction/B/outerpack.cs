@@ -11,6 +11,7 @@ using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Extruction.Chart
 {
@@ -24,21 +25,27 @@ namespace mySystem.Extruction.Chart
         private Boolean isSqlOk;
         private CheckForm checkform = null;
 
-        private DataTable dtusers, dt记录, dt记录详情, dt代码批号;
+        private DataTable dt记录, dt记录详情, dt代码批号;
         private OleDbDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
 
-        private string person_操作员;
-        private string person_审核员;
-        /// <summary>
-        /// 登录人状态，0 操作员， 1 审核员， 2管理员
-        /// </summary>
-        private int stat_user;
-        /// <summary>
-        /// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
-        /// </summary>
-        private int stat_form;
+        #region
+        //private string person_操作员;
+        //private string person_审核员;
+        ///// <summary>
+        ///// 登录人状态，0 操作员， 1 审核员， 2管理员
+        ///// </summary>
+        //private int stat_user;
+        ///// <summary>
+        ///// 窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        ///// </summary>
+        //private int stat_form;
+        #endregion
+
+        List<String> ls操作员, ls审核员;
+        Parameter.UserState _userState;
+        Parameter.FormState _formState;
 
         public outerpack(mySystem.MainForm mainform) : base(mainform)
         {
@@ -47,7 +54,8 @@ namespace mySystem.Extruction.Chart
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
-            
+
+            fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
             getOtherData();  //读取设置内容
@@ -62,6 +70,7 @@ namespace mySystem.Extruction.Chart
             //打印、查看日志按钮不可用
             btn打印.Enabled = false;
             btn查看日志.Enabled = false;
+            cb打印机.Enabled = false;
         }
 
         public outerpack(mySystem.MainForm mainform, Int32 ID): base(mainform)
@@ -72,6 +81,7 @@ namespace mySystem.Extruction.Chart
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
 
+            fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
             //getOtherData();  //读取设置内容
@@ -86,39 +96,72 @@ namespace mySystem.Extruction.Chart
         // 获取操作员和审核员
         private void getPeople()
         {
-            dtusers = new DataTable("用户权限");
-            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from 用户权限 where 步骤 = '吹膜产品外包装记录表'", connOle);
-            datemp.Fill(dtusers);
-            datemp.Dispose();
-            if (dtusers.Rows.Count > 0)
+            OleDbDataAdapter da;
+            DataTable dt;
+
+            ls操作员 = new List<string>();
+            ls审核员 = new List<string>();
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜生产和检验记录表'", connOle);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+
+            if (dt.Rows.Count > 0)
             {
-                person_操作员 = dtusers.Rows[0]["操作员"].ToString();
-                person_审核员 = dtusers.Rows[0]["审核员"].ToString();
+                string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        ls操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        ls审核员.Add(s1[i]);
+                }
             }
         }
 
         // 根据登录人，设置stat_user
         private void setUserState()
         {
-            if (mySystem.Parameter.userName == person_操作员)
-                stat_user = 0;
-            else if (mySystem.Parameter.userName == person_审核员)
-                stat_user = 1;
-            else
-                stat_user = 2;
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
-        private void setFormState()
+        private void setFormState(bool newForm = false)
         {
-            if (dt记录.Rows[0]["审核人"].ToString() == "")
-                stat_form = 0;
-            else if (dt记录.Rows[0]["审核人"].ToString() == "__待审核")
-                stat_form = 1;
-            else if ((bool)dt记录.Rows[0]["审核是否通过"])
-                stat_form = 2;
+            if (newForm)
+            {
+                _formState = Parameter.FormState.无数据;
+                return;
+            }
+            string s = dt记录.Rows[0]["审核人"].ToString();
+            bool b = Convert.ToBoolean(dt记录.Rows[0]["审核是否通过"]);
+            if (s == "") _formState = Parameter.FormState.未保存;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
             else
-                stat_form = 3;
+            {
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
+            }
         }
 
         //读取设置内容  //GetProductInfo //产品代码、产品批号初始化
@@ -171,14 +214,17 @@ namespace mySystem.Extruction.Chart
         //根据状态设置可读写性
         private void setEnableReadOnly()
         {
-            if (stat_user == 2)//管理员
+            //if (stat_user == 2)//管理员
+            if (_userState == Parameter.UserState.管理员)
             {
                 //控件都能点
                 setControlTrue();
             }
-            else if (stat_user == 1)//审核人
+            //else if (stat_user == 1)//审核人
+            else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                if (stat_form == 0 || stat_form == 3 || stat_form == 2)  //0未保存||2审核通过||3审核未通过
+                //if (stat_form == 0 || stat_form == 3 || stat_form == 2)  //0未保存||2审核通过||3审核未通过
+                if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
@@ -192,7 +238,8 @@ namespace mySystem.Extruction.Chart
             }
             else//操作员
             {
-                if (stat_form == 1 || stat_form == 2) //1待审核||2审核通过
+                //if (stat_form == 1 || stat_form == 2) //1待审核||2审核通过
+                if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
                 {
                     //控件都不能点
                     setControlFalse();
@@ -244,7 +291,7 @@ namespace mySystem.Extruction.Chart
 
         /// <summary>
         /// 设置所有控件不可用；
-        /// 查看日志、打印始终可用
+        /// 查看日志、打印、cb打印机始终可用
         /// </summary>
         void setControlFalse()
         {
@@ -266,6 +313,7 @@ namespace mySystem.Extruction.Chart
             //查看日志、打印始终可用
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
+            cb打印机.Enabled = true;
         }
 
         // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
@@ -408,6 +456,9 @@ namespace mySystem.Extruction.Chart
             dr["审核人"] = "";
             dr["审核日期"] = Convert.ToDateTime(dtp审核日期.Value.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
+            string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
+            log += "生产指令编码：" + mySystem.Parameter.proInstruction + "\n";
+            dr["日志"] = log;            
             return dr;
         }
 
@@ -435,6 +486,8 @@ namespace mySystem.Extruction.Chart
             //DataRow dr = dt记录详情.NewRow();
             dr["序号"] = 0;
             dr["T产品外包装记录ID"] = ID;
+            dr["包装箱号"] = 0;
+            dr["包装明细"] = "";
             dr["是否贴标签"] = "Yes";
             dr["是否打包封箱"] = "Yes";
             //dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
@@ -554,7 +607,7 @@ namespace mySystem.Extruction.Chart
         {
             bool isSaved = Save();
             //控件可见性
-            if (stat_user == 0 && isSaved == true)
+            if (_userState == Parameter.UserState.操作员 && isSaved == true)
                 btn提交审核.Enabled = true;
         }
 
@@ -617,24 +670,30 @@ namespace mySystem.Extruction.Chart
             // =================================================
             // yyyy年MM月dd日，操作员：XXX 提交审核
             string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
             dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
             dt记录.Rows[0]["审核人"] = "__待审核";
 
             Save();
-            stat_form = 1;
+            _formState = Parameter.FormState.待审核;
             setEnableReadOnly();
         }
 
         //查看日志按钮
         private void btn查看日志_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(dt记录.Rows[0]["日志"].ToString());
+            mySystem.Other.LogForm logform = new mySystem.Other.LogForm();
+            logform.setLog(dt记录.Rows[0]["日志"].ToString()).Show();
         }
         
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
+            if (mySystem.Parameter.userName == dt记录.Rows[0]["确认人"].ToString())
+            {
+                MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
+                return;
+            }
             checkform = new CheckForm(this);
             checkform.Show();
         }
@@ -649,7 +708,7 @@ namespace mySystem.Extruction.Chart
 
             base.CheckResult();
 
-            dt记录.Rows[0]["审核人"] = Parameter.IDtoName(checkform.userID);
+            dt记录.Rows[0]["审核人"] = mySystem.Parameter.userName;
             dt记录.Rows[0]["审核意见"] = checkform.opinion;
             dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
 
@@ -664,7 +723,7 @@ namespace mySystem.Extruction.Chart
 
             //写日志
             string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 完成审核\n";
             log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
             log += "审核意见：" + checkform.opinion + "\n";
             dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
@@ -673,19 +732,37 @@ namespace mySystem.Extruction.Chart
 
             //修改状态，设置可控性
             if (checkform.ischeckOk)
-            { stat_form = 2; }//审核通过
+            { _formState = Parameter.FormState.审核通过;  }//审核通过
             else
-            { stat_form = 3; }//审核未通过            
+            { _formState = Parameter.FormState.审核未通过; }//审核未通过            
             setEnableReadOnly();
+        }
+        
+        //添加打印机
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        private void fill_printer()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
         }
 
         //打印按钮
         private void printBtn_Click(object sender, EventArgs e)
         {
-            //print
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
             //true->预览
             //false->打印
-            print(true);
+            print(false);
+            GC.Collect();
         }
 
         //打印功能
@@ -697,38 +774,57 @@ namespace mySystem.Extruction.Chart
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-111-R01A  产品外包装记录.xlsx"); 
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
 
             if (isShow)
             {
                 //true->预览
                 // 设置该进程是否可见
                 oXL.Visible = true;
-                // 修改Sheet中某行某列的值
-                my = printValue(my);
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
             }
             else
             {
+                bool isPrint = true;
                 //false->打印
-                // 设置该进程是否可见
-                oXL.Visible = false;
-                // 修改Sheet中某行某列的值
-                my = printValue(my);
-                // 直接用默认打印机打印该Sheet
-                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
-                // 关闭文件，false表示不保存
-                wb.Close(false);
-                // 关闭Excel进程
-                oXL.Quit();
-                // 释放COM资源
-                Marshal.ReleaseComObject(wb);
-                Marshal.ReleaseComObject(oXL);
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+                        bs记录.EndEdit();
+                        da记录.Update((DataTable)bs记录.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
             }
         }
         
         //打印功能
-        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet)
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             //外表信息
             mysheet.Cells[3, 1].Value = "产品代码/规格：" + dt记录.Rows[0]["产品代码"].ToString();
@@ -764,6 +860,20 @@ namespace mySystem.Extruction.Chart
                 mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["是否贴标签"].ToString() == "Yes" ? "√" : "×";
                 mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["是否打包封箱"].ToString() == "Yes" ? "√" : "×";
             }
+            //加页脚
+            int sheetnum;
+            List<Int32> sheetList = new List<Int32>();
+            List<String> queryCols = new List<String>(new String[] { "ID" });
+            List<String> whereCols = new List<String>(new String[] { "生产指令ID" });
+            List<Object> whereVals = new List<Object>(new Object[] { mySystem.Parameter.proInstruID });
+            List<List<Object>> res = Utility.selectAccess(mySystem.Parameter.connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
+            foreach (Int32 num in res[0])
+            {
+                sheetList.Add(num);
+            }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+            mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 15 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            //返回
             return mysheet;
         }
 

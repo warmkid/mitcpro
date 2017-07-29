@@ -11,6 +11,7 @@ using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 //this form is about the 12th picture of the extrusion step
 //READ ME :
@@ -31,66 +32,69 @@ namespace mySystem.Extruction.Process
 
     public partial class MaterialBalenceofExtrusionProcess : mySystem.BaseForm
     {
-        BindingSource bsBalance;
-        DataTable dtBalance;
-        OleDbDataAdapter daBalance;
-        OleDbCommandBuilder cbBalance;
+        BindingSource bsOuter;
+        DataTable dtOuter;
+        OleDbDataAdapter daOuter;
+        OleDbCommandBuilder cbOuter;
         OleDbConnection connOle;
         DateTime 生产日期;
         private CheckForm check = null;
 
-        List<string> list操作员;// = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
-        List<string> list审核员;//= new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
+        List<string> ls操作员;// = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
+        List<string> ls审核员;//= new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
 
         string __待审核 = "__待审核";
         int searchId;
-        string instructionStr;
-        int instructionInt;
+        string __生产指令;
+        int __生产指令ID;
+        string __生产开始时间;
         string tablename1 = "吹膜工序物料平衡记录";
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
         /// </summary>
-        int userState;
+
+        Parameter.UserState _userState;
         /// <summary>
         /// 0：未保存；1：待审核；2：审核通过；3：审核未通过
         /// </summary>
-        int formState;
+        Parameter.FormState _formState;
         public MaterialBalenceofExtrusionProcess(mySystem.MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
             connOle = Parameter.connOle;
+            fill_printer();
             getPeople();
             setUserState();
-            instructionStr= Parameter.proInstruction;
-            instructionInt = Parameter.proInstruID;
-            txb生产指令.Text = instructionStr;
+            __生产指令 = Parameter.proInstruction;
+            __生产指令ID = Parameter.proInstruID;
+            lbl生产指令.Text = __生产指令;
             getOtherData();
-            //
-            readBalance(instructionStr);
-            removeBindBalance();
-            BindBalance();
             
-            if (0 == dtBalance.Rows.Count)
+            readOuterData(__生产指令);
+            removeOuterBind();
+            outerBind();
+            
+            if (0 == dtOuter.Rows.Count)
             {
-                DataRow newrow = dtBalance.NewRow();
-                newrow = writeBalance(newrow);
-                dtBalance.Rows.Add(newrow);
-                daBalance.Update((DataTable)bsBalance.DataSource);
-                readBalance(instructionStr);
-                removeBindBalance();
-                BindBalance();
+                DataRow newrow = dtOuter.NewRow();
+                newrow = writeOuterDefault(newrow);
+                dtOuter.Rows.Add(newrow);
+                daOuter.Update((DataTable)bsOuter.DataSource);
+                readOuterData(__生产指令);
+                removeOuterBind();
+                outerBind();
                 
             }
 
-            searchId = Convert.ToInt32(dtBalance.Rows[0]["ID"]);
+            searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
             getInstructionInfo();
             compute();
-            daBalance.Update((DataTable)bsBalance.DataSource);
-            readBalance(instructionStr);
-            removeBindBalance();
-            BindBalance();
-            searchId = Convert.ToInt32(dtBalance.Rows[0]["ID"]);
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            readOuterData(__生产指令);
+            removeOuterBind();
+            outerBind();
+            searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
            
 
             setFormState();
@@ -102,23 +106,24 @@ namespace mySystem.Extruction.Process
         {
             InitializeComponent();
             connOle = Parameter.connOle;
+            fill_printer();
             getPeople();
             setUserState();
             searchId=Id;
-            readBalance(searchId);
-            removeBindBalance();
-            BindBalance();
-
+            readOuterBind(searchId);
+            removeOuterBind();
+            outerBind();
+       
             //get othertime will use current instruction Id
             getInstructionInfo();
             getOtherData();
            
 
             compute();
-            daBalance.Update((DataTable)bsBalance.DataSource);
-            readBalance(searchId);
-            removeBindBalance();
-            BindBalance();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            readOuterBind(searchId);
+            removeOuterBind();
+            outerBind();
             setFormState();
             setEnableReadOnly();
         }
@@ -126,15 +131,14 @@ namespace mySystem.Extruction.Process
         private void getOtherData()
         {
             //current instruction information
-            
             //get the instruction start time in table "production instruction"
             getStartTime();
 
         }
         private void getInstructionInfo()
         {
-            instructionInt = Convert.ToInt32(dtBalance.Rows[0]["生产指令ID"]);
-            instructionStr = Convert.ToString(dtBalance.Rows[0]["生产指令"]);
+            __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
+            __生产指令 = Convert.ToString(dtOuter.Rows[0]["生产指令"]);
         }
         private void getPeople()
         {
@@ -151,105 +155,137 @@ namespace mySystem.Extruction.Process
             }
 
             //the getPeople and setUserState combine here
-            list操作员 = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
-            list审核员 = new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
+            ls操作员 = new List<string>(Regex.Split(dtUser.Rows[0]["操作员"].ToString(), ",|，"));
+            ls审核员 = new List<string>(Regex.Split(dtUser.Rows[0]["审核员"].ToString(), ",|，"));
+
+        }
+
+
+
+
+        private void setUserState()
+        {
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+        }
+        private void setFormState(bool newForm = false)
+        {
+            if (newForm)
+            {
+
+                _formState = Parameter.FormState.无数据;
+                return;
+            }
+            string s = dtOuter.Rows[0]["审核员"].ToString();
+            bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核是否通过"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
+            else
+            {
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
+            }
 
         }
         private void compute()
         {
             readAgain();
         }
-        private void setUserState()
-        {
-            if (list操作员.IndexOf(Parameter.userName) >= 0)
-            {
-                userState = 0;
-            }
-            else if (list审核员.IndexOf(Parameter.userName) >= 0)
-            {
-                userState = 1;
-            }
-            else
-            {
-                userState = 2;
-            }
-        }
-        private void setFormState()
-        {
-            if ("" == dtBalance.Rows[0]["审核人"].ToString().Trim())
-            {
-                //this means the record hasn't been saved
-                formState = 0;
-            }
-            else if (__待审核 == dtBalance.Rows[0]["审核人"].ToString().Trim())
-            {
-                //this means this record should be checked
-                formState = 1;
-            }
-            else if (Convert.ToBoolean(dtBalance.Rows[0]["审核是否通过"]))
-            {
-                //this means this record has been checked
-                formState = 2;
-            }
-            else
-            {
-                //this means the record has been checked but need more modification
-                formState = 3;
-            }
-        }
+
 
         private void btn查看日志_Click(object sender, EventArgs e)
         {
             try
-            { MessageBox.Show(dtBalance.Rows[0]["日志"].ToString()); }
-            catch
-            { MessageBox.Show(" !"); }
+            {
+                mySystem.Other.LogForm logForm = new Other.LogForm();
+
+                logForm.setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+            }
+            catch (Exception exp)
+            {
+                MessageBox.Show(exp.Message + "\n" + exp.StackTrace);
+            }
         }
         /// <summary>
         ///  for different user, the form will open different controls
         /// </summary>
         private void setEnableReadOnly()
         {
-            switch (userState)
+            if (Parameter.FormState.无数据 == _formState)
             {
-                case 0: //0--操作员
+                setControlFalse();
+               
+                //lbl生产指令.ReadOnly = false;
+                return;
+            }
+            switch (_userState)
+            {
+                case Parameter.UserState.操作员: //0--操作员
                     //In this situation,operator could edit all the information and the send button is active
-                    if (0 == formState || 3 == formState)
+                    if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState)
                     {
                         setControlTrue();
-                        btnSave.Enabled = true;
+                       
                     }
                     //Once the record send to the reviewer or the record has passed check, all the controls are forbidden
-                    else if (1 == formState || 2 == formState)
+                    else if (Parameter.FormState.待审核 == _formState || Parameter.FormState.审核通过 == _formState)
                     {
                         setControlFalse();
                     }
+
                     break;
-                case 1: //1--审核员
+                case Parameter.UserState.审核员: //1--审核员
                     //the formState is to be checked
-                    if (1 == formState)
+                    if (Parameter.FormState.待审核 == _formState)
                     {
                         setControlTrue();
+
                         btn审核.Enabled = true;
                         //one more button should be avtive here!
                     }
                     //the formState do not have to be checked
-                    else if (0 == formState || 2 == formState || 3 == formState)
+                    else if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState || Parameter.FormState.审核未通过 == _formState)
                     {
                         setControlFalse();
+
                     }
+                    if (Parameter.FormState.审核通过 != _formState)
+                    {
+                     
+                    }
+                    else
+                    {
+                  
+                    }
+                    btn打印.Enabled = true;
+                    cmb打印机选择.Enabled = true;
                     break;
-                case 2: //2--管理员
+                case Parameter.UserState.管理员: //2--管理员
                     setControlTrue();
                     break;
                 default:
                     break;
-                    
             }
         }
         // 为了方便设置控件状态，完成如下两个函数：分别用于设置所有控件可用和所有控件不可用
 
-        //this guarantee the controls are editable
+        //this guarantee the controls 
         private void setControlTrue()
         {
             foreach (Control c in this.Controls)
@@ -268,10 +304,9 @@ namespace mySystem.Extruction.Process
                 }
             }
             //some textboxes act as column name and row name, so these shoule be forbidden
-
-            btn查看日志.Enabled = true;
-            
-            
+            btnSave.Enabled = true;
+            txb备注.ReadOnly = false;
+            btn查看日志.Enabled = true;                        
         }
 
 
@@ -302,7 +337,8 @@ namespace mySystem.Extruction.Process
             //this act as the same in function upper
             //this.panel1.Enabled = true;
             btn查看日志.Enabled = true;
-            btn打印.Enabled = true;
+            //only checkman can print
+            //btn打印.Enabled = true;
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)
@@ -332,26 +368,26 @@ namespace mySystem.Extruction.Process
             // =================================================
             // yyyy年MM月dd日，操作员：XXX 提交审核
             string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
-            dtBalance.Rows[0]["日志"] = dtBalance.Rows[0]["日志"].ToString() + log;
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
             //fill reviwer information
-            dtBalance.Rows[0]["审核人"] = __待审核;
+            dtOuter.Rows[0]["审核员"] = __待审核;
             //update log into table
-            bsBalance.EndEdit();
-            daBalance.Update((DataTable)bsBalance.DataSource);
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
             try
             {
-                readBalance(searchId);
+                readOuterBind(searchId);
             }
             catch
             {
-                readBalance(instructionStr);
+                readOuterData(__生产指令);
             }
-            removeBindBalance();
-            BindBalance();
-            searchId = Convert.ToInt32(dtBalance.Rows[0]["ID"]);
-            formState = 1;
+            removeOuterBind();
+            outerBind();
+            searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            setFormState();
             setEnableReadOnly();
             btn提交审核.Enabled = false;
         }
@@ -364,16 +400,16 @@ namespace mySystem.Extruction.Process
             {
                 base.CheckResult();
 
-                dtBalance.Rows[0]["审核人"] = check.userName;
-                dtBalance.Rows[0]["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString());
-                dtBalance.Rows[0]["审核意见"] = check.opinion.ToString();
-                dtBalance.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
-                bsBalance.EndEdit();
-                daBalance.Update((DataTable)bsBalance.DataSource);
-                readBalance(txb生产指令.Text);
-                removeBindBalance();
-                BindBalance();
-                searchId = Convert.ToInt32(dtBalance.Rows[0]["ID"]);
+                dtOuter.Rows[0]["审核员"] = Parameter.userName;
+                dtOuter.Rows[0]["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString());
+                dtOuter.Rows[0]["审核意见"] = check.opinion.ToString();
+                dtOuter.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
+                bsOuter.EndEdit();
+                daOuter.Update((DataTable)bsOuter.DataSource);
+                readOuterData(__生产指令);
+                removeOuterBind();
+                outerBind();
+                searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
 
 
                 //this part to add log 
@@ -381,17 +417,17 @@ namespace mySystem.Extruction.Process
                 // =================================================
                 // yyyy年MM月dd日，操作员：XXX 审核
                 string log = "=====================================\n";
-                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 审核通过\n";
-                dtBalance.Rows[0]["日志"] = dtBalance.Rows[0]["日志"].ToString() + log;
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 审核通过\n";
+                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
 
-                bsBalance.EndEdit();
-                daBalance.Update((DataTable)bsBalance.DataSource);
+                bsOuter.EndEdit();
+                daOuter.Update((DataTable)bsOuter.DataSource);
 
-                readBalance(searchId);
+                readOuterBind(searchId);
 
-                removeBindBalance();
-                BindBalance();
+                removeOuterBind();
+                outerBind();
 
                 //to delete the unchecked table
                 //read from database table and find current record
@@ -407,24 +443,24 @@ namespace mySystem.Extruction.Process
                 {
                     DataRow newrow = dtCheck.NewRow();
                     newrow["表名"] = tablename1;
-                    newrow["对应ID"] = dtBalance.Rows[0]["ID"];
+                    newrow["对应ID"] = dtOuter.Rows[0]["ID"];
                     dtCheck.Rows.Add(newrow);
                 }
                 //remove the record
                 dtCheck.Rows[0].Delete();
                 bsCheck.DataSource = dtCheck;
                 daCheck.Update((DataTable)bsCheck.DataSource);
-                formState = 2;
+                setFormState();
                 setEnableReadOnly();
             }
             else
             {
                 //check unpassed
                 base.CheckResult();
-                txb审核人.Text = check.userName.ToString();
-                dtBalance.Rows[0]["审核人"] = check.userName.ToString();
-                dtBalance.Rows[0]["审核意见"] = check.opinion.ToString();
-                dtBalance.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
+                txb审核员.Text = Parameter.userName;
+                dtOuter.Rows[0]["审核员"] = Parameter.userName;
+                dtOuter.Rows[0]["审核意见"] = check.opinion.ToString();
+                dtOuter.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
 
 
                 //this part to add log 
@@ -432,18 +468,18 @@ namespace mySystem.Extruction.Process
                 // =================================================
                 // yyyy年MM月dd日，操作员：XXX 审核
                 string log = "=====================================\n";
-                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 审核不通过\n";
-                dtBalance.Rows[0]["日志"] = dtBalance.Rows[0]["日志"].ToString() + log;
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 审核不通过\n";
+                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
 
-                bsBalance.EndEdit();
-                daBalance.Update((DataTable)bsBalance.DataSource);
+                bsOuter.EndEdit();
+                daOuter.Update((DataTable)bsOuter.DataSource);
 
-                readBalance(Convert.ToInt32( searchId));
+                readOuterBind(Convert.ToInt32( searchId));
 
-                removeBindBalance();
-                BindBalance();
-                formState = 3;
+                removeOuterBind();
+                outerBind();
+                setFormState();
                 setEnableReadOnly();
             }
 
@@ -451,23 +487,31 @@ namespace mySystem.Extruction.Process
 
         }
 
+        
+
         private void getStartTime()
         {
-            string sqlStr = "SELECT 开始生产日期 FROM 生产指令信息表 WHERE ID = " + instructionInt.ToString();
+            string sqlStr = "SELECT 开始生产日期 FROM 生产指令信息表 WHERE ID = " + __生产指令ID.ToString();
             OleDbCommand sqlCmd = new OleDbCommand(sqlStr, connOle);
-            生产日期 = Convert.ToDateTime(sqlCmd.ExecuteScalar());
-            dtp生产日期.Value = 生产日期;
-            //dtp生产日期.Enabled = false;
+            __生产开始时间 = Convert.ToDateTime(sqlCmd.ExecuteScalar().ToString()).ToLongDateString();
+            lbl生产开始时间.Text = __生产开始时间;
         }
 
-         private DataRow writeBalance(DataRow dr)
+         private DataRow writeOuterDefault(DataRow dr)
          {            
-             dr["生产指令ID"] = instructionInt;
-             dr["生产指令"] = instructionStr;
-             dr["生产日期"] = 生产日期;           
-             dr["记录人"] = Parameter.userName;
+             dr["生产指令ID"] = __生产指令ID;
+             dr["生产指令"] = __生产指令;
+             dr["生产日期"] = __生产开始时间; ;        
+             dr["记录员"] = Parameter.userName;
              dr["记录日期"]=Convert.ToDateTime(DateTime.Now.ToString());
              dr["审核日期"] = Convert.ToDateTime(DateTime.MinValue);
+             //this part to add log 
+             //格式： 
+             // =================================================
+             // yyyy年MM月dd日，操作员：XXX 创建记录
+             string log = "=====================================\n";
+             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 创建记录\n";
+             dr["日志"] = log;
              return dr;
          }
 
@@ -484,11 +528,11 @@ namespace mySystem.Extruction.Process
 
              string Uname = "吹膜工序废品记录";
              string Ucol = "合计不良品数量";
-             string Tsqlcmd = "SELECT " + Tcol + " FROM " + Tname + " WHERE " + where + " = " + instructionInt + ";";
-             string Asqlcmd1 = "SELECT " + Acol1 + " FROM " + Aname + " WHERE " + where + " = " + instructionInt + ";";
-             string Asqlcmd2 = "SELECT " + Acol2 + " FROM " + Aname + " WHERE " + where + " = " + instructionInt + ";";
-             string Asqlcmd3 = "SELECT " + Acol3 + " FROM " + Aname + " WHERE " + where + " = " + instructionInt + ";";
-             string Usqlcmd = "SELECT " + Ucol + " FROM " + Uname + " WHERE " + where + " = " + instructionInt + ";";
+             string Tsqlcmd = "SELECT " + Tcol + " FROM " + Tname + " WHERE " + where + " = " + __生产指令ID + ";";
+             string Asqlcmd1 = "SELECT " + Acol1 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
+             string Asqlcmd2 = "SELECT " + Acol2 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
+             string Asqlcmd3 = "SELECT " + Acol3 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
+             string Usqlcmd = "SELECT " + Ucol + " FROM " + Uname + " WHERE " + where + " = " + __生产指令ID + ";";
              OleDbCommand Tcmd = new OleDbCommand(Tsqlcmd, connOle);
              OleDbCommand Acmd1 = new OleDbCommand(Asqlcmd1, connOle);
              OleDbCommand Acmd2 = new OleDbCommand(Asqlcmd2, connOle);
@@ -510,66 +554,66 @@ namespace mySystem.Extruction.Process
              {
                  MessageBox.Show("物料平衡超出98%--102%!");
              }
-             dtBalance.Rows[0]["成品重量合计"] = t;
-             dtBalance.Rows[0]["废品量合计"] = u;
-             dtBalance.Rows[0]["领料量"] = a;
-             dtBalance.Rows[0]["重量比成品率"] = rate;
-             dtBalance.Rows[0]["物料平衡"] = balance;
+             dtOuter.Rows[0]["成品重量合计"] = t;
+             dtOuter.Rows[0]["废品量合计"] = u;
+             dtOuter.Rows[0]["领料量"] = a;
+             dtOuter.Rows[0]["重量比成品率"] = rate;
+             dtOuter.Rows[0]["物料平衡"] = balance;
 
          }
 
 
-         private void readBalance(string instruc)
+         private void readOuterData(string instruc)
          {
              string tablename1 = "吹膜工序物料平衡记录";
-             bsBalance = new BindingSource();
-             dtBalance = new DataTable(tablename1);
-             daBalance = new OleDbDataAdapter("select * from " + tablename1 + " where 生产指令 ='" + instruc + "';", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
-             cbBalance = new OleDbCommandBuilder(daBalance);
-             daBalance.Fill(dtBalance);
+             bsOuter = new BindingSource();
+             dtOuter = new DataTable(tablename1);
+             daOuter = new OleDbDataAdapter("select * from " + tablename1 + " where 生产指令 ='" + instruc + "';", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
+             cbOuter = new OleDbCommandBuilder(daOuter);
+             daOuter.Fill(dtOuter);
          }
 
 
-         private void readBalance(int searchId)
+         private void readOuterBind(int searchId)
          {
              string tablename1 = "吹膜工序物料平衡记录";
-             bsBalance = new BindingSource();
-             dtBalance = new DataTable(tablename1);
-             daBalance = new OleDbDataAdapter("select * from " + tablename1 + " where ID =" +searchId + ";", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
-             cbBalance = new OleDbCommandBuilder(daBalance);
-             daBalance.Fill(dtBalance);
+             bsOuter = new BindingSource();
+             dtOuter = new DataTable(tablename1);
+             daOuter = new OleDbDataAdapter("select * from " + tablename1 + " where ID =" +searchId + ";", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
+             cbOuter = new OleDbCommandBuilder(daOuter);
+             daOuter.Fill(dtOuter);
          }
-         private void BindBalance()
+         private void outerBind()
          {
-             bsBalance.DataSource = dtBalance;
+             bsOuter.DataSource = dtOuter;
 
-             txb生产指令.DataBindings.Add("Text", bsBalance.DataSource, "生产指令");
-             dtp生产日期.DataBindings.Add("Value", bsBalance.DataSource, "生产日期");
-             txb成品重量合计.DataBindings.Add("Text", bsBalance.DataSource, "成品重量合计");
-             txb废品量合计.DataBindings.Add("Text", bsBalance.DataSource, "废品量合计");
-             txb领料量.DataBindings.Add("Text", bsBalance.DataSource, "领料量");
-             txb重量比成品率.DataBindings.Add("Text", bsBalance.DataSource, "重量比成品率");
-             txb物料平衡.DataBindings.Add("Text", bsBalance.DataSource, "物料平衡");
+             lbl生产指令.DataBindings.Add("Text", bsOuter.DataSource, "生产指令");
+             lbl生产开始时间.DataBindings.Add("Text", bsOuter.DataSource, "生产日期");
+             txb成品重量合计.DataBindings.Add("Text", bsOuter.DataSource, "成品重量合计");
+             txb废品量合计.DataBindings.Add("Text", bsOuter.DataSource, "废品量合计");
+             txb领料量.DataBindings.Add("Text", bsOuter.DataSource, "领料量");
+             txb重量比成品率.DataBindings.Add("Text", bsOuter.DataSource, "重量比成品率");
+             txb物料平衡.DataBindings.Add("Text", bsOuter.DataSource, "物料平衡");
              // TODO: BINDING FAILED
-             txb记录人.DataBindings.Add("Text", bsBalance.DataSource, "记录人");
-             dtp记录日期.DataBindings.Add("Value", bsBalance.DataSource, "记录日期");
-             txb审核人.DataBindings.Add("Text", bsBalance.DataSource, "审核人");
-             dtp审核日期.DataBindings.Add("Value", bsBalance.DataSource, "审核日期");
-             txb备注.DataBindings.Add("Text", bsBalance.DataSource, "备注");
+             txb记录员.DataBindings.Add("Text", bsOuter.DataSource, "记录员");
+             dtp记录日期.DataBindings.Add("Value", bsOuter.DataSource, "记录日期");
+             txb审核员.DataBindings.Add("Text", bsOuter.DataSource, "审核员");
+             dtp审核日期.DataBindings.Add("Value", bsOuter.DataSource, "审核日期");
+             txb备注.DataBindings.Add("Text", bsOuter.DataSource, "备注");
          }
 
-         private void removeBindBalance()
+         private void removeOuterBind()
          {
-             txb生产指令.DataBindings.Clear();
-             dtp生产日期.DataBindings.Clear();
+             lbl生产指令.DataBindings.Clear();
+             lbl生产开始时间.DataBindings.Clear();
              txb成品重量合计.DataBindings.Clear();
              txb废品量合计.DataBindings.Clear();
              txb领料量.DataBindings.Clear();
              txb重量比成品率.DataBindings.Clear();
              txb物料平衡.DataBindings.Clear();
-             txb记录人.DataBindings.Clear();
+             txb记录员.DataBindings.Clear();
              dtp记录日期.DataBindings.Clear();
-             txb审核人.DataBindings.Clear();
+             txb审核员.DataBindings.Clear();
              dtp审核日期.DataBindings.Clear();
              txb备注.DataBindings.Clear();
          }
@@ -579,14 +623,17 @@ namespace mySystem.Extruction.Process
          private void btnSave_Click(object sender, EventArgs e)
          {
              // calculate();
-             bsBalance.EndEdit();
-             daBalance.Update((DataTable)bsBalance.DataSource);
-             readBalance(txb生产指令.Text);
-             removeBindBalance();
-             BindBalance();
-             searchId = Convert.ToInt32(dtBalance.Rows[0]["ID"]);
-             btn提交审核.Enabled = true;
-             btn打印.Enabled = true;
+             bsOuter.EndEdit();
+             daOuter.Update((DataTable)bsOuter.DataSource);
+             readOuterData(__生产指令);
+             removeOuterBind();
+             outerBind();
+             searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+             if (Parameter.UserState.操作员 == _userState)
+             {
+                 btn提交审核.Enabled = true;
+             }
+             //btn打印.Enabled = true;
          }
 
          private void btn审核_Click(object sender, EventArgs e)
@@ -595,9 +642,29 @@ namespace mySystem.Extruction.Process
              check.Show();
          }
 
+         [DllImport("winspool.drv")]
+         public static extern bool SetDefaultPrinter(string Name);
+         //添加打印机
+         private void fill_printer()
+         {
+
+             System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+             foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+             {
+                 cmb打印机选择.Items.Add(sPrint);
+             }
+         }
+
          private void btn打印_Click(object sender, EventArgs e)
          {
+             if (cmb打印机选择.Text == "")
+             {
+                 MessageBox.Show("选择一台打印机");
+                 return;
+             }
+             SetDefaultPrinter(cmb打印机选择.Text);
              print(true);
+             GC.Collect();
          }
 		 public void print(bool preview)
          {
@@ -612,16 +679,16 @@ namespace mySystem.Extruction.Process
              oXL.Visible = true;
              // 修改Sheet中某行某列的值
 
-             my.Cells[3, 2].Value = txb生产指令.Text.ToString();
-             my.Cells[3, 4].Value = dtp生产日期.Value.ToLongDateString();
+             my.Cells[3, 2].Value = lbl生产指令.Text.ToString();
+             my.Cells[3, 4].Value = lbl生产开始时间.Text.ToString();
              my.Cells[6, 1].Value = txb成品重量合计.Text;
              my.Cells[6, 2].Value = txb废品量合计.Text;
              my.Cells[6, 3].Value = txb领料量.Text;
              my.Cells[6, 4].Value = txb重量比成品率.Text;
              my.Cells[6, 5].Value = txb物料平衡.Text;
              my.Cells[7, 2].Value = txb备注.Text;
-             my.Cells[8, 1].Value = "记录人/日期：" + txb记录人.Text+"   "+dtp记录日期.Value.ToLongDateString();
-             my.Cells[8, 4].Value =  txb审核人.Text+dtp审核日期.Value.ToLongDateString();
+             my.Cells[8, 1].Value = "记录员/日期：" + txb记录员.Text+"   "+dtp记录日期.Value.ToLongDateString();
+             my.Cells[8, 4].Value =  txb审核员.Text+dtp审核日期.Value.ToLongDateString();
 
 			if(preview)
 			{
@@ -632,6 +699,9 @@ namespace mySystem.Extruction.Process
 			}
 			else
 			{
+                //footprint
+                my.PageSetup.RightFooter = __生产指令+"-12- 1 /&P"; 
+
 			// 直接用默认打印机打印该Sheet
 			 my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
              // 关闭文件，false表示不保存
@@ -641,6 +711,9 @@ namespace mySystem.Extruction.Process
              // 释放COM资源
              Marshal.ReleaseComObject(wb);
              Marshal.ReleaseComObject(oXL);
+             oXL = null;
+             wb = null;
+             my = null;
 			}
 
          }
