@@ -314,6 +314,19 @@ namespace WindowsFormsApplication1
             dt_prodinstr.Rows[0]["中内层供料量合计b"] = sum_inmid;
             dt_prodinstr.Rows[0]["中层供料量合计c"] = sum_mid;
 
+            //刷新用料和余料
+            float a1, a2;
+            if (float.TryParse(tb用料ab1c.Text, out a1))
+            {
+                dt_prodinstr.Rows[0]["外中内层原料余量"] = a1;
+                dt_prodinstr.Rows[0]["外中内层原料用量"] = float.Parse(dt_prodinstr.Rows[0]["外层供料量合计a"].ToString()) - a1;
+            }
+            if (float.TryParse(tb用料b2.Text, out a2))
+            {
+                dt_prodinstr.Rows[0]["中层原料余量"] = a2;
+                dt_prodinstr.Rows[0]["中层原料用量"] = float.Parse(dt_prodinstr.Rows[0]["中内层供料量合计b"].ToString()) - a2;
+            }
+
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
@@ -452,6 +465,7 @@ namespace WindowsFormsApplication1
 
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
+            log += "生产指令编号：" + mySystem.Parameter.proInstruction + "\n";
             dr["日志"] = log;
             return dr;
 
@@ -885,9 +899,26 @@ namespace WindowsFormsApplication1
                 if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//内层
                     sum_mid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
             }
+
             dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
             dt_prodinstr.Rows[0]["中内层供料量合计b"] = sum_inmid;
             dt_prodinstr.Rows[0]["中层供料量合计c"] = sum_mid;
+
+            //刷新用料和余料
+            float a1, a2;
+            if (float.TryParse(tb用料ab1c.Text, out a1))
+            {
+                dt_prodinstr.Rows[0]["外中内层原料余量"] = a1;
+                dt_prodinstr.Rows[0]["外中内层原料用量"] = float.Parse(dt_prodinstr.Rows[0]["外层供料量合计a"].ToString()) - a1;
+            }
+            if (float.TryParse(tb用料b2.Text, out a2))
+            {
+                dt_prodinstr.Rows[0]["中层原料余量"] =a2;
+                dt_prodinstr.Rows[0]["中层原料用量"] = float.Parse(dt_prodinstr.Rows[0]["中内层供料量合计b"].ToString()) - a2;
+            }
+
+
+
             //供料人是否合法
             if (e.ColumnIndex == 7)
             {
@@ -1148,7 +1179,7 @@ namespace WindowsFormsApplication1
                 string time = string.Format("{0}:{1}:{2}", tempdt.Hour.ToString(), tempdt.Minute.ToString(), tempdt.Second.ToString());
                 my.Cells[9 + i, 1] = time;
                 my.Cells[9 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[9 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[9 + i, 4] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[9 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();
                 my.Cells[9 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
             }
@@ -1160,7 +1191,7 @@ namespace WindowsFormsApplication1
             my.Cells[10+ind, 9].Value = tb用料b2.Text;
             my.Cells[9, 10].Value = tb复核人.Text;
             my.Cells[13+ind, 2].Value = tb外层合计.Text ;
-            my.Cells[13+ind, 3].Value = tb中内层合计.Text;
+            my.Cells[13+ind, 4].Value = tb中内层合计.Text;
         }
 
         //查找打印的表序号

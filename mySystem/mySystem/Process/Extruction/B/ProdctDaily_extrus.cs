@@ -125,150 +125,6 @@ namespace mySystem
         //查找同一条生产指令下的数据
         private void query_by_instru(int para_instrid)
         {
-            #region 以前
-            //if (mainform.isSqlOk)
-            //{
-    
-            //}
-            //else
-            //{
-            //    //通过生产指令代码找到对应的生产指令id
-            //    string acsql = "select production_instruction_id from production_instruction where production_instruction_code='"+instru_code+"'";
-            //    OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle);
-            //    OleDbDataAdapter da = new OleDbDataAdapter(comm);
-            //    DataTable dt1 = new DataTable();
-            //    da.Fill(dt1);
-                
-            //    int id = int.Parse(dt1.Rows[0][0].ToString());//获得生产指令id
-            //    da.Dispose();
-
-            //    //通过生产指令id查找相应的子集
-            //    acsql = "select product_batch_id,s6_production_date,s6_flight,s6_mojuan_number,s6_mojuan_length,s6_mojuan_weight,s6_time,s6_recorder_id,s6_reviewer_id from extrusion_s6_production_check where production_instruction_id="+id;
-            //    comm.CommandText = acsql;
-            //    da = new OleDbDataAdapter(comm);
-            //    DataTable dt2 = new DataTable();
-            //    da.Fill(dt2);
-            //    da.Dispose();
-
-            //    acsql = "select product_batch_id,s5_feeding_info from extrusion_s5_feeding where production_instruction_id="+id;
-            //    comm.CommandText = acsql;
-            //    da = new OleDbDataAdapter(comm);
-            //    DataTable dt3 = new DataTable();
-            //    da.Fill(dt3);
-
-            //    //子集通过连接生成最后的联合表
-            //    var query = from r in dt2.AsEnumerable()
-            //                join s in dt3.AsEnumerable()
-            //                on r.Field<int>("product_batch_id") equals s.Field<int>("product_batch_id") into temp
-            //                from t in temp.DefaultIfEmpty()
-            //                select new
-            //                {
-            //                    batch_id = r.Field<int>("product_batch_id").ToString(),
-            //                    date=r.Field<DateTime>("s6_production_date").ToShortDateString(),
-            //                    flight = r.Field<bool>("s6_flight").ToString(),
-            //                    number=r.Field<string>("s6_mojuan_number"),
-            //                    length = r.Field<int>("s6_mojuan_length").ToString(),
-            //                    weight = r.Field<int>("s6_mojuan_weight").ToString(),
-            //                    time = r.Field<DateTime>("s6_time").ToString(),
-            //                    recid = r.Field<int>("s6_recorder_id").ToString(),
-            //                    revid = r.Field<int>("s6_reviewer_id").ToString(),
-            //                    feedinfo=t!=null ? t.Field<string>("s5_feeding_info") : "***"
-            //                };
-            //    var query_r = from r in dt3.AsEnumerable()
-            //                join s in dt2.AsEnumerable()
-            //                on r.Field<int>("product_batch_id") equals s.Field<int>("product_batch_id") into temp
-            //                from t in temp.DefaultIfEmpty()
-            //                select new
-            //                {
-            //                    batch_id = r.Field<int>("product_batch_id").ToString(),
-            //                    date=t!=null?t.Field<DateTime>("s6_production_date").ToShortDateString():"***",
-            //                    flight = t!=null? t.Field<bool>("s6_flight").ToString():"***",
-            //                    number=t!=null? t.Field<string>("s6_mojuan_number"):"***",
-            //                    length = t!=null? t.Field<int>("s6_mojuan_length").ToString():"***",
-            //                    weight = t!=null? t.Field<int>("s6_mojuan_weight").ToString():"***",
-            //                    time = t!=null? t.Field<DateTime>("s6_time").ToString():"***",
-            //                    recid = t!=null? t.Field<int>("s6_recorder_id").ToString():"***",
-            //                    revid = t!=null? t.Field<int>("s6_reviewer_id").ToString():"***",
-            //                    feedinfo = r.Field<string>("s5_feeding_info")
-            //                };
-            //    var fullquery = query.Union(query_r);//最后查找的结果
-                
-            //    //将结果填入表格中和dt中
-            //    dt.Clear();
-            //    int index = 0;
-            //    foreach (var item in fullquery)
-            //    {
-            //        Console.WriteLine("{0} {1} {2} {3} {4} {5} {6} {7} {8} {9}", item.batch_id, item.date, item.flight, item.number,item.length, item.weight, item.time, item.recid, item.revid, item.feedinfo);
-            //        DataGridViewRow dr = new DataGridViewRow();
-            //        foreach (DataGridViewColumn c in dataGridView1.Columns)
-            //        {
-            //            dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
-            //        }
-                    
-            //        dr.Cells[0].Value = index+1;
-            //        dr.Cells[1].Value = item.date;
-            //        dr.Cells[2].Value = item.flight=="True";
-            //        dr.Cells[3].Value = prodcode_findby_batchid(int.Parse(item.batch_id));//产品代码
-            //        dr.Cells[4].Value = batchcode_findby_batchid(int.Parse(item.batch_id));//批号代码
-            //        dr.Cells[5].Value = item.number;//卷号
-            //        dr.Cells[6].Value = item.length;
-            //        dr.Cells[7].Value = item.weight;
-            //        dr.Cells[8].Value = "";//废品重量
-            //        dr.Cells[9].Value = item.feedinfo;//加料A
-            //        dr.Cells[10].Value = item.feedinfo;//加料B1+C
-            //        dr.Cells[11].Value = item.feedinfo;//加料B2
-            //        dr.Cells[12].Value = item.time;//工时
-            //        if (item.recid == "***")
-            //            dr.Cells[13].Value = item.recid;
-            //        else
-            //            dr.Cells[13].Value = name_findby_userid(int.Parse(item.recid));
-            //        if (item.revid == "***")
-            //            dr.Cells[14].Value = item.revid;
-            //        else
-            //            dr.Cells[14].Value = name_findby_userid(int.Parse(item.revid));
-
-            //        dataGridView1.Rows.Add(dr);
-
-            //        DataRow drow = dt.NewRow();
-            //        if (item.date == "***")
-            //            drow["date"] = DateTime.Parse("1900-1-1 0:00:00");
-            //        else
-            //            drow["date"] = DateTime.Parse(item.date);
-            //        drow["classes"] = item.flight == "True";
-            //        drow["prodcode"] = dr.Cells[3].Value;
-            //        drow["prodbatch"] = dr.Cells[4].Value;
-            //        drow["number"] = item.number;
-            //        drow["count"] = item.length;
-            //        drow["weight"] = item.weight;
-            //        drow["mA"] = item.feedinfo;
-            //        drow["mB1C"] = item.feedinfo;
-            //        drow["mB2"] = item.feedinfo;
-            //        drow["time"] = item.time;
-            //        drow["rec"] = dr.Cells[13].Value;
-            //        drow["rev"] = dr.Cells[14].Value;
-            //        dt.Rows.Add(drow);
-
-            //        index = index + 1;
-            //    }
-                    
-                
-            //    //查询条件可见
-            //    setvisible(true);
-            //    flag = true;
-
-            //    //往查询条件中添加目录
-            //    comboBox1.Items.Clear();
-            //    comboBox3.Items.Clear();
-            //    comboBox4.Items.Clear();
-            //    comboBox1.Items.Add("(空)");
-            //    comboBox3.Items.Add("(空)");
-            //    comboBox4.Items.Add("(空)");
-
-            //    DistinctValueCount(dt, "prodcode", comboBox1);
-            //    DistinctValueCount(dt, "rec", comboBox3);
-            //    DistinctValueCount(dt, "rev", comboBox4);
-            //}
-            #endregion
             while (dataGridView1.Rows.Count > 0)
                 dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count-1);
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
@@ -318,6 +174,8 @@ namespace mySystem
 
                 string date_temp1 = ((DateTime)dt_检验记录.Rows[i]["生产日期"]).ToShortDateString();//标准
                 string code_temp1 = dt_检验记录.Rows[i]["产品名称"].ToString();//之前表上名字错误，应该是产品代码
+                string flight_temp1=((bool)dt_检验记录.Rows[i]["班次"])==true?"白班":"夜班";
+                bool flight_temp1_bool = (bool)dt_检验记录.Rows[i]["班次"];
 
                 dr["T吹膜生产日报表ID"] = dt_prodinstr.Rows[0]["ID"];
                 dr["序号"] = i + 1;
@@ -342,8 +200,9 @@ namespace mySystem
                 {                   
                     string date_temp2=((DateTime)dt_废品记录.Rows[j]["生产日期"]).ToShortDateString();                    
                     string code_temp2 = dt_废品记录.Rows[j]["产品代码"].ToString();
+                    string flight_temp2=dt_废品记录.Rows[j]["班次"].ToString();
 
-                    if (date_temp1 == date_temp2 && code_temp1 == code_temp2)
+                    if (date_temp1 == date_temp2 && code_temp1 == code_temp2 && flight_temp2==flight_temp1)
                     {
                         if (dt_废品记录.Rows[j]["不良品数量"] != null && dt_废品记录.Rows[j]["不良品数量"].ToString()!="")
                             sum_废品重量 += float.Parse(dt_废品记录.Rows[j]["不良品数量"].ToString());
@@ -354,7 +213,7 @@ namespace mySystem
 
                 //查找供料记录中对应的记录，查看的是当天的产品代码下供料合计
                 DataTable dt_供料记录 = new DataTable();
-                acsql = "select * from 吹膜供料记录 where 生产指令ID=" + id + " and 产品代码='" + code_temp1 + "' and 供料日期=#"+date_temp1+"#";
+                acsql = "select * from 吹膜供料记录 where 生产指令ID=" + id + " and 产品代码='" + code_temp1 + "' and 班次=" + flight_temp1_bool + " and 供料日期=#" + date_temp1 + "#";
                 OleDbCommand comm4 = new OleDbCommand(acsql, mySystem.Parameter.connOle);
                 OleDbDataAdapter da4 = new OleDbDataAdapter(comm4);
                 da4.Fill(dt_供料记录);

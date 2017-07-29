@@ -752,6 +752,7 @@ namespace mySystem.Extruction.Process
 
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
+            log += "生产指令编号：" + mySystem.Parameter.proInstruction + "\n";
             dr["日志"] = log;
             return dr;
 
@@ -1332,7 +1333,7 @@ namespace mySystem.Extruction.Process
                 if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
                 {
                     //dataGridView1.Rows[i].Cells["审核人"].Value = person_审核员;
-                    dt_prodlist.Rows[i]["审核人"] = person_审核员;
+                    dt_prodlist.Rows[i]["审核人"] = mySystem.Parameter.userName;
                     dataGridView1.Rows[i].ReadOnly = true;
                 }
             }

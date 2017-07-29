@@ -317,12 +317,12 @@ namespace BatchProductRecord
         private void fill_respons_user()
         {
             DataTable tempdt = new DataTable("users");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from users where 岗位 like '%吹膜%'", mySystem.Parameter.connOleUser);
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户", mySystem.Parameter.connOle);
             da.Fill(tempdt);
             da.Dispose();
             for (int i = 0; i < tempdt.Rows.Count; i++)
             {
-                cb负责人.Items.Add(tempdt.Rows[i][2].ToString());//姓名
+                cb负责人.Items.Add(tempdt.Rows[i][1].ToString());//姓名
             }
         }
 
