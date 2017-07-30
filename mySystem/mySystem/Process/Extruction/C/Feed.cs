@@ -85,6 +85,7 @@ namespace mySystem.Process.Extruction.C
             innerBind();
             setFormState();
             setEnableReadOnly();
+            
         }
 
         public Feed(mySystem.MainForm mainform, int Id)
@@ -228,6 +229,10 @@ namespace mySystem.Process.Extruction.C
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+            lbl生产指令编号.Enabled = false;
+            dtp生产日期.Enabled = false;
+            cmb班次.Enabled = false;
+            txb审核员.ReadOnly = true;
         }
 
 
@@ -604,8 +609,7 @@ namespace mySystem.Process.Extruction.C
             removeOuterBind();
             outerBind();
 
-            removeInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            clearInnerID();
+            
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
@@ -621,14 +625,24 @@ namespace mySystem.Process.Extruction.C
             DataRow dr = dtInner.NewRow();
             dr = writeItemDefault(dr);
             dtInner.Rows.Add(dr);
-            System.Threading.Thread.Sleep(1000);
+            daInner.Update((DataTable)bsInner.DataSource);
+           
+            readInnerData(searchId);
+            //dataGridView1.Rows.Clear();
+            innerBind();
+
             //setDataGridViewRowNums();
             btnSave.Enabled = true;
             btn审核.Enabled = false;
         }
         private void btn删除_Click(object sender, EventArgs e)
         {
-           dtInner.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+           dtInner.Rows[dataGridView1.SelectedCells[0].RowIndex].Delete();
+           daInner.Update((DataTable)bsInner.DataSource);
+           
+           readInnerData(searchId);
+           //dataGridView1.Rows.Clear();
+           innerBind();
            
         }
 

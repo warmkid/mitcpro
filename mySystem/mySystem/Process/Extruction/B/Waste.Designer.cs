@@ -72,7 +72,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(490, 91);
+            this.label2.Location = new System.Drawing.Point(392, 91);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(40, 16);
@@ -83,7 +83,7 @@
             // 
             this.dtp生产结束时间.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp生产结束时间.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtp生产结束时间.Location = new System.Drawing.Point(527, 85);
+            this.dtp生产结束时间.Location = new System.Drawing.Point(428, 84);
             this.dtp生产结束时间.Margin = new System.Windows.Forms.Padding(4);
             this.dtp生产结束时间.Name = "dtp生产结束时间";
             this.dtp生产结束时间.Size = new System.Drawing.Size(151, 26);
@@ -93,7 +93,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(300, 91);
+            this.label1.Location = new System.Drawing.Point(228, 91);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
@@ -155,7 +155,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(687, 91);
+            this.label3.Location = new System.Drawing.Point(597, 88);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(120, 16);
             this.label3.TabIndex = 64;
@@ -223,7 +223,7 @@
             // 
             // txb审核员
             // 
-            this.txb审核员.Location = new System.Drawing.Point(1001, 88);
+            this.txb审核员.Location = new System.Drawing.Point(909, 82);
             this.txb审核员.Name = "txb审核员";
             this.txb审核员.Size = new System.Drawing.Size(100, 26);
             this.txb审核员.TabIndex = 80;
@@ -231,7 +231,7 @@
             // lb审核人
             // 
             this.lb审核人.AutoSize = true;
-            this.lb审核人.Location = new System.Drawing.Point(939, 91);
+            this.lb审核人.Location = new System.Drawing.Point(847, 88);
             this.lb审核人.Name = "lb审核人";
             this.lb审核人.Size = new System.Drawing.Size(56, 16);
             this.lb审核人.TabIndex = 79;
@@ -252,7 +252,7 @@
             this.cmb打印机选择.FormattingEnabled = true;
             this.cmb打印机选择.Location = new System.Drawing.Point(204, 443);
             this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(121, 24);
+            this.cmb打印机选择.Size = new System.Drawing.Size(187, 24);
             this.cmb打印机选择.TabIndex = 147;
             // 
             // lbl生产指令
@@ -267,7 +267,7 @@
             // lbl生产开始时间
             // 
             this.lbl生产开始时间.AutoSize = true;
-            this.lbl生产开始时间.Location = new System.Drawing.Point(379, 91);
+            this.lbl生产开始时间.Location = new System.Drawing.Point(297, 91);
             this.lbl生产开始时间.Name = "lbl生产开始时间";
             this.lbl生产开始时间.Size = new System.Drawing.Size(104, 16);
             this.lbl生产开始时间.TabIndex = 149;
@@ -276,7 +276,7 @@
             // lbl合计不良品数量
             // 
             this.lbl合计不良品数量.AutoSize = true;
-            this.lbl合计不良品数量.Location = new System.Drawing.Point(813, 91);
+            this.lbl合计不良品数量.Location = new System.Drawing.Point(716, 88);
             this.lbl合计不良品数量.Name = "lbl合计不良品数量";
             this.lbl合计不良品数量.Size = new System.Drawing.Size(120, 16);
             this.lbl合计不良品数量.TabIndex = 150;

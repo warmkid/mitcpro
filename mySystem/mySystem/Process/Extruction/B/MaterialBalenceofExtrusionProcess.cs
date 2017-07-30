@@ -234,50 +234,24 @@ namespace mySystem.Extruction.Process
                 //lbl生产指令.ReadOnly = false;
                 return;
             }
+            setControlTrue();
             switch (_userState)
             {
+                    
                 case Parameter.UserState.操作员: //0--操作员
-                    //In this situation,operator could edit all the information and the send button is active
-                    if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState)
-                    {
-                        setControlTrue();
-                       
-                    }
-                    //Once the record send to the reviewer or the record has passed check, all the controls are forbidden
-                    else if (Parameter.FormState.待审核 == _formState || Parameter.FormState.审核通过 == _formState)
-                    {
-                        setControlFalse();
-                    }
+                    btn打印.Enabled = false;
+                    cmb打印机选择.Enabled = false;
 
                     break;
                 case Parameter.UserState.审核员: //1--审核员
                     //the formState is to be checked
-                    if (Parameter.FormState.待审核 == _formState)
-                    {
-                        setControlTrue();
-
-                        btn审核.Enabled = true;
-                        //one more button should be avtive here!
-                    }
-                    //the formState do not have to be checked
-                    else if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState || Parameter.FormState.审核未通过 == _formState)
-                    {
-                        setControlFalse();
-
-                    }
-                    if (Parameter.FormState.审核通过 != _formState)
-                    {
-                     
-                    }
-                    else
-                    {
-                  
-                    }
+                    
                     btn打印.Enabled = true;
                     cmb打印机选择.Enabled = true;
                     break;
                 case Parameter.UserState.管理员: //2--管理员
-                    setControlTrue();
+                    btn打印.Enabled = false;
+                    cmb打印机选择.Enabled = false;
                     break;
                 default:
                     break;
@@ -341,151 +315,11 @@ namespace mySystem.Extruction.Process
             //btn打印.Enabled = true;
         }
 
-        private void btn提交审核_Click(object sender, EventArgs e)
-        {
-            //read from database table and find current record
-            string checkName = "待审核";
-            DataTable dtCheck = new DataTable(checkName);
-            OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", connOle);
-            BindingSource bsCheck = new BindingSource();
-            OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
-            daCheck.Fill(dtCheck);
-
-            //if current hasn't been stored, insert a record in table
-            if (0 == dtCheck.Rows.Count)
-            {
-                DataRow newrow = dtCheck.NewRow();
-                newrow["表名"] = tablename1;
-                //
-                newrow["对应ID"] =searchId;
-                dtCheck.Rows.Add(newrow);
-            }
-            bsCheck.DataSource = dtCheck;
-            daCheck.Update((DataTable)bsCheck.DataSource);
-
-            //this part to add log 
-            //格式： 
-            // =================================================
-            // yyyy年MM月dd日，操作员：XXX 提交审核
-            string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
-            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-
-            //fill reviwer information
-            dtOuter.Rows[0]["审核员"] = __待审核;
-            //update log into table
-            bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
-            try
-            {
-                readOuterBind(searchId);
-            }
-            catch
-            {
-                readOuterData(__生产指令);
-            }
-            removeOuterBind();
-            outerBind();
-            searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
-            setFormState();
-            setEnableReadOnly();
-            btn提交审核.Enabled = false;
-        }
+        
 
 
 
-        public override void CheckResult()
-        {
-            if (check.ischeckOk)
-            {
-                base.CheckResult();
-
-                dtOuter.Rows[0]["审核员"] = Parameter.userName;
-                dtOuter.Rows[0]["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString());
-                dtOuter.Rows[0]["审核意见"] = check.opinion.ToString();
-                dtOuter.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
-                bsOuter.EndEdit();
-                daOuter.Update((DataTable)bsOuter.DataSource);
-                readOuterData(__生产指令);
-                removeOuterBind();
-                outerBind();
-                searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
-
-
-                //this part to add log 
-                //格式： 
-                // =================================================
-                // yyyy年MM月dd日，操作员：XXX 审核
-                string log = "=====================================\n";
-                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 审核通过\n";
-                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-
-
-                bsOuter.EndEdit();
-                daOuter.Update((DataTable)bsOuter.DataSource);
-
-                readOuterBind(searchId);
-
-                removeOuterBind();
-                outerBind();
-
-                //to delete the unchecked table
-                //read from database table and find current record
-                string checkName = "待审核";
-                DataTable dtCheck = new DataTable(checkName);
-                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", connOle);
-                BindingSource bsCheck = new BindingSource();
-                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
-                daCheck.Fill(dtCheck);
-
-                //this part will never be run, for there must be a unchecked recird before this button becomes enable
-                if (0 == dtCheck.Rows.Count)
-                {
-                    DataRow newrow = dtCheck.NewRow();
-                    newrow["表名"] = tablename1;
-                    newrow["对应ID"] = dtOuter.Rows[0]["ID"];
-                    dtCheck.Rows.Add(newrow);
-                }
-                //remove the record
-                dtCheck.Rows[0].Delete();
-                bsCheck.DataSource = dtCheck;
-                daCheck.Update((DataTable)bsCheck.DataSource);
-                setFormState();
-                setEnableReadOnly();
-            }
-            else
-            {
-                //check unpassed
-                base.CheckResult();
-                txb审核员.Text = Parameter.userName;
-                dtOuter.Rows[0]["审核员"] = Parameter.userName;
-                dtOuter.Rows[0]["审核意见"] = check.opinion.ToString();
-                dtOuter.Rows[0]["审核是否通过"] = Convert.ToBoolean(check.ischeckOk);
-
-
-                //this part to add log 
-                //格式： 
-                // =================================================
-                // yyyy年MM月dd日，操作员：XXX 审核
-                string log = "=====================================\n";
-                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 审核不通过\n";
-                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-
-
-                bsOuter.EndEdit();
-                daOuter.Update((DataTable)bsOuter.DataSource);
-
-                readOuterBind(Convert.ToInt32( searchId));
-
-                removeOuterBind();
-                outerBind();
-                setFormState();
-                setEnableReadOnly();
-            }
-
-            /////////////
-
-        }
+        
 
         
 
@@ -623,24 +457,19 @@ namespace mySystem.Extruction.Process
          private void btnSave_Click(object sender, EventArgs e)
          {
              // calculate();
+             string log = "=====================================\n";
+             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 保存\n";
+             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
              bsOuter.EndEdit();
              daOuter.Update((DataTable)bsOuter.DataSource);
              readOuterData(__生产指令);
              removeOuterBind();
              outerBind();
              searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
-             if (Parameter.UserState.操作员 == _userState)
-             {
-                 btn提交审核.Enabled = true;
-             }
              //btn打印.Enabled = true;
          }
 
-         private void btn审核_Click(object sender, EventArgs e)
-         {
-             check = new CheckForm(this);
-             check.Show();
-         }
+        
 
          [DllImport("winspool.drv")]
          public static extern bool SetDefaultPrinter(string Name);

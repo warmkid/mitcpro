@@ -350,6 +350,7 @@ namespace mySystem.Process.Extruction.B
                 }
             }
             // 保证这两个按钮一直是false
+            txb审核员.ReadOnly = true;
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;            
         }
@@ -686,6 +687,14 @@ namespace mySystem.Process.Extruction.B
             //dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[2].Width = 60;
+            dataGridView1.Columns[3].Width = 180;
+            dataGridView1.Columns[4].Width = 70;
+            dataGridView1.Columns[4].ReadOnly = true;
+            dataGridView1.Columns[5].Width = 150;
+            dataGridView1.Columns[6].Width = 120;
+            dataGridView1.Columns[7].Width = 120;
+            dataGridView1.Columns[9].Width = 120;
             dataGridView1.DataError += new DataGridViewDataErrorEventHandler(dataGridView1_DataError);
         }
 
@@ -924,7 +933,6 @@ namespace mySystem.Process.Extruction.B
                 sum += Convert.ToDouble(dtInner.Rows[i]["不良品数量"]);
             }
             outerDataSync("lbl合计不良品数量", (sum).ToString());
-            outerDataSync("txb审核员", "yyy");
             //DataGridViewBindingCompleteEventArgs e=new DataGridViewBindingCompleteEventArgs;
             //dataGridView1_DataBindingComplete(dataGridView1,e);
             //dtOuter.Rows[0]["合计不良品数量"] = sum.ToString();

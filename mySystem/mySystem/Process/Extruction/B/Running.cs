@@ -352,6 +352,7 @@ namespace mySystem.Process.Extruction.B
             removeOuterBinding();
             outerBind();
             btn提交审核.Enabled = true;
+           
         }
 
         private void btn插入_Click(object sender, EventArgs e)
@@ -710,6 +711,7 @@ namespace mySystem.Process.Extruction.B
             try
             {
                 Double.Parse(((TextBox)sender).Text);
+                ((TextBox)sender).Focus();
             }
             catch
             {
@@ -749,6 +751,7 @@ namespace mySystem.Process.Extruction.B
             // yyyy年MM月dd日，操作员：XXX 创建记录
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 创建记录\n";
+            log += "生产指令编码：" + mySystem.Parameter.proInstruction + "\n";
             dr["日志"] = log;
 
             return dr;
@@ -1144,6 +1147,12 @@ namespace mySystem.Process.Extruction.B
                     {
                         setControlFalse();
                     }
+                   
+                    else if (Parameter.FormState.无数据 == _formState)
+                    {
+                        setControlFalse();
+                        cmb产品代码.Enabled = true;
+                    }
                     break;
                 case Parameter.UserState.管理员: //2--管理员
                     setControlTrue();
@@ -1178,6 +1187,9 @@ namespace mySystem.Process.Extruction.B
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             btn新建.Enabled = false;
+            cmb产品代码.Enabled = false;
+            txb产品批号.Enabled = false;
+            txb审核员.ReadOnly = true;
         }
 
         
@@ -1206,6 +1218,7 @@ namespace mySystem.Process.Extruction.B
             setAble(false);
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
+            cmb打印机选择.Enabled = true;
         }
         private void getPeople()
         {
@@ -1296,7 +1309,8 @@ namespace mySystem.Process.Extruction.B
             setEnableReadOnly();
             addOtherEvnetHandler();            
             btn打印.Enabled = true;
-           
+            cmb打印机选择.Enabled = true;
+            
         }
 
         private void btn查看日志_Click(object sender, EventArgs e)

@@ -39,11 +39,6 @@
             this.btn保存 = new System.Windows.Forms.Button();
             this.lb夜班接班员 = new System.Windows.Forms.Label();
             this.txb夜班交班员 = new System.Windows.Forms.TextBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.txb白班产品代码批号数量 = new System.Windows.Forms.TextBox();
-            this.txb夜班产品代码批号数量 = new System.Windows.Forms.TextBox();
-            this.lb夜班产品代码批号数量 = new System.Windows.Forms.Label();
-            this.lb白班产品代码批号数量 = new System.Windows.Forms.Label();
             this.lb夜班交班员 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.txb夜班异常情况处理 = new System.Windows.Forms.TextBox();
@@ -64,7 +59,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label角色 = new System.Windows.Forms.Label();
             this.lbl生产指令编号 = new System.Windows.Forms.Label();
-            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -159,55 +153,6 @@
             this.txb夜班交班员.Size = new System.Drawing.Size(100, 26);
             this.txb夜班交班员.TabIndex = 73;
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.txb白班产品代码批号数量);
-            this.panel1.Controls.Add(this.txb夜班产品代码批号数量);
-            this.panel1.Controls.Add(this.lb夜班产品代码批号数量);
-            this.panel1.Controls.Add(this.lb白班产品代码批号数量);
-            this.panel1.Enabled = false;
-            this.panel1.Location = new System.Drawing.Point(53, 430);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(680, 171);
-            this.panel1.TabIndex = 61;
-            this.panel1.Visible = false;
-            // 
-            // txb白班产品代码批号数量
-            // 
-            this.txb白班产品代码批号数量.Enabled = false;
-            this.txb白班产品代码批号数量.Location = new System.Drawing.Point(34, 35);
-            this.txb白班产品代码批号数量.Multiline = true;
-            this.txb白班产品代码批号数量.Name = "txb白班产品代码批号数量";
-            this.txb白班产品代码批号数量.Size = new System.Drawing.Size(212, 114);
-            this.txb白班产品代码批号数量.TabIndex = 60;
-            // 
-            // txb夜班产品代码批号数量
-            // 
-            this.txb夜班产品代码批号数量.Enabled = false;
-            this.txb夜班产品代码批号数量.Location = new System.Drawing.Point(431, 35);
-            this.txb夜班产品代码批号数量.Multiline = true;
-            this.txb夜班产品代码批号数量.Name = "txb夜班产品代码批号数量";
-            this.txb夜班产品代码批号数量.Size = new System.Drawing.Size(212, 114);
-            this.txb夜班产品代码批号数量.TabIndex = 59;
-            // 
-            // lb夜班产品代码批号数量
-            // 
-            this.lb夜班产品代码批号数量.AutoSize = true;
-            this.lb夜班产品代码批号数量.Location = new System.Drawing.Point(428, 7);
-            this.lb夜班产品代码批号数量.Name = "lb夜班产品代码批号数量";
-            this.lb夜班产品代码批号数量.Size = new System.Drawing.Size(168, 16);
-            this.lb夜班产品代码批号数量.TabIndex = 58;
-            this.lb夜班产品代码批号数量.Text = "夜班产品代码批号数量";
-            // 
-            // lb白班产品代码批号数量
-            // 
-            this.lb白班产品代码批号数量.AutoSize = true;
-            this.lb白班产品代码批号数量.Location = new System.Drawing.Point(31, 7);
-            this.lb白班产品代码批号数量.Name = "lb白班产品代码批号数量";
-            this.lb白班产品代码批号数量.Size = new System.Drawing.Size(168, 16);
-            this.lb白班产品代码批号数量.TabIndex = 57;
-            this.lb白班产品代码批号数量.Text = "白班产品代码批号数量";
-            // 
             // lb夜班交班员
             // 
             this.lb夜班交班员.AutoSize = true;
@@ -223,7 +168,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(39, 130);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(707, 510);
+            this.dataGridView1.Size = new System.Drawing.Size(707, 474);
             this.dataGridView1.TabIndex = 56;
             // 
             // txb夜班异常情况处理
@@ -408,7 +353,6 @@
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.lb夜班接班员);
             this.Controls.Add(this.txb夜班交班员);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.lb夜班交班员);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.txb夜班异常情况处理);
@@ -429,8 +373,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HandOver";
             this.Text = "吹膜岗位交接班记录";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
@@ -445,11 +387,6 @@
         private System.Windows.Forms.Label lb生产日期;
         private System.Windows.Forms.Label lb生产指令编号;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Label lb白班产品代码批号数量;
-        private System.Windows.Forms.Label lb夜班产品代码批号数量;
-        private System.Windows.Forms.TextBox txb夜班产品代码批号数量;
-        private System.Windows.Forms.TextBox txb白班产品代码批号数量;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button btn打印;

@@ -124,7 +124,6 @@
             this.cmb产品代码.Name = "cmb产品代码";
             this.cmb产品代码.Size = new System.Drawing.Size(121, 24);
             this.cmb产品代码.TabIndex = 71;
-            
             this.cmb产品代码.TextChanged += new System.EventHandler(this.cmb产品代码_TextChanged);
             // 
             // txb审核员
@@ -248,13 +247,14 @@
             this.label1.Size = new System.Drawing.Size(56, 16);
             this.label1.TabIndex = 153;
             this.label1.Text = "label1";
+            this.label1.Visible = false;
             // 
             // cmb打印机选择
             // 
             this.cmb打印机选择.FormattingEnabled = true;
             this.cmb打印机选择.Location = new System.Drawing.Point(249, 546);
             this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(121, 24);
+            this.cmb打印机选择.Size = new System.Drawing.Size(190, 24);
             this.cmb打印机选择.TabIndex = 154;
             // 
             // label角色

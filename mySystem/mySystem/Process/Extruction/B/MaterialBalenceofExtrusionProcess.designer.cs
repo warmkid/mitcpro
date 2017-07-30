@@ -42,10 +42,7 @@
             this.txb成品重量合计 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.btn查看日志 = new System.Windows.Forms.Button();
-            this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn打印 = new System.Windows.Forms.Button();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btn审核 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
@@ -62,6 +59,7 @@
             this.cmb打印机选择 = new System.Windows.Forms.ComboBox();
             this.lbl生产开始时间 = new System.Windows.Forms.Label();
             this.lbl生产指令 = new System.Windows.Forms.Label();
+            this.btnSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -194,16 +192,6 @@
             this.btn查看日志.UseVisualStyleBackColor = true;
             this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
             // 
-            // btn提交审核
-            // 
-            this.btn提交审核.Location = new System.Drawing.Point(666, 356);
-            this.btn提交审核.Name = "btn提交审核";
-            this.btn提交审核.Size = new System.Drawing.Size(92, 30);
-            this.btn提交审核.TabIndex = 77;
-            this.btn提交审核.Text = "提交审核";
-            this.btn提交审核.UseVisualStyleBackColor = true;
-            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
-            // 
             // btn打印
             // 
             this.btn打印.Location = new System.Drawing.Point(65, 356);
@@ -213,26 +201,6 @@
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
             this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
-            // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(568, 356);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(92, 30);
-            this.btnSave.TabIndex = 42;
-            this.btnSave.Text = "保存";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
-            // 
-            // btn审核
-            // 
-            this.btn审核.Location = new System.Drawing.Point(152, 356);
-            this.btn审核.Name = "btn审核";
-            this.btn审核.Size = new System.Drawing.Size(92, 30);
-            this.btn审核.TabIndex = 32;
-            this.btn审核.Text = "审核";
-            this.btn审核.UseVisualStyleBackColor = true;
-            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
             // label2
             // 
@@ -374,9 +342,9 @@
             // cmb打印机选择
             // 
             this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(262, 356);
+            this.cmb打印机选择.Location = new System.Drawing.Point(152, 356);
             this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(121, 24);
+            this.cmb打印机选择.Size = new System.Drawing.Size(188, 24);
             this.cmb打印机选择.TabIndex = 159;
             // 
             // lbl生产开始时间
@@ -397,6 +365,16 @@
             this.lbl生产指令.TabIndex = 161;
             this.lbl生产指令.Text = "生产指令";
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(624, 352);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(92, 30);
+            this.btnSave.TabIndex = 42;
+            this.btnSave.Text = "保存";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -409,7 +387,6 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.btn查看日志);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.label7);
@@ -417,7 +394,6 @@
             this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.txb重量比成品率);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.btn审核);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lbRecheckMan);
@@ -468,11 +444,8 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button btn审核;
-        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button btn查看日志;
-        private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.TextBox txb记录员;
@@ -482,5 +455,6 @@
         private System.Windows.Forms.ComboBox cmb打印机选择;
         private System.Windows.Forms.Label lbl生产开始时间;
         private System.Windows.Forms.Label lbl生产指令;
+        private System.Windows.Forms.Button btnSave;
     }
 }
