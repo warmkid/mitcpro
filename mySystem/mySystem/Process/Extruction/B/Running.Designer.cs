@@ -287,7 +287,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1170, 585);
+            this.ClientSize = new System.Drawing.Size(1115, 585);
             this.Controls.Add(this.txb记录员备注);
             this.Controls.Add(this.label记录员备注);
             this.Controls.Add(this.label角色);

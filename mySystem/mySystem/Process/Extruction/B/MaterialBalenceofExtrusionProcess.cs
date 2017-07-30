@@ -89,7 +89,7 @@ namespace mySystem.Extruction.Process
 
             searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
             getInstructionInfo();
-            compute();
+            重新读取并计算();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(__生产指令);
             removeOuterBind();
@@ -117,9 +117,9 @@ namespace mySystem.Extruction.Process
             //get othertime will use current instruction Id
             getInstructionInfo();
             getOtherData();
-           
 
-            compute();
+            重新读取并计算();
+            
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterBind(searchId);
             removeOuterBind();
@@ -205,7 +205,7 @@ namespace mySystem.Extruction.Process
         }
         private void compute()
         {
-            readAgain();
+            重新读取并计算();
         }
 
 
@@ -349,7 +349,7 @@ namespace mySystem.Extruction.Process
              return dr;
          }
 
-         private void readAgain()
+         private void 重新读取并计算()
          {
              string Tname = "吹膜工序生产和检验记录";
              string Tcol = "累计同规格膜卷重量T";

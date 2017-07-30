@@ -90,18 +90,12 @@ namespace mySystem.Process.Extruction.A
             if (0 == dtInner.Rows.Count)
             {
                 writeInnerDefault(dtInner);
-            }
-
-            //fill check item "是"
-            writeDayNightCheck();
+            }           
+            根据班次填写确认结果();
             setDataGridViewRowNums();
-            InnerBind();
-
-            //when the old record can't match current setting
-            askToReload();
-
-            //fill the "交班员" according user flight 
-            writeName();
+            InnerBind();            
+            是否覆盖原有项目();
+            填写交班员();
 
             //update Outer
             daOuter.Update((DataTable)bsOuter.DataSource);
@@ -122,7 +116,7 @@ namespace mySystem.Process.Extruction.A
             
             getPeople();
             setUserState();
-            settingItem= getSettingItem();
+            settingItem= 获取交接班项目();
             readOuterData(searchId);
             __生产指令编号 = Convert.ToString(dtOuter.Rows[0]["生产指令编号"]);
             __生产日期 = Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]);
@@ -132,26 +126,19 @@ namespace mySystem.Process.Extruction.A
             readInnerData(searchId);
             setDataGridViewColumns();
 
-
-
             if (0 == dtInner.Rows.Count)
             {
                 writeInnerDefault(dtInner);
             }
             setDataGridViewRowNums();
             InnerBind();
-            askToReload();
-            writeName();
+            是否覆盖原有项目();
+            填写交班员();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(searchId);
             removeOuterBind();
             outerBind();
-            setEnableReadOnly(true);
-
-
-
-
-            
+            setEnableReadOnly(true);            
         }
 
         /// <summary>
@@ -171,7 +158,7 @@ namespace mySystem.Process.Extruction.A
             __生产指令ID = Parameter.proInstruID;
             __生产指令编号 = Parameter.proInstruction;
             __生产日期 = DateTime.Now.Date;
-            settingItem = getSettingItem();
+            settingItem = 获取交接班项目();
         }
 
         private void getPeople()
@@ -235,30 +222,9 @@ namespace mySystem.Process.Extruction.A
             }
 
         }
-        private void finishReview()
-        {
-            if(     Convert.ToString    (Parameter.userflight)  == "白班")  
-            {
-                dataGridView1.Columns[5].ReadOnly=true;
-            }
-            else
-            {
-                dataGridView1.Columns[4].ReadOnly=true;
-            }
-
-            if (Convert.ToString(dtOuter.Rows[0]["夜班接班员"]).Trim() != "")     //
-            {
-                dataGridView1.Columns[4].ReadOnly = true;
-                txb白班异常情况处理.Enabled = false;
-            }
-            if (Convert.ToString(dtOuter.Rows[0]["白班接班员"]).Trim() != "")
-            {
-                dataGridView1.Columns[5].ReadOnly = true;
-                txb夜班异常情况处理.Enabled = false;
-            }
-        }
+        
     
-        private void askToReload()
+        private void 是否覆盖原有项目()
         {
             if (dtInner.Rows.Count > 0)  //when there are some items 
             {
@@ -392,7 +358,7 @@ namespace mySystem.Process.Extruction.A
             dr["日志"] = log;
             return dr;
         }
-        private void writeName()
+        private void 填写交班员()
         {
             if ((Convert.ToString(Parameter.userflight) == "白班") && (dtOuter.Rows[0]["白班交班员"].ToString() == ""))
             {
@@ -413,7 +379,7 @@ namespace mySystem.Process.Extruction.A
                 dtInner.Rows.Add(dr);
             }
         }
-        void writeDayNightCheck()
+        void 根据班次填写确认结果()
         {
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
@@ -577,15 +543,9 @@ namespace mySystem.Process.Extruction.A
         }
         
      
-        private int getId()
-        {
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = conOle;
-            comm.CommandText = "select ID from " + tablename1 + " where 生产指令编号 ='" + lbl生产指令编号.Text + "' and 生产日期 = #" + dtp生产日期.Value.ToShortDateString() + "#;";
-            return (int)comm.ExecuteScalar();
-        }
+        
       
-        private List<string> getSettingItem()
+        private List<string> 获取交接班项目()
         {
             List<string> settingList = new List<string>();
             bsSettingHandOver = new BindingSource();
@@ -602,10 +562,28 @@ namespace mySystem.Process.Extruction.A
             return settingList;
         }
 
-       
+
+        private Boolean 未确认()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dtInner.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "否" || dataGridView1.Rows[i].Cells[5].Value.ToString() == "否")
+                {
+                    rtn = true;
+                    break;
+                }
+            }
+            return rtn;
+        }
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            if (未确认())
+            {
+                MessageBox.Show("有未确认项目");
+                return;
+            }
            
             daInner.Update((DataTable)bsInner.DataSource);
             InnerBind();
@@ -780,6 +758,9 @@ namespace mySystem.Process.Extruction.A
 			
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(oXL);
+            oXL = null;
+            my = null;
+            wb = null;
 			}
 			
 				
@@ -863,18 +844,18 @@ namespace mySystem.Process.Extruction.A
             if ("白班" == Parameter.userflight)
             {
                 //flight night part disable
-                setNightReadOnly(false);
+                夜班Enable(false);
 
                 //current flight day and already handed over
                 if (dtOuter.Rows[0]["夜班接班员"].ToString().Trim() != "")
                 {
-                    setDayReadOnly(false);       
+                    白班Enable(false);       
                     btn保存.Enabled = false;
                 }
                 //current flight day and haven't handed yet
                 else
                 {
-                    setDayReadOnly(true);
+                    白班Enable(true);
                     btn保存.Enabled=true;
                 }
 
@@ -894,17 +875,17 @@ namespace mySystem.Process.Extruction.A
             }
             else
             {
-                setDayReadOnly(false);
+                白班Enable(false);
                 {
                     if (dtOuter.Rows[0]["白班接班员"].ToString().Trim() != "")
                     {
-                        setNightReadOnly(false);
+                        夜班Enable(false);
                         //dataGridView1.Columns[5].ReadOnly = true;
                         btn保存.Enabled = false;
                     }
                     else
                     {
-                        setNightReadOnly(true);
+                        夜班Enable(true);
                         btn保存.Enabled = true;
                     }
                 }
@@ -922,7 +903,7 @@ namespace mySystem.Process.Extruction.A
                 }
             }
         }
-        private void setNightReadOnly(bool night)
+        private void 夜班Enable(bool night)
         {
             txb夜班异常情况处理.Enabled = night;
             txb夜班交班员.Enabled = night;
@@ -931,7 +912,7 @@ namespace mySystem.Process.Extruction.A
             //this is part of day, but logically works here
             dataGridView1.Columns[5].ReadOnly = (true==night) ?false : true ;
         }
-        private void setDayReadOnly(bool day)
+        private void 白班Enable(bool day)
         {
             txb白班交班员.Enabled = day;
             txb白班异常情况处理.Enabled = day;

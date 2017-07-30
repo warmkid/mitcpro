@@ -79,7 +79,7 @@ namespace mySystem.Process.Extruction.B
             
 
             readOuterData(lbl生产指令.Text);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
             if (0 == dtOuter.Rows.Count)
             {
@@ -88,7 +88,7 @@ namespace mySystem.Process.Extruction.B
                 dtOuter.Rows.Add(newrow);
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(lbl生产指令.Text);    
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
 
 
@@ -100,7 +100,7 @@ namespace mySystem.Process.Extruction.B
             setDataGridViewColumns();
             setRowNums();
             innerBind();
-            sumWaste();
+            计算不良品数量合计();
             setFormState();
             setEnableReadOnly();
             
@@ -130,7 +130,7 @@ namespace mySystem.Process.Extruction.B
 
 
             readOuterData(lbl生产指令.Text);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
             if (0 == dtOuter.Rows.Count)
             {
@@ -139,7 +139,7 @@ namespace mySystem.Process.Extruction.B
                 dtOuter.Rows.Add(newrow);
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(lbl生产指令.Text);
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
             }
             
@@ -150,7 +150,7 @@ namespace mySystem.Process.Extruction.B
             setRowNums();
             innerBind();
 
-            sumWaste();
+            计算不良品数量合计();
             setFormState();
             setEnableReadOnly();
             
@@ -426,7 +426,7 @@ namespace mySystem.Process.Extruction.B
 
                 readOuterData(searchId);
 
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
 
                 //to delete the unchecked table
@@ -477,7 +477,7 @@ namespace mySystem.Process.Extruction.B
 
                 readOuterData(searchId);
 
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
                 setFormState();
                 setEnableReadOnly();
@@ -595,7 +595,7 @@ namespace mySystem.Process.Extruction.B
             txb审核员.DataBindings.Add("Text", bsOuter.DataSource, "审核员");
         }
 
-        private void removeWasteBinding()
+        private void removeOuterBinding()
         {
             lbl生产指令.DataBindings.Clear();
             lbl生产开始时间.DataBindings.Clear();
@@ -736,7 +736,7 @@ namespace mySystem.Process.Extruction.B
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(lbl生产指令.Text);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
             if (Parameter.UserState.操作员 == _userState)
             {
@@ -794,7 +794,7 @@ namespace mySystem.Process.Extruction.B
             daOuter.Update((DataTable)bsOuter.DataSource);
 
             readOuterData(searchId);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
 
             btn提交审核.Enabled = false;
@@ -885,9 +885,9 @@ namespace mySystem.Process.Extruction.B
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
-            sumWaste();
+            计算不良品数量合计();
             daOuter.Fill((DataTable)bsOuter.DataSource);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
             btn保存.Enabled = true;
             
@@ -925,7 +925,7 @@ namespace mySystem.Process.Extruction.B
         }
 
 
-        private void sumWaste()
+        private void 计算不良品数量合计()
         {
             double sum = 0;
             for (int i = 0; i < dtInner.Rows.Count; i++)
@@ -956,7 +956,7 @@ namespace mySystem.Process.Extruction.B
         {
             if (6 == e.ColumnIndex)
             {
-                sumWaste();
+                计算不良品数量合计();
                 
             }
             if (8 == e.ColumnIndex || 10 == e.ColumnIndex)     //how to check the usr name of this list
@@ -989,9 +989,9 @@ namespace mySystem.Process.Extruction.B
                 daInner.Update((DataTable)bsInner.DataSource);
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
-                sumWaste();
+                计算不良品数量合计();
                 daOuter.Fill((DataTable)bsOuter.DataSource);
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
             }
             else

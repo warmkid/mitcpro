@@ -66,7 +66,7 @@ namespace mySystem.Process.Extruction.B
             //only function without Id deals with cmb.selectedChange
             this.cmb产品代码.SelectedIndexChanged += new System.EventHandler(this.cmb产品代码_SelectedIndexChanged);
             conOle = Parameter.connOle;
-            init1();
+            自动绘制表格();
             getPeople();
             setUserState();
             getOtherData();
@@ -110,7 +110,7 @@ namespace mySystem.Process.Extruction.B
             cmb产品代码.SelectedIndexChanged += new EventHandler(cmb产品代码_SelectedIndexChanged_without_Id);
             conOle = Parameter.connOle;
             searchId = Id;
-            init1();
+            自动绘制表格();
             getPeople();
             setUserState();
 
@@ -176,7 +176,7 @@ namespace mySystem.Process.Extruction.B
         /// <summary>
         /// this function will automatically draw the textboxs in the form
         /// </summary>
-        private void init1()
+        private void 自动绘制表格()
         {            
             int x = 10, y = 150;
             int wider = 100, slimer = 70,marginy=10,marginx=2,middleMargin=30;
@@ -240,15 +240,15 @@ namespace mySystem.Process.Extruction.B
             array1[7][0].Height = 2 * array1[0][0].Height;
             array1[0][7].Height = 2 * array1[0][0].Height;
             
-            addname1();
-            hide();
-            line();
+            添加行列名称();
+            隐藏多余TextBox();
+            表格横线();
         }
 
         /// <summary>
         /// this function fill some textboxes the rows name anf columns name
         /// </summary>
-        private void addname1()
+        private void 添加行列名称()
         {
             for (int i = 0; i < namelsft1.Count; i++)
             {
@@ -308,7 +308,7 @@ namespace mySystem.Process.Extruction.B
         /// <summary>
         /// this function hide some unused textboxes
         /// </summary>
-        private void hide()
+        private void 隐藏多余TextBox()
         {
             for (int i = 0; i < 7; i++)
             {
@@ -318,7 +318,7 @@ namespace mySystem.Process.Extruction.B
         /// <summary>
         /// this function fills textboxes with lines 
         /// </summary>
-        private void line()
+        private void 表格横线()
         {
             for (int i = 0; i < 6; i++)
             {
@@ -365,7 +365,7 @@ namespace mySystem.Process.Extruction.B
         /// this function controls the enable and disable status of the textbox array
         /// </summary>
         /// <param name="flag">true means enable and false opposite</param>
-        private void setAble(bool flag)
+        private void 可填写部分TextBox使能(bool flag)
         {
             for (int i = 0; i < 14; i++)
             {
@@ -513,11 +513,7 @@ namespace mySystem.Process.Extruction.B
             array1[4][5].Leave += new EventHandler(Running_Leave10);
         }
 
-        void Running_Shown(object sender, EventArgs e)
-        {
-            MessageBox.Show("new form!");
-            //btn新建.PerformClick();
-        }
+        
         private void cmb产品代码_SelectedIndexChanged(object sender, EventArgs e)
         {
             _产品代码 = cmb产品代码.SelectedItem.ToString();
@@ -1182,7 +1178,7 @@ namespace mySystem.Process.Extruction.B
                 }
             }
             //some textboxes act as column name and row name, so these shoule be forbidden
-            setAble(true);
+            可填写部分TextBox使能(true);
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
@@ -1215,7 +1211,7 @@ namespace mySystem.Process.Extruction.B
                 }
             }
             //this act as the same in function upper
-            setAble(false);
+            可填写部分TextBox使能(false);
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
             cmb打印机选择.Enabled = true;
