@@ -867,7 +867,93 @@ namespace mySystem.Process.CleanCut
             GC.Collect();
         }
 
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            int ind = 0;
+            if (dataGridView1.Rows.Count > 3)
+            {
+                //在第7行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 3; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[7, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 3;
+            }
+
+            my.Cells[3, 1].Value = "指令编号："+tb指令编号.Text;
+            my.Cells[3, 3].Value = "生产设备：" + tb设备编号.Text;
+            my.Cells[3, 6].Value = dtp计划生产日期.Value.ToLongDateString();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                my.Cells[6 + i, 1] = i+1;
+                my.Cells[6 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[6 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[6 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                my.Cells[6 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[6 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+            }
+
+            my.Cells[10+ind, 1].Value = "备注："+tb备注.Text;
+            my.Cells[11 + ind, 1].Value = String.Format(" 编制人：{0}   {1}     审批人：{2} {3}     接收人：{4} {5}", tb编制人.Text, dtp编制日期.Value.ToLongDateString(), tb审批人.Text, dtp审批日期.Value.ToLongDateString(), tb接收人.Text, dtp接收日期.Value.ToLongDateString());
+        }
+
         public void print(bool b)
-        { }
+        {
+            int label_打印成功 = 1;
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            dir += "./../../xls/cleancut/SOP-MFG-302-R01A 清洁分切生产指令.xlsx";
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                {
+                    label_打印成功 = 0;
+                }
+                finally
+                {
+                    if (1 == label_打印成功)
+                    {
+                        string log = "\n=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+                        bs_prodinstr.EndEdit();
+                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }  
+        }
     }
 }
