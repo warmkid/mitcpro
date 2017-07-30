@@ -86,7 +86,7 @@
             // cmb班次
             // 
             this.cmb班次.FormattingEnabled = true;
-            this.cmb班次.Location = new System.Drawing.Point(485, 97);
+            this.cmb班次.Location = new System.Drawing.Point(485, 96);
             this.cmb班次.Name = "cmb班次";
             this.cmb班次.Size = new System.Drawing.Size(121, 24);
             this.cmb班次.TabIndex = 45;
@@ -182,7 +182,7 @@
             // 
             // txb审核员
             // 
-            this.txb审核员.Location = new System.Drawing.Point(685, 96);
+            this.txb审核员.Location = new System.Drawing.Point(685, 93);
             this.txb审核员.Name = "txb审核员";
             this.txb审核员.Size = new System.Drawing.Size(100, 26);
             this.txb审核员.TabIndex = 79;

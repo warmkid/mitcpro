@@ -490,12 +490,6 @@
     <Compile Include="Process\Extruction\B\Waste.Designer.cs">
       <DependentUpon>Waste.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Extruction\B\WasteInExtrusion.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Extruction\B\WasteInExtrusion.Designer.cs">
-      <DependentUpon>WasteInExtrusion.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\Extruction\C\beeholetable.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -745,12 +739,6 @@
     </Compile>
     <Compile Include="Setting\CleanArea_add.designer.cs">
       <DependentUpon>CleanArea_add.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Extruction\A\HandoverRecordofExtrusionProcess.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Extruction\A\HandoverRecordofExtrusionProcess.designer.cs">
-      <DependentUpon>HandoverRecordofExtrusionProcess.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\B\MaterialBalenceofExtrusionProcess.cs">
       <SubType>Form</SubType>
@@ -1135,9 +1123,6 @@
     <EmbeddedResource Include="Process\Extruction\B\Waste.resx">
       <DependentUpon>Waste.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Extruction\B\WasteInExtrusion.resx">
-      <DependentUpon>WasteInExtrusion.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\C\Feed.resx">
       <DependentUpon>Feed.cs</DependentUpon>
     </EmbeddedResource>
@@ -1249,9 +1234,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\CleanArea_add.resx">
       <DependentUpon>CleanArea_add.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Extruction\A\HandoverRecordofExtrusionProcess.resx">
-      <DependentUpon>HandoverRecordofExtrusionProcess.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\B\MaterialBalenceofExtrusionProcess.resx">
       <DependentUpon>MaterialBalenceofExtrusionProcess.cs</DependentUpon>

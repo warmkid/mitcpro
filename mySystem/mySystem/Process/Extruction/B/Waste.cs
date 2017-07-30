@@ -79,7 +79,7 @@ namespace mySystem.Process.Extruction.B
             
 
             readOuterData(lbl生产指令.Text);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
             if (0 == dtOuter.Rows.Count)
             {
@@ -88,7 +88,7 @@ namespace mySystem.Process.Extruction.B
                 dtOuter.Rows.Add(newrow);
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(lbl生产指令.Text);    
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
 
 
@@ -100,7 +100,7 @@ namespace mySystem.Process.Extruction.B
             setDataGridViewColumns();
             setRowNums();
             innerBind();
-            sumWaste();
+            计算不良品数量合计();
             setFormState();
             setEnableReadOnly();
             
@@ -130,7 +130,7 @@ namespace mySystem.Process.Extruction.B
 
 
             readOuterData(lbl生产指令.Text);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
             if (0 == dtOuter.Rows.Count)
             {
@@ -139,7 +139,7 @@ namespace mySystem.Process.Extruction.B
                 dtOuter.Rows.Add(newrow);
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(lbl生产指令.Text);
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
             }
             
@@ -150,7 +150,7 @@ namespace mySystem.Process.Extruction.B
             setRowNums();
             innerBind();
 
-            sumWaste();
+            计算不良品数量合计();
             setFormState();
             setEnableReadOnly();
             
@@ -350,6 +350,7 @@ namespace mySystem.Process.Extruction.B
                 }
             }
             // 保证这两个按钮一直是false
+            txb审核员.ReadOnly = true;
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;            
         }
@@ -425,7 +426,7 @@ namespace mySystem.Process.Extruction.B
 
                 readOuterData(searchId);
 
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
 
                 //to delete the unchecked table
@@ -476,7 +477,7 @@ namespace mySystem.Process.Extruction.B
 
                 readOuterData(searchId);
 
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
                 setFormState();
                 setEnableReadOnly();
@@ -594,7 +595,7 @@ namespace mySystem.Process.Extruction.B
             txb审核员.DataBindings.Add("Text", bsOuter.DataSource, "审核员");
         }
 
-        private void removeWasteBinding()
+        private void removeOuterBinding()
         {
             lbl生产指令.DataBindings.Clear();
             lbl生产开始时间.DataBindings.Clear();
@@ -686,6 +687,14 @@ namespace mySystem.Process.Extruction.B
             //dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[2].Width = 60;
+            dataGridView1.Columns[3].Width = 180;
+            dataGridView1.Columns[4].Width = 70;
+            dataGridView1.Columns[4].ReadOnly = true;
+            dataGridView1.Columns[5].Width = 150;
+            dataGridView1.Columns[6].Width = 120;
+            dataGridView1.Columns[7].Width = 120;
+            dataGridView1.Columns[9].Width = 120;
             dataGridView1.DataError += new DataGridViewDataErrorEventHandler(dataGridView1_DataError);
         }
 
@@ -727,7 +736,7 @@ namespace mySystem.Process.Extruction.B
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(lbl生产指令.Text);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
             if (Parameter.UserState.操作员 == _userState)
             {
@@ -785,7 +794,7 @@ namespace mySystem.Process.Extruction.B
             daOuter.Update((DataTable)bsOuter.DataSource);
 
             readOuterData(searchId);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
 
             btn提交审核.Enabled = false;
@@ -876,9 +885,9 @@ namespace mySystem.Process.Extruction.B
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
-            sumWaste();
+            计算不良品数量合计();
             daOuter.Fill((DataTable)bsOuter.DataSource);
-            removeWasteBinding();
+            removeOuterBinding();
             outerBind();
             btn保存.Enabled = true;
             
@@ -916,7 +925,7 @@ namespace mySystem.Process.Extruction.B
         }
 
 
-        private void sumWaste()
+        private void 计算不良品数量合计()
         {
             double sum = 0;
             for (int i = 0; i < dtInner.Rows.Count; i++)
@@ -924,7 +933,6 @@ namespace mySystem.Process.Extruction.B
                 sum += Convert.ToDouble(dtInner.Rows[i]["不良品数量"]);
             }
             outerDataSync("lbl合计不良品数量", (sum).ToString());
-            outerDataSync("txb审核员", "yyy");
             //DataGridViewBindingCompleteEventArgs e=new DataGridViewBindingCompleteEventArgs;
             //dataGridView1_DataBindingComplete(dataGridView1,e);
             //dtOuter.Rows[0]["合计不良品数量"] = sum.ToString();
@@ -948,7 +956,7 @@ namespace mySystem.Process.Extruction.B
         {
             if (6 == e.ColumnIndex)
             {
-                sumWaste();
+                计算不良品数量合计();
                 
             }
             if (8 == e.ColumnIndex || 10 == e.ColumnIndex)     //how to check the usr name of this list
@@ -981,9 +989,9 @@ namespace mySystem.Process.Extruction.B
                 daInner.Update((DataTable)bsInner.DataSource);
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
-                sumWaste();
+                计算不良品数量合计();
                 daOuter.Fill((DataTable)bsOuter.DataSource);
-                removeWasteBinding();
+                removeOuterBinding();
                 outerBind();
             }
             else

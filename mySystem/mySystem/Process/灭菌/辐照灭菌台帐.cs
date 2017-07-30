@@ -13,10 +13,10 @@ namespace mySystem.Process.灭菌
 {
     public partial class 辐照灭菌台帐 : mySystem.BaseForm
     {
-        private DataTable dt台帐,dt委托单;
-        private BindingSource bs台帐,bs委托单;
-        private OleDbDataAdapter da台帐,da委托单;
-        private OleDbCommandBuilder cb台帐,cb委托单;
+        private DataTable dt台帐,dt委托单,dt台帐外表;
+        private BindingSource bs台帐,bs委托单,bs台帐外表;
+        private OleDbDataAdapter da台帐, da委托单, da台帐外表;
+        private OleDbCommandBuilder cb台帐, cb委托单, cb台帐外表;
         private List<string> weituodanhao;
         DataGridViewComboBoxColumn c1;
 
@@ -70,12 +70,17 @@ namespace mySystem.Process.灭菌
         // 根据条件从数据库中读取一行外表的数据
         private void readOuterData()
         {
-           
+            da台帐外表 = new OleDbDataAdapter("select * from 辐照灭菌台帐",mySystem.Parameter.connOle);
+            cb台帐外表 = new OleDbCommandBuilder(da台帐外表);
+            dt台帐外表 = new DataTable("辐照灭菌台帐外表");
+            bs台帐外表 = new BindingSource();
+            da台帐外表.Fill(dt台帐外表);
         }
         // 外表和控件的绑定
         private void outerBind()
-        { 
-        
+        {
+            bs台帐外表.DataSource = dt台帐外表;
+            
         }
         // 根据条件从数据库中读取多行内表数据
         private void readInnerData()
@@ -101,8 +106,7 @@ namespace mySystem.Process.灭菌
             setDataGridViewFormat();
             bs台帐.DataSource = dt台帐;
             dataGridView1.DataSource = bs台帐.DataSource;
-            //第一列ID不显示
-            dataGridView1.Columns[0].Visible = false;
+            
         }
         // 设置自动计算类事件
         private void addComputerEventHandler()
@@ -253,6 +257,8 @@ namespace mySystem.Process.灭菌
             dataGridView1.Columns["拉回产品托盘数量个"].HeaderText = "拉回产品托盘数量(个)";
             dataGridView1.Columns["产品数量只"].HeaderText = "产品数量(只)";
             dataGridView1.Columns["产品数量箱"].HeaderText = "产品数量(箱)";
+            //第一列ID不显示
+            dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns["T辐照灭菌台帐ID"].Visible = false;
             //dataGridView1.Columns["审核是否通过"].Visible = false;
             //dataGridView1.Columns["日志"].Visible = false;
@@ -423,8 +429,8 @@ namespace mySystem.Process.灭菌
                 mysheet.Cells[i + 4, 6].Value = dt台帐.Rows[i]["送去产品托盘数量个"].ToString();
                 mysheet.Cells[i + 4, 7].Value = dt台帐.Rows[i]["拉回产品托盘数量个"].ToString();
                 mysheet.Cells[i + 4, 8].Value = dt台帐.Rows[i]["备注"].ToString();
-                mysheet.Cells[i + 4, 9].Value = dt台帐.Rows[i]["登记人"].ToString();
-                mysheet.Cells[i + 4, 10].Value = dt台帐.Rows[i]["审核人"].ToString();
+                mysheet.Cells[i + 4, 9].Value = dt台帐.Rows[i]["登记员"].ToString();
+                mysheet.Cells[i + 4, 10].Value = dt台帐.Rows[i]["审核员"].ToString();
             }
                 
             return mysheet;
@@ -438,9 +444,11 @@ namespace mySystem.Process.灭菌
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             //写日志
-            string str日志 = DateTime.Now + "保存";
+            string log = "\n=====================================\n";
+            string str日志 = DateTime.Now + "保存"+log;
+
             MessageBox.Show(str日志);
         }
 
