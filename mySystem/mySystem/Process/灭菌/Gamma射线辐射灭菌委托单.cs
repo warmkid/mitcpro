@@ -31,11 +31,20 @@ namespace mySystem.Process.灭菌
         private List<string> list_产品代码;
         private string person_操作员;
         private string person_审核员;
+        private List<string> list_操作员;
+        private List<string> list_审核员;
 
         private string str_委托单;
+        // 需要保存的状态
+        /// <summary>
+        /// 1:操作员，2：审核员，4：管理员
+        /// </summary>
+        Parameter.UserState _userState;
+        /// <summary>
+        /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
+        /// </summary>
+        Parameter.FormState _formState;
 
-        private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
-        private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
         public Gamma射线辐射灭菌委托单(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -119,6 +128,12 @@ namespace mySystem.Process.灭菌
             dr["操作日期"] = DateTime.Now;
 
             dr["审核是否通过"] = false;
+            dr["审批"] = "";
+
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
+            log += "委托单号：" + tb委托单号.Text + "\n";
+            dr["日志"] = log;
             return dr;
         }
 
@@ -246,6 +261,7 @@ namespace mySystem.Process.灭菌
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[7].ReadOnly = true;//数量只
         }
 
         // 刷新DataGridView中的列：序号
@@ -263,13 +279,113 @@ namespace mySystem.Process.灭菌
 	    // 设置自动计算类事件
 
         // 打印函数
-        void print(bool label){}
+        void print(bool b)
+        {
+            int label_打印成功 = 1;
+
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            dir += "./../../xls/miejun/SOP-MFG-106-R01B Gamma射线辐射灭菌委托单.xlsx";
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                { label_打印成功 = 0; }
+                finally
+                {
+                    if (1 == label_打印成功)
+                    {
+                        string log = "\n=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+                        bs_prodinstr.EndEdit();
+                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                    }
+
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+        //填充excel
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            int ind = 0;//偏移
+            if (dataGridView1.Rows.Count > 13)
+            {
+                //在第8行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 13; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[8, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 13;
+            }
+
+            my.Cells[3, 3].Value = tb委托单号.Text;
+            my.Cells[5, 3].Value = cb辐照单位.Text;
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                my.Cells[7 + i, 1] = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                my.Cells[7 + i, 3] = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[7 + i, 4] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[7 + i, 5] = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[7 + i, 8] = dataGridView1.Rows[i].Cells[8].Value.ToString();
+            }
+
+            my.Cells[20 + ind, 6] = tb箱数.Text;
+            my.Cells[20 + ind, 8] = tb托数.Text;
+            my.Cells[22 + ind, 2] = tb其他说明.Text;
+            my.Cells[23 + ind, 3] = tb委托人.Text;
+            my.Cells[23 + ind, 5] = tb审批人.Text;
+            my.Cells[24 + ind, 3] = dtp委托日期.Value.ToLongDateString();
+            my.Cells[24 + ind, 5] = dtp审批日期.Value.ToLongDateString();
+            my.Cells[25 + ind, 3] = cb运输商.Text;
+            my.Cells[25 + ind, 5] = tb操作人.Text;
+            my.Cells[25 + ind, 7] = dtp操作日期.Value.ToLongDateString();
+        }
+
         // 获取其他需要的数据，比如产品代码，产生废品原因等
         void getOtherData()
         {
             get_辐照单位();
             get_运输商();
             get_产品代码();
+            fill_printer();
         }
 
         private void get_辐照单位()
@@ -306,6 +422,8 @@ namespace mySystem.Process.灭菌
         // 获取操作员和审核员
         void getPeople()
         {
+            list_操作员 = new List<string>();
+            list_审核员 = new List<string>();
             DataTable dt = new DataTable("用户权限");
             OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='Gamma射线辐射灭菌委托单'", mySystem.Parameter.connOle);
             da.Fill(dt);
@@ -314,38 +432,72 @@ namespace mySystem.Process.灭菌
             {
                 person_操作员 = dt.Rows[0]["操作员"].ToString();
                 person_审核员 = dt.Rows[0]["审核员"].ToString();
+                string[] s = Regex.Split(person_操作员, ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        list_操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(person_审核员, ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        list_审核员.Add(s1[i]);
+                }
             }
         }
         // 计算，主要用于日报表、物料平衡记录中的计算
         void computer() { }
 
-        // 获取当前窗体状态：
-        // 如果『审核人』为空，则为未保存
-        // 否则，如果『审核人』为『__待审核』，则为『待审核』
-        // 否则
-        //         如果审核结果为『通过』，则为『审核通过』
-        //         如果审核结果为『不通过』，则为『审核未通过』
-        // 这个函数可以放在父类中？
         void setFormState()
         {
-            if (dt_prodinstr.Rows[0]["审批"].ToString() == "")//未保存
-                stat_form = 0;
-            else if (dt_prodinstr.Rows[0]["审批"].ToString() == "__待审核")
-                stat_form = 1;
-            else if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])//审核通过
-                stat_form = 2;
-            else//审核未通过
-                stat_form = 3;
+            //if (dt_prodinstr.Rows[0]["审批"].ToString() == "")//未保存
+            //    stat_form = 0;
+            //else if (dt_prodinstr.Rows[0]["审批"].ToString() == "__待审核")
+            //    stat_form = 1;
+            //else if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])//审核通过
+            //    stat_form = 2;
+            //else//审核未通过
+            //    stat_form = 3;
+
+            string s = dt_prodinstr.Rows[0]["审批"].ToString();
+            bool b = Convert.ToBoolean(dt_prodinstr.Rows[0]["审核是否通过"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
+            else
+            {
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
+            }
         }
         // 设置用户状态，用户状态有3个：0--操作员，1--审核员，2--管理员
         void setUserState()
         {
-            if (mySystem.Parameter.userName == person_操作员)
-                stat_user = 0;
-            else if (mySystem.Parameter.userName == person_审核员)
-                stat_user = 1;
-            else
-                stat_user = 2;
+            //if (mySystem.Parameter.userName == person_操作员)
+            //    stat_user = 0;
+            //else if (mySystem.Parameter.userName == person_审核员)
+            //    stat_user = 1;
+            //else
+            //    stat_user = 2;
+
+            _userState = Parameter.UserState.NoBody;
+            if (list_操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (list_审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
         void setControlsTrue()
@@ -366,43 +518,29 @@ namespace mySystem.Process.灭菌
             dataGridView1.ReadOnly = true;
             bt日志.Enabled = true;
             bt打印.Enabled = true;
+            cb打印机.Enabled = true;
         }
         // 设置控件可用性，根据状态设置，状态是每个窗体的变量，放在父类中
         // 0：未保存；1：待审核；2：审核通过；3：审核未通过
         void setEnableReadOnly()
         {
-            if (stat_user == 2)//管理员
+            if (Parameter.UserState.管理员 == _userState)
             {
-                //控件都能点
                 setControlsTrue();
             }
-            else if (stat_user == 1)//审核人
+            if (Parameter.UserState.审核员 == _userState)
             {
-                if (stat_form == 0 || stat_form == 3 || stat_form == 2)//未保存,审核不通过，审核通过
+                if (Parameter.FormState.待审核 == _formState)
                 {
-                    //空间都不能点
-                    setControlsFalse();
-                }
-                else
-                {
-                    //发送审核不可点，其他都可点
                     setControlsTrue();
                     bt审核.Enabled = true;
                 }
-
+                else setControlsFalse();
             }
-            else//操作员
+            if (Parameter.UserState.操作员 == _userState)
             {
-                if (stat_form == 1 || stat_form == 2)//待审核，审核通过
-                {
-                    //空间都不能点
-                    setControlsFalse();
-                }
-                else
-                {
-                    //发送审核，审核不能点
-                    setControlsTrue();
-                }
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlsTrue();
+                else setControlsFalse();
             }
         }
 
@@ -411,7 +549,7 @@ namespace mySystem.Process.灭菌
         {
             bool rt=save();
             //控件可见性
-            if (rt && stat_user == 0)
+            if (rt && _userState == Parameter.UserState.操作员)
                 bt发送审核.Enabled = true;
         }
 
@@ -486,14 +624,12 @@ namespace mySystem.Process.灭菌
             //空间都不能点
             setControlsFalse();
 
-            //可以操作其他委托单情况
-            bt查询插入.Enabled = true;
-            tb委托单号.Enabled = true;
         }
 
         private void bt日志_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+            //MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+            (new mySystem.Other.LogForm()).setLog(dt_prodinstr.Rows[0]["日志"].ToString()).Show();
         }
 
         //审核
@@ -502,7 +638,7 @@ namespace mySystem.Process.灭菌
             base.CheckResult();
 
             //获得审核信息
-            dt_prodinstr.Rows[0]["审批"] = checkform.userName;
+            dt_prodinstr.Rows[0]["审批"] = mySystem.Parameter.userName;
             dt_prodinstr.Rows[0]["审批日期"] = checkform.time;
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
@@ -510,12 +646,6 @@ namespace mySystem.Process.灭菌
 
             //改变控件状态
             setControlsFalse();
-
-            //可以操作其他委托单情况
-            bt查询插入.Enabled = true;
-            tb委托单号.Enabled = true;
-
-
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -544,9 +674,28 @@ namespace mySystem.Process.灭菌
             checkform.Show();
         }
 
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        //添加打印机
+        private void fill_printer()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
+        }
+
         private void bt打印_Click(object sender, EventArgs e)
         {
-
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
+            GC.Collect();
         }
 
         private void bt查询插入_Click(object sender, EventArgs e)
@@ -554,7 +703,7 @@ namespace mySystem.Process.灭菌
             str_委托单 = tb委托单号.Text;
             readOuterData(str_委托单);
             outerBind();
-            if (dt_prodinstr.Rows.Count <= 0 && stat_user != 0)
+            if (dt_prodinstr.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
             {
                 MessageBox.Show("只有操作员可以新建指令");
                 return;
@@ -598,6 +747,9 @@ namespace mySystem.Process.灭菌
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
             //刷新序号
             setDataGridViewRowNums();
 
@@ -637,6 +789,14 @@ namespace mySystem.Process.灭菌
                      return;   
                  }
              }
+
+             if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
+             {
+                 float perweight = 0, num = 0;
+                 perweight = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
+                 num = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
+                 dataGridView1.Rows[e.RowIndex].Cells[7].Value = num*perweight;
+             }
              sumDataGridView1();
         }
 
@@ -649,7 +809,8 @@ namespace mySystem.Process.灭菌
             {
                 if (dataGridView1.Rows[i].Cells[2].Value.ToString() != "")//托盘号
                 {
-                    string[] a = dataGridView1.Rows[i].Cells[2].Value.ToString().Split(',');
+                    string temps=dataGridView1.Rows[i].Cells[2].Value.ToString();
+                    string[] a = ToDBC(temps).Split(',');
                     for (int k = 0; k < a.Length; k++)
                         list_托.Add(int.Parse(a[k]));
                 }

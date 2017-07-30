@@ -39,7 +39,7 @@ namespace mySystem.Process.灭菌
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "辐照灭菌产品验收记录");
             if (b)
             {
-                辐照灭菌产品验收记录 mydlg = new 辐照灭菌产品验收记录();
+                辐照灭菌产品验收记录 mydlg = new 辐照灭菌产品验收记录(mainform);
                 mydlg.ShowDialog();
             }
             else

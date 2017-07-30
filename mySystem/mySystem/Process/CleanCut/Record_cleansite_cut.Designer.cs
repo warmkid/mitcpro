@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Record_cleansite_cut));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -59,12 +60,16 @@
             this.ckb不合格 = new System.Windows.Forms.CheckBox();
             this.bt发送审核 = new System.Windows.Forms.Button();
             this.bt日志 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb操作员备注 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.bt插入查询 = new System.Windows.Forms.Button();
             this.label40 = new System.Windows.Forms.Label();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -297,6 +302,7 @@
             this.bt打印.TabIndex = 23;
             this.bt打印.Text = "打印";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // cb产品代码
             // 
@@ -346,13 +352,13 @@
             this.bt日志.UseVisualStyleBackColor = true;
             this.bt日志.Click += new System.EventHandler(this.bt日志_Click);
             // 
-            // textBox1
+            // tb操作员备注
             // 
-            this.textBox1.Location = new System.Drawing.Point(300, 347);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(171, 23);
-            this.textBox1.TabIndex = 30;
+            this.tb操作员备注.Location = new System.Drawing.Point(300, 347);
+            this.tb操作员备注.Multiline = true;
+            this.tb操作员备注.Name = "tb操作员备注";
+            this.tb操作员备注.Size = new System.Drawing.Size(171, 23);
+            this.tb操作员备注.TabIndex = 30;
             // 
             // label11
             // 
@@ -391,15 +397,48 @@
             this.cb打印机.Size = new System.Drawing.Size(156, 22);
             this.cb打印机.TabIndex = 47;
             // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label41.Location = new System.Drawing.Point(972, 20);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(93, 16);
+            this.label41.TabIndex = 51;
+            this.label41.Text = "登录角色：";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(1087, 20);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 50;
+            this.label角色.Text = "角色";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(3, -2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(144, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 87;
+            this.pictureBox1.TabStop = false;
+            // 
             // Record_cleansite_cut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 499);
+            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.label41);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.bt插入查询);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb操作员备注);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.bt日志);
             this.Controls.Add(this.bt发送审核);
@@ -429,9 +468,11 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Record_cleansite_cut";
             this.Text = "Record_cleansite_cut";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -470,10 +511,13 @@
         private System.Windows.Forms.CheckBox ckb不合格;
         private System.Windows.Forms.Button bt发送审核;
         private System.Windows.Forms.Button bt日志;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb操作员备注;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Button bt插入查询;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.ComboBox cb打印机;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

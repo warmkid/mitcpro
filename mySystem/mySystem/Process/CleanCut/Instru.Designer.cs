@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Instru));
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label4 = new System.Windows.Forms.Label();
@@ -61,10 +62,11 @@
             this.bt复制 = new System.Windows.Forms.Button();
             this.label40 = new System.Windows.Forms.Label();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
-            this.bt更改 = new System.Windows.Forms.Button();
             this.label41 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -270,7 +272,7 @@
             // 
             // bt打印
             // 
-            this.bt打印.Location = new System.Drawing.Point(450, 536);
+            this.bt打印.Location = new System.Drawing.Point(388, 535);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(63, 24);
             this.bt打印.TabIndex = 37;
@@ -352,7 +354,7 @@
             // 
             this.label40.AutoSize = true;
             this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label40.Location = new System.Drawing.Point(186, 541);
+            this.label40.Location = new System.Drawing.Point(103, 541);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(91, 14);
             this.label40.TabIndex = 46;
@@ -361,19 +363,10 @@
             // cb打印机
             // 
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(283, 536);
+            this.cb打印机.Location = new System.Drawing.Point(195, 535);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(156, 24);
+            this.cb打印机.Size = new System.Drawing.Size(182, 24);
             this.cb打印机.TabIndex = 45;
-            // 
-            // bt更改
-            // 
-            this.bt更改.Location = new System.Drawing.Point(106, 536);
-            this.bt更改.Name = "bt更改";
-            this.bt更改.Size = new System.Drawing.Size(63, 24);
-            this.bt更改.TabIndex = 47;
-            this.bt更改.Text = "更改";
-            this.bt更改.UseVisualStyleBackColor = true;
             // 
             // label41
             // 
@@ -395,14 +388,24 @@
             this.label角色.TabIndex = 48;
             this.label角色.Text = "角色";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(1, -1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(144, 50);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 86;
+            this.pictureBox1.TabStop = false;
+            // 
             // Instru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 571);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label41);
             this.Controls.Add(this.label角色);
-            this.Controls.Add(this.bt更改);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.bt复制);
@@ -437,10 +440,12 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Instru";
             this.Text = "Instru";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -481,8 +486,8 @@
         private System.Windows.Forms.Button bt复制;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.ComboBox cb打印机;
-        private System.Windows.Forms.Button bt更改;
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

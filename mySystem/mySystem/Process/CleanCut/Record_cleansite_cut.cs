@@ -9,6 +9,13 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.Office;
+using Excel = Microsoft.Office.Interop.Excel;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace mySystem.Process.CleanCut
 {
@@ -24,9 +31,22 @@ namespace mySystem.Process.CleanCut
 
         private string person_操作员;
         private string person_审核员;
+        private List<string> list_操作员;
+        private List<string> list_审核员;
 
-        private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
-        private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        //private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
+        //private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+
+        // 需要保存的状态
+        /// <summary>
+        /// 1:操作员，2：审核员，4：管理员
+        /// </summary>
+        Parameter.UserState _userState;
+        /// <summary>
+        /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
+        /// </summary>
+        Parameter.FormState _formState;
+
         private Dictionary<string, string> dict_prod;//产品代码与产品批号对应字典
 
         private int instrid;
@@ -41,9 +61,10 @@ namespace mySystem.Process.CleanCut
             getOtherData();
             addDataEventHandler();
 
-            instrid = mySystem.Parameter.cleancutInstruID;            
+            instrid = mySystem.Parameter.cleancutInstruID;
 
-            setControlFalse();
+            foreach (Control c in this.Controls)
+                c.Enabled = false;
             cb产品代码.Enabled = true;
             bt插入查询.Enabled = true;
         }
@@ -66,9 +87,6 @@ namespace mySystem.Process.CleanCut
             instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
             prodcode = tempdt.Rows[0]["产品代码"].ToString();
 
-            cb产品代码.Enabled = false;
-            bt插入查询.Enabled = false;
-
             readOuterData(instrid, prodcode);
             removeOuterBinding();
             outerBind();
@@ -88,6 +106,9 @@ namespace mySystem.Process.CleanCut
             addOtherEvnetHandler();
             setFormState();
             setEnableReadOnly();
+
+            cb产品代码.Enabled = false;
+            bt插入查询.Enabled = false;
         }
 
         void addDataEventHandler()
@@ -111,17 +132,37 @@ namespace mySystem.Process.CleanCut
 
         void setUserState()
         {
-            if (mySystem.Parameter.userName == person_操作员)
-                stat_user = 0;
-            else if (mySystem.Parameter.userName == person_审核员)
-                stat_user = 1;
-            else
-                stat_user = 2;
+            //if (mySystem.Parameter.userName == person_操作员)
+            //    stat_user = 0;
+            //else if (mySystem.Parameter.userName == person_审核员)
+            //    stat_user = 1;
+            //else
+            //    stat_user = 2;
+            _userState = Parameter.UserState.NoBody;
+            if (list_操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (list_审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
         //// 获取操作员和审核员
         void getPeople()
         {
+            list_操作员 = new List<string>();
+            list_审核员 = new List<string>();
             DataTable dt = new DataTable("用户权限");
             OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='清场记录'", mySystem.Parameter.connOle);
             da.Fill(dt);
@@ -130,6 +171,18 @@ namespace mySystem.Process.CleanCut
             {
                 person_操作员 = dt.Rows[0]["操作员"].ToString();
                 person_审核员 = dt.Rows[0]["审核员"].ToString();
+                string[] s = Regex.Split(person_操作员, ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        list_操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(person_审核员, ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        list_审核员.Add(s1[i]);
+                }
             }
 
         }
@@ -150,6 +203,9 @@ namespace mySystem.Process.CleanCut
                 cb产品代码.Items.Add(tdr["清洁前产品代码"].ToString());
                 dict_prod.Add(tdr["清洁前产品代码"].ToString(), tdr["清洁前批号"].ToString());
             }
+
+            //添加打印机
+            fill_printer();
         }
 
         //判断之前的内容是否与设置表中内容一致
@@ -210,14 +266,24 @@ namespace mySystem.Process.CleanCut
         //设置窗口状态
         void setFormState()
         {
-            if (dt_prodinstr.Rows[0]["审核人"].ToString() == "")//草稿
-                stat_form = 0;
-            else if (dt_prodinstr.Rows[0]["审核人"].ToString() == "__待审核")//待审核
-                stat_form = 1;
-            else if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])//审核通过
-                stat_form = 2;
-            else//审核未通过
-                stat_form = 3;
+            //if (dt_prodinstr.Rows[0]["审核人"].ToString() == "")//草稿
+            //    stat_form = 0;
+            //else if (dt_prodinstr.Rows[0]["审核人"].ToString() == "__待审核")//待审核
+            //    stat_form = 1;
+            //else if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])//审核通过
+            //    stat_form = 2;
+            //else//审核未通过
+            //    stat_form = 3;
+
+            string s = dt_prodinstr.Rows[0]["审核人"].ToString();
+            bool b = Convert.ToBoolean(dt_prodinstr.Rows[0]["审核是否通过"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
+            else
+            {
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
+            }
         }
 
         //设置控件可见
@@ -243,49 +309,29 @@ namespace mySystem.Process.CleanCut
             dataGridView1.ReadOnly = true;
             bt日志.Enabled = true;
             bt打印.Enabled = true;
+            cb打印机.Enabled = true;
         }
 
         //设置控件可读性
         void setEnableReadOnly()
         {
-            if (stat_user == 2)//管理员
+            if (Parameter.UserState.管理员 == _userState)
             {
                 setControlTrue();
             }
-            else if (stat_user == 1)//审核人
+            if (Parameter.UserState.审核员 == _userState)
             {
-                if (stat_form == 2 || stat_form == 3)//审核通过或审核不通过
+                if (Parameter.FormState.待审核 == _formState)
                 {
-                    //都不可点
-                    setControlFalse();
-                }
-                else if (stat_form == 1)//待审核
-                {
-                    //都可点
                     setControlTrue();
                     bt审核.Enabled = true;
                 }
-                else//草稿
-                {
-                    //都不可点
-                    setControlFalse();
-                }
-
+                else setControlFalse();
             }
-            else//操作员
+            if (Parameter.UserState.操作员 == _userState)
             {
-                if (stat_form == 1 || stat_form == 2)//待审核，审核通过
-                {
-                    //都不能点
-                    setControlFalse();
-
-                }
-                else//草稿，审核不通过
-                {
-                    //都能点，发送审核不能点
-                    setControlTrue();
-                    bt发送审核.Enabled = true;
-                }
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                else setControlFalse();
             }
         }
 
@@ -308,6 +354,13 @@ namespace mySystem.Process.CleanCut
             dr["生产日期"] = DateTime.Now;
             dr["生产班次"] = mySystem.Parameter.userflight=="白班"?true:false;
             dr["清场人"] = mySystem.Parameter.userName;
+            dr["检查人"] = "";
+            dr["审核人"] = "";
+
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
+            log += "生产指令编号：" + mySystem.Parameter.cleancutInstruction + "\n";
+            dr["日志"] = log;
             return dr;
 
         }
@@ -358,6 +411,7 @@ namespace mySystem.Process.CleanCut
             tb清场人.DataBindings.Clear();
             tb检查人.DataBindings.Clear();
             tb备注.DataBindings.Clear();
+            tb操作员备注.DataBindings.Clear();
 
 
         }
@@ -376,6 +430,7 @@ namespace mySystem.Process.CleanCut
             tb检查人.DataBindings.Add("Text", bs_prodinstr.DataSource, "检查人");
             dtp生产日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "生产日期");
             tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "备注");
+            tb操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作员备注");
         }
         // 内表和控件的绑定
         void innerBind()
@@ -484,7 +539,7 @@ namespace mySystem.Process.CleanCut
         {
             bool rt = save();
             //控件可见性
-            if (rt && stat_user == 0)
+            if (rt && _userState == Parameter.UserState.操作员)
                 bt发送审核.Enabled = true;
         }
 
@@ -509,14 +564,23 @@ namespace mySystem.Process.CleanCut
         //审核
         public override void CheckResult()
         {
-            dt_prodinstr.Rows[0]["审核人"] = checkform.userName;
-            dt_prodinstr.Rows[0]["检查人"] = checkform.userName;
+            dt_prodinstr.Rows[0]["审核人"] = mySystem.Parameter.userName;
+            dt_prodinstr.Rows[0]["检查人"] = mySystem.Parameter.userName;
 
             dt_prodinstr.Rows[0]["检查结果"] = checkform.ischeckOk==true?"合格":"不合格" ;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
 
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
-
+            if (checkform.ischeckOk)
+            {
+                ckb合格.Checked = true;
+                ckb不合格.Checked = false;
+            }
+            else
+            {
+                ckb合格.Checked = false;
+                ckb不合格.Checked = true;
+            }
             setControlFalse();
 
 
@@ -590,7 +654,8 @@ namespace mySystem.Process.CleanCut
 
         private void bt日志_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+            //MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+            (new mySystem.Other.LogForm()).setLog(dt_prodinstr.Rows[0]["日志"].ToString()).Show();
         }
 
         private void bt插入查询_Click(object sender, EventArgs e)
@@ -622,10 +687,15 @@ namespace mySystem.Process.CleanCut
             ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["生产班次"];
             ckb夜班.Checked = !ckb白班.Checked;
 
-            if (dt_prodinstr.Rows[0]["审核人"].ToString() != "")
+            if (dt_prodinstr.Rows[0]["审核人"].ToString() != "" && dt_prodinstr.Rows[0]["审核人"].ToString() != "__待审核")
             {
                 ckb合格.Checked = (bool)dt_prodinstr.Rows[0]["审核是否通过"];
                 ckb不合格.Checked = !ckb合格.Checked;
+            }
+            else
+            {
+                ckb合格.Checked = false;
+                ckb不合格.Checked = false;
             }
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
@@ -634,7 +704,39 @@ namespace mySystem.Process.CleanCut
             addOtherEvnetHandler();
             setFormState();
             setEnableReadOnly();
+
+            cb产品代码.Enabled = false;
+            bt插入查询.Enabled = false;
             
+        }
+
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        //添加打印机
+        private void fill_printer()
+        {
+
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
+        }
+
+        private void bt打印_Click(object sender, EventArgs e)
+        {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
+            GC.Collect();
+        }
+        public void print(bool b)
+        {
+ 
         }
     }
 }

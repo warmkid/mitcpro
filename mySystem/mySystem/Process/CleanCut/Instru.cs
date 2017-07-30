@@ -318,6 +318,9 @@ namespace mySystem.Process.CleanCut
             setEnableReadOnly();
             addOtherEvnetHandler();
 
+            tb指令编号.Enabled = false;
+            bt查询插入.Enabled = false;
+
         }
 
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -371,7 +374,6 @@ namespace mySystem.Process.CleanCut
             dataGridView1.ReadOnly = false;
             bt发送审核.Enabled = false;
             bt审核.Enabled = false;
-            bt更改.Enabled = false;
         }
         void setEnableReadOnly()
         {
@@ -422,11 +424,6 @@ namespace mySystem.Process.CleanCut
                     setControlTrue();
                     bt审核.Enabled = true;
                 }
-                else if (Parameter.FormState.审核通过 == _formState)
-                {
-                    setControlFalse();
-                    bt更改.Enabled = true;
-                }
                 else setControlFalse();
             }
             if (Parameter.UserState.操作员 == _userState)
@@ -457,6 +454,12 @@ namespace mySystem.Process.CleanCut
 
             dr["状态"] = 0;
             dr["审核是否通过"] = false;
+            dr["审批人"] = "";
+            dr["审核人"] = "";
+
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
+            dr["日志"] = log;
             return dr;
 
         }
@@ -718,21 +721,19 @@ namespace mySystem.Process.CleanCut
         {
             //获得审核信息
             //dtp审批日期.Value = checkform.time;
-            dt_prodinstr.Rows[0]["审批人"] = checkform.userName;
+            dt_prodinstr.Rows[0]["审批人"] = mySystem.Parameter.userName;
             dt_prodinstr.Rows[0]["审批时间"] = checkform.time;
 
-            dt_prodinstr.Rows[0]["审核人"] = checkform.userName;
+            dt_prodinstr.Rows[0]["审核人"] = mySystem.Parameter.userName;
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+            if(checkform.ischeckOk)
+                dt_prodinstr.Rows[0]["状态"] = 1;//待接收
+            else
+                dt_prodinstr.Rows[0]["状态"] = 0;//草稿
+
             //状态
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
-            bt打印.Enabled = true;
-            bt日志.Enabled = true;
+            setControlFalse();
 
 
             //写待审核表
@@ -797,21 +798,14 @@ namespace mySystem.Process.CleanCut
             save();
 
             //空间都不能点
-            foreach (Control c in this.Controls)
-                c.Enabled = false;
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
-            bt日志.Enabled = true;
-            bt打印.Enabled = true;
-
-            bt查询插入.Enabled = true;
-            tb指令编号.Enabled = true;
+            setControlFalse();
             
         }
 
         private void bt日志_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+            //MessageBox.Show(dt_prodinstr.Rows[0]["日志"].ToString());
+            (new mySystem.Other.LogForm()).setLog(dt_prodinstr.Rows[0]["日志"].ToString()).Show();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
