@@ -144,7 +144,7 @@ namespace mySystem.Process.灭菌
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
 
-            if (Columnsname == "登记人" || Columnsname == "审核人")
+            if (Columnsname == "登记员" || Columnsname == "审核员")
             {
                 string str人员 = dt台帐.Rows[columnindex][rowsname].ToString();
                 if (mySystem.Parameter.NametoID(str人员) <= 0)
