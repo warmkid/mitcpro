@@ -697,6 +697,10 @@ namespace mySystem.Extruction.Process
             dt_prodinstr.Rows[0]["审核日期"] = checkform.time;
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+            if (checkform.ischeckOk)
+            {
+                (this.Owner as ExtructionMainForm).InitBtn();
+            }
             //状态
             setControlFalse();
 
