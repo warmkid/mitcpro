@@ -310,6 +310,7 @@ namespace mySystem.Process.灭菌
         //保存数据到数据库
         private void bt保存_Click(object sender, EventArgs e)
         {
+          //  DialogResult dr= MessageBox.Show("确定保存","放弃",MessageBoxButtons.OKCancel);
             bool is填满 = is_filled();
              bool is合法 = input_Judge();
              if (is填满 && is合法)
