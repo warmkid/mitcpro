@@ -665,6 +665,11 @@ namespace mySystem.Process.CleanCut
                 MessageBox.Show("选择一条产品代码");
                 return;
             }
+            if (_userState != Parameter.UserState.操作员)
+            {
+                MessageBox.Show("只有操作员才能新建记录");
+                return;
+            }
             cb产品代码.Enabled = false;
             bt插入查询.Enabled = false;
 
@@ -738,6 +743,41 @@ namespace mySystem.Process.CleanCut
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
 
+            int ind = 0;
+            if (dataGridView1.Rows.Count > 14)
+            {
+                //在第6行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 14; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 14;
+            }
+
+            my.Cells[3, 1].Value = "产品代码/规格：" + cb产品代码.Text+"   "+tb产品规格.Text;
+            my.Cells[3, 5].Value = "产品批号：" + tb产品批号.Text;
+            if (ckb白班.Checked)
+                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", dtp生产日期.Value.ToLongDateString());
+            else
+                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", dtp生产日期.Value.ToLongDateString());
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                my.Cells[5 + i, 1].Value = i + 1;
+                my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
+            }
+            my.Cells[5, 7].Value = tb清场人.Text;
+            if(ckb合格.Checked && !ckb不合格.Checked)
+                my.Cells[5, 8].Value = "合格☑\n不合格□";
+            else if(ckb不合格.Checked && !ckb合格.Checked)
+                my.Cells[5, 8].Value = "合格□\n不合格☑";
+            else
+                my.Cells[5, 8].Value = "合格□\n不合格□";
+            my.Cells[5, 9].Value = tb检查人.Text;
+            my.Cells[19 + ind, 1].Value = "备注："+tb备注.Text;
 
         }
         public void print(bool b)

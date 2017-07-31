@@ -373,7 +373,7 @@ namespace mySystem.Process.灭菌
             outerBind();
             if (dt_out.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
             {
-                MessageBox.Show("只有操作员可以新建指令");
+                MessageBox.Show("只有操作员可以新建记录");
                 return;
             }
             if (dt_out.Rows.Count <= 0)

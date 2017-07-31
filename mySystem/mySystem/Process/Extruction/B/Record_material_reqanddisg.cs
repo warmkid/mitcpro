@@ -957,6 +957,8 @@ namespace mySystem.Extruction.Process
             if (dt_prodinstr.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
             {
                 MessageBox.Show("只有操作员可以新建记录");
+                foreach (Control c in this.Controls)
+                    c.Enabled = false;
                 return;
             }
             if (dt_prodinstr.Rows.Count <= 0)
