@@ -307,6 +307,10 @@ namespace WindowsFormsApplication1
             if (dt_out.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
             {
                 MessageBox.Show("只有操作员可以新建记录");
+                foreach (Control c in this.Controls)
+                    c.Enabled = false;
+                dataGridView1.Enabled = true;
+                dataGridView1.ReadOnly = true;
                 return;
             }
 
@@ -636,6 +640,10 @@ namespace WindowsFormsApplication1
             dt_out.Rows[0]["审核时间"] = checkform.time;
             dt_out.Rows[0]["审核意见"] = checkform.opinion;
             dt_out.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+            if (checkform.ischeckOk)
+            {
+                (this.Owner as ExtructionMainForm).InitBtn();
+            }
             //状态
             setControlFalse();
 

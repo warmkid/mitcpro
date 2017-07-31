@@ -183,7 +183,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋机运行记录");
             if (b)
             {
-                form7 = new RunningRecord();
+                form7 = new RunningRecord(mainform);
                 form7.ShowDialog();
             }
             else

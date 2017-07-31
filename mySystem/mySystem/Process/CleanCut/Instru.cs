@@ -62,6 +62,8 @@ namespace mySystem.Process.CleanCut
 
             foreach(Control c in this.Controls)
                 c.Enabled=false;
+            dataGridView1.Enabled = true;
+            dataGridView1.ReadOnly = true;
             tb指令编号.Enabled = true;
             bt查询插入.Enabled = true;
 

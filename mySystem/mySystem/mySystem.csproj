@@ -1018,6 +1018,9 @@
     <EmbeddedResource Include="Process\Bag\CS\Record_batch_bag.resx">
       <DependentUpon>Record_batch_bag.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\CS\RunningRecord.resx">
+      <DependentUpon>RunningRecord.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\产品外观和尺寸检验记录.resx">
       <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
     </EmbeddedResource>
