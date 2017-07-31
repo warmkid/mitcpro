@@ -849,10 +849,10 @@ namespace mySystem.Extruction.Chart
             stringtemp = "审核人：" + dt记录.Rows[0]["审核人"].ToString();
             stringtemp = stringtemp + "       审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
             mysheet.Cells[20, 6].Value = stringtemp;
-
             //内表信息
-            int rownum = dt记录详情.Rows.Count > 15 ? 15 : dt记录详情.Rows.Count;
-            for (int i = 0; i < rownum; i++)
+            int rownum = dt记录详情.Rows.Count;
+            //无需插入的部分
+            for (int i = 0; i < (rownum > 15 ? 15 : rownum); i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["包装箱号"].ToString();
@@ -860,19 +860,33 @@ namespace mySystem.Extruction.Chart
                 mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["是否贴标签"].ToString() == "Yes" ? "√" : "×";
                 mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["是否打包封箱"].ToString() == "Yes" ? "√" : "×";
             }
+            //需要插入的部分
+            if (rownum > 15)
+            {
+                for (int i = 15; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                    mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["包装箱号"].ToString();
+                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["包装明细"].ToString();
+                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["是否贴标签"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["是否打包封箱"].ToString() == "Yes" ? "√" : "×";
+                }
+            }
             //加页脚
             int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + mySystem.Parameter.proInstruID.ToString(), connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
-            List<String> queryCols = new List<String>(new String[] { "ID" });
-            List<String> whereCols = new List<String>(new String[] { "生产指令ID" });
-            List<Object> whereVals = new List<Object>(new Object[] { mySystem.Parameter.proInstruID });
-            List<List<Object>> res = Utility.selectAccess(mySystem.Parameter.connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
-            foreach (Int32 num in res[0])
-            {
-                sheetList.Add(num);
-            }
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 15 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }
