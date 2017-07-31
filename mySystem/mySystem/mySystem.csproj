@@ -704,6 +704,12 @@
     <Compile Include="Query\QueryInstruForm.Designer.cs">
       <DependentUpon>QueryInstruForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Query\清洁分切查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\清洁分切查询.Designer.cs">
+      <DependentUpon>清洁分切查询.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\AddPeopleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1228,6 +1234,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryMainForm.resx">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\清洁分切查询.resx">
+      <DependentUpon>清洁分切查询.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\AddPeopleForm.resx">
       <DependentUpon>AddPeopleForm.cs</DependentUpon>

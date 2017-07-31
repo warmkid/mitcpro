@@ -540,6 +540,7 @@ namespace mySystem.Extruction.Process
             //if (stat_user == 0 && isSaved == true)
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
                 btn提交审核.Enabled = true;
+            (this.Owner as ExtructionMainForm).InitBtn();
         }
 
         //保存功能

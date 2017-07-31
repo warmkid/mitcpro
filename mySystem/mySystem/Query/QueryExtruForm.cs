@@ -41,7 +41,7 @@ namespace mySystem.Query
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 ";
+                comm.CommandText = "select * from 生产指令信息表 ";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
@@ -57,7 +57,7 @@ namespace mySystem.Query
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = Parameter.conn;
-                comm.CommandText = "select ID,生产指令编号 from 生产指令信息表 ";
+                comm.CommandText = "select * from 生产指令信息表 ";
                 SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {

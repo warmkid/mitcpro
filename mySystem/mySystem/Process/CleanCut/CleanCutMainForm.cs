@@ -187,7 +187,7 @@ namespace mySystem.Process.CleanCut
         private void A7Btn_Click(object sender, EventArgs e)
         {
             CleanCut_Cover c= new CleanCut_Cover(mainform);
-            c.Show();
+            c.ShowDialog();
         }
 
         private void A8Btn_Click(object sender, EventArgs e)

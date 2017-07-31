@@ -352,7 +352,7 @@ namespace mySystem.Process.Extruction.B
             removeOuterBinding();
             outerBind();
             btn提交审核.Enabled = true;
-           
+            (this.Owner as ExtructionMainForm).InitBtn();
         }
 
         private void btn插入_Click(object sender, EventArgs e)

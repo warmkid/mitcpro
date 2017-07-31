@@ -597,7 +597,7 @@ namespace mySystem.Process.Extruction.A
             outerBind();
 
             btn提交审核.Enabled = true;
-           
+            (this.Owner as ExtructionMainForm).InitBtn();
         }
 
     

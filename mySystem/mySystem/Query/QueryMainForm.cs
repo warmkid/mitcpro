@@ -46,6 +46,8 @@ namespace mySystem
         //清洁分切
         private void CleanBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 2;
+            Parameter.InitCon();
             Btn吹膜.BackColor = Color.FromName("ControlLightLight");
             Btn清洁分切.BackColor = Color.FromArgb(138, 158, 196);
             Btn制袋.BackColor = Color.FromName("ControlLightLight");
@@ -55,7 +57,12 @@ namespace mySystem
             Btn库存.BackColor = Color.FromName("ControlLightLight");
             bagBtnColor();
             QueryPanelRight.Controls.Clear();
-            
+            清洁分切查询 myDlg = new 清洁分切查询();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = QueryPanelRight.Size;
+            QueryPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         //制袋

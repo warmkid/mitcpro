@@ -742,6 +742,7 @@ namespace mySystem.Process.Extruction.B
             {
                 btn提交审核.Enabled = true;
             }
+            (this.Owner as ExtructionMainForm).InitBtn();
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)

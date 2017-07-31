@@ -630,6 +630,8 @@ namespace WindowsFormsApplication1
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
                 bt提交审核.Enabled = true;
+            (this.Owner as ExtructionMainForm).InitBtn();
+                
         }
 
         //重写函数，获得审查人信息
@@ -662,10 +664,6 @@ namespace WindowsFormsApplication1
 
             bs_out.EndEdit();
             da_out.Update((DataTable)bs_out.DataSource);
-            if (checkform.ischeckOk)
-            {
-                (this.Owner as ExtructionMainForm).InitBtn();
-            }
             base.CheckResult();
 
         }

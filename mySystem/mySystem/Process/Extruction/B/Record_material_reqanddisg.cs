@@ -488,6 +488,7 @@ namespace mySystem.Extruction.Process
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
                 bt提交审核.Enabled = true;
+            (this.Owner as ExtructionMainForm).InitBtn();
         }
         //保存内表和外表数据
         private bool save()

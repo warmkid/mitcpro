@@ -855,6 +855,7 @@ namespace WindowsFormsApplication1
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
                 bt提交审核.Enabled = true;
+            (this.Owner as ExtructionMainForm).InitBtn();
         }
 
         private void cb原料代码ab1c_SelectedIndexChanged(object sender, EventArgs e)
