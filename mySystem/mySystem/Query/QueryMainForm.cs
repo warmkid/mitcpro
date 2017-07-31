@@ -14,16 +14,10 @@ namespace mySystem
 {
     public partial class QueryMainForm : BaseForm
     {
-        SqlConnection conn = null;
-        OleDbConnection connOle = null;
-        bool isSqlOk;
 
         public QueryMainForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            conn = base.mainform.conn;
-            connOle = base.mainform.connOle;
-            isSqlOk = base.mainform.isSqlOk;
             
         }
 

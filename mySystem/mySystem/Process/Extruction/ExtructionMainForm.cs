@@ -577,6 +577,7 @@ namespace mySystem
         private void A1Btn_Click(object sender, EventArgs e)
         {
             BatchProductRecord.BatchProductRecord form1 = new BatchProductRecord.BatchProductRecord(mainform);
+            form1.Owner = this;
             form1.ShowDialog();
         }
 
@@ -586,6 +587,7 @@ namespace mySystem
             if (b)
             {
                 BatchProductRecord.ProcessProductInstru form2 = new BatchProductRecord.ProcessProductInstru(mainform);
+                form2.Owner = this;
                 form2.ShowDialog();
             }
             else
@@ -602,6 +604,7 @@ namespace mySystem
             if (b)
             {
                 Record_extrusClean form3 = new Record_extrusClean(mainform);
+                form3.Owner = this;
                 form3.ShowDialog();
             }
             else
@@ -617,6 +620,7 @@ namespace mySystem
             if (b)
             {
                 Record_extrusSiteClean form4 = new Record_extrusSiteClean(mainform);
+                form4.Owner = this;
                 form4.ShowDialog();
             }
             else
@@ -633,6 +637,7 @@ namespace mySystem
             if (b)
             {
                 mySystem.Process.Extruction.A.HandOver form5 = new mySystem.Process.Extruction.A.HandOver(mainform);
+                form5.Owner = this;
                 form5.ShowDialog();
             }
             else
@@ -649,6 +654,7 @@ namespace mySystem
             if (b)
             {
                 Record_extrusSupply form6 = new Record_extrusSupply(mainform);
+                form6.Owner = this;
                 form6.ShowDialog(this);
             }
             else
@@ -665,6 +671,7 @@ namespace mySystem
             if (b)
             {
                 mySystem.Process.Extruction.B.Waste form7 = new mySystem.Process.Extruction.B.Waste(mainform);
+                form7.Owner = this;
                 form7.ShowDialog();
             }
             else
@@ -681,6 +688,7 @@ namespace mySystem
             if (b)
             {
                 Record_material_reqanddisg form8 = new Record_material_reqanddisg(mainform);
+                form8.Owner = this;
                 form8.ShowDialog();
             }
             else
@@ -695,6 +703,7 @@ namespace mySystem
         private void B5Btn_Click(object sender, EventArgs e)
         {
             ProdctDaily_extrus form9 = new ProdctDaily_extrus(mainform);
+            form9.Owner = this;
             form9.ShowDialog();
                               
         }
@@ -705,6 +714,7 @@ namespace mySystem
             if (b)
             {
                 ExtructionpRoductionAndRestRecordStep6 form10 = new ExtructionpRoductionAndRestRecordStep6(mainform);
+                form10.Owner = this;
                 form10.ShowDialog();
             }
             else
@@ -721,6 +731,7 @@ namespace mySystem
             if (b)
             {
                 MaterialBalenceofExtrusionProcess form11 = new MaterialBalenceofExtrusionProcess(mainform);
+                form11.Owner = this;
                 form11.ShowDialog();
             }
             else
@@ -737,6 +748,7 @@ namespace mySystem
             if (b)
             {
                 ProductInnerPackagingRecord form12 = new ProductInnerPackagingRecord(mainform);
+                form12.Owner = this;
                 form12.ShowDialog();
             }
             else
@@ -753,6 +765,7 @@ namespace mySystem
             if (b)
             {
                 Extruction.Chart.outerpack form13 = new Extruction.Chart.outerpack(mainform);
+                form13.Owner = this;
                 form13.ShowDialog();
             }
             else
@@ -764,11 +777,12 @@ namespace mySystem
         }
 
         private void C1Btn_Click(object sender, EventArgs e)
-        {
+        {            
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜开机前确认表");
             if (b)
             {
                 ExtructionCheckBeforePowerStep2 form14 = new ExtructionCheckBeforePowerStep2(mainform);
+                form14.Owner = this;
                 form14.ShowDialog();
             }
             else
@@ -784,7 +798,8 @@ namespace mySystem
             if (b)
             {
                 ExtructionPreheatParameterRecordStep3 form15 = new ExtructionPreheatParameterRecordStep3(mainform);
-                form15.ShowDialog(this);
+                form15.Owner = this;
+                form15.ShowDialog();
             }
             else
             {
@@ -800,6 +815,7 @@ namespace mySystem
             if (b)
             {
                 mySystem.Process.Extruction.C.Feed form16 = new mySystem.Process.Extruction.C.Feed(mainform);
+                form16.Owner = this;
                 form16.ShowDialog();
             }
             else
@@ -816,6 +832,7 @@ namespace mySystem
             if (b)
             {
                 mySystem.Process.Extruction.B.Running form17 = new mySystem.Process.Extruction.B.Running(mainform);
+                form17.Owner = this;
                 form17.ShowDialog();
             }
             else
@@ -829,24 +846,28 @@ namespace mySystem
         private void D1Btn_Click(object sender, EventArgs e)
         {
             Record_train form18 = new Record_train(mainform);
+            form18.Owner = this;
             form18.ShowDialog();
         }
 
         private void D2Btn_Click(object sender, EventArgs e)
         {
             ReplaceHeadForm form19 = new ReplaceHeadForm(mainform);
+            form19.Owner = this;
             form19.ShowDialog();
         }
 
         private void D3Btn_Click(object sender, EventArgs e)
         {
             ExtructionReplaceCore form20 = new ExtructionReplaceCore(mainform);
+            form20.Owner = this;
             form20.ShowDialog();
         }
 
         private void B1Btn_Click(object sender, EventArgs e)
         {
             ExtructionTransportRecordStep4 form22 = new ExtructionTransportRecordStep4(mainform);
+            form22.Owner = this;
             form22.ShowDialog();
         }
 
@@ -859,6 +880,7 @@ namespace mySystem
         private void D4Btn_Click(object sender, EventArgs e)
         {
             Process.Extruction.D.NetExchange form24 = new Process.Extruction.D.NetExchange(mainform);
+            form24.Owner = this;
             form24.ShowDialog();
         }
 

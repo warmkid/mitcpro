@@ -18,16 +18,7 @@ namespace mySystem
 
         public bool isSqlOk = false;
         public SqlConnection conn;
-        public OleDbConnection connOle;
-        public OleDbConnection connOleCleancut;
-        public OleDbConnection connOleBag;
-        public string username; //登录用户名
-        public int userID;
-        public int userRole; //用户角色
-        public string proInstruction; //吹膜生产指令
-        public string csbagInstruction; //cs制袋生产指令
-        public string cleancutInstruction; //清洁分切生产指令
-        
+        public OleDbConnection connOle;        
 
         public MainForm()
         {
@@ -132,7 +123,7 @@ namespace mySystem
             myDlg.Show();
         }
 
-
+        //退出登录按钮
         private void ExitBtn_Click(object sender, EventArgs e)
         {
             timer1.Stop();

@@ -486,6 +486,8 @@ namespace mySystem.Extruction.Process
             dr["生产设备"] = dt工艺设备.Rows[0]["生产设备"];
             dr["审核人"] = "";
             dr["审核是否通过"] = false;
+            dr["累计同规格膜卷长度R"] = 0;
+            dr["累计同规格膜卷重量T"] = 0;            
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + mySystem.Parameter.proInstruction + "\n";
             dr["日志"] = log;
@@ -927,8 +929,9 @@ namespace mySystem.Extruction.Process
             mysheet.Cells[18, 4].Value = dt记录.Rows[0]["累计同规格膜卷长度R"].ToString();
             mysheet.Cells[18, 5].Value = dt记录.Rows[0]["累计同规格膜卷重量T"].ToString();
             //内表信息
-            int rownum = dt记录详情.Rows.Count > 10 ? 10 : dt记录详情.Rows.Count;
-            for (int i = 0; i < rownum; i++)
+            int rownum = dt记录详情.Rows.Count;
+            //无需插入的部分
+            for (int i = 0; i < (rownum > 10 ? 10 : rownum); i++)
             {
                 mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["开始时间"].ToString()).ToString("HH:mm") + " ~ " + Convert.ToDateTime(dt记录详情.Rows[i]["结束时间"].ToString()).ToString("HH:mm");
                 mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["膜卷编号"].ToString();
@@ -944,17 +947,40 @@ namespace mySystem.Extruction.Process
                 mysheet.Cells[8 + i, 13].Value = dt记录详情.Rows[i]["操作员"].ToString();
                 mysheet.Cells[8 + i, 14].Value = dt记录详情.Rows[i]["判定"].ToString() == "Yes" ? "√" : "×";
             }
-            //加页脚
-            int sheetnum;
-            List<Int32> sheetList = new List<Int32>();
-            List<String> queryCols = new List<String>(new String[] { "ID" });
-            List<String> whereCols = new List<String>(new String[] { "生产指令ID" });
-            List<Object> whereVals = new List<Object>(new Object[] { mySystem.Parameter.proInstruID });
-            List<List<Object>> res = Utility.selectAccess(mySystem.Parameter.connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
-            foreach (Int32 num in res[0])
+            //需要插入的部分
+            if (rownum > 10)
             {
-                sheetList.Add(num);
+                for (int i = 10; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8+i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    mysheet.Cells[8 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                    mysheet.Cells[8 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["开始时间"].ToString()).ToString("HH:mm") + " ~ " + Convert.ToDateTime(dt记录详情.Rows[i]["结束时间"].ToString()).ToString("HH:mm");
+                    mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["膜卷编号"].ToString();
+                    mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["膜卷长度"].ToString();
+                    mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["膜卷重量"].ToString();
+                    mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                    mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["外观"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["宽度"].ToString();
+                    mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["最大厚度"].ToString();
+                    mysheet.Cells[8 + i, 10].Value = dt记录详情.Rows[i]["最小厚度"].ToString();
+                    mysheet.Cells[8 + i, 11].Value = dt记录详情.Rows[i]["平均厚度"].ToString();
+                    mysheet.Cells[8 + i, 12].Value = dt记录详情.Rows[i]["厚度公差"].ToString();
+                    mysheet.Cells[8 + i, 13].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                    mysheet.Cells[8 + i, 14].Value = dt记录详情.Rows[i]["判定"].ToString() == "Yes" ? "√" : "×";
+                }
             }
+            //加页脚
+            int sheetnum; 
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from "+table+" where 生产指令ID="+mySystem.Parameter.proInstruID.ToString(), connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
             mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回

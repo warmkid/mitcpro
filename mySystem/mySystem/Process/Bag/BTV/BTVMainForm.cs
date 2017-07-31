@@ -6,14 +6,67 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Bag.BTV
 {
-    public partial class BTVMainForm : Form
+    public partial class BTVMainForm : BaseForm
     {
+        string instruction = null;
+        int instruID = 0;
+
         public BTVMainForm()
         {
             InitializeComponent();
+            Init();
+        }
+
+        private void Init()
+        {
+            if (!Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
+                comm.CommandText = "select * from BPV制袋生产指令 where 状态 = 2";
+                OleDbDataReader reader = comm.ExecuteReader();//执行查询
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader["生产指令编号"]);  //下拉框获取生产指令
+                    }
+                }
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = Parameter.conn;
+                comm.CommandText = "select * from BPV制袋生产指令 where 状态 = 2";
+                SqlDataReader reader = comm.ExecuteReader();//执行查询
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader["生产指令编号"]);
+                    }
+                }
+
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            instruction = comboBox1.SelectedItem.ToString();
+            Parameter.bpvbagInstruction = instruction;
+            String tblName = "BPV制袋生产指令";
+            List<String> queryCols = new List<String>(new String[] { "ID" });
+            List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
+            List<Object> whereVals = new List<Object>(new Object[] { instruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            instruID = Convert.ToInt32(res[0][0]);
+            Parameter.bpvbagInstruID = instruID;
+            //InitBtn();
         }
 
         private void Btn生产领料_Click(object sender, EventArgs e)
@@ -141,5 +194,7 @@ namespace mySystem.Process.Bag.BTV
             BTVPunchDrawingConfirm mydlg = new BTVPunchDrawingConfirm();
             mydlg.ShowDialog();
         }
+
+        
     }
 }
