@@ -168,6 +168,8 @@ namespace mySystem
         //LDPE制袋
         private void LDPEbagBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 7;
+            Parameter.InitCon();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();

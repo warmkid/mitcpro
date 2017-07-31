@@ -6,14 +6,64 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Bag.LDPE
 {
-    public partial class LDPEMainForm : Form
+    public partial class LDPEMainForm : BaseForm
     {
+        string instruction = null;
+        int instruID = 0;
+
         public LDPEMainForm()
         {
             InitializeComponent();
+            comboInit();
+        }
+
+        //下拉框获取生产指令
+        public void comboInit()
+        {
+            HashSet<String> hash = new HashSet<String>();
+            if (!Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
+                comm.CommandText = "select * from 生产指令 where 状态 = 2 ";
+                OleDbDataReader reader = comm.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    comboBox1.Items.Clear();
+                    while (reader.Read())
+                    {
+                        hash.Add(reader["生产指令编号"].ToString());
+                    }
+                    foreach (String code in hash)
+                    {
+                        comboBox1.Items.Add(code);
+                    }
+
+                }
+                comm.Dispose();
+            }
+            else
+            {
+
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            instruction = comboBox1.SelectedItem.ToString();
+            Parameter.ldpebagInstruction = instruction;
+            String tblName = "生产指令";
+            List<String> queryCols = new List<String>(new String[] { "ID" });
+            List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
+            List<Object> whereVals = new List<Object>(new Object[] { instruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            instruID = Convert.ToInt32(res[0][0]);
+            Parameter.ldpebagInstruID = instruID;
         }
 
         private void A1Btn_Click(object sender, EventArgs e)
@@ -63,5 +113,7 @@ namespace mySystem.Process.Bag.LDPE
             LDPEBag_dailyreport daily = new LDPEBag_dailyreport();
             daily.ShowDialog();
         }
+
+        
     }
 }

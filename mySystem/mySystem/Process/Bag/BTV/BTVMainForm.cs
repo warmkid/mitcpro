@@ -19,38 +19,36 @@ namespace mySystem.Process.Bag.BTV
         public BTVMainForm()
         {
             InitializeComponent();
-            Init();
+            comboInit();
         }
 
-        private void Init()
+        //下拉框获取生产指令
+        public void comboInit()
         {
+            HashSet<String> hash = new HashSet<String>();
             if (!Parameter.isSqlOk)
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select * from BPV制袋生产指令 where 状态 = 2";
+                comm.CommandText = "select * from BPV制袋生产指令 where 状态 = 2 ";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
+                    comboBox1.Items.Clear();
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["生产指令编号"]);  //下拉框获取生产指令
+                        hash.Add(reader["生产指令编号"].ToString());
                     }
+                    foreach (String code in hash)
+                    {
+                        comboBox1.Items.Add(code);
+                    }
+
                 }
+                comm.Dispose();
             }
             else
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = Parameter.conn;
-                comm.CommandText = "select * from BPV制袋生产指令 where 状态 = 2";
-                SqlDataReader reader = comm.ExecuteReader();//执行查询
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        comboBox1.Items.Add(reader["生产指令编号"]);
-                    }
-                }
 
             }
         }

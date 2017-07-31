@@ -640,10 +640,7 @@ namespace WindowsFormsApplication1
             dt_out.Rows[0]["审核时间"] = checkform.time;
             dt_out.Rows[0]["审核意见"] = checkform.opinion;
             dt_out.Rows[0]["审核是否通过"] = checkform.ischeckOk;
-            if (checkform.ischeckOk)
-            {
-                (this.Owner as ExtructionMainForm).InitBtn();
-            }
+            
             //状态
             setControlFalse();
 
@@ -665,6 +662,10 @@ namespace WindowsFormsApplication1
 
             bs_out.EndEdit();
             da_out.Update((DataTable)bs_out.DataSource);
+            if (checkform.ischeckOk)
+            {
+                (this.Owner as ExtructionMainForm).InitBtn();
+            }
             base.CheckResult();
 
         }

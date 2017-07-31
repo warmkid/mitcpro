@@ -50,6 +50,8 @@ namespace mySystem
         public static int cleancutInstruID; //清洁分切生产指令编号
         public static string bpvbagInstruction; //BPV制袋生产指令
         public static int bpvbagInstruID; //BPV制袋生产指令编号
+        public static string ldpebagInstruction; //LDPE制袋生产指令
+        public static int ldpebagInstruID; //LDPE制袋生产指令编号
 
         public static int selectCon;
         static string strConn; //sql连接地址
@@ -63,6 +65,7 @@ namespace mySystem
         public static mySystem.Process.Bag.BTV.BTVMainForm parentBPV; //BPV制袋mainform
 
 
+        #region 公用函数
         //通过id查名字
         public static string IDtoName(int id)
         {
@@ -169,7 +172,7 @@ namespace mySystem
             }           
             return role;
         }
-
+        #endregion
 
         #region DbConnection
         //初始化连接有用户表的数据库
@@ -248,6 +251,11 @@ namespace mySystem
                                 Data Source=../../database/BPV.mdb;Persist Security Info=False";
                         Conn = InitOle(strCon6);
                         break;
+                    case 7: //LDPE制袋
+                        String strCon7 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/LDPE.mdb;Persist Security Info=False";
+                        Conn = InitOle(strCon7);
+                        break;
                 }
             }
             else
@@ -315,6 +323,11 @@ namespace mySystem
                     case 6: //BPV制袋
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/BPV.mdb;Persist Security Info=False";
+                        connOle = InitOle(strConn);
+                        break;
+                    case 7: //LDPE制袋
+                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/LDPE.mdb;Persist Security Info=False";
                         connOle = InitOle(strConn);
                         break;
                 }

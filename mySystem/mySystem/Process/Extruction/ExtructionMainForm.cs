@@ -46,7 +46,7 @@ namespace mySystem
             List<String> whereCols1 = new List<String>(new String[] { "生产指令ID" });
             List<Object> whereVals1 = new List<Object>(new Object[] { Parameter.proInstruID });
             List<List<Object>> res1 = Utility.selectAccess(Parameter.connOle, tblName1, queryCols1, whereCols1, whereVals1, null, null, null, null, null);
-            if (res1.Count != 0)
+            if (res1.Count != 0 && !res1[0][0].ToString().Equals("") && !res1[0][0].ToString().Equals("__待审核"))
             {
                 checkBeforePower = true;
             }
@@ -60,7 +60,7 @@ namespace mySystem
             List<String> whereCols2 = new List<String>(new String[] { "生产指令ID" });
             List<Object> whereVals2 = new List<Object>(new Object[] { Parameter.proInstruID });
             List<List<Object>> res2 = Utility.selectAccess(Parameter.connOle, tblName2, queryCols2, whereCols2, whereVals2, null, null, null, null, null);
-            if (res2.Count != 0)
+            if (res2.Count != 0 && !res2[0][0].ToString().Equals("") && !res2[0][0].ToString().Equals("__待审核"))
             {
                 extrusClean = true;
             }
@@ -74,7 +74,7 @@ namespace mySystem
             List<String> whereCols3 = new List<String>(new String[] { "生产指令id" });
             List<Object> whereVals3 = new List<Object>(new Object[] { Parameter.proInstruID });
             List<List<Object>> res3 = Utility.selectAccess(Parameter.connOle, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
-            if (res3.Count != 0)
+            if (res3.Count != 0 && !res3[0][0].ToString().Equals("") && !res3[0][0].ToString().Equals("__待审核"))
             {
                 preheat = true;
             }
