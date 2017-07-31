@@ -38,7 +38,7 @@ namespace mySystem
 
         private void RoleInit()
         {
-            switch (mform.userRole)
+            switch (Parameter.userRole)
             {
                 case 1:
 
