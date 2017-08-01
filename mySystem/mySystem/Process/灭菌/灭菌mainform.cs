@@ -12,10 +12,58 @@ namespace mySystem.Process.灭菌
 {
     public partial class 灭菌mainform : BaseForm
     {
+        string instruction = null;
+        int instruID = 0;
 
         public 灭菌mainform()
         {
             InitializeComponent();
+            comboInit();
+        }
+
+        //下拉框获取生产指令
+        public void comboInit()
+        {
+            HashSet<String> hash = new HashSet<String>();
+            if (!Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
+                comm.CommandText = "select * from Gamma射线辐射灭菌委托单 ";
+                OleDbDataReader reader = comm.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    comboBox1.Items.Clear();
+                    while (reader.Read())
+                    {
+                        //comboBox1.Items.Add(reader["委托单号"]);
+                        hash.Add(reader["委托单号"].ToString());
+                    }
+                    foreach (String code in hash)
+                    {
+                        comboBox1.Items.Add(code);
+                    }
+
+                }
+                comm.Dispose();
+            }
+            else
+            {
+
+            }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            instruction = comboBox1.SelectedItem.ToString();
+            Parameter.miejunInstruction = instruction;
+            String tblName = "Gamma射线辐射灭菌委托单";
+            List<String> queryCols = new List<String>(new String[] { "ID" });
+            List<String> whereCols = new List<String>(new String[] { "委托单号" });
+            List<Object> whereVals = new List<Object>(new Object[] { instruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            instruID = Convert.ToInt32(res[0][0]);
+            Parameter.miejunInstruID = instruID;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -101,6 +149,8 @@ namespace mySystem.Process.灭菌
             }
             return b = false;
         }
+
+        
 
 
     }

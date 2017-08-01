@@ -35,6 +35,10 @@ namespace mySystem.Setting
         private DataTable dt运输商;
         private BindingSource bs运输商;
         private OleDbCommandBuilder cb运输商;
+        private OleDbDataAdapter da辐照单位;
+        private DataTable dt辐照单位;
+        private BindingSource bs辐照单位;
+        private OleDbCommandBuilder cb辐照单位;
         private OleDbDataAdapter da人员;
         private DataTable dt人员;
         private BindingSource bs人员;
@@ -58,6 +62,9 @@ namespace mySystem.Setting
 
             bs运输商 = new BindingSource();
             EachInitdgv(dgv运输商);
+
+            bs辐照单位 = new BindingSource();
+            EachInitdgv(dgv辐照单位);
 
             bs人员 = new BindingSource();
             EachInitdgv(dgv人员);
@@ -120,6 +127,19 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv产品规格);
             this.dgv产品规格.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            //************************    辐照单位     *******************************************
+            dt辐照单位 = new DataTable("设置辐照单位"); //""中的是表名
+            da辐照单位 = new OleDbDataAdapter("select * from 设置辐照单位", mySystem.Parameter.connOle);
+            cb辐照单位 = new OleDbCommandBuilder(da辐照单位);
+            dt辐照单位.Columns.Add("序号", System.Type.GetType("System.String"));
+            da辐照单位.Fill(dt辐照单位);
+            bs辐照单位.DataSource = dt辐照单位;
+            this.dgv辐照单位.DataSource = bs辐照单位.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv辐照单位);
+            this.dgv辐照单位.Columns["辐照单位"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv辐照单位.Columns["辐照单位"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("用户"); //""中的是表名
@@ -258,6 +278,23 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv运输商);
         }
 
+        private void add辐照单位_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt辐照单位.NewRow();
+            dt辐照单位.Rows.InsertAt(dt辐照单位.NewRow(), dt辐照单位.Rows.Count);
+            setDataGridViewRowNums(this.dgv辐照单位);
+        }
+
+        private void del辐照单位_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv辐照单位.CurrentRow.Index;
+            dt辐照单位.Rows[idx].Delete();
+            da辐照单位.Update((DataTable)bs辐照单位.DataSource);
+            dt辐照单位.Clear();
+            da辐照单位.Fill(dt辐照单位);
+            setDataGridViewRowNums(this.dgv辐照单位);
+        }
+
         private void Btn保存产品_Click(object sender, EventArgs e)
         {
             try
@@ -285,6 +322,11 @@ namespace mySystem.Setting
                     dt运输商.Clear();
                     da运输商.Fill(dt运输商);
                     setDataGridViewRowNums(this.dgv运输商);
+
+                    da辐照单位.Update((DataTable)bs辐照单位.DataSource);
+                    dt辐照单位.Clear();
+                    da辐照单位.Fill(dt辐照单位);
+                    setDataGridViewRowNums(this.dgv辐照单位);
 
                 }
                 MessageBox.Show("保存成功！");
@@ -454,6 +496,11 @@ namespace mySystem.Setting
             dgv运输商.Columns["ID"].Visible = false;
         }
 
+        private void dgv辐照单位_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv辐照单位.Columns["ID"].Visible = false;
+        }
+
         private void dgv人员_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dgv人员.Columns["ID"].Visible = false;
@@ -465,6 +512,10 @@ namespace mySystem.Setting
         }
 
         #endregion
+
+        
+
+        
 
 
     }

@@ -115,14 +115,18 @@ namespace mySystem
             switch (process)
             {
                 case "吹膜":
-                    BatchProductRecord.ProcessProductInstru detailform = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
-                    detailform.Show();
+                    BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
+                    form1.Show();
 
                     break;
-                case "清洁分切":                   
+                case "清洁分切":
+                    mySystem.Process.CleanCut.Instru form2 = new Process.CleanCut.Instru(mainform, ID);
+                    form2.Show();
 
                     break;
                 case "CS制袋":
+                    mySystem.Process.Bag.CS.CS制袋生产指令 form3 = new Process.Bag.CS.CS制袋生产指令(ID);
+                    form3.Show();
 
                     break;
 

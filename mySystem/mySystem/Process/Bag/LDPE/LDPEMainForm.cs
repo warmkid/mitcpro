@@ -20,6 +20,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             InitializeComponent();
             comboInit();
+            InitBtn();
         }
 
         //下拉框获取生产指令
@@ -64,6 +65,27 @@ namespace mySystem.Process.Bag.LDPE
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.ldpebagInstruID = instruID;
+            InitBtn();
+        }
+
+        private void InitBtn()
+        {
+            if (comboBox1.SelectedIndex == -1)
+                otherBtnInit(false);
+            else
+                otherBtnInit(true);
+        }
+
+        private void otherBtnInit(bool b)
+        {
+            Btn生产领料.Enabled = b;
+            Btn产品内包装.Enabled = b;
+            Btn日报表.Enabled = b;
+            Btn标签.Enabled = b;
+            Btn开机前确认.Enabled = b;
+            Btn运行记录.Enabled = b;
+            Btn清场.Enabled = b;
+            Btn批生产记录.Enabled = b;
         }
 
         private void A1Btn_Click(object sender, EventArgs e)

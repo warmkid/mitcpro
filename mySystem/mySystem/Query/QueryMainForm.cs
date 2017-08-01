@@ -26,15 +26,10 @@ namespace mySystem
         {
             Parameter.selectCon = 1;
             Parameter.InitCon();
+            BtnColor();
             Btn吹膜.BackColor = Color.FromArgb(138, 158, 196);
-            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
-            Btn制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
-            Btn生产指令.BackColor = Color.FromName("ControlLightLight");
-            Btn订单.BackColor = Color.FromName("ControlLightLight");
-            Btn库存.BackColor = Color.FromName("ControlLightLight");
-            bagBtnColor();
             QueryPanelRight.Controls.Clear();
+
             QueryExtruForm myDlg = new QueryExtruForm(mainform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -48,15 +43,10 @@ namespace mySystem
         {
             Parameter.selectCon = 2;
             Parameter.InitCon();
-            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             Btn清洁分切.BackColor = Color.FromArgb(138, 158, 196);
-            Btn制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
-            Btn生产指令.BackColor = Color.FromName("ControlLightLight");
-            Btn订单.BackColor = Color.FromName("ControlLightLight");
-            Btn库存.BackColor = Color.FromName("ControlLightLight");
-            bagBtnColor();
             QueryPanelRight.Controls.Clear();
+
             清洁分切查询 myDlg = new 清洁分切查询();
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -68,15 +58,10 @@ namespace mySystem
         //制袋
         private void BagBtn_Click(object sender, EventArgs e)
         {
-            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
-            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             Btn制袋.BackColor = Color.FromArgb(138, 158, 196);
-            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
-            Btn生产指令.BackColor = Color.FromName("ControlLightLight");
-            Btn订单.BackColor = Color.FromName("ControlLightLight");
-            Btn库存.BackColor = Color.FromName("ControlLightLight");
-            bagBtnColor();
             QueryPanelRight.Controls.Clear();
+
             if (Panel制袋.Visible == true)
             {
                 Panel其他按钮.Location = new Point(0, 130);
@@ -86,36 +71,33 @@ namespace mySystem
             {
                 Panel其他按钮.Location = new Point(0, 361);
                 Panel制袋.Visible = true;
-
             }   
         }
 
         //灭菌
         private void KillBtn_Click(object sender, EventArgs e)
         {
-            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
-            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
-            Btn制袋.BackColor = Color.FromName("ControlLightLight");
+            Parameter.selectCon = 5;
+            Parameter.InitCon();
+            BtnColor();
             Btn灭菌.BackColor = Color.FromArgb(138, 158, 196);
-            Btn生产指令.BackColor = Color.FromName("ControlLightLight");
-            Btn订单.BackColor = Color.FromName("ControlLightLight");
-            Btn库存.BackColor = Color.FromName("ControlLightLight");
-            bagBtnColor();
             QueryPanelRight.Controls.Clear();
+
+            灭菌查询 myDlg = new 灭菌查询();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = QueryPanelRight.Size;
+            QueryPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         //生产指令查询
         private void PlanBtn_Click(object sender, EventArgs e)
-        {           
-            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
-            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
-            Btn制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
+        {
+            BtnColor();
             Btn生产指令.BackColor = Color.FromArgb(138, 158, 196);
-            Btn订单.BackColor = Color.FromName("ControlLightLight");
-            Btn库存.BackColor = Color.FromName("ControlLightLight");
-            bagBtnColor();
             QueryPanelRight.Controls.Clear();
+
             QueryInstruForm myDlg = new QueryInstruForm(mainform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
@@ -128,105 +110,65 @@ namespace mySystem
         //订单查询
         private void OrderBtn_Click(object sender, EventArgs e)
         {
-            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
-            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
-            Btn制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
-            Btn生产指令.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             Btn订单.BackColor = Color.FromArgb(138, 158, 196);
-            Btn库存.BackColor = Color.FromName("ControlLightLight");
-            bagBtnColor();
             QueryPanelRight.Controls.Clear();
         }
 
         //库存查询
         private void StockBtn_Click(object sender, EventArgs e)
         {
-            Btn吹膜.BackColor = Color.FromName("ControlLightLight");
-            Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
-            Btn制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn灭菌.BackColor = Color.FromName("ControlLightLight");
-            Btn生产指令.BackColor = Color.FromName("ControlLightLight");
-            Btn订单.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             Btn库存.BackColor = Color.FromArgb(138, 158, 196);
-            bagBtnColor();
             QueryPanelRight.Controls.Clear();
         }
 
         private void BtnPE制袋_Click(object sender, EventArgs e)
         {
             QueryPanelRight.Controls.Clear();
-            otherBtnColor();
-            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             BtnPE制袋.BackColor = Color.FromArgb(138, 158, 196);
-            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
-            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
-            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
         }
 
         private void BtnCS制袋_Click(object sender, EventArgs e)
         {
             QueryPanelRight.Controls.Clear();
-            otherBtnColor();
+            BtnColor();
             BtnCS制袋.BackColor = Color.FromArgb(138, 158, 196);
-            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
-            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
-            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
         }
 
         private void Btn连续袋_Click(object sender, EventArgs e)
         {
             QueryPanelRight.Controls.Clear();
-            otherBtnColor();
-            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
-            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             Btn连续袋.BackColor = Color.FromArgb(138, 158, 196);
-            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
-            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
         }
 
         private void BtnPTV制袋_Click(object sender, EventArgs e)
         {
             QueryPanelRight.Controls.Clear();
-            otherBtnColor();
-            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
-            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             BtnPTV制袋.BackColor = Color.FromArgb(138, 158, 196);
-            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
         }
 
         private void BtnBPV制袋_Click(object sender, EventArgs e)
         {
             QueryPanelRight.Controls.Clear();
-            otherBtnColor();
-            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
-            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
-            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             BtnBPV制袋.BackColor = Color.FromArgb(138, 158, 196);
-            Btn防护罩.BackColor = Color.FromName("ControlLightLight");
         }
 
         private void Btn防护罩_Click(object sender, EventArgs e)
         {
             QueryPanelRight.Controls.Clear();
-            otherBtnColor();
-            BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
-            BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
-            Btn连续袋.BackColor = Color.FromName("ControlLightLight");
-            BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
-            BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
+            BtnColor();
             Btn防护罩.BackColor = Color.FromArgb(138, 158, 196);
-        }
+        }       
 
-        //其他按钮背景色不高亮
-        private void otherBtnColor()
+
+
+        //按钮背景色不高亮
+        private void BtnColor()
         {
             Btn吹膜.BackColor = Color.FromName("ControlLightLight");
             Btn清洁分切.BackColor = Color.FromName("ControlLightLight");
@@ -235,11 +177,6 @@ namespace mySystem
             Btn生产指令.BackColor = Color.FromName("ControlLightLight");
             Btn订单.BackColor = Color.FromName("ControlLightLight");
             Btn库存.BackColor = Color.FromName("ControlLightLight");
-        }
-
-        //制袋组按钮背景色不高亮
-        private void bagBtnColor()
-        {
             BtnCS制袋.BackColor = Color.FromName("ControlLightLight");
             BtnPE制袋.BackColor = Color.FromName("ControlLightLight");
             Btn连续袋.BackColor = Color.FromName("ControlLightLight");
@@ -247,8 +184,6 @@ namespace mySystem
             BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
             Btn防护罩.BackColor = Color.FromName("ControlLightLight");
         }
-
-        
 
     }
 }

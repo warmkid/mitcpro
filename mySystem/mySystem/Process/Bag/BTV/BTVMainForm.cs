@@ -20,6 +20,7 @@ namespace mySystem.Process.Bag.BTV
         {
             InitializeComponent();
             comboInit();
+            InitBtn();
         }
 
         //下拉框获取生产指令
@@ -30,7 +31,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select * from BPV制袋生产指令 where 状态 = 2 ";
+                comm.CommandText = "select * from 生产指令 where 状态 = 2 ";
                 OleDbDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
@@ -57,14 +58,46 @@ namespace mySystem.Process.Bag.BTV
         {
             instruction = comboBox1.SelectedItem.ToString();
             Parameter.bpvbagInstruction = instruction;
-            String tblName = "BPV制袋生产指令";
+            String tblName = "生产指令";
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.bpvbagInstruID = instruID;
-            //InitBtn();
+            InitBtn();
+        }
+
+        private void InitBtn()
+        {
+            if (comboBox1.SelectedIndex == -1)
+                otherBtnInit(false);
+            else
+                otherBtnInit(true);
+        }
+
+        private void otherBtnInit(bool b)
+        {
+            Btn生产领料.Enabled = b;
+            Btn批生产记录.Enabled = b;
+            Btn内包装.Enabled = b;
+            Btn清场记录.Enabled = b;
+            Btn生产前确认.Enabled = b;
+            Btn切管记录.Enabled = b;
+            Btn装配确认.Enabled = b;
+            Btn2D袋体生产记录.Enabled = b;
+            Btn关键尺寸确认.Enabled = b;
+            Btn原材料分装.Enabled = b;
+            Btn底封机运行记录.Enabled = b;
+            Btn泄漏测试记录.Enabled = b;
+            Btn2D与船型.Enabled = b;
+            Btn瓶口焊接机.Enabled = b;
+            Btn多功能热合机.Enabled = b;
+            Btn3D袋体生产记录.Enabled = b;
+            Btn单管口热合机.Enabled = b;
+            Btn90度热合机.Enabled = b;
+            Btn封口热合机.Enabled = b;
+            Btn打孔及与图纸.Enabled = b;
         }
 
         private void Btn生产领料_Click(object sender, EventArgs e)
