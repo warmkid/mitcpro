@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using mySystem.Setting;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using CustomUIControls;
 
 
 namespace mySystem
@@ -18,7 +19,10 @@ namespace mySystem
 
         public bool isSqlOk = false;
         public SqlConnection conn;
-        public OleDbConnection connOle;        
+        public OleDbConnection connOle;
+        //TODO:时间间隔设置
+        int interval = 600000; //十分钟
+        TaskbarNotifier taskbarNotifier1; //右下角提示框
 
         public MainForm()
         {
@@ -30,28 +34,91 @@ namespace mySystem
             InitializeComponent();
             RoleInit();
             userLabel.Text = Parameter.userName;
-            
-            //TODO:时间间隔设置
-            int interval = 1000; 
+            InitTaskBar();
+            SearchUnchecked();
             timer1.Interval = interval;
             timer1.Start();
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            //SearchUnchecked();
+            SearchUnchecked();
         }
 
         //定时器代码
-        int num = Parameter.i;
+        List<String> list吹膜;
+        List<String> list清洁分切;
+        List<String> listCS制袋;
+        List<String> listPE制袋;
+
         private void SearchUnchecked()
         {
-            //test
-            label1.Text = (++num).ToString();
-            Parameter.i = num;
-            //正式部分
- 
+            String strCon吹膜 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
+            list吹膜 = EachSearchUnchecked(strCon吹膜);
+            String strCon清洁分切 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/welding.mdb;Persist Security Info=False";
+            list清洁分切 = EachSearchUnchecked(strCon清洁分切);
+            String strConCS制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
+            listCS制袋 = EachSearchUnchecked(strConCS制袋);
+            String strConPE制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/LDPE.mdb;Persist Security Info=False";
+            //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+
+
+
+            String message = "以下表单中有待审核记录：\n";
+            message += "吹膜：\n";
+            foreach (string table in list吹膜)
+            { message += "   " + table + "\n"; }
+            message += "清洁分切：\n";
+            foreach (string table in list清洁分切)
+            { message += "   " + table + "\n"; }
+            message += "CS制袋：\n";
+            foreach (string table in listCS制袋)
+            { message += "   " + table + "\n"; }
+            message += "PE制袋：\n";
+            //foreach (string table in listPE制袋)
+            //{ message += "   " + table + "\n"; }
+
+            MessageBox.Show(message, "提示");
+            //taskbarNotifier1.Show("提示", message, 500, 10000, 500);
         }
+
+        private List<String> EachSearchUnchecked(string strcon)
+        {
+            OleDbConnection Conn;
+            OleDbCommand comm;
+            Conn = new OleDbConnection(strcon);
+            Conn.Open();
+            comm = new OleDbCommand();
+            comm.Connection = Conn;
+            comm.CommandText = "SELECT * FROM 用户权限 WHERE 审核员 LIKE " + "'%" + Parameter.userName + "%'";
+            OleDbDataReader reader1 = comm.ExecuteReader();
+            List<String> rightlist = new List<String>();
+            while (reader1.Read())
+            {
+                rightlist.Add(reader1["步骤"].ToString());
+            }
+            reader1.Dispose();
+
+            comm.CommandText = "SELECT * FROM 待审核";
+            OleDbDataReader reader2 = comm.ExecuteReader();
+            List<String> formlist = new List<String>();
+            while (reader2.Read())
+            {
+                formlist.Add(reader2["表名"].ToString());
+            }
+            reader2.Dispose();
+            comm.Dispose();
+            Conn.Dispose();
+
+            List<String> list = rightlist.Intersect(formlist).ToList<String>();
+
+            return list;
+        }
+
 
         private void RoleInit()
         {
@@ -127,6 +194,7 @@ namespace mySystem
         private void ExitBtn_Click(object sender, EventArgs e)
         {
             timer1.Stop();
+            timer1.Dispose();
             this.Hide();
             foreach (Control control in MainPanel.Controls)
             { control.Dispose(); }
@@ -141,8 +209,9 @@ namespace mySystem
                 MainProduceBtn.BackColor = Color.FromName("Control");
                 MainSettingBtn.BackColor = Color.FromName("Control");
                 MainQueryBtn.BackColor = Color.FromName("Control");
-                timer1.Start();
                 this.Show();
+                timer1.Interval = interval;
+                timer1.Start();
             }
             else
             {
@@ -151,8 +220,22 @@ namespace mySystem
             }
         }
 
-        
 
+        //右下角提示框状态初始化
+        private void InitTaskBar()
+        {
+            taskbarNotifier1 = new TaskbarNotifier();
+            taskbarNotifier1.SetBackgroundBitmap(new Bitmap(Image.FromFile(@"../../pic/skin_big.bmp")), Color.FromArgb(255, 0, 255));
+            taskbarNotifier1.SetCloseBitmap(new Bitmap(Image.FromFile(@"../../pic/close_logo.bmp")), Color.FromArgb(255, 0, 255), new Point(300, 12));
+            taskbarNotifier1.TitleRectangle = new Rectangle(90, 25, 135, 60);
+            taskbarNotifier1.ContentRectangle = new Rectangle(29, 70, 315, 250);
+            taskbarNotifier1.CloseClickable = true;
+            taskbarNotifier1.TitleClickable = false;
+            taskbarNotifier1.ContentClickable = false;
+            taskbarNotifier1.EnableSelectionRectangle = false;
+            taskbarNotifier1.KeepVisibleOnMousOver = true;
+            taskbarNotifier1.ReShowOnMouseOver = true;
+        }
 
 
     }

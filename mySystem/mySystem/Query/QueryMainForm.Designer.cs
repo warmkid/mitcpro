@@ -35,9 +35,6 @@
             this.QueryPanelRight = new System.Windows.Forms.Panel();
             this.Btn灭菌 = new System.Windows.Forms.Button();
             this.QueryPanelLeft = new System.Windows.Forms.Panel();
-            this.Btn制袋 = new System.Windows.Forms.Button();
-            this.Btn清洁分切 = new System.Windows.Forms.Button();
-            this.Btn吹膜 = new System.Windows.Forms.Button();
             this.Panel制袋 = new System.Windows.Forms.Panel();
             this.Btn防护罩 = new System.Windows.Forms.Button();
             this.BtnBPV制袋 = new System.Windows.Forms.Button();
@@ -46,6 +43,9 @@
             this.BtnCS制袋 = new System.Windows.Forms.Button();
             this.BtnPE制袋 = new System.Windows.Forms.Button();
             this.Panel其他按钮 = new System.Windows.Forms.Panel();
+            this.Btn制袋 = new System.Windows.Forms.Button();
+            this.Btn清洁分切 = new System.Windows.Forms.Button();
+            this.Btn吹膜 = new System.Windows.Forms.Button();
             this.QueryPanelLeft.SuspendLayout();
             this.Panel制袋.SuspendLayout();
             this.Panel其他按钮.SuspendLayout();
@@ -127,63 +127,15 @@
             // 
             this.QueryPanelLeft.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.QueryPanelLeft.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.QueryPanelLeft.Controls.Add(this.Panel制袋);
             this.QueryPanelLeft.Controls.Add(this.Panel其他按钮);
             this.QueryPanelLeft.Controls.Add(this.Btn制袋);
             this.QueryPanelLeft.Controls.Add(this.Btn清洁分切);
             this.QueryPanelLeft.Controls.Add(this.Btn吹膜);
+            this.QueryPanelLeft.Controls.Add(this.Panel制袋);
             this.QueryPanelLeft.Location = new System.Drawing.Point(4, 2);
             this.QueryPanelLeft.Name = "QueryPanelLeft";
             this.QueryPanelLeft.Size = new System.Drawing.Size(180, 615);
             this.QueryPanelLeft.TabIndex = 6;
-            // 
-            // Btn制袋
-            // 
-            this.Btn制袋.FlatAppearance.BorderSize = 0;
-            this.Btn制袋.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn制袋.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn制袋.Image = ((System.Drawing.Image)(resources.GetObject("Btn制袋.Image")));
-            this.Btn制袋.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn制袋.Location = new System.Drawing.Point(3, 90);
-            this.Btn制袋.Name = "Btn制袋";
-            this.Btn制袋.Size = new System.Drawing.Size(172, 43);
-            this.Btn制袋.TabIndex = 4;
-            this.Btn制袋.Text = "    制袋";
-            this.Btn制袋.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn制袋.UseVisualStyleBackColor = true;
-            this.Btn制袋.Click += new System.EventHandler(this.BagBtn_Click);
-            // 
-            // Btn清洁分切
-            // 
-            this.Btn清洁分切.FlatAppearance.BorderSize = 0;
-            this.Btn清洁分切.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn清洁分切.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn清洁分切.Image = ((System.Drawing.Image)(resources.GetObject("Btn清洁分切.Image")));
-            this.Btn清洁分切.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn清洁分切.Location = new System.Drawing.Point(3, 47);
-            this.Btn清洁分切.Name = "Btn清洁分切";
-            this.Btn清洁分切.Size = new System.Drawing.Size(172, 43);
-            this.Btn清洁分切.TabIndex = 3;
-            this.Btn清洁分切.Text = "    清洁分切";
-            this.Btn清洁分切.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn清洁分切.UseVisualStyleBackColor = true;
-            this.Btn清洁分切.Click += new System.EventHandler(this.CleanBtn_Click);
-            // 
-            // Btn吹膜
-            // 
-            this.Btn吹膜.FlatAppearance.BorderSize = 0;
-            this.Btn吹膜.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn吹膜.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn吹膜.Image = ((System.Drawing.Image)(resources.GetObject("Btn吹膜.Image")));
-            this.Btn吹膜.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn吹膜.Location = new System.Drawing.Point(3, 4);
-            this.Btn吹膜.Name = "Btn吹膜";
-            this.Btn吹膜.Size = new System.Drawing.Size(172, 43);
-            this.Btn吹膜.TabIndex = 0;
-            this.Btn吹膜.Text = "    吹膜";
-            this.Btn吹膜.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn吹膜.UseVisualStyleBackColor = true;
-            this.Btn吹膜.Click += new System.EventHandler(this.ExtructionBtn_Click);
             // 
             // Panel制袋
             // 
@@ -299,6 +251,54 @@
             this.Panel其他按钮.Name = "Panel其他按钮";
             this.Panel其他按钮.Size = new System.Drawing.Size(177, 176);
             this.Panel其他按钮.TabIndex = 9;
+            // 
+            // Btn制袋
+            // 
+            this.Btn制袋.FlatAppearance.BorderSize = 0;
+            this.Btn制袋.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn制袋.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn制袋.Image = ((System.Drawing.Image)(resources.GetObject("Btn制袋.Image")));
+            this.Btn制袋.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn制袋.Location = new System.Drawing.Point(3, 90);
+            this.Btn制袋.Name = "Btn制袋";
+            this.Btn制袋.Size = new System.Drawing.Size(172, 43);
+            this.Btn制袋.TabIndex = 4;
+            this.Btn制袋.Text = "    制袋";
+            this.Btn制袋.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn制袋.UseVisualStyleBackColor = true;
+            this.Btn制袋.Click += new System.EventHandler(this.BagBtn_Click);
+            // 
+            // Btn清洁分切
+            // 
+            this.Btn清洁分切.FlatAppearance.BorderSize = 0;
+            this.Btn清洁分切.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn清洁分切.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn清洁分切.Image = ((System.Drawing.Image)(resources.GetObject("Btn清洁分切.Image")));
+            this.Btn清洁分切.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn清洁分切.Location = new System.Drawing.Point(3, 47);
+            this.Btn清洁分切.Name = "Btn清洁分切";
+            this.Btn清洁分切.Size = new System.Drawing.Size(172, 43);
+            this.Btn清洁分切.TabIndex = 3;
+            this.Btn清洁分切.Text = "    清洁分切";
+            this.Btn清洁分切.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn清洁分切.UseVisualStyleBackColor = true;
+            this.Btn清洁分切.Click += new System.EventHandler(this.CleanBtn_Click);
+            // 
+            // Btn吹膜
+            // 
+            this.Btn吹膜.FlatAppearance.BorderSize = 0;
+            this.Btn吹膜.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn吹膜.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn吹膜.Image = ((System.Drawing.Image)(resources.GetObject("Btn吹膜.Image")));
+            this.Btn吹膜.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn吹膜.Location = new System.Drawing.Point(3, 4);
+            this.Btn吹膜.Name = "Btn吹膜";
+            this.Btn吹膜.Size = new System.Drawing.Size(172, 43);
+            this.Btn吹膜.TabIndex = 0;
+            this.Btn吹膜.Text = "    吹膜";
+            this.Btn吹膜.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn吹膜.UseVisualStyleBackColor = true;
+            this.Btn吹膜.Click += new System.EventHandler(this.ExtructionBtn_Click);
             // 
             // QueryMainForm
             // 

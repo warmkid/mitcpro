@@ -928,7 +928,7 @@ namespace mySystem
         {
             taskbarNotifier1 = new TaskbarNotifier();
             taskbarNotifier1.SetBackgroundBitmap(new Bitmap(Image.FromFile(@"../../pic/skin_logo.bmp")), Color.FromArgb(255, 0, 255));
-            taskbarNotifier1.SetCloseBitmap(new Bitmap(Image.FromFile(@"../../pic/close_big.bmp")), Color.FromArgb(255, 0, 255), new Point(190, 12));
+            taskbarNotifier1.SetCloseBitmap(new Bitmap(Image.FromFile(@"../../pic/close_logo.bmp")), Color.FromArgb(255, 0, 255), new Point(190, 12));
             taskbarNotifier1.TitleRectangle = new Rectangle(65, 25, 135, 60);
             taskbarNotifier1.ContentRectangle = new Rectangle(15, 65, 205, 150);
             taskbarNotifier1.CloseClickable = true;

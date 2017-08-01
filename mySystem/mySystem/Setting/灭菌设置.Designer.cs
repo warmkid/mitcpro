@@ -30,8 +30,6 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage产品设置 = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tB面数 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.dgv运输商 = new System.Windows.Forms.DataGridView();
@@ -68,6 +66,10 @@
             this.del人员 = new System.Windows.Forms.Button();
             this.add人员 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.dgv辐照单位 = new System.Windows.Forms.DataGridView();
+            this.del辐照单位 = new System.Windows.Forms.Button();
+            this.add辐照单位 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage产品设置.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -83,6 +85,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv辐照单位)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -99,8 +103,7 @@
             // tabPage产品设置
             // 
             this.tabPage产品设置.AutoScroll = true;
-            this.tabPage产品设置.Controls.Add(this.label7);
-            this.tabPage产品设置.Controls.Add(this.tB面数);
+            this.tabPage产品设置.Controls.Add(this.groupBox6);
             this.tabPage产品设置.Controls.Add(this.label6);
             this.tabPage产品设置.Controls.Add(this.groupBox2);
             this.tabPage产品设置.Controls.Add(this.label2);
@@ -119,25 +122,6 @@
             this.tabPage产品设置.TabIndex = 0;
             this.tabPage产品设置.Text = "产品设置";
             this.tabPage产品设置.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label7.Location = new System.Drawing.Point(25, 601);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 16);
-            this.label7.TabIndex = 28;
-            this.label7.Text = "辐照单位：";
-            // 
-            // tB面数
-            // 
-            this.tB面数.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tB面数.Location = new System.Drawing.Point(119, 598);
-            this.tB面数.Name = "tB面数";
-            this.tB面数.Size = new System.Drawing.Size(103, 26);
-            this.tB面数.TabIndex = 29;
-            this.tB面数.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label6
             // 
@@ -204,7 +188,7 @@
             // 
             // panel2
             // 
-            this.panel2.Location = new System.Drawing.Point(876, 661);
+            this.panel2.Location = new System.Drawing.Point(876, 811);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(200, 10);
             this.panel2.TabIndex = 71;
@@ -265,7 +249,7 @@
             // Btn保存产品
             // 
             this.Btn保存产品.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存产品.Location = new System.Drawing.Point(912, 627);
+            this.Btn保存产品.Location = new System.Drawing.Point(912, 777);
             this.Btn保存产品.Name = "Btn保存产品";
             this.Btn保存产品.Size = new System.Drawing.Size(90, 33);
             this.Btn保存产品.TabIndex = 68;
@@ -517,6 +501,49 @@
             this.label4.TabIndex = 58;
             this.label4.Text = "灭菌人员设置";
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.dgv辐照单位);
+            this.groupBox6.Controls.Add(this.del辐照单位);
+            this.groupBox6.Controls.Add(this.add辐照单位);
+            this.groupBox6.Location = new System.Drawing.Point(19, 585);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(534, 225);
+            this.groupBox6.TabIndex = 75;
+            this.groupBox6.TabStop = false;
+            // 
+            // dgv辐照单位
+            // 
+            this.dgv辐照单位.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv辐照单位.Location = new System.Drawing.Point(12, 51);
+            this.dgv辐照单位.Name = "dgv辐照单位";
+            this.dgv辐照单位.RowTemplate.Height = 23;
+            this.dgv辐照单位.Size = new System.Drawing.Size(490, 165);
+            this.dgv辐照单位.TabIndex = 2;
+            this.dgv辐照单位.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv辐照单位_DataBindingComplete);
+            // 
+            // del辐照单位
+            // 
+            this.del辐照单位.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del辐照单位.Location = new System.Drawing.Point(100, 14);
+            this.del辐照单位.Name = "del辐照单位";
+            this.del辐照单位.Size = new System.Drawing.Size(70, 30);
+            this.del辐照单位.TabIndex = 1;
+            this.del辐照单位.Text = "删除";
+            this.del辐照单位.UseVisualStyleBackColor = true;
+            this.del辐照单位.Click += new System.EventHandler(this.del辐照单位_Click);
+            // 
+            // add辐照单位
+            // 
+            this.add辐照单位.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add辐照单位.Location = new System.Drawing.Point(12, 14);
+            this.add辐照单位.Name = "add辐照单位";
+            this.add辐照单位.Size = new System.Drawing.Size(70, 30);
+            this.add辐照单位.TabIndex = 0;
+            this.add辐照单位.Text = "添加";
+            this.add辐照单位.UseVisualStyleBackColor = true;
+            this.add辐照单位.Click += new System.EventHandler(this.add辐照单位_Click);
+            // 
             // 灭菌设置
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -545,6 +572,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).EndInit();
             this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv辐照单位)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -588,8 +617,10 @@
         private System.Windows.Forms.Button add运输商;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tB面数;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.DataGridView dgv辐照单位;
+        private System.Windows.Forms.Button del辐照单位;
+        private System.Windows.Forms.Button add辐照单位;
     }
 }
