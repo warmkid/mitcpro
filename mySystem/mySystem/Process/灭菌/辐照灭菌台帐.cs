@@ -141,7 +141,7 @@ namespace mySystem.Process.灭菌
             // 获取选中的列，然后提示
             int columnindex = ((DataGridView)sender).SelectedCells[0].ColumnIndex;
             String Columnsname = ((DataGridView)sender).Columns[columnindex].Name;
-            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
+            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); 
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
 
             if (Columnsname == "登记员" || Columnsname == "审核员")
@@ -298,6 +298,7 @@ namespace mySystem.Process.灭菌
         //写默认行数据
         DataRow writeInnerDefault(DataRow dr)
         {
+            dr["委托日期"] = DateTime.Now.ToString("D");
             dr["产品数量箱"] = 0;
             dr["产品数量只"] = 0;
             dr["送去产品托盘数量个"] = 0;
