@@ -10,12 +10,24 @@ using Microsoft.Office.Interop.Excel;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Collections;
+using System.Data.OleDb;
 
 
 namespace mySystem.Process.Extruction
 {
     public partial class LabelPrint : Form
     {
+
+        Hashtable codeToBatch = new Hashtable();
+        Hashtable codeToLabel = new Hashtable();
+
+        //添加打印机
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        
+
+
         public LabelPrint()
         {
             InitializeComponent();
@@ -34,38 +46,59 @@ namespace mySystem.Process.Extruction
             c标签模板.Items.Add("外标签-中文不照射");
             c标签模板.Items.Add("外箱-英文照射");
             c标签模板.Items.Add("外箱-英文不照射");
+
+
+            getCodeAndBatch();
+            foreach (string c in codeToBatch.Keys.OfType<String>().ToList<String>())
+            {
+                cmb膜代码.Items.Add(c);
+            }
+            cmb膜代码.SelectedIndexChanged += cmb膜代码_SelectedIndexChanged;
+
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                c打印机.Items.Add(sPrint);
+            }
+            c打印机.SelectedText = print.PrinterSettings.PrinterName;
+        }
+
+        void cmb膜代码_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            tc批号.Text = codeToBatch[cmb膜代码.SelectedItem].ToString();
+            // 
+            c标签模板.SelectedIndex = Convert.ToInt32(codeToLabel[cmb膜代码.SelectedItem]) - 1;
+        }
+
+        private void getCodeAndBatch()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            System.Data.DataTable dt = new System.Data.DataTable("temp");
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                codeToBatch.Add(dr["产品编码"].ToString(), dr["产品批号"].ToString());
+                codeToLabel.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["标签"]));
+            }
         }
 
         private void BtnPrint_Click(object sender, EventArgs e)
         {
 
+            printLable();
+            GC.Collect();
+        }
+
+        private void printLable()
+        {
             string path = Directory.GetCurrentDirectory();
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
-            File.Copy(@"../../../吹膜标签Cmmon.xlsx", path + @"/label.xlsx", true);
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(path + @"/label.xlsx");
+            //File.Copy(@"../../xls/Extrusion/吹膜标签.xlsx", path + @"/label.xlsx", true);
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(path + @"/../../xls/Extrusion/吹膜标签.xlsx");
             _Worksheet my = wb.Worksheets[wb.Worksheets.Count];
 
-            // my.Cells[6, 7].Value = "1";
-            my.Cells[1, 2].Value = tc膜代码.Text;
-            String pihao = tc批号.Text;
-            if (!File.Exists(@"./pihaojuanhao"))
-            {
-                File.WriteAllText(@"./pihaojuanhao", "{}");
-            }
-            StreamReader sr = File.OpenText(@"./pihaojuanhao");
-            JObject jobject = JObject.Parse(sr.ReadToEnd());
-            sr.Close();
-
-            if (null == jobject[pihao])
-            {
-                jobject[pihao] = 1;
-            }
-            else
-            {
-                jobject[pihao] = Convert.ToInt32(jobject[pihao]) + 1;
-            }
-            File.WriteAllText(@"./pihaojuanhao", jobject.ToString());
-            my.Cells[2, 2].Value = tc批号.Text + "-" + jobject[pihao];
+            my.Cells[1, 2].Value = cmb膜代码.SelectedItem;
+            my.Select();
 
             my.Cells[3, 2].Value = tc数量米.Text + "米；" + tc数量KG.Text + "KG";
             my.Cells[4, 2].Value = dc日期.Value.ToShortDateString() + "     " +
@@ -82,7 +115,6 @@ namespace mySystem.Process.Extruction
             my.Cells[15, 2].Value = tc注册证号.Text;
             my.Cells[16, 2].Value = tc毛重.Text;
             my.Cells[17, 2].Value = tc箱体规格.Text;
-
             my.Cells[6, 5].Value = teName.Text;
             my.Cells[7, 5].Value = teCode.Text;
             my.Cells[8, 5].Value = teSize.Text;
@@ -95,15 +127,18 @@ namespace mySystem.Process.Extruction
             my.Cells[16, 6].Value = teGross.Text;
             my.Cells[17, 6].Value = teCarton.Text;
 
+            my = wb.Worksheets[c标签模板.SelectedIndex+1];
+            my.Select();
+            oXL.Visible = true;
+            my.PrintOut();
 
-
-            wb.Save();
-            wb.Close();
+            wb.Close(false);
             oXL.Quit();
             Marshal.ReleaseComObject(wb);
             Marshal.ReleaseComObject(oXL);
+            wb = null;
+            oXL = null;
         }
-
   
     }
 }

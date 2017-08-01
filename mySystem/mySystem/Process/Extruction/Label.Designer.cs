@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.tc膜代码 = new System.Windows.Forms.TextBox();
             this.tc批号 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tc数量米 = new System.Windows.Forms.TextBox();
@@ -39,6 +38,7 @@
             this.tc数量KG = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cmb膜代码 = new System.Windows.Forms.ComboBox();
             this.cc班次 = new System.Windows.Forms.ComboBox();
             this.dc日期 = new System.Windows.Forms.DateTimePicker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -93,6 +93,9 @@
             this.c标签模板 = new System.Windows.Forms.ComboBox();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.c打印机 = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -107,14 +110,6 @@
             this.label1.Size = new System.Drawing.Size(56, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "膜代码";
-            // 
-            // tc膜代码
-            // 
-            this.tc膜代码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tc膜代码.Location = new System.Drawing.Point(132, 31);
-            this.tc膜代码.Name = "tc膜代码";
-            this.tc膜代码.Size = new System.Drawing.Size(100, 26);
-            this.tc膜代码.TabIndex = 1;
             // 
             // tc批号
             // 
@@ -192,11 +187,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cmb膜代码);
             this.groupBox1.Controls.Add(this.cc班次);
             this.groupBox1.Controls.Add(this.dc日期);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.tc膜代码);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.tc批号);
@@ -211,6 +206,14 @@
             this.groupBox1.TabIndex = 12;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "半成品";
+            // 
+            // cmb膜代码
+            // 
+            this.cmb膜代码.FormattingEnabled = true;
+            this.cmb膜代码.Location = new System.Drawing.Point(132, 28);
+            this.cmb膜代码.Name = "cmb膜代码";
+            this.cmb膜代码.Size = new System.Drawing.Size(107, 24);
+            this.cmb膜代码.TabIndex = 35;
             // 
             // cc班次
             // 
@@ -704,7 +707,7 @@
             // BtnPrint
             // 
             this.BtnPrint.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.BtnPrint.Location = new System.Drawing.Point(592, 526);
+            this.BtnPrint.Location = new System.Drawing.Point(592, 539);
             this.BtnPrint.Name = "BtnPrint";
             this.BtnPrint.Size = new System.Drawing.Size(75, 23);
             this.BtnPrint.TabIndex = 33;
@@ -718,7 +721,7 @@
             this.c标签模板.FormattingEnabled = true;
             this.c标签模板.Location = new System.Drawing.Point(592, 446);
             this.c标签模板.Name = "c标签模板";
-            this.c标签模板.Size = new System.Drawing.Size(121, 24);
+            this.c标签模板.Size = new System.Drawing.Size(199, 24);
             this.c标签模板.TabIndex = 34;
             // 
             // label23
@@ -739,11 +742,41 @@
             this.label24.TabIndex = 32;
             this.label24.Text = "标签模板";
             // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label26.Location = new System.Drawing.Point(589, 478);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(88, 16);
+            this.label26.TabIndex = 36;
+            this.label26.Text = "选择打印机";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(610, 521);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(0, 12);
+            this.label28.TabIndex = 38;
+            // 
+            // c打印机
+            // 
+            this.c打印机.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.c打印机.FormattingEnabled = true;
+            this.c打印机.Location = new System.Drawing.Point(592, 509);
+            this.c打印机.Name = "c打印机";
+            this.c打印机.Size = new System.Drawing.Size(199, 24);
+            this.c打印机.TabIndex = 37;
+            // 
             // LabelPrint
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 601);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.label28);
+            this.Controls.Add(this.c打印机);
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.c标签模板);
@@ -767,7 +800,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox tc膜代码;
         private System.Windows.Forms.TextBox tc批号;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tc数量米;
@@ -831,5 +863,9 @@
         private System.Windows.Forms.DateTimePicker dc有效期至;
         private System.Windows.Forms.DateTimePicker deMfg;
         private System.Windows.Forms.DateTimePicker dc生产日期;
+        private System.Windows.Forms.ComboBox cmb膜代码;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.ComboBox c打印机;
     }
 }

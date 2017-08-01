@@ -30,6 +30,7 @@
         {
             this.btn添加 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btn采购需求单 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,11 +53,22 @@
             this.dataGridView1.Size = new System.Drawing.Size(444, 150);
             this.dataGridView1.TabIndex = 1;
             // 
+            // btn采购需求单
+            // 
+            this.btn采购需求单.Location = new System.Drawing.Point(146, 21);
+            this.btn采购需求单.Name = "btn采购需求单";
+            this.btn采购需求单.Size = new System.Drawing.Size(75, 23);
+            this.btn采购需求单.TabIndex = 2;
+            this.btn采购需求单.Text = "采购需求单";
+            this.btn采购需求单.UseVisualStyleBackColor = true;
+            this.btn采购需求单.Click += new System.EventHandler(this.btn采购需求单_Click);
+            // 
             // 采购单管理
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(468, 238);
+            this.Controls.Add(this.btn采购需求单);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btn添加);
             this.Name = "采购单管理";
@@ -70,5 +82,6 @@
 
         private System.Windows.Forms.Button btn添加;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btn采购需求单;
     }
 }

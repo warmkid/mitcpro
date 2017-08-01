@@ -620,17 +620,41 @@
     <Compile Include="Process\Stock\原料入库管理.Designer.cs">
       <DependentUpon>原料入库管理.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\取样记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\取样记录.Designer.cs">
+      <DependentUpon>取样记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\取样证.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\取样证.Designer.cs">
+      <DependentUpon>取样证.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\商品设置.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Process\Stock\商品设置.Designer.cs">
       <DependentUpon>商品设置.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\检验台账.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\检验台账.Designer.cs">
+      <DependentUpon>检验台账.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\检验记录.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Process\Stock\检验记录.Designer.cs">
       <DependentUpon>检验记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\物料取样请验等级及报告发放记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\物料取样请验等级及报告发放记录.Designer.cs">
+      <DependentUpon>物料取样请验等级及报告发放记录.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Stock\物资验收记录.cs">
       <SubType>Form</SubType>
@@ -673,6 +697,12 @@
     </Compile>
     <Compile Include="Process\Stock\采购单管理.Designer.cs">
       <DependentUpon>采购单管理.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\采购需求单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\采购需求单.Designer.cs">
+      <DependentUpon>采购需求单.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\灭菌\Gamma射线辐射灭菌委托单.cs">
       <SubType>Form</SubType>
@@ -1187,11 +1217,23 @@
     <EmbeddedResource Include="Process\Stock\原料入库管理.resx">
       <DependentUpon>原料入库管理.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\取样记录.resx">
+      <DependentUpon>取样记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\取样证.resx">
+      <DependentUpon>取样证.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\商品设置.resx">
       <DependentUpon>商品设置.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\检验台账.resx">
+      <DependentUpon>检验台账.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\检验记录.resx">
       <DependentUpon>检验记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\物料取样请验等级及报告发放记录.resx">
+      <DependentUpon>物料取样请验等级及报告发放记录.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\物资验收记录.resx">
       <DependentUpon>物资验收记录.cs</DependentUpon>
@@ -1213,6 +1255,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\采购单管理.resx">
       <DependentUpon>采购单管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\采购需求单.resx">
+      <DependentUpon>采购需求单.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\灭菌\Gamma射线辐射灭菌委托单.resx">
       <DependentUpon>Gamma射线辐射灭菌委托单.cs</DependentUpon>
