@@ -17,15 +17,23 @@ namespace mySystem.Process.CleanCut
         private OleDbConnection connOle = Parameter.connOle;
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
+        Int32 ID生产指令 = mySystem.Parameter.csbagInstruID;
+        String str生产指令编码 = mySystem.Parameter.csbagInstruction;
+        String str产品代码;
+        String str产品批号;
+        String str客户或订单号;
+        Int32 i入库量只;
+        Int32 i效率=0;
+        Int32 i成品数量=0;
+        Int32 i膜材1用量=0;
+        Int32 i膜材2用量=0;
+        Int32 i制袋收率=0;
 
         private DataTable dt日报表详细信息, dt日报表, dt生产指令, dt生产指令详细信息, dt领料, dt领料详细信息, dt内包装;
         private BindingSource bs日报表详细信息, bs日报表, bs生产指令, bs生产指令详细信息, bs领料, bs领料详细信息, bs内包装;
         private OleDbDataAdapter da日报表详细信息, da日报表, da生产指令, da生产指令详细信息, da领料, da领料详细信息, da内包装;
         private OleDbCommandBuilder cb日报表详细信息, cb日报表, cb生产指令, cb生产指令详细信息, cb领料, cb领料详细信息, cb内包装;
        
-        int ID = mySystem.Parameter.csbagInstruID;
-        string strID = mySystem.Parameter.csbagInstruction;
-
         public Chart_daily_cs()
         {
             InitializeComponent();
@@ -53,51 +61,63 @@ namespace mySystem.Process.CleanCut
         private void getOtherData()
         {
             //读取生产指令外表
-            da生产指令 = new OleDbDataAdapter("select * from 生产指令 where ID="+ID, mySystem.Parameter.connOle);
+            da生产指令 = new OleDbDataAdapter("select * from 生产指令 where ID="+ID生产指令, mySystem.Parameter.connOle);
             cb生产指令 = new OleDbCommandBuilder(da生产指令);
             dt生产指令 = new DataTable("生产指令");
             bs生产指令 = new BindingSource();
             da生产指令.Fill(dt生产指令);
             DataTable dt生产指令所需信息 = dt生产指令.DefaultView.ToTable(false, new string[] {"ID", "计划生产日期", "生产指令编号" });
+            Int32 i生产指令外表ID = Convert.ToInt32(dt生产指令所需信息.Rows[0]["ID"].ToString());
 
             //读取生产指令内表
-            da生产指令详细信息 = new OleDbDataAdapter("select * from 生产指令详细信息", mySystem.Parameter.connOle);
-            cb生产指令详细信息 = new OleDbCommandBuilder(da生产指令);
+            da生产指令详细信息 = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令外表ID, mySystem.Parameter.connOle);
+            cb生产指令详细信息 = new OleDbCommandBuilder(da生产指令详细信息);
             dt生产指令详细信息 = new DataTable("生产指令详细信息");
             bs生产指令详细信息 = new BindingSource();
             da生产指令详细信息.Fill(dt生产指令详细信息);
             DataTable dt生产指令所需信息详细 = dt生产指令详细信息.DefaultView.ToTable(false, new string[] { "产品代码", "产品批号","客户或订单号" });
+            
+            str产品代码 = dt生产指令所需信息详细.Rows[0]["产品代码"].ToString();
+            str产品批号 = dt生产指令所需信息详细.Rows[0]["产品批号"].ToString();
+            str客户或订单号 = dt生产指令所需信息详细.Rows[0]["客户或订单号"].ToString();
 
             //读取领料量外表
-            da领料 = new OleDbDataAdapter("select * from CS制袋领料记录 where 生产指令ID=" + ID, mySystem.Parameter.connOle);
+            da领料 = new OleDbDataAdapter("select * from CS制袋领料记录 where 生产指令ID=" + ID生产指令, mySystem.Parameter.connOle);
             cb领料 = new OleDbCommandBuilder(da领料);
             dt领料 = new DataTable("领料");
             bs领料 = new BindingSource();
             da领料.Fill(dt领料);
             DataTable dt领料所需信息 = dt领料.DefaultView.ToTable(false, new string[] { "ID"});
+            Int32 i领料量外表ID = Convert.ToInt32(dt领料所需信息.Rows[0]["ID"].ToString());
 
             //读取领料量内表
-            da领料详细信息 = new OleDbDataAdapter("select * from CS制袋领料记录详细记录",mySystem.Parameter.connOle);
+            da领料详细信息 = new OleDbDataAdapter("select * from CS制袋领料记录详细记录 where TCS制袋领料记录ID=" + i领料量外表ID, mySystem.Parameter.connOle);
             cb领料详细信息 = new OleDbCommandBuilder(da领料详细信息);
             dt领料详细信息 = new DataTable("领料详细信息");
             bs领料详细信息 = new BindingSource();
             da领料详细信息.Fill(dt领料详细信息);
-            DataTable dt领料所需信息详细 = dt领料详细信息.DefaultView.ToTable(false, new string[] { "TCS制袋领料记录ID","物料简称","使用数量C"});
+            DataTable dt领料所需信息详细 = dt领料详细信息.DefaultView.ToTable(false, new string[] { "物料简称", "领取数量B" });
+
+
 
             //读取内包装
-            da内包装 = new OleDbDataAdapter("select * from 产品内包装记录 where 生产指令ID="+ID, mySystem.Parameter.connOle);
+            da内包装 = new OleDbDataAdapter("select * from 产品内包装记录 where 生产指令ID="+ID生产指令, mySystem.Parameter.connOle);
             cb内包装 = new OleDbCommandBuilder(da内包装);
             dt内包装 = new DataTable("内包装");
             bs内包装 = new BindingSource();
             da内包装.Fill(dt内包装);
             DataTable dt内包装所需信息 = dt内包装.DefaultView.ToTable(false, new string[] {"ID", "产品数量只数合计B"});
+            Int32 i内包装外表ID = Convert.ToInt32(dt内包装所需信息.Rows[0]["ID"].ToString());
 
-            MessageBox.Show(strID);
+            i入库量只 =Convert.ToInt32(dt内包装所需信息.Rows[0]["产品数量只数合计B"].ToString());
+
+            MessageBox.Show(str生产指令编码);
 
             //添加打印机
             fill_printer();
         }
-        // 根据条件从数据库中读取一行外表的数据
+
+        // 读取数据，无参数表示从Paramter中读取数据
         private void readOuterData()
         {
             da日报表 = new OleDbDataAdapter("select * from CS制袋日报表", mySystem.Parameter.connOle);
@@ -141,7 +161,7 @@ namespace mySystem.Process.CleanCut
         // 设置自动计算类事件
         private void addComputerEventHandler()
         {
-
+           
         }
 
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -235,20 +255,20 @@ namespace mySystem.Process.CleanCut
         // 设置DataGridView中各列的格式，包括列类型，列名，是否可以排序
         private void setDataGridViewColumns()
         {
-
-            DataGridViewTextBoxColumn c1;
+           // DataGridViewComboBoxColumn c1;
+            DataGridViewTextBoxColumn c2;
             foreach (DataColumn dc in dt日报表详细信息.Columns)
             {
                 switch (dc.ColumnName)
-                {
+                {                  
                       default:
-                        c1 = new DataGridViewTextBoxColumn();
-                        c1.DataPropertyName = dc.ColumnName;
-                        c1.HeaderText = dc.ColumnName;
-                        c1.Name = dc.ColumnName;
-                        c1.SortMode = DataGridViewColumnSortMode.Automatic;
-                        c1.ValueType = dc.DataType;
-                        dataGridView1.Columns.Add(c1);
+                        c2 = new DataGridViewTextBoxColumn();
+                        c2.DataPropertyName = dc.ColumnName;
+                        c2.HeaderText = dc.ColumnName;
+                        c2.Name = dc.ColumnName;
+                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c2.ValueType = dc.DataType;
+                        dataGridView1.Columns.Add(c2);
                         break;
                 }
             }
@@ -298,25 +318,59 @@ namespace mySystem.Process.CleanCut
         }
 
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        { }
+        {
+           // int columnindex = ((DataGridView)sender).SelectedCells[0].ColumnIndex;
+            int rowindex = ((DataGridView)sender).SelectedCells[0].RowIndex;
+            
+            if (Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["工时B"].ToString()) != 0)
+            {
+                i效率 = Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["入库量只A"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["系数C"].ToString()) / Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["工时B"].ToString());
+            }
+            i成品数量 = Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["入库量只A"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["成品宽D"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["成品长E"].ToString()) / 1000000 * 2;
+            i膜材1用量 = Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["膜材1规格F"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["膜材1用量G"].ToString()) / 1000;
+            i膜材2用量 = Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["膜材2规格H"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["膜材2用量K"].ToString()) / 1000;
+            if ((i膜材1用量 + i膜材2用量) != 0)
+            {
+                i制袋收率 = i成品数量 / (i膜材1用量 + i膜材2用量);
+            }
+        }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        { }
+        {
+            
+            
+        }
 
         //写默认行数据
         DataRow writeInnerDefault(DataRow dr)
         {
-            dr["班次"] = "";
+            dr["TCS制袋日报表ID"] = 1;
+            dr["生产日期"] = DateTime.Now;
+            dr["班次"] = " ";
+            dr["客户或订单号"] = str客户或订单号;
+            dr["产品代码"] = str产品代码;
+            dr["批号"] = str产品批号;
+            dr["入库量只A"] = i入库量只;
             dr["工时B"] = 0;
             dr["系数C"] = 0;
+            dr["效率"] = i效率;
+            dr["成品宽D"] = 0;
+            dr["成品长E"] = 0;
+            dr["成品数量W"] = i成品数量;
+            
             dr["膜材1规格F"] = 0;
+            dr["膜材1用量G"] = 0;
+            dr["膜材1用量E"] = i膜材1用量;
             dr["膜材2规格H"] = 0;
+            dr["膜材2用量K"] = 0;
+            dr["膜材2用量R"] = i膜材2用量;
+            dr["制袋收率"] = i制袋收率;
 
             return dr;
         }
 
         //设置序号递增
-        void setDataGridViewRowNums()
+        void setDataGridViewRowNums() 
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -324,72 +378,79 @@ namespace mySystem.Process.CleanCut
             }
         }
 
-        private void bt添加_Click(object sender, EventArgs e)
-        {
-            DataRow dr新行 = dt日报表详细信息.NewRow();
-            dr新行 = writeInnerDefault(dr新行);
-            dt日报表详细信息.Rows.Add(dr新行);
-            setDataGridViewRowNums();
-        }
+        //private void bt添加_Click(object sender, EventArgs e)
+        //{
+        //    bool is填满 = is_filled();
 
-        private void bt删除_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.SelectedCells.Count > 0)
-            {
-                if (dataGridView1.SelectedCells[0].RowIndex < 0)
-                    return;
-                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
-            }
+        //    if (is填满)
+        //    {
+        //        DataRow dr新行 = dt日报表详细信息.NewRow();
+        //        dr新行 = writeInnerDefault(dr新行);
+        //        dt日报表详细信息.Rows.Add(dr新行);
+        //        setDataGridViewRowNums();
+        //    }
+        //    else
+        //        MessageBox.Show("未填完");
+        //}
 
-            da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
-            innerBind();
-            //刷新序号
-            setDataGridViewRowNums();
-        }
+        //private void bt删除_Click(object sender, EventArgs e)
+        //{
+        //    if (dataGridView1.SelectedCells.Count > 0)
+        //    { 
+        //        if (dataGridView1.SelectedCells[0].RowIndex < 0)
+        //            return;
+        //        dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+        //    }
 
-        private void bt保存_Click(object sender, EventArgs e)
-        {
-            bool is填满 = is_filled();
-            if (is填满)
-            {
-                bs日报表详细信息.EndEdit();
-                da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
-                readInnerData();
-                innerBind();
-            }
-            else
-                MessageBox.Show("信息填写不完整");
-        }
+        //    da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+        //    innerBind();
+        //    //刷新序号
+        //    setDataGridViewRowNums();
+        //}
+
+        //private void bt保存_Click(object sender, EventArgs e)
+        //{
+        //    bool is填满 = is_filled();
+        //    if (is填满)
+        //    {
+        //        bs日报表详细信息.EndEdit();
+        //        da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+        //        readInnerData();
+        //        innerBind();
+        //    }
+        //    else
+        //        MessageBox.Show("信息填写不完整");
+        //}
 
         //某行数据是否填满
-        private bool is_filled()
-        {
-            int index = dataGridView1.Rows.Count - 1;
-            DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
-            DataRow dr最后一行 = dt日报表详细信息.NewRow();
-            dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
+        //private bool is_filled()
+        //{
+        //    int index = dataGridView1.Rows.Count - 1;
+        //    DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
+        //    DataRow dr最后一行 = dt日报表详细信息.NewRow();
+        //    dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
 
-            int sum = 0;//空白单元格个数
-            for (int i = 0; i < dr最后一行.ItemArray.Length; i++)
-            {
-                //string suibian = dr[i].ToString();
-                //if (dr[i] != dr["审核意见"] && dr[i] != dr["审核是否通过"])
-                //if (dr[i].Equals(dr["审核意见"]) || dr[i].Equals(dr["审核是否通过"]))
-                if (i != 0 && i != 1)
-                {
-                    if (dr最后一行[i].ToString() == "")
-                        sum += 1;
-                }
-                else
-                {
-                    sum += 0;
-                }
-            }
-            if (sum != 0)
-                return false;
-            else
-                return true;
-        }
+        //    int sum = 0;//空白单元格个数
+        //    for (int i = 0; i < dr最后一行.ItemArray.Length; i++)
+        //    {
+        //        //string suibian = dr[i].ToString();
+        //        //if (dr[i] != dr["审核意见"] && dr[i] != dr["审核是否通过"])
+        //        //if (dr[i].Equals(dr["审核意见"]) || dr[i].Equals(dr["审核是否通过"]))
+        //        if (i != 0 && i != 1)
+        //        {
+        //            if (dr最后一行[i].ToString() == "")
+        //                sum += 1;
+        //        }
+        //        else
+        //        {
+        //            sum += 0;
+        //        }
+        //    }
+        //    if (sum != 0)
+        //        return false;
+        //    else
+        //        return true;
+        //}
 
         //打印功能
         public void print(bool isShow)
@@ -397,7 +458,7 @@ namespace mySystem.Process.CleanCut
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\miejun\SOP-MFG-106-R03A 辐照灭菌台帐.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-303-R06A  CS制袋日报表.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
 
@@ -440,23 +501,34 @@ namespace mySystem.Process.CleanCut
         }
 
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
-        {
+        {          
             int rownum = dt日报表详细信息.Rows.Count;
             for (int i = 0; i < rownum; i++)
             {
-                mysheet.Cells[i + 4, 2].Value = dt日报表详细信息.Rows[i]["委托单号"].ToString();
-                mysheet.Cells[i + 4, 3].Value = Convert.ToDateTime(dt日报表详细信息.Rows[i]["委托日期"]).ToString("D");//去掉时分秒，且显示为****年**月**日
-                mysheet.Cells[i + 4, 4].Value = dt日报表详细信息.Rows[i]["产品数量箱"].ToString();
-                mysheet.Cells[i + 4, 5].Value = dt日报表详细信息.Rows[i]["产品数量只"].ToString();
-                mysheet.Cells[i + 4, 6].Value = dt日报表详细信息.Rows[i]["送去产品托盘数量个"].ToString();
-                mysheet.Cells[i + 4, 7].Value = dt日报表详细信息.Rows[i]["拉回产品托盘数量个"].ToString();
-                mysheet.Cells[i + 4, 8].Value = dt日报表详细信息.Rows[i]["备注"].ToString();
-                mysheet.Cells[i + 4, 9].Value = dt日报表详细信息.Rows[i]["登记员"].ToString();
-                mysheet.Cells[i + 4, 10].Value = dt日报表详细信息.Rows[i]["审核员"].ToString();
+                mysheet.Cells[i + 5, 1].Value = Convert.ToDateTime(dt日报表详细信息.Rows[i]["生产日期"]).ToString("D");//去掉时分秒，且显示为****年**月**日
+                mysheet.Cells[i + 5, 2].Value = dt日报表详细信息.Rows[i]["班次"].ToString();
+                mysheet.Cells[i + 5, 3].Value = dt日报表详细信息.Rows[i]["客户或订单号"].ToString();
+
+                mysheet.Cells[i + 5, 4].Value = dt日报表详细信息.Rows[i]["产品代码"].ToString();
+                mysheet.Cells[i + 5, 5].Value = dt日报表详细信息.Rows[i]["批号"].ToString();
+                mysheet.Cells[i + 5, 6].Value = dt日报表详细信息.Rows[i]["入库量只A"].ToString();
+                mysheet.Cells[i + 5, 7].Value = dt日报表详细信息.Rows[i]["工时B"].ToString();
+                mysheet.Cells[i + 5, 8].Value = dt日报表详细信息.Rows[i]["系数C"].ToString();
+                mysheet.Cells[i + 5, 9].Value = dt日报表详细信息.Rows[i]["效率"].ToString();
+                mysheet.Cells[i + 5, 10].Value = dt日报表详细信息.Rows[i]["成品宽D"].ToString();
+                mysheet.Cells[i + 5, 11].Value = dt日报表详细信息.Rows[i]["成品长E"].ToString();
+                mysheet.Cells[i + 5, 12].Value = dt日报表详细信息.Rows[i]["成品数量W"].ToString();
+                mysheet.Cells[i + 5, 13].Value = dt日报表详细信息.Rows[i]["膜材1规格F"].ToString();
+                mysheet.Cells[i + 5, 14].Value = dt日报表详细信息.Rows[i]["膜材1用量G"].ToString();
+                mysheet.Cells[i + 5, 15].Value = dt日报表详细信息.Rows[i]["膜材1用量E"].ToString();
+                mysheet.Cells[i + 5, 16].Value = dt日报表详细信息.Rows[i]["膜材2规格H"].ToString();
+                mysheet.Cells[i + 5, 17].Value = dt日报表详细信息.Rows[i]["膜材2用量K"].ToString();
+                mysheet.Cells[i + 5, 18].Value = dt日报表详细信息.Rows[i]["膜材2用量R"].ToString();
+                mysheet.Cells[i + 5, 19].Value = dt日报表详细信息.Rows[i]["制袋收率"].ToString();
             }
             //加页脚
             int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 辐照灭菌台帐详细信息", connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from CS制袋日报表详细信息", connOle);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
@@ -481,14 +553,20 @@ namespace mySystem.Process.CleanCut
             //写日志
             string log = "\n=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
-            dt日报表详细信息.Rows[0]["日志"] = dt日报表详细信息.Rows[0]["日志"].ToString() + log;
+            dt日报表.Rows[0]["日志"] = dt日报表.Rows[0]["日志"].ToString() + log;
 
-            bs日报表详细信息.EndEdit();
-            da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+            bs日报表.EndEdit();
+            da日报表.Update((DataTable)bs日报表.DataSource);
         }
 
         private void bt查看日志_Click(object sender, EventArgs e)
         {
+            OleDbDataAdapter da日报表日志 = new OleDbDataAdapter("select * from CS制袋日报表 where 生产指令ID=" + ID生产指令, mySystem.Parameter.connOle);
+           // OleDbCommandBuilder cb日报表日志 = new OleDbCommandBuilder(da日报表日志);
+            DataTable dt日报表日志 = new DataTable("CS制袋日报表");
+            //BindingSource bs日报表日志 = new BindingSource();
+            da日报表日志.Fill(dt日报表日志);
+            String str日志 = dt日报表日志.Rows[0]["日志"].ToString();
             (new mySystem.Other.LogForm()).setLog(dt日报表.Rows[0]["日志"].ToString()).Show();
         }
 

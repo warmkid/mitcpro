@@ -32,13 +32,10 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.bt打印 = new System.Windows.Forms.Button();
             this.bt查看日志 = new System.Windows.Forms.Button();
-            this.bt保存 = new System.Windows.Forms.Button();
             this.label40 = new System.Windows.Forms.Label();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.label角色 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.bt添加 = new System.Windows.Forms.Button();
-            this.bt删除 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -85,17 +82,6 @@
             this.bt查看日志.UseVisualStyleBackColor = true;
             this.bt查看日志.Click += new System.EventHandler(this.bt查看日志_Click);
             // 
-            // bt保存
-            // 
-            this.bt保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt保存.Location = new System.Drawing.Point(349, 330);
-            this.bt保存.Name = "bt保存";
-            this.bt保存.Size = new System.Drawing.Size(75, 23);
-            this.bt保存.TabIndex = 4;
-            this.bt保存.Text = "保存";
-            this.bt保存.UseVisualStyleBackColor = true;
-            this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
-            // 
             // label40
             // 
             this.label40.AutoSize = true;
@@ -134,40 +120,15 @@
             this.label2.TabIndex = 36;
             this.label2.Text = "登录角色：";
             // 
-            // bt添加
-            // 
-            this.bt添加.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt添加.Location = new System.Drawing.Point(146, 329);
-            this.bt添加.Name = "bt添加";
-            this.bt添加.Size = new System.Drawing.Size(75, 23);
-            this.bt添加.TabIndex = 38;
-            this.bt添加.Text = "添加";
-            this.bt添加.UseVisualStyleBackColor = true;
-            this.bt添加.Click += new System.EventHandler(this.bt添加_Click);
-            // 
-            // bt删除
-            // 
-            this.bt删除.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt删除.Location = new System.Drawing.Point(269, 329);
-            this.bt删除.Name = "bt删除";
-            this.bt删除.Size = new System.Drawing.Size(75, 23);
-            this.bt删除.TabIndex = 39;
-            this.bt删除.Text = "删除";
-            this.bt删除.UseVisualStyleBackColor = true;
-            this.bt删除.Click += new System.EventHandler(this.bt删除_Click);
-            // 
             // Chart_daily_cs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 373);
-            this.Controls.Add(this.bt删除);
-            this.Controls.Add(this.bt添加);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.cb打印机);
-            this.Controls.Add(this.bt保存);
             this.Controls.Add(this.bt查看日志);
             this.Controls.Add(this.bt打印);
             this.Controls.Add(this.dataGridView1);
@@ -188,12 +149,9 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button bt打印;
         private System.Windows.Forms.Button bt查看日志;
-        private System.Windows.Forms.Button bt保存;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button bt添加;
-        private System.Windows.Forms.Button bt删除;
     }
 }

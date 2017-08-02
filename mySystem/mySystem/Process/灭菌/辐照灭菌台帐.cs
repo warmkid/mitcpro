@@ -23,6 +23,7 @@ namespace mySystem.Process.灭菌
         private OleDbConnection connOle =  Parameter.connOle;
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
+        Int32 index;//datagridview列数
 
         public 辐照灭菌台帐(mySystem.MainForm mainform): base(mainform)
         {
@@ -91,6 +92,7 @@ namespace mySystem.Process.灭菌
             da台帐 = new OleDbDataAdapter(@"select * from 辐照灭菌台帐详细信息", mySystem.Parameter.connOle);
             cb台帐 = new OleDbCommandBuilder(da台帐);
             da台帐.Fill(dt台帐);
+            index = dt台帐.Rows.Count;
         }
         // 内表和控件的绑定
         private void innerBind()
@@ -103,7 +105,7 @@ namespace mySystem.Process.灭菌
             setDataGridViewFormat();
             bs台帐.DataSource = dt台帐;
             dataGridView1.DataSource = bs台帐.DataSource;
-            
+            index = dt台帐.Rows.Count;
         }
         // 设置自动计算类事件
         private void addComputerEventHandler()
@@ -303,6 +305,7 @@ namespace mySystem.Process.灭菌
             dr["送去产品托盘数量个"] = 0;
             dr["拉回产品托盘数量个"] = 0;
             dr["备注"] = "无";
+           // dr["操作员"] = mySystem.Parameter.userName;
            // dr["日志"] = "无";
             return dr;
         }
@@ -325,6 +328,7 @@ namespace mySystem.Process.灭菌
                  MessageBox.Show("信息填写不完整");
              else
                  MessageBox.Show("信息填写错误且不完整");
+             index = dt台帐.Rows.Count;
         }
 
         //某行数据是否填满
@@ -482,7 +486,8 @@ namespace mySystem.Process.灭菌
         //填过“审核员”后，该行只读
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            int index=dt台帐.Rows.Count;
+            
+            
             for (int i = 0; i < index; i++)
             {
                 string str审核员 = dt台帐.Rows[i]["审核员"].ToString();
@@ -499,16 +504,23 @@ namespace mySystem.Process.灭菌
         {
             if (dataGridView1.SelectedCells.Count > 0)
             {
-                if (dataGridView1.SelectedCells[0].RowIndex < 0)
-                    return;
-                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
-            }
+                int deletenum = dataGridView1.CurrentRow.Index;
 
-            da台帐.Update((DataTable)bs台帐.DataSource);
-            ///readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
-            innerBind();
-            //刷新序号
-            setDataGridViewRowNums();
+                if (deletenum < 0)
+                    return;
+                // dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+                else
+                {
+                    dt台帐.Rows[deletenum].Delete();
+                    da台帐.Update((DataTable)bs台帐.DataSource);
+                    readInnerData();
+                    innerBind();
+                    //刷新序号
+                    setDataGridViewRowNums();
+                    index = dt台帐.Rows.Count;
+                }
+            }
+            
         }
 
         // 获取操作员和审核员
