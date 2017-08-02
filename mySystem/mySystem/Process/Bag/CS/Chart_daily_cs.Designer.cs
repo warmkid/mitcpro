@@ -30,39 +30,25 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column18 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column19 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column20 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column22 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button1 = new System.Windows.Forms.Button();
+            this.bt打印 = new System.Windows.Forms.Button();
+            this.bt查看日志 = new System.Windows.Forms.Button();
+            this.bt保存 = new System.Windows.Forms.Button();
+            this.label40 = new System.Windows.Forms.Label();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.bt添加 = new System.Windows.Forms.Button();
+            this.bt删除 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(531, 9);
+            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(507, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(111, 16);
+            this.label1.Size = new System.Drawing.Size(131, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "CS制袋日报表";
             // 
@@ -70,161 +56,115 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5,
-            this.Column6,
-            this.Column7,
-            this.Column8,
-            this.Column9,
-            this.Column10,
-            this.Column11,
-            this.Column12,
-            this.Column13,
-            this.Column14,
-            this.Column15,
-            this.Column16,
-            this.Column17,
-            this.Column18,
-            this.Column19,
-            this.Column20,
-            this.Column21,
-            this.Column22});
-            this.dataGridView1.Location = new System.Drawing.Point(3, 35);
+            this.dataGridView1.Location = new System.Drawing.Point(22, 43);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1147, 264);
+            this.dataGridView1.Size = new System.Drawing.Size(1109, 264);
             this.dataGridView1.TabIndex = 1;
             // 
-            // Column1
+            // bt打印
             // 
-            this.Column1.HeaderText = "月份";
-            this.Column1.Name = "Column1";
+            this.bt打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt打印.Location = new System.Drawing.Point(885, 329);
+            this.bt打印.Name = "bt打印";
+            this.bt打印.Size = new System.Drawing.Size(75, 23);
+            this.bt打印.TabIndex = 2;
+            this.bt打印.Text = "打印";
+            this.bt打印.UseVisualStyleBackColor = true;
             // 
-            // Column2
+            // bt查看日志
             // 
-            this.Column2.HeaderText = "指令编号";
-            this.Column2.Name = "Column2";
+            this.bt查看日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看日志.Location = new System.Drawing.Point(1008, 329);
+            this.bt查看日志.Name = "bt查看日志";
+            this.bt查看日志.Size = new System.Drawing.Size(94, 23);
+            this.bt查看日志.TabIndex = 3;
+            this.bt查看日志.Text = "查看日志";
+            this.bt查看日志.UseVisualStyleBackColor = true;
             // 
-            // Column3
+            // bt保存
             // 
-            this.Column3.HeaderText = "订单号";
-            this.Column3.Name = "Column3";
+            this.bt保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Location = new System.Drawing.Point(349, 330);
+            this.bt保存.Name = "bt保存";
+            this.bt保存.Size = new System.Drawing.Size(75, 23);
+            this.bt保存.TabIndex = 4;
+            this.bt保存.Text = "保存";
+            this.bt保存.UseVisualStyleBackColor = true;
             // 
-            // Column4
+            // label40
             // 
-            this.Column4.HeaderText = "客户或订单号";
-            this.Column4.Name = "Column4";
+            this.label40.AutoSize = true;
+            this.label40.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.Location = new System.Drawing.Point(515, 333);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(104, 16);
+            this.label40.TabIndex = 34;
+            this.label40.Text = "选择打印机：";
             // 
-            // Column5
+            // cb打印机
             // 
-            this.Column5.HeaderText = "产品代码";
-            this.Column5.Name = "Column5";
+            this.cb打印机.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(625, 330);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(205, 24);
+            this.cb打印机.TabIndex = 33;
             // 
-            // Column6
+            // label角色
             // 
-            this.Column6.HeaderText = "入库量（只）";
-            this.Column6.Name = "Column6";
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(925, 8);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(0, 16);
+            this.label角色.TabIndex = 37;
             // 
-            // Column7
+            // label2
             // 
-            this.Column7.HeaderText = "内包装（只/包）";
-            this.Column7.Name = "Column7";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(826, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(93, 16);
+            this.label2.TabIndex = 36;
+            this.label2.Text = "登录角色：";
             // 
-            // Column8
+            // bt添加
             // 
-            this.Column8.HeaderText = "批号";
-            this.Column8.Name = "Column8";
+            this.bt添加.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt添加.Location = new System.Drawing.Point(146, 329);
+            this.bt添加.Name = "bt添加";
+            this.bt添加.Size = new System.Drawing.Size(75, 23);
+            this.bt添加.TabIndex = 38;
+            this.bt添加.Text = "添加";
+            this.bt添加.UseVisualStyleBackColor = true;
             // 
-            // Column9
+            // bt删除
             // 
-            this.Column9.HeaderText = "标签";
-            this.Column9.Name = "Column9";
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "成品宽";
-            this.Column10.Name = "Column10";
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "成品长";
-            this.Column11.Name = "Column11";
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "TY规格";
-            this.Column12.Name = "Column12";
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "XD1规格";
-            this.Column13.Name = "Column13";
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "TY用量（米）";
-            this.Column14.Name = "Column14";
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "XD1用量（米）";
-            this.Column15.Name = "Column15";
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "产品数量（㎡）";
-            this.Column16.Name = "Column16";
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "TY用量（㎡）";
-            this.Column17.Name = "Column17";
-            // 
-            // Column18
-            // 
-            this.Column18.HeaderText = "XD1用量（㎡）";
-            this.Column18.Name = "Column18";
-            // 
-            // Column19
-            // 
-            this.Column19.HeaderText = "制袋收率（%）";
-            this.Column19.Name = "Column19";
-            // 
-            // Column20
-            // 
-            this.Column20.HeaderText = "工时";
-            this.Column20.Name = "Column20";
-            // 
-            // Column21
-            // 
-            this.Column21.HeaderText = "系数";
-            this.Column21.Name = "Column21";
-            // 
-            // Column22
-            // 
-            this.Column22.HeaderText = "工时产量";
-            this.Column22.Name = "Column22";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1056, 309);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "打印";
-            this.button1.UseVisualStyleBackColor = true;
+            this.bt删除.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt删除.Location = new System.Drawing.Point(269, 329);
+            this.bt删除.Name = "bt删除";
+            this.bt删除.Size = new System.Drawing.Size(75, 23);
+            this.bt删除.TabIndex = 39;
+            this.bt删除.Text = "删除";
+            this.bt删除.UseVisualStyleBackColor = true;
             // 
             // Chart_daily_cs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1152, 338);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1152, 373);
+            this.Controls.Add(this.bt删除);
+            this.Controls.Add(this.bt添加);
+            this.Controls.Add(this.label角色);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.cb打印机);
+            this.Controls.Add(this.bt保存);
+            this.Controls.Add(this.bt查看日志);
+            this.Controls.Add(this.bt打印);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -241,28 +181,14 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column19;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column20;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column22;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button bt打印;
+        private System.Windows.Forms.Button bt查看日志;
+        private System.Windows.Forms.Button bt保存;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.ComboBox cb打印机;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button bt添加;
+        private System.Windows.Forms.Button bt删除;
     }
 }
