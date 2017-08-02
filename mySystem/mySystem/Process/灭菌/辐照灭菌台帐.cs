@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.灭菌
 {
@@ -19,6 +20,9 @@ namespace mySystem.Process.灭菌
         private OleDbCommandBuilder cb台帐, cb委托单, cb台帐外表;
         private List<string> weituodanhao;
         DataGridViewComboBoxColumn c1;
+        private OleDbConnection connOle =  Parameter.connOle;
+        List<String> ls操作员, ls审核员;
+        Parameter.UserState _userState;
 
         public 辐照灭菌台帐(mySystem.MainForm mainform): base(mainform)
         {
@@ -44,22 +48,15 @@ namespace mySystem.Process.灭菌
             
         }
 
-        private void getPeople()
-        {
-        
-        }
-        // 设置用户状态，用户状态有3个：0--操作员，1--审核员，2--管理员
-        private void setUserState()
-        { 
-        
-        }
         // 获取其他需要的数据，比如产品代码，产生废品原因等
         private void getOtherData()
         {
             //weituodanhao = new List<string>();
-            OleDbDataAdapter danhao_search = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单",mySystem.Parameter.connOle);
+            OleDbDataAdapter da单号查询 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单",mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb单号查询 = new OleDbCommandBuilder(da单号查询);
             DataTable dt委托单数据源 = new DataTable("委托单号查询");
-            danhao_search.Fill(dt委托单数据源);
+            BindingSource bs单号查询 = new BindingSource();
+            da单号查询.Fill(dt委托单数据源);
             //foreach (DataRow tdr in dt委托单数据源.Rows)
             //{
             //    weituodanhao.Add(tdr["委托单号"].ToString());
@@ -134,6 +131,7 @@ namespace mySystem.Process.灭菌
         {
             dataGridView1.DataError += dataGridView1_DataError;
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
 
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
@@ -298,6 +296,7 @@ namespace mySystem.Process.灭菌
         //写默认行数据
         DataRow writeInnerDefault(DataRow dr)
         {
+            dr["T辐照灭菌台帐ID"] = 8;
             dr["委托日期"] = DateTime.Now.ToString("D");
             dr["产品数量箱"] = 0;
             dr["产品数量只"] = 0;
@@ -311,7 +310,6 @@ namespace mySystem.Process.灭菌
         //保存数据到数据库
         private void bt保存_Click(object sender, EventArgs e)
         {
-          //  DialogResult dr= MessageBox.Show("确定保存","放弃",MessageBoxButtons.OKCancel);
             bool is填满 = is_filled();
              bool is合法 = input_Judge();
              if (is填满 && is合法)
@@ -381,6 +379,7 @@ namespace mySystem.Process.灭菌
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\miejun\SOP-MFG-106-R03A 辐照灭菌台帐.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+             
 
             if (isShow)
             {
@@ -388,7 +387,7 @@ namespace mySystem.Process.灭菌
                 // 设置该进程是否可见
                 oXL.Visible = true;
                 // 修改Sheet中某行某列的值
-                my = printValue(my);
+                my = printValue(my,wb);
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
             }
@@ -398,7 +397,7 @@ namespace mySystem.Process.灭菌
                 // 设置该进程是否可见
                 oXL.Visible = false;
                 // 修改Sheet中某行某列的值
-                my = printValue(my);
+                my = printValue(my, wb);
                 try
                 {
                     // 直接用默认打印机打印该Sheet
@@ -419,7 +418,7 @@ namespace mySystem.Process.灭菌
             }
         }
 
-        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet)
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             int rownum = dt台帐.Rows.Count;
             for (int i = 0; i < rownum; i++)
@@ -434,7 +433,18 @@ namespace mySystem.Process.灭菌
                 mysheet.Cells[i + 4, 9].Value = dt台帐.Rows[i]["登记员"].ToString();
                 mysheet.Cells[i + 4, 10].Value = dt台帐.Rows[i]["审核员"].ToString();
             }
-                
+            //加页脚
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 辐照灭菌台帐详细信息", connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt台帐.Rows[0]["ID"])) + 1;
+            // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); 
+           //返回
             return mysheet;
         }
 
@@ -449,9 +459,11 @@ namespace mySystem.Process.灭菌
             print(true);
             //写日志
             string log = "\n=====================================\n";
-            string str日志 = DateTime.Now + "保存"+log;
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+            dt台帐外表.Rows[0]["日志"] = dt台帐外表.Rows[0]["日志"].ToString() + log;
 
-            MessageBox.Show(str日志);
+            bs台帐外表.EndEdit();
+            da台帐外表.Update((DataTable)bs台帐外表.DataSource);
         }
 
         [DllImport("winspool.drv")]
@@ -466,6 +478,97 @@ namespace mySystem.Process.灭菌
                 cb打印机.Items.Add(sPrint);
             }
         }
+
+        //填过“审核员”后，该行只读
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            int index=dt台帐.Rows.Count;
+            for (int i = 0; i < index; i++)
+            {
+                string str审核员 = dt台帐.Rows[i]["审核员"].ToString();
+                if (str审核员 != "")
+                {
+                    dataGridView1.Rows[i].ReadOnly = true;
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Wheat;
+                }
+            }
+        }
+
+        //删除
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count > 0)
+            {
+                if (dataGridView1.SelectedCells[0].RowIndex < 0)
+                    return;
+                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            }
+
+            da台帐.Update((DataTable)bs台帐.DataSource);
+            ///readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+            //刷新序号
+            setDataGridViewRowNums();
+        }
+
+        // 获取操作员和审核员
+        private void getPeople()
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+
+            ls操作员 = new List<string>();
+            ls审核员 = new List<string>();
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='辐照灭菌台帐'", connOle);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+                string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        ls操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        ls审核员.Add(s1[i]);
+                }
+            }
+        }
+
+        // 根据登录人，设置stat_user
+        private void setUserState()
+        {
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+        }
+
+        //查看日志
+        private void bt查看日志_Click(object sender, EventArgs e)
+        {
+            (new mySystem.Other.LogForm()).setLog(dt台帐外表.Rows[0]["日志"].ToString()).Show();
+        }
+
 
     }
 }
