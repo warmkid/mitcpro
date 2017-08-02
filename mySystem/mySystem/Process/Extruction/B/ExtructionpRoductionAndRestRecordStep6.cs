@@ -824,11 +824,11 @@ namespace mySystem.Extruction.Process
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            if (mySystem.Parameter.userName == dt记录.Rows[0]["确认人"].ToString())
-            {
-                MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
-                return;
-            }
+            //if (mySystem.Parameter.userName == dt记录.Rows[0]["审核人"].ToString())
+            //{
+            //    MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
+            //    return;
+            //}
             checkform = new CheckForm(this);
             checkform.Show();
         }

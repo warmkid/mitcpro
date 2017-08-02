@@ -152,10 +152,18 @@ namespace mySystem.Setting
         
         private void BtnPE制袋_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 7;
+            Parameter.InitCon();
             BtnColor();
             BtnPE制袋.BackColor = Color.FromArgb(138, 158, 196);
             SettingPanelRight.Controls.Clear();
 
+            PE制袋设置 csbagform = new PE制袋设置();
+            csbagform.TopLevel = false;
+            csbagform.FormBorderStyle = FormBorderStyle.None;
+            csbagform.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(csbagform);
+            csbagform.Show();
         }
 
         private void Btn连续袋_Click(object sender, EventArgs e)

@@ -756,6 +756,7 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
             dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
             dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
+            dt_prodinstr.Rows[0]["卷心管领料量"] = sum_juan;
             //更新领料量
             string bili=tb内外层比例.Text;
             if (bili == "")
@@ -1180,7 +1181,7 @@ namespace BatchProductRecord
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
             dataGridView1.Columns[5].ReadOnly = true;//用料重量
-            dataGridView1.Columns[6].ReadOnly = true;//产品批号
+            //dataGridView1.Columns[6].ReadOnly = true;//产品批号
             dataGridView1.Columns[8].ReadOnly = true;//计划产量卷
             dataGridView1.Columns[12].ReadOnly = true;//标签领料量
 
@@ -1503,7 +1504,7 @@ namespace BatchProductRecord
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = tb指令编号.Text + "--" + "步骤序号0--" + "表序号" + find_indexofprint() + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = tb指令编号.Text + "-" + "01" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -1737,6 +1738,8 @@ namespace BatchProductRecord
             innerBind();
 
             MessageBox.Show("更改成功");
+            setFormState();
+            setEnableReadOnly();
         }
     }
 }
