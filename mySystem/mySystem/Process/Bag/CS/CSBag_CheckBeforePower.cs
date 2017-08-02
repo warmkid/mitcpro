@@ -144,7 +144,7 @@ namespace mySystem.Process.Bag
                 _formState = Parameter.FormState.无数据;
                 return;
             }
-            string s = dt记录.Rows[0]["审核人"].ToString();
+            string s = dt记录.Rows[0]["审核员"].ToString();
             bool b = Convert.ToBoolean(dt记录.Rows[0]["审核是否通过"]);
             if (s == "") _formState = Parameter.FormState.未保存;
             else if (s == "__待审核") _formState = Parameter.FormState.待审核;

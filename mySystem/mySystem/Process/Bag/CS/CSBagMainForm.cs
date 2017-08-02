@@ -111,7 +111,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "CS制袋生产领料记录");
             if (b)
             {
-                form1 = new MaterialRecord();
+                form1 = new MaterialRecord(mainform);
                 form1.ShowDialog();
             }
             else

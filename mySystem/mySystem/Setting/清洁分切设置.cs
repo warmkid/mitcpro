@@ -208,6 +208,7 @@ namespace mySystem.Setting
             }
         }
 
+        #region 项目设置
         private void add开机_Click(object sender, EventArgs e)
         {
             DataRow dr = dt开机.NewRow();
@@ -242,6 +243,34 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv清场);
         }
 
+        private void Btn保存项目_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Parameter.isSqlOk)
+                { }
+                else
+                {
+                    da开机.Update((DataTable)bs开机.DataSource);
+                    dt开机.Clear();
+                    da开机.Fill(dt开机);
+                    setDataGridViewRowNums(this.dgv开机);
+
+                    da清场.Update((DataTable)bs清场.DataSource);
+                    dt清场.Clear();
+                    da清场.Fill(dt清场);
+                    setDataGridViewRowNums(this.dgv清场);
+
+                }
+                MessageBox.Show("保存成功！");
+            }
+            catch
+            { MessageBox.Show("保存失败！", "错误"); }
+        }
+
+        #endregion
+
+        #region 产品设置
         private void add产品_Click(object sender, EventArgs e)
         {
             DataRow dr = dt产品.NewRow();
@@ -291,32 +320,7 @@ namespace mySystem.Setting
             dt物料代码.Clear();
             da物料代码.Fill(dt物料代码);
             setDataGridViewRowNums(this.dgv物料代码);
-        }       
-
-        private void Btn保存项目_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (Parameter.isSqlOk)
-                { }
-                else
-                {
-                    da开机.Update((DataTable)bs开机.DataSource);
-                    dt开机.Clear();
-                    da开机.Fill(dt开机);
-                    setDataGridViewRowNums(this.dgv开机);
-
-                    da清场.Update((DataTable)bs清场.DataSource);
-                    dt清场.Clear();
-                    da清场.Fill(dt清场);
-                    setDataGridViewRowNums(this.dgv清场);
-
-                }
-                MessageBox.Show("保存成功！");
-            }
-            catch
-            { MessageBox.Show("保存失败！", "错误"); }
-        }
+        }              
 
         private void Btn保存产品_Click(object sender, EventArgs e)
         {
@@ -347,7 +351,9 @@ namespace mySystem.Setting
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+        #endregion
 
+        #region 人员设置
         private void add人员_Click(object sender, EventArgs e)
         {
             DataRow dr = dt人员.NewRow();
@@ -482,7 +488,7 @@ namespace mySystem.Setting
             comm.Dispose();
             return b;
         }
-
+        #endregion
 
     }
 }

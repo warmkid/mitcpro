@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MaterialRecord));
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
@@ -41,7 +40,6 @@
             this.tb产品批号 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tb生产指令编号 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -66,7 +64,6 @@
             this.btn提交数据审核 = new System.Windows.Forms.Button();
             this.btn删除记录 = new System.Windows.Forms.Button();
             this.btn添加记录 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -191,16 +188,6 @@
             this.label2.Size = new System.Drawing.Size(88, 16);
             this.label2.TabIndex = 161;
             this.label2.Text = "产品代码：";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(5, 4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(174, 53);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 170;
-            this.pictureBox1.TabStop = false;
             // 
             // tb生产指令编号
             // 
@@ -456,7 +443,6 @@
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.tb生产指令编号);
             this.Controls.Add(this.label14);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tb产品批号);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label2);
@@ -473,7 +459,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MaterialRecord";
             this.Text = "生产领料使用记录";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -494,7 +479,6 @@
         private System.Windows.Forms.TextBox tb产品批号;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox tb生产指令编号;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label27;
