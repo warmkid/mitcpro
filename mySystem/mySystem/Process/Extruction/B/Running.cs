@@ -539,7 +539,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -556,7 +556,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -573,7 +573,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -590,7 +590,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -607,7 +607,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -624,7 +624,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -641,7 +641,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -658,7 +658,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -675,7 +675,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -692,7 +692,7 @@ namespace mySystem.Process.Extruction.B
                 if (System.Math.Abs(content - setting) > diff)
                 {
                     MessageBox.Show("超出标准");
-                    ((TextBox)sender).Focus();
+                    //((TextBox)sender).Focus();
                 }
             }
             catch (FormatException)
@@ -709,12 +709,12 @@ namespace mySystem.Process.Extruction.B
             try
             {
                 Double.Parse(((TextBox)sender).Text);
-                ((TextBox)sender).Focus();
+                //((TextBox)sender).Focus();
             }
             catch
             {
                 MessageBox.Show("格式错误");
-                ((TextBox)sender).Focus();
+                //((TextBox)sender).Focus();
             }
         }
         
