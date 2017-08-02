@@ -48,6 +48,8 @@ namespace mySystem.Extruction.Process
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
         Parameter.FormState _formState;
+        Int32 InstruID;
+        String Instruction;  
 
         public ExtructionpRoductionAndRestRecordStep6(MainForm mainform): base(mainform)
         {
@@ -56,6 +58,8 @@ namespace mySystem.Extruction.Process
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            InstruID = Parameter.proInstruID;
+            Instruction = Parameter.proInstruction;
             cb白班.Checked = Parameter.userflight == "白班" ? true : false; //生产班次的初始化？？？？？
             cb夜班.Checked = !cb白班.Checked;
 
@@ -186,7 +190,7 @@ namespace mySystem.Extruction.Process
                 //从 “生产指令信息表” 中找 “生产指令编号” 下的信息
                 OleDbCommand comm1 = new OleDbCommand();
                 comm1.Connection = Parameter.connOle;
-                comm1.CommandText = "select * from 生产指令信息表 where 生产指令编号 = '" + mySystem.Parameter.proInstruction + "' ";//这里应有生产指令编码
+                comm1.CommandText = "select * from 生产指令信息表 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
                 OleDbDataReader reader1 = comm1.ExecuteReader();
                 if (reader1.Read())
                 {
@@ -305,6 +309,8 @@ namespace mySystem.Extruction.Process
             tb审核人.Enabled = false;
             //部分空间防作弊，不可改
             tb产品批号.ReadOnly = true;
+            tb生产设备.ReadOnly = true;
+            tb依据工艺.ReadOnly = true;
             cb白班.Enabled = false;
             cb夜班.Enabled = false;
             tb累计同规格膜卷长度R.ReadOnly = true;
@@ -428,6 +434,7 @@ namespace mySystem.Extruction.Process
             {
                 cb白班.Checked = Convert.ToBoolean(dt1.Rows[0]["班次"].ToString());
                 cb夜班.Checked = !cb白班.Checked;
+                InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
                 DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品名称"].ToString(), Convert.ToBoolean(dt1.Rows[0]["班次"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
             }
         }
@@ -477,7 +484,7 @@ namespace mySystem.Extruction.Process
         //添加外表默认信息
         private DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.proInstruID;
+            dr["生产指令ID"] = InstruID;
             dr["产品名称"] = cb产品名称.Text;
             dr["产品批号"] = dt代码批号.Rows[cb产品名称.FindString(cb产品名称.Text)]["产品批号"].ToString();
             dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
@@ -489,7 +496,7 @@ namespace mySystem.Extruction.Process
             dr["累计同规格膜卷长度R"] = 0;
             dr["累计同规格膜卷重量T"] = 0;            
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
-            log += "生产指令编码：" + mySystem.Parameter.proInstruction + "\n";
+            log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
             return dr;
         }
@@ -636,7 +643,7 @@ namespace mySystem.Extruction.Process
         private void btn查询新建_Click(object sender, EventArgs e)
         {
             if (cb产品名称.SelectedIndex >= 0)
-            { DataShow(mySystem.Parameter.proInstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value); }
+            { DataShow(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value); }
         }
 
         //添加行按钮
@@ -730,7 +737,7 @@ namespace mySystem.Extruction.Process
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(mySystem.Parameter.proInstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
+                readOuterData(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
                 outerBind();
 
                 return true;
@@ -824,11 +831,11 @@ namespace mySystem.Extruction.Process
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            //if (mySystem.Parameter.userName == dt记录.Rows[0]["审核人"].ToString())
-            //{
-            //    MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
-            //    return;
-            //}
+            if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
+            {
+                MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
+                return;
+            }
             checkform = new CheckForm(this);
             checkform.Show();
         }
@@ -980,15 +987,15 @@ namespace mySystem.Extruction.Process
                 }
             }
             //加页脚
-            int sheetnum; 
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from "+table+" where 生产指令ID="+mySystem.Parameter.proInstruID.ToString(), connOle);
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = Instruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }

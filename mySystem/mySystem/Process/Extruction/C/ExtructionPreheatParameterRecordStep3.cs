@@ -48,6 +48,8 @@ namespace mySystem.Extruction.Process
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
         Parameter.FormState _formState;
+        Int32 InstruID;
+        String Instruction;  
 
         public ExtructionPreheatParameterRecordStep3(MainForm mainform): base(mainform)
         {
@@ -55,6 +57,8 @@ namespace mySystem.Extruction.Process
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            InstruID = Parameter.proInstruID;
+            Instruction = Parameter.proInstruction;
 
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
@@ -62,7 +66,7 @@ namespace mySystem.Extruction.Process
             addOtherEvnetHandler();  // 其他事件，几个时间的格式
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            DataShow(mySystem.Parameter.proInstruID);
+            DataShow(InstruID);
         }
         
         public ExtructionPreheatParameterRecordStep3(MainForm mainform, Int32 ID) : base(mainform)
@@ -360,7 +364,11 @@ namespace mySystem.Extruction.Process
             OleDbDataReader reader1 = comm1.ExecuteReader();
 
             if (reader1.Read())
-            { DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString())); }            
+            {
+                InstruID = Convert.ToInt32(reader1["生产指令ID"].ToString());
+                Instruction = reader1["生产指令编号"].ToString();
+                DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()));
+            }            
         }
 
         //****************************** 嵌套 ******************************//
@@ -456,8 +464,8 @@ namespace mySystem.Extruction.Process
         //添加外表默认信息
         private DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令编号"] = mySystem.Parameter.proInstruction;
-            dr["生产指令id"] = mySystem.Parameter.proInstruID;
+            dr["生产指令编号"] = Instruction;
+            dr["生产指令id"] = InstruID;
             dr["日期"] = Convert.ToDateTime(dtp日期.Value.ToString("yyyy/MM/dd"));
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核人"] = "";
@@ -501,7 +509,7 @@ namespace mySystem.Extruction.Process
             dr["加热保温时间3"] = Convert.ToInt32(dt设置.Rows[0]["加热保温时间3"].ToString());
 
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
-            log += "生产指令编码：" + mySystem.Parameter.proInstruction + "\n";
+            log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
             
             return dr;
@@ -540,7 +548,7 @@ namespace mySystem.Extruction.Process
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(mySystem.Parameter.proInstruID);
+                readOuterData(InstruID);
                 outerBind();
 
                 return true;
@@ -594,7 +602,7 @@ namespace mySystem.Extruction.Process
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            if (mySystem.Parameter.userName == dt记录.Rows[0]["确认人"].ToString())
+            if (mySystem.Parameter.userName == dt记录.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;

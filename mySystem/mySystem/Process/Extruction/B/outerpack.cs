@@ -46,6 +46,8 @@ namespace mySystem.Extruction.Chart
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
         Parameter.FormState _formState;
+        Int32 InstruID;
+        String Instruction;  
 
         public outerpack(mySystem.MainForm mainform) : base(mainform)
         {
@@ -54,6 +56,8 @@ namespace mySystem.Extruction.Chart
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            InstruID = Parameter.proInstruID;
+            Instruction = Parameter.proInstruction;
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -173,7 +177,7 @@ namespace mySystem.Extruction.Chart
             {
                 OleDbCommand comm1 = new OleDbCommand();
                 comm1.Connection = Parameter.connOle;
-                comm1.CommandText = "select * from 生产指令信息表 where 生产指令编号 = '" + mySystem.Parameter.proInstruction + "' ";//这里应有生产指令编码
+                comm1.CommandText = "select * from 生产指令信息表 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
                 OleDbDataReader reader1 = comm1.ExecuteReader();
                 if (reader1.Read())
                 {
@@ -385,6 +389,7 @@ namespace mySystem.Extruction.Chart
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
             {
+                InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
                 DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["包装日期"].ToString()));
             }
         }
@@ -447,7 +452,7 @@ namespace mySystem.Extruction.Chart
         //添加外表默认信息
         private DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.proInstruID;
+            dr["生产指令ID"] = InstruID;
             dr["产品代码"] = cb产品代码.Text;
             dr["产品批号"] = dt代码批号.Rows[cb产品代码.FindString(cb产品代码.Text)]["产品批号"].ToString();
             dr["包装日期"] = Convert.ToDateTime(dtp包装日期.Value.ToString("yyyy/MM/dd"));
@@ -457,7 +462,7 @@ namespace mySystem.Extruction.Chart
             dr["审核日期"] = Convert.ToDateTime(dtp审核日期.Value.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
-            log += "生产指令编码：" + mySystem.Parameter.proInstruction + "\n";
+            log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;            
             return dr;
         }
@@ -572,7 +577,7 @@ namespace mySystem.Extruction.Chart
         private void btn查询新建_Click(object sender, EventArgs e)
         {
             if (cb产品代码.SelectedIndex >= 0)
-            { DataShow(mySystem.Parameter.proInstruID, cb产品代码.Text.ToString(), dtp包装日期.Value); }
+            { DataShow(InstruID, cb产品代码.Text.ToString(), dtp包装日期.Value); }
         }
     
         //添加按钮
@@ -635,7 +640,7 @@ namespace mySystem.Extruction.Chart
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, dtp包装日期.Value);
+                readOuterData(InstruID, cb产品代码.Text, dtp包装日期.Value);
                 outerBind();
 
                 return true;
@@ -689,7 +694,7 @@ namespace mySystem.Extruction.Chart
         //审核按钮
         private void CheckBtn_Click(object sender, EventArgs e)
         {
-            if (mySystem.Parameter.userName == dt记录.Rows[0]["确认人"].ToString())
+            if (mySystem.Parameter.userName == dt记录.Rows[0]["操作人"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
@@ -879,14 +884,14 @@ namespace mySystem.Extruction.Chart
             }
             //加页脚
             int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + mySystem.Parameter.proInstruID.ToString(), connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = Instruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }

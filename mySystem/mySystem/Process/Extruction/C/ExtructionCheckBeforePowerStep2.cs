@@ -49,7 +49,9 @@ namespace mySystem.Extruction.Process
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
         Parameter.FormState _formState;
-                
+        Int32 InstruID;
+        String Instruction;  
+
         public ExtructionCheckBeforePowerStep2(MainForm mainform): base(mainform)
         {
             InitializeComponent();
@@ -57,6 +59,8 @@ namespace mySystem.Extruction.Process
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            InstruID = Parameter.proInstruID;
+            Instruction = Parameter.proInstruction;
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -65,7 +69,7 @@ namespace mySystem.Extruction.Process
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete 
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            DataShow(mySystem.Parameter.proInstruID);
+            DataShow(InstruID);
         }
 
         public ExtructionCheckBeforePowerStep2(MainForm mainform, Int32 ID): base(mainform)
@@ -370,7 +374,10 @@ namespace mySystem.Extruction.Process
             comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
             OleDbDataReader reader1 = comm1.ExecuteReader();
             if (reader1.Read())
-            { DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString())); }            
+            {
+                InstruID = Convert.ToInt32(reader1["生产指令ID"].ToString()); 
+                DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()));
+            }            
         }
 
         //****************************** 嵌套 ******************************//
@@ -405,7 +412,7 @@ namespace mySystem.Extruction.Process
         //添加外表默认信息        
         private DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.proInstruID;
+            dr["生产指令ID"] = InstruID;
             dr["确认人"] = mySystem.Parameter.userName;
             dr["确认日期"] = Convert.ToDateTime(dtp操作日期.Value.ToString("yyyy/MM/dd"));
             dr["操作员备注"] = "";
@@ -413,7 +420,7 @@ namespace mySystem.Extruction.Process
             dr["审核日期"] = Convert.ToDateTime(dtp审核日期.Value.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
-            log += "生产指令编码：" + mySystem.Parameter.proInstruction + "\n";
+            log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
             return dr;
         }
@@ -569,7 +576,7 @@ namespace mySystem.Extruction.Process
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(mySystem.Parameter.proInstruID);
+                readOuterData(InstruID);
                 outerBind();
 
                 setDataGridViewBackColor();
@@ -643,7 +650,7 @@ namespace mySystem.Extruction.Process
                     MessageBox.Show("有条目待确认");
                     return;
                 }
-            } 
+            }
             if (mySystem.Parameter.userName == dt记录.Rows[0]["确认人"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
@@ -816,14 +823,14 @@ namespace mySystem.Extruction.Process
             }
             //加页脚
             int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + mySystem.Parameter.proInstruID.ToString(), connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = Instruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }
