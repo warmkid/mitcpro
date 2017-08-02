@@ -377,6 +377,7 @@ namespace mySystem.Process.Extruction.B
             }
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
+            cmb打印机选择.Enabled = true;
         }
         // “审核”和“提交审核”按钮特殊，在以上两个函数中要设为false。
         // 当登陆人是审核员时，在外面设置它为true

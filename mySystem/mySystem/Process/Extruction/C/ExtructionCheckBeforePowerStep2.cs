@@ -271,6 +271,8 @@ namespace mySystem.Extruction.Process
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             tb审核员.Enabled = false;
+            dtp操作日期.Enabled = false;
+            dtp审核日期.Enabled = false;
         }
         
         /// <summary>
