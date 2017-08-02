@@ -10,9 +10,9 @@ using System.Data.OleDb;
 
 namespace mySystem.Setting
 {
-    public partial class CS制袋设置 : Form
-    {
-        public CS制袋设置()
+    public partial class PE制袋设置 : BaseForm
+    {       
+        public PE制袋设置()
         {
             InitializeComponent();
             Initdgv();
@@ -59,7 +59,6 @@ namespace mySystem.Setting
         private DataTable dt权限;
         private BindingSource bs权限;
         private OleDbCommandBuilder cb权限;
-
 
         //dgv样式初始化
         private void Initdgv()
@@ -114,8 +113,8 @@ namespace mySystem.Setting
             this.dgv开机.Columns["ID"].Visible = false;
 
             //**************************   清场    ***********************************
-            dt清场 = new DataTable("设置清场记录"); //""中的是表名
-            da清场 = new OleDbDataAdapter("select * from 设置清场记录", mySystem.Parameter.connOle);
+            dt清场 = new DataTable("设置清场项目"); //""中的是表名
+            da清场 = new OleDbDataAdapter("select * from 设置清场项目", mySystem.Parameter.connOle);
             cb清场 = new OleDbCommandBuilder(da清场);
             dt清场.Columns.Add("序号", System.Type.GetType("System.String"));
             da清场.Fill(dt清场);
@@ -130,8 +129,8 @@ namespace mySystem.Setting
             this.dgv清场.Columns["ID"].Visible = false;
 
             //************************    产品     *******************************************
-            dt产品 = new DataTable("设置CS制袋产品"); //""中的是表名
-            da产品 = new OleDbDataAdapter("select * from 设置CS制袋产品", mySystem.Parameter.connOle);
+            dt产品 = new DataTable("设置LDPE产品"); //""中的是表名
+            da产品 = new OleDbDataAdapter("select * from 设置LDPE产品", mySystem.Parameter.connOle);
             cb产品 = new OleDbCommandBuilder(da产品);
             dt产品.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品.Fill(dt产品);
@@ -145,8 +144,8 @@ namespace mySystem.Setting
             this.dgv产品.Columns["ID"].Visible = false;
 
             //**************************   产品编码    ***********************************
-            dt产品编码 = new DataTable("设置CS制袋产品代码"); //""中的是表名
-            da产品编码 = new OleDbDataAdapter("select * from 设置CS制袋产品代码", mySystem.Parameter.connOle);
+            dt产品编码 = new DataTable("设置LDPE产品编码"); //""中的是表名
+            da产品编码 = new OleDbDataAdapter("select * from 设置LDPE产品编码", mySystem.Parameter.connOle);
             cb产品编码 = new OleDbCommandBuilder(da产品编码);
             dt产品编码.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品编码.Fill(dt产品编码);
@@ -154,14 +153,14 @@ namespace mySystem.Setting
             this.dgv产品编码.DataSource = bs产品编码.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv产品编码);
-            this.dgv产品编码.Columns["产品代码"].MinimumWidth = 200;
-            this.dgv产品编码.Columns["产品代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            this.dgv产品编码.Columns["产品代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv产品编码.Columns["产品编码"].MinimumWidth = 200;
+            this.dgv产品编码.Columns["产品编码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv产品编码.Columns["产品编码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品编码.Columns["ID"].Visible = false;
 
             //**************************   产品规格    ***********************************
-            dt产品规格 = new DataTable("设置CS制袋产品规格"); //""中的是表名
-            da产品规格 = new OleDbDataAdapter("select * from 设置CS制袋产品规格", mySystem.Parameter.connOle);
+            dt产品规格 = new DataTable("设置LDPE制袋产品规格"); //""中的是表名
+            da产品规格 = new OleDbDataAdapter("select * from 设置LDPE制袋产品规格", mySystem.Parameter.connOle);
             cb产品规格 = new OleDbCommandBuilder(da产品规格);
             dt产品规格.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品规格.Fill(dt产品规格);
@@ -175,8 +174,8 @@ namespace mySystem.Setting
             this.dgv产品规格.Columns["ID"].Visible = false;
 
             //**************************   封边    ***********************************
-            dt封边 = new DataTable("设置CS制袋封边"); //""中的是表名
-            da封边 = new OleDbDataAdapter("select * from 设置CS制袋封边", mySystem.Parameter.connOle);
+            dt封边 = new DataTable("设置LDPE制袋封边"); //""中的是表名
+            da封边 = new OleDbDataAdapter("select * from 设置LDPE制袋封边", mySystem.Parameter.connOle);
             cb封边 = new OleDbCommandBuilder(da封边);
             dt封边.Columns.Add("序号", System.Type.GetType("System.String"));
             da封边.Fill(dt封边);
@@ -189,9 +188,10 @@ namespace mySystem.Setting
             this.dgv封边.Columns["封边名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv封边.Columns["ID"].Visible = false;
 
+
             //**************************   工艺    ***********************************
-            dt工艺 = new DataTable("设置CS制袋工艺"); //""中的是表名
-            da工艺 = new OleDbDataAdapter("select * from 设置CS制袋工艺", mySystem.Parameter.connOle);
+            dt工艺 = new DataTable("设置LDPE制袋工艺"); //""中的是表名
+            da工艺 = new OleDbDataAdapter("select * from 设置LDPE制袋工艺", mySystem.Parameter.connOle);
             cb工艺 = new OleDbCommandBuilder(da工艺);
             dt工艺.Columns.Add("序号", System.Type.GetType("System.String"));
             da工艺.Fill(dt工艺);
@@ -274,6 +274,7 @@ namespace mySystem.Setting
                 dgv.Rows[i].Cells[0].Value = (i + 1).ToString();
             }
         }
+
 
         #region 项目设置
         private void add开机_Click(object sender, EventArgs e)
@@ -519,7 +520,7 @@ namespace mySystem.Setting
                         da人员.Fill(dt人员);
                         setDataGridViewRowNums(this.dgv人员);
 
-                        Boolean c = checkPeopleRight(); //判断用户是否在CS制袋用户表中
+                        Boolean c = checkPeopleRight(); //判断用户是否在PE用户表中
                         if (c)
                         {
                             da权限.Update((DataTable)bs权限.DataSource);
@@ -573,7 +574,7 @@ namespace mySystem.Setting
             return b;
         }
 
-        //检查人员是否在CS制袋人员中
+        //检查人员是否在PE制袋人员中
         private Boolean checkPeopleRight()
         {
             Boolean b;
@@ -612,13 +613,15 @@ namespace mySystem.Setting
             else
             {
                 b = false;
-                MessageBox.Show("员工" + "“" + name + "”" + "无操作CS制袋工序权限，保存失败！");
+                MessageBox.Show("员工" + "“" + name + "”" + "无操作PE制袋工序权限，保存失败！");
             }
 
             reader.Dispose();
             comm.Dispose();
             return b;
         }
+
+
         #endregion
 
     }

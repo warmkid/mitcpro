@@ -90,8 +90,17 @@ namespace mySystem.Process.Bag.LDPE
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_materialrecord material = new LDPEBag_materialrecord();
-            material.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "LDPE制袋生产领料记录");
+            if (b)
+            {
+                LDPEBag_materialrecord material = new LDPEBag_materialrecord();
+                material.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }             
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -102,40 +111,122 @@ namespace mySystem.Process.Bag.LDPE
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging();
-            inner.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品内包装记录");
+            if (b)
+            {
+                LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging();
+                inner.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }             
         }
 
         private void B4Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance();
-            cleanrance.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清场记录");
+            if (b)
+            {
+                LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance();
+                cleanrance.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }              
         }
 
         private void B1Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_productioninstruction pro_ins = new LDPEBag_productioninstruction();
-            pro_ins.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "LDPE制袋生产指令");
+            if (b)
+            {
+                LDPEBag_productioninstruction pro_ins = new LDPEBag_productioninstruction();
+                pro_ins.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }              
         }
 
         private void B2Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_checklist check = new LDPEBag_checklist(mainform);
-            check.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋机开机前确认表");
+            if (b)
+            {
+                LDPEBag_checklist check = new LDPEBag_checklist(mainform);
+                check.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }             
         }
 
         private void B3Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_runningrecord run = new LDPEBag_runningrecord();
-            run.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋机运行记录");
+            if (b)
+            {
+                LDPEBag_runningrecord run = new LDPEBag_runningrecord();
+                run.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }             
         }
 
         private void A3Btn_Click(object sender, EventArgs e)
-        {
+        {            
             LDPEBag_dailyreport daily = new LDPEBag_dailyreport();
             daily.ShowDialog();
         }
 
+
+        //判断是否能查看
+        private Boolean checkUser(String user, int role, String tblName)
+        {
+            Boolean b = false;
+            String[] name操作员 = null;
+            String[] name审核员 = null;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
+            OleDbDataReader reader = comm.ExecuteReader();
+            while (reader.Read())
+            {
+                name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
+                name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
+            }
+
+            if (role == 3)
+            {
+                return b = true;
+            }
+            else
+            {
+                foreach (String name in name操作员)
+                {
+                    if (user == name)
+                    { return b = true; }
+                }
+                foreach (String name in name审核员)
+                {
+                    if (user == name)
+                    { return b = true; }
+                }
+
+            }
+            return b = false;
+        }
         
     }
 }
