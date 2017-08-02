@@ -1054,8 +1054,14 @@
     <EmbeddedResource Include="Process\Bag\CS\CSBag_CheckBeforePower.resx">
       <DependentUpon>CSBag_CheckBeforePower.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\CS\CSBag_InnerPackaging.resx">
+      <DependentUpon>CSBag_InnerPackaging.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\CS制袋生产指令.resx">
       <DependentUpon>CS制袋生产指令.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\CS\MaterialRecord.resx">
+      <DependentUpon>MaterialRecord.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Record_batch_bag.resx">
       <DependentUpon>Record_batch_bag.cs</DependentUpon>

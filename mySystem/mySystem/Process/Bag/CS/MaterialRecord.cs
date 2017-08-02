@@ -15,8 +15,8 @@ namespace mySystem.Process.Bag
 {
     public partial class MaterialRecord : BaseForm
     {
-        private String table = "产品内包装记录";
-        private String tableInfo = "产品内包装详细记录";
+        private String table = "CS制袋领料记录";
+        private String tableInfo = "CS制袋领料记录详细记录";
 
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
@@ -155,48 +155,46 @@ namespace mySystem.Process.Bag
                 OleDbCommand comm1 = new OleDbCommand();
                 comm1.Connection = Parameter.connOle;
                 comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + mySystem.Parameter.csbagInstruction + "' ";//这里应有生产指令编码
-                OleDbDataReader reader1 = comm1.ExecuteReader();
-                if (reader1.Read())
+                DataTable dt生产指令 = new DataTable("生产指令");
+                OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
+                datemp1.Fill(dt生产指令);
+                if (dt生产指令.Rows.Count == 0)
                 {
-                    OleDbCommand comm2 = new OleDbCommand();
-                    comm2.Connection = Parameter.connOle;
-                    comm2.CommandText = "select * from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
-                    DataTable dt生产指令 = new DataTable("生产指令");
-                    OleDbDataAdapter datemp = new OleDbDataAdapter(comm2);
-                    datemp.Fill(dt生产指令);
-                    if (dt生产指令.Rows.Count == 0)
-                    {
-                        MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！");
-                    }
-                    else
-                    {
-                        //外表代码批号                
-                        dt代码批号.Columns.Add("产品代码", typeof(String));   //新建第一列
-                        dt代码批号.Columns.Add("产品批号", typeof(String));      //新建第二列
-                        dt代码批号.Rows.Add(dt生产指令.Rows[0]["产品代码"].ToString(), dt生产指令.Rows[0]["产品批号"].ToString());
-                        tb产品代码.Text = dt代码批号.Rows[0]["产品代码"].ToString();
-                        tb产品批号.Text = dt代码批号.Rows[0]["产品批号"].ToString();
-                        //内表物料
-                        dt物料.Columns.Add("物料简称", typeof(String));   //新建第1列
-                        dt物料.Columns.Add("物料代码", typeof(String));   //新建第2列
-                        dt物料.Columns.Add("物料批号", typeof(String));   //新建第3列
-                        dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称1"].ToString(), dt生产指令.Rows[0]["制袋物料代码1"].ToString(), dt生产指令.Rows[0]["制袋物料批号1"].ToString());
-                        dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称2"].ToString(), dt生产指令.Rows[0]["制袋物料代码2"].ToString(), dt生产指令.Rows[0]["制袋物料批号2"].ToString());
-                        dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称3"].ToString(), dt生产指令.Rows[0]["制袋物料代码3"].ToString(), dt生产指令.Rows[0]["制袋物料批号3"].ToString());
-                        dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称1"].ToString(), dt生产指令.Rows[0]["内包物料代码1"].ToString(), dt生产指令.Rows[0]["内包物料批号1"].ToString());
-                        dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称2"].ToString(), dt生产指令.Rows[0]["内包物料代码2"].ToString(), dt生产指令.Rows[0]["内包物料批号2"].ToString());
-                        dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称1"].ToString(), dt生产指令.Rows[0]["外包物料代码1"].ToString(), dt生产指令.Rows[0]["外包物料批号1"].ToString());
-                        dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
-                        dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
-                    }
-                    datemp.Dispose();
+                    MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！");
                 }
                 else
                 {
-                    //dt代码批号为空
-                    MessageBox.Show("该生产指令编码下的『生产指令』尚未生成！");
+                    //外表物料
+                    dt物料.Columns.Add("物料简称", typeof(String));   //新建第1列
+                    dt物料.Columns.Add("物料代码", typeof(String));   //新建第2列
+                    dt物料.Columns.Add("物料批号", typeof(String));   //新建第3列
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称1"].ToString(), dt生产指令.Rows[0]["制袋物料代码1"].ToString(), dt生产指令.Rows[0]["制袋物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称2"].ToString(), dt生产指令.Rows[0]["制袋物料代码2"].ToString(), dt生产指令.Rows[0]["制袋物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称3"].ToString(), dt生产指令.Rows[0]["制袋物料代码3"].ToString(), dt生产指令.Rows[0]["制袋物料批号3"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称1"].ToString(), dt生产指令.Rows[0]["内包物料代码1"].ToString(), dt生产指令.Rows[0]["内包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称2"].ToString(), dt生产指令.Rows[0]["内包物料代码2"].ToString(), dt生产指令.Rows[0]["内包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称1"].ToString(), dt生产指令.Rows[0]["外包物料代码1"].ToString(), dt生产指令.Rows[0]["外包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());                
+                    //内表代码批号
+                    OleDbCommand comm2 = new OleDbCommand();
+                    comm2.Connection = Parameter.connOle;
+                    comm2.CommandText = "select * from 生产指令详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
+                    DataTable dttemp = new DataTable("dttemp");
+                    OleDbDataAdapter datemp2 = new OleDbDataAdapter(comm2);
+                    datemp2.Fill(dttemp);
+                    if (dttemp.Rows.Count == 0)
+                    { MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！"); }
+                    else
+                    {
+                        dt代码批号.Columns.Add("产品代码", typeof(String));   //新建第一列
+                        dt代码批号.Columns.Add("产品批号", typeof(String));      //新建第二列
+                        dt代码批号.Rows.Add(dttemp.Rows[0]["产品代码"].ToString(), dttemp.Rows[0]["产品批号"].ToString());
+                        tb产品代码.Text = dttemp.Rows[0]["产品代码"].ToString();
+                        tb产品批号.Text = dttemp.Rows[0]["产品批号"].ToString();
+                    }
                 }
-                reader1.Dispose();
+                datemp1.Dispose();
             }
             else
             { }
@@ -444,7 +442,7 @@ namespace mySystem.Process.Bag
             tb产品代码.DataBindings.Clear();
             tb产品代码.DataBindings.Add("Text", bs记录.DataSource, "产品代码");
             tb产品批号.DataBindings.Clear();
-            tb产品代码.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
+            tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
             tb生产指令编号.DataBindings.Clear();
             tb生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
             tb成品率.DataBindings.Clear();
@@ -546,32 +544,6 @@ namespace mySystem.Process.Bag
                         cbc.ValueType = dc.DataType;
                         for (int i = 0; i < dt物料.Rows.Count; i++)
                         { cbc.Items.Add(dt物料.Rows[i]["物料简称"].ToString()); }
-                        dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
-                        break;
-                    case "物料代码":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        for (int i = 0; i < dt物料.Rows.Count; i++)
-                        { cbc.Items.Add(dt物料.Rows[i]["物料代码"].ToString()); }
-                        dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
-                        break;
-                    case "物料批号":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        for (int i = 0; i < dt物料.Rows.Count; i++)
-                        { cbc.Items.Add(dt物料.Rows[i]["物料批号"].ToString()); }
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;

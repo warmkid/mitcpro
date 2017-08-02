@@ -120,7 +120,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void B2Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_checklist check = new LDPEBag_checklist();
+            LDPEBag_checklist check = new LDPEBag_checklist(mainform);
             check.ShowDialog();
         }
 
