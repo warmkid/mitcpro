@@ -1150,6 +1150,9 @@
     <EmbeddedResource Include="Process\CleanCut\CleanCut_Cover.resx">
       <DependentUpon>CleanCut_Cover.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\CleanCut_Productrecord.resx">
+      <DependentUpon>CleanCut_Productrecord.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCut_RunRecord.resx">
       <DependentUpon>CleanCut_RunRecord.cs</DependentUpon>
     </EmbeddedResource>

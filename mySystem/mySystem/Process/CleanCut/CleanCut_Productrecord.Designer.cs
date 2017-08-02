@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CleanCut_Productrecord));
             this.cb夜班 = new System.Windows.Forms.CheckBox();
             this.cb白班 = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -74,9 +73,7 @@
             this.label40 = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // cb夜班
@@ -518,16 +515,6 @@
             this.label角色.TabIndex = 176;
             this.label角色.Text = "角色";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(7, 2);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(174, 53);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 175;
-            this.pictureBox1.TabStop = false;
-            // 
             // CleanCut_Productrecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -537,7 +524,6 @@
             this.Controls.Add(this.label40);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label角色);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.btn分切);
@@ -582,7 +568,6 @@
             this.Name = "CleanCut_Productrecord";
             this.Text = "清洁分切生产记录\t";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -635,6 +620,5 @@
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label角色;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

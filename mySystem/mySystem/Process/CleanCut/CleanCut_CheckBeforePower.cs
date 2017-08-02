@@ -47,6 +47,8 @@ namespace mySystem.Process.CleanCut
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
         Parameter.FormState _formState;
+        Int32 InstruID;
+        String Instruction;        
         
         public CleanCut_CheckBeforePower(MainForm mainform) : base(mainform)
         {
@@ -55,6 +57,8 @@ namespace mySystem.Process.CleanCut
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            InstruID = Parameter.cleancutInstruID;
+            Instruction = Parameter.cleancutInstruction;
             cb白班.Checked = Parameter.userflight == "白班" ? true : false; //生产班次的初始化？？？？？
             cb夜班.Checked = !cb白班.Checked;
 
@@ -88,7 +92,7 @@ namespace mySystem.Process.CleanCut
             //getOtherData();  //读取设置内容
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
-
+            
             IDShow(ID);
         }
 
@@ -350,6 +354,8 @@ namespace mySystem.Process.CleanCut
             {
                 cb白班.Checked = Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString());
                 cb夜班.Checked = !cb白班.Checked;
+                InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
+                Instruction = dt1.Rows[0]["生产指令编号"].ToString(); 
                 DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()), Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString()));                
             }
         }
@@ -400,8 +406,8 @@ namespace mySystem.Process.CleanCut
         //添加外表默认信息        
         private DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
-            dr["生产指令编号"] = mySystem.Parameter.cleancutInstruction;
+            dr["生产指令ID"] = InstruID;
+            dr["生产指令编号"] = Instruction;
             dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
             dr["生产班次"] = cb白班.Checked;
             dr["确认人"] = mySystem.Parameter.userName;
@@ -410,7 +416,7 @@ namespace mySystem.Process.CleanCut
             dr["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
-            log += "生产指令编码：" + mySystem.Parameter.cleancutInstruction + "\n";
+            log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
             return dr;
         }
@@ -534,7 +540,7 @@ namespace mySystem.Process.CleanCut
         //用于显示/新建数据
         private void btn查询新建_Click(object sender, EventArgs e)
         {
-            DataShow(mySystem.Parameter.cleancutInstruID, dtp生产日期.Value, cb白班.Checked);
+            DataShow(InstruID, dtp生产日期.Value, cb白班.Checked);
         }
 
         //保存按钮
@@ -570,7 +576,7 @@ namespace mySystem.Process.CleanCut
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(mySystem.Parameter.cleancutInstruID, dtp生产日期.Value, cb白班.Checked);
+                readOuterData(InstruID, dtp生产日期.Value, cb白班.Checked);
                 outerBind();
 
                 setDataGridViewBackColor();
@@ -641,7 +647,7 @@ namespace mySystem.Process.CleanCut
                     MessageBox.Show("有条目待确认");
                     return;
                 }
-            } 
+            }
             if (mySystem.Parameter.userName == dt记录.Rows[0]["确认人"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");

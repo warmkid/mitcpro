@@ -44,6 +44,8 @@ namespace mySystem.Process.Bag
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
         Parameter.FormState _formState;
+        Int32 InstruID;
+        String Instruction;     
 
         public CSBag_InnerPackaging(MainForm mainform) : base(mainform)
         {
@@ -52,6 +54,8 @@ namespace mySystem.Process.Bag
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            InstruID = Parameter.csbagInstruID;
+            Instruction = Parameter.csbagInstruction;
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -140,7 +144,7 @@ namespace mySystem.Process.Bag
             if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
             if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
-
+        
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
         private void setFormState(bool newForm = false)
         {
@@ -149,7 +153,7 @@ namespace mySystem.Process.Bag
                 _formState = Parameter.FormState.无数据;
                 return;
             }
-            string s = dt记录.Rows[0]["审核人"].ToString();
+            string s = dt记录.Rows[0]["审核员"].ToString();
             bool b = Convert.ToBoolean(dt记录.Rows[0]["审核是否通过"]);
             if (s == "") _formState = Parameter.FormState.未保存;
             else if (s == "__待审核") _formState = Parameter.FormState.待审核;
@@ -169,7 +173,7 @@ namespace mySystem.Process.Bag
             {
                 OleDbCommand comm1 = new OleDbCommand();
                 comm1.Connection = Parameter.connOle;
-                comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + mySystem.Parameter.csbagInstruction + "' ";//这里应有生产指令编码
+                comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
                 OleDbDataReader reader1 = comm1.ExecuteReader();
                 if (reader1.Read())
                 {
@@ -227,22 +231,31 @@ namespace mySystem.Process.Bag
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                     btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
                 else //1待审核
                 {
                     //发送审核不可点，其他都可点
                     setControlTrue();
                     btn审核.Enabled = true;
-                    btn数据审核.Enabled = true;                    
-                }
-                //遍历datagridview，如果有一行为待审核，则该行可以修改
-                dataGridView1.ReadOnly = false;
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
-                        dataGridView1.Rows[i].ReadOnly = false;
-                    else
-                        dataGridView1.Rows[i].ReadOnly = true;
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
             }
             else//操作员
@@ -256,22 +269,31 @@ namespace mySystem.Process.Bag
                 {
                     //发送审核，审核不能点
                     setControlTrue();
-                    btn提交数据审核.Enabled = true;                    
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
                 }
                 else //3审核未通过
-                { 
+                {
                     //发送审核，审核不能点
                     setControlTrue();
                     btn提交数据审核.Enabled = true;
-                }
-                //遍历datagridview，如果有一行为未审核，则该行可以修改
-                dataGridView1.ReadOnly = false;
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                {
-                    if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
-                        dataGridView1.Rows[i].ReadOnly = true;
-                    else
-                        dataGridView1.Rows[i].ReadOnly = false;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
                 }
             }
             //datagridview格式，包含序号不可编辑
@@ -280,7 +302,7 @@ namespace mySystem.Process.Bag
 
         /// <summary>
         /// 设置所有控件可用；
-        /// btn审核、btn提交审核两个按钮一直是false；内表审核、提交审核false
+        /// /// btn审核、btn提交审核两个按钮一直是false；内表审核、提交审核false
         /// 部分控件防作弊，不可改；
         /// 查询条件始终不可编辑
         /// </summary>
@@ -432,6 +454,8 @@ namespace mySystem.Process.Bag
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
             {
+                InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
+                Instruction = dt1.Rows[0]["生产指令编号"].ToString(); 
                 DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString());
             }
         }
@@ -481,8 +505,8 @@ namespace mySystem.Process.Bag
         //添加外表默认信息
         private DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.csbagInstruID;
-            dr["生产指令编号"] = mySystem.Parameter.csbagInstruction;
+            dr["生产指令ID"] = InstruID;
+            dr["生产指令编号"] = Instruction;
             dr["产品代码"] = cb产品代码.Text;
             dr["生产批号"] = dt代码批号.Rows[cb产品代码.FindString(cb产品代码.Text)]["产品批号"].ToString();
             dr["标签语言中文"] = true;
@@ -494,7 +518,7 @@ namespace mySystem.Process.Bag
             dr["审核员"] = "";
             dr["审核是否通过"] = false;
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
-            log += "生产指令编码：" + mySystem.Parameter.csbagInstruction + "\n";
+            log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
             return dr;
         }
@@ -645,7 +669,7 @@ namespace mySystem.Process.Bag
         private void btn查询新建_Click(object sender, EventArgs e)
         {
             if (cb产品代码.SelectedIndex >= 0)
-            { DataShow(mySystem.Parameter.csbagInstruID, cb产品代码.Text.ToString()); }
+            { DataShow(InstruID, cb产品代码.Text.ToString()); }
         }
 
         //添加按钮
@@ -747,7 +771,7 @@ namespace mySystem.Process.Bag
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(mySystem.Parameter.csbagInstruID, cb产品代码.Text);
+                readOuterData(InstruID, cb产品代码.Text);
                 outerBind();
 
                 setEnableReadOnly();
@@ -803,7 +827,7 @@ namespace mySystem.Process.Bag
         //审核功能
         private void btn审核_Click(object sender, EventArgs e)
         {
-            if (mySystem.Parameter.userName == dt记录.Rows[0]["确认人"].ToString())
+            if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
@@ -928,7 +952,8 @@ namespace mySystem.Process.Bag
         //tb理论产量->成品率计算
         private void tb理论产量C_TextChanged(object sender, EventArgs e)
         {
-            getPercent();
+            if (dt记录详情 != null && dt记录详情.Rows.Count > 0)
+            { getPercent(); }
         }
 
         // 检查控件内容是否合法

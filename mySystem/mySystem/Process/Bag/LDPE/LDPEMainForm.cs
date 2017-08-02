@@ -102,7 +102,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging();
+            LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging(mainform);
             inner.ShowDialog();
         }
 
