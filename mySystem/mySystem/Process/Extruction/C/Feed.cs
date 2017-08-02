@@ -618,7 +618,11 @@ namespace mySystem.Process.Extruction.C
             {
                 btn提交审核.Enabled = true;
             }
-            (this.Owner as ExtructionMainForm).InitBtn();
+            try { (this.Owner as ExtructionMainForm).InitBtn(); }
+            catch (NullReferenceException exp)
+            {
+
+            }
         }
 
         private void btn添加_Click(object sender, EventArgs e)

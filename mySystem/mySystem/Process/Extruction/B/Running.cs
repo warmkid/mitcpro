@@ -352,7 +352,9 @@ namespace mySystem.Process.Extruction.B
             removeOuterBinding();
             outerBind();
             btn提交审核.Enabled = true;
-            (this.Owner as ExtructionMainForm).InitBtn();
+            try { (this.Owner as ExtructionMainForm).InitBtn(); }
+            catch (NullReferenceException exp) { }
+            
         }
 
         private void btn插入_Click(object sender, EventArgs e)
@@ -1147,7 +1149,7 @@ namespace mySystem.Process.Extruction.B
                     else if (Parameter.FormState.无数据 == _formState)
                     {
                         setControlFalse();
-                        cmb产品代码.Enabled = true;
+                        //cmb产品代码.Enabled = true;
                     }
                     break;
                 case Parameter.UserState.管理员: //2--管理员

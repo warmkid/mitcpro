@@ -61,6 +61,12 @@ namespace mySystem.Process.Extruction
                 c打印机.Items.Add(sPrint);
             }
             c打印机.SelectedText = print.PrinterSettings.PrinterName;
+            c打印机.SelectedIndexChanged += c打印机_SelectedIndexChanged;
+        }
+
+        void c打印机_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            SetDefaultPrinter(c打印机.SelectedItem.ToString());
         }
 
         void cmb膜代码_SelectedIndexChanged(object sender, EventArgs e)
@@ -99,7 +105,7 @@ namespace mySystem.Process.Extruction
 
             my.Cells[1, 2].Value = cmb膜代码.SelectedItem;
             my.Select();
-
+            my.Cells[2, 2].Value = tc批号.Text;
             my.Cells[3, 2].Value = tc数量米.Text + "米；" + tc数量KG.Text + "KG";
             my.Cells[4, 2].Value = dc日期.Value.ToShortDateString() + "     " +
                 (cc班次.SelectedItem.ToString() == "白班" ? "白班" : "夜班");

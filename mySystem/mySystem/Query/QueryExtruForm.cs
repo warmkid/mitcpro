@@ -381,63 +381,78 @@ namespace mySystem.Query
                     break;
                 case "吹膜机组清洁记录":
                     Record_extrusClean detailform2 = new Record_extrusClean(base.mainform, ID);
-                    detailform2.Show();
+                    detailform2.Owner = this;
+                    detailform2.ShowDialog();
                     break;
                 case "吹膜岗位交接班记录":
                     mySystem.Process.Extruction.A.HandOver detailform3 = new Process.Extruction.A.HandOver(base.mainform, ID);
-                    detailform3.Show();
+                    detailform3.Owner = this;
+                    detailform3.ShowDialog();
                     break;
                 case "吹膜工序清场记录":
                     Record_extrusSiteClean detailform4 = new Record_extrusSiteClean(base.mainform, ID);
-                    detailform4.Show();
+                    detailform4.Owner = this;
+                    detailform4.ShowDialog();
                     break;
                 case "吹膜供料记录":
                     Record_extrusSupply detailform5 = new Record_extrusSupply(base.mainform, ID);
-                    detailform5.Show();
+                    detailform5.Owner = this;
+                    detailform5.ShowDialog();
                     break;
                 case "吹膜工序废品记录":
                     mySystem.Process.Extruction.B.Waste detailform6 = new Process.Extruction.B.Waste(base.mainform, ID);
-                    detailform6.Show();
+                    detailform6.Owner = this;
+                    detailform6.ShowDialog();
                     break;
                 case "吹膜工序领料退料记录":
                     Record_material_reqanddisg detailform7 = new Record_material_reqanddisg(base.mainform, ID);
+                    detailform7.Owner = this;
                     detailform7.Show();
                     break;
                 case "吹膜生产日报表":
                     ProdctDaily_extrus detailform8 = new ProdctDaily_extrus(base.mainform, ID);
-                    detailform8.Show();
+                    detailform8.Owner = this;
+                    detailform8.ShowDialog();
                     break;
                 case "吹膜工序生产和检验记录":                   
                     ExtructionpRoductionAndRestRecordStep6 detailform9 = new ExtructionpRoductionAndRestRecordStep6(base.mainform, ID);
-                    detailform9.Show();
+                    detailform9.Owner = this;
+                    detailform9.ShowDialog();
                     break;
                 case "吹膜工序物料平衡记录":
                     MaterialBalenceofExtrusionProcess detailform10 = new MaterialBalenceofExtrusionProcess(base.mainform, ID);
-                    detailform10.Show();
+                    detailform10.Owner = this;
+                    detailform10.ShowDialog();
                     break;
                 case "产品内包装记录":
                     ProductInnerPackagingRecord detailform11 = new ProductInnerPackagingRecord(base.mainform, ID);
-                    detailform11.Show();
+                    detailform11.Owner = this;
+                    detailform11.ShowDialog();
                     break;
                 case "产品外包装记录":
                     Extruction.Chart.outerpack detailform12 = new Extruction.Chart.outerpack(base.mainform, ID);
-                    detailform12.Show();
+                    detailform12.Owner = this;
+                    detailform12.ShowDialog();
                     break;
                 case "吹膜机组开机前确认表":
                     ExtructionCheckBeforePowerStep2 detailform13 = new ExtructionCheckBeforePowerStep2(base.mainform, ID);
-                    detailform13.Show();
+                    detailform13.Owner = this;
+                    detailform13.ShowDialog();
                     break;
                 case "吹膜机组预热参数记录表":
                     ExtructionPreheatParameterRecordStep3 detailform14 = new ExtructionPreheatParameterRecordStep3(base.mainform, ID);
-                    detailform14.Show();
+                    detailform14.Owner = this;
+                    detailform14.ShowDialog();
                     break;
                 case "吹膜供料系统运行记录":
                     mySystem.Process.Extruction.C.Feed detailform15 = new Process.Extruction.C.Feed(base.mainform, ID);
-                    detailform15.Show();
+                    detailform15.Owner = this;
+                    detailform15.ShowDialog();
                     break;
                 case "吹膜机组运行记录":
                     mySystem.Process.Extruction.B.Running detailform16 = new Process.Extruction.B.Running(base.mainform, ID);
-                    detailform16.Show();
+                    detailform16.Owner = this;
+                    detailform16.ShowDialog();
                     break;
                 case "培训记录表":
                     //Record_train detailform17 = new Record_train(base.mainform, ID);
@@ -445,11 +460,13 @@ namespace mySystem.Query
                     break;
                 case "吹膜机更换模头记录及安装检查表":
                     ReplaceHeadForm detailform18 = new ReplaceHeadForm(base.mainform, ID);
-                    detailform18.Show();
+                    detailform18.Owner = this;
+                    detailform18.ShowDialog();
                     break;
                 case "吹膜机更换模芯记录及安装检查表":
                     ExtructionReplaceCore detailform19 = new ExtructionReplaceCore(base.mainform, ID);
-                    detailform19.Show();
+                    detailform19.Owner = this;
+                    detailform19.ShowDialog();
                     break;
                 case "吹膜机更换过滤网记录":
                     //Process.Extruction.D.NetExchange detailform20 = new Process.Extruction.D.NetExchange(base.mainform, ID);

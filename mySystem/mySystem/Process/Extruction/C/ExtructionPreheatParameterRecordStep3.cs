@@ -387,7 +387,7 @@ namespace mySystem.Extruction.Process
             tb模芯规格参数2.DataBindings.Clear();
             tb模芯规格参数2.DataBindings.Add("Text", bs记录.DataSource, "模芯规格参数2");
             tb记录人.DataBindings.Clear();
-            tb记录人.DataBindings.Add("Text", bs记录.DataSource, "记录人");
+            tb记录人.DataBindings.Add("Text", bs记录.DataSource, "操作员");
             tb操作员备注.DataBindings.Clear();
             tb操作员备注.DataBindings.Add("Text", bs记录.DataSource, "操作员备注");
             tb审核人.DataBindings.Clear();
@@ -459,7 +459,7 @@ namespace mySystem.Extruction.Process
             dr["生产指令编号"] = mySystem.Parameter.proInstruction;
             dr["生产指令id"] = mySystem.Parameter.proInstruID;
             dr["日期"] = Convert.ToDateTime(dtp日期.Value.ToString("yyyy/MM/dd"));
-            dr["记录人"] = mySystem.Parameter.userName;
+            dr["操作员"] = mySystem.Parameter.userName;
             dr["审核人"] = "";
             dr["审核是否通过"] = false;
 
@@ -516,7 +516,9 @@ namespace mySystem.Extruction.Process
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
                 btn提交审核.Enabled = true;
-            (this.Owner as ExtructionMainForm).InitBtn();
+            try { (this.Owner as ExtructionMainForm).InitBtn(); }
+            catch (NullReferenceException exp) { }
+            
         }
 
         //保存功能
