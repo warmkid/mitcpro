@@ -110,6 +110,8 @@ namespace mySystem
         //订单查询
         private void OrderBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 4;
+            Parameter.InitCon();
             BtnColor();
             Btn订单.BackColor = Color.FromArgb(138, 158, 196);
             QueryPanelRight.Controls.Clear();
@@ -118,6 +120,8 @@ namespace mySystem
         //库存查询
         private void StockBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 4;
+            Parameter.InitCon();
             BtnColor();
             Btn库存.BackColor = Color.FromArgb(138, 158, 196);
             QueryPanelRight.Controls.Clear();
@@ -125,16 +129,34 @@ namespace mySystem
 
         private void BtnPE制袋_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 7;
+            Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
             BtnColor();
             BtnPE制袋.BackColor = Color.FromArgb(138, 158, 196);
+
+            PE制袋查询 myDlg = new PE制袋查询();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = QueryPanelRight.Size;
+            QueryPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         private void BtnCS制袋_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 3;
+            Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
             BtnColor();
             BtnCS制袋.BackColor = Color.FromArgb(138, 158, 196);
+
+            CS制袋查询 myDlg = new CS制袋查询();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = QueryPanelRight.Size;
+            QueryPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         private void Btn连续袋_Click(object sender, EventArgs e)
@@ -153,6 +175,8 @@ namespace mySystem
 
         private void BtnBPV制袋_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 6;
+            Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
             BtnColor();
             BtnBPV制袋.BackColor = Color.FromArgb(138, 158, 196);

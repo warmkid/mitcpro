@@ -99,18 +99,18 @@ namespace mySystem.Query
                 {
                     case "Gamma 射线辐射灭菌委托单":
                         if (comboBox1.SelectedIndex == -1)
-                            EachBind(this.dgv, "Gamma射线辐射灭菌委托单", "委托人", "委托日期");
+                            EachBind(this.dgv, "Gamma射线辐射灭菌委托单", "委托人", "委托日期", null);
                         else
                             EachBind(this.dgv, "Gamma射线辐射灭菌委托单", "委托人", "委托日期", "ID"); 
                         break;
                     case "Gamma 射线辐照灭菌产品验收记录":
-                        if(comboBox1.SelectedIndex == -1)
-                            EachBind(this.dgv, "辐照灭菌产品验收记录", "验收人", "验收日期"); 
+                        if (comboBox1.SelectedIndex == -1)
+                            EachBind(this.dgv, "辐照灭菌产品验收记录", "验收人", "验收日期", null);
                         else
                             EachBind(this.dgv, "辐照灭菌产品验收记录", "验收人", "验收日期", "灭菌委托单ID"); 
                         break;
                     case "辐照灭菌台帐":
-                        EachBind(this.dgv, "辐照灭菌台帐", "审核员"); 
+                        EachBind(this.dgv, "辐照灭菌台帐", "审核员", null, null); 
                         break;
 
                     default:
@@ -127,11 +127,26 @@ namespace mySystem.Query
         }
 
         // 各表查询
-        // 人、日期、生产指令
         private void EachBind(DataGridView dgv, String tblName, String person, String startDate, String instruID)
         {
             dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            if (person != null && startDate != null && instruID == null) // 人 + 日期
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            else if (person == null && startDate != null && instruID != null) // 日期 + 生产指令
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            else if (person != null && startDate == null && instruID != null) // 人 + 生产指令
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            else if (person != null && startDate == null && instruID == null) // 人 
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.connOle);
+            else if (person == null && startDate != null && instruID == null) // 日期
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            else if (person == null && startDate == null && instruID != null) // 生产指令
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            else if (person == null && startDate == null && instruID == null) // 只有表名
+                da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
+            else if (person != null && startDate != null && instruID != null) // 人 + 日期 + 生产指令
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+
             cb = new OleDbCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
@@ -140,39 +155,7 @@ namespace mySystem.Query
             dgv.DataSource = bs.DataSource; //绑定
             //显示序号
             setDataGridViewRowNums();
-        }
-
-        // 人、日期
-        private void EachBind(DataGridView dgv, String tblName, String person, String startDate)
-        {
-            dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
-            dt.Columns.Add("序号", System.Type.GetType("System.String"));
-            da.Fill(dt);
-            bs.DataSource = dt;
-            dgv.DataBindings.Clear();
-            dgv.DataSource = bs.DataSource; //绑定
-            //显示序号
-            setDataGridViewRowNums();
-
-        }
-
-        // 人
-        private void EachBind(DataGridView dgv, String tblName, String person)
-        {
-            dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" , mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
-            dt.Columns.Add("序号", System.Type.GetType("System.String"));
-            da.Fill(dt);
-            bs.DataSource = dt;
-            dgv.DataBindings.Clear();
-            dgv.DataSource = bs.DataSource; //绑定
-            //显示序号
-            setDataGridViewRowNums();
-
-        }
+        }     
 
         //填序号列的值
         private void setDataGridViewRowNums()

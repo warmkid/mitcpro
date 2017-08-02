@@ -210,6 +210,7 @@ namespace mySystem
                 MainSettingBtn.BackColor = Color.FromName("Control");
                 MainQueryBtn.BackColor = Color.FromName("Control");
                 this.Show();
+                SearchUnchecked();
                 timer1.Interval = interval;
                 timer1.Start();
             }

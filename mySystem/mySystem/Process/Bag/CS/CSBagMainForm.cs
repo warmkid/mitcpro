@@ -91,27 +91,16 @@ namespace mySystem.Process.Bag
             Btn运行记录.Enabled = b;
             Btn清场.Enabled = b;
             Btn批生产.Enabled = b;
-            
+            Btn热合强度.Enabled = b;
         }
 
-
-        //定义各窗体变量
-        MaterialRecord form1 = null;
-        CSBag_InnerPackaging form2 = null;
-        Chart_daily_cs form3 = null;
-
-        Bagprocess_prod_instru form5 = null;
-        CSBag_CheckBeforePower form6 = null;
-        RunningRecord form7 = null;
-
-        Record_batch_bag form9 = null;
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "CS制袋生产领料记录");
             if (b)
             {
-                form1 = new MaterialRecord(mainform);
+                MaterialRecord form1 = new MaterialRecord(mainform);
                 form1.ShowDialog();
             }
             else
@@ -127,7 +116,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品内包装记录");
             if (b)
             {
-                form2 = new CSBag_InnerPackaging(mainform);
+                CSBag_InnerPackaging form2 = new CSBag_InnerPackaging(mainform);
                 form2.ShowDialog();
             }
             else
@@ -140,7 +129,7 @@ namespace mySystem.Process.Bag
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            form3 = new Chart_daily_cs();           
+            Chart_daily_cs form3 = new Chart_daily_cs();           
             form3.ShowDialog();
         }
 
@@ -165,7 +154,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋机开机前确认表");
             if (b)
             {
-                form6 = new CSBag_CheckBeforePower(mainform);
+                CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform);
                 form6.ShowDialog();
             }
             else
@@ -181,7 +170,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋机运行记录");
             if (b)
             {
-                form7 = new RunningRecord(mainform);
+                RunningRecord form7 = new RunningRecord(mainform);
                 form7.ShowDialog();
             }
             else
@@ -215,7 +204,7 @@ namespace mySystem.Process.Bag
 
         private void button1_Click(object sender, EventArgs e)
         {
-            form9 = new Record_batch_bag(mainform);           
+            Record_batch_bag form9 = new Record_batch_bag(mainform);           
             form9.ShowDialog();
         }
 
@@ -233,6 +222,12 @@ namespace mySystem.Process.Bag
                 return;
             }  
             
+        }
+
+        private void Btn热合强度_Click(object sender, EventArgs e)
+        {
+            CS.产品热合强度检验记录 myform = new 产品热合强度检验记录();
+            myform.ShowDialog();
         }
 
 
@@ -272,6 +267,8 @@ namespace mySystem.Process.Bag
             }
             return b = false;
         }
+
+        
 
     }
 }

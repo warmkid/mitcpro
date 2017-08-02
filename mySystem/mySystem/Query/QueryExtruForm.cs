@@ -115,112 +115,112 @@ namespace mySystem.Query
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间"); }
+                        { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", null); }
                         break;
                     case "吹膜机组清洁记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期"); }
+                        { EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期", null); }
                         break;
                     case "吹膜岗位交接班记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "吹膜岗位交接班记录", "生产日期", "生产指令ID", 1); }
+                        { EachBind(this.dgv, "吹膜岗位交接班记录", null, "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜岗位交接班记录", "生产日期"); }
+                        { EachBind(this.dgv, "吹膜岗位交接班记录", null, "生产日期", null); }
                         break;
                     case "吹膜工序清场记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期"); }                       
+                        { EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期", null); }                       
                         break;  
                     case "吹膜供料记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期"); }
+                        { EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期", null); }
                         break;
                     case "吹膜工序废品记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "吹膜工序废品记录", "生产指令ID", 1); }
+                        { EachBind(this.dgv, "吹膜工序废品记录", null, null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜工序废品记录"); }
+                        { EachBind(this.dgv, "吹膜工序废品记录", null, null, null); }
                         break;                   
                     case "吹膜工序领料退料记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期"); }
+                        { EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期", null); }
                         break;                   
                     case "吹膜生产日报表":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "吹膜生产日报表", "生产指令ID", 1); }
+                        { EachBind(this.dgv, "吹膜生产日报表", null, null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜生产日报表"); }
+                        { EachBind(this.dgv, "吹膜生产日报表", null, null, null); }
                         break;
                     case "吹膜工序生产和检验记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期"); }
+                        { EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期", null); }
                         break;
                     case "吹膜工序物料平衡记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期"); }
+                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期", null); }
                         break;
                     case "产品内包装记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期"); }
+                        { EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期", null); }
                         break;
                     case "产品外包装记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期"); }
+                        { EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期", null); }
                         break;
                     case "吹膜机组开机前确认表":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期"); }
+                        { EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期", null); }
                         break;
                     case "吹膜机组预热参数记录表":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "吹膜机组预热参数记录表", "记录人", "日期", "生产指令id"); }
+                        { EachBind(this.dgv, "吹膜机组预热参数记录表", "操作员", "日期", "生产指令id"); }
                         else
-                        { EachBind(this.dgv, "吹膜机组预热参数记录表", "记录人", "日期"); }
+                        { EachBind(this.dgv, "吹膜机组预热参数记录表", "操作员", "日期", null); }
                         break;
                     case "吹膜供料系统运行记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜供料系统运行记录", "审核员", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜供料系统运行记录", "审核员", "生产日期"); }
+                        { EachBind(this.dgv, "吹膜供料系统运行记录", "审核员", "生产日期", null); }
                         break;
                     case "吹膜机组运行记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜机组运行记录", "记录员", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜机组运行记录", "记录员", "生产日期"); }
+                        { EachBind(this.dgv, "吹膜机组运行记录", "记录员", "生产日期", null); }
                         break;
                     case "培训记录表":
-                        EachBind(this.dgv, "吹膜机安全培训记录", "培训日期");
+                        EachBind(this.dgv, "吹膜机安全培训记录", "培训日期", null, null);
                         
                         break;
                     case "吹膜机更换模头记录及安装检查表":
-                        EachBind(this.dgv, "吹膜机组换模头检查表", "检查人", "更换日期");
+                        EachBind(this.dgv, "吹膜机组换模头检查表", "检查人", "更换日期", null);
                         
                         break;
                     case "吹膜机更换模芯记录及安装检查表":
-                        EachBind(this.dgv, "吹膜机组换模芯检查表", "检查人", "更换日期");
+                        EachBind(this.dgv, "吹膜机组换模芯检查表", "检查人", "更换日期", null);
                         
                         break;
                     case "吹膜机更换过滤网记录":
-                        EachBind(this.dgv, "吹膜机更换过滤网记录表", "更换人", "更换日期");
+                        EachBind(this.dgv, "吹膜机更换过滤网记录表", "更换人", "更换日期", null);
                         
                         break;
 
@@ -237,44 +237,27 @@ namespace mySystem.Query
 
         }
 
-
         // 各表查询
-        // 人、日期、生产指令
         private void EachBind(DataGridView dgv, String tblName, String person, String startDate, String instruID)
         {
             dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
-            dt.Columns.Add("序号", System.Type.GetType("System.String"));
-            da.Fill(dt);
-            bs.DataSource = dt;
-            dgv.DataBindings.Clear();
-            dgv.DataSource = bs.DataSource; //绑定
-            //显示序号
-            setDataGridViewRowNums();                       
-        }
+            if (person != null && startDate != null && instruID == null) // 人 + 日期
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            else if (person == null && startDate != null && instruID != null) // 日期 + 生产指令
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            else if (person != null && startDate == null && instruID != null) // 人 + 生产指令
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            else if (person != null && startDate == null && instruID == null) // 人 
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.connOle);
+            else if (person == null && startDate != null && instruID == null) // 日期
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            else if (person == null && startDate == null && instruID != null) // 生产指令
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+            else if (person == null && startDate == null && instruID == null) // 只有表名
+                da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
+            else if (person != null && startDate != null && instruID != null) // 人 + 日期 + 生产指令
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
 
-        // 人、日期
-        private void EachBind(DataGridView dgv, String tblName, String person, String startDate)
-        {
-            dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
-            dt.Columns.Add("序号", System.Type.GetType("System.String"));
-            da.Fill(dt);
-            bs.DataSource = dt;
-            dgv.DataBindings.Clear();
-            dgv.DataSource = bs.DataSource; //绑定
-            //显示序号
-            setDataGridViewRowNums();
-
-        }
-
-        // 日期、生产指令
-        private void EachBind(DataGridView dgv, String tblName, String startDate, String instruID, int m)
-        {
-            dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
@@ -283,55 +266,8 @@ namespace mySystem.Query
             dgv.DataSource = bs.DataSource; //绑定
             //显示序号
             setDataGridViewRowNums();
-
-        }
-
-        // 日期
-        private void EachBind(DataGridView dgv, String tblName, String startDate)
-        {
-            dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
-            dt.Columns.Add("序号", System.Type.GetType("System.String"));
-            da.Fill(dt);
-            bs.DataSource = dt;
-            dgv.DataBindings.Clear();
-            dgv.DataSource = bs.DataSource; //绑定
-            //显示序号
-            setDataGridViewRowNums();
-
-        }
-
-        // 生产指令
-        private void EachBind(DataGridView dgv, String tblName, String instruID, int m)
-        {
-            dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
-            dt.Columns.Add("序号", System.Type.GetType("System.String"));
-            da.Fill(dt);
-            bs.DataSource = dt;
-            dgv.DataBindings.Clear();
-            dgv.DataSource = bs.DataSource; //绑定
-            //显示序号
-            setDataGridViewRowNums();
-          
-        }
-
-        //只有表名
-        private void EachBind(DataGridView dgv, String tblName)
-        {
-            dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
-            dt.Columns.Add("序号", System.Type.GetType("System.String"));
-            da.Fill(dt);
-            bs.DataSource = dt;
-            dgv.DataBindings.Clear();
-            dgv.DataSource = bs.DataSource; //绑定
-            //显示序号
-            setDataGridViewRowNums();
-        }
+        }   
+       
 
         //填序号列的值
         private void setDataGridViewRowNums()

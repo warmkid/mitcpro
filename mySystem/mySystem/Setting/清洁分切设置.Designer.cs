@@ -407,7 +407,7 @@
             this.groupBox2.Controls.Add(this.add物料代码);
             this.groupBox2.Location = new System.Drawing.Point(17, 299);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(1081, 225);
+            this.groupBox2.Size = new System.Drawing.Size(534, 225);
             this.groupBox2.TabIndex = 59;
             this.groupBox2.TabStop = false;
             // 
@@ -417,7 +417,7 @@
             this.dgv物料代码.Location = new System.Drawing.Point(12, 53);
             this.dgv物料代码.Name = "dgv物料代码";
             this.dgv物料代码.RowTemplate.Height = 23;
-            this.dgv物料代码.Size = new System.Drawing.Size(1041, 165);
+            this.dgv物料代码.Size = new System.Drawing.Size(490, 165);
             this.dgv物料代码.TabIndex = 2;
             // 
             // del物料代码

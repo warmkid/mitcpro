@@ -101,6 +101,10 @@ namespace mySystem
                     Bind("生产指令", " 操作员", "操作时间");        
 
                     break;
+                case "PE制袋":
+                    Bind("生产指令", " 操作员", "操作时间");
+
+                    break;
 
             }
 
@@ -129,6 +133,11 @@ namespace mySystem
                     form3.Show();
 
                     break;
+                case "PE制袋":
+                    //mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction form4 = new Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, ID);
+                    //form4.Show();
+
+                    break;
 
             }
 
@@ -153,6 +162,11 @@ namespace mySystem
                     break;
                 case "CS制袋":
                     Parameter.selectCon = 3;
+                    Parameter.InitCon();
+
+                    break;
+                case "PE制袋":
+                    Parameter.selectCon = 7;
                     Parameter.InitCon();
 
                     break;

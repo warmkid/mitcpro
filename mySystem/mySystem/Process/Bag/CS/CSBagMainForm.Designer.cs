@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.Btn批生产 = new System.Windows.Forms.Button();
+            this.Btn热合强度 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -50,6 +51,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.Btn热合强度);
             this.groupBox1.Controls.Add(this.Btn生产指令);
             this.groupBox1.Controls.Add(this.Btn开机确认);
             this.groupBox1.Controls.Add(this.Btn清场);
@@ -221,6 +223,17 @@
             this.Btn批生产.UseVisualStyleBackColor = true;
             this.Btn批生产.Click += new System.EventHandler(this.button1_Click);
             // 
+            // Btn热合强度
+            // 
+            this.Btn热合强度.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn热合强度.Location = new System.Drawing.Point(31, 324);
+            this.Btn热合强度.Name = "Btn热合强度";
+            this.Btn热合强度.Size = new System.Drawing.Size(200, 38);
+            this.Btn热合强度.TabIndex = 17;
+            this.Btn热合强度.Text = "产品热合强度检验记录";
+            this.Btn热合强度.UseVisualStyleBackColor = true;
+            this.Btn热合强度.Click += new System.EventHandler(this.Btn热合强度_Click);
+            // 
             // CSBagMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -261,5 +274,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button Btn批生产;
         private System.Windows.Forms.Button Btn外观及检验;
+        private System.Windows.Forms.Button Btn热合强度;
     }
 }
