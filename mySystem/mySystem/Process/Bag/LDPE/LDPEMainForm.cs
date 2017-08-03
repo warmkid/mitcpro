@@ -90,7 +90,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_materialrecord material = new LDPEBag_materialrecord();
+            LDPEBag_materialrecord material = new LDPEBag_materialrecord(mainform);
             material.ShowDialog();
         }
 

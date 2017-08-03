@@ -150,7 +150,6 @@
             this.tb理论产量C.Name = "tb理论产量C";
             this.tb理论产量C.Size = new System.Drawing.Size(80, 26);
             this.tb理论产量C.TabIndex = 211;
-            this.tb理论产量C.TextChanged += new System.EventHandler(this.tb理论产量C_TextChanged);
             // 
             // label9
             // 

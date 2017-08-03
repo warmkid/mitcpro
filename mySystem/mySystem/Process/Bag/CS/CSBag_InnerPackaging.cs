@@ -382,7 +382,7 @@ namespace mySystem.Process.Bag
         private void addComputerEventHandler() 
         {
             tb理论产量C.TextChanged += new EventHandler(tb理论产量C_TextChanged);
-            tb理论产量C.Leave += new EventHandler(tb理论产量C_TextChanged);
+            //tb理论产量C.Leave += new EventHandler(tb理论产量C_TextChanged);
         }
         
         //修改单个控件的值
