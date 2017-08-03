@@ -98,7 +98,7 @@ namespace mySystem.Process.灭菌
         private void innerBind()
         {
            // bs委托单.DataSource = dt委托单;
-            
+
             while (dataGridView1.Columns.Count > 0)
                 dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
             setDataGridViewColumns();
@@ -502,24 +502,25 @@ namespace mySystem.Process.灭菌
         //删除
         private void button1_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedCells.Count > 0)
-            {
-                int deletenum = dataGridView1.CurrentRow.Index;
+            //if (dataGridView1.SelectedCells.Count > 1)
+            //{
+            if (dataGridView1.SelectedCells.Count == 0) return;
+            int deletenum = dataGridView1.CurrentRow.Index;
 
-                if (deletenum < 0)
-                    return;
-                // dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
-                else
-                {
-                    dt台帐.Rows[deletenum].Delete();
-                    da台帐.Update((DataTable)bs台帐.DataSource);
-                    readInnerData();
-                    innerBind();
-                    //刷新序号
-                    setDataGridViewRowNums();
-                    index = dt台帐.Rows.Count;
-                }
+            if (deletenum < 0)
+                return;
+            // dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            else
+            {
+                dt台帐.Rows[deletenum].Delete();
+                da台帐.Update((DataTable)bs台帐.DataSource);
+                readInnerData();
+                innerBind();
+                //刷新序号
+                setDataGridViewRowNums();
+                index = dt台帐.Rows.Count;
             }
+            //}
             
         }
 

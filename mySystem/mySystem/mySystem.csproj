@@ -1066,6 +1066,9 @@
     <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\CS\Chart_daily_cs.resx">
+      <DependentUpon>Chart_daily_cs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\CSbagMainForm.resx">
       <DependentUpon>CSBagMainForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -36,6 +36,7 @@
             this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.label角色 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.bt保存 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -120,11 +121,23 @@
             this.label2.TabIndex = 36;
             this.label2.Text = "登录角色：";
             // 
+            // bt保存
+            // 
+            this.bt保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Location = new System.Drawing.Point(406, 328);
+            this.bt保存.Name = "bt保存";
+            this.bt保存.Size = new System.Drawing.Size(75, 23);
+            this.bt保存.TabIndex = 38;
+            this.bt保存.Text = "保存";
+            this.bt保存.UseVisualStyleBackColor = true;
+            this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
+            // 
             // Chart_daily_cs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 373);
+            this.Controls.Add(this.bt保存);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label40);
@@ -153,5 +166,6 @@
         private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button bt保存;
     }
 }

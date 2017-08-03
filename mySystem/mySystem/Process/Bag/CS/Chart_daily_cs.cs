@@ -23,11 +23,11 @@ namespace mySystem.Process.CleanCut
         String str产品批号;
         String str客户或订单号;
         Int32 i入库量只;
-        Int32 i效率=0;
-        Int32 i成品数量=0;
-        Int32 i膜材1用量=0;
-        Int32 i膜材2用量=0;
-        Int32 i制袋收率=0;
+        Double i效率=0.0;
+        Double i成品数量 = 0.0;
+        Double i膜材1用量 = 0.0;
+        Double i膜材2用量 = 0.0;
+        Double i制袋收率 = 0.0;
 
         private DataTable dt日报表详细信息, dt日报表, dt生产指令, dt生产指令详细信息, dt领料, dt领料详细信息, dt内包装;
         private BindingSource bs日报表详细信息, bs日报表, bs生产指令, bs生产指令详细信息, bs领料, bs领料详细信息, bs内包装;
@@ -50,6 +50,8 @@ namespace mySystem.Process.CleanCut
             setFormState();
             setEnableReadOnly();
             addOtherEventHandler();
+            dataGridView1.Columns.Clear();
+            setDataGridViewColumns();
         }
 
         private void Chart_daily_cs_Load(object sender, EventArgs e)
@@ -148,12 +150,9 @@ namespace mySystem.Process.CleanCut
         // 内表和控件的绑定
         private void innerBind()
         {
-            // bs委托单.DataSource = dt委托单;
-
             while (dataGridView1.Columns.Count > 0)
                 dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
-            setDataGridViewColumns();
-            setDataGridViewFormat();
+
             bs日报表详细信息.DataSource = dt日报表详细信息;
             dataGridView1.DataSource = bs日报表详细信息.DataSource;
 
@@ -161,7 +160,7 @@ namespace mySystem.Process.CleanCut
         // 设置自动计算类事件
         private void addComputerEventHandler()
         {
-           
+          //  DataGridViewsum();
         }
 
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -195,7 +194,7 @@ namespace mySystem.Process.CleanCut
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='辐照灭菌台帐'", connOle);
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='CS制袋日报表'", connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -254,8 +253,7 @@ namespace mySystem.Process.CleanCut
 
         // 设置DataGridView中各列的格式，包括列类型，列名，是否可以排序
         private void setDataGridViewColumns()
-        {
-           // DataGridViewComboBoxColumn c1;
+        {          
             DataGridViewTextBoxColumn c2;
             foreach (DataColumn dc in dt日报表详细信息.Columns)
             {
@@ -272,7 +270,7 @@ namespace mySystem.Process.CleanCut
                         break;
                 }
             }
-
+            setDataGridViewFormat();
         }
 
         //设置DataGridView中各列的格式+设置datagridview基本属性
@@ -300,6 +298,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns["TCS制袋日报表ID"].Visible = false;
         }
 
+        //填写数据类型错误提示
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
@@ -317,28 +316,46 @@ namespace mySystem.Process.CleanCut
 
         }
 
+        //根据公式计算
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-           // int columnindex = ((DataGridView)sender).SelectedCells[0].ColumnIndex;
-            int rowindex = ((DataGridView)sender).SelectedCells[0].RowIndex;
-            
-            if (Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["工时B"].ToString()) != 0)
+           /// Int32[] rowcount = { 0, 1, 2, 3 };
+            foreach (DataRow dr in dt日报表详细信息.Rows)
             {
-                i效率 = Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["入库量只A"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["系数C"].ToString()) / Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["工时B"].ToString());
-            }
-            i成品数量 = Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["入库量只A"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["成品宽D"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["成品长E"].ToString()) / 1000000 * 2;
-            i膜材1用量 = Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["膜材1规格F"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["膜材1用量G"].ToString()) / 1000;
-            i膜材2用量 = Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["膜材2规格H"].ToString()) * Convert.ToInt32(dt日报表详细信息.Rows[rowindex]["膜材2用量K"].ToString()) / 1000;
-            if ((i膜材1用量 + i膜材2用量) != 0)
-            {
-                i制袋收率 = i成品数量 / (i膜材1用量 + i膜材2用量);
+                if (Convert.ToInt32(dr["工时B"].ToString()) == 0)
+                {
+                    i效率 = 0;
+                    dr["效率"] = i效率;
+                }
+                else
+                    i效率 = Convert.ToInt32(dr["入库量只A"].ToString()) * Convert.ToDouble(dr["系数C"].ToString()) / Convert.ToDouble(dr["工时B"].ToString());
+
+
+                i成品数量 = Convert.ToInt32(dr["入库量只A"].ToString()) * Convert.ToDouble(dr["成品宽D"].ToString()) * Convert.ToDouble(dr["成品长E"].ToString()) / 1000000 * 2;
+                i膜材1用量 = Convert.ToDouble(dr["膜材1规格F"].ToString()) * Convert.ToDouble(dr["膜材1用量G"].ToString()) / 1000;
+                i膜材2用量 = Convert.ToDouble(dr["膜材2规格H"].ToString()) * Convert.ToDouble(dr["膜材2用量K"].ToString()) / 1000;
+                if ((i膜材1用量 + i膜材2用量) != 0)
+                {
+                    i制袋收率 = i成品数量 / (i膜材1用量 + i膜材2用量);
+                }
+                dr["效率"] = i效率;
+                dr["成品数量W"] = i成品数量;
+                dr["膜材1用量E"] = i膜材1用量;
+                dr["膜材2用量R"] = i膜材2用量;
+                dr["制袋收率"] = i制袋收率;
+
+                //dt日报表详细信息.Rows[i]["效率"] = i效率;
+                //dt日报表详细信息.Rows[i]["成品数量W"] = i成品数量;
+                //dt日报表详细信息.Rows[i]["膜材1用量E"] = i膜材1用量;
+                //dt日报表详细信息.Rows[i]["膜材2用量R"] = i膜材2用量;
+                //dt日报表详细信息.Rows[i]["制袋收率"] = i制袋收率;
+                
             }
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            
-            
+           
         }
 
         //写默认行数据
@@ -351,18 +368,18 @@ namespace mySystem.Process.CleanCut
             dr["产品代码"] = str产品代码;
             dr["批号"] = str产品批号;
             dr["入库量只A"] = i入库量只;
-            dr["工时B"] = 0;
-            dr["系数C"] = 0;
+            dr["工时B"] = 0.0;
+            dr["系数C"] = 0.0;
             dr["效率"] = i效率;
-            dr["成品宽D"] = 0;
-            dr["成品长E"] = 0;
+            dr["成品宽D"] = 0.0;
+            dr["成品长E"] = 0.0;
             dr["成品数量W"] = i成品数量;
             
-            dr["膜材1规格F"] = 0;
-            dr["膜材1用量G"] = 0;
+            dr["膜材1规格F"] = 0.0;
+            dr["膜材1用量G"] = 0.0;
             dr["膜材1用量E"] = i膜材1用量;
-            dr["膜材2规格H"] = 0;
-            dr["膜材2用量K"] = 0;
+            dr["膜材2规格H"] = 0.0;
+            dr["膜材2用量K"] = 0.0;
             dr["膜材2用量R"] = i膜材2用量;
             dr["制袋收率"] = i制袋收率;
 
@@ -568,6 +585,49 @@ namespace mySystem.Process.CleanCut
             da日报表日志.Fill(dt日报表日志);
             String str日志 = dt日报表日志.Rows[0]["日志"].ToString();
             (new mySystem.Other.LogForm()).setLog(dt日报表.Rows[0]["日志"].ToString()).Show();
+        }
+
+        private void bt保存_Click(object sender, EventArgs e)
+        {
+            bool is填满 = is_filled();
+            
+            if (is填满)
+            {
+             //   DataGridViewsum();
+                bs日报表详细信息.EndEdit();
+                da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+                readInnerData();
+                innerBind();
+            }
+            else 
+                MessageBox.Show("信息填写不完整");
+        }
+       
+        //判断是否填满
+        private bool is_filled()
+        {
+            int index = dataGridView1.Rows.Count - 1;
+            DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
+            DataRow dr最后一行 = dt日报表详细信息.NewRow();
+            dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
+
+            int sum = 0;//空白单元格个数
+            for (int i = 0; i < dr最后一行.ItemArray.Length; i++)
+            {
+                if (i != 0 && i != 1)
+                {
+                    if (dr最后一行[i].ToString() == "")
+                        sum += 1;
+                }
+                else
+                {
+                    sum += 0;
+                }
+            }
+            if (sum != 0)
+                return false;
+            else
+                return true;
         }
 
     }
