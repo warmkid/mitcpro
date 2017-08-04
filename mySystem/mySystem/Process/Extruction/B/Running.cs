@@ -351,7 +351,10 @@ namespace mySystem.Process.Extruction.B
             readOuterData(_生产指令ID,_产品代码,_Date,_Time);
             removeOuterBinding();
             outerBind();
-            btn提交审核.Enabled = true;
+            if (_userState == Parameter.UserState.操作员)
+            {
+                btn提交审核.Enabled = true;
+            }
             try { (this.Owner as ExtructionMainForm).InitBtn(); }
             catch (NullReferenceException exp) { }
             

@@ -553,8 +553,8 @@ namespace mySystem.Extruction.Process
                 new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id_物料);
 
                 DialogResult result;
-                result = MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
+                //result = MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (true)
                 {
                     DataTable dt_tempdt = new DataTable("生产指令信息");
                     OleDbDataAdapter da_tempdt = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + instrid, mySystem.Parameter.connOle);
@@ -569,11 +569,14 @@ namespace mySystem.Extruction.Process
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (checkform != null)
-                checkform.Dispose();
-            checkform = new mySystem.CheckForm(this);
-            checkform.FormClosed += new FormClosedEventHandler(checkform_FormClosed);
-            checkform.Show();
+            if (DialogResult.Yes == MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                if (checkform != null)
+                    checkform.Dispose();
+                checkform = new mySystem.CheckForm(this);
+                checkform.FormClosed += new FormClosedEventHandler(checkform_FormClosed);
+                checkform.Show();
+            }
         }
 
 
@@ -1076,10 +1079,10 @@ namespace mySystem.Extruction.Process
             //不合格标红，合格标白
             if (e.ColumnIndex == 4)
             {
-                if (dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString() == "合格")
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
-                if (dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString() == "不合格")
-                    dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
+                if (dataGridView2.Rows[e.RowIndex].Cells[4].Value.ToString() == "合格")
+                    dataGridView2.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                if (dataGridView2.Rows[e.RowIndex].Cells[4].Value.ToString() == "不合格")
+                    dataGridView2.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
             }
         }
     }

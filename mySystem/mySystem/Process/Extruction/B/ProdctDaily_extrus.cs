@@ -228,9 +228,46 @@ namespace mySystem
                         dr["加料B2"] = float.Parse(dt_供料记录.Rows[0]["中层供料量合计c"].ToString());//加料B2
                 }
 
+                
+
+
                 dt_prodlist.Rows.Add(dr);
             }
 
+            // 查找领料退料记录
+            OleDbDataAdapter daly = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + para_instrid, mySystem.Parameter.connOle);
+            DataTable dtly = new DataTable();
+            daly.Fill(dtly);
+            string code1 = dtly.Rows[0]["内外层物料代码"].ToString();
+            string code2 = dtly.Rows[0]["中层物料代码"].ToString();
+            double tuiliao1 = 0;
+            double tuiliao2 = 0;
+
+            DataTable dt_退料记录 = new DataTable();
+            acsql = "select * from 吹膜工序领料退料记录 where 生产指令ID=" + id;
+            OleDbCommand comm5 = new OleDbCommand(acsql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da5 = new OleDbDataAdapter(comm5);
+            da5.Fill(dt_退料记录);
+            foreach (DataRow ndr in dt_退料记录.Rows)
+            {
+                if (ndr["物料代码"].ToString() == code1)
+                {
+                    tuiliao1 = Convert.ToDouble(ndr["退料"]);
+                }
+                if (ndr["物料代码"].ToString() == code2)
+                {
+                    tuiliao2 = Convert.ToDouble(ndr["退料"]);
+                }
+            }
+            try
+            {
+                dt_prodlist.Rows[dt_prodlist.Rows.Count - 1]["加料A"] = Convert.ToDouble(dt_prodlist.Rows[dt_prodlist.Rows.Count - 1]["加料A"]) - tuiliao1;
+                dt_prodlist.Rows[dt_prodlist.Rows.Count - 1]["加料B"] = Convert.ToDouble(dt_prodlist.Rows[dt_prodlist.Rows.Count - 1]["加料B"]) - tuiliao2;
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
             dt = dt_prodlist.Copy();
 
             
