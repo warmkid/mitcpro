@@ -440,6 +440,11 @@ namespace mySystem.Query
             { setDataGridViewBackColor("审核员"); }
             catch
             { }
+            if (tableName == "吹膜岗位交接班记录")
+            {
+                setDataGridViewBackColor("白班接班员");
+                setDataGridViewBackColor("夜班接班员");
+            }
         }
 
         //设置datagridview背景颜色，待审核标红
