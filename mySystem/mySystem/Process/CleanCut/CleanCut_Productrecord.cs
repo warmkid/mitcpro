@@ -476,7 +476,7 @@ namespace mySystem.Process.CleanCut
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T清洁分切生产记录ID = " + ID.ToString(), connOle);
+            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T清洁分切生产记录ID = " + ID.ToString() + " Order by 序号", connOle);
             cb记录详情 = new OleDbCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
@@ -630,7 +630,7 @@ namespace mySystem.Process.CleanCut
             dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dr["序号"] = 0;
             dr["T清洁分切生产记录ID"] = dt记录.Rows[0]["ID"];
-            dr["卷号"] = dt记录详情.Rows[dataGridView1.CurrentRow.Index]["卷号"].ToString();
+            dr["膜卷卷号"] = dt记录详情.Rows[dataGridView1.CurrentRow.Index]["膜卷卷号"].ToString();
             dr["物料代码"] = dt记录详情.Rows[dataGridView1.CurrentRow.Index]["物料代码"].ToString();
             dr["膜卷批号"] = dt记录详情.Rows[dataGridView1.CurrentRow.Index]["膜卷批号"].ToString();
             dr["清洁分切后代码"] = getCodeAfter(dr["物料代码"].ToString());
@@ -829,7 +829,7 @@ namespace mySystem.Process.CleanCut
                 return false;
             }
             return true;
-        } 
+        }
 
         //求出分切后的清洁分切后代码
         private String getCodeAfter(String codeBefore)
@@ -837,12 +837,20 @@ namespace mySystem.Process.CleanCut
             String codeAfter;
             Int32 leng;
             //eg: codeBefore = TY-200*300*3
-            //String pattern = @"^[a-zA-Z]+-[0-9]+\*[0-9]+\*[0-9]";//正则表达式
-            string[] array1 = codeBefore.Split('-'); //array1[0]=TY array1[1]=200*300*3
-            string[] array2 = array1[1].Split('*'); //array2[0]=200 array2[1]=300 array2[2]=3
-            leng = Int32.Parse(array2[0]);
-            codeAfter = array1[0] + "-0*" + array2[1] + "*" + array2[2]+"C";
-            return codeAfter; //TY-0*300*3C
+            String pattern = @"^[a-zA-Z]+-[0-9]+\*[0-9]+\*[0-9]";//正则表达式
+            if (!Regex.IsMatch(codeBefore, pattern))
+            {
+                MessageBox.Show("清洁分切前代码格式不正确");
+                return (codeBefore + "C");
+            }
+            else
+            {
+                string[] array1 = codeBefore.Split('-'); //array1[0]=TY array1[1]=200*300*3
+                string[] array2 = array1[1].Split('*'); //array2[0]=200 array2[1]=300 array2[2]=3
+                leng = Int32.Parse(array2[0]);
+                codeAfter = array1[0] + "-0*" + array2[1] + "*" + array2[2] + "C";
+                return codeAfter; //TY-0*300*3C
+            }
         }
 
         //实时求收率
