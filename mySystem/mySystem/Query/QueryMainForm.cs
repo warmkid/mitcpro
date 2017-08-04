@@ -168,9 +168,18 @@ namespace mySystem
 
         private void BtnPTV制袋_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 7;
+            Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
             BtnColor();
             BtnPTV制袋.BackColor = Color.FromArgb(138, 158, 196);
+
+            PTV制袋查询 myDlg = new PTV制袋查询();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = QueryPanelRight.Size;
+            QueryPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         private void BtnBPV制袋_Click(object sender, EventArgs e)
@@ -180,6 +189,13 @@ namespace mySystem
             QueryPanelRight.Controls.Clear();
             BtnColor();
             BtnBPV制袋.BackColor = Color.FromArgb(138, 158, 196);
+
+            BPV制袋查询 myDlg = new BPV制袋查询();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = QueryPanelRight.Size;
+            QueryPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         private void Btn防护罩_Click(object sender, EventArgs e)

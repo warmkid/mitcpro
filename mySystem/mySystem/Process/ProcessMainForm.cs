@@ -58,6 +58,7 @@ namespace mySystem
         {
             Parameter.selectCon = 1;
             Parameter.InitCon();
+            checkFlight(); //获取用户班次
             BtnColor();
             Btn吹膜.BackColor = Color.FromArgb(138, 158, 196);            
             foreach (Control control in ProducePanelRight.Controls)
@@ -78,6 +79,7 @@ namespace mySystem
         {
             Parameter.selectCon = 2;
             Parameter.InitCon();
+            checkFlight();
             BtnColor();
             Btn清洁分切.BackColor = Color.FromArgb(138, 158, 196);
             
@@ -122,6 +124,7 @@ namespace mySystem
         {
             Parameter.selectCon = 3;
             Parameter.InitCon();
+            checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -143,6 +146,7 @@ namespace mySystem
         {
             Parameter.selectCon = 7;
             Parameter.InitCon();
+            checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -172,6 +176,9 @@ namespace mySystem
         //PTV制袋
         private void PTVbagBtn_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 8;
+            Parameter.InitCon();
+            checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -192,6 +199,7 @@ namespace mySystem
         {
             Parameter.selectCon = 6;
             Parameter.InitCon();
+            checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -223,6 +231,7 @@ namespace mySystem
         {
             Parameter.selectCon = 5;
             Parameter.InitCon();
+            checkFlight();
             foreach (Control control in ProducePanelRight.Controls)
             { control.Dispose(); }
             ProducePanelRight.Controls.Clear();
@@ -303,6 +312,20 @@ namespace mySystem
             BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
             BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
             Btn防护罩.BackColor = Color.FromName("ControlLightLight");
+        }
+
+        //班次查询
+        private void checkFlight()
+        {
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            comm.CommandText = "SELECT * FROM 用户 WHERE 用户名= " + "'" + Parameter.userName + "'";
+            OleDbDataReader reader = comm.ExecuteReader();
+            while (reader.Read())
+                Parameter.userflight = reader["班次"].ToString();
+
+            reader.Dispose();
+            comm.Dispose();
         }
 
         

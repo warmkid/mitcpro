@@ -728,6 +728,12 @@
     <Compile Include="Process\灭菌\辐照灭菌台帐.Designer.cs">
       <DependentUpon>辐照灭菌台帐.cs</DependentUpon>
     </Compile>
+    <Compile Include="Query\BPV制袋查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\BPV制袋查询.Designer.cs">
+      <DependentUpon>BPV制袋查询.cs</DependentUpon>
+    </Compile>
     <Compile Include="Query\CS制袋查询.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -739,6 +745,12 @@
     </Compile>
     <Compile Include="Query\PE制袋查询.Designer.cs">
       <DependentUpon>PE制袋查询.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\PTV制袋查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\PTV制袋查询.Designer.cs">
+      <DependentUpon>PTV制袋查询.cs</DependentUpon>
     </Compile>
     <Compile Include="Query\QueryInstruForm.cs">
       <SubType>Form</SubType>
@@ -763,6 +775,12 @@
     </Compile>
     <Compile Include="Setting\AddPeopleForm.Designer.cs">
       <DependentUpon>AddPeopleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\BPV制袋设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\BPV制袋设置.Designer.cs">
+      <DependentUpon>BPV制袋设置.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\CS制袋设置.cs">
       <SubType>Form</SubType>
@@ -823,6 +841,12 @@
     </Compile>
     <Compile Include="Setting\PE制袋设置.Designer.cs">
       <DependentUpon>PE制袋设置.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\PTV制袋设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\PTV制袋设置.Designer.cs">
+      <DependentUpon>PTV制袋设置.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\SetPeopleForm.cs">
       <SubType>Form</SubType>
@@ -1307,11 +1331,17 @@
     <EmbeddedResource Include="Process\灭菌\辐照灭菌台帐.resx">
       <DependentUpon>辐照灭菌台帐.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Query\BPV制袋查询.resx">
+      <DependentUpon>BPV制袋查询.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Query\CS制袋查询.resx">
       <DependentUpon>CS制袋查询.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Query\PE制袋查询.resx">
       <DependentUpon>PE制袋查询.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\PTV制袋查询.resx">
+      <DependentUpon>PTV制袋查询.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryExtruForm.resx">
       <DependentUpon>QueryExtruForm.cs</DependentUpon>
@@ -1330,6 +1360,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\AddPeopleForm.resx">
       <DependentUpon>AddPeopleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\BPV制袋设置.resx">
+      <DependentUpon>BPV制袋设置.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\CS制袋设置.resx">
       <DependentUpon>CS制袋设置.cs</DependentUpon>
@@ -1351,6 +1384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\PE制袋设置.resx">
       <DependentUpon>PE制袋设置.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\PTV制袋设置.resx">
+      <DependentUpon>PTV制袋设置.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SetPeopleForm.resx">
       <DependentUpon>SetPeopleForm.cs</DependentUpon>

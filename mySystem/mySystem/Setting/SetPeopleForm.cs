@@ -323,14 +323,22 @@ namespace mySystem.Setting
         {
             this.dgvUser.Columns["ID"].Visible = false;
             this.dgvUser.Columns["角色ID"].Visible = false;
+            this.dgvUser.Columns["班次"].Visible = false;
+            this.dgvUser.Columns["部门"].Visible = false;
+            this.dgvUser.Columns["岗位"].Visible = false;
+            this.dgvUser.Columns["班次开始时间"].Visible = false;
+            this.dgvUser.Columns["班次结束时间"].Visible = false;
 
-            //设置列宽
-            for (int i = 0; i < this.dgvUser.Columns.Count; i++)
-            {
-                String colName = this.dgvUser.Columns[i].HeaderText;
-                int strlen = colName.Length;
-                this.dgvUser.Columns[i].MinimumWidth = strlen * 25;
-            }  
+            this.dgvUser.Columns["用户ID"].MinimumWidth = 150;
+            this.dgvUser.Columns["密码"].MinimumWidth = 150;
+
+            ////设置列宽
+            //for (int i = 0; i < this.dgvUser.Columns.Count; i++)
+            //{
+            //    String colName = this.dgvUser.Columns[i].HeaderText;
+            //    int strlen = colName.Length;
+            //    this.dgvUser.Columns[i].MinimumWidth = strlen * 25;
+            //}  
 
         }
 

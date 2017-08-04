@@ -175,16 +175,34 @@ namespace mySystem.Setting
 
         private void BtnPTV制袋_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 8;
+            Parameter.InitCon();
             BtnColor();
             BtnPTV制袋.BackColor = Color.FromArgb(138, 158, 196);
             SettingPanelRight.Controls.Clear();
+
+            PTV制袋设置 csbagform = new PTV制袋设置();
+            csbagform.TopLevel = false;
+            csbagform.FormBorderStyle = FormBorderStyle.None;
+            csbagform.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(csbagform);
+            csbagform.Show();
         }
 
         private void BtnBPV制袋_Click(object sender, EventArgs e)
         {
+            Parameter.selectCon = 6;
+            Parameter.InitCon();
             BtnColor();
             BtnBPV制袋.BackColor = Color.FromArgb(138, 158, 196);
             SettingPanelRight.Controls.Clear();
+
+            BPV制袋设置 csbagform = new BPV制袋设置();
+            csbagform.TopLevel = false;
+            csbagform.FormBorderStyle = FormBorderStyle.None;
+            csbagform.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(csbagform);
+            csbagform.Show();
         }
 
         private void Btn防护罩_Click(object sender, EventArgs e)

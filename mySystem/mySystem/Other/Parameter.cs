@@ -258,6 +258,11 @@ namespace mySystem
                                 Data Source=../../database/LDPE.mdb;Persist Security Info=False";
                         Conn = InitOle(strCon7);
                         break;
+                    case 8: //PTV制袋
+                        String strCon8 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/PTV.mdb;Persist Security Info=False";
+                        Conn = InitOle(strCon8);
+                        break;
                 }
             }
             else
@@ -330,6 +335,11 @@ namespace mySystem
                     case 7: //LDPE制袋
                         strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/LDPE.mdb;Persist Security Info=False";
+                        connOle = InitOle(strConn);
+                        break;
+                    case 8: //PTV制袋
+                        strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/PTV.mdb;Persist Security Info=False";
                         connOle = InitOle(strConn);
                         break;
                 }

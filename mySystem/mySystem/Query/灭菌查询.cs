@@ -110,7 +110,7 @@ namespace mySystem.Query
                             EachBind(this.dgv, "辐照灭菌产品验收记录", "验收人", "验收日期", "灭菌委托单ID"); 
                         break;
                     case "辐照灭菌台帐":
-                        EachBind(this.dgv, "辐照灭菌台帐", "审核员", null, null); 
+                        EachBind(this.dgv, "辐照灭菌台帐详细信息", null, null, null); 
                         break;
 
                     default:
@@ -204,8 +204,7 @@ namespace mySystem.Query
                     mydlg2.Show();
                     break;
                 case "辐照灭菌台帐":
-                    //辐照灭菌台帐 mydlg3 = new 辐照灭菌台帐(mainform, ID);
-                    //mydlg3.Show();
+
                     break;               
 
                 default:

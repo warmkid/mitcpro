@@ -6,12 +6,13 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.OleDb;
 
 namespace mySystem.Setting
 {
     public partial class AddPeopleForm : BaseForm
     {
-        int userid;
+        string userid;
         string username;
         string password;
         string flight = null; //班次
@@ -30,13 +31,7 @@ namespace mySystem.Setting
         {
             InitializeComponent();
             myparent = parent;
-            this.dtp班次开始时间.ShowUpDown = true;
-            this.dtp班次结束时间.ShowUpDown = true;
-        }
 
-        private void comboBox班次_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            flight = this.comboBox班次.SelectedItem.ToString();
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,11 +51,6 @@ namespace mySystem.Setting
             }
         }
 
-        private void comboBox部门_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            department = comboBox部门.SelectedItem.ToString();
-        }
-
         private void CancelBtn_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -68,49 +58,63 @@ namespace mySystem.Setting
 
         private void AddBtn_Click(object sender, EventArgs e)
         {
-            string useridstr = IDtextBox.Text.Trim();           
+            userid = IDtextBox.Text.Trim();           
             username = NametextBox.Text.Trim();
             password = PWtextBox.Text.Trim();
-            starttime = this.dtp班次开始时间.Value;
-            endtime = this.dtp班次结束时间.Value;
-            job = this.tb岗位.Text.Trim();
 
-            if (username == "" || password == "" || useridstr == "" || comboBox班次.SelectedIndex == -1 || comboBox角色.SelectedIndex == -1 || comboBox部门.SelectedIndex == -1 || job == "")
+            if (username == "" || password == "" || userid == "" || comboBox角色.SelectedIndex == -1)
             {
                 MessageBox.Show("员工信息不能为空", "错误");
                 return;
             }
             else
             {
-                if (Int32.TryParse(useridstr, out userid))
-                { }
+                bool idbool = isIDExist();
+                if (!idbool)
+                {
+                    String tblName = "users";
+                    //List<String> insertCols = new List<String>(new String[] { "角色ID", "姓名", "密码", "角色", "用户ID", "班次", "班次开始时间", "班次结束时间", "部门", "岗位" });
+                    //List<Object> insertVals = new List<Object>(new Object[] { role_id, username, password, role, userid, "", DateTime.Now, DateTime.Now, "", "" });
+                    List<String> insertCols = new List<String>(new String[] { "角色ID", "姓名", "密码", "角色", "用户ID" });
+                    List<Object> insertVals = new List<Object>(new Object[] { role_id, username, password, role, userid });
+                    
+                    Boolean b = Utility.insertAccess(Parameter.connOleUser, tblName, insertCols, insertVals);
+                    if (b)
+                    {
+                        MessageBox.Show("用户添加成功", "success");
+                        myparent.BindUser();
+                        this.Close();
+                        this.Dispose();
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("用户添加失败", "错误");
+                        return;
+                    }
+                }
                 else
                 {
-                    MessageBox.Show("员工ID必须为数字", "错误");
+                    MessageBox.Show("该员工ID已经存在，请重新输入！", "警告");
                     return;
                 }
-                String tblName = "users";
-                List<String> insertCols = new List<String>(new String[] { "角色ID", "姓名", "密码", "班次", "角色", "部门", "用户ID", "班次开始时间", "班次结束时间", "岗位" });
-                List<Object> insertVals = new List<Object>(new Object[] { role_id, username, password, flight, role, department, userid, starttime, endtime, job });
-                Boolean b = Utility.insertAccess(Parameter.connOleUser, tblName, insertCols, insertVals);
-                if (b)
-                {
-                    MessageBox.Show("用户添加成功", "success");
-                    myparent.BindUser();
-                    this.Close();
-                    this.Dispose();
-                    return;
-                }
-                else
-                {
-                    MessageBox.Show("用户添加失败", "错误");
-                    return;
-                }
-
             }
-
-
         }
+
+        //判断用户ID是否已经存在
+        private Boolean isIDExist()
+        {
+            bool b;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOleUser;
+            comm.CommandText = "SELECT * FROM users WHERE 用户ID = " + "'" + userid + "'";
+            OleDbDataReader reader = comm.ExecuteReader();
+            b = reader.HasRows ? true : false;
+
+            return b;
+        }
+
+
         
     }
 }

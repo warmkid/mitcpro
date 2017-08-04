@@ -416,7 +416,7 @@ namespace mySystem.Query
             }
         }
 
-        //TODO：待审核标红
+
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             //设置列宽
