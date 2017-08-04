@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace mySystem
 {
@@ -25,6 +26,12 @@ namespace mySystem
             InitializeComponent();
             fill_printer();
             Init();
+            getPeople();
+            setUserState();
+            if (_userState != Parameter.UserState.审核员)
+            {
+                button2.Enabled = false;
+            }
         }
 
         public ProdctDaily_extrus(mySystem.MainForm mainform,int id)
@@ -33,6 +40,12 @@ namespace mySystem
             InitializeComponent();
             fill_printer();
             Init();
+            getPeople();
+            setUserState();
+            if (_userState != Parameter.UserState.审核员)
+            {
+                button2.Enabled = false;
+            }
             string asql = "select * from 吹膜生产日报表 where ID=" + id;
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
@@ -683,6 +696,68 @@ namespace mySystem
         private void button4_Click(object sender, EventArgs e)
         {
             (new ProdctDaily_extrus(mainform, 2)).Show();
+        }
+
+        List<string> ls操作员, ls审核员;
+
+        void getPeople()
+        {
+            ls审核员 = new List<string>();
+            ls操作员 = new List<string>();
+            OleDbDataAdapter da;
+            DataTable dt;
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='" + "吹膜生产日报表" + "'", mySystem.Parameter.connOle);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("用户权限设置有误，为避免出现错误，请尽快联系管理员完成设置！");
+                this.Dispose();
+                return;
+            }
+
+            string str操作员 = dt.Rows[0]["操作员"].ToString();
+            string str审核员 = dt.Rows[0]["审核员"].ToString();
+            String[] tmp = Regex.Split(str操作员, ",|，");
+            foreach (string s in tmp)
+            {
+                if (s != "")
+                {
+                    ls操作员.Add(s);
+                }
+            }
+            tmp = Regex.Split(str审核员, ",|，");
+            foreach (string s in tmp)
+            {
+                if (s != "")
+                {
+                    ls审核员.Add(s);
+                }
+            }
+        }
+
+
+        mySystem.Parameter.UserState _userState;
+        void setUserState()
+        {
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
     }
