@@ -1078,7 +1078,7 @@ namespace mySystem.Process.Extruction.B
                 my.Cells[i + 5, 4].Value = dtInner.Rows[i]["产品代码"];
                 my.Cells[i + 5, 5].Value = dtInner.Rows[i]["不良品数量"].ToString();
                 my.Cells[i + 5, 6].Value = dtInner.Rows[i]["废品产生原因"];
-                my.Cells[i + 5, 7].Value = dtInner.Rows[i]["记录人"];
+                my.Cells[i + 5, 7].Value = dtInner.Rows[i]["记录员"];
                 my.Cells[i + 5, 8].Value = dtInner.Rows[i]["审核员"];               
             }
 
