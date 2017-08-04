@@ -21,12 +21,12 @@ namespace mySystem.Process.CleanCut
         String str生产指令编码 = mySystem.Parameter.csbagInstruction;
         
         //界面显示所需信息
-        DateTime date生产日期;
-        String str班次;
-        String str产品代码;
-        String str产品批号;
-        String str客户或订单号;
-        Int32 i入库量只;
+        DateTime date生产日期=DateTime.Now;
+        String str班次="";
+        String str产品代码 = "";
+        String str产品批号 = "";
+        String str客户或订单号 = "";
+        Int32 i入库量只=0;
         Double i效率=0.0;
         Double i成品宽 = 0.0;
         Double i成品长 = 0.0;
@@ -80,6 +80,13 @@ namespace mySystem.Process.CleanCut
             //    readInnerData(Convert.ToInt32(dt日报表.Rows[0]["ID"]));
             //    innerBind();
             //}          
+            if (dt日报表详细信息.Rows.Count == 0)
+            {
+                DataRow dr内表 = dt日报表详细信息.NewRow();
+                dr内表 = writeInnerDefault(dr内表);
+                dt日报表详细信息.Rows.Add(dr内表);
+                da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+            }
 
             addComputerEventHandler();
             setFormState();
@@ -87,8 +94,8 @@ namespace mySystem.Process.CleanCut
             addOtherEventHandler();
 
             dataGridView1.Columns.Clear();
-
             setDataGridViewColumns();
+            setDataGridViewRowNums();
             
         }
 
@@ -185,7 +192,7 @@ namespace mySystem.Process.CleanCut
 
             i入库量只 =Convert.ToInt32(dt内包装所需信息.Rows[0]["产品数量只数合计B"].ToString());
             
-            //读取生产日期
+            //读取内包装内表：生产日期
             OleDbCommand comm生产日期 = new OleDbCommand();
             comm生产日期.Connection = mySystem.Parameter.connOle;
             comm生产日期.CommandText = "select * from 产品内包装详细记录 where T产品内包装记录ID= @name";
@@ -502,7 +509,7 @@ namespace mySystem.Process.CleanCut
         {
             dr["TCS制袋日报表ID"] = dt日报表.Rows[0]["ID"];
             dr["生产日期"] = date生产日期;
-            dr["班次"] = " ";
+            dr["班次"] = str班次;
             dr["客户或订单号"] = str客户或订单号;
             dr["产品代码"] = str产品代码;
             dr["批号"] = str产品批号;
