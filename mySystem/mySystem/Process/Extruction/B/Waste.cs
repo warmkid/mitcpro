@@ -308,10 +308,14 @@ namespace mySystem.Process.Extruction.B
                         //one more button should be avtive here!
                     }
                     //the formState do not have to be checked
-                    else if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState || Parameter.FormState.审核未通过 == _formState)
+                    else if ( Parameter.FormState.审核通过 == _formState || Parameter.FormState.审核未通过 == _formState)
                     {
                         setControlFalse();
                         
+                    }else if(Parameter.FormState.未保存 == _formState)
+                    {
+                        setControlFalse();
+                        dataGridView1.ReadOnly = false;
                     }
                     if (Parameter.FormState.审核通过 != _formState)
                     {
@@ -533,7 +537,7 @@ namespace mySystem.Process.Extruction.B
             // =================================================
             // yyyy年MM月dd日，操作员：XXX 创建记录
             string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 创建记录\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 创建记录\n" + "生产指令编号:" + __生产指令 + "\n";
             dr["日志"] =  log;
             return dr;
         }
@@ -842,11 +846,22 @@ namespace mySystem.Process.Extruction.B
             //}
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if ((Convert.ToString(dataGridView1.Rows[i].Cells["审核员"].Value).ToString().Trim() != "") && (Convert.ToString(dataGridView1.Rows[i].Cells["审核员"].Value).ToString().Trim() != __待审核))
+                if (_userState == Parameter.UserState.操作员)
                 {
-                    dataGridView1.Rows[i].ReadOnly = true;
+                    if ((Convert.ToString(dataGridView1.Rows[i].Cells["审核员"].Value).ToString().Trim() != ""))
+                    {
+                        dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
-                continue;
+                else if (_userState == Parameter.UserState.审核员)
+                {
+                    if ((Convert.ToString(dataGridView1.Rows[i].Cells["审核员"].Value).ToString().Trim() != __待审核))
+                    {
+                        dataGridView1.Rows[i].ReadOnly = true;
+                    }
+                }
+               
+                
             }
             dataGridView1.Columns[10].ReadOnly = true;
         }

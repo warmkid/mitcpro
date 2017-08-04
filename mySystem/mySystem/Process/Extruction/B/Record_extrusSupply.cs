@@ -343,7 +343,11 @@ namespace WindowsFormsApplication1
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
             if (checkform.ischeckOk)
             {
-                (this.Owner as ExtructionMainForm).InitBtn();
+                try
+                {
+                    (this.Owner as ExtructionMainForm).InitBtn();
+                }
+                catch (NullReferenceException) { }
             }
             //状态
             setControlFalse();
