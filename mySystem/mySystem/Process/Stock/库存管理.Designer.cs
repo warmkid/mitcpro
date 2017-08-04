@@ -37,6 +37,7 @@
             this.btn取样证 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btn检验台账 = new System.Windows.Forms.Button();
+            this.btn文件上传 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -129,11 +130,22 @@
             this.btn检验台账.UseVisualStyleBackColor = true;
             this.btn检验台账.Click += new System.EventHandler(this.btn检验台账_Click);
             // 
+            // btn文件上传
+            // 
+            this.btn文件上传.Location = new System.Drawing.Point(273, 109);
+            this.btn文件上传.Name = "btn文件上传";
+            this.btn文件上传.Size = new System.Drawing.Size(75, 23);
+            this.btn文件上传.TabIndex = 9;
+            this.btn文件上传.Text = "文件上传";
+            this.btn文件上传.UseVisualStyleBackColor = true;
+            this.btn文件上传.Click += new System.EventHandler(this.btn文件上传_Click);
+            // 
             // 库存管理
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(508, 407);
+            this.Controls.Add(this.btn文件上传);
             this.Controls.Add(this.btn检验台账);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btn取样证);
@@ -161,5 +173,6 @@
         private System.Windows.Forms.Button btn取样证;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btn检验台账;
+        private System.Windows.Forms.Button btn文件上传;
     }
 }

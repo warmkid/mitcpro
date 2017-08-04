@@ -41,6 +41,10 @@
             this.tp不合格品处理记录 = new System.Windows.Forms.TabPage();
             this.btn读取不合格品记录 = new System.Windows.Forms.Button();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.btn读取验收记录 = new System.Windows.Forms.Button();
+            this.tp取样记录 = new System.Windows.Forms.TabPage();
+            this.btn读取取样记录 = new System.Windows.Forms.Button();
+            this.dataGridView5 = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tp物资验收记录.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -50,6 +54,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.tp不合格品处理记录.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.tp取样记录.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -59,6 +65,7 @@
             this.tabControl1.Controls.Add(this.tp物资请验单);
             this.tabControl1.Controls.Add(this.tp检验记录);
             this.tabControl1.Controls.Add(this.tp不合格品处理记录);
+            this.tabControl1.Controls.Add(this.tp取样记录);
             this.tabControl1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(19, 12);
             this.tabControl1.Name = "tabControl1";
@@ -68,6 +75,7 @@
             // 
             // tp物资验收记录
             // 
+            this.tp物资验收记录.Controls.Add(this.btn读取验收记录);
             this.tp物资验收记录.Controls.Add(this.dataGridView1);
             this.tp物资验收记录.Controls.Add(this.btn增加物资验收记录);
             this.tp物资验收记录.Location = new System.Drawing.Point(4, 29);
@@ -190,6 +198,47 @@
             this.dataGridView4.Size = new System.Drawing.Size(650, 365);
             this.dataGridView4.TabIndex = 0;
             // 
+            // btn读取验收记录
+            // 
+            this.btn读取验收记录.Location = new System.Drawing.Point(514, 24);
+            this.btn读取验收记录.Name = "btn读取验收记录";
+            this.btn读取验收记录.Size = new System.Drawing.Size(150, 28);
+            this.btn读取验收记录.TabIndex = 2;
+            this.btn读取验收记录.Text = "读取";
+            this.btn读取验收记录.UseVisualStyleBackColor = true;
+            this.btn读取验收记录.Click += new System.EventHandler(this.btn读取验收记录_Click);
+            // 
+            // tp取样记录
+            // 
+            this.tp取样记录.Controls.Add(this.btn读取取样记录);
+            this.tp取样记录.Controls.Add(this.dataGridView5);
+            this.tp取样记录.Location = new System.Drawing.Point(4, 29);
+            this.tp取样记录.Name = "tp取样记录";
+            this.tp取样记录.Padding = new System.Windows.Forms.Padding(3);
+            this.tp取样记录.Size = new System.Drawing.Size(689, 477);
+            this.tp取样记录.TabIndex = 4;
+            this.tp取样记录.Text = "取样记录";
+            this.tp取样记录.UseVisualStyleBackColor = true;
+            // 
+            // btn读取取样记录
+            // 
+            this.btn读取取样记录.Location = new System.Drawing.Point(594, 29);
+            this.btn读取取样记录.Name = "btn读取取样记录";
+            this.btn读取取样记录.Size = new System.Drawing.Size(75, 23);
+            this.btn读取取样记录.TabIndex = 3;
+            this.btn读取取样记录.Text = "读取";
+            this.btn读取取样记录.UseVisualStyleBackColor = true;
+            this.btn读取取样记录.Click += new System.EventHandler(this.btn读取取样记录_Click);
+            // 
+            // dataGridView5
+            // 
+            this.dataGridView5.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView5.Location = new System.Drawing.Point(19, 82);
+            this.dataGridView5.Name = "dataGridView5";
+            this.dataGridView5.RowTemplate.Height = 23;
+            this.dataGridView5.Size = new System.Drawing.Size(650, 365);
+            this.dataGridView5.TabIndex = 2;
+            // 
             // 原料入库管理
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -207,6 +256,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.tp不合格品处理记录.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            this.tp取样记录.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -226,5 +277,9 @@
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.Button btn读取不合格品记录;
         private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.Button btn读取验收记录;
+        private System.Windows.Forms.TabPage tp取样记录;
+        private System.Windows.Forms.Button btn读取取样记录;
+        private System.Windows.Forms.DataGridView dataGridView5;
     }
 }

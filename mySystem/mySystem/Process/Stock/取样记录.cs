@@ -10,7 +10,7 @@ using System.Data.OleDb;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 取样记录 : Form
+    public partial class 取样记录 : BaseForm
     {
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
@@ -21,68 +21,46 @@ namespace mySystem.Process.Stock
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
-        public 取样记录()
+        int _id;
+        mySystem.Parameter.UserState _userState;
+        mySystem.Parameter.FormState _formState;
+
+        List<String> ls操作员, ls审核员;
+
+        CheckForm ckform;
+
+        public 取样记录(int id)
         {
+            _id = id;
             InitializeComponent();
             conn = new OleDbConnection(strConnect);
             conn.Open();
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = false;
-            }
-            tb名称.Enabled = true;
-            btn查询插入.Enabled = true;
-
+            getPeople();
+            setUseState();
+            readOuterData(id);
+            outerBind();
+            readInnerData( Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+            setFormState();
+            setEnableReadOnly();
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
         }
 
 
-        private void btn查询插入_Click(object sender, EventArgs e)
-        {
-            readOuterData(tb名称.Text);
-            outerBind();
-            if (dtOuter.Rows.Count <= 0)
-            {
-                DataRow dr = dtOuter.NewRow();
-                dr = writeOuterDefault(dr, tb名称.Text);
-                dtOuter.Rows.Add(dr);
-                daOuter.Update((DataTable)bsOuter.DataSource);
-                readOuterData(tb名称.Text);
-                removeOuterBinding();
-                outerBind();
-            }
-            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            setDataGridViewColumns();
-            innerBind();
-            // 控件状态
-            foreach (Control c in this.Controls)
-            {
-                c.Enabled = true;
-            }
-            tb名称.Enabled = false;
-            btn查询插入.Enabled = false;
-
-
-        }
-
+       
       
 
-        private void readOuterData(String name)
+        private void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 取样记录 where 名称='" + name + "'", conn);
+            daOuter = new OleDbDataAdapter("select * from 取样记录 where ID=" + id, conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("取样记录");
             bsOuter = new BindingSource();
             daOuter.Fill(dtOuter);
         }
 
-        private DataRow writeOuterDefault(DataRow dr, String name)
-        {
-            dr["名称"] = name;
-
-            return dr;
-        }
+        
 
         private void outerBind()
         {
@@ -118,10 +96,6 @@ namespace mySystem.Process.Stock
             }
         }
 
-        private void removeOuterBinding()
-        {
-
-        }
 
         private void readInnerData(int id)
         {
@@ -150,15 +124,15 @@ namespace mySystem.Process.Stock
 
         private void btn添加_Click(object sender, EventArgs e)
         {
-            DataRow dr = dtInner.NewRow();
-            dr = writeInnerDefault(dr);
-            dtInner.Rows.Add(dr);
+            //DataRow dr = dtInner.NewRow();
+            //dr = writeInnerDefault(dr);
+            //dtInner.Rows.Add(dr);
         }
 
         private void btn删除_Click(object sender, EventArgs e)
         {
-            int idx = dataGridView1.SelectedCells[0].RowIndex;
-            dtInner.Rows[idx].Delete();
+            //int idx = dataGridView1.SelectedCells[0].RowIndex;
+            //dtInner.Rows[idx].Delete();
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -170,9 +144,10 @@ namespace mySystem.Process.Stock
 
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
-            readOuterData(tb名称.Text);
-            removeOuterBinding();
+            readOuterData(_id);
             outerBind();
+
+            btn提交审核.Enabled = true;
         }
 
        
@@ -218,14 +193,217 @@ namespace mySystem.Process.Stock
             }
         }
 
+        void setUseState()
+        {
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+        }
+
+
+        void getPeople()
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+
+            ls操作员 = new List<string>();
+            ls审核员 = new List<string>();
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='取样记录'", conn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+
+            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
+
+            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            //string[] s=Regex.Split("张三，,赵一,赵二", ",|，");
+
+        }
+
+        void setFormState()
+        {
+
+            string s = dtOuter.Rows[0]["审核员"].ToString();
+            bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核结果"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
+            else
+            {
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
+            }
+        }
+
+        void setEnableReadOnly()
+        {
+
+            if (Parameter.FormState.无数据 == _formState)
+            {
+                setControlFalse();
+                return;
+            }
+            if (Parameter.UserState.管理员 == _userState)
+            {
+                setControlTrue();
+            }
+            if (Parameter.UserState.审核员 == _userState)
+            {
+                if (Parameter.FormState.待审核 == _formState)
+                {
+                    setControlTrue();
+                    btn审核.Enabled = true;
+                }
+                else setControlFalse();
+            }
+            if (Parameter.UserState.操作员 == _userState)
+            {
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                else setControlFalse();
+            }
+
+
+        }
+
+        /// <summary>
+        /// 默认控件可用状态
+        /// </summary>
+        void setControlTrue()
+        {
+            // 查询插入，审核，提交审核，生产指令编码 在这里不用管
+            foreach (Control c in this.Controls)
+            {
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = false;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            // 保证这两个按钮一直是false
+            btn审核.Enabled = false;
+            btn提交审核.Enabled = false;
+
+        }
+
+        /// <summary>
+        /// 默认控件不可用状态
+        /// </summary>
+        void setControlFalse()
+        {
+            // 查询插入，审核，提交审核，生产指令编码 在这里不用管
+            foreach (Control c in this.Controls)
+            {
+                if (c.Name == "btn查询插入") continue;
+                if (c.Name == "tb生产指令编码") continue;
+                if (c is TextBox)
+                {
+                    (c as TextBox).ReadOnly = true;
+                }
+                else if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            btn取样证.Enabled = true;
+        }
+
+        private void btn提交审核_Click(object sender, EventArgs e)
+        {
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
+            DataTable dt;
 
 
 
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='取样记录' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            cb = new OleDbCommandBuilder(da);
+
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            DataRow dr = dt.NewRow();
+            dr["表名"] = "取样记录";
+            dr["对应ID"] = dtOuter.Rows[0]["ID"];
+            dt.Rows.Add(dr);
+            da.Update(dt);
 
 
+            dtOuter.Rows[0]["审核员"] = "__待审核";
+            _formState = Parameter.FormState.待审核;
+            btn提交审核.Enabled = false;
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            btn保存.PerformClick();
+            setFormState();
+            setEnableReadOnly();
 
+           
+            setControlFalse();
+        }
 
+        private void btn审核_Click(object sender, EventArgs e)
+        {
+             ckform = new CheckForm(this);
+             ckform.Show();
+        }
 
+        public override void CheckResult()
+        {
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
+            DataTable dt;
+
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='取样记录' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            cb = new OleDbCommandBuilder(da);
+
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            dt.Rows[0].Delete();
+            da.Update(dt);
+
+            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
+            dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
+            dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            
+            btn保存.PerformClick();
+            setFormState();
+            setEnableReadOnly();
+
+            btn审核.Enabled = false;
+
+            base.CheckResult();
+        }
+
+        private void btn取样证_Click(object sender, EventArgs e)
+        {
+            
+            int rIdx=dataGridView1.SelectedCells[0].RowIndex;
+            int selectedId = Convert.ToInt32(dtInner.Rows[rIdx]["ID"]);
+            取样证 form = new 取样证(selectedId);
+            form.Show();
+        }
 
     }
 }

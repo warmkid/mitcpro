@@ -77,25 +77,30 @@ namespace 订单和库存管理
 
         private void btn取样记录_Click(object sender, EventArgs e)
         {
-            mySystem.Process.Stock.取样记录 form = new mySystem.Process.Stock.取样记录();
-            form.Show();
+            //mySystem.Process.Stock.取样记录 form = new mySystem.Process.Stock.取样记录();
+            //form.Show();
         }
 
         private void btn取样证_Click(object sender, EventArgs e)
         {
-            mySystem.Process.Stock.取样证 form = new mySystem.Process.Stock.取样证();
-            form.Show();
+            //mySystem.Process.Stock.取样证 form = new mySystem.Process.Stock.取样证();
+            //form.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            mySystem.Process.Stock.物料取样请验等级及报告发放记录 form = new mySystem.Process.Stock.物料取样请验等级及报告发放记录();
-            form.Show();
+            
         }
 
         private void btn检验台账_Click(object sender, EventArgs e)
         {
             mySystem.Process.Stock.检验台账 form = new mySystem.Process.Stock.检验台账();
+            form.Show();
+        }
+
+        private void btn文件上传_Click(object sender, EventArgs e)
+        {
+            mySystem.Process.Stock.文件上传 form = new mySystem.Process.Stock.文件上传();
             form.Show();
         }
     }

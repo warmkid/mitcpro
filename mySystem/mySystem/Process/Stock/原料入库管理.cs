@@ -16,7 +16,7 @@ namespace mySystem.Process.Stock
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
         OleDbConnection conn;
-        DataTable dt物资验收记录, dt物资请验单, dt检验记录, dt不合格品处理记录;
+        DataTable dt物资验收记录, dt物资请验单, dt检验记录, dt不合格品处理记录, dt取样记录;
 
         public 原料入库管理()
         {
@@ -54,11 +54,27 @@ namespace mySystem.Process.Stock
             dataGridView2.AllowUserToAddRows = false;
             dataGridView3.AllowUserToAddRows = false;
             dataGridView4.AllowUserToAddRows = false;
+            dataGridView5.AllowUserToAddRows = false;
             // TODO  加一个绑定完成事件，把需要审核的行标记
-
+            dataGridView1.CellDoubleClick += new DataGridViewCellEventHandler(dataGridView1_CellDoubleClick);
             dataGridView2.CellDoubleClick += dataGridView2_CellDoubleClick;
             dataGridView3.CellDoubleClick += dataGridView3_CellDoubleClick;
             dataGridView4.CellDoubleClick += dataGridView4_CellDoubleClick;
+            dataGridView5.CellDoubleClick += new DataGridViewCellEventHandler(dataGridView5_CellDoubleClick);
+        }
+
+        void dataGridView5_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = Convert.ToInt32(dt取样记录.Rows[e.RowIndex][0]);
+            取样记录 form = new 取样记录(id);
+            form.Show();
+        }
+
+        void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = Convert.ToInt32(dt物资验收记录.Rows[e.RowIndex][0]);
+            物资验收记录 form = new 物资验收记录(id);
+            form.Show();
         }
 
         void dataGridView4_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -121,6 +137,9 @@ namespace mySystem.Process.Stock
             dataGridView3.DataSource = dt检验记录;
         }
 
+       
+
+
         void read不合格品记录Data()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 不合格品处理记录", conn);
@@ -137,6 +156,30 @@ namespace mySystem.Process.Stock
         {
             read不合格品记录Data();
             不合格品记录Bind();
+        }
+
+        private void btn读取验收记录_Click(object sender, EventArgs e)
+        {
+            read物资验收记录Data();
+            物资验收记录Bind();
+        }
+
+        void read取样记录Data()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录", conn);
+            dt取样记录 = new DataTable("取样记录");
+            da.Fill(dt取样记录);
+        }
+
+        void 取样记录Bind()
+        {
+            dataGridView5.DataSource = dt取样记录;
+        }
+
+        private void btn读取取样记录_Click(object sender, EventArgs e)
+        {
+            read取样记录Data();
+            取样记录Bind();
         }
     }
 }
