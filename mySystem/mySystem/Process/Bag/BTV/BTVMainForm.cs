@@ -186,7 +186,7 @@ namespace mySystem.Process.Bag.BTV
 
         private void Btn瓶口焊接机_Click(object sender, EventArgs e)
         {
-            BTVRunningRecordPK mydlg = new BTVRunningRecordPK();
+            BTVRunningRecordPK mydlg = new BTVRunningRecordPK(mainform);
             mydlg.ShowDialog();
         }
 

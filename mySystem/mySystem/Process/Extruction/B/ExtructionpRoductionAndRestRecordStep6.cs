@@ -240,16 +240,13 @@ namespace mySystem.Extruction.Process
         //根据状态设置可读写性
         private void setEnableReadOnly()
         {
-            //if (stat_user == 2)//管理员
             if (_userState == Parameter.UserState.管理员)
             {
                 //控件都能点
                 setControlTrue();
             }
-            //else if (stat_user == 1)//审核人
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                //if (stat_form == 0 || stat_form == 3 || stat_form == 2)  //0未保存||2审核通过||3审核未通过
                 if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
@@ -264,7 +261,6 @@ namespace mySystem.Extruction.Process
             }
             else//操作员
             {
-                //if (stat_form == 1 || stat_form == 2) //1待审核||2审核通过
                 if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
                 {
                     //控件都不能点
@@ -708,10 +704,7 @@ namespace mySystem.Extruction.Process
                 btn提交审核.Enabled = true;
             try { (this.Owner as ExtructionMainForm).InitBtn(); }
             catch (NullReferenceException exp)
-            {
-
-            }
-            
+            {  }            
         }
 
         //保存功能
