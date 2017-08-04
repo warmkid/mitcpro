@@ -24,6 +24,8 @@ namespace mySystem.Process.灭菌
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
         Int32 index;//datagridview列数
+        Int32 ID委托单号;
+
 
         public 辐照灭菌台帐(mySystem.MainForm mainform): base(mainform)
         {
