@@ -98,7 +98,7 @@ namespace mySystem.Process.CleanCut
             dt领料详细信息 = new DataTable("领料详细信息");
             bs领料详细信息 = new BindingSource();
             da领料详细信息.Fill(dt领料详细信息);
-            DataTable dt领料所需信息详细 = dt领料详细信息.DefaultView.ToTable(false, new string[] { "物料简称", "领取数量B" });
+            DataTable dt领料所需信息详细 = dt领料详细信息.DefaultView.ToTable(false, new string[] { "物料简称", "使用数量C" });
 
 
 
