@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Stock
 {
@@ -66,6 +67,37 @@ namespace mySystem.Process.Stock
         void getPeople()
         {
             // TODO
+            ls审核员 = new List<string>();
+            ls操作员 = new List<string>();
+            OleDbDataAdapter da;
+            DataTable dt;
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='" + "检验记录" + "'", conn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("用户权限设置有误，为避免出现错误，请尽快联系管理员完成设置！");
+                this.Dispose();
+            }
+
+            string str操作员 = dt.Rows[0]["操作员"].ToString();
+            string str审核员 = dt.Rows[0]["审核员"].ToString();
+            String[] tmp = Regex.Split(str操作员, ",|，");
+            foreach (string s in tmp)
+            {
+                if (s != "")
+                {
+                    ls操作员.Add(s);
+                }
+            }
+            tmp = Regex.Split(str审核员, ",|，");
+            foreach (string s in tmp)
+            {
+                if (s != "")
+                {
+                    ls审核员.Add(s);
+                }
+            }
         }
 
         void setUserState()
