@@ -19,24 +19,35 @@ namespace mySystem.Process.CleanCut
         Parameter.UserState _userState;
         Int32 ID生产指令 = mySystem.Parameter.csbagInstruID;
         String str生产指令编码 = mySystem.Parameter.csbagInstruction;
+        
+        //界面显示所需信息
+        DateTime date生产日期;
+        String str班次;
         String str产品代码;
         String str产品批号;
         String str客户或订单号;
         Int32 i入库量只;
         Double i效率=0.0;
+        Double i成品宽 = 0.0;
+        Double i成品长 = 0.0;
         Double i成品数量 = 0.0;
-        Double i膜材1用量 = 0.0;
-        Double i膜材2用量 = 0.0;
+        Double i膜材1用量米 = 0.0;
+        Double i膜材1用量平方米 = 0.0;
+        Double i膜材2用量米 = 0.0;
+        Double i膜材2用量平方米 = 0.0;
         Double i制袋收率 = 0.0;
 
-        private DataTable dt日报表详细信息, dt日报表, dt生产指令, dt生产指令详细信息, dt领料, dt领料详细信息, dt内包装;
-        private BindingSource bs日报表详细信息, bs日报表, bs生产指令, bs生产指令详细信息, bs领料, bs领料详细信息, bs内包装;
-        private OleDbDataAdapter da日报表详细信息, da日报表, da生产指令, da生产指令详细信息, da领料, da领料详细信息, da内包装;
-        private OleDbCommandBuilder cb日报表详细信息, cb日报表, cb生产指令, cb生产指令详细信息, cb领料, cb领料详细信息, cb内包装;
+        private DataTable dt日报表详细信息, dt日报表, dt生产指令, dt生产指令详细信息, dt领料, dt领料详细信息, dt内包装,dt产品外观;
+        private BindingSource bs日报表详细信息, bs日报表, bs生产指令, bs生产指令详细信息, bs领料, bs领料详细信息, bs内包装, bs产品外观;
+        private OleDbDataAdapter da日报表详细信息, da日报表, da生产指令, da生产指令详细信息, da领料, da领料详细信息, da内包装, ds产品外观;
+        private OleDbCommandBuilder cb日报表详细信息, cb日报表, cb生产指令, cb生产指令详细信息, cb领料, cb领料详细信息, cb内包装, cb产品外观;
        
         public Chart_daily_cs()
         {
             InitializeComponent();
+
+            bt打印.Enabled = false;
+
             getPeople();
             setUserState();
             getOtherData();
@@ -50,7 +61,9 @@ namespace mySystem.Process.CleanCut
             setFormState();
             setEnableReadOnly();
             addOtherEventHandler();
+
             dataGridView1.Columns.Clear();
+
             setDataGridViewColumns();
         }
 
@@ -68,8 +81,11 @@ namespace mySystem.Process.CleanCut
             dt生产指令 = new DataTable("生产指令");
             bs生产指令 = new BindingSource();
             da生产指令.Fill(dt生产指令);
-            DataTable dt生产指令所需信息 = dt生产指令.DefaultView.ToTable(false, new string[] {"ID", "计划生产日期", "生产指令编号" });
+            DataTable dt生产指令所需信息 = dt生产指令.DefaultView.ToTable(false, new string[] {"ID", "计划生产日期", "生产指令编号" ,"制袋物料名称1","制袋物料名称2"});
             Int32 i生产指令外表ID = Convert.ToInt32(dt生产指令所需信息.Rows[0]["ID"].ToString());
+            //根据生产指令外表中的制袋物料名称，读取领料量中对应物料的使用量C
+            String str制袋物料名称1 = dt生产指令所需信息.Rows[0]["制袋物料名称1"].ToString();
+            String str制袋物料名称2 = dt生产指令所需信息.Rows[0]["制袋物料名称2"].ToString();
 
             //读取生产指令内表
             da生产指令详细信息 = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令外表ID, mySystem.Parameter.connOle);
@@ -226,16 +242,21 @@ namespace mySystem.Process.CleanCut
             {
                 _userState = Parameter.UserState.管理员;
                 label角色.Text = "管理员";
+                bt打印.Enabled = true;
             }
             // 让用户选择操作员还是审核员，选“是”表示操作员
             if (Parameter.UserState.Both == _userState)
             {
                 if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
                 else _userState = Parameter.UserState.审核员;
-
+                bt打印.Enabled = true;
             }
             if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
-            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+            if (Parameter.UserState.审核员 == _userState)
+            { 
+                label角色.Text = "审核员";
+                bt打印.Enabled = true;
+            }
         }
 
         [DllImport("winspool.drv")]
@@ -332,16 +353,16 @@ namespace mySystem.Process.CleanCut
 
 
                 i成品数量 = Convert.ToInt32(dr["入库量只A"].ToString()) * Convert.ToDouble(dr["成品宽D"].ToString()) * Convert.ToDouble(dr["成品长E"].ToString()) / 1000000 * 2;
-                i膜材1用量 = Convert.ToDouble(dr["膜材1规格F"].ToString()) * Convert.ToDouble(dr["膜材1用量G"].ToString()) / 1000;
-                i膜材2用量 = Convert.ToDouble(dr["膜材2规格H"].ToString()) * Convert.ToDouble(dr["膜材2用量K"].ToString()) / 1000;
-                if ((i膜材1用量 + i膜材2用量) != 0)
+                i膜材1用量平方米 = Convert.ToDouble(dr["膜材1规格F"].ToString()) * Convert.ToDouble(dr["膜材1用量G"].ToString()) / 1000;
+                i膜材2用量平方米 = Convert.ToDouble(dr["膜材2规格H"].ToString()) * Convert.ToDouble(dr["膜材2用量K"].ToString()) / 1000;
+                if ((i膜材1用量平方米 + i膜材2用量平方米) != 0)
                 {
-                    i制袋收率 = i成品数量 / (i膜材1用量 + i膜材2用量);
+                    i制袋收率 = i成品数量 / (i膜材1用量平方米 + i膜材2用量平方米);
                 }
                 dr["效率"] = i效率;
                 dr["成品数量W"] = i成品数量;
-                dr["膜材1用量E"] = i膜材1用量;
-                dr["膜材2用量R"] = i膜材2用量;
+                dr["膜材1用量E"] = i膜材1用量平方米;
+                dr["膜材2用量R"] = i膜材2用量平方米;
                 dr["制袋收率"] = i制袋收率;
 
                 //dt日报表详细信息.Rows[i]["效率"] = i效率;
@@ -358,7 +379,13 @@ namespace mySystem.Process.CleanCut
            
         }
 
-        //写默认行数据
+        //写日报表外表数据
+        void writeInnerDefault(DataTable dt)
+        { 
+            
+        }
+
+        //写日报表内表数据
         DataRow writeInnerDefault(DataRow dr)
         {
             dr["TCS制袋日报表ID"] = 1;
@@ -377,12 +404,12 @@ namespace mySystem.Process.CleanCut
             
             dr["膜材1规格F"] = 0.0;
             dr["膜材1用量G"] = 0.0;
-            dr["膜材1用量E"] = i膜材1用量;
+            dr["膜材1用量E"] = i膜材1用量平方米;
             dr["膜材2规格H"] = 0.0;
             dr["膜材2用量K"] = 0.0;
-            dr["膜材2用量R"] = i膜材2用量;
+            dr["膜材2用量R"] = i膜材2用量平方米;
             dr["制袋收率"] = i制袋收率;
-
+            
             return dr;
         }
 
