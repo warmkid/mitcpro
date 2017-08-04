@@ -33,9 +33,9 @@
             this.btn保存 = new System.Windows.Forms.Button();
             this.Title = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tb产品名称 = new System.Windows.Forms.TextBox();
+            this.tb物料名称 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.tb产品代码 = new System.Windows.Forms.TextBox();
+            this.tb物料代码 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tb数量 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -54,6 +54,7 @@
             this.btn审核 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.cmb检验结论 = new System.Windows.Forms.ComboBox();
+            this.label角色 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // tb检查项目
@@ -100,14 +101,14 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(53, 12);
             this.label2.TabIndex = 1;
-            this.label2.Text = "产品名称";
+            this.label2.Text = "物料名称";
             // 
-            // tb产品名称
+            // tb物料名称
             // 
-            this.tb产品名称.Location = new System.Drawing.Point(80, 80);
-            this.tb产品名称.Name = "tb产品名称";
-            this.tb产品名称.Size = new System.Drawing.Size(100, 21);
-            this.tb产品名称.TabIndex = 37;
+            this.tb物料名称.Location = new System.Drawing.Point(80, 80);
+            this.tb物料名称.Name = "tb物料名称";
+            this.tb物料名称.Size = new System.Drawing.Size(100, 21);
+            this.tb物料名称.TabIndex = 37;
             // 
             // label3
             // 
@@ -116,14 +117,14 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 38;
-            this.label3.Text = "产品代码";
+            this.label3.Text = "物料代码";
             // 
-            // tb产品代码
+            // tb物料代码
             // 
-            this.tb产品代码.Location = new System.Drawing.Point(257, 80);
-            this.tb产品代码.Name = "tb产品代码";
-            this.tb产品代码.Size = new System.Drawing.Size(100, 21);
-            this.tb产品代码.TabIndex = 39;
+            this.tb物料代码.Location = new System.Drawing.Point(257, 80);
+            this.tb物料代码.Name = "tb物料代码";
+            this.tb物料代码.Size = new System.Drawing.Size(100, 21);
+            this.tb物料代码.TabIndex = 39;
             // 
             // label4
             // 
@@ -273,11 +274,22 @@
             this.cmb检验结论.Size = new System.Drawing.Size(121, 20);
             this.cmb检验结论.TabIndex = 57;
             // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
+            this.label角色.Location = new System.Drawing.Point(367, 23);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(49, 19);
+            this.label角色.TabIndex = 58;
+            this.label角色.Text = "角色";
+            // 
             // 检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(559, 618);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.cmb检验结论);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.btn审核);
@@ -296,9 +308,9 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tb数量);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.tb产品代码);
+            this.Controls.Add(this.tb物料代码);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.tb产品名称);
+            this.Controls.Add(this.tb物料名称);
             this.Controls.Add(this.Title);
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.label2);
@@ -318,9 +330,9 @@
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Label Title;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tb产品名称;
+        private System.Windows.Forms.TextBox tb物料名称;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tb产品代码;
+        private System.Windows.Forms.TextBox tb物料代码;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tb数量;
         private System.Windows.Forms.Label label5;
@@ -339,5 +351,6 @@
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cmb检验结论;
+        private System.Windows.Forms.Label label角色;
     }
 }

@@ -7,23 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Text.RegularExpressions;
+
 
 namespace mySystem.Process.Stock
 {
-    public partial class 物资验收记录 : Form
+    public partial class 物资验收记录 : BaseForm
     {
 
-        List<String> ls验收人;
+        List<String> ls操作员;
         List<String> ls审核员;
-        List<String> ls物资厂家代码;
+        List<String> ls供应商代码,ls供应商名称;
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
         /// </summary>
-        int userState;
+        mySystem.Parameter.UserState _userState;
         /// <summary>
         /// 0：未保存；1：待审核；2：审核通过；3：审核未通过
         /// </summary>
-        int formState;
+        mySystem.Parameter.FormState _formState;
 
         OleDbDataAdapter daOuter, daInner;
         OleDbCommandBuilder cbOuter, cbInner;
@@ -34,11 +36,14 @@ namespace mySystem.Process.Stock
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 
         OleDbConnection conn;
+        CheckForm ckform;
 
         public 物资验收记录()
         {
             // TODO 审核人不走这条路
             InitializeComponent();
+            conn = new OleDbConnection(strConn);
+            conn.Open();
             getPeople();
             setUserState();
             getOtherData();
@@ -62,19 +67,28 @@ namespace mySystem.Process.Stock
             }
 
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            setDataGridViewColumn();
             innerBind();
 
             addComputerEvnetHandler();
             setFormState();
             setEnableReadOnly();
             addOtherEventHandler();
-            
+
+        }
+
+        void cmb供应商代码_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            lbl供应商名称.Text = ls供应商名称[(sender as ComboBox).SelectedIndex];
+            lbl供应商名称.DataBindings[0].WriteValue();
         }
 
 
         public 物资验收记录(int id)
         {
             InitializeComponent();
+            conn = new OleDbConnection(strConn);
+            conn.Open();
             getPeople();
             setUserState();
             getOtherData();
@@ -84,12 +98,15 @@ namespace mySystem.Process.Stock
             
 
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            setDataGridViewColumn();
             innerBind();
 
             addComputerEvnetHandler();
             setFormState();
             setEnableReadOnly();
             addOtherEventHandler();
+
+            
         }
         //getPeople()--> setUserState()--> getOtherData()-->
         // 读取数据并显示(readOuterData(),outerBind(),readInnerData(),innerBind)-->
@@ -100,20 +117,79 @@ namespace mySystem.Process.Stock
         {
             // TODO
             ls审核员 = new List<string>();
-            ls验收人 = new List<string>();
+            ls操作员 = new List<string>();
+            OleDbDataAdapter da;
+            DataTable dt;
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='" + "物资验收记录" + "'", conn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("用户权限设置有误，为避免出现错误，请尽快联系管理员完成设置！");
+                this.Dispose();
+            }
+            
+            string str操作员 = dt.Rows[0]["操作员"].ToString();
+            string str审核员 = dt.Rows[0]["审核员"].ToString();
+            String[] tmp = Regex.Split(str操作员, ",|，");
+            foreach (string s in tmp)
+            {
+                if (s != "")
+                {
+                    ls操作员.Add(s);
+                }
+            }
+            tmp = Regex.Split(str审核员, ",|，");
+            foreach (string s in tmp)
+            {
+                if (s != "")
+                {
+                    ls审核员.Add(s);
+                }
+            }
         }
 
         void setUserState()
         {
             // TODO
-            userState = 0;
+
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
         void getOtherData()
         {
             // TODO
-            ls物资厂家代码 = new List<string>();
-            ls物资厂家代码.Add("厂家1");
+            ls供应商代码 = new List<string>();
+            ls供应商名称 = new List<string>();
+            //ls供应商代码.Add("厂家1");
+
+            OleDbDataAdapter da;
+            DataTable dt;
+            da = new OleDbDataAdapter("select * from 设置厂家信息", conn);
+            dt = new DataTable("tmp");
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls供应商代码.Add(dr["供应商代码"].ToString());
+                ls供应商名称.Add(dr["供应商名称"].ToString());
+            }
         }
 
         void readOuterData(int id = -1)
@@ -143,6 +219,7 @@ namespace mySystem.Process.Stock
         {
             dr["接收时间"] = DateTime.Now;
             dr["验收人"] = mySystem.Parameter.userName;
+            dr["请验人"] = mySystem.Parameter.userName;
             dr["请验时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
             dr["验收记录编号"] = create验收记录编号();
@@ -182,7 +259,9 @@ namespace mySystem.Process.Stock
 
             bsOuter.DataSource = dtOuter;
 
-            cmb物资厂家代码.DataBindings.Clear();
+            cmb供应商代码.DataBindings.Clear();
+            lbl供应商名称.DataBindings.Clear();
+            lbl供应商名称.DataBindings.Add("Text", bsOuter.DataSource, "供应商名称");
             dtp接收时间.DataBindings.Clear();
             tb验收人.DataBindings.Clear();
 
@@ -204,13 +283,14 @@ namespace mySystem.Process.Stock
             lbl验收记录编号.DataBindings.Clear();
             
             // ----
-            cmb物资厂家代码.Items.Clear();
-            foreach (String s in ls物资厂家代码)
+            cmb供应商代码.Items.Clear();
+            foreach (String s in ls供应商代码)
             {
-                cmb物资厂家代码.Items.Add(s);
+                cmb供应商代码.Items.Add(s);
             }
 
-            cmb物资厂家代码.DataBindings.Add("SelectedItem", bsOuter.DataSource, "物资厂家代码");
+            cmb供应商代码.DataBindings.Add("SelectedItem", bsOuter.DataSource, "供应商代码");
+            
             dtp接收时间.DataBindings.Add("Value", bsOuter.DataSource, "接收时间");
             tb验收人.DataBindings.Add("Text", bsOuter.DataSource, "验收人");
 
@@ -270,62 +350,74 @@ namespace mySystem.Process.Stock
 
         void setFormState()
         {
-            if (dtOuter.Rows[0]["审核员"].ToString() == "")
-            {
-                formState = 0;
-            }
-            else if (dtOuter.Rows[0]["审核员"].ToString() == "__待审核")
-            {
-                formState = 1;
-            }
+            string s = dtOuter.Rows[0]["审核员"].ToString();
+            bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核结果"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
             else
             {
-                if (Convert.ToBoolean(dtOuter.Rows[0]["审核意见"]))
-                {
-                    formState = 2;
-                }
-                else
-                {
-                    formState = 3;
-                }
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
             }
+            
             
         }
 
         void setEnableReadOnly()
         {
-            if (2 == userState)
+           
+            if (Parameter.UserState.管理员 == _userState)
             {
                 setControlTrue();
             }
-            if (1 == userState)
+            if (Parameter.UserState.审核员 == _userState)
             {
-                if (0 == formState || 2 == formState || 3 == formState)
-                {
-                    setControlFalse();
-                }
-                else
+                if (Parameter.FormState.待审核 == _formState)
                 {
                     setControlTrue();
                     btn审核.Enabled = true;
                 }
+                else setControlFalse();
             }
-            if (0 == userState)
+            if (Parameter.UserState.操作员 == _userState)
             {
-                if (0 == formState || 3 == formState)
-                {
-                    setControlTrue();
-                }
-                if (1 == formState || 2 == formState)
-                {
-                    setControlFalse();
-                }
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                else setControlFalse();
             }
+
+            //if (2 == _userState)
+            //{
+            //    setControlTrue();
+            //}
+            //if (1 == _userState)
+            //{
+            //    if (0 == _formState || 2 == _formState || 3 == _formState)
+            //    {
+            //        setControlFalse();
+            //    }
+            //    else
+            //    {
+            //        setControlTrue();
+            //        btn审核.Enabled = true;
+            //    }
+            //}
+            //if (0 == _userState)
+            //{
+            //    if (0 == _formState || 3 == _formState)
+            //    {
+            //        setControlTrue();
+            //    }
+            //    if (1 == _formState || 2 == _formState)
+            //    {
+            //        setControlFalse();
+            //    }
+            //}
         }
 
         void addOtherEventHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
+            cmb供应商代码.SelectedIndexChanged += new EventHandler(cmb供应商代码_SelectedIndexChanged); 
         }
 
         void setControlTrue()
@@ -387,9 +479,31 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
+            DataTable dt;
+
+
+
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资验收记录' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            cb = new OleDbCommandBuilder(da);
+
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            DataRow dr = dt.NewRow();
+            dr["表名"] = "物资验收记录";
+            dr["对应ID"] = dtOuter.Rows[0]["ID"];
+            dt.Rows.Add(dr);
+            da.Update(dt);
+
+
             dtOuter.Rows[0]["审核员"] = "__待审核";
-            formState = 1;
+            _formState = Parameter.FormState.待审核;
             btn提交审核.Enabled = false;
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            btn保存.PerformClick();
+            setFormState();
+            setEnableReadOnly();
 
             string log = "=============================\n";
             log += DateTime.Now.ToShortDateString();
@@ -398,6 +512,7 @@ namespace mySystem.Process.Stock
             setControlFalse();
 
             // TODO 判断，然后决定是新建 请验单 还是  检验记录
+            // 还有自动增加若干条检验台账
             
             bool isAllOK = true;
             List<Int32> RowToCheck = new List<int>();
@@ -409,29 +524,33 @@ namespace mySystem.Process.Stock
                     RowToCheck.Add(i);
                 }
             }
-            // 开请验单
+            // 开请验单，取样记录，检验台账
             if (isAllOK)
             {
                 create请验单();
+                // 
+                create取样记录();
+                insert台账();
+                // TODO 加入库存台账
             }
             // 开检验记录
             else
             {
                 foreach (int r in RowToCheck)
                 {
-                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"]+" and 产品名称='"+dtInner.Rows[r]["产品名称"]+"'", conn);
-                    DataTable dt = new DataTable("检验记录");
-                    OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                    da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dtInner.Rows[r]["物料名称"] + "'", conn);
+                    dt = new DataTable("检验记录");
+                    cb = new OleDbCommandBuilder(da);
                     BindingSource bs = new BindingSource();
                     da.Fill(dt);
-                    DataRow dr = dt.NewRow();
+                    dr = dt.NewRow();
                     dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
-                    dr["产品名称"] = dtInner.Rows[r]["产品名称"];
+                    dr["物料名称"] = dtInner.Rows[r]["物料名称"];
                     dr["产品批号"] = dtInner.Rows[r]["本厂批号"];
                     dr["数量"] = dtInner.Rows[r]["数量"];
                     dr["检验日期"] = DateTime.Now;
                     dr["审核日期"] = DateTime.Now;
-                    dr["产品代码"] = dtInner.Rows[r]["产品代码"];
+                    dr["物料代码"] = dtInner.Rows[r]["物料代码"];
                     dr["检验结论"] = "合格";
                     dt.Rows.Add(dr);
                     da.Update(dt);
@@ -445,7 +564,7 @@ namespace mySystem.Process.Stock
 
         public void create请验单()
         {
-            if (dtOuter.Rows[0]["审核人"].ToString() == "")
+            if (dtOuter.Rows[0]["审核员"].ToString() == "")
             {
                 return;
             }
@@ -458,7 +577,8 @@ namespace mySystem.Process.Stock
             // 填写值
             // Outer
             DataRow dr = dt.NewRow();
-            dr["物资厂家代码"] = dtOuter.Rows[0]["物资厂家代码"];
+            dr["供应商代码"] = dtOuter.Rows[0]["供应商代码"];
+            dr["供应商名称"] = dtOuter.Rows[0]["供应商名称"];
             dr["请验时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
             dr["请验人"] = mySystem.Parameter.userName;
@@ -478,6 +598,7 @@ namespace mySystem.Process.Stock
             da.Fill(dtMore);
             for (int i = 0; i < dtInner.Rows.Count; ++i)
             {
+                if (dtInner.Rows[i]["是否需要检验"].ToString() == "是") continue;
                 DataRow ndr = dtMore.NewRow();
                 // 注意ID的值
                 for (int j = 2; j < dtInner.Rows[i].ItemArray.Length - 1; ++j)
@@ -485,11 +606,57 @@ namespace mySystem.Process.Stock
                     ndr[j] = dtInner.Rows[i][j];
                 }
                 ndr[1] = dt.Rows[0]["ID"];
-                ndr[ndr.ItemArray.Length - 1] = true;
+                ndr[ndr.ItemArray.Length - 1] = dtOuter.Rows[0]["厂家随附检验报告"].ToString() ;
                 dtMore.Rows.Add(ndr);
             }
             da.Update(dtMore);
             MessageBox.Show("已自动生产物资请验单！");
+        }
+
+        public void create取样记录()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            DataTable dt = new DataTable("取样记录");
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            BindingSource bs = new BindingSource();
+            da.Fill(dt);
+
+            // 填写值
+            // Outer
+            DataRow dr = dt.NewRow();
+
+            dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
+            dr["审核时间"] = DateTime.Now;
+            dt.Rows.Add(dr);
+
+            da.Update(dt);
+            da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], conn);
+
+            dt = new DataTable("取样记录");
+            da.Fill(dt);
+            // Inner
+            da = new OleDbDataAdapter("select * from 取样记录详细信息 where 取样记录ID=" + dt.Rows[0]["ID"], conn);
+            DataTable dtMore = new DataTable("取样记录详细信息");
+            cb = new OleDbCommandBuilder(da);
+            da.Fill(dtMore);
+            for (int i = 0; i < dtInner.Rows.Count; ++i)
+            {
+                if (dtInner.Rows[i][9].ToString() == "是") continue;
+                DataRow ndr = dtMore.NewRow();
+                // 注意ID的值
+                for (int j = 2; j <= 8; ++j)
+                {
+                    
+                    ndr[j] = dtInner.Rows[i][j];
+                }
+                ndr[1] = dt.Rows[0]["ID"];
+
+                ndr[9] = DateTime.Now;
+                ndr[12] = mySystem.Parameter.userName;
+                dtMore.Rows.Add(ndr);
+            }
+            da.Update(dtMore);
+            MessageBox.Show("已自动生产取样记录！");
         }
 
         private string create请验编号()
@@ -525,7 +692,8 @@ namespace mySystem.Process.Stock
 
         private void btn审核_Click(object sender, EventArgs e)
         {
-
+            ckform = new CheckForm(this);
+            ckform.Show();
         }
 
         private void btn添加_Click(object sender, EventArgs e)
@@ -535,12 +703,130 @@ namespace mySystem.Process.Stock
             dtInner.Rows.Add(dr);
         }
 
-        private void 增加物资验收记录_Load(object sender, EventArgs e)
+
+
+        public override void CheckResult()
         {
-            
-            
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
+            DataTable dt;
+
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资验收记录' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            cb = new OleDbCommandBuilder(da);
+
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            dt.Rows[0].Delete();
+            da.Update(dt);
+
+            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
+            dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
+            dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            String log = "===================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
+            log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
+            log += "审核结果为：通过\n";
+            log += "审核意见为：无\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+            btn保存.PerformClick();
+            setFormState();
+            setEnableReadOnly();
+
+            btn审核.Enabled = false;
+            base.CheckResult();
+        }
+
+        void setDataGridViewColumn()
+        {
+            dataGridView1.Columns.Clear();
+            DataGridViewTextBoxColumn tbc;
+            DataGridViewComboBoxColumn cbc;
+            DataGridViewCheckBoxColumn ckbc;
+
+            // 先把所有的列都加好，基本属性附上
+            foreach (DataColumn dc in dtInner.Columns)
+            {
+                // 要下拉框的特殊处理
+
+                if (dc.ColumnName == "是否需要检验")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    cbc.Items.Add("是");
+                    cbc.Items.Add("否");
+                    dataGridView1.Columns.Add(cbc);
+                    continue;
+                }
+                // 根据数据类型自动生成列的关键信息
+                switch (dc.DataType.ToString())
+                {
+
+                    case "System.Int32":
+                    case "System.String":
+                    case "System.Double":
+                    case "System.DateTime":
+                        tbc = new DataGridViewTextBoxColumn();
+                        tbc.HeaderText = dc.ColumnName;
+                        tbc.Name = dc.ColumnName;
+                        tbc.ValueType = dc.DataType;
+                        tbc.DataPropertyName = dc.ColumnName;
+                        tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        dataGridView1.Columns.Add(tbc);
+                        break;
+                    case "System.Boolean":
+                        ckbc = new DataGridViewCheckBoxColumn();
+                        ckbc.HeaderText = dc.ColumnName;
+                        ckbc.Name = dc.ColumnName;
+                        ckbc.ValueType = dc.DataType;
+                        ckbc.DataPropertyName = dc.ColumnName;
+                        ckbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        dataGridView1.Columns.Add(ckbc);
+                        break;
+                }
+            }
         }
 
 
+        public void insert台账()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验台账 where 0=1" + dtOuter.Rows[0]["ID"], conn);
+            DataTable dt = new DataTable("检验台账");
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            BindingSource bs = new BindingSource();
+            da.Fill(dt);
+
+            // 填写值
+            // Outer
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                if (dr["是否需要检验"].ToString() == "是") continue;
+                DataRow ndr =  dt.NewRow();
+                for (int j= 2; j <= 8; ++j)
+                {
+                    ndr[j] = dr[j];
+                    
+                }
+                ndr[1] = DateTime.Now;
+                ndr[9] = dtOuter.Rows[0]["供应商代码"];
+                ndr[10] = dtOuter.Rows[0]["供应商名称"];
+                ndr[11] = "有";
+                ndr[13] = mySystem.Parameter.userName;
+                ndr[14] = "Yes";
+                ndr[16] = DateTime.Now;
+                ndr[19] = "是";
+                dt.Rows.Add(ndr);
+            }
+            
+
+            
+
+            da.Update(dt);
+            
+            MessageBox.Show("已加入检验台账！");
+        }
     }
 }

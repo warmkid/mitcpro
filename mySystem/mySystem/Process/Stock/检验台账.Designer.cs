@@ -33,6 +33,9 @@
             this.btn删除 = new System.Windows.Forms.Button();
             this.btn添加 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
+            this.label角色 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -88,11 +91,46 @@
             this.dataGridView1.Size = new System.Drawing.Size(1088, 340);
             this.dataGridView1.TabIndex = 47;
             // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn提交审核.Location = new System.Drawing.Point(771, 409);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(92, 23);
+            this.btn提交审核.TabIndex = 52;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            // 
+            // btn审核
+            // 
+            this.btn审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn审核.Location = new System.Drawing.Point(264, 407);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(75, 23);
+            this.btn审核.TabIndex = 53;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(657, 9);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 54;
+            this.label角色.Text = "角色";
+            // 
             // 检验台账
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1112, 442);
+            this.Controls.Add(this.label角色);
+            this.Controls.Add(this.btn审核);
+            this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.btn删除);
@@ -113,6 +151,9 @@
         private System.Windows.Forms.Button btn删除;
         private System.Windows.Forms.Button btn添加;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.Label label角色;
 
     }
 }

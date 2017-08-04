@@ -19,12 +19,12 @@ namespace mySystem.Process.Stock
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
         /// </summary>
-        int userState;
+        mySystem.Parameter.UserState _userState;
 
         /// <summary>
         /// 0：未保存；1：待审核；2：审核通过；3：审核未通过
         /// </summary>
-        int formState;
+        mySystem.Parameter.FormState _formState;
 
 
 
@@ -70,7 +70,24 @@ namespace mySystem.Process.Stock
 
         void setUserState()
         {
-            userState = 0;
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
         void getOtherData()
@@ -147,56 +164,37 @@ namespace mySystem.Process.Stock
 
         void setFormState()
         {
-            if (dtOuter.Rows[0]["审核员"].ToString() == "")
-            {
-                formState = 0;
-            }
-            else if (dtOuter.Rows[0]["审核员"].ToString() == "__待审核")
-            {
-                formState = 1;
-            }
+            string s = dtOuter.Rows[0]["审核员"].ToString();
+            bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核结果"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
             else
             {
-                if (Convert.ToBoolean(dtOuter.Rows[0]["审核意见"]))
-                {
-                    formState = 2;
-                }
-                else
-                {
-                    formState = 3;
-                }
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
             }
 
         }
 
         void setEnableReadOnly()
         {
-            if (2 == userState)
+            if (Parameter.UserState.管理员 == _userState)
             {
                 setControlTrue();
             }
-            if (1 == userState)
+            if (Parameter.UserState.审核员 == _userState)
             {
-                if (0 == formState || 2 == formState || 3 == formState)
-                {
-                    setControlFalse();
-                }
-                else
+                if (Parameter.FormState.待审核 == _formState)
                 {
                     setControlTrue();
                     btn审核.Enabled = true;
                 }
+                else setControlFalse();
             }
-            if (0 == userState)
+            if (Parameter.UserState.操作员 == _userState)
             {
-                if (0 == formState || 3 == formState)
-                {
-                    setControlTrue();
-                }
-                if (1 == formState || 2 == formState)
-                {
-                    setControlFalse();
-                }
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                else setControlFalse();
             }
             
         }
@@ -258,21 +256,49 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
+            DataTable dt;
+
+
+
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='检验记录' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            cb = new OleDbCommandBuilder(da);
+
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            DataRow odr = dt.NewRow();
+            odr["表名"] = "检验记录";
+            odr["对应ID"] = dtOuter.Rows[0]["ID"];
+            dt.Rows.Add(odr);
+            da.Update(dt);
+
+
+            dtOuter.Rows[0]["审核员"] = "__待审核";
+            _formState = Parameter.FormState.待审核;
             btn提交审核.Enabled = false;
-            formState = 1;
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            btn保存.PerformClick();
+            setFormState();
             setEnableReadOnly();
+
+
+            setControlFalse();
+
+
+            
             // 判断检验结论，如果合格，则：
             if (cmb检验结论.SelectedItem.ToString() == "合格")
             {
                 // 修改验收记录，判断可以生产请验单
                 // 根据dtOuter中的物资验收记录 ID 和 产品名称找到  物资验收记录详细信息  中的那一行数据
-                String sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0} and 产品名称='{1}'";
-                OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]), dtOuter.Rows[0]["产品名称"].ToString()), conn);
-                DataTable dt = new DataTable("temp");
-                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                String sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0} and 物料名称='{1}'";
+                 da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]), dtOuter.Rows[0]["物料名称"].ToString()), conn);
+                 dt = new DataTable("temp");
+                 cb = new OleDbCommandBuilder(da);
                 da.Fill(dt);
                 // 修改  是  为  否
-                dt.Rows[0]["是否需要检查"] = "否";
+                dt.Rows[0]["是否需要检验"] = "否";
                 da.Update(dt);
                 // 读取该 物资验收记录 ID 下的所有详细信息，看是否都为否了
                 sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0}";
@@ -281,28 +307,30 @@ namespace mySystem.Process.Stock
                 da.Fill(dt);
                 foreach (DataRow dr in dt.Rows)
                 {
-                    if (dr["是否需要检查"].ToString() == "是") { return; }
+                    if (dr["是否需要检验"].ToString() == "是") { return; }
                 }
                 // 如果都为否了，则自动生成请验单
                 MessageBox.Show("当期验收单下的所有产品都通过检查，正在为您自动生产物资请验单");
                 物资验收记录 form = new 物资验收记录(Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
                 form.create请验单();
+                form.create取样记录();
+                form.insert台账();
             }
             // 否则 生成不合格品处理记录
             else
             {
                 // TODO 不合格品记录如何点击？？
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 不合格品处理记录 where 物资验收记录ID=" + dtOuter.Rows[0]["物资验收记录ID"] + " and 产品名称='" + dtOuter.Rows[0]["产品名称"] + "'", conn);
-                DataTable dt = new DataTable("不合格品处理记录");
-                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                 da = new OleDbDataAdapter("select * from 不合格品处理记录 where 物资验收记录ID=" + dtOuter.Rows[0]["物资验收记录ID"] + " and 物料名称='" + dtOuter.Rows[0]["物料名称"] + "'", conn);
+                 dt = new DataTable("不合格品处理记录");
+                 cb = new OleDbCommandBuilder(da);
                 BindingSource bs = new BindingSource();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
                 {
                     DataRow dr = dt.NewRow();
                     dr["物资验收记录ID"] = dtOuter.Rows[0]["物资验收记录ID"];
-                    dr["产品名称"] = dtOuter.Rows[0]["产品名称"];
-                    dr["产品代码"] = dtOuter.Rows[0]["产品代码"];
+                    dr["物料名称"] = dtOuter.Rows[0]["物料名称"];
+                    dr["物料代码"] = dtOuter.Rows[0]["物料代码"];
                     dr["编号"] = create检验记录编号();
                     dr["产品批号"] = dtOuter.Rows[0]["产品批号"];
                     dr["数量"] = dtOuter.Rows[0]["数量"];

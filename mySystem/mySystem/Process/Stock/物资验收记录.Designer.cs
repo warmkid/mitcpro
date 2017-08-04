@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.Title = new System.Windows.Forms.Label();
-            this.cmb物资厂家代码 = new System.Windows.Forms.ComboBox();
+            this.cmb供应商代码 = new System.Windows.Forms.ComboBox();
             this.tb检验报告理由 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btn保存 = new System.Windows.Forms.Button();
@@ -61,6 +61,9 @@
             this.btn下移 = new System.Windows.Forms.Button();
             this.lbl验收记录编号 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.lbl供应商名称 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -74,17 +77,17 @@
             this.Title.TabIndex = 4;
             this.Title.Text = "物资验收记录";
             // 
-            // cmb物资厂家代码
+            // cmb供应商代码
             // 
-            this.cmb物资厂家代码.FormattingEnabled = true;
-            this.cmb物资厂家代码.Location = new System.Drawing.Point(100, 81);
-            this.cmb物资厂家代码.Name = "cmb物资厂家代码";
-            this.cmb物资厂家代码.Size = new System.Drawing.Size(121, 20);
-            this.cmb物资厂家代码.TabIndex = 5;
+            this.cmb供应商代码.FormattingEnabled = true;
+            this.cmb供应商代码.Location = new System.Drawing.Point(100, 81);
+            this.cmb供应商代码.Name = "cmb供应商代码";
+            this.cmb供应商代码.Size = new System.Drawing.Size(121, 20);
+            this.cmb供应商代码.TabIndex = 5;
             // 
             // tb检验报告理由
             // 
-            this.tb检验报告理由.Location = new System.Drawing.Point(256, 403);
+            this.tb检验报告理由.Location = new System.Drawing.Point(256, 448);
             this.tb检验报告理由.Name = "tb检验报告理由";
             this.tb检验报告理由.Size = new System.Drawing.Size(100, 21);
             this.tb检验报告理由.TabIndex = 6;
@@ -92,7 +95,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(215, 407);
+            this.label1.Location = new System.Drawing.Point(215, 452);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 7;
@@ -100,7 +103,7 @@
             // 
             // btn保存
             // 
-            this.btn保存.Location = new System.Drawing.Point(399, 501);
+            this.btn保存.Location = new System.Drawing.Point(399, 546);
             this.btn保存.Name = "btn保存";
             this.btn保存.Size = new System.Drawing.Size(75, 23);
             this.btn保存.TabIndex = 8;
@@ -113,13 +116,13 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(17, 84);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 12);
+            this.label2.Size = new System.Drawing.Size(65, 12);
             this.label2.TabIndex = 9;
-            this.label2.Text = "物资厂家代码";
+            this.label2.Text = "供应商代码";
             // 
             // dtp请验时间
             // 
-            this.dtp请验时间.Location = new System.Drawing.Point(229, 458);
+            this.dtp请验时间.Location = new System.Drawing.Point(229, 503);
             this.dtp请验时间.Name = "dtp请验时间";
             this.dtp请验时间.Size = new System.Drawing.Size(109, 21);
             this.dtp请验时间.TabIndex = 10;
@@ -159,7 +162,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(19, 126);
+            this.dataGridView1.Location = new System.Drawing.Point(19, 171);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(662, 221);
@@ -168,7 +171,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 407);
+            this.label5.Location = new System.Drawing.Point(17, 452);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(101, 12);
             this.label5.TabIndex = 16;
@@ -177,7 +180,7 @@
             // cmb厂家随附检验报告
             // 
             this.cmb厂家随附检验报告.FormattingEnabled = true;
-            this.cmb厂家随附检验报告.Location = new System.Drawing.Point(127, 404);
+            this.cmb厂家随附检验报告.Location = new System.Drawing.Point(127, 449);
             this.cmb厂家随附检验报告.Name = "cmb厂家随附检验报告";
             this.cmb厂家随附检验报告.Size = new System.Drawing.Size(52, 20);
             this.cmb厂家随附检验报告.TabIndex = 17;
@@ -185,7 +188,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(400, 407);
+            this.label6.Location = new System.Drawing.Point(400, 452);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 12);
             this.label6.TabIndex = 18;
@@ -194,7 +197,7 @@
             // cmb是否有样品
             // 
             this.cmb是否有样品.FormattingEnabled = true;
-            this.cmb是否有样品.Location = new System.Drawing.Point(471, 403);
+            this.cmb是否有样品.Location = new System.Drawing.Point(471, 448);
             this.cmb是否有样品.Name = "cmb是否有样品";
             this.cmb是否有样品.Size = new System.Drawing.Size(52, 20);
             this.cmb是否有样品.TabIndex = 19;
@@ -202,7 +205,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(544, 406);
+            this.label7.Location = new System.Drawing.Point(544, 451);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 12);
             this.label7.TabIndex = 20;
@@ -210,7 +213,7 @@
             // 
             // tb样品理由
             // 
-            this.tb样品理由.Location = new System.Drawing.Point(581, 402);
+            this.tb样品理由.Location = new System.Drawing.Point(581, 447);
             this.tb样品理由.Name = "tb样品理由";
             this.tb样品理由.Size = new System.Drawing.Size(100, 21);
             this.tb样品理由.TabIndex = 21;
@@ -218,7 +221,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(17, 464);
+            this.label8.Location = new System.Drawing.Point(17, 509);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(41, 12);
             this.label8.TabIndex = 22;
@@ -226,7 +229,7 @@
             // 
             // tb请验人
             // 
-            this.tb请验人.Location = new System.Drawing.Point(64, 459);
+            this.tb请验人.Location = new System.Drawing.Point(64, 504);
             this.tb请验人.Name = "tb请验人";
             this.tb请验人.Size = new System.Drawing.Size(100, 21);
             this.tb请验人.TabIndex = 23;
@@ -234,7 +237,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(170, 464);
+            this.label9.Location = new System.Drawing.Point(170, 509);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(53, 12);
             this.label9.TabIndex = 24;
@@ -243,7 +246,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(512, 464);
+            this.label10.Location = new System.Drawing.Point(512, 509);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 12);
             this.label10.TabIndex = 28;
@@ -251,7 +254,7 @@
             // 
             // tb审核员
             // 
-            this.tb审核员.Location = new System.Drawing.Point(406, 459);
+            this.tb审核员.Location = new System.Drawing.Point(406, 504);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(100, 21);
             this.tb审核员.TabIndex = 27;
@@ -259,7 +262,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(359, 464);
+            this.label11.Location = new System.Drawing.Point(359, 509);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(41, 12);
             this.label11.TabIndex = 26;
@@ -267,14 +270,14 @@
             // 
             // dtp审核时间
             // 
-            this.dtp审核时间.Location = new System.Drawing.Point(571, 458);
+            this.dtp审核时间.Location = new System.Drawing.Point(571, 503);
             this.dtp审核时间.Name = "dtp审核时间";
             this.dtp审核时间.Size = new System.Drawing.Size(109, 21);
             this.dtp审核时间.TabIndex = 25;
             // 
             // btn提交审核
             // 
-            this.btn提交审核.Location = new System.Drawing.Point(504, 501);
+            this.btn提交审核.Location = new System.Drawing.Point(504, 546);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(75, 23);
             this.btn提交审核.TabIndex = 29;
@@ -284,7 +287,7 @@
             // 
             // btn查看日志
             // 
-            this.btn查看日志.Location = new System.Drawing.Point(607, 501);
+            this.btn查看日志.Location = new System.Drawing.Point(607, 546);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(75, 23);
             this.btn查看日志.TabIndex = 30;
@@ -294,7 +297,7 @@
             // 
             // btn审核
             // 
-            this.btn审核.Location = new System.Drawing.Point(19, 501);
+            this.btn审核.Location = new System.Drawing.Point(19, 546);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 23);
             this.btn审核.TabIndex = 31;
@@ -304,7 +307,7 @@
             // 
             // btn添加
             // 
-            this.btn添加.Location = new System.Drawing.Point(19, 363);
+            this.btn添加.Location = new System.Drawing.Point(19, 408);
             this.btn添加.Name = "btn添加";
             this.btn添加.Size = new System.Drawing.Size(75, 23);
             this.btn添加.TabIndex = 32;
@@ -314,7 +317,7 @@
             // 
             // btn上移
             // 
-            this.btn上移.Location = new System.Drawing.Point(127, 363);
+            this.btn上移.Location = new System.Drawing.Point(127, 408);
             this.btn上移.Name = "btn上移";
             this.btn上移.Size = new System.Drawing.Size(75, 23);
             this.btn上移.TabIndex = 33;
@@ -323,7 +326,7 @@
             // 
             // btn下移
             // 
-            this.btn下移.Location = new System.Drawing.Point(229, 363);
+            this.btn下移.Location = new System.Drawing.Point(229, 408);
             this.btn下移.Name = "btn下移";
             this.btn下移.Size = new System.Drawing.Size(75, 23);
             this.btn下移.TabIndex = 34;
@@ -333,7 +336,7 @@
             // lbl验收记录编号
             // 
             this.lbl验收记录编号.AutoSize = true;
-            this.lbl验收记录编号.Location = new System.Drawing.Point(606, 31);
+            this.lbl验收记录编号.Location = new System.Drawing.Point(344, 134);
             this.lbl验收记录编号.Name = "lbl验收记录编号";
             this.lbl验收记录编号.Size = new System.Drawing.Size(0, 12);
             this.lbl验收记录编号.TabIndex = 35;
@@ -341,17 +344,47 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(496, 31);
+            this.label12.Location = new System.Drawing.Point(245, 134);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(89, 12);
             this.label12.TabIndex = 36;
             this.label12.Text = "验收记录编号：";
             // 
-            // 增加物资验收记录
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(546, 31);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(49, 19);
+            this.label角色.TabIndex = 37;
+            this.label角色.Text = "角色";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(17, 134);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(65, 12);
+            this.label13.TabIndex = 39;
+            this.label13.Text = "供应商名称";
+            // 
+            // lbl供应商名称
+            // 
+            this.lbl供应商名称.AutoSize = true;
+            this.lbl供应商名称.Location = new System.Drawing.Point(98, 134);
+            this.lbl供应商名称.Name = "lbl供应商名称";
+            this.lbl供应商名称.Size = new System.Drawing.Size(0, 12);
+            this.lbl供应商名称.TabIndex = 40;
+            // 
+            // 物资验收记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(697, 536);
+            this.ClientSize = new System.Drawing.Size(697, 609);
+            this.Controls.Add(this.lbl供应商名称);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.lbl验收记录编号);
             this.Controls.Add(this.btn下移);
@@ -383,11 +416,11 @@
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tb检验报告理由);
-            this.Controls.Add(this.cmb物资厂家代码);
+            this.Controls.Add(this.cmb供应商代码);
             this.Controls.Add(this.Title);
-            this.Name = "增加物资验收记录";
+            this.Name = "物资验收记录";
             this.Text = "增加物资验收记录";
-            this.Load += new System.EventHandler(this.增加物资验收记录_Load);
+            
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -397,7 +430,7 @@
         #endregion
 
         private System.Windows.Forms.Label Title;
-        private System.Windows.Forms.ComboBox cmb物资厂家代码;
+        private System.Windows.Forms.ComboBox cmb供应商代码;
         private System.Windows.Forms.TextBox tb检验报告理由;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn保存;
@@ -429,5 +462,8 @@
         private System.Windows.Forms.Button btn下移;
         private System.Windows.Forms.Label lbl验收记录编号;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label lbl供应商名称;
     }
 }
