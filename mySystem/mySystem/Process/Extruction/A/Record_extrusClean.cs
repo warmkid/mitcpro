@@ -673,6 +673,14 @@ namespace WindowsFormsApplication1
             bs_out.EndEdit();
             da_out.Update((DataTable)bs_out.DataSource);
             base.CheckResult();
+            try
+            {
+                (this.Owner as ExtructionMainForm).InitBtn();
+            }
+            catch (NullReferenceException exp)
+            {
+
+            }
 
         }
 

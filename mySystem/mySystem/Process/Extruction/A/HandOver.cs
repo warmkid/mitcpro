@@ -597,14 +597,7 @@ namespace mySystem.Process.Extruction.A
             outerBind();
 
             btn提交审核.Enabled = true;
-            try
-            {
-                (this.Owner as ExtructionMainForm).InitBtn();
-            }
-            catch (NullReferenceException exp)
-            {
-
-            }
+            
             
         }
 

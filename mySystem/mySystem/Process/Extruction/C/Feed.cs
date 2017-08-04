@@ -643,6 +643,10 @@ namespace mySystem.Process.Extruction.C
         }
         private void btn删除_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.SelectedCells.Count <= 0)
+            {
+                return;
+            }
            dtInner.Rows[dataGridView1.SelectedCells[0].RowIndex].Delete();
            daInner.Update((DataTable)bsInner.DataSource);
            
