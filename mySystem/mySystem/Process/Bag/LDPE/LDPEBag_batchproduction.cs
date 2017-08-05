@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Data.OleDb;
 
 namespace mySystem.Process.Bag.LDPE
 {
@@ -15,10 +16,10 @@ namespace mySystem.Process.Bag.LDPE
         {
             InitializeComponent();
         }
-
         private void label2_Click(object sender, EventArgs e)
         {
 
         }
+        
     }
 }

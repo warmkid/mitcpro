@@ -327,6 +327,29 @@ namespace mySystem.Process.Stock
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
             dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
+            dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
+        }
+
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 14)
+            {
+                int itemID = Convert.ToInt32( dataGridView1.Rows[ dataGridView1.SelectedCells[0].RowIndex].Cells["物资验收记录详细信息ID"].Value);
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 库存台帐 where 物资验收记录详细信息ID=" + itemID, conn);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dataGridView1.SelectedCells[0].Value.ToString() == "Yes")
+                {
+                    
+                    dt.Rows[0]["状态"] = "合格";
+                }
+                else if (dataGridView1.SelectedCells[0].Value.ToString() == "No")
+                {
+                    dt.Rows[0]["状态"] = "待验";
+                }
+                da.Update(dt);
+            }
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)

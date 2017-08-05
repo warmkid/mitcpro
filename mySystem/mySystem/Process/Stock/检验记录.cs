@@ -346,7 +346,8 @@ namespace mySystem.Process.Stock
                 物资验收记录 form = new 物资验收记录(Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
                 form.create请验单();
                 form.create取样记录();
-                form.insert台账();
+                form.insert检验台账();
+                form.insert库存台帐();
             }
             // 否则 生成不合格品处理记录
             else

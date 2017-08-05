@@ -38,9 +38,9 @@ namespace 订单和库存管理
 
         private void readFromDatabase()
         {
-            da = new OleDbDataAdapter("select * from 库存信息", conn);
+            da = new OleDbDataAdapter("select * from 库存台帐", conn);
             cb = new OleDbCommandBuilder(da);
-            dt = new DataTable("库存信息");
+            dt = new DataTable("库存台帐");
             bs = new BindingSource();
             da.Fill(dt);
         }
@@ -53,20 +53,20 @@ namespace 订单和库存管理
 
         private void btn入库_Click(object sender, EventArgs e)
         {
-            入库 form = new 入库();
-            form.Show();
+            //入库 form = new 入库();
+            //form.Show();
         }
 
         private void btn出库_Click(object sender, EventArgs e)
         {
-            出库 form = new 出库();
-            form.Show();
+            //出库 form = new 出库();
+            //form.Show();
         }
 
         private void btn退货_Click(object sender, EventArgs e)
         {
-            退货 form = new 退货();
-            form.Show();
+            //退货 form = new 退货();
+            //form.Show();
         }
 
         private void btn原料入库_Click(object sender, EventArgs e)

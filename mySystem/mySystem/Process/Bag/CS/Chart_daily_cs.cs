@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 
 namespace mySystem.Process.CleanCut
 {
-    public partial class Chart_daily_cs : Form
+    public partial class Chart_daily_cs : BaseForm
     {
         private OleDbConnection connOle = Parameter.connOle;
         List<String> ls操作员, ls审核员;
@@ -64,9 +64,10 @@ namespace mySystem.Process.CleanCut
                 da日报表.Update((DataTable)bs日报表.DataSource);
                 readOuterData(ID生产指令);
                 outerBind();
-                DataRow dr内表 = dt日报表详细信息.NewRow();
-                dr内表 = writeInnerDefault(dr内表);
-                dt日报表详细信息.Rows.Add(dr内表);
+                //DataRow dr内表 = dt日报表详细信息.NewRow();
+                //dr内表 = writeInnerDefault(dr内表);
+                //dt日报表详细信息.Rows.Add(dr内表);
+                writeInnerData();
                 da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
             }
 
@@ -83,9 +84,10 @@ namespace mySystem.Process.CleanCut
             //}          
             if (dt日报表详细信息.Rows.Count == 0)
             {
-                DataRow dr内表 = dt日报表详细信息.NewRow();
-                dr内表 = writeInnerDefault(dr内表);
-                dt日报表详细信息.Rows.Add(dr内表);
+                //DataRow dr内表 = dt日报表详细信息.NewRow();
+                //dr内表 = writeInnerDefault(dr内表);
+                //dt日报表详细信息.Rows.Add(dr内表);
+                writeInnerData();
                 da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
             }
 
@@ -97,6 +99,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns.Clear();
             setDataGridViewColumns();
             setDataGridViewRowNums();
+            dataGridView1.Columns["ID"].Visible = false;
             
         }
 
@@ -147,15 +150,15 @@ namespace mySystem.Process.CleanCut
             Int32 i领料量外表ID = Convert.ToInt32(dt领料所需信息.Rows[0]["ID"].ToString());
 
             //读取领料量内表
-            da领料详细信息1 = new OleDbDataAdapter("select * from CS制袋领料记录详细记录 where TCS制袋领料记录ID=" + i领料量外表ID + "and 物料简称=" + str制袋物料名称1, mySystem.Parameter.connOle);
+            da领料详细信息1 = new OleDbDataAdapter("select * from CS制袋领料记录详细记录 where TCS制袋领料记录ID=" + i领料量外表ID + "and 物料简称='" + str制袋物料名称1 + "'", mySystem.Parameter.connOle);
             cb领料详细信息1 = new OleDbCommandBuilder(da领料详细信息1);
             dt领料详细信息1 = new DataTable("领料详细信息1");
             bs领料详细信息1 = new BindingSource();
             da领料详细信息1.Fill(dt领料详细信息1);
             DataTable dt领料所需信息详细1 = dt领料详细信息1.DefaultView.ToTable(false, new string[] { "物料简称", "使用数量C" });
 
-            da领料详细信息2 = new OleDbDataAdapter("select * from CS制袋领料记录详细记录 where TCS制袋领料记录ID=" + i领料量外表ID + "and 物料简称=" + str制袋物料名称1, mySystem.Parameter.connOle);
-            cb领料详细信息2 = new OleDbCommandBuilder(da领料详细信息1);
+            da领料详细信息2 = new OleDbDataAdapter("select * from CS制袋领料记录详细记录 where TCS制袋领料记录ID=" + i领料量外表ID + "and 物料简称='" + str制袋物料名称2 + "'", mySystem.Parameter.connOle);
+            cb领料详细信息2 = new OleDbCommandBuilder(da领料详细信息2);
             dt领料详细信息2 = new DataTable("领料详细信息1");
             bs领料详细信息2 = new BindingSource();
             da领料详细信息2.Fill(dt领料详细信息2);
@@ -175,7 +178,7 @@ namespace mySystem.Process.CleanCut
             i入库量只 =Convert.ToInt32(dt内包装所需信息.Rows[0]["产品数量只数合计B"].ToString());
 
 
-            //读取领料量内表
+            //读取内包装内表
             da内包装详细信息 = new OleDbDataAdapter("select * from 产品内包装详细记录 where T产品内包装记录ID=" + i内包装外表ID, mySystem.Parameter.connOle);
             cb内包装详细信息 = new OleDbCommandBuilder(da内包装详细信息);
             dt内包装详细信息 = new DataTable("内包装详细信息");
@@ -409,7 +412,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns["膜材2用量R"].HeaderText = "膜材2用量/㎡";
             dataGridView1.Columns["制袋收率"].HeaderText = "制袋收率（%）";
             //第一列ID不显示
-            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["TCS制袋日报表ID"].Visible = false;
         }
 
@@ -486,7 +489,7 @@ namespace mySystem.Process.CleanCut
         {
            
             dr["TCS制袋日报表ID"] = dt日报表.Rows[0]["ID"];
-            dr["生产日期"] = date生产日期;
+            dr["生产日期"] = DateTime.Now;
             dr["班次"] = str班次;
             dr["客户或订单号"] = str客户或订单号;
             dr["产品代码"] = str产品代码;
@@ -500,20 +503,317 @@ namespace mySystem.Process.CleanCut
             dr["成品数量W"] = i成品数量;
             
             dr["膜材1规格F"] = 0.0;
-            dr["膜材1用量G"] = i膜材1用量米;
+            dr["膜材1用量G"] = 0.0;
             dr["膜材1用量E"] = i膜材1用量平方米;
             dr["膜材2规格H"] = 0.0;
-            dr["膜材2用量K"] = i膜材2用量米;
+            dr["膜材2用量K"] = 0.0;
             dr["膜材2用量R"] = i膜材2用量平方米;
             dr["制袋收率"] = i制袋收率;
             
             return dr;
         }
 
-        DataTable writeInnerDefault(DataTable dt)
+        void writeInnerData()
         {
-            return dt;
+            bool issameday;
+            DataTable dt内包装所需信息详细 = dt内包装详细信息.DefaultView.ToTable(false, new string[] { "生产开始时间", "生产结束时间" });
+            DataTable dt领料所需信息详细1 = dt领料详细信息1.DefaultView.ToTable(false, new string[] { "领料日期时间", "物料简称", "使用数量C" });
+            DataTable dt领料所需信息详细2 = dt领料详细信息2.DefaultView.ToTable(false, new string[] { "领料日期时间", "物料简称", "使用数量C" });
+            for (int i = 0; i < i日报表行数; i++)
+            {
+                //以内包装为准，显示信息
+                DataRow dr内表 = dt日报表详细信息.NewRow();
+                dr内表 = writeInnerDefault(dr内表);
+                dt日报表详细信息.Rows.Add(dr内表);
+                date生产日期 = Convert.ToDateTime(dt内包装所需信息详细.Rows[i]["生产开始时间"].ToString());
+                dt日报表详细信息.Rows[i]["生产日期"] = date生产日期;
+                dt日报表详细信息.Rows[i]["班次"] = str班次;
+                dt日报表详细信息.Rows[i]["客户或订单号"] = str客户或订单号;
+                dt日报表详细信息.Rows[i]["产品代码"] = str产品代码;
+                dt日报表详细信息.Rows[i]["批号"] = str产品批号;
+                dt日报表详细信息.Rows[i]["入库量只A"] = i入库量只;
+                dt日报表详细信息.Rows[i]["工时B"] = 0.0;
+                dt日报表详细信息.Rows[i]["系数C"] = 0.0;
+                dt日报表详细信息.Rows[i]["效率"] = i效率;
+                dt日报表详细信息.Rows[i]["成品宽D"] = i成品长;
+                dt日报表详细信息.Rows[i]["成品长E"] = i成品宽;
+                dt日报表详细信息.Rows[i]["成品数量W"] = i成品数量;
+                dt日报表详细信息.Rows[i]["膜材1规格F"] = 0.0;
+                dt日报表详细信息.Rows[i]["膜材2规格H"] = 0.0;
+
+                //判断内包装记录日期下，有无领料记录，若有，填写对应信息，若无，填0
+                //若内包装行数小于等于领料量行数，循环，判断内包装行数范围内，日期是否相同
+                
+                int i领料量1行数 = dt领料详细信息1.Rows.Count;
+                if (i日报表行数 <= i领料量1行数)
+                {
+                  //  for (int j = 0; j <= i日报表行数; j++)
+                  //  {
+                    DateTime date领料1日期 = Convert.ToDateTime(dt领料所需信息详细1.Rows[i]["领料日期时间"].ToString());
+                        if (date生产日期.ToString("yyyy-MM-dd") == date领料1日期.ToString("yyyy-MM-dd"))
+                            issameday = true;
+                        else
+                            issameday = false;
+                        if (issameday)
+                        {
+                            i膜材1用量米 = Convert.ToDouble(dt领料详细信息1.Rows[i]["使用数量C"].ToString());
+                            // i膜材2用量米 = Convert.ToDouble(dt领料详细信息2.Rows[i]["使用数量C"].ToString());
+                            dt日报表详细信息.Rows[i]["膜材1用量G"] = i膜材1用量米;
+                            // dt日报表详细信息.Rows[i]["膜材2用量K"] = i膜材2用量米;
+                        }
+                        else
+                        {
+                            dt日报表详细信息.Rows[i]["膜材1用量G"] = 0.0;
+                            //  dt日报表详细信息.Rows[j]["膜材2用量K"] = 0.0;
+                        }
+                  //  }
+                   
+                }
+                //若内包装行数大于领料量行数，循环到领料量行数即可，内包装剩余行默认写0
+                else 
+                {
+                    if (i < i领料量1行数)
+                    {
+                        DateTime date领料1日期 = Convert.ToDateTime(dt领料所需信息详细1.Rows[i]["领料日期时间"].ToString());
+                        if (date生产日期.ToString("yyyy-MM-dd") == date领料1日期.ToString("yyyy-MM-dd"))
+                            issameday = true;
+                        else
+                            issameday = false;
+                        if (issameday)
+                        {
+                            i膜材1用量米 = Convert.ToDouble(dt领料详细信息1.Rows[i]["使用数量C"].ToString());
+                            dt日报表详细信息.Rows[i]["膜材1用量G"] = i膜材1用量米;
+                        }
+                        else
+                        {
+                            dt日报表详细信息.Rows[i]["膜材1用量G"] = 0.0;
+                        }
+                    }
+                    else
+                    {
+                        dt日报表详细信息.Rows[i]["膜材1用量G"] = 0.0;
+                    }
+                }
+
+                int i领料量2行数 = dt领料详细信息2.Rows.Count;
+                if (i日报表行数 <= i领料量2行数)
+                {
+                    DateTime date领料2日期 = Convert.ToDateTime(dt领料所需信息详细2.Rows[i]["领料日期时间"].ToString());
+                    if (date生产日期.ToString("yyyy-MM-dd") == date领料2日期.ToString("yyyy-MM-dd"))
+                        issameday = true;
+                    else
+                        issameday = false;
+                    if (issameday)
+                    {
+                        i膜材2用量米 = Convert.ToDouble(dt领料详细信息2.Rows[i]["使用数量C"].ToString());
+                        dt日报表详细信息.Rows[i]["膜材2用量K"] = i膜材2用量米;
+                    }
+                    else
+                    {
+                        dt日报表详细信息.Rows[i]["膜材2用量K"] = 0.0;
+                    }
+
+                }
+                //若内包装行数大于领料量行数，循环到领料量行数即可，内包装剩余行默认写0
+                else
+                {
+                    if (i < i领料量2行数)
+                    {
+                        DateTime date领料2日期 = Convert.ToDateTime(dt领料所需信息详细2.Rows[i]["领料日期时间"].ToString());
+                        if (date生产日期.ToString("yyyy-MM-dd") == date领料2日期.ToString("yyyy-MM-dd"))
+                            issameday = true;
+                        else
+                            issameday = false;
+                        if (issameday)
+                        {
+                            i膜材2用量米 = Convert.ToDouble(dt领料详细信息2.Rows[i]["使用数量C"].ToString());
+                            dt日报表详细信息.Rows[i]["膜材2用量K"] = i膜材2用量米;
+                        }
+                        else
+                        {
+                            dt日报表详细信息.Rows[i]["膜材2用量K"] = 0.0;
+                        }
+                    }
+                    else
+                    {
+                        dt日报表详细信息.Rows[i]["膜材2用量K"] = 0.0;
+                    }
+                }
+
+                dt日报表详细信息.Rows[i]["膜材1用量E"] = i膜材1用量平方米;
+                dt日报表详细信息.Rows[i]["膜材2用量R"] = i膜材2用量平方米;
+                dt日报表详细信息.Rows[i]["制袋收率"] = i制袋收率;
+            }
+
         }
+
+        //void writeInnerData()
+        //{
+        //    DataTable dt内包装所需信息详细 = dt内包装详细信息.DefaultView.ToTable(false, new string[] { "生产开始时间", "生产结束时间" });
+        //    DataTable dt领料所需信息详细1 = dt领料详细信息1.DefaultView.ToTable(false, new string[] { "领料日期时间", "物料简称", "使用数量C" });
+        //    DataTable dt领料所需信息详细2 = dt领料详细信息2.DefaultView.ToTable(false, new string[] { "领料日期时间", "物料简称", "使用数量C" });
+        //    int i领料量1行数 = dt领料详细信息1.Rows.Count;
+        //    int i领料量2行数 = dt领料详细信息2.Rows.Count;
+        //    bool issameday1,issameday2;
+
+        //    //内包装行数多于领料量1行数
+        //    if (i日报表行数 > i领料量1行数)
+        //    {
+        //        for (int i = 0; i < i领料量1行数; i++)
+        //        {
+        //            DataRow dr内表 = dt日报表详细信息.NewRow();
+        //            dr内表 = writeInnerDefault(dr内表);
+        //            dt日报表详细信息.Rows.Add(dr内表);
+        //            DateTime date领料1日期 = Convert.ToDateTime(dt领料所需信息详细1.Rows[i]["领料日期时间"].ToString());
+        //            //判断内包装记录日期下，领料量1是否有记录
+        //            if (date生产日期.ToString("yyyy-MM-dd") == date领料1日期.ToString("yyyy-MM-dd"))
+        //                issameday1 = true;
+        //            else
+        //                issameday1 = false;
+        //            //若有记录
+        //            if (issameday1)
+        //            {                      
+        //                i膜材1用量米 = Convert.ToDouble(dt领料详细信息1.Rows[i]["使用数量C"].ToString());
+        //                dt日报表详细信息.Rows[i]["膜材1用量G"] = i膜材1用量米;
+        //            }
+        //            //若无记录
+        //            else
+        //            {
+        //                dt日报表详细信息.Rows[i]["膜材1用量G"] = 0.0;
+        //            }
+        //            DateTime date领料2日期 = Convert.ToDateTime(dt领料所需信息详细2.Rows[i]["领料日期时间"].ToString());
+        //            //判断内包装记录日期下，领料量2是否有记录
+        //            if (date生产日期.ToString("yyyy-MM-dd") == date领料2日期.ToString("yyyy-MM-dd"))
+        //                issameday2 = true;
+        //            else
+        //                issameday2 = false;
+        //            //若有记录
+        //            if (issameday2)
+        //            {
+        //                i膜材2用量米 = Convert.ToDouble(dt领料详细信息2.Rows[i]["使用数量C"].ToString());
+        //                dt日报表详细信息.Rows[i]["膜材2用量K"] = i膜材2用量米;
+        //            }
+        //            //若无记录
+        //            else
+        //            {
+        //                dt日报表详细信息.Rows[i]["膜材2用量K"] = 0.0;
+        //            }
+
+        //            date生产日期 = Convert.ToDateTime(dt内包装所需信息详细.Rows[i]["生产开始时间"].ToString());
+        //            dt日报表详细信息.Rows[i]["生产日期"] = date生产日期;
+
+        //        }
+        //        //对于内包装多出来的行，默认写0
+        //        for (int j = i领料量1行数; j < i日报表行数; j++)
+        //        {
+        //            DataRow dr内表 = dt日报表详细信息.NewRow();
+        //            dr内表 = writeInnerDefault(dr内表);
+        //            dt日报表详细信息.Rows.Add(dr内表);
+        //            dt日报表详细信息.Rows[j]["膜材1用量G"] = 0.0;
+        //            date生产日期 = Convert.ToDateTime(dt内包装所需信息详细.Rows[j]["生产开始时间"].ToString());
+        //            dt日报表详细信息.Rows[j]["生产日期"] = date生产日期;
+        //        }
+
+        //    }
+        //    //内包装行数小于等于领料量1行数
+        //    else
+        //    {
+        //        for (int k = 0; k < i日报表行数; k++)
+        //        {
+        //            DataRow dr内表 = dt日报表详细信息.NewRow();
+        //            dr内表 = writeInnerDefault(dr内表);
+        //            dt日报表详细信息.Rows.Add(dr内表);
+        //             DateTime date领料日期 = Convert.ToDateTime(dt领料所需信息详细1.Rows[k]["领料日期时间"].ToString());
+        //            //判断内包装记录日期下，领料量是否有记录
+        //            if (date生产日期.ToString("yyyy-MM-dd") == date领料日期.ToString("yyyy-MM-dd"))
+        //                issameday1 = true;
+        //            else
+        //                issameday1 = false;
+        //            //若有记录
+        //            if (issameday1)
+        //            {
+        //                i膜材1用量米 = Convert.ToDouble(dt领料详细信息1.Rows[k]["使用数量C"].ToString());
+        //                dt日报表详细信息.Rows[k]["膜材1用量G"] = i膜材1用量米;
+        //            }
+        //            else
+        //            {
+        //                dt日报表详细信息.Rows[k]["膜材1用量G"] = 0.0;
+        //            }
+        //            date生产日期 = Convert.ToDateTime(dt内包装所需信息详细.Rows[k]["生产开始时间"].ToString());
+        //            dt日报表详细信息.Rows[k]["生产日期"] = date生产日期;
+        //        }
+        //    }
+
+        //    //内包装行数多余领料量2行数
+        //    if (i日报表行数 > i领料量2行数)
+        //    {
+        //        for (int i = 0; i < i领料量2行数; i++)
+        //        {
+        //            DataRow dr内表 = dt日报表详细信息.NewRow();
+        //            dr内表 = writeInnerDefault(dr内表);
+        //            dt日报表详细信息.Rows.Add(dr内表);
+        //            DateTime date领料日期 = Convert.ToDateTime(dt领料所需信息详细2.Rows[i]["领料日期时间"].ToString());
+        //            //判断内包装记录日期下，领料量是否有记录
+        //            if (date生产日期.ToString("yyyy-MM-dd") == date领料日期.ToString("yyyy-MM-dd"))
+        //                issameday1 = true;
+        //            else
+        //                issameday1 = false;
+        //            //若有记录
+        //            if (issameday1)
+        //            {
+        //                i膜材2用量米 = Convert.ToDouble(dt领料详细信息2.Rows[i]["使用数量C"].ToString());
+        //                dt日报表详细信息.Rows[i]["膜材2用量K"] = i膜材2用量米;
+        //            }
+        //            //若无记录
+        //            else
+        //            {
+        //                dt日报表详细信息.Rows[i]["膜材2用量K"] = 0.0;
+        //            }
+        //            date生产日期 = Convert.ToDateTime(dt内包装所需信息详细.Rows[i]["生产开始时间"].ToString());
+        //            dt日报表详细信息.Rows[i]["生产日期"] = date生产日期;
+
+        //        }
+        //        //对于内包装多出来的行，默认写0
+        //        for (int j = i领料量2行数; j < i日报表行数; j++)
+        //        {
+        //            DataRow dr内表 = dt日报表详细信息.NewRow();
+        //            dr内表 = writeInnerDefault(dr内表);
+        //            dt日报表详细信息.Rows.Add(dr内表);
+        //            dt日报表详细信息.Rows[j]["膜材2用量K"] = 0.0;
+        //            date生产日期 = Convert.ToDateTime(dt内包装所需信息详细.Rows[j]["生产开始时间"].ToString());
+        //            dt日报表详细信息.Rows[j]["生产日期"] = date生产日期;
+        //        }
+        //    }
+        //    //内包装行数小于等于领料量2行数
+        //    else
+        //    {
+        //        for (int k = 0; k < i日报表行数; k++)
+        //        {
+        //            DataRow dr内表 = dt日报表详细信息.NewRow();
+        //            dr内表 = writeInnerDefault(dr内表);
+        //            dt日报表详细信息.Rows.Add(dr内表);
+        //            DateTime date领料日期 = Convert.ToDateTime(dt领料所需信息详细2.Rows[k]["领料日期时间"].ToString());
+        //            //判断内包装记录日期下，领料量是否有记录
+        //            if (date生产日期.ToString("yyyy-MM-dd") == date领料日期.ToString("yyyy-MM-dd"))
+        //                issameday1 = true;
+        //            else
+        //                issameday1 = false;
+        //            //若有记录
+        //            if (issameday1)
+        //            {
+        //                i膜材2用量米 = Convert.ToDouble(dt领料详细信息2.Rows[k]["使用数量C"].ToString());
+        //                dt日报表详细信息.Rows[k]["膜材2用量K"] = i膜材2用量米;
+        //            }
+        //            else
+        //            {
+        //                dt日报表详细信息.Rows[k]["膜材2用量K"] = 0.0;
+        //            }
+        //            date生产日期 = Convert.ToDateTime(dt内包装所需信息详细.Rows[k]["生产开始时间"].ToString());
+        //            dt日报表详细信息.Rows[k]["生产日期"] = date生产日期;
+        //        }
+        //    }
+            
+        //}
 
         //设置序号递增
         void setDataGridViewRowNums() 

@@ -530,8 +530,9 @@ namespace mySystem.Process.Stock
                 create请验单();
                 // 
                 create取样记录();
-                insert台账();
+                insert检验台账();
                 // TODO 加入库存台账
+                insert库存台帐();
             }
             // 开检验记录
             else
@@ -791,7 +792,7 @@ namespace mySystem.Process.Stock
         }
 
 
-        public void insert台账()
+        public void insert检验台账()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验台账 where 0=1" + dtOuter.Rows[0]["ID"], conn);
             DataTable dt = new DataTable("检验台账");
@@ -815,18 +816,65 @@ namespace mySystem.Process.Stock
                 ndr[10] = dtOuter.Rows[0]["供应商名称"];
                 ndr[11] = "有";
                 ndr[13] = mySystem.Parameter.userName;
-                ndr[14] = "Yes";
+                ndr[14] = "No";
                 ndr[16] = DateTime.Now;
                 ndr[19] = "是";
+                ndr["物资验收记录详细信息ID"] = dr["ID"]; 
                 dt.Rows.Add(ndr);
             }
-            
-
             
 
             da.Update(dt);
             
             MessageBox.Show("已加入检验台账！");
+        }
+
+        public void insert库存台帐()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 库存台帐 where 0=1" + dtOuter.Rows[0]["ID"], conn);
+            DataTable dt = new DataTable("库存台帐");
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            BindingSource bs = new BindingSource();
+            da.Fill(dt);
+
+            // 填写值
+            // Outer
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                if (dr["是否需要检验"].ToString() == "是") continue;
+                DataRow ndr = dt.NewRow();
+                //for (int j = 2; j <= 8; ++j)
+                //{
+                //    ndr[j] = dr[j];
+
+                //}
+                //ndr[1] = DateTime.Now;
+                //ndr[9] = dtOuter.Rows[0]["供应商代码"];
+                //ndr[10] = dtOuter.Rows[0]["供应商名称"];
+                //ndr[11] = "有";
+                //ndr[13] = mySystem.Parameter.userName;
+                //ndr[14] = "Yes";
+                //ndr[16] = DateTime.Now;
+                //ndr[19] = "是";
+                ndr["仓库名称"] = "SPM仓库";
+                ndr["供应商代码"] = dtOuter.Rows[0]["供应商代码"];
+                ndr["供应商名称"] = dtOuter.Rows[0]["供应商名称"];
+                ndr["产品名称"] = dr["物料名称"];
+                ndr["产品规格"] = dr["包装规格"];
+                ndr["产品批号"] = dr["本厂批号"];
+                ndr["现存件数"] = 0;
+                ndr["现存数量"] = dr["数量"];
+                ndr["主计量单位"] = dr["单位"];
+                ndr["实盘数量"] = 0;
+                ndr["状态"] = "待验";
+                ndr["物资验收记录详细信息ID"] = dr["ID"]; 
+                dt.Rows.Add(ndr);
+            }
+
+
+            da.Update(dt);
+
+            MessageBox.Show("已加入库存台账！");
         }
     }
 }

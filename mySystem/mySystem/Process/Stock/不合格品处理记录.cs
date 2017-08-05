@@ -329,7 +329,8 @@ namespace mySystem.Process.Stock
             物资验收记录 form = new 物资验收记录(tmpID);
             form.create请验单();
             form.create取样记录();
-            form.insert台账();
+            form.insert检验台账();
+            form.insert库存台帐();
         }
 
         private void btn审核_Click(object sender, EventArgs e)
