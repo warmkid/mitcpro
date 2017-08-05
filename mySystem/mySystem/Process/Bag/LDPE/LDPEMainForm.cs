@@ -21,6 +21,7 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
             comboInit();
             InitBtn();
+
         }
 
         //下拉框获取生产指令
