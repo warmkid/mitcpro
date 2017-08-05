@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 
 namespace mySystem.Process.CleanCut
 {
-    public partial class Chart_daily_cs : Form
+    public partial class Chart_daily_cs : BaseForm
     {
         private OleDbConnection connOle = Parameter.connOle;
         List<String> ls操作员, ls审核员;
