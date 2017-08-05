@@ -41,7 +41,7 @@
             this.btn保存 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.btn打印 = new System.Windows.Forms.Button();
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
@@ -181,14 +181,14 @@
             this.dataGridView1.Size = new System.Drawing.Size(929, 150);
             this.dataGridView1.TabIndex = 22;
             // 
-            // comboBox2
+            // cb打印机
             // 
-            this.comboBox2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(309, 353);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 24);
-            this.comboBox2.TabIndex = 101;
+            this.cb打印机.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(309, 353);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(121, 24);
+            this.cb打印机.TabIndex = 101;
             // 
             // btn打印
             // 
@@ -308,7 +308,7 @@
             this.Controls.Add(this.label10);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn查看日志);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btn审核);
@@ -346,7 +346,7 @@
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.Button btn提交审核;

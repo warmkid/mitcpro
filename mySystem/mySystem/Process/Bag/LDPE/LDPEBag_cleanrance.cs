@@ -183,6 +183,8 @@ namespace mySystem.Process.Bag.LDPE
 
             cmb检查结果.Items.Add("合格");
             cmb检查结果.Items.Add("不合格");
+
+            fill_printer();
         }
 
         void setUseState()
@@ -617,6 +619,17 @@ namespace mySystem.Process.Bag.LDPE
             setEnableReadOnly();
 
             btn审核.Enabled = false;
+        }
+
+        //添加打印机
+        private void fill_printer()
+        {
+
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
