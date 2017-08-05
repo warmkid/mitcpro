@@ -231,51 +231,58 @@ namespace mySystem.Query
             Bind();
         }
 
+
+        //双击弹出界面
         private void dgv_DoubleClick(object sender, EventArgs e)
         {
-            int selectIndex = this.dgv.CurrentRow.Index;
-            int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-            switch (tableName)
+            try
             {
-                case "制袋生产领料记录":
-                    MaterialRecord form1 = new MaterialRecord(mainform, ID);
-                    form1.Show();
-                    break;
-                case "产品内包装记录":
-                    CSBag_InnerPackaging form2 = new CSBag_InnerPackaging(mainform, ID);
-                    form2.Show();
-                    break;
-                case "CS制袋日报表":
-                    //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);           
-                    //form3.Show();
-                    break;
-                case "产品外观和尺寸检验记录":
-                    //产品外观和尺寸检验记录 myform = new 产品外观和尺寸检验记录(mainform, ID);
-                    //myform.Show();
-                    break;
-                case "产品热合强度检验记录":
-                    //产品热合强度检验记录 myform = new 产品热合强度检验记录(mainform, ID);
-                    //myform.Show();
-                    break;
-                case "2#制袋机开机前确认表":
-                    CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform, ID);
-                    form6.Show();
-                    break;
-                case "2#制袋机运行记录":
-                    RunningRecord form7 = new RunningRecord(mainform, ID);
-                    form7.Show();
-                    break;
-                case "清场记录":
-                    //清场记录 myform = new 清场记录(mainform, ID);
-                    //myform.Show();
-                    break;
-                case "制袋工序批生产记录":
+                int selectIndex = this.dgv.CurrentRow.Index;
+                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                switch (tableName)
+                {
+                    case "制袋生产领料记录":
+                        MaterialRecord form1 = new MaterialRecord(mainform, ID);
+                        form1.Show();
+                        break;
+                    case "产品内包装记录":
+                        CSBag_InnerPackaging form2 = new CSBag_InnerPackaging(mainform, ID);
+                        form2.Show();
+                        break;
+                    case "CS制袋日报表":
+                        //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);           
+                        //form3.Show();
+                        break;
+                    case "产品外观和尺寸检验记录":
+                        //产品外观和尺寸检验记录 myform = new 产品外观和尺寸检验记录(mainform, ID);
+                        //myform.Show();
+                        break;
+                    case "产品热合强度检验记录":
+                        //产品热合强度检验记录 myform = new 产品热合强度检验记录(mainform, ID);
+                        //myform.Show();
+                        break;
+                    case "2#制袋机开机前确认表":
+                        CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform, ID);
+                        form6.Show();
+                        break;
+                    case "2#制袋机运行记录":
+                        RunningRecord form7 = new RunningRecord(mainform, ID);
+                        form7.Show();
+                        break;
+                    case "清场记录":
+                        //清场记录 myform = new 清场记录(mainform, ID);
+                        //myform.Show();
+                        break;
+                    case "制袋工序批生产记录":
 
-                    break;
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
+            catch
+            { }
         }
 
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

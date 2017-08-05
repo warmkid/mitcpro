@@ -90,21 +90,12 @@ namespace mySystem.Process.CleanCut
             Btn批生产.Enabled = b;
         }
 
-        //定义各窗体变量
-        CleanCut_Productrecord form1 = null;
-        DailyRecord form2 = null;
-        Instru form4 = null;
-        CleanCut_CheckBeforePower form5 = null;
-        Record_cleansite_cut form6 = null;
-        CleanCut_RunRecord form8 = null;
-
-
         private void A1Btn_Click(object sender, EventArgs e)
         {
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切生产指令");
             if (b)
             {
-                form4 = new Instru(base.mainform);
+                Instru form4 = new Instru(base.mainform);
                 form4.ShowDialog();
             }
             else
@@ -119,7 +110,7 @@ namespace mySystem.Process.CleanCut
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清场记录");
             if (b)
             {
-                form6 = new Record_cleansite_cut(base.mainform);
+                Record_cleansite_cut form6 = new Record_cleansite_cut(base.mainform);
                 form6.ShowDialog();
             }
             else
@@ -134,7 +125,7 @@ namespace mySystem.Process.CleanCut
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切开机确认");
             if (b)
             {
-                form5 = new CleanCut_CheckBeforePower(mainform);
+                CleanCut_CheckBeforePower form5 = new CleanCut_CheckBeforePower(mainform);
                 form5.ShowDialog();
             }
             else
@@ -149,7 +140,7 @@ namespace mySystem.Process.CleanCut
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切生产记录表");
             if (b)
             {
-                form1 = new CleanCut_Productrecord(mainform);
+                CleanCut_Productrecord form1 = new CleanCut_Productrecord(mainform);
                 form1.ShowDialog();
             }
             else
@@ -164,7 +155,7 @@ namespace mySystem.Process.CleanCut
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切日报表");
             if (b)
             {
-                form2 = new DailyRecord();
+                DailyRecord form2 = new DailyRecord();
                 form2.ShowDialog();
             }
             else
@@ -195,7 +186,7 @@ namespace mySystem.Process.CleanCut
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切运行记录");
             if (b)
             {
-                form8 = new CleanCut_RunRecord(mainform);
+                CleanCut_RunRecord form8 = new CleanCut_RunRecord(mainform);
                 form8.ShowDialog();
             }
             else

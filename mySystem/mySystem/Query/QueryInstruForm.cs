@@ -16,7 +16,7 @@ namespace mySystem
         DateTime date1;//起始时间
         DateTime date2;//结束时间
         string writer;//编制人
-
+        string processName;//工序名
         private OleDbDataAdapter da;
         private DataTable dt;
         private BindingSource bs;
@@ -43,6 +43,46 @@ namespace mySystem
             dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.Font = new Font("宋体", 12);
 
+        }
+
+        //根据不同工序连接不同数据库
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            processName = comboBox1.SelectedItem.ToString();
+            switch (processName)
+            {
+                case "吹膜":
+                    Parameter.selectCon = 1;
+                    Parameter.InitCon();
+
+                    break;
+                case "清洁分切":
+                    Parameter.selectCon = 2;
+                    Parameter.InitCon();
+
+                    break;
+                case "CS制袋":
+                    Parameter.selectCon = 3;
+                    Parameter.InitCon();
+
+                    break;
+                case "PE制袋":
+                    Parameter.selectCon = 7;
+                    Parameter.InitCon();
+
+                    break;
+                case "BPV制袋":
+                    Parameter.selectCon = 6;
+                    Parameter.InitCon();
+
+                    break;
+                case "PTV制袋":
+                    Parameter.selectCon = 8;
+                    Parameter.InitCon();
+
+                    break;
+
+            }
         }
 
         private void Bind(String tblName, String person, String time)
@@ -86,8 +126,7 @@ namespace mySystem
                 return;
             }
 
-            String process = comboBox1.SelectedItem.ToString();
-            switch (process)
+            switch (processName)
             {
                 case "吹膜":
                     Bind("生产指令信息表", " 编制人", "编制时间");        
@@ -105,74 +144,67 @@ namespace mySystem
                     Bind("生产指令", " 操作员", "操作时间");
 
                     break;
+                case "BPV制袋":
+                    Bind("生产指令", " 操作员", "操作时间");
+
+                    break;
+                case "PTV制袋":
+
+                    Bind("生产指令", " 操作员", "操作时间");
+
+                    break;
 
             }
-
  
         }
 
+        //双击弹出界面
         private void dgv_DoubleClick(object sender, EventArgs e)
         {
-            int selectIndex = this.dgv.CurrentRow.Index;
-            int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-            String process = comboBox1.SelectedItem.ToString();
-            switch (process)
+            try
             {
-                case "吹膜":
-                    BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
-                    form1.Show();
+                int selectIndex = this.dgv.CurrentRow.Index;
+                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                switch (processName)
+                {
+                    case "吹膜":
+                        BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
+                        form1.Show();
 
-                    break;
-                case "清洁分切":
-                    mySystem.Process.CleanCut.Instru form2 = new Process.CleanCut.Instru(mainform, ID);
-                    form2.Show();
+                        break;
+                    case "清洁分切":
+                        mySystem.Process.CleanCut.Instru form2 = new Process.CleanCut.Instru(mainform, ID);
+                        form2.Show();
 
-                    break;
-                case "CS制袋":
-                    mySystem.Process.Bag.CS.CS制袋生产指令 form3 = new Process.Bag.CS.CS制袋生产指令(ID);
-                    form3.Show();
+                        break;
+                    case "CS制袋":
+                        mySystem.Process.Bag.CS.CS制袋生产指令 form3 = new Process.Bag.CS.CS制袋生产指令(ID);
+                        form3.Show();
 
-                    break;
-                case "PE制袋":
-                    //mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction form4 = new Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, ID);
-                    //form4.Show();
+                        break;
+                    case "PE制袋":
+                        //mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction form4 = new Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, ID);
+                        //form4.Show();
 
-                    break;
+                        break;
+                    case "BPV制袋":
+                        //mySystem.Process.Bag.BTV.BTVProInstruction form5 = new Process.Bag.BTV.BTVProInstruction(mainform, ID);
+                        //form5.Show();
 
+                        break;
+                    case "PTV制袋":
+                        //mySystem.Process.Bag.PTV.PTVBag_productioninstruction form6 = new Process.Bag.PTV.PTVBag_productioninstruction(mainform, ID);
+                        //form6.Show();
+
+                        break;
+
+                }
             }
-
+            catch
+            { }
             
         }
-
-        //根据不同工序连接不同数据库
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {            
-            String process = comboBox1.SelectedItem.ToString();
-            switch (process)
-            {
-                case "吹膜":
-                    Parameter.selectCon = 1;
-                    Parameter.InitCon();
-
-                    break;
-                case "清洁分切":
-                    Parameter.selectCon = 2;
-                    Parameter.InitCon();
-
-                    break;
-                case "CS制袋":
-                    Parameter.selectCon = 3;
-                    Parameter.InitCon();
-
-                    break;
-                case "PE制袋":
-                    Parameter.selectCon = 7;
-                    Parameter.InitCon();
-
-                    break;
-
-            }
-        }
+       
 
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -184,9 +216,31 @@ namespace mySystem
                 int strlen = colName.Length;
                 this.dgv.Columns[i].MinimumWidth = strlen * 25;
             }  
+
+            //待审核标红
+            try
+            { setDataGridViewBackColor("审核员"); }
+            catch
+            { }
+            try
+            { setDataGridViewBackColor("审核人"); }
+            catch
+            { }
+            if (processName == "吹膜")
+                setDataGridViewBackColor("审批人");
         }
 
-
+        //设置datagridview背景颜色，待审核标红
+        private void setDataGridViewBackColor(String checker)
+        {
+            for (int i = 0; i < dgv.Rows.Count; i++)
+            {
+                if (dgv.Rows[i].Cells[checker].Value.ToString() == "__待审核")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                }
+            }
+        }
 
 
     }

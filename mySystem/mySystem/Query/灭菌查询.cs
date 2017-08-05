@@ -189,27 +189,33 @@ namespace mySystem.Query
             Bind();
         }
 
+        //双击弹出界面
         private void dgv_DoubleClick(object sender, EventArgs e)
         {
-            int selectIndex = this.dgv.CurrentRow.Index;
-            int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-            switch (tableName)
+            try
             {
-                case "Gamma 射线辐射灭菌委托单":
-                    Gamma射线辐射灭菌委托单 mydlg1 = new Gamma射线辐射灭菌委托单(mainform, ID);
-                    mydlg1.Show();
-                    break;
-                case "Gamma 射线辐照灭菌产品验收记录":
-                    辐照灭菌产品验收记录 mydlg2 = new 辐照灭菌产品验收记录(mainform, ID);
-                    mydlg2.Show();
-                    break;
-                case "辐照灭菌台帐":
+                int selectIndex = this.dgv.CurrentRow.Index;
+                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                switch (tableName)
+                {
+                    case "Gamma 射线辐射灭菌委托单":
+                        Gamma射线辐射灭菌委托单 mydlg1 = new Gamma射线辐射灭菌委托单(mainform, ID);
+                        mydlg1.Show();
+                        break;
+                    case "Gamma 射线辐照灭菌产品验收记录":
+                        辐照灭菌产品验收记录 mydlg2 = new 辐照灭菌产品验收记录(mainform, ID);
+                        mydlg2.Show();
+                        break;
+                    case "辐照灭菌台帐":
 
-                    break;               
+                        break;
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
             }
+            catch
+            { }
         }
 
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

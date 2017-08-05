@@ -52,6 +52,8 @@ namespace mySystem
         public static int bpvbagInstruID; //BPV制袋生产指令编号
         public static string ldpebagInstruction; //LDPE制袋生产指令
         public static int ldpebagInstruID; //LDPE制袋生产指令编号
+        public static string ptvbagInstruction; //PTV制袋生产指令
+        public static int ptvbagInstruID; //PTV制袋生产指令编号
         public static string miejunInstruction; //灭菌委托单
         public static int miejunInstruID; //灭菌委托单编号
 

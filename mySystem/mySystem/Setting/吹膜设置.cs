@@ -104,7 +104,7 @@ namespace mySystem.Setting
 
         private void EachInitdgv(DataGridView dgv)
         {
-            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv.AllowUserToAddRows = false;
             dgv.ReadOnly = false;
             dgv.RowHeadersVisible = false;
@@ -280,7 +280,7 @@ namespace mySystem.Setting
             //显示序号
             setDataGridViewRowNums(this.dgv人员);
             this.dgv人员.Columns["用户名"].MinimumWidth = 150;
-            this.dgv人员.Columns["用户名"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv人员.Columns["班次"].MinimumWidth = 100;
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv人员.Columns["ID"].Visible = false;
 

@@ -168,7 +168,7 @@ namespace mySystem
 
         private void BtnPTV制袋_Click(object sender, EventArgs e)
         {
-            Parameter.selectCon = 7;
+            Parameter.selectCon = 8;
             Parameter.InitCon();
             QueryPanelRight.Controls.Clear();
             BtnColor();

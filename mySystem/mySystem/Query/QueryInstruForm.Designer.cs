@@ -125,8 +125,10 @@
             this.comboBox1.Items.AddRange(new object[] {
             "吹膜",
             "清洁分切",
+            "PE制袋",
             "CS制袋",
-            "PE制袋"});
+            "PTV制袋",
+            "BPV制袋"});
             this.comboBox1.Location = new System.Drawing.Point(130, 22);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(154, 24);

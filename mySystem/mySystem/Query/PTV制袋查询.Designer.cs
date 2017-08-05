@@ -50,15 +50,20 @@
             this.comboBox2.Items.AddRange(new object[] {
             "生产领料使用记录",
             "产品内包装记录",
-            "LDPE生产日报表",
-            "1#制袋机开机前确认表",
-            "1#制袋机运行记录",
+            "PTV生产日报表",
+            "PTV生产开机确认表",
+            "底封机运行记录",
+            "圆口焊接机运行记录",
+            "泄漏测试记录",
+            "超声波焊接记录",
+            "瓶口焊接机运行记录",
             "清场记录",
             "制袋工序批生产记录"});
             this.comboBox2.Location = new System.Drawing.Point(612, 20);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(255, 24);
             this.comboBox2.TabIndex = 68;
+            this.comboBox2.SelectedIndexChanged += new System.EventHandler(this.comboBox2_SelectedIndexChanged);
             // 
             // label4
             // 
@@ -78,6 +83,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(340, 27);
             this.comboBox1.TabIndex = 66;
+            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -97,6 +103,8 @@
             this.dgv.RowTemplate.Height = 23;
             this.dgv.Size = new System.Drawing.Size(1089, 460);
             this.dgv.TabIndex = 64;
+            this.dgv.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DataBindingComplete);
+            this.dgv.DoubleClick += new System.EventHandler(this.dgv_DoubleClick);
             // 
             // SearchBtn
             // 
@@ -107,6 +115,7 @@
             this.SearchBtn.TabIndex = 63;
             this.SearchBtn.Text = "查询";
             this.SearchBtn.UseVisualStyleBackColor = true;
+            this.SearchBtn.Click += new System.EventHandler(this.SearchBtn_Click);
             // 
             // textBox1
             // 
@@ -182,7 +191,7 @@
             this.Controls.Add(this.label2);
             this.Font = new System.Drawing.Font("SimSun", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "PTV制袋查询";
             this.Text = "PTV制袋查询";
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();

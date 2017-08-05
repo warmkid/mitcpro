@@ -76,7 +76,6 @@ namespace mySystem.Setting
         private void Bind()
         {
             //************************    运输商     *******************************************
-            //EachBind("设置运输商", dt运输商, da运输商, cb运输商, bs运输商, dgv运输商);
             dt运输商 = new DataTable("设置运输商"); //""中的是表名
             da运输商 = new OleDbDataAdapter("select * from 设置运输商", mySystem.Parameter.connOle);
             cb运输商 = new OleDbCommandBuilder(da运输商);
@@ -151,9 +150,10 @@ namespace mySystem.Setting
             this.dgv人员.DataSource = bs人员.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv人员);
-            this.dgv人员.Columns["用户名"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv人员.Columns["用户名"].MinimumWidth = 150;
+            this.dgv人员.Columns["班次"].MinimumWidth = 100;
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-
+            
             //************************    人员权限     *******************************************
             dt权限 = new DataTable("用户权限"); //""中的是表名
             da权限 = new OleDbDataAdapter("select * from 用户权限", mySystem.Parameter.connOle);
@@ -173,7 +173,7 @@ namespace mySystem.Setting
 
         private void EachInitdgv(DataGridView dgv)
         {
-            dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            //dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dgv.AllowUserToAddRows = false;
             dgv.ReadOnly = false;
             dgv.RowHeadersVisible = false;
@@ -182,22 +182,6 @@ namespace mySystem.Setting
             dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.Font = new Font("宋体", 12);
-        }
-
-        //有误
-        private void EachBind(String tblName, DataTable dt, OleDbDataAdapter da, OleDbCommandBuilder cb, BindingSource bs, DataGridView dgv)
-        {
-            dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
-            dt.Columns.Add("序号", System.Type.GetType("System.String"));
-            da.Fill(dt);
-            bs.DataSource = dt;
-            dgv.DataSource = bs.DataSource;
-            //显示序号
-            setDataGridViewRowNums(dgv);
-            dgv.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dgv.Columns[2].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
         }
        
         private void setDataGridViewRowNums(DataGridView dgv)
