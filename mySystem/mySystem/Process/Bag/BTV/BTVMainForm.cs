@@ -192,7 +192,7 @@ namespace mySystem.Process.Bag.BTV
 
         private void Btn多功能热合机_Click(object sender, EventArgs e)
         {
-            BTVRunningRecordRHJMulti mydlg = new BTVRunningRecordRHJMulti();
+            BTVRunningRecordRHJMulti mydlg = new BTVRunningRecordRHJMulti(mainform);
             mydlg.ShowDialog();
         }
 
@@ -204,19 +204,19 @@ namespace mySystem.Process.Bag.BTV
 
         private void Btn单管口热合机_Click(object sender, EventArgs e)
         {
-            BTVRunningRecordRHJsingle mydlg = new BTVRunningRecordRHJsingle();
+            BTVRunningRecordRHJsingle mydlg = new BTVRunningRecordRHJsingle(mainform);
             mydlg.ShowDialog();
         }
 
         private void Btn90度热合机_Click(object sender, EventArgs e)
         {
-            BTVRunningRecordRHJ90 mydlg = new BTVRunningRecordRHJ90();
+            BTVRunningRecordRHJ90 mydlg = new BTVRunningRecordRHJ90(mainform);
             mydlg.ShowDialog();
         }
 
         private void Btn封口热合机_Click(object sender, EventArgs e)
         {
-            BTVRunningRecordRHJseal mydlg = new BTVRunningRecordRHJseal();
+            BTVRunningRecordRHJseal mydlg = new BTVRunningRecordRHJseal(mainform);
             mydlg.ShowDialog();
         }
 
