@@ -115,6 +115,62 @@ namespace mySystem.Setting
             dgv.Font = new Font("宋体", 12);
         }
 
+        void dgv人员下拉框设置()
+        {
+            dgv人员.Columns.Clear();
+            DataGridViewTextBoxColumn tbc;
+            DataGridViewComboBoxColumn cbc;
+            DataGridViewCheckBoxColumn ckbc;
+
+            // 先把所有的列都加好，基本属性附上
+            foreach (DataColumn dc in dt人员.Columns)
+            {
+                // 要下拉框的特殊处理
+                if (dc.ColumnName == "班次")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+
+                    cbc.Items.Add("白班");
+                    cbc.Items.Add("夜班");
+                   
+                    dgv人员.Columns.Add(cbc);
+                    continue;
+                }
+               
+                // 根据数据类型自动生成列的关键信息
+                switch (dc.DataType.ToString())
+                {
+
+                    case "System.Int32":
+                    case "System.String":
+                    case "System.Double":
+                    case "System.DateTime":
+                        tbc = new DataGridViewTextBoxColumn();
+                        tbc.HeaderText = dc.ColumnName;
+                        tbc.Name = dc.ColumnName;
+                        tbc.ValueType = dc.DataType;
+                        tbc.DataPropertyName = dc.ColumnName;
+                        tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        dgv人员.Columns.Add(tbc);
+                        break;
+                    case "System.Boolean":
+                        ckbc = new DataGridViewCheckBoxColumn();
+                        ckbc.HeaderText = dc.ColumnName;
+                        ckbc.Name = dc.ColumnName;
+                        ckbc.ValueType = dc.DataType;
+                        ckbc.DataPropertyName = dc.ColumnName;
+                        ckbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        dgv人员.Columns.Add(ckbc);
+                        break;
+                }
+            }
+        }
+
         private void Bind()
         {
             //**************************   清洁    ***********************************
@@ -276,6 +332,7 @@ namespace mySystem.Setting
             dt人员.Columns.Add("序号", System.Type.GetType("System.String"));
             da人员.Fill(dt人员);
             bs人员.DataSource = dt人员;
+            dgv人员下拉框设置();
             this.dgv人员.DataSource = bs人员.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv人员);

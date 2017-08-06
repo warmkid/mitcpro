@@ -746,6 +746,13 @@ namespace mySystem.Extruction.Process
                 MessageBox.Show("领料没有完全审核，请先审核领料");
                 return;
             }
+
+            if (mySystem.Parameter.userName == dt_prodinstr.Rows[0]["退料操作人"].ToString())
+            {
+                MessageBox.Show("操作员和审核员不能是同一个人");
+                return;
+            }
+            
             checkform = new CheckForm(this);
             checkform.Show();
         }

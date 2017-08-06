@@ -24,6 +24,7 @@ namespace mySystem
 
         private void LoginButton_Click(object sender, EventArgs e)
         {
+
             if (UserIDTextBox.Text.Trim() == "" || UserPWTextBox.Text.Trim() == "")
             {
                 MessageBox.Show("提示：请输入操作员ID和密码！", "警告");
@@ -47,9 +48,11 @@ namespace mySystem
                         Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
                         InstruReceive();
                     }
-                    
+
                 }
             }
+        
+            
 
         }
 

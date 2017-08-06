@@ -948,6 +948,11 @@ namespace mySystem.Process.Extruction.B
         }
         private void btn审核_Click(object sender, EventArgs e)
         {
+            if (mySystem.Parameter.userName == dtOuter.Rows[0]["记录员"].ToString())
+            {
+                MessageBox.Show("操作员和审核员不能是同一个人");
+                return;
+            }
             check = new CheckForm(this);
             check.Show();
         }

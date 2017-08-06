@@ -69,6 +69,13 @@ namespace mySystem.Setting
             }
             else
             {
+                int uid;
+                if (!Int32.TryParse(userid, out uid))
+                {
+                    MessageBox.Show("员工ID必须为数字", "提示");
+                    return;
+                }
+                
                 bool idbool = isIDExist();
                 if (!idbool)
                 {

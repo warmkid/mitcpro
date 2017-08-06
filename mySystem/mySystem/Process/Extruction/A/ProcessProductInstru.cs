@@ -569,7 +569,11 @@ namespace BatchProductRecord
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            
+            if (mySystem.Parameter.userName == dt_prodinstr.Rows[0]["编制人"].ToString())
+            {
+                MessageBox.Show("操作员和审核员不能是同一个人");
+                return;
+            }
             checkform = new mySystem.CheckForm(this);
             checkform.Show();  
             
