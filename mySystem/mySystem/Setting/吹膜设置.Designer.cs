@@ -167,6 +167,11 @@
             this.del人员 = new System.Windows.Forms.Button();
             this.add人员 = new System.Windows.Forms.Button();
             this.label42 = new System.Windows.Forms.Label();
+            this.tabPage产品代码和批号 = new System.Windows.Forms.TabPage();
+            this.dgv代码批号 = new System.Windows.Forms.DataGridView();
+            this.del代码批号 = new System.Windows.Forms.Button();
+            this.add代码批号 = new System.Windows.Forms.Button();
+            this.save代码批号 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage区域设置.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -199,6 +204,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).BeginInit();
             this.groupBox15.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).BeginInit();
+            this.tabPage产品代码和批号.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv代码批号)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -209,6 +216,7 @@
             this.tabControl1.Controls.Add(this.tabPage参数设置);
             this.tabControl1.Controls.Add(this.tabPage产品设置);
             this.tabControl1.Controls.Add(this.tabPage人员设置);
+            this.tabControl1.Controls.Add(this.tabPage产品代码和批号);
             this.tabControl1.Location = new System.Drawing.Point(5, 5);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1704,6 +1712,62 @@
             this.label42.TabIndex = 58;
             this.label42.Text = "吹膜人员设置";
             // 
+            // tabPage产品代码和批号
+            // 
+            this.tabPage产品代码和批号.Controls.Add(this.del代码批号);
+            this.tabPage产品代码和批号.Controls.Add(this.add代码批号);
+            this.tabPage产品代码和批号.Controls.Add(this.save代码批号);
+            this.tabPage产品代码和批号.Controls.Add(this.dgv代码批号);
+            this.tabPage产品代码和批号.Location = new System.Drawing.Point(4, 29);
+            this.tabPage产品代码和批号.Name = "tabPage产品代码和批号";
+            this.tabPage产品代码和批号.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage产品代码和批号.Size = new System.Drawing.Size(1147, 577);
+            this.tabPage产品代码和批号.TabIndex = 5;
+            this.tabPage产品代码和批号.Text = "代码批号设置";
+            this.tabPage产品代码和批号.UseVisualStyleBackColor = true;
+            // 
+            // dgv代码批号
+            // 
+            this.dgv代码批号.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv代码批号.Location = new System.Drawing.Point(26, 105);
+            this.dgv代码批号.Name = "dgv代码批号";
+            this.dgv代码批号.RowTemplate.Height = 23;
+            this.dgv代码批号.Size = new System.Drawing.Size(475, 407);
+            this.dgv代码批号.TabIndex = 0;
+            // 
+            // del代码批号
+            // 
+            this.del代码批号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del代码批号.Location = new System.Drawing.Point(431, 53);
+            this.del代码批号.Name = "del代码批号";
+            this.del代码批号.Size = new System.Drawing.Size(70, 30);
+            this.del代码批号.TabIndex = 64;
+            this.del代码批号.Text = "删除";
+            this.del代码批号.UseVisualStyleBackColor = true;
+            this.del代码批号.Click += new System.EventHandler(this.del代码批号_Click);
+            // 
+            // add代码批号
+            // 
+            this.add代码批号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add代码批号.Location = new System.Drawing.Point(26, 53);
+            this.add代码批号.Name = "add代码批号";
+            this.add代码批号.Size = new System.Drawing.Size(70, 30);
+            this.add代码批号.TabIndex = 63;
+            this.add代码批号.Text = "添加";
+            this.add代码批号.UseVisualStyleBackColor = true;
+            this.add代码批号.Click += new System.EventHandler(this.add代码批号_Click);
+            // 
+            // save代码批号
+            // 
+            this.save代码批号.Font = new System.Drawing.Font("SimSun", 12F);
+            this.save代码批号.Location = new System.Drawing.Point(1013, 523);
+            this.save代码批号.Name = "save代码批号";
+            this.save代码批号.Size = new System.Drawing.Size(90, 33);
+            this.save代码批号.TabIndex = 65;
+            this.save代码批号.Text = "保存设置";
+            this.save代码批号.UseVisualStyleBackColor = true;
+            this.save代码批号.Click += new System.EventHandler(this.button7_Click);
+            // 
             // 吹膜设置
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1756,6 +1820,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).EndInit();
             this.groupBox15.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).EndInit();
+            this.tabPage产品代码和批号.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv代码批号)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1901,5 +1967,10 @@
         private System.Windows.Forms.Button del人员;
         private System.Windows.Forms.Button add人员;
         private System.Windows.Forms.Label label42;
+        private System.Windows.Forms.TabPage tabPage产品代码和批号;
+        private System.Windows.Forms.Button del代码批号;
+        private System.Windows.Forms.Button add代码批号;
+        private System.Windows.Forms.Button save代码批号;
+        private System.Windows.Forms.DataGridView dgv代码批号;
     }
 }

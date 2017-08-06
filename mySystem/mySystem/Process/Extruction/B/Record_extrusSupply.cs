@@ -424,12 +424,13 @@ namespace WindowsFormsApplication1
                 {
                     cb原料代码ab1c.Items.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]));        
                     dict_inoutmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]), Convert.ToString(tempdt.Rows[i]["内外层物料批号"]));
+                    label9.Text = tempdt.Rows[i]["内外层物料代码"].ToString();
                 }
                 if (tempdt.Rows[i]["中层物料代码"] != null && tempdt.Rows[i]["中层物料批号"] != null)
                 {
                     cb原料代码b2.Items.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]));
-                    dict_midmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]), Convert.ToString(tempdt.Rows[i]["中层物料批号"])); 
- 
+                    dict_midmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]), Convert.ToString(tempdt.Rows[i]["中层物料批号"]));
+                    label11.Text = Convert.ToString(tempdt.Rows[i]["中层物料代码"]);
                 }                     
             }
             if(tempdt.Rows.Count>0)

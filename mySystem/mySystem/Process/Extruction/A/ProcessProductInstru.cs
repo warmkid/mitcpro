@@ -17,6 +17,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using WindowsFormsApplication1;
+using System.Collections;
 using mySystem;
 
 
@@ -639,35 +640,47 @@ namespace BatchProductRecord
 
                     //产品批号
                     string temp = array[1];
-                    if (temp == "100")
+                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.connOle);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    Hashtable ht = new Hashtable();
+                    foreach (DataRow dr in dt.Rows)
                     {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "1";
+                        ht.Add(dr["产品代码中的厚度"].ToString(), dr["产品批号末尾数字"].ToString());
                     }
-                    else if (temp == "80")
+                    if (ht.Keys.OfType<String>().ToList<String>().IndexOf(temp) >= 0)
                     {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "2";
+                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + ht[temp];
                     }
-                    else if (temp == "60")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "3";
-                    }
-                    else if (temp == "120")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "4";
-                    }
-                    else if (temp == "200")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "5";
-                    }
-                    else if (temp == "110")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "6";
-                    }
-                    else if (temp == "70")
-                    {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "7";
-                    }
-                    else { };
+                    //if (temp == "100")
+                    //{
+                    //    dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "1";
+                    //}
+                    //else if (temp == "80")
+                    //{
+                    //    dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "2";
+                    //}
+                    //else if (temp == "60")
+                    //{
+                    //    dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "3";
+                    //}
+                    //else if (temp == "120")
+                    //{
+                    //    dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "4";
+                    //}
+                    //else if (temp == "200")
+                    //{
+                    //    dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "5";
+                    //}
+                    //else if (temp == "110")
+                    //{
+                    //    dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "6";
+                    //}
+                    //else if (temp == "70")
+                    //{
+                    //    dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + "7";
+                    //}
+                    //else { };
 
                     while (true)
                     {

@@ -72,6 +72,10 @@ namespace mySystem.Setting
         private DataTable dt权限;
         private BindingSource bs权限;
         private OleDbCommandBuilder cb权限;
+        private OleDbDataAdapter da代码批号;
+        private DataTable dt代码批号;
+        private BindingSource bs代码批号;
+        private OleDbCommandBuilder cb代码批号;
 
         //dgv样式初始化
         private void Initdgv()
@@ -99,7 +103,9 @@ namespace mySystem.Setting
             bs人员 = new BindingSource();
             EachInitdgv(dgv人员);
             bs权限 = new BindingSource();
-            EachInitdgv(dgv权限);       
+            EachInitdgv(dgv权限);
+            bs代码批号 = new BindingSource();
+            EachInitdgv(dgv代码批号);
         }
 
         private void EachInitdgv(DataGridView dgv)
@@ -357,6 +363,16 @@ namespace mySystem.Setting
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
+            // ********   代码批号 设置 ***********
+            dt代码批号 = new DataTable("设置产品代码和产品批号的对应关系");
+            da代码批号 = new OleDbDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.connOle);
+            cb代码批号 = new OleDbCommandBuilder(da代码批号);
+            dt代码批号.Columns.Add("序号", System.Type.GetType("System.String"));
+            da代码批号.Fill(dt代码批号);
+            bs代码批号.DataSource = dt代码批号;
+            this.dgv代码批号.DataSource = bs代码批号.DataSource;
+            setDataGridViewRowNums(this.dgv代码批号);
+            this.dgv代码批号.Columns["ID"].Visible = false;
 
         }
 
@@ -934,5 +950,30 @@ namespace mySystem.Setting
         }
 
         #endregion
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            da代码批号.Update((DataTable)bs代码批号.DataSource);
+            dt代码批号.Clear();
+            da代码批号.Fill(dt代码批号);
+            setDataGridViewRowNums(this.dgv代码批号);
+        }
+
+        private void add代码批号_Click(object sender, EventArgs e)
+        {
+            //DataRow dr = dt代码批号.NewRow();
+            dt代码批号.Rows.Add(dt代码批号.NewRow());
+            setDataGridViewRowNums(this.dgv代码批号);
+        }
+
+        private void del代码批号_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv代码批号.SelectedCells[0].RowIndex;
+            dt代码批号.Rows[idx].Delete();
+            da代码批号.Update((DataTable)bs代码批号.DataSource);
+            dt代码批号.Clear();
+            da代码批号.Fill(dt代码批号);
+            setDataGridViewRowNums(this.dgv代码批号);
+        }
     }
 }
