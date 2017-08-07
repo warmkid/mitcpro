@@ -107,7 +107,7 @@ namespace mySystem.Process.Extruction.B
         {
             InitializeComponent();
             //different handler function
-            cmb产品代码.SelectedIndexChanged += new EventHandler(cmb产品代码_SelectedIndexChanged_without_Id);
+            
             conOle = Parameter.connOle;
             searchId = Id;
             自动绘制表格();
@@ -138,8 +138,8 @@ namespace mySystem.Process.Extruction.B
             
 
             //btn保存.Visible = false;
-            
 
+            //cmb产品代码.SelectedIndexChanged += new EventHandler(cmb产品代码_SelectedIndexChanged_without_Id);
 
         }
         /// <summary>
@@ -977,7 +977,7 @@ namespace mySystem.Process.Extruction.B
                 return;
             }
             SetDefaultPrinter(cmb打印机选择.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
         public void print(bool preview)
@@ -990,7 +990,7 @@ namespace mySystem.Process.Extruction.B
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 设置该进程是否可见
-            oXL.Visible = true;
+            //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
             my.Cells[3, 1].Value = "产品代码：" + cmb产品代码.Text.ToString();
@@ -1047,7 +1047,7 @@ namespace mySystem.Process.Extruction.B
             my.Cells[16, 10] =  "A层 "+array1[9][11].Text+"  (℃)";
             my.Cells[16, 12] = "B层 "+array1[11][11].Text+"  (℃)";
             my.Cells[16, 14] = "C层 " + array1[13][11].Text + "  (℃)";
-
+            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-08-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 			if(preview)
 			{
             // 让这个Sheet为被选中状态
@@ -1057,7 +1057,11 @@ namespace mySystem.Process.Extruction.B
 			else
 			{	
 			// 直接用默认打印机打印该Sheet
-           // my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
             // 关闭文件，false表示不保存
             wb.Close(false);
             // 关闭Excel进程
@@ -1071,6 +1075,19 @@ namespace mySystem.Process.Extruction.B
 			}
 
 		}
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+        }
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {

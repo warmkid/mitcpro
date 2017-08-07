@@ -56,7 +56,7 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(41, 193);
+            this.dataGridView1.Location = new System.Drawing.Point(41, 134);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(982, 192);
@@ -65,7 +65,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(175, 478);
+            this.btn打印.Location = new System.Drawing.Point(151, 406);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(91, 30);
             this.btn打印.TabIndex = 75;
@@ -75,7 +75,7 @@
             // 
             // btn添加
             // 
-            this.btn添加.Location = new System.Drawing.Point(1043, 202);
+            this.btn添加.Location = new System.Drawing.Point(41, 347);
             this.btn添加.Name = "btn添加";
             this.btn添加.Size = new System.Drawing.Size(92, 30);
             this.btn添加.TabIndex = 64;
@@ -86,7 +86,7 @@
             // cmb班次
             // 
             this.cmb班次.FormattingEnabled = true;
-            this.cmb班次.Location = new System.Drawing.Point(485, 96);
+            this.cmb班次.Location = new System.Drawing.Point(675, 92);
             this.cmb班次.Name = "cmb班次";
             this.cmb班次.Size = new System.Drawing.Size(121, 24);
             this.cmb班次.TabIndex = 45;
@@ -94,7 +94,7 @@
             // lb班次
             // 
             this.lb班次.AutoSize = true;
-            this.lb班次.Location = new System.Drawing.Point(448, 100);
+            this.lb班次.Location = new System.Drawing.Point(638, 96);
             this.lb班次.Name = "lb班次";
             this.lb班次.Size = new System.Drawing.Size(40, 16);
             this.lb班次.TabIndex = 44;
@@ -104,14 +104,14 @@
             // 
             this.dtp生产日期.CustomFormat = "yyyy-MM-dd";
             this.dtp生产日期.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtp生产日期.Location = new System.Drawing.Point(326, 96);
+            this.dtp生产日期.Location = new System.Drawing.Point(407, 92);
             this.dtp生产日期.Name = "dtp生产日期";
             this.dtp生产日期.Size = new System.Drawing.Size(110, 26);
             this.dtp生产日期.TabIndex = 43;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(833, 478);
+            this.btnSave.Location = new System.Drawing.Point(735, 408);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(92, 30);
             this.btnSave.TabIndex = 42;
@@ -121,7 +121,7 @@
             // 
             // btn审核
             // 
-            this.btn审核.Location = new System.Drawing.Point(65, 478);
+            this.btn审核.Location = new System.Drawing.Point(42, 408);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(92, 30);
             this.btn审核.TabIndex = 32;
@@ -132,7 +132,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(257, 103);
+            this.label2.Location = new System.Drawing.Point(328, 96);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
@@ -142,7 +142,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(38, 102);
+            this.label1.Location = new System.Drawing.Point(43, 99);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
@@ -152,7 +152,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.Location = new System.Drawing.Point(424, 40);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
@@ -162,7 +162,7 @@
             // 
             // btn查看日志
             // 
-            this.btn查看日志.Location = new System.Drawing.Point(1029, 478);
+            this.btn查看日志.Location = new System.Drawing.Point(931, 408);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(92, 30);
             this.btn查看日志.TabIndex = 77;
@@ -172,7 +172,7 @@
             // 
             // btn提交审核
             // 
-            this.btn提交审核.Location = new System.Drawing.Point(931, 478);
+            this.btn提交审核.Location = new System.Drawing.Point(833, 408);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(92, 30);
             this.btn提交审核.TabIndex = 76;
@@ -182,7 +182,7 @@
             // 
             // txb审核员
             // 
-            this.txb审核员.Location = new System.Drawing.Point(685, 93);
+            this.txb审核员.Location = new System.Drawing.Point(923, 92);
             this.txb审核员.Name = "txb审核员";
             this.txb审核员.Size = new System.Drawing.Size(100, 26);
             this.txb审核员.TabIndex = 79;
@@ -190,7 +190,7 @@
             // lb审核人
             // 
             this.lb审核人.AutoSize = true;
-            this.lb审核人.Location = new System.Drawing.Point(623, 98);
+            this.lb审核人.Location = new System.Drawing.Point(861, 97);
             this.lb审核人.Name = "lb审核人";
             this.lb审核人.Size = new System.Drawing.Size(56, 16);
             this.lb审核人.TabIndex = 78;
@@ -199,7 +199,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(283, 28);
+            this.pictureBox1.Location = new System.Drawing.Point(0, 12);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(134, 42);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -209,7 +209,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(672, 42);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -219,7 +219,7 @@
             // lbl生产指令编号
             // 
             this.lbl生产指令编号.AutoSize = true;
-            this.lbl生产指令编号.Location = new System.Drawing.Point(132, 101);
+            this.lbl生产指令编号.Location = new System.Drawing.Point(122, 99);
             this.lbl生产指令编号.Name = "lbl生产指令编号";
             this.lbl生产指令编号.Size = new System.Drawing.Size(104, 16);
             this.lbl生产指令编号.TabIndex = 157;
@@ -228,14 +228,14 @@
             // cmb打印机选择
             // 
             this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(283, 478);
+            this.cmb打印机选择.Location = new System.Drawing.Point(260, 412);
             this.cmb打印机选择.Name = "cmb打印机选择";
             this.cmb打印机选择.Size = new System.Drawing.Size(121, 24);
             this.cmb打印机选择.TabIndex = 158;
             // 
             // btn删除
             // 
-            this.btn删除.Location = new System.Drawing.Point(1043, 250);
+            this.btn删除.Location = new System.Drawing.Point(151, 345);
             this.btn删除.Name = "btn删除";
             this.btn删除.Size = new System.Drawing.Size(92, 32);
             this.btn删除.TabIndex = 159;
@@ -247,7 +247,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 585);
+            this.ClientSize = new System.Drawing.Size(1078, 463);
             this.Controls.Add(this.btn删除);
             this.Controls.Add(this.cmb打印机选择);
             this.Controls.Add(this.lbl生产指令编号);
@@ -268,7 +268,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btn审核);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Feed";
             this.Text = "吹膜供料系统运行记录";

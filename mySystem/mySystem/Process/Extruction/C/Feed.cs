@@ -686,7 +686,7 @@ namespace mySystem.Process.Extruction.C
                 return;
             }
             SetDefaultPrinter(cmb打印机选择.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
 		public void print(bool preview)
@@ -699,7 +699,7 @@ namespace mySystem.Process.Extruction.C
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 设置该进程是否可见
-            oXL.Visible = true;
+            //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
             my.Cells[3, 6].Value = "生产指令：" + lbl生产指令编号.Text;
@@ -721,6 +721,8 @@ namespace mySystem.Process.Extruction.C
             }
             my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"];
             // 让这个Sheet为被选中状态
+
+            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-07-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
             
 			if(preview)
 			{
@@ -730,7 +732,11 @@ namespace mySystem.Process.Extruction.C
 			else
 			{
             // 直接用默认打印机打印该Sheet
-            // my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
             // 关闭文件，false表示不保存
             wb.Close(false);
             // 关闭Excel进程
@@ -752,7 +758,22 @@ namespace mySystem.Process.Extruction.C
             dataGridView1.Columns[1].Visible = false;
         }
 
-        
+        int find_indexofprint()
+        {
+            OleDbDataAdapter dat = new OleDbDataAdapter("select * from 生产指令信息表 where 生产指令编号='" + __生产指令编号+"'", mySystem.Parameter.connOle);
+            DataTable dtt = new DataTable();
+            dat.Fill(dtt);
+            int __pid = Convert.ToInt32(dtt.Rows[0]["ID"]);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜供料系统运行记录 where 生产指令ID=" + __pid, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+        }
     }
 	
 }

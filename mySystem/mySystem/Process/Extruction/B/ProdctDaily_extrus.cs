@@ -15,15 +15,18 @@ using System.Text.RegularExpressions;
 
 namespace mySystem
 {
+
     /// <summary>
     ///  吹膜生产日报表
     /// </summary>
     public partial class ProdctDaily_extrus : mySystem.BaseForm
     {
+        int __生产指令ID;
         public ProdctDaily_extrus(mySystem.MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
+            __生产指令ID = mySystem.Parameter.proInstruID;
             fill_printer();
             Init();
             getPeople();
@@ -38,6 +41,15 @@ namespace mySystem
             : base(mainform)
         {
             InitializeComponent();
+
+            string asql = "select * from 吹膜生产日报表 where ID=" + id;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            __生产指令ID = (int)tempdt.Rows[0]["生产指令ID"];
+
             fill_printer();
             Init();
             getPeople();
@@ -46,21 +58,15 @@ namespace mySystem
             {
                 button2.Enabled = false;
             }
-            string asql = "select * from 吹膜生产日报表 where ID=" + id;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
-            int instrid = (int)tempdt.Rows[0]["生产指令ID"];
 
-            readOuterData(instrid);
+            readOuterData(__生产指令ID);
             removeOuterBinding();
             outerBind();
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
-            query_by_instru(instrid);
+            query_by_instru(__生产指令ID);
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
 
             DataGridViewsum();
@@ -111,7 +117,7 @@ namespace mySystem
 
         private void begin()
         {
-            readOuterData(mySystem.Parameter.proInstruID);
+            readOuterData(__生产指令ID);
             removeOuterBinding();
             outerBind();
             if (dt_prodinstr.Rows.Count <= 0)
@@ -120,14 +126,14 @@ namespace mySystem
                 dr = writeOuterDefault(dr);
                 dt_prodinstr.Rows.Add(dr);
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                readOuterData(mySystem.Parameter.proInstruID);
+                readOuterData(__生产指令ID);
                 removeOuterBinding();
                 outerBind();              
             }
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
-            query_by_instru(mySystem.Parameter.proInstruID);
+            query_by_instru(__生产指令ID);
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
 
             DataGridViewsum();
@@ -403,7 +409,7 @@ namespace mySystem
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
             fill_excel(my);
-
+            my.PageSetup.RightFooter = tb生产指令.Text + "-02-001 &P/" + wb.ActiveSheet.PageSetup.Pages.Count;
             if (b)
             {
                 // 设置该进程是否可见
@@ -475,6 +481,8 @@ namespace mySystem
             my.Cells[17+ind, 13].Value = tb工时.Text;
             my.Cells[18+ind, 3].Value = tb工时效率.Text;
             my.Cells[18+ind, 6].Value = "备注: "+tb备注.Text;
+
+            
         }
 
         private void button1_Click_1(object sender, EventArgs e)
@@ -515,7 +523,7 @@ namespace mySystem
         // 给外表的一行写入默认值
         DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.proInstruID;
+            dr["生产指令ID"] = __生产指令ID;
             dr["生产指令"] = mySystem.Parameter.proInstruction;
             dr["生产数量合计"] = 0;
             dr["生产重量合计"] = 0;

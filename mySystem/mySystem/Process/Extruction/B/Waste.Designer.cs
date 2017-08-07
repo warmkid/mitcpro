@@ -296,7 +296,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1104, 585);
+            this.ClientSize = new System.Drawing.Size(1066, 485);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbl合计不良品数量);
             this.Controls.Add(this.lbl生产开始时间);

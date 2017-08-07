@@ -1119,7 +1119,7 @@ namespace WindowsFormsApplication1
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "--" + "步骤序号6--" + "表序号" + find_indexofprint() + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-06-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {

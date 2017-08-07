@@ -1050,7 +1050,7 @@ namespace mySystem.Process.Extruction.B
                 return;
             }
             SetDefaultPrinter(cmb打印机选择.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
 		public void print(bool preview)
@@ -1063,7 +1063,7 @@ namespace mySystem.Process.Extruction.B
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 设置该进程是否可见
-            oXL.Visible = true;
+            //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
             my.Cells[3, 1].Value = "生产指令：" + lbl生产指令.Text;
@@ -1095,10 +1095,15 @@ namespace mySystem.Process.Extruction.B
 			{
                 
                 //add footer
-                my.PageSetup.RightFooter = __生产指令 + "02-1 /&/P";
+                my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+                
 
             // 直接用默认打印机打印该Sheet
-            //my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
             // 关闭文件，false表示不保存
             wb.Close(false);
             // 关闭Excel进程
@@ -1112,6 +1117,17 @@ namespace mySystem.Process.Extruction.B
 			}
 		}
 
-        
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where 生产指令ID=" + __生产指令ID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+        }
     }
 }

@@ -68,6 +68,7 @@ namespace mySystem.Process.Extruction.A
             getOtherData();
             __生产指令编号 = Parameter.proInstruction;
             __生产日期 = DateTime.Now.Date;
+            __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
             dtp生产日期.Value = __生产日期;
 
             readOuterData(__生产指令编号, __生产日期);
@@ -120,6 +121,7 @@ namespace mySystem.Process.Extruction.A
             readOuterData(searchId);
             __生产指令编号 = Convert.ToString(dtOuter.Rows[0]["生产指令编号"]);
             __生产日期 = Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]);
+            __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
             removeOuterBind();
             outerBind();
            
@@ -707,12 +709,12 @@ namespace mySystem.Process.Extruction.A
                 return;
             }
             SetDefaultPrinter(cmb打印机选择.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
-		public void print(bool preview)
-		{
-			// 打开一个Excel进程
+        public void print(bool preview)
+        {
+            // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
@@ -720,7 +722,7 @@ namespace mySystem.Process.Extruction.A
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 设置该进程是否可见
-            oXL.Visible = true;
+            //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
             my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编号.Text;
@@ -733,39 +735,57 @@ namespace mySystem.Process.Extruction.A
                 my.Cells[i + 6, 2].Value = dtInner.Rows[i]["确认项目"];
                 my.Cells[i + 6, 3].Value = dtInner.Rows[i]["确认结果白班"];
                 my.Cells[i + 6, 4].Value = dtInner.Rows[i]["确认结果夜班"];
-         
-            }
-            my.Cells[12,6].Value="交班人："+txb白班交班员.Text+"   接班人："+txb夜班接班员.Text+"   时间："+dtp白班交接班时间.Value.ToShortTimeString();
-           my.Cells[21,6].Value="交班人："+txb夜班交班员.Text+"   接班人："+txb白班接班员.Text+"   时间："+dtp夜班交接班时间.Value.ToShortTimeString();
-           my.Cells[5, 6].Value = txb白班异常情况处理.Text;
-           my.Cells[15, 6].Value = txb夜班异常情况处理.Text;
 
-			if(preview)
-			{
-				my.Select();   
-				oXL.Visible=true; //加上这一行  就相当于预览功能            
-			}
-			else
-			{
-            // 让这个Sheet为被选中状态
-            my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
-            // 直接用默认打印机打印该Sheet
-            //my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
-            // 关闭文件，false表示不保存
-            wb.Close(false);
-            // 关闭Excel进程
-            oXL.Quit();
-            // 释放COM资源
-			
-            Marshal.ReleaseComObject(wb);
-            Marshal.ReleaseComObject(oXL);
-            oXL = null;
-            my = null;
-            wb = null;
-			}
-			
-				
-		}
+            }
+            my.Cells[12, 6].Value = "交班人：" + txb白班交班员.Text + "   接班人：" + txb夜班接班员.Text + "   时间：" + dtp白班交接班时间.Value.ToShortTimeString();
+            my.Cells[21, 6].Value = "交班人：" + txb夜班交班员.Text + "   接班人：" + txb白班接班员.Text + "   时间：" + dtp夜班交接班时间.Value.ToShortTimeString();
+            my.Cells[5, 6].Value = txb白班异常情况处理.Text;
+            my.Cells[15, 6].Value = txb夜班异常情况处理.Text;
+            my.PageSetup.RightFooter = __生产指令编号 + "-" + "14" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+            if (preview)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                // 让这个Sheet为被选中状态
+                //my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                my = null;
+                wb = null;
+            }
+        }
+
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜岗位交接班记录 where 生产指令ID="+__生产指令ID,mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+        }
+		
         private void btn查看日志_Click(object sender, EventArgs e)
         {
             try

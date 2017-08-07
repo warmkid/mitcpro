@@ -111,97 +111,97 @@ namespace mySystem.Query
             {
                 switch (tableName)
                 {
-                    case "批生产记录（吹膜）":
+                    case "00 批生产记录（吹膜）":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", null); }
                         break;
-                    case "吹膜机组清洁记录":
+                    case "03 吹膜机组清洁记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜机组清洁记录表", "审核人", "清洁日期", null); }
                         break;
-                    case "吹膜岗位交接班记录":
+                    case "14 吹膜岗位交接班记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜岗位交接班记录", null, "生产日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜岗位交接班记录", null, "生产日期", null); }
                         break;
-                    case "吹膜工序清场记录":
+                    case "11 吹膜工序清场记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜工序清场记录", "清场人", "清场日期", null); }                       
-                        break;  
-                    case "吹膜供料记录":
+                        break;
+                    case "06 吹膜供料记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜供料记录", "审核人", "供料日期", null); }
                         break;
-                    case "吹膜工序废品记录":
+                    case "10 吹膜工序废品记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序废品记录", null, null, "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜工序废品记录", null, null, null); }
-                        break;                   
-                    case "吹膜工序领料退料记录":
+                        break;
+                    case "13 吹膜工序领料退料记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜工序领料退料记录", "退料操作人", "领料日期", null); }
-                        break;                   
-                    case "吹膜生产日报表":
+                        break;
+                    case "02 吹膜生产日报表":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜生产日报表", null, null, "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜生产日报表", null, null, null); }
                         break;
-                    case "吹膜工序生产和检验记录":
+                    case "09 吹膜工序生产和检验记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜工序生产和检验记录", "审核人", "生产日期", null); }
                         break;
-                    case "吹膜工序物料平衡记录":
+                    case "12 吹膜工序物料平衡记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期", null); }
                         break;
-                    case "产品内包装记录":
+                    case "15 产品内包装记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "产品内包装记录表", "操作人", "生产日期", null); }
                         break;
-                    case "产品外包装记录":
+                    case "16 产品外包装记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "产品外包装记录表", "操作人", "操作日期", null); }
                         break;
-                    case "吹膜机组开机前确认表":
+                    case "04 吹膜机组开机前确认表":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜机组开机前确认表", "确认人", "确认日期", null); }
                         break;
-                    case "吹膜机组预热参数记录表":
+                    case "05 吹膜机组预热参数记录表":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜机组预热参数记录表", "操作员", "日期", "生产指令id"); }
                         else
                         { EachBind(this.dgv, "吹膜机组预热参数记录表", "操作员", "日期", null); }
                         break;
-                    case "吹膜供料系统运行记录":
+                    case "07 吹膜供料系统运行记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜供料系统运行记录", "审核员", "生产日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜供料系统运行记录", "审核员", "生产日期", null); }
                         break;
-                    case "吹膜机组运行记录":
+                    case "08 吹膜机组运行记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "吹膜机组运行记录", "记录员", "生产日期", "生产指令ID"); }
                         else
@@ -313,81 +313,81 @@ namespace mySystem.Query
                 int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
                 switch (tableName)
                 {
-                    case "批生产记录（吹膜）":
+                    case "00 批生产记录（吹膜）":
                         //BatchProductRecord.BatchProductRecord detailform1 = new BatchProductRecord.BatchProductRecord(base.mainform, ID);
                         //detailform1.Show();
                         break;
-                    case "吹膜机组清洁记录":
+                    case "03 吹膜机组清洁记录":
                         Record_extrusClean detailform2 = new Record_extrusClean(base.mainform, ID);
                         detailform2.Owner = this;
                         detailform2.ShowDialog();
                         break;
-                    case "吹膜岗位交接班记录":
+                    case "14 吹膜岗位交接班记录":
                         mySystem.Process.Extruction.A.HandOver detailform3 = new Process.Extruction.A.HandOver(base.mainform, ID);
                         detailform3.Owner = this;
                         detailform3.ShowDialog();
                         break;
-                    case "吹膜工序清场记录":
+                    case "11 吹膜工序清场记录":
                         Record_extrusSiteClean detailform4 = new Record_extrusSiteClean(base.mainform, ID);
                         detailform4.Owner = this;
                         detailform4.ShowDialog();
                         break;
-                    case "吹膜供料记录":
+                    case "06 吹膜供料记录":
                         Record_extrusSupply detailform5 = new Record_extrusSupply(base.mainform, ID);
                         detailform5.Owner = this;
                         detailform5.ShowDialog();
                         break;
-                    case "吹膜工序废品记录":
+                    case "10 吹膜工序废品记录":
                         mySystem.Process.Extruction.B.Waste detailform6 = new Process.Extruction.B.Waste(base.mainform, ID);
                         detailform6.Owner = this;
                         detailform6.ShowDialog();
                         break;
-                    case "吹膜工序领料退料记录":
+                    case "13 吹膜工序领料退料记录":
                         Record_material_reqanddisg detailform7 = new Record_material_reqanddisg(base.mainform, ID);
                         detailform7.Owner = this;
                         detailform7.Show();
                         break;
-                    case "吹膜生产日报表":
+                    case "02 吹膜生产日报表":
                         ProdctDaily_extrus detailform8 = new ProdctDaily_extrus(base.mainform, ID);
                         detailform8.Owner = this;
                         detailform8.ShowDialog();
                         break;
-                    case "吹膜工序生产和检验记录":
+                    case "09 吹膜工序生产和检验记录":
                         ExtructionpRoductionAndRestRecordStep6 detailform9 = new ExtructionpRoductionAndRestRecordStep6(base.mainform, ID);
                         detailform9.Owner = this;
                         detailform9.ShowDialog();
                         break;
-                    case "吹膜工序物料平衡记录":
+                    case "12 吹膜工序物料平衡记录":
                         MaterialBalenceofExtrusionProcess detailform10 = new MaterialBalenceofExtrusionProcess(base.mainform, ID);
                         detailform10.Owner = this;
                         detailform10.ShowDialog();
                         break;
-                    case "产品内包装记录":
+                    case "15 产品内包装记录":
                         ProductInnerPackagingRecord detailform11 = new ProductInnerPackagingRecord(base.mainform, ID);
                         detailform11.Owner = this;
                         detailform11.ShowDialog();
                         break;
-                    case "产品外包装记录":
+                    case "16 产品外包装记录":
                         Extruction.Chart.outerpack detailform12 = new Extruction.Chart.outerpack(base.mainform, ID);
                         detailform12.Owner = this;
                         detailform12.ShowDialog();
                         break;
-                    case "吹膜机组开机前确认表":
+                    case "04 吹膜机组开机前确认表":
                         ExtructionCheckBeforePowerStep2 detailform13 = new ExtructionCheckBeforePowerStep2(base.mainform, ID);
                         detailform13.Owner = this;
                         detailform13.ShowDialog();
                         break;
-                    case "吹膜机组预热参数记录表":
+                    case "05 吹膜机组预热参数记录表":
                         ExtructionPreheatParameterRecordStep3 detailform14 = new ExtructionPreheatParameterRecordStep3(base.mainform, ID);
                         detailform14.Owner = this;
                         detailform14.ShowDialog();
                         break;
-                    case "吹膜供料系统运行记录":
+                    case "07 吹膜供料系统运行记录":
                         mySystem.Process.Extruction.C.Feed detailform15 = new Process.Extruction.C.Feed(base.mainform, ID);
                         detailform15.Owner = this;
                         detailform15.ShowDialog();
                         break;
-                    case "吹膜机组运行记录":
+                    case "08 吹膜机组运行记录":
                         mySystem.Process.Extruction.B.Running detailform16 = new Process.Extruction.B.Running(base.mainform, ID);
                         detailform16.Owner = this;
                         detailform16.ShowDialog();
@@ -415,8 +415,8 @@ namespace mySystem.Query
                         break;
                 }
             }
-            catch
-            { }
+            catch(Exception ee)
+            { MessageBox.Show(ee.Message + "\n" + ee.StackTrace); }
         }
 
 

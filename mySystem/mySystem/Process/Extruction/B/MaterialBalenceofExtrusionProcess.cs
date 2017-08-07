@@ -492,7 +492,7 @@ namespace mySystem.Extruction.Process
                  return;
              }
              SetDefaultPrinter(cmb打印机选择.Text);
-             print(true);
+             print(false);
              GC.Collect();
          }
 		 public void print(bool preview)
@@ -505,7 +505,7 @@ namespace mySystem.Extruction.Process
              // 选择一个Sheet，注意Sheet的序号是从1开始的
              Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
              // 设置该进程是否可见
-             oXL.Visible = true;
+             //oXL.Visible = true;
              // 修改Sheet中某行某列的值
 
              my.Cells[3, 2].Value = lbl生产指令.Text.ToString();
@@ -517,7 +517,8 @@ namespace mySystem.Extruction.Process
              my.Cells[6, 5].Value = txb物料平衡.Text;
              my.Cells[7, 2].Value = txb备注.Text;
              my.Cells[8, 1].Value = "记录员/日期：" + txb记录员.Text+"   "+dtp记录日期.Value.ToLongDateString();
-             my.Cells[8, 4].Value =  txb审核员.Text+dtp审核日期.Value.ToLongDateString();
+             my.Cells[8, 4].Value = txb审核员.Text + dtp审核日期.Value.ToLongDateString();
+             
 
 			if(preview)
 			{
@@ -529,10 +530,14 @@ namespace mySystem.Extruction.Process
 			else
 			{
                 //footprint
-                my.PageSetup.RightFooter = __生产指令+"-12- 1 /&P"; 
+                my.PageSetup.RightFooter = __生产指令 + "-12-001 &P/" + wb.ActiveSheet.PageSetup.Pages.Count;
 
 			// 直接用默认打印机打印该Sheet
-			 my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+            try
+            {
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+            }
+            catch { }
              // 关闭文件，false表示不保存
              wb.Close(false);
              // 关闭Excel进程
