@@ -23,13 +23,13 @@ namespace mySystem.Process.CleanCut
     public partial class DailyRecord : mySystem.BaseForm
     {
         OleDbConnection conOle;
-        string tablename1 = "吹膜工序废品记录";
+        string tablename1 = "清洁分切日报表";
         DataTable dtOuter;
         OleDbDataAdapter daOuter;
         BindingSource bsOuter;
         OleDbCommandBuilder cbOuter;
 
-        string tablename2 = "吹膜工序废品记录详细信息";
+        string tablename2 = "清洁分切日报表详细信息";
         DataTable dtInner;
         OleDbDataAdapter daInner;
         BindingSource bsInner;
@@ -37,6 +37,7 @@ namespace mySystem.Process.CleanCut
 
         List<string> productCode;
         List<string> productCodeLst;
+        List<String> matCodes = new List<string>(new String[] { "T", "PEF", "UP1", "XP1" });
         List<string> wasteReason = new List<string>();
         List<string> flight = new List<string>(new string[] { "白班", "夜班" });
         List<string> usrList = new List<string>();
@@ -58,37 +59,173 @@ namespace mySystem.Process.CleanCut
         /// 0：未保存；1：待审核；2：审核通过；3：审核未通过
         /// </summary>
         Parameter.FormState _formState;
-        public DailyRecord()
-            : base()
-        {
-            InitializeComponent();
-            //getPeople()--> setUserState()--> getOtherData()--> Computer() --> addOtherEvnetHandler()-->setFormState()-->setEnableReadOnly()
+        //public DailyRecord()
+        //    : base()
+        //{
+           
+        //    //getPeople()--> setUserState()--> getOtherData()--> Computer() --> addOtherEvnetHandler()-->setFormState()-->setEnableReadOnly()
 
+        //}
+
+        void cmb物料种类_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            // 看生产指令状态
+            da = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID="+__生产指令ID,mySystem.Parameter.connOle);
+            dt = new DataTable();
+            da.Fill(dt);
+            int statue = Convert.ToInt32(dt.Rows[0]["状态"]);
+            if (4 == statue)
+            {
+                readOuterData(__生产指令ID, cmb物料种类.SelectedItem.ToString());
+                outerBind();
+                if (0 == dtOuter.Rows.Count)
+                {
+                    MessageBox.Show("物料代码： " + cmb物料种类.SelectedItem.ToString() + " 下没有生产记录");
+                    return;
+                }
+                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                innerBind();
+            }
+            else
+            {
+                
+
+                // 先看外表有没有，没有就新建
+                readOuterData(__生产指令ID, cmb物料种类.SelectedItem.ToString());
+                outerBind();
+                if (dtOuter.Rows.Count == 0)
+                {
+                    DataRow dr = dtOuter.NewRow();
+                    dr = writeOuterDefault(dr);
+                    dtOuter.Rows.Add(dr);
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                    readOuterData(__生产指令ID, cmb物料种类.SelectedItem.ToString());
+                    outerBind();
+                }
+                
+
+                // 读取内表，删除所有记录
+                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                innerBind();
+                foreach (DataRow dr in dtInner.Rows)
+                {
+                    dr.Delete();
+                }
+                daInner.Update((DataTable)bsInner.DataSource);
+                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                innerBind();
+
+                // 读取生产记录
+
+                da = new OleDbDataAdapter("select * from 清洁分切生产记录 where 生产指令ID=" + __生产指令ID, mySystem.Parameter.connOle);
+                dt = new DataTable();
+                da.Fill(dt);
+                OleDbDataAdapter dain;
+                int xuhao = 1;
+                foreach (DataRow r in dt.Rows)
+                {
+                    int id = Convert.ToInt32(r["ID"]);
+                    string sql = "select * from 清洁分切生产记录详细信息 where T清洁分切生产记录ID={0} and 物料代码 like '%{1}%'";
+                    dain = new OleDbDataAdapter(string.Format(sql, id, cmb物料种类.SelectedItem.ToString()), mySystem.Parameter.connOle);
+                    DataTable tmp = new DataTable();
+                    dain.Fill(tmp);
+                    foreach (DataRow dr in tmp.Rows)
+                    {
+                        DataRow ndr = dtInner.NewRow();
+                        ndr["T清洁分切日报表ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+                        ndr["序号"] = xuhao++;
+                        ndr["生产指令"] = __生产指令;
+                        ndr["生产日期"] = r["生产日期"];
+                        ndr["使用物料代码"] = dr["物料代码"];
+                        // TODO 能自动填吗？
+                        ndr["规格a1"] = 0;
+                        ndr["用量b1"] = dr["长度A"];
+                        ndr["使用量"] = Convert.ToDouble(ndr["规格a1"]) * Convert.ToDouble(ndr["用量b1"]);
+                        ndr["清洁分切后代码"] = dr["清洁分切后代码"];
+                        ndr["规格a2"] = 0;
+                        ndr["数量b2"] = dr["长度B"];
+                        ndr["数量"] = Convert.ToDouble(ndr["规格a2"]) * Convert.ToDouble(ndr["数量b2"]);
+                        ndr["工时"] = 0;
+                        ndr["操作人"] = mySystem.Parameter.userName;
+                        ndr["审核人"] = "";
+                        dtInner.Rows.Add(ndr);
+                    }
+
+                }
+                daInner.Update((DataTable)bsInner.DataSource);
+                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                innerBind();
+            }
+
+            computerOuterData();
         }
 
         public DailyRecord(mySystem.MainForm mainform)
             : base(mainform)
         {
+            
             InitializeComponent();
+            fill_printer();
+            conOle = mySystem.Parameter.connOle;
+            getPeople();
+            setUserState();
+            __生产指令 = mySystem.Parameter.cleancutInstruction;
+            __生产指令ID = mySystem.Parameter.cleancutInstruID;
+            foreach (string m in matCodes)
+            {
+                cmb物料种类.Items.Add(m);
+            }
+            cmb物料种类.SelectedIndexChanged += new EventHandler(cmb物料种类_SelectedIndexChanged);
+            addOtherEventHandler();
             //getPeople()--> setUserState()--> getOtherData()--> Computer() --> addOtherEvnetHandler()-->setFormState()-->setEnableReadOnly()
-
+            setEnableReadOnly();
         }
 
         public DailyRecord(mySystem.MainForm mainform, int Id)
             : base(mainform)
         {
+            string matcode;
             InitializeComponent();
-            
+            fill_printer();
+            conOle = mySystem.Parameter.connOle;
+            getPeople();
+            setUserState();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清洁分切日报表 where ID="+Id,mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            matcode = dt.Rows[0]["物料种类"].ToString();
+            __生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+            da = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID="+__生产指令ID, mySystem.Parameter.connOle);
+            dt.Clear();
+            da.Fill(dt);
+            __生产指令 = dt.Rows[0]["生产指令编号"].ToString();
+            foreach (string m in matCodes)
+            {
+                cmb物料种类.Items.Add(m);
+            }
+            cmb物料种类.SelectedIndexChanged += new EventHandler(cmb物料种类_SelectedIndexChanged);
+            cmb物料种类.SelectedItem = matcode;
+            addOtherEventHandler();
+            setEnableReadOnly();
         }
-        private void readOuterData(int Id)
+
+
+        void getOtherData()
+        {
+        }
+
+        private void readOuterData(int pid, string matcode)
         {
             dtOuter = new DataTable(tablename1);
-            daOuter = new OleDbDataAdapter("SELECT * FROM 吹膜工序废品记录 WHERE ID =" + Id, conOle);
+            string sql = "select * from 清洁分切日报表 where 生产指令ID={0} and 物料种类='{1}'";
+            daOuter = new OleDbDataAdapter(string.Format(sql, pid, matcode), conOle);
             bsOuter = new BindingSource();
             cbOuter = new OleDbCommandBuilder(daOuter);
             daOuter.Fill(dtOuter);
         }
-/*
+
         private void getPeople()
         {
             string tabName = "用户权限";
@@ -153,99 +290,24 @@ namespace mySystem.Process.CleanCut
 
         }
 
-        // 获取其他需要的数据，比如产品代码，产生废品原因等
-        //void getOtherData();
-        // 获取操作员和审核员
-        //void getPeople();
-        // 计算，主要用于日报表、物料平衡记录中的计算
-        //void compute();
-
-
-        /// 数据读取类函数 ================================================
-
-
-        /// 主要事件处理，格式处理
-        // 设置DataGridView中各列的格式，包括列类型，列名，是否可以排序
-        // 这个函数中先通过遍历把列加全，并设置全局属性（列的类型，是否可排序）； 然后再设置各类的可见性等属性
-
-
-        // 设置各控件的事件 ================================================
-        // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
-        //void addDateEventHandler();
-        // 设置自动计算类事件
-        //void addComputerEventHandler();
-        // 其他事件，比如按钮的点击，数据有效性判断
-        //void addOtherEvnetHandler();
-        // 打印函数
-
-        /// 主要事件处理，格式处理 ================================================
-
-
-
-
-        /// 控件状态类 ================================================
-        // 获取当前窗体状态：
-        // 如果『审核员』为空，则为未保存
-        // 否则，如果『审核员』为『__待审核』，则为『待审核』
-        // 否则
-        //         如果审核结果为『通过』，则为『审核通过』
-        //         如果审核结果为『不通过』，则为『审核未通过』
-
-        // 设置用户状态，用户状态有3个：0--操作员，1--审核员，2--管理员
-
-        // 设置控件可用性，根据状态设置，状态是每个窗体的变量，放在父类中
-        // 0：未保存；1：待审核；2：审核通过；3：审核未通过
 
 
         //for different user, the form will open different controls
         private void setEnableReadOnly()
         {
-            if (Parameter.FormState.无数据 == _formState)
-            {
-                setControlFalse();
-                btn添加.Enabled = true;
-                //lbl生产指令.ReadOnly = false;
-                return;
-            }
+            
             switch (_userState)
             {
                 case Parameter.UserState.操作员: //0--操作员
-                    //In this situation,operator could edit all the information and the send button is active
-                    if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState)
-                    {
-                        setControlTrue();
-                        btn提交数据审核.Enabled = true;
-                        btn数据审核.Enabled = false;
-                    }
-                    //Once the record send to the reviewer or the record has passed check, all the controls are forbidden
-                    else if (Parameter.FormState.待审核 == _formState || Parameter.FormState.审核通过 == _formState)
-                    {
-                        setControlFalse();
-                    }
-
+                   
+                    setControlFalse();
+                    bt保存.Enabled = true;
                     break;
                 case Parameter.UserState.审核员: //1--审核员
-                    //the formState is to be checked
-                    if (Parameter.FormState.待审核 == _formState)
-                    {
-                        setControlTrue();
-                        btn审核.Enabled = true;
-                        //one more button should be avtive here!
-                    }
-                    //the formState do not have to be checked
-                    else if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState || Parameter.FormState.审核未通过 == _formState)
-                    {
-                        setControlFalse();
-
-                    }
-                    if (Parameter.FormState.审核通过 != _formState)
-                    {
-                        btn数据审核.Enabled = true;
-                    }
-                    else
-                    {
-                        btn数据审核.Enabled = false;
-                    }
+                    
+                    setControlFalse();
+                    combobox打印机选择.Enabled = true;
+                    btn打印.Enabled = true;
                     break;
                 case Parameter.UserState.管理员: //2--管理员
                     setControlTrue();
@@ -275,9 +337,9 @@ namespace mySystem.Process.CleanCut
                 }
             }
             // 保证这两个按钮一直是false
-            txb审核员.ReadOnly = true;
-            btn审核.Enabled = false;
-            btn提交审核.Enabled = false;
+            //txb审核员.ReadOnly = true;
+            //btn审核.Enabled = false;
+            //btn提交审核.Enabled = false;
         }
 
         //this guarantees the controls are uneditable
@@ -301,7 +363,7 @@ namespace mySystem.Process.CleanCut
                 }
             }
             btn查看日志.Enabled = true;
-            btn打印.Enabled = true;
+            //btn打印.Enabled = true;
         }
         // “审核”和“提交审核”按钮特殊，在以上两个函数中要设为false。
         // 当登陆人是审核员时，在外面设置它为true
@@ -349,7 +411,7 @@ namespace mySystem.Process.CleanCut
                 bsOuter.EndEdit();
                 daOuter.Update((DataTable)bsOuter.DataSource);
 
-                readOuterData(searchId);
+                //readOuterData(searchId);
 
                 removeOuterBind();
                 outerBind();
@@ -400,7 +462,7 @@ namespace mySystem.Process.CleanCut
                 bsOuter.EndEdit();
                 daOuter.Update((DataTable)bsOuter.DataSource);
 
-                readOuterData(searchId);
+                //readOuterData(searchId);
 
                 removeOuterBind();
                 outerBind();
@@ -446,18 +508,21 @@ namespace mySystem.Process.CleanCut
         private DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = __生产指令ID;
-            dr["生产指令"] = lbl生产指令.Text;
-            dr["生产开始时间"] = Convert.ToDateTime(lbl生产开始时间.Text);
-            dr["生产结束时间"] = Convert.ToDateTime(dtp生产结束时间.Value.ToString());
-            dr["审核员"] = "";
-            dr["合计不良品数量"] = 0;
-
-            //this part to add log 
-            //格式： 
-            // =================================================
-            // yyyy年MM月dd日，操作员：XXX 创建记录
-            string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 创建记录\n";
+            dr["物料种类"] = cmb物料种类.SelectedItem.ToString();
+            dr["清洁前合计A1"] = 0;
+            dr["清洁前合计A2"] = 0;
+            dr["清洁后合计B1"] = 0;
+            dr["清洁后合计B2"] = 0;
+            dr["清洁后合计C"] = 0;
+            dr["月汇总"] = 0;
+            dr["成品率"] = 0;
+            dr["工时效率"] = 0;
+            dr["工时"] = 0;
+            dr["操作人"] = mySystem.Parameter.userName;
+            dr["操作日期"] = DateTime.Now;
+            dr["审核日期"] = DateTime.Now;
+            string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
+            log += "生产指令编码：" + __生产指令 + "\n";
             dr["日志"] = log;
             return dr;
         }
@@ -476,18 +541,7 @@ namespace mySystem.Process.CleanCut
         }
         
 
-        private void getWasteRason()
-        {
-            DataTable Dt = new DataTable("设置废品产生原因");
-            OleDbDataAdapter da = new OleDbDataAdapter("SELECT 废品产生原因 FROM 设置废品产生原因", conOle);
-            da.Fill(Dt);
-
-            wasteReason = new List<string>();
-            for (int i = 0; i < Dt.Rows.Count; i++)
-            {
-                wasteReason.Add(Convert.ToString(Dt.Rows[i]["废品产生原因"]));
-            }
-        }
+       
         private void outerBind()
         {
             bsOuter.DataSource = dtOuter;
@@ -495,22 +549,22 @@ namespace mySystem.Process.CleanCut
             {
                 if (c.Name.StartsWith("txb"))
                 {
-                    //(c as TextBox).DataBindings.Clear();
+                    (c as TextBox).DataBindings.Clear();
                     (c as TextBox).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(3));
                 }
                 else if (c.Name.StartsWith("lbl"))
                 {
-                    //(c as Label).DataBindings.Clear();
+                    (c as Label).DataBindings.Clear();
                     (c as Label).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(3));
                 }
                 else if (c.Name.StartsWith("cmb"))
                 {
-                    //(c as ComboBox).DataBindings.Clear();
+                    (c as ComboBox).DataBindings.Clear();
                     (c as ComboBox).DataBindings.Add("SelectedItem", bsOuter.DataSource, c.Name.Substring(3));
                 }
                 else if (c.Name.StartsWith("dtp"))
                 {
-                    //(c as DateTimePicker).DataBindings.Clear();
+                    (c as DateTimePicker).DataBindings.Clear();
                     (c as DateTimePicker).DataBindings.Add("Value", bsOuter.DataSource, c.Name.Substring(3));
                 }
             }
@@ -545,7 +599,7 @@ namespace mySystem.Process.CleanCut
 
         private void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE T吹膜工序废品记录ID=" + id, conOle);
+            daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE T清洁分切日报表ID=" + id, conOle);
             cbInner = new OleDbCommandBuilder(daInner);
             dtInner = new DataTable(tablename2);
             bsInner = new BindingSource();
@@ -562,113 +616,7 @@ namespace mySystem.Process.CleanCut
         {
             dataGridView1.DataBindings.Clear();
         }
-        private void setDataGridViewColumns()
-        {
-            DataGridViewTextBoxColumn tbc;
-            DataGridViewComboBoxColumn cbc;
-            foreach (DataColumn dc in dtInner.Columns)
-            {
-
-                switch (dc.ColumnName)
-                {
-                    case "班次":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        foreach (String s in flight)
-                        {
-                            cbc.Items.Add(s);
-                        }
-                        dataGridView1.Columns.Add(cbc);
-                        break;
-                    case "产品代码":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        foreach (String s in productCodeLst)
-                        {
-                            cbc.Items.Add(s);
-                        }
-                        dataGridView1.Columns.Add(cbc);
-                        break;
-
-                    case "废品产生原因":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        foreach (String s in wasteReason)
-                        {
-                            cbc.Items.Add(s);
-                        }
-                        dataGridView1.Columns.Add(cbc);
-                        break;
-
-
-                    default:
-                        DataGridViewTextBoxColumn c2 = new DataGridViewTextBoxColumn();
-                        c2.DataPropertyName = dc.ColumnName;
-                        c2.HeaderText = dc.ColumnName;
-                        c2.Name = dc.ColumnName;
-                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
-                        c2.ValueType = dc.DataType;
-                        dataGridView1.Columns.Add(c2);
-
-                        break;
-                }
-            }
-            dataGridView1.AllowUserToAddRows = false;
-            //dataGridView1.RowHeadersVisible = false;
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[2].Width = 60;
-            dataGridView1.Columns[3].Width = 180;
-            dataGridView1.Columns[4].Width = 70;
-            dataGridView1.Columns[4].ReadOnly = true;
-            dataGridView1.Columns[5].Width = 150;
-            dataGridView1.Columns[6].Width = 120;
-            dataGridView1.Columns[7].Width = 120;
-            dataGridView1.Columns[9].Width = 120;
-            dataGridView1.DataError += new DataGridViewDataErrorEventHandler(dataGridView1_DataError);
-        }
-
-
-
-        private DataRow writeInnerDefault(int Id)
-        {
-            OleDbDataAdapter daReadFromDatabase = new OleDbDataAdapter("SELECT * FROM 清洁分切生产记录详细信息 WHERE T清洁分切生产记录ID =" + Id, conOle);
-            DataTable dtReadFromDatebase = new DataTable("清洁分切生产记录详细信息");
-            BindingSource bsReadFromDatabase = new BindingSource();
-            OleDbCommandBuilder cbReadFromDatebase = new OleDbCommandBuilder(daReadFromDatabase);
-            daReadFromDatabase.Fill(dtReadFromDatebase);
-
-            if (dtReadFromDatebase.Rows.Count < 1)
-            {
-                MessageBox.Show("未查询到相关信息");
-                this.Close();
-            }
-
-            daInner = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE ", conOle);
-
-
-
-            dr["T吹膜工序废品记录ID"] = dtOuter.Rows[0]["ID"];
-            dr["序号"] = 0;
-            dr["生产日期"] = Convert.ToDateTime(DateTime.Now.ToString());
-            dr["班次"] = Parameter.userflight;
-            dr["产品代码"] = "";
-            dr["不良品数量"] = 0;
-            dr["废品产生原因"] = "";
-            dr["记录员"] = Parameter.userName;
-            dr["记录员备注"] = "";
-            dr["审核员"] = "";
-            return dr;
-        }
+       
 
         //check the operator, make sure the operator exists in userlist
         private void btn保存_Click(object sender, EventArgs e)
@@ -686,11 +634,10 @@ namespace mySystem.Process.CleanCut
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
-            setRowNums();
 
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
-            readOuterData(lbl生产指令.Text);
+            //readOuterData(lbl生产指令.Text);
             removeOuterBind();
             outerBind();
             if (Parameter.UserState.操作员 == _userState)
@@ -699,84 +646,7 @@ namespace mySystem.Process.CleanCut
             }
         }
 
-        private void btn提交审核_Click(object sender, EventArgs e)
-        {
-            foreach (DataRow dr in dtInner.Rows)
-            {
-                if (dr["审核员"].ToString() == "")
-                {
-                    MessageBox.Show("请先提交数据审核!");
-                    return;
-                }
-            }
-            //after saving, inner item haven't changed but we update once more here
-            daInner.Update((DataTable)bsInner.DataSource);
-            readInnerData(searchId);
-            innerBind();
-            setRowNums();
-
-            //read from database table and find current record
-            string checkName = "待审核";
-            DataTable dtCheck = new DataTable(checkName);
-            OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
-            BindingSource bsCheck = new BindingSource();
-            OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
-            daCheck.Fill(dtCheck);
-
-            //if current hasn't been stored, insert a record in table
-            if (0 == dtCheck.Rows.Count)
-            {
-                DataRow newrow = dtCheck.NewRow();
-                newrow["表名"] = tablename1;
-                newrow["对应ID"] = dtOuter.Rows[0]["ID"];
-                dtCheck.Rows.Add(newrow);
-            }
-            bsCheck.DataSource = dtCheck;
-            daCheck.Update((DataTable)bsCheck.DataSource);
-
-            //this part to add log 
-            //格式： 
-            // =================================================
-            // yyyy年MM月dd日，操作员：XXX 提交审核
-            string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
-            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-
-            //fill reviwer information
-            dtOuter.Rows[0]["审核员"] = __待审核;
-            //update log into table
-            bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
-
-            readOuterData(searchId);
-            removeOuterBind();
-            outerBind();
-
-            btn提交审核.Enabled = false;
-            // insert into database
-            setFormState();
-            setEnableReadOnly();
-        }
-
-        private void btn提交数据审核_Click(object sender, EventArgs e)
-        {
-            //find the uncheck item in inner list and tag the revoewer __待审核
-            for (int i = 0; i < dtInner.Rows.Count; i++)
-            {
-                if (Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim() == "")
-                {
-                    dtInner.Rows[i]["审核员"] = __待审核;
-                }
-                continue;
-            }
-            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            daInner.Update((DataTable)bsInner.DataSource);
-            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            innerBind();
-            setRowNums();
-            setDataGridViewColumnReadOnly();
-        }
-
+       
 
         /// <summary>
         /// for the checked record set rows readonly
@@ -805,48 +675,7 @@ namespace mySystem.Process.CleanCut
 
 
 
-        //this function just fill the name but dooesn't catch the opinion
-        private void btn数据审核_Click(object sender, EventArgs e)
-        {
-            //find the item in inner tagged the reviewer __待审核 and replace the content his name
-            for (int i = 0; i < dtInner.Rows.Count; i++)
-            {
-                if (__待审核 == Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim())
-                {
-                    if (Parameter.userName != dtInner.Rows[i]["记录员"].ToString())
-                    {
-                        dtInner.Rows[i]["审核员"] = Parameter.userName;
-                    }
-                    else
-                    {
-                        MessageBox.Show("记录员,审核员相同");
-                    }
-                }
-                continue;
-            }
-            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            daInner.Update((DataTable)bsInner.DataSource);
-            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            innerBind();
-            setRowNums();
-        }
-        private void btn添加_Click(object sender, EventArgs e)
-        {
-            // 内表中添加一行
-            DataRow dr = dtInner.NewRow();
-            dr = writeInnerDefault(dr);
-            dtInner.Rows.Add(dr);
-            setRowNums();
-            daInner.Update((DataTable)bsInner.DataSource);
-            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            innerBind();
-            sumWaste();
-            daOuter.Fill((DataTable)bsOuter.DataSource);
-            removeOuterBind();
-            outerBind();
-            btn保存.Enabled = true;
-
-        }
+      
 
         private void btn查看日志_Click(object sender, EventArgs e)
         {
@@ -862,38 +691,8 @@ namespace mySystem.Process.CleanCut
             }
         }
 
-        private void setDataGridViewRowNums()
-        {
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
-            }
-        }
-
-        private void setRowNums()
-        {
-            for (int i = 0; i < dtInner.Rows.Count; i++)
-            {
-                dtInner.Rows[i]["序号"] = i + 1;
-            }
-        }
-
-
-        private void sumWaste()
-        {
-            double sum = 0;
-            for (int i = 0; i < dtInner.Rows.Count; i++)
-            {
-                sum += Convert.ToDouble(dtInner.Rows[i]["不良品数量"]);
-            }
-            outerDataSync("lbl合计不良品数量", (sum).ToString());
-            //DataGridViewBindingCompleteEventArgs e=new DataGridViewBindingCompleteEventArgs;
-            //dataGridView1_DataBindingComplete(dataGridView1,e);
-            //dtOuter.Rows[0]["合计不良品数量"] = sum.ToString();
-            //txb合计不良品数量.DataBindings.Clear();
-            //txb合计不良品数量.DataBindings.Add("Text", bsOuter.DataSource, "合计不良品数量");
-        }
+       
 
         void outerDataSync(String name, String val)
         {
@@ -907,22 +706,7 @@ namespace mySystem.Process.CleanCut
             }
         }
 
-        private void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (6 == e.ColumnIndex)
-            {
-                sumWaste();
-
-            }
-            if (8 == e.ColumnIndex || 10 == e.ColumnIndex)     //how to check the usr name of this list
-            {
-                if (usrList.IndexOf(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString().Trim()) < 0)
-                {
-                    MessageBox.Show("用户不存在");
-                }
-            }
-
-        }
+       
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
@@ -933,27 +717,7 @@ namespace mySystem.Process.CleanCut
             MessageBox.Show(name + "填写错误");
         }
 
-        private void btn删除_Click(object sender, EventArgs e)
-        {
-
-            if ("" == (Convert.ToString(dtInner.Rows[dataGridView1.SelectedCells[0].RowIndex]["审核员"]).ToString().Trim()))
-            {
-                dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
-                //.Rows[dataGridView1.SelectedCells[0].RowIndex].Delete();
-                //this line disable
-                daInner.Update((DataTable)bsInner.DataSource);
-                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-                innerBind();
-                sumWaste();
-                daOuter.Fill((DataTable)bsOuter.DataSource);
-                removeOuterBind();
-                outerBind();
-            }
-            else
-            {
-                MessageBox.Show("不可删除");
-            }
-        }
+        
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -974,81 +738,73 @@ namespace mySystem.Process.CleanCut
             System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
             foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
             {
-                cmb打印机选择.Items.Add(sPrint);
+                combobox打印机选择.Items.Add(sPrint);
             }
+        }
+
+        //void fill_printer()
+        //{
+
+        //    System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+        //    foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+        //    {
+        //        combobox打印机选择.Items.Add(sPrint);
+        //    }
+        //}
+
+        void computerOuterData()
+        {
+            double a1 = 0, a2 = 0, b1 = 0, b2 = 0, c = 0;
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                a1 += Convert.ToDouble(dr["用量b1"]);
+                a2 += Convert.ToDouble(dr["使用量"]);
+                b1 += Convert.ToDouble(dr["数量b2"]);
+                b2 += Convert.ToDouble(dr["数量"]);
+                c += Convert.ToDouble(dr["工时"]); ;
+            }
+            dtOuter.Rows[0]["清洁前合计A1"] = a1;
+            dtOuter.Rows[0]["清洁前合计A2"] = a2;
+            dtOuter.Rows[0]["清洁后合计B1"] = b1;
+            dtOuter.Rows[0]["清洁后合计B2"] = b2;
+            dtOuter.Rows[0]["清洁后合计C"] = c;
+        }
+
+        private void bt保存_Click(object sender, EventArgs e)
+        {
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            readOuterData(__生产指令ID, cmb物料种类.SelectedItem.ToString());
+            outerBind();
+
+            //内表保存
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+        }
+
+        void addOtherEventHandler()
+        {
+            dataGridView1.AllowUserToAddRows = false;
+            
         }
 
         private void btn打印_Click(object sender, EventArgs e)
         {
-            if (cmb打印机选择.Text == "")
+            if (combobox打印机选择.SelectedItem.ToString() == "")
             {
-                MessageBox.Show("选择一台打印机");
+                MessageBox.Show("请先选择一台打印机");
                 return;
             }
-            SetDefaultPrinter(cmb打印机选择.Text);
-            print(true);
+            SetDefaultPrinter(combobox打印机选择.Text);
+            print(false);
             GC.Collect();
         }
-        public void print(bool preview)
+
+        // TODO 打印
+        void print(bool preview)
         {
-            // 打开一个Excel进程
-            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
-            // 利用这个进程打开一个Excel文件
-            //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\B\SOP-MFG-301-R10 吹膜工序废品记录.xlsx");
-            // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
-            // 设置该进程是否可见
-            oXL.Visible = true;
-            // 修改Sheet中某行某列的值
-
-            my.Cells[3, 1].Value = "生产指令：" + lbl生产指令.Text;
-            my.Cells[3, 6].Value = "生产时段：" + lbl生产开始时间.Text + "--" + dtp生产结束时间.Value.ToLongDateString();
-
-
-            for (int i = 0; i < dtInner.Rows.Count; i++)
-            {
-                my.Cells[i + 5, 1].Value = dtInner.Rows[i]["序号"];
-                my.Cells[i + 5, 2].Value = Convert.ToDateTime(dtInner.Rows[i]["生产日期"]).ToLongDateString();
-                my.Cells[i + 5, 3].Value = dtInner.Rows[i]["班次"];
-                my.Cells[i + 5, 4].Value = dtInner.Rows[i]["产品代码"];
-                my.Cells[i + 5, 5].Value = dtInner.Rows[i]["不良品数量"].ToString();
-                my.Cells[i + 5, 6].Value = dtInner.Rows[i]["废品产生原因"];
-                my.Cells[i + 5, 7].Value = dtInner.Rows[i]["记录人"];
-                my.Cells[i + 5, 8].Value = dtInner.Rows[i]["审核员"];
-            }
-
-            //my.Cells[16, 10] = "A层 " + array1[9][11].Text + "  (℃)";
-            //my.Cells[16, 12] = "B层 " + array1[11][11].Text + "  (℃)";
-            //my.Cells[16, 14] = "C层 " + array1[13][11].Text + "  (℃)";
-
-            if (preview)
-            {
-                // 让这个Sheet为被选中状态
-                my.Select();
-                oXL.Visible = true; //加上这一行  就相当于预览功能
-            }
-            else
-            {
-
-                //add footer
-                my.PageSetup.RightFooter = __生产指令 + "02-1 /&/P";
-
-                // 直接用默认打印机打印该Sheet
-                //my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
-                // 关闭文件，false表示不保存
-                wb.Close(false);
-                // 关闭Excel进程
-                oXL.Quit();
-                // 释放COM资源
-                Marshal.ReleaseComObject(wb);
-                Marshal.ReleaseComObject(oXL);
-                my = null;
-                oXL = null;
-                wb = null;
-            }
+            MessageBox.Show("打印功能正在完善");
         }
-
-       */
     }
 }

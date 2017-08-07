@@ -83,11 +83,17 @@ namespace mySystem.Process.CleanCut
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清洁分切生产记录 where ID="+ID,connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+            Instruction = dt.Rows[0]["生产指令编号"].ToString();
+
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
-            //getOtherData();  //读取设置内容
+            getOtherData();  //读取设置内容
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
@@ -770,7 +776,7 @@ namespace mySystem.Process.CleanCut
         //审核按钮
         private void btn审核_Click(object sender, EventArgs e)
         {
-            if (mySystem.Parameter.userName == dt记录.Rows[0]["操作员"].ToString())
+            if (mySystem.Parameter.userName == dt记录.Rows[0]["操作人"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
@@ -835,22 +841,23 @@ namespace mySystem.Process.CleanCut
         private String getCodeAfter(String codeBefore)
         {
             String codeAfter;
-            Int32 leng;
-            //eg: codeBefore = TY-200*300*3
-            String pattern = @"^[a-zA-Z]+-[0-9]+\*[0-9]+\*[0-9]";//正则表达式
-            if (!Regex.IsMatch(codeBefore, pattern))
-            {
-                MessageBox.Show("清洁分切前代码格式不正确");
-                return (codeBefore + "C");
-            }
-            else
-            {
-                string[] array1 = codeBefore.Split('-'); //array1[0]=TY array1[1]=200*300*3
-                string[] array2 = array1[1].Split('*'); //array2[0]=200 array2[1]=300 array2[2]=3
-                leng = Int32.Parse(array2[0]);
-                codeAfter = array1[0] + "-0*" + array2[1] + "*" + array2[2] + "C";
-                return codeAfter; //TY-0*300*3C
-            }
+            return (codeBefore + "C");
+            //Int32 leng;
+            ////eg: codeBefore = TY-200*300*3
+            //String pattern = @"^[a-zA-Z]+-[0-9]+\*[0-9]+\*[0-9]";//正则表达式
+            //if (!Regex.IsMatch(codeBefore, pattern))
+            //{
+            //    MessageBox.Show("清洁分切前代码格式不正确");
+            //    return (codeBefore + "C");
+            //}
+            //else
+            //{
+            //    string[] array1 = codeBefore.Split('-'); //array1[0]=TY array1[1]=200*300*3
+            //    string[] array2 = array1[1].Split('*'); //array2[0]=200 array2[1]=300 array2[2]=3
+            //    leng = Int32.Parse(array2[0]);
+            //    codeAfter = array1[0] + "-0*" + array2[1] + "*" + array2[2] + "C";
+            //    return codeAfter; //TY-0*300*3C
+            //}
         }
 
         //实时求收率
@@ -897,6 +904,7 @@ namespace mySystem.Process.CleanCut
                     { cbc.Items.Add(dt物料代码.Rows[i]["清洁前产品代码"]); }
                     Int32 index = cbc.FindString(dt记录详情.Rows[e.RowIndex]["物料代码"].ToString());
                     dt记录详情.Rows[e.RowIndex]["膜卷批号"] = dt物料代码.Rows[index]["清洁前批号"].ToString();
+                    dt记录详情.Rows[e.RowIndex]["清洁分切后代码"] = dt记录详情.Rows[e.RowIndex]["物料代码"].ToString() + "C";
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "长度A")
                 {

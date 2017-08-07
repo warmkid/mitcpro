@@ -69,6 +69,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.ReadOnly = true;
             cb产品代码.Enabled = true;
             bt插入查询.Enabled = true;
+            dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
         }
 
         public Record_cleansite_cut(mySystem.MainForm mainform, int id)
@@ -111,6 +112,7 @@ namespace mySystem.Process.CleanCut
 
             cb产品代码.Enabled = false;
             bt插入查询.Enabled = false;
+            dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
         }
 
         void addDataEventHandler()
@@ -839,5 +841,23 @@ namespace mySystem.Process.CleanCut
 
             }    
         }
+
+
+        private void setDataGridViewBackColor()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "合格")
+                {
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                }
+                if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "不合格")
+                {
+                    //dataGridView1.Rows[i].Cells["确认结果"].Style.BackColor = Color.Red;
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                }
+            }
+        }
+
     }
 }

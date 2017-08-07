@@ -41,6 +41,7 @@
             this.Btn运行记录 = new System.Windows.Forms.Button();
             this.Btn批生产 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn工序结束 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -185,6 +186,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.btn工序结束);
             this.groupBox3.Controls.Add(this.Btn批生产);
             this.groupBox3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.groupBox3.Location = new System.Drawing.Point(815, 110);
@@ -194,6 +196,17 @@
             this.groupBox3.TabIndex = 23;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "封面";
+            // 
+            // btn工序结束
+            // 
+            this.btn工序结束.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn工序结束.Location = new System.Drawing.Point(15, 112);
+            this.btn工序结束.Name = "btn工序结束";
+            this.btn工序结束.Size = new System.Drawing.Size(269, 38);
+            this.btn工序结束.TabIndex = 18;
+            this.btn工序结束.Text = "工序结束";
+            this.btn工序结束.UseVisualStyleBackColor = true;
+            this.btn工序结束.Click += new System.EventHandler(this.btn工序结束_Click);
             // 
             // CleanCutMainForm
             // 
@@ -233,5 +246,6 @@
         private System.Windows.Forms.Button Btn批生产;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button Btn运行记录;
+        private System.Windows.Forms.Button btn工序结束;
     }
 }

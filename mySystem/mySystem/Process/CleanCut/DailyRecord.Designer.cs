@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DailyRecord));
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.txb审核员 = new System.Windows.Forms.TextBox();
+            this.txb审核人 = new System.Windows.Forms.TextBox();
             this.txb操作员 = new System.Windows.Forms.TextBox();
             this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.dtp操作日期 = new System.Windows.Forms.DateTimePicker();
@@ -57,13 +57,13 @@
             this.txb清洁后合计C = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.txb备注 = new System.Windows.Forms.TextBox();
-            this.bt打印 = new System.Windows.Forms.Button();
+            this.btn打印 = new System.Windows.Forms.Button();
             this.bt保存 = new System.Windows.Forms.Button();
             this.label角色 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txb操作员备注 = new System.Windows.Forms.TextBox();
-            this.cmb打印机选择 = new System.Windows.Forms.ComboBox();
+            this.combobox打印机选择 = new System.Windows.Forms.ComboBox();
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
@@ -74,7 +74,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(391, 21);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -92,13 +92,13 @@
             this.dataGridView1.Size = new System.Drawing.Size(885, 200);
             this.dataGridView1.TabIndex = 7;
             // 
-            // txb审核员
+            // txb审核人
             // 
-            this.txb审核员.Location = new System.Drawing.Point(590, 467);
-            this.txb审核员.Margin = new System.Windows.Forms.Padding(4);
-            this.txb审核员.Name = "txb审核员";
-            this.txb审核员.Size = new System.Drawing.Size(93, 26);
-            this.txb审核员.TabIndex = 18;
+            this.txb审核人.Location = new System.Drawing.Point(590, 467);
+            this.txb审核人.Margin = new System.Windows.Forms.Padding(4);
+            this.txb审核人.Name = "txb审核人";
+            this.txb审核人.Size = new System.Drawing.Size(93, 26);
+            this.txb审核人.TabIndex = 18;
             // 
             // txb操作员
             // 
@@ -107,6 +107,7 @@
             this.txb操作员.Name = "txb操作员";
             this.txb操作员.Size = new System.Drawing.Size(102, 26);
             this.txb操作员.TabIndex = 17;
+            this.txb操作员.Visible = false;
             // 
             // dtp审核日期
             // 
@@ -123,6 +124,7 @@
             this.dtp操作日期.Name = "dtp操作日期";
             this.dtp操作日期.Size = new System.Drawing.Size(157, 26);
             this.dtp操作日期.TabIndex = 15;
+            this.dtp操作日期.Visible = false;
             // 
             // label3
             // 
@@ -149,6 +151,7 @@
             this.label2.Size = new System.Drawing.Size(96, 16);
             this.label2.TabIndex = 24;
             this.label2.Text = "操作员/日期";
+            this.label2.Visible = false;
             // 
             // label4
             // 
@@ -315,31 +318,32 @@
             this.txb备注.Size = new System.Drawing.Size(821, 26);
             this.txb备注.TabIndex = 49;
             // 
-            // bt打印
+            // btn打印
             // 
-            this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt打印.Location = new System.Drawing.Point(113, 552);
-            this.bt打印.Name = "bt打印";
-            this.bt打印.Size = new System.Drawing.Size(63, 25);
-            this.bt打印.TabIndex = 51;
-            this.bt打印.Text = "打印";
-            this.bt打印.UseVisualStyleBackColor = true;
+            this.btn打印.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印.Location = new System.Drawing.Point(113, 552);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(63, 25);
+            this.btn打印.TabIndex = 51;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // bt保存
             // 
-            this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt保存.Location = new System.Drawing.Point(657, 546);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(63, 25);
             this.bt保存.TabIndex = 50;
             this.bt保存.Text = "保存";
             this.bt保存.UseVisualStyleBackColor = true;
-            //this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
+            this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
             // 
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(657, 25);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -364,6 +368,7 @@
             this.label16.Size = new System.Drawing.Size(88, 16);
             this.label16.TabIndex = 158;
             this.label16.Text = "操作员备注";
+            this.label16.Visible = false;
             // 
             // txb操作员备注
             // 
@@ -371,14 +376,15 @@
             this.txb操作员备注.Name = "txb操作员备注";
             this.txb操作员备注.Size = new System.Drawing.Size(100, 26);
             this.txb操作员备注.TabIndex = 159;
+            this.txb操作员备注.Visible = false;
             // 
-            // cmb打印机选择
+            // combobox打印机选择
             // 
-            this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(182, 552);
-            this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(190, 24);
-            this.cmb打印机选择.TabIndex = 163;
+            this.combobox打印机选择.FormattingEnabled = true;
+            this.combobox打印机选择.Location = new System.Drawing.Point(182, 552);
+            this.combobox打印机选择.Name = "combobox打印机选择";
+            this.combobox打印机选择.Size = new System.Drawing.Size(190, 24);
+            this.combobox打印机选择.TabIndex = 163;
             // 
             // btn查看日志
             // 
@@ -397,6 +403,8 @@
             this.btn提交审核.TabIndex = 161;
             this.btn提交审核.Text = "提交审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.UseWaitCursor = true;
+            this.btn提交审核.Visible = false;
             // 
             // btn审核
             // 
@@ -406,13 +414,15 @@
             this.btn审核.TabIndex = 160;
             this.btn审核.Text = "审核";
             this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.UseWaitCursor = true;
+            this.btn审核.Visible = false;
             // 
             // DailyRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(987, 581);
-            this.Controls.Add(this.cmb打印机选择);
+            this.Controls.Add(this.combobox打印机选择);
             this.Controls.Add(this.btn查看日志);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn审核);
@@ -420,7 +430,7 @@
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.bt打印);
+            this.Controls.Add(this.btn打印);
             this.Controls.Add(this.bt保存);
             this.Controls.Add(this.txb备注);
             this.Controls.Add(this.label19);
@@ -445,12 +455,12 @@
             this.Controls.Add(this.dtp操作日期);
             this.Controls.Add(this.txb操作员);
             this.Controls.Add(this.cmb物料种类);
-            this.Controls.Add(this.txb审核员);
+            this.Controls.Add(this.txb审核人);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DailyRecord";
             this.Text = "清洁分切日报表";
@@ -465,7 +475,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.TextBox txb审核员;
+        private System.Windows.Forms.TextBox txb审核人;
         private System.Windows.Forms.TextBox txb操作员;
         private System.Windows.Forms.DateTimePicker dtp审核日期;
         private System.Windows.Forms.DateTimePicker dtp操作日期;
@@ -491,13 +501,13 @@
         private System.Windows.Forms.TextBox txb清洁后合计C;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox txb备注;
-        private System.Windows.Forms.Button bt打印;
+        private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button bt保存;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txb操作员备注;
-        private System.Windows.Forms.ComboBox cmb打印机选择;
+        private System.Windows.Forms.ComboBox combobox打印机选择;
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn审核;

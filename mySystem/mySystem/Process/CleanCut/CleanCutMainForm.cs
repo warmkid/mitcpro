@@ -155,7 +155,7 @@ namespace mySystem.Process.CleanCut
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切日报表");
             if (b)
             {
-                DailyRecord form2 = new DailyRecord();
+                DailyRecord form2 = new DailyRecord(mainform);
                 form2.ShowDialog();
             }
             else
@@ -232,6 +232,24 @@ namespace mySystem.Process.CleanCut
 
             }
             return b = false;
+        }
+
+        private void btn工序结束_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedItem==null)
+            {
+                MessageBox.Show("请先选择一个生产指令");
+                return;
+            }
+            if (DialogResult.Yes == MessageBox.Show("确定结束本次工序吗？", "警告", MessageBoxButtons.YesNo))
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID="+mySystem.Parameter.cleancutInstruID, mySystem.Parameter.connOle);
+                DataTable dt = new DataTable();
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                da.Fill(dt);
+                dt.Rows[0]["状态"] = 4;
+                da.Update(dt);
+            }
         }
 
     }
