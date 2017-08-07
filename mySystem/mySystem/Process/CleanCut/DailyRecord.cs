@@ -301,11 +301,13 @@ namespace mySystem.Process.CleanCut
                 case Parameter.UserState.操作员: //0--操作员
                    
                     setControlFalse();
+                    cmb物料种类.Enabled = true;
                     bt保存.Enabled = true;
                     break;
                 case Parameter.UserState.审核员: //1--审核员
                     
                     setControlFalse();
+                    cmb物料种类.Enabled = true;
                     combobox打印机选择.Enabled = true;
                     btn打印.Enabled = true;
                     break;
@@ -723,7 +725,8 @@ namespace mySystem.Process.CleanCut
         {
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns[0].Visible = false;
-            setDataGridViewColumnReadOnly();
+            dataGridView1.Columns[1].Visible = false;
+            //setDataGridViewColumnReadOnly();
 
         }
 
@@ -786,6 +789,7 @@ namespace mySystem.Process.CleanCut
         void addOtherEventHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.DataBindingComplete+=new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             
         }
 
