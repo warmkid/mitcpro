@@ -114,7 +114,7 @@ namespace mySystem.Setting
             bool b;
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Parameter.connOleUser;
-            comm.CommandText = "SELECT * FROM users WHERE 用户ID = " + "'" + userid + "'";
+            comm.CommandText = "SELECT * FROM users WHERE 用户ID  =" + userid;
             OleDbDataReader reader = comm.ExecuteReader();
             b = reader.HasRows ? true : false;
 

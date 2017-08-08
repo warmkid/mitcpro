@@ -337,10 +337,10 @@ namespace BatchProductRecord
             da.Fill(tempdt);
             da.Dispose();
             cb.Dispose();
-            面=float.Parse(tempdt.Rows[0][0].ToString());
-            密度=float.Parse(tempdt.Rows[0][1].ToString());
-            系数1=float.Parse(tempdt.Rows[0][2].ToString());
-            系数2 = float.Parse(tempdt.Rows[0][3].ToString());
+            面=float.Parse(tempdt.Rows[0][1].ToString());
+            密度=float.Parse(tempdt.Rows[0][2].ToString());
+            系数1=float.Parse(tempdt.Rows[0][3].ToString());
+            系数2 = float.Parse(tempdt.Rows[0][4].ToString());
             tempdt.Dispose();
         }
 
@@ -691,7 +691,7 @@ namespace BatchProductRecord
                         {
                             break;
                         }
-                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 面 * 密度;//用料重量
+                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = Math.Ceiling( a * leng / 1000.0 * 面 * 密度);//用料重量
                         break;
                     }
                     break;
@@ -717,7 +717,7 @@ namespace BatchProductRecord
                         array = str.Split('*');
                         array2 = array[0].Split('-');
                         leng = float.Parse(array2[2]);
-                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * leng / 1000.0 * 面 * 密度;//用料重量
+                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = Math.Ceiling(a * leng / 1000.0 * 面 * 密度);//用料重量
                     }
 
                     string s7 = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
