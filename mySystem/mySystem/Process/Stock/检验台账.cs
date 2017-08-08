@@ -354,7 +354,7 @@ namespace mySystem.Process.Stock
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (e.ColumnIndex==10)
+            if (e.ColumnIndex==12)
             {
                 object eFV = e.FormattedValue;
                 DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;

@@ -65,7 +65,7 @@
             this.comboBox角色.FormattingEnabled = true;
             this.comboBox角色.Items.AddRange(new object[] {
             "操作员",
-            "计划员",
+            //"计划员",
             "管理员"});
             this.comboBox角色.Location = new System.Drawing.Point(359, 26);
             this.comboBox角色.Name = "comboBox角色";

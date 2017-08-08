@@ -87,19 +87,19 @@ namespace mySystem.Process.Extruction.B
         { }
         void Running_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (cmb产品代码.Text == "")
-            {
-                return;
-            }
-            if (txb审核员.Text.ToString().Trim() == "")
-            {
-                MessageBox.Show("请提交审核");
-                e.Cancel = true;               
-            }
+            //if (cmb产品代码.Text == "")
+            //{
+            //    return;
+            //}
+            //if (txb审核员.Text.ToString().Trim() == "")
+            //{
+            //    MessageBox.Show("请提交审核");
+            //    e.Cancel = true;               
+            //}
 
-            //test for print
-            btn打印.Enabled = true;
-            btn查看日志.Enabled = true;
+            ////test for print
+            //btn打印.Enabled = true;
+            //btn查看日志.Enabled = true;
         }
 
         public Running(mySystem.MainForm mainform, int Id)

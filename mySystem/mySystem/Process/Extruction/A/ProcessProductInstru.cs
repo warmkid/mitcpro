@@ -165,7 +165,8 @@ namespace BatchProductRecord
                 else if (Parameter.FormState.审核通过 == _formState)
                 {
                     setControlFalse();
-                    bt更改.Enabled = true;
+                    if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) != 4)
+                        bt更改.Enabled = true;
                 }
                 else setControlFalse();
             }

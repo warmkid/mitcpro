@@ -386,20 +386,20 @@ namespace mySystem
                         { return; }
                         else if (!reader11.HasRows && reader2.HasRows)
                         {
-                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); //提示框显示10s
-                            //MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); //提示框显示10s
+                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
                             return;
                         }
                         else if (reader11.HasRows && !reader2.HasRows)
                         {
-                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜机组运行记录”！", 500, 10000, 500); 
-                            //MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请尽快填写 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
                             return;
                         }
                         else
                         {
-                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
-                            //MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
                             return;
                         }
                     }
@@ -450,20 +450,20 @@ namespace mySystem
                         { return; }
                         else if (!reader11.HasRows && reader2.HasRows)
                         {
-                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); 
-                            //MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); 
+                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”！", "警告");
                             return;
                         }
                         else if (reader11.HasRows && !reader2.HasRows)
                         {
-                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜机组运行记录”！", 500, 10000, 500); 
-                            //MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请尽快填写 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            MessageBox.Show("请尽快填写“吹膜机组运行记录”！", "警告");
                             return;
                         }
                         else
                         {
-                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
-                            //MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            MessageBox.Show("请尽快填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
                             return;
                         }
                     }
@@ -513,8 +513,8 @@ namespace mySystem
                         { return; }
                         else if (!reader11.HasRows && reader2.HasRows)
                         {
-                            taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); 
-                            //MessageBox.Show("请填写“吹膜供料系统运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请尽快填写 “吹膜供料系统运行记录”！", 500, 10000, 500); 
+                            MessageBox.Show("请填写“吹膜供料系统运行记录”！", "警告");
                             Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料系统运行记录");
                             if (a)
                             {
@@ -527,8 +527,8 @@ namespace mySystem
                         }
                         else if (reader11.HasRows && !reader2.HasRows)
                         {
-                            taskbarNotifier1.Show("提示", "请填写 “吹膜机组运行记录”！", 500, 10000, 500); 
-                            //MessageBox.Show("请填写“吹膜机组运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请填写 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            MessageBox.Show("请填写“吹膜机组运行记录”！", "警告");
                             Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜机组运行记录");
                             if (a)
                             {
@@ -541,8 +541,8 @@ namespace mySystem
                         }
                         else
                         {
-                            taskbarNotifier1.Show("提示", "请填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
-                            //MessageBox.Show("请填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
+                            //taskbarNotifier1.Show("提示", "请填写 “吹膜供料系统运行记录” 和 “吹膜机组运行记录”！", 500, 10000, 500); 
+                            MessageBox.Show("请填写“吹膜供料系统运行记录”和“吹膜机组运行记录”！", "警告");
                             Boolean a = checkUser(Parameter.userName, Parameter.userRole, "吹膜供料系统运行记录");
                             if (a)
                             {
