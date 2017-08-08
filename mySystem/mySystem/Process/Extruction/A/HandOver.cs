@@ -68,7 +68,7 @@ namespace mySystem.Process.Extruction.A
             getOtherData();
             __生产指令编号 = Parameter.proInstruction;
             __生产日期 = DateTime.Now.Date;
-            __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
+            
             dtp生产日期.Value = __生产日期;
 
             readOuterData(__生产指令编号, __生产日期);
@@ -84,6 +84,7 @@ namespace mySystem.Process.Extruction.A
                 removeOuterBind();
                 outerBind();
             }
+            __生产指令ID = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"]);
 
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             setDataGridViewColumns();
