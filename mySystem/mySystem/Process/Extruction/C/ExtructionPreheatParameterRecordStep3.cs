@@ -806,10 +806,10 @@ namespace mySystem.Extruction.Process
             List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb模芯规格参数1, tb模芯规格参数2 });
             List<String> StringList = new List<String>(new String[] { "模芯规格参数φ", "模芯规格参数Gap" });
 
-            int numtemp = 0;
+            double numtemp = 0;
             for (int i = 0; i < TextBoxList.Count; i++)
             {
-                if (Int32.TryParse(TextBoxList[i].Text.ToString(), out numtemp) == false)
+                if (Double.TryParse(TextBoxList[i].Text.ToString(), out numtemp) == false)
                 {
                     MessageBox.Show("『" + StringList[i] + "』应填数字，请重新填入！");
                     TypeCheck = false;
