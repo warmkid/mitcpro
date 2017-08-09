@@ -60,8 +60,8 @@ namespace mySystem.Process.Stock
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            
-            System.Diagnostics.Process.Start(dataGridView1.Rows[e.RowIndex].Cells["文件路径"].Value.ToString());
+            if (e.RowIndex > 0)
+                System.Diagnostics.Process.Start(dataGridView1.Rows[e.RowIndex].Cells["文件路径"].Value.ToString());
         }
     }
 }

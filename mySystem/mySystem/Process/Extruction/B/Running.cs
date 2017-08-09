@@ -82,6 +82,7 @@ namespace mySystem.Process.Extruction.B
             this.FormClosing += new FormClosingEventHandler(Running_FormClosing);
             setFormState(true);
             setEnableReadOnly();
+            填写界面上被disable的部分为横线();
         }
         private void addDataEventHandler()
         { }
@@ -100,6 +101,11 @@ namespace mySystem.Process.Extruction.B
             ////test for print
             //btn打印.Enabled = true;
             //btn查看日志.Enabled = true;
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            readOuterData(_生产指令ID, _产品代码, _Date, _Time);
+            removeOuterBinding();
+            outerBind();
         }
 
         public Running(mySystem.MainForm mainform, int Id)
@@ -140,7 +146,7 @@ namespace mySystem.Process.Extruction.B
             //btn保存.Visible = false;
 
             //cmb产品代码.SelectedIndexChanged += new EventHandler(cmb产品代码_SelectedIndexChanged_without_Id);
-
+            填写界面上被disable的部分为横线();
         }
         /// <summary>
         /// get settings and so on
@@ -187,6 +193,7 @@ namespace mySystem.Process.Extruction.B
                 for (int j = 0; j < 12; j++)
                 {
                     TextBox tb = new TextBox();
+                    tb.Text = "                             ";
                     if (0 == i ||7==i)
                     {
                         tb.Width = wider;
@@ -242,7 +249,7 @@ namespace mySystem.Process.Extruction.B
             
             添加行列名称();
             隐藏多余TextBox();
-            表格横线();
+            
         }
 
         /// <summary>
@@ -320,29 +327,48 @@ namespace mySystem.Process.Extruction.B
         /// </summary>
         private void 表格横线()
         {
-            for (int i = 0; i < 6; i++)
+            //for (int i = 0; i < 6; i++)
+            //{
+            //    for (int j = 0; j < 5; j++)
+            //    {
+            //        array1[8 + i][6 + j].Text = note;
+            //        array1[8 + i][6 + j].Enabled = true;
+            //    }
+            //}
+            //for (int j = 0; j < 4; j++)
+            //{
+            //    array1[13][2 + j].Text = note;
+            //    array1[13][2 + j].Enabled = true;
+            //}
+            //array1[10][2].Text = note;
+            //array1[10][2].Enabled = true;
+            //array1[11][2].Text = note;
+            //array1[11][2].Enabled = true;
+            //array1[10][5].Text = note;
+            //array1[10][5].Enabled = true;
+            //array1[11][5].Text = note;
+            //array1[11][5].Enabled = true;
+            for (int i = 8; i <= 13; ++i)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 2; j <= 10; ++j)
                 {
-                    array1[8 + i][6 + j].Text = note;
-                    array1[8 + i][6 + j].Enabled = false;
+                    array1[i][j].Text = note;
                 }
             }
-            for (int j = 0; j < 4; j++)
+            for (int i = 1; i <= 6; ++i)
             {
-                array1[13][2 + j].Text = note;
-                array1[13][2 + j].Enabled = false;
+                for (int j = 9; j <= 11; ++j)
+                {
+                    array1[i][j].Text = note;
+                }
             }
-            array1[10][2].Text = note;
-            array1[10][2].Enabled = false;
-            array1[11][2].Text = note;
-            array1[11][2].Enabled = false;
-            array1[10][5].Text = note;
-            array1[10][5].Enabled = false;
-            array1[11][5].Text = note;
-            array1[11][5].Enabled = false;
+
+            array1[9][11].Text = note;
+            array1[11][11].Text = note;
+            array1[13][11].Text = note;
+            array1[6][4].Text = note;
         }
-        
+
         private void btn保存_Click(object sender, EventArgs e)
         {
             //pullData();
@@ -379,94 +405,166 @@ namespace mySystem.Process.Extruction.B
                     array1[i][j].Enabled = false;
                 }
             }
-            if (flag)
+
+            //
+            for (int i = 0; i < 6; i++)
             {
-                for (int i = 0; i < 6; i++)
+                for (int j = 0; j < 3; j++)
                 {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        array1[1 + i][1 + j].Enabled = true;
-                    }
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    array1[1 + i][5].Enabled = true;
-                }
-                array1[6][4].Enabled = true;
-                for (int i = 0; i < 6; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        array1[1 + i][9 + j].Enabled = true;
-                    }
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        array1[8 + i][2 + j].Enabled = true;
-                    }
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    for (int j = 0; j < 2; j++)
-                    {
-                        array1[10 + i][3 + j].Enabled = true;
-                    }
-                }
-                for (int j = 0; j < 4; j++)
-                {
-                    array1[12][2 + j].Enabled = true;
-                }
-                for (int j = 0; j < 5; j+=2)
-                {
-                    array1[9+j][11].Enabled = true;
+                    array1[1 + i][1 + j].Enabled = flag;
                 }
             }
-            else
-            { 
-                for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 4; i++)
+            {
+                array1[1 + i][5].Enabled = flag;
+            }
+            array1[6][4].Enabled = flag;
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 3; j++)
                 {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        array1[1 + i][1 + j].Enabled = false;
-                    }
-                }
-                for (int i = 0; i < 4; i++)
-                {
-                    array1[1 + i][5].Enabled = false;
-                }
-                array1[6][4].Enabled = false;
-                for (int i = 0; i < 6; i++)
-                {
-                    for (int j = 0; j < 3; j++)
-                    {
-                        array1[1 + i][9 + j].Enabled = false;
-                    }
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        array1[8 + i][2 + j].Enabled = false;
-                    }
-                }
-                for (int i = 0; i < 2; i++)
-                {
-                    for (int j = 0; j < 2; j++)
-                    {
-                        array1[10 + i][3 + j].Enabled = false;
-                    }
-                }
-                for (int j = 0; j < 4; j++)
-                {
-                    array1[12][2 + j].Enabled = false;
-                }
-                for (int j = 0; j < 5; j += 2)
-                {
-                    array1[9 + j][11].Enabled = false;
+                    array1[1 + i][9 + j].Enabled = flag;
                 }
             }
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    array1[8 + i][2 + j].Enabled = flag;
+                }
+            }
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    array1[10 + i][2 + j].Enabled = flag;
+                }
+            }
+            for (int j = 0; j < 9; j++)
+            {
+                array1[12][2 + j].Enabled = flag;
+                array1[13][2 + j].Enabled = flag;
+            }
+            for (int j = 0; j < 5; j += 2)
+            {
+                array1[9 + j][11].Enabled = flag;
+            }
+
+            for (int j = 6; j <= 8; ++j)
+            {
+                array1[8][j].Enabled = false;
+                array1[9][j].Enabled = false;
+                array1[12][j].Enabled = false;
+            }
+            array1[8][10].Enabled = false;
+            array1[9][10].Enabled = false;
+            array1[12][10].Enabled = false;
+
+            for (int j = 5; j <= 8; ++j)
+            {
+                array1[10][j].Enabled = false;
+                array1[11][j].Enabled = false;
+            }
+            array1[10][2].Enabled = false;
+            array1[10][10].Enabled = false;
+            array1[11][2].Enabled = false;
+            array1[11][10].Enabled = false;
+
+            for (int j = 2; j <= 10; ++j)
+            {
+                array1[13][j].Enabled = false;
+            }
+
+            //
+
+            //if (flag)
+            //{
+            //    for (int i = 0; i < 6; i++)
+            //    {
+            //        for (int j = 0; j < 3; j++)
+            //        {
+            //            array1[1 + i][1 + j].Enabled = true;
+            //        }
+            //    }
+            //    for (int i = 0; i < 4; i++)
+            //    {
+            //        array1[1 + i][5].Enabled = true;
+            //    }
+            //    array1[6][4].Enabled = true;
+            //    for (int i = 0; i < 6; i++)
+            //    {
+            //        for (int j = 0; j < 3; j++)
+            //        {
+            //            array1[1 + i][9 + j].Enabled = true;
+            //        }
+            //    }
+            //    for (int i = 0; i < 2; i++)
+            //    {
+            //        for (int j = 0; j < 4; j++)
+            //        {
+            //            array1[8 + i][2 + j].Enabled = true;
+            //        }
+            //    }
+            //    for (int i = 0; i < 2; i++)
+            //    {
+            //        for (int j = 0; j < 2; j++)
+            //        {
+            //            array1[10 + i][3 + j].Enabled = true;
+            //        }
+            //    }
+            //    for (int j = 0; j < 4; j++)
+            //    {
+            //        array1[12][2 + j].Enabled = true;
+            //    }
+            //    for (int j = 0; j < 5; j+=2)
+            //    {
+            //        array1[9+j][11].Enabled = true;
+            //    }
+            //}
+            //else
+            //{ 
+            //    for (int i = 0; i < 6; i++)
+            //    {
+            //        for (int j = 0; j < 3; j++)
+            //        {
+            //            array1[1 + i][1 + j].Enabled = false;
+            //        }
+            //    }
+            //    for (int i = 0; i < 4; i++)
+            //    {
+            //        array1[1 + i][5].Enabled = false;
+            //    }
+            //    array1[6][4].Enabled = false;
+            //    for (int i = 0; i < 6; i++)
+            //    {
+            //        for (int j = 0; j < 3; j++)
+            //        {
+            //            array1[1 + i][9 + j].Enabled = false;
+            //        }
+            //    }
+            //    for (int i = 0; i < 2; i++)
+            //    {
+            //        for (int j = 0; j < 4; j++)
+            //        {
+            //            array1[8 + i][2 + j].Enabled = false;
+            //        }
+            //    }
+            //    for (int i = 0; i < 2; i++)
+            //    {
+            //        for (int j = 0; j < 2; j++)
+            //        {
+            //            array1[10 + i][3 + j].Enabled = false;
+            //        }
+            //    }
+            //    for (int j = 0; j < 4; j++)
+            //    {
+            //        array1[12][2 + j].Enabled = false;
+            //    }
+            //    for (int j = 0; j < 5; j += 2)
+            //    {
+            //        array1[9 + j][11].Enabled = false;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -525,6 +623,7 @@ namespace mySystem.Process.Extruction.B
             txb产品批号.Text = productCode[cmb产品代码.SelectedItem.ToString()].ToString();
             MessageBox.Show("请点击'新建'按钮!");
             btn新建.Enabled = true;
+            //btn新建.PerformClick();
         }
 
         private void cmb产品代码_SelectedIndexChanged_without_Id(object sender, EventArgs e)
@@ -708,19 +807,63 @@ namespace mySystem.Process.Extruction.B
             {
                 return;
             }
-
+            if (((TextBox)sender).Text.Trim() == note)
+            {
+                return;
+            }
             try
             {
-                Double.Parse(((TextBox)sender).Text);
+                TextBox tb = (sender as TextBox);
+                if (tbchecker(tb))
+                {
+                    int val = Int32.Parse(((TextBox)sender).Text);
+                    String str = val.ToString();
+                    ((TextBox)sender).Text = str;
+                    ((TextBox)sender).DataBindings[0].WriteValue();
+                    //((TextBox)sender).Focus();
+                }
+                else
+                {
+                    double val = Double.Parse(((TextBox)sender).Text);
+                    String str = val.ToString("f1");
+                    ((TextBox)sender).Text = str;
+                    ((TextBox)sender).DataBindings[0].WriteValue();
+                    //((TextBox)sender).Focus();
+                }
+               
+            }
+            catch (ArgumentOutOfRangeException ee)
+            {
+                //MessageBox.Show("格式错误");
+                //((TextBox)sender).Text = note;
                 //((TextBox)sender).Focus();
             }
-            catch
+            catch (Exception ee)
             {
                 MessageBox.Show("格式错误");
-                //((TextBox)sender).Focus();
+                ((TextBox)sender).Text = note;
             }
         }
         
+        // 检查当前textbox是不是下面的温度压强那几个
+        bool tbchecker(TextBox tb)
+        {
+            for (int i = 3; i <= 5; ++i)
+            {
+                for (int j = 9; j <= 11; ++j)
+                {
+                    if (tb.Equals(array1[i][j]))
+                    {
+                        return true;
+                    }
+                }
+            }
+            if(tb.Equals(array1[9][11])) return true;
+            if(tb.Equals(array1[11][11])) return true;
+            if(tb.Equals(array1[13][11])) return true;
+            return false;
+        }
+
         void readOuterData(int instructionId, string productCode, DateTime date, DateTime time)
         {
             dtOuter = new DataTable("吹膜机组运行记录");
@@ -739,6 +882,9 @@ namespace mySystem.Process.Extruction.B
         }
         DataRow writeOuterDefault(DataRow dr)
         {
+            // 读取历史数据
+           
+
             dr["生产指令ID"] = Parameter.proInstruID;
             dr["产品代码"] =  cmb产品代码.SelectedItem.ToString();
             dr["产品批号"] = productCode[cmb产品代码.SelectedItem.ToString()];
@@ -812,6 +958,20 @@ namespace mySystem.Process.Extruction.B
             array1[9][11].DataBindings.Add("Text",bsOuter.DataSource,colname[48]);
             array1[11][11].DataBindings.Add("Text",bsOuter.DataSource,colname[49]);
             array1[13][11].DataBindings.Add("Text",bsOuter.DataSource,colname[50]);
+
+
+            array1[8][9].DataBindings.Clear();
+            array1[8][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机设置频率");
+            array1[9][9].DataBindings.Clear();
+            array1[9][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机实际频率");
+            array1[10][9].DataBindings.Clear();
+            array1[10][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机设定张力");
+            array1[11][9].DataBindings.Clear();
+            array1[11][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机实际张力");
+            array1[12][9].DataBindings.Clear();
+            array1[12][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机电流");
+
+
         }
         void removeOuterBinding()
         {
@@ -1091,6 +1251,11 @@ namespace mySystem.Process.Extruction.B
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            if (!inputJudge())
+            {
+                MessageBox.Show("请填写完整再提交审核!");
+                return;
+            }
             //read from database table and find current record
             string checkName = "待审核";
             DataTable dtCheck = new DataTable(checkName);
@@ -1325,6 +1490,69 @@ namespace mySystem.Process.Extruction.B
                 readOuterData(_生产指令ID, _产品代码, _Date, _Time);
                 removeOuterBinding();
                 outerBind();
+
+                string sql = "SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID={0} AND 产品代码='{1}'";
+                OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _生产指令ID, _产品代码), conOle);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 1)
+                {
+                    array1[1][1].Text = dtSetting.Rows[0]["一区预热参数设定2"].ToString();
+                    array1[1][2].Text = dtSetting.Rows[0]["一区预热参数设定2"].ToString();
+                    array1[1][3].Text = dtSetting.Rows[0]["一区预热参数设定2"].ToString();
+
+                    array1[2][1].Text = dtSetting.Rows[0]["二区预热参数设定2"].ToString();
+                    array1[2][2].Text = dtSetting.Rows[0]["二区预热参数设定2"].ToString();
+                    array1[2][3].Text = dtSetting.Rows[0]["二区预热参数设定2"].ToString();
+
+
+                    array1[3][1].Text = dtSetting.Rows[0]["三区预热参数设定2"].ToString();
+                    array1[3][2].Text = dtSetting.Rows[0]["三区预热参数设定2"].ToString();
+                    array1[3][3].Text = dtSetting.Rows[0]["三区预热参数设定2"].ToString();
+
+                    array1[4][1].Text = dtSetting.Rows[0]["四区预热参数设定2"].ToString();
+                    array1[4][2].Text = dtSetting.Rows[0]["四区预热参数设定2"].ToString();
+                    array1[4][3].Text = dtSetting.Rows[0]["四区预热参数设定2"].ToString();
+
+                    array1[5][1].Text = dtSetting.Rows[0]["换网预热参数设定2"].ToString();
+                    array1[5][2].Text = dtSetting.Rows[0]["换网预热参数设定2"].ToString();
+                    array1[5][3].Text = dtSetting.Rows[0]["换网预热参数设定2"].ToString();
+
+                    array1[6][1].Text = dtSetting.Rows[0]["流道预热参数设定2"].ToString();
+                    array1[6][2].Text = dtSetting.Rows[0]["流道预热参数设定2"].ToString();
+                    array1[6][3].Text = dtSetting.Rows[0]["流道预热参数设定2"].ToString();
+
+                    array1[1][5].Text = dtSetting.Rows[0]["模颈预热参数设定2"].ToString();
+                    array1[2][5].Text = dtSetting.Rows[0]["机头1预热参数设定2"].ToString();
+                    array1[3][5].Text = dtSetting.Rows[0]["机头2预热参数设定2"].ToString();
+                    array1[4][5].Text = dtSetting.Rows[0]["口模预热参数设定2"].ToString();
+
+                    表格横线();
+
+                    foreach (List<TextBox> tb1 in array1)
+                    {
+                        foreach (TextBox tb2 in tb1)
+                        {
+                            try
+                            {
+                                tb2.DataBindings[0].WriteValue();
+                            }
+                            catch (ArgumentOutOfRangeException ee)
+                            {
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    int idx = dt.Rows.Count - 2;
+                    dtOuter.Rows[0].ItemArray = dt.Rows[idx].ItemArray.Clone() as object[];
+                    dtOuter.Rows[0]["生产日期"] = _Date;
+                    dtOuter.Rows[0]["记录时间"] = _Time;
+                    dtOuter.Rows[0]["记录员"] = Parameter.userName;
+                    dtOuter.Rows[0]["审核员"] = "";
+                }
+
             }
             //setFormState()-->setEnableReadOnly() --> addOtherEvnetHandler()
             addComputerEventHandler();
@@ -1356,6 +1584,54 @@ namespace mySystem.Process.Extruction.B
             //txb产品批号.Text = productCode[cmb产品代码.SelectedItem.ToString()].ToString();
             //MessageBox.Show("请点击'新建'按钮!");
             //btn新建.Enabled = true;
+        }
+
+        bool inputJudge()
+        {
+            bool isok = true;
+            int ii = array1.Count;
+            int jj = array1[0].Count;
+            for(int i=0;i<ii;++i)
+            {
+                for(int j=0;j<jj;++j)
+                {
+                    if (array1[i][j].Text == "")
+                    {
+                        isok = false;
+                        array1[i][j].BackColor = Color.Red;
+                    }
+                    
+                }
+            }
+            return isok;
+        }
+
+        void 填写界面上被disable的部分为横线()
+        {
+            for (int j = 6; j <= 8; ++j)
+            {
+                array1[8][j].Text = note;
+                array1[9][j].Text = note;
+                array1[12][j].Text = note;
+            }
+            array1[8][10].Text = note;
+            array1[9][10].Text = note;
+            array1[12][10].Text = note;
+
+            for (int j = 5; j <= 8; ++j)
+            {
+                array1[10][j].Text = note;
+                array1[11][j].Text = note;
+            }
+            array1[10][2].Text = note;
+            array1[10][10].Text = note;
+            array1[11][2].Text = note;
+            array1[11][10].Text = note;
+
+            for (int j = 2; j <= 10; ++j)
+            {
+                array1[13][j].Text = note;
+            }
         }
     }
 }
