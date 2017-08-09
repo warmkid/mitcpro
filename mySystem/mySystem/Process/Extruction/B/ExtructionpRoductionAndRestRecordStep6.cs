@@ -623,6 +623,7 @@ namespace mySystem.Extruction.Process
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ColumnHeadersHeight = 40;
             dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["操作员备注"].Visible = false;
             dataGridView1.Columns["T吹膜工序生产和检验记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["膜卷编号"].HeaderText = "膜卷编号\r(卷)";

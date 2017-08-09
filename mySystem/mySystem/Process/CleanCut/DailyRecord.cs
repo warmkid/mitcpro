@@ -230,7 +230,7 @@ namespace mySystem.Process.CleanCut
         {
             string tabName = "用户权限";
             DataTable dtUser = new DataTable(tabName);
-            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", conOle);
+            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + "全部" + "';", conOle);
             BindingSource bsUser = new BindingSource();
             OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
             daUser.Fill(dtUser);
