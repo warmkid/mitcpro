@@ -536,52 +536,55 @@ namespace mySystem.Process.Extruction.C
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-            //read from database table and find current record
-            string checkName = "待审核";
-            DataTable dtCheck = new DataTable(checkName);
-            OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
-            BindingSource bsCheck = new BindingSource();
-            OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
-            daCheck.Fill(dtCheck);
-
-            //if current hasn't been stored, insert a record in table
-            if (0 == dtCheck.Rows.Count)
+            if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
-                DataRow newrow = dtCheck.NewRow();
-                newrow["表名"] = tablename1;
-                newrow["对应ID"] = dtOuter.Rows[0]["ID"];
-                dtCheck.Rows.Add(newrow);
-            }
-            bsCheck.DataSource = dtCheck;
-            daCheck.Update((DataTable)bsCheck.DataSource);
+                //read from database table and find current record
+                string checkName = "待审核";
+                DataTable dtCheck = new DataTable(checkName);
+                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                BindingSource bsCheck = new BindingSource();
+                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                daCheck.Fill(dtCheck);
 
-            //this part to add log 
-            //格式： 
-            // =================================================
-            // yyyy年MM月dd日，操作员：XXX 提交审核
-            string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
-            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                //if current hasn't been stored, insert a record in table
+                if (0 == dtCheck.Rows.Count)
+                {
+                    DataRow newrow = dtCheck.NewRow();
+                    newrow["表名"] = tablename1;
+                    newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                    dtCheck.Rows.Add(newrow);
+                }
+                bsCheck.DataSource = dtCheck;
+                daCheck.Update((DataTable)bsCheck.DataSource);
 
-            //fill reviwer information
-            dtOuter.Rows[0]["审核员"] = __待审核;
-            //update log into table
-            bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
-            try
-            {
-                readOuterData(searchId);
-            }
-            catch
-            {
-                readOuterData(__生产指令编号,__生产日期,__班次);
-            }
-            removeOuterBind();
-            outerBind();
+                //this part to add log 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 提交审核
+                string log = "=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
-            setFormState();
-            setEnableReadOnly();
-            btn提交审核.Enabled = false;
+                //fill reviwer information
+                dtOuter.Rows[0]["审核员"] = __待审核;
+                //update log into table
+                bsOuter.EndEdit();
+                daOuter.Update((DataTable)bsOuter.DataSource);
+                try
+                {
+                    readOuterData(searchId);
+                }
+                catch
+                {
+                    readOuterData(__生产指令编号, __生产日期, __班次);
+                }
+                removeOuterBind();
+                outerBind();
+
+                setFormState();
+                setEnableReadOnly();
+                btn提交审核.Enabled = false;
+            }
         }
         private void btn查看日志_Click(object sender, EventArgs e)
         {

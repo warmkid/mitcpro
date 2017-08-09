@@ -275,6 +275,7 @@
             this.label记录员备注.Size = new System.Drawing.Size(88, 16);
             this.label记录员备注.TabIndex = 156;
             this.label记录员备注.Text = "记录员备注";
+            this.label记录员备注.Visible = false;
             // 
             // txb记录员备注
             // 
@@ -282,6 +283,7 @@
             this.txb记录员备注.Name = "txb记录员备注";
             this.txb记录员备注.Size = new System.Drawing.Size(100, 26);
             this.txb记录员备注.TabIndex = 157;
+            this.txb记录员备注.Visible = false;
             // 
             // Running
             // 

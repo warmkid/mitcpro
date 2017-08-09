@@ -740,38 +740,41 @@ namespace mySystem.Extruction.Process
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-            //保存
-            bool isSaved = Save();
-            if (isSaved == false)
-                return;
-
-            //写待审核表
-            DataTable dt_temp = new DataTable("待审核");
-            //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜生产和检验记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            if (dt_temp.Rows.Count == 0)
+            if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
-                DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "吹膜生产和检验记录表";
-                dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
-                dt_temp.Rows.Add(dr);
+                //保存
+                bool isSaved = Save();
+                if (isSaved == false)
+                    return;
+
+                //写待审核表
+                DataTable dt_temp = new DataTable("待审核");
+                //BindingSource bs_temp = new BindingSource();
+                OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜生产和检验记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "吹膜生产和检验记录表";
+                    dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                da_temp.Update(dt_temp);
+
+                //写日志 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 提交审核
+                string log = "=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
+                dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+                dt记录.Rows[0]["审核人"] = "__待审核";
+
+                Save();
+                _formState = Parameter.FormState.待审核;
+                setEnableReadOnly();
             }
-            da_temp.Update(dt_temp);
-
-            //写日志 
-            //格式： 
-            // =================================================
-            // yyyy年MM月dd日，操作员：XXX 提交审核
-            string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
-            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
-            dt记录.Rows[0]["审核人"] = "__待审核";
-
-            Save();
-            _formState = Parameter.FormState.待审核;
-            setEnableReadOnly();
         }
 
         //查看日志按钮

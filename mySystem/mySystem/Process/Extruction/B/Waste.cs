@@ -754,61 +754,64 @@ namespace mySystem.Process.Extruction.B
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-            foreach (DataRow dr in dtInner.Rows)
+            if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
-                if (dr["审核员"].ToString() == "")
+                foreach (DataRow dr in dtInner.Rows)
                 {
-                    MessageBox.Show("请先提交数据审核!");
-                    return;
+                    if (dr["审核员"].ToString() == "")
+                    {
+                        MessageBox.Show("请先提交数据审核!");
+                        return;
+                    }
                 }
+                //after saving, inner item haven't changed but we update once more here
+                daInner.Update((DataTable)bsInner.DataSource);
+                readInnerData(searchId);
+                innerBind();
+                setRowNums();
+
+                //read from database table and find current record
+                string checkName = "待审核";
+                DataTable dtCheck = new DataTable(checkName);
+                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                BindingSource bsCheck = new BindingSource();
+                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                daCheck.Fill(dtCheck);
+
+                //if current hasn't been stored, insert a record in table
+                if (0 == dtCheck.Rows.Count)
+                {
+                    DataRow newrow = dtCheck.NewRow();
+                    newrow["表名"] = tablename1;
+                    newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                    dtCheck.Rows.Add(newrow);
+                }
+                bsCheck.DataSource = dtCheck;
+                daCheck.Update((DataTable)bsCheck.DataSource);
+
+                //this part to add log 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 提交审核
+                string log = "=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
+                dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                //fill reviwer information
+                dtOuter.Rows[0]["审核员"] = __待审核;
+                //update log into table
+                bsOuter.EndEdit();
+                daOuter.Update((DataTable)bsOuter.DataSource);
+
+                readOuterData(searchId);
+                removeOuterBinding();
+                outerBind();
+
+                btn提交审核.Enabled = false;
+                // insert into database
+                setFormState();
+                setEnableReadOnly();
             }
-            //after saving, inner item haven't changed but we update once more here
-            daInner.Update((DataTable)bsInner.DataSource);
-            readInnerData(searchId);
-            innerBind();
-            setRowNums();
-
-            //read from database table and find current record
-            string checkName = "待审核";
-            DataTable dtCheck = new DataTable(checkName);
-            OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
-            BindingSource bsCheck = new BindingSource();
-            OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
-            daCheck.Fill(dtCheck);
-
-            //if current hasn't been stored, insert a record in table
-            if (0 == dtCheck.Rows.Count)
-            {
-                DataRow newrow = dtCheck.NewRow();
-                newrow["表名"] = tablename1;
-                newrow["对应ID"] = dtOuter.Rows[0]["ID"];
-                dtCheck.Rows.Add(newrow);
-            }
-            bsCheck.DataSource = dtCheck;
-            daCheck.Update((DataTable)bsCheck.DataSource);
-
-            //this part to add log 
-            //格式： 
-            // =================================================
-            // yyyy年MM月dd日，操作员：XXX 提交审核
-            string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
-            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-
-            //fill reviwer information
-            dtOuter.Rows[0]["审核员"] = __待审核;
-            //update log into table
-            bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
-
-            readOuterData(searchId);
-            removeOuterBinding();
-            outerBind();
-
-            btn提交审核.Enabled = false;
-            // insert into database
-            setFormState();
-            setEnableReadOnly();
         }
 
         private void btn提交数据审核_Click(object sender, EventArgs e)
