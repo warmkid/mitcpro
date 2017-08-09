@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 检验台账 : Form
+    public partial class 检验台账 : BaseForm
     {
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";

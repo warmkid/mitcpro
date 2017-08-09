@@ -87,6 +87,7 @@ namespace mySystem.Process.Stock
         public 物资验收记录(int id)
         {
             InitializeComponent();
+            
             conn = new OleDbConnection(strConn);
             conn.Open();
             getPeople();
@@ -941,5 +942,7 @@ namespace mySystem.Process.Stock
 
             MessageBox.Show("已加入库存台账！");
         }
+
+      
     }
 }

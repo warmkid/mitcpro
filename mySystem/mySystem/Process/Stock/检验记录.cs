@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 检验记录 : Form
+    public partial class 检验记录 : BaseForm
     {
 
         List<String> ls操作员 = new List<string>();

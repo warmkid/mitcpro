@@ -11,7 +11,7 @@ using System.Data.OleDb;
 namespace mySystem.Process.Stock
 {
     // TODO 打印
-    public partial class 取样证 : Form
+    public partial class 取样证 : BaseForm
     {
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";

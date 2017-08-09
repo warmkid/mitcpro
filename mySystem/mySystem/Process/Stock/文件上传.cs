@@ -10,7 +10,7 @@ using System.Data.OleDb;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 文件上传 : Form
+    public partial class 文件上传 : BaseForm
     {
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
