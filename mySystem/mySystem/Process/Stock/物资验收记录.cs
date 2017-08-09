@@ -183,7 +183,7 @@ namespace mySystem.Process.Stock
 
             OleDbDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 设置厂家信息", conn);
+            da = new OleDbDataAdapter("select * from 设置供应商信息", conn);
             dt = new DataTable("tmp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)

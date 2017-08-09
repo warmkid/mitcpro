@@ -1000,6 +1000,12 @@
     <Compile Include="Setting\吹膜设置.Designer.cs">
       <DependentUpon>吹膜设置.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setting\库存设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\库存设置.Designer.cs">
+      <DependentUpon>库存设置.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\清洁分切设置.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1011,6 +1017,12 @@
     </Compile>
     <Compile Include="Setting\灭菌设置.Designer.cs">
       <DependentUpon>灭菌设置.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setting\订单设置.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Setting\订单设置.Designer.cs">
+      <DependentUpon>订单设置.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Other\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
@@ -1473,11 +1485,17 @@
     <EmbeddedResource Include="Setting\吹膜设置.resx">
       <DependentUpon>吹膜设置.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Setting\库存设置.resx">
+      <DependentUpon>库存设置.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Setting\清洁分切设置.resx">
       <DependentUpon>清洁分切设置.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\灭菌设置.resx">
       <DependentUpon>灭菌设置.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Setting\订单设置.resx">
+      <DependentUpon>订单设置.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />

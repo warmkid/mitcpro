@@ -77,12 +77,16 @@ namespace mySystem.Setting
             {
                 Btn灭菌.Location = new Point(3, 130);
                 Btn人员.Location = new Point(3, 176);
+                Btn订单管理.Location = new Point(3, 216);
+                Btn库存管理.Location = new Point(3, 259);
                 Panel制袋.Visible = false;
             }
             else
             {
                 Btn灭菌.Location = new Point(3, 366);
                 Btn人员.Location = new Point(3, 409);
+                Btn订单管理.Location = new Point(3, 216+230);
+                Btn库存管理.Location = new Point(3, 259+230);
                 Panel制袋.Visible = true;
 
             }    
@@ -226,6 +230,38 @@ namespace mySystem.Setting
             BtnPTV制袋.BackColor = Color.FromName("ControlLightLight");
             BtnBPV制袋.BackColor = Color.FromName("ControlLightLight");
             Btn防护罩.BackColor = Color.FromName("ControlLightLight");
+            Btn订单管理.BackColor = Color.FromName("ControlLightLight");
+            Btn库存管理.BackColor = Color.FromName("ControlLightLight");
+        }
+
+        private void Btn订单管理_Click(object sender, EventArgs e)
+        {
+            Parameter.selectCon = 4;
+            Parameter.InitCon();
+            BtnColor();
+            Btn订单管理.BackColor = Color.FromArgb(138, 158, 196);
+            SettingPanelRight.Controls.Clear();
+            订单设置 myDlg = new 订单设置();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
+        }
+
+        private void Btn库存管理_Click(object sender, EventArgs e)
+        {
+            Parameter.selectCon = 4;
+            Parameter.InitCon();
+            BtnColor();
+            Btn库存管理.BackColor = Color.FromArgb(138, 158, 196);
+            SettingPanelRight.Controls.Clear();
+            库存设置 myDlg = new 库存设置();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = SettingPanelRight.Size;
+            SettingPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
 
