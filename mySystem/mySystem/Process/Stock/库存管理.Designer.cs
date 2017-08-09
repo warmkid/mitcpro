@@ -77,7 +77,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 147);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(476, 248);
+            this.dataGridView1.Size = new System.Drawing.Size(768, 248);
             this.dataGridView1.TabIndex = 3;
             // 
             // btn原料入库
@@ -144,7 +144,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(508, 407);
+            this.ClientSize = new System.Drawing.Size(792, 407);
             this.Controls.Add(this.btn文件上传);
             this.Controls.Add(this.btn检验台账);
             this.Controls.Add(this.button1);

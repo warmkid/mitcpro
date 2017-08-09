@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.tb检查项目 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btn保存 = new System.Windows.Forms.Button();
@@ -55,6 +56,12 @@
             this.label11 = new System.Windows.Forms.Label();
             this.cmb检验结论 = new System.Windows.Forms.ComboBox();
             this.label角色 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.物资验收记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.物资请验单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.检验记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.取样记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tb检查项目
@@ -284,6 +291,40 @@
             this.label角色.TabIndex = 58;
             this.label角色.Text = "角色";
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.物资验收记录ToolStripMenuItem,
+            this.物资请验单ToolStripMenuItem,
+            this.检验记录ToolStripMenuItem,
+            this.取样记录ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(143, 92);
+            // 
+            // 物资验收记录ToolStripMenuItem
+            // 
+            this.物资验收记录ToolStripMenuItem.Name = "物资验收记录ToolStripMenuItem";
+            this.物资验收记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.物资验收记录ToolStripMenuItem.Text = "物资验收记录";
+            // 
+            // 物资请验单ToolStripMenuItem
+            // 
+            this.物资请验单ToolStripMenuItem.Name = "物资请验单ToolStripMenuItem";
+            this.物资请验单ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.物资请验单ToolStripMenuItem.Text = "物资请验单";
+            // 
+            // 检验记录ToolStripMenuItem
+            // 
+            this.检验记录ToolStripMenuItem.Name = "检验记录ToolStripMenuItem";
+            this.检验记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.检验记录ToolStripMenuItem.Text = "检验记录";
+            // 
+            // 取样记录ToolStripMenuItem
+            // 
+            this.取样记录ToolStripMenuItem.Name = "取样记录ToolStripMenuItem";
+            this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.取样记录ToolStripMenuItem.Text = "取样记录";
+            // 
             // 检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -318,6 +359,7 @@
             this.Controls.Add(this.tb检查项目);
             this.Name = "检验记录";
             this.Text = "检验记录";
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -352,5 +394,10 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cmb检验结论;
         private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 物资验收记录ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 物资请验单ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 检验记录ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 取样记录ToolStripMenuItem;
     }
 }

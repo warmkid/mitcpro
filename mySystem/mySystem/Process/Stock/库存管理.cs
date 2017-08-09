@@ -27,7 +27,6 @@ namespace 订单和库存管理
 
             conn = new OleDbConnection(strConnect);
             conn.Open();
-
             // 绑定控件
             readFromDatabase();
             bindControl();
@@ -35,6 +34,7 @@ namespace 订单和库存管理
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
         }
+
 
         private void readFromDatabase()
         {
@@ -103,5 +103,7 @@ namespace 订单和库存管理
             mySystem.Process.Stock.文件上传 form = new mySystem.Process.Stock.文件上传();
             form.Show();
         }
+
+
     }
 }
