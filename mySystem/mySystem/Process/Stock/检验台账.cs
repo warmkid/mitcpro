@@ -399,6 +399,8 @@ namespace mySystem.Process.Stock
                 }
                 
             }
+
+            dataGridView1.Columns["ID"].Visible = false;
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)

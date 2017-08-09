@@ -424,7 +424,13 @@ namespace mySystem.Process.Stock
             dataGridView1.AllowUserToAddRows = false;
             cmb供应商代码.SelectedIndexChanged += new EventHandler(cmb供应商代码_SelectedIndexChanged);
             dataGridView1.ContextMenuStrip = contextMenuStrip1;
-            
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["物资验收记录ID"].Visible = false;
         }
 
         void tsi_Click(object sender, EventArgs e)
@@ -693,6 +699,8 @@ namespace mySystem.Process.Stock
 
             dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
             dr["审核时间"] = DateTime.Now;
+            dr["供应商代码"] = dtOuter.Rows[0]["供应商代码"].ToString();
+            dr["供应商名称"] = dtOuter.Rows[0]["供应商名称"].ToString();
             dt.Rows.Add(dr);
 
             da.Update(dt);

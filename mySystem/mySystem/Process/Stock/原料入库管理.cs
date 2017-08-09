@@ -26,6 +26,14 @@ namespace mySystem.Process.Stock
 
             read物资验收记录Data();
             物资验收记录Bind();
+            read物资请验单Data();
+            物资请验单Bind();
+            read检验记录Data();
+            检验记录Bind();
+            read不合格品记录Data();
+            不合格品记录Bind();
+            read取样记录Data();
+            取样记录Bind();
             addOtherEventHandler();
         }
 
@@ -61,32 +69,48 @@ namespace mySystem.Process.Stock
             dataGridView3.CellDoubleClick += dataGridView3_CellDoubleClick;
             dataGridView4.CellDoubleClick += dataGridView4_CellDoubleClick;
             dataGridView5.CellDoubleClick += new DataGridViewCellEventHandler(dataGridView5_CellDoubleClick);
+
+            // 隐藏ID等列
+            dataGridView1.Columns["ID"].Visible = false;
+            //dataGridView1.Columns["物资验收记录ID"].Visible = false;
+
+            dataGridView2.Columns["ID"].Visible = false;
+            dataGridView2.Columns["物资验收记录ID"].Visible = false;
+
+            dataGridView3.Columns["ID"].Visible = false;
+            dataGridView3.Columns["物资验收记录ID"].Visible = false;
+
+            dataGridView4.Columns["ID"].Visible = false;
+            dataGridView4.Columns["物资验收记录ID"].Visible = false;
+
+            dataGridView5.Columns["ID"].Visible = false;
+            dataGridView5.Columns["物资验收记录ID"].Visible = false;
         }
 
         void dataGridView5_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dt取样记录.Rows[e.RowIndex][0]);
+            int id = Convert.ToInt32(dataGridView5.Rows[e.RowIndex].Cells[0].Value);
             取样记录 form = new 取样记录(id);
             form.Show();
         }
 
         void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dt物资验收记录.Rows[e.RowIndex][0]);
+            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
             物资验收记录 form = new 物资验收记录(id);
             form.Show();
         }
 
         void dataGridView4_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dt不合格品处理记录.Rows[e.RowIndex][0]);
+            int id = Convert.ToInt32(dataGridView4.Rows[e.RowIndex].Cells[0].Value);
             不合格品处理记录 form = new 不合格品处理记录(id);
             form.Show();
         }
 
         void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dt检验记录.Rows[e.RowIndex][0]);
+            int id = Convert.ToInt32(dataGridView3.Rows[e.RowIndex].Cells[0].Value);
             检验记录 form = new 检验记录(id);
             form.Show();
         }
@@ -94,7 +118,7 @@ namespace mySystem.Process.Stock
         void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             //双击 显示请验单
-            int id = Convert.ToInt32(dt物资请验单.Rows[e.RowIndex][0]);
+            int id = Convert.ToInt32(dataGridView2.Rows[e.RowIndex].Cells[0].Value);
             物资请验单 form = new 物资请验单(id);
             form.Show();
         }

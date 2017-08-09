@@ -22,6 +22,12 @@ namespace mySystem.Process.Stock
             conn = new OleDbConnection(strConnect);
             conn.Open();
             refresh();
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns["ID"].Visible = false;
         }
 
         void refresh()

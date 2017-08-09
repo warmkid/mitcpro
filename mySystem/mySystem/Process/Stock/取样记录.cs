@@ -434,6 +434,13 @@ namespace mySystem.Process.Stock
                 this.ContextMenuStrip = contextMenuStrip1;
             }
             dataGridView1.ContextMenuStrip = contextMenuStrip1;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["取样记录ID"].Visible = false;
         }
 
         void tsi_Click(object sender, EventArgs e)
