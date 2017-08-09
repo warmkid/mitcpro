@@ -419,6 +419,7 @@ namespace mySystem.Extruction.Process
             dr["审核人"] = "";
             dr["审核日期"] = Convert.ToDateTime(dtp审核日期.Value.ToString("yyyy/MM/dd"));
             dr["审核是否通过"] = false;
+            dr["操作员备注"] = "无";
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;

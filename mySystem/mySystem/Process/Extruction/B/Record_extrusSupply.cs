@@ -488,6 +488,8 @@ namespace WindowsFormsApplication1
             dr["中内层供料量"] = 0;
             dr["中层供料量"] = 0;
             dr["原料抽查结果"] = "合格";
+
+            dr["操作员备注"] = "无";
             dr["供料人"] =mySystem.Parameter.userName;
             return dr;
         }

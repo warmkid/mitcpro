@@ -791,6 +791,7 @@ namespace mySystem.Extruction.Process
             dr["包装完好"] = "是";
             dr["清洁合格"] = "合格";
             dr["操作人"] = mySystem.Parameter.userName;
+            dr["操作员备注"] = "无";
             return dr;
         }
         // 根据条件从数据库中读取一行外表的数据

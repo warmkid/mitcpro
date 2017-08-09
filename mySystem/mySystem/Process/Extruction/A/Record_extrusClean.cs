@@ -732,6 +732,7 @@ namespace WindowsFormsApplication1
             dr["吹膜机组清洁记录ID"] = dt_out.Rows[0]["ID"];
             dr["合格"] = "合格";
             dr["清洁人"] = mySystem.Parameter.userName;
+            dr["清洁员备注"] = "无";
             return dr;
         }
         // 根据条件从数据库中读取一行外表的数据
@@ -767,7 +768,7 @@ namespace WindowsFormsApplication1
                     ndr["合格"] = "合格";
                     ndr["清洁人"] = mySystem.Parameter.userName;
                     ndr["检查人"] = "";
-                    ndr["清洁员备注"] = "";
+                    ndr["清洁员备注"] = "无";
                     dt_in.Rows.Add(ndr);
                 }
             }

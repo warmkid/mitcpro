@@ -143,6 +143,8 @@ namespace mySystem.Process.Extruction.C
             dr["有无警报显示"] = "无";
             dr["是否解除警报"] = "无";
             dr["检查员"] = Parameter.userName;
+
+            dr["检查员备注"] = "无";
             return dr;
         }
 

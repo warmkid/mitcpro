@@ -717,6 +717,7 @@ namespace mySystem.Process.Extruction.B
             dr["记录员"] = Parameter.userName;
             dr["记录员备注"] = "";
             dr["审核员"] = "";
+            dr["记录员备注"] = "无";
             return dr;
         }
 

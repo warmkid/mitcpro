@@ -891,6 +891,7 @@ namespace mySystem.Process.Extruction.B
             dr["生产日期"] = _Date;
             dr["记录时间"] = _Time;
             dr["记录员"] = Parameter.userName;
+            dr["记录员备注"] = "无";
             dr["审核员"] = "";
             //this part to add log 
             //格式： 

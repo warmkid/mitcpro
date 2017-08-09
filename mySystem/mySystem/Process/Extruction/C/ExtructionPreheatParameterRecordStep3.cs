@@ -471,6 +471,7 @@ namespace mySystem.Extruction.Process
             dr["生产指令id"] = InstruID;
             dr["日期"] = Convert.ToDateTime(dtp日期.Value.ToString("yyyy/MM/dd"));
             dr["操作员"] = mySystem.Parameter.userName;
+            dr["操作员备注"] = "无";
             dr["审核人"] = "";
             dr["审核是否通过"] = false;
 

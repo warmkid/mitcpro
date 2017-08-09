@@ -592,6 +592,7 @@ namespace mySystem.Extruction.Process
             dr["清场人"] = mySystem.Parameter.userName;
             dr["审核时间"] = DateTime.Now;
 
+            dr["操作员备注"] = "无";
             dr["检查人"] = "";
             dr["审核人"] = "";
 

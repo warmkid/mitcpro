@@ -550,6 +550,8 @@ namespace mySystem.Extruction.Process
             dr["厚度公差"] = 0;
             dr["判定"] = "Yes";
             dr["操作员"] = mySystem.Parameter.userName;
+
+            dr["操作员备注"] = "无";
             //dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             return dr;
         }

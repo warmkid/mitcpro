@@ -653,6 +653,7 @@ namespace mySystem.Process.Stock
                 ndr[1] = dt.Rows[0]["ID"];
 
                 ndr[9] = DateTime.Now;
+                ndr["取样目的"] = "入场检验";
                 ndr[12] = mySystem.Parameter.userName;
                 dtMore.Rows.Add(ndr);
             }

@@ -337,6 +337,8 @@ namespace mySystem.Extruction.Process
              dr["生产指令"] = __生产指令;
              dr["生产日期"] = __生产开始时间; ;        
              dr["记录员"] = Parameter.userName;
+
+             dr["记录员备注"] = "无";
              dr["记录日期"]=Convert.ToDateTime(DateTime.Now.ToString());
              dr["审核日期"] = Convert.ToDateTime(DateTime.MinValue);
              //this part to add log 
