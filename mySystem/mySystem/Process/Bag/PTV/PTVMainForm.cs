@@ -127,7 +127,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品内包装记录");
             if (b)
             {
-                PTVBag_innerpackaging inner = new PTVBag_innerpackaging();
+                PTVBag_innerpackaging inner = new PTVBag_innerpackaging(mainform);
                 inner.ShowDialog();
             }
             else
