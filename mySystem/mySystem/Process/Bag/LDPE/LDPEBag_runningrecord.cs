@@ -40,10 +40,11 @@ namespace mySystem.Process.Bag.LDPE
             getOtherData();
             addDataEventHandler();
 
-            foreach (Control c in this.Controls)
-                c.Enabled = false;
-            dataGridView1.Enabled = true;
-            dataGridView1.ReadOnly = true;
+            setControlFalse();
+            btn查看日志.Enabled = false;
+            cb打印机.Enabled = false;
+            btn打印.Enabled = false;
+
             dtp日期.Enabled = true;
             bt插入查询.Enabled = true;
         }
@@ -221,6 +222,8 @@ namespace mySystem.Process.Bag.LDPE
             // 保证这两个按钮、审核人姓名框一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+            tb审核员.ReadOnly = true;
+            
         }
 
         /// <summary>
@@ -317,7 +320,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["审核日期"] = DateTime.Now;
             dr["审核是否通过"] = false;
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
-            log += "生产指令编码：" + mySystem.Parameter.csbagInstruction + "\n";
+            log += "生产指令编码：" + mySystem.Parameter.ldpebagInstruction + "\n";
             dr["日志"] = log;
             return dr;
         }
@@ -619,7 +622,7 @@ namespace mySystem.Process.Bag.LDPE
         //******************************插入查询按钮******************************// 
         private void bt插入查询_Click(object sender, EventArgs e)
         {
-            InstruID = mySystem.Parameter.csbagInstruID;
+            InstruID = mySystem.Parameter.ldpebagInstruID;
             date = DateTime.Parse(dtp日期.Value.ToShortDateString());
             readOuterData(InstruID,date);
             outerBind();

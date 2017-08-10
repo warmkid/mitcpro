@@ -39,7 +39,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.label10 = new System.Windows.Forms.Label();
             this.tb审核员 = new System.Windows.Forms.TextBox();
@@ -57,7 +56,6 @@
             this.bt删除 = new System.Windows.Forms.Button();
             this.bt添加 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -163,22 +161,10 @@
             this.dataGridView1.Size = new System.Drawing.Size(853, 186);
             this.dataGridView1.TabIndex = 14;
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.dtp审核日期);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.tb审核员);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Location = new System.Drawing.Point(37, 316);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(472, 45);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            // 
             // dtp审核日期
             // 
             this.dtp审核日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp审核日期.Location = new System.Drawing.Point(248, 12);
+            this.dtp审核日期.Location = new System.Drawing.Point(279, 324);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
             this.dtp审核日期.TabIndex = 7;
@@ -187,7 +173,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(201, 16);
+            this.label10.Location = new System.Drawing.Point(225, 331);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(48, 16);
             this.label10.TabIndex = 6;
@@ -196,7 +182,7 @@
             // tb审核员
             // 
             this.tb审核员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审核员.Location = new System.Drawing.Point(69, 12);
+            this.tb审核员.Location = new System.Drawing.Point(84, 324);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(100, 26);
             this.tb审核员.TabIndex = 5;
@@ -205,7 +191,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(6, 16);
+            this.label11.Location = new System.Drawing.Point(14, 331);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(64, 16);
             this.label11.TabIndex = 4;
@@ -343,6 +329,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(874, 418);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.tb审核员);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.bt删除);
             this.Controls.Add(this.bt添加);
             this.Controls.Add(this.bt插入查询);
@@ -355,7 +345,6 @@
             this.Controls.Add(this.label40);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn审核);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -370,8 +359,6 @@
             this.Name = "LDPEBag_runningrecord";
             this.Text = "LDPEBag_runningrecord";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -390,7 +377,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.DateTimePicker dtp审核日期;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox tb审核员;
