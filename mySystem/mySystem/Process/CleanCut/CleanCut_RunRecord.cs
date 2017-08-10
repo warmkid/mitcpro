@@ -105,7 +105,7 @@ namespace mySystem.Process.CleanCut
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='清洁分切运行记录'", connOle);
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='全部'", connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 

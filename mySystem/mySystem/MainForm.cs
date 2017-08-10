@@ -66,19 +66,28 @@ namespace mySystem
                                 Data Source=../../database/LDPE.mdb;Persist Security Info=False";
             //listPE制袋 = EachSearchUnchecked(strConPE制袋);
 
-
+            if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count == 0) return;
 
             String message = "以下表单中有待审核记录：\n";
-            message += "吹膜：\n";
-            foreach (string table in list吹膜)
-            { message += "   " + table + "\n"; }
-            message += "清洁分切：\n";
-            foreach (string table in list清洁分切)
-            { message += "   " + table + "\n"; }
-            message += "CS制袋：\n";
-            foreach (string table in listCS制袋)
-            { message += "   " + table + "\n"; }
-            message += "PE制袋：\n";
+            if (list吹膜.Count != 0)
+            {
+                message += "吹膜：\n";
+                foreach (string table in list吹膜)
+                { message += "   " + table + "\n"; }
+            }
+            if (list清洁分切.Count != 0)
+            {
+                message += "清洁分切：\n";
+                foreach (string table in list清洁分切)
+                { message += "   " + table + "\n"; }
+            }
+            if (listCS制袋.Count != 0)
+            {
+                message += "CS制袋：\n";
+                foreach (string table in listCS制袋)
+                { message += "   " + table + "\n"; }
+            }
+            //message += "PE制袋：\n";
             //foreach (string table in listPE制袋)
             //{ message += "   " + table + "\n"; }
 

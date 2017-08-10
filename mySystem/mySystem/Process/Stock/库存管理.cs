@@ -27,14 +27,23 @@ namespace 订单和库存管理
 
             conn = new OleDbConnection(strConnect);
             conn.Open();
-
             // 绑定控件
             readFromDatabase();
             bindControl();
+
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["物资验收记录详细信息ID"].Visible = false;
+            
+        }
+
 
         private void readFromDatabase()
         {
@@ -103,5 +112,13 @@ namespace 订单和库存管理
             mySystem.Process.Stock.文件上传 form = new mySystem.Process.Stock.文件上传();
             form.Show();
         }
+
+        private void btn读取_Click(object sender, EventArgs e)
+        {
+            readFromDatabase();
+            bindControl();
+        }
+
+
     }
 }

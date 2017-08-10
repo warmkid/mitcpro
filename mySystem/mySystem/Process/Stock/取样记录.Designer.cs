@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label角色 = new System.Windows.Forms.Label();
             this.Title = new System.Windows.Forms.Label();
             this.btn审核 = new System.Windows.Forms.Button();
@@ -39,7 +40,13 @@
             this.label11 = new System.Windows.Forms.Label();
             this.dtp审核时间 = new System.Windows.Forms.DateTimePicker();
             this.btn取样证 = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.物资验收记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.物资请验单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.检验记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.取样记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label角色
@@ -76,7 +83,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(362, 469);
+            this.btn提交审核.Location = new System.Drawing.Point(544, 467);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(89, 23);
             this.btn提交审核.TabIndex = 43;
@@ -87,7 +94,7 @@
             // btn保存
             // 
             this.btn保存.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn保存.Location = new System.Drawing.Point(252, 469);
+            this.btn保存.Location = new System.Drawing.Point(434, 467);
             this.btn保存.Name = "btn保存";
             this.btn保存.Size = new System.Drawing.Size(75, 23);
             this.btn保存.TabIndex = 42;
@@ -101,14 +108,14 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 71);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(439, 340);
+            this.dataGridView1.Size = new System.Drawing.Size(621, 340);
             this.dataGridView1.TabIndex = 2;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(217, 435);
+            this.label10.Location = new System.Drawing.Point(399, 433);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(72, 16);
             this.label10.TabIndex = 50;
@@ -135,7 +142,7 @@
             // dtp审核时间
             // 
             this.dtp审核时间.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp审核时间.Location = new System.Drawing.Point(295, 430);
+            this.dtp审核时间.Location = new System.Drawing.Point(477, 428);
             this.dtp审核时间.Name = "dtp审核时间";
             this.dtp审核时间.Size = new System.Drawing.Size(156, 26);
             this.dtp审核时间.TabIndex = 47;
@@ -151,11 +158,45 @@
             this.btn取样证.UseVisualStyleBackColor = true;
             this.btn取样证.Click += new System.EventHandler(this.btn取样证_Click);
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.物资验收记录ToolStripMenuItem,
+            this.物资请验单ToolStripMenuItem,
+            this.检验记录ToolStripMenuItem,
+            this.取样记录ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(143, 92);
+            // 
+            // 物资验收记录ToolStripMenuItem
+            // 
+            this.物资验收记录ToolStripMenuItem.Name = "物资验收记录ToolStripMenuItem";
+            this.物资验收记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.物资验收记录ToolStripMenuItem.Text = "物资验收记录";
+            // 
+            // 物资请验单ToolStripMenuItem
+            // 
+            this.物资请验单ToolStripMenuItem.Name = "物资请验单ToolStripMenuItem";
+            this.物资请验单ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.物资请验单ToolStripMenuItem.Text = "物资请验单";
+            // 
+            // 检验记录ToolStripMenuItem
+            // 
+            this.检验记录ToolStripMenuItem.Name = "检验记录ToolStripMenuItem";
+            this.检验记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.检验记录ToolStripMenuItem.Text = "检验记录";
+            // 
+            // 取样记录ToolStripMenuItem
+            // 
+            this.取样记录ToolStripMenuItem.Name = "取样记录ToolStripMenuItem";
+            this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
+            this.取样记录ToolStripMenuItem.Text = "取样记录";
+            // 
             // 取样记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(463, 528);
+            this.ClientSize = new System.Drawing.Size(645, 528);
             this.Controls.Add(this.btn取样证);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.tb审核员);
@@ -170,6 +211,7 @@
             this.Name = "取样记录";
             this.Text = "取样记录";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -188,5 +230,10 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DateTimePicker dtp审核时间;
         private System.Windows.Forms.Button btn取样证;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 物资验收记录ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 物资请验单ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 检验记录ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 取样记录ToolStripMenuItem;
     }
 }

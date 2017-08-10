@@ -93,7 +93,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(228, 91);
+            this.label1.Location = new System.Drawing.Point(210, 91);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
@@ -104,7 +104,7 @@
             // 
             this.lbInstruction.AutoSize = true;
             this.lbInstruction.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbInstruction.Location = new System.Drawing.Point(55, 92);
+            this.lbInstruction.Location = new System.Drawing.Point(37, 92);
             this.lbInstruction.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbInstruction.Name = "lbInstruction";
             this.lbInstruction.Size = new System.Drawing.Size(72, 16);
@@ -258,7 +258,7 @@
             // lbl生产指令
             // 
             this.lbl生产指令.AutoSize = true;
-            this.lbl生产指令.Location = new System.Drawing.Point(134, 92);
+            this.lbl生产指令.Location = new System.Drawing.Point(116, 92);
             this.lbl生产指令.Name = "lbl生产指令";
             this.lbl生产指令.Size = new System.Drawing.Size(72, 16);
             this.lbl生产指令.TabIndex = 148;
@@ -267,7 +267,7 @@
             // lbl生产开始时间
             // 
             this.lbl生产开始时间.AutoSize = true;
-            this.lbl生产开始时间.Location = new System.Drawing.Point(297, 91);
+            this.lbl生产开始时间.Location = new System.Drawing.Point(282, 91);
             this.lbl生产开始时间.Name = "lbl生产开始时间";
             this.lbl生产开始时间.Size = new System.Drawing.Size(104, 16);
             this.lbl生产开始时间.TabIndex = 149;

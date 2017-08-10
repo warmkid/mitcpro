@@ -46,6 +46,7 @@ namespace mySystem.Process.Stock
             setEnableReadOnly();
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
+            addOtherEventHandler();
         }
 
 
@@ -425,5 +426,78 @@ namespace mySystem.Process.Stock
             form.Show();
         }
 
+        void addOtherEventHandler()
+        {
+            foreach (ToolStripItem tsi in contextMenuStrip1.Items)
+            {
+                tsi.Click += new EventHandler(tsi_Click);
+                this.ContextMenuStrip = contextMenuStrip1;
+            }
+            dataGridView1.ContextMenuStrip = contextMenuStrip1;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["取样记录ID"].Visible = false;
+        }
+
+        void tsi_Click(object sender, EventArgs e)
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            if (this.Name == sender.ToString())
+            {
+                return;
+            }
+            int id;
+            if (this.Name == "物资验收记录")
+            {
+                id = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            }
+            else
+            {
+                id = Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]);
+            }
+            try
+            {
+                switch (sender.ToString())
+                {
+                    case "物资验收记录":
+                        物资验收记录 form1 = new 物资验收记录(id);
+                        form1.Show();
+                        break;
+                    case "物资请验单":
+                        da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, conn);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        物资请验单 form2 = new 物资请验单(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        form2.Show();
+                        break;
+                    case "检验记录":
+                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + id, conn);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            (new 检验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
+                        }
+                        break;
+                    case "取样记录":
+                        da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, conn);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        取样记录 form4 = new 取样记录(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        form4.Show();
+                        break;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("关联失败，请检查是否有相应数据");
+            }
+        }
     }
 }
