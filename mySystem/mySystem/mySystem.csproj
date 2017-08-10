@@ -1165,6 +1165,9 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_batchproduction.resx">
       <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTVBag_checklist.resx">
+      <DependentUpon>PTVBag_checklist.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_clearance.resx">
       <DependentUpon>PTVBag_clearance.cs</DependentUpon>
     </EmbeddedResource>

@@ -173,7 +173,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "PTV生产开机确认表");
             if (b)
             {
-                PTVBag_checklist check = new PTVBag_checklist();
+                PTVBag_checklist check = new PTVBag_checklist(mainform);
                 check.ShowDialog();
             }
             else

@@ -15,5 +15,10 @@ namespace mySystem.Process.Bag.LDPE
         {
             InitializeComponent();
         }
+
+        private void b打印_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

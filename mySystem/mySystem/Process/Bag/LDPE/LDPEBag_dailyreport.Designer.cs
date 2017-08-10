@@ -53,6 +53,7 @@
             this.b打印.TabIndex = 2;
             this.b打印.Text = "打印";
             this.b打印.UseVisualStyleBackColor = true;
+            this.b打印.Click += new System.EventHandler(this.b打印_Click);
             // 
             // dataGridView1
             // 
