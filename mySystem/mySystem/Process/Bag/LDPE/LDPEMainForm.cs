@@ -127,7 +127,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void B3Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_runningrecord run = new LDPEBag_runningrecord();
+            LDPEBag_runningrecord run = new LDPEBag_runningrecord(mainform);
             run.ShowDialog();
         }
 

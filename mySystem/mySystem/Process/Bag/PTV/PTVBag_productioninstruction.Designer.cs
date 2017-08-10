@@ -77,6 +77,13 @@
             this.tb编制人 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.btn打印 = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn保存 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -105,7 +112,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(39, 40);
+            this.label2.Location = new System.Drawing.Point(408, 41);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 16);
             this.label2.TabIndex = 1;
@@ -115,7 +122,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(300, 40);
+            this.label3.Location = new System.Drawing.Point(36, 44);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 16);
             this.label3.TabIndex = 2;
@@ -135,7 +142,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(560, 40);
+            this.label5.Location = new System.Drawing.Point(602, 44);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(112, 16);
             this.label5.TabIndex = 4;
@@ -144,7 +151,7 @@
             // tb产品名称
             // 
             this.tb产品名称.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb产品名称.Location = new System.Drawing.Point(118, 37);
+            this.tb产品名称.Location = new System.Drawing.Point(487, 38);
             this.tb产品名称.Name = "tb产品名称";
             this.tb产品名称.Size = new System.Drawing.Size(100, 26);
             this.tb产品名称.TabIndex = 6;
@@ -152,7 +159,7 @@
             // tb生产指令编号
             // 
             this.tb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb生产指令编号.Location = new System.Drawing.Point(415, 37);
+            this.tb生产指令编号.Location = new System.Drawing.Point(154, 37);
             this.tb生产指令编号.Name = "tb生产指令编号";
             this.tb生产指令编号.Size = new System.Drawing.Size(100, 26);
             this.tb生产指令编号.TabIndex = 7;
@@ -170,9 +177,9 @@
             // dtp计划生产日期
             // 
             this.dtp计划生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp计划生产日期.Location = new System.Drawing.Point(676, 37);
+            this.dtp计划生产日期.Location = new System.Drawing.Point(723, 37);
             this.dtp计划生产日期.Name = "dtp计划生产日期";
-            this.dtp计划生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp计划生产日期.Size = new System.Drawing.Size(152, 26);
             this.dtp计划生产日期.TabIndex = 9;
             // 
             // groupBox1
@@ -567,11 +574,87 @@
             this.label19.TabIndex = 4;
             this.label19.Text = "编制人:";
             // 
+            // comboBox1
+            // 
+            this.comboBox1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(110, 765);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(182, 24);
+            this.comboBox1.TabIndex = 105;
+            // 
+            // btn打印
+            // 
+            this.btn打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印.Location = new System.Drawing.Point(303, 762);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(75, 28);
+            this.btn打印.TabIndex = 104;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            // 
+            // btn审核
+            // 
+            this.btn审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn审核.Location = new System.Drawing.Point(12, 765);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(75, 27);
+            this.btn审核.TabIndex = 103;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn查看日志.Location = new System.Drawing.Point(774, 762);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(94, 27);
+            this.btn查看日志.TabIndex = 108;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn提交审核.Location = new System.Drawing.Point(643, 762);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(97, 27);
+            this.btn提交审核.TabIndex = 107;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            // 
+            // btn保存
+            // 
+            this.btn保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn保存.Location = new System.Drawing.Point(532, 762);
+            this.btn保存.Name = "btn保存";
+            this.btn保存.Size = new System.Drawing.Size(75, 27);
+            this.btn保存.TabIndex = 106;
+            this.btn保存.Text = "保存";
+            this.btn保存.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(271, 37);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(102, 27);
+            this.button1.TabIndex = 109;
+            this.button1.Text = "插入查询";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
             // PTVBag_productioninstruction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(932, 753);
+            this.ClientSize = new System.Drawing.Size(882, 799);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.btn提交审核);
+            this.Controls.Add(this.btn保存);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.btn打印);
+            this.Controls.Add(this.btn审核);
             this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
@@ -673,5 +756,12 @@
         private System.Windows.Forms.TextBox tb编制人;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button btn打印;
+        private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn保存;
+        private System.Windows.Forms.Button button1;
     }
 }

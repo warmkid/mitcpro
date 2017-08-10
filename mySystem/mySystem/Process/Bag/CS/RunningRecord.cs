@@ -488,6 +488,8 @@ namespace mySystem.Process.Bag
                 MessageBox.Show("只有操作员可以新建记录");
                 foreach (Control c in this.Controls)
                     c.Enabled = false;
+                dataGridView1.Enabled = true;
+                dataGridView1.ReadOnly = true;
                 return;
             }
 
