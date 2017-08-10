@@ -95,7 +95,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料使用记录");
             if (b)
             {
-                PTVBag_materialrecord material = new PTVBag_materialrecord();
+                PTVBag_materialrecord material = new PTVBag_materialrecord(mainform);
                 material.ShowDialog();
             }
             else
