@@ -43,9 +43,11 @@
             this.tb备注 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.dtp取样时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp取样日期 = new System.Windows.Forms.DateTimePicker();
             this.btn打印 = new System.Windows.Forms.Button();
-            this.cmb打印机选择 = new System.Windows.Forms.ComboBox();
+            this.combobox打印机选择 = new System.Windows.Forms.ComboBox();
+            this.tb单位 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -82,7 +84,7 @@
             // 
             // tb本厂批号
             // 
-            this.tb本厂批号.Location = new System.Drawing.Point(87, 159);
+            this.tb本厂批号.Location = new System.Drawing.Point(87, 203);
             this.tb本厂批号.Name = "tb本厂批号";
             this.tb本厂批号.Size = new System.Drawing.Size(118, 21);
             this.tb本厂批号.TabIndex = 7;
@@ -90,7 +92,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 162);
+            this.label3.Location = new System.Drawing.Point(24, 206);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(53, 12);
             this.label3.TabIndex = 6;
@@ -114,7 +116,7 @@
             // 
             // tb取样人
             // 
-            this.tb取样人.Location = new System.Drawing.Point(87, 251);
+            this.tb取样人.Location = new System.Drawing.Point(87, 297);
             this.tb取样人.Name = "tb取样人";
             this.tb取样人.Size = new System.Drawing.Size(118, 21);
             this.tb取样人.TabIndex = 11;
@@ -122,7 +124,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(24, 254);
+            this.label5.Location = new System.Drawing.Point(24, 300);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(41, 12);
             this.label5.TabIndex = 10;
@@ -130,7 +132,7 @@
             // 
             // tb取样量
             // 
-            this.tb取样量.Location = new System.Drawing.Point(87, 208);
+            this.tb取样量.Location = new System.Drawing.Point(87, 250);
             this.tb取样量.Name = "tb取样量";
             this.tb取样量.Size = new System.Drawing.Size(118, 21);
             this.tb取样量.TabIndex = 9;
@@ -138,7 +140,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 211);
+            this.label6.Location = new System.Drawing.Point(24, 253);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 8;
@@ -149,7 +151,7 @@
             this.tb备注.Location = new System.Drawing.Point(238, 76);
             this.tb备注.Multiline = true;
             this.tb备注.Name = "tb备注";
-            this.tb备注.Size = new System.Drawing.Size(100, 252);
+            this.tb备注.Size = new System.Drawing.Size(128, 296);
             this.tb备注.TabIndex = 15;
             // 
             // label7
@@ -164,22 +166,22 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 307);
+            this.label8.Location = new System.Drawing.Point(24, 351);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(53, 12);
             this.label8.TabIndex = 12;
             this.label8.Text = "取样日期";
             // 
-            // dtp取样时间
+            // dtp取样日期
             // 
-            this.dtp取样时间.Location = new System.Drawing.Point(87, 307);
-            this.dtp取样时间.Name = "dtp取样时间";
-            this.dtp取样时间.Size = new System.Drawing.Size(118, 21);
-            this.dtp取样时间.TabIndex = 16;
+            this.dtp取样日期.Location = new System.Drawing.Point(87, 347);
+            this.dtp取样日期.Name = "dtp取样日期";
+            this.dtp取样日期.Size = new System.Drawing.Size(118, 21);
+            this.dtp取样日期.TabIndex = 16;
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(26, 375);
+            this.btn打印.Location = new System.Drawing.Point(26, 408);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 23);
             this.btn打印.TabIndex = 17;
@@ -187,22 +189,40 @@
             this.btn打印.UseVisualStyleBackColor = true;
             this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
-            // cmb打印机选择
+            // combobox打印机选择
             // 
-            this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(144, 377);
-            this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(121, 20);
-            this.cmb打印机选择.TabIndex = 18;
+            this.combobox打印机选择.FormattingEnabled = true;
+            this.combobox打印机选择.Location = new System.Drawing.Point(144, 410);
+            this.combobox打印机选择.Name = "combobox打印机选择";
+            this.combobox打印机选择.Size = new System.Drawing.Size(121, 20);
+            this.combobox打印机选择.TabIndex = 18;
+            // 
+            // tb单位
+            // 
+            this.tb单位.Location = new System.Drawing.Point(87, 159);
+            this.tb单位.Name = "tb单位";
+            this.tb单位.Size = new System.Drawing.Size(118, 21);
+            this.tb单位.TabIndex = 20;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(24, 162);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(29, 12);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "单位";
             // 
             // 取样证
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(395, 410);
-            this.Controls.Add(this.cmb打印机选择);
+            this.ClientSize = new System.Drawing.Size(395, 446);
+            this.Controls.Add(this.tb单位);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.combobox打印机选择);
             this.Controls.Add(this.btn打印);
-            this.Controls.Add(this.dtp取样时间);
+            this.Controls.Add(this.dtp取样日期);
             this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
@@ -242,8 +262,10 @@
         private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DateTimePicker dtp取样时间;
+        private System.Windows.Forms.DateTimePicker dtp取样日期;
         private System.Windows.Forms.Button btn打印;
-        private System.Windows.Forms.ComboBox cmb打印机选择;
+        private System.Windows.Forms.ComboBox combobox打印机选择;
+        private System.Windows.Forms.TextBox tb单位;
+        private System.Windows.Forms.Label label9;
     }
 }
