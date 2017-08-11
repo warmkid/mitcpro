@@ -101,11 +101,17 @@ namespace mySystem.Process.Extruction.B
             ////test for print
             //btn打印.Enabled = true;
             //btn查看日志.Enabled = true;
-            bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
-            readOuterData(_生产指令ID, _产品代码, _Date, _Time);
-            removeOuterBinding();
-            outerBind();
+            try
+            {
+                bsOuter.EndEdit();
+                daOuter.Update((DataTable)bsOuter.DataSource);
+                readOuterData(_生产指令ID, _产品代码, _Date, _Time);
+                removeOuterBinding();
+                outerBind();
+            }
+            catch (Exception ee)
+            {
+            }
         }
 
         public Running(mySystem.MainForm mainform, int Id)
@@ -1562,6 +1568,7 @@ namespace mySystem.Process.Extruction.B
             addOtherEvnetHandler();            
             btn打印.Enabled = true;
             cmb打印机选择.Enabled = true;
+            
             
         }
 
