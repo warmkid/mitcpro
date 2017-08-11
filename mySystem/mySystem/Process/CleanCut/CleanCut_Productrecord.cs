@@ -375,6 +375,21 @@ namespace mySystem.Process.CleanCut
                 setDataGridViewRowNums();
                 //立马保存内表
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind();
+                // 添加分切前ID
+                foreach (DataRow ndr in dt记录详情.Rows)
+                {
+                    if (ndr["分切前ID"].ToString().Trim() == "")
+                    {
+                        ndr["分切前ID"] = Convert.ToInt32(ndr["ID"]);
+                    }
+                }
+                //立马保存内表
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind();
+
             }
             //内表绑定
             dataGridView1.Columns.Clear();
@@ -611,6 +626,19 @@ namespace mySystem.Process.CleanCut
             dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             setDataGridViewRowNums();
+            // 内表保存
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
+            // 添加分切前ID
+            foreach (DataRow ndr in dt记录详情.Rows)
+            {
+                if (ndr["分切前ID"].ToString().Trim() == "")
+                {
+                    ndr["分切前ID"] = Convert.ToInt32(ndr["ID"]);
+                }
+            }
+            
         }
 
         //删除行按钮
@@ -633,6 +661,8 @@ namespace mySystem.Process.CleanCut
         private void btn分切_Click(object sender, EventArgs e)
         {
             DataRow dr = dt记录详情.NewRow();
+            if (dataGridView1.SelectedCells.Count == 0) return;
+            int idx = dataGridView1.SelectedCells[0].RowIndex;
             dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dr["序号"] = 0;
             dr["T清洁分切生产记录ID"] = dt记录.Rows[0]["ID"];
@@ -645,6 +675,7 @@ namespace mySystem.Process.CleanCut
             dr["长度B"] = 0;
             dr["重量"] = 0;
             dr["收率"] = -1;
+            dr["分切前ID"] = Convert.ToInt32(dataGridView1.Rows[idx].Cells["ID"].Value);
             dt记录详情.Rows.InsertAt(dr, dataGridView1.CurrentRow.Index+1);
             setDataGridViewRowNums();
         }
@@ -863,20 +894,174 @@ namespace mySystem.Process.CleanCut
         //实时求收率
         private void getPercent(Int32 Rownum)
         {
-            int len1;
-            int len2;
-            // 膜卷长度求和
-            if ((Int32.TryParse(dt记录详情.Rows[Rownum]["长度A"].ToString(), out len1) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["长度B"].ToString(), out len2) == true))
+            //int len1;
+            //int len2;
+            //// 膜卷长度求和
+            //if ((Int32.TryParse(dt记录详情.Rows[Rownum]["长度A"].ToString(), out len1) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["长度B"].ToString(), out len2) == true))
+            //{
+            //    //均为数值类型
+            //    if (len1 == 0)
+            //    { dt记录详情.Rows[Rownum]["收率"] = -1;  }
+            //    else
+            //    { dt记录详情.Rows[Rownum]["收率"] = (Int32)((Double)len2/(Double)len1 * 100); }
+            //}
+            //else
+            //{ dt记录详情.Rows[Rownum]["收率"] = -1; }
+
+            DataRow[] drs;
+            // 获取当前row的分切前ID，分切前的数据
+            int idB = Convert.ToInt32(dt记录详情.Rows[Rownum]["分切前ID"]);
+            drs = dt记录详情.Select("ID=" + idB);
+            string codeB = drs[0]["物料代码"].ToString();
+            int widthB = getWidthB(codeB);
+            int lengthB = Convert.ToInt32(drs[0]["长度A"]);
+            double before = widthB * lengthB / 1000.0;
+            // 找到同一分切前ID的所有数据,并累计
+            double after = 0;
+            int widthA, lengthA;
+            string codeA;
+            drs = dt记录详情.Select("分切前ID=" + idB);
+            foreach (DataRow dr in drs)
             {
-                //均为数值类型
-                if (len1 == 0)
-                { dt记录详情.Rows[Rownum]["收率"] = -1;  }
-                else
-                { dt记录详情.Rows[Rownum]["收率"] = (Int32)((Double)len2/(Double)len1 * 100); }
+                codeA = dr["清洁分切后代码"].ToString();
+                widthA = getWidthA(codeA);
+                lengthA = Convert.ToInt32(dr["长度B"]);
+                after += widthA * lengthA / 1000.0;
             }
-            else
-            { dt记录详情.Rows[Rownum]["收率"] = -1; }
+            double ratio = after / before;
+            foreach (DataRow dr in drs)
+            {
+                dr["收率"] = Double.Parse((ratio * 100).ToString("f1"));
+            }
+            //
             
+
+
+        }
+
+        // TODO 乘法符号待统一
+        int getWidthB(String code)
+        {
+            char MULTI = '*';
+            int widthB = 0;
+            Regex re1B = new Regex(@"^SPM-TY-\d+\*\d+\*\d+$");
+            Regex re2B = new Regex(@"^SPM-TY-\d+\*\d+$");
+            Regex re3B = new Regex(@"^SPM-TN-\d+$");
+            Regex re4B = new Regex(@"^PEF-TA-\d+\*\d+$");
+            Regex re5B = new Regex(@"^XP1-SA-\d+\*\d+$");
+            Regex re6B = new Regex(@"^UP1-SA-\d+\*\d+$");
+            //Match m1 =  re1.Match(codeB);
+            //Match m2 = re2.Match(codeB);
+            string val;
+            string[] tNum, tW;
+            string nums;
+            if (re1B.Match(code).Value != "")
+            { // SPM-TY-320X450X2
+                val = re1B.Match(code).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                tW = nums.Split(MULTI);
+                widthB = Convert.ToInt32(tW[1]) * Convert.ToInt32(tW[2]);
+
+            }
+            else if (re2B.Match(code).Value != "")
+            { // SPM-TY-320X450
+                val = re1B.Match(code).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                tW = nums.Split(MULTI);
+                widthB = Convert.ToInt32(tW[1]);
+
+            }
+            else if (re3B.Match(code).Value != "")
+            { // SPM-TN-400
+                val = re1B.Match(code).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                widthB = Convert.ToInt32(nums);
+            }
+            else if (re4B.Match(code).Value != "")
+            { // PEF-TA-600X100
+                val = re1B.Match(code).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                tW = nums.Split(MULTI);
+                widthB = Convert.ToInt32(tW[0]);
+            }
+            else if (re5B.Match(code).Value != "")
+            { // XP1-SA-1010X080
+                val = re1B.Match(code).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                tW = nums.Split(MULTI);
+                widthB = Convert.ToInt32(tW[0]);
+            }
+            else if (re6B.Match(code).Value != "")
+            { // UP1-SA-1200X120
+                val = re1B.Match(code).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                tW = nums.Split(MULTI);
+                widthB = Convert.ToInt32(tW[0]);
+            }
+            return widthB;
+        }
+
+        int getWidthA(string codeA)
+        {
+            char MULTI = '*';
+            int widthA = 0;
+            string val;
+            string[] tNum, tW;
+            string nums;
+            Regex re1A = new Regex(@"^SPM-TY-\d+\*\d+\*\d+C$");//SPM-TY-320X450X2C
+            Regex re2A = new Regex(@"^SPM-TN-\d+C$");//SPM-TN-400C
+            Regex re3A = new Regex(@"^PEF-CA-\d+\*\d+$"); // PEF-CA-450X100
+            Regex re4A = new Regex(@"^XP1-SA-\d+\*\d+$"); // XP1-SA-500X080
+            Regex re5A = new Regex(@"^UP1-SA-\d+\*\d+$"); // UP1-SA-900X120
+
+            if (re1A.Match(codeA).Value != "")
+            { //SPM-TY-320X450X2C
+                val = re1A.Match(codeA).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                nums = nums.Substring(0, nums.Length - 1);
+                tW = nums.Split(MULTI);
+                widthA = Convert.ToInt32(tW[1]) * Convert.ToInt32(tW[2]);
+            }
+            else if (re2A.Match(codeA).Value != "")
+            { // SPM-TN-400C
+                val = re2A.Match(codeA).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                nums = nums.Substring(0, nums.Length - 1);
+                widthA = Convert.ToInt32(nums);
+            }
+            else if (re3A.Match(codeA).Value != "")
+            { // PEF-CA-450X100
+                val = re3A.Match(codeA).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                tW = nums.Split(MULTI);
+                widthA = Convert.ToInt32(tW[0]);
+            }
+            else if (re4A.Match(codeA).Value != "")
+            { // XP1-SA-500X080
+                val = re4A.Match(codeA).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                tW = nums.Split(MULTI);
+                widthA = Convert.ToInt32(tW[0]);
+            }
+            else if (re5A.Match(codeA).Value != "")
+            { // UP1-SA-900X120
+                val = re5A.Match(codeA).Value;
+                tNum = val.Split('-');
+                nums = tNum[tNum.Length - 1];
+                tW = nums.Split(MULTI);
+                widthA = Convert.ToInt32(tW[0]);
+            }
+            return widthA;
         }
 
         //******************************datagridview******************************//  
@@ -919,8 +1104,8 @@ namespace mySystem.Process.CleanCut
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "清洁分切后代码")
                 {
                     //实时检查“清洁分切后代码”格式是否合格
-                    if (CheckCodeFormat(dt记录详情.Rows[e.RowIndex]["清洁分切后代码"].ToString()) == false)
-                    { dt记录详情.Rows[e.RowIndex]["清洁分切后代码"] = getCodeAfter(dt记录详情.Rows[e.RowIndex]["物料代码"].ToString()); }
+                    //if (CheckCodeFormat(dt记录详情.Rows[e.RowIndex]["清洁分切后代码"].ToString()) == false)
+                    //{ dt记录详情.Rows[e.RowIndex]["清洁分切后代码"] = getCodeAfter(dt记录详情.Rows[e.RowIndex]["物料代码"].ToString()); }
                 }
                 else
                 { }
