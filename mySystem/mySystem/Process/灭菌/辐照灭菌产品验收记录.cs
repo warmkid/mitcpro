@@ -407,14 +407,19 @@ namespace mySystem.Process.灭菌
         // 给外表的一行写入默认值
         DataRow writeOuterDefault(DataRow dr)
         {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where 委托单号='"+code+"'",mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("射线辐射灭菌委托单");
+            da.Fill(dt);
             dr["灭菌委托单编号"] = cb委托单号.Text;
             dr["灭菌委托单ID"] = id_findby_code(cb委托单号.Text);
             dr["辐照产品运回日期"] = DateTime.Now;
-
+            dr["辐照商"] = dt.Rows[0]["辐照单位"].ToString();
+            dr["检查运输商"] = dt.Rows[0]["运输商"].ToString();
+            dr["辐照产品数量箱"] = Convert.ToInt32(dt.Rows[0]["合计箱数"]);
+            dr["辐照产品数量托"] = Convert.ToInt32(dt.Rows[0]["合计托数"]);
             dr["辐照供应商检查结果"] = "合格";
             dr["运输商检查结果"] = "合格";
-            dr["辐照产品数量箱"] = 0;
-            dr["辐照产品数量托"] = 0;
+            
             dr["辐照产品数量检查结果"] = "合格";
             dr["外包装检查结果"] = "合格";
             dr["标签检查结果"] = "合格";
@@ -427,7 +432,7 @@ namespace mySystem.Process.灭菌
             dr["审核人"] = "";
             dr["审核日期"] = DateTime.Now;
             dr["审核是否通过"] = false;
-
+            dr["验收人"] = mySystem.Parameter.userName;
             dr["操作人"] = mySystem.Parameter.userName;
             dr["操作日期"] = DateTime.Now;
 
