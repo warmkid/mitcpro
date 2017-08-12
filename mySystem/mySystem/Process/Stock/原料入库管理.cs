@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Collections;
 
 namespace mySystem.Process.Stock
 {
@@ -24,6 +25,8 @@ namespace mySystem.Process.Stock
             conn = new OleDbConnection(strConn);
             conn.Open();
 
+
+            // TODO 默认不读全部记录，一周内的
             read物资验收记录Data();
             物资验收记录Bind();
             read物资请验单Data();
@@ -35,6 +38,16 @@ namespace mySystem.Process.Stock
             read取样记录Data();
             取样记录Bind();
             addOtherEventHandler();
+
+            setQueryControl();
+        }
+
+        private void setQueryControl()
+        {
+            dateTimePicker开始.Value = DateTime.Now.AddDays(-7);
+            dateTimePicker结束.Value = DateTime.Now;
+            comboBox审核状态.Items.Add("__待审核");
+            comboBox审核状态.SelectedIndex = 0;
         }
 
         private void btn增加物资验收记录_Click(object sender, EventArgs e)
@@ -46,7 +59,8 @@ namespace mySystem.Process.Stock
         void read物资验收记录Data()
         {
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资验收记录", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资验收记录 where 接收时间 between #" +
+                DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now.Date + "# ", conn);
             dt物资验收记录 = new DataTable("物资验收记录");
             da.Fill(dt物资验收记录);
         }
@@ -133,7 +147,8 @@ namespace mySystem.Process.Stock
 
         void read物资请验单Data()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单 where 请验时间 between #"
+            + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now.Date + "#", conn);
             dt物资请验单 = new DataTable("物资请验单");
             da.Fill(dt物资请验单);
         }
@@ -151,7 +166,8 @@ namespace mySystem.Process.Stock
 
         void read检验记录Data()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录 where  检验日期 between #"
+            + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "#", conn);
             dt检验记录 = new DataTable("检验记录");
             da.Fill(dt检验记录);
         }
@@ -190,7 +206,7 @@ namespace mySystem.Process.Stock
 
         void read取样记录Data()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录 where 审核员='__待审核'", conn);
             dt取样记录 = new DataTable("取样记录");
             da.Fill(dt取样记录);
         }
@@ -205,5 +221,50 @@ namespace mySystem.Process.Stock
             read取样记录Data();
             取样记录Bind();
         }
+
+        private void button查询_Click(object sender, EventArgs e)
+        {
+            //MessageBox.Show(tabControl1.SelectedIndex.ToString()+"\n"+comboBox审核状态.Text);
+            String shr = comboBox审核状态.Text;
+            DateTime startT = dateTimePicker开始.Value.Date;
+            DateTime endT = dateTimePicker结束.Value.Date;
+            OleDbDataAdapter da;
+            String sql;
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0: // 验收记录
+                    sql = @"select * from 物资验收记录 where 审核员 like '%{0}%' and 接收时间 between #{1}# and #{2}#";
+                    da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    dt物资验收记录 = new DataTable("物资验收记录");
+                    da.Fill(dt物资验收记录);
+                    物资验收记录Bind();
+                    break;
+                case 1: // 请验记录
+                    sql = @"select * from 物资请验单 where 审核员 like '%{0}%' and 请验时间 between #{1}# and #{2}#";
+                    da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    dt物资请验单 = new DataTable("物资请验单");
+                    da.Fill(dt物资请验单);
+                    物资请验单Bind();
+                    break;
+                case 2: // 检验记录
+                    sql = @"select * from 检验记录 where 审核员 like '%{0}%' and 检验日期 between #{1}# and #{2}#";
+                    da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    dt检验记录 = new DataTable("检验记录");
+                    da.Fill(dt检验记录);
+                    检验记录Bind();
+                    break;
+                case 3: // 不合格品记录
+                    MessageBox.Show("该表格数据项太多，不知道以哪几个为依据查询");
+                    break;
+                case 4: // 取样记录
+                    sql = @"select * from 取样记录 where 审核员 like '%{0}%'";
+                    da = new OleDbDataAdapter(string.Format(sql, shr), conn);
+                    dt取样记录 = new DataTable("取样记录");
+                    da.Fill(dt取样记录);
+                    取样记录Bind();
+                    break;
+            }
+        }
+
     }
 }
