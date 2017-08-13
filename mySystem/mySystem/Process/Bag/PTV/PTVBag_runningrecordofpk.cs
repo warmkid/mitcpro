@@ -43,8 +43,12 @@ namespace mySystem.Process.Bag.PTV
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
-            InstruID = Parameter.bpvbagInstruID;
-            Instruction = Parameter.bpvbagInstruction;
+            InstruID = Parameter.ptvbagInstruID;
+            Instruction = Parameter.ptvbagInstruction;
+
+            //TODO:手动设置生产指令ID和生产指令编码,方便测试*************************************
+            InstruID = 1;
+            Instruction = "E-2017-08";
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员

@@ -43,10 +43,6 @@
             this.tb圆口代码 = new System.Windows.Forms.TextBox();
             this.tb把手代码 = new System.Windows.Forms.TextBox();
             this.tb电压 = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.tb焊线1参数5 = new System.Windows.Forms.TextBox();
             this.tb焊线1参数4 = new System.Windows.Forms.TextBox();
@@ -71,30 +67,6 @@
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column13 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.tb不良品数量 = new System.Windows.Forms.TextBox();
             this.tb合格品数量 = new System.Windows.Forms.TextBox();
@@ -104,20 +76,31 @@
             this.label39 = new System.Windows.Forms.Label();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
-            this.tb审核人 = new System.Windows.Forms.TextBox();
+            this.tb审核员 = new System.Windows.Forms.TextBox();
             this.label37 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label31 = new System.Windows.Forms.Label();
             this.label30 = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.btn查询新建 = new System.Windows.Forms.Button();
+            this.btn删除记录 = new System.Windows.Forms.Button();
+            this.btn添加记录 = new System.Windows.Forms.Button();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn确认 = new System.Windows.Forms.Button();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.btn打印 = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox8.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -149,7 +132,6 @@
             this.label3.Size = new System.Drawing.Size(24, 16);
             this.label3.TabIndex = 2;
             this.label3.Text = "L\"";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // label4
             // 
@@ -195,7 +177,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(538, 81);
+            this.label8.Location = new System.Drawing.Point(554, 81);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(112, 16);
             this.label8.TabIndex = 7;
@@ -205,7 +187,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(754, 81);
+            this.label9.Location = new System.Drawing.Point(770, 81);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(16, 16);
             this.label9.TabIndex = 8;
@@ -254,52 +236,10 @@
             // tb电压
             // 
             this.tb电压.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb电压.Location = new System.Drawing.Point(646, 78);
+            this.tb电压.Location = new System.Drawing.Point(662, 78);
             this.tb电压.Name = "tb电压";
             this.tb电压.Size = new System.Drawing.Size(100, 26);
             this.tb电压.TabIndex = 14;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.label12);
-            this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Location = new System.Drawing.Point(28, 109);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(133, 113);
-            this.groupBox1.TabIndex = 15;
-            this.groupBox1.TabStop = false;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(63, 80);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(40, 16);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "设定";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(55, 39);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(72, 16);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "生产时间";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(5, 61);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 16);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "序号";
-            this.label10.Click += new System.EventHandler(this.label10_Click);
             // 
             // groupBox2
             // 
@@ -314,7 +254,7 @@
             this.groupBox2.Controls.Add(this.label15);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Location = new System.Drawing.Point(159, 109);
+            this.groupBox2.Location = new System.Drawing.Point(28, 108);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(282, 113);
             this.groupBox2.TabIndex = 16;
@@ -438,7 +378,7 @@
             this.groupBox3.Controls.Add(this.label22);
             this.groupBox3.Controls.Add(this.label23);
             this.groupBox3.Controls.Add(this.label24);
-            this.groupBox3.Location = new System.Drawing.Point(439, 109);
+            this.groupBox3.Location = new System.Drawing.Point(320, 108);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(282, 113);
             this.groupBox3.TabIndex = 17;
@@ -549,201 +489,6 @@
             this.label24.TabIndex = 0;
             this.label24.Text = "Horizontal  焊线2号 Line2";
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label29);
-            this.groupBox4.Controls.Add(this.label28);
-            this.groupBox4.Controls.Add(this.label27);
-            this.groupBox4.Controls.Add(this.label26);
-            this.groupBox4.Controls.Add(this.label25);
-            this.groupBox4.Location = new System.Drawing.Point(713, 109);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(291, 113);
-            this.groupBox4.TabIndex = 18;
-            this.groupBox4.TabStop = false;
-            // 
-            // label29
-            // 
-            this.label29.AutoSize = true;
-            this.label29.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(236, 49);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(40, 16);
-            this.label29.TabIndex = 4;
-            this.label29.Text = "备注";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label28.Location = new System.Drawing.Point(171, 49);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(56, 16);
-            this.label28.TabIndex = 3;
-            this.label28.Text = "操作人";
-            // 
-            // label27
-            // 
-            this.label27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(110, 24);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(61, 67);
-            this.label27.TabIndex = 2;
-            this.label27.Text = "不良品  数量 (只)";
-            this.label27.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label26
-            // 
-            this.label26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label26.Location = new System.Drawing.Point(55, 24);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(57, 67);
-            this.label26.TabIndex = 1;
-            this.label26.Text = "合格品  数量 (只)";
-            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label25
-            // 
-            this.label25.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label25.Location = new System.Drawing.Point(4, 37);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(48, 41);
-            this.label25.TabIndex = 0;
-            this.label25.Text = "外观检查";
-            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToResizeColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.ColumnHeadersVisible = false;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5,
-            this.Column6,
-            this.Column7,
-            this.Column8,
-            this.Column9,
-            this.Column10,
-            this.Column11,
-            this.Column12,
-            this.Column13,
-            this.Column14,
-            this.Column15,
-            this.Column16,
-            this.Column17});
-            this.dataGridView1.Location = new System.Drawing.Point(28, 222);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(976, 150);
-            this.dataGridView1.TabIndex = 19;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 40;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "Column2";
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 90;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "Column3";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 60;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "Column4";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 55;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "Column5";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 55;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "Column6";
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 55;
-            // 
-            // Column7
-            // 
-            this.Column7.HeaderText = "Column7";
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 55;
-            // 
-            // Column8
-            // 
-            this.Column8.HeaderText = "Column8";
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 55;
-            // 
-            // Column9
-            // 
-            this.Column9.HeaderText = "Column9";
-            this.Column9.Name = "Column9";
-            this.Column9.Width = 55;
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "Column10";
-            this.Column10.Name = "Column10";
-            this.Column10.Width = 55;
-            // 
-            // Column11
-            // 
-            this.Column11.HeaderText = "Column11";
-            this.Column11.Name = "Column11";
-            this.Column11.Width = 55;
-            // 
-            // Column12
-            // 
-            this.Column12.HeaderText = "Column12";
-            this.Column12.Name = "Column12";
-            this.Column12.Width = 55;
-            // 
-            // Column13
-            // 
-            this.Column13.HeaderText = "Column13";
-            this.Column13.Name = "Column13";
-            this.Column13.Width = 55;
-            // 
-            // Column14
-            // 
-            this.Column14.HeaderText = "Column14";
-            this.Column14.Name = "Column14";
-            this.Column14.Width = 55;
-            // 
-            // Column15
-            // 
-            this.Column15.HeaderText = "Column15";
-            this.Column15.Name = "Column15";
-            this.Column15.Width = 55;
-            // 
-            // Column16
-            // 
-            this.Column16.HeaderText = "Column16";
-            this.Column16.Name = "Column16";
-            this.Column16.Width = 60;
-            // 
-            // Column17
-            // 
-            this.Column17.HeaderText = "Column17";
-            this.Column17.Name = "Column17";
-            this.Column17.Width = 63;
-            // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.tb不良品数量);
@@ -817,7 +562,7 @@
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.dtp审核日期);
-            this.groupBox5.Controls.Add(this.tb审核人);
+            this.groupBox5.Controls.Add(this.tb审核员);
             this.groupBox5.Controls.Add(this.label37);
             this.groupBox5.Controls.Add(this.label36);
             this.groupBox5.Location = new System.Drawing.Point(721, 378);
@@ -834,13 +579,13 @@
             this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
             this.dtp审核日期.TabIndex = 35;
             // 
-            // tb审核人
+            // tb审核员
             // 
-            this.tb审核人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审核人.Location = new System.Drawing.Point(72, 19);
-            this.tb审核人.Name = "tb审核人";
-            this.tb审核人.Size = new System.Drawing.Size(100, 26);
-            this.tb审核人.TabIndex = 34;
+            this.tb审核员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核员.Location = new System.Drawing.Point(72, 19);
+            this.tb审核员.Name = "tb审核员";
+            this.tb审核员.Size = new System.Drawing.Size(100, 26);
+            this.tb审核员.TabIndex = 34;
             // 
             // label37
             // 
@@ -860,7 +605,7 @@
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(64, 16);
             this.label36.TabIndex = 32;
-            this.label36.Text = "审核人:";
+            this.label36.Text = "审核员:";
             // 
             // groupBox6
             // 
@@ -892,19 +637,165 @@
             this.label30.TabIndex = 22;
             this.label30.Text = "备注：参数确认栏内符合划√,不符合填写实际数值。";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(862, 16);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(93, 16);
+            this.label10.TabIndex = 185;
+            this.label10.Text = "登录角色：";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(967, 16);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 184;
+            this.label角色.Text = "角色";
+            // 
+            // btn查询新建
+            // 
+            this.btn查询新建.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn查询新建.Location = new System.Drawing.Point(878, 40);
+            this.btn查询新建.Name = "btn查询新建";
+            this.btn查询新建.Size = new System.Drawing.Size(96, 30);
+            this.btn查询新建.TabIndex = 186;
+            this.btn查询新建.Text = "查询/新建";
+            this.btn查询新建.UseVisualStyleBackColor = true;
+            this.btn查询新建.Click += new System.EventHandler(this.btn查询新建_Click);
+            // 
+            // btn删除记录
+            // 
+            this.btn删除记录.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn删除记录.Location = new System.Drawing.Point(733, 181);
+            this.btn删除记录.Name = "btn删除记录";
+            this.btn删除记录.Size = new System.Drawing.Size(70, 30);
+            this.btn删除记录.TabIndex = 198;
+            this.btn删除记录.Text = "删除";
+            this.btn删除记录.UseVisualStyleBackColor = true;
+            this.btn删除记录.Click += new System.EventHandler(this.btn删除记录_Click);
+            // 
+            // btn添加记录
+            // 
+            this.btn添加记录.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn添加记录.Location = new System.Drawing.Point(647, 181);
+            this.btn添加记录.Name = "btn添加记录";
+            this.btn添加记录.Size = new System.Drawing.Size(70, 30);
+            this.btn添加记录.TabIndex = 197;
+            this.btn添加记录.Text = "添加";
+            this.btn添加记录.UseVisualStyleBackColor = true;
+            this.btn添加记录.Click += new System.EventHandler(this.btn添加记录_Click);
+            // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn查看日志.Location = new System.Drawing.Point(919, 492);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(80, 30);
+            this.btn查看日志.TabIndex = 201;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
+            // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn提交审核.Location = new System.Drawing.Point(827, 492);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(80, 30);
+            this.btn提交审核.TabIndex = 200;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            // 
+            // btn确认
+            // 
+            this.btn确认.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn确认.Location = new System.Drawing.Point(733, 493);
+            this.btn确认.Name = "btn确认";
+            this.btn确认.Size = new System.Drawing.Size(80, 30);
+            this.btn确认.TabIndex = 199;
+            this.btn确认.Text = "确认";
+            this.btn确认.UseVisualStyleBackColor = true;
+            this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
+            // 
+            // cb打印机
+            // 
+            this.cb打印机.Font = new System.Drawing.Font("宋体", 12F);
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(308, 493);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(279, 24);
+            this.cb打印机.TabIndex = 204;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("宋体", 12F);
+            this.label11.Location = new System.Drawing.Point(212, 498);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(104, 16);
+            this.label11.TabIndex = 205;
+            this.label11.Text = "选择打印机：";
+            // 
+            // btn打印
+            // 
+            this.btn打印.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn打印.Location = new System.Drawing.Point(107, 491);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(80, 30);
+            this.btn打印.TabIndex = 203;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
+            // 
+            // btn审核
+            // 
+            this.btn审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn审核.Location = new System.Drawing.Point(13, 492);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(80, 30);
+            this.btn审核.TabIndex = 202;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(13, 222);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(996, 150);
+            this.dataGridView1.TabIndex = 237;
+            // 
             // PTVBag_runningrecordofyk
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1028, 503);
+            this.ClientSize = new System.Drawing.Size(1024, 535);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.cb打印机);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.btn打印);
+            this.Controls.Add(this.btn审核);
+            this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.btn提交审核);
+            this.Controls.Add(this.btn确认);
+            this.Controls.Add(this.btn删除记录);
+            this.Controls.Add(this.btn添加记录);
+            this.Controls.Add(this.btn查询新建);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox8);
-            this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.tb电压);
             this.Controls.Add(this.tb把手代码);
             this.Controls.Add(this.tb圆口代码);
@@ -922,21 +813,17 @@
             this.Controls.Add(this.label1);
             this.Name = "PTVBag_runningrecordofyk";
             this.Text = "PTVBag_runningrecordofyk";
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -959,10 +846,6 @@
         private System.Windows.Forms.TextBox tb圆口代码;
         private System.Windows.Forms.TextBox tb把手代码;
         private System.Windows.Forms.TextBox tb电压;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
@@ -987,30 +870,6 @@
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column12;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column13;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column14;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.TextBox tb不良品数量;
         private System.Windows.Forms.TextBox tb合格品数量;
@@ -1020,11 +879,24 @@
         private System.Windows.Forms.Label label39;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.DateTimePicker dtp审核日期;
-        private System.Windows.Forms.TextBox tb审核人;
+        private System.Windows.Forms.TextBox tb审核员;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label30;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.Button btn查询新建;
+        private System.Windows.Forms.Button btn删除记录;
+        private System.Windows.Forms.Button btn添加记录;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn确认;
+        private System.Windows.Forms.ComboBox cb打印机;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Button btn打印;
+        private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }

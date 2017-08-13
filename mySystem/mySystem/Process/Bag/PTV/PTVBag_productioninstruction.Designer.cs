@@ -46,8 +46,6 @@
             this.label28 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tb制袋内包负责人 = new System.Windows.Forms.TextBox();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -62,17 +60,14 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tb备注 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.dtp接收日期 = new System.Windows.Forms.DateTimePicker();
             this.tb接收人 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.dtp审批日期 = new System.Windows.Forms.DateTimePicker();
             this.tb审批人 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.dtp编制日期 = new System.Windows.Forms.DateTimePicker();
             this.tb编制人 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
@@ -84,18 +79,14 @@
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn保存 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.label角色 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.groupBox5.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox8.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -274,24 +265,6 @@
             this.tb制袋内包负责人.Size = new System.Drawing.Size(118, 201);
             this.tb制袋内包负责人.TabIndex = 23;
             // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(153, 271);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(600, 100);
-            this.dataGridView2.TabIndex = 24;
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(153, 373);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowTemplate.Height = 23;
-            this.dataGridView3.Size = new System.Drawing.Size(600, 100);
-            this.dataGridView3.TabIndex = 25;
-            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label6);
@@ -428,22 +401,10 @@
             this.label16.TabIndex = 17;
             this.label16.Text = "备注:";
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.dtp接收日期);
-            this.groupBox6.Controls.Add(this.tb接收人);
-            this.groupBox6.Controls.Add(this.label11);
-            this.groupBox6.Controls.Add(this.label12);
-            this.groupBox6.Location = new System.Drawing.Point(595, 664);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(280, 85);
-            this.groupBox6.TabIndex = 32;
-            this.groupBox6.TabStop = false;
-            // 
             // dtp接收日期
             // 
             this.dtp接收日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp接收日期.Location = new System.Drawing.Point(72, 49);
+            this.dtp接收日期.Location = new System.Drawing.Point(685, 706);
             this.dtp接收日期.Name = "dtp接收日期";
             this.dtp接收日期.Size = new System.Drawing.Size(200, 26);
             this.dtp接收日期.TabIndex = 7;
@@ -451,7 +412,7 @@
             // tb接收人
             // 
             this.tb接收人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb接收人.Location = new System.Drawing.Point(72, 13);
+            this.tb接收人.Location = new System.Drawing.Point(685, 670);
             this.tb接收人.Name = "tb接收人";
             this.tb接收人.Size = new System.Drawing.Size(100, 26);
             this.tb接收人.TabIndex = 6;
@@ -460,7 +421,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(10, 53);
+            this.label11.Location = new System.Drawing.Point(623, 710);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(48, 16);
             this.label11.TabIndex = 5;
@@ -470,29 +431,17 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(10, 19);
+            this.label12.Location = new System.Drawing.Point(623, 676);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(64, 16);
             this.label12.TabIndex = 4;
             this.label12.Text = "接收人:";
             // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.dtp审批日期);
-            this.groupBox7.Controls.Add(this.tb审批人);
-            this.groupBox7.Controls.Add(this.label13);
-            this.groupBox7.Controls.Add(this.label14);
-            this.groupBox7.Location = new System.Drawing.Point(317, 664);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(280, 85);
-            this.groupBox7.TabIndex = 33;
-            this.groupBox7.TabStop = false;
-            // 
             // dtp审批日期
             // 
             this.dtp审批日期.CalendarFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp审批日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp审批日期.Location = new System.Drawing.Point(71, 47);
+            this.dtp审批日期.Location = new System.Drawing.Point(546, 301);
             this.dtp审批日期.Name = "dtp审批日期";
             this.dtp审批日期.Size = new System.Drawing.Size(200, 26);
             this.dtp审批日期.TabIndex = 7;
@@ -500,7 +449,7 @@
             // tb审批人
             // 
             this.tb审批人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审批人.Location = new System.Drawing.Point(71, 11);
+            this.tb审批人.Location = new System.Drawing.Point(546, 265);
             this.tb审批人.Name = "tb审批人";
             this.tb审批人.Size = new System.Drawing.Size(100, 26);
             this.tb审批人.TabIndex = 6;
@@ -509,7 +458,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(9, 51);
+            this.label13.Location = new System.Drawing.Point(484, 305);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(48, 16);
             this.label13.TabIndex = 5;
@@ -519,29 +468,17 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(9, 17);
+            this.label14.Location = new System.Drawing.Point(484, 271);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(64, 16);
             this.label14.TabIndex = 4;
             this.label14.Text = "审批人:";
             // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.dtp编制日期);
-            this.groupBox8.Controls.Add(this.tb编制人);
-            this.groupBox8.Controls.Add(this.label15);
-            this.groupBox8.Controls.Add(this.label19);
-            this.groupBox8.Location = new System.Drawing.Point(39, 664);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(280, 85);
-            this.groupBox8.TabIndex = 34;
-            this.groupBox8.TabStop = false;
-            // 
             // dtp编制日期
             // 
             this.dtp编制日期.CalendarFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp编制日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp编制日期.Location = new System.Drawing.Point(71, 47);
+            this.dtp编制日期.Location = new System.Drawing.Point(242, 345);
             this.dtp编制日期.Name = "dtp编制日期";
             this.dtp编制日期.Size = new System.Drawing.Size(200, 26);
             this.dtp编制日期.TabIndex = 7;
@@ -549,7 +486,7 @@
             // tb编制人
             // 
             this.tb编制人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb编制人.Location = new System.Drawing.Point(71, 11);
+            this.tb编制人.Location = new System.Drawing.Point(242, 309);
             this.tb编制人.Name = "tb编制人";
             this.tb编制人.Size = new System.Drawing.Size(100, 26);
             this.tb编制人.TabIndex = 6;
@@ -558,7 +495,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label15.Location = new System.Drawing.Point(9, 51);
+            this.label15.Location = new System.Drawing.Point(180, 349);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(48, 16);
             this.label15.TabIndex = 5;
@@ -568,7 +505,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(9, 17);
+            this.label19.Location = new System.Drawing.Point(180, 315);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(64, 16);
             this.label19.TabIndex = 4;
@@ -643,29 +580,47 @@
             this.button1.Text = "插入查询";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(743, 18);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 245;
+            this.label角色.Text = "角色";
+            // 
             // PTVBag_productioninstruction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(882, 799);
+            this.ClientSize = new System.Drawing.Size(893, 741);
+            this.Controls.Add(this.dtp编制日期);
+            this.Controls.Add(this.dtp审批日期);
+            this.Controls.Add(this.tb编制人);
+            this.Controls.Add(this.dtp接收日期);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.tb审批人);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.label角色);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.tb接收人);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn审核);
-            this.Controls.Add(this.groupBox8);
-            this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.tb外包负责人);
             this.Controls.Add(this.dataGridView4);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.dataGridView3);
-            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.tb制袋内包负责人);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.groupBox1);
@@ -683,8 +638,6 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -694,12 +647,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -725,8 +672,6 @@
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.TextBox tb制袋内包负责人;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
@@ -741,17 +686,14 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.DateTimePicker dtp接收日期;
         private System.Windows.Forms.TextBox tb接收人;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.DateTimePicker dtp审批日期;
         private System.Windows.Forms.TextBox tb审批人;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.DateTimePicker dtp编制日期;
         private System.Windows.Forms.TextBox tb编制人;
         private System.Windows.Forms.Label label15;
@@ -763,5 +705,6 @@
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label角色;
     }
 }

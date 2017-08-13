@@ -227,7 +227,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "圆口焊接机运行记录");
             if (b)
             {
-                PTVBag_runningrecordofyk yk = new PTVBag_runningrecordofyk();
+                PTVBag_runningrecordofyk yk = new PTVBag_runningrecordofyk(mainform);
                 yk.ShowDialog();
             }
             else
