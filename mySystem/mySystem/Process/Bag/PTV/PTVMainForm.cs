@@ -195,7 +195,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "底封机运行记录");
             if (b)
             {
-                PTVBag_runningrecordofdf df = new PTVBag_runningrecordofdf();
+                PTVBag_runningrecordofdf df = new PTVBag_runningrecordofdf(mainform);
                 df.ShowDialog();
             }
             else
@@ -259,7 +259,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "瓶口焊接机运行记录");
             if (b)
             {
-                PTVBag_runningrecordofpk pk = new PTVBag_runningrecordofpk();
+                PTVBag_runningrecordofpk pk = new PTVBag_runningrecordofpk(mainform);
                 pk.ShowDialog();
             }
             else
