@@ -217,7 +217,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "BPV装配确认记录");
             if (b)
             {
-                BTVAssemblyConfirm mydlg = new BTVAssemblyConfirm();
+                BTVAssemblyConfirm mydlg = new BTVAssemblyConfirm(mainform);
                 mydlg.ShowDialog();
             }
             else

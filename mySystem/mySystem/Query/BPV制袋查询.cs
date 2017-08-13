@@ -358,8 +358,8 @@ namespace mySystem.Query
                         //mydlg13.Show();
                         break;
                     case "瓶口焊接机运行记录":
-                        //BTVRunningRecordPK mydlg14 = new BTVRunningRecordPK(mainform, ID);
-                        //mydlg14.Show();
+                        BTVRunningRecordPK mydlg14 = new BTVRunningRecordPK(mainform, ID);
+                        mydlg14.Show();
                         break;
                     case "多功能热合机运行记录":
                         BTVRunningRecordRHJMulti mydlg15 = new BTVRunningRecordRHJMulti(mainform, ID);

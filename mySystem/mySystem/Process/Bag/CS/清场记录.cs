@@ -13,8 +13,8 @@ namespace mySystem.Process.Bag.CS
     public partial class 清场记录 : BaseForm
     {
         // TODO   需要从Parameter 中读取生产指令ID或编号，这里假装填写当前生产指令编号和ID
-        string CODE = "1";
-        int ID = 11;
+        string CODE;
+        int ID;
         // TODO : 注意处理生产指令的状态
         // TODO： 审核时要调用赵梦的函数
         // TODO: 打印
@@ -139,8 +139,10 @@ namespace mySystem.Process.Bag.CS
         {
             conn = new OleDbConnection(strConn);
             conn.Open();
-
+            ID = mySystem.Parameter.csbagInstruID;
             i生产指令ID = ID;
+            CODE = mySystem.Parameter.csbagInstruction;
+            
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
@@ -157,8 +159,9 @@ namespace mySystem.Process.Bag.CS
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 清场记录 where ID=" + id, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
+            
             i生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
-
+            ID = i生产指令ID;
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
             ls清场项目 = new List<string>();

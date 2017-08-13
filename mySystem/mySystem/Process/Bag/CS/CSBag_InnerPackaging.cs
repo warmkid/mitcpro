@@ -45,7 +45,8 @@ namespace mySystem.Process.Bag
         Parameter.UserState _userState;
         Parameter.FormState _formState;
         Int32 InstruID;
-        String Instruction;     
+        String Instruction;
+        bool b标签;
 
         public CSBag_InnerPackaging(MainForm mainform) : base(mainform)
         {
@@ -179,8 +180,8 @@ namespace mySystem.Process.Bag
                 {
                     OleDbCommand comm2 = new OleDbCommand();
                     comm2.Connection = Parameter.connOle;
-                    comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
-
+                    comm2.CommandText = "select ID, 产品代码, 产品批号,内标签 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
+                    
                     OleDbDataAdapter datemp = new OleDbDataAdapter(comm2);
                     datemp.Fill(dt代码批号);
                     if (dt代码批号.Rows.Count == 0)
@@ -192,6 +193,7 @@ namespace mySystem.Process.Bag
                         for (int i = 0; i < dt代码批号.Rows.Count; i++)
                         {
                             cb产品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
+                            b标签 = (dt代码批号.Rows[i]["内标签"].ToString()=="中文");
                         }
                     }
                     datemp.Dispose();
@@ -509,8 +511,8 @@ namespace mySystem.Process.Bag
             dr["生产指令编号"] = Instruction;
             dr["产品代码"] = cb产品代码.Text;
             dr["生产批号"] = dt代码批号.Rows[cb产品代码.FindString(cb产品代码.Text)]["产品批号"].ToString();
-            dr["标签语言中文"] = true;
-            dr["标签语言英文"] = true;
+            dr["标签语言中文"] = b标签;
+            dr["标签语言英文"] = !b标签;
             dr["产品数量包数合计A"] = 0;
             dr["产品数量只数合计B"] = 0;
             dr["理论产量C"] = 0;
@@ -650,6 +652,7 @@ namespace mySystem.Process.Bag
             //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["审核员"].ReadOnly = true;
+            dataGridView1.Columns["不良合计"].ReadOnly = true;
             //HeaderText
             dataGridView1.Columns["包装规格每包只数"].HeaderText = "包装规格\r(只/包)";
             dataGridView1.Columns["产品数量包数"].HeaderText = "产品数量\r(包)";
@@ -952,6 +955,7 @@ namespace mySystem.Process.Bag
         //tb理论产量->成品率计算
         private void tb理论产量C_TextChanged(object sender, EventArgs e)
         {
+            tb理论产量C.DataBindings[0].WriteValue();
             if (dt记录详情 != null && dt记录详情.Rows.Count > 0)
             { getPercent(); }
         }
@@ -1021,10 +1025,29 @@ namespace mySystem.Process.Bag
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
                     }
                 }
-                else
-                { }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "黑点晶点" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "指示剂不良" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "其他")
+                {
+                    try
+                    {
+                        int sum = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["热封线不合格"].Value) +
+                            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["黑点晶点"].Value) +
+                            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["指示剂不良"].Value) +
+                            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["其他"].Value);
+                        dataGridView1.Rows[e.RowIndex].Cells["不良合计"].Value = sum;
+                    }
+                    catch
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells["不良合计"].Value = 0;
+                    }
+                }
+
             }
         }
+
+
         
     }
 }

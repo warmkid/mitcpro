@@ -46,6 +46,8 @@ namespace mySystem.Process.Bag.CS
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
+        CheckForm ckform;
+
 
         public CS制袋生产指令()
         {
@@ -906,6 +908,18 @@ namespace mySystem.Process.Bag.CS
         private void btn审核_Click(object sender, EventArgs e)
         {
             // TODO 弹出赵梦的窗口
+            if (dtOuter.Rows[0]["操作员"].ToString() == mySystem.Parameter.userName)
+            {
+                MessageBox.Show("操作员和审核员不能是同一个人！");
+                return;
+            }
+            ckform = new CheckForm(this);
+            ckform.Show();
+
+        }
+
+        public override void CheckResult()
+        {
 
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
@@ -919,21 +933,26 @@ namespace mySystem.Process.Bag.CS
             dt.Rows[0].Delete();
             da.Update(dt);
 
-            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
-            dtOuter.Rows[0]["审核是否通过"] = true;
+            dtOuter.Rows[0]["审核员"] = ckform.userName;
+            dtOuter.Rows[0]["审核是否通过"] = ckform.ischeckOk;
+            dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            if (ckform.ischeckOk)
+            {
+                dtOuter.Rows[0]["状态"] = 1;
+            }
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
-            log += "审核结果为：通过\n";
-            log += "审核意见为：无\n";
+            log += "审核结果为：" + (ckform.ischeckOk ? "通过" : "不通过") + "\n";
+            log += "审核意见为：" + ckform.opinion + "\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             btn保存.PerformClick();
             setFormState();
             setEnableReadOnly();
 
             btn审核.Enabled = false;
+            base.CheckResult();
         }
-
 
 
         private void btn添加_Click(object sender, EventArgs e)

@@ -16,28 +16,53 @@ namespace mySystem.Process.Stock
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
         OleDbConnection conn;
+        OleDbDataAdapter daOuter;
+        DataTable dtOuter;
+        OleDbCommandBuilder cbOuter;
+        BindingSource bsOuter;
         public 取样证(int id)
         {
             InitializeComponent();
             
             conn = new OleDbConnection(strConnect);
             conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录详细信息 where ID=" + id, conn);
-            DataTable dt = new DataTable("取样记录详细信息");
 
-            da.Fill(dt);
-            DataRow dr = dt.Rows[0];
-            tb物料代码.Text = dr["物料代码"].ToString();
-            tb物料名称.Text = dr["物料名称"].ToString();
-            tb数量.Text = dr["数量"].ToString();
-            tb取样人.Text = dr["取样人"].ToString();
-            tb取样量.Text = dr["取样量"].ToString();
-            tb本厂批号.Text = dr["本厂批号"].ToString();
+
+            readOuterData(id);
+            outerBind();
+
+            if (dtOuter.Rows.Count == 0)
+            {
+
+                OleDbDataAdapter daT = new OleDbDataAdapter("select * from 取样记录详细信息 where ID=" + id, conn);
+                DataTable dtT = new DataTable("取样记录详细信息");
+
+                daT.Fill(dtT);
+                DataRow dr = dtT.Rows[0];
+
+                DataRow ndr = dtOuter.NewRow();
+                ndr["取样记录详细信息ID"] = id;
+                ndr["物料名称"] = dr["物料名称"].ToString();
+                ndr["物料代码"] = dr["物料代码"].ToString();
+                ndr["数量"] = Convert.ToInt32(dr["数量"]);
+                ndr["取样人"] = dr["取样人"].ToString();
+                ndr["取样量"] = Convert.ToInt32(dr["取样量"]);
+                ndr["本厂批号"] = dr["本厂批号"].ToString();
+                ndr["单位"] = dr["单位"].ToString();
+                ndr["备注"] = dr["备注"].ToString();
+                ndr["取样日期"] = DateTime.Now;
+                dtOuter.Rows.Add(ndr);
+
+                daOuter.Update((DataTable)bsOuter.DataSource);
+
+                readOuterData(id);
+                outerBind();
+            }
 
             System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
             foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
             {
-                cmb打印机选择.Items.Add(sPrint);
+                combobox打印机选择.Items.Add(sPrint);
             }
 
         }
@@ -55,11 +80,55 @@ namespace mySystem.Process.Stock
             dr["物料代码"] = tb物料代码.Text;
             dr["本厂批号"] = tb本厂批号.Text;
             dr["取样人"] = tb取样人.Text;
-            dr["取样时间"] = dtp取样时间.Value;
+            dr["取样时间"] = dtp取样日期.Value;
             dr["打印人"] = mySystem.Parameter.userName;
             dr["打印时间"] = DateTime.Now;
             dt.Rows.Add(dr);
             da.Update(dt);
+        }
+
+
+        void readOuterData(int id)
+        {
+            daOuter = new OleDbDataAdapter("select * from 取样证 where 取样记录详细信息ID=" + id, conn);
+            dtOuter = new DataTable("取样证");
+            daOuter.Fill(dtOuter);
+            cbOuter = new OleDbCommandBuilder(daOuter);
+            bsOuter = new BindingSource();
+        }
+
+        void outerBind()
+        {
+            bsOuter.DataSource = dtOuter;
+
+            foreach (Control c in this.Controls)
+            {
+
+                if (c.Name.StartsWith("tb"))
+                {
+                    (c as TextBox).DataBindings.Clear();
+                    (c as TextBox).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(2), false, DataSourceUpdateMode.OnPropertyChanged);
+                }
+                else if (c.Name.StartsWith("lbl"))
+                {
+                    (c as Label).DataBindings.Clear();
+                    (c as Label).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(3));
+                }
+                else if (c.Name.StartsWith("cmb"))
+                {
+                    (c as ComboBox).DataBindings.Clear();
+                    (c as ComboBox).DataBindings.Add("Text", bsOuter.DataSource, c.Name.Substring(3));
+                    ControlUpdateMode cm = (c as ComboBox).DataBindings["Text"].ControlUpdateMode;
+                    DataSourceUpdateMode dm = (c as ComboBox).DataBindings["Text"].DataSourceUpdateMode;
+                }
+                else if (c.Name.StartsWith("dtp"))
+                {
+                    (c as DateTimePicker).DataBindings.Clear();
+                    (c as DateTimePicker).DataBindings.Add("Value", bsOuter.DataSource, c.Name.Substring(3));
+                    ControlUpdateMode cm = (c as DateTimePicker).DataBindings["Value"].ControlUpdateMode;
+                    DataSourceUpdateMode dm = (c as DateTimePicker).DataBindings["Value"].DataSourceUpdateMode;
+                }
+            }
         }
     }
 }

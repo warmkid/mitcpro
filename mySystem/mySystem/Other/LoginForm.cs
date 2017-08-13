@@ -168,6 +168,12 @@ namespace mySystem
             InstruStateChange(connOle清洁分切, "清洁分切工序生产指令");
 
 
+            String strConnCS制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
+            OleDbConnection connOleCS制袋 = new OleDbConnection(strConnCS制袋);
+            connOleCS制袋.Open();
+            InstruStateChange(connOleCS制袋, "生产指令");
+
             //去掉最后一个"、"，弹框提示
             if (Instru != null)
             {

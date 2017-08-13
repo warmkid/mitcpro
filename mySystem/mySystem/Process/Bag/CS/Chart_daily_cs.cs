@@ -193,13 +193,13 @@ namespace mySystem.Process.CleanCut
             dt产品外观 = new DataTable("产品外观");
             bs产品外观 = new BindingSource();
             da产品外观.Fill(dt产品外观);
-            DataTable dt产品外观所需信息 = dt产品外观.DefaultView.ToTable(false, new string[] {"ID", "检查员", "尺寸规格宽", "尺寸规格长" });
+            DataTable dt产品外观所需信息 = dt产品外观.DefaultView.ToTable(false, new string[] {"ID", "操作员", "尺寸规格宽", "尺寸规格长" });
             Int32 i产品外观外表ID = Convert.ToInt32(dt产品外观所需信息.Rows[0]["ID"].ToString());
 
             i成品宽 = Convert.ToDouble(dt产品外观所需信息.Rows[0]["尺寸规格宽"].ToString());
             i成品长 = Convert.ToDouble(dt产品外观所需信息.Rows[0]["尺寸规格长"].ToString());
 
-            String str检查员 = dt产品外观所需信息.Rows[0]["检查员"].ToString();
+            String str检查员 = dt产品外观所需信息.Rows[0]["操作员"].ToString();
             //读取检查员对应的班次
             OleDbCommand comm班次 = new OleDbCommand();
             comm班次.Connection = mySystem.Parameter.connOle;

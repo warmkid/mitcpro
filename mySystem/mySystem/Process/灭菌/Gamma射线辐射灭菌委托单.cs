@@ -126,7 +126,7 @@ namespace mySystem.Process.灭菌
             dr["委托日期"] = DateTime.Now;
             dr["审批日期"] = DateTime.Now;
             dr["操作日期"] = DateTime.Now;
-
+            dr["委托人"] = mySystem.Parameter.userName;
             dr["审核是否通过"] = false;
             dr["审批"] = "";
 

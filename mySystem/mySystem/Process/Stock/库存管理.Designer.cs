@@ -41,7 +41,7 @@
             // 
             // btn入库
             // 
-            this.btn入库.Location = new System.Drawing.Point(12, 47);
+            this.btn入库.Location = new System.Drawing.Point(12, 23);
             this.btn入库.Name = "btn入库";
             this.btn入库.Size = new System.Drawing.Size(75, 23);
             this.btn入库.TabIndex = 0;
@@ -51,7 +51,7 @@
             // 
             // btn出库
             // 
-            this.btn出库.Location = new System.Drawing.Point(123, 47);
+            this.btn出库.Location = new System.Drawing.Point(123, 23);
             this.btn出库.Name = "btn出库";
             this.btn出库.Size = new System.Drawing.Size(75, 23);
             this.btn出库.TabIndex = 1;
@@ -61,7 +61,7 @@
             // 
             // btn退货
             // 
-            this.btn退货.Location = new System.Drawing.Point(238, 47);
+            this.btn退货.Location = new System.Drawing.Point(238, 23);
             this.btn退货.Name = "btn退货";
             this.btn退货.Size = new System.Drawing.Size(75, 23);
             this.btn退货.TabIndex = 2;
@@ -72,15 +72,15 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 88);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 52);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(839, 307);
+            this.dataGridView1.Size = new System.Drawing.Size(839, 343);
             this.dataGridView1.TabIndex = 3;
             // 
             // btn原料入库
             // 
-            this.btn原料入库.Location = new System.Drawing.Point(532, 47);
+            this.btn原料入库.Location = new System.Drawing.Point(532, 23);
             this.btn原料入库.Name = "btn原料入库";
             this.btn原料入库.Size = new System.Drawing.Size(75, 23);
             this.btn原料入库.TabIndex = 4;
@@ -90,7 +90,7 @@
             // 
             // btn检验台账
             // 
-            this.btn检验台账.Location = new System.Drawing.Point(653, 47);
+            this.btn检验台账.Location = new System.Drawing.Point(653, 23);
             this.btn检验台账.Name = "btn检验台账";
             this.btn检验台账.Size = new System.Drawing.Size(75, 23);
             this.btn检验台账.TabIndex = 8;
@@ -100,7 +100,7 @@
             // 
             // btn文件上传
             // 
-            this.btn文件上传.Location = new System.Drawing.Point(776, 47);
+            this.btn文件上传.Location = new System.Drawing.Point(776, 23);
             this.btn文件上传.Name = "btn文件上传";
             this.btn文件上传.Size = new System.Drawing.Size(75, 23);
             this.btn文件上传.TabIndex = 9;
@@ -110,7 +110,7 @@
             // 
             // btn读取
             // 
-            this.btn读取.Location = new System.Drawing.Point(382, 47);
+            this.btn读取.Location = new System.Drawing.Point(382, 23);
             this.btn读取.Name = "btn读取";
             this.btn读取.Size = new System.Drawing.Size(75, 23);
             this.btn读取.TabIndex = 10;

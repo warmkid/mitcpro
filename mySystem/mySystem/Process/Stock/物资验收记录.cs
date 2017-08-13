@@ -18,6 +18,7 @@ namespace mySystem.Process.Stock
         List<String> ls操作员;
         List<String> ls审核员;
         List<String> ls供应商代码,ls供应商名称;
+        HashSet<String> hs物料名称, hs物料代码;
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
         /// </summary>
@@ -67,6 +68,7 @@ namespace mySystem.Process.Stock
             }
 
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
 
@@ -99,6 +101,7 @@ namespace mySystem.Process.Stock
             
 
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
 
@@ -425,6 +428,40 @@ namespace mySystem.Process.Stock
             cmb供应商代码.SelectedIndexChanged += new EventHandler(cmb供应商代码_SelectedIndexChanged);
             dataGridView1.ContextMenuStrip = contextMenuStrip1;
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+
+            // 物料代码和物料名称可选可输
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
+        }
+
+        void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            DataGridView dgv = (sender as DataGridView);
+            if (dgv.SelectedCells.Count == 0) return;
+            int colIdx = dgv.SelectedCells[0].ColumnIndex;
+            if (2==colIdx || 3==colIdx)
+            {
+                object eFV = e.FormattedValue;
+                DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;
+                if (!cbc.Items.Contains(eFV))
+                {
+                    cbc.Items.Add(eFV);
+                    dataGridView1.SelectedCells[0].Value = eFV;
+                }
+            }
+        }
+
+        void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            DataGridView dgv = (sender as DataGridView);
+
+            if (dgv.SelectedCells.Count == 0) return;
+            int colIdx = dgv.SelectedCells[0].ColumnIndex;
+            if (2==colIdx || 3==colIdx)
+            {
+                ComboBox c = e.Control as ComboBox;
+                if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            }
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -654,6 +691,7 @@ namespace mySystem.Process.Stock
             dr["请验时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
             dr["请验人"] = mySystem.Parameter.userName;
+            dr["审核员"] = "";
             dr["请验编号"] = create请验编号();
             dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
             dt.Rows.Add(dr);
@@ -699,6 +737,7 @@ namespace mySystem.Process.Stock
 
             dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
             dr["审核时间"] = DateTime.Now;
+            dr["审核员"] = "";
             dr["供应商代码"] = dtOuter.Rows[0]["供应商代码"].ToString();
             dr["供应商名称"] = dtOuter.Rows[0]["供应商名称"].ToString();
             dt.Rows.Add(dr);
@@ -836,6 +875,36 @@ namespace mySystem.Process.Stock
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
+                if (dc.ColumnName == "物料名称")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    foreach (string s in hs物料名称)
+                    {
+                        cbc.Items.Add(s);
+                    }
+                    dataGridView1.Columns.Add(cbc);
+                    continue;
+                }
+                if (dc.ColumnName == "物料代码")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    foreach (string s in hs物料代码)
+                    {
+                        cbc.Items.Add(s);
+                    }
+                    dataGridView1.Columns.Add(cbc);
+                    continue;
+                }
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
                 {
@@ -951,6 +1020,38 @@ namespace mySystem.Process.Stock
             MessageBox.Show("已加入库存台账！");
         }
 
-      
+
+        void getInnerOtherData()
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+
+            hs物料代码 = new HashSet<string>();
+            da = new OleDbDataAdapter("select * from 设置物料代码", conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                hs物料代码.Add(dr["物料代码"].ToString());
+            }
+
+
+            hs物料名称 = new HashSet<string>();
+            da = new OleDbDataAdapter("select * from 设置物料名称", conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                hs物料名称.Add(dr["物料名称"].ToString());
+            }
+
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                hs物料代码.Add(dr["物料代码"].ToString());
+                hs物料名称.Add(dr["物料名称"].ToString());
+            }
+
+        }
+
     }
 }
