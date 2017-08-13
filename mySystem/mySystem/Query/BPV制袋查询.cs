@@ -153,9 +153,9 @@ namespace mySystem.Query
                         break;
                     case "原材料分装记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "原材料分装记录", "审核人", null, "生产指令ID"); }
+                        { EachBind(this.dgv, "原材料分装记录", "审核员", null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "原材料分装记录", "审核人", null, null); }
+                        { EachBind(this.dgv, "原材料分装记录", "审核员", null, null); }
                         break;
                     case "底封机运行记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -330,8 +330,8 @@ namespace mySystem.Query
                         //mydlg6.Show();
                         break;
                     case "BPV装配确认记录":
-                        //BTVAssemblyConfirm mydlg7 = new BTVAssemblyConfirm(mainform, ID);
-                        //mydlg7.Show();
+                        BTVAssemblyConfirm mydlg7 = new BTVAssemblyConfirm(mainform, ID);
+                        mydlg7.Show();
                         break;
                     case "2D袋体生产记录":
                         //BTV2DProRecord mydlg8 = new BTV2DProRecord(mainform, ID);
@@ -342,8 +342,8 @@ namespace mySystem.Query
                         //mydlg9.Show();
                         break;
                     case "原材料分装记录":
-                        //BTVRawMaterialDispensing mydlg10 = new BTVRawMaterialDispensing(mainform, ID);
-                        //mydlg10.Show();
+                        BTVRawMaterialDispensing mydlg10 = new BTVRawMaterialDispensing(mainform, ID);
+                        mydlg10.Show();
                         break;
                     case "底封机运行记录":
                         //BTVRunningRecordDF mydlg11 = new BTVRunningRecordDF(mainform, ID);
