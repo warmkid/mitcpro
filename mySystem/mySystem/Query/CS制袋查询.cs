@@ -250,8 +250,8 @@ namespace mySystem.Query
                         form2.Show();
                         break;
                     case "CS制袋日报表":
-                        //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);           
-                        //form3.Show();
+                        Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);           
+                        form3.Show();
                         break;
                     case "产品外观和尺寸检验记录":
                         //产品外观和尺寸检验记录 myform = new 产品外观和尺寸检验记录(mainform, ID);

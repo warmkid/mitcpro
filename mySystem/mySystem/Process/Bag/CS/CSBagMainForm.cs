@@ -129,7 +129,7 @@ namespace mySystem.Process.Bag
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            Chart_daily_cs form3 = new Chart_daily_cs();           
+            Chart_daily_cs form3 = new Chart_daily_cs(mainform);           
             form3.ShowDialog();
         }
 
