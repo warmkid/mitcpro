@@ -13,8 +13,8 @@ namespace mySystem.Process.Bag.CS
     public partial class 产品外观和尺寸检验记录 : BaseForm
     {
         // TODO   需要从Parameter 中读取生产指令ID或编号，这里假装填写当前生产指令编号和ID
-        string CODE = "1";
-        int ID = 11;
+        string CODE;
+        int ID;
         // TODO : 注意处理生产指令的状态
         // TODO： 审核时要调用赵梦的函数
         // TODO: 打印
@@ -118,8 +118,10 @@ namespace mySystem.Process.Bag.CS
             conn.Open();
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            i生产指令ID = ID;
-            str生产指令编号 = CODE;
+            i生产指令ID = mySystem.Parameter.csbagInstruID;
+            str生产指令编号 = mySystem.Parameter.csbagInstruction;
+            ID = i生产指令ID;
+            CODE = str生产指令编号;
         }
 
         void variableInit(int id)
