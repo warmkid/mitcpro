@@ -242,6 +242,87 @@ namespace mySystem
             }
         }
 
+        private void btn复制_Click(object sender, EventArgs e)
+        {
+            // TODO 复制内表
+            if (dgv.SelectedCells.Count == 0) return;
+            DataRow dr;
+            OleDbDataAdapter daT;
+            DataTable dtT;
+            OleDbCommandBuilder cbT;
+            
+           
+            
+            
+
+
+
+            switch (processName)
+            {
+                case "吹膜":
+                    int pid = Convert.ToInt32(dt.Rows[dgv.SelectedCells[0].RowIndex]["ID"]);
+                    dr = dt.NewRow();
+                    dr.ItemArray = dt.Rows[dgv.SelectedCells[0].RowIndex].ItemArray.Clone() as object[];
+                    dr["生产指令编号"] = dt.Rows[dgv.SelectedCells[0].RowIndex]["生产指令编号"].ToString() + " 复制";
+                    dr["审批人"] = "";
+                    dr["状态"] = 0;
+                    string log = "=====================================\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + mySystem.Parameter.userName +
+                        " 复制生产指令：" + dt.Rows[dgv.SelectedCells[0].RowIndex]["生产指令编号"].ToString() + "\n";
+                    dr["日志"] = log;
+                    dt.Rows.Add(dr);
+                    da.Update((DataTable)bs.DataSource);
+                    da = new OleDbDataAdapter(da.SelectCommand);
+                    cb = new OleDbCommandBuilder(da);
+                    dt = new DataTable(dt.TableName);
+                    bs = new BindingSource();
+                    dt.Columns.Add("序号", System.Type.GetType("System.String"));
+                    da.Fill(dt);
+                    bs.DataSource = dt;
+                    dgv.DataSource = bs.DataSource;
+                    setDataGridViewRowNums();
+                    daT = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + pid, mySystem.Parameter.connOle);
+                    cbT = new OleDbCommandBuilder(daT);
+                    dtT = new DataTable();
+                    daT.Fill(dtT);
+                    List<DataRow> ndrs = new List<DataRow>();
+                    foreach (DataRow tdr in dtT.Rows)
+                    {
+                        DataRow t = dtT.NewRow();
+                        t.ItemArray = tdr.ItemArray.Clone() as object[];
+                        t["生产指令ID"] = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["ID"]);
+                        ndrs.Add(t);
+                    }
+                    foreach (DataRow tdr in ndrs)
+                    {
+                        dtT.Rows.Add(tdr);
+                    }
+                    daT.Update(dtT);
+                    break;
+                case "清洁分切":
+                    
+
+                    break;
+                case "CS制袋":
+                    
+
+                    break;
+                case "PE制袋":
+                    
+
+                    break;
+                case "BPV制袋":
+                    
+
+                    break;
+                case "PTV制袋":
+
+                    break;
+            }
+            
+ 
+        }
+
 
     }
 }
