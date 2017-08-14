@@ -60,7 +60,7 @@ namespace mySystem.Process.Stock
         {
 
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资验收记录 where 接收时间 between #" +
-                DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now.Date + "# ", conn);
+                DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "# ", conn);
             dt物资验收记录 = new DataTable("物资验收记录");
             da.Fill(dt物资验收记录);
         }
@@ -148,7 +148,7 @@ namespace mySystem.Process.Stock
         void read物资请验单Data()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单 where 请验时间 between #"
-            + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now.Date + "#", conn);
+            + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "#", conn);
             dt物资请验单 = new DataTable("物资请验单");
             da.Fill(dt物资请验单);
         }
@@ -227,7 +227,7 @@ namespace mySystem.Process.Stock
             //MessageBox.Show(tabControl1.SelectedIndex.ToString()+"\n"+comboBox审核状态.Text);
             String shr = comboBox审核状态.Text;
             DateTime startT = dateTimePicker开始.Value.Date;
-            DateTime endT = dateTimePicker结束.Value.Date;
+            DateTime endT = dateTimePicker结束.Value;
             OleDbDataAdapter da;
             String sql;
             switch (tabControl1.SelectedIndex)

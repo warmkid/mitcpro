@@ -67,7 +67,16 @@ namespace mySystem.Process.Stock
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex > 0)
-                System.Diagnostics.Process.Start(dataGridView1.Rows[e.RowIndex].Cells["文件路径"].Value.ToString());
+            {
+                try
+                {
+                    System.Diagnostics.Process.Start(dataGridView1.Rows[e.RowIndex].Cells["文件路径"].Value.ToString());
+                }
+                catch (Win32Exception ee)
+                {
+                    MessageBox.Show("找不到文件！");
+                }
+            }
         }
     }
 }
