@@ -385,7 +385,7 @@
     <Compile Include="Process\Bag\PTV\PTVBag_productioninstruction.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\PTV\PTVBag_productioninstruction.Designer.cs">
+    <Compile Include="Process\Bag\PTV\PTVBag_productioninstruction.designer.cs">
       <DependentUpon>PTVBag_productioninstruction.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Bag\PTV\PTVBag_runningrecordofdf.cs">
