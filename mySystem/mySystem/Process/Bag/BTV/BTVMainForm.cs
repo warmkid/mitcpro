@@ -281,7 +281,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "底封机运行记录");
             if (b)
             {
-                BTVRunningRecordDF mydlg = new BTVRunningRecordDF();
+                BTVRunningRecordDF mydlg = new BTVRunningRecordDF(mainform);
                 mydlg.ShowDialog();
             }
             else
