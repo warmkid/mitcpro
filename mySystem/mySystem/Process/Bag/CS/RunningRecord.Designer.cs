@@ -83,7 +83,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(384, 21);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -197,7 +197,7 @@
             // 
             // tb环境温度
             // 
-            this.tb环境温度.Location = new System.Drawing.Point(221, 100);
+            this.tb环境温度.Location = new System.Drawing.Point(238, 100);
             this.tb环境温度.Name = "tb环境温度";
             this.tb环境温度.Size = new System.Drawing.Size(76, 26);
             this.tb环境温度.TabIndex = 14;
@@ -205,7 +205,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(303, 103);
+            this.label8.Location = new System.Drawing.Point(320, 103);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(24, 16);
             this.label8.TabIndex = 15;
@@ -214,7 +214,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(365, 103);
+            this.label9.Location = new System.Drawing.Point(410, 103);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(72, 16);
             this.label9.TabIndex = 16;
@@ -222,7 +222,7 @@
             // 
             // tb环境湿度
             // 
-            this.tb环境湿度.Location = new System.Drawing.Point(443, 100);
+            this.tb环境湿度.Location = new System.Drawing.Point(488, 100);
             this.tb环境湿度.Name = "tb环境湿度";
             this.tb环境湿度.Size = new System.Drawing.Size(76, 26);
             this.tb环境湿度.TabIndex = 17;
@@ -230,7 +230,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(525, 103);
+            this.label10.Location = new System.Drawing.Point(570, 103);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(16, 16);
             this.label10.TabIndex = 18;
@@ -356,7 +356,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label40.Location = new System.Drawing.Point(107, 452);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(91, 14);
@@ -373,7 +373,7 @@
             // 
             // bt打印
             // 
-            this.bt打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt打印.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt打印.Location = new System.Drawing.Point(358, 448);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(75, 23);
@@ -384,7 +384,7 @@
             // 
             // bt审核
             // 
-            this.bt审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt审核.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt审核.Location = new System.Drawing.Point(12, 448);
             this.bt审核.Name = "bt审核";
             this.bt审核.Size = new System.Drawing.Size(75, 23);
@@ -395,7 +395,7 @@
             // 
             // bt日志
             // 
-            this.bt日志.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt日志.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt日志.Location = new System.Drawing.Point(887, 448);
             this.bt日志.Name = "bt日志";
             this.bt日志.Size = new System.Drawing.Size(75, 23);
@@ -406,7 +406,7 @@
             // 
             // bt提交审核
             // 
-            this.bt提交审核.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt提交审核.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt提交审核.Location = new System.Drawing.Point(794, 448);
             this.bt提交审核.Name = "bt提交审核";
             this.bt提交审核.Size = new System.Drawing.Size(75, 23);
@@ -417,7 +417,7 @@
             // 
             // bt保存
             // 
-            this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt保存.Location = new System.Drawing.Point(700, 448);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(75, 23);
@@ -429,8 +429,8 @@
             // label20
             // 
             this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(780, 67);
+            this.label20.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(771, 21);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(109, 19);
             this.label20.TabIndex = 41;
@@ -439,8 +439,8 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(895, 67);
+            this.label角色.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(886, 21);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(49, 19);
             this.label角色.TabIndex = 40;
@@ -522,7 +522,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RunningRecord";
