@@ -243,7 +243,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "泄露测试记录");
             if (b)
             {
-                PTVBag_testrecordofdisclose xlDlg = new PTVBag_testrecordofdisclose();
+                PTVBag_testrecordofdisclose xlDlg = new PTVBag_testrecordofdisclose(mainform);
                 xlDlg.ShowDialog();
             }
             else
