@@ -250,7 +250,7 @@ namespace mySystem.Query
                         form2.Show();
                         break;
                     case "CS制袋日报表":
-                        Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);           
+                        Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
                         form3.Show();
                         break;
                     case "产品外观和尺寸检验记录":
@@ -281,8 +281,10 @@ namespace mySystem.Query
                         break;
                 }
             }
-            catch
-            { }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

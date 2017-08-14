@@ -38,11 +38,7 @@ namespace mySystem.Process.Bag
         {
             InitializeComponent();
 
-            conn = Parameter.conn;
-            connOle = Parameter.connOle;
-            isSqlOk = Parameter.isSqlOk;
-            InstruID = Parameter.csbagInstruID;
-            Instruction = Parameter.csbagInstruction;
+            variableInit();
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -61,18 +57,38 @@ namespace mySystem.Process.Bag
         {
             InitializeComponent();
 
-            conn = Parameter.conn;
-            connOle = Parameter.connOle;
-            isSqlOk = Parameter.isSqlOk;
+            variableInit(ID);
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
-            //getOtherData();  //读取设置内容
+            getOtherData();  //读取设置内容
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             IDShow(ID);
+        }
+
+        void variableInit()
+        {
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+            InstruID = Parameter.csbagInstruID;
+            Instruction = Parameter.csbagInstruction;
+        }
+
+        void variableInit(int id)
+        {
+            conn = Parameter.conn;
+            connOle = Parameter.connOle;
+            isSqlOk = Parameter.isSqlOk;
+
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from CS制袋领料记录 where ID="+id,connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+            Instruction = dt.Rows[0]["生产指令编号"].ToString();
         }
 
         //******************************初始化******************************//
@@ -492,7 +508,7 @@ namespace mySystem.Process.Bag
             dr["生产指令ID"] = InstruID;
             dr["生产指令编号"] = Instruction;
             dr["产品代码"] = tb产品代码.Text;
-            dr["产品代码"] = tb产品批号.Text;
+            dr["产品批号"] = tb产品批号.Text;
             dr["成品率"] = -1;
             dr["废品重量"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
