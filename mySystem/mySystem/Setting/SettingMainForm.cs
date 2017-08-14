@@ -30,6 +30,8 @@ namespace mySystem.Setting
                     Btn吹膜.Enabled = false;
                     Btn清洁分切.Enabled = false;
                     Btn灭菌.Enabled = false;
+                    Btn订单管理.Enabled = false;
+                    Btn库存管理.Enabled = false;
                     break;
                 case 2:
                     Btn人员.Enabled = true;
@@ -37,6 +39,8 @@ namespace mySystem.Setting
                     Btn吹膜.Enabled = false;
                     Btn清洁分切.Enabled = false;
                     Btn灭菌.Enabled = false;
+                    Btn订单管理.Enabled = false;
+                    Btn库存管理.Enabled = false;
                     break;
                 case 3:
                     Btn人员.Enabled = true;
@@ -44,6 +48,8 @@ namespace mySystem.Setting
                     Btn吹膜.Enabled = true;
                     Btn清洁分切.Enabled = true;
                     Btn灭菌.Enabled = true;
+                    Btn订单管理.Enabled = true;
+                    Btn库存管理.Enabled = true;
                     break;
                 default:
                     break;
