@@ -211,7 +211,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "超声波焊接记录");
             if (b)
             {
-                PTVBag_weldingrecordofwave wave = new PTVBag_weldingrecordofwave();
+                PTVBag_weldingrecordofwave wave = new PTVBag_weldingrecordofwave(mainform);
                 wave.ShowDialog();
             }
             else
