@@ -38,6 +38,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.btn复制 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).BeginInit();
             this.SuspendLayout();
             // 
@@ -145,11 +146,23 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "选择工序：";
             // 
+            // btn复制
+            // 
+            this.btn复制.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn复制.Location = new System.Drawing.Point(929, 66);
+            this.btn复制.Name = "btn复制";
+            this.btn复制.Size = new System.Drawing.Size(75, 30);
+            this.btn复制.TabIndex = 25;
+            this.btn复制.Text = "复制";
+            this.btn复制.UseVisualStyleBackColor = true;
+            this.btn复制.Click += new System.EventHandler(this.btn复制_Click);
+            // 
             // QueryInstruForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 615);
+            this.Controls.Add(this.btn复制);
             this.Controls.Add(this.dgv);
             this.Controls.Add(this.SearchBtn);
             this.Controls.Add(this.textBox1);
@@ -181,5 +194,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn复制;
     }
 }

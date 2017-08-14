@@ -45,7 +45,7 @@ namespace mySystem.Process.Bag.CS
 
         CheckForm ckForm = null;
 
-        public 产品热合强度检验记录()
+        public 产品热合强度检验记录(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             variableInit();
@@ -78,7 +78,7 @@ namespace mySystem.Process.Bag.CS
         }
 
 
-        public 产品热合强度检验记录(int id)
+        public 产品热合强度检验记录(MainForm mainform,int id):base(mainform)
         {
             InitializeComponent();
             variableInit();
@@ -120,9 +120,9 @@ namespace mySystem.Process.Bag.CS
             da = new OleDbDataAdapter("select * from 产品热合强度检验记录 where ID=" + id + "", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
-            _instrId = Convert.ToInt32(dt.Rows[0]["T生产指令ID"]);
+            _instrId = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
             _id = id;
-            _code = dtOuter.Rows[0]["生产指令编号"].ToString();
+            // _code = dtOuter.Rows[0]["生产指令编号"].ToString();
         }
 
         void setKeyInfoFromDataTable()
@@ -196,7 +196,7 @@ namespace mySystem.Process.Bag.CS
         /// <param name="code"></param>
         void readOuterData()
         {
-            string sql = "select * from 产品热合强度检验记录 where T生产指令ID={0} and 整理时间=#{1}#";
+            string sql = "select * from 产品热合强度检验记录 where 生产指令ID={0} and 整理时间=#{1}#";
             daOuter = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.csbagInstruID, nowString), conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("产品热合强度检验记录");
@@ -213,7 +213,8 @@ namespace mySystem.Process.Bag.CS
         /// <returns></returns>
         DataRow writeOuterDefault(DataRow dr)
         {
-            dr["T生产指令ID"] = mySystem.Parameter.csbagInstruID;
+            dr["生产指令ID"] = mySystem.Parameter.csbagInstruID;
+            dr["整理人"] = mySystem.Parameter.userName;
             dr["整理时间"] = nowString;
             dr["审核日期"] = DateTime.Now;
             string log = "===================================\n";

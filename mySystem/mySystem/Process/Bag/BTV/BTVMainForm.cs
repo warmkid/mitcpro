@@ -265,7 +265,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "原材料分装记录");
             if (b)
             {
-                BTVRawMaterialDispensing mydlg = new BTVRawMaterialDispensing();
+                BTVRawMaterialDispensing mydlg = new BTVRawMaterialDispensing(mainform);
                 mydlg.ShowDialog();
             }
             else
@@ -281,7 +281,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "底封机运行记录");
             if (b)
             {
-                BTVRunningRecordDF mydlg = new BTVRunningRecordDF();
+                BTVRunningRecordDF mydlg = new BTVRunningRecordDF(mainform);
                 mydlg.ShowDialog();
             }
             else

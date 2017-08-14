@@ -598,6 +598,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.ColumnHeadersHeight = 40;
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T清洁分切生产记录ID"].Visible = false;
+            dataGridView1.Columns["分切前ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["膜卷批号"].ReadOnly = true;
             dataGridView1.Columns["长度A"].HeaderText = "长度\r(m)";

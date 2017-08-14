@@ -119,13 +119,13 @@ namespace mySystem.Query
                         break;
                     case "产品外观和尺寸检验记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "检查员", "操作日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "操作日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "检查员", "操作日期", null); }
+                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "操作日期", null); }
                         break;
                     case "产品热合强度检验记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", "T生产指令ID"); }
+                        { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", null); }
                         break;
@@ -159,9 +159,9 @@ namespace mySystem.Query
                 }
             }
 
-            catch
+            catch(Exception ee)
             {
-                MessageBox.Show("输入有误，请重新输入", "错误");
+                MessageBox.Show("输入有误，请重新输入"+ee.Message+"\n"+ee.StackTrace, "错误");
                 return;
             }
 
@@ -250,16 +250,16 @@ namespace mySystem.Query
                         form2.Show();
                         break;
                     case "CS制袋日报表":
-                        //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);           
-                        //form3.Show();
+                        Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
+                        form3.Show();
                         break;
                     case "产品外观和尺寸检验记录":
-                        //产品外观和尺寸检验记录 myform = new 产品外观和尺寸检验记录(mainform, ID);
-                        //myform.Show();
+                        产品外观和尺寸检验记录 form4 = new 产品外观和尺寸检验记录(mainform, ID);
+                        form4.Show();
                         break;
                     case "产品热合强度检验记录":
-                        //产品热合强度检验记录 myform = new 产品热合强度检验记录(mainform, ID);
-                        //myform.Show();
+                        产品热合强度检验记录 form5 = new 产品热合强度检验记录(mainform, ID);
+                        form5.Show();
                         break;
                     case "2#制袋机开机前确认表":
                         CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform, ID);
@@ -281,8 +281,10 @@ namespace mySystem.Query
                         break;
                 }
             }
-            catch
-            { }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

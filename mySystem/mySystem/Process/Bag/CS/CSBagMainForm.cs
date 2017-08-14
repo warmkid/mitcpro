@@ -129,7 +129,7 @@ namespace mySystem.Process.Bag
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            Chart_daily_cs form3 = new Chart_daily_cs();           
+            Chart_daily_cs form3 = new Chart_daily_cs(mainform);           
             form3.ShowDialog();
         }
 
@@ -213,7 +213,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外观和尺寸检验记录");
             if (b)
             {
-                CS.产品外观和尺寸检验记录 myform = new 产品外观和尺寸检验记录();
+                CS.产品外观和尺寸检验记录 myform = new 产品外观和尺寸检验记录(mainform);
                 myform.ShowDialog();
             }
             else
@@ -226,7 +226,7 @@ namespace mySystem.Process.Bag
 
         private void Btn热合强度_Click(object sender, EventArgs e)
         {
-            CS.产品热合强度检验记录 myform = new 产品热合强度检验记录();
+            CS.产品热合强度检验记录 myform = new 产品热合强度检验记录(mainform);
             myform.ShowDialog();
         }
 

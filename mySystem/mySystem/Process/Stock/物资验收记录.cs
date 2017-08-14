@@ -225,6 +225,7 @@ namespace mySystem.Process.Stock
             dr["验收人"] = mySystem.Parameter.userName;
             dr["请验人"] = mySystem.Parameter.userName;
             dr["请验时间"] = DateTime.Now;
+            dr["审核员"] = "null";
             dr["审核时间"] = DateTime.Now;
             dr["验收记录编号"] = create验收记录编号();
             return dr;
@@ -661,6 +662,7 @@ namespace mySystem.Process.Stock
                     dr["审核日期"] = DateTime.Now;
                     dr["物料代码"] = dtInner.Rows[r]["物料代码"];
                     dr["检验结论"] = "合格";
+                    dr["审核员"] = "null";
                     dt.Rows.Add(dr);
                     da.Update(dt);
                 }
@@ -691,7 +693,7 @@ namespace mySystem.Process.Stock
             dr["请验时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
             dr["请验人"] = mySystem.Parameter.userName;
-            dr["审核员"] = "";
+            dr["审核员"] = "null";
             dr["请验编号"] = create请验编号();
             dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
             dt.Rows.Add(dr);
@@ -737,7 +739,7 @@ namespace mySystem.Process.Stock
 
             dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
             dr["审核时间"] = DateTime.Now;
-            dr["审核员"] = "";
+            dr["审核员"] = "null";
             dr["供应商代码"] = dtOuter.Rows[0]["供应商代码"].ToString();
             dr["供应商名称"] = dtOuter.Rows[0]["供应商名称"].ToString();
             dt.Rows.Add(dr);

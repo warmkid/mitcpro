@@ -75,7 +75,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(538, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(76, 16);
@@ -94,11 +94,12 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(319, 66);
+            this.label3.Location = new System.Drawing.Point(318, 23);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(63, 14);
             this.label3.TabIndex = 2;
             this.label3.Text = "产品规格";
+            this.label3.Visible = false;
             // 
             // label4
             // 
@@ -129,10 +130,11 @@
             // 
             // tb产品规格
             // 
-            this.tb产品规格.Location = new System.Drawing.Point(388, 62);
+            this.tb产品规格.Location = new System.Drawing.Point(387, 19);
             this.tb产品规格.Name = "tb产品规格";
             this.tb产品规格.Size = new System.Drawing.Size(100, 23);
             this.tb产品规格.TabIndex = 7;
+            this.tb产品规格.Visible = false;
             // 
             // tb产品批号
             // 
@@ -172,8 +174,8 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -266,8 +268,8 @@
             // 
             // tb备注
             // 
-            this.tb备注.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tb备注.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.tb备注.Location = new System.Drawing.Point(53, 392);
             this.tb备注.Multiline = true;
             this.tb备注.Name = "tb备注";
@@ -309,7 +311,7 @@
             this.cb产品代码.FormattingEnabled = true;
             this.cb产品代码.Location = new System.Drawing.Point(84, 64);
             this.cb产品代码.Name = "cb产品代码";
-            this.cb产品代码.Size = new System.Drawing.Size(101, 22);
+            this.cb产品代码.Size = new System.Drawing.Size(189, 22);
             this.cb产品代码.TabIndex = 24;
             // 
             // ckb合格
@@ -371,7 +373,7 @@
             // 
             // bt插入查询
             // 
-            this.bt插入查询.Location = new System.Drawing.Point(206, 63);
+            this.bt插入查询.Location = new System.Drawing.Point(300, 62);
             this.bt插入查询.Name = "bt插入查询";
             this.bt插入查询.Size = new System.Drawing.Size(88, 23);
             this.bt插入查询.TabIndex = 31;
@@ -382,7 +384,7 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label40.Location = new System.Drawing.Point(99, 468);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(91, 14);
@@ -400,7 +402,7 @@
             // label41
             // 
             this.label41.AutoSize = true;
-            this.label41.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label41.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label41.Location = new System.Drawing.Point(972, 20);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(93, 16);
@@ -410,7 +412,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(1087, 20);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -467,7 +469,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Record_cleansite_cut";
             this.Text = "Record_cleansite_cut";

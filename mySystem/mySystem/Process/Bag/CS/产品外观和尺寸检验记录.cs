@@ -52,7 +52,7 @@ namespace mySystem.Process.Bag.CS
         BindingSource bsOuter, bsInner;
 
 
-        public 产品外观和尺寸检验记录()
+        public 产品外观和尺寸检验记录(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             variableInit();
@@ -83,7 +83,7 @@ namespace mySystem.Process.Bag.CS
             addOtherEvenHandler();
         }
 
-        public 产品外观和尺寸检验记录(int id)
+        public 产品外观和尺寸检验记录(MainForm mainform, int id):base(mainform)
         {
             // 待显示
             InitializeComponent();

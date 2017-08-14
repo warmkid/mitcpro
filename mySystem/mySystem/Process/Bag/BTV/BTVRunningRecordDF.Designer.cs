@@ -71,11 +71,9 @@
             this.label27 = new System.Windows.Forms.Label();
             this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
             this.label28 = new System.Windows.Forms.Label();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.label29 = new System.Windows.Forms.Label();
-            this.tb审核人 = new System.Windows.Forms.TextBox();
+            this.tb审核员 = new System.Windows.Forms.TextBox();
             this.label30 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
             this.label24 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -105,7 +103,6 @@
             this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
             this.tb产品批号 = new System.Windows.Forms.TextBox();
             this.tb产品代码 = new System.Windows.Forms.TextBox();
-            this.tb膜或袋体代码 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -119,10 +116,21 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn删除记录 = new System.Windows.Forms.Button();
+            this.btn添加记录 = new System.Windows.Forms.Button();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
+            this.label31 = new System.Windows.Forms.Label();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn打印 = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
+            this.btn确认 = new System.Windows.Forms.Button();
+            this.label32 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.btn查询新建 = new System.Windows.Forms.Button();
+            this.cmb膜代码 = new System.Windows.Forms.ComboBox();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.groupBox7.SuspendLayout();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -487,7 +495,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label25.Location = new System.Drawing.Point(178, 59);
+            this.label25.Location = new System.Drawing.Point(879, 467);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(25, 16);
             this.label25.TabIndex = 25;
@@ -496,7 +504,7 @@
             // tb不良品数量
             // 
             this.tb不良品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb不良品数量.Location = new System.Drawing.Point(122, 56);
+            this.tb不良品数量.Location = new System.Drawing.Point(823, 464);
             this.tb不良品数量.Name = "tb不良品数量";
             this.tb不良品数量.Size = new System.Drawing.Size(50, 26);
             this.tb不良品数量.TabIndex = 23;
@@ -505,7 +513,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label26.Location = new System.Drawing.Point(179, 27);
+            this.label26.Location = new System.Drawing.Point(880, 435);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(25, 16);
             this.label26.TabIndex = 24;
@@ -524,7 +532,7 @@
             // tb合格品数量
             // 
             this.tb合格品数量.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb合格品数量.Location = new System.Drawing.Point(122, 22);
+            this.tb合格品数量.Location = new System.Drawing.Point(823, 430);
             this.tb合格品数量.Name = "tb合格品数量";
             this.tb合格品数量.Size = new System.Drawing.Size(50, 26);
             this.tb合格品数量.TabIndex = 22;
@@ -533,7 +541,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(20, 58);
+            this.label27.Location = new System.Drawing.Point(721, 466);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(110, 16);
             this.label27.TabIndex = 21;
@@ -542,7 +550,7 @@
             // dtp审核日期
             // 
             this.dtp审核日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp审核日期.Location = new System.Drawing.Point(81, 53);
+            this.dtp审核日期.Location = new System.Drawing.Point(989, 461);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
             this.dtp审核日期.TabIndex = 27;
@@ -551,65 +559,39 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label28.Location = new System.Drawing.Point(20, 28);
+            this.label28.Location = new System.Drawing.Point(721, 436);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(110, 16);
             this.label28.TabIndex = 20;
             this.label28.Text = "合格品数量：";
             // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.dtp审核日期);
-            this.groupBox8.Controls.Add(this.label29);
-            this.groupBox8.Controls.Add(this.tb审核人);
-            this.groupBox8.Controls.Add(this.label30);
-            this.groupBox8.Location = new System.Drawing.Point(931, 355);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(290, 100);
-            this.groupBox8.TabIndex = 59;
-            this.groupBox8.TabStop = false;
-            // 
             // label29
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(11, 58);
+            this.label29.Location = new System.Drawing.Point(919, 466);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(48, 16);
             this.label29.TabIndex = 26;
             this.label29.Text = "日期:";
             // 
-            // tb审核人
+            // tb审核员
             // 
-            this.tb审核人.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审核人.Location = new System.Drawing.Point(80, 22);
-            this.tb审核人.Name = "tb审核人";
-            this.tb审核人.Size = new System.Drawing.Size(100, 26);
-            this.tb审核人.TabIndex = 25;
+            this.tb审核员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核员.Location = new System.Drawing.Point(988, 430);
+            this.tb审核员.Name = "tb审核员";
+            this.tb审核员.Size = new System.Drawing.Size(100, 26);
+            this.tb审核员.TabIndex = 25;
             // 
             // label30
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label30.Location = new System.Drawing.Point(11, 28);
+            this.label30.Location = new System.Drawing.Point(919, 436);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(64, 16);
             this.label30.TabIndex = 24;
             this.label30.Text = "审核人:";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.label25);
-            this.groupBox7.Controls.Add(this.label26);
-            this.groupBox7.Controls.Add(this.tb不良品数量);
-            this.groupBox7.Controls.Add(this.tb合格品数量);
-            this.groupBox7.Controls.Add(this.label27);
-            this.groupBox7.Controls.Add(this.label28);
-            this.groupBox7.Location = new System.Drawing.Point(704, 355);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(229, 100);
-            this.groupBox7.TabIndex = 58;
-            this.groupBox7.TabStop = false;
             // 
             // label24
             // 
@@ -625,7 +607,7 @@
             // 
             this.groupBox6.Controls.Add(this.label23);
             this.groupBox6.Controls.Add(this.label24);
-            this.groupBox6.Location = new System.Drawing.Point(38, 355);
+            this.groupBox6.Location = new System.Drawing.Point(43, 411);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(671, 100);
             this.groupBox6.TabIndex = 57;
@@ -835,14 +817,6 @@
             this.tb产品代码.Size = new System.Drawing.Size(100, 26);
             this.tb产品代码.TabIndex = 48;
             // 
-            // tb膜或袋体代码
-            // 
-            this.tb膜或袋体代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb膜或袋体代码.Location = new System.Drawing.Point(147, 53);
-            this.tb膜或袋体代码.Name = "tb膜或袋体代码";
-            this.tb膜或袋体代码.Size = new System.Drawing.Size(100, 26);
-            this.tb膜或袋体代码.TabIndex = 47;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -985,22 +959,178 @@
             this.groupBox1.TabIndex = 52;
             this.groupBox1.TabStop = false;
             // 
+            // btn删除记录
+            // 
+            this.btn删除记录.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn删除记录.Location = new System.Drawing.Point(1060, 364);
+            this.btn删除记录.Name = "btn删除记录";
+            this.btn删除记录.Size = new System.Drawing.Size(70, 30);
+            this.btn删除记录.TabIndex = 267;
+            this.btn删除记录.Text = "删除";
+            this.btn删除记录.UseVisualStyleBackColor = true;
+            this.btn删除记录.Click += new System.EventHandler(this.btn删除记录_Click);
+            // 
+            // btn添加记录
+            // 
+            this.btn添加记录.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn添加记录.Location = new System.Drawing.Point(984, 366);
+            this.btn添加记录.Name = "btn添加记录";
+            this.btn添加记录.Size = new System.Drawing.Size(70, 30);
+            this.btn添加记录.TabIndex = 266;
+            this.btn添加记录.Text = "添加";
+            this.btn添加记录.UseVisualStyleBackColor = true;
+            this.btn添加记录.Click += new System.EventHandler(this.btn添加记录_Click);
+            // 
+            // cb打印机
+            // 
+            this.cb打印机.Font = new System.Drawing.Font("宋体", 12F);
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(338, 520);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(279, 24);
+            this.cb打印机.TabIndex = 273;
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.Font = new System.Drawing.Font("宋体", 12F);
+            this.label31.Location = new System.Drawing.Point(242, 525);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(104, 16);
+            this.label31.TabIndex = 274;
+            this.label31.Text = "选择打印机：";
+            // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn查看日志.Location = new System.Drawing.Point(1069, 518);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(80, 30);
+            this.btn查看日志.TabIndex = 272;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
+            // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn提交审核.Location = new System.Drawing.Point(977, 518);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(80, 30);
+            this.btn提交审核.TabIndex = 271;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            // 
+            // btn打印
+            // 
+            this.btn打印.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn打印.Location = new System.Drawing.Point(137, 518);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(80, 30);
+            this.btn打印.TabIndex = 270;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
+            // 
+            // btn审核
+            // 
+            this.btn审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn审核.Location = new System.Drawing.Point(43, 519);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(80, 30);
+            this.btn审核.TabIndex = 269;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
+            // 
+            // btn确认
+            // 
+            this.btn确认.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn确认.Location = new System.Drawing.Point(883, 519);
+            this.btn确认.Name = "btn确认";
+            this.btn确认.Size = new System.Drawing.Size(80, 30);
+            this.btn确认.TabIndex = 268;
+            this.btn确认.Text = "确认";
+            this.btn确认.UseVisualStyleBackColor = true;
+            this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label32.Location = new System.Drawing.Point(717, 18);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(93, 16);
+            this.label32.TabIndex = 276;
+            this.label32.Text = "登录角色：";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(822, 18);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 275;
+            this.label角色.Text = "角色";
+            // 
+            // btn查询新建
+            // 
+            this.btn查询新建.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn查询新建.Location = new System.Drawing.Point(1011, 49);
+            this.btn查询新建.Name = "btn查询新建";
+            this.btn查询新建.Size = new System.Drawing.Size(96, 30);
+            this.btn查询新建.TabIndex = 277;
+            this.btn查询新建.Text = "查询/新建";
+            this.btn查询新建.UseVisualStyleBackColor = true;
+            this.btn查询新建.Click += new System.EventHandler(this.btn查询新建_Click);
+            // 
+            // cmb膜代码
+            // 
+            this.cmb膜代码.Font = new System.Drawing.Font("宋体", 12F);
+            this.cmb膜代码.FormattingEnabled = true;
+            this.cmb膜代码.Location = new System.Drawing.Point(142, 53);
+            this.cmb膜代码.Name = "cmb膜代码";
+            this.cmb膜代码.Size = new System.Drawing.Size(137, 24);
+            this.cmb膜代码.TabIndex = 278;
+            // 
             // BTVRunningRecordDF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1257, 473);
+            this.ClientSize = new System.Drawing.Size(1315, 561);
+            this.Controls.Add(this.cmb膜代码);
+            this.Controls.Add(this.btn查询新建);
+            this.Controls.Add(this.label32);
+            this.Controls.Add(this.label角色);
+            this.Controls.Add(this.cb打印机);
+            this.Controls.Add(this.label31);
+            this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.btn提交审核);
+            this.Controls.Add(this.btn打印);
+            this.Controls.Add(this.btn审核);
+            this.Controls.Add(this.btn确认);
+            this.Controls.Add(this.btn删除记录);
+            this.Controls.Add(this.btn添加记录);
+            this.Controls.Add(this.dtp审核日期);
+            this.Controls.Add(this.label25);
+            this.Controls.Add(this.label29);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.tb审核员);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.label30);
             this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.tb不良品数量);
             this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox8);
-            this.Controls.Add(this.groupBox7);
+            this.Controls.Add(this.tb合格品数量);
+            this.Controls.Add(this.label27);
+            this.Controls.Add(this.label28);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.dtp生产日期);
             this.Controls.Add(this.tb产品批号);
             this.Controls.Add(this.tb产品代码);
-            this.Controls.Add(this.tb膜或袋体代码);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -1014,10 +1144,6 @@
             this.groupBox3.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox8.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -1077,11 +1203,9 @@
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.DateTimePicker dtp审核日期;
         private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox tb审核人;
+        private System.Windows.Forms.TextBox tb审核员;
         private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Label label12;
@@ -1111,7 +1235,6 @@
         private System.Windows.Forms.DateTimePicker dtp生产日期;
         private System.Windows.Forms.TextBox tb产品批号;
         private System.Windows.Forms.TextBox tb产品代码;
-        private System.Windows.Forms.TextBox tb膜或袋体代码;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -1125,5 +1248,18 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btn删除记录;
+        private System.Windows.Forms.Button btn添加记录;
+        private System.Windows.Forms.ComboBox cb打印机;
+        private System.Windows.Forms.Label label31;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn打印;
+        private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.Button btn确认;
+        private System.Windows.Forms.Label label32;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.Button btn查询新建;
+        private System.Windows.Forms.ComboBox cmb膜代码;
     }
 }

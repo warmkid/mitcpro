@@ -292,7 +292,7 @@ namespace BatchProductRecord
             int idx = 0;
             int tempid;
             da = new OleDbDataAdapter("select * from 生产指令信息表 where  生产指令编号='" + mySystem.Parameter.proInstruction + "'", mySystem.Parameter.connOle);
-            dt = new DataTable("吹膜工序生产和检验记录");
+            dt = new DataTable("生产指令信息表");
             da.Fill(dt);
             temp = dt.Rows.Count;
             if (temp <= 0)

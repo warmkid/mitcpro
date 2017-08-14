@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Collections;
 
 namespace mySystem.Process.CleanCut
 {
@@ -17,16 +18,15 @@ namespace mySystem.Process.CleanCut
         private OleDbConnection connOle = Parameter.connOle;
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
-        Int32 ID生产指令 = mySystem.Parameter.csbagInstruID;
-        String str生产指令编码 = mySystem.Parameter.csbagInstruction;
+        Int32 ID生产指令;
+        String str生产指令编码;
         Int32 i日报表行数;
         
         //界面显示所需信息
         DateTime date生产日期=DateTime.Now;
         String str班次="";
-        String str产品代码 = "";
-        String str产品批号 = "";
-        String str客户或订单号 = "";
+        
+        
         Int32 i入库量只=0;
         Double i效率=0.0;
         Double i成品宽 = 0.0;
@@ -42,11 +42,21 @@ namespace mySystem.Process.CleanCut
         private BindingSource bs日报表详细信息, bs日报表, bs生产指令, bs生产指令详细信息, bs领料, bs领料详细信息1, bs领料详细信息2, bs内包装, bs内包装详细信息, bs产品外观, bs产品外观详细信息;
         private OleDbDataAdapter da日报表详细信息, da日报表, da生产指令, da生产指令详细信息, da领料, da领料详细信息1, da领料详细信息2, da内包装, da内包装详细信息, da产品外观, da产品外观详细信息;
         private OleDbCommandBuilder cb日报表详细信息, cb日报表, cb生产指令, cb生产指令详细信息, cb领料, cb领料详细信息1, cb领料详细信息2, cb内包装, cb内包装详细信息, cb产品外观, cb产品外观详细信息;
+
+        // ly
+        String str产品代码 = "";
+        String str产品批号 = "";
+        String str客户或订单号 = "";
+        String str膜1 = "";
+        String str膜2 = "";
+        Hashtable ht内包ID数量 = new Hashtable();
+        //
        
-        public Chart_daily_cs()
+        public Chart_daily_cs(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-
+            ID生产指令 = mySystem.Parameter.csbagInstruID;
+            str生产指令编码 = mySystem.Parameter.csbagInstruction;
             bt打印.Enabled = false;
 
             getPeople();
@@ -67,12 +77,13 @@ namespace mySystem.Process.CleanCut
                 //DataRow dr内表 = dt日报表详细信息.NewRow();
                 //dr内表 = writeInnerDefault(dr内表);
                 //dt日报表详细信息.Rows.Add(dr内表);
-                writeInnerData();
-                da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+                //writeInnerData();
+                //da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
             }
 
             readInnerData(Convert.ToInt32(dt日报表.Rows[0]["ID"]));
             innerBind();
+            fillAndCheckInner();
             //if (dt日报表详细信息.Rows.Count == 0)
             //{
             //    DataRow drinner = dt日报表详细信息.NewRow();
@@ -82,14 +93,14 @@ namespace mySystem.Process.CleanCut
             //    readInnerData(Convert.ToInt32(dt日报表.Rows[0]["ID"]));
             //    innerBind();
             //}          
-            if (dt日报表详细信息.Rows.Count == 0)
-            {
-                //DataRow dr内表 = dt日报表详细信息.NewRow();
-                //dr内表 = writeInnerDefault(dr内表);
-                //dt日报表详细信息.Rows.Add(dr内表);
-                writeInnerData();
-                da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
-            }
+            //if (dt日报表详细信息.Rows.Count == 0)
+            //{
+            //    //DataRow dr内表 = dt日报表详细信息.NewRow();
+            //    //dr内表 = writeInnerDefault(dr内表);
+            //    //dt日报表详细信息.Rows.Add(dr内表);
+            //    writeInnerData();
+            //    da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+            //}
 
             addComputerEventHandler();
             setFormState();
@@ -99,8 +110,101 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns.Clear();
             setDataGridViewColumns();
             setDataGridViewRowNums();
-            dataGridView1.Columns["ID"].Visible = false;
             
+        }
+
+        public Chart_daily_cs(MainForm mainform, int id)
+            : base(mainform)
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from CS制袋日报表 where ID=" + id, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            ID生产指令 = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+            str生产指令编码 = dt.Rows[0]["生产指令编号"].ToString();
+            InitializeComponent();
+            //ID生产指令 = mySystem.Parameter.csbagInstruID;
+            //str生产指令编码 = mySystem.Parameter.csbagInstruction;
+            bt打印.Enabled = false;
+
+            getPeople();
+            setUserState();
+            getOtherData();
+
+            readOuterData(ID生产指令);
+            outerBind();
+
+            if (dt日报表.Rows.Count == 0)
+            {
+                DataRow dr = dt日报表.NewRow();
+                dr = writeOuterDefault(dr);
+                dt日报表.Rows.Add(dr);
+                da日报表.Update((DataTable)bs日报表.DataSource);
+                readOuterData(ID生产指令);
+                outerBind();
+                //DataRow dr内表 = dt日报表详细信息.NewRow();
+                //dr内表 = writeInnerDefault(dr内表);
+                //dt日报表详细信息.Rows.Add(dr内表);
+                //writeInnerData();
+                //da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+            }
+
+            readInnerData(Convert.ToInt32(dt日报表.Rows[0]["ID"]));
+            innerBind();
+            fillAndCheckInner();
+            //if (dt日报表详细信息.Rows.Count == 0)
+            //{
+            //    DataRow drinner = dt日报表详细信息.NewRow();
+            //    drinner = writeInnerDefault(drinner);
+            //    dt日报表详细信息.Rows.Add(drinner);
+            //    da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+            //    readInnerData(Convert.ToInt32(dt日报表.Rows[0]["ID"]));
+            //    innerBind();
+            //}          
+            //if (dt日报表详细信息.Rows.Count == 0)
+            //{
+            //    //DataRow dr内表 = dt日报表详细信息.NewRow();
+            //    //dr内表 = writeInnerDefault(dr内表);
+            //    //dt日报表详细信息.Rows.Add(dr内表);
+            //    writeInnerData();
+            //    da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+            //}
+
+            addComputerEventHandler();
+            setFormState();
+            setEnableReadOnly();
+            addOtherEventHandler();
+
+            dataGridView1.Columns.Clear();
+            setDataGridViewColumns();
+            setDataGridViewRowNums();
+        }
+
+        private void fillAndCheckInner()
+        {
+            // 从内表中得到它已经有的内包装ID
+            HashSet<int> innerPackageIDs = new HashSet<int>();
+            foreach (DataRow dr in dt日报表详细信息.Rows)
+            {
+                innerPackageIDs.Add(Convert.ToInt32(dr["T产品内包装记录ID"]));
+            }
+            // 遍历hashtable，如果ID已经有了，则跳过，否则就填值
+            foreach (int id in ht内包ID数量.Keys.OfType<int>().ToList<int>())
+            {
+                if (innerPackageIDs.Contains(id)) continue;
+                DataRow ndr = dt日报表详细信息.NewRow();
+                ndr["T产品内包装记录ID"] = id;
+                ndr["TCS制袋日报表ID"] = Convert.ToInt32(dt日报表.Rows[0]["ID"]);
+                ndr["生产日期"] = Convert.ToDateTime(  ((List<object> )ht内包ID数量[id])[1] );
+                ndr["班次"] = str班次;
+                ndr["客户或订单号"] = str客户或订单号;
+                ndr["产品代码"] = str产品代码;
+                ndr["批号"] = str产品批号;
+                ndr["入库量只A"] = i入库量只;
+                dt日报表详细信息.Rows.Add(ndr);
+            }
+            da日报表详细信息.Update((DataTable)bs日报表详细信息.DataSource);
+            readInnerData(Convert.ToInt32(dt日报表.Rows[0]["ID"]));
+            innerBind();
         }
 
         private void Chart_daily_cs_Load(object sender, EventArgs e)
@@ -120,25 +224,27 @@ namespace mySystem.Process.CleanCut
             dt生产指令 = new DataTable("生产指令");
             bs生产指令 = new BindingSource();
             da生产指令.Fill(dt生产指令);
-            DataTable dt生产指令所需信息 = dt生产指令.DefaultView.ToTable(false, new string[] {"ID", "计划生产日期", "生产指令编号" ,"制袋物料名称1","制袋物料名称2"});
-            Int32 i生产指令外表ID = Convert.ToInt32(dt生产指令所需信息.Rows[0]["ID"].ToString());
+            //DataTable dt生产指令所需信息 = dt生产指令.DefaultView.ToTable(false, new string[] {"ID", "计划生产日期", "生产指令编号" ,"制袋物料名称1","制袋物料名称2"});
+            //Int32 i生产指令外表ID = Convert.ToInt32(dt生产指令所需信息.Rows[0]["ID"].ToString());
             //根据生产指令外表中的制袋物料名称，读取领料量中对应物料的使用量C
-            String str制袋物料名称1 = dt生产指令所需信息.Rows[0]["制袋物料名称1"].ToString();
-            String str制袋物料名称2 = dt生产指令所需信息.Rows[0]["制袋物料名称2"].ToString();
+            //String str制袋物料名称1 = dt生产指令所需信息.Rows[0]["制袋物料名称1"].ToString();
+            //String str制袋物料名称2 = dt生产指令所需信息.Rows[0]["制袋物料名称2"].ToString();
+            str膜1 = dt生产指令.Rows[0]["制袋物料名称1"].ToString();
+            str膜2 = dt生产指令.Rows[0]["制袋物料名称2"].ToString();
 
-            date生产日期 =Convert.ToDateTime(dt生产指令所需信息.Rows[0]["计划生产日期"].ToString());
+            //date生产日期 =Convert.ToDateTime(dt生产指令所需信息.Rows[0]["计划生产日期"].ToString());
 
             //读取生产指令内表
-            da生产指令详细信息 = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令外表ID, mySystem.Parameter.connOle);
+            da生产指令详细信息 = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + ID生产指令, mySystem.Parameter.connOle);
             cb生产指令详细信息 = new OleDbCommandBuilder(da生产指令详细信息);
             dt生产指令详细信息 = new DataTable("生产指令详细信息");
             bs生产指令详细信息 = new BindingSource();
             da生产指令详细信息.Fill(dt生产指令详细信息);
-            DataTable dt生产指令所需信息详细 = dt生产指令详细信息.DefaultView.ToTable(false, new string[] { "产品代码", "产品批号","客户或订单号" });
-            
-            str产品代码 = dt生产指令所需信息详细.Rows[0]["产品代码"].ToString();
-            str产品批号 = dt生产指令所需信息详细.Rows[0]["产品批号"].ToString();
-            str客户或订单号 = dt生产指令所需信息详细.Rows[0]["客户或订单号"].ToString();
+            DataTable dt生产指令所需信息详细 = dt生产指令详细信息.DefaultView.ToTable(false, new string[] { "产品代码", "产品批号", "客户或订单号" });
+
+            str产品代码 = dt生产指令详细信息.Rows[0]["产品代码"].ToString();
+            str产品批号 = dt生产指令详细信息.Rows[0]["产品批号"].ToString();
+            str客户或订单号 = dt生产指令详细信息.Rows[0]["客户或订单号"].ToString();
 
             //读取领料量外表
             da领料 = new OleDbDataAdapter("select * from CS制袋领料记录 where 生产指令ID=" + ID生产指令, mySystem.Parameter.connOle);
@@ -146,9 +252,11 @@ namespace mySystem.Process.CleanCut
             dt领料 = new DataTable("领料");
             bs领料 = new BindingSource();
             da领料.Fill(dt领料);
-            DataTable dt领料所需信息 = dt领料.DefaultView.ToTable(false, new string[] { "ID"});
+            DataTable dt领料所需信息 = dt领料.DefaultView.ToTable(false, new string[] { "ID" });
             Int32 i领料量外表ID = Convert.ToInt32(dt领料所需信息.Rows[0]["ID"].ToString());
 
+            string str制袋物料名称1 = str膜1;
+            string str制袋物料名称2 = str膜2;
             //读取领料量内表
             da领料详细信息1 = new OleDbDataAdapter("select * from CS制袋领料记录详细记录 where TCS制袋领料记录ID=" + i领料量外表ID + "and 物料简称='" + str制袋物料名称1 + "'", mySystem.Parameter.connOle);
             cb领料详细信息1 = new OleDbCommandBuilder(da领料详细信息1);
@@ -176,8 +284,7 @@ namespace mySystem.Process.CleanCut
             i日报表行数 = dt内包装所需信息.Rows.Count;
 
             i入库量只 =Convert.ToInt32(dt内包装所需信息.Rows[0]["产品数量只数合计B"].ToString());
-
-
+            
             //读取内包装内表
             da内包装详细信息 = new OleDbDataAdapter("select * from 产品内包装详细记录 where T产品内包装记录ID=" + i内包装外表ID, mySystem.Parameter.connOle);
             cb内包装详细信息 = new OleDbCommandBuilder(da内包装详细信息);
@@ -186,6 +293,13 @@ namespace mySystem.Process.CleanCut
             da内包装详细信息.Fill(dt内包装详细信息);
             DataTable dt内包装所需信息详细 = dt内包装详细信息.DefaultView.ToTable(false, new string[] { "生产开始时间", "生产结束时间" });
             date生产日期 = Convert.ToDateTime(dt内包装所需信息详细.Rows[0]["生产开始时间"].ToString());
+
+            foreach (DataRow dr in dt内包装.Rows)
+            {
+                ht内包ID数量.Add(Convert.ToInt32(dr["ID"]), new List<object>(new object[]{ 
+                    Convert.ToInt32(dr["产品数量只数合计B"]),date生产日期}
+            ));
+            }
                         
             //读取产品外观和尺寸检验记录外表
             da产品外观 = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where 生产指令ID="+ID生产指令,mySystem.Parameter.connOle);
@@ -437,43 +551,104 @@ namespace mySystem.Process.CleanCut
         //根据公式计算
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-           /// Int32[] rowcount = { 0, 1, 2, 3 };
-            foreach (DataRow dr in dt日报表详细信息.Rows)
+           // Int32[] rowcount = { 0, 1, 2, 3 };
+            double 入库量只, 工时B, 系数C, 成品宽D, 成品长E, 膜材1规格F, 膜材1用量G, 膜材2规格H, 膜材2用量K;
+            if (!Double.TryParse(dataGridView1[8, e.RowIndex].Value.ToString(), out 入库量只))
             {
-                if (Convert.ToInt32(dr["工时B"].ToString()) == 0)
-                {
-                    i效率 = 0;
-                    dr["效率"] = i效率;
-                }
-                else
-                    i效率 = Convert.ToInt32(dr["入库量只A"].ToString()) * Convert.ToDouble(dr["系数C"].ToString()) / Convert.ToDouble(dr["工时B"].ToString());
-
-
-                i成品数量 = Convert.ToInt32(dr["入库量只A"].ToString()) * Convert.ToDouble(dr["成品宽D"].ToString()) * Convert.ToDouble(dr["成品长E"].ToString()) / 1000000 * 2;
-                i膜材1用量平方米 = Convert.ToDouble(dr["膜材1规格F"].ToString()) * Convert.ToDouble(dr["膜材1用量G"].ToString()) / 1000;
-                i膜材2用量平方米 = Convert.ToDouble(dr["膜材2规格H"].ToString()) * Convert.ToDouble(dr["膜材2用量K"].ToString()) / 1000;
-                if ((i膜材1用量平方米 + i膜材2用量平方米) != 0)
-                {
-                    i制袋收率 = i成品数量 / (i膜材1用量平方米 + i膜材2用量平方米);
-                }
-                dr["效率"] = i效率;
-                dr["成品数量W"] = i成品数量;
-                dr["膜材1用量E"] = i膜材1用量平方米;
-                dr["膜材2用量R"] = i膜材2用量平方米;
-                dr["制袋收率"] = i制袋收率;
-
-                //dt日报表详细信息.Rows[i]["效率"] = i效率;
-                //dt日报表详细信息.Rows[i]["成品数量W"] = i成品数量;
-                //dt日报表详细信息.Rows[i]["膜材1用量E"] = i膜材1用量;
-                //dt日报表详细信息.Rows[i]["膜材2用量R"] = i膜材2用量;
-                //dt日报表详细信息.Rows[i]["制袋收率"] = i制袋收率;
-                
+                入库量只 = 0;
             }
+            if (!Double.TryParse(dataGridView1[9, e.RowIndex].Value.ToString(), out 工时B))
+            {
+                工时B = 0;
+            }
+            if (!Double.TryParse(dataGridView1[10, e.RowIndex].Value.ToString(), out 系数C))
+            {
+                系数C = 0;
+            }
+
+            if (!Double.TryParse(dataGridView1[12, e.RowIndex].Value.ToString(), out 成品宽D))
+            {
+                成品宽D = 0;
+            }
+            if (!Double.TryParse(dataGridView1[13, e.RowIndex].Value.ToString(), out 成品长E))
+            {
+                成品长E = 0;
+            }
+
+            if (!Double.TryParse(dataGridView1[15, e.RowIndex].Value.ToString(), out 膜材1规格F))
+            {
+                膜材1规格F = 0;
+            }
+            if (!Double.TryParse(dataGridView1[16, e.RowIndex].Value.ToString(), out 膜材1用量G))
+            {
+                膜材1用量G = 0;
+            }
+
+            if (!Double.TryParse(dataGridView1[18, e.RowIndex].Value.ToString(), out 膜材2规格H))
+            {
+                膜材2规格H = 0;
+            }
+            if (!Double.TryParse(dataGridView1[19, e.RowIndex].Value.ToString(), out 膜材2用量K))
+            {
+                膜材2用量K = 0;
+            }
+
+            try
+            {
+                double 效率 = 入库量只 * 系数C / 工时B;
+                double 数量 = 入库量只 * 成品宽D * 成品长E / 1000000 * 2;
+                double 用量1 = 膜材1规格F * 膜材1用量G / 1000;
+                double 用量2 = 膜材2规格H * 膜材2用量K / 1000;
+                double 收率 = 数量 / (用量1 + 用量2);
+                dataGridView1[11, e.RowIndex].Value = 效率;
+                dataGridView1[14, e.RowIndex].Value = 数量;
+                dataGridView1[17, e.RowIndex].Value = 用量1;
+                dataGridView1[20, e.RowIndex].Value = 用量2;
+                dataGridView1[21, e.RowIndex].Value = 收率;
+
+            }
+            catch (DivideByZeroException ee)
+            {
+            }
+             
+            
+            //foreach (DataRow dr in dt日报表详细信息.Rows)
+            //{
+            //    if (Convert.ToInt32(dr["工时B"].ToString()) == 0)
+            //    {
+            //        i效率 = 0;
+            //        dr["效率"] = i效率;
+            //    }
+            //    else
+            //        i效率 = Convert.ToInt32(dr["入库量只A"].ToString()) * Convert.ToDouble(dr["系数C"].ToString()) / Convert.ToDouble(dr["工时B"].ToString());
+
+
+            //    i成品数量 = Convert.ToInt32(dr["入库量只A"].ToString()) * Convert.ToDouble(dr["成品宽D"].ToString()) * Convert.ToDouble(dr["成品长E"].ToString()) / 1000000 * 2;
+            //    i膜材1用量平方米 = Convert.ToDouble(dr["膜材1规格F"].ToString()) * Convert.ToDouble(dr["膜材1用量G"].ToString()) / 1000;
+            //    i膜材2用量平方米 = Convert.ToDouble(dr["膜材2规格H"].ToString()) * Convert.ToDouble(dr["膜材2用量K"].ToString()) / 1000;
+            //    if ((i膜材1用量平方米 + i膜材2用量平方米) != 0)
+            //    {
+            //        i制袋收率 = i成品数量 / (i膜材1用量平方米 + i膜材2用量平方米);
+            //    }
+            //    dr["效率"] = i效率;
+            //    dr["成品数量W"] = i成品数量;
+            //    dr["膜材1用量E"] = i膜材1用量平方米;
+            //    dr["膜材2用量R"] = i膜材2用量平方米;
+            //    dr["制袋收率"] = i制袋收率;
+
+            //    //dt日报表详细信息.Rows[i]["效率"] = i效率;
+            //    //dt日报表详细信息.Rows[i]["成品数量W"] = i成品数量;
+            //    //dt日报表详细信息.Rows[i]["膜材1用量E"] = i膜材1用量;
+            //    //dt日报表详细信息.Rows[i]["膜材2用量R"] = i膜材2用量;
+            //    //dt日报表详细信息.Rows[i]["制袋收率"] = i制袋收率;
+                
+            //}
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-           
+            dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["T产品内包装记录ID"].Visible = false;
         }
 
         //写日报表外表数据
@@ -481,6 +656,8 @@ namespace mySystem.Process.CleanCut
         {
             dr["生产指令ID"] = ID生产指令;
             dr["日志"] = "";
+            dr["审核员"] = "";
+            dr["生产指令编号"] = str生产指令编码;
             return dr;
         }
 
