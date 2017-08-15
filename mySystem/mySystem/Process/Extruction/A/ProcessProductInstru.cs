@@ -1633,13 +1633,13 @@ namespace BatchProductRecord
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[5].Value.ToString();
-                my.Cells[7 + i, 8] = dataGridView1.Rows[i].Cells[6].Value.ToString();
-                my.Cells[7 + i, 9] = dataGridView1.Rows[i].Cells[7].Value.ToString();
-                my.Cells[7 + i, 10] = dataGridView1.Rows[i].Cells[8].Value.ToString();
-                my.Cells[7 + i, 11] = dataGridView1.Rows[i].Cells[9].Value.ToString();
-                my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[7 + i, 8] = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                my.Cells[7 + i, 9] = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                my.Cells[7 + i, 10] = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                my.Cells[7 + i, 11] = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[12].Value.ToString();
             }
 
             my.Cells[14 + ind, 6].Value = textBox6.Text;//计划产量米
