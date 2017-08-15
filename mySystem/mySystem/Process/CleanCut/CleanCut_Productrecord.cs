@@ -834,7 +834,7 @@ namespace mySystem.Process.CleanCut
         //打印按钮 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        
         private void btn打印_Click(object sender, EventArgs e)
         {
-
+            // TODO 打印时“实测宽度”和“纵向尺寸实测值”如果为“”，则不填
         }
 
         //******************************小功能******************************//  
@@ -843,8 +843,8 @@ namespace mySystem.Process.CleanCut
         private bool TextBox_check()
         {
             bool TypeCheck = true;
-            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb实测宽度, tb纵向尺寸测量实际值, tb废品重量 });
-            List<String> StringList = new List<String>(new String[] { "实测宽度", "纵向尺寸测量实际值", "废品重量" });
+            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb废品重量 });
+            List<String> StringList = new List<String>(new String[] {  "废品重量" });
             int numtemp = 0;
             for (int i = 0; i < TextBoxList.Count; i++)
             {
@@ -854,6 +854,19 @@ namespace mySystem.Process.CleanCut
                     TypeCheck = false;
                     break;
                 }
+            }
+            if (cmb是否印刷.SelectedItem.ToString() == "Yes")
+            {
+                if (!Int32.TryParse(tb纵向尺寸测量实际值.ToString(), out numtemp))
+                {
+                    MessageBox.Show("『纵向尺寸测量』框内应填数字，请重新填入！");
+                    TypeCheck = false;
+                    tb纵向尺寸测量实际值.Text = "";
+                }
+            }
+            if (!Int32.TryParse(tb实测宽度.Text, out numtemp))
+            {
+                tb实测宽度.Text = "";
             }
             return TypeCheck;
         }
