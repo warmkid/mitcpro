@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Collections;
+using System.Text.RegularExpressions;
+using mySystem;
 
 namespace BatchProductRecord
 {
@@ -26,10 +28,18 @@ namespace BatchProductRecord
         DataTable dtOuter, dtInner1,dtInner2;
         BindingSource bsOuter, bsInner1,bsInner2;
 
+        List<string> ls操作员, ls审核员;
+
+        mySystem.Parameter.UserState _userState;
+        mySystem.Parameter.FormState _formState;
+
+        mySystem.CheckForm ckform;
 
         public BatchProductRecord(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
+            getPeople();
+            setUserState();
             getOtherData();
             // 构建外表，写日志，构建内表
             // 读取数据填写两个内表
@@ -44,6 +54,8 @@ namespace BatchProductRecord
                 readOuterData(mySystem.Parameter.proInstruction);
                 outerBind();
             }
+            setFormState();
+            setEnableReadOnly();
             setKeyInfo(mySystem.Parameter.proInstruID, Convert.ToInt32(dtOuter.Rows[0]["ID"]), mySystem.Parameter.proInstruction);
             readInner2Data(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             inner2Bind();
@@ -56,8 +68,32 @@ namespace BatchProductRecord
         public BatchProductRecord(mySystem.MainForm mainform, int id)
             : base(mainform)
         {
+            InitializeComponent();
             // TODO
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 批生产记录表 where ID="+id,mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            setKeyInfo(Convert.ToInt32(dt.Rows[0]["生产指令ID"]),id,dt.Rows[0]["生产指令编号"].ToString());
+            getOtherData();
+            // 构建外表，写日志，构建内表
+            // 读取数据填写两个内表
+            readOuterData(_code);
+            outerBind();
+            if (dtOuter.Rows.Count == 0)
+            {
+                DataRow dr = dtOuter.NewRow();
+                dr = writeOuterDefault(dr);
+                dtOuter.Rows.Add(dr);
+                daOuter.Update((DataTable)bsOuter.DataSource);
+                readOuterData(_code);
+                outerBind();
+            }
+            readInner2Data(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            inner2Bind();
+            checkInner2Data();
             init();
+            initly();
+
 
         }
 
@@ -168,7 +204,7 @@ namespace BatchProductRecord
         {
             OleDbDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where 生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where 生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
             Hashtable ht产品代码 = new Hashtable();
@@ -295,7 +331,7 @@ namespace BatchProductRecord
             int temp;
             int idx = 0;
             int tempid;
-            da = new OleDbDataAdapter("select * from 生产指令信息表 where  生产指令编号='" + mySystem.Parameter.proInstruction + "'", mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 生产指令信息表 where  生产指令编号='" + _code + "'", mySystem.Parameter.connOle);
             dt = new DataTable("生产指令信息表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -309,7 +345,7 @@ namespace BatchProductRecord
             }
             // 生产日报表
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜工序生产和检验记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -333,7 +369,7 @@ namespace BatchProductRecord
             }
             // 清洁记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜机组清洁记录表 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜机组清洁记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜机组清洁记录表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -347,7 +383,7 @@ namespace BatchProductRecord
             }
             //开机前确认表
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜机组开机前确认表 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜机组开机前确认表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜机组开机前确认表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -361,7 +397,7 @@ namespace BatchProductRecord
             }
             // 预热参数记录表
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜机组预热参数记录表 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜机组预热参数记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜机组预热参数记录表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -375,7 +411,7 @@ namespace BatchProductRecord
             }
             // 供料记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜供料记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜供料记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜供料记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -398,7 +434,7 @@ namespace BatchProductRecord
             }
             // 供料系统运行记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜供料系统运行记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜供料系统运行记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜供料系统运行记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -412,7 +448,7 @@ namespace BatchProductRecord
             }
             // 吹膜机组运行记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜机组运行记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -426,7 +462,7 @@ namespace BatchProductRecord
             }
             // 吹膜工序生产和检验记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜工序生产和检验记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -440,7 +476,7 @@ namespace BatchProductRecord
             }
             // 废品记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜工序废品记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -464,7 +500,7 @@ namespace BatchProductRecord
             }
             // 清场记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜工序清场记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜工序清场记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜工序清场记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -478,7 +514,7 @@ namespace BatchProductRecord
             }
             // 物料平衡记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜工序物料平衡记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜工序物料平衡记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜工序物料平衡记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -492,7 +528,7 @@ namespace BatchProductRecord
             }
             // 领料退料记录
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜工序领料退料记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -506,7 +542,7 @@ namespace BatchProductRecord
             }
             // 岗位交接班
             idx++;
-            da = new OleDbDataAdapter("select * from 吹膜岗位交接班记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 吹膜岗位交接班记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("吹膜岗位交接班记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -520,7 +556,7 @@ namespace BatchProductRecord
             }
             // 内包装
             idx++;
-            da = new OleDbDataAdapter("select * from 产品内包装记录表 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 产品内包装记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("产品内包装记录表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -534,7 +570,7 @@ namespace BatchProductRecord
             }
             // 外包装
             idx++;
-            da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
             dt = new DataTable("产品外包装记录表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -992,6 +1028,192 @@ namespace BatchProductRecord
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(_code);
             outerBind();
+            if (_userState == mySystem.Parameter.UserState.操作员)
+                btn提交审核.Enabled = true;
         }
+
+
+        private void getPeople()
+        {
+            string tabName = "用户权限";
+            DataTable dtUser = new DataTable(tabName);
+            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + "批生产记录表" + "';", mySystem.Parameter.connOle);
+            BindingSource bsUser = new BindingSource();
+            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+            daUser.Fill(dtUser);
+            if (dtUser.Rows.Count != 1)
+            {
+                MessageBox.Show("请确认表单权限信息");
+                this.Close();
+            }
+
+            //the getPeople and setUserState combine here
+            ls操作员 = new List<string>(Regex.Split(dtUser.Rows[0]["操作员"].ToString(), ",|，"));
+            ls审核员 = new List<string>(Regex.Split(dtUser.Rows[0]["审核员"].ToString(), ",|，"));
+
+        }
+
+        private void setUserState()
+        {
+            _userState = mySystem.Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= mySystem.Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= mySystem.Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (mySystem.Parameter.UserState.NoBody == _userState)
+            {
+                _userState = mySystem.Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (mySystem.Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = mySystem.Parameter.UserState.操作员;
+                else _userState = mySystem.Parameter.UserState.审核员;
+
+            }
+            if (mySystem.Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (mySystem.Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
+        }
+
+        void setFormState()
+        {
+            string s = dtOuter.Rows[0]["审核人"].ToString();
+            bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核是否通过"]);
+            if (s == "") _formState = 0;
+            else if (s == "__待审核") _formState = mySystem.Parameter.FormState.待审核;
+            else
+            {
+                if (b) _formState = mySystem.Parameter.FormState.审核通过;
+                else _formState = mySystem.Parameter.FormState.审核未通过;
+            }
+        }
+
+        private void setControlTrue()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = false;
+                }
+                else
+                {
+                    c.Enabled = true;
+                }
+            }
+            // 保证这两个按钮一直是false
+            btn审核.Enabled = false;
+            btn提交审核.Enabled = false;
+        }
+
+        private void setControlFalse()
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c is DataGridView)
+                {
+                    (c as DataGridView).ReadOnly = true;
+                }
+                else
+                {
+                    c.Enabled = false;
+                }
+            }
+            btn打印.Enabled = true;
+            cmb打印.Enabled = true;
+        }
+
+
+        void setEnableReadOnly()
+        {
+
+            if (mySystem.Parameter.UserState.管理员 == _userState)
+            {
+                setControlTrue();
+            }
+            if (mySystem.Parameter.UserState.审核员 == _userState)
+            {
+                if (mySystem.Parameter.FormState.待审核 == _formState)
+                {
+                    setControlTrue();
+                    btn审核.Enabled = true;
+                }
+                else setControlFalse();
+            }
+            if (mySystem.Parameter.UserState.操作员 == _userState)
+            {
+                if (mySystem.Parameter.FormState.未保存 == _formState || mySystem.Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                else setControlFalse();
+            }
+        }
+
+        private void btn提交审核_Click(object sender, EventArgs e)
+        {
+            DataTable dt_temp = new DataTable("待审核");
+            BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='批生产记录表' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "批生产记录表";
+                dr["对应ID"] = (int)dtOuter.Rows[0]["ID"];
+                dt_temp.Rows.Add(dr);
+            }
+            bs_temp.DataSource = dt_temp;
+            da_temp.Update((DataTable)bs_temp.DataSource);
+
+            dtOuter.Rows[0]["审核人"] = "__待审核";
+            dtOuter.Rows[0]["审核时间"] = DateTime.Now;
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            readOuterData(_code);
+            outerBind();
+
+            setControlFalse();
+        }
+
+        private void btn审核_Click(object sender, EventArgs e)
+        {
+            ckform = new mySystem.CheckForm(this);
+            ckform.ShowDialog();
+        }
+
+        public override void CheckResult()
+        {
+            dtOuter.Rows[0]["审核人"] = mySystem.Parameter.userName;
+            dtOuter.Rows[0]["审核时间"] = ckform.time;
+            dtOuter.Rows[0]["批准人"] = mySystem.Parameter.userName;
+            dtOuter.Rows[0]["批准时间"] = ckform.time;
+            dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            dtOuter.Rows[0]["审核是否通过"] = ckform.ischeckOk;
+
+            setControlFalse();
+
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='批生产记录表' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            base.CheckResult();
+            try
+            {
+                (this.Owner as ExtructionMainForm).InitBtn();
+            }
+            catch (NullReferenceException exp)
+            {
+
+            }
+
+            base.CheckResult();
+        }
+
     }
 }
