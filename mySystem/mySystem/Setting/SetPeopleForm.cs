@@ -279,18 +279,18 @@ namespace mySystem.Setting
                         dgvUser.Columns.Add(c1);
 
                         break;
-                    //case "角色":
-                    //    DataGridViewComboBoxColumn c2 = new DataGridViewComboBoxColumn();
-                    //    c2.DataPropertyName = dc.ColumnName;
-                    //    c2.HeaderText = dc.ColumnName;
-                    //    c2.Name = dc.ColumnName;
-                    //    c2.SortMode = DataGridViewColumnSortMode.Automatic;
-                    //    c2.ValueType = dc.DataType;
-                    //    c2.Items.Add("操作员");
-                    //    c2.Items.Add("计划员");
-                    //    c2.Items.Add("管理员");
-                    //    dgvUser.Columns.Add(c2);
-                    //    break;
+                    case "角色":
+                        DataGridViewComboBoxColumn c2 = new DataGridViewComboBoxColumn();
+                        c2.DataPropertyName = dc.ColumnName;
+                        c2.HeaderText = dc.ColumnName;
+                        c2.Name = dc.ColumnName;
+                        c2.SortMode = DataGridViewColumnSortMode.Automatic;
+                        c2.ValueType = dc.DataType;
+                        c2.Items.Add("操作员");
+                     //   c2.Items.Add("计划员");
+                        c2.Items.Add("管理员");
+                        dgvUser.Columns.Add(c2);
+                        break;
                     //case "岗位":
                     //    DataGridViewComboBoxColumn c3 = new DataGridViewComboBoxColumn();
                     //    c3.DataPropertyName = dc.ColumnName;

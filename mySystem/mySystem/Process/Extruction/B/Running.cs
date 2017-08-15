@@ -864,9 +864,9 @@ namespace mySystem.Process.Extruction.B
                     }
                 }
             }
-            if(tb.Equals(array1[9][11])) return true;
-            if(tb.Equals(array1[11][11])) return true;
-            if(tb.Equals(array1[13][11])) return true;
+            //if(tb.Equals(array1[9][11])) return true;
+            //if(tb.Equals(array1[11][11])) return true;
+            //if(tb.Equals(array1[13][11])) return true;
             return false;
         }
 
