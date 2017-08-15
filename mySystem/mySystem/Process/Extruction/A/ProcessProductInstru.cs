@@ -1659,9 +1659,9 @@ namespace BatchProductRecord
             my.Cells[16 + ind, 12].Value = "白班：" + tb白班.Text + "\n" + "夜班：" + tb夜班.Text;
             my.Cells[21 + ind, 2].Value = tb备注.Text;
 
-            my.Cells[22 + ind, 1].Value = "编制人：" + tb编制人.Text + "\n" + dateTimePicker2.Value.ToLongDateString();
-            my.Cells[22 + ind, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToLongDateString();
-            my.Cells[22 + ind, 9].Value = "接受人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToLongDateString();
+            my.Cells[22 + ind, 1].Value = "编制人：" + tb编制人.Text + "\n" + dateTimePicker2.Value.ToString("yyyy年MM月dd日");
+            my.Cells[22 + ind, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToString("yyyy年MM月dd日");
+            my.Cells[22 + ind, 9].Value = "接收人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToString("yyyy年MM月dd日");
 
         }
 

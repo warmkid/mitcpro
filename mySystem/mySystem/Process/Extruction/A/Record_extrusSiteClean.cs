@@ -951,7 +951,7 @@ namespace mySystem.Extruction.Process
 
             my.Cells[3, 1].Value = "生产指令："+mySystem.Parameter.proInstruction;
             my.Cells[3, 3].Value = "清场前产品代码及批号：" + tb产品代码.Text + "  " + tb产品批号.Text ;
-            my.Cells[3, 5].Value = "清场日期：" + dtp清场日期.Value.ToLongDateString();
+            my.Cells[3, 5].Value = "清场日期：" + dtp清场日期.Value.ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 2].Value = i+1;

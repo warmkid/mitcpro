@@ -372,11 +372,11 @@ namespace mySystem.Process.灭菌
             my.Cells[22 + ind, 2] = tb其他说明.Text;
             my.Cells[23 + ind, 3] = tb委托人.Text;
             my.Cells[23 + ind, 5] = tb审批人.Text;
-            my.Cells[24 + ind, 3] = dtp委托日期.Value.ToLongDateString();
-            my.Cells[24 + ind, 5] = dtp审批日期.Value.ToLongDateString();
+            my.Cells[24 + ind, 3] = dtp委托日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[24 + ind, 5] = dtp审批日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[25 + ind, 3] = cb运输商.Text;
             my.Cells[25 + ind, 5] = tb操作人.Text;
-            my.Cells[25 + ind, 7] = dtp操作日期.Value.ToLongDateString();
+            my.Cells[25 + ind, 7] = dtp操作日期.Value.ToString("yyyy年MM月dd日");
         }
 
         // 获取其他需要的数据，比如产品代码，产生废品原因等

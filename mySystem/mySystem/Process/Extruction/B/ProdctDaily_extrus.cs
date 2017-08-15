@@ -460,7 +460,7 @@ namespace mySystem
             my.Cells[3, 10].Value = "生产指令: "+mySystem.Parameter.proInstruction;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                my.Cells[5 + i, 2] = DateTime.Parse( dataGridView1.Rows[i].Cells[3].Value.ToString()).ToLongDateString();
+                my.Cells[5 + i, 2] = DateTime.Parse( dataGridView1.Rows[i].Cells[3].Value.ToString()).ToString("yyyy年MM月dd日");
                 my.Cells[5 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[5 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();
                 my.Cells[5 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();

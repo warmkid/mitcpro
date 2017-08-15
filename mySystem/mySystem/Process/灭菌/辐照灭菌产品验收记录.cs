@@ -338,7 +338,7 @@ namespace mySystem.Process.灭菌
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             my.Cells[3, 4].Value = "灭菌委托单编号：" + cb委托单号.Text;
-            my.Cells[4, 2].Value = dtp运回日期.Value.ToLongDateString();
+            my.Cells[4, 2].Value = dtp运回日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[6, 3].Value = "应是合格辐照商。\n辐照商：" + cb辐照商.Text;
             my.Cells[6, 5].Value = cb检查结果1.Text;
             my.Cells[7, 3].Value = "应是合格运输商。\n运输商：" + cb运输商内.Text;
@@ -349,15 +349,15 @@ namespace mySystem.Process.灭菌
             my.Cells[10, 5].Value = cb检查结果5.Text;
             my.Cells[11, 3].Value = String.Format("每批照射产品均应有照射报告，且报告中辐照批号与辐照标签上的批号一致。\n\n报告编号：{0}\n\n辐照批号：{1}", tb报告编号.Text, tb辐照批号.Text);
             my.Cells[11, 5].Value = cb检查结果6.Text;
-            my.Cells[12, 5].Value = "取样时间："+dtp取样时间.Value.ToLongDateString();
+            my.Cells[12, 5].Value = "取样时间："+dtp取样时间.Value.ToString("yyyy年MM月dd日");
             my.Cells[13, 1].Value = "说明：" + tb说明.Text;
             if (ckb符合要求.Checked)
             {
                 my.Cells[15, 1].Value = "结论：  辐照产品符合要求，正常入库☑\n不符合要求，按不合格品处理□";
             }
             else { my.Cells[15, 1].Value = "结论：  辐照产品符合要求，正常入库□\n不符合要求，按不合格品处理☑"; }
-            my.Cells[17, 1].Value = String.Format("  验收人：{0}    {1}     复核人：{2}     {3}",tb验收人.Text,dtp验收日期.Value.ToLongDateString(),tb审核人.Text,dtp审核日期.Value.ToLongDateString());
-            my.Cells[18, 1].Value = String.Format("  运输商：{0}            操作人：{1}      {2}", cb运输商.Text,tb操作人.Text,dtp操作日期.Value.ToLongDateString());    
+            my.Cells[17, 1].Value = String.Format("  验收人：{0}    {1}     复核人：{2}     {3}",tb验收人.Text,dtp验收日期.Value.ToString("yyyy年MM月dd日"),tb审核人.Text,dtp审核日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[18, 1].Value = String.Format("  运输商：{0}            操作人：{1}      {2}", cb运输商.Text,tb操作人.Text,dtp操作日期.Value.ToString("yyyy年MM月dd日"));    
         }
 
         private void bt插入查询_Click(object sender, EventArgs e)
