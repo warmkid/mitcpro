@@ -181,6 +181,7 @@ namespace BatchProductRecord
         {
             foreach (Control c in this.Controls)
             {
+                //if (c.Name == "tb白班" || c.Name == "tb夜班") continue;
                 if (c is DataGridView)
                 {
                     (c as DataGridView).ReadOnly = false;
@@ -1752,7 +1753,8 @@ namespace BatchProductRecord
             DataRow dr = dt_prodinstr.NewRow();
             dr.ItemArray = dt_prodinstr.Rows[0].ItemArray.Clone() as object[];
             dt_prodinstr.Rows[0]["审批人"] = "";
-
+            string newcode = dr["生产指令编号"].ToString() + " 更改" + DateTime.Now.ToString("yyyyMMdd");
+            dr["生产指令编号"] = newcode;
             //写日志
             string log = "\n=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 更改生产指令计划\n";
@@ -1760,7 +1762,7 @@ namespace BatchProductRecord
 
             dt_prodinstr.Rows.Add(dr);
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(instrcode);
+            readOuterData(newcode);
 
             int newid = (int)dt_prodinstr.Rows[dt_prodinstr.Rows.Count-1]["ID"];
             int count = dt_prodlist.Rows.Count;
