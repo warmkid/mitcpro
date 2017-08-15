@@ -1213,10 +1213,10 @@ namespace BatchProductRecord
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[5].ReadOnly = true;//用料重量
+            dataGridView1.Columns["用料重量"].ReadOnly = true;//用料重量
             //dataGridView1.Columns[6].ReadOnly = true;//产品批号
-            dataGridView1.Columns[8].ReadOnly = true;//计划产量卷
-            dataGridView1.Columns[12].ReadOnly = true;//标签领料量
+            dataGridView1.Columns["计划产量卷"].ReadOnly = true;//计划产量卷
+            dataGridView1.Columns["标签领料量"].ReadOnly = true;//标签领料量
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
                 dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
