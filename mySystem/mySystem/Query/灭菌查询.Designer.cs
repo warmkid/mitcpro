@@ -49,8 +49,7 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "Gamma 射线辐射灭菌委托单",
-            "Gamma 射线辐照灭菌产品验收记录",
-            "辐照灭菌台帐"});
+            "Gamma 射线辐照灭菌产品验收记录"});
             this.comboBox2.Location = new System.Drawing.Point(612, 20);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(255, 24);

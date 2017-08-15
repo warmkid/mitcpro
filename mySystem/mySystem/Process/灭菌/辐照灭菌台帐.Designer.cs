@@ -84,6 +84,7 @@
             this.bt添加.TabIndex = 3;
             this.bt添加.Text = "添加";
             this.bt添加.UseVisualStyleBackColor = true;
+            this.bt添加.Visible = false;
             this.bt添加.Click += new System.EventHandler(this.bt添加_Click);
             // 
             // bt保存
@@ -95,6 +96,7 @@
             this.bt保存.TabIndex = 4;
             this.bt保存.Text = "保存";
             this.bt保存.UseVisualStyleBackColor = true;
+            this.bt保存.Visible = false;
             this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
             // 
             // label40
@@ -125,6 +127,7 @@
             this.bt删除.TabIndex = 33;
             this.bt删除.Text = "删除";
             this.bt删除.UseVisualStyleBackColor = true;
+            this.bt删除.Visible = false;
             this.bt删除.Click += new System.EventHandler(this.button1_Click);
             // 
             // label2
@@ -155,6 +158,7 @@
             this.bt查看日志.TabIndex = 36;
             this.bt查看日志.Text = "查看日志";
             this.bt查看日志.UseVisualStyleBackColor = true;
+            this.bt查看日志.Visible = false;
             this.bt查看日志.Click += new System.EventHandler(this.bt查看日志_Click);
             // 
             // 辐照灭菌台帐

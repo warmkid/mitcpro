@@ -580,9 +580,9 @@ namespace mySystem.Process.灭菌
                 MessageBox.Show("委托人不能为空");
                 return false;
             }
-            if (mySystem.Parameter.NametoID(tb操作人.Text) <= 0)
+            if (mySystem.Parameter.NametoID(tb委托人.Text) <= 0)
             {
-                MessageBox.Show("操作人ID不存在");
+                MessageBox.Show("委托人ID不存在");
                 return false;
             }
             return true;

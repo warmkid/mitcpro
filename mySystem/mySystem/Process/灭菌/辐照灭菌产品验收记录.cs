@@ -233,16 +233,16 @@ namespace mySystem.Process.灭菌
                 MessageBox.Show("合格运输商不能为空");
                 return false;
             }
-            if (cb运输商.Text == "")
-            {
-                MessageBox.Show("运输商不能为空");
-                return false;
-            }
-            if (mySystem.Parameter.NametoID(tb操作人.Text) <= 0)
-            {
-                MessageBox.Show("操作人ID不存在");
-                return false;
-            }
+            //if (cb运输商.Text == "")
+            //{
+            //    MessageBox.Show("运输商不能为空");
+            //    return false;
+            //}
+            //if (mySystem.Parameter.NametoID(tb操作人.Text) <= 0)
+            //{
+            //    MessageBox.Show("操作人ID不存在");
+            //    return false;
+            //}
             //验收人
             if (mySystem.Parameter.NametoID(tb验收人.Text) <= 0)
             {
@@ -601,6 +601,33 @@ namespace mySystem.Process.灭菌
 
             //空间都不能点
             setControlFalse();
+
+            // 添加台账,先读委托单中的内表
+            da_temp = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where 委托单号='" + cb委托单号.Text + "'", mySystem.Parameter.connOle);
+            dt_temp = new DataTable();
+            da_temp.Fill(dt_temp);
+            DateTime 委托日期 = Convert.ToDateTime(dt_temp.Rows[0]["委托日期"]);
+            da_temp = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单详细信息 where TGamma射线辐射灭菌委托单详细信息ID="
+                + id_findby_code(cb委托单号.Text), mySystem.Parameter.connOle);
+            dt_temp = new DataTable();
+            da_temp.Fill(dt_temp);
+            OleDbDataAdapter da_台账 = new OleDbDataAdapter("select * from 辐照灭菌台帐详细信息 where 0=1",mySystem.Parameter.connOle);
+            DataTable dt_台账 = new DataTable("辐照灭菌台帐详细信息");
+            OleDbCommandBuilder cb_台账 = new OleDbCommandBuilder(da_台账);
+            BindingSource bs_台账 = new BindingSource();
+            da_台账.Fill(dt_台账);
+            foreach (DataRow drtemp in dt_temp.Rows)
+            {
+                DataRow dr台账 = dt_台账.NewRow();
+                dr台账["委托单号"] = cb委托单号.Text;
+                dr台账["委托日期"] = 委托日期;
+                dr台账["产品代码"] = drtemp["产品代码"].ToString();
+                dr台账["产品数量只"] = Convert.ToInt32(drtemp["数量只"]);
+                dr台账["产品数量箱"] = Convert.ToInt32(drtemp["数量箱"]);
+                dr台账["登记员"] = dt_out.Rows[0]["操作人"].ToString();
+                dt_台账.Rows.Add(dr台账);
+            }
+            da_台账.Update(dt_台账);
         }
 
         private void bt日志_Click(object sender, EventArgs e)
