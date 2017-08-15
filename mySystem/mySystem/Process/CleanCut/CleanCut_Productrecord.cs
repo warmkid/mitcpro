@@ -553,7 +553,7 @@ namespace mySystem.Process.CleanCut
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         cbc.MinimumWidth = 80;
                         break;
                     case "物料代码":
@@ -569,7 +569,7 @@ namespace mySystem.Process.CleanCut
                         }                        
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         cbc.MinimumWidth = 80;
                         break;
                     default:
@@ -580,7 +580,7 @@ namespace mySystem.Process.CleanCut
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         tbc.MinimumWidth = 80;
                         break;
                 }
@@ -928,7 +928,7 @@ namespace mySystem.Process.CleanCut
             // 获取当前row的分切前ID，分切前的数据
             int idB = Convert.ToInt32(dt记录详情.Rows[Rownum]["分切前ID"]);
             drs = dt记录详情.Select("ID=" + idB);
-            string codeB = drs[0]["物料代码"].ToString();
+            string codeB = drs[0]["物料代码"].ToString().Trim();
             int widthB = getWidthB(codeB);
             int lengthB = Convert.ToInt32(drs[0]["长度A"]);
             double before = widthB * lengthB / 1000.0;
@@ -939,7 +939,7 @@ namespace mySystem.Process.CleanCut
             drs = dt记录详情.Select("分切前ID=" + idB);
             foreach (DataRow dr in drs)
             {
-                codeA = dr["清洁分切后代码"].ToString();
+                codeA = dr["清洁分切后代码"].ToString().Trim();
                 widthA = getWidthA(codeA);
                 lengthA = Convert.ToInt32(dr["长度B"]);
                 after += widthA * lengthA / 1000.0;
@@ -958,14 +958,14 @@ namespace mySystem.Process.CleanCut
         // TODO 乘法符号待统一
         int getWidthB(String code)
         {
-            char MULTI = '*';
+            char MULTI = 'X';
             int widthB = 0;
-            Regex re1B = new Regex(@"^SPM-TY-\d+\*\d+\*\d+$");
-            Regex re2B = new Regex(@"^SPM-TY-\d+\*\d+$");
+            Regex re1B = new Regex(@"^SPM-TY-\d+X\d+X\d+$");
+            Regex re2B = new Regex(@"^SPM-TY-\d+X\d+$");
             Regex re3B = new Regex(@"^SPM-TN-\d+$");
-            Regex re4B = new Regex(@"^PEF-TA-\d+\*\d+$");
-            Regex re5B = new Regex(@"^XP1-SA-\d+\*\d+$");
-            Regex re6B = new Regex(@"^UP1-SA-\d+\*\d+$");
+            Regex re4B = new Regex(@"^PEF-TA-\d+X\d+$");
+            Regex re5B = new Regex(@"^XP1-SA-\d+X\d+$");
+            Regex re6B = new Regex(@"^UP1-SA-\d+X\d+$");
             //Match m1 =  re1.Match(codeB);
             //Match m2 = re2.Match(codeB);
             string val;
@@ -1025,16 +1025,16 @@ namespace mySystem.Process.CleanCut
 
         int getWidthA(string codeA)
         {
-            char MULTI = '*';
+            char MULTI = 'X';
             int widthA = 0;
             string val;
             string[] tNum, tW;
             string nums;
-            Regex re1A = new Regex(@"^SPM-TY-\d+\*\d+\*\d+C$");//SPM-TY-320X450X2C
+            Regex re1A = new Regex(@"^SPM-TY-\d+X\d+X\d+C$");//SPM-TY-320X450X2C
             Regex re2A = new Regex(@"^SPM-TN-\d+C$");//SPM-TN-400C
-            Regex re3A = new Regex(@"^PEF-CA-\d+\*\d+$"); // PEF-CA-450X100
-            Regex re4A = new Regex(@"^XP1-SA-\d+\*\d+$"); // XP1-SA-500X080
-            Regex re5A = new Regex(@"^UP1-SA-\d+\*\d+$"); // UP1-SA-900X120
+            Regex re3A = new Regex(@"^PEF-CA-\d+X\d+$"); // PEF-CA-450X100
+            Regex re4A = new Regex(@"^XP1-SA-\d+X\d+$"); // XP1-SA-500X080
+            Regex re5A = new Regex(@"^UP1-SA-\d+X\d+$"); // UP1-SA-900X120
 
             if (re1A.Match(codeA).Value != "")
             { //SPM-TY-320X450X2C
