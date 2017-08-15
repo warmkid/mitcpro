@@ -313,7 +313,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "2D袋体与船型接口热合记录");
             if (b)
             {
-                BTV2DShipHeat mydlg = new BTV2DShipHeat();
+                BTV2DShipHeat mydlg = new BTV2DShipHeat(mainform);
                 mydlg.ShowDialog();
             }
             else
