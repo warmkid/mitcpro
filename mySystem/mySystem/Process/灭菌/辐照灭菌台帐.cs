@@ -43,7 +43,7 @@ namespace mySystem.Process.灭菌
             setFormState();
             setEnableReadOnly();
             addOtherEventHandler();
-
+            setDataGridViewRowNums();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -496,7 +496,7 @@ namespace mySystem.Process.灭菌
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
-            setDataGridViewRowNums();
+           
             //for (int i = 0; i < index; i++)
             //{
             //    string str审核员 = dt台帐.Rows[i]["审核员"].ToString();
@@ -511,25 +511,25 @@ namespace mySystem.Process.灭菌
         //删除
         private void button1_Click(object sender, EventArgs e)
         {
-            //if (dataGridView1.SelectedCells.Count > 1)
-            //{
-            if (dataGridView1.SelectedCells.Count == 0) return;
-            int deletenum = dataGridView1.CurrentRow.Index;
+            ////if (dataGridView1.SelectedCells.Count > 1)
+            ////{
+            //if (dataGridView1.SelectedCells.Count == 0) return;
+            //int deletenum = dataGridView1.CurrentRow.Index;
 
-            if (deletenum < 0)
-                return;
-            // dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
-            else
-            {
-                dt台帐.Rows[deletenum].Delete();
-                da台帐.Update((DataTable)bs台帐.DataSource);
-                readInnerData();
-                innerBind();
-                //刷新序号
-                setDataGridViewRowNums();
-                index = dt台帐.Rows.Count;
-            }
+            //if (deletenum < 0)
+            //    return;
+            //// dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            //else
+            //{
+            //    dt台帐.Rows[deletenum].Delete();
+            //    da台帐.Update((DataTable)bs台帐.DataSource);
+            //    readInnerData();
+            //    innerBind();
+            //    //刷新序号
+            //    setDataGridViewRowNums();
+            //    index = dt台帐.Rows.Count;
             //}
+            ////}
             
         }
 

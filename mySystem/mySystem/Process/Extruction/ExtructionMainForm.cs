@@ -97,15 +97,15 @@ namespace mySystem
             }
             else
             {
-                C1Btn.Enabled = true;
-                A3Btn.Enabled = false;
+                C1Btn.Enabled = false;
+                A3Btn.Enabled = true;
                 C2Btn.Enabled = false;
                 cleanBtnInit(); //判断清场按钮是否可点
                 otherBtnInit(false);
-                if (checkBeforePower)
+                if (extrusClean)
                 {
-                    A3Btn.Enabled = true;
-                    if (extrusClean)
+                    C1Btn.Enabled = true;
+                    if (checkBeforePower)
                     {
                         C2Btn.Enabled = true;
                         if (preheat)

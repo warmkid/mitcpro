@@ -129,7 +129,7 @@ namespace mySystem.Process.灭菌
             dr["委托人"] = mySystem.Parameter.userName;
             dr["审核是否通过"] = false;
             dr["审批"] = "";
-
+            dr["状态"] = 0;
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
             log += "委托单号：" + tb委托单号.Text + "\n";
@@ -615,7 +615,7 @@ namespace mySystem.Process.灭菌
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
             dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
-
+            dt_prodinstr.Rows[0]["状态"] = 1;
             dt_prodinstr.Rows[0]["审批"] = "__待审核";
             dt_prodinstr.Rows[0]["审批日期"] = DateTime.Now;
 

@@ -186,7 +186,7 @@ namespace mySystem.Process.灭菌
             cb检查结果6.Items.Add("不合格");
 
             //添加委托单号
-            OleDbDataAdapter tda3 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单", mySystem.Parameter.connOle);
+            OleDbDataAdapter tda3 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where 状态=1", mySystem.Parameter.connOle);
             DataTable tdt3 = new DataTable("Gamma射线辐射灭菌委托单");
             tda3.Fill(tdt3);
             foreach (DataRow tdr in tdt3.Rows)
@@ -602,10 +602,13 @@ namespace mySystem.Process.灭菌
             //空间都不能点
             setControlFalse();
 
-            // 添加台账,先读委托单中的内表
+            // 添加台账,先读委托单中的内表,修改状态为2
             da_temp = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where 委托单号='" + cb委托单号.Text + "'", mySystem.Parameter.connOle);
+            cb_temp = new OleDbCommandBuilder(da_temp);
             dt_temp = new DataTable();
             da_temp.Fill(dt_temp);
+            dt_temp.Rows[0]["状态"] = 2;
+            da_temp.Update(dt_temp);
             DateTime 委托日期 = Convert.ToDateTime(dt_temp.Rows[0]["委托日期"]);
             da_temp = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单详细信息 where TGamma射线辐射灭菌委托单详细信息ID="
                 + id_findby_code(cb委托单号.Text), mySystem.Parameter.connOle);
