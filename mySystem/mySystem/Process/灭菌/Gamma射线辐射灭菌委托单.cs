@@ -261,7 +261,7 @@ namespace mySystem.Process.灭菌
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[7].ReadOnly = true;//数量只
+            //dataGridView1.Columns[7].ReadOnly = true;//数量只
         }
 
         // 刷新DataGridView中的列：序号
@@ -790,13 +790,13 @@ namespace mySystem.Process.灭菌
                  }
              }
 
-             if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
-             {
-                 float perweight = 0, num = 0;
-                 perweight = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
-                 num = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
-                 dataGridView1.Rows[e.RowIndex].Cells[7].Value = num*perweight;
-             }
+             //if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
+             //{
+             //    float perweight = 0, num = 0;
+             //    perweight = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
+             //    num = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
+             //    dataGridView1.Rows[e.RowIndex].Cells[7].Value = num*perweight;
+             //}
              sumDataGridView1();
         }
 
