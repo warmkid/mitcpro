@@ -1041,6 +1041,7 @@ namespace mySystem.Extruction.Process
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //查找打印的表序号
@@ -1134,7 +1135,7 @@ namespace mySystem.Extruction.Process
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 DateTime tempdt = DateTime.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString());
-                my.Cells[5 + i, 1] = tempdt.ToLongDateString();
+                my.Cells[5 + i, 1] = tempdt.ToString("yyyy年MM月dd日");
                 my.Cells[5 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
                 my.Cells[5 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[5 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();

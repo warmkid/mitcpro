@@ -1134,6 +1134,7 @@ namespace mySystem.Process.Extruction.B
             {
                 cmb打印机选择.Items.Add(sPrint);
             }
+            cmb打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         private void btn打印_Click(object sender, EventArgs e)
@@ -1162,7 +1163,7 @@ namespace mySystem.Process.Extruction.B
 
             my.Cells[3, 1].Value = "产品代码：" + cmb产品代码.Text.ToString();
             my.Cells[3, 5].Value = "批号：" + txb产品批号.Text;
-            my.Cells[3, 7].Value = "生产日期：" + dtp生产日期.Value.ToLongDateString();
+            my.Cells[3, 7].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[3, 10].Value = "记录时间：" + dtp记录时间.Value.ToShortTimeString();
             my.Cells[3, 12].Value = "记录人：" + txb记录员.Text;
             my.Cells[3, 14].Value = "复核人：" + txb审核员.Text;

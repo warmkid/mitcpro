@@ -252,7 +252,8 @@ namespace BatchProductRecord
             foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
             {
                 cb打印机.Items.Add(sPrint);
-            } 
+            }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         private void getOtherData()
@@ -624,10 +625,11 @@ namespace BatchProductRecord
             //产品编码
             if (e.ColumnIndex == 3)
             {
+                // TODO 计算公式用新加的列
                 while (true)
                 {
                     string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
-                    string pattern = @"^[a-zA-Z]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
+                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
                     if (!Regex.IsMatch(str, pattern))
                     {
                         MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500*100");
@@ -638,7 +640,9 @@ namespace BatchProductRecord
                     string[] array = str.Split('*');
                     string[] array2 = array[0].Split('-');
                     leng = float.Parse(array2[2]);
-
+                    dataGridView1.Rows[e.RowIndex].Cells["宽"].Value = Int32.Parse(array2[2]);
+                    
+                    dataGridView1.Rows[e.RowIndex].Cells["厚"].Value = Int32.Parse(array[1].TrimStart('0'));
                     //产品批号
                     string temp = array[1];
                     OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.connOle);
@@ -651,7 +655,7 @@ namespace BatchProductRecord
                     }
                     if (ht.Keys.OfType<String>().ToList<String>().IndexOf(temp) >= 0)
                     {
-                        dataGridView1.Rows[e.RowIndex].Cells[6].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + ht[temp];
+                        dataGridView1.Rows[e.RowIndex].Cells["产品批号"].Value = dtp开始生产日期.Value.ToString("yyyyMMdd") + ht[temp];
                     }
                     //if (temp == "100")
                     //{
@@ -685,24 +689,24 @@ namespace BatchProductRecord
 
                     while (true)
                     {
-                        string s4 = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                        string s4 = dataGridView1.Rows[e.RowIndex].Cells["计划产量米"].Value.ToString();
                         float a;
                         if (s4 == "" || !float.TryParse(s4, out a))
                         {
                             break;
                         }
-                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = Math.Ceiling( a * leng / 1000.0 * 面 * 密度);//用料重量
+                        dataGridView1.Rows[e.RowIndex].Cells["用料重量"].Value = Math.Ceiling(a * leng / 1000.0 * 面 * 密度);//用料重量
                         break;
                     }
                     break;
                 }
             }
             //计划产量米
-            if (e.ColumnIndex == 4)
+            if (e.ColumnIndex == 6)
             {
                 while (true)
                 {
-                    string s4 = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                    string s4 = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
                     float a;
                     if (s4 == "" || !float.TryParse(s4, out a))
                     {
@@ -717,10 +721,20 @@ namespace BatchProductRecord
                         array = str.Split('*');
                         array2 = array[0].Split('-');
                         leng = float.Parse(array2[2]);
-                        dataGridView1.Rows[e.RowIndex].Cells[5].Value = Math.Ceiling(a * leng / 1000.0 * 面 * 密度);//用料重量
+                        dataGridView1.Rows[e.RowIndex].Cells[7].Value = Math.Ceiling(a * leng / 1000.0 * 面 * 密度);//用料重量
                     }
 
-                    string s7 = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
+                    int hou, kuang;
+                    bool ok = true;
+                    ok &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].Value.ToString(), out kuang);
+                    ok &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["厚"].Value.ToString(), out hou);
+                    if (ok)
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells[7].Value = Math.Ceiling(hou * kuang * a / 1000 / 100 * 面 * 密度);
+                    }
+
+
+                    string s7 = dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString();
                     int b;
                     if (s7 == "" || !int.TryParse(s7, out b))
                     {
@@ -728,33 +742,33 @@ namespace BatchProductRecord
                     }
                     if (b == 0)
                         break;
-                    dataGridView1.Rows[e.RowIndex].Cells[8].Value = Math.Ceiling(Convert.ToDecimal(a / b));//计划产量（卷）
-                    dataGridView1.Rows[e.RowIndex].Cells[12].Value = Math.Ceiling(Convert.ToDecimal(a / b));//标签领料量
+                    dataGridView1.Rows[e.RowIndex].Cells[10].Value = Math.Ceiling(Convert.ToDecimal(a / b));//计划产量（卷）
+                    dataGridView1.Rows[e.RowIndex].Cells[14].Value = Math.Ceiling(Convert.ToDecimal(a / b));//标签领料量
                     break;
                 }
 
             }
             //每卷长度
-            if (e.ColumnIndex == 7)
+            if (e.ColumnIndex == 9)
             {
                 while (true)
                 {
                     int a;
-                    string s7 = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
+                    string s7 = dataGridView1.Rows[e.RowIndex].Cells[9].Value.ToString();
                     if (s7 == "" || !int.TryParse(s7, out a))
                     {
                         break;
                     }
                     if (a == 0)
                         break;
-                    string s4 = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
+                    string s4 = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
                     float b;
                     if (s4 == "" || !float.TryParse(s4, out b))
                     {
                         break;
                     }
-                    dataGridView1.Rows[e.RowIndex].Cells[8].Value = Math.Ceiling(Convert.ToDecimal(b / a));//计划产量（卷）
-                    dataGridView1.Rows[e.RowIndex].Cells[12].Value = Math.Ceiling(Convert.ToDecimal(b / a));//标签领料量
+                    dataGridView1.Rows[e.RowIndex].Cells[10].Value = Math.Ceiling(Convert.ToDecimal(b / a));//计划产量（卷）
+                    dataGridView1.Rows[e.RowIndex].Cells[14].Value = Math.Ceiling(Convert.ToDecimal(b / a));//标签领料量
                     break;
                 }
                 
@@ -764,12 +778,12 @@ namespace BatchProductRecord
             float sum_mi = 0, sum_juan = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")
-                    sum_mi += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
-                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[8].Value.ToString() != "")
-                    sum_juan += float.Parse(dataGridView1.Rows[i].Cells[8].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() != "")
+                    sum_mi += float.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[7].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[7].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[10].Value.ToString() != "")
+                    sum_juan += float.Parse(dataGridView1.Rows[i].Cells[10].Value.ToString());
             }
             dt_prodinstr.Rows[0]["计划产量合计米"] = sum_mi;
             dt_prodinstr.Rows[0]["用料重量合计"] = sum_weight;
@@ -1202,6 +1216,10 @@ namespace BatchProductRecord
             //dataGridView1.Columns[6].ReadOnly = true;//产品批号
             dataGridView1.Columns[8].ReadOnly = true;//计划产量卷
             dataGridView1.Columns[12].ReadOnly = true;//标签领料量
+            foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
+            {
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
 
         }
         //设置datagridview序号
@@ -1515,7 +1533,9 @@ namespace BatchProductRecord
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             string dir = System.IO.Directory.GetCurrentDirectory();
-            dir+="./../../xls/Extrusion/A/SOP-MFG-301-R01 吹膜工序生产指令.xlsx";
+            //@"\..\..\xls\Extrusion\C\SOP-MFG-301-R05 吹膜机组预热参数记录表.xlsx"
+            dir += @"\..\..\xls\Extrusion\A\SOP-MFG-301-R01 吹膜工序生产指令.xlsx";
+            //dir+="./../../xls/Extrusion/A/SOP-MFG-301-R01 吹膜工序生产指令.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
@@ -1600,7 +1620,7 @@ namespace BatchProductRecord
             my.Cells[3, 9].Value = "生产指令编号：" + tb指令编号.Text;
             my.Cells[4, 1].Value = "生产工艺：" + cb工艺.Text;          
             my.Cells[4, 6].Value = "生产设备编号：" + tb设备编号.Text;
-            my.Cells[4, 9].Value = "开始生产日期：" + dtp开始生产日期.Value.ToLongDateString();
+            my.Cells[4, 9].Value = "开始生产日期：" + dtp开始生产日期.Value.ToString("yyyy年MM月dd日");
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {

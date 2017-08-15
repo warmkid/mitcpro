@@ -681,6 +681,7 @@ namespace mySystem.Process.Extruction.C
             {
                 cmb打印机选择.Items.Add(sPrint);
             }
+            cmb打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         private void btn打印_Click(object sender, EventArgs e)

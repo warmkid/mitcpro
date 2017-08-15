@@ -145,6 +145,7 @@ namespace BatchProductRecord
             {
                 cmb打印.Items.Add(sPrint);
             }
+            cmb打印.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         void readInner2Data(int id)
@@ -173,15 +174,18 @@ namespace BatchProductRecord
             Hashtable ht产品代码 = new Hashtable();
             foreach (DataRow dr in dt.Rows)
             {
-                if (ht产品代码.ContainsKey(dr["产品名称"].ToString()))
-                {
-                    double weight = Convert.ToDouble((ht产品代码[dr["产品名称"].ToString()] as List<Object>)[1]) + Convert.ToDouble(dr["累计同规格膜卷长度R"]);
-
-                    ht产品代码.Add(dr["产品名称"].ToString(), new List<Object>(new Object[] { dr["产品批号"].ToString(), weight }));
-                }
                 try
                 {
-                    ht产品代码.Add(dr["产品名称"].ToString(), new List<Object>(new Object[] { dr["产品批号"].ToString(), Convert.ToDouble(dr["累计同规格膜卷长度R"]) }));
+                    if (ht产品代码.ContainsKey(dr["产品名称"].ToString()))
+                    {
+                        double weight = Convert.ToDouble((ht产品代码[dr["产品名称"].ToString()] as List<Object>)[1]) + Convert.ToDouble(dr["累计同规格膜卷长度R"]);
+                        (ht产品代码[dr["产品名称"].ToString()] as List<Object>)[1] = weight;
+                        //ht产品代码.Add(dr["产品名称"].ToString(), new List<Object>(new Object[] { dr["产品批号"].ToString(), weight }));
+                    }
+                    else
+                    {
+                        ht产品代码.Add(dr["产品名称"].ToString(), new List<Object>(new Object[] { dr["产品批号"].ToString(), Convert.ToDouble(dr["累计同规格膜卷长度R"]) }));
+                    }
                 }
                 catch (InvalidCastException e)
                 {

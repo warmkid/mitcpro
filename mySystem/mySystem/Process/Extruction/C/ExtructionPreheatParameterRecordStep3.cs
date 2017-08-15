@@ -665,6 +665,7 @@ namespace mySystem.Extruction.Process
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮

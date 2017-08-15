@@ -245,6 +245,10 @@ namespace mySystem
         private void btn复制_Click(object sender, EventArgs e)
         {
             // TODO 复制内表
+            String newCode = mySystem.Other.InputWindow.getString("新的生产指令编码：");
+
+
+
             if (dgv.SelectedCells.Count == 0) return;
             DataRow dr;
             OleDbDataAdapter daT;
@@ -263,7 +267,7 @@ namespace mySystem
                     int pid = Convert.ToInt32(dt.Rows[dgv.SelectedCells[0].RowIndex]["ID"]);
                     dr = dt.NewRow();
                     dr.ItemArray = dt.Rows[dgv.SelectedCells[0].RowIndex].ItemArray.Clone() as object[];
-                    dr["生产指令编号"] = dt.Rows[dgv.SelectedCells[0].RowIndex]["生产指令编号"].ToString() + " 复制";
+                    dr["生产指令编号"] = newCode;
                     dr["审批人"] = "";
                     dr["状态"] = 0;
                     string log = "=====================================\n";
