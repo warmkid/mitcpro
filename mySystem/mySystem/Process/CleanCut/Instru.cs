@@ -245,16 +245,16 @@ namespace mySystem.Process.CleanCut
                 return false;
             }
             //产品代码是否重复
-            HashSet<string> hs_temp = new HashSet<string>();
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                if (hs_temp.Contains(dataGridView1.Rows[i].Cells[3].Value.ToString()))
-                {
-                    MessageBox.Show("产品编码不能重复");
-                    return false;
-                }                    
-                hs_temp.Add(dataGridView1.Rows[i].Cells[3].Value.ToString());
-            }
+            //HashSet<string> hs_temp = new HashSet<string>();
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //{
+            //    if (hs_temp.Contains(dataGridView1.Rows[i].Cells[3].Value.ToString()))
+            //    {
+            //        MessageBox.Show("产品编码不能重复");
+            //        return false;
+            //    }                    
+            //    hs_temp.Add(dataGridView1.Rows[i].Cells[3].Value.ToString());
+            //}
             return true;
 
 
