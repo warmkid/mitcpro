@@ -630,20 +630,22 @@ namespace BatchProductRecord
                 while (true)
                 {
                     string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
-                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
+                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]";//正则表达式
                     if (!Regex.IsMatch(str, pattern))
                     {
-                        MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500*100");
+                        MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500X100");
                         dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
                         leng = 0;
                         break ;
                     }
-                    string[] array = str.Split('*');
-                    string[] array2 = array[0].Split('-');
+                    string[] array = str.Split('X');
+                    string[] array2 = array[array.Length-2].Split('-');
                     leng = float.Parse(array2[2]);
                     dataGridView1.Rows[e.RowIndex].Cells["宽"].Value = Int32.Parse(array2[2]);
                     
-                    dataGridView1.Rows[e.RowIndex].Cells["厚"].Value = Int32.Parse(array[1].TrimStart('0'));
+                    dataGridView1.Rows[e.RowIndex].Cells["厚"].Value = Int32.Parse(array[array.Length-1].TrimStart('0'));
+                    bool ok2 = float.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].ToString(), out leng);
+                    if (!ok2) leng = 0;
                     //产品批号
                     string temp = array[1];
                     OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.connOle);
@@ -719,17 +721,22 @@ namespace BatchProductRecord
                     string[] array2;
                     if (str != "")
                     {
-                        array = str.Split('*');
-                        array2 = array[0].Split('-');
-                        leng = float.Parse(array2[2]);
+                        //array = str.Split('*');
+                        //array2 = array[0].Split('-');
+                        //leng = float.Parse(array2[2]);
+                        bool ok = float.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].Value.ToString(), out leng);
+                        if (!ok)
+                        {
+                            leng = 0;
+                        }
                         dataGridView1.Rows[e.RowIndex].Cells[7].Value = Math.Ceiling(a * leng / 1000.0 * 面 * 密度);//用料重量
                     }
 
                     int hou, kuang;
-                    bool ok = true;
-                    ok &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].Value.ToString(), out kuang);
-                    ok &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["厚"].Value.ToString(), out hou);
-                    if (ok)
+                    bool ok1 = true;
+                    ok1 &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].Value.ToString(), out kuang);
+                    ok1 &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["厚"].Value.ToString(), out hou);
+                    if (ok1)
                     {
                         dataGridView1.Rows[e.RowIndex].Cells[7].Value = Math.Ceiling(hou * kuang * a / 1000 / 100 * 面 * 密度);
                     }

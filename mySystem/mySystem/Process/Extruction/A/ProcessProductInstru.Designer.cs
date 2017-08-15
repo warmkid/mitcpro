@@ -235,7 +235,7 @@
             // bt日志
             // 
             this.bt日志.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt日志.Location = new System.Drawing.Point(804, 688);
+            this.bt日志.Location = new System.Drawing.Point(921, 688);
             this.bt日志.Name = "bt日志";
             this.bt日志.Size = new System.Drawing.Size(75, 23);
             this.bt日志.TabIndex = 28;
@@ -246,7 +246,7 @@
             // bt提交审核
             // 
             this.bt提交审核.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt提交审核.Location = new System.Drawing.Point(709, 688);
+            this.bt提交审核.Location = new System.Drawing.Point(826, 688);
             this.bt提交审核.Name = "bt提交审核";
             this.bt提交审核.Size = new System.Drawing.Size(75, 23);
             this.bt提交审核.TabIndex = 27;
@@ -285,7 +285,7 @@
             // bt查询插入
             // 
             this.bt查询插入.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt查询插入.Location = new System.Drawing.Point(657, 61);
+            this.bt查询插入.Location = new System.Drawing.Point(912, 61);
             this.bt查询插入.Name = "bt查询插入";
             this.bt查询插入.Size = new System.Drawing.Size(84, 23);
             this.bt查询插入.TabIndex = 23;
@@ -295,7 +295,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(804, 62);
+            this.button7.Location = new System.Drawing.Point(459, 51);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(37, 23);
             this.button7.TabIndex = 22;
@@ -306,7 +306,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(756, 61);
+            this.button6.Location = new System.Drawing.Point(411, 50);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(38, 23);
             this.button6.TabIndex = 21;
@@ -322,7 +322,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(897, 196);
+            this.dataGridView1.Size = new System.Drawing.Size(989, 196);
             this.dataGridView1.TabIndex = 20;
             this.dataGridView1.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellEndEdit);
             // 
@@ -342,7 +342,7 @@
             this.panel1.Controls.Add(this.label17);
             this.panel1.Location = new System.Drawing.Point(4, 331);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(888, 42);
+            this.panel1.Size = new System.Drawing.Size(989, 42);
             this.panel1.TabIndex = 19;
             // 
             // bt复制
@@ -490,7 +490,7 @@
             // bt确认
             // 
             this.bt确认.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.bt确认.Location = new System.Drawing.Point(625, 688);
+            this.bt确认.Location = new System.Drawing.Point(742, 688);
             this.bt确认.Name = "bt确认";
             this.bt确认.Size = new System.Drawing.Size(75, 23);
             this.bt确认.TabIndex = 16;
@@ -515,8 +515,8 @@
             // splitContainer7.Panel2
             // 
             this.splitContainer7.Panel2.Controls.Add(this.splitContainer8);
-            this.splitContainer7.Size = new System.Drawing.Size(888, 72);
-            this.splitContainer7.SplitterDistance = 413;
+            this.splitContainer7.Size = new System.Drawing.Size(993, 72);
+            this.splitContainer7.SplitterDistance = 461;
             this.splitContainer7.TabIndex = 15;
             // 
             // tb操作员备注
@@ -593,8 +593,8 @@
             this.splitContainer8.Panel2.Controls.Add(this.label27);
             this.splitContainer8.Panel2.Controls.Add(this.tb接收人);
             this.splitContainer8.Panel2.Controls.Add(this.label26);
-            this.splitContainer8.Size = new System.Drawing.Size(471, 72);
-            this.splitContainer8.SplitterDistance = 244;
+            this.splitContainer8.Size = new System.Drawing.Size(528, 72);
+            this.splitContainer8.SplitterDistance = 273;
             this.splitContainer8.TabIndex = 0;
             // 
             // dateTimePicker3
@@ -682,8 +682,8 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.tb备注);
-            this.splitContainer6.Size = new System.Drawing.Size(888, 38);
-            this.splitContainer6.SplitterDistance = 71;
+            this.splitContainer6.Size = new System.Drawing.Size(993, 38);
+            this.splitContainer6.SplitterDistance = 79;
             this.splitContainer6.TabIndex = 14;
             // 
             // label21
@@ -728,7 +728,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(888, 173);
+            this.splitContainer1.Size = new System.Drawing.Size(993, 173);
             this.splitContainer1.SplitterDistance = 34;
             this.splitContainer1.TabIndex = 13;
             // 
@@ -832,8 +832,8 @@
             this.splitContainer2.Panel2.Controls.Add(this.button3);
             this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Panel2.Controls.Add(this.cb负责人);
-            this.splitContainer2.Size = new System.Drawing.Size(888, 135);
-            this.splitContainer2.SplitterDistance = 668;
+            this.splitContainer2.Size = new System.Drawing.Size(993, 135);
+            this.splitContainer2.SplitterDistance = 746;
             this.splitContainer2.TabIndex = 0;
             // 
             // splitContainer3
@@ -850,7 +850,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer3.Size = new System.Drawing.Size(668, 135);
+            this.splitContainer3.Size = new System.Drawing.Size(746, 135);
             this.splitContainer3.SplitterDistance = 101;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -885,8 +885,8 @@
             this.splitContainer4.Panel2.Controls.Add(this.textBox13);
             this.splitContainer4.Panel2.Controls.Add(this.textBox12);
             this.splitContainer4.Panel2.Controls.Add(this.label19);
-            this.splitContainer4.Size = new System.Drawing.Size(668, 101);
-            this.splitContainer4.SplitterDistance = 55;
+            this.splitContainer4.Size = new System.Drawing.Size(746, 101);
+            this.splitContainer4.SplitterDistance = 61;
             this.splitContainer4.TabIndex = 0;
             // 
             // label15
@@ -1073,8 +1073,8 @@
             this.splitContainer5.Panel2.Controls.Add(this.textBox9);
             this.splitContainer5.Panel2.Controls.Add(this.textBox7);
             this.splitContainer5.Panel2.Controls.Add(this.label18);
-            this.splitContainer5.Size = new System.Drawing.Size(668, 30);
-            this.splitContainer5.SplitterDistance = 55;
+            this.splitContainer5.Size = new System.Drawing.Size(746, 30);
+            this.splitContainer5.SplitterDistance = 61;
             this.splitContainer5.TabIndex = 0;
             // 
             // label16
@@ -1201,7 +1201,7 @@
             // dtp开始生产日期
             // 
             this.dtp开始生产日期.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp开始生产日期.Location = new System.Drawing.Point(648, 100);
+            this.dtp开始生产日期.Location = new System.Drawing.Point(857, 100);
             this.dtp开始生产日期.Name = "dtp开始生产日期";
             this.dtp开始生产日期.Size = new System.Drawing.Size(136, 23);
             this.dtp开始生产日期.TabIndex = 11;
@@ -1210,7 +1210,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(529, 103);
+            this.label7.Location = new System.Drawing.Point(738, 103);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(91, 14);
             this.label7.TabIndex = 10;
@@ -1247,7 +1247,7 @@
             // tb指令编号
             // 
             this.tb指令编号.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb指令编号.Location = new System.Drawing.Point(521, 61);
+            this.tb指令编号.Location = new System.Drawing.Point(776, 61);
             this.tb指令编号.Name = "tb指令编号";
             this.tb指令编号.Size = new System.Drawing.Size(96, 23);
             this.tb指令编号.TabIndex = 5;
@@ -1256,7 +1256,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(398, 64);
+            this.label4.Location = new System.Drawing.Point(653, 64);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(91, 14);
             this.label4.TabIndex = 4;
@@ -1296,7 +1296,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(904, 720);
+            this.ClientSize = new System.Drawing.Size(1009, 720);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bt更改);
             this.Controls.Add(this.label41);

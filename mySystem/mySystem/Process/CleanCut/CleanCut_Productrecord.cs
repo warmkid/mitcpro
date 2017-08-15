@@ -639,7 +639,9 @@ namespace mySystem.Process.CleanCut
                     ndr["分切前ID"] = Convert.ToInt32(ndr["ID"]);
                 }
             }
-            
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
         }
 
         //删除行按钮
@@ -967,7 +969,7 @@ namespace mySystem.Process.CleanCut
             }
             else if (re2B.Match(code).Value != "")
             { // SPM-TY-320X450
-                val = re1B.Match(code).Value;
+                val = re2B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 tW = nums.Split(MULTI);
@@ -976,14 +978,14 @@ namespace mySystem.Process.CleanCut
             }
             else if (re3B.Match(code).Value != "")
             { // SPM-TN-400
-                val = re1B.Match(code).Value;
+                val = re3B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 widthB = Convert.ToInt32(nums);
             }
             else if (re4B.Match(code).Value != "")
             { // PEF-TA-600X100
-                val = re1B.Match(code).Value;
+                val = re4B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 tW = nums.Split(MULTI);
@@ -991,7 +993,7 @@ namespace mySystem.Process.CleanCut
             }
             else if (re5B.Match(code).Value != "")
             { // XP1-SA-1010X080
-                val = re1B.Match(code).Value;
+                val = re5B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 tW = nums.Split(MULTI);
@@ -999,7 +1001,7 @@ namespace mySystem.Process.CleanCut
             }
             else if (re6B.Match(code).Value != "")
             { // UP1-SA-1200X120
-                val = re1B.Match(code).Value;
+                val = re6B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 tW = nums.Split(MULTI);
