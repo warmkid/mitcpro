@@ -92,7 +92,7 @@ namespace mySystem.Process.CleanCut
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切生产指令");
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切工序生产指令");
             if (b)
             {
                 Instru form4 = new Instru(base.mainform);
@@ -205,6 +205,10 @@ namespace mySystem.Process.CleanCut
             String[] name审核员 = null;
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Parameter.connOle;
+            if (tblName != "清洁分切工序生产指令")
+            {
+                tblName = "全部";
+            }
             comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
             OleDbDataReader reader = comm.ExecuteReader();
             while (reader.Read())
