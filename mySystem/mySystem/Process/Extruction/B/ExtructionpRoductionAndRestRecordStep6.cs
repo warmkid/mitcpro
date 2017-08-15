@@ -1016,14 +1016,16 @@ namespace mySystem.Extruction.Process
             //dt记录.Rows[0]["累计同规格膜卷长度R"] = sum[0];
             outerDataSync("tb累计同规格膜卷长度R", sum[0].ToString());
             // 膜卷重量求和
+            double numtemp2;
             sum[1] = 0;
+            double sum2 = 0;
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
-                if (Int32.TryParse(dt记录详情.Rows[i]["膜卷重量"].ToString(), out numtemp) == true)
-                { sum[1] += numtemp; }
+                if (Double.TryParse(dt记录详情.Rows[i]["膜卷重量"].ToString(), out numtemp2) == true)
+                { sum2 += numtemp2; }
             }
             //dt记录.Rows[0]["累计同规格膜卷重量T"] = sum[1];
-            outerDataSync("tb累计同规格膜卷重量T", sum[1].ToString());        
+            outerDataSync("tb累计同规格膜卷重量T", sum2.ToString());        
         }
 
         // 检查控件内容是否合法
