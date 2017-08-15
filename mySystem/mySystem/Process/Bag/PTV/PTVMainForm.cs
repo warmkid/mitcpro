@@ -142,7 +142,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清场记录");
             if (b)
             {
-                PTVBag_clearance clearance = new PTVBag_clearance();
+                PTVBag_clearance clearance = new PTVBag_clearance(mainform);
                 clearance.ShowDialog();
             }
             else
