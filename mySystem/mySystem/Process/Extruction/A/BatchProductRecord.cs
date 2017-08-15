@@ -13,7 +13,7 @@ using mySystem;
 
 namespace BatchProductRecord
 {
-    // TODO  审核
+    
     public partial class BatchProductRecord : mySystem.BaseForm
     {
 
