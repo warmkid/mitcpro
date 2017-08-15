@@ -31,7 +31,7 @@ namespace mySystem
             Init();
             getPeople();
             setUserState();
-            if (_userState != Parameter.UserState.审核员)
+            if ((_userState == Parameter.UserState.操作员))
             {
                 button2.Enabled = false;
             }
@@ -54,7 +54,7 @@ namespace mySystem
             Init();
             getPeople();
             setUserState();
-            if (_userState != Parameter.UserState.审核员)
+            if ((_userState == Parameter.UserState.操作员))
             {
                 button2.Enabled = false;
             }
@@ -204,16 +204,16 @@ namespace mySystem
                 dr["产品批号"] = dt_检验记录.Rows[i]["产品批号"].ToString();
                 dr["卷号"]= str膜卷编号;//卷号
                 dr["生产数量"]= sum_膜卷长度;//生产数量
-                dr["生产重量"] = sum_膜卷重量;//生产重量
+                dr["生产重量"] = Double.Parse( sum_膜卷重量.ToString("f1"));//生产重量
 
                 if (dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] != null && dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"].ToString() != "")
                 {
                     TimeSpan delt = (DateTime)dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] - (DateTime)dt_检验记录_详细.Rows[0]["开始时间"];
-                    dr["工时"] = delt.TotalHours;//工时
+                    dr["工时"] = Math.Ceiling(delt.TotalHours);//工时
                 }
 
 
-                //查找废品记录中对应的记录
+                //查找废品记录中对应的记录查看的是当天的产品代码下供料合计
                 float sum_废品重量 = 0;
                 for (int j = 0; j < dt_废品记录.Rows.Count; j++)
                 {                   
@@ -227,7 +227,7 @@ namespace mySystem
                             sum_废品重量 += float.Parse(dt_废品记录.Rows[j]["不良品数量"].ToString());
                     }
                 }
-                dr["废品重量"] = sum_废品重量;//废品重量
+                dr["废品重量"] = Double.Parse(sum_废品重量.ToString("f1"));//废品重量
 
 
                 //查找供料记录中对应的记录，查看的是当天的产品代码下供料合计
@@ -384,6 +384,7 @@ namespace mySystem
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
         private void button2_Click(object sender, EventArgs e)
         {
@@ -654,11 +655,11 @@ namespace mySystem
                 }
                 if (dataGridView1.Rows[i].Cells["生产重量"].Value.ToString() != "")
                 {
-                    sum_生产重量 += float.Parse(dataGridView1.Rows[i].Cells["生产重量"].Value.ToString());
+                    sum_生产重量 += float.Parse(float.Parse(dataGridView1.Rows[i].Cells["生产重量"].Value.ToString()).ToString("f1"));
                 }
                 if (dataGridView1.Rows[i].Cells["废品重量"].Value.ToString() != "")
                 {
-                    sum_废品重量 += float.Parse(dataGridView1.Rows[i].Cells["废品重量"].Value.ToString());
+                    sum_废品重量 += float.Parse(float.Parse(dataGridView1.Rows[i].Cells["废品重量"].Value.ToString()).ToString("f1"));
                 }
                 if (dataGridView1.Rows[i].Cells["加料A"].Value.ToString() != "")
                 {
@@ -685,7 +686,7 @@ namespace mySystem
             dt_prodinstr.Rows[0]["加料B2合计"] = sum_加料B2;
             dt_prodinstr.Rows[0]["工时合计"] = Math.Round((float)sum_工时, 2);
 
-            float temp=(sum_生产数量 + sum_生产重量) / sum_工时;
+            float temp = (sum_生产重量 + sum_废品重量) / sum_工时;
             dt_prodinstr.Rows[0]["工时效率"] =Math.Round((float)temp, 2) ;
 
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);

@@ -527,7 +527,7 @@ namespace mySystem.Process.Extruction.B
         {
             dr["生产指令ID"] = __生产指令ID;
 			dr["生产指令"]=lbl生产指令.Text;
-			dr["生产开始时间"]=Convert.ToDateTime(lbl生产开始时间.Text);
+			dr["生产开始时间"]=Convert.ToDateTime(lbl生产开始时间.Text).ToString("yyyy/MM/dd");
 			dr["生产结束时间"]=Convert.ToDateTime(dtp生产结束时间.Value.ToString());
             dr["审核员"] = "";
             dr["合计不良品数量"] = 0;
@@ -545,7 +545,7 @@ namespace mySystem.Process.Extruction.B
         {
             string sqlStr = "SELECT 开始生产日期 FROM 生产指令信息表 WHERE ID = " + __生产指令ID.ToString();
             OleDbCommand sqlCmd = new OleDbCommand(sqlStr, conOle);
-            lbl生产开始时间.Text =Convert.ToDateTime( sqlCmd.ExecuteScalar().ToString()).ToLongDateString();
+            lbl生产开始时间.Text =Convert.ToDateTime( sqlCmd.ExecuteScalar().ToString()).ToString("yyyy/MM/dd");
         }
 
         private void getProductCode()
@@ -1044,6 +1044,7 @@ namespace mySystem.Process.Extruction.B
             {
                 cmb打印机选择.Items.Add(sPrint);
             }
+            cmb打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         private void btn打印_Click(object sender, EventArgs e)
@@ -1071,13 +1072,13 @@ namespace mySystem.Process.Extruction.B
             // 修改Sheet中某行某列的值
 
             my.Cells[3, 1].Value = "生产指令：" + lbl生产指令.Text;
-            my.Cells[3, 6].Value = "生产时段：" + lbl生产开始时间.Text + "--" + dtp生产结束时间.Value.ToLongDateString();
+            my.Cells[3, 6].Value = "生产时段：" + lbl生产开始时间.Text + "--" + dtp生产结束时间.Value.ToString("yyyy年MM月dd日");
             
 
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
                 my.Cells[i + 5, 1].Value = dtInner.Rows[i]["序号"];
-                my.Cells[i + 5, 2].Value = Convert.ToDateTime(dtInner.Rows[i]["生产日期"]).ToLongDateString();
+                my.Cells[i + 5, 2].Value = Convert.ToDateTime(dtInner.Rows[i]["生产日期"]).ToString("yyyy年MM月dd日");
                 my.Cells[i + 5, 3].Value = dtInner.Rows[i]["班次"];
                 my.Cells[i + 5, 4].Value = dtInner.Rows[i]["产品代码"];
                 my.Cells[i + 5, 5].Value = dtInner.Rows[i]["不良品数量"].ToString();
@@ -1132,6 +1133,11 @@ namespace mySystem.Process.Extruction.B
                 ids.Add(Convert.ToInt32(dr["ID"]));
             }
             return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+        }
+
+        private void Waste_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

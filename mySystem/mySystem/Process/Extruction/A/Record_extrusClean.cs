@@ -889,6 +889,7 @@ namespace WindowsFormsApplication1
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
         private void bt打印_Click(object sender, EventArgs e)
         {
@@ -973,9 +974,9 @@ namespace WindowsFormsApplication1
                 }
             }
 
-            my.Cells[3, 2].Value = dtp清洁日期.Value.ToLongDateString();
+            my.Cells[3, 2].Value = dtp清洁日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[3, 7].Value = ckb白班.Checked==true?"白班":"夜班";
-            my.Cells[3, 11].Value = dtp复核日期.Value.ToLongDateString() ;
+            my.Cells[3, 11].Value = dtp复核日期.Value.ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1] = dataGridView1.Rows[i].Cells[2].Value.ToString();

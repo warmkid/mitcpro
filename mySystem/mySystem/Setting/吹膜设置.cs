@@ -646,6 +646,9 @@ namespace mySystem.Setting
             DataRow dr = dt产品编码.NewRow();
             dt产品编码.Rows.InsertAt(dt产品编码.NewRow(), dt产品编码.Rows.Count);
             setDataGridViewRowNums(this.dgv产品编码);
+            ////dgv产品编码.CurrentCell = dgv产品编码.Rows[dgv产品编码.Rows.Count - 1].Cells[1];
+            ////dgv产品编码.BeginEdit(true);
+            //dgv产品编码.Rows[dgv产品编码.Rows.Count - 1].Cells
         }
 
         private void del产品编码_Click(object sender, EventArgs e)
