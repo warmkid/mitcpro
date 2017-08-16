@@ -360,8 +360,8 @@ namespace BatchProductRecord
             bt日志.Enabled = false;
 
             tb指令编号.Enabled = true;
-            bt查询插入.Enabled = true;           
-          
+            bt查询插入.Enabled = true;
+            tb指令编号.Text = mySystem.Parameter.proInstruction;
         }
 
         public ProcessProductInstru(mySystem.MainForm mainform,int id)
@@ -409,6 +409,8 @@ namespace BatchProductRecord
 
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
+
+            
         }
 
         private void init()

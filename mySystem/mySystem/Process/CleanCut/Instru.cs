@@ -67,6 +67,7 @@ namespace mySystem.Process.CleanCut
             tb指令编号.Enabled = true;
             bt查询插入.Enabled = true;
 
+            tb指令编号.Text = mySystem.Parameter.cleancutInstruction;
         }
 
         public Instru(mySystem.MainForm mainform, int id)
