@@ -513,6 +513,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExtructionpRoductionAndRestRecordStep6";
             this.Text = "吹膜工序生产和检验记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExtructionpRoductionAndRestRecordStep6_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

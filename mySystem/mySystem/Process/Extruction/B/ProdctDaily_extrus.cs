@@ -679,7 +679,7 @@ namespace mySystem
                 }
             }
             dt_prodinstr.Rows[0]["生产数量合计"] = sum_生产数量;
-            dt_prodinstr.Rows[0]["生产重量合计"] = sum_生产重量;
+            dt_prodinstr.Rows[0]["生产重量合计"] = double.Parse(sum_生产重量.ToString("f1"));
             dt_prodinstr.Rows[0]["废品重量合计"] = sum_废品重量;
             dt_prodinstr.Rows[0]["加料A合计"] = sum_加料A;
             dt_prodinstr.Rows[0]["加料B1C合计"] = sum_加料B1C;

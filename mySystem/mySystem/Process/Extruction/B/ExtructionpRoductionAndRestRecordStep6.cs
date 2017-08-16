@@ -17,6 +17,7 @@ namespace mySystem.Extruction.Process
 {
     public partial class ExtructionpRoductionAndRestRecordStep6 : BaseForm
     {
+        bool isSaveClicked = false;
         private String table = "吹膜工序生产和检验记录";
         private String tableInfo = "吹膜工序生产和检验记录详细信息";
 
@@ -83,7 +84,7 @@ namespace mySystem.Extruction.Process
         public ExtructionpRoductionAndRestRecordStep6(MainForm mainform, Int32 ID) : base(mainform)
         {
             InitializeComponent();
-
+            isSaveClicked = true;
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
@@ -701,6 +702,7 @@ namespace mySystem.Extruction.Process
         //保存按钮
         private void SaveBtn_Click(object sender, EventArgs e)
         {
+            isSaveClicked = true;
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
@@ -1104,6 +1106,15 @@ namespace mySystem.Extruction.Process
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+        }
+
+        private void ExtructionpRoductionAndRestRecordStep6_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSaveClicked && dt记录.Rows.Count > 0)
+            {
+                dt记录.Rows[0].Delete();
+                da记录.Update((DataTable)bs记录.DataSource);
+            }
         }
 
     
