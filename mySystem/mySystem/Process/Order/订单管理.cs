@@ -29,11 +29,11 @@ namespace 订单和库存管理
             conn.Open();
 
             // 绑定控件
-            readFromDatabase();
-            bindControl();
-            dataGridView1.ReadOnly = true;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.RowHeadersVisible = false;
+            //readFromDatabase();
+            //bindControl();
+            //datagridview1.ReadOnly = true;
+            //dataGridView1.AllowUserToAddRows = false;
+            //dataGridView1.RowHeadersVisible = false;
             // TODO 查询
         }
 
@@ -55,7 +55,7 @@ namespace 订单和库存管理
         private void bindControl()
         {
             bs.DataSource = dt;
-            dataGridView1.DataSource = bs.DataSource;
+            //dataGridView1.DataSource = bs.DataSource;
         }
     }
 }

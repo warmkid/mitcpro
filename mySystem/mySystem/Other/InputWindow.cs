@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace mySystem.Other
 {
-    public partial class InputWindow : BaseForm
+    public partial class InputTextWindow : BaseForm
     {
-        public InputWindow()
+        public InputTextWindow()
         {
             InitializeComponent();
         }
@@ -23,14 +23,22 @@ namespace mySystem.Other
 
         public static String getString(String lbl)
         {
-            InputWindow iw = new InputWindow();
+            InputTextWindow iw = new InputTextWindow();
             iw.label1.Text = lbl;
-            iw.ShowDialog();
-            return iw.textBox1.Text;
+            if (DialogResult.OK == iw.ShowDialog())
+            {
+                return iw.textBox1.Text;
+            }
+            else
+            {
+                return "";
+            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.Close();
         }
     }

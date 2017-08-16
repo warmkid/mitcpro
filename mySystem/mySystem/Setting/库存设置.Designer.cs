@@ -123,6 +123,7 @@
             this.del检验标准.TabIndex = 1;
             this.del检验标准.Text = "删除";
             this.del检验标准.UseVisualStyleBackColor = true;
+            this.del检验标准.Click += new System.EventHandler(this.del检验标准_Click);
             // 
             // add检验标准
             // 
@@ -133,6 +134,7 @@
             this.add检验标准.TabIndex = 0;
             this.add检验标准.Text = "添加";
             this.add检验标准.UseVisualStyleBackColor = true;
+            this.add检验标准.Click += new System.EventHandler(this.add检验标准_Click);
             // 
             // label1
             // 
@@ -147,12 +149,13 @@
             // Btn保存项目
             // 
             this.Btn保存项目.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存项目.Location = new System.Drawing.Point(967, 456);
+            this.Btn保存项目.Location = new System.Drawing.Point(968, 468);
             this.Btn保存项目.Name = "Btn保存项目";
             this.Btn保存项目.Size = new System.Drawing.Size(90, 33);
             this.Btn保存项目.TabIndex = 57;
             this.Btn保存项目.Text = "保存设置";
             this.Btn保存项目.UseVisualStyleBackColor = true;
+            this.Btn保存项目.Click += new System.EventHandler(this.Btn保存项目_Click);
             // 
             // groupBox6
             // 
@@ -183,6 +186,7 @@
             this.del供应商.TabIndex = 1;
             this.del供应商.Text = "删除";
             this.del供应商.UseVisualStyleBackColor = true;
+            this.del供应商.Click += new System.EventHandler(this.del供应商_Click);
             // 
             // add供应商
             // 
@@ -193,6 +197,7 @@
             this.add供应商.TabIndex = 0;
             this.add供应商.Text = "添加";
             this.add供应商.UseVisualStyleBackColor = true;
+            this.add供应商.Click += new System.EventHandler(this.add供应商_Click);
             // 
             // label15
             // 

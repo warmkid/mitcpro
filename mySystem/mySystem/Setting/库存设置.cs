@@ -89,8 +89,8 @@ namespace mySystem.Setting
             this.dgv检验标准.Columns["ID"].Visible = false;
 
             //**************************   人员设置    ***********************************
-            dt人员 = new DataTable("用户"); //""中的是表名
-            da人员 = new OleDbDataAdapter("select * from 用户", mySystem.Parameter.connOle);
+            dt人员 = new DataTable("库存用户"); //""中的是表名
+            da人员 = new OleDbDataAdapter("select * from 库存用户", mySystem.Parameter.connOle);
             cb人员 = new OleDbCommandBuilder(da人员);
             dt人员.Columns.Add("序号", System.Type.GetType("System.String"));
             da人员.Fill(dt人员);
@@ -105,8 +105,8 @@ namespace mySystem.Setting
             this.dgv人员.Columns["ID"].Visible = false;
 
             //************************    人员权限     *******************************************
-            dt权限 = new DataTable("用户权限"); //""中的是表名
-            da权限 = new OleDbDataAdapter("select * from 用户权限", mySystem.Parameter.connOle);
+            dt权限 = new DataTable("库存用户权限"); //""中的是表名
+            da权限 = new OleDbDataAdapter("select * from 库存用户权限", mySystem.Parameter.connOle);
             cb权限 = new OleDbCommandBuilder(da权限);
             dt权限.Columns.Add("序号", System.Type.GetType("System.String"));
             da权限.Fill(dt权限);
@@ -253,7 +253,7 @@ namespace mySystem.Setting
                 }
 
             }
-            catch
+            catch(Exception ee)
             { MessageBox.Show("保存失败！", "错误"); }
         }
 
@@ -325,14 +325,14 @@ namespace mySystem.Setting
             Boolean b;
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = Parameter.connOle;
-            comm.CommandText = "select * from 用户 where 用户名 = " + "'" + name + "' ";
+            comm.CommandText = "select * from 库存用户 where 用户名 = " + "'" + name + "' ";
             OleDbDataReader reader = comm.ExecuteReader();
             if (reader.HasRows)
             { b = true; }
             else
             {
                 b = false;
-                MessageBox.Show("员工" + "“" + name + "”" + "无订单和库存管理权限，保存失败！");
+                MessageBox.Show("员工" + "“" + name + "”" + "无库存管理权限，保存失败！");
             }
 
             reader.Dispose();
@@ -398,14 +398,7 @@ namespace mySystem.Setting
             }
         }
 
-
-
-
-
-
-
-
-
+        
 
 
     }

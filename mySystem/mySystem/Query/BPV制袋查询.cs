@@ -235,8 +235,10 @@ namespace mySystem.Query
         private void EachBind(DataGridView dgv, String tblName, String person, String startDate, String instruID)
         {
             dt = new DataTable(tblName); //""中的是表名
-            if (person != null && startDate != null && instruID == null) // 人 + 日期
+            if (person != null && startDate != null && instruID == null)
+            {// 人 + 日期
                 da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            }
             else if (person == null && startDate != null && instruID != null) // 日期 + 生产指令
                 da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person != null && startDate == null && instruID != null) // 人 + 生产指令

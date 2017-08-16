@@ -233,22 +233,46 @@ namespace mySystem.Process.Stock
             switch (tabControl1.SelectedIndex)
             {
                 case 0: // 验收记录
-                    sql = @"select * from 物资验收记录 where 审核员 like '%{0}%' and 接收时间 between #{1}# and #{2}#";
-                    da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    if (shr != "")
+                    {
+                        sql = @"select * from 物资验收记录 where 审核员 like '%{0}%' and 接收时间 between #{1}# and #{2}#";
+                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    }
+                    else
+                    {
+                        sql = @"select * from 物资验收记录 where 审核员 is null and 接收时间 between #{0}# and #{1}#";
+                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), conn);
+                    }
                     dt物资验收记录 = new DataTable("物资验收记录");
                     da.Fill(dt物资验收记录);
                     物资验收记录Bind();
                     break;
                 case 1: // 请验记录
-                    sql = @"select * from 物资请验单 where 审核员 like '%{0}%' and 请验时间 between #{1}# and #{2}#";
-                    da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    if (shr != "")
+                    {
+                        sql = @"select * from 物资请验单 where 审核员 like '%{0}%' and 请验时间 between #{1}# and #{2}#";
+                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    }
+                    else
+                    {
+                        sql = @"select * from 物资请验单 where 审核员 is null and 请验时间 between #{0}# and #{1}#";
+                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), conn);
+                    }
                     dt物资请验单 = new DataTable("物资请验单");
                     da.Fill(dt物资请验单);
                     物资请验单Bind();
                     break;
                 case 2: // 检验记录
-                    sql = @"select * from 检验记录 where 审核员 like '%{0}%' and 检验日期 between #{1}# and #{2}#";
-                    da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    if (shr != "")
+                    {
+                        sql = @"select * from 检验记录 where 审核员 like '%{0}%' and 检验日期 between #{1}# and #{2}#";
+                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                    }
+                    else
+                    {
+                        sql = @"select * from 检验记录 where 审核员 is null and 检验日期 between #{0}# and #{1}#";
+                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), conn);
+                    }
                     dt检验记录 = new DataTable("检验记录");
                     da.Fill(dt检验记录);
                     检验记录Bind();
@@ -257,8 +281,16 @@ namespace mySystem.Process.Stock
                     MessageBox.Show("该表格数据项太多，不知道以哪几个为依据查询");
                     break;
                 case 4: // 取样记录
-                    sql = @"select * from 取样记录 where 审核员 like '%{0}%'";
-                    da = new OleDbDataAdapter(string.Format(sql, shr), conn);
+                    if (shr != "")
+                    {
+                        sql = @"select * from 取样记录 where 审核员 like '%{0}%'";
+                        da = new OleDbDataAdapter(string.Format(sql, shr), conn);
+                    }
+                    else
+                    {
+                        sql = @"select * from 取样记录 where 审核员 is null";
+                        da = new OleDbDataAdapter(sql, conn);
+                    }
                     dt取样记录 = new DataTable("取样记录");
                     da.Fill(dt取样记录);
                     取样记录Bind();
