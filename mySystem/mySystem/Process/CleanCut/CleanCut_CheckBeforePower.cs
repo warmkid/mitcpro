@@ -587,6 +587,7 @@ namespace mySystem.Process.CleanCut
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+
             foreach (DataGridViewRow gdvr in dataGridView1.Rows)
             {
                 if (gdvr.DefaultCellStyle.BackColor == Color.Red)

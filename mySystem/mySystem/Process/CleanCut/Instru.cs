@@ -427,6 +427,12 @@ namespace mySystem.Process.CleanCut
                     setControlTrue();
                     bt审核.Enabled = true;
                 }
+                else if (Parameter.FormState.审核通过 == _formState)
+                {
+                    setControlFalse();
+                    if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) != 4)
+                        btn更改.Enabled = true;
+                }
                 else setControlFalse();
             }
             if (Parameter.UserState.操作员 == _userState)
@@ -957,6 +963,11 @@ namespace mySystem.Process.CleanCut
                     oXL = null;
                 }
             }  
+        }
+
+        private void btn更改_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

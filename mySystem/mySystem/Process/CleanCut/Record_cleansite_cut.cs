@@ -145,7 +145,7 @@ namespace mySystem.Process.CleanCut
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
-            prodcode = tempdt.Rows[0]["产品代码"].ToString();
+            //prodcode = tempdt.Rows[0]["产品代码"].ToString();
 
             readOuterData(instrid, prodcode);
             removeOuterBinding();
@@ -627,8 +627,44 @@ namespace mySystem.Process.CleanCut
         //审核按钮
         private void bt审核_Click(object sender, EventArgs e)
         {
-            checkform = new CheckForm(this);
-            checkform.Show();
+
+            if (DialogResult.Yes == MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                if (checkform != null)
+                    checkform.Dispose();
+                checkform = new mySystem.CheckForm(this);
+                checkform.FormClosed += new FormClosedEventHandler(checkform_FormClosed);
+                checkform.ShowDialog();
+            }
+            //checkform = new CheckForm(this);
+            //checkform.Show();
+        }
+
+        void checkform_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //审核通过
+            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+            {
+                //日报表调用带ID的
+                DataTable dt_日报表 = new DataTable("清洁分切日报表");
+                OleDbDataAdapter da_日报表 = new OleDbDataAdapter("select * from 清洁分切日报表 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_日报表 = new OleDbCommandBuilder(da_日报表);
+                da_日报表.Fill(dt_日报表);
+                int id_日报表 = (int)dt_日报表.Rows[0]["ID"];
+                new DailyRecord(mainform, id_日报表);
+
+                //result = MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (true)
+                {
+                    DataTable dt_tempdt = new DataTable("清洁分切工序生产指令");
+                    OleDbDataAdapter da_tempdt = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID=" + instrid, mySystem.Parameter.connOle);
+                    OleDbCommandBuilder cb_prodinstr = new OleDbCommandBuilder(da_tempdt);
+                    da_tempdt.Fill(dt_tempdt);
+
+                    dt_tempdt.Rows[0]["状态"] = 4;
+                    da_tempdt.Update(dt_tempdt);
+                }
+            }
         }
 
         //审核
@@ -680,7 +716,7 @@ namespace mySystem.Process.CleanCut
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "不合格")
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
                 {
                     MessageBox.Show("有条目待确认");
                     return;
