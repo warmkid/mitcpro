@@ -68,6 +68,7 @@
             this.label41 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lbl生产指令编码 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -87,9 +88,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(15, 68);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(63, 14);
+            this.label2.Size = new System.Drawing.Size(91, 14);
             this.label2.TabIndex = 1;
-            this.label2.Text = "产品代码";
+            this.label2.Text = "生产指令编码";
             // 
             // label3
             // 
@@ -109,6 +110,7 @@
             this.label4.Size = new System.Drawing.Size(63, 14);
             this.label4.TabIndex = 3;
             this.label4.Text = "产品批号";
+            this.label4.Visible = false;
             // 
             // label5
             // 
@@ -143,6 +145,7 @@
             this.tb产品批号.ReadOnly = true;
             this.tb产品批号.Size = new System.Drawing.Size(100, 23);
             this.tb产品批号.TabIndex = 8;
+            this.tb产品批号.Visible = false;
             // 
             // dtp生产日期
             // 
@@ -309,10 +312,11 @@
             // cb产品代码
             // 
             this.cb产品代码.FormattingEnabled = true;
-            this.cb产品代码.Location = new System.Drawing.Point(84, 64);
+            this.cb产品代码.Location = new System.Drawing.Point(183, 26);
             this.cb产品代码.Name = "cb产品代码";
-            this.cb产品代码.Size = new System.Drawing.Size(189, 22);
+            this.cb产品代码.Size = new System.Drawing.Size(129, 22);
             this.cb产品代码.TabIndex = 24;
+            this.cb产品代码.Visible = false;
             // 
             // ckb合格
             // 
@@ -379,6 +383,7 @@
             this.bt插入查询.TabIndex = 31;
             this.bt插入查询.Text = "插入/查询";
             this.bt插入查询.UseVisualStyleBackColor = true;
+            this.bt插入查询.Visible = false;
             this.bt插入查询.Click += new System.EventHandler(this.bt插入查询_Click);
             // 
             // label40
@@ -429,11 +434,21 @@
             this.pictureBox1.TabIndex = 87;
             this.pictureBox1.TabStop = false;
             // 
+            // lbl生产指令编码
+            // 
+            this.lbl生产指令编码.AutoSize = true;
+            this.lbl生产指令编码.Location = new System.Drawing.Point(142, 68);
+            this.lbl生产指令编码.Name = "lbl生产指令编码";
+            this.lbl生产指令编码.Size = new System.Drawing.Size(91, 14);
+            this.lbl生产指令编码.TabIndex = 88;
+            this.lbl生产指令编码.Text = "生产指令编码";
+            // 
             // Record_cleansite_cut
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 499);
+            this.Controls.Add(this.lbl生产指令编码);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label41);
             this.Controls.Add(this.label角色);
@@ -521,5 +536,6 @@
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label lbl生产指令编码;
     }
 }
