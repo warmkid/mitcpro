@@ -186,7 +186,7 @@ namespace mySystem.Process.Bag.PTV
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            PTVBag_dailyreport daily = new PTVBag_dailyreport();
+            PTVBag_dailyreport daily = new PTVBag_dailyreport(mainform);
             daily.ShowDialog();
         }
 

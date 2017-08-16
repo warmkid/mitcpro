@@ -258,7 +258,6 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1084, 147);
             this.dataGridView1.TabIndex = 11;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // Column1
             // 
@@ -325,7 +324,6 @@
             this.splitContainer1.Panel1.Controls.Add(this.label10);
             this.splitContainer1.Panel1.Controls.Add(this.label9);
             this.splitContainer1.Panel1.Controls.Add(this.label8);
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
             // 
             // splitContainer1.Panel2
             // 
@@ -393,7 +391,6 @@
             this.label8.Size = new System.Drawing.Size(35, 14);
             this.label8.TabIndex = 7;
             this.label8.Text = "工序";
-            this.label8.Click += new System.EventHandler(this.label8_Click);
             // 
             // splitContainer2
             // 
@@ -935,7 +932,6 @@
             this.button1.TabIndex = 22;
             this.button1.Text = "保存";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // panel1
             // 
@@ -985,7 +981,6 @@
             this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "Bagprocess_prod_instru";
             this.Text = "Bagprocess_prod_instru";
-            this.Load += new System.EventHandler(this.Bagprocess_prod_instru_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

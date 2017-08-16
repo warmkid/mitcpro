@@ -15,30 +15,5 @@ namespace mySystem.Process.Bag
         {
             InitializeComponent();
         }
-
-        private void label8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Bagprocess_prod_instru_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void splitContainer1_Panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
     }
 }

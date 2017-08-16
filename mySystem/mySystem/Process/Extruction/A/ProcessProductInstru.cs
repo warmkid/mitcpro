@@ -360,8 +360,8 @@ namespace BatchProductRecord
             bt日志.Enabled = false;
 
             tb指令编号.Enabled = true;
-            bt查询插入.Enabled = true;           
-          
+            bt查询插入.Enabled = true;
+            tb指令编号.Text = mySystem.Parameter.proInstruction;
         }
 
         public ProcessProductInstru(mySystem.MainForm mainform,int id)
@@ -409,6 +409,8 @@ namespace BatchProductRecord
 
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
+
+            
         }
 
         private void init()
@@ -1757,11 +1759,17 @@ namespace BatchProductRecord
 
         private void bt更改_Click(object sender, EventArgs e)
         {
+            if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"])==1)
+            {
+                MessageBox.Show("该指令还未被接收，无法更改!");
+                return;
+            }
             DataRow dr = dt_prodinstr.NewRow();
             dr.ItemArray = dt_prodinstr.Rows[0].ItemArray.Clone() as object[];
             dt_prodinstr.Rows[0]["审批人"] = "";
             string newcode = dr["生产指令编号"].ToString() + " 更改" + DateTime.Now.ToString("yyyyMMdd");
             dr["生产指令编号"] = newcode;
+            dr["状态"] = 4;
             //写日志
             string log = "\n=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 更改生产指令计划\n";

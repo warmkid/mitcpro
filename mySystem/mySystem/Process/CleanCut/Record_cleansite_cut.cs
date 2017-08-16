@@ -70,6 +70,63 @@ namespace mySystem.Process.CleanCut
             cb产品代码.Enabled = true;
             bt插入查询.Enabled = true;
             dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
+
+
+
+            //if (cb产品代码.Text == "")
+            //{
+            //    MessageBox.Show("选择一条产品代码");
+            //    return;
+            //}
+            //if (_userState != Parameter.UserState.操作员)
+            //{
+            //    MessageBox.Show("只有操作员才能新建记录");
+            //    return;
+            //}
+            cb产品代码.Enabled = false;
+            bt插入查询.Enabled = false;
+
+            instrid = mySystem.Parameter.cleancutInstruID;
+            prodcode = cb产品代码.Text;
+            readOuterData(instrid, prodcode);
+            removeOuterBinding();
+            outerBind();
+            if (dt_prodinstr.Rows.Count <= 0)
+            {
+                DataRow dr = dt_prodinstr.NewRow();
+                dr = writeOuterDefault(dr);
+                dt_prodinstr.Rows.Add(dr);
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(instrid, prodcode);
+                removeOuterBinding();
+                outerBind();
+            }
+
+            ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["生产班次"];
+            ckb夜班.Checked = !ckb白班.Checked;
+
+            if (dt_prodinstr.Rows[0]["审核人"].ToString() != "" && dt_prodinstr.Rows[0]["审核人"].ToString() != "__待审核")
+            {
+                ckb合格.Checked = (bool)dt_prodinstr.Rows[0]["审核是否通过"];
+                ckb不合格.Checked = !ckb合格.Checked;
+            }
+            else
+            {
+                ckb合格.Checked = false;
+                ckb不合格.Checked = false;
+            }
+
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            addOtherEvnetHandler();
+            setFormState();
+            setEnableReadOnly();
+
+            cb产品代码.Enabled = false;
+            bt插入查询.Enabled = false;
+
+
         }
 
         public Record_cleansite_cut(mySystem.MainForm mainform, int id)
@@ -88,7 +145,7 @@ namespace mySystem.Process.CleanCut
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
-            prodcode = tempdt.Rows[0]["产品代码"].ToString();
+            //prodcode = tempdt.Rows[0]["产品代码"].ToString();
 
             readOuterData(instrid, prodcode);
             removeOuterBinding();
@@ -125,9 +182,9 @@ namespace mySystem.Process.CleanCut
         {
             if (e.ColumnIndex < 0)
                 return;
-            if (e.ColumnIndex == 5)
+            if (e.ColumnIndex == 4)
             {
-                if (dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString() == "合格")
+                if (dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString() == "合格")
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 else
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
@@ -219,7 +276,7 @@ namespace mySystem.Process.CleanCut
                 return false;
             for (int i = 0; i < dt_清场设置.Rows.Count; i++)
             {
-                if (dt_清场设置.Rows[i]["清场项目"].ToString() != dt_prodlist.Rows[i]["清场项目"].ToString() || dt_清场设置.Rows[i]["清场要点"].ToString() != dt_prodlist.Rows[i]["清场要点"].ToString())
+                if (dt_清场设置.Rows[i]["清场内容"].ToString() != dt_prodlist.Rows[i]["清场内容"].ToString())
                     return false;
             }
             return true;
@@ -352,9 +409,13 @@ namespace mySystem.Process.CleanCut
         // 给外表的一行写入默认值
         DataRow writeOuterDefault(DataRow dr)
         {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID="+instrid,mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
             dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
-            dr["产品代码"] = prodcode;
-            dr["产品批号"] = dict_prod[prodcode];
+            dr["生产指令编码"] = dt.Rows[0]["生产指令编号"];
+            //dr["产品代码"] = prodcode;
+            //dr["产品批号"] = dict_prod[prodcode];
             dr["生产日期"] = DateTime.Now;
             dr["生产班次"] = mySystem.Parameter.userflight=="白班"?true:false;
             dr["清场人"] = mySystem.Parameter.userName;
@@ -374,7 +435,8 @@ namespace mySystem.Process.CleanCut
         {
             dt_prodinstr = new DataTable("清场记录");
             bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid + " and 产品代码='"+prodcode+"'", mySystem.Parameter.connOle);
+            //da_prodinstr = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid + " and 产品代码='" + prodcode + "'", mySystem.Parameter.connOle);
+            da_prodinstr = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid , mySystem.Parameter.connOle);
             cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
             da_prodinstr.Fill(dt_prodinstr);
         }
@@ -395,8 +457,8 @@ namespace mySystem.Process.CleanCut
                     DataRow ndr = dt_prodlist.NewRow();
                     ndr[1] = (int)dt_prodinstr.Rows[0]["ID"];
                     ndr["序号"] = index++;
-                    ndr["清场项目"] = dr["清场项目"];
-                    ndr["清场要点"] = dr["清场要点"];
+                    ndr["清场内容"] = dr["清场内容"];
+                    //ndr["清场要点"] = dr["清场要点"];
                     ndr["清洁操作"] = "合格";
                     dt_prodlist.Rows.Add(ndr);
                 }
@@ -417,6 +479,8 @@ namespace mySystem.Process.CleanCut
             tb备注.DataBindings.Clear();
             tb操作员备注.DataBindings.Clear();
 
+            lbl生产指令编码.DataBindings.Clear();
+
 
         }
         // 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
@@ -435,6 +499,8 @@ namespace mySystem.Process.CleanCut
             dtp生产日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "生产日期");
             tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "备注");
             tb操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作员备注");
+
+            lbl生产指令编码.DataBindings.Add("Text", bs_prodinstr.DataSource, "生产指令编码");
         }
         // 内表和控件的绑定
         void innerBind()
@@ -531,9 +597,9 @@ namespace mySystem.Process.CleanCut
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "合格")
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "不合格")
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
             }
         }
@@ -561,8 +627,44 @@ namespace mySystem.Process.CleanCut
         //审核按钮
         private void bt审核_Click(object sender, EventArgs e)
         {
-            checkform = new CheckForm(this);
-            checkform.Show();
+
+            if (DialogResult.Yes == MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+            {
+                if (checkform != null)
+                    checkform.Dispose();
+                checkform = new mySystem.CheckForm(this);
+                checkform.FormClosed += new FormClosedEventHandler(checkform_FormClosed);
+                checkform.ShowDialog();
+            }
+            //checkform = new CheckForm(this);
+            //checkform.Show();
+        }
+
+        void checkform_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //审核通过
+            if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
+            {
+                //日报表调用带ID的
+                DataTable dt_日报表 = new DataTable("清洁分切日报表");
+                OleDbDataAdapter da_日报表 = new OleDbDataAdapter("select * from 清洁分切日报表 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_日报表 = new OleDbCommandBuilder(da_日报表);
+                da_日报表.Fill(dt_日报表);
+                int id_日报表 = (int)dt_日报表.Rows[0]["ID"];
+                new DailyRecord(mainform, id_日报表);
+
+                //result = MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (true)
+                {
+                    DataTable dt_tempdt = new DataTable("清洁分切工序生产指令");
+                    OleDbDataAdapter da_tempdt = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID=" + instrid, mySystem.Parameter.connOle);
+                    OleDbCommandBuilder cb_prodinstr = new OleDbCommandBuilder(da_tempdt);
+                    da_tempdt.Fill(dt_tempdt);
+
+                    dt_tempdt.Rows[0]["状态"] = 4;
+                    da_tempdt.Update(dt_tempdt);
+                }
+            }
         }
 
         //审核
@@ -614,7 +716,7 @@ namespace mySystem.Process.CleanCut
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() == "不合格")
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
                 {
                     MessageBox.Show("有条目待确认");
                     return;

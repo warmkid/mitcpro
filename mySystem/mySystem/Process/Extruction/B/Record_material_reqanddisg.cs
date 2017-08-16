@@ -14,6 +14,7 @@ namespace mySystem.Extruction.Process
 {
     public partial class Record_material_reqanddisg : mySystem.BaseForm
     {
+        bool isSaved = false;
         //private int instrid;
         private DataTable dt_prodinstr, dt_prodlist;
         private OleDbDataAdapter da_prodinstr, da_prodlist;
@@ -369,6 +370,7 @@ namespace mySystem.Extruction.Process
             : base(mainform)
         {
             InitializeComponent();
+            isSaved = true;
             fill_printer();
             getPeople();
             setUserState();
@@ -484,6 +486,7 @@ namespace mySystem.Extruction.Process
 
         private void button1_Click(object sender, EventArgs e)
         {
+            isSaved = true;
             bool rt = save();
             //控件可见性
             if (rt && _userState == Parameter.UserState.操作员)
@@ -1381,6 +1384,15 @@ namespace mySystem.Extruction.Process
             }
             bs_prodlist.DataSource = dt_prodlist;
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+        }
+
+        private void Record_material_reqanddisg_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSaved&&dt_prodinstr.Rows.Count>0)
+            {
+                dt_prodinstr.Rows[0].Delete();
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
         }
     }
 }

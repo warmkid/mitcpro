@@ -185,7 +185,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "BPV生产前确认记录");
             if (b)
             {
-                BTVConfirmBefore mydlg = new BTVConfirmBefore();
+                BTVConfirmBefore mydlg = new BTVConfirmBefore(mainform);
                 mydlg.ShowDialog();
             }
             else
