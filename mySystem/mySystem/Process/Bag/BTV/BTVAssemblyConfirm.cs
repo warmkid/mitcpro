@@ -15,8 +15,13 @@ namespace mySystem.Process.Bag.BTV
 {
     public partial class BTVAssemblyConfirm : BaseForm
     {
-
+        /// <summary>
+        /// BPV装配确认记录
+        /// </summary>
         private String table = "BPV装配确认记录";
+        /// <summary>
+        /// BPV装配确认记录详细信息
+        /// </summary>
         private String tableInfo = "BPV装配确认记录详细信息";
 
         private SqlConnection conn = null;
@@ -834,6 +839,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮

@@ -23,7 +23,13 @@ namespace mySystem.Process.Bag.BTV
          * REMOVE 设定 COLUMN IN 底封机运行记录详细信息( ACTUALLY DO NOT HAVE TO)
          */
 
+        /// <summary>
+        /// 底封机运行记录
+        /// </summary>
         private String table = "底封机运行记录";
+        /// <summary>
+        /// 底封机运行记录详细信息
+        /// </summary>
         private String tableInfo = "底封机运行记录详细信息";
 
         private SqlConnection conn = null;
@@ -829,6 +835,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮
