@@ -348,12 +348,12 @@ namespace mySystem.Query
                         mydlg10.Show();
                         break;
                     case "底封机运行记录":
-                        //BTVRunningRecordDF mydlg11 = new BTVRunningRecordDF(mainform, ID);
-                        //mydlg11.Show();
+                        BTVRunningRecordDF mydlg11 = new BTVRunningRecordDF(mainform, ID);
+                        mydlg11.Show();
                         break;
                     case "泄漏测试记录":
-                        //BTVLeakTest mydlg12 = new BTVLeakTest(mainform, ID);
-                        //mydlg12.Show();
+                        BTVLeakTest mydlg12 = new BTVLeakTest(mainform, ID);
+                        mydlg12.Show();
                         break;
                     case "2D袋体与船型接口热合记录":
                         BTV2DShipHeat mydlg13 = new BTV2DShipHeat(mainform, ID);

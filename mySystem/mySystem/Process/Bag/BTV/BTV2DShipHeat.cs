@@ -15,7 +15,13 @@ namespace mySystem.Process.Bag.BTV
 {
     public partial class BTV2DShipHeat : BaseForm
     {
+        /// <summary>
+        /// 2DBag袋体与船型接口热合记录
+        /// </summary>
         private String table = "2DBag袋体与船型接口热合记录";
+        /// <summary>
+        /// 2DBag袋体与船型接口热合记录
+        /// </summary>
         private String tableInfo = "2DBag袋体与船型接口热合记录详细信息";
 
         private SqlConnection conn = null;
@@ -794,6 +800,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮
