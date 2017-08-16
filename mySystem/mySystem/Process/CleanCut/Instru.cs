@@ -967,7 +967,42 @@ namespace mySystem.Process.CleanCut
 
         private void btn更改_Click(object sender, EventArgs e)
         {
+            if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) == 1)
+            {
+                MessageBox.Show("该指令还未被接收，无法更改!");
+                return;
+            }
+            DataRow dr = dt_prodinstr.NewRow();
+            dr.ItemArray = dt_prodinstr.Rows[0].ItemArray.Clone() as object[];
+            dt_prodinstr.Rows[0]["审核人"] = "";
+            string newcode = dr["生产指令编号"].ToString() + " 更改" + DateTime.Now.ToString("yyyyMMdd");
+            dr["生产指令编号"] = newcode;
+            dr["状态"] = 4;
+            //写日志
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 更改生产指令计划\n";
+            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
+            dt_prodinstr.Rows.Add(dr);
+            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            readOuterData(newcode);
+
+            int newid = (int)dt_prodinstr.Rows[dt_prodinstr.Rows.Count - 1]["ID"];
+            int count = dt_prodlist.Rows.Count;
+            for (int i = 0; i < count; i++)
+            {
+                DataRow dr_list = dt_prodlist.NewRow();
+                dr_list.ItemArray = dt_prodlist.Rows[i].ItemArray.Clone() as object[];
+                dr_list["T生产指令表ID"] = newid;
+                dt_prodlist.Rows.Add(dr_list);
+            }
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+            MessageBox.Show("更改成功");
+            setFormState();
+            setEnableReadOnly();
         }
     }
 }
