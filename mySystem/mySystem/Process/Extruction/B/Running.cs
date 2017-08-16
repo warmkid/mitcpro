@@ -38,7 +38,7 @@ namespace mySystem.Process.Extruction.B
         List<string> weightright = new List<string>(new string[] { "(Hz)", "(Hz)", "(kg)", "(kg)", "(A)", "(%)" });
         List<string> ls操作员;// = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
         List<string> ls审核员;//= new List<string>(new string[] { dtUser.Rows[0]["审核员"].ToString() });
-        string note = "--------";
+        string note = "-";
         string __待审核 = "__待审核";
         int searchId;
         DataTable dtSetting;
@@ -864,9 +864,9 @@ namespace mySystem.Process.Extruction.B
                     }
                 }
             }
-            if(tb.Equals(array1[9][11])) return true;
-            if(tb.Equals(array1[11][11])) return true;
-            if(tb.Equals(array1[13][11])) return true;
+            //if(tb.Equals(array1[9][11])) return true;
+            //if(tb.Equals(array1[11][11])) return true;
+            //if(tb.Equals(array1[13][11])) return true;
             return false;
         }
 

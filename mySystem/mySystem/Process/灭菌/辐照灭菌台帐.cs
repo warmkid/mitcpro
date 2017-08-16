@@ -43,7 +43,7 @@ namespace mySystem.Process.灭菌
             setFormState();
             setEnableReadOnly();
             addOtherEventHandler();
-
+            setDataGridViewRowNums();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -104,7 +104,6 @@ namespace mySystem.Process.灭菌
             while (dataGridView1.Columns.Count > 0)
                 dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
             setDataGridViewColumns();
-            setDataGridViewFormat();
             bs台帐.DataSource = dt台帐;
             dataGridView1.DataSource = bs台帐.DataSource;
             index = dt台帐.Rows.Count;
@@ -127,14 +126,21 @@ namespace mySystem.Process.灭菌
         // 设置控件可用性，根据状态设置，状态是每个窗体的变量，放在父类中
         // 0：未保存；1：待审核；2：审核通过；3：审核未通过
         private void setEnableReadOnly()
-        { 
-        
+        {
+            if (_userState == Parameter.UserState.审核员 || _userState == Parameter.UserState.管理员)
+            {
+                b打印.Enabled = true;
+            }
+            else
+            {
+                b打印.Enabled = false;
+            }
         }
         // 其他事件，比如按钮的点击，数据有效性判断
         private void addOtherEventHandler()
         {
-            dataGridView1.DataError += dataGridView1_DataError;
-            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+           dataGridView1.DataError += dataGridView1_DataError;
+            //dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
 
@@ -211,40 +217,40 @@ namespace mySystem.Process.灭菌
         {          
             
             DataGridViewTextBoxColumn c2;
-         foreach (DataColumn dc in dt台帐.Columns)
-            {
-             switch(dc.ColumnName)
-            {
-                case "委托单号":
-                    c1 = new DataGridViewComboBoxColumn();
-                    c1.DataPropertyName = dc.ColumnName;
-                    c1.HeaderText = dc.ColumnName;
-                    c1.Name = dc.ColumnName;
-                    c1.DataPropertyName = dc.ColumnName;
-                    c1.SortMode = DataGridViewColumnSortMode.Automatic;
-                    c1.ValueType = dc.DataType;
-                    OleDbDataAdapter danhao_search = new OleDbDataAdapter("select 委托单号 from Gamma射线辐射灭菌委托单", mySystem.Parameter.connOle);
-                    DataTable da_danhao = new DataTable("委托单号查询");
-                    danhao_search.Fill(da_danhao);
-                    foreach (DataRow tdr in da_danhao.Rows)
-                    {
-                        c1.Items.Add(tdr["委托单号"]);
-                    }
-                    dataGridView1.Columns.Add(c1);
-                    //dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
-                    //dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;              
-                    break;
-                 default:
-                c2 = new DataGridViewTextBoxColumn();
-                c2.DataPropertyName = dc.ColumnName;
-                c2.HeaderText = dc.ColumnName;
-                c2.Name = dc.ColumnName;
-                c2.SortMode = DataGridViewColumnSortMode.Automatic;
-                c2.ValueType = dc.DataType;
-                dataGridView1.Columns.Add(c2);
-                break;
-            }
-            }
+         //foreach (DataColumn dc in dt台帐.Columns)
+         //   {
+         //    switch(dc.ColumnName)
+         //   {
+         //       case "委托单号":
+         //           c1 = new DataGridViewComboBoxColumn();
+         //           c1.DataPropertyName = dc.ColumnName;
+         //           c1.HeaderText = dc.ColumnName;
+         //           c1.Name = dc.ColumnName;
+         //           c1.DataPropertyName = dc.ColumnName;
+         //           c1.SortMode = DataGridViewColumnSortMode.Automatic;
+         //           c1.ValueType = dc.DataType;
+         //           OleDbDataAdapter danhao_search = new OleDbDataAdapter("select 委托单号 from Gamma射线辐射灭菌委托单", mySystem.Parameter.connOle);
+         //           DataTable da_danhao = new DataTable("委托单号查询");
+         //           danhao_search.Fill(da_danhao);
+         //           foreach (DataRow tdr in da_danhao.Rows)
+         //           {
+         //               c1.Items.Add(tdr["委托单号"]);
+         //           }
+         //           dataGridView1.Columns.Add(c1);
+         //           //dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+         //           //dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;              
+         //           break;
+         //        default:
+         //       c2 = new DataGridViewTextBoxColumn();
+         //       c2.DataPropertyName = dc.ColumnName;
+         //       c2.HeaderText = dc.ColumnName;
+         //       c2.Name = dc.ColumnName;
+         //       c2.SortMode = DataGridViewColumnSortMode.Automatic;
+         //       c2.ValueType = dc.DataType;
+         //       dataGridView1.Columns.Add(c2);
+         //       break;
+         //   }
+         //   }
 
         }
 
@@ -253,15 +259,16 @@ namespace mySystem.Process.灭菌
         {
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.ColumnHeadersHeight = 40;
-            dataGridView1.Columns["送去产品托盘数量个"].HeaderText = "送去产品托盘数量(个)";
-            dataGridView1.Columns["拉回产品托盘数量个"].HeaderText = "拉回产品托盘数量(个)";
+            //dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //dataGridView1.ColumnHeadersHeight = 40;
+            //dataGridView1.Columns["送去产品托盘数量个"].HeaderText = "送去产品托盘数量(个)";
+            //dataGridView1.Columns["拉回产品托盘数量个"].HeaderText = "拉回产品托盘数量(个)";
             dataGridView1.Columns["产品数量只"].HeaderText = "产品数量(只)";
             dataGridView1.Columns["产品数量箱"].HeaderText = "产品数量(箱)";
-            //第一列ID不显示
+            ////第一列ID不显示
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns["T辐照灭菌台帐ID"].Visible = false;
+            dataGridView1.Columns["审核员"].Visible = false;
             //dataGridView1.Columns["审核是否通过"].Visible = false;
             //dataGridView1.Columns["日志"].Visible = false;
         }
@@ -270,22 +277,22 @@ namespace mySystem.Process.灭菌
         private void bt添加_Click(object sender, EventArgs e)
         {
             //最后一行是否填满
-            //int index = dataGridView1.Rows.Count - 1;
-            //DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
-            //DataRow dr最后一行 = dt台帐.NewRow();
-            //dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
-            bool is填满 = is_filled();
+            ////int index = dataGridView1.Rows.Count - 1;
+            ////DataGridViewRow dgvr最后一行 = dataGridView1.Rows[index];
+            ////DataRow dr最后一行 = dt台帐.NewRow();
+            ////dr最后一行 = (dgvr最后一行.DataBoundItem as DataRowView).Row;
+            //bool is填满 = is_filled();
           
-            if (is填满)
-            {
-                DataRow dr新行 = dt台帐.NewRow();
-                dr新行 = writeInnerDefault(dr新行);
-                dt台帐.Rows.Add(dr新行);
-                setDataGridViewRowNums();
-                dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
-            }
-            else
-                MessageBox.Show("未填完");
+            //if (is填满)
+            //{
+            //    DataRow dr新行 = dt台帐.NewRow();
+            //    dr新行 = writeInnerDefault(dr新行);
+            //    dt台帐.Rows.Add(dr新行);
+            //    setDataGridViewRowNums();
+            //    dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            //}
+            //else
+            //    MessageBox.Show("未填完");
         }
 
         //设置序号递增
@@ -298,39 +305,39 @@ namespace mySystem.Process.灭菌
         }
 
         //写默认行数据
-        DataRow writeInnerDefault(DataRow dr)
-        {
-            dr["T辐照灭菌台帐ID"] = 8;
-            dr["委托日期"] = DateTime.Now.ToString("D");
-            dr["产品数量箱"] = 0;
-            dr["产品数量只"] = 0;
-            dr["送去产品托盘数量个"] = 0;
-            dr["拉回产品托盘数量个"] = 0;
-            dr["备注"] = "无";
-           // dr["操作员"] = mySystem.Parameter.userName;
-           // dr["日志"] = "无";
-            return dr;
-        }
+        //DataRow writeInnerDefault(DataRow dr)
+        //{
+        //   // dr["T辐照灭菌台帐ID"] = 8;
+        //   // dr["委托日期"] = DateTime.Now.ToString("D");
+        //   // dr["产品数量箱"] = 0;
+        //   // dr["产品数量只"] = 0;
+        //   // dr["送去产品托盘数量个"] = 0;
+        //   // dr["拉回产品托盘数量个"] = 0;
+        //   // dr["备注"] = "无";
+        //   //// dr["操作员"] = mySystem.Parameter.userName;
+        //   //// dr["日志"] = "无";
+        //   // return dr;
+        //}
 
         //保存数据到数据库
         private void bt保存_Click(object sender, EventArgs e)
         {
-            bool is填满 = is_filled();
-             bool is合法 = input_Judge();
-             if (is填满 && is合法)
-             {
-                 bs台帐.EndEdit();
-                 da台帐.Update((DataTable)bs台帐.DataSource);
-                 readInnerData();
-                 innerBind();
-             }
-             else if (!is合法 && is填满)
-                 MessageBox.Show("信息填写错误");
-             else if (is合法 && !is填满)
-                 MessageBox.Show("信息填写不完整");
-             else
-                 MessageBox.Show("信息填写错误且不完整");
-             index = dt台帐.Rows.Count;
+            //bool is填满 = is_filled();
+            // bool is合法 = input_Judge();
+            // if (is填满 && is合法)
+            // {
+            //     bs台帐.EndEdit();
+            //     da台帐.Update((DataTable)bs台帐.DataSource);
+            //     readInnerData();
+            //     innerBind();
+            // }
+            // else if (!is合法 && is填满)
+            //     MessageBox.Show("信息填写错误");
+            // else if (is合法 && !is填满)
+            //     MessageBox.Show("信息填写不完整");
+            // else
+            //     MessageBox.Show("信息填写错误且不完整");
+            // index = dt台帐.Rows.Count;
         }
 
         //某行数据是否填满
@@ -363,18 +370,18 @@ namespace mySystem.Process.灭菌
                 return true;
         }
         //输入用户姓名是否合法
-        private bool input_Judge()
-        {
-            int index = dataGridView1.Rows.Count - 1;
-            string str登记员=dt台帐.Rows[index]["登记员"].ToString();
-            string str审核员 = dt台帐.Rows[index]["审核员"].ToString();
-            if (mySystem.Parameter.NametoID(str登记员) <= 0 || mySystem.Parameter.NametoID(str审核员)<=0)
-            {              
-                return false;
-            }
-            else
-                return true;
-        }
+        //private bool input_Judge()
+        //{
+        //    //int index = dataGridView1.Rows.Count - 1;
+        //    //string str登记员=dt台帐.Rows[index]["登记员"].ToString();
+        //    //string str审核员 = dt台帐.Rows[index]["审核员"].ToString();
+        //    //if (mySystem.Parameter.NametoID(str登记员) <= 0 || mySystem.Parameter.NametoID(str审核员)<=0)
+        //    //{              
+        //    //    return false;
+        //    //}
+        //    //else
+        //    //    return true;
+        //}
 
         //打印功能
         public void print(bool isShow)
@@ -488,41 +495,41 @@ namespace mySystem.Process.灭菌
         //填过“审核员”后，该行只读
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            
-            
-            for (int i = 0; i < index; i++)
-            {
-                string str审核员 = dt台帐.Rows[i]["审核员"].ToString();
-                if (str审核员 != "")
-                {
-                    dataGridView1.Rows[i].ReadOnly = true;
-                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Wheat;
-                }
-            }
+            setDataGridViewFormat();
+           
+            //for (int i = 0; i < index; i++)
+            //{
+            //    string str审核员 = dt台帐.Rows[i]["审核员"].ToString();
+            //    if (str审核员 != "")
+            //    {
+            //        dataGridView1.Rows[i].ReadOnly = true;
+            //        dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Wheat;
+            //    }
+            //}
         }
 
         //删除
         private void button1_Click(object sender, EventArgs e)
         {
-            //if (dataGridView1.SelectedCells.Count > 1)
-            //{
-            if (dataGridView1.SelectedCells.Count == 0) return;
-            int deletenum = dataGridView1.CurrentRow.Index;
+            ////if (dataGridView1.SelectedCells.Count > 1)
+            ////{
+            //if (dataGridView1.SelectedCells.Count == 0) return;
+            //int deletenum = dataGridView1.CurrentRow.Index;
 
-            if (deletenum < 0)
-                return;
-            // dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
-            else
-            {
-                dt台帐.Rows[deletenum].Delete();
-                da台帐.Update((DataTable)bs台帐.DataSource);
-                readInnerData();
-                innerBind();
-                //刷新序号
-                setDataGridViewRowNums();
-                index = dt台帐.Rows.Count;
-            }
+            //if (deletenum < 0)
+            //    return;
+            //// dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
+            //else
+            //{
+            //    dt台帐.Rows[deletenum].Delete();
+            //    da台帐.Update((DataTable)bs台帐.DataSource);
+            //    readInnerData();
+            //    innerBind();
+            //    //刷新序号
+            //    setDataGridViewRowNums();
+            //    index = dt台帐.Rows.Count;
             //}
+            ////}
             
         }
 

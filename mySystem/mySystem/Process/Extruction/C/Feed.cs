@@ -709,7 +709,7 @@ namespace mySystem.Process.Extruction.C
             // 修改Sheet中某行某列的值
 
             my.Cells[3, 6].Value = "生产指令：" + lbl生产指令编号.Text;
-            my.Cells[5, 1].Value = dtp生产日期.Value.ToLongDateString() + "   " + cmb班次.Text;
+            my.Cells[5, 1].Value = dtp生产日期.Value.ToString("yyyy年MM月dd日") + "   " + cmb班次.Text;
             my.Cells[5, 9].Value = "";
             
 

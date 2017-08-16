@@ -553,7 +553,7 @@ namespace mySystem.Process.CleanCut
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         cbc.MinimumWidth = 80;
                         break;
                     case "物料代码":
@@ -569,7 +569,7 @@ namespace mySystem.Process.CleanCut
                         }                        
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         cbc.MinimumWidth = 80;
                         break;
                     default:
@@ -580,7 +580,7 @@ namespace mySystem.Process.CleanCut
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         tbc.MinimumWidth = 80;
                         break;
                 }
@@ -639,7 +639,9 @@ namespace mySystem.Process.CleanCut
                     ndr["分切前ID"] = Convert.ToInt32(ndr["ID"]);
                 }
             }
-            
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
         }
 
         //删除行按钮
@@ -832,7 +834,7 @@ namespace mySystem.Process.CleanCut
         //打印按钮 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!        
         private void btn打印_Click(object sender, EventArgs e)
         {
-
+            // TODO 打印时“实测宽度”和“纵向尺寸实测值”如果为“”，则不填
         }
 
         //******************************小功能******************************//  
@@ -841,8 +843,8 @@ namespace mySystem.Process.CleanCut
         private bool TextBox_check()
         {
             bool TypeCheck = true;
-            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb实测宽度, tb纵向尺寸测量实际值, tb废品重量 });
-            List<String> StringList = new List<String>(new String[] { "实测宽度", "纵向尺寸测量实际值", "废品重量" });
+            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb废品重量 });
+            List<String> StringList = new List<String>(new String[] {  "废品重量" });
             int numtemp = 0;
             for (int i = 0; i < TextBoxList.Count; i++)
             {
@@ -852,6 +854,19 @@ namespace mySystem.Process.CleanCut
                     TypeCheck = false;
                     break;
                 }
+            }
+            if (cmb是否印刷.SelectedItem.ToString() == "Yes")
+            {
+                if (!Int32.TryParse(tb纵向尺寸测量实际值.ToString(), out numtemp))
+                {
+                    MessageBox.Show("『纵向尺寸测量』框内应填数字，请重新填入！");
+                    TypeCheck = false;
+                    tb纵向尺寸测量实际值.Text = "";
+                }
+            }
+            if (!Int32.TryParse(tb实测宽度.Text, out numtemp))
+            {
+                tb实测宽度.Text = "";
             }
             return TypeCheck;
         }
@@ -913,7 +928,7 @@ namespace mySystem.Process.CleanCut
             // 获取当前row的分切前ID，分切前的数据
             int idB = Convert.ToInt32(dt记录详情.Rows[Rownum]["分切前ID"]);
             drs = dt记录详情.Select("ID=" + idB);
-            string codeB = drs[0]["物料代码"].ToString();
+            string codeB = drs[0]["物料代码"].ToString().Trim();
             int widthB = getWidthB(codeB);
             int lengthB = Convert.ToInt32(drs[0]["长度A"]);
             double before = widthB * lengthB / 1000.0;
@@ -924,7 +939,7 @@ namespace mySystem.Process.CleanCut
             drs = dt记录详情.Select("分切前ID=" + idB);
             foreach (DataRow dr in drs)
             {
-                codeA = dr["清洁分切后代码"].ToString();
+                codeA = dr["清洁分切后代码"].ToString().Trim();
                 widthA = getWidthA(codeA);
                 lengthA = Convert.ToInt32(dr["长度B"]);
                 after += widthA * lengthA / 1000.0;
@@ -943,14 +958,14 @@ namespace mySystem.Process.CleanCut
         // TODO 乘法符号待统一
         int getWidthB(String code)
         {
-            char MULTI = '*';
+            char MULTI = 'X';
             int widthB = 0;
-            Regex re1B = new Regex(@"^SPM-TY-\d+\*\d+\*\d+$");
-            Regex re2B = new Regex(@"^SPM-TY-\d+\*\d+$");
+            Regex re1B = new Regex(@"^SPM-TY-\d+X\d+X\d+$");
+            Regex re2B = new Regex(@"^SPM-TY-\d+X\d+$");
             Regex re3B = new Regex(@"^SPM-TN-\d+$");
-            Regex re4B = new Regex(@"^PEF-TA-\d+\*\d+$");
-            Regex re5B = new Regex(@"^XP1-SA-\d+\*\d+$");
-            Regex re6B = new Regex(@"^UP1-SA-\d+\*\d+$");
+            Regex re4B = new Regex(@"^PEF-TA-\d+X\d+$");
+            Regex re5B = new Regex(@"^XP1-SA-\d+X\d+$");
+            Regex re6B = new Regex(@"^UP1-SA-\d+X\d+$");
             //Match m1 =  re1.Match(codeB);
             //Match m2 = re2.Match(codeB);
             string val;
@@ -967,7 +982,7 @@ namespace mySystem.Process.CleanCut
             }
             else if (re2B.Match(code).Value != "")
             { // SPM-TY-320X450
-                val = re1B.Match(code).Value;
+                val = re2B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 tW = nums.Split(MULTI);
@@ -976,14 +991,14 @@ namespace mySystem.Process.CleanCut
             }
             else if (re3B.Match(code).Value != "")
             { // SPM-TN-400
-                val = re1B.Match(code).Value;
+                val = re3B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 widthB = Convert.ToInt32(nums);
             }
             else if (re4B.Match(code).Value != "")
             { // PEF-TA-600X100
-                val = re1B.Match(code).Value;
+                val = re4B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 tW = nums.Split(MULTI);
@@ -991,7 +1006,7 @@ namespace mySystem.Process.CleanCut
             }
             else if (re5B.Match(code).Value != "")
             { // XP1-SA-1010X080
-                val = re1B.Match(code).Value;
+                val = re5B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 tW = nums.Split(MULTI);
@@ -999,7 +1014,7 @@ namespace mySystem.Process.CleanCut
             }
             else if (re6B.Match(code).Value != "")
             { // UP1-SA-1200X120
-                val = re1B.Match(code).Value;
+                val = re6B.Match(code).Value;
                 tNum = val.Split('-');
                 nums = tNum[tNum.Length - 1];
                 tW = nums.Split(MULTI);
@@ -1010,16 +1025,16 @@ namespace mySystem.Process.CleanCut
 
         int getWidthA(string codeA)
         {
-            char MULTI = '*';
+            char MULTI = 'X';
             int widthA = 0;
             string val;
             string[] tNum, tW;
             string nums;
-            Regex re1A = new Regex(@"^SPM-TY-\d+\*\d+\*\d+C$");//SPM-TY-320X450X2C
+            Regex re1A = new Regex(@"^SPM-TY-\d+X\d+X\d+C$");//SPM-TY-320X450X2C
             Regex re2A = new Regex(@"^SPM-TN-\d+C$");//SPM-TN-400C
-            Regex re3A = new Regex(@"^PEF-CA-\d+\*\d+$"); // PEF-CA-450X100
-            Regex re4A = new Regex(@"^XP1-SA-\d+\*\d+$"); // XP1-SA-500X080
-            Regex re5A = new Regex(@"^UP1-SA-\d+\*\d+$"); // UP1-SA-900X120
+            Regex re3A = new Regex(@"^PEF-CA-\d+X\d+$"); // PEF-CA-450X100
+            Regex re4A = new Regex(@"^XP1-SA-\d+X\d+$"); // XP1-SA-500X080
+            Regex re5A = new Regex(@"^UP1-SA-\d+X\d+$"); // UP1-SA-900X120
 
             if (re1A.Match(codeA).Value != "")
             { //SPM-TY-320X450X2C

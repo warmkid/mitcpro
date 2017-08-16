@@ -88,7 +88,7 @@ namespace mySystem
         private void Bind(String tblName, String person, String time)
         {            
             dt = new DataTable(tblName); //""中的是表名
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + time + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + time + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "# order by ID", mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);

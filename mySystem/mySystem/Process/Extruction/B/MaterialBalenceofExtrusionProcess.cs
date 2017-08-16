@@ -327,7 +327,7 @@ namespace mySystem.Extruction.Process
         {
             string sqlStr = "SELECT 开始生产日期 FROM 生产指令信息表 WHERE ID = " + __生产指令ID.ToString();
             OleDbCommand sqlCmd = new OleDbCommand(sqlStr, connOle);
-            __生产开始时间 = Convert.ToDateTime(sqlCmd.ExecuteScalar().ToString()).ToLongDateString();
+            __生产开始时间 = Convert.ToDateTime(sqlCmd.ExecuteScalar().ToString()).ToString("yyyy年MM月dd日");
             lbl生产开始时间.Text = __生产开始时间;
         }
 
@@ -518,8 +518,8 @@ namespace mySystem.Extruction.Process
              my.Cells[6, 4].Value = txb重量比成品率.Text;
              my.Cells[6, 5].Value = txb物料平衡.Text;
              my.Cells[7, 2].Value = txb备注.Text;
-             my.Cells[8, 1].Value = "记录员/日期：" + txb记录员.Text+"   "+dtp记录日期.Value.ToLongDateString();
-             my.Cells[8, 4].Value = txb审核员.Text + dtp审核日期.Value.ToLongDateString();
+             my.Cells[8, 1].Value = "记录员/日期：" + txb记录员.Text+"   "+dtp记录日期.Value.ToString("yyyy年MM月dd日");
+             my.Cells[8, 4].Value = txb审核员.Text + dtp审核日期.Value.ToString("yyyy年MM月dd日");
              
 
 			if(preview)

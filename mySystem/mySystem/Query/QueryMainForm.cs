@@ -64,12 +64,12 @@ namespace mySystem
 
             if (Panel制袋.Visible == true)
             {
-                Panel其他按钮.Location = new Point(0, 130);
+                Panel其他按钮.Location = new Point(0, 160);
                 Panel制袋.Visible = false;
             }
             else
             {
-                Panel其他按钮.Location = new Point(0, 361);
+                Panel其他按钮.Location = new Point(0, 391);
                 Panel制袋.Visible = true;
             }   
         }

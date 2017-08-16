@@ -186,7 +186,7 @@ namespace mySystem.Process.灭菌
             cb检查结果6.Items.Add("不合格");
 
             //添加委托单号
-            OleDbDataAdapter tda3 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单", mySystem.Parameter.connOle);
+            OleDbDataAdapter tda3 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where 状态=1", mySystem.Parameter.connOle);
             DataTable tdt3 = new DataTable("Gamma射线辐射灭菌委托单");
             tda3.Fill(tdt3);
             foreach (DataRow tdr in tdt3.Rows)
@@ -233,16 +233,16 @@ namespace mySystem.Process.灭菌
                 MessageBox.Show("合格运输商不能为空");
                 return false;
             }
-            if (cb运输商.Text == "")
-            {
-                MessageBox.Show("运输商不能为空");
-                return false;
-            }
-            if (mySystem.Parameter.NametoID(tb操作人.Text) <= 0)
-            {
-                MessageBox.Show("操作人ID不存在");
-                return false;
-            }
+            //if (cb运输商.Text == "")
+            //{
+            //    MessageBox.Show("运输商不能为空");
+            //    return false;
+            //}
+            //if (mySystem.Parameter.NametoID(tb操作人.Text) <= 0)
+            //{
+            //    MessageBox.Show("操作人ID不存在");
+            //    return false;
+            //}
             //验收人
             if (mySystem.Parameter.NametoID(tb验收人.Text) <= 0)
             {
@@ -338,7 +338,7 @@ namespace mySystem.Process.灭菌
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             my.Cells[3, 4].Value = "灭菌委托单编号：" + cb委托单号.Text;
-            my.Cells[4, 2].Value = dtp运回日期.Value.ToLongDateString();
+            my.Cells[4, 2].Value = dtp运回日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[6, 3].Value = "应是合格辐照商。\n辐照商：" + cb辐照商.Text;
             my.Cells[6, 5].Value = cb检查结果1.Text;
             my.Cells[7, 3].Value = "应是合格运输商。\n运输商：" + cb运输商内.Text;
@@ -349,15 +349,15 @@ namespace mySystem.Process.灭菌
             my.Cells[10, 5].Value = cb检查结果5.Text;
             my.Cells[11, 3].Value = String.Format("每批照射产品均应有照射报告，且报告中辐照批号与辐照标签上的批号一致。\n\n报告编号：{0}\n\n辐照批号：{1}", tb报告编号.Text, tb辐照批号.Text);
             my.Cells[11, 5].Value = cb检查结果6.Text;
-            my.Cells[12, 5].Value = "取样时间："+dtp取样时间.Value.ToLongDateString();
+            my.Cells[12, 5].Value = "取样时间："+dtp取样时间.Value.ToString("yyyy年MM月dd日");
             my.Cells[13, 1].Value = "说明：" + tb说明.Text;
             if (ckb符合要求.Checked)
             {
                 my.Cells[15, 1].Value = "结论：  辐照产品符合要求，正常入库☑\n不符合要求，按不合格品处理□";
             }
             else { my.Cells[15, 1].Value = "结论：  辐照产品符合要求，正常入库□\n不符合要求，按不合格品处理☑"; }
-            my.Cells[17, 1].Value = String.Format("  验收人：{0}    {1}     复核人：{2}     {3}",tb验收人.Text,dtp验收日期.Value.ToLongDateString(),tb审核人.Text,dtp审核日期.Value.ToLongDateString());
-            my.Cells[18, 1].Value = String.Format("  运输商：{0}            操作人：{1}      {2}", cb运输商.Text,tb操作人.Text,dtp操作日期.Value.ToLongDateString());    
+            my.Cells[17, 1].Value = String.Format("  验收人：{0}    {1}     复核人：{2}     {3}",tb验收人.Text,dtp验收日期.Value.ToString("yyyy年MM月dd日"),tb审核人.Text,dtp审核日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[18, 1].Value = String.Format("  运输商：{0}            操作人：{1}      {2}", cb运输商.Text,tb操作人.Text,dtp操作日期.Value.ToString("yyyy年MM月dd日"));    
         }
 
         private void bt插入查询_Click(object sender, EventArgs e)
@@ -601,6 +601,36 @@ namespace mySystem.Process.灭菌
 
             //空间都不能点
             setControlFalse();
+
+            // 添加台账,先读委托单中的内表,修改状态为2
+            da_temp = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where 委托单号='" + cb委托单号.Text + "'", mySystem.Parameter.connOle);
+            cb_temp = new OleDbCommandBuilder(da_temp);
+            dt_temp = new DataTable();
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0]["状态"] = 2;
+            da_temp.Update(dt_temp);
+            DateTime 委托日期 = Convert.ToDateTime(dt_temp.Rows[0]["委托日期"]);
+            da_temp = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单详细信息 where TGamma射线辐射灭菌委托单详细信息ID="
+                + id_findby_code(cb委托单号.Text), mySystem.Parameter.connOle);
+            dt_temp = new DataTable();
+            da_temp.Fill(dt_temp);
+            OleDbDataAdapter da_台账 = new OleDbDataAdapter("select * from 辐照灭菌台帐详细信息 where 0=1",mySystem.Parameter.connOle);
+            DataTable dt_台账 = new DataTable("辐照灭菌台帐详细信息");
+            OleDbCommandBuilder cb_台账 = new OleDbCommandBuilder(da_台账);
+            BindingSource bs_台账 = new BindingSource();
+            da_台账.Fill(dt_台账);
+            foreach (DataRow drtemp in dt_temp.Rows)
+            {
+                DataRow dr台账 = dt_台账.NewRow();
+                dr台账["委托单号"] = cb委托单号.Text;
+                dr台账["委托日期"] = 委托日期;
+                dr台账["产品代码"] = drtemp["产品代码"].ToString();
+                dr台账["产品数量只"] = Convert.ToInt32(drtemp["数量只"]);
+                dr台账["产品数量箱"] = Convert.ToInt32(drtemp["数量箱"]);
+                dr台账["登记员"] = dt_out.Rows[0]["操作人"].ToString();
+                dt_台账.Rows.Add(dr台账);
+            }
+            da_台账.Update(dt_台账);
         }
 
         private void bt日志_Click(object sender, EventArgs e)

@@ -167,9 +167,9 @@ namespace mySystem.Query
                         break;
                     case "12 吹膜工序物料平衡记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "记录日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "生产日期", null); }
+                        { EachBind(this.dgv, "吹膜工序物料平衡记录", "记录员", "记录日期", null); }
                         break;
                     case "15 产品内包装记录":
                         if (comboBox1.SelectedIndex != -1)

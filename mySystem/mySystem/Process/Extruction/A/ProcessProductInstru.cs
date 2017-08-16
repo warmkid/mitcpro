@@ -181,6 +181,7 @@ namespace BatchProductRecord
         {
             foreach (Control c in this.Controls)
             {
+                //if (c.Name == "tb白班" || c.Name == "tb夜班") continue;
                 if (c is DataGridView)
                 {
                     (c as DataGridView).ReadOnly = false;
@@ -629,20 +630,22 @@ namespace BatchProductRecord
                 while (true)
                 {
                     string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
-                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+\*[0-9]";//正则表达式
+                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]";//正则表达式
                     if (!Regex.IsMatch(str, pattern))
                     {
-                        MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500*100");
+                        MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500X100");
                         dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
                         leng = 0;
                         break ;
                     }
-                    string[] array = str.Split('*');
-                    string[] array2 = array[0].Split('-');
+                    string[] array = str.Split('X');
+                    string[] array2 = array[array.Length-2].Split('-');
                     leng = float.Parse(array2[2]);
                     dataGridView1.Rows[e.RowIndex].Cells["宽"].Value = Int32.Parse(array2[2]);
                     
-                    dataGridView1.Rows[e.RowIndex].Cells["厚"].Value = Int32.Parse(array[1].TrimStart('0'));
+                    dataGridView1.Rows[e.RowIndex].Cells["厚"].Value = Int32.Parse(array[array.Length-1].TrimStart('0'));
+                    bool ok2 = float.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].ToString(), out leng);
+                    if (!ok2) leng = 0;
                     //产品批号
                     string temp = array[1];
                     OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.connOle);
@@ -718,17 +721,22 @@ namespace BatchProductRecord
                     string[] array2;
                     if (str != "")
                     {
-                        array = str.Split('*');
-                        array2 = array[0].Split('-');
-                        leng = float.Parse(array2[2]);
+                        //array = str.Split('*');
+                        //array2 = array[0].Split('-');
+                        //leng = float.Parse(array2[2]);
+                        bool ok = float.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].Value.ToString(), out leng);
+                        if (!ok)
+                        {
+                            leng = 0;
+                        }
                         dataGridView1.Rows[e.RowIndex].Cells[7].Value = Math.Ceiling(a * leng / 1000.0 * 面 * 密度);//用料重量
                     }
 
                     int hou, kuang;
-                    bool ok = true;
-                    ok &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].Value.ToString(), out kuang);
-                    ok &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["厚"].Value.ToString(), out hou);
-                    if (ok)
+                    bool ok1 = true;
+                    ok1 &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["宽"].Value.ToString(), out kuang);
+                    ok1 &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["厚"].Value.ToString(), out hou);
+                    if (ok1)
                     {
                         dataGridView1.Rows[e.RowIndex].Cells[7].Value = Math.Ceiling(hou * kuang * a / 1000 / 100 * 面 * 密度);
                     }
@@ -1212,10 +1220,10 @@ namespace BatchProductRecord
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[5].ReadOnly = true;//用料重量
+            dataGridView1.Columns["用料重量"].ReadOnly = true;//用料重量
             //dataGridView1.Columns[6].ReadOnly = true;//产品批号
-            dataGridView1.Columns[8].ReadOnly = true;//计划产量卷
-            dataGridView1.Columns[12].ReadOnly = true;//标签领料量
+            dataGridView1.Columns["计划产量卷"].ReadOnly = true;//计划产量卷
+            dataGridView1.Columns["标签领料量"].ReadOnly = true;//标签领料量
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
                 dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -1625,13 +1633,13 @@ namespace BatchProductRecord
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[5].Value.ToString();
-                my.Cells[7 + i, 8] = dataGridView1.Rows[i].Cells[6].Value.ToString();
-                my.Cells[7 + i, 9] = dataGridView1.Rows[i].Cells[7].Value.ToString();
-                my.Cells[7 + i, 10] = dataGridView1.Rows[i].Cells[8].Value.ToString();
-                my.Cells[7 + i, 11] = dataGridView1.Rows[i].Cells[9].Value.ToString();
-                my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[7 + i, 8] = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                my.Cells[7 + i, 9] = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                my.Cells[7 + i, 10] = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                my.Cells[7 + i, 11] = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[12].Value.ToString();
             }
 
             my.Cells[14 + ind, 6].Value = textBox6.Text;//计划产量米
@@ -1658,9 +1666,9 @@ namespace BatchProductRecord
             my.Cells[16 + ind, 12].Value = "白班：" + tb白班.Text + "\n" + "夜班：" + tb夜班.Text;
             my.Cells[21 + ind, 2].Value = tb备注.Text;
 
-            my.Cells[22 + ind, 1].Value = "编制人：" + tb编制人.Text + "\n" + dateTimePicker2.Value.ToLongDateString();
-            my.Cells[22 + ind, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToLongDateString();
-            my.Cells[22 + ind, 9].Value = "接受人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToLongDateString();
+            my.Cells[22 + ind, 1].Value = "编制人：" + tb编制人.Text + "\n" + dateTimePicker2.Value.ToString("yyyy年MM月dd日");
+            my.Cells[22 + ind, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToString("yyyy年MM月dd日");
+            my.Cells[22 + ind, 9].Value = "接收人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToString("yyyy年MM月dd日");
 
         }
 
@@ -1752,7 +1760,8 @@ namespace BatchProductRecord
             DataRow dr = dt_prodinstr.NewRow();
             dr.ItemArray = dt_prodinstr.Rows[0].ItemArray.Clone() as object[];
             dt_prodinstr.Rows[0]["审批人"] = "";
-
+            string newcode = dr["生产指令编号"].ToString() + " 更改" + DateTime.Now.ToString("yyyyMMdd");
+            dr["生产指令编号"] = newcode;
             //写日志
             string log = "\n=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 更改生产指令计划\n";
@@ -1760,7 +1769,7 @@ namespace BatchProductRecord
 
             dt_prodinstr.Rows.Add(dr);
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(instrcode);
+            readOuterData(newcode);
 
             int newid = (int)dt_prodinstr.Rows[dt_prodinstr.Rows.Count-1]["ID"];
             int count = dt_prodlist.Rows.Count;

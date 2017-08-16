@@ -763,9 +763,9 @@ namespace mySystem.Process.CleanCut
             my.Cells[3, 1].Value = "产品代码/规格：" + cb产品代码.Text+"   "+tb产品规格.Text;
             my.Cells[3, 5].Value = "产品批号：" + tb产品批号.Text;
             if (ckb白班.Checked)
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", dtp生产日期.Value.ToLongDateString());
+                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
             else
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", dtp生产日期.Value.ToLongDateString());
+                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1].Value = i + 1;

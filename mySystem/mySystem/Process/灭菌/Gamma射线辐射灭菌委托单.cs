@@ -129,7 +129,7 @@ namespace mySystem.Process.灭菌
             dr["委托人"] = mySystem.Parameter.userName;
             dr["审核是否通过"] = false;
             dr["审批"] = "";
-
+            dr["状态"] = 0;
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
             log += "委托单号：" + tb委托单号.Text + "\n";
@@ -261,7 +261,7 @@ namespace mySystem.Process.灭菌
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[7].ReadOnly = true;//数量只
+            //dataGridView1.Columns[7].ReadOnly = true;//数量只
         }
 
         // 刷新DataGridView中的列：序号
@@ -372,11 +372,11 @@ namespace mySystem.Process.灭菌
             my.Cells[22 + ind, 2] = tb其他说明.Text;
             my.Cells[23 + ind, 3] = tb委托人.Text;
             my.Cells[23 + ind, 5] = tb审批人.Text;
-            my.Cells[24 + ind, 3] = dtp委托日期.Value.ToLongDateString();
-            my.Cells[24 + ind, 5] = dtp审批日期.Value.ToLongDateString();
+            my.Cells[24 + ind, 3] = dtp委托日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[24 + ind, 5] = dtp审批日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[25 + ind, 3] = cb运输商.Text;
             my.Cells[25 + ind, 5] = tb操作人.Text;
-            my.Cells[25 + ind, 7] = dtp操作日期.Value.ToLongDateString();
+            my.Cells[25 + ind, 7] = dtp操作日期.Value.ToString("yyyy年MM月dd日");
         }
 
         // 获取其他需要的数据，比如产品代码，产生废品原因等
@@ -580,9 +580,9 @@ namespace mySystem.Process.灭菌
                 MessageBox.Show("委托人不能为空");
                 return false;
             }
-            if (mySystem.Parameter.NametoID(tb操作人.Text) <= 0)
+            if (mySystem.Parameter.NametoID(tb委托人.Text) <= 0)
             {
-                MessageBox.Show("操作人ID不存在");
+                MessageBox.Show("委托人ID不存在");
                 return false;
             }
             return true;
@@ -615,7 +615,7 @@ namespace mySystem.Process.灭菌
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
             dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
-
+            dt_prodinstr.Rows[0]["状态"] = 1;
             dt_prodinstr.Rows[0]["审批"] = "__待审核";
             dt_prodinstr.Rows[0]["审批日期"] = DateTime.Now;
 
@@ -790,13 +790,13 @@ namespace mySystem.Process.灭菌
                  }
              }
 
-             if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
-             {
-                 float perweight = 0, num = 0;
-                 perweight = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
-                 num = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
-                 dataGridView1.Rows[e.RowIndex].Cells[7].Value = num*perweight;
-             }
+             //if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
+             //{
+             //    float perweight = 0, num = 0;
+             //    perweight = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
+             //    num = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
+             //    dataGridView1.Rows[e.RowIndex].Cells[7].Value = num*perweight;
+             //}
              sumDataGridView1();
         }
 

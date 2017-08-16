@@ -176,7 +176,7 @@ namespace mySystem.Process.CleanCut
             list_审核员 = new List<string>();
 
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='全部'", mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='清洁分切工序生产指令'", mySystem.Parameter.connOle);
             da.Fill(dt);
 
             if (dt.Rows.Count > 0)
@@ -245,16 +245,16 @@ namespace mySystem.Process.CleanCut
                 return false;
             }
             //产品代码是否重复
-            HashSet<string> hs_temp = new HashSet<string>();
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
-            {
-                if (hs_temp.Contains(dataGridView1.Rows[i].Cells[3].Value.ToString()))
-                {
-                    MessageBox.Show("产品编码不能重复");
-                    return false;
-                }                    
-                hs_temp.Add(dataGridView1.Rows[i].Cells[3].Value.ToString());
-            }
+            //HashSet<string> hs_temp = new HashSet<string>();
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //{
+            //    if (hs_temp.Contains(dataGridView1.Rows[i].Cells[3].Value.ToString()))
+            //    {
+            //        MessageBox.Show("产品编码不能重复");
+            //        return false;
+            //    }                    
+            //    hs_temp.Add(dataGridView1.Rows[i].Cells[3].Value.ToString());
+            //}
             return true;
 
 
@@ -886,7 +886,7 @@ namespace mySystem.Process.CleanCut
 
             my.Cells[3, 1].Value = "指令编号："+tb指令编号.Text;
             my.Cells[3, 3].Value = "生产设备：" + tb设备编号.Text;
-            my.Cells[3, 6].Value = dtp计划生产日期.Value.ToLongDateString();
+            my.Cells[3, 6].Value = dtp计划生产日期.Value.ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[6 + i, 1] = i+1;
@@ -898,7 +898,7 @@ namespace mySystem.Process.CleanCut
             }
 
             my.Cells[10+ind, 1].Value = "备注："+tb备注.Text;
-            my.Cells[11 + ind, 1].Value = String.Format(" 编制人：{0}   {1}     审批人：{2} {3}     接收人：{4} {5}", tb编制人.Text, dtp编制日期.Value.ToLongDateString(), tb审批人.Text, dtp审批日期.Value.ToLongDateString(), tb接收人.Text, dtp接收日期.Value.ToLongDateString());
+            my.Cells[11 + ind, 1].Value = String.Format(" 编制人：{0}   {1}     审批人：{2} {3}     接收人：{4} {5}", tb编制人.Text, dtp编制日期.Value.ToString("yyyy年MM月dd日"), tb审批人.Text, dtp审批日期.Value.ToString("yyyy年MM月dd日"), tb接收人.Text, dtp接收日期.Value.ToString("yyyy年MM月dd日"));
         }
 
         public void print(bool b)

@@ -1187,7 +1187,7 @@ namespace WindowsFormsApplication1
             my.Cells[6, 6].Value = cb原料代码b2.Text;
             my.Cells[6, 8].Value = tb原料批号b2.Text;
 
-            my.Cells[7, 1].Value = "供料日期时间: "+dtp供料日期.Value.ToLongDateString();
+            my.Cells[7, 1].Value = "供料日期时间: "+dtp供料日期.Value.ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 DateTime tempdt=DateTime.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString());

@@ -74,7 +74,7 @@
             this.Btn生产指令.Name = "Btn生产指令";
             this.Btn生产指令.Size = new System.Drawing.Size(269, 38);
             this.Btn生产指令.TabIndex = 12;
-            this.Btn生产指令.Text = "清洁分切生产指令";
+            this.Btn生产指令.Text = "01 清洁分切生产指令";
             this.Btn生产指令.UseVisualStyleBackColor = true;
             this.Btn生产指令.Click += new System.EventHandler(this.A1Btn_Click);
             // 
@@ -85,7 +85,7 @@
             this.Btn清场.Name = "Btn清场";
             this.Btn清场.Size = new System.Drawing.Size(269, 38);
             this.Btn清场.TabIndex = 16;
-            this.Btn清场.Text = "清场记录";
+            this.Btn清场.Text = "07 清场记录";
             this.Btn清场.UseVisualStyleBackColor = true;
             this.Btn清场.Click += new System.EventHandler(this.A2Btn_Click);
             // 
@@ -110,7 +110,7 @@
             this.Btn标签.Name = "Btn标签";
             this.Btn标签.Size = new System.Drawing.Size(269, 38);
             this.Btn标签.TabIndex = 18;
-            this.Btn标签.Text = "清洁分切标签";
+            this.Btn标签.Text = "06 清洁分切标签";
             this.Btn标签.UseVisualStyleBackColor = true;
             this.Btn标签.Click += new System.EventHandler(this.A6Btn_Click);
             // 
@@ -121,7 +121,7 @@
             this.Btn日报表.Name = "Btn日报表";
             this.Btn日报表.Size = new System.Drawing.Size(269, 38);
             this.Btn日报表.TabIndex = 17;
-            this.Btn日报表.Text = "清洁分切日报表";
+            this.Btn日报表.Text = "05 清洁分切日报表";
             this.Btn日报表.UseVisualStyleBackColor = true;
             this.Btn日报表.Click += new System.EventHandler(this.A5Btn_Click);
             // 
@@ -132,7 +132,7 @@
             this.Btn生产记录.Name = "Btn生产记录";
             this.Btn生产记录.Size = new System.Drawing.Size(269, 38);
             this.Btn生产记录.TabIndex = 15;
-            this.Btn生产记录.Text = "清洁分切生产记录";
+            this.Btn生产记录.Text = "04 清洁分切生产记录";
             this.Btn生产记录.UseVisualStyleBackColor = true;
             this.Btn生产记录.Click += new System.EventHandler(this.A4Btn_Click);
             // 
@@ -143,7 +143,7 @@
             this.Btn开机确认.Name = "Btn开机确认";
             this.Btn开机确认.Size = new System.Drawing.Size(269, 38);
             this.Btn开机确认.TabIndex = 11;
-            this.Btn开机确认.Text = "清洁分切机开机前确认";
+            this.Btn开机确认.Text = "02 清洁分切机开机前确认";
             this.Btn开机确认.UseVisualStyleBackColor = true;
             this.Btn开机确认.Click += new System.EventHandler(this.A3Btn_Click);
             // 
@@ -169,7 +169,7 @@
             this.Btn运行记录.Name = "Btn运行记录";
             this.Btn运行记录.Size = new System.Drawing.Size(269, 38);
             this.Btn运行记录.TabIndex = 17;
-            this.Btn运行记录.Text = "清洁分切运行记录";
+            this.Btn运行记录.Text = "03 清洁分切运行记录";
             this.Btn运行记录.UseVisualStyleBackColor = true;
             this.Btn运行记录.Click += new System.EventHandler(this.A8Btn_Click);
             // 
@@ -180,7 +180,7 @@
             this.Btn批生产.Name = "Btn批生产";
             this.Btn批生产.Size = new System.Drawing.Size(269, 38);
             this.Btn批生产.TabIndex = 17;
-            this.Btn批生产.Text = "清洁分切批生产记录";
+            this.Btn批生产.Text = "00 清洁分切批生产记录";
             this.Btn批生产.UseVisualStyleBackColor = true;
             this.Btn批生产.Click += new System.EventHandler(this.A7Btn_Click);
             // 

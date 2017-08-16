@@ -354,8 +354,8 @@ namespace mySystem.Query
                         //mydlg12.Show();
                         break;
                     case "2D袋体与船型接口热合记录":
-                        //BTV2DShipHeat mydlg13 = new BTV2DShipHeat(mainform, ID);
-                        //mydlg13.Show();
+                        BTV2DShipHeat mydlg13 = new BTV2DShipHeat(mainform, ID);
+                        mydlg13.Show();
                         break;
                     case "瓶口焊接机运行记录":
                         BTVRunningRecordPK mydlg14 = new BTVRunningRecordPK(mainform, ID);
