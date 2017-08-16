@@ -28,34 +28,35 @@ namespace 订单和库存管理
             conn = new OleDbConnection(strConnect);
             conn.Open();
 
-            // 绑定控件
-            //readFromDatabase();
-            //bindControl();
-            //datagridview1.ReadOnly = true;
-            //dataGridView1.AllowUserToAddRows = false;
-            //dataGridView1.RowHeadersVisible = false;
-            // TODO 查询
+            switch (tabControl1.SelectedIndex)
+            {
+                case 0:
+                    // 销售订单
+                    init销售订单();
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    break;
+            }
+
         }
 
-        private void btn添加订单_Click(object sender, EventArgs e)
+        void init销售订单()
         {
-            添加订单 form = new 添加订单();
-            form.Show();
+            dtp销售订单开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp销售订单结束时间.Value = DateTime.Now;
+            cmb销售订单审核状态.SelectedItem = "__待审核";
+
         }
 
-        private void readFromDatabase()
-        {
-            da = new OleDbDataAdapter("select * from 订单信息", conn);
-            cb = new OleDbCommandBuilder(da);
-            dt = new DataTable("订单信息");
-            bs = new BindingSource();
-            da.Fill(dt);
-        }
+        //DataTable get销售订单(DateTime start, DateTime end, string code, string status)
+        //{
+        //    // TODO 添加销售订单的数据库
+        //    //string sql = "select * from "
+        //    //OleDbDataAdapter da = new OleDbDataAdapter("select ");
+        //}
 
-        private void bindControl()
-        {
-            bs.DataSource = dt;
-            //dataGridView1.DataSource = bs.DataSource;
-        }
+        
     }
 }

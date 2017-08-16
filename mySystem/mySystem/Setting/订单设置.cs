@@ -21,6 +21,8 @@ namespace mySystem.Setting
         private DataTable dt产成品存货档案;
         private BindingSource bs产成品存货档案;
         private OleDbCommandBuilder cb产成品存货档案;
+
+
         private OleDbDataAdapter da人员;
         private DataTable dt人员;
         private BindingSource bs人员;
@@ -30,6 +32,26 @@ namespace mySystem.Setting
         private BindingSource bs权限;
         private OleDbCommandBuilder cb权限;
 
+        private OleDbDataAdapter da业务类型;
+        private DataTable dt业务类型;
+        private BindingSource bs业务类型;
+        private OleDbCommandBuilder cb业务类型;
+        private OleDbDataAdapter da销售类型;
+        private DataTable dt销售类型;
+        private BindingSource bs销售类型;
+        private OleDbCommandBuilder cb销售类型;
+        private OleDbDataAdapter da客户简称;
+        private DataTable dt客户简称;
+        private BindingSource bs客户简称;
+        private OleDbCommandBuilder cb客户简称;
+        private OleDbDataAdapter da销售部门;
+        private DataTable dt销售部门;
+        private BindingSource bs销售部门;
+        private OleDbCommandBuilder cb销售部门;
+        private OleDbDataAdapter da币种;
+        private DataTable dt币种;
+        private BindingSource bs币种;
+        private OleDbCommandBuilder cb币种;
 
         public 订单设置()
         {
@@ -66,6 +88,21 @@ namespace mySystem.Setting
 
             bs权限 = new BindingSource();
             EachInitdgv(dgv权限);
+
+            bs业务类型 = new BindingSource();
+            EachInitdgv(dgv业务类型);
+
+            bs销售类型 = new BindingSource();
+            EachInitdgv(dgv销售类型);
+
+            bs客户简称 = new BindingSource();
+            EachInitdgv(dgv客户简称);
+
+            bs销售部门 = new BindingSource();
+            EachInitdgv(dgv销售部门);
+
+            bs币种 = new BindingSource();
+            EachInitdgv(dgv币种);
 
         }
 
@@ -138,6 +175,91 @@ namespace mySystem.Setting
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
+
+
+            //**************************   业务类型    ***********************************
+            dt业务类型 = new DataTable("设置业务类型"); //""中的是表名
+            da业务类型 = new OleDbDataAdapter("select * from 设置业务类型", mySystem.Parameter.connOle);
+            cb业务类型 = new OleDbCommandBuilder(da业务类型);
+            dt业务类型.Columns.Add("序号", System.Type.GetType("System.String"));
+            da业务类型.Fill(dt业务类型);
+            bs业务类型.DataSource = dt业务类型;
+            this.dgv业务类型.DataSource = bs业务类型.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv业务类型);
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv业务类型.Columns["ID"].Visible = false;
+
+
+            //**************************   销售类型    ***********************************
+            dt销售类型 = new DataTable("设置销售类型"); //""中的是表名
+            da销售类型 = new OleDbDataAdapter("select * from 设置销售类型", mySystem.Parameter.connOle);
+            cb销售类型 = new OleDbCommandBuilder(da销售类型);
+            dt销售类型.Columns.Add("序号", System.Type.GetType("System.String"));
+            da销售类型.Fill(dt销售类型);
+            bs销售类型.DataSource = dt销售类型;
+            this.dgv销售类型.DataSource = bs销售类型.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv销售类型);
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv销售类型.Columns["ID"].Visible = false;
+
+
+            //**************************   客户简称    ***********************************
+            dt客户简称 = new DataTable("设置客户简称"); //""中的是表名
+            da客户简称 = new OleDbDataAdapter("select * from 设置客户简称", mySystem.Parameter.connOle);
+            cb客户简称 = new OleDbCommandBuilder(da客户简称);
+            dt客户简称.Columns.Add("序号", System.Type.GetType("System.String"));
+            da客户简称.Fill(dt客户简称);
+            bs客户简称.DataSource = dt客户简称;
+            this.dgv客户简称.DataSource = bs客户简称.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv客户简称);
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv客户简称.Columns["ID"].Visible = false;
+
+
+            //**************************   销售部门    ***********************************
+            dt销售部门 = new DataTable("设置销售部门"); //""中的是表名
+            da销售部门 = new OleDbDataAdapter("select * from 设置销售部门", mySystem.Parameter.connOle);
+            cb销售部门 = new OleDbCommandBuilder(da销售部门);
+            dt销售部门.Columns.Add("序号", System.Type.GetType("System.String"));
+            da销售部门.Fill(dt销售部门);
+            bs销售部门.DataSource = dt销售部门;
+            this.dgv销售部门.DataSource = bs销售部门.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv销售部门);
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv销售部门.Columns["ID"].Visible = false;
+
+
+            //**************************   币种    ***********************************
+            dt币种 = new DataTable("设置币种"); //""中的是表名
+            da币种 = new OleDbDataAdapter("select * from 设置币种", mySystem.Parameter.connOle);
+            cb币种 = new OleDbCommandBuilder(da币种);
+            dt币种.Columns.Add("序号", System.Type.GetType("System.String"));
+            da币种.Fill(dt币种);
+            bs币种.DataSource = dt币种;
+            this.dgv币种.DataSource = bs币种.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv币种);
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv币种.Columns["ID"].Visible = false;
 
         }
 
@@ -355,6 +477,133 @@ namespace mySystem.Setting
             comm.Dispose();
             return b;
         }
+
+        private void add业务类型_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt业务类型.NewRow();
+            dt业务类型.Rows.InsertAt(dt业务类型.NewRow(), dt业务类型.Rows.Count);
+            setDataGridViewRowNums(this.dgv业务类型);
+        }
+
+        private void add销售类型_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt销售类型.NewRow();
+            dt销售类型.Rows.InsertAt(dt销售类型.NewRow(), dt销售类型.Rows.Count);
+            setDataGridViewRowNums(this.dgv销售类型);
+        }
+
+        private void add客户简称_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt客户简称.NewRow();
+            dt客户简称.Rows.InsertAt(dt客户简称.NewRow(), dt客户简称.Rows.Count);
+            setDataGridViewRowNums(this.dgv客户简称);
+        }
+
+        private void add销售部门_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt销售部门.NewRow();
+            dt销售部门.Rows.InsertAt(dt销售部门.NewRow(), dt销售部门.Rows.Count);
+            setDataGridViewRowNums(this.dgv销售部门);
+        }
+
+        private void add币种_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt币种.NewRow();
+            dt币种.Rows.InsertAt(dt币种.NewRow(), dt币种.Rows.Count);
+            setDataGridViewRowNums(this.dgv币种);
+        }
+
+        private void del业务类型_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv业务类型.SelectedCells[0].RowIndex;
+            dt业务类型.Rows[idx].Delete();
+            da业务类型.Update((DataTable)bs业务类型.DataSource);
+            dt业务类型.Clear();
+            da业务类型.Fill(dt业务类型);
+            setDataGridViewRowNums(this.dgv业务类型);
+        }
+
+        private void del销售类型_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv销售类型.SelectedCells[0].RowIndex;
+            dt销售类型.Rows[idx].Delete();
+            da销售类型.Update((DataTable)bs销售类型.DataSource);
+            dt销售类型.Clear();
+            da销售类型.Fill(dt销售类型);
+            setDataGridViewRowNums(this.dgv销售类型);
+        }
+
+        private void del客户简称_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv客户简称.SelectedCells[0].RowIndex;
+            dt客户简称.Rows[idx].Delete();
+            da客户简称.Update((DataTable)bs客户简称.DataSource);
+            dt客户简称.Clear();
+            da客户简称.Fill(dt客户简称);
+            setDataGridViewRowNums(this.dgv客户简称);
+        }
+
+        private void del销售部门_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv销售部门.SelectedCells[0].RowIndex;
+            dt销售部门.Rows[idx].Delete();
+            da销售部门.Update((DataTable)bs销售部门.DataSource);
+            dt销售部门.Clear();
+            da销售部门.Fill(dt销售部门);
+            setDataGridViewRowNums(this.dgv销售部门);
+        }
+
+        private void del币种_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv币种.SelectedCells[0].RowIndex;
+            dt币种.Rows[idx].Delete();
+            da币种.Update((DataTable)bs币种.DataSource);
+            dt币种.Clear();
+            da币种.Fill(dt币种);
+            setDataGridViewRowNums(this.dgv币种);
+        }
+
+        private void save基本信息设置_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (Parameter.isSqlOk)
+                { }
+                else
+                {   
+                    da业务类型.Update((DataTable)bs业务类型.DataSource);
+                    dt业务类型.Clear();
+                    da业务类型.Fill(dt业务类型);
+                    setDataGridViewRowNums(this.dgv业务类型);
+
+                    da销售类型.Update((DataTable)bs销售类型.DataSource);
+                    dt销售类型.Clear();
+                    da销售类型.Fill(dt销售类型);
+                    setDataGridViewRowNums(this.dgv销售类型);
+
+                    da客户简称.Update((DataTable)bs客户简称.DataSource);
+                    dt客户简称.Clear();
+                    da客户简称.Fill(dt客户简称);
+                    setDataGridViewRowNums(this.dgv客户简称);
+
+
+                    da销售部门.Update((DataTable)bs销售部门.DataSource);
+                    dt销售部门.Clear();
+                    da销售部门.Fill(dt销售部门);
+                    setDataGridViewRowNums(this.dgv销售部门);
+
+                    da币种.Update((DataTable)bs币种.DataSource);
+                    dt币种.Clear();
+                    da币种.Fill(dt币种);
+                    setDataGridViewRowNums(this.dgv币种);
+                }
+                MessageBox.Show("保存成功！");
+            }
+            catch
+            { MessageBox.Show("保存失败！", "错误"); }
+        }
+
+
 
     }
 }
