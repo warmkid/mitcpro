@@ -201,7 +201,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "BPV切管记录");
             if (b)
             {
-                BTVCutPipeRecord mydlg = new BTVCutPipeRecord();
+                BTVCutPipeRecord mydlg = new BTVCutPipeRecord(mainform);
                 mydlg.ShowDialog();
             }
             else
