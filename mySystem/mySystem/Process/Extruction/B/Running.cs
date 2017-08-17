@@ -1510,7 +1510,7 @@ namespace mySystem.Process.Extruction.B
                 removeOuterBinding();
                 outerBind();
 
-                string sql = "SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID={0} AND 产品代码='{1}'";
+                string sql = "SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID={0} AND 产品代码='{1}' order by ID";
                 OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _生产指令ID, _产品代码), conOle);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
