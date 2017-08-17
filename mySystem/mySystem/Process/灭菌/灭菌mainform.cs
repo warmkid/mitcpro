@@ -29,7 +29,7 @@ namespace mySystem.Process.灭菌
             {
                 OleDbCommand comm = new OleDbCommand();
                 comm.Connection = Parameter.connOle;
-                comm.CommandText = "select * from Gamma射线辐射灭菌委托单 where 状态=1";
+                comm.CommandText = "select * from Gamma射线辐射灭菌委托单 where 状态 = 2";
                 OleDbDataReader reader = comm.ExecuteReader();
                 if (reader.HasRows)
                 {
