@@ -301,7 +301,7 @@ namespace mySystem.Query
             }
 
             Bind();
-
+            dgv.FirstDisplayedScrollingRowIndex = dgv.Rows.Count - 1;
  
         }
 

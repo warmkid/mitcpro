@@ -282,6 +282,7 @@ namespace mySystem.Setting
             DataRow dr = dt开机.NewRow();
             dt开机.Rows.InsertAt(dt开机.NewRow(), dt开机.Rows.Count);
             setDataGridViewRowNums(this.dgv开机);
+            dgv开机.FirstDisplayedScrollingRowIndex = dgv开机.Rows.Count - 1;
         }
 
         private void del开机_Click(object sender, EventArgs e)
@@ -299,6 +300,7 @@ namespace mySystem.Setting
             DataRow dr = dt清场.NewRow();
             dt清场.Rows.InsertAt(dt清场.NewRow(), dt清场.Rows.Count);
             setDataGridViewRowNums(this.dgv清场);
+            dgv清场.FirstDisplayedScrollingRowIndex = dgv清场.Rows.Count - 1;
         }
 
         private void del清场_Click(object sender, EventArgs e)
@@ -343,7 +345,9 @@ namespace mySystem.Setting
             DataRow dr = dt产品.NewRow();
             dt产品.Rows.InsertAt(dt产品.NewRow(), dt产品.Rows.Count);
             setDataGridViewRowNums(this.dgv产品);
+            dgv产品.FirstDisplayedScrollingRowIndex = dgv产品.Rows.Count - 1;
         }
+
 
         private void del产品_Click(object sender, EventArgs e)
         {
@@ -360,6 +364,7 @@ namespace mySystem.Setting
             DataRow dr = dt产品编码.NewRow();
             dt产品编码.Rows.InsertAt(dt产品编码.NewRow(), dt产品编码.Rows.Count);
             setDataGridViewRowNums(this.dgv产品编码);
+            dgv产品编码.FirstDisplayedScrollingRowIndex = dgv产品编码.Rows.Count - 1;
         }
 
         private void del产品编码_Click(object sender, EventArgs e)
@@ -377,6 +382,7 @@ namespace mySystem.Setting
             DataRow dr = dt产品规格.NewRow();
             dt产品规格.Rows.InsertAt(dt产品规格.NewRow(), dt产品规格.Rows.Count);
             setDataGridViewRowNums(this.dgv产品规格);
+            dgv产品规格.FirstDisplayedScrollingRowIndex = dgv产品规格.Rows.Count - 1;
         }
 
         private void del产品规格_Click(object sender, EventArgs e)
@@ -394,6 +400,7 @@ namespace mySystem.Setting
             DataRow dr = dt封边.NewRow();
             dt封边.Rows.InsertAt(dt封边.NewRow(), dt封边.Rows.Count);
             setDataGridViewRowNums(this.dgv封边);
+            dgv封边.FirstDisplayedScrollingRowIndex = dgv封边.Rows.Count - 1;
         }
 
         private void del封边_Click(object sender, EventArgs e)
@@ -492,6 +499,7 @@ namespace mySystem.Setting
             DataRow dr = dt人员.NewRow();
             dt人员.Rows.InsertAt(dt人员.NewRow(), dt人员.Rows.Count);
             setDataGridViewRowNums(this.dgv人员);
+            dgv人员.FirstDisplayedScrollingRowIndex = dgv人员.Rows.Count - 1;
         }
 
         private void del人员_Click(object sender, EventArgs e)

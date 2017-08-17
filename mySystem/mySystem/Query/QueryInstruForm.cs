@@ -162,7 +162,7 @@ namespace mySystem
                     break;
 
             }
- 
+            dgv.FirstDisplayedScrollingRowIndex = dgv.Rows.Count - 1;
         }
 
         //双击弹出界面

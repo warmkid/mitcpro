@@ -226,6 +226,7 @@ namespace mySystem.Setting
         {
             AddPeopleForm addform = new AddPeopleForm(base.mainform, this);
             addform.ShowDialog();
+            dgvUser.FirstDisplayedScrollingRowIndex = dgvUser.Rows.Count - 1;
       
         }
 

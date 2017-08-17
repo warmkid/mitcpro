@@ -642,6 +642,7 @@ namespace mySystem.Process.CleanCut
             da记录详情.Update((DataTable)bs记录详情.DataSource);
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             innerBind();
+            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         //删除行按钮

@@ -678,7 +678,7 @@ namespace mySystem.Extruction.Process
             //        //MessageBox.Show("您选择的是【取消】");
             //    }
             //}                    
-
+            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
         
         //删除行按钮

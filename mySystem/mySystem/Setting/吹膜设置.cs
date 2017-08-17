@@ -649,6 +649,7 @@ namespace mySystem.Setting
             ////dgv产品编码.CurrentCell = dgv产品编码.Rows[dgv产品编码.Rows.Count - 1].Cells[1];
             ////dgv产品编码.BeginEdit(true);
             //dgv产品编码.Rows[dgv产品编码.Rows.Count - 1].Cells
+            dgv产品编码.FirstDisplayedScrollingRowIndex = dgv产品编码.Rows.Count - 1;
         }
 
         private void del产品编码_Click(object sender, EventArgs e)

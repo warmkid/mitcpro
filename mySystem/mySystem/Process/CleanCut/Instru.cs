@@ -640,6 +640,7 @@ namespace mySystem.Process.CleanCut
 
             dt_prodlist.Rows.Add(dr);
             setDataGridViewRowNums();
+            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         private void bt删除_Click(object sender, EventArgs e)
