@@ -259,11 +259,11 @@ namespace mySystem.Process.CleanCut
             OleDbDataAdapter tda = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID="+mySystem.Parameter.cleancutInstruID, mySystem.Parameter.connOle);
             DataTable tdt = new DataTable("清洁分切工序生产指令详细信息");
             tda.Fill(tdt);
-            foreach (DataRow tdr in tdt.Rows)
-            {
-                cb产品代码.Items.Add(tdr["清洁前产品代码"].ToString());
-                dict_prod.Add(tdr["清洁前产品代码"].ToString(), tdr["清洁前批号"].ToString());
-            }
+            //foreach (DataRow tdr in tdt.Rows)
+            //{
+            //    cb产品代码.Items.Add(tdr["清洁前产品代码"].ToString());
+            //    dict_prod.Add(tdr["清洁前产品代码"].ToString(), tdr["清洁前批号"].ToString());
+            //}
 
             //添加打印机
             fill_printer();

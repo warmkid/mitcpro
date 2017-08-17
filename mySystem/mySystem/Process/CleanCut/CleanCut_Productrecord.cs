@@ -15,6 +15,8 @@ namespace mySystem.Process.CleanCut
 {
     public partial class CleanCut_Productrecord : BaseForm
     {
+        bool isSavedClicked = false;
+
         private String table = "清洁分切生产记录";
         private String tableInfo = "清洁分切生产记录详细信息";
 
@@ -79,7 +81,7 @@ namespace mySystem.Process.CleanCut
         public CleanCut_Productrecord(MainForm mainform, Int32 ID) : base(mainform)
         {
             InitializeComponent();
-
+            isSavedClicked = true;
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
@@ -687,6 +689,7 @@ namespace mySystem.Process.CleanCut
         //保存按钮
         private void btn确认_Click(object sender, EventArgs e)
         {
+            isSavedClicked = true;
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
@@ -1010,10 +1013,10 @@ namespace mySystem.Process.CleanCut
                     tb纵向尺寸测量实际值.Text = "";
                 }
             }
-            if (!Int32.TryParse(tb实测宽度.Text, out numtemp))
-            {
-                tb实测宽度.Text = "";
-            }
+            //if (!Int32.TryParse(tb实测宽度.Text, out numtemp))
+            //{
+            //    tb实测宽度.Text = "";
+            //}
             return TypeCheck;
         }
 
@@ -1278,6 +1281,15 @@ namespace mySystem.Process.CleanCut
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+        }
+
+        private void CleanCut_Productrecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSavedClicked&&dt记录.Rows.Count>0)
+            {
+                dt记录.Rows[0].Delete();
+                da记录.Update((DataTable)bs记录.DataSource);
+            }
         }
 
     }
