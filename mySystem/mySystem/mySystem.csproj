@@ -608,6 +608,12 @@
     <Compile Include="Process\Order\订单管理.Designer.cs">
       <DependentUpon>订单管理.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Order\销售订单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Order\销售订单.Designer.cs">
+      <DependentUpon>销售订单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\不合格品处理记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1300,6 +1306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Order\订单管理.resx">
       <DependentUpon>订单管理.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Order\销售订单.resx">
+      <DependentUpon>销售订单.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\ProcessMainForm.resx">
       <DependentUpon>ProcessMainForm.cs</DependentUpon>

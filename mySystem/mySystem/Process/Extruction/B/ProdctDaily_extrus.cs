@@ -239,12 +239,24 @@ namespace mySystem
 
                 if (dt_供料记录.Rows.Count > 0)
                 {
-                    if (dt_供料记录.Rows[0]["外层供料量合计a"]!=null && dt_供料记录.Rows[0]["外层供料量合计a"].ToString()!="")
+                    if (dt_供料记录.Rows[0]["外层供料量合计a"] != null && dt_供料记录.Rows[0]["外层供料量合计a"].ToString() != "")
                         dr["加料A"] = float.Parse(dt_供料记录.Rows[0]["外层供料量合计a"].ToString());//加料A
+                    else
+                        dr["加料A"] = 0;
                     if (dt_供料记录.Rows[0]["中内层供料量合计b"] != null && dt_供料记录.Rows[0]["中内层供料量合计b"].ToString() != "")
                         dr["加料B"] = float.Parse(dt_供料记录.Rows[0]["中内层供料量合计b"].ToString());//加料B1C
+                    else
+                        dr["加料B"] = 0;
                     if (dt_供料记录.Rows[0]["中层供料量合计c"] != null && dt_供料记录.Rows[0]["中层供料量合计c"].ToString() != "")
                         dr["加料B2"] = float.Parse(dt_供料记录.Rows[0]["中层供料量合计c"].ToString());//加料B2
+                    else
+                        dr["加料B2"] = 0;
+                }
+                else
+                {
+                    dr["加料A"] = 0;
+                    dr["加料B"] = 0;
+                    dr["加料B2"] = 0;
                 }
 
                 
@@ -679,8 +691,8 @@ namespace mySystem
                 }
             }
             dt_prodinstr.Rows[0]["生产数量合计"] = sum_生产数量;
-            dt_prodinstr.Rows[0]["生产重量合计"] = double.Parse(sum_生产重量.ToString("f1"));
-            dt_prodinstr.Rows[0]["废品重量合计"] = sum_废品重量;
+            dt_prodinstr.Rows[0]["生产重量合计"] = Math.Round(double.Parse(sum_生产重量.ToString("f1")), 1);
+            dt_prodinstr.Rows[0]["废品重量合计"] = Math.Round(double.Parse(sum_废品重量.ToString("f1")), 1);
             dt_prodinstr.Rows[0]["加料A合计"] = sum_加料A;
             dt_prodinstr.Rows[0]["加料B1C合计"] = sum_加料B1C;
             dt_prodinstr.Rows[0]["加料B2合计"] = sum_加料B2;
