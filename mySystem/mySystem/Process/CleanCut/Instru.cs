@@ -46,6 +46,8 @@ namespace mySystem.Process.CleanCut
         Parameter.FormState _formState;
 
         private string instrcode;//指令编号
+        //用于带id参数构造函数，存储已存在记录的相关信息
+        int instrid;
 
         HashSet<string> hs_产品代码;//存储内表产品代码下拉框内容
 
@@ -68,6 +70,8 @@ namespace mySystem.Process.CleanCut
             bt查询插入.Enabled = true;
 
             tb指令编号.Text = mySystem.Parameter.cleancutInstruction;
+            instrid = mySystem.Parameter.cleancutInstruID;
+            instrcode = mySystem.Parameter.cleancutInstruction;
         }
 
         public Instru(mySystem.MainForm mainform, int id)
@@ -87,6 +91,8 @@ namespace mySystem.Process.CleanCut
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             instrcode = tempdt.Rows[0]["生产指令编号"].ToString();
+            //instrid = (int)tempdt.Rows[0]["生产指令ID"];
+            instrid = id;
 
             readOuterData(instrcode);
             removeOuterBinding();
@@ -863,6 +869,7 @@ namespace mySystem.Process.CleanCut
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
         private void bt打印_Click(object sender, EventArgs e)
         {
@@ -904,8 +911,24 @@ namespace mySystem.Process.CleanCut
                 my.Cells[6 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
             }
 
-            my.Cells[10+ind, 1].Value = "备注："+tb备注.Text;
-            my.Cells[11 + ind, 1].Value = String.Format(" 编制人：{0}   {1}     审批人：{2} {3}     接收人：{4} {5}", tb编制人.Text, dtp编制日期.Value.ToString("yyyy年MM月dd日"), tb审批人.Text, dtp审批日期.Value.ToString("yyyy年MM月dd日"), tb接收人.Text, dtp接收日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[10 + ind, 1].Value = "备注：" + tb备注.Text;
+            my.Cells[11 + ind, 1].Value = String.Format(" 编制人：{0}    {1}        审批人：{2}    {3}        接收人：{4}      {5}", tb编制人.Text, dtp编制日期.Value.ToString("yyyy年MM月dd日"), tb审批人.Text, dtp审批日期.Value.ToString("yyyy年MM月dd日"), tb接收人.Text, dtp接收日期.Value.ToString("yyyy年MM月dd日"));
+        }
+
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from 清洁分切工序生产指令 where 生产指令编号 = '" + instrcode + "'";
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt_prodinstr.Rows[0]["ID"]) + 1;
+
         }
 
         public void print(bool b)
@@ -922,7 +945,7 @@ namespace mySystem.Process.CleanCut
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = instrcode + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
             if (b)
             {
