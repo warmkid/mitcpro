@@ -200,7 +200,7 @@ namespace mySystem.Process.CleanCut
                     //查找该生产ID下的产品编码、产品批号
                     OleDbCommand comm2 = new OleDbCommand();
                     comm2.Connection = Parameter.connOle;
-                    comm2.CommandText = "select ID, 清洁前产品代码, 清洁前批号 from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + reader1["ID"].ToString();
+                    comm2.CommandText = "select ID, 清洁前产品代码, 清洁前批号,清洁后产品代码 from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + reader1["ID"].ToString();
                     OleDbDataAdapter datemp = new OleDbDataAdapter(comm2);
                     datemp.Fill(dt物料代码);
                     //if (dt物料代码.Rows.Count == 0)
@@ -522,8 +522,9 @@ namespace mySystem.Process.CleanCut
             dr["膜卷卷号"] = 0;
             dr["长度A"] = 0;
             dr["重量"] = 0;
-            dr["清洁分切后代码"] = dr["物料代码"] + "C";
+            dr["清洁分切后代码"] = dt物料代码.Rows[0]["清洁后产品代码"].ToString();
             dr["长度B"] = 0;
+            dr["工时"] = 0;
             dr["收率"] = -1;
             dr["外观检查"] = "Yes";
             return dr;
@@ -574,6 +575,23 @@ namespace mySystem.Process.CleanCut
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         cbc.MinimumWidth = 80;
                         break;
+                    case "清洁分切后代码":
+                        cbc = new DataGridViewComboBoxColumn();
+                        cbc.DataPropertyName = dc.ColumnName;
+                        cbc.HeaderText = dc.ColumnName;
+                        cbc.Name = dc.ColumnName;
+                        cbc.ValueType = dc.DataType;
+                        if (dt物料代码 != null)
+                        {
+                            for (int i = 0; i < dt物料代码.Rows.Count; i++)
+                            { cbc.Items.Add(dt物料代码.Rows[i]["清洁后产品代码"]); }
+                        }  
+                        dataGridView1.Columns.Add(cbc);
+                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        cbc.MinimumWidth = 80;
+                        break;
+
                     default:
                         tbc = new DataGridViewTextBoxColumn();
                         tbc.DataPropertyName = dc.ColumnName;
@@ -645,6 +663,7 @@ namespace mySystem.Process.CleanCut
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             innerBind();
             dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+
         }
 
         //删除行按钮
@@ -684,6 +703,28 @@ namespace mySystem.Process.CleanCut
             dr["分切前ID"] = Convert.ToInt32(dataGridView1.Rows[idx].Cells["ID"].Value);
             dt记录详情.Rows.InsertAt(dr, dataGridView1.CurrentRow.Index+1);
             setDataGridViewRowNums();
+        }
+
+        void refresh分切后代码下拉框()
+        {
+            foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+            {
+                DataGridViewComboBoxCell dgvcbc = (dgvr.Cells["清洁分切后代码"] as DataGridViewComboBoxCell);
+                if (dgvcbc == null) continue;
+                dgvcbc.Items.Clear();
+                dgvcbc.Items.AddRange(get分切后产品代码(dgvr.Cells["物料代码"].Value.ToString()).ToArray());
+            }
+        }
+
+        List<String> get分切后产品代码(string code)
+        {
+            List<string> ret = new List<string>();
+            DataRow[] drs = dt物料代码.Select("清洁前产品代码='" + code + "'");
+            foreach (DataRow dr in drs)
+            {
+                ret.Add(dr["清洁后产品代码"].ToString());
+            }
+            return ret;
         }
 
         //保存按钮
@@ -1235,8 +1276,12 @@ namespace mySystem.Process.CleanCut
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
-            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
-            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
+
+            //e.ColumnIndex
+            
+            String Columnsname = ((DataGridView)sender).Columns[e.ColumnIndex].Name;
+            if (Columnsname == "清洁分切后代码") return;
+            String rowsname = (e.RowIndex + 1).ToString(); ;
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
@@ -1254,7 +1299,9 @@ namespace mySystem.Process.CleanCut
                     { cbc.Items.Add(dt物料代码.Rows[i]["清洁前产品代码"]); }
                     Int32 index = cbc.FindString(dt记录详情.Rows[e.RowIndex]["物料代码"].ToString());
                     dt记录详情.Rows[e.RowIndex]["膜卷批号"] = dt物料代码.Rows[index]["清洁前批号"].ToString();
-                    dt记录详情.Rows[e.RowIndex]["清洁分切后代码"] = dt记录详情.Rows[e.RowIndex]["物料代码"].ToString() + "C";
+                    //dt记录详情.Rows[e.RowIndex]["清洁分切后代码"] = dt记录详情.Rows[e.RowIndex]["物料代码"].ToString() + "C";
+                    dt记录详情.Rows[e.RowIndex]["清洁分切后代码"] = dt物料代码.Rows[e.RowIndex]["清洁后产品代码"].ToString();
+                    refresh分切后代码下拉框();
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "长度A")
                 {
@@ -1272,8 +1319,10 @@ namespace mySystem.Process.CleanCut
                     //if (CheckCodeFormat(dt记录详情.Rows[e.RowIndex]["清洁分切后代码"].ToString()) == false)
                     //{ dt记录详情.Rows[e.RowIndex]["清洁分切后代码"] = getCodeAfter(dt记录详情.Rows[e.RowIndex]["物料代码"].ToString()); }
                 }
-                else
-                { }
+                else 
+                {
+                    
+                }
             }
         }
 
@@ -1281,10 +1330,12 @@ namespace mySystem.Process.CleanCut
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            refresh分切后代码下拉框();
         }
 
         private void CleanCut_Productrecord_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (dt记录 == null) return;
             if (!isSavedClicked&&dt记录.Rows.Count>0)
             {
                 dt记录.Rows[0].Delete();

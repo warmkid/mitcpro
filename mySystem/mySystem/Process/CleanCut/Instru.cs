@@ -383,6 +383,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.ReadOnly = false;
             bt发送审核.Enabled = false;
             bt审核.Enabled = false;
+            btn更改.Enabled = false;
         }
         void setEnableReadOnly()
         {
@@ -436,7 +437,7 @@ namespace mySystem.Process.CleanCut
                 else if (Parameter.FormState.审核通过 == _formState)
                 {
                     setControlFalse();
-                    if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) != 4)
+                    if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) == 2)
                         btn更改.Enabled = true;
                 }
                 else setControlFalse();
@@ -622,6 +623,10 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns[1].Visible = false;
             dataGridView1.Columns[6].ReadOnly = true;//数量米
             dataGridView1.Columns[7].ReadOnly = true;//分切后产品代码
+            foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
+            {
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            }
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
