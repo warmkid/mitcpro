@@ -575,7 +575,7 @@ namespace mySystem.Extruction.Process
                     checkform.Dispose();
                 checkform = new mySystem.CheckForm(this);
                 checkform.FormClosed += new FormClosedEventHandler(checkform_FormClosed);
-                checkform.Show();
+                checkform.ShowDialog();
             }
         }
 

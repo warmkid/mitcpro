@@ -15,7 +15,13 @@ namespace mySystem.Process.Bag.BTV
 {
     public partial class BTVRawMaterialDispensing : BaseForm
     {
+        /// <summary>
+        /// 原材料分装记录
+        /// </summary>
         private String table = "原材料分装记录";
+        /// <summary>
+        /// 原材料分装记录详细信息
+        /// </summary>
         private String tableInfo = "原材料分装记录详细信息";
 
         private SqlConnection conn = null;
@@ -917,6 +923,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮

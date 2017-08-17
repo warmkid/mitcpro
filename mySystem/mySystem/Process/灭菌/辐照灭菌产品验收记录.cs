@@ -61,6 +61,7 @@ namespace mySystem.Process.灭菌
                 c.Enabled = false;
             cb委托单号.Enabled = true;
             bt插入查询.Enabled = true;
+            cb委托单号.SelectedItem = mySystem.Parameter.miejunInstruction;
         }
 
         public 辐照灭菌产品验收记录(mySystem.MainForm mainform,int id)

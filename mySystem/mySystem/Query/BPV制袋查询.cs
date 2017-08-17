@@ -235,8 +235,10 @@ namespace mySystem.Query
         private void EachBind(DataGridView dgv, String tblName, String person, String startDate, String instruID)
         {
             dt = new DataTable(tblName); //""中的是表名
-            if (person != null && startDate != null && instruID == null) // 人 + 日期
+            if (person != null && startDate != null && instruID == null)
+            {// 人 + 日期
                 da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+            }
             else if (person == null && startDate != null && instruID != null) // 日期 + 生产指令
                 da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person != null && startDate == null && instruID != null) // 人 + 生产指令
@@ -346,12 +348,12 @@ namespace mySystem.Query
                         mydlg10.Show();
                         break;
                     case "底封机运行记录":
-                        //BTVRunningRecordDF mydlg11 = new BTVRunningRecordDF(mainform, ID);
-                        //mydlg11.Show();
+                        BTVRunningRecordDF mydlg11 = new BTVRunningRecordDF(mainform, ID);
+                        mydlg11.Show();
                         break;
                     case "泄漏测试记录":
-                        //BTVLeakTest mydlg12 = new BTVLeakTest(mainform, ID);
-                        //mydlg12.Show();
+                        BTVLeakTest mydlg12 = new BTVLeakTest(mainform, ID);
+                        mydlg12.Show();
                         break;
                     case "2D袋体与船型接口热合记录":
                         BTV2DShipHeat mydlg13 = new BTV2DShipHeat(mainform, ID);

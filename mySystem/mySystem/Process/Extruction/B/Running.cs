@@ -19,6 +19,7 @@ namespace mySystem.Process.Extruction.B
 
     public partial class Running : BaseForm
     {
+        bool isSaved = false;
         OleDbConnection conOle;
         string tablename1 = "吹膜机组运行记录";
         DataTable dtOuter;
@@ -79,7 +80,7 @@ namespace mySystem.Process.Extruction.B
             addDataEventHandler();
             addOtherEvnetHandler();
             cmb产品代码.Enabled = true;
-            this.FormClosing += new FormClosingEventHandler(Running_FormClosing);
+            //this.FormClosing += new FormClosingEventHandler(Running_FormClosing);
             setFormState(true);
             setEnableReadOnly();
             填写界面上被disable的部分为横线();
@@ -103,11 +104,20 @@ namespace mySystem.Process.Extruction.B
             //btn查看日志.Enabled = true;
             try
             {
-                bsOuter.EndEdit();
-                daOuter.Update((DataTable)bsOuter.DataSource);
-                readOuterData(_生产指令ID, _产品代码, _Date, _Time);
-                removeOuterBinding();
-                outerBind();
+
+                if (!isSaved)
+                {
+                    dtOuter.Rows[0].Delete();
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    bsOuter.EndEdit();
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                    readOuterData(_生产指令ID, _产品代码, _Date, _Time);
+                    removeOuterBinding();
+                    outerBind();
+                }
             }
             catch (Exception ee)
             {
@@ -119,7 +129,7 @@ namespace mySystem.Process.Extruction.B
         {
             InitializeComponent();
             //different handler function
-            
+            isSaved = true;
             conOle = Parameter.connOle;
             searchId = Id;
             自动绘制表格();
@@ -378,6 +388,7 @@ namespace mySystem.Process.Extruction.B
         private void btn保存_Click(object sender, EventArgs e)
         {
             //pullData();
+            isSaved = true;
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(_生产指令ID,_产品代码,_Date,_Time);
@@ -1499,7 +1510,7 @@ namespace mySystem.Process.Extruction.B
                 removeOuterBinding();
                 outerBind();
 
-                string sql = "SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID={0} AND 产品代码='{1}'";
+                string sql = "SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID={0} AND 产品代码='{1}' order by ID";
                 OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _生产指令ID, _产品代码), conOle);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -1642,5 +1653,12 @@ namespace mySystem.Process.Extruction.B
                 array1[13][j].Text = note;
             }
         }
+
+        private void c(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

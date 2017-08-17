@@ -206,6 +206,7 @@
             this.btn工序结束.TabIndex = 18;
             this.btn工序结束.Text = "工序结束";
             this.btn工序结束.UseVisualStyleBackColor = true;
+            this.btn工序结束.Visible = false;
             this.btn工序结束.Click += new System.EventHandler(this.btn工序结束_Click);
             // 
             // CleanCutMainForm

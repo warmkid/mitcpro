@@ -88,7 +88,14 @@ namespace mySystem
         private void Bind(String tblName, String person, String time)
         {            
             dt = new DataTable(tblName); //""中的是表名
+            //if (writer != "")
+            //{
             da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + time + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "# order by ID", mySystem.Parameter.connOle);
+            //}
+            //else
+            //{
+            //    da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " is null and " + time + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "# order by ID", mySystem.Parameter.connOle);
+            //}
             cb = new OleDbCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
@@ -245,8 +252,11 @@ namespace mySystem
         private void btn复制_Click(object sender, EventArgs e)
         {
             // TODO 复制内表
-            String newCode = mySystem.Other.InputWindow.getString("新的生产指令编码：");
-
+            String newCode = mySystem.Other.InputTextWindow.getString("新的生产指令编码：");
+            if (newCode == "")
+            {
+                return;
+            }
 
 
             if (dgv.SelectedCells.Count == 0) return;

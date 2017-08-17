@@ -1,6 +1,6 @@
 ﻿namespace mySystem.Other
 {
-    partial class InputWindow
+    partial class InputTextWindow
     {
         /// <summary>
         /// Required designer variable.

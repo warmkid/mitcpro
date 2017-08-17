@@ -297,7 +297,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "泄漏测试记录");
             if (b)
             {
-                BTVLeakTest mydlg = new BTVLeakTest();
+                BTVLeakTest mydlg = new BTVLeakTest(mainform);
                 mydlg.ShowDialog();
             }
             else

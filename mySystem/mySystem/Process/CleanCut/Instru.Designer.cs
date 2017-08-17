@@ -65,6 +65,7 @@
             this.label41 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btn更改 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -272,7 +273,7 @@
             // 
             // bt打印
             // 
-            this.bt打印.Location = new System.Drawing.Point(388, 535);
+            this.bt打印.Location = new System.Drawing.Point(457, 535);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(63, 24);
             this.bt打印.TabIndex = 37;
@@ -354,7 +355,7 @@
             // 
             this.label40.AutoSize = true;
             this.label40.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label40.Location = new System.Drawing.Point(103, 541);
+            this.label40.Location = new System.Drawing.Point(172, 541);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(91, 14);
             this.label40.TabIndex = 46;
@@ -363,7 +364,7 @@
             // cb打印机
             // 
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(195, 535);
+            this.cb打印机.Location = new System.Drawing.Point(264, 535);
             this.cb打印机.Name = "cb打印机";
             this.cb打印机.Size = new System.Drawing.Size(182, 24);
             this.cb打印机.TabIndex = 45;
@@ -398,11 +399,22 @@
             this.pictureBox1.TabIndex = 86;
             this.pictureBox1.TabStop = false;
             // 
+            // btn更改
+            // 
+            this.btn更改.Location = new System.Drawing.Point(96, 536);
+            this.btn更改.Name = "btn更改";
+            this.btn更改.Size = new System.Drawing.Size(63, 24);
+            this.btn更改.TabIndex = 87;
+            this.btn更改.Text = "更改";
+            this.btn更改.UseVisualStyleBackColor = true;
+            this.btn更改.Click += new System.EventHandler(this.btn更改_Click);
+            // 
             // Instru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 571);
+            this.Controls.Add(this.btn更改);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label41);
             this.Controls.Add(this.label角色);
@@ -489,5 +501,6 @@
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button btn更改;
     }
 }
