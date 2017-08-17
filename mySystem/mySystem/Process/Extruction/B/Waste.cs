@@ -1072,9 +1072,11 @@ namespace mySystem.Process.Extruction.B
             // 修改Sheet中某行某列的值
 
             my.Cells[3, 1].Value = "生产指令：" + lbl生产指令.Text;
-            my.Cells[3, 6].Value = "生产时段：" + lbl生产开始时间.Text + "--" + dtp生产结束时间.Value.ToString("yyyy年MM月dd日");
-            
+            my.Cells[3, 5].Value = "生产时段：" + lbl生产开始时间.Text + "--" + dtp生产结束时间.Value.ToString("yyyy年MM月dd日");
+            my.Cells[23, 5].Value = dtOuter.Rows[0]["合计不良品数量"];
+            my.Cells[23, 7].Value = dtOuter.Rows[0]["审核员"];
 
+            // TODO 没有考虑行数过多的情况
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
                 my.Cells[i + 5, 1].Value = dtInner.Rows[i]["序号"];
@@ -1084,7 +1086,7 @@ namespace mySystem.Process.Extruction.B
                 my.Cells[i + 5, 5].Value = dtInner.Rows[i]["不良品数量"].ToString();
                 my.Cells[i + 5, 6].Value = dtInner.Rows[i]["废品产生原因"];
                 my.Cells[i + 5, 7].Value = dtInner.Rows[i]["记录员"];
-                my.Cells[i + 5, 8].Value = dtInner.Rows[i]["审核员"];               
+                //my.Cells[i + 5, 8].Value = dtInner.Rows[i]["审核员"];               
             }
 
             //my.Cells[16, 10] = "A层 " + array1[9][11].Text + "  (℃)";
