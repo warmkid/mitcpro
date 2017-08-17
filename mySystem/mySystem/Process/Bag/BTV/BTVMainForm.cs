@@ -137,7 +137,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品内包装记录");
             if (b)
             {
-                BTVInnerPackage mydlg = new BTVInnerPackage();
+                BTVInnerPackage mydlg = new BTVInnerPackage(mainform);
                 mydlg.ShowDialog();
             }
             else
