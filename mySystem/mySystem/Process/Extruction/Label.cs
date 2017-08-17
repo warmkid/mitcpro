@@ -60,7 +60,7 @@ namespace mySystem.Process.Extruction
             {
                 c打印机.Items.Add(sPrint);
             }
-            c打印机.SelectedText = print.PrinterSettings.PrinterName;
+            c打印机.SelectedItem = print.PrinterSettings.PrinterName;
             c打印机.SelectedIndexChanged += c打印机_SelectedIndexChanged;
         }
 
@@ -90,6 +90,12 @@ namespace mySystem.Process.Extruction
 
         private void BtnPrint_Click(object sender, EventArgs e)
         {
+            if (c标签模板.SelectedIndex < 0)
+            {
+                MessageBox.Show("请选择一个模板再打印");
+                return;
+            }
+            
 
             printLable();
             GC.Collect();
