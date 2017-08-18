@@ -44,12 +44,19 @@ namespace mySystem.Process.灭菌
             setEnableReadOnly();
             addOtherEventHandler();
             setDataGridViewRowNums();
+
+
+            initQuery();
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void initQuery()
         {
+            dateTimePicker委托日期结束.Value = DateTime.Now;
+            dateTimePicker委托日期开始.Value = DateTime.Now.AddDays(-7).Date;
             
         }
+
+
 
         // 获取其他需要的数据，比如产品代码，产生废品原因等
         private void getOtherData()
@@ -590,6 +597,20 @@ namespace mySystem.Process.灭菌
         {
             (new mySystem.Other.LogForm()).setLog(dt台帐外表.Rows[0]["日志"].ToString()).Show();
         }
+
+        private void btn查询_Click(object sender, EventArgs e)
+        {
+            string sql = @"select * from 辐照灭菌台帐详细信息 where 委托单号 like '%{0}%' and 产品代码 like '%{1}%' and 委托日期 between #{2}# and #{3}#";
+            dt台帐 = new DataTable("辐照灭菌台帐详细信息");
+            bs台帐 = new BindingSource();
+            da台帐 = new OleDbDataAdapter(string.Format(sql, textBox委托单号.Text, textBox产品代码.Text, dateTimePicker委托日期开始.Value, dateTimePicker委托日期结束.Value), mySystem.Parameter.connOle);
+            cb台帐 = new OleDbCommandBuilder(da台帐);
+            da台帐.Fill(dt台帐);
+
+            innerBind();
+        }
+
+
 
 
     }

@@ -84,7 +84,7 @@ namespace mySystem.Process.灭菌
             da.Fill(tempdt);
             code = tempdt.Rows[0]["灭菌委托单编号"].ToString();
 
-            // TODO 判断是否要加入code
+            
 
             if (!cb委托单号.Items.Contains(code))
             {
