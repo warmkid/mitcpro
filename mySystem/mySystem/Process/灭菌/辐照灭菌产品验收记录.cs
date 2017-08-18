@@ -47,6 +47,7 @@ namespace mySystem.Process.灭菌
         Parameter.FormState _formState;
 
         private string code;//灭菌委托单编号
+        private int instruID;
 
         public 辐照灭菌产品验收记录(mySystem.MainForm mainform)
             : base(mainform)
@@ -62,6 +63,8 @@ namespace mySystem.Process.灭菌
             cb委托单号.Enabled = true;
             bt插入查询.Enabled = true;
             cb委托单号.SelectedItem = mySystem.Parameter.miejunInstruction;
+            code = cb委托单号.Text;
+            instruID = mySystem.Parameter.miejunInstruID;
         }
 
         public 辐照灭菌产品验收记录(mySystem.MainForm mainform,int id)
@@ -80,12 +83,16 @@ namespace mySystem.Process.灭菌
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             code = tempdt.Rows[0]["灭菌委托单编号"].ToString();
+
             // TODO 判断是否要加入code
 
             if (!cb委托单号.Items.Contains(code))
             {
                 cb委托单号.Items.Add(code);
             }
+
+            instruID = id;
+
 
             readOuterData(code);
             outerBind();
@@ -193,7 +200,7 @@ namespace mySystem.Process.灭菌
             cb检查结果6.Items.Add("不合格");
 
             //添加委托单号
-            OleDbDataAdapter tda3 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where 状态=1", mySystem.Parameter.connOle);
+            OleDbDataAdapter tda3 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where 状态 = 2", mySystem.Parameter.connOle);
             DataTable tdt3 = new DataTable("Gamma射线辐射灭菌委托单");
             tda3.Fill(tdt3);
             foreach (DataRow tdr in tdt3.Rows)
@@ -272,6 +279,7 @@ namespace mySystem.Process.灭菌
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
         private void bt打印_Click(object sender, EventArgs e)
         {
@@ -283,6 +291,21 @@ namespace mySystem.Process.灭菌
             SetDefaultPrinter(cb打印机.Text);
             print(false);
             GC.Collect();
+        }
+
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from 辐照灭菌产品验收记录 where 灭菌委托单ID = " + instruID;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt_out.Rows[0]["ID"]) + 1;
         }
 
         public void print(bool b)
@@ -300,7 +323,7 @@ namespace mySystem.Process.灭菌
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = code + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
             if (b)
             {
@@ -363,8 +386,8 @@ namespace mySystem.Process.灭菌
                 my.Cells[15, 1].Value = "结论：  辐照产品符合要求，正常入库☑\n不符合要求，按不合格品处理□";
             }
             else { my.Cells[15, 1].Value = "结论：  辐照产品符合要求，正常入库□\n不符合要求，按不合格品处理☑"; }
-            my.Cells[17, 1].Value = String.Format("  验收人：{0}    {1}     复核人：{2}     {3}",tb验收人.Text,dtp验收日期.Value.ToString("yyyy年MM月dd日"),tb审核人.Text,dtp审核日期.Value.ToString("yyyy年MM月dd日"));
-            my.Cells[18, 1].Value = String.Format("  运输商：{0}            操作人：{1}      {2}", cb运输商.Text,tb操作人.Text,dtp操作日期.Value.ToString("yyyy年MM月dd日"));    
+            my.Cells[17, 1].Value = String.Format("验收人：{0}    {1}        复核人：{2}     {3}",tb验收人.Text,dtp验收日期.Value.ToString("yyyy年MM月dd日"),tb审核人.Text,dtp审核日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[18, 1].Value = String.Format("运输商：{0}            操作人：{1}      {2}", cb运输商.Text,tb操作人.Text,dtp操作日期.Value.ToString("yyyy年MM月dd日"));    
         }
 
         private void bt插入查询_Click(object sender, EventArgs e)
@@ -376,6 +399,8 @@ namespace mySystem.Process.灭菌
                 return;
             }
             code = cb委托单号.Text;
+            instruID = id_findby_code(cb委托单号.Text);
+
             readOuterData(code);
             outerBind();
             if (dt_out.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
