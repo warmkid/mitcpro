@@ -67,6 +67,9 @@
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.label17 = new System.Windows.Forms.Label();
+            this.btn查询 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -129,7 +132,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(29, 54);
+            this.label3.Location = new System.Drawing.Point(74, 60);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 22;
@@ -138,7 +141,7 @@
             // cmb物料种类
             // 
             this.cmb物料种类.FormattingEnabled = true;
-            this.cmb物料种类.Location = new System.Drawing.Point(107, 51);
+            this.cmb物料种类.Location = new System.Drawing.Point(152, 57);
             this.cmb物料种类.Name = "cmb物料种类";
             this.cmb物料种类.Size = new System.Drawing.Size(121, 24);
             this.cmb物料种类.TabIndex = 23;
@@ -338,6 +341,7 @@
             this.bt保存.TabIndex = 50;
             this.bt保存.Text = "保存";
             this.bt保存.UseVisualStyleBackColor = true;
+            this.bt保存.Visible = false;
             this.bt保存.Click += new System.EventHandler(this.bt保存_Click);
             // 
             // label角色
@@ -353,7 +357,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(250, 12);
+            this.pictureBox1.Location = new System.Drawing.Point(-1, -2);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(134, 42);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -394,6 +398,7 @@
             this.btn查看日志.TabIndex = 162;
             this.btn查看日志.Text = "查看日志";
             this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Visible = false;
             // 
             // btn提交审核
             // 
@@ -417,11 +422,41 @@
             this.btn审核.UseWaitCursor = true;
             this.btn审核.Visible = false;
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(359, 55);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
+            this.dateTimePicker1.TabIndex = 164;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(313, 61);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(40, 16);
+            this.label17.TabIndex = 165;
+            this.label17.Text = "日期";
+            // 
+            // btn查询
+            // 
+            this.btn查询.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn查询.Location = new System.Drawing.Point(609, 58);
+            this.btn查询.Name = "btn查询";
+            this.btn查询.Size = new System.Drawing.Size(63, 25);
+            this.btn查询.TabIndex = 166;
+            this.btn查询.Text = "查询";
+            this.btn查询.UseVisualStyleBackColor = true;
+            this.btn查询.Click += new System.EventHandler(this.btn查询_Click);
+            // 
             // DailyRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1098, 581);
+            this.Controls.Add(this.btn查询);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.combobox打印机选择);
             this.Controls.Add(this.btn查看日志);
             this.Controls.Add(this.btn提交审核);
@@ -511,5 +546,8 @@
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button btn查询;
     }
 }

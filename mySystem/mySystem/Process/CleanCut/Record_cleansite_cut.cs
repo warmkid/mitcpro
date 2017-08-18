@@ -646,12 +646,12 @@ namespace mySystem.Process.CleanCut
             if ((bool)dt_prodinstr.Rows[0]["审核是否通过"])
             {
                 //日报表调用带ID的
-                DataTable dt_日报表 = new DataTable("清洁分切日报表");
-                OleDbDataAdapter da_日报表 = new OleDbDataAdapter("select * from 清洁分切日报表 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
-                OleDbCommandBuilder cb_日报表 = new OleDbCommandBuilder(da_日报表);
-                da_日报表.Fill(dt_日报表);
-                int id_日报表 = (int)dt_日报表.Rows[0]["ID"];
-                new DailyRecord(mainform, id_日报表);
+                //DataTable dt_日报表 = new DataTable("清洁分切日报表");
+                //OleDbDataAdapter da_日报表 = new OleDbDataAdapter("select * from 清洁分切日报表 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+                //OleDbCommandBuilder cb_日报表 = new OleDbCommandBuilder(da_日报表);
+                //da_日报表.Fill(dt_日报表);
+                //int id_日报表 = (int)dt_日报表.Rows[0]["ID"];
+                //new DailyRecord(mainform, id_日报表);
 
                 //result = MessageBox.Show("是否确定完成当前生产指令", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (true)

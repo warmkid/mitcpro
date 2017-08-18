@@ -117,10 +117,10 @@ namespace mySystem.Query
                         { EachBind(this.dgv, "清洁分切生产记录", "操作人", "操作日期", null); }
                         break;
                     case "清洁分切日报表":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "清洁分切日报表", "操作人", "操作日期", "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "清洁分切日报表", "操作人", "操作日期", null); }
+                        //if (comboBox1.SelectedIndex != -1)
+                        //{ EachBind(this.dgv, "清洁分切日报表", "操作人", "操作日期", "生产指令ID"); }
+                        //else
+                        //{ EachBind(this.dgv, "清洁分切日报表", "操作人", "操作日期", null); }
                         break;
                     case "清洁分切开机前确认表":
                         if (comboBox1.SelectedIndex != -1)
@@ -239,8 +239,8 @@ namespace mySystem.Query
                         form1.Show();
                         break;
                     case "清洁分切日报表":
-                        DailyRecord form2 = new DailyRecord(mainform, ID);
-                        form2.Show();
+                        //DailyRecord form2 = new DailyRecord(mainform, ID);
+                        //form2.Show();
                         break;
                     case "清洁分切开机前确认表":
                         CleanCut_CheckBeforePower form3 = new CleanCut_CheckBeforePower(mainform, ID);

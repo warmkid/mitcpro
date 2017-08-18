@@ -37,7 +37,7 @@ namespace mySystem.Process.CleanCut
 
         List<string> productCode;
         List<string> productCodeLst;
-        List<String> matCodes = new List<string>(new String[] { "T", "PEF", "UP1", "XP1" });
+        List<String> matCodes = new List<string>(new String[] {"全部", "T", "PEF", "UP1", "XP1" });
         List<string> wasteReason = new List<string>();
         List<string> flight = new List<string>(new string[] { "白班", "夜班" });
         List<string> usrList = new List<string>();
@@ -183,39 +183,63 @@ namespace mySystem.Process.CleanCut
             {
                 cmb物料种类.Items.Add(m);
             }
-            cmb物料种类.SelectedIndexChanged += new EventHandler(cmb物料种类_SelectedIndexChanged);
+            // cmb物料种类.SelectedIndexChanged += new EventHandler(cmb物料种类_SelectedIndexChanged);
             addOtherEventHandler();
             //getPeople()--> setUserState()--> getOtherData()--> Computer() --> addOtherEvnetHandler()-->setFormState()-->setEnableReadOnly()
-            setEnableReadOnly();
+            //setEnableReadOnly();
+            dateTimePicker1.Value = DateTime.Now;
+            //dateTimePicker1.ValueChanged += new EventHandler(dateTimePicker1_ValueChanged);
+            cmb物料种类.SelectedItem = "全部";
+
+            if (_userState == Parameter.UserState.管理员 || _userState == Parameter.UserState.审核员)
+            {
+                btn打印.Enabled = true;
+            }
+            else
+            {
+                btn打印.Enabled = false;
+            }
+
+            daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE 0=1", conOle);
+            //cbInner = new OleDbCommandBuilder(daInner);
+            dtInner = new DataTable(tablename2);
+            bsInner = new BindingSource();
+            daInner.Fill(dtInner);
+
         }
 
-        public DailyRecord(mySystem.MainForm mainform, int Id)
-            : base(mainform)
+        void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            string matcode;
-            InitializeComponent();
-            fill_printer();
-            conOle = mySystem.Parameter.connOle;
-            getPeople();
-            setUserState();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清洁分切日报表 where ID="+Id,mySystem.Parameter.connOle);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            matcode = dt.Rows[0]["物料种类"].ToString();
-            __生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
-            da = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID="+__生产指令ID, mySystem.Parameter.connOle);
-            dt.Clear();
-            da.Fill(dt);
-            __生产指令 = dt.Rows[0]["生产指令编号"].ToString();
-            foreach (string m in matCodes)
-            {
-                cmb物料种类.Items.Add(m);
-            }
-            cmb物料种类.SelectedIndexChanged += new EventHandler(cmb物料种类_SelectedIndexChanged);
-            cmb物料种类.SelectedItem = matcode;
-            addOtherEventHandler();
-            setEnableReadOnly();
+            throw new NotImplementedException();
         }
+
+        //public DailyRecord(mySystem.MainForm mainform, int Id)
+        //    : base(mainform)
+        //{
+        //    string matcode;
+        //    InitializeComponent();
+        //    fill_printer();
+        //    conOle = mySystem.Parameter.connOle;
+        //    getPeople();
+        //    setUserState();
+        //    OleDbDataAdapter da = new OleDbDataAdapter("select * from 清洁分切日报表 where ID="+Id,mySystem.Parameter.connOle);
+        //    DataTable dt = new DataTable();
+        //    da.Fill(dt);
+        //    matcode = dt.Rows[0]["物料种类"].ToString();
+        //    __生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+        //    da = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID="+__生产指令ID, mySystem.Parameter.connOle);
+        //    dt.Clear();
+        //    da.Fill(dt);
+        //    __生产指令 = dt.Rows[0]["生产指令编号"].ToString();
+        //    foreach (string m in matCodes)
+        //    {
+        //        cmb物料种类.Items.Add(m);
+        //    }
+        //    cmb物料种类.SelectedIndexChanged += new EventHandler(cmb物料种类_SelectedIndexChanged);
+        //    cmb物料种类.SelectedItem = matcode;
+        //    addOtherEventHandler();
+        //    setEnableReadOnly();
+        //}
 
 
         void getOtherData()
@@ -371,6 +395,7 @@ namespace mySystem.Process.CleanCut
                 }
             }
             btn查看日志.Enabled = true;
+            dateTimePicker1.Enabled = true;
             //btn打印.Enabled = true;
         }
         // “审核”和“提交审核”按钮特殊，在以上两个函数中要设为false。
@@ -749,6 +774,7 @@ namespace mySystem.Process.CleanCut
             {
                 combobox打印机选择.Items.Add(sPrint);
             }
+            combobox打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //void fill_printer()
@@ -772,11 +798,16 @@ namespace mySystem.Process.CleanCut
                 b2 += Convert.ToDouble(dr["数量"]);
                 c += Convert.ToDouble(dr["工时"]); ;
             }
-            dtOuter.Rows[0]["清洁前合计A1"] = a1;
-            dtOuter.Rows[0]["清洁前合计A2"] = a2;
-            dtOuter.Rows[0]["清洁后合计B1"] = b1;
-            dtOuter.Rows[0]["清洁后合计B2"] = b2;
-            dtOuter.Rows[0]["清洁后合计C"] = c;
+            //dtOuter.Rows[0]["清洁前合计A1"] = a1;
+            //dtOuter.Rows[0]["清洁前合计A2"] = a2;
+            //dtOuter.Rows[0]["清洁后合计B1"] = b1;
+            //dtOuter.Rows[0]["清洁后合计B2"] = b2;
+            //dtOuter.Rows[0]["清洁后合计C"] = c;
+            txb清洁前合计A1.Text = a1.ToString();
+            txb清洁前合计A2.Text = a2.ToString();
+            txb清洁后合计B1.Text = b1.ToString();
+            txb清洁后合计B2.Text = b2.ToString();
+            txb清洁后合计C.Text = c.ToString();
         }
 
         private void bt保存_Click(object sender, EventArgs e)
@@ -816,5 +847,83 @@ namespace mySystem.Process.CleanCut
         {
             MessageBox.Show("打印功能正在完善");
         }
+
+        private void btn查询_Click(object sender, EventArgs e)
+        {
+            if (cmb物料种类.SelectedItem.ToString() == "全部")
+            {
+                query(dateTimePicker1.Value.Date, "");
+            }
+            else
+            {
+                query(dateTimePicker1.Value.Date, cmb物料种类.SelectedItem.ToString());
+            }
+            innerBind();
+            computerOuterData();
+        }
+
+        void query(DateTime time, String matcode)
+        {
+            OleDbDataAdapter da;
+            DataTable tmp;
+            string sql;
+            // 拿到这个日期下的所有ID
+            sql = "select * from 清洁分切生产记录 where 生产日期=#{0}#";
+            da = new OleDbDataAdapter(string.Format(sql, time.Date), mySystem.Parameter.connOle);
+            tmp = new DataTable();
+            da.Fill(tmp);
+            List<int> ids = new List<int>();
+            Hashtable ht生产指令 = new Hashtable();
+            foreach (DataRow dr in tmp.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+                ht生产指令.Add(Convert.ToInt32(dr["ID"]),dr["生产指令编号"].ToString());
+            }
+            
+            // 从这些ID中读取符合条件的记录
+            //ret = new DataTable("日报表");
+            tmp = new DataTable();
+            foreach (int id in ids)
+            {
+                sql = "select * from 清洁分切生产记录详细信息 where T清洁分切生产记录ID={0} and 物料代码 like '%{1}%'";
+                da = new OleDbDataAdapter(string.Format(sql, id, matcode), mySystem.Parameter.connOle);
+                da.Fill(tmp);
+            }
+            int xuhao = 1;
+            //string sql = "select * from 清洁分切生产记录详细信息 where ";
+            //OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, id, cmb物料种类.SelectedItem.ToString()), mySystem.Parameter.connOle);
+            //DataTable tmp = new DataTable();
+            //dain.Fill(tmp);
+            foreach (DataRow dr in tmp.Rows)
+            {
+                DataRow ndr = dtInner.NewRow();
+                //ndr["T清洁分切日报表ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+                ndr["序号"] = xuhao++;
+                ndr["生产指令"] = ht生产指令[Convert.ToInt32(dr["T清洁分切生产记录ID"])];
+                ndr["生产日期"] = dateTimePicker1.Value;
+                ndr["使用物料代码"] = dr["物料代码"];
+                // TODO 能自动填吗？
+                string temp = ndr["使用物料代码"].ToString().TrimStart('X').Split('X')[0];
+                string[] tmps = temp.Split('-');
+                temp = tmps[tmps.Length - 1];
+                ndr["规格a1"] = Convert.ToInt32(temp);
+                ndr["用量b1"] = dr["长度A"];
+                ndr["使用量"] = Convert.ToDouble(ndr["规格a1"]) * Convert.ToDouble(ndr["用量b1"]) / 1000;
+                ndr["清洁分切后代码"] = dr["清洁分切后代码"];
+                temp = ndr["清洁分切后代码"].ToString().TrimStart('X').Split('X')[0];
+                tmps = temp.Split('-');
+                temp = tmps[tmps.Length - 1];
+                ndr["规格a2"] = Convert.ToInt32(temp.TrimEnd('C')); ;
+                ndr["数量b2"] = dr["长度B"];
+                ndr["数量"] = Convert.ToDouble(ndr["规格a2"]) * Convert.ToDouble(ndr["数量b2"]) / 1000;
+                ndr["工时"] = Convert.ToDouble(dr["工时"]);
+                ndr["操作人"] = mySystem.Parameter.userName;
+                ndr["审核人"] = "";
+                dtInner.Rows.Add(ndr);
+            }
+
+        }
+
+ 
     }
 }
