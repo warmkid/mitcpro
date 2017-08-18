@@ -249,7 +249,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "关键尺寸确认记录");
             if (b)
             {
-                BTVKeySizeConfirm mydlg = new BTVKeySizeConfirm();
+                BTVKeySizeConfirm mydlg = new BTVKeySizeConfirm(mainform);
                 mydlg.ShowDialog();
             }
             else

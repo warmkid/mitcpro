@@ -147,9 +147,9 @@ namespace mySystem.Query
                         break;
                     case "关键尺寸确认记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "BPV关键尺寸确认记录", "操作人", "操作日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "BPV关键尺寸确认记录", "操作员", "操作日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "BPV关键尺寸确认记录", "操作人", "操作日期", null); }
+                        { EachBind(this.dgv, "BPV关键尺寸确认记录", "操作员", "操作日期", null); }
                         break;
                     case "原材料分装记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -189,9 +189,9 @@ namespace mySystem.Query
                         break;
                     case "3D袋体生产记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "3D袋体生产记录", "审核人", "开始生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "3D袋体生产记录", "审核员", "开始生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "3D袋体生产记录", "审核人", "开始生产日期", null); }
+                        { EachBind(this.dgv, "3D袋体生产记录", "审核员", "开始生产日期", null); }
                         break;
                     case "单管口热合机运行记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -336,12 +336,12 @@ namespace mySystem.Query
                         mydlg7.Show();
                         break;
                     case "2D袋体生产记录":
-                        //BTV2DProRecord mydlg8 = new BTV2DProRecord(mainform, ID);
-                        //mydlg8.Show();
+                        BTV2DProRecord mydlg8 = new BTV2DProRecord(mainform, ID);
+                        mydlg8.Show();
                         break;
                     case "关键尺寸确认记录":
-                        //BTVKeySizeConfirm mydlg9 = new BTVKeySizeConfirm(mainform, ID);
-                        //mydlg9.Show();
+                        BTVKeySizeConfirm mydlg9 = new BTVKeySizeConfirm(mainform, ID);
+                        mydlg9.Show();
                         break;
                     case "原材料分装记录":
                         BTVRawMaterialDispensing mydlg10 = new BTVRawMaterialDispensing(mainform, ID);
