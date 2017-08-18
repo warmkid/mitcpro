@@ -215,7 +215,7 @@ namespace mySystem.Query
                         break;
                 }
             }
-            catch
+            catch(Exception ee)
             { }
         }
 

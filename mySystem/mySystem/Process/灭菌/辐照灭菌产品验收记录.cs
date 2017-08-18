@@ -93,15 +93,24 @@ namespace mySystem.Process.灭菌
 
             instruID = id;
 
-
             readOuterData(code);
             outerBind();
+
+            //??
+            tb辐照批号.DataBindings.Clear();
+            tb辐照批号.Text = dt_out.Rows[0]["辐照批号"].ToString();
+            tb报告编号.DataBindings.Clear();
+            tb报告编号.Text = dt_out.Rows[0]["报告编号"].ToString();
+            tb验收人.DataBindings.Clear();
+            tb验收人.Text = dt_out.Rows[0]["验收人"].ToString();
 
             setFormState();
             setEnableReadOnly();
 
             cb委托单号.Enabled = false;
             bt插入查询.Enabled = false;
+
+            
         }
 
         void getPeople()
@@ -532,6 +541,7 @@ namespace mySystem.Process.灭菌
             tb审核人.DataBindings.Add("Text", bs_out.DataSource, "审核人");
             dtp审核日期.DataBindings.Add("Value", bs_out.DataSource, "审核日期");
             dtp操作日期.DataBindings.Add("Value", bs_out.DataSource, "操作日期");
+
         }
 
         void setFormState()
