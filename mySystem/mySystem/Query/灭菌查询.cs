@@ -242,6 +242,10 @@ namespace mySystem.Query
             { setDataGridViewBackColor("审核员"); }
             catch
             { }
+            try
+            { setDataGridViewBackColor("审批"); }
+            catch
+            { }
         }
 
         //设置datagridview背景颜色，待审核标红

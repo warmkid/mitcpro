@@ -306,7 +306,7 @@ namespace mySystem.Process.灭菌
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = str_委托单 + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -348,6 +348,22 @@ namespace mySystem.Process.灭菌
             }
         }
 
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from Gamma射线辐射灭菌委托单 where 委托单号 = '" + str_委托单 + "'";
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt_prodinstr.Rows[0]["ID"]) + 1;
+
+        }
+
         //填充excel
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
@@ -370,7 +386,8 @@ namespace mySystem.Process.灭菌
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[7 + i, 1] = dataGridView1.Rows[i].Cells[9].Value.ToString();
-                my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                //my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                my.Cells[7 + i, 2] = i + 1;
                 my.Cells[7 + i, 3] = dataGridView1.Rows[i].Cells[3].Value.ToString();
                 my.Cells[7 + i, 4] = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 my.Cells[7 + i, 5] = dataGridView1.Rows[i].Cells[5].Value.ToString();
@@ -387,7 +404,7 @@ namespace mySystem.Process.灭菌
             my.Cells[24 + ind, 3] = dtp委托日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[24 + ind, 5] = dtp审批日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[25 + ind, 3] = cb运输商.Text;
-            my.Cells[25 + ind, 5] = tb操作人.Text;
+            my.Cells[25 + ind, 5] = tb委托人.Text;
             my.Cells[25 + ind, 7] = dtp操作日期.Value.ToString("yyyy年MM月dd日");
         }
 
@@ -709,6 +726,7 @@ namespace mySystem.Process.灭菌
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         private void bt打印_Click(object sender, EventArgs e)
