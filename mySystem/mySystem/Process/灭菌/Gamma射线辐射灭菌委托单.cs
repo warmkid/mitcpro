@@ -28,7 +28,7 @@ namespace mySystem.Process.灭菌
         private BindingSource bs_prodinstr, bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
 
-        private List<string> list_产品代码;
+        private List<string> list_产品代码,list_产品名称;
         private string person_操作员;
         private string person_审核员;
         private List<string> list_操作员;
@@ -121,7 +121,7 @@ namespace mySystem.Process.灭菌
             dr["委托单号"] = tb委托单号.Text;
             dr["合计箱数"] = 0;
             dr["合计托数"] = 0;
-
+            dr["其他说明"] = "无";
             dr["操作人"] = mySystem.Parameter.userName;
             dr["委托日期"] = DateTime.Now;
             dr["审批日期"] = DateTime.Now;
@@ -222,7 +222,19 @@ namespace mySystem.Process.灭菌
                         }
                         dataGridView1.Columns.Add(c1);
                         break;
-
+                    case "产品名称":
+                        DataGridViewComboBoxColumn c5 = new DataGridViewComboBoxColumn();
+                        c5.DataPropertyName = dc.ColumnName;
+                        c5.HeaderText = "产品名称";
+                        c5.Name = dc.ColumnName;
+                        c5.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        c5.ValueType = dc.DataType;
+                        foreach (string sdr in list_产品名称)
+                        {
+                            c5.Items.Add(sdr);
+                        }
+                        dataGridView1.Columns.Add(c5);
+                        break;
                     case "数量箱":
                         DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
                         c3.DataPropertyName = dc.ColumnName;
@@ -385,7 +397,20 @@ namespace mySystem.Process.灭菌
             get_辐照单位();
             get_运输商();
             get_产品代码();
+            get_产品名称();
             fill_printer();
+        }
+
+        private void get_产品名称()
+        {
+            list_产品名称 = new List<string>();
+            DataTable dt = new DataTable("设置产品名称");
+            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置产品名称", mySystem.Parameter.connOle);
+            da.Fill(dt);
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                list_产品名称.Add(dt.Rows[i][1].ToString());
+            }
         }
 
         private void get_辐照单位()

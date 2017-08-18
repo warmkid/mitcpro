@@ -80,6 +80,12 @@ namespace mySystem.Process.灭菌
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             code = tempdt.Rows[0]["灭菌委托单编号"].ToString();
+            // TODO 判断是否要加入code
+
+            if (!cb委托单号.Items.Contains(code))
+            {
+                cb委托单号.Items.Add(code);
+            }
 
             readOuterData(code);
             outerBind();
@@ -476,7 +482,7 @@ namespace mySystem.Process.灭菌
 
             bs_out.DataSource = dt_out;
 
-            cb委托单号.DataBindings.Add("Text", bs_out.DataSource, "灭菌委托单编号");
+            cb委托单号.DataBindings.Add("SelectedItem", bs_out.DataSource, "灭菌委托单编号");
             dtp运回日期.DataBindings.Add("Value", bs_out.DataSource, "辐照产品运回日期");
             cb辐照商.DataBindings.Add("Text", bs_out.DataSource, "辐照商");
             cb检查结果1.DataBindings.Add("Text", bs_out.DataSource, "辐照供应商检查结果");

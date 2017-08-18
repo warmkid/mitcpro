@@ -39,6 +39,10 @@ namespace mySystem.Setting
         private DataTable dt辐照单位;
         private BindingSource bs辐照单位;
         private OleDbCommandBuilder cb辐照单位;
+        private OleDbDataAdapter da产品名称;
+        private DataTable dt产品名称;
+        private BindingSource bs产品名称;
+        private OleDbCommandBuilder cb产品名称;
         private OleDbDataAdapter da人员;
         private DataTable dt人员;
         private BindingSource bs人员;
@@ -65,6 +69,9 @@ namespace mySystem.Setting
 
             bs辐照单位 = new BindingSource();
             EachInitdgv(dgv辐照单位);
+
+            bs产品名称 = new BindingSource();
+            EachInitdgv(dgv产品名称);
 
             bs人员 = new BindingSource();
             EachInitdgv(dgv人员);
@@ -139,6 +146,19 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv辐照单位);
             this.dgv辐照单位.Columns["辐照单位"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv辐照单位.Columns["辐照单位"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            //************************   产品名称     *******************************************
+            dt产品名称 = new DataTable("设置产品名称"); //""中的是表名
+            da产品名称 = new OleDbDataAdapter("select * from 设置产品名称", mySystem.Parameter.connOle);
+            cb产品名称 = new OleDbCommandBuilder(da产品名称);
+            dt产品名称.Columns.Add("序号", System.Type.GetType("System.String"));
+            da产品名称.Fill(dt产品名称);
+            bs产品名称.DataSource = dt产品名称;
+            this.dgv产品名称.DataSource = bs产品名称.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv产品名称);
+            this.dgv产品名称.Columns["产品名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv产品名称.Columns["产品名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("用户"); //""中的是表名
@@ -312,6 +332,11 @@ namespace mySystem.Setting
                     dt辐照单位.Clear();
                     da辐照单位.Fill(dt辐照单位);
                     setDataGridViewRowNums(this.dgv辐照单位);
+
+                    da产品名称.Update((DataTable)bs产品名称.DataSource);
+                    dt产品名称.Clear();
+                    da产品名称.Fill(dt产品名称);
+                    setDataGridViewRowNums(this.dgv产品名称);
 
                 }
                 MessageBox.Show("保存成功！");
@@ -556,6 +581,30 @@ namespace mySystem.Setting
                 }
             }
         }
+
+        private void dgv产品名称_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv产品名称.Columns["ID"].Visible = false;
+        }
+
+        private void add产品名称_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt产品名称.NewRow();
+            dt产品名称.Rows.InsertAt(dt产品名称.NewRow(), dt产品名称.Rows.Count);
+            setDataGridViewRowNums(this.dgv产品名称);
+        }
+
+        private void del产品名称_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv产品名称.CurrentRow.Index;
+            dt产品名称.Rows[idx].Delete();
+            da产品名称.Update((DataTable)bs产品名称.DataSource);
+            dt产品名称.Clear();
+            da产品名称.Fill(dt产品名称);
+            setDataGridViewRowNums(this.dgv产品名称);
+        }
+
+        
 
     }
 }
