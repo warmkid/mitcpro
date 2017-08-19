@@ -267,7 +267,7 @@ namespace mySystem
             BtnColor();
             Btn订单管理.BackColor = Color.FromArgb(138, 158, 196);
 
-            订单管理 myDlg = new 订单管理();
+            订单管理 myDlg = new 订单管理(mainform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = ProducePanelRight.Size;
@@ -286,7 +286,7 @@ namespace mySystem
             BtnColor();
             Btn库存管理.BackColor = Color.FromArgb(138, 158, 196);
 
-            库存管理主界面 myDlg = new 库存管理主界面();
+            库存管理主界面 myDlg = new 库存管理主界面(mainform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = ProducePanelRight.Size;

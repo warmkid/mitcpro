@@ -10,9 +10,9 @@ using 订单和库存管理;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 库存管理主界面 : Form
+    public partial class 库存管理主界面 : BaseForm
     {
-        public 库存管理主界面()
+        public 库存管理主界面(MainForm mainform):base(mainform)
         {
             InitializeComponent();
         }

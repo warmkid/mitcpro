@@ -12,10 +12,12 @@ namespace mySystem.Other
     public partial class InputDataGridView : Form
     {
         DataTable _datatable;
-        public InputDataGridView(String data, DataTable setting)
+        bool _multiSelect;
+        public InputDataGridView(String data, DataTable setting, bool multiSelect=true)
         {
             InitializeComponent();
             _datatable = setting;
+            _multiSelect = multiSelect;
             // add column
             setting.Columns.Add("选择", System.Type.GetType("System.Boolean"));
             // check sth
@@ -45,6 +47,42 @@ namespace mySystem.Other
 
             dataGridView1.DataSource = _datatable;
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+            dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
+            dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(dataGridView1_CellValueChanged);
+            dataGridView1.CellContentClick += new DataGridViewCellEventHandler(dataGridView1_CellContentClick);
+        }
+
+        void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            switch (dataGridView1.Columns[e.ColumnIndex].Name)
+            {
+                case "选择":
+                    if (!_multiSelect)
+                    {
+                        //dataGridView1.Rows[e.RowIndex].Cells[0].edited
+                        if (Convert.ToBoolean(dataGridView1[e.ColumnIndex, e.RowIndex].EditedFormattedValue))
+                        {
+                            for (int i = 0; i < dataGridView1.Rows.Count; ++i)
+                            {
+                                //if (i == e.RowIndex) continue;
+                                dataGridView1["选择", i].Value = false;
+                            }
+                            dataGridView1[e.ColumnIndex, e.RowIndex].Value = true;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+           
+            //throw new NotImplementedException();
+        }
+
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -61,9 +99,9 @@ namespace mySystem.Other
             this.Close();
         }
 
-        public static String getIDs(String data, DataTable setting)
+        public static String getIDs(String data, DataTable setting, bool multiSelect=true)
         {
-            InputDataGridView dlg = new InputDataGridView(data, setting);
+            InputDataGridView dlg = new InputDataGridView(data, setting, multiSelect);
             if (DialogResult.OK == dlg.ShowDialog())
             {
                 // 获取用户的选择，并返回

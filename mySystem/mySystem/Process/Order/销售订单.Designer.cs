@@ -28,83 +28,343 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
+            this.cmb币种 = new System.Windows.Forms.ComboBox();
+            this.cmb销售部门 = new System.Windows.Forms.ComboBox();
+            this.cmb客户简称 = new System.Windows.Forms.ComboBox();
+            this.cmb销售类型 = new System.Windows.Forms.ComboBox();
+            this.combox打印机选择 = new System.Windows.Forms.ComboBox();
+            this.btn打印 = new System.Windows.Forms.Button();
+            this.btn下移 = new System.Windows.Forms.Button();
+            this.btn上移 = new System.Windows.Forms.Button();
+            this.btn删除 = new System.Windows.Forms.Button();
+            this.btn添加 = new System.Windows.Forms.Button();
+            this.btn确认 = new System.Windows.Forms.Button();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
+            this.tb备注 = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tb汇率 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.tb税率 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.tb业务员 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.tb付款条件 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.dtp订单日期 = new System.Windows.Forms.DateTimePicker();
+            this.label3 = new System.Windows.Forms.Label();
             this.label44 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label4 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBox9 = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.textBox10 = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.textBox11 = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.tb订单号 = new System.Windows.Forms.TextBox();
+            this.cmb业务类型 = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btn新建 = new System.Windows.Forms.Button();
+            this.tb操作员 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tb审核员 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.tb关闭员 = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.btn关闭订单 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // cmb币种
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(12, 49);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "订单号";
+            this.cmb币种.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmb币种.FormattingEnabled = true;
+            this.cmb币种.Location = new System.Drawing.Point(734, 144);
+            this.cmb币种.Name = "cmb币种";
+            this.cmb币种.Size = new System.Drawing.Size(141, 24);
+            this.cmb币种.TabIndex = 117;
             // 
-            // comboBox1
+            // cmb销售部门
             // 
-            this.comboBox1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(160, 4);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 1;
+            this.cmb销售部门.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmb销售部门.FormattingEnabled = true;
+            this.cmb销售部门.Location = new System.Drawing.Point(734, 98);
+            this.cmb销售部门.Name = "cmb销售部门";
+            this.cmb销售部门.Size = new System.Drawing.Size(141, 24);
+            this.cmb销售部门.TabIndex = 116;
             // 
-            // textBox1
+            // cmb客户简称
             // 
-            this.textBox1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(86, 46);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(141, 26);
-            this.textBox1.TabIndex = 2;
+            this.cmb客户简称.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmb客户简称.FormattingEnabled = true;
+            this.cmb客户简称.Location = new System.Drawing.Point(86, 93);
+            this.cmb客户简称.Name = "cmb客户简称";
+            this.cmb客户简称.Size = new System.Drawing.Size(141, 24);
+            this.cmb客户简称.TabIndex = 115;
             // 
-            // dataGridView1
+            // cmb销售类型
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 216);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(816, 340);
-            this.dataGridView1.TabIndex = 3;
+            this.cmb销售类型.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmb销售类型.FormattingEnabled = true;
+            this.cmb销售类型.Location = new System.Drawing.Point(734, 45);
+            this.cmb销售类型.Name = "cmb销售类型";
+            this.cmb销售类型.Size = new System.Drawing.Size(141, 24);
+            this.cmb销售类型.TabIndex = 114;
             // 
-            // label2
+            // combox打印机选择
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(311, 12);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(89, 19);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "销售订单";
+            this.combox打印机选择.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.combox打印机选择.FormattingEnabled = true;
+            this.combox打印机选择.Location = new System.Drawing.Point(229, 648);
+            this.combox打印机选择.Name = "combox打印机选择";
+            this.combox打印机选择.Size = new System.Drawing.Size(182, 24);
+            this.combox打印机选择.TabIndex = 113;
+            // 
+            // btn打印
+            // 
+            this.btn打印.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印.Location = new System.Drawing.Point(122, 648);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(75, 23);
+            this.btn打印.TabIndex = 112;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
+            // 
+            // btn下移
+            // 
+            this.btn下移.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn下移.Location = new System.Drawing.Point(335, 554);
+            this.btn下移.Name = "btn下移";
+            this.btn下移.Size = new System.Drawing.Size(75, 23);
+            this.btn下移.TabIndex = 111;
+            this.btn下移.Text = "下移";
+            this.btn下移.UseVisualStyleBackColor = true;
+            this.btn下移.Click += new System.EventHandler(this.btn下移_Click);
+            // 
+            // btn上移
+            // 
+            this.btn上移.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn上移.Location = new System.Drawing.Point(228, 554);
+            this.btn上移.Name = "btn上移";
+            this.btn上移.Size = new System.Drawing.Size(75, 23);
+            this.btn上移.TabIndex = 110;
+            this.btn上移.Text = "上移";
+            this.btn上移.UseVisualStyleBackColor = true;
+            this.btn上移.Click += new System.EventHandler(this.btn上移_Click);
+            // 
+            // btn删除
+            // 
+            this.btn删除.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn删除.Location = new System.Drawing.Point(121, 554);
+            this.btn删除.Name = "btn删除";
+            this.btn删除.Size = new System.Drawing.Size(75, 23);
+            this.btn删除.TabIndex = 109;
+            this.btn删除.Text = "删除";
+            this.btn删除.UseVisualStyleBackColor = true;
+            this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
+            // 
+            // btn添加
+            // 
+            this.btn添加.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn添加.Location = new System.Drawing.Point(12, 554);
+            this.btn添加.Name = "btn添加";
+            this.btn添加.Size = new System.Drawing.Size(75, 23);
+            this.btn添加.TabIndex = 108;
+            this.btn添加.Text = "添加";
+            this.btn添加.UseVisualStyleBackColor = true;
+            this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
+            // 
+            // btn确认
+            // 
+            this.btn确认.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn确认.Location = new System.Drawing.Point(694, 648);
+            this.btn确认.Name = "btn确认";
+            this.btn确认.Size = new System.Drawing.Size(75, 23);
+            this.btn确认.TabIndex = 107;
+            this.btn确认.Text = "确认";
+            this.btn确认.UseVisualStyleBackColor = true;
+            this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
+            // 
+            // btn提交审核
+            // 
+            this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn提交审核.Location = new System.Drawing.Point(775, 648);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(100, 23);
+            this.btn提交审核.TabIndex = 106;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
+            // 
+            // btn审核
+            // 
+            this.btn审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn审核.Location = new System.Drawing.Point(13, 648);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(75, 23);
+            this.btn审核.TabIndex = 105;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
+            // 
+            // tb备注
+            // 
+            this.tb备注.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb备注.Location = new System.Drawing.Point(394, 184);
+            this.tb备注.Name = "tb备注";
+            this.tb备注.Size = new System.Drawing.Size(141, 26);
+            this.tb备注.TabIndex = 104;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label13.Location = new System.Drawing.Point(320, 187);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(40, 16);
+            this.label13.TabIndex = 103;
+            this.label13.Text = "备注";
+            // 
+            // tb汇率
+            // 
+            this.tb汇率.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb汇率.Location = new System.Drawing.Point(86, 184);
+            this.tb汇率.Name = "tb汇率";
+            this.tb汇率.Size = new System.Drawing.Size(141, 26);
+            this.tb汇率.TabIndex = 102;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label12.Location = new System.Drawing.Point(12, 187);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(40, 16);
+            this.label12.TabIndex = 101;
+            this.label12.Text = "汇率";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.Location = new System.Drawing.Point(660, 150);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(40, 16);
+            this.label11.TabIndex = 99;
+            this.label11.Text = "币种";
+            // 
+            // tb税率
+            // 
+            this.tb税率.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb税率.Location = new System.Drawing.Point(394, 144);
+            this.tb税率.Name = "tb税率";
+            this.tb税率.Size = new System.Drawing.Size(141, 26);
+            this.tb税率.TabIndex = 98;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(320, 147);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(40, 16);
+            this.label10.TabIndex = 97;
+            this.label10.Text = "税率";
+            // 
+            // tb业务员
+            // 
+            this.tb业务员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb业务员.Location = new System.Drawing.Point(86, 141);
+            this.tb业务员.Name = "tb业务员";
+            this.tb业务员.Size = new System.Drawing.Size(141, 26);
+            this.tb业务员.TabIndex = 96;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Location = new System.Drawing.Point(12, 144);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(56, 16);
+            this.label9.TabIndex = 95;
+            this.label9.Text = "业务员";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label8.Location = new System.Drawing.Point(656, 101);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(72, 16);
+            this.label8.TabIndex = 93;
+            this.label8.Text = "销售部门";
+            // 
+            // tb付款条件
+            // 
+            this.tb付款条件.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb付款条件.Location = new System.Drawing.Point(394, 98);
+            this.tb付款条件.Name = "tb付款条件";
+            this.tb付款条件.Size = new System.Drawing.Size(141, 26);
+            this.tb付款条件.TabIndex = 92;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(320, 101);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(72, 16);
+            this.label6.TabIndex = 91;
+            this.label6.Text = "付款条件";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(12, 98);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(72, 16);
+            this.label7.TabIndex = 89;
+            this.label7.Text = "客户简称";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(656, 49);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 16);
+            this.label5.TabIndex = 85;
+            this.label5.Text = "销售类型";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label4.Location = new System.Drawing.Point(316, 53);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 16);
+            this.label4.TabIndex = 83;
+            this.label4.Text = "业务类型";
+            // 
+            // dtp订单日期
+            // 
+            this.dtp订单日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp订单日期.Location = new System.Drawing.Point(675, 180);
+            this.dtp订单日期.Name = "dtp订单日期";
+            this.dtp订单日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp订单日期.TabIndex = 82;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label3.Location = new System.Drawing.Point(594, 187);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(72, 16);
+            this.label3.TabIndex = 80;
+            this.label3.Text = "订单日期";
             // 
             // label44
             // 
@@ -126,237 +386,176 @@
             this.label角色.TabIndex = 78;
             this.label角色.Text = "角色";
             // 
-            // label3
+            // label2
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(539, 187);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 16);
-            this.label3.TabIndex = 80;
-            this.label3.Text = "订单日期";
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(311, 12);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 19);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "销售订单";
             // 
-            // dateTimePicker1
+            // dataGridView1
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(620, 180);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 82;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 216);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(863, 332);
+            this.dataGridView1.TabIndex = 3;
             // 
-            // label4
+            // tb订单号
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(290, 53);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 16);
-            this.label4.TabIndex = 83;
-            this.label4.Text = "业务类型";
+            this.tb订单号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb订单号.Location = new System.Drawing.Point(86, 46);
+            this.tb订单号.Name = "tb订单号";
+            this.tb订单号.Size = new System.Drawing.Size(141, 26);
+            this.tb订单号.TabIndex = 2;
             // 
-            // textBox2
+            // cmb业务类型
             // 
-            this.textBox2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox2.Location = new System.Drawing.Point(368, 46);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(141, 26);
-            this.textBox2.TabIndex = 84;
+            this.cmb业务类型.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmb业务类型.FormattingEnabled = true;
+            this.cmb业务类型.Location = new System.Drawing.Point(394, 50);
+            this.cmb业务类型.Name = "cmb业务类型";
+            this.cmb业务类型.Size = new System.Drawing.Size(141, 24);
+            this.cmb业务类型.TabIndex = 1;
             // 
-            // textBox3
+            // label1
             // 
-            this.textBox3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox3.Location = new System.Drawing.Point(679, 43);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(141, 26);
-            this.textBox3.TabIndex = 86;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(12, 49);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(56, 16);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "订单号";
             // 
-            // label5
+            // btn新建
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(601, 49);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 16);
-            this.label5.TabIndex = 85;
-            this.label5.Text = "销售类型";
+            this.btn新建.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn新建.Location = new System.Drawing.Point(233, 46);
+            this.btn新建.Name = "btn新建";
+            this.btn新建.Size = new System.Drawing.Size(51, 23);
+            this.btn新建.TabIndex = 118;
+            this.btn新建.Text = "新建";
+            this.btn新建.UseVisualStyleBackColor = true;
+            this.btn新建.Click += new System.EventHandler(this.btn新建_Click);
             // 
-            // textBox5
+            // tb操作员
             // 
-            this.textBox5.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox5.Location = new System.Drawing.Point(86, 95);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(141, 26);
-            this.textBox5.TabIndex = 90;
+            this.tb操作员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb操作员.Location = new System.Drawing.Point(86, 593);
+            this.tb操作员.Name = "tb操作员";
+            this.tb操作员.Size = new System.Drawing.Size(141, 26);
+            this.tb操作员.TabIndex = 120;
             // 
-            // label7
+            // label14
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(12, 98);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 16);
-            this.label7.TabIndex = 89;
-            this.label7.Text = "客户简称";
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label14.Location = new System.Drawing.Point(12, 596);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(56, 16);
+            this.label14.TabIndex = 119;
+            this.label14.Text = "操作员";
             // 
-            // textBox4
+            // tb审核员
             // 
-            this.textBox4.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox4.Location = new System.Drawing.Point(368, 98);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(141, 26);
-            this.textBox4.TabIndex = 92;
+            this.tb审核员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核员.Location = new System.Drawing.Point(383, 593);
+            this.tb审核员.Name = "tb审核员";
+            this.tb审核员.Size = new System.Drawing.Size(141, 26);
+            this.tb审核员.TabIndex = 122;
             // 
-            // label6
+            // label15
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(294, 101);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(72, 16);
-            this.label6.TabIndex = 91;
-            this.label6.Text = "付款条件";
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label15.Location = new System.Drawing.Point(309, 596);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(56, 16);
+            this.label15.TabIndex = 121;
+            this.label15.Text = "审核员";
             // 
-            // textBox6
+            // tb关闭员
             // 
-            this.textBox6.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox6.Location = new System.Drawing.Point(679, 98);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(141, 26);
-            this.textBox6.TabIndex = 94;
+            this.tb关闭员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb关闭员.Location = new System.Drawing.Point(675, 593);
+            this.tb关闭员.Name = "tb关闭员";
+            this.tb关闭员.Size = new System.Drawing.Size(141, 26);
+            this.tb关闭员.TabIndex = 124;
             // 
-            // label8
+            // label16
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(605, 101);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(72, 16);
-            this.label8.TabIndex = 93;
-            this.label8.Text = "销售部门";
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label16.Location = new System.Drawing.Point(601, 596);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(56, 16);
+            this.label16.TabIndex = 123;
+            this.label16.Text = "关闭员";
             // 
-            // textBox7
+            // btn关闭订单
             // 
-            this.textBox7.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox7.Location = new System.Drawing.Point(86, 141);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(141, 26);
-            this.textBox7.TabIndex = 96;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label9.Location = new System.Drawing.Point(12, 144);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(56, 16);
-            this.label9.TabIndex = 95;
-            this.label9.Text = "业务员";
-            // 
-            // textBox8
-            // 
-            this.textBox8.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox8.Location = new System.Drawing.Point(368, 144);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(141, 26);
-            this.textBox8.TabIndex = 98;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(294, 147);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(40, 16);
-            this.label10.TabIndex = 97;
-            this.label10.Text = "税率";
-            // 
-            // textBox9
-            // 
-            this.textBox9.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox9.Location = new System.Drawing.Point(679, 147);
-            this.textBox9.Name = "textBox9";
-            this.textBox9.Size = new System.Drawing.Size(141, 26);
-            this.textBox9.TabIndex = 100;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(605, 150);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(40, 16);
-            this.label11.TabIndex = 99;
-            this.label11.Text = "币种";
-            // 
-            // textBox10
-            // 
-            this.textBox10.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox10.Location = new System.Drawing.Point(86, 184);
-            this.textBox10.Name = "textBox10";
-            this.textBox10.Size = new System.Drawing.Size(141, 26);
-            this.textBox10.TabIndex = 102;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(12, 187);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(40, 16);
-            this.label12.TabIndex = 101;
-            this.label12.Text = "汇率";
-            // 
-            // textBox11
-            // 
-            this.textBox11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox11.Location = new System.Drawing.Point(368, 184);
-            this.textBox11.Name = "textBox11";
-            this.textBox11.Size = new System.Drawing.Size(141, 26);
-            this.textBox11.TabIndex = 104;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(294, 187);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(40, 16);
-            this.label13.TabIndex = 103;
-            this.label13.Text = "备注";
+            this.btn关闭订单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn关闭订单.Location = new System.Drawing.Point(431, 648);
+            this.btn关闭订单.Name = "btn关闭订单";
+            this.btn关闭订单.Size = new System.Drawing.Size(93, 23);
+            this.btn关闭订单.TabIndex = 125;
+            this.btn关闭订单.Text = "关闭订单";
+            this.btn关闭订单.UseVisualStyleBackColor = true;
             // 
             // 销售订单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(840, 598);
-            this.Controls.Add(this.textBox11);
+            this.ClientSize = new System.Drawing.Size(882, 683);
+            this.Controls.Add(this.btn关闭订单);
+            this.Controls.Add(this.tb关闭员);
+            this.Controls.Add(this.label16);
+            this.Controls.Add(this.tb审核员);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.tb操作员);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.btn新建);
+            this.Controls.Add(this.cmb币种);
+            this.Controls.Add(this.cmb销售部门);
+            this.Controls.Add(this.cmb客户简称);
+            this.Controls.Add(this.cmb销售类型);
+            this.Controls.Add(this.combox打印机选择);
+            this.Controls.Add(this.btn打印);
+            this.Controls.Add(this.btn下移);
+            this.Controls.Add(this.btn上移);
+            this.Controls.Add(this.btn删除);
+            this.Controls.Add(this.btn添加);
+            this.Controls.Add(this.btn确认);
+            this.Controls.Add(this.btn提交审核);
+            this.Controls.Add(this.btn审核);
+            this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.textBox10);
+            this.Controls.Add(this.tb汇率);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.textBox9);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.textBox8);
+            this.Controls.Add(this.tb税率);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.textBox7);
+            this.Controls.Add(this.tb业务员);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.textBox6);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.textBox4);
+            this.Controls.Add(this.tb付款条件);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.textBox5);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dtp订单日期);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label44);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.tb订单号);
+            this.Controls.Add(this.cmb业务类型);
             this.Controls.Add(this.label1);
             this.Name = "销售订单";
             this.Text = "销售订单";
@@ -369,33 +568,49 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ComboBox cmb业务类型;
+        private System.Windows.Forms.TextBox tb订单号;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label44;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtp订单日期;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox tb付款条件;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox textBox7;
+        private System.Windows.Forms.TextBox tb业务员;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.TextBox tb税率;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox9;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox10;
+        private System.Windows.Forms.TextBox tb汇率;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox textBox11;
+        private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn确认;
+        private System.Windows.Forms.Button btn添加;
+        private System.Windows.Forms.Button btn删除;
+        private System.Windows.Forms.Button btn上移;
+        private System.Windows.Forms.Button btn下移;
+        private System.Windows.Forms.Button btn打印;
+        private System.Windows.Forms.ComboBox combox打印机选择;
+        private System.Windows.Forms.ComboBox cmb销售类型;
+        private System.Windows.Forms.ComboBox cmb客户简称;
+        private System.Windows.Forms.ComboBox cmb销售部门;
+        private System.Windows.Forms.ComboBox cmb币种;
+        private System.Windows.Forms.Button btn新建;
+        private System.Windows.Forms.TextBox tb操作员;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tb审核员;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox tb关闭员;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Button btn关闭订单;
     }
 }
