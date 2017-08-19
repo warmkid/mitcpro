@@ -707,6 +707,8 @@ namespace mySystem.Process.灭菌
 
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            readOuterData(str_委托单);
+            outerBind();
         }
 
         //审核按钮
