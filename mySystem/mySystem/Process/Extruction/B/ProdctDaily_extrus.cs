@@ -12,6 +12,7 @@ using System.Configuration;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 namespace mySystem
 {
@@ -22,15 +23,20 @@ namespace mySystem
     public partial class ProdctDaily_extrus : mySystem.BaseForm
     {
         int __生产指令ID;
+        Hashtable ht代码面数;
+        Hashtable ht代码宽度;
         public ProdctDaily_extrus(mySystem.MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
+            
             __生产指令ID = mySystem.Parameter.proInstruID;
+            getOtherData();
             fill_printer();
             Init();
             getPeople();
             setUserState();
+            
             if ((_userState == Parameter.UserState.操作员))
             {
                 button2.Enabled = false;
@@ -49,11 +55,12 @@ namespace mySystem
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             __生产指令ID = (int)tempdt.Rows[0]["生产指令ID"];
-
+            getOtherData();
             fill_printer();
             Init();
             getPeople();
             setUserState();
+            ;
             if ((_userState == Parameter.UserState.操作员))
             {
                 button2.Enabled = false;
@@ -76,6 +83,27 @@ namespace mySystem
             //    c.Enabled = false;
             //dataGridView1.Enabled = true;
             dataGridView1.ReadOnly = true;
+        }
+
+        private void getOtherData()
+        {
+            ht代码面数 = new Hashtable();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ht代码面数.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["面数"]));
+            }
+
+            ht代码宽度 = new System.Collections.Hashtable();
+            da = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID="+__生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ht代码宽度.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["宽"]));
+            }
         }
 
         DataTable dt;
@@ -205,7 +233,9 @@ namespace mySystem
                 dr["卷号"]= str膜卷编号;//卷号
                 dr["生产数量"]= sum_膜卷长度;//生产数量
                 dr["生产重量"] = Double.Parse( sum_膜卷重量.ToString("f1"));//生产重量
-
+                dr["膜宽"] = Convert.ToInt32(ht代码宽度[code_temp1]);
+                dr["膜层数"] = Convert.ToInt32(ht代码面数[code_temp1]);
+                dr["生产数量平米"] = Math.Round(sum_膜卷长度 * Convert.ToInt32(ht代码宽度[code_temp1]) * Convert.ToInt32(ht代码面数[code_temp1]) / 1000, 2);
                 if (dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] != null && dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"].ToString() != "")
                 {
                     TimeSpan delt = (DateTime)dt_检验记录_详细.Rows[dt_检验记录_详细.Rows.Count - 1]["结束时间"] - (DateTime)dt_检验记录_详细.Rows[0]["开始时间"];
@@ -482,17 +512,23 @@ namespace mySystem
                 my.Cells[5 + i, 9] = dataGridView1.Rows[i].Cells[10].Value.ToString();
                 my.Cells[5 + i, 10] = dataGridView1.Rows[i].Cells[11].Value.ToString();
                 my.Cells[5 + i, 11] = dataGridView1.Rows[i].Cells[12].Value.ToString();
-                my.Cells[5 + i, 12] = dataGridView1.Rows[i].Cells[13].Value.ToString();
-                my.Cells[5 + i, 13] = dataGridView1.Rows[i].Cells[14].Value.ToString();
-            }
+                my.Cells[5 + i, 12] = dataGridView1.Rows[i].Cells[14].Value.ToString();
+                my.Cells[5 + i, 13] = dataGridView1.Rows[i].Cells[15].Value.ToString();
+                my.Cells[5 + i, 14] = dataGridView1.Rows[i].Cells[16].Value.ToString();
+                my.Cells[5 + i, 15] = dataGridView1.Rows[i].Cells[17].Value.ToString();
+                my.Cells[5 + i, 16] = dataGridView1.Rows[i].Cells[18].Value.ToString();
+                my.Cells[5 + i, 17] = dataGridView1.Rows[i].Cells[19].Value.ToString();
 
+            }
+            my.Cells[17 + ind, 3].Value = Math.Round(Convert.ToDouble(tb加料B1C.Text) / (Convert.ToDouble(tb加料A.Text) + Convert.ToDouble(tb加料B1C.Text)) * 100, 2);
             my.Cells[17+ind, 7].Value = tb生产数量.Text;
             my.Cells[17+ind, 8].Value = tb生产重量.Text;
             my.Cells[17+ind, 9].Value = tb废品重量.Text;
             my.Cells[17+ind, 10].Value = tb加料A.Text;
             my.Cells[17+ind, 11].Value = tb加料B1C.Text;
             my.Cells[17+ind, 13].Value = tb工时.Text;
-            my.Cells[18+ind, 3].Value = tb工时效率.Text;
+            my.Cells[18 + ind, 3].Value = tb成品率.Text;
+            my.Cells[19+ind, 3].Value = tb工时效率.Text;
             my.Cells[18+ind, 6].Value = "备注: "+tb备注.Text;
 
             
@@ -601,6 +637,7 @@ namespace mySystem
             tb加料B2.DataBindings.Clear();
             tb工时.DataBindings.Clear();
             tb备注.DataBindings.Clear();
+            tb成品率.DataBindings.Clear();
 
         }
         // 移除内表和控件的绑定，如果只是一个DataGridView可以不用实现
@@ -622,6 +659,7 @@ namespace mySystem
             tb加料B2.DataBindings.Add("Text", bs_prodinstr.DataSource, "加料B2合计");
             tb工时.DataBindings.Add("Text", bs_prodinstr.DataSource, "工时合计");
             tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "备注");
+            tb成品率.DataBindings.Add("Text", bs_prodinstr.DataSource, "成品率");
 
         }
         // 内表和控件的绑定
@@ -645,6 +683,7 @@ namespace mySystem
             dataGridView1.Columns["加料B2"].Visible = false;
             dataGridView1.Columns["填报人"].Visible = false;
             dataGridView1.Columns["审核人"].Visible = false;
+            dataGridView1.Columns["生产数量平米"].HeaderText = "生产数量(平米)";
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
@@ -700,7 +739,7 @@ namespace mySystem
 
             float temp = (sum_生产重量 + sum_废品重量) / sum_工时;
             dt_prodinstr.Rows[0]["工时效率"] =Math.Round((float)temp, 2) ;
-
+            dt_prodinstr.Rows[0]["成品率"] = Math.Round(sum_生产重量 / (sum_加料A + sum_加料B1C + sum_加料B2) * 100);
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
 

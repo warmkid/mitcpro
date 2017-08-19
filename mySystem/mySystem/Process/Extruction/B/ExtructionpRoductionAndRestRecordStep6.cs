@@ -409,6 +409,10 @@ namespace mySystem.Extruction.Process
                 //立马保存内表
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
             }
+            else
+            {
+                isSaveClicked = true;
+            }
             //内表绑定
             dataGridView1.Columns.Clear();
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));

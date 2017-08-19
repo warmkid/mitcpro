@@ -736,7 +736,7 @@
             // 
             this.label32.AutoSize = true;
             this.label32.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label32.Location = new System.Drawing.Point(303, 12);
+            this.label32.Location = new System.Drawing.Point(376, 12);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(35, 14);
             this.label32.TabIndex = 14;
@@ -756,7 +756,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label13.Location = new System.Drawing.Point(556, 12);
+            this.label13.Location = new System.Drawing.Point(647, 12);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(49, 14);
             this.label13.TabIndex = 12;
@@ -766,7 +766,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(457, 12);
+            this.label12.Location = new System.Drawing.Point(545, 12);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(63, 14);
             this.label12.TabIndex = 11;
@@ -776,7 +776,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(357, 12);
+            this.label11.Location = new System.Drawing.Point(452, 12);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(63, 14);
             this.label11.TabIndex = 10;
@@ -786,7 +786,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(209, 12);
+            this.label10.Location = new System.Drawing.Point(260, 12);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(63, 14);
             this.label10.TabIndex = 9;
@@ -833,7 +833,7 @@
             this.splitContainer2.Panel2.Controls.Add(this.button2);
             this.splitContainer2.Panel2.Controls.Add(this.cb负责人);
             this.splitContainer2.Size = new System.Drawing.Size(993, 135);
-            this.splitContainer2.SplitterDistance = 746;
+            this.splitContainer2.SplitterDistance = 745;
             this.splitContainer2.TabIndex = 0;
             // 
             // splitContainer3
@@ -850,7 +850,7 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer5);
-            this.splitContainer3.Size = new System.Drawing.Size(746, 135);
+            this.splitContainer3.Size = new System.Drawing.Size(745, 135);
             this.splitContainer3.SplitterDistance = 101;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -885,8 +885,8 @@
             this.splitContainer4.Panel2.Controls.Add(this.textBox13);
             this.splitContainer4.Panel2.Controls.Add(this.textBox12);
             this.splitContainer4.Panel2.Controls.Add(this.label19);
-            this.splitContainer4.Size = new System.Drawing.Size(746, 101);
-            this.splitContainer4.SplitterDistance = 61;
+            this.splitContainer4.Size = new System.Drawing.Size(745, 101);
+            this.splitContainer4.SplitterDistance = 60;
             this.splitContainer4.TabIndex = 0;
             // 
             // label15
@@ -903,7 +903,7 @@
             // 
             this.label38.AutoSize = true;
             this.label38.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label38.Location = new System.Drawing.Point(573, 78);
+            this.label38.Location = new System.Drawing.Point(645, 76);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(21, 14);
             this.label38.TabIndex = 29;
@@ -913,7 +913,7 @@
             // 
             this.label37.AutoSize = true;
             this.label37.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label37.Location = new System.Drawing.Point(573, 44);
+            this.label37.Location = new System.Drawing.Point(645, 42);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(21, 14);
             this.label37.TabIndex = 28;
@@ -923,7 +923,7 @@
             // 
             this.label36.AutoSize = true;
             this.label36.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label36.Location = new System.Drawing.Point(573, 15);
+            this.label36.Location = new System.Drawing.Point(645, 13);
             this.label36.Name = "label36";
             this.label36.Size = new System.Drawing.Size(21, 14);
             this.label36.TabIndex = 27;
@@ -931,7 +931,7 @@
             // 
             // tb中层比例
             // 
-            this.tb中层比例.Location = new System.Drawing.Point(244, 38);
+            this.tb中层比例.Location = new System.Drawing.Point(315, 36);
             this.tb中层比例.Name = "tb中层比例";
             this.tb中层比例.ReadOnly = true;
             this.tb中层比例.Size = new System.Drawing.Size(31, 23);
@@ -939,7 +939,7 @@
             // 
             // tb内外层比例
             // 
-            this.tb内外层比例.Location = new System.Drawing.Point(244, 12);
+            this.tb内外层比例.Location = new System.Drawing.Point(315, 10);
             this.tb内外层比例.Name = "tb内外层比例";
             this.tb内外层比例.Size = new System.Drawing.Size(31, 23);
             this.tb内外层比例.TabIndex = 25;
@@ -950,7 +950,7 @@
             this.cb中层物料代码.FormattingEnabled = true;
             this.cb中层物料代码.Location = new System.Drawing.Point(150, 39);
             this.cb中层物料代码.Name = "cb中层物料代码";
-            this.cb中层物料代码.Size = new System.Drawing.Size(73, 22);
+            this.cb中层物料代码.Size = new System.Drawing.Size(143, 22);
             this.cb中层物料代码.TabIndex = 24;
             this.cb中层物料代码.SelectedIndexChanged += new System.EventHandler(this.cb中层物料代码_SelectedIndexChanged);
             // 
@@ -959,7 +959,7 @@
             this.cb内外层物料代码.FormattingEnabled = true;
             this.cb内外层物料代码.Location = new System.Drawing.Point(150, 12);
             this.cb内外层物料代码.Name = "cb内外层物料代码";
-            this.cb内外层物料代码.Size = new System.Drawing.Size(73, 22);
+            this.cb内外层物料代码.Size = new System.Drawing.Size(143, 22);
             this.cb内外层物料代码.TabIndex = 23;
             this.cb内外层物料代码.SelectedIndexChanged += new System.EventHandler(this.cb内外层物料代码_SelectedIndexChanged);
             // 
@@ -975,44 +975,44 @@
             // 
             // tb中层领料量
             // 
-            this.tb中层领料量.Location = new System.Drawing.Point(497, 40);
+            this.tb中层领料量.Location = new System.Drawing.Point(569, 38);
             this.tb中层领料量.Name = "tb中层领料量";
             this.tb中层领料量.Size = new System.Drawing.Size(70, 23);
             this.tb中层领料量.TabIndex = 21;
             // 
             // tb内外领料量
             // 
-            this.tb内外领料量.Location = new System.Drawing.Point(497, 11);
+            this.tb内外领料量.Location = new System.Drawing.Point(569, 9);
             this.tb内外领料量.Name = "tb内外领料量";
             this.tb内外领料量.Size = new System.Drawing.Size(70, 23);
             this.tb内外领料量.TabIndex = 14;
             // 
             // tb中层包装规格
             // 
-            this.tb中层包装规格.Location = new System.Drawing.Point(406, 44);
+            this.tb中层包装规格.Location = new System.Drawing.Point(478, 42);
             this.tb中层包装规格.Name = "tb中层包装规格";
             this.tb中层包装规格.Size = new System.Drawing.Size(66, 23);
             this.tb中层包装规格.TabIndex = 14;
             // 
             // tb内外层包装规格
             // 
-            this.tb内外层包装规格.Location = new System.Drawing.Point(406, 12);
+            this.tb内外层包装规格.Location = new System.Drawing.Point(478, 10);
             this.tb内外层包装规格.Name = "tb内外层包装规格";
             this.tb内外层包装规格.Size = new System.Drawing.Size(66, 23);
             this.tb内外层包装规格.TabIndex = 20;
             // 
             // tb中层物料批号
             // 
-            this.tb中层物料批号.Location = new System.Drawing.Point(298, 41);
+            this.tb中层物料批号.Location = new System.Drawing.Point(361, 40);
             this.tb中层物料批号.Name = "tb中层物料批号";
-            this.tb中层物料批号.Size = new System.Drawing.Size(83, 23);
+            this.tb中层物料批号.Size = new System.Drawing.Size(111, 23);
             this.tb中层物料批号.TabIndex = 19;
             // 
             // tb内外层物料批号
             // 
-            this.tb内外层物料批号.Location = new System.Drawing.Point(298, 12);
+            this.tb内外层物料批号.Location = new System.Drawing.Point(361, 11);
             this.tb内外层物料批号.Name = "tb内外层物料批号";
-            this.tb内外层物料批号.Size = new System.Drawing.Size(83, 23);
+            this.tb内外层物料批号.Size = new System.Drawing.Size(111, 23);
             this.tb内外层物料批号.TabIndex = 18;
             // 
             // label20
@@ -1027,14 +1027,14 @@
             // 
             // tb卷心管领料量
             // 
-            this.tb卷心管领料量.Location = new System.Drawing.Point(497, 75);
+            this.tb卷心管领料量.Location = new System.Drawing.Point(569, 73);
             this.tb卷心管领料量.Name = "tb卷心管领料量";
             this.tb卷心管领料量.Size = new System.Drawing.Size(70, 23);
             this.tb卷心管领料量.TabIndex = 14;
             // 
             // textBox13
             // 
-            this.textBox13.Location = new System.Drawing.Point(406, 73);
+            this.textBox13.Location = new System.Drawing.Point(478, 71);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(66, 23);
             this.textBox13.TabIndex = 13;
@@ -1043,7 +1043,7 @@
             // 
             this.textBox12.Location = new System.Drawing.Point(150, 73);
             this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(231, 23);
+            this.textBox12.Size = new System.Drawing.Size(322, 23);
             this.textBox12.TabIndex = 12;
             this.textBox12.Text = "\r\n";
             // 
@@ -1073,8 +1073,8 @@
             this.splitContainer5.Panel2.Controls.Add(this.textBox9);
             this.splitContainer5.Panel2.Controls.Add(this.textBox7);
             this.splitContainer5.Panel2.Controls.Add(this.label18);
-            this.splitContainer5.Size = new System.Drawing.Size(746, 30);
-            this.splitContainer5.SplitterDistance = 61;
+            this.splitContainer5.Size = new System.Drawing.Size(745, 30);
+            this.splitContainer5.SplitterDistance = 60;
             this.splitContainer5.TabIndex = 0;
             // 
             // label16
@@ -1089,7 +1089,7 @@
             // 
             // tb双层包装领料量
             // 
-            this.tb双层包装领料量.Location = new System.Drawing.Point(497, 3);
+            this.tb双层包装领料量.Location = new System.Drawing.Point(569, 3);
             this.tb双层包装领料量.Name = "tb双层包装领料量";
             this.tb双层包装领料量.Size = new System.Drawing.Size(70, 23);
             this.tb双层包装领料量.TabIndex = 16;
@@ -1097,7 +1097,7 @@
             // 
             // textBox9
             // 
-            this.textBox9.Location = new System.Drawing.Point(404, 2);
+            this.textBox9.Location = new System.Drawing.Point(476, 2);
             this.textBox9.Name = "textBox9";
             this.textBox9.Size = new System.Drawing.Size(68, 23);
             this.textBox9.TabIndex = 14;
@@ -1137,7 +1137,7 @@
             this.tb夜班.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb夜班.Location = new System.Drawing.Point(109, 83);
             this.tb夜班.Name = "tb夜班";
-            this.tb夜班.Size = new System.Drawing.Size(100, 23);
+            this.tb夜班.Size = new System.Drawing.Size(130, 23);
             this.tb夜班.TabIndex = 30;
             // 
             // tb白班
@@ -1145,7 +1145,7 @@
             this.tb白班.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb白班.Location = new System.Drawing.Point(109, 54);
             this.tb白班.Name = "tb白班";
-            this.tb白班.Size = new System.Drawing.Size(100, 23);
+            this.tb白班.Size = new System.Drawing.Size(130, 23);
             this.tb白班.TabIndex = 29;
             // 
             // label34
@@ -1171,7 +1171,7 @@
             // button3
             // 
             this.button3.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button3.Location = new System.Drawing.Point(162, 15);
+            this.button3.Location = new System.Drawing.Point(192, 15);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(47, 23);
             this.button3.TabIndex = 26;
@@ -1182,7 +1182,7 @@
             // button2
             // 
             this.button2.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button2.Location = new System.Drawing.Point(109, 15);
+            this.button2.Location = new System.Drawing.Point(140, 15);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(47, 23);
             this.button2.TabIndex = 25;
@@ -1195,7 +1195,7 @@
             this.cb负责人.FormattingEnabled = true;
             this.cb负责人.Location = new System.Drawing.Point(44, 15);
             this.cb负责人.Name = "cb负责人";
-            this.cb负责人.Size = new System.Drawing.Size(56, 22);
+            this.cb负责人.Size = new System.Drawing.Size(90, 22);
             this.cb负责人.TabIndex = 24;
             // 
             // dtp开始生产日期
@@ -1247,16 +1247,16 @@
             // tb指令编号
             // 
             this.tb指令编号.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb指令编号.Location = new System.Drawing.Point(776, 61);
+            this.tb指令编号.Location = new System.Drawing.Point(718, 61);
             this.tb指令编号.Name = "tb指令编号";
-            this.tb指令编号.Size = new System.Drawing.Size(96, 23);
+            this.tb指令编号.Size = new System.Drawing.Size(154, 23);
             this.tb指令编号.TabIndex = 5;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(653, 64);
+            this.label4.Location = new System.Drawing.Point(618, 64);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(91, 14);
             this.label4.TabIndex = 4;

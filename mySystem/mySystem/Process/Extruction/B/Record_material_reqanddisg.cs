@@ -999,6 +999,10 @@ namespace mySystem.Extruction.Process
                 removeOuterBinding();
                 outerBind();
             }
+            else
+            {
+                isSaved = true;
+            }
             instrid = mySystem.Parameter.proInstruID;
             matcode = cB物料代码.Text;
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);

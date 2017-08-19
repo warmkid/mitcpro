@@ -393,6 +393,11 @@ namespace mySystem.Process.CleanCut
                 innerBind();
 
             }
+            else
+            {
+                isSavedClicked = true;
+
+            }
             //内表绑定
             dataGridView1.Columns.Clear();
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));

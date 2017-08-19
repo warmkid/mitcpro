@@ -47,6 +47,7 @@ namespace BatchProductRecord
         private string person_审核员;
         private List<string> list_操作员;
         private List<string> list_审核员;
+        Hashtable ht代码面数;
 
         //用于带id参数构造函数，存储已存在记录的相关信息
         string instrcode;
@@ -269,8 +270,16 @@ namespace BatchProductRecord
                 fill_printer();
             }
             label = 1;
-
+            ht代码面数 = new Hashtable();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ht代码面数.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["面数"]));
+            }
         }
+
 
         //读取产品列表填入产品名称下拉列表
         private void fill_prodname()
@@ -700,6 +709,7 @@ namespace BatchProductRecord
                         {
                             break;
                         }
+                        面 = Convert.ToInt32(ht代码面数[dataGridView1.Rows[e.RowIndex].Cells["产品编码"].Value.ToString()]);
                         dataGridView1.Rows[e.RowIndex].Cells["用料重量"].Value = Math.Ceiling(a * leng / 1000.0 * 面 * 密度);//用料重量
                         break;
                     }
@@ -731,6 +741,7 @@ namespace BatchProductRecord
                         {
                             leng = 0;
                         }
+                        面 = Convert.ToInt32(ht代码面数[dataGridView1.Rows[e.RowIndex].Cells["产品编码"].Value.ToString()]);
                         dataGridView1.Rows[e.RowIndex].Cells[7].Value = Math.Ceiling(a * leng / 1000.0 * 面 * 密度);//用料重量
                     }
 
@@ -740,6 +751,7 @@ namespace BatchProductRecord
                     ok1 &= Int32.TryParse(dataGridView1.Rows[e.RowIndex].Cells["厚"].Value.ToString(), out hou);
                     if (ok1)
                     {
+                        面 = Convert.ToInt32(ht代码面数[dataGridView1.Rows[e.RowIndex].Cells["产品编码"].Value.ToString()]);
                         dataGridView1.Rows[e.RowIndex].Cells[7].Value = Math.Ceiling(hou * kuang * a / 1000 / 100 * 面 * 密度);
                     }
 
