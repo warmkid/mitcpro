@@ -384,8 +384,8 @@ namespace mySystem.Query
                         mydlg19.Show();
                         break;
                     case "打孔及与图纸确认记录":
-                        //BTVPunchDrawingConfirm mydlg20 = new BTVPunchDrawingConfirm(mainform, ID);
-                        //mydlg20.Show();
+                        BTVPunchDrawingConfirm mydlg20 = new BTVPunchDrawingConfirm(mainform, ID);
+                        mydlg20.Show();
                         break;
 
                     default:

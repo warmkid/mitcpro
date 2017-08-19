@@ -425,7 +425,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "打孔及与图纸确认记录");
             if (b)
             {
-                BTVPunchDrawingConfirm mydlg = new BTVPunchDrawingConfirm();
+                BTVPunchDrawingConfirm mydlg = new BTVPunchDrawingConfirm(mainform);
                 mydlg.ShowDialog();
             }
             else
