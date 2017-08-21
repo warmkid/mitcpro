@@ -53,6 +53,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.tbflow = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label18 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label12 = new System.Windows.Forms.Label();
@@ -65,6 +66,20 @@
             this.tbprefill = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.检测时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PREFILL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CHARDE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SETTLE = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TEST = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FINEL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FINER = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FLOW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.检测产品数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.不良品数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.合格 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.操作人 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.备注 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tb产品批号 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tb产品代码 = new System.Windows.Forms.TextBox();
@@ -86,21 +101,6 @@
             this.btn打印 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn确认 = new System.Windows.Forms.Button();
-            this.序号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.检测时间 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PREFILL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CHARDE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SETTLE = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TEST = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FINEL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FINER = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FLOW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.检测产品数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.不良品数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.合格 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.操作人 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.备注 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label18 = new System.Windows.Forms.Label();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -347,6 +347,16 @@
             this.groupBox3.TabIndex = 46;
             this.groupBox3.TabStop = false;
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.Location = new System.Drawing.Point(257, 20);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(93, 16);
+            this.label18.TabIndex = 49;
+            this.label18.Text = "操作员备注";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -464,7 +474,6 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            //this.dataGridView1.ColumnHeadersVisible = false;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.序号,
             this.检测时间,
@@ -487,6 +496,104 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1069, 168);
             this.dataGridView1.TabIndex = 43;
+            // 
+            // 序号
+            // 
+            this.序号.HeaderText = "序号";
+            this.序号.Name = "序号";
+            this.序号.Width = 50;
+            // 
+            // 检测时间
+            // 
+            this.检测时间.HeaderText = "检测时间";
+            this.检测时间.Name = "检测时间";
+            this.检测时间.Width = 150;
+            // 
+            // PREFILL
+            // 
+            this.PREFILL.HeaderText = "PREFILL";
+            this.PREFILL.Name = "PREFILL";
+            this.PREFILL.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.PREFILL.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.PREFILL.Width = 70;
+            // 
+            // CHARDE
+            // 
+            this.CHARDE.HeaderText = "CHARDE";
+            this.CHARDE.Name = "CHARDE";
+            this.CHARDE.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.CHARDE.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.CHARDE.Width = 65;
+            // 
+            // SETTLE
+            // 
+            this.SETTLE.HeaderText = "SETTLE";
+            this.SETTLE.Name = "SETTLE";
+            this.SETTLE.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.SETTLE.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SETTLE.Width = 65;
+            // 
+            // TEST
+            // 
+            this.TEST.HeaderText = "TEST";
+            this.TEST.Name = "TEST";
+            this.TEST.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.TEST.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.TEST.Width = 65;
+            // 
+            // FINEL
+            // 
+            this.FINEL.HeaderText = "FINEL";
+            this.FINEL.Name = "FINEL";
+            this.FINEL.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.FINEL.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FINEL.Width = 65;
+            // 
+            // FINER
+            // 
+            this.FINER.HeaderText = "FINER";
+            this.FINER.Name = "FINER";
+            this.FINER.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.FINER.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FINER.Width = 65;
+            // 
+            // FLOW
+            // 
+            this.FLOW.HeaderText = "FLOW";
+            this.FLOW.Name = "FLOW";
+            this.FLOW.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.FLOW.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.FLOW.Width = 70;
+            // 
+            // 检测产品数量
+            // 
+            this.检测产品数量.HeaderText = "检测产品数量";
+            this.检测产品数量.Name = "检测产品数量";
+            this.检测产品数量.Width = 65;
+            // 
+            // 不良品数量
+            // 
+            this.不良品数量.HeaderText = "不良品数量";
+            this.不良品数量.Name = "不良品数量";
+            this.不良品数量.Width = 65;
+            // 
+            // 合格
+            // 
+            this.合格.HeaderText = "合格";
+            this.合格.Name = "合格";
+            this.合格.Width = 50;
+            // 
+            // 操作人
+            // 
+            this.操作人.HeaderText = "操作人";
+            this.操作人.Name = "操作人";
+            this.操作人.Width = 75;
+            // 
+            // 备注
+            // 
+            this.备注.HeaderText = "备注";
+            this.备注.Name = "备注";
+            this.备注.Width = 150;
             // 
             // tb产品批号
             // 
@@ -547,7 +654,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Location = new System.Drawing.Point(68, 97);
+            this.groupBox1.Location = new System.Drawing.Point(-251, 97);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(150, 85);
             this.groupBox1.TabIndex = 44;
@@ -700,119 +807,11 @@
             this.btn确认.UseVisualStyleBackColor = true;
             this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
             // 
-            // 序号
-            // 
-            this.序号.HeaderText = "序号";
-            this.序号.Name = "序号";
-            this.序号.Width = 50;
-            // 
-            // 检测时间
-            // 
-            this.检测时间.HeaderText = "检测时间";
-            this.检测时间.Name = "检测时间";
-            this.检测时间.Width = 150;
-            // 
-            // PREFILL
-            // 
-            this.PREFILL.HeaderText = "PREFILL";
-            this.PREFILL.Name = "PREFILL";
-            this.PREFILL.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.PREFILL.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.PREFILL.Width = 70;
-            // 
-            // CHARDE
-            // 
-            this.CHARDE.HeaderText = "CHARDE";
-            this.CHARDE.Name = "CHARDE";
-            this.CHARDE.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.CHARDE.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.CHARDE.Width = 65;
-            // 
-            // SETTLE
-            // 
-            this.SETTLE.HeaderText = "SETTLE";
-            this.SETTLE.Name = "SETTLE";
-            this.SETTLE.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.SETTLE.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.SETTLE.Width = 65;
-            // 
-            // TEST
-            // 
-            this.TEST.HeaderText = "TEST";
-            this.TEST.Name = "TEST";
-            this.TEST.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.TEST.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.TEST.Width = 65;
-            // 
-            // FINEL
-            // 
-            this.FINEL.HeaderText = "FINEL";
-            this.FINEL.Name = "FINEL";
-            this.FINEL.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.FINEL.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FINEL.Width = 65;
-            // 
-            // FINER
-            // 
-            this.FINER.HeaderText = "FINER";
-            this.FINER.Name = "FINER";
-            this.FINER.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.FINER.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FINER.Width = 65;
-            // 
-            // FLOW
-            // 
-            this.FLOW.HeaderText = "FLOW";
-            this.FLOW.Name = "FLOW";
-            this.FLOW.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.FLOW.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.FLOW.Width = 70;
-            // 
-            // 检测产品数量
-            // 
-            this.检测产品数量.HeaderText = "检测产品数量";
-            this.检测产品数量.Name = "检测产品数量";
-            this.检测产品数量.Width = 65;
-            // 
-            // 不良品数量
-            // 
-            this.不良品数量.HeaderText = "不良品数量";
-            this.不良品数量.Name = "不良品数量";
-            this.不良品数量.Width = 65;
-            // 
-            // 合格
-            // 
-            this.合格.HeaderText = "合格";
-            this.合格.Name = "合格";
-            this.合格.Width = 50;
-            // 
-            // 操作人
-            // 
-            this.操作人.HeaderText = "操作人";
-            this.操作人.Name = "操作人";
-            this.操作人.Width = 75;
-            // 
-            // 备注
-            // 
-            this.备注.HeaderText = "备注";
-            this.备注.Name = "备注";
-            this.备注.Width = 150;
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(257, 20);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(93, 16);
-            this.label18.TabIndex = 49;
-            this.label18.Text = "操作员备注";
-            // 
             // BTVLeakTest
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1125, 587);
+            this.ClientSize = new System.Drawing.Size(806, 587);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.btn查看日志);

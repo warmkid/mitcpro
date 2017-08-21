@@ -821,9 +821,104 @@ namespace mySystem.Process.Bag.BTV
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
+            GC.Collect();
+        }
+        public void print(bool preview)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R08A  关键尺寸确认记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+            my.Cells[3, 1].Value = "生产指令编号：\n" + lbl生产指令编号.Text;
+            my.Cells[4, 1].Value = "产品代码/规格：" + tb产品代码.Text;
+            my.Cells[3, 6].Value = "产品批号：" + tb产品批号.Text;
+            my.Cells[4, 6].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[5, 1].Value = "判定依据：关键尺寸要求v "+ tb关键尺寸1.Text+" ± "+tb关键尺寸2.Text+ " mm";
+            //EVERY SHEET CONTAINS 15 RECORDS
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                int u, v;
+                if (i < 25)
+                {
+                    u = 0;
+                    v = i % 25;
+                }
+                else if (i < 50)
+                {
+                    u = 1;
+                    v = i % 25;
+                }
+                else
+                {
+                    u = 2;
+                    v = i % 25;
+                }
+                my.Cells[v + 7, 3u+1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[v + 7, 3u+2].Value = dt记录详情.Rows[i]["实测值"];
+                my.Cells[v + 7, 3u+3].Value = dt记录详情.Rows[i]["判定"];              
+            }
 
+            my.Cells[32, 1].Value = "合格产品数量： " + tb合格产品数量.Text + " 个，不良品数量： " + tb不良品数量.Text + " 个。";
+            my.Cells[33, 1].Value = "备注：\n" + tb备注.Text;
+            my.Cells[34, 1].Value = "操作人/日期： " + tb操作员.Text + dtp操作日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[34, 6].Value = "QC复核/日期： " + tb审核员.Text + dtp审核日期.Value.ToString("yyyy年MM月dd日");
+            if (preview)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                //add footer
+                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                my = null;
+                wb = null;
+            }
         }
 
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+        }
+		
         //******************************小功能******************************//  
 
         //求合计

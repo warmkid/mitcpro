@@ -865,11 +865,99 @@ namespace mySystem.Process.Bag.BTV
             cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
+
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
-
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
+            GC.Collect();
         }
+        public void print(bool preview)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R06A  2D袋体生产记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+
+            my.Cells[3, 1].Value = "产品代码/规格："+tb产品代码.Text;
+            my.Cells[3, 5].Value = "产品批号："+tb产品批号.Text;
+            my.Cells[3, 8].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+
+            //EVERY SHEET CONTAINS 15 RECORDS
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["生产时间"];
+                my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["切片尺寸长"];
+                my.Cells[i + 5, 4].Value = dt记录详情.Rows[i]["切片尺寸宽"];
+                my.Cells[i + 5, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
+                my.Cells[i + 5, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
+                my.Cells[i + 5, 7].Value = dt记录详情.Rows[i]["袋体外观检查"];
+                my.Cells[i + 5, 8].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
+                my.Cells[i + 5, 9].Value = dt记录详情.Rows[i]["热封线检查"];
+                my.Cells[i + 5, 10].Value = dt记录详情.Rows[i]["合格品数量"];
+                my.Cells[i + 5, 11].Value = dt记录详情.Rows[i]["不良品数量"];
+                my.Cells[i + 5, 12].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + 5, 13].Value = dt记录详情.Rows[i]["审核员"];     
+
+            }
+            
+            if (preview)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                //add footer
+                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                my = null;
+                wb = null;
+            }
+        }
+
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+        }
+		
 
         //******************************小功能******************************//  
 
