@@ -29,22 +29,28 @@ namespace mySystem.Process.Stock
 
         private void Page商品设置_Paint(object sender, PaintEventArgs e)
         {
-            商品设置 myDlg = new 商品设置();
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = this.Page商品设置.Size;
-            this.Page商品设置.Controls.Add(myDlg);
-            myDlg.Show();
+            //商品设置 myDlg = new 商品设置();
+            //myDlg.TopLevel = false;
+            //myDlg.FormBorderStyle = FormBorderStyle.None;
+            //myDlg.Size = this.Page商品设置.Size;
+            //this.Page商品设置.Controls.Add(myDlg);
+            //myDlg.Show();
         }
 
         private void Page采购单管理_Paint(object sender, PaintEventArgs e)
         {
-            采购单管理 myDlg = new 采购单管理();
-            myDlg.TopLevel = false;
-            myDlg.FormBorderStyle = FormBorderStyle.None;
-            myDlg.Size = this.Page采购单管理.Size;
-            this.Page采购单管理.Controls.Add(myDlg);
-            myDlg.Show();
+            //采购单管理 myDlg = new 采购单管理();
+            //myDlg.TopLevel = false;
+            //myDlg.FormBorderStyle = FormBorderStyle.None;
+            //myDlg.Size = this.Page采购单管理.Size;
+            //this.Page采购单管理.Controls.Add(myDlg);
+            //myDlg.Show();
+        }
+
+        private void btn退货申请_Click(object sender, EventArgs e)
+        {
+            mySystem.Process.Stock.退货申请 form = new 退货申请(mainform);
+            form.Show();
         }
 
 

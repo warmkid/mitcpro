@@ -41,8 +41,7 @@
             this.dtp销售订单开始时间 = new System.Windows.Forms.DateTimePicker();
             this.dgv销售订单 = new System.Windows.Forms.DataGridView();
             this.tabPage采购需求单 = new System.Windows.Forms.TabPage();
-            this.tabPage采购批准单 = new System.Windows.Forms.TabPage();
-            this.tabPage采购订单 = new System.Windows.Forms.TabPage();
+            this.dgv采购需求单 = new System.Windows.Forms.DataGridView();
             this.btn添加采购需求单 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btn查询采购需求单 = new System.Windows.Forms.Button();
@@ -52,12 +51,25 @@
             this.label6 = new System.Windows.Forms.Label();
             this.dtp采购需求单结束时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp采购需求单开始时间 = new System.Windows.Forms.DateTimePicker();
-            this.dgv采购需求单 = new System.Windows.Forms.DataGridView();
+            this.tabPage采购批准单 = new System.Windows.Forms.TabPage();
+            this.dgv采购批准单 = new System.Windows.Forms.DataGridView();
+            this.btn采购批准单添加 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btn采购批准单查询 = new System.Windows.Forms.Button();
+            this.cmb采购批准单审核状态 = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dtp采购批准单结束时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp采购批准单开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.tabPage采购订单 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage销售订单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv销售订单)).BeginInit();
             this.tabPage采购需求单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv采购需求单)).BeginInit();
+            this.tabPage采购批准单.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv采购批准单)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -204,25 +216,14 @@
             this.tabPage采购需求单.Text = "采购需求单";
             this.tabPage采购需求单.UseVisualStyleBackColor = true;
             // 
-            // tabPage采购批准单
+            // dgv采购需求单
             // 
-            this.tabPage采购批准单.Location = new System.Drawing.Point(4, 29);
-            this.tabPage采购批准单.Name = "tabPage采购批准单";
-            this.tabPage采购批准单.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage采购批准单.Size = new System.Drawing.Size(1064, 480);
-            this.tabPage采购批准单.TabIndex = 3;
-            this.tabPage采购批准单.Text = "采购批准单";
-            this.tabPage采购批准单.UseVisualStyleBackColor = true;
-            // 
-            // tabPage采购订单
-            // 
-            this.tabPage采购订单.Location = new System.Drawing.Point(4, 29);
-            this.tabPage采购订单.Name = "tabPage采购订单";
-            this.tabPage采购订单.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage采购订单.Size = new System.Drawing.Size(1064, 480);
-            this.tabPage采购订单.TabIndex = 4;
-            this.tabPage采购订单.Text = "采购订单";
-            this.tabPage采购订单.UseVisualStyleBackColor = true;
+            this.dgv采购需求单.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv采购需求单.Location = new System.Drawing.Point(12, 108);
+            this.dgv采购需求单.Name = "dgv采购需求单";
+            this.dgv采购需求单.RowTemplate.Height = 23;
+            this.dgv采购需求单.Size = new System.Drawing.Size(1041, 350);
+            this.dgv采购需求单.TabIndex = 19;
             // 
             // btn添加采购需求单
             // 
@@ -305,14 +306,126 @@
             this.dtp采购需求单开始时间.Size = new System.Drawing.Size(200, 26);
             this.dtp采购需求单开始时间.TabIndex = 10;
             // 
-            // dgv采购需求单
+            // tabPage采购批准单
             // 
-            this.dgv采购需求单.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv采购需求单.Location = new System.Drawing.Point(12, 108);
-            this.dgv采购需求单.Name = "dgv采购需求单";
-            this.dgv采购需求单.RowTemplate.Height = 23;
-            this.dgv采购需求单.Size = new System.Drawing.Size(1041, 350);
-            this.dgv采购需求单.TabIndex = 19;
+            this.tabPage采购批准单.Controls.Add(this.dgv采购批准单);
+            this.tabPage采购批准单.Controls.Add(this.btn采购批准单添加);
+            this.tabPage采购批准单.Controls.Add(this.label7);
+            this.tabPage采购批准单.Controls.Add(this.btn采购批准单查询);
+            this.tabPage采购批准单.Controls.Add(this.cmb采购批准单审核状态);
+            this.tabPage采购批准单.Controls.Add(this.label8);
+            this.tabPage采购批准单.Controls.Add(this.textBox1);
+            this.tabPage采购批准单.Controls.Add(this.label9);
+            this.tabPage采购批准单.Controls.Add(this.dtp采购批准单结束时间);
+            this.tabPage采购批准单.Controls.Add(this.dtp采购批准单开始时间);
+            this.tabPage采购批准单.Location = new System.Drawing.Point(4, 29);
+            this.tabPage采购批准单.Name = "tabPage采购批准单";
+            this.tabPage采购批准单.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage采购批准单.Size = new System.Drawing.Size(1064, 480);
+            this.tabPage采购批准单.TabIndex = 3;
+            this.tabPage采购批准单.Text = "采购批准单";
+            this.tabPage采购批准单.UseVisualStyleBackColor = true;
+            // 
+            // dgv采购批准单
+            // 
+            this.dgv采购批准单.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv采购批准单.Location = new System.Drawing.Point(13, 99);
+            this.dgv采购批准单.Name = "dgv采购批准单";
+            this.dgv采购批准单.RowTemplate.Height = 23;
+            this.dgv采购批准单.Size = new System.Drawing.Size(1041, 350);
+            this.dgv采购批准单.TabIndex = 28;
+            // 
+            // btn采购批准单添加
+            // 
+            this.btn采购批准单添加.Location = new System.Drawing.Point(13, 70);
+            this.btn采购批准单添加.Name = "btn采购批准单添加";
+            this.btn采购批准单添加.Size = new System.Drawing.Size(75, 23);
+            this.btn采购批准单添加.TabIndex = 27;
+            this.btn采购批准单添加.Text = "添加";
+            this.btn采购批准单添加.UseVisualStyleBackColor = true;
+            this.btn采购批准单添加.Click += new System.EventHandler(this.btn采购批准单添加_Click);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(229, 26);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(32, 16);
+            this.label7.TabIndex = 26;
+            this.label7.Text = "---";
+            // 
+            // btn采购批准单查询
+            // 
+            this.btn采购批准单查询.Location = new System.Drawing.Point(965, 70);
+            this.btn采购批准单查询.Name = "btn采购批准单查询";
+            this.btn采购批准单查询.Size = new System.Drawing.Size(75, 23);
+            this.btn采购批准单查询.TabIndex = 25;
+            this.btn采购批准单查询.Text = "查询";
+            this.btn采购批准单查询.UseVisualStyleBackColor = true;
+            this.btn采购批准单查询.Click += new System.EventHandler(this.btn采购批准单查询_Click);
+            // 
+            // cmb采购批准单审核状态
+            // 
+            this.cmb采购批准单审核状态.FormattingEnabled = true;
+            this.cmb采购批准单审核状态.Items.AddRange(new object[] {
+            "编辑中",
+            "待审核",
+            "审核完成",
+            "已关闭"});
+            this.cmb采购批准单审核状态.Location = new System.Drawing.Point(919, 19);
+            this.cmb采购批准单审核状态.Name = "cmb采购批准单审核状态";
+            this.cmb采购批准单审核状态.Size = new System.Drawing.Size(121, 24);
+            this.cmb采购批准单审核状态.TabIndex = 24;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(837, 24);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(72, 16);
+            this.label8.TabIndex = 23;
+            this.label8.Text = "审核状态";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(637, 20);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(160, 26);
+            this.textBox1.TabIndex = 22;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(568, 26);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(40, 16);
+            this.label9.TabIndex = 21;
+            this.label9.Text = "？？";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // dtp采购批准单结束时间
+            // 
+            this.dtp采购批准单结束时间.Location = new System.Drawing.Point(290, 19);
+            this.dtp采购批准单结束时间.Name = "dtp采购批准单结束时间";
+            this.dtp采购批准单结束时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp采购批准单结束时间.TabIndex = 20;
+            // 
+            // dtp采购批准单开始时间
+            // 
+            this.dtp采购批准单开始时间.Location = new System.Drawing.Point(13, 19);
+            this.dtp采购批准单开始时间.Name = "dtp采购批准单开始时间";
+            this.dtp采购批准单开始时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp采购批准单开始时间.TabIndex = 19;
+            // 
+            // tabPage采购订单
+            // 
+            this.tabPage采购订单.Location = new System.Drawing.Point(4, 29);
+            this.tabPage采购订单.Name = "tabPage采购订单";
+            this.tabPage采购订单.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage采购订单.Size = new System.Drawing.Size(1064, 480);
+            this.tabPage采购订单.TabIndex = 4;
+            this.tabPage采购订单.Text = "采购订单";
+            this.tabPage采购订单.UseVisualStyleBackColor = true;
             // 
             // 订单管理
             // 
@@ -329,6 +442,9 @@
             this.tabPage采购需求单.ResumeLayout(false);
             this.tabPage采购需求单.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv采购需求单)).EndInit();
+            this.tabPage采购批准单.ResumeLayout(false);
+            this.tabPage采购批准单.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv采购批准单)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -360,5 +476,15 @@
         private System.Windows.Forms.DateTimePicker dtp采购需求单结束时间;
         private System.Windows.Forms.DateTimePicker dtp采购需求单开始时间;
         private System.Windows.Forms.DataGridView dgv采购需求单;
+        private System.Windows.Forms.DataGridView dgv采购批准单;
+        private System.Windows.Forms.Button btn采购批准单添加;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btn采购批准单查询;
+        private System.Windows.Forms.ComboBox cmb采购批准单审核状态;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.DateTimePicker dtp采购批准单结束时间;
+        private System.Windows.Forms.DateTimePicker dtp采购批准单开始时间;
     }
 }
