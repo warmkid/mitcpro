@@ -806,8 +806,96 @@ namespace mySystem.Process.Bag.BTV
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
-
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
+            GC.Collect();
         }
+        public void print(bool preview)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-417-R01A  2D袋体与船型接口热合记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+            my.Cells[3, 1].Value = "生产指令编号：\n" + tb生产指令编号.Text;
+            my.Cells[3, 3].Value = "产品代码/规格：" + tb产品代码.Text;
+            my.Cells[3, 7].Value = "产品批号：" + tb产品批号.Text;
+            my.Cells[3, 10].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+
+            //EVERY SHEET CONTAINS 15 RECORDS
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["生产时间"];
+                my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["焊接温度上"];
+                my.Cells[i + 5, 4].Value = dt记录详情.Rows[i]["焊接温度下"];
+                my.Cells[i + 5, 5].Value = dt记录详情.Rows[i]["焊接时间"];
+                my.Cells[i + 5, 6].Value = dt记录详情.Rows[i]["焊接压力"];
+                my.Cells[i + 5, 7].Value = dt记录详情.Rows[i]["管组件1"];
+                my.Cells[i + 5, 8].Value = dt记录详情.Rows[i]["管组件2"];
+                my.Cells[i + 5, 9].Value = dt记录详情.Rows[i]["管组件3"];
+                my.Cells[i + 5, 10].Value = dt记录详情.Rows[i]["合格产品数量"];
+                my.Cells[i + 5, 11].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + 5, 12].Value = dt记录详情.Rows[i]["备注"];
+            }
+            my.Cells[20, 6].Value = "合格品数量：" + dt记录.Rows[0]["合格品数量"] + "只\n\n不良品数量：" + dt记录.Rows[0]["不良品数量"] + "只";
+
+            my.Cells[20, 9].Value = "操作员:" + dt记录.Rows[0]["操作员"] + "\t操作日期：" + dtp操作日期.Value.ToString("yyyy年MM月dd日") + "\n审核员:" + dt记录.Rows[0]["审核员"] + "\t审核日期：" + dtp审核日期.Value.ToString("yyyy年MM月dd日");
+            
+            if (preview)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                //add footer
+                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                my = null;
+                wb = null;
+            }
+        }
+
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+        }
+		
 
         //******************************小功能******************************//  
 
