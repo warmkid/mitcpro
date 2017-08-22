@@ -1241,7 +1241,7 @@ namespace BatchProductRecord
             dataGridView1.Columns["标签领料量"].ReadOnly = true;//标签领料量
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
-                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
 
         }

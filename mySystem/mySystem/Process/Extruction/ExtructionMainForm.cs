@@ -584,6 +584,7 @@ namespace mySystem
         private void A2Btn_Click(object sender, EventArgs e)
         {
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "吹膜工序生产指令");
+            b = true;
             if (b)
             {
                 BatchProductRecord.ProcessProductInstru form2 = new BatchProductRecord.ProcessProductInstru(mainform);

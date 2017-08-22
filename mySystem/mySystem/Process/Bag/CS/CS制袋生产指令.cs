@@ -15,12 +15,6 @@ namespace mySystem.Process.Bag.CS
     {
 
 
-        // TODO : 注意处理生产指令的状态（是否接收等状态）
-        // TODO ：要加到Mainform中去
-        // TODO： 审核时要调用赵梦的函数
-        // TODO: 打印  选打印机
-        // TODO：构造函数添加参数mainform
-        // TODO: 用正则表达式获取操作员和审核员姓名
 
         // 需要保存的状态
         Parameter.UserState _userState;
