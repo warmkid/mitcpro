@@ -889,6 +889,14 @@ namespace mySystem.Process.Bag.BTV
             my.Cells[3, 1].Value = "产品代码/规格：" + tb产品代码.Text;
             my.Cells[3, 8].Value = "产品批号：" + tb产品批号.Text;
             my.Cells[3, 12].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+
+            my.Cells[6, 3].Value = tbprefill.Text;
+            my.Cells[6, 4].Value = tbcharde.Text;
+            my.Cells[6, 5].Value = tbsettle.Text;
+            my.Cells[6, 6].Value = tbtest.Text;
+            my.Cells[6, 7].Value = tbfinel.Text;
+            my.Cells[6, 8].Value = tbfiner.Text;
+            my.Cells[6, 9].Value = tbflow.Text;
             //EVERY SHEET CONTAINS 15 RECORDS
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
