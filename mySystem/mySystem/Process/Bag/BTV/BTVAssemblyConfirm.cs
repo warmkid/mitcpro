@@ -46,8 +46,6 @@ namespace mySystem.Process.Bag.BTV
             InitializeComponent();
 
 
-            Parameter.bpvbagInstruID = 1;
-            Parameter.bpvbagInstruction = "BPV生产指令编号1";
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
@@ -61,10 +59,14 @@ namespace mySystem.Process.Bag.BTV
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            if (dt代码批号.Rows.Count > 0)
-            { DataShow(InstruID); }
-            else
-            { MessageBox.Show("该生产指令信息不完善！"); }
+            setControlFalse();
+            dtp生产日期.Enabled = true;
+            btn查询新建.Enabled = true;
+            //打印、查看日志按钮不可用
+            btn打印.Enabled = false;
+            btn查看日志.Enabled = false;
+            cb打印机.Enabled = false;
+
 
         }
         public BTVAssemblyConfirm(MainForm mainform, int ID)
@@ -340,6 +342,8 @@ namespace mySystem.Process.Bag.BTV
             tb产品批号.ReadOnly = true;
             //tb成品率.ReadOnly = true;
             //查询条件始终不可编辑
+            dtp生产日期.Enabled = false;
+            btn查询新建.Enabled = false;
         }
 
         /// <summary>
@@ -444,6 +448,53 @@ namespace mySystem.Process.Bag.BTV
             setEnableReadOnly();  //根据状态设置可读写性  
         }
 
+        // ANOTHER EDITION: ADD TIME WHNE SEARCH
+        private void DataShow(Int32 InstruID, DateTime _生产日期)
+        {
+            //******************************外表 根据条件绑定******************************//  
+            readOuterData(InstruID, _生产日期);
+            outerBind();
+            //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
+
+            //*******************************表格内部******************************// 
+            if (dt记录.Rows.Count <= 0)
+            {
+                //********* 外表新建、保存、重新绑定 *********//                
+                //初始化外表这一行
+                DataRow dr1 = dt记录.NewRow();
+                dr1 = writeOuterDefault(dr1);
+                dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
+                //立马保存这一行
+                bs记录.EndEdit();
+                da记录.Update((DataTable)bs记录.DataSource);
+                //外表重新绑定
+                readOuterData(InstruID, _生产日期);
+                outerBind();
+
+                //********* 内表新建、保存、重新绑定 *********//
+
+                //内表绑定
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind();
+                DataRow dr2 = dt记录详情.NewRow();
+                dr2 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr2);
+                dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
+                setDataGridViewRowNums();
+                //立马保存内表
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+            }
+            //内表绑定
+            dataGridView1.Columns.Clear();
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            setDataGridViewColumns();
+            innerBind();
+
+            addComputerEventHandler();  // 设置自动计算类事件
+            setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+            setEnableReadOnly();  //根据状态设置可读写性  
+        }
+
+
         //根据主键显示
         public void IDShow(Int32 ID)
         {
@@ -470,6 +521,16 @@ namespace mySystem.Process.Bag.BTV
             da记录.Fill(dt记录);
         }
 
+        //ANOTHER EDITION
+        //外表读数据，填datatable
+        private void readOuterData(Int32 InstruID, DateTime searchTime)
+        {
+            bs记录 = new BindingSource();
+            dt记录 = new DataTable(table);
+            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+            cb记录 = new OleDbCommandBuilder(da记录);
+            da记录.Fill(dt记录);
+        }
         //外表控件绑定
         private void outerBind()
         {
@@ -617,6 +678,11 @@ namespace mySystem.Process.Bag.BTV
 
         //******************************按钮功能******************************//
 
+        private void btn查询新建_Click(object sender, EventArgs e)
+        {
+            DataShow(InstruID, dtp生产日期.Value.Date);
+        }
+
         //添加按钮
         private void btn添加记录_Click(object sender, EventArgs e)
         {
@@ -662,6 +728,7 @@ namespace mySystem.Process.Bag.BTV
             da记录详情.Update((DataTable)bs记录详情.DataSource);
             innerBind();
             setEnableReadOnly();
+            btn提交审核.Enabled = true;
         }
 
         //内表审核按钮
@@ -722,7 +789,7 @@ namespace mySystem.Process.Bag.BTV
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID);
+                readOuterData(InstruID,dtp生产日期.Value);
                 outerBind();
 
                 setEnableReadOnly();
@@ -737,7 +804,12 @@ namespace mySystem.Process.Bag.BTV
             //保存
             bool isSaved = Save();
             if (isSaved == false)
+            { return; }
+            else if (need提交数据审核())
+            {
+                MessageBox.Show("需要提交数据审核");
                 return;
+            }
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -784,6 +856,11 @@ namespace mySystem.Process.Bag.BTV
             //    MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
             //    return;
             //}
+            if (need数据审核())
+            {
+                MessageBox.Show("需要数据审核");
+                return;
+            }
             checkform = new CheckForm(this);
             checkform.Show();
         }
@@ -930,6 +1007,34 @@ namespace mySystem.Process.Bag.BTV
         }
 		
         //******************************小功能******************************//  
+
+        //need提交数据审核
+        private bool need提交数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
+
+        //内表审核按钮
+        private bool need数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
 
         // 检查操作员的姓名（内表）
         private bool Name_check()

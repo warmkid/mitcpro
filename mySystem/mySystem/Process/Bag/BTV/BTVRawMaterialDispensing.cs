@@ -608,7 +608,7 @@ namespace mySystem.Process.Bag.BTV
                 switch (dc.ColumnName)
                 {
                     case "物料代码":
-                        //IF READ ACCORDING TO ID, LET IT BE TWXT
+                        //IF READ ACCORDING TO ID, LET IT BE TEXTBOX
                         if (dt物料==null)
                         {
                             tbc = new DataGridViewTextBoxColumn();
@@ -723,6 +723,7 @@ namespace mySystem.Process.Bag.BTV
             da记录详情.Update((DataTable)bs记录详情.DataSource);
             innerBind();
             setEnableReadOnly();
+            btn提交审核.Enabled = true;
         }
 
         //内表审核按钮
@@ -809,7 +810,12 @@ namespace mySystem.Process.Bag.BTV
             //保存
             bool isSaved = Save();
             if (isSaved == false)
+            { return; }
+            else if (need提交数据审核())
+            {
+                MessageBox.Show("需要提交数据审核");
                 return;
+            }
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -853,6 +859,11 @@ namespace mySystem.Process.Bag.BTV
             if (check当前登录的审核员与操作员())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
+                return;
+            }
+            else if (need数据审核())
+            {
+                MessageBox.Show("需要数据审核");
                 return;
             }
             checkform = new CheckForm(this);
@@ -1016,6 +1027,33 @@ namespace mySystem.Process.Bag.BTV
 		
 
         //******************************小功能******************************//  
+        //need提交数据审核
+        private bool need提交数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
+
+        //内表审核按钮
+        private bool need数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
 
         // 检查操作员的姓名（内表）
         private bool Name_check()
