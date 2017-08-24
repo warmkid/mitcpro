@@ -608,7 +608,7 @@ namespace mySystem.Process.Bag.BTV
                 switch (dc.ColumnName)
                 {
                     case "物料代码":
-                        //IF READ ACCORDING TO ID, LET IT BE TWXT
+                        //IF READ ACCORDING TO ID, LET IT BE TEXTBOX
                         if (dt物料==null)
                         {
                             tbc = new DataGridViewTextBoxColumn();
@@ -723,6 +723,7 @@ namespace mySystem.Process.Bag.BTV
             da记录详情.Update((DataTable)bs记录详情.DataSource);
             innerBind();
             setEnableReadOnly();
+            btn提交审核.Enabled = true;
         }
 
         //内表审核按钮
@@ -809,7 +810,12 @@ namespace mySystem.Process.Bag.BTV
             //保存
             bool isSaved = Save();
             if (isSaved == false)
+            { return; }
+            else if (need提交数据审核())
+            {
+                MessageBox.Show("需要提交数据审核");
                 return;
+            }
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -853,6 +859,11 @@ namespace mySystem.Process.Bag.BTV
             if (check当前登录的审核员与操作员())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
+                return;
+            }
+            else if (need数据审核())
+            {
+                MessageBox.Show("需要数据审核");
                 return;
             }
             checkform = new CheckForm(this);
@@ -929,10 +940,120 @@ namespace mySystem.Process.Bag.BTV
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
+            GC.Collect();
+        }
+        public void print(bool preview)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R09A  原材料分装记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
 
+            //EVERY SHEET CONTAINS 15 RECORDS
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+
+                my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["物料代码"];
+                my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["物料批号"];
+                my.Cells[i + 5, 4].Value = dt记录详情.Rows[i]["分装前规格"];
+                my.Cells[i + 5, 5].Value = dt记录详情.Rows[i]["分装前数量"];
+                my.Cells[i + 5, 6].Value = dt记录详情.Rows[i]["分装后规格"];
+                my.Cells[i + 5, 7].Value = dt记录详情.Rows[i]["分装后数量"];
+                my.Cells[i + 5, 8].Value = dt记录详情.Rows[i]["外观"];
+                my.Cells[i + 5, 9].Value = dt记录详情.Rows[i]["数量偏差"];
+                my.Cells[i + 5, 10].Value = dt记录详情.Rows[i]["判定"];
+                my.Cells[i + 5, 11].Value = dt记录详情.Rows[i]["备注"];
+                
+            }
+
+            my.Cells[25, 1].Value = "备注： \n" + tb备注.Text ;
+            if (preview)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                //add footer
+                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                my = null;
+                wb = null;
+            }
         }
 
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+        }
+		
+
         //******************************小功能******************************//  
+        //need提交数据审核
+        private bool need提交数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
+
+        //内表审核按钮
+        private bool need数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
 
         // 检查操作员的姓名（内表）
         private bool Name_check()
