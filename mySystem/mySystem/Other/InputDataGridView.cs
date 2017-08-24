@@ -53,6 +53,7 @@ namespace mySystem.Other
             dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
             dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(dataGridView1_CellValueChanged);
             dataGridView1.CellContentClick += new DataGridViewCellEventHandler(dataGridView1_CellContentClick);
+            //addOtherEventHandler();
         }
 
         void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -88,7 +89,7 @@ namespace mySystem.Other
             
         }
 
-        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        void addOtherEventHandler()
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["选择"].DisplayIndex = 0;
@@ -103,11 +104,28 @@ namespace mySystem.Other
                     int id = Convert.ToInt32(dgvr.Cells["ID"].Value);
                     foreach (DataGridViewCell cell in dgvr.Cells)
                     {
-                        object[] tmp = ((List<Object>)_additional[id]).ToArray();
-                        cell.ToolTipText = String.Join("\n", tmp);
+                        object[] tmp;
+                        try
+                        {
+                            tmp = ((List<Object>)_additional[id]).ToArray();
+                            cell.ToolTipText = String.Join("\n", tmp);
+                        }
+                        catch (InvalidCastException ee)
+                        {
+                            tmp = ((HashSet<Object>)_additional[id]).ToArray();
+                            cell.ToolTipText = String.Join("\n", tmp);
+                        }
+
+
                     }
                 }
             }
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            addOtherEventHandler();
+            dataGridView1.DataBindingComplete -= dataGridView1_DataBindingComplete;
         }
 
         private void btn完成_Click(object sender, EventArgs e)

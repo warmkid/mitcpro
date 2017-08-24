@@ -1114,10 +1114,13 @@ namespace mySystem.Extruction.Process
 
         private void ExtructionpRoductionAndRestRecordStep6_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!isSaveClicked && dt记录.Rows.Count > 0)
+            if (dt记录 != null)
             {
-                dt记录.Rows[0].Delete();
-                da记录.Update((DataTable)bs记录.DataSource);
+                if (!isSaveClicked && dt记录.Rows.Count > 0)
+                {
+                    dt记录.Rows[0].Delete();
+                    da记录.Update((DataTable)bs记录.DataSource);
+                }
             }
         }
 

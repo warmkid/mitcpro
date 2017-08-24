@@ -28,37 +28,28 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Page库存管理 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.Page库存管理 = new System.Windows.Forms.TabPage();
             this.tabPage退货管理 = new System.Windows.Forms.TabPage();
-            this.btn退货记录 = new System.Windows.Forms.Button();
-            this.btn退货申请 = new System.Windows.Forms.Button();
+            this.tb产品代码 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tb客户名称 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btn退货台账查询 = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.tb退货编号 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dtp结束时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp开始时间 = new System.Windows.Forms.DateTimePicker();
-            this.btn退货台账查询 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.tb客户名称 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tb产品代码 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.btn退货记录 = new System.Windows.Forms.Button();
+            this.btn退货申请 = new System.Windows.Forms.Button();
+            this.btn查询退货申请 = new System.Windows.Forms.Button();
+            this.btn查询退货记录 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage退货管理.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // Page库存管理
-            // 
-            this.Page库存管理.Location = new System.Drawing.Point(4, 29);
-            this.Page库存管理.Name = "Page库存管理";
-            this.Page库存管理.Padding = new System.Windows.Forms.Padding(3);
-            this.Page库存管理.Size = new System.Drawing.Size(1162, 577);
-            this.Page库存管理.TabIndex = 0;
-            this.Page库存管理.Text = "库存管理";
-            this.Page库存管理.UseVisualStyleBackColor = true;
-            this.Page库存管理.Paint += new System.Windows.Forms.PaintEventHandler(this.Page库存管理_Paint);
             // 
             // tabControl1
             // 
@@ -71,8 +62,21 @@
             this.tabControl1.Size = new System.Drawing.Size(1170, 610);
             this.tabControl1.TabIndex = 0;
             // 
+            // Page库存管理
+            // 
+            this.Page库存管理.Location = new System.Drawing.Point(4, 29);
+            this.Page库存管理.Name = "Page库存管理";
+            this.Page库存管理.Padding = new System.Windows.Forms.Padding(3);
+            this.Page库存管理.Size = new System.Drawing.Size(1162, 577);
+            this.Page库存管理.TabIndex = 0;
+            this.Page库存管理.Text = "库存管理";
+            this.Page库存管理.UseVisualStyleBackColor = true;
+            this.Page库存管理.Paint += new System.Windows.Forms.PaintEventHandler(this.Page库存管理_Paint);
+            // 
             // tabPage退货管理
             // 
+            this.tabPage退货管理.Controls.Add(this.btn查询退货记录);
+            this.tabPage退货管理.Controls.Add(this.btn查询退货申请);
             this.tabPage退货管理.Controls.Add(this.tb产品代码);
             this.tabPage退货管理.Controls.Add(this.label4);
             this.tabPage退货管理.Controls.Add(this.tb客户名称);
@@ -93,25 +97,58 @@
             this.tabPage退货管理.TabIndex = 1;
             this.tabPage退货管理.Text = "退货管理";
             this.tabPage退货管理.UseVisualStyleBackColor = true;
+            this.tabPage退货管理.Paint += new System.Windows.Forms.PaintEventHandler(this.tabPage退货管理_Paint);
             // 
-            // btn退货记录
+            // tb产品代码
             // 
-            this.btn退货记录.Location = new System.Drawing.Point(157, 91);
-            this.btn退货记录.Name = "btn退货记录";
-            this.btn退货记录.Size = new System.Drawing.Size(88, 23);
-            this.btn退货记录.TabIndex = 1;
-            this.btn退货记录.Text = "退货记录";
-            this.btn退货记录.UseVisualStyleBackColor = true;
+            this.tb产品代码.Location = new System.Drawing.Point(1020, 31);
+            this.tb产品代码.Name = "tb产品代码";
+            this.tb产品代码.Size = new System.Drawing.Size(107, 26);
+            this.tb产品代码.TabIndex = 21;
             // 
-            // btn退货申请
+            // label4
             // 
-            this.btn退货申请.Location = new System.Drawing.Point(21, 91);
-            this.btn退货申请.Name = "btn退货申请";
-            this.btn退货申请.Size = new System.Drawing.Size(88, 23);
-            this.btn退货申请.TabIndex = 0;
-            this.btn退货申请.Text = "退货申请";
-            this.btn退货申请.UseVisualStyleBackColor = true;
-            this.btn退货申请.Click += new System.EventHandler(this.btn退货申请_Click);
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(945, 38);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(72, 16);
+            this.label4.TabIndex = 20;
+            this.label4.Text = "产品代码";
+            // 
+            // tb客户名称
+            // 
+            this.tb客户名称.Location = new System.Drawing.Point(791, 34);
+            this.tb客户名称.Name = "tb客户名称";
+            this.tb客户名称.Size = new System.Drawing.Size(107, 26);
+            this.tb客户名称.TabIndex = 19;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(716, 41);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(72, 16);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "客户名称";
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(21, 138);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(1116, 416);
+            this.dataGridView1.TabIndex = 17;
+            // 
+            // btn退货台账查询
+            // 
+            this.btn退货台账查询.Location = new System.Drawing.Point(948, 91);
+            this.btn退货台账查询.Name = "btn退货台账查询";
+            this.btn退货台账查询.Size = new System.Drawing.Size(128, 23);
+            this.btn退货台账查询.TabIndex = 16;
+            this.btn退货台账查询.Text = "查询退货台账";
+            this.btn退货台账查询.UseVisualStyleBackColor = true;
+            this.btn退货台账查询.Click += new System.EventHandler(this.btn退货台账查询_Click);
             // 
             // label3
             // 
@@ -152,55 +189,45 @@
             this.dtp开始时间.Size = new System.Drawing.Size(156, 26);
             this.dtp开始时间.TabIndex = 9;
             // 
-            // btn退货台账查询
+            // btn退货记录
             // 
-            this.btn退货台账查询.Location = new System.Drawing.Point(1039, 91);
-            this.btn退货台账查询.Name = "btn退货台账查询";
-            this.btn退货台账查询.Size = new System.Drawing.Size(88, 23);
-            this.btn退货台账查询.TabIndex = 16;
-            this.btn退货台账查询.Text = "查询";
-            this.btn退货台账查询.UseVisualStyleBackColor = true;
+            this.btn退货记录.Location = new System.Drawing.Point(157, 91);
+            this.btn退货记录.Name = "btn退货记录";
+            this.btn退货记录.Size = new System.Drawing.Size(88, 23);
+            this.btn退货记录.TabIndex = 1;
+            this.btn退货记录.Text = "退货记录";
+            this.btn退货记录.UseVisualStyleBackColor = true;
+            this.btn退货记录.Click += new System.EventHandler(this.btn退货记录_Click);
             // 
-            // dataGridView1
+            // btn退货申请
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(21, 138);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1116, 416);
-            this.dataGridView1.TabIndex = 17;
+            this.btn退货申请.Location = new System.Drawing.Point(21, 91);
+            this.btn退货申请.Name = "btn退货申请";
+            this.btn退货申请.Size = new System.Drawing.Size(88, 23);
+            this.btn退货申请.TabIndex = 0;
+            this.btn退货申请.Text = "退货申请";
+            this.btn退货申请.UseVisualStyleBackColor = true;
+            this.btn退货申请.Click += new System.EventHandler(this.btn退货申请_Click);
             // 
-            // tb客户名称
+            // btn查询退货申请
             // 
-            this.tb客户名称.Location = new System.Drawing.Point(791, 34);
-            this.tb客户名称.Name = "tb客户名称";
-            this.tb客户名称.Size = new System.Drawing.Size(107, 26);
-            this.tb客户名称.TabIndex = 19;
+            this.btn查询退货申请.Location = new System.Drawing.Point(470, 91);
+            this.btn查询退货申请.Name = "btn查询退货申请";
+            this.btn查询退货申请.Size = new System.Drawing.Size(128, 23);
+            this.btn查询退货申请.TabIndex = 22;
+            this.btn查询退货申请.Text = "查询退货申请";
+            this.btn查询退货申请.UseVisualStyleBackColor = true;
+            this.btn查询退货申请.Click += new System.EventHandler(this.btn查询退货申请_Click);
             // 
-            // label2
+            // btn查询退货记录
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(716, 41);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(72, 16);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "客户名称";
-            // 
-            // tb产品代码
-            // 
-            this.tb产品代码.Location = new System.Drawing.Point(1020, 31);
-            this.tb产品代码.Name = "tb产品代码";
-            this.tb产品代码.Size = new System.Drawing.Size(107, 26);
-            this.tb产品代码.TabIndex = 21;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(945, 38);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(72, 16);
-            this.label4.TabIndex = 20;
-            this.label4.Text = "产品代码";
+            this.btn查询退货记录.Location = new System.Drawing.Point(719, 91);
+            this.btn查询退货记录.Name = "btn查询退货记录";
+            this.btn查询退货记录.Size = new System.Drawing.Size(128, 23);
+            this.btn查询退货记录.TabIndex = 23;
+            this.btn查询退货记录.Text = "查询退货记录";
+            this.btn查询退货记录.UseVisualStyleBackColor = true;
+            this.btn查询退货记录.Click += new System.EventHandler(this.btn查询退货记录_Click);
             // 
             // 库存管理主界面
             // 
@@ -239,6 +266,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb产品代码;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button btn查询退货记录;
+        private System.Windows.Forms.Button btn查询退货申请;
 
     }
 }

@@ -70,8 +70,15 @@ namespace mySystem.Setting
                 OleDbDataAdapter da = new OleDbDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.connOle);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-                String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
-                dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = ids;
+                try
+                {
+                    String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
+                    dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = ids;
+                }
+                catch (Exception ee)
+                {
+                }
+                
             }
         }
 

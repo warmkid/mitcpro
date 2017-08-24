@@ -43,6 +43,60 @@ namespace mySystem.Process.Stock
             setEnableReadOnly();
         }
 
+        public 退货申请(MainForm mainform, string code)
+            : base(mainform)
+        {
+            conn = new OleDbConnection(strConnect);
+            conn.Open();
+            InitializeComponent();
+            fillPrinter();
+            getPeople();
+            setUseState();
+            setFormState(true);
+            setEnableReadOnly();
+
+
+            // 读取数据
+            _code = code;
+            readOuterData(_code);
+            if (dtOuter.Rows.Count == 0)
+            {
+                if (DialogResult.Yes == MessageBox.Show("该条记录不存在，是否新建记录？", "提示", MessageBoxButtons.YesNo))
+                {
+                    DataRow dr = dtOuter.NewRow();
+                    dr = writeOuterDefault(dr);
+                    dtOuter.Rows.Add(dr);
+                    daOuter.Update(dtOuter);
+                    readOuterData(_code);
+                    outerBind();
+
+                }
+                else
+                {
+                    return;
+                }
+
+            }
+            _id = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            outerBind();
+            //setKeyInfoFromDataTable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            //readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            //getInnerOtherData();
+            //setDataGridViewColumn();
+            //innerBind();
+            setFormState();
+            setEnableReadOnly();
+
+            // 事件部分
+            //addComputerEventHandler();
+            addOtherEvenHandler();
+
+            // 禁用自己
+            btn查询.Enabled = false;
+            tb退货编号.Enabled = false;
+
+        }
+
         void getPeople()
         {
             OleDbDataAdapter da;
@@ -218,7 +272,7 @@ namespace mySystem.Process.Stock
                     daOuter.Update(dtOuter);
                     readOuterData(_code);
                     outerBind();
-                    _id = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+                    
                 }
                 else
                 {
@@ -226,6 +280,7 @@ namespace mySystem.Process.Stock
                 }
                 
             }
+            _id = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
             outerBind();
             //setKeyInfoFromDataTable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             //readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
@@ -261,7 +316,7 @@ namespace mySystem.Process.Stock
             dr["评审结果"] = "未知";
             dr["技术总监日期"] = DateTime.Now;
             dr["销售总监日期"] = DateTime.Now;
-            dr["状态"] = "待申请";
+            dr["状态"] = "编辑中";
             return dr;
         }
         void outerBind()
@@ -319,8 +374,6 @@ namespace mySystem.Process.Stock
         private void btn提交审核_Click(object sender, EventArgs e)
         {
 
-            
-
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
             DataTable dt;
@@ -337,6 +390,7 @@ namespace mySystem.Process.Stock
             da.Update(dt);
 
             dtOuter.Rows[0]["审核人"] = "__待审核";
+            //dtOuter.Rows[0]["状态"] = "未申请";
             save();
             setFormState();
             setEnableReadOnly();
@@ -368,7 +422,7 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["评审意见"] = ckform.opinion;
             if (ckform.ischeckOk)
             {
-                dtOuter.Rows[0]["状态"] = "";
+                dtOuter.Rows[0]["状态"] = "未申请";
             }
             //String log = "===================================\n";
             //log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");

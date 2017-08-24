@@ -497,6 +497,7 @@ namespace mySystem.Process.灭菌
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //填过“审核员”后，该行只读

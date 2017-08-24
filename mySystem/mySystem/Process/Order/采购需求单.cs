@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Order
 {
@@ -31,12 +32,12 @@ namespace mySystem.Process.Order
 
         public 采购需求单(MainForm mainform, string 订单号):base(mainform)
         {
-            // id是销售订单ID
-            // whatId 为真，表示销售订单
+            
             _订单号 = 订单号;
             conn = new OleDbConnection(strConnect);
             conn.Open();
             InitializeComponent();
+            fillPrinter();
             getPeople();
             setUseState();
             
@@ -87,6 +88,7 @@ namespace mySystem.Process.Order
         private void fillBy订单号(string 订单号)
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 订单号 + "'", conn);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             DataTable dt = new DataTable();
             da.Fill(dt);
             
@@ -96,7 +98,14 @@ namespace mySystem.Process.Order
                 return;
                     
             }
+            
+
             int 销售订单ID = Convert.ToInt32(dt.Rows[0]["ID"]);
+
+            // 修改销售订单的状态
+            dt.Rows[0]["状态"] = "已生成采购需求单";
+            da.Update(dt);
+
             // 外包表
             readOuterData(订单号);
             outerBind();
@@ -110,6 +119,8 @@ namespace mySystem.Process.Order
                 readOuterData(订单号);
                 outerBind();
             }
+
+            
 
 
             // 内表
@@ -163,6 +174,8 @@ namespace mySystem.Process.Order
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
             }
+
+           
 
         }
 
@@ -446,7 +459,10 @@ namespace mySystem.Process.Order
             {
                 dtOuter.Rows[0]["状态"] = "编辑中";//未审核，草稿
             }
-
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                dr["批准状态"] = "未批准";
+            }
             //状态
             setControlFalse();
 
@@ -519,5 +535,17 @@ namespace mySystem.Process.Order
                 }
             }
         }
+
+        private void fillPrinter()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                combox打印机选择.Items.Add(sPrint);
+            }
+            combox打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
+        }
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
     }
 }

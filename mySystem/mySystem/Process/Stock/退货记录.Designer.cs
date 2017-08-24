@@ -656,6 +656,7 @@
             this.btn确认.TabIndex = 164;
             this.btn确认.Text = "确认";
             this.btn确认.UseVisualStyleBackColor = true;
+            this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
             // 
             // btn提交审核
             // 
@@ -666,6 +667,7 @@
             this.btn提交审核.TabIndex = 163;
             this.btn提交审核.Text = "提交审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
             // btn审核
             // 
@@ -676,6 +678,7 @@
             this.btn审核.TabIndex = 162;
             this.btn审核.Text = "审核";
             this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
             // dateTimePicker1
             // 

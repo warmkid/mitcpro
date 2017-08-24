@@ -1393,10 +1393,13 @@ namespace mySystem.Extruction.Process
 
         private void Record_material_reqanddisg_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!isSaved&&dt_prodinstr.Rows.Count>0)
+            if (dt_prodinstr != null)
             {
-                dt_prodinstr.Rows[0].Delete();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                if (!isSaved && dt_prodinstr.Rows.Count > 0)
+                {
+                    dt_prodinstr.Rows[0].Delete();
+                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                }
             }
         }
     }

@@ -616,6 +616,12 @@
     <Compile Include="Process\Order\采购批准单.Designer.cs">
       <DependentUpon>采购批准单.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Order\采购订单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Order\采购订单.Designer.cs">
+      <DependentUpon>采购订单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Order\采购需求单.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -741,12 +747,6 @@
     </Compile>
     <Compile Include="Process\Stock\采购单管理.Designer.cs">
       <DependentUpon>采购单管理.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\采购需求单.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\采购需求单.Designer.cs">
-      <DependentUpon>采购需求单.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\灭菌\Gamma射线辐射灭菌委托单.cs">
       <SubType>Form</SubType>
@@ -1336,6 +1336,9 @@
     <EmbeddedResource Include="Process\Order\采购批准单.resx">
       <DependentUpon>采购批准单.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Order\采购订单.resx">
+      <DependentUpon>采购订单.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Order\采购需求单.resx">
       <DependentUpon>采购需求单.cs</DependentUpon>
     </EmbeddedResource>
@@ -1401,9 +1404,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\采购单管理.resx">
       <DependentUpon>采购单管理.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\采购需求单.resx">
-      <DependentUpon>采购需求单.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\灭菌\Gamma射线辐射灭菌委托单.resx">
       <DependentUpon>Gamma射线辐射灭菌委托单.cs</DependentUpon>
