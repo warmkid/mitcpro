@@ -50,7 +50,7 @@ namespace mySystem.Process.CleanCut
         private Dictionary<string, string> dict_prod;//产品代码与产品批号对应字典
 
         private int instrid;
-        private string prodcode;
+        private string prodcode,instrcode;
         public Record_cleansite_cut(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -62,6 +62,7 @@ namespace mySystem.Process.CleanCut
             addDataEventHandler();
 
             instrid = mySystem.Parameter.cleancutInstruID;
+            instrcode = mySystem.Parameter.cleancutInstruction;
 
             foreach (Control c in this.Controls)
                 c.Enabled = false;
@@ -871,18 +872,19 @@ namespace mySystem.Process.CleanCut
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1].Value = i + 1;
-                my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[2].Value.ToString();
-                my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                //清洁要点需不需要？？
+             //   my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
             }
-            my.Cells[5, 5].Value = tb清场人.Text;
+            my.Cells[5, 7].Value = tb清场人.Text;
             if(ckb合格.Checked && !ckb不合格.Checked)
-                my.Cells[5,6].Value = "合格☑\n不合格□";
+                my.Cells[5,8].Value = "合格☑\n不合格□";
             else if(ckb不合格.Checked && !ckb合格.Checked)
-                my.Cells[5, 6].Value = "合格□\n不合格☑";
+                my.Cells[5, 8].Value = "合格□\n不合格☑";
             else
-                my.Cells[5, 6].Value = "合格□\n不合格□";
-            my.Cells[5, 7].Value = tb检查人.Text;
+                my.Cells[5, 8].Value = "合格□\n不合格□";
+            my.Cells[5, 9].Value = tb检查人.Text;
             my.Cells[19 + ind, 1].Value = "备注："+tb备注.Text;
 
         }
@@ -899,8 +901,17 @@ namespace mySystem.Process.CleanCut
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
             fill_excel(my);
+
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 清场记录" + " where 生产指令ID=" + instrid.ToString(), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"])) + 1;           
+            my.PageSetup.RightFooter = instrcode + "-02-" + sheetnum.ToString("D3") + "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
             if (b)
             {

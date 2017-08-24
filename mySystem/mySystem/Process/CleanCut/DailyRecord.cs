@@ -838,7 +838,7 @@ namespace mySystem.Process.CleanCut
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
 
@@ -850,7 +850,7 @@ namespace mySystem.Process.CleanCut
             // 利用这个进程打开一个Excel文件
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\cleancut\SOP-MFG-302-R04A+清洁分切日报表.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 修改Sheet中某行某列的值
             my = printValue(my, wb);
 
@@ -904,56 +904,40 @@ namespace mySystem.Process.CleanCut
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             //外表信息
-            mysheet.Cells[3, 2].Value = dtOuter.Rows[0]["物料种类"].ToString();
-            mysheet.Cells[13, 2].Value = dtOuter.Rows[0]["清洁前合计A1"].ToString();
-            mysheet.Cells[13, 3].Value = dtOuter.Rows[0]["清洁前合计A2"].ToString();
-            mysheet.Cells[13, 5].Value = dtOuter.Rows[0]["清洁后合计B1"].ToString();
-            mysheet.Cells[13, 6].Value = dtOuter.Rows[0]["清洁后合计B2"].ToString();
-            mysheet.Cells[13, 7].Value = dtOuter.Rows[0]["清洁后合计C"].ToString();
-            //String stringtemp = "";
-            //stringtemp = "确认人：" + dtOuter.Rows[0]["确认人"].ToString();
-            //stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dtOuter.Rows[0]["确认日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["确认日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["确认日期"].ToString()).Day.ToString() + "日";
-            //mysheet.Cells[16, 1].Value = stringtemp;
-            //stringtemp = "复核人：" + dtOuter.Rows[0]["审核人"].ToString();
-            //stringtemp = stringtemp + "       复核日期：" + Convert%.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
-            //mysheet.Cells[16, 4].Value = stringtemp;
-
-            ////内表信息
-            //int rownum = dtInner.Rows.Count;
-            ////无需插入的部分
-            //for (int i = 0; i < (rownum > 9 ? 9 : rownum); i++)
-            //{
-            //    mysheet.Cells[5 + i, 1].Value = dtInner.Rows[i]["序号"].ToString();
-            //    mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["确认项目"].ToString();
-            //    mysheet.Cells[5 + i, 3].Value = dtInner.Rows[i]["确认内容"].ToString();
-            //    mysheet.Cells[5 + i, 5].Value = dtInner.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-            //}
-            ////需要插入的部分
-            //if (rownum > 9)
-            //{
-            //    for (int i = 9; i < rownum; i++)
-            //    {
-            //        Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
-
-            //        range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-            //            Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-            //        mysheet.Cells[5 + i, 1].Value = dtInner.Rows[i]["序号"].ToString();
-            //        mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["确认项目"].ToString();
-            //        mysheet.Cells[5 + i, 3].Value = dtInner.Rows[i]["确认内容"].ToString();
-            //        mysheet.Cells[5 + i, 5].Value = dtInner.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-            //    }
-            //}
+            mysheet.Cells[3, 2].Value = cmb物料种类.Text;
+            mysheet.Cells[13, 2].Value = txb清洁前合计A1.Text;
+            mysheet.Cells[13, 3].Value = txb清洁前合计A2.Text;
+            mysheet.Cells[13, 5].Value = txb清洁后合计B1.Text;
+            mysheet.Cells[13, 6].Value = txb清洁后合计B2.Text;
+         //   mysheet.Cells[13, 7].Value = dtOuter.Rows[0]["清洁后合计C"].ToString();
+           
+            //内表信息
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                mysheet.Cells[5+i, 2].Value=dataGridView1.Rows[i].Cells[3].Value.ToString();
+                mysheet.Cells[5+i, 3].Value=dataGridView1.Rows[i].Cells[4].Value.ToString();
+                mysheet.Cells[5+i, 4].Value=dataGridView1.Rows[i].Cells[5].Value.ToString();
+                mysheet.Cells[5+i, 5].Value=dataGridView1.Rows[i].Cells[6].Value.ToString();
+                mysheet.Cells[5+i, 6].Value=dataGridView1.Rows[i].Cells[7].Value.ToString();
+                mysheet.Cells[5+i, 7].Value=dataGridView1.Rows[i].Cells[8].Value.ToString();
+                mysheet.Cells[5+i, 8].Value=dataGridView1.Rows[i].Cells[9].Value.ToString();
+                mysheet.Cells[5+i, 9].Value=dataGridView1.Rows[i].Cells[10].Value.ToString();
+                mysheet.Cells[5+i, 10].Value=dataGridView1.Rows[i].Cells[11].Value.ToString();
+                mysheet.Cells[5+i, 11].Value=dataGridView1.Rows[i].Cells[12].Value.ToString();
+                mysheet.Cells[5+i, 12].Value=dataGridView1.Rows[i].Cells[13].Value.ToString();
+                mysheet.Cells[5+i, 13].Value=dataGridView1.Rows[i].Cells[14].Value.ToString();
+                mysheet.Cells[5+i, 14].Value=dataGridView1.Rows[i].Cells[15].Value.ToString();
+            }
             //加页脚
-            int sheetnum;
+            int sheetnum=0;
        //     OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
             DataTable dt = new DataTable("temp");
        //     da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
-            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
-       //     mysheet.PageSetup.RightFooter = Instruction + "-02-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+       //     sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            mysheet.PageSetup.RightFooter = __生产指令 + "-02-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }
@@ -1010,7 +994,6 @@ namespace mySystem.Process.CleanCut
             //OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, id, cmb物料种类.SelectedItem.ToString()), mySystem.Parameter.connOle);
             //DataTable tmp = new DataTable();
             //dain.Fill(tmp);
-            dtInner.Clear();
             foreach (DataRow dr in tmp.Rows)
             {
                 DataRow ndr = dtInner.NewRow();
