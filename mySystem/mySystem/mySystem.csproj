@@ -360,6 +360,18 @@
     <Compile Include="Process\Bag\LDPE\LDPEMainForm.Designer.cs">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\LDPE\产品外观和尺寸检验记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\产品外观和尺寸检验记录.Designer.cs">
+      <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\产品热合强度检验记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\产品热合强度检验记录.Designer.cs">
+      <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\PTV\PTVBag_batchproduction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1217,6 +1229,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\产品外观和尺寸检验记录.resx">
+      <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\产品热合强度检验记录.resx">
+      <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_batchproduction.resx">
       <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>

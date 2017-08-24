@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Bag.CS
 {
@@ -46,18 +47,21 @@ namespace mySystem.Process.Bag.CS
         public CS制袋生产指令()
         {
             InitializeComponent();
+            fillPrinter();
             variableInit();
             getOuterOtherData();
             getPeople();
             setUseState();
             setFormState(true);
             setEnableReadOnly();
+            tb生产指令编号.Text = mySystem.Parameter.csbagInstruction;
         }
 
         public CS制袋生产指令(int id)
         {
             // 显示前的准备工作
             InitializeComponent();
+            fillPrinter();
             variableInit();
             getOuterOtherData();
             getPeople();
@@ -623,7 +627,7 @@ namespace mySystem.Process.Bag.CS
             }
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
-
+            comboBox1.Enabled = true;
         }
 
         /// <summary>
@@ -971,6 +975,19 @@ namespace mySystem.Process.Bag.CS
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             MessageBox.Show(name + "填写错误");
         }
- 
+
+        private void fillPrinter()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                comboBox1.Items.Add(sPrint);
+            }
+            comboBox1.SelectedItem = print.PrinterSettings.PrinterName;
+        }
+
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+
     }
 }

@@ -34,6 +34,7 @@ namespace mySystem.Process.Bag.LDPE
         // DataGridView 中用到的一些变量
         List<Int32> li可选可输的列;
 
+        CheckForm ckform;
 
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
@@ -43,7 +44,7 @@ namespace mySystem.Process.Bag.LDPE
         OleDbCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
-        public LDPEBag_productioninstruction()
+        public LDPEBag_productioninstruction(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             variableInit();
@@ -54,7 +55,7 @@ namespace mySystem.Process.Bag.LDPE
             setEnableReadOnly();
         }
 
-        public LDPEBag_productioninstruction(int id)
+        public LDPEBag_productioninstruction(MainForm mainform, int id):base(mainform)
         {
             // 显示前的准备工作
             InitializeComponent();
@@ -870,8 +871,20 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn审核_Click_1(object sender, EventArgs e)
         {
-            // TODO 弹出赵梦的窗口
 
+
+            if (dtOuter.Rows[0]["操作员"].ToString() == mySystem.Parameter.userName)
+            {
+                MessageBox.Show("操作员和审核员不能是同一个人！");
+                return;
+            }
+            ckform = new CheckForm(this);
+            ckform.Show();
+
+        }
+
+        public override void CheckResult()
+        {
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
             DataTable dt;
@@ -886,6 +899,11 @@ namespace mySystem.Process.Bag.LDPE
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核是否通过"] = true;
+            dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            if (ckform.ischeckOk)
+            {
+                dtOuter.Rows[0]["状态"] = 1;
+            }
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
@@ -897,6 +915,7 @@ namespace mySystem.Process.Bag.LDPE
             setEnableReadOnly();
 
             btn审核.Enabled = false;
+            base.CheckResult();
         }
 
         private void btn打印_Click(object sender, EventArgs e)

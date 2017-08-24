@@ -87,6 +87,8 @@ namespace mySystem.Process.Bag.LDPE
             Btn运行记录.Enabled = b;
             Btn清场.Enabled = b;
             Btn批生产记录.Enabled = b;
+            Btn热合强度.Enabled = b;
+            Btn外观及检验.Enabled = b;
         }
 
         private void A1Btn_Click(object sender, EventArgs e)
@@ -97,7 +99,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void button1_Click(object sender, EventArgs e)
         {
-            LDPEBag_batchproduction batch = new LDPEBag_batchproduction();
+            LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform);
             batch.ShowDialog();
         }
 
@@ -109,13 +111,13 @@ namespace mySystem.Process.Bag.LDPE
 
         private void B4Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance();
+            LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance(mainform);
             cleanrance.ShowDialog();
         }
 
         private void B1Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_productioninstruction pro_ins = new LDPEBag_productioninstruction();
+            LDPEBag_productioninstruction pro_ins = new LDPEBag_productioninstruction(mainform);
             pro_ins.ShowDialog();
         }
 
@@ -135,6 +137,18 @@ namespace mySystem.Process.Bag.LDPE
         {
             LDPEBag_dailyreport daily = new LDPEBag_dailyreport();
             daily.ShowDialog();
+        }
+
+        private void Btn热合强度_Click(object sender, EventArgs e)
+        {
+            mySystem.Process.Bag.LDPE.产品热合强度检验记录 rhform = new 产品热合强度检验记录(mainform);
+            rhform.ShowDialog();
+        }
+
+        private void Btn外观及检验_Click(object sender, EventArgs e)
+        {
+            mySystem.Process.Bag.LDPE.产品外观和尺寸检验记录 wgform = new 产品外观和尺寸检验记录(mainform);
+            wgform.ShowDialog();
         }
 
 

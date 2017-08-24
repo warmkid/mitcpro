@@ -28,41 +28,42 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label2 = new System.Windows.Forms.Label();
-            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.Column8 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.dtp结束生产时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp开始生产时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp批准时间 = new System.Windows.Forms.DateTimePicker();
+            this.tb批准人 = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dtp审核时间 = new System.Windows.Forms.DateTimePicker();
+            this.tb审核人 = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.dtp汇总时间 = new System.Windows.Forms.DateTimePicker();
+            this.tb汇总人 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tb生产指令编号 = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
+            this.comboBox打印机选择 = new System.Windows.Forms.ComboBox();
+            this.btn提交审核 = new System.Windows.Forms.Button();
+            this.btn保存 = new System.Windows.Forms.Button();
+            this.btn打印 = new System.Windows.Forms.Button();
+            this.btn审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -96,24 +97,26 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker4);
-            this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker3);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox6);
+            this.splitContainer1.Panel2.Controls.Add(this.label6);
+            this.splitContainer1.Panel2.Controls.Add(this.dtp结束生产时间);
+            this.splitContainer1.Panel2.Controls.Add(this.dtp开始生产时间);
+            this.splitContainer1.Panel2.Controls.Add(this.dtp批准时间);
+            this.splitContainer1.Panel2.Controls.Add(this.tb批准人);
             this.splitContainer1.Panel2.Controls.Add(this.label9);
-            this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker2);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox5);
+            this.splitContainer1.Panel2.Controls.Add(this.dtp审核时间);
+            this.splitContainer1.Panel2.Controls.Add(this.tb审核人);
             this.splitContainer1.Panel2.Controls.Add(this.label8);
-            this.splitContainer1.Panel2.Controls.Add(this.dateTimePicker1);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox4);
+            this.splitContainer1.Panel2.Controls.Add(this.dtp汇总时间);
+            this.splitContainer1.Panel2.Controls.Add(this.tb汇总人);
             this.splitContainer1.Panel2.Controls.Add(this.label7);
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView2);
             this.splitContainer1.Panel2.Controls.Add(this.label5);
-            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.tb生产指令编号);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
             this.splitContainer1.Panel2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.splitContainer1.Size = new System.Drawing.Size(990, 519);
-            this.splitContainer1.SplitterDistance = 553;
+            this.splitContainer1.Size = new System.Drawing.Size(1066, 519);
+            this.splitContainer1.SplitterDistance = 595;
             this.splitContainer1.TabIndex = 3;
             // 
             // dataGridView1
@@ -133,8 +136,48 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(547, 466);
+            this.dataGridView1.Size = new System.Drawing.Size(589, 466);
             this.dataGridView1.TabIndex = 1;
+            // 
+            // Column8
+            // 
+            this.Column8.HeaderText = "打印";
+            this.Column8.Name = "Column8";
+            this.Column8.Width = 50;
+            // 
+            // Column9
+            // 
+            this.Column9.HeaderText = "打印页面";
+            this.Column9.Name = "Column9";
+            // 
+            // Column1
+            // 
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle7;
+            this.Column1.HeaderText = "序号";
+            this.Column1.Name = "Column1";
+            this.Column1.Width = 70;
+            // 
+            // Column2
+            // 
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle8;
+            this.Column2.HeaderText = "记录";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 200;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "总页数";
+            this.Column10.Name = "Column10";
+            // 
+            // Column4
+            // 
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Column4.DefaultCellStyle = dataGridViewCellStyle9;
+            this.Column4.HeaderText = "备注";
+            this.Column4.Name = "Column4";
+            this.Column4.Width = 120;
             // 
             // label2
             // 
@@ -146,28 +189,45 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "制袋工序记录 目录";
             // 
-            // dateTimePicker4
+            // label6
             // 
-            this.dateTimePicker4.Location = new System.Drawing.Point(135, 88);
-            this.dateTimePicker4.Name = "dateTimePicker4";
-            this.dateTimePicker4.Size = new System.Drawing.Size(158, 26);
-            this.dateTimePicker4.TabIndex = 17;
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(257, 97);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(28, 14);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "---";
             // 
-            // dateTimePicker3
+            // dtp结束生产时间
             // 
-            this.dateTimePicker3.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker3.Location = new System.Drawing.Point(232, 459);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.Size = new System.Drawing.Size(150, 23);
-            this.dateTimePicker3.TabIndex = 16;
+            this.dtp结束生产时间.Location = new System.Drawing.Point(300, 88);
+            this.dtp结束生产时间.Name = "dtp结束生产时间";
+            this.dtp结束生产时间.Size = new System.Drawing.Size(158, 26);
+            this.dtp结束生产时间.TabIndex = 18;
             // 
-            // textBox6
+            // dtp开始生产时间
             // 
-            this.textBox6.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox6.Location = new System.Drawing.Point(108, 459);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(103, 23);
-            this.textBox6.TabIndex = 15;
+            this.dtp开始生产时间.Location = new System.Drawing.Point(98, 88);
+            this.dtp开始生产时间.Name = "dtp开始生产时间";
+            this.dtp开始生产时间.Size = new System.Drawing.Size(137, 26);
+            this.dtp开始生产时间.TabIndex = 17;
+            // 
+            // dtp批准时间
+            // 
+            this.dtp批准时间.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp批准时间.Location = new System.Drawing.Point(232, 459);
+            this.dtp批准时间.Name = "dtp批准时间";
+            this.dtp批准时间.Size = new System.Drawing.Size(150, 23);
+            this.dtp批准时间.TabIndex = 16;
+            // 
+            // tb批准人
+            // 
+            this.tb批准人.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb批准人.Location = new System.Drawing.Point(108, 459);
+            this.tb批准人.Name = "tb批准人";
+            this.tb批准人.Size = new System.Drawing.Size(103, 23);
+            this.tb批准人.TabIndex = 15;
             // 
             // label9
             // 
@@ -179,21 +239,21 @@
             this.label9.TabIndex = 14;
             this.label9.Text = "批准";
             // 
-            // dateTimePicker2
+            // dtp审核时间
             // 
-            this.dateTimePicker2.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker2.Location = new System.Drawing.Point(232, 422);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(150, 23);
-            this.dateTimePicker2.TabIndex = 13;
+            this.dtp审核时间.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp审核时间.Location = new System.Drawing.Point(232, 422);
+            this.dtp审核时间.Name = "dtp审核时间";
+            this.dtp审核时间.Size = new System.Drawing.Size(150, 23);
+            this.dtp审核时间.TabIndex = 13;
             // 
-            // textBox5
+            // tb审核人
             // 
-            this.textBox5.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox5.Location = new System.Drawing.Point(108, 419);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(103, 23);
-            this.textBox5.TabIndex = 12;
+            this.tb审核人.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核人.Location = new System.Drawing.Point(108, 419);
+            this.tb审核人.Name = "tb审核人";
+            this.tb审核人.Size = new System.Drawing.Size(103, 23);
+            this.tb审核人.TabIndex = 12;
             // 
             // label8
             // 
@@ -205,21 +265,21 @@
             this.label8.TabIndex = 11;
             this.label8.Text = "审核";
             // 
-            // dateTimePicker1
+            // dtp汇总时间
             // 
-            this.dateTimePicker1.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(232, 380);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(150, 23);
-            this.dateTimePicker1.TabIndex = 10;
+            this.dtp汇总时间.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp汇总时间.Location = new System.Drawing.Point(232, 380);
+            this.dtp汇总时间.Name = "dtp汇总时间";
+            this.dtp汇总时间.Size = new System.Drawing.Size(150, 23);
+            this.dtp汇总时间.TabIndex = 10;
             // 
-            // textBox4
+            // tb汇总人
             // 
-            this.textBox4.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox4.Location = new System.Drawing.Point(108, 380);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(103, 23);
-            this.textBox4.TabIndex = 9;
+            this.tb汇总人.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb汇总人.Location = new System.Drawing.Point(108, 380);
+            this.tb汇总人.Name = "tb汇总人";
+            this.tb汇总人.Size = new System.Drawing.Size(103, 23);
+            this.tb汇总人.TabIndex = 9;
             // 
             // label7
             // 
@@ -236,58 +296,30 @@
             this.dataGridView2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column5,
-            this.Column6,
-            this.Column7});
             this.dataGridView2.Location = new System.Drawing.Point(3, 130);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(426, 215);
+            this.dataGridView2.Size = new System.Drawing.Size(460, 215);
             this.dataGridView2.TabIndex = 7;
-            // 
-            // Column5
-            // 
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column5.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Column5.HeaderText = "产品代码";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 150;
-            // 
-            // Column6
-            // 
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Column6.HeaderText = "生产数量";
-            this.Column6.Name = "Column6";
-            this.Column6.Width = 150;
-            // 
-            // Column7
-            // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column7.DefaultCellStyle = dataGridViewCellStyle6;
-            this.Column7.HeaderText = "产品批号";
-            this.Column7.Name = "Column7";
-            this.Column7.Width = 150;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(46, 97);
+            this.label5.Location = new System.Drawing.Point(18, 97);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 14);
             this.label5.TabIndex = 3;
             this.label5.Text = "生产日期";
             // 
-            // textBox1
+            // tb生产指令编号
             // 
-            this.textBox1.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox1.Location = new System.Drawing.Point(135, 50);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(159, 23);
-            this.textBox1.TabIndex = 2;
+            this.tb生产指令编号.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb生产指令编号.Location = new System.Drawing.Point(135, 50);
+            this.tb生产指令编号.Name = "tb生产指令编号";
+            this.tb生产指令编号.Size = new System.Drawing.Size(159, 23);
+            this.tb生产指令编号.TabIndex = 2;
             // 
             // label4
             // 
@@ -309,62 +341,79 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "汇总审批";
             // 
-            // button1
+            // label角色
             // 
-            this.button1.Location = new System.Drawing.Point(907, 565);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "打印";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(793, 9);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 146;
+            this.label角色.Text = "角色";
             // 
-            // Column8
+            // comboBox打印机选择
             // 
-            this.Column8.HeaderText = "打印";
-            this.Column8.Name = "Column8";
-            this.Column8.Width = 50;
+            this.comboBox打印机选择.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.comboBox打印机选择.FormattingEnabled = true;
+            this.comboBox打印机选择.Location = new System.Drawing.Point(198, 584);
+            this.comboBox打印机选择.Name = "comboBox打印机选择";
+            this.comboBox打印机选择.Size = new System.Drawing.Size(175, 24);
+            this.comboBox打印机选择.TabIndex = 152;
             // 
-            // Column9
+            // btn提交审核
             // 
-            this.Column9.HeaderText = "打印页面";
-            this.Column9.Name = "Column9";
+            this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn提交审核.Location = new System.Drawing.Point(949, 581);
+            this.btn提交审核.Name = "btn提交审核";
+            this.btn提交审核.Size = new System.Drawing.Size(97, 27);
+            this.btn提交审核.TabIndex = 150;
+            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
-            // Column1
+            // btn保存
             // 
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Column1.HeaderText = "序号";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 70;
+            this.btn保存.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn保存.Location = new System.Drawing.Point(838, 581);
+            this.btn保存.Name = "btn保存";
+            this.btn保存.Size = new System.Drawing.Size(75, 27);
+            this.btn保存.TabIndex = 149;
+            this.btn保存.Text = "保存";
+            this.btn保存.UseVisualStyleBackColor = true;
+            this.btn保存.Click += new System.EventHandler(this.btn保存_Click);
             // 
-            // Column2
+            // btn打印
             // 
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle2;
-            this.Column2.HeaderText = "记录";
-            this.Column2.Name = "Column2";
-            this.Column2.Width = 200;
+            this.btn打印.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印.Location = new System.Drawing.Point(92, 581);
+            this.btn打印.Name = "btn打印";
+            this.btn打印.Size = new System.Drawing.Size(75, 28);
+            this.btn打印.TabIndex = 148;
+            this.btn打印.Text = "打印";
+            this.btn打印.UseVisualStyleBackColor = true;
             // 
-            // Column10
+            // btn审核
             // 
-            this.Column10.HeaderText = "总页数";
-            this.Column10.Name = "Column10";
-            // 
-            // Column4
-            // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Column4.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Column4.HeaderText = "备注";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 120;
+            this.btn审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn审核.Location = new System.Drawing.Point(11, 582);
+            this.btn审核.Name = "btn审核";
+            this.btn审核.Size = new System.Drawing.Size(75, 27);
+            this.btn审核.TabIndex = 147;
+            this.btn审核.Text = "审核";
+            this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
             // Record_batch_bag
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(994, 596);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1070, 621);
+            this.Controls.Add(this.comboBox打印机选择);
+            this.Controls.Add(this.btn提交审核);
+            this.Controls.Add(this.btn保存);
+            this.Controls.Add(this.btn打印);
+            this.Controls.Add(this.btn审核);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -389,31 +438,35 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker4;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.TextBox textBox6;
+        private System.Windows.Forms.DateTimePicker dtp开始生产时间;
+        private System.Windows.Forms.DateTimePicker dtp批准时间;
+        private System.Windows.Forms.TextBox tb批准人;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.DateTimePicker dtp审核时间;
+        private System.Windows.Forms.TextBox tb审核人;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.DateTimePicker dtp汇总时间;
+        private System.Windows.Forms.TextBox tb汇总人;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb生产指令编号;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DateTimePicker dtp结束生产时间;
+        private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.ComboBox comboBox打印机选择;
+        private System.Windows.Forms.Button btn提交审核;
+        private System.Windows.Forms.Button btn保存;
+        private System.Windows.Forms.Button btn打印;
+        private System.Windows.Forms.Button btn审核;
 
     }
 }

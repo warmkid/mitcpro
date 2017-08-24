@@ -222,7 +222,7 @@
             // 
             this.lbl产品批号.AutoSize = true;
             this.lbl产品批号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl产品批号.Location = new System.Drawing.Point(382, 53);
+            this.lbl产品批号.Location = new System.Drawing.Point(420, 53);
             this.lbl产品批号.Name = "lbl产品批号";
             this.lbl产品批号.Size = new System.Drawing.Size(72, 16);
             this.lbl产品批号.TabIndex = 83;
@@ -242,7 +242,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(288, 53);
+            this.label2.Location = new System.Drawing.Point(326, 53);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(88, 16);
             this.label2.TabIndex = 81;

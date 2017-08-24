@@ -894,6 +894,7 @@ namespace mySystem.Process.CleanCut
             //OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, id, cmb物料种类.SelectedItem.ToString()), mySystem.Parameter.connOle);
             //DataTable tmp = new DataTable();
             //dain.Fill(tmp);
+            dtInner.Clear();
             foreach (DataRow dr in tmp.Rows)
             {
                 DataRow ndr = dtInner.NewRow();

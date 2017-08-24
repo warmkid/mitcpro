@@ -10,11 +10,11 @@ using System.Data.OleDb;
 
 namespace mySystem.Process.Bag.LDPE
 {
-    public partial class LDPEBag_cleanrance : BaseForm
+    public partial class 产品外观和尺寸检验记录 : BaseForm
     {
         // TODO   需要从Parameter 中读取生产指令ID或编号，这里假装填写当前生产指令编号和ID
-        string CODE = "1";
-        int ID = 11;
+        string CODE;
+        int ID;
         // TODO : 注意处理生产指令的状态
         // TODO： 审核时要调用赵梦的函数
         // TODO: 打印
@@ -36,11 +36,10 @@ namespace mySystem.Process.Bag.LDPE
         // 显示界面需要的信息
         String str产品代码;
         String str产品批号;
+        String str生产指令编号;
         Int32 i生产指令ID;
         List<String> ls操作员;
         List<String> ls审核员;
-        List<String> ls清场项目;
-        List<String> ls清场要点;
 
 
         // 数据库连接
@@ -52,19 +51,14 @@ namespace mySystem.Process.Bag.LDPE
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
-        CheckForm ckform;
 
-        public LDPEBag_cleanrance(MainForm mainform):base(mainform)
-        {           
-            // 判断设置是否变化
+        public 产品外观和尺寸检验记录(MainForm mainform)
+            : base(mainform)
+        {
             InitializeComponent();
             variableInit();
-            // 若为未保存状态，则判断设置是否变化
             getOtherData();
             getPeople();
-
-
-            // 读取数据
             readOuterData();
             outerBind();
             if (dtOuter.Rows.Count == 0)
@@ -75,43 +69,27 @@ namespace mySystem.Process.Bag.LDPE
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData();
                 outerBind();
-                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-                setDataGridViewColumn();
-                innerBind();
-                generateRowOfDataTableInner();
-                setDataGridViewNO();
-
-                daInner.Update((DataTable)bsInner.DataSource);
-                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-                innerBind();
             }
-            if (null == dtInner)
-            {
-                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-                setDataGridViewColumn();
-                innerBind();
-            }
-            matchInnerData();
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            setDataGridViewColumn();
+            innerBind();
 
-            // 获取和显示内容有关的变量
             setFormVariable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
 
-            // 设置状态和控件可用性
             setUseState();
             setFormState();
             setEnableReadOnly();
 
-            // 事件部分
             addComputerEventHandler();
             addOtherEvenHandler();
         }
 
-        public LDPEBag_cleanrance(MainForm mainform, int id):base(mainform)
+        public 产品外观和尺寸检验记录(MainForm mainform, int id)
+            : base(mainform)
         {
-            
+            // 待显示
             InitializeComponent();
             variableInit(id);
-            // 若为未保存状态，则判断设置是否变化
             getOtherData();
             getPeople();
 
@@ -122,7 +100,7 @@ namespace mySystem.Process.Bag.LDPE
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             setDataGridViewColumn();
             innerBind();
-            setDataGridViewNO();
+
             // 获取和显示内容有关的变量
             setFormVariable(id);
 
@@ -140,30 +118,28 @@ namespace mySystem.Process.Bag.LDPE
         {
             conn = new OleDbConnection(strConn);
             conn.Open();
-
-            i生产指令ID = ID;
-
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            ls清场项目 = new List<string>();
-            ls清场要点 = new List<string>();
-            
+            i生产指令ID = mySystem.Parameter.ldpebagInstruID;
+            str生产指令编号 = mySystem.Parameter.ldpebagInstruction;
+            ID = i生产指令ID;
+            CODE = str生产指令编号;
         }
 
         void variableInit(int id)
         {
             conn = new OleDbConnection(strConn);
             conn.Open();
-
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清场记录 where ID=" + id, conn);
+            ls操作员 = new List<string>();
+            ls审核员 = new List<string>();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where ID=" + id, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             i生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
-
-            ls操作员 = new List<string>();
-            ls审核员 = new List<string>();
-            ls清场项目 = new List<string>();
-            ls清场要点 = new List<string>();
+            da = new OleDbDataAdapter("select * from 生产指令 where ID=" + i生产指令ID, conn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            str生产指令编号 = dt.Rows[0]["生产指令编号"].ToString();
         }
 
         void getOtherData()
@@ -175,19 +151,6 @@ namespace mySystem.Process.Bag.LDPE
             str产品代码 = dt.Rows[0]["产品代码"].ToString();
             str产品批号 = dt.Rows[0]["产品批号"].ToString();
 
-            da = new OleDbDataAdapter("select * from 设置清场项目", conn);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
-            {
-                ls清场项目.Add(dr["清场项目"].ToString());
-                ls清场要点.Add(dr["清场要点"].ToString());
-            }
-
-            cmb检查结果.Items.Add("合格");
-            cmb检查结果.Items.Add("不合格");
-
-            fill_printer();
         }
 
         void setUseState()
@@ -200,9 +163,9 @@ namespace mySystem.Process.Bag.LDPE
         // 读取数据，根据自己表的ID
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 清场记录 where ID=" + id, conn);
+            daOuter = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where ID=" + id, conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable("清场记录");
+            dtOuter = new DataTable("产品外观和尺寸检验记录");
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -211,11 +174,9 @@ namespace mySystem.Process.Bag.LDPE
         // 读取数据，无参数表示从Paramter中读取数据
         void readOuterData()
         {
-            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期=#{1}# and 生产班次='{2}'";
-            DateTime date = DateTime.Parse(DateTime.Now.ToString("yyyy/MM/dd"));
-            daOuter = new OleDbDataAdapter(String.Format(sql, i生产指令ID, date, mySystem.Parameter.userflight), conn);
+            daOuter = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where 生产指令ID=" + ID, conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable("清场记录");
+            dtOuter = new DataTable("产品外观和尺寸检验记录");
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -226,10 +187,16 @@ namespace mySystem.Process.Bag.LDPE
             dr["生产指令ID"] = i生产指令ID;
             dr["产品代码"] = str产品代码;
             dr["产品批号"] = str产品批号;
-            dr["生产日期"] = DateTime.Parse( DateTime.Now.ToString("yyyy/MM/dd"));
-            dr["生产班次"] = mySystem.Parameter.userflight;
+            dr["生产日期"] = DateTime.Now;
             dr["操作员"] = mySystem.Parameter.userName;
-            dr["检查结果"] = "合格";
+            dr["操作日期"] = DateTime.Now;
+            dr["审核日期"] = DateTime.Now;
+            dr["抽检量合计"] = 0;
+            dr["游离异物合计"] = 0;
+            dr["内含黑点晶点合计"] = 0;
+            dr["热封线不良合计"] = 0;
+            dr["其他合计"] = 0;
+            dr["不良合计"] = 0;
             return dr;
         }
 
@@ -263,57 +230,12 @@ namespace mySystem.Process.Bag.LDPE
         }
         void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 清场记录详细信息 where T清场记录ID=" + dtOuter.Rows[0]["ID"], conn);
-            dtInner = new DataTable("清场记录详细信息");
+            daInner = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录详细信息 where T产品外观和尺寸检验记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            dtInner = new DataTable("产品外观和尺寸检验记录详细信息");
             cbInner = new OleDbCommandBuilder(daInner);
             bsInner = new BindingSource();
 
             daInner.Fill(dtInner);
-        }
-
-        void matchInnerData()
-        {
-            if (0 != _formState) return;
-            bool isChanged = false;
-            if (ls清场要点.Count != dtInner.Rows.Count) isChanged = true;
-            else
-            {
-                for (int i = 0; i < ls清场项目.Count; ++i)
-                {
-                    if (dtInner.Rows[i]["清场项目"].ToString() != ls清场项目[i] ||
-                        dtInner.Rows[i]["清场要点"].ToString() != ls清场要点[i])
-                    {
-                        isChanged = true;
-                    }
-                }
-            }
-
-            if (isChanged)
-            {
-                if (DialogResult.OK == MessageBox.Show("检测到清场设置项已被修改，是否使用最新的设置?",
-                    "提示", MessageBoxButtons.OKCancel))
-                {
-                    foreach (DataRow dr in dtInner.Rows) dr.Delete();
-                    daInner.Update((DataTable)bsInner.DataSource);
-                    readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-                    innerBind();
-                    generateRowOfDataTableInner();
-                    daInner.Update((DataTable)bsInner.DataSource);
-                    readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-                    innerBind();
-                }
-            }
-
-        }
-
-        void generateRowOfDataTableInner()
-        {
-            for (int i = 0; i < ls清场项目.Count; ++i)
-            {
-                DataRow dr = dtInner.NewRow();
-                dr = writeInnerDefault(dr, ls清场项目[i], ls清场要点[i]);
-                dtInner.Rows.Add(dr);
-            }
         }
         void setDataGridViewColumn()
         {
@@ -326,7 +248,7 @@ namespace mySystem.Process.Bag.LDPE
             foreach (DataColumn dc in dtInner.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "清洁操作")
+                if (dc.ColumnName == "判定外观检查")
                 {
                     cbc = new DataGridViewComboBoxColumn();
                     cbc.HeaderText = dc.ColumnName;
@@ -334,11 +256,25 @@ namespace mySystem.Process.Bag.LDPE
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    cbc.Items.Add("完成");
-                    cbc.Items.Add("不适用");
+                    cbc.Items.Add("合格");
+                    cbc.Items.Add("不合格");
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
+                if (dc.ColumnName == "判定尺寸检测")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    cbc.Items.Add("合格");
+                    cbc.Items.Add("不合格");
+                    dataGridView1.Columns.Add(cbc);
+                    continue;
+                }
+
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
                 {
@@ -368,26 +304,34 @@ namespace mySystem.Process.Bag.LDPE
             }
 
             // 然后修改其他特殊属性
-            
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+
+            dataGridView1.Columns[2].HeaderText = "抽样时间（外观）";
+            dataGridView1.Columns[3].HeaderText = "抽样量（外观）";
+            dataGridView1.Columns[8].ReadOnly = true;
+            dataGridView1.Columns[9].HeaderText = "判定（外观）";
+            dataGridView1.Columns[10].HeaderText = "抽样时间（尺寸）";
+            dataGridView1.Columns[14].HeaderText = "判定（尺寸）";
         }
 
-        // 写序号
-        void setDataGridViewNO()
-        {
 
-            for (int i = 0; i < dtInner.Rows.Count;++i )
-            {
-                dtInner.Rows[i]["序号"] = i + 1;
-            }
-        }
-
-        DataRow writeInnerDefault(DataRow dr, String xm, String yd)
+        DataRow writeInnerDefault(DataRow dr)
         {
-            dr["T清场记录ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
-            dr["序号"] = 0;
-            dr["清场项目"] = xm;
-            dr["清场要点"] = yd;
-            dr["清洁操作"] = "完成";
+            dr["T产品外观和尺寸检验记录ID"] = dtOuter.Rows[0]["ID"];
+            dr["抽样时间外观检查"] = DateTime.Now;
+            dr["抽检量外观检查"] = 0;
+            dr["游离异物"] = 0;
+            dr["内含黑点晶点"] = 0;
+            dr["热封线不良"] = 0;
+            dr["其他"] = 0;
+            dr["不良合计"] = 0;
+            dr["判定外观检查"] = "合格";
+            dr["抽检时间尺寸检测"] = DateTime.Now;
+            dr["抽检量尺寸检测"] = 0;
+            dr["宽"] = 0;
+            dr["长"] = 0;
+            dr["判定尺寸检测"] = "合格";
             return dr;
         }
 
@@ -412,7 +356,7 @@ namespace mySystem.Process.Bag.LDPE
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='清场记录'", conn);
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='产品外观和尺寸检验记录'", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -505,26 +449,91 @@ namespace mySystem.Process.Bag.LDPE
         // 事件部分
         void addComputerEventHandler()
         {
+            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
         }
 
-     
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            int sum;
+            switch (e.ColumnIndex)
+            {
+                // 抽检量合计
+                case 3:
+                    sum = 0;
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        sum += Convert.ToInt32(dr["抽检量外观检查"]);
+                    }
+                    dtOuter.Rows[0]["抽检量合计"] = sum;
+                    break;
+                // 游离异物合计
+                case 4:
+                    sum = 0;
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        sum += Convert.ToInt32(dr["游离异物"]);
+                    }
+                    dtOuter.Rows[0]["游离异物合计"] = sum;
+                    break;
+                // 内含黑点晶点合计
+                case 5:
+                    sum = 0;
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        sum += Convert.ToInt32(dr["内含黑点晶点"]);
+                    }
+                    dtOuter.Rows[0]["内含黑点晶点合计"] = sum;
+                    break;
+                // 热封线不良合计
+                case 6:
+                    sum = 0;
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        sum += Convert.ToInt32(dr["热封线不良"]);
+                    }
+                    dtOuter.Rows[0]["热封线不良合计"] = sum;
+                    break;
+                // 其他合计
+                case 7:
+                    sum = 0;
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        sum += Convert.ToInt32(dr["其他"]);
+                    }
+                    dtOuter.Rows[0]["其他合计"] = sum;
+                    break;
+                //// 不良合计
+                //case 8:
+                //    sum = 0;
+                //    foreach (DataRow dr in dtInner.Rows)
+                //    {
+                //        sum += Convert.ToInt32(dr["不良合计"]);
+                //    }
+                //    dtOuter.Rows[0]["不良合计"] = sum;
+                //    break;
+
+            }
+            if (e.ColumnIndex >= 3 && e.ColumnIndex <= 7)
+            {
+                sum = 0;
+                for (int i = 3; i <= 7; ++i)
+                {
+                    sum += Convert.ToInt32(dtInner.Rows[e.RowIndex][i]);
+                }
+                dtInner.Rows[e.RowIndex]["不良合计"] = sum;
+                // 为什么DataGridVew中的值不会及时刷新？
+                dataGridView1.Rows[e.RowIndex].Cells["不良合计"].Value = sum;
+                sum = 0;
+                foreach (DataRow dr in dtInner.Rows)
+                {
+                    sum += Convert.ToInt32(dr["不良合计"]);
+                }
+                dtOuter.Rows[0]["不良合计"] = sum;
+            }
+        }
         void addOtherEvenHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
-        }
-
-        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            // DataGridView的可见和只读等属性最好在这个事件中处理
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-            
-            for (int i = 0; i < 5; ++i)
-            {
-                dataGridView1.Columns[i].ReadOnly = true;
-            }
-                
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -542,6 +551,92 @@ namespace mySystem.Process.Bag.LDPE
             if (_userState == 0) btn提交审核.Enabled = true;
         }
 
+        private void btn添加_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dtInner.NewRow();
+            dr = writeInnerDefault(dr);
+            dtInner.Rows.Add(dr);
+        }
+
+        private void btn上移_Click(object sender, EventArgs e)
+        {
+            int count = dtInner.Rows.Count;
+            if (dataGridView1.SelectedCells.Count == 0) return;
+            int index = dataGridView1.SelectedCells[0].RowIndex;
+            if (0 == index)
+            {
+                return;
+            }
+            DataRow currRow = dtInner.Rows[index];
+            DataRow desRow = dtInner.NewRow();
+            desRow.ItemArray = currRow.ItemArray.Clone() as object[];
+            currRow.Delete();
+            dtInner.Rows.Add(desRow);
+
+            for (int i = index - 1; i < count; ++i)
+            {
+                if (i == index) { continue; }
+                DataRow tcurrRow = dtInner.Rows[i];
+                DataRow tdesRow = dtInner.NewRow();
+                tdesRow.ItemArray = tcurrRow.ItemArray.Clone() as object[];
+                tcurrRow.Delete();
+                dtInner.Rows.Add(tdesRow);
+            }
+            daInner.Update((DataTable)bsInner.DataSource);
+            dtInner.Clear();
+            daInner.Fill(dtInner);
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index - 1].Selected = true;
+        }
+
+        private void btn下移_Click(object sender, EventArgs e)
+        {
+            int count = dtInner.Rows.Count;
+            if (dataGridView1.SelectedCells.Count == 0) return;
+            int index = dataGridView1.SelectedCells[0].RowIndex;
+            if (count - 1 == index)
+            {
+                return;
+            }
+            DataRow currRow = dtInner.Rows[index];
+            DataRow desRow = dtInner.NewRow();
+            desRow.ItemArray = currRow.ItemArray.Clone() as object[];
+            currRow.Delete();
+            dtInner.Rows.Add(desRow);
+
+            for (int i = index + 2; i < count; ++i)
+            {
+                if (i == index) { continue; }
+                DataRow tcurrRow = dtInner.Rows[i];
+                DataRow tdesRow = dtInner.NewRow();
+                tdesRow.ItemArray = tcurrRow.ItemArray.Clone() as object[];
+                tcurrRow.Delete();
+                dtInner.Rows.Add(tdesRow);
+            }
+            daInner.Update((DataTable)bsInner.DataSource);
+            dtInner.Clear();
+            daInner.Fill(dtInner);
+            dataGridView1.ClearSelection();
+            dataGridView1.Rows[index + 1].Selected = true;
+        }
+
+        private void btn删除_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count == 0) return;
+            dtInner.Rows[dataGridView1.SelectedCells[0].RowIndex].Delete();
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+            // 重新计算合计
+            int sum = 0;
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                sum += Convert.ToInt32(dr["不良合计"]);
+            }
+            dtOuter.Rows[0]["不良合计"] = sum;
+
+        }
+
         private void btn提交审核_Click(object sender, EventArgs e)
         {
             if (!dataValidate())
@@ -554,13 +649,13 @@ namespace mySystem.Process.Bag.LDPE
             OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品外观和尺寸检验记录' and 对应ID=" + _id, conn);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
             DataRow dr = dt.NewRow();
-            dr["表名"] = "清场记录";
+            dr["表名"] = "产品外观和尺寸检验记录";
             dr["对应ID"] = _id;
             dt.Rows.Add(dr);
             da.Update(dt);
@@ -601,7 +696,7 @@ namespace mySystem.Process.Bag.LDPE
             OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品外观和尺寸检验记录' and 对应ID=" + _id, conn);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
@@ -624,31 +719,10 @@ namespace mySystem.Process.Bag.LDPE
             btn审核.Enabled = false;
         }
 
-        //添加打印机
-        private void fill_printer()
-        {
-
-            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
-            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
-            {
-                cb打印机.Items.Add(sPrint);
-            }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void btn打印_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void btn审核_Click_1(object sender, EventArgs e)
-        {
-            if (dtOuter.Rows[0]["操作员"].ToString() == mySystem.Parameter.userName)
-            {
-                MessageBox.Show("操作员和审核员不能是同一个人！");
-                return;
-            }
-            ckform = new CheckForm(this);
-            ckform.Show();
-        }
     }
 }
