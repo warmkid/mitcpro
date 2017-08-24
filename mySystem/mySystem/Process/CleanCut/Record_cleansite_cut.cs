@@ -842,7 +842,7 @@ namespace mySystem.Process.CleanCut
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
 
@@ -871,18 +871,18 @@ namespace mySystem.Process.CleanCut
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1].Value = i + 1;
-                my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
             }
-            my.Cells[5, 7].Value = tb清场人.Text;
+            my.Cells[5, 5].Value = tb清场人.Text;
             if(ckb合格.Checked && !ckb不合格.Checked)
-                my.Cells[5, 8].Value = "合格☑\n不合格□";
+                my.Cells[5,6].Value = "合格☑\n不合格□";
             else if(ckb不合格.Checked && !ckb合格.Checked)
-                my.Cells[5, 8].Value = "合格□\n不合格☑";
+                my.Cells[5, 6].Value = "合格□\n不合格☑";
             else
-                my.Cells[5, 8].Value = "合格□\n不合格□";
-            my.Cells[5, 9].Value = tb检查人.Text;
+                my.Cells[5, 6].Value = "合格□\n不合格□";
+            my.Cells[5, 7].Value = tb检查人.Text;
             my.Cells[19 + ind, 1].Value = "备注："+tb备注.Text;
 
         }
