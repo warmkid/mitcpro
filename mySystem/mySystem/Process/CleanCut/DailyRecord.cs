@@ -338,7 +338,7 @@ namespace mySystem.Process.CleanCut
                     
                     setControlFalse();
                     cmb物料种类.Enabled = true;
-                    combobox打印机选择.Enabled = true;
+                    cb打印机.Enabled = true;
                     btn打印.Enabled = true;
                     break;
                 case Parameter.UserState.管理员: //2--管理员
@@ -772,9 +772,9 @@ namespace mySystem.Process.CleanCut
             System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
             foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
             {
-                combobox打印机选择.Items.Add(sPrint);
+                cb打印机.Items.Add(sPrint);
             }
-            combobox打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //void fill_printer()
@@ -832,21 +832,137 @@ namespace mySystem.Process.CleanCut
 
         private void btn打印_Click(object sender, EventArgs e)
         {
-            if (combobox打印机选择.SelectedItem.ToString() == "")
+            if (cb打印机.SelectedItem.ToString() == "")
             {
                 MessageBox.Show("请先选择一台打印机");
                 return;
             }
-            SetDefaultPrinter(combobox打印机选择.Text);
+            SetDefaultPrinter(cb打印机.Text);
             print(false);
             GC.Collect();
         }
 
-        // TODO 打印
-        void print(bool preview)
+        //打印功能
+        public void print(bool isShow)
         {
-            MessageBox.Show("打印功能正在完善");
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\cleancut\SOP-MFG-302-R04A+清洁分切日报表.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
         }
+
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            //外表信息
+            mysheet.Cells[3, 2].Value = dtOuter.Rows[0]["物料种类"].ToString();
+            mysheet.Cells[13, 2].Value = dtOuter.Rows[0]["清洁前合计A1"].ToString();
+            mysheet.Cells[13, 3].Value = dtOuter.Rows[0]["清洁前合计A2"].ToString();
+            mysheet.Cells[13, 5].Value = dtOuter.Rows[0]["清洁后合计B1"].ToString();
+            mysheet.Cells[13, 6].Value = dtOuter.Rows[0]["清洁后合计B2"].ToString();
+            mysheet.Cells[13, 7].Value = dtOuter.Rows[0]["清洁后合计C"].ToString();
+            //String stringtemp = "";
+            //stringtemp = "确认人：" + dtOuter.Rows[0]["确认人"].ToString();
+            //stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dtOuter.Rows[0]["确认日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["确认日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["确认日期"].ToString()).Day.ToString() + "日";
+            //mysheet.Cells[16, 1].Value = stringtemp;
+            //stringtemp = "复核人：" + dtOuter.Rows[0]["审核人"].ToString();
+            //stringtemp = stringtemp + "       复核日期：" + Convert%.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
+            //mysheet.Cells[16, 4].Value = stringtemp;
+
+            ////内表信息
+            //int rownum = dtInner.Rows.Count;
+            ////无需插入的部分
+            //for (int i = 0; i < (rownum > 9 ? 9 : rownum); i++)
+            //{
+            //    mysheet.Cells[5 + i, 1].Value = dtInner.Rows[i]["序号"].ToString();
+            //    mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["确认项目"].ToString();
+            //    mysheet.Cells[5 + i, 3].Value = dtInner.Rows[i]["确认内容"].ToString();
+            //    mysheet.Cells[5 + i, 5].Value = dtInner.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+            //}
+            ////需要插入的部分
+            //if (rownum > 9)
+            //{
+            //    for (int i = 9; i < rownum; i++)
+            //    {
+            //        Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
+
+            //        range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+            //            Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+            //        mysheet.Cells[5 + i, 1].Value = dtInner.Rows[i]["序号"].ToString();
+            //        mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["确认项目"].ToString();
+            //        mysheet.Cells[5 + i, 3].Value = dtInner.Rows[i]["确认内容"].ToString();
+            //        mysheet.Cells[5 + i, 5].Value = dtInner.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+            //    }
+            //}
+            //加页脚
+            int sheetnum;
+       //     OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
+            DataTable dt = new DataTable("temp");
+       //     da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+       //     mysheet.PageSetup.RightFooter = Instruction + "-02-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            //返回
+            return mysheet;
+        }
+
+        //// TODO 打印
+        //void print(bool preview)
+        //{
+        //    MessageBox.Show("打印功能正在完善");
+        //}
 
         private void btn查询_Click(object sender, EventArgs e)
         {

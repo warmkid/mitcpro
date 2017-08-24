@@ -447,8 +447,8 @@ namespace mySystem.Process.灭菌
                 mysheet.Cells[i + 4, 3].Value = Convert.ToDateTime( dt台帐.Rows[i]["委托日期"]).ToString("D");//去掉时分秒，且显示为****年**月**日
                 mysheet.Cells[i + 4, 4].Value = dt台帐.Rows[i]["产品数量箱"].ToString();
                 mysheet.Cells[i + 4, 5].Value = dt台帐.Rows[i]["产品数量只"].ToString();
-                mysheet.Cells[i + 4, 6].Value = dt台帐.Rows[i]["送去产品托盘数量个"].ToString();
-                mysheet.Cells[i + 4, 7].Value = dt台帐.Rows[i]["拉回产品托盘数量个"].ToString();
+                //mysheet.Cells[i + 4, 6].Value = dt台帐.Rows[i]["送去产品托盘数量个"].ToString();
+                //mysheet.Cells[i + 4, 7].Value = dt台帐.Rows[i]["拉回产品托盘数量个"].ToString();
                 mysheet.Cells[i + 4, 8].Value = dt台帐.Rows[i]["备注"].ToString();
                 mysheet.Cells[i + 4, 9].Value = dt台帐.Rows[i]["登记员"].ToString();
                 mysheet.Cells[i + 4, 10].Value = dt台帐.Rows[i]["审核员"].ToString();
@@ -497,7 +497,6 @@ namespace mySystem.Process.灭菌
             {
                 cb打印机.Items.Add(sPrint);
             }
-            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //填过“审核员”后，该行只读

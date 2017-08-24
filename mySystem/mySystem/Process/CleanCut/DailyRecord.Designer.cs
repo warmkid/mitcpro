@@ -63,7 +63,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txb操作员备注 = new System.Windows.Forms.TextBox();
-            this.combobox打印机选择 = new System.Windows.Forms.ComboBox();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
@@ -77,7 +77,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(510, 21);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -323,7 +323,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn打印.Location = new System.Drawing.Point(113, 545);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(63, 25);
@@ -334,7 +334,7 @@
             // 
             // bt保存
             // 
-            this.bt保存.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt保存.Location = new System.Drawing.Point(829, 546);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(63, 25);
@@ -347,7 +347,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(970, 24);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -382,13 +382,13 @@
             this.txb操作员备注.TabIndex = 159;
             this.txb操作员备注.Visible = false;
             // 
-            // combobox打印机选择
+            // cb打印机
             // 
-            this.combobox打印机选择.FormattingEnabled = true;
-            this.combobox打印机选择.Location = new System.Drawing.Point(182, 545);
-            this.combobox打印机选择.Name = "combobox打印机选择";
-            this.combobox打印机选择.Size = new System.Drawing.Size(190, 24);
-            this.combobox打印机选择.TabIndex = 163;
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(182, 545);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(190, 24);
+            this.cb打印机.TabIndex = 163;
             // 
             // btn查看日志
             // 
@@ -440,7 +440,7 @@
             // 
             // btn查询
             // 
-            this.btn查询.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn查询.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn查询.Location = new System.Drawing.Point(609, 58);
             this.btn查询.Name = "btn查询";
             this.btn查询.Size = new System.Drawing.Size(63, 25);
@@ -457,7 +457,7 @@
             this.Controls.Add(this.btn查询);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.combobox打印机选择);
+            this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.btn查看日志);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn审核);
@@ -495,7 +495,7 @@
             this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DailyRecord";
             this.Text = "清洁分切日报表";
@@ -542,7 +542,7 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txb操作员备注;
-        private System.Windows.Forms.ComboBox combobox打印机选择;
+        private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn审核;
