@@ -138,6 +138,7 @@ namespace mySystem.Process.Stock
             da.Fill(dt);
 
             dataGridView1.DataSource = dt;
+            退货申请or退货记录 = -1;
         }
 
 

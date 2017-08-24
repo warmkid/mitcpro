@@ -139,7 +139,11 @@ namespace mySystem.Process.Order
                 {
                     string 存货编码 = dr["存货编码"].ToString();
                     double 订单数量 = Convert.ToDouble(dr["数量"]);
-                    ht产成品.Add(存货编码,订单数量);
+                    if (!ht产成品.ContainsKey(存货编码))
+                    {
+                        ht产成品[存货编码] = 0;
+                    }
+                    ht产成品[存货编码] = Convert.ToDouble(ht产成品[存货编码]) + 订单数量;
                     string BOM_IDS = ht产成品BOM[存货编码].ToString();
                     foreach (string sid in BOM_IDS.Split(','))
                     {

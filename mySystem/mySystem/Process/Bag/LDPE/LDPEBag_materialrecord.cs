@@ -422,6 +422,13 @@ namespace mySystem.Process.Bag.LDPE
                 innerBind();
                 DataRow dr2 = dt记录详情.NewRow();
                 dr2 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr2);
+                // 写入代码和批号
+                //DataRow[] drs = dt物料.Select("物料简称='" + dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString() + "'");
+                //if (drs.Length > 0)
+                //{
+                //    dataGridView1["物料代码", e.RowIndex].Value = drs[0]["物料代码"];
+                //    dataGridView1["物料批号", e.RowIndex].Value = drs[0]["物料批号"];
+                //}
                 dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
                 setDataGridViewRowNums();
                 //立马保存内表
@@ -496,7 +503,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["生产指令ID"] = InstruID;
             dr["生产指令编号"] = Instruction;
             dr["产品代码"] = tb产品代码.Text;
-            dr["产品代码"] = tb产品批号.Text;
+            dr["产品批号"] = tb产品批号.Text;
             dr["废品"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作日期"] = Convert.ToDateTime(dtp操作日期.Value.ToString("yyyy/MM/dd"));
@@ -988,8 +995,15 @@ namespace mySystem.Process.Bag.LDPE
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
                     }
                 }
-                else
-                { }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "物料简称")
+                {
+                    DataRow[] drs =  dt物料.Select("物料简称='" + dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString() + "'");
+                    if (drs.Length > 0)
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = drs[0]["物料代码"];
+                        dataGridView1["物料批号", e.RowIndex].Value = drs[0]["物料批号"];
+                    }
+                }
             }
         }
         

@@ -441,7 +441,7 @@ namespace mySystem.Process.Bag.CS
             }
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
-
+            comboBox1.Enabled = true;
         }
 
         // 事件部分

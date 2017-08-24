@@ -47,6 +47,7 @@
             this.btn入库.TabIndex = 0;
             this.btn入库.Text = "入库";
             this.btn入库.UseVisualStyleBackColor = true;
+            this.btn入库.Visible = false;
             this.btn入库.Click += new System.EventHandler(this.btn入库_Click);
             // 
             // btn出库
@@ -57,6 +58,7 @@
             this.btn出库.TabIndex = 1;
             this.btn出库.Text = "出库";
             this.btn出库.UseVisualStyleBackColor = true;
+            this.btn出库.Visible = false;
             this.btn出库.Click += new System.EventHandler(this.btn出库_Click);
             // 
             // btn退货
@@ -67,6 +69,7 @@
             this.btn退货.TabIndex = 2;
             this.btn退货.Text = "退货";
             this.btn退货.UseVisualStyleBackColor = true;
+            this.btn退货.Visible = false;
             this.btn退货.Click += new System.EventHandler(this.btn退货_Click);
             // 
             // dataGridView1

@@ -174,6 +174,13 @@ namespace mySystem
             connOleCS制袋.Open();
             InstruStateChange(connOleCS制袋, "生产指令");
 
+
+            String strConnPE制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/LDPE.mdb;Persist Security Info=False";
+            OleDbConnection connOlePE制袋 = new OleDbConnection(strConnPE制袋);
+            connOlePE制袋.Open();
+            InstruStateChange(connOlePE制袋, "生产指令");
+
             //去掉最后一个"、"，弹框提示
             if (Instru != null)
             {

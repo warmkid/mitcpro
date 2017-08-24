@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Bag.CS
 {
@@ -57,6 +58,7 @@ namespace mySystem.Process.Bag.CS
         {
             // 判断设置是否变化
             InitializeComponent();
+            fill_printer();
             variableInit();
             // 若为未保存状态，则判断设置是否变化
             getOtherData();
@@ -109,6 +111,7 @@ namespace mySystem.Process.Bag.CS
         {
             
             InitializeComponent();
+            fill_printer();
             variableInit(id);
             // 若为未保存状态，则判断设置是否变化
             getOtherData();
@@ -623,7 +626,18 @@ namespace mySystem.Process.Bag.CS
 
             btn审核.Enabled = false;
         }
-       
 
+        //添加打印机
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        private void fill_printer()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                comboBox2.Items.Add(sPrint);
+            }
+            comboBox2.SelectedItem = print.PrinterSettings.PrinterName;
+        }
     }
 }

@@ -293,7 +293,7 @@ namespace mySystem.Process.Order
                 foreach (DataRow dr in drs)
                 {
                     string 存货代码 = dr["存货代码"].ToString();
-                    double 采购数量 = Convert.ToDouble(dr["数量"]);
+                    double 采购数量 = Convert.ToDouble(dr["采购数量"]);
                     DataRow ndr = dt未批准需求单详细信息.NewRow();
                     ndr.ItemArray = dr.ItemArray.Clone() as object[];
                     dt未批准需求单详细信息.Rows.Add(ndr);
@@ -481,6 +481,7 @@ namespace mySystem.Process.Order
                 ndr["预计到货时间"] = DateTime.Now;
                 ndr["采购需求单ID"] = dr["ID"];
                 ndr["状态"] = "未采购";
+                ndr["推荐供应商"] = dr["推荐供应商"];
                 dtInner.Rows.Add(ndr);
             }
 
@@ -932,7 +933,9 @@ namespace mySystem.Process.Order
         {
             foreach (DataRow dr in dtInner.Rows)
             {
-                if (dr["推荐供应商"] == DBNull.Value) return false;
+                if (Convert.ToBoolean(dr["是否批准"]))
+                    if (dr["推荐供应商"] == DBNull.Value)
+                        return false;
             }
             return true;
         }

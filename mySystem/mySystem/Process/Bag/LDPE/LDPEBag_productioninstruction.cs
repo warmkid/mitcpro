@@ -53,6 +53,7 @@ namespace mySystem.Process.Bag.LDPE
             setUseState();
             setFormState(true);
             setEnableReadOnly();
+            tb生产指令编号.Text = mySystem.Parameter.ldpebagInstruction;
         }
 
         public LDPEBag_productioninstruction(MainForm mainform, int id):base(mainform)
@@ -608,6 +609,8 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
             dataGridView1.CellValidating += dataGridView1_CellValidating;
 
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
             // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
         }

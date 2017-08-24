@@ -66,11 +66,12 @@ namespace mySystem.Process.Bag
         {
             InitializeComponent();
             fillPrinter();
-            _生产指令ID = id;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + id, mySystem.Parameter.connOle);
+            
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 批生产记录表 where ID=" + id, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             _生产指令 = dt.Rows[0]["生产指令编号"].ToString();
+            _生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
             tb生产指令编号.Text = _生产指令;
             init();
 

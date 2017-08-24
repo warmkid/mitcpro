@@ -121,6 +121,7 @@ namespace mySystem.Process.Stock
             dr["取样量"] = 0;
             dr["日期"] = DateTime.Now;
             dr["取样人"] = mySystem.Parameter.userName;
+            dr["取样量"] = 0;
             return dr;
         }
 

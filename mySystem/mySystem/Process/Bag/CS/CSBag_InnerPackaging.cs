@@ -336,7 +336,7 @@ namespace mySystem.Process.Bag
             tb生产批号.ReadOnly = true;
             tb产品数量包数合计A.ReadOnly = true;
             tb产品数量只数合计B.ReadOnly = true;
-            tb成品率.ReadOnly = true;
+            //tb成品率.ReadOnly = true;
             //查询条件始终不可编辑
             cb产品代码.Enabled = false;
             btn查询新建.Enabled = false;
@@ -889,6 +889,7 @@ namespace mySystem.Process.Bag
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮

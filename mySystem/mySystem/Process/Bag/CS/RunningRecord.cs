@@ -595,6 +595,7 @@ namespace mySystem.Process.Bag
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
         private void bt打印_Click(object sender, EventArgs e)
         {

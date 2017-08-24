@@ -52,7 +52,7 @@ namespace mySystem.Process.Stock
 
         private void readInnerData()
         {
-            daInner = new OleDbDataAdapter("select * from 检验台账", conn);
+            daInner = new OleDbDataAdapter("select * from 检验台账 order by ID", conn);
             cbInner = new OleDbCommandBuilder(daInner);
             dtInner = new DataTable("检验台账");
             bsInner = new BindingSource();

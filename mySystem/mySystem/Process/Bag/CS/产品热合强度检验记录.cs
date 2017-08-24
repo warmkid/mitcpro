@@ -477,7 +477,7 @@ namespace mySystem.Process.Bag.CS
         }
 
         /// <summary>
-        /// 默认控件不可用状态
+        /// 默认控件不可用状态.
         /// </summary>
         void setControlFalse()
         {
@@ -501,7 +501,7 @@ namespace mySystem.Process.Bag.CS
             }
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
-
+            comboBox1.Enabled = true;
         }
 
         /// <summary>
