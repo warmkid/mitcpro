@@ -914,42 +914,70 @@ namespace mySystem.Process.CleanCut
                 mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 □    UP1 ☑";
             else
                 mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 □    UP1 □" + cmb物料种类.Text + " ☑ ";
-            mysheet.Cells[13, 6].Value = txb清洁前合计A1.Text;
-            mysheet.Cells[13, 7].Value = txb清洁前合计A2.Text;
-            mysheet.Cells[13, 10].Value = txb清洁后合计B1.Text;
-            mysheet.Cells[13, 11].Value = txb清洁后合计B2.Text;
-            mysheet.Cells[15, 11].Value = txb清洁后合计C.Text;
-            mysheet.Cells[15, 2].Value =  txb备注.Text;
-            mysheet.Cells[16, 1].Value = String.Format("操作人/日期：{0}      {1}", txb操作员.Text, dtp操作日期.Value.ToString("yyyy年MM月dd日"));
-            mysheet.Cells[16, 8].Value = String.Format("复核人/日期：{0}      {1}", txb审核人.Text, dtp审核日期.Value.ToString("yyyy年MM月dd日"));
-         //   mysheet.Cells[13, 7].Value = dtOuter.Rows[0]["清洁后合计C"].ToString();
-           
+            
             //内表信息
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            int i内表行数 = dataGridView1.Rows.Count;
+            int i超出行数 = 0;
+            //行数不超过模板行数的部分
+            for (int i = 0; i < (i内表行数 > 8 ? 8 : i内表行数); i++)
             {
-                mysheet.Cells[5+i, 2].Value=dataGridView1.Rows[i].Cells[3].Value.ToString();
-                mysheet.Cells[5+i, 3].Value=dataGridView1.Rows[i].Cells[4].Value.ToString();
-                mysheet.Cells[5+i, 4].Value=dataGridView1.Rows[i].Cells[5].Value.ToString();
-                mysheet.Cells[5+i, 5].Value=dataGridView1.Rows[i].Cells[6].Value.ToString();
-                mysheet.Cells[5+i, 6].Value=dataGridView1.Rows[i].Cells[7].Value.ToString();
-                mysheet.Cells[5+i, 7].Value=dataGridView1.Rows[i].Cells[8].Value.ToString();
-                mysheet.Cells[5+i, 8].Value=dataGridView1.Rows[i].Cells[9].Value.ToString();
-                mysheet.Cells[5+i, 9].Value=dataGridView1.Rows[i].Cells[10].Value.ToString();
-                mysheet.Cells[5+i, 10].Value=dataGridView1.Rows[i].Cells[11].Value.ToString();
-                mysheet.Cells[5+i, 11].Value=dataGridView1.Rows[i].Cells[12].Value.ToString();
-                mysheet.Cells[5+i, 12].Value=dataGridView1.Rows[i].Cells[13].Value.ToString();
-                mysheet.Cells[5+i, 13].Value=dataGridView1.Rows[i].Cells[14].Value.ToString();
-                mysheet.Cells[5+i, 14].Value=dataGridView1.Rows[i].Cells[15].Value.ToString();
+                mysheet.Cells[5 + i, 2].Value=dataGridView1.Rows[i].Cells[3].Value.ToString();
+                mysheet.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                mysheet.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                mysheet.Cells[5 + i, 5].Value = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                mysheet.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                mysheet.Cells[5 + i, 7].Value = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                mysheet.Cells[5 + i, 8].Value = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                mysheet.Cells[5 + i, 9].Value = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                mysheet.Cells[5 + i, 10].Value = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                mysheet.Cells[5 + i, 11].Value = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                mysheet.Cells[5 + i, 12].Value = dataGridView1.Rows[i].Cells[13].Value.ToString();
+                mysheet.Cells[5 + i, 13].Value = dataGridView1.Rows[i].Cells[14].Value.ToString();
+                mysheet.Cells[5 + i, 14].Value = dataGridView1.Rows[i].Cells[15].Value.ToString();
             }
+            //超过模板行数的部分，插入
+            if (i内表行数 > 8)
+            {
+                i超出行数 = i内表行数 - 8;
+                for (int i = 8; i < i内表行数; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    mysheet.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                    mysheet.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                    mysheet.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                    mysheet.Cells[5 + i, 5].Value = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                    mysheet.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                    mysheet.Cells[5 + i, 7].Value = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                    mysheet.Cells[5 + i, 8].Value = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                    mysheet.Cells[5 + i, 9].Value = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                    mysheet.Cells[5 + i, 10].Value = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                    mysheet.Cells[5 + i, 11].Value = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                    mysheet.Cells[5 + i, 12].Value = dataGridView1.Rows[i].Cells[13].Value.ToString();
+                    mysheet.Cells[5 + i, 13].Value = dataGridView1.Rows[i].Cells[14].Value.ToString();
+                    mysheet.Cells[5 + i, 14].Value = dataGridView1.Rows[i].Cells[15].Value.ToString();
+                }
+            }
+            mysheet.Cells[13 + i超出行数, 6].Value = txb清洁前合计A1.Text;
+            mysheet.Cells[13 + i超出行数, 7].Value = txb清洁前合计A2.Text;
+            mysheet.Cells[13 + i超出行数, 10].Value = txb清洁后合计B1.Text;
+            mysheet.Cells[13 + i超出行数, 11].Value = txb清洁后合计B2.Text;
+            mysheet.Cells[15 + i超出行数, 11].Value = txb清洁后合计C.Text;
+            mysheet.Cells[15 + i超出行数, 2].Value = txb备注.Text;
+            mysheet.Cells[16 + i超出行数, 1].Value = String.Format("操作人/日期：{0}      {1}", txb操作员.Text, dtp操作日期.Value.ToString("yyyy年MM月dd日"));
+            mysheet.Cells[16 + i超出行数, 8].Value = String.Format("复核人/日期：{0}      {1}", txb审核人.Text, dtp审核日期.Value.ToString("yyyy年MM月dd日"));
+
             //加页脚
             int sheetnum=0;
-       //     OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 清洁分切日报表 where 生产指令ID=" + __生产指令ID.ToString(), conOle);
             DataTable dt = new DataTable("temp");
-       //     da.Fill(dt);
+            da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
-       //     sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
             mysheet.PageSetup.RightFooter = __生产指令 + "-05-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
