@@ -341,14 +341,14 @@ namespace mySystem.Process.Extruction.A
                 dr["白班异常情况处理"] = "";
                 
                 dr["白班交接班时间"] = Convert.ToDateTime(dtp白班交接班时间.Value.ToString());
-                dr["夜班交接班时间"] = Convert.ToDateTime(DateTime.MinValue.ToString());
+                dr["夜班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToString());
             }
             else
             {
                 dr["夜班异常情况处理"] = "";
                 
                 dr["夜班交接班时间"] = Convert.ToDateTime(dtp白班交接班时间.Value.ToString());
-                dr["白班交接班时间"] = Convert.ToDateTime(DateTime.MinValue.ToString());
+                dr["白班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToString());
             }
 
             //this part to add log 
@@ -739,8 +739,8 @@ namespace mySystem.Process.Extruction.A
                 my.Cells[i + 6, 5].Value = dtInner.Rows[i]["确认结果夜班"];
 
             }
-            my.Cells[12, 6].Value = "交班人：" + txb白班交班员.Text + "   接班人：" + txb夜班接班员.Text + "   时间：" + dtp白班交接班时间.Value.ToShortTimeString();
-            my.Cells[21, 6].Value = "交班人：" + txb夜班交班员.Text + "   接班人：" + txb白班接班员.Text + "   时间：" + dtp夜班交接班时间.Value.ToShortTimeString();
+            my.Cells[12, 6].Value = "交班人：" + dtOuter.Rows[0]["白班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[21, 6].Value = "交班人：" + dtOuter.Rows[0]["夜班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["白班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["夜班交接班时间"]).ToString("yyyy年MM月dd日");
             my.Cells[5, 6].Value = txb白班异常情况处理.Text;
             my.Cells[15, 6].Value = txb夜班异常情况处理.Text;
             my.PageSetup.RightFooter = __生产指令编号 + "-" + "14" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
