@@ -735,8 +735,8 @@ namespace mySystem.Process.Extruction.A
             {
                 my.Cells[i + 6, 1].Value = dtInner.Rows[i]["序号"];
                 my.Cells[i + 6, 2].Value = dtInner.Rows[i]["确认项目"];
-                my.Cells[i + 6, 3].Value = dtInner.Rows[i]["确认结果白班"];
-                my.Cells[i + 6, 4].Value = dtInner.Rows[i]["确认结果夜班"];
+                my.Cells[i + 6, 4].Value = dtInner.Rows[i]["确认结果白班"];
+                my.Cells[i + 6, 5].Value = dtInner.Rows[i]["确认结果夜班"];
 
             }
             my.Cells[12, 6].Value = "交班人：" + txb白班交班员.Text + "   接班人：" + txb夜班接班员.Text + "   时间：" + dtp白班交接班时间.Value.ToShortTimeString();
