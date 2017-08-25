@@ -851,25 +851,15 @@ namespace mySystem.Process.CleanCut
         {
 
             int ind = 0;
-            if (dataGridView1.Rows.Count > 14)
-            {
-                //在第6行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 14; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-                }
-                ind = dataGridView1.Rows.Count - 14;
-            }
-
+           
             my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编码.Text;
            // my.Cells[3, 4].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
             if (ckb白班.Checked)
                 my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
             else
                 my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            int i内表行数 = dataGridView1.Rows.Count / 2;
+            for (int i = 0; i < (dataGridView1.Rows.Count > 8 ? 8 : dataGridView1.Rows.Count); i++)
             {
                 my.Cells[5 + i, 1].Value = i + 1;
                 my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
@@ -878,7 +868,7 @@ namespace mySystem.Process.CleanCut
              //   my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
                     my.Cells[5 + i, 3].Value = "√";
-                else
+                else if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
                     my.Cells[5 + i, 3].Value = "×";
             }
             //my.Cells[5, 7].Value = tb清场人.Text;
@@ -888,8 +878,21 @@ namespace mySystem.Process.CleanCut
             //    my.Cells[5, 8].Value = "合格□\n不合格☑";
             //else
             //    my.Cells[5, 8].Value = "合格□\n不合格□";
-            my.Cells[10, 1].Value = String.Format("确认人/日期：{0}      {1}", tb清场人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
-            my.Cells[10, 4].Value = String.Format("复核人/日期：{0}      {1}", tb检查人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            if (i内表行数 > 4)
+            {
+                //在第9行插入
+                for (int i = 4; i < i内表行数; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[5 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = i内表行数 - 4;
+            }
+            //TODO:读取确认日期和审核日期
+            my.Cells[9 + ind, 1].Value = "备注：清场打“√”，没清洁打“×”。";
+            my.Cells[10 + ind, 1].Value = String.Format("确认人/日期：{0}      {1}", tb清场人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[10 + ind, 4].Value = String.Format("复核人/日期：{0}      {1}", tb检查人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
 
         }
         public void print(bool b)
