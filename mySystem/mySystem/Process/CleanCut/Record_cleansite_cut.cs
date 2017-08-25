@@ -863,29 +863,33 @@ namespace mySystem.Process.CleanCut
                 ind = dataGridView1.Rows.Count - 14;
             }
 
-            my.Cells[3, 1].Value = "产品代码/规格：" + cb产品代码.Text+"   "+tb产品规格.Text;
-            my.Cells[3, 5].Value = "产品批号：" + tb产品批号.Text;
+            my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编码.Text;
+           // my.Cells[3, 4].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
             if (ckb白班.Checked)
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
             else
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1].Value = i + 1;
                 my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
                 //清洁要点需不需要？？
              //   my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+             //   my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
+                    my.Cells[5 + i, 3].Value = "√";
+                else
+                    my.Cells[5 + i, 3].Value = "×";
             }
-            my.Cells[5, 7].Value = tb清场人.Text;
-            if(ckb合格.Checked && !ckb不合格.Checked)
-                my.Cells[5,8].Value = "合格☑\n不合格□";
-            else if(ckb不合格.Checked && !ckb合格.Checked)
-                my.Cells[5, 8].Value = "合格□\n不合格☑";
-            else
-                my.Cells[5, 8].Value = "合格□\n不合格□";
-            my.Cells[5, 9].Value = tb检查人.Text;
-            my.Cells[19 + ind, 1].Value = "备注："+tb备注.Text;
+            //my.Cells[5, 7].Value = tb清场人.Text;
+            //if(ckb合格.Checked && !ckb不合格.Checked)
+            //    my.Cells[5,8].Value = "合格☑\n不合格□";
+            //else if(ckb不合格.Checked && !ckb合格.Checked)
+            //    my.Cells[5, 8].Value = "合格□\n不合格☑";
+            //else
+            //    my.Cells[5, 8].Value = "合格□\n不合格□";
+            my.Cells[10, 1].Value = String.Format("确认人/日期：{0}      {1}", tb清场人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[10, 4].Value = String.Format("复核人/日期：{0}      {1}", tb检查人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
 
         }
         public void print(bool b)
@@ -895,7 +899,7 @@ namespace mySystem.Process.CleanCut
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             string dir = System.IO.Directory.GetCurrentDirectory();
-            dir += "./../../xls/cleancut/SOP-MFG-110-R01A 清场记录.xlsx";
+            dir += "./../../xls/cleancut/SOP-MFG-302-R04A 清场记录.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
@@ -911,7 +915,7 @@ namespace mySystem.Process.CleanCut
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"])) + 1;           
-            my.PageSetup.RightFooter = instrcode + "-02-" + sheetnum.ToString("D3") + "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+            my.PageSetup.RightFooter = instrcode + "-07-" + sheetnum.ToString("D3") + "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
             if (b)
             {

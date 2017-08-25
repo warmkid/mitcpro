@@ -904,11 +904,24 @@ namespace mySystem.Process.CleanCut
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             //外表信息
-            mysheet.Cells[3, 2].Value = cmb物料种类.Text;
-            mysheet.Cells[13, 2].Value = txb清洁前合计A1.Text;
-            mysheet.Cells[13, 3].Value = txb清洁前合计A2.Text;
-            mysheet.Cells[13, 5].Value = txb清洁后合计B1.Text;
-            mysheet.Cells[13, 6].Value = txb清洁后合计B2.Text;
+            if (cmb物料种类.Text == "LDPE")
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE ☑  TY □   TK8 □    UP1 □";
+            else if (cmb物料种类.Text == "TY")
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY ☑   TK8 □    UP1 □";
+            else if (cmb物料种类.Text == "TK8")
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 ☑    UP1 □";
+            else if (cmb物料种类.Text == "UP1")
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 □    UP1 ☑";
+            else
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 □    UP1 □" + cmb物料种类.Text + " ☑ ";
+            mysheet.Cells[13, 6].Value = txb清洁前合计A1.Text;
+            mysheet.Cells[13, 7].Value = txb清洁前合计A2.Text;
+            mysheet.Cells[13, 10].Value = txb清洁后合计B1.Text;
+            mysheet.Cells[13, 11].Value = txb清洁后合计B2.Text;
+            mysheet.Cells[15, 11].Value = txb清洁后合计C.Text;
+            mysheet.Cells[15, 2].Value =  txb备注.Text;
+            mysheet.Cells[16, 1].Value = String.Format("操作人/日期：{0}      {1}", txb操作员.Text, dtp操作日期.Value.ToString("yyyy年MM月dd日"));
+            mysheet.Cells[16, 8].Value = String.Format("复核人/日期：{0}      {1}", txb审核人.Text, dtp审核日期.Value.ToString("yyyy年MM月dd日"));
          //   mysheet.Cells[13, 7].Value = dtOuter.Rows[0]["清洁后合计C"].ToString();
            
             //内表信息
@@ -937,7 +950,7 @@ namespace mySystem.Process.CleanCut
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
        //     sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = __生产指令 + "-02-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = __生产指令 + "-05-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }
