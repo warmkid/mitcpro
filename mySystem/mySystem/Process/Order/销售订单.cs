@@ -719,6 +719,12 @@ namespace mySystem.Process.Order
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
                     }
+                    else
+                    {
+                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货名称", e.RowIndex].Value = "";
+                        dataGridView1["规格型号", e.RowIndex].Value = "";
+                    }
                     break;
                 case "存货名称":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
@@ -729,6 +735,12 @@ namespace mySystem.Process.Order
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
                     }
+                    else
+                    {
+                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货名称", e.RowIndex].Value = "";
+                        dataGridView1["规格型号", e.RowIndex].Value = "";
+                    }
                     break;
                 case "规格型号":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
@@ -738,6 +750,12 @@ namespace mySystem.Process.Order
                         dataGridView1["存货编码", e.RowIndex].Value = ls存货编码[idx];
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
+                    }
+                    else
+                    {
+                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货名称", e.RowIndex].Value = "";
+                        dataGridView1["规格型号", e.RowIndex].Value = "";
                     }
                     break;
                 case "数量":
