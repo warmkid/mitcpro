@@ -154,7 +154,8 @@
             "编辑中",
             "待审核",
             "审核完成",
-            "已关闭"});
+            "已关闭",
+            "已生成采购需求单"});
             this.cmb销售订单审核状态.Location = new System.Drawing.Point(923, 21);
             this.cmb销售订单审核状态.Name = "cmb销售订单审核状态";
             this.cmb销售订单审核状态.Size = new System.Drawing.Size(121, 24);

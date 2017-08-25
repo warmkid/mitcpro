@@ -548,7 +548,7 @@ namespace mySystem.Process.Order
             foreach (string daima in DaiMaS)
             {
                 double avaNum = 0;
-                DataRow[] drs = dtInner库存.Select("产品代码='" + daima + "'");
+                DataRow[] drs = dtInner库存Show.Select("产品代码='" + daima + "'");
                 foreach (DataRow dr in drs)
                 {
                     if (!Convert.ToBoolean(dr["冻结状态"]))
@@ -638,15 +638,13 @@ namespace mySystem.Process.Order
             {
                 if (dataGridView2.Columns[e.ColumnIndex].Name == "冻结状态")
                 {
-                    //dtInner库存 = dtInner库存Show;
-                    //daInner库存.Update(dtInner库存);
-
-                    //daInner库存 = new OleDbDataAdapter(库存sql, conn);
-                    //dtInner库存 = new DataTable("关联库存信息");
-                    //cbInner库存 = new OleDbCommandBuilder(daInner库存);
-                    //bsInner库存 = new BindingSource();
-
-                    //daInner库存.Fill(dtInner库存);
+                    // 更新dtInner库存
+                    if (combobox存货编码筛选.SelectedItem.ToString() != "全部")
+                    {
+                        int id = Convert.ToInt32(dataGridView2["ID", e.RowIndex].Value);
+                        bool b = Convert.ToBoolean(dataGridView2["冻结状态", e.RowIndex].Value);
+                        dtInner库存.Select("ID=" + id)[0]["冻结状态"] = b;
+                    }
                     refresh仓库可用数据();
                     refreshSum(combobox存货编码筛选);
                 }
@@ -659,17 +657,13 @@ namespace mySystem.Process.Order
             {
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "是否批准")
                 {
-                    //dtInner = dtInnerShow;
-                    //daInner.Update((DataTable)bsInner.DataSource);
-                    //// TODO 重新读数据，然后搞一个dtinnerShow
-                    //daInner = new OleDbDataAdapter("select * from 采购批准单详细信息 where 采购批准单ID=" + dtOuter.Rows[0]["ID"], conn);
-                    //cbInner = new OleDbCommandBuilder(daInner);
-                    //bsInner = new BindingSource();
-                    //dtInner = new DataTable("采购批准单详细信息");
-
-                    //daInner.Fill(dtInner);
-
-                    //innerBind();
+                    // 更新dtIner
+                    if (combobox存货编码筛选.SelectedItem.ToString() != "全部")
+                    {
+                        int id = Convert.ToInt32(dataGridView1["ID", e.RowIndex].Value);
+                        bool b = Convert.ToBoolean(dataGridView1["是否批准", e.RowIndex].Value);
+                        dtInner.Select("ID=" + id)[0]["是否批准"] = b;
+                    }
                     refresh仓库可用数据();
                     refreshSum(combobox存货编码筛选);
                 }

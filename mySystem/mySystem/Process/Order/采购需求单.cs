@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Collections;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json.Linq;
 
 namespace mySystem.Process.Order
 {
@@ -144,17 +145,18 @@ namespace mySystem.Process.Order
                         ht产成品[存货编码] = 0;
                     }
                     ht产成品[存货编码] = Convert.ToDouble(ht产成品[存货编码]) + 订单数量;
-                    string BOM_IDS = ht产成品BOM[存货编码].ToString();
-                    foreach (string sid in BOM_IDS.Split(','))
+                    JArray BOM_IDS = JArray.Parse(ht产成品BOM[存货编码].ToString());
+                    foreach (JToken sid in BOM_IDS)
                     {
-                        int id = Convert.ToInt32(sid);
+                        int id = Convert.ToInt32(sid["ID"]);
+                        double 数量每产品 = Convert.ToDouble(sid["数量"]);
                         if (ht组件.ContainsKey(id))
                         {
-                            ht组件[id] = Convert.ToInt32(ht组件[id]) + 订单数量;
+                            ht组件[id] = Convert.ToInt32(ht组件[id]) + 订单数量 * 数量每产品;
                         }
                         else
                         {
-                            ht组件[id] = 订单数量;
+                            ht组件[id] = 订单数量 * 数量每产品;
                         }
                     }
                 }
@@ -167,11 +169,11 @@ namespace mySystem.Process.Order
                     ndr["存货名称"] = dr["存货名称"];
                     ndr["规格型号"] = dr["规格型号"];
                     ndr["件数"] = 1;
-                    ndr["数量"] = dr["数量每件"];
+                    ndr["数量"] = dr["辅计量单位每主计量单位"];
                     ndr["单位"] = dr["主计量单位名称"];
                     ndr["订单数量"] = ht组件[id];
                     ndr["采购数量"] = ht组件[id];
-                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["数量每件"]), 2);
+                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["辅计量单位每主计量单位"]), 2);
                     dtInner.Rows.Add(ndr);
                 }
                 daInner.Update((DataTable)bsInner.DataSource);

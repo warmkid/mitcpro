@@ -73,6 +73,12 @@
     <Compile Include="Other\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\BOMList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\BOMList.Designer.cs">
+      <DependentUpon>BOMList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\CheckForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +107,12 @@
     <Compile Include="Other\Parameter.cs" />
     <Compile Include="Other\TaskbarNotifier.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\属于工序.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\属于工序.Designer.cs">
+      <DependentUpon>属于工序.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Bag\BTV\BTV2DProRecord.cs">
       <SubType>Form</SubType>
@@ -1083,6 +1095,9 @@
     <EmbeddedResource Include="Other\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Other\BOMList.resx">
+      <DependentUpon>BOMList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1096,6 +1111,9 @@
     <EmbeddedResource Include="Other\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\属于工序.resx">
+      <DependentUpon>属于工序.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTV2DProRecord.resx">
       <DependentUpon>BTV2DProRecord.cs</DependentUpon>

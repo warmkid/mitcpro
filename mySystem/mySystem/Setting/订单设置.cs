@@ -59,6 +59,19 @@ namespace mySystem.Setting
             Initdgv();
             Bind();
             dgv产成品存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv产成品存货档案_CellDoubleClick);
+            dgv组件存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv组件存货档案_CellDoubleClick);
+        }
+
+        void dgv组件存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv组件存货档案.Columns[e.ColumnIndex].Name == "属于工序")
+            {
+                string data = mySystem.Other.属于工序.getData();
+                if (data != null)
+                {
+                    dgv组件存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                }
+            }
         }
 
         void dgv产成品存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -67,18 +80,26 @@ namespace mySystem.Setting
             {
                 // 弹出对话框，选择组件
                 //MessageBox.Show("dian");
-                OleDbDataAdapter da = new OleDbDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.connOle);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                //OleDbDataAdapter da = new OleDbDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.connOle);
+                //DataTable dt = new DataTable();
+                //da.Fill(dt);
                 try
                 {
-                    String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
-                    dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = ids;
+                    //String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
+                    string data = mySystem.Other.BOMList.getData();
+                    dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
                 }
                 catch (Exception ee)
                 {
                 }
-                
+            }
+            else if (dgv产成品存货档案.Columns[e.ColumnIndex].Name == "属于工序")
+            {
+                string data = mySystem.Other.属于工序.getData();
+                if (data != null)
+                {
+                    dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                }
             }
         }
 
@@ -116,7 +137,7 @@ namespace mySystem.Setting
 
         private void Bind()
         {
-            //**************************   供应商    ***********************************
+            //**************************   设置组件存货档案    ***********************************
             dt组件存货档案 = new DataTable("设置组件存货档案"); //""中的是表名
             da组件存货档案 = new OleDbDataAdapter("select * from 设置组件存货档案", mySystem.Parameter.connOle);
             cb组件存货档案 = new OleDbCommandBuilder(da组件存货档案);
@@ -131,9 +152,10 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv组件存货档案.Columns["ID"].Visible = false;
-            
+            this.dgv组件存货档案.Columns["属于工序"].ReadOnly = true;
 
-            //**************************   检验标准    ***********************************
+
+            //**************************   设置产成品存货档案    ***********************************
             dt产成品存货档案 = new DataTable("设置产成品存货档案"); //""中的是表名
             da产成品存货档案 = new OleDbDataAdapter("select * from 设置产成品存货档案", mySystem.Parameter.connOle);
             cb产成品存货档案 = new OleDbCommandBuilder(da产成品存货档案);
@@ -149,6 +171,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产成品存货档案.Columns["ID"].Visible = false;
             this.dgv产成品存货档案.Columns["BOM列表"].ReadOnly = true;
+            this.dgv产成品存货档案.Columns["属于工序"].ReadOnly = true;
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("订单用户"); //""中的是表名
