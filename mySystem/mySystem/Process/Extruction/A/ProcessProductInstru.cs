@@ -371,6 +371,12 @@ namespace BatchProductRecord
             tb指令编号.Enabled = true;
             bt查询插入.Enabled = true;
             tb指令编号.Text = mySystem.Parameter.proInstruction;
+            dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            calc合计();
         }
 
         public ProcessProductInstru(mySystem.MainForm mainform,int id)
@@ -418,7 +424,7 @@ namespace BatchProductRecord
 
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
-
+            dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
             
         }
 
@@ -797,6 +803,12 @@ namespace BatchProductRecord
             }
 
             //计算合计
+            calc合计();
+        }
+
+
+        void calc合计()
+        {
             float sum_mi = 0, sum_juan = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -812,19 +824,20 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
             dt_prodinstr.Rows[0]["卷心管领料量"] = sum_juan;
             //更新领料量
-            string bili=tb内外层比例.Text;
+            string bili = tb内外层比例.Text;
             if (bili == "")
                 return;
             float fbili = float.Parse(bili);
             if (fbili <= 100 && fbili >= 0)
             {
                 dt_prodinstr.Rows[0]["内外层领料量"] = sum_weight / 100 * fbili;
-                dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100-fbili);
+                dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100 - fbili);
             }
 
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
+
 
         //datagridview 添加行
         private void button4_Click(object sender, System.EventArgs e)
