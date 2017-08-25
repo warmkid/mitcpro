@@ -1138,7 +1138,7 @@ namespace mySystem.Extruction.Process
                 ind = dataGridView1.Rows.Count - 24;
             }
 
-            my.Cells[3, 1].Value = "物料代码："+cB物料代码.Text;
+            my.Cells[3, 1].Value = "物料代码："+dt_prodinstr.Rows[0]["物料代码"].ToString();
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {

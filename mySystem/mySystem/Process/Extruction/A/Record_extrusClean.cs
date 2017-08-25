@@ -38,6 +38,7 @@ namespace WindowsFormsApplication1
 
         //用于带id参数构造函数，存储已存在记录的相关信息
         int instrid;
+        string instr;
 
         // 需要保存的状态
         /// <summary>
@@ -63,9 +64,16 @@ namespace WindowsFormsApplication1
             getOtherData();
 
             begin();
+            instrid = Convert.ToInt32(dt_out.Rows[0]["生产指令ID"]);
+            String asql = "select * from 生产指令信息表 where ID=" + instrid;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+            instr = tempdt.Rows[0]["生产指令编号"].ToString();
         }
 
-        public Record_extrusClean(mySystem.MainForm mainform,int id)
+        public Record_extrusClean(mySystem.MainForm mainform, int id)
             : base(mainform)
         {
             conn = mainform.conn;
@@ -81,10 +89,18 @@ namespace WindowsFormsApplication1
             string asql = "select * from 吹膜机组清洁记录表 where ID=" + id;
             OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
             OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+
+
+            asql = "select * from 生产指令信息表 where ID=" + instrid;
+            comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter(comm);
+            tempdt = new DataTable();
+            da.Fill(tempdt);
+            instr = tempdt.Rows[0]["生产指令编号"].ToString();
+
 
             readOuterData(instrid);
             removeOuterBinding();
@@ -721,7 +737,7 @@ namespace WindowsFormsApplication1
 
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
-            log += "生产指令编号：" + mySystem.Parameter.proInstruction + "\n";
+            log += "生产指令编号：" + instr + "\n";
             dr["日志"] = log;
             return dr;
 
@@ -917,7 +933,7 @@ namespace WindowsFormsApplication1
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-03-" + "" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = instr + "-03-" + "" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -976,7 +992,7 @@ namespace WindowsFormsApplication1
 
             my.Cells[3, 2].Value = dtp清洁日期.Value.ToString("yyyy年MM月dd日");
             my.Cells[3, 7].Value = ckb白班.Checked==true?"白班":"夜班";
-            my.Cells[3, 11].Value = dtp复核日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[3, 11].Value = tb复核人.Text + "  " + dtp复核日期.Value.ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1] = dataGridView1.Rows[i].Cells[2].Value.ToString();

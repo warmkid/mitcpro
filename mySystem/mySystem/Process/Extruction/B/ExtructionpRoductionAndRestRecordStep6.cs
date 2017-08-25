@@ -89,6 +89,17 @@ namespace mySystem.Extruction.Process
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
 
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where ID=" + ID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+
+            da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, mySystem.Parameter.connOle);
+            dt = new DataTable();
+            da.Fill(dt);
+            Instruction = dt.Rows[0]["生产指令编号"].ToString();
+
+
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user

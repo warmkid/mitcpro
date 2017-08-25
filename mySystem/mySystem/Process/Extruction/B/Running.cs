@@ -1226,7 +1226,11 @@ namespace mySystem.Process.Extruction.B
             my.Cells[16, 10] =  "A层 "+array1[9][11].Text+"  (℃)";
             my.Cells[16, 12] = "B层 "+array1[11][11].Text+"  (℃)";
             my.Cells[16, 14] = "C层 " + array1[13][11].Text + "  (℃)";
-            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-08-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            string instr;
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            my.PageSetup.RightFooter = dt.Rows[0]["生产指令编号"].ToString() + "-08-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 			if(preview)
 			{
             // 让这个Sheet为被选中状态
