@@ -964,6 +964,14 @@ namespace mySystem.Process.CleanCut
             mysheet.Cells[13 + i超出行数, 7].Value = txb清洁前合计A2.Text;
             mysheet.Cells[13 + i超出行数, 10].Value = txb清洁后合计B1.Text;
             mysheet.Cells[13 + i超出行数, 11].Value = txb清洁后合计B2.Text;
+            if(Convert.ToDouble(txb清洁前合计A2.Text)!=0)
+                mysheet.Cells[14 + i超出行数, 5].Value =Convert.ToDouble( Convert.ToDouble(txb清洁后合计B2.Text) / Convert.ToDouble(txb清洁前合计A2.Text)).ToString("P");
+            else
+                mysheet.Cells[14 + i超出行数, 5].Value =0;
+            if (Convert.ToDouble(txb清洁后合计C.Text)!=0)
+                mysheet.Cells[14 + i超出行数, 9].Value = Convert.ToDouble(txb清洁前合计A1.Text) / Convert.ToDouble(txb清洁后合计C.Text);
+            else
+                mysheet.Cells[14 + i超出行数, 9].Value = 0;
             mysheet.Cells[15 + i超出行数, 11].Value = txb清洁后合计C.Text;
             mysheet.Cells[15 + i超出行数, 2].Value = txb备注.Text;
             mysheet.Cells[16 + i超出行数, 1].Value = String.Format("操作人/日期：{0}      {1}", txb操作员.Text, dtp操作日期.Value.ToString("yyyy年MM月dd日"));
