@@ -741,7 +741,7 @@ namespace mySystem.Process.Extruction.C
             my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"];
             // 让这个Sheet为被选中状态
 
-            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-07-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = __生产指令编号 + "-07-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
             
 			if(preview)
 			{
