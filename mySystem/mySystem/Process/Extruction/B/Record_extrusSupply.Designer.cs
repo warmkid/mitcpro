@@ -252,6 +252,7 @@
             this.label3.Size = new System.Drawing.Size(77, 14);
             this.label3.TabIndex = 0;
             this.label3.Text = "产品批号：";
+            this.label3.Visible = false;
             // 
             // tb生产指令
             // 
@@ -269,6 +270,7 @@
             this.tb产品批号.Name = "tb产品批号";
             this.tb产品批号.Size = new System.Drawing.Size(102, 23);
             this.tb产品批号.TabIndex = 1;
+            this.tb产品批号.Visible = false;
             // 
             // cb产品代码
             // 
@@ -278,6 +280,7 @@
             this.cb产品代码.Name = "cb产品代码";
             this.cb产品代码.Size = new System.Drawing.Size(145, 22);
             this.cb产品代码.TabIndex = 1;
+            this.cb产品代码.Visible = false;
             // 
             // label2
             // 
@@ -288,6 +291,7 @@
             this.label2.Size = new System.Drawing.Size(77, 14);
             this.label2.TabIndex = 0;
             this.label2.Text = "产品代码：";
+            this.label2.Visible = false;
             // 
             // label11
             // 
@@ -530,6 +534,7 @@
             this.label14.Size = new System.Drawing.Size(49, 14);
             this.label14.TabIndex = 27;
             this.label14.Text = "班次：";
+            this.label14.Visible = false;
             // 
             // ckb白班
             // 
@@ -541,6 +546,7 @@
             this.ckb白班.TabIndex = 28;
             this.ckb白班.Text = "白班";
             this.ckb白班.UseVisualStyleBackColor = true;
+            this.ckb白班.Visible = false;
             // 
             // ckb夜班
             // 
@@ -552,6 +558,7 @@
             this.ckb夜班.TabIndex = 29;
             this.ckb夜班.Text = "夜班";
             this.ckb夜班.UseVisualStyleBackColor = true;
+            this.ckb夜班.Visible = false;
             // 
             // button1
             // 
@@ -704,6 +711,7 @@
             this.bt插入查询.TabIndex = 44;
             this.bt插入查询.Text = "插入/查询";
             this.bt插入查询.UseVisualStyleBackColor = true;
+            this.bt插入查询.Visible = false;
             this.bt插入查询.Click += new System.EventHandler(this.bt插入查询_Click);
             // 
             // Record_extrusSupply

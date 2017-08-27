@@ -67,7 +67,8 @@ namespace mySystem.Process.Extruction.C
                 cmb班次.Items.Add(flight[i]);
             }
             cmb班次.SelectedItem = __班次;
-            readOuterData(__生产指令编号, __生产日期, __班次);
+            //readOuterData(__生产指令编号, __生产日期, __班次);
+            readOuterData(__生产指令编号);
             removeOuterBind();
             outerBind();
             if (0 == dtOuter.Rows.Count)
@@ -76,7 +77,8 @@ namespace mySystem.Process.Extruction.C
                 newrow = writeOuterDefault(newrow);
                 dtOuter.Rows.Add(newrow);
                 daOuter.Update((DataTable)bsOuter.DataSource);
-                readOuterData(__生产指令编号, __生产日期, __班次);
+                readOuterData(__生产指令编号);
+                //readOuterData(__生产指令编号, __生产日期, __班次);
                 removeOuterBind();
                 outerBind();
             }
@@ -137,6 +139,7 @@ namespace mySystem.Process.Extruction.C
         {
             dr["T吹膜供料系统运行记录ID"] = dtOuter.Rows[0]["ID"];
             dr["检查时间"] = Convert.ToDateTime(DateTime.Now.TimeOfDay.ToString());
+            dr["班次"] = mySystem.Parameter.userflight;
             dr["电机工作是否正常"] = "正常";
             dr["气动阀工作是否正常"] = "正常";
             dr["供料运行是否正常"] = "正常";
@@ -156,6 +159,16 @@ namespace mySystem.Process.Extruction.C
             bsOuter = new BindingSource();
             daOuter.Fill(dtOuter);
         }
+
+        void readOuterData(string __生产指令编号)
+        {
+            daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "'", conOle);
+            cbOuter = new OleDbCommandBuilder(daOuter);
+            dtOuter = new DataTable(tablename1);
+            bsOuter = new BindingSource();
+            daOuter.Fill(dtOuter);
+        }
+
         void readOuterData(int Id)
         {
             daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID="+Id+";", conOle);
@@ -578,7 +591,7 @@ namespace mySystem.Process.Extruction.C
                 }
                 catch
                 {
-                    readOuterData(__生产指令编号, __生产日期, __班次);
+                    readOuterData(__生产指令编号);
                 }
                 removeOuterBind();
                 outerBind();
@@ -611,7 +624,7 @@ namespace mySystem.Process.Extruction.C
         {           
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
-            readOuterData(__生产指令编号, __生产日期, __班次);
+            readOuterData(__生产指令编号);
             removeOuterBind();
             outerBind();
 

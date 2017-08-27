@@ -90,6 +90,7 @@
             this.cmb班次.Name = "cmb班次";
             this.cmb班次.Size = new System.Drawing.Size(121, 24);
             this.cmb班次.TabIndex = 45;
+            this.cmb班次.Visible = false;
             // 
             // lb班次
             // 
@@ -99,6 +100,7 @@
             this.lb班次.Size = new System.Drawing.Size(40, 16);
             this.lb班次.TabIndex = 44;
             this.lb班次.Text = "班次";
+            this.lb班次.Visible = false;
             // 
             // dtp生产日期
             // 
@@ -230,7 +232,7 @@
             this.cmb打印机选择.FormattingEnabled = true;
             this.cmb打印机选择.Location = new System.Drawing.Point(260, 412);
             this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(121, 24);
+            this.cmb打印机选择.Size = new System.Drawing.Size(181, 24);
             this.cmb打印机选择.TabIndex = 158;
             // 
             // btn删除
