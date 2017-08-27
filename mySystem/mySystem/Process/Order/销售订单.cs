@@ -18,7 +18,7 @@ namespace mySystem.Process.Order
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
         OleDbConnection conn;
 
-        List<String> ls业务类型, ls销售类型, ls客户简称, ls销售部门, ls币种;
+        List<String> ls业务类型, ls销售类型, ls客户简称, ls销售部门, ls币种,ls付款条件;
         List<String> ls存货编码, ls存货名称, ls规格型号;
        
         List<double> ld数量每件;
@@ -147,7 +147,15 @@ namespace mySystem.Process.Order
             }
             cmb币种.Items.AddRange(ls币种.ToArray());
 
-            
+            ls付款条件 = new List<string>();
+            da = new OleDbDataAdapter("select * from 设置付款条件", conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls付款条件.Add(dr["付款条件"].ToString());
+            }
+            cmb付款条件.Items.AddRange(ls付款条件.ToArray());
             
 
 
@@ -364,17 +372,19 @@ namespace mySystem.Process.Order
             }
             dr["币种"] = cmb币种.Text;
 
-            dr["付款条件"] = tb付款条件.Text;
+            dr["付款条件"] = cmb付款条件.Text;
             bool ok;
             double temp;
             ok = double.TryParse(tb税率.Text, out temp);
             dr["税率"] = ok ? temp : 17;
             ok = double.TryParse(tb汇率.Text, out temp);
-            dr["汇率"] = ok ? temp : 0.0;
+            dr["汇率"] = ok ? temp : 1;
             dr["备注"] = tb备注.Text;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["状态"] = "编辑中";
-
+            dr["件数合计"] = 0;
+            dr["数量合计"] = 0;
+            dr["价税合计合计"] = 0;
             return dr;
         }
 
@@ -514,6 +524,7 @@ namespace mySystem.Process.Order
                 daInner.Update((DataTable)bsInner.DataSource);
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
+                calc合计();
             }
         }
 
@@ -767,6 +778,7 @@ namespace mySystem.Process.Order
                     {
                         dataGridView1["件数", e.RowIndex].Value = Math.Round( curDou / ld数量每件[idx],2);
                     }
+                    calc合计();
                     break;
                 case "件数":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
@@ -777,6 +789,10 @@ namespace mySystem.Process.Order
                     {
                         dataGridView1["数量", e.RowIndex].Value = Math.Round( curDou * ld数量每件[idx],2);
                     }
+                    calc合计();
+                    break;
+                case "价税合计":
+                    calc合计();
                     break;
             }
         }
@@ -794,6 +810,22 @@ namespace mySystem.Process.Order
             dataGridView1.Columns["销售订单ID"].Visible = false;
         }
 
-        
+        void calc合计()
+        {
+            double 件数合计 = 0;
+            double 数量合计 = 0;
+            double 价税合计合计 = 0;
+            foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+            {
+                件数合计 += Convert.ToDouble(dgvr.Cells["件数"].Value);
+                数量合计 += Convert.ToDouble(dgvr.Cells["数量"].Value);
+                价税合计合计 += Convert.ToDouble(dgvr.Cells["价税合计"].Value);
+
+            }
+            dtOuter.Rows[0]["件数合计"] = 件数合计;
+            dtOuter.Rows[0]["数量合计"] = 数量合计;
+            dtOuter.Rows[0]["价税合计合计"] = 价税合计合计;
+        }
+
     }
 }

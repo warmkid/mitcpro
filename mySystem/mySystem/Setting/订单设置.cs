@@ -52,6 +52,10 @@ namespace mySystem.Setting
         private DataTable dt币种;
         private BindingSource bs币种;
         private OleDbCommandBuilder cb币种;
+        private OleDbDataAdapter da付款条件;
+        private DataTable dt付款条件;
+        private BindingSource bs付款条件;
+        private OleDbCommandBuilder cb付款条件;
 
         public 订单设置()
         {
@@ -131,6 +135,9 @@ namespace mySystem.Setting
 
             bs币种 = new BindingSource();
             EachInitdgv(dgv币种);
+
+            bs付款条件 = new BindingSource();
+            EachInitdgv(dgv付款条件);
 
         }
 
@@ -290,6 +297,23 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv币种.Columns["ID"].Visible = false;
+
+
+            //**************************   付款条件    ***********************************
+            dt付款条件 = new DataTable("设置付款条件"); //""中的是表名
+            da付款条件 = new OleDbDataAdapter("select * from 设置付款条件", mySystem.Parameter.connOle);
+            cb付款条件 = new OleDbCommandBuilder(da付款条件);
+            dt付款条件.Columns.Add("序号", System.Type.GetType("System.String"));
+            da付款条件.Fill(dt付款条件);
+            bs付款条件.DataSource = dt付款条件;
+            this.dgv付款条件.DataSource = bs付款条件.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv付款条件);
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv付款条件.Columns["ID"].Visible = false;
 
         }
 
@@ -543,6 +567,13 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv币种);
         }
 
+        private void add付款条件_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt付款条件.NewRow();
+            dt付款条件.Rows.InsertAt(dt付款条件.NewRow(), dt付款条件.Rows.Count);
+            setDataGridViewRowNums(this.dgv付款条件);
+        }
+
         private void del业务类型_Click(object sender, EventArgs e)
         {
             int idx = this.dgv业务类型.SelectedCells[0].RowIndex;
@@ -593,6 +624,18 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv币种);
         }
 
+       
+
+        private void del付款条件_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv付款条件.SelectedCells[0].RowIndex;
+            dt付款条件.Rows[idx].Delete();
+            da付款条件.Update((DataTable)bs付款条件.DataSource);
+            dt付款条件.Clear();
+            da付款条件.Fill(dt付款条件);
+            setDataGridViewRowNums(this.dgv付款条件);
+        }
+
         private void save基本信息设置_Click(object sender, EventArgs e)
         {
             try
@@ -626,12 +669,19 @@ namespace mySystem.Setting
                     dt币种.Clear();
                     da币种.Fill(dt币种);
                     setDataGridViewRowNums(this.dgv币种);
+
+                    da付款条件.Update((DataTable)bs付款条件.DataSource);
+                    dt付款条件.Clear();
+                    da付款条件.Fill(dt付款条件);
+                    setDataGridViewRowNums(this.dgv付款条件);
                 }
                 MessageBox.Show("保存成功！");
             }
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+
+        
 
 
 
