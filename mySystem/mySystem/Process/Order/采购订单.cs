@@ -281,12 +281,6 @@ namespace mySystem.Process.Order
 
         void generateInnerData(String 供应商)
         {
-            string sql = @"select * from 采购批准单详细信息 where 推荐供应商='{0}' and 状态='未采购'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, 供应商), conn);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
 
             daInner = new OleDbDataAdapter("select * from 采购订单详细信息 where 0=1", conn);
             cbInner = new OleDbCommandBuilder(daInner);
@@ -295,6 +289,64 @@ namespace mySystem.Process.Order
 
             daInner.Fill(dtInner);
 
+
+            string sql = @"select * from 采购批准单详细信息 where 推荐供应商='{0}' and 状态='未采购'";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, 供应商), conn);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                DataRow ndr = dtInner.NewRow();
+                ndr["采购订单ID"] = dtOuter.Rows[0]["ID"];
+                ndr["存货代码"] = dr["存货代码"];
+                ndr["存货名称"] = dr["存货名称"];
+                ndr["规格型号"] = dr["规格型号"];
+                ndr["采购件数"] = dr["采购件数"];
+                ndr["采购数量"] = dr["采购数量"];
+                ndr["用途"] = dr["用途"];
+                ndr["供应商产品编码"] = dr["供应商产品编码"];
+                ndr["预计到货时间"] = dr["预计到货时间"];
+                ndr["关联的采购批准详细信息ID"] = dr["ID"];
+                dtInner.Rows.Add(ndr);
+                // 改变批准单详细信息中的状态
+                dr["状态"] = "采购订单编制中";
+                // 自由订单部分
+                int 采购批准单ID = Convert.ToInt32(dr["采购批准单ID"]);
+                OleDbDataAdapter daT = new OleDbDataAdapter("select * from 采购批准单实际购入信息 where 采购批准单ID=" + 采购批准单ID + " and 产品代码='" + dr["存货代码"].ToString() + "'", conn);
+                DataTable dtT = new DataTable();
+                daT.Fill(dtT);
+                if(dtT.Rows.Count>0){
+                    double 富余量 = Convert.ToDouble(dtT.Rows[0]["富余量"]);
+                    if (富余量 > 0)
+                    {
+                        DataRow ndr自由 = dtInner.NewRow();
+                        ndr自由["采购订单ID"] = dtOuter.Rows[0]["ID"];
+                        ndr自由["存货代码"] = dr["存货代码"];
+                        ndr自由["存货名称"] = dr["存货名称"];
+                        ndr自由["规格型号"] = dr["规格型号"];
+                        ndr自由["采购件数"] = 富余量 / Convert.ToDouble(dr["主计量单位每辅计量单位"]);
+                        ndr自由["采购数量"] = 富余量;
+                        ndr自由["用途"] = "__自由";
+                        ndr自由["供应商产品编码"] = dr["供应商产品编码"];
+                        ndr自由["预计到货时间"] = dr["预计到货时间"];
+                        ndr自由["关联的采购批准详细信息ID"] = dr["ID"];
+                        dtInner.Rows.Add(ndr自由);
+                    }
+                }
+
+            }
+
+            
+
+
+            da.Update(dt);
+
+            sql = @"select * from 采购批准单借用订单详细信息 where 推荐供应商='{0}' and 状态='未采购'";
+            da = new OleDbDataAdapter(string.Format(sql, 供应商), conn);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
                 DataRow ndr = dtInner.NewRow();
@@ -306,12 +358,14 @@ namespace mySystem.Process.Order
                 ndr["采购数量"] = dr["采购数量"];
                 ndr["用途"] = dr["用途"];
                 ndr["预计到货时间"] = dr["预计到货时间"];
-                ndr["关联的采购批准单ID"] = dr["ID"];
+                ndr["关联的采购批转单借用单ID"] = dr["ID"];
                 dtInner.Rows.Add(ndr);
                 // 改变批准单详细信息中的状态
                 dr["状态"] = "采购订单编制中";
             }
             da.Update(dt);
+
+            
             daInner.Update(dtInner);
             daInner = new OleDbDataAdapter("select * from 采购订单详细信息 where 采购订单ID=" + dtOuter.Rows[0]["ID"], conn);
             cbInner = new OleDbCommandBuilder(daInner);
@@ -431,15 +485,48 @@ namespace mySystem.Process.Order
                 DataTable dt;
                 foreach (DataRow dr in dtInner.Rows)
                 {
-                    int xid = Convert.ToInt32(dr["关联的采购批准单ID"]);
-                    da = new OleDbDataAdapter("select * from 采购批准单详细信息 where ID=" + xid, conn);
-                    cb = new OleDbCommandBuilder(da);
-                    dt = new DataTable();
-                    da.Fill(dt);
+                    int xid;
+                    if (dr["关联的采购批准详细信息ID"] == DBNull.Value)
+                    {
+                        xid = Convert.ToInt32(dr["关联的采购批转单借用单ID"]);
+                        da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where ID=" + xid, conn);
+                        cb = new OleDbCommandBuilder(da);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        dt.Rows[0]["状态"] = "已完成采购订单";
 
-                    dt.Rows[0]["状态"] = "已完成采购订单";
-                   
-                    da.Update(dt);
+                        da.Update(dt);
+                        // 更新借用日志
+                        string 产品代码 = dt.Rows[0]["存货代码"].ToString();
+                        string 用途 = dt.Rows[0]["用途"].ToString();
+                        OleDbDataAdapter daT = new OleDbDataAdapter("select * from 库存台帐 where 产品代码='" + 产品代码 + "' and 用途='" + 用途 + "'", conn);
+                        OleDbCommandBuilder cbT = new OleDbCommandBuilder(daT);
+                        DataTable dtT = new DataTable();
+                        daT.Fill(dtT);
+                        if (dtT.Rows.Count > 0)
+                        {
+                            foreach (DataRow tdr in dtT.Rows)
+                            {
+                                string log = "";
+                                log += DateTime.Now.ToString("yyyy年MM月dd日，采购合同号："+dtOuter.Rows[0]["采购合同号"].ToString()+"，补充数量："+ Convert.ToDouble( dt.Rows[0]["采购数量"])+"。\n");
+                                tdr["借用日志"] = tdr["借用日志"] + log;
+                            }
+                        }
+                        daT.Update(dtT);
+
+                    }
+                    else
+                    {
+                        xid = Convert.ToInt32(dr["关联的采购批准详细信息ID"]);
+                        da = new OleDbDataAdapter("select * from 采购批准单详细信息 where ID=" + xid, conn);
+                        cb = new OleDbCommandBuilder(da);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        dt.Rows[0]["状态"] = "已完成采购订单";
+
+                        da.Update(dt);
+                    }
+                    
                 } 
 
 

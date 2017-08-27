@@ -169,11 +169,11 @@ namespace mySystem.Process.Order
                     ndr["存货名称"] = dr["存货名称"];
                     ndr["规格型号"] = dr["规格型号"];
                     ndr["件数"] = 1;
-                    ndr["数量"] = dr["辅计量单位每主计量单位"];
+                    ndr["数量"] = dr["主计量单位每辅计量单位"];
                     ndr["单位"] = dr["主计量单位名称"];
                     ndr["订单数量"] = ht组件[id];
                     ndr["采购数量"] = ht组件[id];
-                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["辅计量单位每主计量单位"]), 2);
+                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["主计量单位每辅计量单位"]), 2);
                     dtInner.Rows.Add(ndr);
                 }
                 daInner.Update((DataTable)bsInner.DataSource);

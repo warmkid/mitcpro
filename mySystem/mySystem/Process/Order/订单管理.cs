@@ -355,7 +355,7 @@ namespace 订单和库存管理
             // 获取有未采购信息的供应商名字，和要采购的数量
 
 
-            DataTable dt未采购批准单详细信息;
+            DataTable dt未采购批准单详细信息, dt未采购借用单详细信息;
             Hashtable ht供应商2详细信息条数, ht供应商2详细信息;
             dt未采购批准单详细信息 = new DataTable();
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 采购批准单详细信息 where 状态='未采购'", conn);
@@ -385,8 +385,40 @@ namespace 订单和库存管理
                     ht供应商2详细信息[供应商] = new HashSet<Object>();
                 }
                 ht供应商2详细信息条数[供应商] = Convert.ToInt32(ht供应商2详细信息条数[供应商]) + 1;
-                ((HashSet<Object>)ht供应商2详细信息[供应商]).Add(dr["存货代码"].ToString() + "," + dr["存货名称"].ToString() + "," + dr["规格型号"].ToString());
+                ((HashSet<Object>)ht供应商2详细信息[供应商]).Add(dr["存货代码"].ToString() + "," + dr["存货名称"].ToString() + "," + dr["规格型号"].ToString()+","+dr["用途"].ToString());
             }
+
+
+            dt未采购借用单详细信息 = new DataTable();
+            da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where 状态='未采购'", conn);
+            da.Fill(dt未采购借用单详细信息);
+            foreach (DataRow dr in dt未采购借用单详细信息.Rows)
+            {
+                int id = Convert.ToInt32(dr["采购批准单ID"]);
+                da = new OleDbDataAdapter("select * from 采购批准单 where ID=" + id, conn);
+                DataTable tmp = new DataTable();
+                da.Fill(tmp);
+                if (tmp.Rows.Count == 0)
+                {
+                    MessageBox.Show("采购批准单数据错误，请检查");
+                    return;
+                }
+                string 供应商 = dr["推荐供应商"].ToString();
+                if (!ht供应商2详细信息条数.ContainsKey(供应商))
+                {
+                    ht供应商2详细信息条数[供应商] = 0;
+
+                }
+                if (!ht供应商2详细信息.ContainsKey(供应商))
+                {
+                    ht供应商2详细信息[供应商] = new HashSet<Object>();
+                }
+                ht供应商2详细信息条数[供应商] = Convert.ToInt32(ht供应商2详细信息条数[供应商]) + 1;
+                ((HashSet<Object>)ht供应商2详细信息[供应商]).Add(dr["存货代码"].ToString() + "," + dr["存货名称"].ToString() + "," + dr["规格型号"].ToString() + "," + dr["用途"].ToString());
+            }
+
+
+
             DataTable dt = new DataTable();
             dt.Columns.Add("ID", Type.GetType("System.String"));
             dt.Columns.Add("供应商", Type.GetType("System.String"));

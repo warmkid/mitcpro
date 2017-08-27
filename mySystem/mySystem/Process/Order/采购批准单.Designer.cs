@@ -35,9 +35,11 @@
             this.label14 = new System.Windows.Forms.Label();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label还需购入 = new System.Windows.Forms.Label();
+            this.label可借数量 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label最少应购 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.label库存可用 = new System.Windows.Forms.Label();
+            this.label仓库可用 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.combobox库存部分存货编码筛选 = new System.Windows.Forms.ComboBox();
@@ -65,11 +67,13 @@
             this.label角色 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox2
@@ -138,9 +142,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label还需购入);
+            this.groupBox1.Controls.Add(this.label可借数量);
+            this.groupBox1.Controls.Add(this.label16);
+            this.groupBox1.Controls.Add(this.label最少应购);
             this.groupBox1.Controls.Add(this.label11);
-            this.groupBox1.Controls.Add(this.label库存可用);
+            this.groupBox1.Controls.Add(this.label仓库可用);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.dataGridView2);
             this.groupBox1.Controls.Add(this.combobox库存部分存货编码筛选);
@@ -153,35 +159,55 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "库存关联数据";
             // 
-            // label还需购入
+            // label可借数量
             // 
-            this.label还需购入.AutoSize = true;
-            this.label还需购入.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label还需购入.Location = new System.Drawing.Point(304, 295);
-            this.label还需购入.Name = "label还需购入";
-            this.label还需购入.Size = new System.Drawing.Size(16, 16);
-            this.label还需购入.TabIndex = 173;
-            this.label还需购入.Text = "0";
+            this.label可借数量.AutoSize = true;
+            this.label可借数量.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label可借数量.Location = new System.Drawing.Point(253, 295);
+            this.label可借数量.Name = "label可借数量";
+            this.label可借数量.Size = new System.Drawing.Size(16, 16);
+            this.label可借数量.TabIndex = 175;
+            this.label可借数量.Text = "0";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label16.Location = new System.Drawing.Point(159, 295);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(88, 16);
+            this.label16.TabIndex = 174;
+            this.label16.Text = "可借数量：";
+            // 
+            // label最少应购
+            // 
+            this.label最少应购.AutoSize = true;
+            this.label最少应购.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label最少应购.Location = new System.Drawing.Point(412, 295);
+            this.label最少应购.Name = "label最少应购";
+            this.label最少应购.Size = new System.Drawing.Size(16, 16);
+            this.label最少应购.TabIndex = 173;
+            this.label最少应购.Text = "0";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(210, 295);
+            this.label11.Location = new System.Drawing.Point(318, 295);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(88, 16);
             this.label11.TabIndex = 172;
-            this.label11.Text = "还需购入：";
+            this.label11.Text = "最少应购：";
             // 
-            // label库存可用
+            // label仓库可用
             // 
-            this.label库存可用.AutoSize = true;
-            this.label库存可用.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label库存可用.Location = new System.Drawing.Point(98, 295);
-            this.label库存可用.Name = "label库存可用";
-            this.label库存可用.Size = new System.Drawing.Size(16, 16);
-            this.label库存可用.TabIndex = 171;
-            this.label库存可用.Text = "0";
+            this.label仓库可用.AutoSize = true;
+            this.label仓库可用.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label仓库可用.Location = new System.Drawing.Point(98, 295);
+            this.label仓库可用.Name = "label仓库可用";
+            this.label仓库可用.Size = new System.Drawing.Size(16, 16);
+            this.label仓库可用.TabIndex = 171;
+            this.label仓库可用.Text = "0";
             // 
             // label9
             // 
@@ -191,7 +217,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(88, 16);
             this.label9.TabIndex = 170;
-            this.label9.Text = "库存可用：";
+            this.label9.Text = "仓库可用：";
             // 
             // dataGridView2
             // 
@@ -440,14 +466,24 @@
             this.dataGridView1.Location = new System.Drawing.Point(22, 113);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(802, 328);
+            this.dataGridView1.Size = new System.Drawing.Size(802, 159);
             this.dataGridView1.TabIndex = 4;
+            // 
+            // dataGridView4
+            // 
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Location = new System.Drawing.Point(22, 291);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.RowTemplate.Height = 23;
+            this.dataGridView4.Size = new System.Drawing.Size(802, 164);
+            this.dataGridView4.TabIndex = 175;
             // 
             // 采购批准单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1307, 622);
+            this.Controls.Add(this.dataGridView4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
@@ -482,6 +518,7 @@
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -513,9 +550,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label还需购入;
+        private System.Windows.Forms.Label label最少应购;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label库存可用;
+        private System.Windows.Forms.Label label仓库可用;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.ComboBox combobox库存部分存货编码筛选;
@@ -526,5 +563,8 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.DataGridView dataGridView3;
+        private System.Windows.Forms.Label label可借数量;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.DataGridView dataGridView4;
     }
 }

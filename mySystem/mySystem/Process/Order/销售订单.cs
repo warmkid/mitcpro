@@ -163,7 +163,7 @@ namespace mySystem.Process.Order
                 ls存货编码.Add(dr["存货编码"].ToString());
                 ls存货名称.Add(dr["存货名称"].ToString());
                 ls规格型号.Add(dr["规格型号"].ToString());
-                ld数量每件.Add(Convert.ToDouble(dr["辅计量单位每主计量单位"]));
+                ld数量每件.Add(Convert.ToDouble(dr["主计量单位每辅计量单位"]));
             }
         }
 
