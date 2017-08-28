@@ -187,7 +187,16 @@ namespace 订单和库存管理
             OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end), mySystem.Parameter.connOle);
             DataTable dt = new DataTable("采购需求单");
             da.Fill(dt);
-            return dt;
+            string select = "状态 like '%{0}%' and 用途 like '%{1}%'";
+            DataRow[] drs = dt.Select(string.Format(select, status, yongtu));
+            if (drs.Length > 0)
+                return drs.CopyToDataTable();
+            else
+            {
+                dt.Clear();
+                return dt;
+            }
+            //return dt;
         }
         private void btn查询采购需求单_Click(object sender, EventArgs e)
         {
