@@ -838,7 +838,7 @@ namespace mySystem.Process.CleanCut
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
 
