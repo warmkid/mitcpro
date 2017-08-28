@@ -363,7 +363,7 @@ namespace 订单和库存管理
         {
             // 获取有未采购信息的供应商名字，和要采购的数量
 
-
+            
             DataTable dt未采购批准单详细信息, dt未采购借用单详细信息;
             Hashtable ht供应商2详细信息条数, ht供应商2详细信息;
             dt未采购批准单详细信息 = new DataTable();

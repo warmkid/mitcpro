@@ -234,7 +234,7 @@ namespace mySystem.Process.Order
 
             dr["用途"] = 订单号;
             dr["期望到货时间"] = DateTime.Now;
-            dr["采购申请单号"] = "没有规则--" + 订单号;
+            dr["采购申请单号"] = generate需求单号();
             dr["申请日期"] = DateTime.Now;
             dr["申请人"] = mySystem.Parameter.userName;
             dr["审核日期"] = DateTime.Now;
@@ -360,6 +360,7 @@ namespace mySystem.Process.Order
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+            tb采购申请单号.ReadOnly = true;
         }
 
         void setControlFalse()
@@ -553,5 +554,26 @@ namespace mySystem.Process.Order
         }
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
+
+
+
+        string generate需求单号()
+        {
+            string prefix = "PAPN";
+            string yymmdd = DateTime.Now.ToString("yyMMdd");
+            string sql = "select * from 采购需求单 where 采购申请单号 like '{0}%' order by ID";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                return prefix + yymmdd + "001";
+            }
+            else
+            {
+                int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["采购申请单号"].ToString().Substring(10, 3));
+                return prefix + yymmdd + (no + 1).ToString("D3");
+            }
+        }
     }
 }

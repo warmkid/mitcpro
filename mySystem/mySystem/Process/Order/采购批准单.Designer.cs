@@ -68,6 +68,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.label15 = new System.Windows.Forms.Label();
+            this.lbl采购申请批准单号 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -478,11 +480,33 @@
             this.dataGridView4.Size = new System.Drawing.Size(802, 164);
             this.dataGridView4.TabIndex = 175;
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label15.Location = new System.Drawing.Point(412, 79);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(152, 16);
+            this.label15.TabIndex = 176;
+            this.label15.Text = "采购申请批准单号：";
+            // 
+            // lbl采购申请批准单号
+            // 
+            this.lbl采购申请批准单号.AutoSize = true;
+            this.lbl采购申请批准单号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl采购申请批准单号.Location = new System.Drawing.Point(574, 79);
+            this.lbl采购申请批准单号.Name = "lbl采购申请批准单号";
+            this.lbl采购申请批准单号.Size = new System.Drawing.Size(112, 16);
+            this.lbl采购申请批准单号.TabIndex = 177;
+            this.lbl采购申请批准单号.Text = "PAPAYYMMDDXXX";
+            // 
             // 采购批准单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1307, 622);
+            this.Controls.Add(this.lbl采购申请批准单号);
+            this.Controls.Add(this.label15);
             this.Controls.Add(this.dataGridView4);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
@@ -566,5 +590,7 @@
         private System.Windows.Forms.Label label可借数量;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label lbl采购申请批准单号;
     }
 }

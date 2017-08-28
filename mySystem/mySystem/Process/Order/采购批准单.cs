@@ -33,7 +33,7 @@ namespace mySystem.Process.Order
         // 这个是原始数据，bing时用另外一个dt
         DataTable dt未批准需求单详细信息;
         // ht库存编码2采购数量 不考虑库存里的数量
-        Hashtable ht未批准需求单ID2详细信息条数,ht库存编码2采购数量,ht采购需求单ID2用途;
+        Hashtable ht未批准需求单ID2详细信息条数,ht库存编码2采购数量,ht采购需求单ID2用途,ht组件编码2组件订单需求号;
         Hashtable ht借用信息 = null;
 
         CheckForm ckform;
@@ -252,9 +252,6 @@ namespace mySystem.Process.Order
         void getOtherData(string ids)
         {
 
-            
-
-
 
             // 拿到需求单中未批准的详细信息
             // 拿到去重的存货编码和需要的数量
@@ -318,6 +315,17 @@ namespace mySystem.Process.Order
             //按存货代码排序
             dt未批准需求单详细信息.DefaultView.Sort = "存货代码 ASC";
             dt未批准需求单详细信息 = dt未批准需求单详细信息.DefaultView.ToTable();
+
+            ht组件编码2组件订单需求号 = new Hashtable();
+            string curr编码 = generate组件订单需求流水号();
+            List<String> DaiMaS = ht库存编码2采购数量.Keys.OfType<String>().ToList<String>();
+            foreach (string daima in DaiMaS)
+            {
+                if (ht组件编码2组件订单需求号.ContainsKey(daima)) continue;
+                ht组件编码2组件订单需求号[daima] = curr编码;
+                curr编码 = curr编码.Substring(0, 10) + (Convert.ToInt32(curr编码.Substring(10, 3)) + 1).ToString("D3");
+            }
+
         }
 
         void getOtherDataByID(int id)
@@ -392,6 +400,15 @@ namespace mySystem.Process.Order
             //按存货代码排序
             dt未批准需求单详细信息.DefaultView.Sort = "存货代码 ASC";
             dt未批准需求单详细信息 = dt未批准需求单详细信息.DefaultView.ToTable();
+
+            ht组件编码2组件订单需求号 = new Hashtable();
+            foreach (DataRow dr in dt未批准需求单详细信息.Rows)
+            {
+                string 存货代码 = dr["存货代码"].ToString();
+                string 组件订单需求流水号 = dr["组件订单需求流水号"].ToString();
+                if (ht库存编码2采购数量.ContainsKey(存货代码)) continue;
+                ht组件编码2组件订单需求号[存货代码] = 组件订单需求流水号;
+            }
         }
 
         void readOuterData(int id)
@@ -415,6 +432,7 @@ namespace mySystem.Process.Order
             daOuter.Fill(dtOuter);
 
             DataRow dr = dtOuter.NewRow();
+            dr["采购申请批准单号"] = generate采购申请批准单号();
             dr["申请日期"] = DateTime.Now;
             dr["申请人"] = mySystem.Parameter.userName;
             dr["审核日期"] = DateTime.Now;
@@ -481,6 +499,7 @@ namespace mySystem.Process.Order
                 DataRow ndr = dtInner.NewRow();
                 ndr["采购批准单ID"] = dtOuter.Rows[0]["ID"];
                 ndr["是否批准"] = true;
+                ndr["组件订单需求流水号"] = ht组件编码2组件订单需求号[dr["存货代码"].ToString()];
                 ndr["存货代码"] = dr["存货代码"];
                 ndr["存货名称"] = dr["存货名称"];
                 ndr["规格型号"] = dr["规格型号"];
@@ -512,7 +531,7 @@ namespace mySystem.Process.Order
             库存sql = @"select ID, 产品代码,现存数量,用途,冻结状态 from (select * from 库存台帐 where 状态='合格') where 产品代码='{0}'";
             库存sql = string.Format(库存sql, DaiMaS[0]);
             List<String> whereS = new List<string>();
-            if (DaiMaS.Count >= 1) 库存sql += " or ";
+            if (DaiMaS.Count > 1) 库存sql += " or ";
             for(int i=1;i<DaiMaS.Count;++i)
             {
                 whereS.Add("产品代码='" + DaiMaS[i] + "'");
@@ -633,7 +652,7 @@ namespace mySystem.Process.Order
             库存sql = @"select ID, 产品代码,现存数量,用途,冻结状态 from (select * from 库存台帐 where 状态='合格') where 产品代码='{0}'";
             库存sql = string.Format(库存sql, DaiMaS[0]);
             List<String> whereS = new List<string>();
-            if (DaiMaS.Count >= 1) 库存sql += " or ";
+            if (DaiMaS.Count > 1) 库存sql += " or ";
             for (int i = 1; i < DaiMaS.Count; ++i)
             {
                 whereS.Add("产品代码='" + DaiMaS[i] + "'");
@@ -801,6 +820,7 @@ namespace mySystem.Process.Order
                     }
                     DataRow dr = dtInner借用订单.NewRow();
                     dr["采购批准单ID"] = dtInner.Rows[0]["ID"];
+                    dr["组件订单需求流水号"] = ht组件编码2组件订单需求号["产品代码"];
                     dr["存货代码"] = 产品代码;
                     dr["存货名称"] = 存货名称;
                     dr["规格型号"] = 规格型号;
@@ -1710,6 +1730,44 @@ namespace mySystem.Process.Order
             }
             
             
+        }
+
+        string generate采购申请批准单号()
+        {
+            string prefix = "PAPA";
+            string yymmdd = DateTime.Now.ToString("yyMMdd");
+            string sql = "select * from 采购批准单 where 采购申请批准单号 like '{0}%' order by ID";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                return prefix + yymmdd + "001";
+            }
+            else
+            {
+                int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["采购申请批准单号"].ToString().Substring(10, 3));
+                return prefix + yymmdd + (no + 1).ToString("D3");
+            }
+        }
+
+        string generate组件订单需求流水号()
+        {
+            string prefix = "PACR";
+            string yymmdd = DateTime.Now.ToString("yyMMdd");
+            string sql = "select * from 采购批准单详细信息 where 组件订单需求流水号 like '{0}%' order by ID";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                return prefix + yymmdd + "001";
+            }
+            else
+            {
+                int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["组件订单需求流水号"].ToString().Substring(10, 3));
+                return prefix + yymmdd + (no + 1).ToString("D3");
+            }
         }
 
     }

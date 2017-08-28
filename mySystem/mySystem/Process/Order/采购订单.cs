@@ -191,6 +191,7 @@ namespace mySystem.Process.Order
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+            tb采购合同号.ReadOnly = true;
         }
 
         void setControlFalse()
@@ -227,12 +228,12 @@ namespace mySystem.Process.Order
             daOuter.Fill(dtOuter);
 
             DataRow dr = dtOuter.NewRow();
+            dr["采购合同号"] = generate采购合同号();
             dr["申请日期"] = DateTime.Now;
             dr["申请人"] = mySystem.Parameter.userName;
             dr["审核日期"] = DateTime.Now;
             dr["状态"] = "编辑中";
             dr["供应商"] = 供应商;
-            dr["采购合同号"] = "";
             dtOuter.Rows.Add(dr);
             daOuter.Update(dtOuter);
             OleDbCommand comm = new OleDbCommand();
@@ -553,6 +554,25 @@ namespace mySystem.Process.Order
 
             save();
             base.CheckResult();
+        }
+
+        string generate采购合同号()
+        {
+            string prefix = "PAPO";
+            string yymmdd = DateTime.Now.ToString("yy");
+            string sql = "select * from 采购订单 where 采购合同号 like '{0}%' order by ID";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                return prefix + yymmdd + "001";
+            }
+            else
+            {
+                int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["采购合同号"].ToString().Substring(10, 3));
+                return prefix + yymmdd + (no + 1).ToString("D3");
+            }
         }
     }
 }
