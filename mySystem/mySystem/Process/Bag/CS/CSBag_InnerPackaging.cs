@@ -48,7 +48,8 @@ namespace mySystem.Process.Bag
         String Instruction;
         bool b标签;
 
-        public CSBag_InnerPackaging(MainForm mainform) : base(mainform)
+        public CSBag_InnerPackaging(MainForm mainform)
+            : base(mainform)
         {
             InitializeComponent();
 
@@ -73,8 +74,9 @@ namespace mySystem.Process.Bag
             btn查看日志.Enabled = false;
 
         }
-        
-        public CSBag_InnerPackaging(MainForm mainform, Int32 ID) : base(mainform)
+
+        public CSBag_InnerPackaging(MainForm mainform, Int32 ID)
+            : base(mainform)
         {
             InitializeComponent();
 
@@ -145,7 +147,7 @@ namespace mySystem.Process.Bag
             if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
             if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
-        
+
         // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
         private void setFormState(bool newForm = false)
         {
@@ -181,7 +183,7 @@ namespace mySystem.Process.Bag
                     OleDbCommand comm2 = new OleDbCommand();
                     comm2.Connection = Parameter.connOle;
                     comm2.CommandText = "select ID, 产品代码, 产品批号,内标签 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
-                    
+
                     OleDbDataAdapter datemp = new OleDbDataAdapter(comm2);
                     datemp.Fill(dt代码批号);
                     if (dt代码批号.Rows.Count == 0)
@@ -193,7 +195,7 @@ namespace mySystem.Process.Bag
                         for (int i = 0; i < dt代码批号.Rows.Count; i++)
                         {
                             cb产品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
-                            b标签 = (dt代码批号.Rows[i]["内标签"].ToString()=="中文");
+                            b标签 = (dt代码批号.Rows[i]["内标签"].ToString() == "中文");
                         }
                     }
                     datemp.Dispose();
@@ -381,12 +383,12 @@ namespace mySystem.Process.Bag
         private void addDataEventHandler() { }
 
         // 设置自动计算类事件：TextChanged&Leave
-        private void addComputerEventHandler() 
+        private void addComputerEventHandler()
         {
             tb理论产量C.TextChanged += new EventHandler(tb理论产量C_TextChanged);
             //tb理论产量C.Leave += new EventHandler(tb理论产量C_TextChanged);
         }
-        
+
         //修改单个控件的值
         private void outerDataSync(String name, String val)
         {
@@ -457,7 +459,7 @@ namespace mySystem.Process.Bag
             if (dt1.Rows.Count > 0)
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
-                Instruction = dt1.Rows[0]["生产指令编号"].ToString(); 
+                Instruction = dt1.Rows[0]["生产指令编号"].ToString();
                 DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString());
             }
         }
@@ -665,7 +667,7 @@ namespace mySystem.Process.Bag
             dataGridView1.Columns["包装袋热封线"].HeaderText = "包装袋\r热封线";
             dataGridView1.Columns["内包装外观"].HeaderText = "内包装\r外观";
         }
-        
+
         //******************************按钮功能******************************//
 
         //用于显示/新建数据
@@ -760,7 +762,7 @@ namespace mySystem.Process.Bag
                 return false;
             }
             else if (TextBox_check() == false)
-            { 
+            {
                 /*数字框不合格*/
                 return false;
             }
@@ -778,7 +780,7 @@ namespace mySystem.Process.Bag
                 outerBind();
 
                 setEnableReadOnly();
-                
+
                 return true;
             }
         }
@@ -895,11 +897,150 @@ namespace mySystem.Process.Bag
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            // 修改Sheet中某行某列的值
+            fill_excel(my, wb);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = Instruction + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+                        bs记录.EndEdit();
+                        da记录.Update((DataTable)bs记录.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+
+        //打印填数据
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            int ind = 0;
+            if (dataGridView1.Rows.Count > 12)
+            {
+                //在第7行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 12; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 12;
+            }
+            
+            //外表信息
+            mysheet.Cells[3, 1].Value = "生产指令编号：" + tb生产指令编号.Text;
+            mysheet.Cells[3, 5].Value = "产品代码：" + cb产品代码.Text;
+            mysheet.Cells[3, 10].Value = "生产批号：" + tb生产批号.Text;
+            mysheet.Cells[3, 15].Value = "标签：" + "中文" + (cb标签语言中文.Checked == true ? "☑" : "□") + "  英文" + (cb标签语言英文.Checked == true ? "☑" : "□");
+
+            mysheet.Cells[18 + ind, 5].Value = tb产品数量包数合计A.Text;
+            mysheet.Cells[18 + ind, 6].Value = tb产品数量只数合计B.Text;
+            mysheet.Cells[18 + ind, 7].Value = "理论产量： " + tb理论产量C.Text;
+            mysheet.Cells[19 + ind, 7].Value = "成品率 = " + tb成品率.Text;
+
+            //内表信息
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                mysheet.Cells[6 + i, 1] = i + 1;
+                mysheet.Cells[6 + i, 2] = dataGridView1.Rows[i].Cells["生产开始时间"].Value.ToString();
+                mysheet.Cells[6 + i, 3] = dataGridView1.Rows[i].Cells["内包序号"].Value.ToString();
+                mysheet.Cells[6 + i, 4] = dataGridView1.Rows[i].Cells["包装规格每包只数"].Value.ToString();
+                mysheet.Cells[6 + i, 5] = dataGridView1.Rows[i].Cells["产品数量包数"].Value.ToString();
+                mysheet.Cells[6 + i, 6] = dataGridView1.Rows[i].Cells["产品数量只数"].Value.ToString();
+                mysheet.Cells[6 + i, 7] = dataGridView1.Rows[i].Cells["热封线不合格"].Value.ToString();
+                mysheet.Cells[6 + i, 8] = dataGridView1.Rows[i].Cells["黑点晶点"].Value.ToString();
+                mysheet.Cells[6 + i, 9] = dataGridView1.Rows[i].Cells["指示剂不良"].Value.ToString();
+                mysheet.Cells[6 + i, 10] = dataGridView1.Rows[i].Cells["其他"].Value.ToString();
+                mysheet.Cells[6 + i, 11] = dataGridView1.Rows[i].Cells["不良合计"].Value.ToString();
+                mysheet.Cells[6 + i, 12] = dataGridView1.Rows[i].Cells["包装袋热封线"].Value.ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 13] = dataGridView1.Rows[i].Cells["内标签"].Value.ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 14] = dataGridView1.Rows[i].Cells["内包装外观"].Value.ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 15] = dataGridView1.Rows[i].Cells["操作员"].Value.ToString();
+                mysheet.Cells[6 + i, 16] = dataGridView1.Rows[i].Cells["审核员"].Value.ToString();
+
+            }
+            
+            return;
+        }
+
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from " + table + " where 生产指令ID=" + InstruID.ToString();
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt记录.Rows[0]["ID"]) + 1;
 
         }
 
         //******************************小功能******************************//  
-        
+
         // 检查 操作员的姓名
         private bool Name_check()
         {
@@ -1049,6 +1190,6 @@ namespace mySystem.Process.Bag
         }
 
 
-        
+
     }
 }
