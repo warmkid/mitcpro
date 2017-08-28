@@ -198,7 +198,7 @@ namespace mySystem
             //读取未接收的生产指令
             OleDbCommand comm = new OleDbCommand();
             comm.Connection = connOle;
-            comm.CommandText = "select * from " + tblName + " where 接收人= @接收人 and 状态=1";
+            comm.CommandText = "select * from " + tblName + " where 接收人 like  '%' + @接收人 + '%' and 状态=1";
             comm.Parameters.AddWithValue("@接收人", Parameter.userName);
 
             OleDbDataReader reader = comm.ExecuteReader();//执行查询
@@ -215,8 +215,9 @@ namespace mySystem
             //将状态变为已接收
             OleDbCommand commnew = new OleDbCommand();
             commnew.Connection = connOle;
-            commnew.CommandText = "UPDATE " + tblName + " SET 状态=2 where 接收人= @接收人 and 状态=1";
+            commnew.CommandText = "UPDATE " + tblName + " SET 状态=2 where 接收人 = @接收人 and 状态=1";
             commnew.Parameters.AddWithValue("@接收人", Parameter.userName);
+            
             commnew.ExecuteNonQuery();
 
             reader.Dispose();

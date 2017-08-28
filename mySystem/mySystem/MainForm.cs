@@ -247,6 +247,52 @@ namespace mySystem
             taskbarNotifier1.ReShowOnMouseOver = true;
         }
 
+        private void btn浏览_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (DialogResult.OK == ofd.ShowDialog())
+            {
+                textBox1.Text = ofd.FileName;
+            }
+        }
+
+        private void btn导入供应商_Click(object sender, EventArgs e)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(textBox1.Text);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+            List<String> ls = new List<string>();
+            for (int i = 3; i <= 66; ++i)
+            {
+                ls.Add(my.Cells[i, 2].Value);
+            }
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection conn;
+            conn = new OleDbConnection(strConnect);
+            conn.Open();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置供应商信息 where 0=1", conn);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (string gys in ls)
+            {
+                DataRow dr = dt.NewRow();
+                dr["供应商代码"] = "";
+                dr["供应商名称"] = gys;
+                dt.Rows.Add(dr);
+            }
+            da.Update(dt);
+            MessageBox.Show("导入供应商成功");
+        }
+
 
     }
 }

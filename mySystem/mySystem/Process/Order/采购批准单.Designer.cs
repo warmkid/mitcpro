@@ -70,6 +70,8 @@
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.label15 = new System.Windows.Forms.Label();
             this.lbl采购申请批准单号 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -465,19 +467,19 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(22, 113);
+            this.dataGridView1.Location = new System.Drawing.Point(22, 133);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(802, 159);
+            this.dataGridView1.Size = new System.Drawing.Size(802, 124);
             this.dataGridView1.TabIndex = 4;
             // 
             // dataGridView4
             // 
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(22, 291);
+            this.dataGridView4.Location = new System.Drawing.Point(22, 307);
             this.dataGridView4.Name = "dataGridView4";
             this.dataGridView4.RowTemplate.Height = 23;
-            this.dataGridView4.Size = new System.Drawing.Size(802, 164);
+            this.dataGridView4.Size = new System.Drawing.Size(802, 142);
             this.dataGridView4.TabIndex = 175;
             // 
             // label15
@@ -500,11 +502,33 @@
             this.lbl采购申请批准单号.TabIndex = 177;
             this.lbl采购申请批准单号.Text = "PAPAYYMMDDXXX";
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label17.Location = new System.Drawing.Point(19, 102);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(136, 16);
+            this.label17.TabIndex = 178;
+            this.label17.Text = "本订单采购信息：";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.Location = new System.Drawing.Point(19, 288);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(152, 16);
+            this.label18.TabIndex = 179;
+            this.label18.Text = "借用订单采购信息：";
+            // 
             // 采购批准单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1307, 622);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
             this.Controls.Add(this.lbl采购申请批准单号);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.dataGridView4);
@@ -592,5 +616,7 @@
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label lbl采购申请批准单号;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
     }
 }

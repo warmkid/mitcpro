@@ -718,6 +718,23 @@ namespace mySystem.Process.Order
             dataGridView4.AllowUserToAddRows = false;
             dataGridView4.RowHeadersVisible = false;
             dataGridView4.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView4_DataBindingComplete);
+            dataGridView4.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView4_EditingControlShowing);
+        }
+
+        void dataGridView4_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (dataGridView4.CurrentCell.OwningColumn.Name == "推荐供应商")
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls供应商.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                }
+            }
         }
 
         void dataGridView3_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -819,7 +836,7 @@ namespace mySystem.Process.Order
                         continue;
                     }
                     DataRow dr = dtInner借用订单.NewRow();
-                    dr["采购批准单ID"] = dtInner.Rows[0]["ID"];
+                    dr["采购批准单ID"] = dtOuter.Rows[0]["ID"];
                     dr["组件订单需求流水号"] = ht组件编码2组件订单需求号["产品代码"];
                     dr["存货代码"] = 产品代码;
                     dr["存货名称"] = 存货名称;
@@ -1132,7 +1149,8 @@ namespace mySystem.Process.Order
             dataGridView1.Columns["主计量单位每辅计量单位"].Visible = false;
             dataGridView1.Columns["已借用数量"].Visible = false;
             dataGridView1.Columns["采购需求单ID"].Visible = false;
-            List<string> ls可用修改的列 = new List<string>(new String[] { "是否批准", "推荐供应商", "预计到货时间", "备注","供应商产品编码" });
+            dataGridView1.Columns["状态"].Visible = false;
+            List<string> ls可用修改的列 = new List<string>(new String[] { "是否批准", "预计到货时间", "备注","供应商产品编码" });
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
                 if (!ls可用修改的列.Contains(dgvc.Name))
@@ -1589,21 +1607,21 @@ namespace mySystem.Process.Order
             foreach (DataColumn dc in dtInner.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "推荐供应商")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (string gys in ls供应商)
-                    {
-                        cbc.Items.Add(gys);
-                    }
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
+                //if (dc.ColumnName == "推荐供应商")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (string gys in ls供应商)
+                //    {
+                //        cbc.Items.Add(gys);
+                //    }
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
                 {
@@ -1639,21 +1657,21 @@ namespace mySystem.Process.Order
             foreach (DataColumn dc in dtInner借用订单.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "推荐供应商")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (string gys in ls供应商)
-                    {
-                        cbc.Items.Add(gys);
-                    }
-                    dataGridView4.Columns.Add(cbc);
-                    continue;
-                }
+                //if (dc.ColumnName == "推荐供应商")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (string gys in ls供应商)
+                //    {
+                //        cbc.Items.Add(gys);
+                //    }
+                //    dataGridView4.Columns.Add(cbc);
+                //    continue;
+                //}
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
                 {

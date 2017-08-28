@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using Newtonsoft.Json.Linq;
 
 namespace mySystem.Setting
 {
@@ -90,8 +91,18 @@ namespace mySystem.Setting
                 try
                 {
                     //String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
-                    string data = mySystem.Other.BOMList.getData();
-                    dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                    string d = dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    if (d == "")
+                    {
+                        string data = mySystem.Other.BOMList.getData();
+                        dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                    }
+                    else
+                    {
+                        JArray ja = JArray.Parse(d);
+                        string data = mySystem.Other.BOMList.getData(ja);
+                        dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                    }
                 }
                 catch (Exception ee)
                 {

@@ -53,7 +53,11 @@
             this.btn审核 = new System.Windows.Forms.Button();
             this.dtp申请日期 = new System.Windows.Forms.DateTimePicker();
             this.dtp审核日期 = new System.Windows.Forms.DateTimePicker();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // tb采购申请单号
@@ -143,10 +147,10 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(17, 121);
+            this.dataGridView1.Location = new System.Drawing.Point(17, 311);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(914, 350);
+            this.dataGridView1.Size = new System.Drawing.Size(914, 150);
             this.dataGridView1.TabIndex = 126;
             // 
             // tb申请人
@@ -291,11 +295,43 @@
             this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
             this.dtp审核日期.TabIndex = 142;
             // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(16, 165);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(914, 90);
+            this.dataGridView2.TabIndex = 143;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(15, 131);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(120, 16);
+            this.label10.TabIndex = 144;
+            this.label10.Text = "销售订单信息：";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.Location = new System.Drawing.Point(14, 273);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(152, 16);
+            this.label11.TabIndex = 145;
+            this.label11.Text = "需要采购组件信息：";
+            // 
             // 采购需求单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(953, 617);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.dtp申请日期);
             this.Controls.Add(this.combox打印机选择);
@@ -324,6 +360,7 @@
             this.Name = "采购需求单";
             this.Text = "采购需求单";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -356,5 +393,8 @@
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.DateTimePicker dtp申请日期;
         private System.Windows.Forms.DateTimePicker dtp审核日期;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
     }
 }

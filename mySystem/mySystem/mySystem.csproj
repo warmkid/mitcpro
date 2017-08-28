@@ -838,6 +838,12 @@
     <Compile Include="Query\灭菌查询.Designer.cs">
       <DependentUpon>灭菌查询.cs</DependentUpon>
     </Compile>
+    <Compile Include="Query\订单查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\订单查询.Designer.cs">
+      <DependentUpon>订单查询.cs</DependentUpon>
+    </Compile>
     <Compile Include="Setting\AddPeopleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1479,6 +1485,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Query\灭菌查询.resx">
       <DependentUpon>灭菌查询.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\订单查询.resx">
+      <DependentUpon>订单查询.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\AddPeopleForm.resx">
       <DependentUpon>AddPeopleForm.cs</DependentUpon>

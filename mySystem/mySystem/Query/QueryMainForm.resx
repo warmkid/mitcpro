@@ -118,22 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="Btn库存.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAJASURBVEhLpZaxbxoxFMY9dWKBGSakDkwZGTt06ICQEEthqjplqjp1RIiwNAE6oKrT5QQoYqju
-        GqQoTU65HP9Bpqoj6hB1iKoqQ5ShCq+f3Rgc3x2xVdAn28/P73e2n+/MmPLrdrvPB4MB2arf74sxsuz1
-        elSv1wmh36rxWbvdfuE4zq/5fE6bFEWR6NdLOYbbx+NxHMIBruv+CMNwI0ANJEESJtuTyYQ6nc5DCABb
-        0N5sNtuCYxmDyrxMq/P+NJ/hcPiRAxAvBinD+AFBp+pTpS3ZJp/RaCQAGyHHZ8fU3G8KNfYb67qj1GHn
-        fQ3YuHY+73wB+JI/lBHEO/WIOYzYwkrbAFzwGRpB/MAnNgVA/y8VS7wuIMYzSYXEsarFDnISnlxjJq/w
-        3P+0vJdsJ5dPrWYC5z/Qd6yvEK/r0u337Vvj5QrOA9r1d+PyNJvSPvh68A2Aa2OI2JMhFiqy0jZmY77x
-        XoAUltmVlFHSpvYRExDjFBbnJAlimF38xfjoiT86O7oFxMVipWuJPq61zzOr5YLzDTbwk60w7sp4ubjj
-        eRBYKQpDnvZ3xtl16nn0njFy7bQ68UZ7Evg+TQHAd3OlpdZO6LNL4QAz0SFq0KQ6HsLu3RUcHt4BskCw
-        R4Xg0qepn5NWq0WVSuUGl4jX4iKBvF59GbF5v6GXuhDkgU22FftC3fharcYBb1Y3FQnBgKn+ydUvCUn9
-        qg/f+Gq1SplMZg3gpHw+X85msz8LhcJVqVSi/1GxWKRcLvcOYZ+o962/v+lY9yowgyEAAAAASUVORK5C
-        YII=
-</value>
-  </data>
   <data name="Btn生产指令.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -162,6 +146,42 @@
         crmdfgj+K0YIXvkHwFYrCc/h168AAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="Btn灭菌.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAANlSURBVEhLnZZdSBRRFMcv6yKbLREqFSElZhE9WUQIfSASPUhIiPggayyV2IOUgcWKttzaTYlC
+        e1mjFK0kBV3Jj9bwIVboQSRkH3uoWER8iIgoHxax9vS/c2ecO/ttM/yYYWfu+c0592sZy3AsLCy4wuEw
+        4ZrE/Pt58gf9IcbZnkwxMj7jnNdDsJkoMKTuF26CQDABiv9LBEk4EAhQf38/TU1NWTJpftlM9nt2Q4Jr
+        0+z2JcTuOH87Y2Vfyqj9UTt1POmg7ofdQrjR8qplPf9+viIQ2bQAPgmc+LjdIENmxBwszi6h2SSwnDWh
+        Gqqdrl1mY8yL8rwBm7Jce8FNKuCcTkMEwRKIps+MmBPNRhIFEAthDHjAGS0AZw+k5KLIgkoBghtkkIjG
+        hE4k9jpJROyn5es4K4Ckx5Ac3JZERIozOyQOsIT7VbCC+yNJJeDMxniX18557K6SBTLab303zq4jgETc
+        m8gXiZ0DlZlGj4Nzr16qCK4V4DI4b7YR9ZY1Tzzf4Rd7LkMTAW3ADU6AGyAGxsy2xOohEZ2a6pzORaKN
+        A86rwSewrmf1S2SkitrSSL7i92PZRAiWrw9ddYSJ+2di3oialwBRGnmqpZP3T7NJxPMqzqsApQD9KTrV
+        CK72jylbgVjpxDRKzgtRs2ExZxJYZEXfiyoBCQp/FJr9IodtVM/PnTI0sV34AJRDP/iOa4w71hm/AlGr
+        AudlRj09PR6qiFRQyWrJMoIfBQfAMJCzXD2EgNiANvTVQy451rVNPB8dHW0D5Pf7jY7zZO0HIZflNSWc
+        XYAgmlKCPaMY+8R8KBSimdkZanzeuIYXI5JTgEd2AmQc0OaOGAxx9lfvy9W8zTzxLNI70Ls2+HaQVJqG
+        m1xbHwyRF6KYL+hTUj2+1Ymt6FAs+0t6+SwjERKtAkNDQ1v7jtjcwGfEtU4B/BD1TaiSLk1yGNwGrhGX
+        dcLqo9H2x0Z1wTrq6+ujubk5TaTvoG1JZcfDBjOTagi8dAjBb+mLX5JEUZZGS7VsgsGgkc0HxCtLksBu
+        K39c3iA772osD43OKkt4p78zjHJ1AXMZ0ueTIRkfH/+G4IvAHNppRxFW1n1Y5MRCpyBHndi84mxDn0Mf
+        cR2DxHjvZNaRmfMLcWzDcqWwzpOcA+Tyovw/4EuajCna/gNUvgT+bHuQSwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="Btn库存.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAJASURBVEhLpZaxbxoxFMY9dWKBGSakDkwZGTt06ICQEEthqjplqjp1RIiwNAE6oKrT5QQoYqju
+        GqQoTU65HP9Bpqoj6hB1iKoqQ5ShCq+f3Rgc3x2xVdAn28/P73e2n+/MmPLrdrvPB4MB2arf74sxsuz1
+        elSv1wmh36rxWbvdfuE4zq/5fE6bFEWR6NdLOYbbx+NxHMIBruv+CMNwI0ANJEESJtuTyYQ6nc5DCABb
+        0N5sNtuCYxmDyrxMq/P+NJ/hcPiRAxAvBinD+AFBp+pTpS3ZJp/RaCQAGyHHZ8fU3G8KNfYb67qj1GHn
+        fQ3YuHY+73wB+JI/lBHEO/WIOYzYwkrbAFzwGRpB/MAnNgVA/y8VS7wuIMYzSYXEsarFDnISnlxjJq/w
+        3P+0vJdsJ5dPrWYC5z/Qd6yvEK/r0u337Vvj5QrOA9r1d+PyNJvSPvh68A2Aa2OI2JMhFiqy0jZmY77x
+        XoAUltmVlFHSpvYRExDjFBbnJAlimF38xfjoiT86O7oFxMVipWuJPq61zzOr5YLzDTbwk60w7sp4ubjj
+        eRBYKQpDnvZ3xtl16nn0njFy7bQ68UZ7Evg+TQHAd3OlpdZO6LNL4QAz0SFq0KQ6HsLu3RUcHt4BskCw
+        R4Xg0qepn5NWq0WVSuUGl4jX4iKBvF59GbF5v6GXuhDkgU22FftC3fharcYBb1Y3FQnBgKn+ydUvCUn9
+        qg/f+Gq1SplMZg3gpHw+X85msz8LhcJVqVSi/1GxWKRcLvcOYZ+o962/v+lY9yowgyEAAAAASUVORK5C
+        YII=
+</value>
+  </data>
   <data name="Btn订单.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -183,26 +203,6 @@
         1/H6eoi7XA7R/akIvsgwyB3JPkhCFy4ANjR8tU25mkhJlHmI3CT0ATfYQhZitF5P7zmdzgWDwZC02+04
         Ojq6I2O/oFarN3PKpVQqv6WPirPQROtf0ntEUky/37TNcxn74oKCgqUPkRMhDSc5O4epdd6cLJERj4Fd
         KBSKOZqoL7P3eU0lzLNpj31q/TpXJMX0M1ruoeH4ITAyMrKnGf8Bj6QL2J4LH2AAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="Btn灭菌.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABkAAAAZCAYAAADE6YVjAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAANlSURBVEhLnZZdSBRRFMcv6yKbLREqFSElZhE9WUQIfSASPUhIiPggayyV2IOUgcWKttzaTYlC
-        e1mjFK0kBV3Jj9bwIVboQSRkH3uoWER8iIgoHxax9vS/c2ecO/ttM/yYYWfu+c0592sZy3AsLCy4wuEw
-        4ZrE/Pt58gf9IcbZnkwxMj7jnNdDsJkoMKTuF26CQDABiv9LBEk4EAhQf38/TU1NWTJpftlM9nt2Q4Jr
-        0+z2JcTuOH87Y2Vfyqj9UTt1POmg7ofdQrjR8qplPf9+viIQ2bQAPgmc+LjdIENmxBwszi6h2SSwnDWh
-        Gqqdrl1mY8yL8rwBm7Jce8FNKuCcTkMEwRKIps+MmBPNRhIFEAthDHjAGS0AZw+k5KLIgkoBghtkkIjG
-        hE4k9jpJROyn5es4K4Ckx5Ac3JZERIozOyQOsIT7VbCC+yNJJeDMxniX18557K6SBTLab303zq4jgETc
-        m8gXiZ0DlZlGj4Nzr16qCK4V4DI4b7YR9ZY1Tzzf4Rd7LkMTAW3ADU6AGyAGxsy2xOohEZ2a6pzORaKN
-        A86rwSewrmf1S2SkitrSSL7i92PZRAiWrw9ddYSJ+2di3oialwBRGnmqpZP3T7NJxPMqzqsApQD9KTrV
-        CK72jylbgVjpxDRKzgtRs2ExZxJYZEXfiyoBCQp/FJr9IodtVM/PnTI0sV34AJRDP/iOa4w71hm/AlGr
-        AudlRj09PR6qiFRQyWrJMoIfBQfAMJCzXD2EgNiANvTVQy451rVNPB8dHW0D5Pf7jY7zZO0HIZflNSWc
-        XYAgmlKCPaMY+8R8KBSimdkZanzeuIYXI5JTgEd2AmQc0OaOGAxx9lfvy9W8zTzxLNI70Ls2+HaQVJqG
-        m1xbHwyRF6KYL+hTUj2+1Ymt6FAs+0t6+SwjERKtAkNDQ1v7jtjcwGfEtU4B/BD1TaiSLk1yGNwGrhGX
-        dcLqo9H2x0Z1wTrq6+ujubk5TaTvoG1JZcfDBjOTagi8dAjBb+mLX5JEUZZGS7VsgsGgkc0HxCtLksBu
-        K39c3iA772osD43OKkt4p78zjHJ1AXMZ0ueTIRkfH/+G4IvAHNppRxFW1n1Y5MRCpyBHndi84mxDn0Mf
-        cR2DxHjvZNaRmfMLcWzDcqWwzpOcA+Tyovw/4EuajCna/gNUvgT+bHuQSwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="Btn制袋.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

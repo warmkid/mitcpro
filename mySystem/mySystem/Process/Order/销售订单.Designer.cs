@@ -80,6 +80,9 @@
             this.label20 = new System.Windows.Forms.Label();
             this.lbl价税合计合计 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.dtp拟交货日期 = new System.Windows.Forms.DateTimePicker();
+            this.label19 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -185,7 +188,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn确认.Location = new System.Drawing.Point(694, 648);
+            this.btn确认.Location = new System.Drawing.Point(594, 648);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(75, 23);
             this.btn确认.TabIndex = 107;
@@ -196,7 +199,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(775, 648);
+            this.btn提交审核.Location = new System.Drawing.Point(675, 648);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(100, 23);
             this.btn提交审核.TabIndex = 106;
@@ -585,11 +588,43 @@
             this.label22.TabIndex = 131;
             this.label22.Text = "价税合计合计：";
             // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn查看日志.Location = new System.Drawing.Point(781, 648);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(89, 23);
+            this.btn查看日志.TabIndex = 133;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
+            // 
+            // dtp拟交货日期
+            // 
+            this.dtp拟交货日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp拟交货日期.Location = new System.Drawing.Point(103, 510);
+            this.dtp拟交货日期.Name = "dtp拟交货日期";
+            this.dtp拟交货日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp拟交货日期.TabIndex = 135;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label19.Location = new System.Drawing.Point(9, 517);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(88, 16);
+            this.label19.TabIndex = 134;
+            this.label19.Text = "拟交货日期";
+            // 
             // 销售订单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 683);
+            this.Controls.Add(this.dtp拟交货日期);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.btn查看日志);
             this.Controls.Add(this.lbl价税合计合计);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.lbl数量合计);
@@ -704,5 +739,8 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label lbl价税合计合计;
         private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.DateTimePicker dtp拟交货日期;
+        private System.Windows.Forms.Label label19;
     }
 }

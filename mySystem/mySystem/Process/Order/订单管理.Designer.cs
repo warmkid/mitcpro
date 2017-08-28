@@ -273,8 +273,7 @@
             this.cmb采购需求单审核状态.Items.AddRange(new object[] {
             "编辑中",
             "待审核",
-            "审核完成",
-            "已关闭"});
+            "审核完成"});
             this.cmb采购需求单审核状态.Location = new System.Drawing.Point(925, 17);
             this.cmb采购需求单审核状态.Name = "cmb采购需求单审核状态";
             this.cmb采购需求单审核状态.Size = new System.Drawing.Size(121, 24);
@@ -350,7 +349,7 @@
             // 
             // btn采购批准单添加
             // 
-            this.btn采购批准单添加.Location = new System.Drawing.Point(13, 70);
+            this.btn采购批准单添加.Location = new System.Drawing.Point(13, 65);
             this.btn采购批准单添加.Name = "btn采购批准单添加";
             this.btn采购批准单添加.Size = new System.Drawing.Size(75, 23);
             this.btn采购批准单添加.TabIndex = 27;
@@ -369,7 +368,7 @@
             // 
             // btn采购批准单查询
             // 
-            this.btn采购批准单查询.Location = new System.Drawing.Point(965, 70);
+            this.btn采购批准单查询.Location = new System.Drawing.Point(965, 65);
             this.btn采购批准单查询.Name = "btn采购批准单查询";
             this.btn采购批准单查询.Size = new System.Drawing.Size(75, 23);
             this.btn采购批准单查询.TabIndex = 25;

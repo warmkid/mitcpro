@@ -51,6 +51,14 @@
             this.btn确认 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
+            this.dtp订单日期 = new System.Windows.Forms.DateTimePicker();
+            this.label9 = new System.Windows.Forms.Label();
+            this.tb采购分类 = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cmb币种 = new System.Windows.Forms.ComboBox();
+            this.tb汇率 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -125,10 +133,10 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(15, 98);
+            this.dataGridView1.Location = new System.Drawing.Point(15, 134);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(919, 350);
+            this.dataGridView1.Size = new System.Drawing.Size(919, 314);
             this.dataGridView1.TabIndex = 134;
             // 
             // dtp审核日期
@@ -273,11 +281,92 @@
             this.btn审核.UseVisualStyleBackColor = true;
             this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
+            // dtp订单日期
+            // 
+            this.dtp订单日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp订单日期.Location = new System.Drawing.Point(90, 92);
+            this.dtp订单日期.Name = "dtp订单日期";
+            this.dtp订单日期.Size = new System.Drawing.Size(153, 26);
+            this.dtp订单日期.TabIndex = 158;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label9.Location = new System.Drawing.Point(12, 99);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(72, 16);
+            this.label9.TabIndex = 159;
+            this.label9.Text = "订单日期";
+            // 
+            // tb采购分类
+            // 
+            this.tb采购分类.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb采购分类.Location = new System.Drawing.Point(381, 92);
+            this.tb采购分类.Name = "tb采购分类";
+            this.tb采购分类.Size = new System.Drawing.Size(107, 26);
+            this.tb采购分类.TabIndex = 161;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label10.Location = new System.Drawing.Point(303, 97);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(72, 16);
+            this.label10.TabIndex = 160;
+            this.label10.Text = "采购分类";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.Location = new System.Drawing.Point(524, 97);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(40, 16);
+            this.label11.TabIndex = 162;
+            this.label11.Text = "币种";
+            // 
+            // cmb币种
+            // 
+            this.cmb币种.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmb币种.FormattingEnabled = true;
+            this.cmb币种.Location = new System.Drawing.Point(584, 94);
+            this.cmb币种.Name = "cmb币种";
+            this.cmb币种.Size = new System.Drawing.Size(99, 24);
+            this.cmb币种.TabIndex = 163;
+            // 
+            // tb汇率
+            // 
+            this.tb汇率.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb汇率.Location = new System.Drawing.Point(827, 94);
+            this.tb汇率.Name = "tb汇率";
+            this.tb汇率.Size = new System.Drawing.Size(107, 26);
+            this.tb汇率.TabIndex = 165;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label12.Location = new System.Drawing.Point(759, 99);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(40, 16);
+            this.label12.TabIndex = 164;
+            this.label12.Text = "汇率";
+            // 
             // 采购订单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 609);
+            this.Controls.Add(this.tb汇率);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.cmb币种);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.tb采购分类);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.dtp订单日期);
             this.Controls.Add(this.combox打印机选择);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn确认);
@@ -334,5 +423,13 @@
         private System.Windows.Forms.Button btn确认;
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.DateTimePicker dtp订单日期;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tb采购分类;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cmb币种;
+        private System.Windows.Forms.TextBox tb汇率;
+        private System.Windows.Forms.Label label12;
     }
 }

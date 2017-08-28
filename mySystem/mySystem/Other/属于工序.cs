@@ -18,6 +18,7 @@ namespace mySystem.Other
             initData();
         }
 
+
         void initData()
         {
             int index;

@@ -931,7 +931,7 @@ namespace mySystem.Process.Bag.CS
             dt.Rows[0].Delete();
             da.Update(dt);
 
-            dtOuter.Rows[0]["审核员"] = ckform.userName;
+            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核是否通过"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
             if (ckform.ischeckOk)
@@ -1065,7 +1065,6 @@ namespace mySystem.Process.Bag.CS
                     wb = null;
                     oXL = null;
                 }
-
             }
         }
 
