@@ -759,9 +759,9 @@ namespace mySystem.Process.Extruction.B
             {
                 foreach (DataRow dr in dtInner.Rows)
                 {
-                    if (dr["审核员"].ToString() == "")
+                    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == __待审核)
                     {
-                        MessageBox.Show("请先提交数据审核!");
+                        MessageBox.Show("请先完成数据审核!");
                         return;
                     }
                 }
@@ -876,8 +876,13 @@ namespace mySystem.Process.Extruction.B
         //this function just fill the name but dooesn't catch the opinion
         private void btn数据审核_Click(object sender, EventArgs e)
         {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
             //find the item in inner tagged the reviewer __待审核 and replace the content his name
-            for (int i = 0; i < dtInner.Rows.Count; i++)
+            foreach (int i in hi待审核行号)
             {
                 if (__待审核 == Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim())
                 {
@@ -1086,7 +1091,7 @@ namespace mySystem.Process.Extruction.B
                 my.Cells[i + 5, 5].Value = dtInner.Rows[i]["不良品数量"].ToString();
                 my.Cells[i + 5, 6].Value = dtInner.Rows[i]["废品产生原因"];
                 my.Cells[i + 5, 7].Value = dtInner.Rows[i]["记录员"];
-                //my.Cells[i + 5, 8].Value = dtInner.Rows[i]["审核员"];               
+                my.Cells[i + 5, 8].Value = dtInner.Rows[i]["审核员"];               
             }
 
             //my.Cells[16, 10] = "A层 " + array1[9][11].Text + "  (℃)";

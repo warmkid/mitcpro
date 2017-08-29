@@ -270,11 +270,12 @@ namespace mySystem.Query
                         form7.Show();
                         break;
                     case "清场记录":
-                        //清场记录 myform = new 清场记录(mainform, ID);
-                        //myform.Show();
+                        清场记录 myform = new 清场记录( ID);
+                        myform.Show();
                         break;
                     case "制袋工序批生产记录":
-
+                        Record_batch_bag form8 = new Record_batch_bag(mainform, ID);
+                        form8.Show();
                         break;
 
                     default:

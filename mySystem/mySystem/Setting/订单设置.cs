@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using Newtonsoft.Json.Linq;
 
 namespace mySystem.Setting
 {
@@ -52,6 +53,10 @@ namespace mySystem.Setting
         private DataTable dt币种;
         private BindingSource bs币种;
         private OleDbCommandBuilder cb币种;
+        private OleDbDataAdapter da付款条件;
+        private DataTable dt付款条件;
+        private BindingSource bs付款条件;
+        private OleDbCommandBuilder cb付款条件;
 
         public 订单设置()
         {
@@ -59,6 +64,19 @@ namespace mySystem.Setting
             Initdgv();
             Bind();
             dgv产成品存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv产成品存货档案_CellDoubleClick);
+            dgv组件存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv组件存货档案_CellDoubleClick);
+        }
+
+        void dgv组件存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv组件存货档案.Columns[e.ColumnIndex].Name == "属于工序")
+            {
+                string data = mySystem.Other.属于工序.getData();
+                if (data != null)
+                {
+                    dgv组件存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                }
+            }
         }
 
         void dgv产成品存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -67,11 +85,36 @@ namespace mySystem.Setting
             {
                 // 弹出对话框，选择组件
                 //MessageBox.Show("dian");
-                OleDbDataAdapter da = new OleDbDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.connOle);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
-                dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = ids;
+                //OleDbDataAdapter da = new OleDbDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.connOle);
+                //DataTable dt = new DataTable();
+                //da.Fill(dt);
+                try
+                {
+                    //String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
+                    string d = dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    if (d == "")
+                    {
+                        string data = mySystem.Other.BOMList.getData();
+                        dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                    }
+                    else
+                    {
+                        JArray ja = JArray.Parse(d);
+                        string data = mySystem.Other.BOMList.getData(ja);
+                        dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                    }
+                }
+                catch (Exception ee)
+                {
+                }
+            }
+            else if (dgv产成品存货档案.Columns[e.ColumnIndex].Name == "属于工序")
+            {
+                string data = mySystem.Other.属于工序.getData();
+                if (data != null)
+                {
+                    dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                }
             }
         }
 
@@ -104,12 +147,15 @@ namespace mySystem.Setting
             bs币种 = new BindingSource();
             EachInitdgv(dgv币种);
 
+            bs付款条件 = new BindingSource();
+            EachInitdgv(dgv付款条件);
+
         }
 
 
         private void Bind()
         {
-            //**************************   供应商    ***********************************
+            //**************************   设置组件存货档案    ***********************************
             dt组件存货档案 = new DataTable("设置组件存货档案"); //""中的是表名
             da组件存货档案 = new OleDbDataAdapter("select * from 设置组件存货档案", mySystem.Parameter.connOle);
             cb组件存货档案 = new OleDbCommandBuilder(da组件存货档案);
@@ -124,9 +170,10 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv组件存货档案.Columns["ID"].Visible = false;
-            
+            this.dgv组件存货档案.Columns["属于工序"].ReadOnly = true;
 
-            //**************************   检验标准    ***********************************
+
+            //**************************   设置产成品存货档案    ***********************************
             dt产成品存货档案 = new DataTable("设置产成品存货档案"); //""中的是表名
             da产成品存货档案 = new OleDbDataAdapter("select * from 设置产成品存货档案", mySystem.Parameter.connOle);
             cb产成品存货档案 = new OleDbCommandBuilder(da产成品存货档案);
@@ -142,6 +189,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产成品存货档案.Columns["ID"].Visible = false;
             this.dgv产成品存货档案.Columns["BOM列表"].ReadOnly = true;
+            this.dgv产成品存货档案.Columns["属于工序"].ReadOnly = true;
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("订单用户"); //""中的是表名
@@ -260,6 +308,23 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv币种.Columns["ID"].Visible = false;
+
+
+            //**************************   付款条件    ***********************************
+            dt付款条件 = new DataTable("设置付款条件"); //""中的是表名
+            da付款条件 = new OleDbDataAdapter("select * from 设置付款条件", mySystem.Parameter.connOle);
+            cb付款条件 = new OleDbCommandBuilder(da付款条件);
+            dt付款条件.Columns.Add("序号", System.Type.GetType("System.String"));
+            da付款条件.Fill(dt付款条件);
+            bs付款条件.DataSource = dt付款条件;
+            this.dgv付款条件.DataSource = bs付款条件.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv付款条件);
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv付款条件.Columns["ID"].Visible = false;
 
         }
 
@@ -513,6 +578,13 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv币种);
         }
 
+        private void add付款条件_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt付款条件.NewRow();
+            dt付款条件.Rows.InsertAt(dt付款条件.NewRow(), dt付款条件.Rows.Count);
+            setDataGridViewRowNums(this.dgv付款条件);
+        }
+
         private void del业务类型_Click(object sender, EventArgs e)
         {
             int idx = this.dgv业务类型.SelectedCells[0].RowIndex;
@@ -563,6 +635,18 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv币种);
         }
 
+       
+
+        private void del付款条件_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv付款条件.SelectedCells[0].RowIndex;
+            dt付款条件.Rows[idx].Delete();
+            da付款条件.Update((DataTable)bs付款条件.DataSource);
+            dt付款条件.Clear();
+            da付款条件.Fill(dt付款条件);
+            setDataGridViewRowNums(this.dgv付款条件);
+        }
+
         private void save基本信息设置_Click(object sender, EventArgs e)
         {
             try
@@ -596,12 +680,19 @@ namespace mySystem.Setting
                     dt币种.Clear();
                     da币种.Fill(dt币种);
                     setDataGridViewRowNums(this.dgv币种);
+
+                    da付款条件.Update((DataTable)bs付款条件.DataSource);
+                    dt付款条件.Clear();
+                    da付款条件.Fill(dt付款条件);
+                    setDataGridViewRowNums(this.dgv付款条件);
                 }
                 MessageBox.Show("保存成功！");
             }
             catch
             { MessageBox.Show("保存失败！", "错误"); }
         }
+
+        
 
 
 

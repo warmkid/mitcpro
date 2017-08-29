@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Bag.CS
 {
@@ -57,6 +58,7 @@ namespace mySystem.Process.Bag.CS
         {
             // 判断设置是否变化
             InitializeComponent();
+            fill_printer();
             variableInit();
             // 若为未保存状态，则判断设置是否变化
             getOtherData();
@@ -107,8 +109,9 @@ namespace mySystem.Process.Bag.CS
 
         public 清场记录(int id)
         {
-            
+
             InitializeComponent();
+            fill_printer();
             variableInit(id);
             // 若为未保存状态，则判断设置是否变化
             getOtherData();
@@ -142,13 +145,13 @@ namespace mySystem.Process.Bag.CS
             ID = mySystem.Parameter.csbagInstruID;
             i生产指令ID = ID;
             CODE = mySystem.Parameter.csbagInstruction;
-            
+
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
             ls清场项目 = new List<string>();
             ls清场要点 = new List<string>();
-            
+
         }
 
         void variableInit(int id)
@@ -159,9 +162,15 @@ namespace mySystem.Process.Bag.CS
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 清场记录 where ID=" + id, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
-            
+
             i生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
             ID = i生产指令ID;
+
+            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from 生产指令 where ID=" + ID, conn);
+            DataTable dt1 = new DataTable("temp");
+            da1.Fill(dt1);
+            CODE = dt1.Rows[0]["生产指令编号"].ToString();
+
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
             ls清场项目 = new List<string>();
@@ -226,7 +235,7 @@ namespace mySystem.Process.Bag.CS
             dr["生产指令ID"] = i生产指令ID;
             dr["产品代码"] = str产品代码;
             dr["产品批号"] = str产品批号;
-            dr["生产日期"] = DateTime.Parse( DateTime.Now.ToString("yyyy/MM/dd"));
+            dr["生产日期"] = DateTime.Parse(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["生产班次"] = mySystem.Parameter.userflight;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["检查结果"] = "合格";
@@ -368,14 +377,14 @@ namespace mySystem.Process.Bag.CS
             }
 
             // 然后修改其他特殊属性
-            
+
         }
 
         // 写序号
         void setDataGridViewNO()
         {
 
-            for (int i = 0; i < dtInner.Rows.Count;++i )
+            for (int i = 0; i < dtInner.Rows.Count; ++i)
             {
                 dtInner.Rows[i]["序号"] = i + 1;
             }
@@ -507,7 +516,7 @@ namespace mySystem.Process.Bag.CS
         {
         }
 
-     
+
         void addOtherEvenHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
@@ -519,12 +528,12 @@ namespace mySystem.Process.Bag.CS
             // DataGridView的可见和只读等属性最好在这个事件中处理
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            
+
             for (int i = 0; i < 5; ++i)
             {
                 dataGridView1.Columns[i].ReadOnly = true;
             }
-                
+
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -623,7 +632,156 @@ namespace mySystem.Process.Bag.CS
 
             btn审核.Enabled = false;
         }
-       
+
+        //添加打印机
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        private void fill_printer()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                comboBox2.Items.Add(sPrint);
+            }
+            comboBox2.SelectedItem = print.PrinterSettings.PrinterName;
+        }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            if (comboBox2.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(comboBox2.Text);
+            print(false);
+            GC.Collect();
+        }
+
+
+        public void print(bool b)
+        {
+            int label_打印成功 = 1;
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            dir += "./../../xls/CSBag/SOP-MFG-110-R01A 清场记录.xlsx";
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            //"生产指令-步骤序号- 表序号 /&P"
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 清场记录" + " where 生产指令ID=" + ID.ToString(), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            my.PageSetup.RightFooter = CODE + "-" + sheetnum.ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                {
+                    label_打印成功 = 0;
+                }
+                finally
+                {
+                    if (1 == label_打印成功)
+                    {
+                        string str角色;
+                        if (_userState == 0)
+                            str角色 = "操作员";
+                        else if (_userState == 1)
+                            str角色 = "审核员";
+                        else
+                            str角色 = "管理员";
+                        string log = "\n=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + str角色 + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            int ind = 0;
+            int i插入行数 = 0;
+            my.Cells[3, 1].Value = "产品代码/规格：" + lbl产品代码.Text;
+            my.Cells[3, 5].Value = "产品批号：" + lbl产品批号.Text;
+            if (lbl生产班次.Text.Equals("白班"))
+                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            else
+                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            //插入新行
+            if (dataGridView1.Rows.Count > 14)
+            {
+                i插入行数 = dataGridView1.Rows.Count -14;
+                for (int i = 0; i < i插入行数; i++)
+                {
+                    //在第6行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = i插入行数;
+            }
+
+            //写内表数据
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                my.Cells[5 + i, 1].Value = dataGridView1.Rows[i].Cells["序号"].Value.ToString();
+                my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells["清场项目"].Value.ToString();
+                my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells["清场要点"].Value.ToString();
+                //my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "完成" ? "完成☑  不适用□" : "完成□  不适用☑";
+                my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString();
+            }
+            my.Cells[5, 7].Value = tb操作员.Text;
+            my.Cells[5, 8].Value = cmb检查结果.Text;
+
+            //if (cmb检查结果.Text == "合格")
+            //    my.Cells[5, 8].Value = "合格☑\n不合格□";
+            //else if (cmb检查结果.Text == "不合格")
+            //    my.Cells[5, 8].Value = "合格□\n不合格☑";
+            //else
+            //    my.Cells[5, 8].Value = "合格□\n不合格□";
+
+            my.Cells[5, 9].Value = tb审核员.Text;
+            //my.Cells[9 + ind, 1].Value = "备注：";
+
+        }
+
+
 
     }
 }

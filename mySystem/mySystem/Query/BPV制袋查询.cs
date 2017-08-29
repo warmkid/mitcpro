@@ -308,8 +308,8 @@ namespace mySystem.Query
                 switch (tableName)
                 {
                     case "生产领料使用记录":
-                        //BTVMaterialRecord mydlg1 = new BTVMaterialRecord(mainform, ID);
-                        //mydlg1.Show();
+                        BTVMaterialRecord mydlg1 = new BTVMaterialRecord(mainform, ID);
+                        mydlg1.Show();
                         break;
                     case "制袋工序批生产记录":
                         //BTVBatchProduction mydlg2 = new BTVBatchProduction(mainform, ID);

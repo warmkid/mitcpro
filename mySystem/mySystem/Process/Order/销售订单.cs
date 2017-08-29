@@ -18,7 +18,7 @@ namespace mySystem.Process.Order
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
         OleDbConnection conn;
 
-        List<String> ls业务类型, ls销售类型, ls客户简称, ls销售部门, ls币种;
+        List<String> ls业务类型, ls销售类型, ls客户简称, ls销售部门, ls币种,ls付款条件;
         List<String> ls存货编码, ls存货名称, ls规格型号;
        
         List<double> ld数量每件;
@@ -147,7 +147,15 @@ namespace mySystem.Process.Order
             }
             cmb币种.Items.AddRange(ls币种.ToArray());
 
-            
+            ls付款条件 = new List<string>();
+            da = new OleDbDataAdapter("select * from 设置付款条件", conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls付款条件.Add(dr["付款条件"].ToString());
+            }
+            cmb付款条件.Items.AddRange(ls付款条件.ToArray());
             
 
 
@@ -163,7 +171,7 @@ namespace mySystem.Process.Order
                 ls存货编码.Add(dr["存货编码"].ToString());
                 ls存货名称.Add(dr["存货名称"].ToString());
                 ls规格型号.Add(dr["规格型号"].ToString());
-                ld数量每件.Add(Convert.ToDouble(dr["数量每件"]));
+                ld数量每件.Add(Convert.ToDouble(dr["主计量单位每辅计量单位"]));
             }
         }
 
@@ -293,6 +301,7 @@ namespace mySystem.Process.Order
             
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            btn查看日志.Enabled = true;
         }
 
         private void fillPrinter()
@@ -364,17 +373,23 @@ namespace mySystem.Process.Order
             }
             dr["币种"] = cmb币种.Text;
 
-            dr["付款条件"] = tb付款条件.Text;
+            dr["付款条件"] = cmb付款条件.Text;
             bool ok;
             double temp;
             ok = double.TryParse(tb税率.Text, out temp);
             dr["税率"] = ok ? temp : 17;
             ok = double.TryParse(tb汇率.Text, out temp);
-            dr["汇率"] = ok ? temp : 0.0;
+            dr["汇率"] = ok ? temp : 1;
             dr["备注"] = tb备注.Text;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["状态"] = "编辑中";
-
+            dr["件数合计"] = 0;
+            dr["数量合计"] = 0;
+            dr["拟交货日期"] = DateTime.Now;
+            dr["价税合计合计"] = 0;
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
+            dr["日志"] = log;
             return dr;
         }
 
@@ -514,6 +529,7 @@ namespace mySystem.Process.Order
                 daInner.Update((DataTable)bsInner.DataSource);
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
+                calc合计();
             }
         }
 
@@ -607,6 +623,15 @@ namespace mySystem.Process.Order
 
 
             dtOuter.Rows[0]["状态"] = "待审核";
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
             dtOuter.Rows[0]["审核员"] = "__待审核";
             dtOuter.Rows[0]["审核时间"] = DateTime.Now;
 
@@ -656,6 +681,11 @@ namespace mySystem.Process.Order
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
 
+            string log = "\n=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (ckform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + ckform.opinion;
+            dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
 
             save();
@@ -719,6 +749,12 @@ namespace mySystem.Process.Order
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
                     }
+                    else
+                    {
+                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货名称", e.RowIndex].Value = "";
+                        dataGridView1["规格型号", e.RowIndex].Value = "";
+                    }
                     break;
                 case "存货名称":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
@@ -728,6 +764,12 @@ namespace mySystem.Process.Order
                         dataGridView1["存货编码", e.RowIndex].Value = ls存货编码[idx];
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
+                    }
+                    else
+                    {
+                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货名称", e.RowIndex].Value = "";
+                        dataGridView1["规格型号", e.RowIndex].Value = "";
                     }
                     break;
                 case "规格型号":
@@ -739,6 +781,12 @@ namespace mySystem.Process.Order
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
                     }
+                    else
+                    {
+                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货名称", e.RowIndex].Value = "";
+                        dataGridView1["规格型号", e.RowIndex].Value = "";
+                    }
                     break;
                 case "数量":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
@@ -749,6 +797,7 @@ namespace mySystem.Process.Order
                     {
                         dataGridView1["件数", e.RowIndex].Value = Math.Round( curDou / ld数量每件[idx],2);
                     }
+                    calc合计();
                     break;
                 case "件数":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
@@ -759,6 +808,10 @@ namespace mySystem.Process.Order
                     {
                         dataGridView1["数量", e.RowIndex].Value = Math.Round( curDou * ld数量每件[idx],2);
                     }
+                    calc合计();
+                    break;
+                case "价税合计":
+                    calc合计();
                     break;
             }
         }
@@ -776,6 +829,30 @@ namespace mySystem.Process.Order
             dataGridView1.Columns["销售订单ID"].Visible = false;
         }
 
-        
+        void calc合计()
+        {
+            double 件数合计 = 0;
+            double 数量合计 = 0;
+            double 价税合计合计 = 0;
+            foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+            {
+                件数合计 += Convert.ToDouble(dgvr.Cells["件数"].Value);
+                数量合计 += Convert.ToDouble(dgvr.Cells["数量"].Value);
+                价税合计合计 += Convert.ToDouble(dgvr.Cells["价税合计"].Value);
+
+            }
+            dtOuter.Rows[0]["件数合计"] = 件数合计;
+            dtOuter.Rows[0]["数量合计"] = 数量合计;
+            dtOuter.Rows[0]["价税合计合计"] = 价税合计合计;
+            lbl价税合计合计.DataBindings[0].ReadValue();
+            lbl数量合计.DataBindings[0].ReadValue();
+            lbl件数合计.DataBindings[0].ReadValue();
+        }
+
+        private void btn查看日志_Click(object sender, EventArgs e)
+        {
+            (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+        }
+
     }
 }

@@ -190,8 +190,8 @@ namespace mySystem
 
                         break;
                     case "PE制袋":
-                        //mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction form4 = new Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, ID);
-                        //form4.Show();
+                        mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction form4 = new Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, ID);
+                        form4.Show();
 
                         break;
                     case "BPV制袋":

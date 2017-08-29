@@ -61,7 +61,14 @@ namespace mySystem.Process.CleanCut
 
             getPeople();
             setUserState();
-            getOtherData();
+            try
+            {
+                getOtherData();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show("生产日报表失败。\n错误信息如下："+ee.Message+"\n"+ee.StackTrace);
+            }
 
             readOuterData(ID生产指令);
             outerBind();
@@ -128,7 +135,14 @@ namespace mySystem.Process.CleanCut
 
             getPeople();
             setUserState();
-            getOtherData();
+            try
+            {
+                getOtherData();
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show("生产日报表失败。\n错误信息如下：" + ee.Message + "\n" + ee.StackTrace);
+            }
 
             readOuterData(ID生产指令);
             outerBind();

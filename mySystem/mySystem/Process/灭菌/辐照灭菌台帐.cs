@@ -398,7 +398,7 @@ namespace mySystem.Process.灭菌
             // 利用这个进程打开一个Excel文件
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\miejun\SOP-MFG-106-R03A 辐照灭菌台帐.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
              
 
             if (isShow)
@@ -443,27 +443,29 @@ namespace mySystem.Process.灭菌
             int rownum = dt台帐.Rows.Count;
             for (int i = 0; i < rownum; i++)
             {
+                mysheet.Cells[i + 4, 1].Value = i+1;
                 mysheet.Cells[i + 4, 2].Value = dt台帐.Rows[i]["委托单号"].ToString();
                 mysheet.Cells[i + 4, 3].Value = Convert.ToDateTime( dt台帐.Rows[i]["委托日期"]).ToString("D");//去掉时分秒，且显示为****年**月**日
-                mysheet.Cells[i + 4, 4].Value = dt台帐.Rows[i]["产品数量箱"].ToString();
+                mysheet.Cells[i + 4, 4].Value = dt台帐.Rows[i]["产品代码"].ToString();
                 mysheet.Cells[i + 4, 5].Value = dt台帐.Rows[i]["产品数量只"].ToString();
-                mysheet.Cells[i + 4, 6].Value = dt台帐.Rows[i]["送去产品托盘数量个"].ToString();
-                mysheet.Cells[i + 4, 7].Value = dt台帐.Rows[i]["拉回产品托盘数量个"].ToString();
-                mysheet.Cells[i + 4, 8].Value = dt台帐.Rows[i]["备注"].ToString();
-                mysheet.Cells[i + 4, 9].Value = dt台帐.Rows[i]["登记员"].ToString();
-                mysheet.Cells[i + 4, 10].Value = dt台帐.Rows[i]["审核员"].ToString();
+                mysheet.Cells[i + 4, 6].Value = dt台帐.Rows[i]["产品数量箱"].ToString();
+                //mysheet.Cells[i + 4, 6].Value = dt台帐.Rows[i]["送去产品托盘数量个"].ToString();
+                //mysheet.Cells[i + 4, 7].Value = dt台帐.Rows[i]["拉回产品托盘数量个"].ToString();
+                mysheet.Cells[i + 4, 7].Value = dt台帐.Rows[i]["备注"].ToString();
+                mysheet.Cells[i + 4, 8].Value = dt台帐.Rows[i]["登记员"].ToString();
+                mysheet.Cells[i + 4, 9].Value = dt台帐.Rows[i]["审核员"].ToString();
             }
             //加页脚
-            int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 辐照灭菌台帐详细信息", connOle);
-            DataTable dt = new DataTable("temp");
-            da.Fill(dt);
-            List<Int32> sheetList = new List<Int32>();
-            for (int i = 0; i < dt.Rows.Count; i++)
-            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
-            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt台帐.Rows[0]["ID"])) + 1;
+            //int sheetnum;
+            //OleDbDataAdapter da = new OleDbDataAdapter("select * from 辐照灭菌台帐详细信息", connOle);
+            //DataTable dt = new DataTable("temp");
+            //da.Fill(dt);
+            //List<Int32> sheetList = new List<Int32>();
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{ sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            //sheetnum = sheetList.IndexOf(Convert.ToInt32(dt台帐.Rows[0]["ID"])) + 1;
             // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
-            mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); 
+          //  mysheet.PageSetup.RightFooter = mySystem.Parameter.proInstruction + " - 09 - " + sheetnum.ToString() + " / &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); 
            //返回
             return mysheet;
         }
@@ -476,7 +478,7 @@ namespace mySystem.Process.灭菌
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(true);
+            print(false);
             //写日志
             string log = "\n=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
@@ -497,6 +499,7 @@ namespace mySystem.Process.灭菌
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //填过“审核员”后，该行只读

@@ -52,7 +52,7 @@ namespace mySystem.Process.Stock
 
         private void readInnerData()
         {
-            daInner = new OleDbDataAdapter("select * from 检验台账", conn);
+            daInner = new OleDbDataAdapter("select * from 检验台账 order by ID", conn);
             cbInner = new OleDbCommandBuilder(daInner);
             dtInner = new DataTable("检验台账");
             bsInner = new BindingSource();
@@ -201,7 +201,7 @@ namespace mySystem.Process.Stock
             ls操作员 = new List<string>();
             OleDbDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='" + "检验台帐" + "'", conn);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "检验台帐" + "'", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             if (dt.Rows.Count == 0)

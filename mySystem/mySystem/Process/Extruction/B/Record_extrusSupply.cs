@@ -39,6 +39,7 @@ namespace WindowsFormsApplication1
         //用于带id参数构造函数，存储已存在记录的相关信息
         int instrid;
         string prodcode;
+        string instr;
         DateTime time;
         bool flight;
 
@@ -212,19 +213,57 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
             instrid = mySystem.Parameter.proInstruID;
+            instr = mySystem.Parameter.proInstruction;
             fill_printer();
             getPeople();
             setUserState();
             getOtherData();
+            readOuterData(instrid);
+            removeOuterBinding();
+            outerBind();
+            
+            if (dt_prodinstr.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
+            {
+                MessageBox.Show("只有操作员可以新建记录");
+                return;
+            }
+            if (dt_prodinstr.Rows.Count <= 0)
+            {
+                DataRow dr = dt_prodinstr.NewRow();
+                dr = writeOuterDefault(dr);
+                dt_prodinstr.Rows.Add(dr);
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(instrid);
+                removeOuterBinding();
+                outerBind();
+            }
+            //ckb白班.Checked = (bool)dt_prodinstr.Rows[0]["班次"];
+            //ckb夜班.Checked = !ckb白班.Checked;
 
-            setControlFalse();
-            bt打印.Enabled = false;
-            bt日志.Enabled = false;
-            cb打印机.Enabled = false;
+            
+            time = DateTime.Parse(dtp供料日期.Value.ToShortDateString());
+            flight = mySystem.Parameter.userflight == "白班";
 
-            cb产品代码.Enabled = true;
-            dtp供料日期.Enabled = true;
-            bt插入查询.Enabled = true;
+            readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            innerBind();
+
+
+            setFormState();
+            setEnableReadOnly();
+            addDataEventHandler();
+
+            dtp供料日期.Enabled = false;
+            cb产品代码.Enabled = false;
+            bt插入查询.Enabled = false;
+            
+            //setControlFalse();
+            //bt打印.Enabled = false;
+            //bt日志.Enabled = false;
+            //cb打印机.Enabled = false;
+
+            //cb产品代码.Enabled = true;
+            //dtp供料日期.Enabled = true;
+            //bt插入查询.Enabled = true;
         }
 
         public Record_extrusSupply(mySystem.MainForm mainform,int id)
@@ -245,6 +284,7 @@ namespace WindowsFormsApplication1
             da.Fill(tempdt);
             
             instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+            instr = tempdt.Rows[0]["生产指令编号"].ToString();
             prodcode = tempdt.Rows[0]["产品代码"].ToString();
             time = (DateTime)tempdt.Rows[0]["供料日期"];
             flight = (bool)tempdt.Rows[0]["班次"];
@@ -252,7 +292,7 @@ namespace WindowsFormsApplication1
             addmatcode(instrid);
             label_prodcode = 1;
 
-            readOuterData(instrid, prodcode, time, flight);
+            readOuterData(instrid);
             removeOuterBinding();
             outerBind();
             cb产品代码.Text = prodcode;
@@ -293,6 +333,13 @@ namespace WindowsFormsApplication1
             {
                 if (dataGridView1.SelectedCells[0].RowIndex < 0)
                     return;
+
+                if (!( "" == (Convert.ToString(dt_prodlist.Rows[dataGridView1.SelectedCells[0].RowIndex]["审核员"]).ToString().Trim())))
+                {
+                    return;
+                }
+
+
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
@@ -304,12 +351,39 @@ namespace WindowsFormsApplication1
             float sum_out = 0, sum_inmid = 0, sum_mid = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")//外层
-                    sum_out += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//中内层
-                    sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//内层
-                    sum_mid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//外层
+                {
+                    try
+                    {
+                        sum_out += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                    }
+                    catch (Exception ee)
+                    {
+                        sum_out += 0;
+                    }
+                }
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                {//中内层
+                    try
+                    {
+                        sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                    }
+                    catch (Exception ee)
+                    {
+                        sum_out += 0;
+                    }
+                }
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() != "")
+                {//内层
+                    try
+                    {
+                        sum_mid += float.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
+                    }
+                    catch (Exception ee)
+                    {
+                        sum_out += 0;
+                    }
+                }
             }
             dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
             dt_prodinstr.Rows[0]["中内层供料量合计b"] = sum_inmid;
@@ -426,12 +500,14 @@ namespace WindowsFormsApplication1
                     cb原料代码ab1c.Items.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]));        
                     dict_inoutmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]), Convert.ToString(tempdt.Rows[i]["内外层物料批号"]));
                     label9.Text = tempdt.Rows[i]["内外层物料代码"].ToString();
+                    tb原料批号ab1c.Text = tempdt.Rows[i]["内外层物料批号"].ToString();
                 }
                 if (tempdt.Rows[i]["中层物料代码"] != null && tempdt.Rows[i]["中层物料批号"] != null)
                 {
                     cb原料代码b2.Items.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]));
                     dict_midmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]), Convert.ToString(tempdt.Rows[i]["中层物料批号"]));
                     label11.Text = Convert.ToString(tempdt.Rows[i]["中层物料代码"]);
+                    tb原料批号b2.Text = tempdt.Rows[i]["中层物料批号"].ToString();
                 }                     
             }
             if(tempdt.Rows.Count>0)
@@ -451,8 +527,8 @@ namespace WindowsFormsApplication1
         DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = mySystem.Parameter.proInstruID;
-            dr["产品代码"] = cb产品代码.Text;
-            dr["产品批号"] = dict_procode_batch[cb产品代码.Text];
+            //dr["产品代码"] = cb产品代码.Text;
+            //dr["产品批号"] = dict_procode_batch[cb产品代码.Text];
             dr["生产指令编号"] = mySystem.Parameter.proInstruction;
             dr["外中内层原料代码"] = cb原料代码ab1c.Text;
             dr["中层原料代码"] = cb原料代码b2.Text;
@@ -489,7 +565,7 @@ namespace WindowsFormsApplication1
             dr["中内层供料量"] = 0;
             dr["中层供料量"] = 0;
             dr["原料抽查结果"] = "合格";
-
+            dr["班次"] = mySystem.Parameter.userflight;
             dr["操作员备注"] = "无";
             dr["供料人"] =mySystem.Parameter.userName;
             return dr;
@@ -500,6 +576,14 @@ namespace WindowsFormsApplication1
             dt_prodinstr = new DataTable("吹膜供料记录");
             bs_prodinstr = new BindingSource();
             da_prodinstr = new OleDbDataAdapter("select * from 吹膜供料记录 where 生产指令ID=" + instrid + " and 产品代码='" + prodcode + "' and 供料日期=#"+time+"# and 班次="+flight, mySystem.Parameter.connOle);
+            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+            da_prodinstr.Fill(dt_prodinstr);
+        }
+        void readOuterData(int instrid)
+        {
+            dt_prodinstr = new DataTable("吹膜供料记录");
+            bs_prodinstr = new BindingSource();
+            da_prodinstr = new OleDbDataAdapter("select * from 吹膜供料记录 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
             cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
             da_prodinstr.Fill(dt_prodinstr);
         }
@@ -631,7 +715,7 @@ namespace WindowsFormsApplication1
         {
             dataGridView1.Columns[0].Visible = false;//ID
             dataGridView1.Columns[1].Visible = false;//T吹膜供料记录ID
-            dataGridView1.Columns[5].Visible = false;//中内层供料量
+            dataGridView1.Columns[6].Visible = false;//中内层供料量
         }
         //设置datagridview序号
         void setDataGridViewRowNums()
@@ -821,16 +905,24 @@ namespace WindowsFormsApplication1
                     bt审核.Enabled = true;
                 }
                 else setControlFalse();
+                if (Parameter.FormState.审核通过 != _formState)
+                {
+                    btn数据审核.Enabled = true;
+                }
             }
             if (Parameter.UserState.操作员 == _userState)
             {
-                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState)
+                {
+                    setControlTrue();
+                }
                 else
                 {
                     setControlFalse();
                     cb产品代码.Enabled = true;
                     dtp供料日期.Enabled = true;
-                } 
+                }
+                btn数据审核.Enabled = false;
             }
         }
 
@@ -844,7 +936,7 @@ namespace WindowsFormsApplication1
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(instrid, prodcode, time, flight);
+            readOuterData(instrid);
             
             removeOuterBinding();
             outerBind();
@@ -907,12 +999,12 @@ namespace WindowsFormsApplication1
             float sum_out = 0, sum_inmid = 0, sum_mid = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")//外层
-                    sum_out += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//中内层
-                    sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//内层
-                    sum_mid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//外层
+                    sum_out += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//中内层
+                    sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() != "")//内层
+                    sum_mid += float.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
             }
 
             dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
@@ -1123,7 +1215,7 @@ namespace WindowsFormsApplication1
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-06-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = instr + "-06-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -1241,6 +1333,14 @@ namespace WindowsFormsApplication1
         {
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
+                foreach (DataRow dr in dt_prodlist.Rows)
+                {
+                    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == "__待审核")
+                    {
+                        MessageBox.Show("请先完成数据审核!");
+                        return;
+                    }
+                }
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "不合格")
@@ -1306,6 +1406,11 @@ namespace WindowsFormsApplication1
             //班次不能编辑
             ckb白班.Enabled = false;
             ckb夜班.Enabled = false;
+
+            cb原料代码ab1c.Enabled = false;
+            cb原料代码b2.Enabled = false;
+            tb原料批号ab1c.ReadOnly = true;
+            tb原料批号b2.ReadOnly = true;
         }
 
         private void setControlFalse()
@@ -1377,6 +1482,52 @@ namespace WindowsFormsApplication1
             dtp供料日期.Enabled = false;
             cb产品代码.Enabled = false;
             bt插入查询.Enabled = false;
+        }
+
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dt_prodlist.Rows.Count; i++)
+            {
+                if (Convert.ToString(dt_prodlist.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dt_prodlist.Rows[i]["审核员"] = "__待审核";
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            innerBind();
+        }
+
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if ("__待审核" == Convert.ToString(dt_prodlist.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dt_prodlist.Rows[i]["供料人"].ToString())
+                    {
+                        dt_prodlist.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("供料人和审核员不能相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            innerBind();
         }
 
     }

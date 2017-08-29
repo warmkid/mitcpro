@@ -105,7 +105,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料使用记录");
             if (b)
             {
-                BTVMaterialRecord mydlg = new BTVMaterialRecord();
+                BTVMaterialRecord mydlg = new BTVMaterialRecord(mainform);
                 mydlg.ShowDialog();
             }
             else

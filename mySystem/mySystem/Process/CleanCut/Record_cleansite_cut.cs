@@ -50,7 +50,7 @@ namespace mySystem.Process.CleanCut
         private Dictionary<string, string> dict_prod;//产品代码与产品批号对应字典
 
         private int instrid;
-        private string prodcode;
+        private string prodcode,instrcode;
         public Record_cleansite_cut(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -62,6 +62,7 @@ namespace mySystem.Process.CleanCut
             addDataEventHandler();
 
             instrid = mySystem.Parameter.cleancutInstruID;
+            instrcode = mySystem.Parameter.cleancutInstruction;
 
             foreach (Control c in this.Controls)
                 c.Enabled = false;
@@ -850,40 +851,68 @@ namespace mySystem.Process.CleanCut
         {
 
             int ind = 0;
-            if (dataGridView1.Rows.Count > 14)
+            int i插入行数 = 0;
+            my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编码.Text;
+           // my.Cells[3, 4].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            if (ckb白班.Checked)
+                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            else
+                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            int i内表序号判断=0;
+            //插入新行
+            if (dataGridView1.Rows.Count > 8)
             {
-                //在第6行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 14; i++)
+                if ((dataGridView1.Rows.Count - 8) % 2 == 0)
+                    i插入行数 = (dataGridView1.Rows.Count - 8) / 2;
+                if ((dataGridView1.Rows.Count - 8) % 2 == 1)
+                    i插入行数 = (dataGridView1.Rows.Count - 8) / 2 + 1;
+                for (int i = 0; i < i插入行数; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[9 + i, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 14;
+                ind = i插入行数;
             }
-
-            my.Cells[3, 1].Value = "产品代码/规格：" + cb产品代码.Text+"   "+tb产品规格.Text;
-            my.Cells[3, 5].Value = "产品批号：" + tb产品批号.Text;
-            if (ckb白班.Checked)
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
-            else
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+           
+            //写内表数据
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                my.Cells[5 + i, 1].Value = i + 1;
-                my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                if (dataGridView1.Rows.Count % 2 == 1)
+                    i内表序号判断 = dataGridView1.Rows.Count + 1;
+                else
+                    i内表序号判断 = dataGridView1.Rows.Count;
+                if (i < (i内表序号判断 / 2)||i<4)
+                {
+                    my.Cells[5 + i, 1].Value = i + 1;
+                    my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                    if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
+                        my.Cells[5 + i, 3].Value = "√";
+                    else if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                        my.Cells[5 + i, 3].Value = "×";
+                }
+                else
+                {
+                    my.Cells[5 + i - i内表序号判断 / 2, 4].Value = i + 1;
+                    my.Cells[5 + i - i内表序号判断 / 2, 5].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                    if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
+                        my.Cells[5 + i - i内表序号判断 / 2, 6].Value = "√";
+                    else if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                        my.Cells[5 + i - i内表序号判断 / 2, 6].Value = "×";
+                }
             }
-            my.Cells[5, 7].Value = tb清场人.Text;
-            if(ckb合格.Checked && !ckb不合格.Checked)
-                my.Cells[5, 8].Value = "合格☑\n不合格□";
-            else if(ckb不合格.Checked && !ckb合格.Checked)
-                my.Cells[5, 8].Value = "合格□\n不合格☑";
-            else
-                my.Cells[5, 8].Value = "合格□\n不合格□";
-            my.Cells[5, 9].Value = tb检查人.Text;
-            my.Cells[19 + ind, 1].Value = "备注："+tb备注.Text;
+            //my.Cells[5, 7].Value = tb清场人.Text;
+            //if(ckb合格.Checked && !ckb不合格.Checked)
+            //    my.Cells[5,8].Value = "合格☑\n不合格□";
+            //else if(ckb不合格.Checked && !ckb合格.Checked)
+            //    my.Cells[5, 8].Value = "合格□\n不合格☑";
+            //else
+            //    my.Cells[5, 8].Value = "合格□\n不合格□";
+            
+            //TODO:读取确认日期和审核日期
+            my.Cells[9 + ind, 1].Value = "备注：清场打“√”，没清洁打“×”。";
+            my.Cells[10 + ind, 1].Value = String.Format("确认人/日期：{0}      {1}", tb清场人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[10 + ind, 4].Value = String.Format("复核人/日期：{0}      {1}", tb检查人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
 
         }
         public void print(bool b)
@@ -893,14 +922,23 @@ namespace mySystem.Process.CleanCut
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             string dir = System.IO.Directory.GetCurrentDirectory();
-            dir += "./../../xls/cleancut/SOP-MFG-110-R01A 清场记录.xlsx";
+            dir += "./../../xls/cleancut/SOP-MFG-302-R04A 清场记录.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
             fill_excel(my);
+
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 清场记录" + " where 生产指令ID=" + instrid.ToString(), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"])) + 1;           
+            my.PageSetup.RightFooter = instrcode + "-07-" + sheetnum.ToString("D3") + "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
             if (b)
             {

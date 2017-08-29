@@ -67,7 +67,8 @@ namespace mySystem.Process.Extruction.C
                 cmb班次.Items.Add(flight[i]);
             }
             cmb班次.SelectedItem = __班次;
-            readOuterData(__生产指令编号, __生产日期, __班次);
+            //readOuterData(__生产指令编号, __生产日期, __班次);
+            readOuterData(__生产指令编号);
             removeOuterBind();
             outerBind();
             if (0 == dtOuter.Rows.Count)
@@ -76,7 +77,8 @@ namespace mySystem.Process.Extruction.C
                 newrow = writeOuterDefault(newrow);
                 dtOuter.Rows.Add(newrow);
                 daOuter.Update((DataTable)bsOuter.DataSource);
-                readOuterData(__生产指令编号, __生产日期, __班次);
+                readOuterData(__生产指令编号);
+                //readOuterData(__生产指令编号, __生产日期, __班次);
                 removeOuterBind();
                 outerBind();
             }
@@ -137,6 +139,7 @@ namespace mySystem.Process.Extruction.C
         {
             dr["T吹膜供料系统运行记录ID"] = dtOuter.Rows[0]["ID"];
             dr["检查时间"] = Convert.ToDateTime(DateTime.Now.TimeOfDay.ToString());
+            dr["班次"] = mySystem.Parameter.userflight;
             dr["电机工作是否正常"] = "正常";
             dr["气动阀工作是否正常"] = "正常";
             dr["供料运行是否正常"] = "正常";
@@ -156,6 +159,16 @@ namespace mySystem.Process.Extruction.C
             bsOuter = new BindingSource();
             daOuter.Fill(dtOuter);
         }
+
+        void readOuterData(string __生产指令编号)
+        {
+            daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "'", conOle);
+            cbOuter = new OleDbCommandBuilder(daOuter);
+            dtOuter = new DataTable(tablename1);
+            bsOuter = new BindingSource();
+            daOuter.Fill(dtOuter);
+        }
+
         void readOuterData(int Id)
         {
             daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID="+Id+";", conOle);
@@ -184,6 +197,7 @@ namespace mySystem.Process.Extruction.C
                         setControlFalse();
                         
                     }
+                    btn数据审核.Enabled = false;
                     break;
                 case Parameter.UserState.审核员: //1--审核员
                     //the _formState is to be checked
@@ -197,6 +211,10 @@ namespace mySystem.Process.Extruction.C
                     else if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState || Parameter.FormState.审核未通过 == _formState)
                     {
                         setControlFalse();
+                    }
+                    if (Parameter.FormState.审核通过 != _formState)
+                    {
+                        btn数据审核.Enabled = true;
                     }
                     break;
                 case Parameter.UserState.管理员: //2--管理员
@@ -540,6 +558,14 @@ namespace mySystem.Process.Extruction.C
         {
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
+                foreach (DataRow dr in dtInner.Rows)
+                {
+                    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == __待审核)
+                    {
+                        MessageBox.Show("请先完成数据审核!");
+                        return;
+                    }
+                }
                 //read from database table and find current record
                 string checkName = "待审核";
                 DataTable dtCheck = new DataTable(checkName);
@@ -578,7 +604,7 @@ namespace mySystem.Process.Extruction.C
                 }
                 catch
                 {
-                    readOuterData(__生产指令编号, __生产日期, __班次);
+                    readOuterData(__生产指令编号);
                 }
                 removeOuterBind();
                 outerBind();
@@ -611,7 +637,7 @@ namespace mySystem.Process.Extruction.C
         {           
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
-            readOuterData(__生产指令编号, __生产日期, __班次);
+            readOuterData(__生产指令编号);
             removeOuterBind();
             outerBind();
 
@@ -649,6 +675,10 @@ namespace mySystem.Process.Extruction.C
         private void btn删除_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedCells.Count <= 0)
+            {
+                return;
+            }
+            if (!("" == (Convert.ToString(dtInner.Rows[dataGridView1.SelectedCells[0].RowIndex]["审核员"]).ToString().Trim())))
             {
                 return;
             }
@@ -708,8 +738,8 @@ namespace mySystem.Process.Extruction.C
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
-            my.Cells[3, 6].Value = "生产指令：" + lbl生产指令编号.Text;
-            my.Cells[5, 1].Value = dtp生产日期.Value.ToString("yyyy年MM月dd日") + "   " + cmb班次.Text;
+            my.Cells[3, 6].Value = "生产指令：" + __生产指令编号;
+            my.Cells[5, 1].Value = __生产日期.ToString("yyyy年MM月dd日") + "   " + __班次;
             my.Cells[5, 9].Value = "";
             
 
@@ -728,7 +758,7 @@ namespace mySystem.Process.Extruction.C
             my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"];
             // 让这个Sheet为被选中状态
 
-            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-07-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = __生产指令编号 + "-07-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
             
 			if(preview)
 			{
@@ -779,6 +809,52 @@ namespace mySystem.Process.Extruction.C
                 ids.Add(Convert.ToInt32(dr["ID"]));
             }
             return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+        }
+
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dtInner.Rows.Count; i++)
+            {
+                if (Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dtInner.Rows[i]["审核员"] = __待审核;                    
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+        }
+
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if (__待审核 == Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dtInner.Rows[i]["检查员"].ToString())
+                    {
+                        dtInner.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("检查员和审核员不能相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
         }
     }
 	

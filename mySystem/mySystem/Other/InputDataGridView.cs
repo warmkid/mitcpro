@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace mySystem.Other
 {
@@ -13,11 +14,13 @@ namespace mySystem.Other
     {
         DataTable _datatable;
         bool _multiSelect;
-        public InputDataGridView(String data, DataTable setting, bool multiSelect=true)
+        Hashtable _additional;
+        public InputDataGridView(String data, DataTable setting, bool multiSelect=true, Hashtable additional=null)
         {
             InitializeComponent();
             _datatable = setting;
             _multiSelect = multiSelect;
+            _additional = additional;
             // add column
             setting.Columns.Add("选择", System.Type.GetType("System.Boolean"));
             // check sth
@@ -50,6 +53,7 @@ namespace mySystem.Other
             dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
             dataGridView1.CellValueChanged += new DataGridViewCellEventHandler(dataGridView1_CellValueChanged);
             dataGridView1.CellContentClick += new DataGridViewCellEventHandler(dataGridView1_CellContentClick);
+            //addOtherEventHandler();
         }
 
         void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -85,12 +89,43 @@ namespace mySystem.Other
             
         }
 
-        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        void addOtherEventHandler()
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["选择"].DisplayIndex = 0;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
+
+            if (_additional != null)
+            {
+                dataGridView1.ShowCellToolTips = true;
+                foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+                {
+                    int id = Convert.ToInt32(dgvr.Cells["ID"].Value);
+                    foreach (DataGridViewCell cell in dgvr.Cells)
+                    {
+                        object[] tmp;
+                        try
+                        {
+                            tmp = ((List<Object>)_additional[id]).ToArray();
+                            cell.ToolTipText = String.Join("\n", tmp);
+                        }
+                        catch (InvalidCastException ee)
+                        {
+                            tmp = ((HashSet<Object>)_additional[id]).ToArray();
+                            cell.ToolTipText = String.Join("\n", tmp);
+                        }
+
+
+                    }
+                }
+            }
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            addOtherEventHandler();
+            dataGridView1.DataBindingComplete -= dataGridView1_DataBindingComplete;
         }
 
         private void btn完成_Click(object sender, EventArgs e)
@@ -99,9 +134,9 @@ namespace mySystem.Other
             this.Close();
         }
 
-        public static String getIDs(String data, DataTable setting, bool multiSelect=true)
+        public static String getIDs(String data, DataTable setting, bool multiSelect = true, Hashtable additional = null)
         {
-            InputDataGridView dlg = new InputDataGridView(data, setting, multiSelect);
+            InputDataGridView dlg = new InputDataGridView(data, setting, multiSelect, additional);
             if (DialogResult.OK == dlg.ShowDialog())
             {
                 // 获取用户的选择，并返回

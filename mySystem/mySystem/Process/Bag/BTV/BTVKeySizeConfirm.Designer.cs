@@ -363,13 +363,13 @@
             this.tb关键尺寸2.Size = new System.Drawing.Size(132, 26);
             this.tb关键尺寸2.TabIndex = 16;
             // 
-            // LBL生产指令编号
+            // lbl生产指令编号
             // 
             this.lbl生产指令编号.AutoSize = true;
             this.lbl生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbl生产指令编号.Location = new System.Drawing.Point(134, 74);
             this.lbl生产指令编号.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lbl生产指令编号.Name = "LBL生产指令编号";
+            this.lbl生产指令编号.Name = "lbl生产指令编号";
             this.lbl生产指令编号.Size = new System.Drawing.Size(64, 16);
             this.lbl生产指令编号.TabIndex = 17;
             this.lbl生产指令编号.Text = "label18";
@@ -547,7 +547,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 639);
+            this.ClientSize = new System.Drawing.Size(806, 587);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.btn查看日志);

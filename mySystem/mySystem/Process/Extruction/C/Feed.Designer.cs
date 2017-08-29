@@ -49,6 +49,8 @@
             this.lbl生产指令编号 = new System.Windows.Forms.Label();
             this.cmb打印机选择 = new System.Windows.Forms.ComboBox();
             this.btn删除 = new System.Windows.Forms.Button();
+            this.btn数据审核 = new System.Windows.Forms.Button();
+            this.btn提交数据审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -90,6 +92,7 @@
             this.cmb班次.Name = "cmb班次";
             this.cmb班次.Size = new System.Drawing.Size(121, 24);
             this.cmb班次.TabIndex = 45;
+            this.cmb班次.Visible = false;
             // 
             // lb班次
             // 
@@ -99,6 +102,7 @@
             this.lb班次.Size = new System.Drawing.Size(40, 16);
             this.lb班次.TabIndex = 44;
             this.lb班次.Text = "班次";
+            this.lb班次.Visible = false;
             // 
             // dtp生产日期
             // 
@@ -176,7 +180,7 @@
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(92, 30);
             this.btn提交审核.TabIndex = 76;
-            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.Text = "最后审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
             this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
@@ -230,7 +234,7 @@
             this.cmb打印机选择.FormattingEnabled = true;
             this.cmb打印机选择.Location = new System.Drawing.Point(260, 412);
             this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(121, 24);
+            this.cmb打印机选择.Size = new System.Drawing.Size(181, 24);
             this.cmb打印机选择.TabIndex = 158;
             // 
             // btn删除
@@ -243,11 +247,33 @@
             this.btn删除.UseVisualStyleBackColor = true;
             this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
             // 
+            // btn数据审核
+            // 
+            this.btn数据审核.Location = new System.Drawing.Point(931, 347);
+            this.btn数据审核.Name = "btn数据审核";
+            this.btn数据审核.Size = new System.Drawing.Size(92, 30);
+            this.btn数据审核.TabIndex = 161;
+            this.btn数据审核.Text = "数据审核";
+            this.btn数据审核.UseVisualStyleBackColor = true;
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
+            // 
+            // btn提交数据审核
+            // 
+            this.btn提交数据审核.Location = new System.Drawing.Point(805, 347);
+            this.btn提交数据审核.Name = "btn提交数据审核";
+            this.btn提交数据审核.Size = new System.Drawing.Size(120, 30);
+            this.btn提交数据审核.TabIndex = 160;
+            this.btn提交数据审核.Text = "提交数据审核";
+            this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
+            // 
             // Feed
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1078, 463);
+            this.Controls.Add(this.btn数据审核);
+            this.Controls.Add(this.btn提交数据审核);
             this.Controls.Add(this.btn删除);
             this.Controls.Add(this.cmb打印机选择);
             this.Controls.Add(this.lbl生产指令编号);
@@ -301,5 +327,7 @@
         private System.Windows.Forms.Label lbl生产指令编号;
         private System.Windows.Forms.ComboBox cmb打印机选择;
         private System.Windows.Forms.Button btn删除;
+        private System.Windows.Forms.Button btn数据审核;
+        private System.Windows.Forms.Button btn提交数据审核;
     }
 }

@@ -48,6 +48,8 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
       <HintPath>extern\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>extern\Newtonsoft.Json.dll</HintPath>
@@ -70,6 +72,12 @@
     </Compile>
     <Compile Include="Other\BaseForm.Designer.cs">
       <DependentUpon>BaseForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Other\BOMList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\BOMList.Designer.cs">
+      <DependentUpon>BOMList.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\CheckForm.cs">
       <SubType>Form</SubType>
@@ -99,6 +107,12 @@
     <Compile Include="Other\Parameter.cs" />
     <Compile Include="Other\TaskbarNotifier.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\属于工序.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\属于工序.Designer.cs">
+      <DependentUpon>属于工序.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Bag\BTV\BTV2DProRecord.cs">
       <SubType>Form</SubType>
@@ -358,6 +372,18 @@
     <Compile Include="Process\Bag\LDPE\LDPEMainForm.Designer.cs">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\LDPE\产品外观和尺寸检验记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\产品外观和尺寸检验记录.Designer.cs">
+      <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\产品热合强度检验记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\产品热合强度检验记录.Designer.cs">
+      <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\PTV\PTVBag_batchproduction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -608,6 +634,18 @@
     <Compile Include="Process\Order\订单管理.Designer.cs">
       <DependentUpon>订单管理.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Order\采购批准单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Order\采购批准单.Designer.cs">
+      <DependentUpon>采购批准单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Order\采购订单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Order\采购订单.Designer.cs">
+      <DependentUpon>采购订单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Order\采购需求单.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -716,17 +754,23 @@
     <Compile Include="Process\Stock\退货.Designer.cs">
       <DependentUpon>退货.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\退货申请.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\退货申请.Designer.cs">
+      <DependentUpon>退货申请.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\退货记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\退货记录.Designer.cs">
+      <DependentUpon>退货记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\采购单管理.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Process\Stock\采购单管理.Designer.cs">
       <DependentUpon>采购单管理.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\采购需求单.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\采购需求单.Designer.cs">
-      <DependentUpon>采购需求单.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\灭菌\Gamma射线辐射灭菌委托单.cs">
       <SubType>Form</SubType>
@@ -793,6 +837,12 @@
     </Compile>
     <Compile Include="Query\灭菌查询.Designer.cs">
       <DependentUpon>灭菌查询.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\订单查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\订单查询.Designer.cs">
+      <DependentUpon>订单查询.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\AddPeopleForm.cs">
       <SubType>Form</SubType>
@@ -1051,6 +1101,9 @@
     <EmbeddedResource Include="Other\BaseForm.resx">
       <DependentUpon>BaseForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Other\BOMList.resx">
+      <DependentUpon>BOMList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Other\CheckForm.resx">
       <DependentUpon>CheckForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -1064,6 +1117,9 @@
     <EmbeddedResource Include="Other\LogForm.resx">
       <DependentUpon>LogForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Other\属于工序.resx">
+      <DependentUpon>属于工序.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTV2DProRecord.resx">
       <DependentUpon>BTV2DProRecord.cs</DependentUpon>
@@ -1198,6 +1254,12 @@
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEMainForm.resx">
       <DependentUpon>LDPEMainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\产品外观和尺寸检验记录.resx">
+      <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\产品热合强度检验记录.resx">
+      <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_batchproduction.resx">
       <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>
     </EmbeddedResource>
@@ -1313,6 +1375,12 @@
     <EmbeddedResource Include="Process\Order\订单管理.resx">
       <DependentUpon>订单管理.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Order\采购批准单.resx">
+      <DependentUpon>采购批准单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Order\采购订单.resx">
+      <DependentUpon>采购订单.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Order\采购需求单.resx">
       <DependentUpon>采购需求单.cs</DependentUpon>
     </EmbeddedResource>
@@ -1370,11 +1438,14 @@
     <EmbeddedResource Include="Process\Stock\退货.resx">
       <DependentUpon>退货.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\退货申请.resx">
+      <DependentUpon>退货申请.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\退货记录.resx">
+      <DependentUpon>退货记录.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\采购单管理.resx">
       <DependentUpon>采购单管理.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\采购需求单.resx">
-      <DependentUpon>采购需求单.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\灭菌\Gamma射线辐射灭菌委托单.resx">
       <DependentUpon>Gamma射线辐射灭菌委托单.cs</DependentUpon>
@@ -1414,6 +1485,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Query\灭菌查询.resx">
       <DependentUpon>灭菌查询.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\订单查询.resx">
+      <DependentUpon>订单查询.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\AddPeopleForm.resx">
       <DependentUpon>AddPeopleForm.cs</DependentUpon>

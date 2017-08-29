@@ -1138,7 +1138,7 @@ namespace mySystem.Extruction.Process
                 ind = dataGridView1.Rows.Count - 24;
             }
 
-            my.Cells[3, 1].Value = "物料代码："+cB物料代码.Text;
+            my.Cells[3, 1].Value = "物料代码："+dt_prodinstr.Rows[0]["物料代码"].ToString();
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -1307,9 +1307,9 @@ namespace mySystem.Extruction.Process
             //判断内表审核人是否有空值
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[9].Value.ToString() == "")
+                if (dataGridView1.Rows[i].Cells[9].Value.ToString() == "" || dataGridView1.Rows[i].Cells[9].Value.ToString()=="__待审核")
                 {
-                    MessageBox.Show("未提交领料审核");
+                    MessageBox.Show("未完成领料审核");
                     return;
                 }
             }
@@ -1363,7 +1363,12 @@ namespace mySystem.Extruction.Process
 
         private void bt领料审核_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int i in hi待审核行号)
             {
                 if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
                 {
@@ -1393,10 +1398,13 @@ namespace mySystem.Extruction.Process
 
         private void Record_material_reqanddisg_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!isSaved&&dt_prodinstr.Rows.Count>0)
+            if (dt_prodinstr != null)
             {
-                dt_prodinstr.Rows[0].Delete();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                if (!isSaved && dt_prodinstr.Rows.Count > 0)
+                {
+                    dt_prodinstr.Rows[0].Delete();
+                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                }
             }
         }
     }

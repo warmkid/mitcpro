@@ -859,6 +859,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new ProcessProductInstru(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 1: // 日报表
@@ -869,6 +870,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.ProdctDaily_extrus(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         
                         break;
@@ -880,6 +882,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new WindowsFormsApplication1.Record_extrusClean(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         
                         break;
@@ -891,6 +894,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 4:// 预热参数记录表                                    
@@ -901,7 +905,8 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             // TODO
-                            //(new mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3(mainform, id)).print(false);
+                            (new mySystem.Extruction.Process.ExtructionPreheatParameterRecordStep3(mainform, id)).print(false);
+                            GC.Collect();
 
                         }
                         break;
@@ -913,6 +918,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new WindowsFormsApplication1.Record_extrusSupply(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 6://供料系统运行记录
@@ -923,7 +929,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Process.Extruction.C.Feed(mainform, id)).print(false);
-
+                            GC.Collect();
                         }
                         break;
                     case 7:// 吹膜机组运行记录
@@ -935,6 +941,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Process.Extruction.B.Running(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 8:// 吹膜工序生产和检验记录
@@ -945,6 +952,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 9:// 废品记录
@@ -956,6 +964,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Process.Extruction.B.Waste(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 10:
@@ -967,9 +976,10 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Extruction.Process.Record_extrusSiteClean(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
-                    case 11:// 物料平衡记录s
+                    case 11:// 物料平衡记录
                         da = new OleDbDataAdapter("select * from 吹膜工序物料平衡记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
                         dt = new DataTable("吹膜工序物料平衡记录");
                         da.Fill(dt);
@@ -977,6 +987,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 12:// 领料退料记录
@@ -987,6 +998,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Extruction.Process.Record_material_reqanddisg(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 13: // 岗位交接班
@@ -997,6 +1009,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Process.Extruction.A.HandOver(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 14:// 内包装
@@ -1007,6 +1020,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Extruction.Process.ProductInnerPackagingRecord(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                     case 15:// 外包装
@@ -1017,6 +1031,7 @@ namespace BatchProductRecord
                         {
                             id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                             (new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
+                            GC.Collect();
                         }
                         break;
                 }

@@ -8,6 +8,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Collections;
+using System.Runtime.InteropServices;
+using Newtonsoft.Json.Linq;
 
 namespace mySystem.Process.Order
 {
@@ -31,12 +33,12 @@ namespace mySystem.Process.Order
 
         public 采购需求单(MainForm mainform, string 订单号):base(mainform)
         {
-            // id是销售订单ID
-            // whatId 为真，表示销售订单
+            
             _订单号 = 订单号;
             conn = new OleDbConnection(strConnect);
             conn.Open();
             InitializeComponent();
+            fillPrinter();
             getPeople();
             setUseState();
             
@@ -45,18 +47,57 @@ namespace mySystem.Process.Order
             addOtherEventHandler();
             setFormState();
             setEnableReadOnly();
+            // 加入产成品列表
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 订单号 + "'", conn);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("读取销售订单数据失败");
+                return;
+
+            }
+            int 销售订单ID = Convert.ToInt32(dt.Rows[0]["ID"]);
+            da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + 销售订单ID, conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            dataGridView2.DataSource = dt;
+            dataGridView2.ReadOnly = true;
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView2.Columns["ID"].Visible = false;
+            dataGridView2.Columns["销售订单ID"].Visible = false;
+            //
         }
 
         private void addOtherEventHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+        }
+
+        void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (dataGridView1.CurrentCell.OwningColumn.Name == "推荐供应商")
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls供应商.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                }
+            }
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["采购需求单ID"].Visible = false;
+            dataGridView1.Columns["批准状态"].Visible = false;
         }
 
         private void getOtherData()
@@ -87,6 +128,7 @@ namespace mySystem.Process.Order
         private void fillBy订单号(string 订单号)
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 订单号 + "'", conn);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             DataTable dt = new DataTable();
             da.Fill(dt);
             
@@ -96,7 +138,14 @@ namespace mySystem.Process.Order
                 return;
                     
             }
+            
+
             int 销售订单ID = Convert.ToInt32(dt.Rows[0]["ID"]);
+            DateTime dt拟交货日期 = Convert.ToDateTime(dt.Rows[0]["拟交货日期"]);
+            // 修改销售订单的状态
+            dt.Rows[0]["状态"] = "已生成采购需求单";
+            da.Update(dt);
+
             // 外包表
             readOuterData(订单号);
             outerBind();
@@ -104,12 +153,14 @@ namespace mySystem.Process.Order
             {
 
                 DataRow dr = dtOuter.NewRow();
-                dr = writeOuterDefault(dr, 订单号);
+                dr = writeOuterDefault(dr, 订单号, dt拟交货日期);
                 dtOuter.Rows.Add(dr);
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(订单号);
                 outerBind();
             }
+
+            
 
 
             // 内表
@@ -128,18 +179,23 @@ namespace mySystem.Process.Order
                 {
                     string 存货编码 = dr["存货编码"].ToString();
                     double 订单数量 = Convert.ToDouble(dr["数量"]);
-                    ht产成品.Add(存货编码,订单数量);
-                    string BOM_IDS = ht产成品BOM[存货编码].ToString();
-                    foreach (string sid in BOM_IDS.Split(','))
+                    if (!ht产成品.ContainsKey(存货编码))
                     {
-                        int id = Convert.ToInt32(sid);
+                        ht产成品[存货编码] = 0;
+                    }
+                    ht产成品[存货编码] = Convert.ToDouble(ht产成品[存货编码]) + 订单数量;
+                    JArray BOM_IDS = JArray.Parse(ht产成品BOM[存货编码].ToString());
+                    foreach (JToken sid in BOM_IDS)
+                    {
+                        int id = Convert.ToInt32(sid["ID"]);
+                        double 数量每产品 = Convert.ToDouble(sid["数量"]);
                         if (ht组件.ContainsKey(id))
                         {
-                            ht组件[id] = Convert.ToInt32(ht组件[id]) + 订单数量;
+                            ht组件[id] = Convert.ToInt32(ht组件[id]) + 订单数量 * 数量每产品;
                         }
                         else
                         {
-                            ht组件[id] = 订单数量;
+                            ht组件[id] = 订单数量 * 数量每产品;
                         }
                     }
                 }
@@ -152,17 +208,19 @@ namespace mySystem.Process.Order
                     ndr["存货名称"] = dr["存货名称"];
                     ndr["规格型号"] = dr["规格型号"];
                     ndr["件数"] = 1;
-                    ndr["数量"] = dr["数量每件"];
+                    ndr["数量"] = dr["主计量单位每辅计量单位"];
                     ndr["单位"] = dr["主计量单位名称"];
                     ndr["订单数量"] = ht组件[id];
                     ndr["采购数量"] = ht组件[id];
-                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["数量每件"]), 2);
+                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["主计量单位每辅计量单位"]), 2);
                     dtInner.Rows.Add(ndr);
                 }
                 daInner.Update((DataTable)bsInner.DataSource);
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
             }
+
+           
 
         }
 
@@ -210,12 +268,12 @@ namespace mySystem.Process.Order
             }
         }
 
-        DataRow writeOuterDefault(DataRow dr, string 订单号)
+        DataRow writeOuterDefault(DataRow dr, string 订单号, DateTime dt)
         {
 
             dr["用途"] = 订单号;
-            dr["期望到货时间"] = DateTime.Now;
-            dr["采购申请单号"] = "没有规则--" + 订单号;
+            dr["期望到货时间"] = dt;
+            dr["采购申请单号"] = generate需求单号();
             dr["申请日期"] = DateTime.Now;
             dr["申请人"] = mySystem.Parameter.userName;
             dr["审核日期"] = DateTime.Now;
@@ -341,6 +399,8 @@ namespace mySystem.Process.Order
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+            tb采购申请单号.ReadOnly = true;
+            tb用途.ReadOnly = true;
         }
 
         void setControlFalse()
@@ -390,7 +450,14 @@ namespace mySystem.Process.Order
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+
+            if (!check供应商())
+            {
+                MessageBox.Show("供应商未填写完整！");
+                return;
+            }
             //写待审核表
+
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
             OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='采购需求单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], conn);
@@ -446,7 +513,10 @@ namespace mySystem.Process.Order
             {
                 dtOuter.Rows[0]["状态"] = "编辑中";//未审核，草稿
             }
-
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                dr["批准状态"] = "未批准";
+            }
             //状态
             setControlFalse();
 
@@ -476,21 +546,21 @@ namespace mySystem.Process.Order
             foreach (DataColumn dc in dtInner.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "推荐供应商")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (string gys in ls供应商)
-                    {
-                        cbc.Items.Add(gys);
-                    }
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
+                //if (dc.ColumnName == "推荐供应商")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (string gys in ls供应商)
+                //    {
+                //        cbc.Items.Add(gys);
+                //    }
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
                 {
@@ -519,5 +589,51 @@ namespace mySystem.Process.Order
                 }
             }
         }
+
+        private void fillPrinter()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                combox打印机选择.Items.Add(sPrint);
+            }
+            combox打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
+        }
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+
+
+
+        string generate需求单号()
+        {
+            string prefix = "PAPN";
+            string yymmdd = DateTime.Now.ToString("yyMMdd");
+            string sql = "select * from 采购需求单 where 采购申请单号 like '{0}%' order by ID";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                return prefix + yymmdd + "001";
+            }
+            else
+            {
+                int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["采购申请单号"].ToString().Substring(10, 3));
+                return prefix + yymmdd + (no + 1).ToString("D3");
+            }
+        }
+
+
+        bool check供应商()
+        {
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                if (dr["推荐供应商"] == DBNull.Value)
+                    return false;
+            }
+            return true;
+        }
+
+
     }
 }

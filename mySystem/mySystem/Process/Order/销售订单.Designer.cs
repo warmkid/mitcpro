@@ -51,7 +51,6 @@
             this.tb业务员 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.tb付款条件 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -73,6 +72,17 @@
             this.tb关闭员 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.btn关闭订单 = new System.Windows.Forms.Button();
+            this.cmb付款条件 = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.lbl件数合计 = new System.Windows.Forms.Label();
+            this.lbl数量合计 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.lbl价税合计合计 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.btn查看日志 = new System.Windows.Forms.Button();
+            this.dtp拟交货日期 = new System.Windows.Forms.DateTimePicker();
+            this.label19 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -178,7 +188,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn确认.Location = new System.Drawing.Point(694, 648);
+            this.btn确认.Location = new System.Drawing.Point(594, 648);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(75, 23);
             this.btn确认.TabIndex = 107;
@@ -189,7 +199,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(775, 648);
+            this.btn提交审核.Location = new System.Drawing.Point(675, 648);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(100, 23);
             this.btn提交审核.TabIndex = 106;
@@ -259,7 +269,7 @@
             this.tb税率.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb税率.Location = new System.Drawing.Point(394, 144);
             this.tb税率.Name = "tb税率";
-            this.tb税率.Size = new System.Drawing.Size(141, 26);
+            this.tb税率.Size = new System.Drawing.Size(119, 26);
             this.tb税率.TabIndex = 98;
             // 
             // label10
@@ -299,14 +309,6 @@
             this.label8.Size = new System.Drawing.Size(72, 16);
             this.label8.TabIndex = 93;
             this.label8.Text = "销售部门";
-            // 
-            // tb付款条件
-            // 
-            this.tb付款条件.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb付款条件.Location = new System.Drawing.Point(394, 98);
-            this.tb付款条件.Name = "tb付款条件";
-            this.tb付款条件.Size = new System.Drawing.Size(141, 26);
-            this.tb付款条件.TabIndex = 92;
             // 
             // label6
             // 
@@ -402,7 +404,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 216);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(863, 332);
+            this.dataGridView1.Size = new System.Drawing.Size(863, 287);
             this.dataGridView1.TabIndex = 3;
             // 
             // tb订单号
@@ -507,11 +509,130 @@
             this.btn关闭订单.Text = "关闭订单";
             this.btn关闭订单.UseVisualStyleBackColor = true;
             // 
+            // cmb付款条件
+            // 
+            this.cmb付款条件.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmb付款条件.FormattingEnabled = true;
+            this.cmb付款条件.Location = new System.Drawing.Point(394, 95);
+            this.cmb付款条件.Name = "cmb付款条件";
+            this.cmb付款条件.Size = new System.Drawing.Size(141, 24);
+            this.cmb付款条件.TabIndex = 126;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label17.Location = new System.Drawing.Point(519, 149);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(16, 16);
+            this.label17.TabIndex = 127;
+            this.label17.Text = "%";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label18.Location = new System.Drawing.Point(369, 520);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(88, 16);
+            this.label18.TabIndex = 128;
+            this.label18.Text = "件数合计：";
+            // 
+            // lbl件数合计
+            // 
+            this.lbl件数合计.AutoSize = true;
+            this.lbl件数合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl件数合计.Location = new System.Drawing.Point(471, 520);
+            this.lbl件数合计.Name = "lbl件数合计";
+            this.lbl件数合计.Size = new System.Drawing.Size(16, 16);
+            this.lbl件数合计.TabIndex = 128;
+            this.lbl件数合计.Text = "0";
+            // 
+            // lbl数量合计
+            // 
+            this.lbl数量合计.AutoSize = true;
+            this.lbl数量合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl数量合计.Location = new System.Drawing.Point(651, 520);
+            this.lbl数量合计.Name = "lbl数量合计";
+            this.lbl数量合计.Size = new System.Drawing.Size(16, 16);
+            this.lbl数量合计.TabIndex = 130;
+            this.lbl数量合计.Text = "0";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(549, 520);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(88, 16);
+            this.label20.TabIndex = 129;
+            this.label20.Text = "数量合计：";
+            // 
+            // lbl价税合计合计
+            // 
+            this.lbl价税合计合计.AutoSize = true;
+            this.lbl价税合计合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl价税合计合计.Location = new System.Drawing.Point(817, 520);
+            this.lbl价税合计合计.Name = "lbl价税合计合计";
+            this.lbl价税合计合计.Size = new System.Drawing.Size(16, 16);
+            this.lbl价税合计合计.TabIndex = 132;
+            this.lbl价税合计合计.Text = "0";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label22.Location = new System.Drawing.Point(704, 520);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(120, 16);
+            this.label22.TabIndex = 131;
+            this.label22.Text = "价税合计合计：";
+            // 
+            // btn查看日志
+            // 
+            this.btn查看日志.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn查看日志.Location = new System.Drawing.Point(781, 648);
+            this.btn查看日志.Name = "btn查看日志";
+            this.btn查看日志.Size = new System.Drawing.Size(89, 23);
+            this.btn查看日志.TabIndex = 133;
+            this.btn查看日志.Text = "查看日志";
+            this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
+            // 
+            // dtp拟交货日期
+            // 
+            this.dtp拟交货日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp拟交货日期.Location = new System.Drawing.Point(103, 510);
+            this.dtp拟交货日期.Name = "dtp拟交货日期";
+            this.dtp拟交货日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp拟交货日期.TabIndex = 135;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label19.Location = new System.Drawing.Point(9, 517);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(88, 16);
+            this.label19.TabIndex = 134;
+            this.label19.Text = "拟交货日期";
+            // 
             // 销售订单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(882, 683);
+            this.Controls.Add(this.dtp拟交货日期);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.btn查看日志);
+            this.Controls.Add(this.lbl价税合计合计);
+            this.Controls.Add(this.label22);
+            this.Controls.Add(this.lbl数量合计);
+            this.Controls.Add(this.label20);
+            this.Controls.Add(this.lbl件数合计);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.label17);
+            this.Controls.Add(this.cmb付款条件);
             this.Controls.Add(this.btn关闭订单);
             this.Controls.Add(this.tb关闭员);
             this.Controls.Add(this.label16);
@@ -543,7 +664,6 @@
             this.Controls.Add(this.tb业务员);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.tb付款条件);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label5);
@@ -579,7 +699,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tb付款条件;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox tb业务员;
@@ -612,5 +731,16 @@
         private System.Windows.Forms.TextBox tb关闭员;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button btn关闭订单;
+        private System.Windows.Forms.ComboBox cmb付款条件;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label lbl件数合计;
+        private System.Windows.Forms.Label lbl数量合计;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label lbl价税合计合计;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Button btn查看日志;
+        private System.Windows.Forms.DateTimePicker dtp拟交货日期;
+        private System.Windows.Forms.Label label19;
     }
 }

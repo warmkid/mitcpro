@@ -338,7 +338,7 @@ namespace mySystem.Process.CleanCut
                     
                     setControlFalse();
                     cmb物料种类.Enabled = true;
-                    combobox打印机选择.Enabled = true;
+                    cb打印机.Enabled = true;
                     btn打印.Enabled = true;
                     break;
                 case Parameter.UserState.管理员: //2--管理员
@@ -772,9 +772,9 @@ namespace mySystem.Process.CleanCut
             System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
             foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
             {
-                combobox打印机选择.Items.Add(sPrint);
+                cb打印机.Items.Add(sPrint);
             }
-            combobox打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //void fill_printer()
@@ -832,21 +832,170 @@ namespace mySystem.Process.CleanCut
 
         private void btn打印_Click(object sender, EventArgs e)
         {
-            if (combobox打印机选择.SelectedItem.ToString() == "")
+            if (cb打印机.SelectedItem.ToString() == "")
             {
                 MessageBox.Show("请先选择一台打印机");
                 return;
             }
-            SetDefaultPrinter(combobox打印机选择.Text);
+            SetDefaultPrinter(cb打印机.Text);
             print(false);
             GC.Collect();
         }
 
-        // TODO 打印
-        void print(bool preview)
+        //打印功能
+        public void print(bool isShow)
         {
-            MessageBox.Show("打印功能正在完善");
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\cleancut\SOP-MFG-302-R04A+清洁分切日报表.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
         }
+
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            //外表信息
+            if (cmb物料种类.Text == "LDPE")
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE ☑  TY □   TK8 □    UP1 □";
+            else if (cmb物料种类.Text == "TY")
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY ☑   TK8 □    UP1 □";
+            else if (cmb物料种类.Text == "TK8")
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 ☑    UP1 □";
+            else if (cmb物料种类.Text == "UP1")
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 □    UP1 ☑";
+            else
+                mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 □    UP1 □" + cmb物料种类.Text + " ☑ ";
+            
+            //内表信息
+            int i内表行数 = dataGridView1.Rows.Count;
+            int i超出行数 = 0;
+            //行数不超过模板行数的部分
+            for (int i = 0; i < (i内表行数 > 8 ? 8 : i内表行数); i++)
+            {
+                mysheet.Cells[5 + i, 2].Value=dataGridView1.Rows[i].Cells[3].Value.ToString();
+                mysheet.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                mysheet.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                mysheet.Cells[5 + i, 5].Value = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                mysheet.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                mysheet.Cells[5 + i, 7].Value = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                mysheet.Cells[5 + i, 8].Value = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                mysheet.Cells[5 + i, 9].Value = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                mysheet.Cells[5 + i, 10].Value = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                mysheet.Cells[5 + i, 11].Value = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                mysheet.Cells[5 + i, 12].Value = dataGridView1.Rows[i].Cells[13].Value.ToString();
+                mysheet.Cells[5 + i, 13].Value = dataGridView1.Rows[i].Cells[14].Value.ToString();
+                mysheet.Cells[5 + i, 14].Value = dataGridView1.Rows[i].Cells[15].Value.ToString();
+            }
+            //超过模板行数的部分，插入
+            if (i内表行数 > 8)
+            {
+                i超出行数 = i内表行数 - 8;
+                for (int i = 8; i < i内表行数; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    mysheet.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                    mysheet.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                    mysheet.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                    mysheet.Cells[5 + i, 5].Value = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                    mysheet.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                    mysheet.Cells[5 + i, 7].Value = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                    mysheet.Cells[5 + i, 8].Value = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                    mysheet.Cells[5 + i, 9].Value = dataGridView1.Rows[i].Cells[10].Value.ToString();
+                    mysheet.Cells[5 + i, 10].Value = dataGridView1.Rows[i].Cells[11].Value.ToString();
+                    mysheet.Cells[5 + i, 11].Value = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                    mysheet.Cells[5 + i, 12].Value = dataGridView1.Rows[i].Cells[13].Value.ToString();
+                    mysheet.Cells[5 + i, 13].Value = dataGridView1.Rows[i].Cells[14].Value.ToString();
+                    mysheet.Cells[5 + i, 14].Value = dataGridView1.Rows[i].Cells[15].Value.ToString();
+                }
+            }
+            mysheet.Cells[13 + i超出行数, 6].Value = txb清洁前合计A1.Text;
+            mysheet.Cells[13 + i超出行数, 7].Value = txb清洁前合计A2.Text;
+            mysheet.Cells[13 + i超出行数, 10].Value = txb清洁后合计B1.Text;
+            mysheet.Cells[13 + i超出行数, 11].Value = txb清洁后合计B2.Text;
+            if(Convert.ToDouble(txb清洁前合计A2.Text)!=0)
+                mysheet.Cells[14 + i超出行数, 5].Value =Convert.ToDouble( Convert.ToDouble(txb清洁后合计B2.Text) / Convert.ToDouble(txb清洁前合计A2.Text)).ToString("P");
+            else
+                mysheet.Cells[14 + i超出行数, 5].Value =0;
+            if (Convert.ToDouble(txb清洁后合计C.Text)!=0)
+                mysheet.Cells[14 + i超出行数, 9].Value = Convert.ToDouble(txb清洁前合计A1.Text) / Convert.ToDouble(txb清洁后合计C.Text);
+            else
+                mysheet.Cells[14 + i超出行数, 9].Value = 0;
+            mysheet.Cells[15 + i超出行数, 11].Value = txb清洁后合计C.Text;
+            mysheet.Cells[15 + i超出行数, 2].Value = txb备注.Text;
+            mysheet.Cells[16 + i超出行数, 1].Value = String.Format("操作人/日期：{0}      {1}", txb操作员.Text, dtp操作日期.Value.ToString("yyyy年MM月dd日"));
+            mysheet.Cells[16 + i超出行数, 8].Value = String.Format("复核人/日期：{0}      {1}", txb审核人.Text, dtp审核日期.Value.ToString("yyyy年MM月dd日"));
+
+            //加页脚
+            int sheetnum=0;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 清洁分切日报表 where 生产指令ID=" + __生产指令ID.ToString(), conOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            mysheet.PageSetup.RightFooter = __生产指令 + "-05-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            //返回
+            return mysheet;
+        }
+
+        //// TODO 打印
+        //void print(bool preview)
+        //{
+        //    MessageBox.Show("打印功能正在完善");
+        //}
 
         private void btn查询_Click(object sender, EventArgs e)
         {

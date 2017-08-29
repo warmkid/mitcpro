@@ -371,6 +371,29 @@ namespace BatchProductRecord
             tb指令编号.Enabled = true;
             bt查询插入.Enabled = true;
             tb指令编号.Text = mySystem.Parameter.proInstruction;
+            dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+        }
+
+        void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            if (dataGridView1.CurrentCell.OwningColumn.Name == "产品编码")
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    acsc.AddRange(ht代码面数.Keys.OfType<String>().ToArray<String>());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                }
+            }
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            calc合计();
         }
 
         public ProcessProductInstru(mySystem.MainForm mainform,int id)
@@ -418,8 +441,8 @@ namespace BatchProductRecord
 
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
-
-            
+            dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
         }
 
         private void init()
@@ -797,6 +820,12 @@ namespace BatchProductRecord
             }
 
             //计算合计
+            calc合计();
+        }
+
+
+        void calc合计()
+        {
             float sum_mi = 0, sum_juan = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -812,19 +841,20 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
             dt_prodinstr.Rows[0]["卷心管领料量"] = sum_juan;
             //更新领料量
-            string bili=tb内外层比例.Text;
+            string bili = tb内外层比例.Text;
             if (bili == "")
                 return;
             float fbili = float.Parse(bili);
             if (fbili <= 100 && fbili >= 0)
             {
                 dt_prodinstr.Rows[0]["内外层领料量"] = sum_weight / 100 * fbili;
-                dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100-fbili);
+                dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100 - fbili);
             }
 
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
+
 
         //datagridview 添加行
         private void button4_Click(object sender, System.EventArgs e)
@@ -1199,7 +1229,7 @@ namespace BatchProductRecord
                         break;
 
                     case "产品编码":
-                        DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
+                        DataGridViewTextBoxColumn c1 = new DataGridViewTextBoxColumn();
                         c1.DataPropertyName = dc.ColumnName;
                         c1.HeaderText = "产品代码（规格型号）";
                         c1.Name = dc.ColumnName;
@@ -1210,10 +1240,10 @@ namespace BatchProductRecord
                         OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置吹膜产品编码", mySystem.Parameter.connOle);
                         DataTable tdt = new DataTable("产品编码");
                         tda.Fill(tdt);
-                        foreach (DataRow tdr in tdt.Rows)
-                        {
-                            c1.Items.Add(tdr["产品编码"]);
-                        }
+                        //foreach (DataRow tdr in tdt.Rows)
+                        //{
+                        //    c1.Items.Add(tdr["产品编码"]);
+                        //}
                         dataGridView1.Columns.Add(c1);
                         // 重写cell value changed 事件，自动填写id
                         break;
@@ -1241,7 +1271,7 @@ namespace BatchProductRecord
             dataGridView1.Columns["标签领料量"].ReadOnly = true;//标签领料量
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
-                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
             }
 
         }
@@ -1654,7 +1684,8 @@ namespace BatchProductRecord
                 my.Cells[7 + i, 9] = dataGridView1.Rows[i].Cells[9].Value.ToString();
                 my.Cells[7 + i, 10] = dataGridView1.Rows[i].Cells[10].Value.ToString();
                 my.Cells[7 + i, 11] = dataGridView1.Rows[i].Cells[11].Value.ToString();
-                my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[13].Value.ToString();
+                my.Cells[7 + i, 13] = dataGridView1.Rows[i].Cells[12].Value.ToString();
             }
 
             my.Cells[14 + ind, 6].Value = textBox6.Text;//计划产量米

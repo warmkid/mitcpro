@@ -154,8 +154,8 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(11, 71);
             this.dataGridView1.Name = "dataGridView1";
@@ -618,7 +618,7 @@
             this.label23.Size = new System.Drawing.Size(791, 14);
             this.label23.TabIndex = 93;
             this.label23.Text = "---------------------------------------------------------------------------------" +
-    "-------------------------------";
+                "-------------------------------";
             // 
             // label33
             // 
@@ -630,7 +630,7 @@
             this.label33.Size = new System.Drawing.Size(1092, 14);
             this.label33.TabIndex = 95;
             this.label33.Text = "---------------------------------------------------------------------------------" +
-    "--------------------------------------------------------------------------";
+                "--------------------------------------------------------------------------";
             // 
             // btn审核
             // 
@@ -652,6 +652,7 @@
             this.btn打印.TabIndex = 98;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn保存
             // 
@@ -692,7 +693,7 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(193, 581);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
+            this.comboBox1.Size = new System.Drawing.Size(194, 24);
             this.comboBox1.TabIndex = 102;
             // 
             // cmb生产工艺
@@ -826,7 +827,7 @@
             this.label15.Size = new System.Drawing.Size(791, 14);
             this.label15.TabIndex = 119;
             this.label15.Text = "---------------------------------------------------------------------------------" +
-    "-------------------------------";
+                "-------------------------------";
             // 
             // tb外包夜班负责人
             // 

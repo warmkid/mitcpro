@@ -51,7 +51,10 @@ namespace mySystem.Process.Bag.LDPE
         OleDbCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
-        public LDPEBag_cleanrance()
+
+        CheckForm ckform;
+
+        public LDPEBag_cleanrance(MainForm mainform):base(mainform)
         {           
             // 判断设置是否变化
             InitializeComponent();
@@ -103,7 +106,7 @@ namespace mySystem.Process.Bag.LDPE
             addOtherEvenHandler();
         }
 
-        public LDPEBag_cleanrance(int id)
+        public LDPEBag_cleanrance(MainForm mainform, int id):base(mainform)
         {
             
             InitializeComponent();
@@ -635,6 +638,17 @@ namespace mySystem.Process.Bag.LDPE
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btn审核_Click_1(object sender, EventArgs e)
+        {
+            if (dtOuter.Rows[0]["操作员"].ToString() == mySystem.Parameter.userName)
+            {
+                MessageBox.Show("操作员和审核员不能是同一个人！");
+                return;
+            }
+            ckform = new CheckForm(this);
+            ckform.Show();
         }
     }
 }

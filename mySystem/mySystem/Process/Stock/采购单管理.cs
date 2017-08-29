@@ -61,8 +61,6 @@ namespace 订单和库存管理
 
         private void btn采购需求单_Click(object sender, EventArgs e)
         {
-            mySystem.Process.Stock.采购需求单 form = new mySystem.Process.Stock.采购需求单();
-            form.Show();
         }
     }
 }

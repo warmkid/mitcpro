@@ -39,6 +39,9 @@
             this.userLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.btn浏览 = new System.Windows.Forms.Button();
+            this.btn导入供应商 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +50,7 @@
             this.MainProduceBtn.BackColor = System.Drawing.SystemColors.Control;
             this.MainProduceBtn.FlatAppearance.BorderSize = 0;
             this.MainProduceBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MainProduceBtn.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainProduceBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainProduceBtn.Image = ((System.Drawing.Image)(resources.GetObject("MainProduceBtn.Image")));
             this.MainProduceBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainProduceBtn.Location = new System.Drawing.Point(3, 9);
@@ -64,7 +67,7 @@
             this.MainSettingBtn.BackColor = System.Drawing.SystemColors.Control;
             this.MainSettingBtn.FlatAppearance.BorderSize = 0;
             this.MainSettingBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MainSettingBtn.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainSettingBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainSettingBtn.Image = ((System.Drawing.Image)(resources.GetObject("MainSettingBtn.Image")));
             this.MainSettingBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainSettingBtn.Location = new System.Drawing.Point(78, 9);
@@ -80,7 +83,7 @@
             // 
             this.MainQueryBtn.FlatAppearance.BorderSize = 0;
             this.MainQueryBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.MainQueryBtn.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainQueryBtn.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainQueryBtn.Image = ((System.Drawing.Image)(resources.GetObject("MainQueryBtn.Image")));
             this.MainQueryBtn.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.MainQueryBtn.Location = new System.Drawing.Point(153, 9);
@@ -94,7 +97,7 @@
             // 
             // MainPanel
             // 
-            this.MainPanel.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.MainPanel.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MainPanel.Location = new System.Drawing.Point(0, 69);
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(1360, 620);
@@ -102,6 +105,9 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.btn导入供应商);
+            this.groupBox1.Controls.Add(this.btn浏览);
             this.groupBox1.Controls.Add(this.ExitBtn);
             this.groupBox1.Controls.Add(this.userLabel);
             this.groupBox1.Controls.Add(this.label1);
@@ -116,7 +122,7 @@
             // 
             // ExitBtn
             // 
-            this.ExitBtn.Font = new System.Drawing.Font("宋体", 15F);
+            this.ExitBtn.Font = new System.Drawing.Font("SimSun", 15F);
             this.ExitBtn.Location = new System.Drawing.Point(1233, 31);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(99, 30);
@@ -128,7 +134,7 @@
             // userLabel
             // 
             this.userLabel.AutoSize = true;
-            this.userLabel.Font = new System.Drawing.Font("宋体", 15F);
+            this.userLabel.Font = new System.Drawing.Font("SimSun", 15F);
             this.userLabel.Location = new System.Drawing.Point(1151, 37);
             this.userLabel.Name = "userLabel";
             this.userLabel.Size = new System.Drawing.Size(0, 20);
@@ -137,7 +143,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 15F);
+            this.label1.Font = new System.Drawing.Font("SimSun", 15F);
             this.label1.Location = new System.Drawing.Point(1068, 37);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(89, 20);
@@ -148,6 +154,33 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // btn浏览
+            // 
+            this.btn浏览.Location = new System.Drawing.Point(641, 30);
+            this.btn浏览.Name = "btn浏览";
+            this.btn浏览.Size = new System.Drawing.Size(75, 23);
+            this.btn浏览.TabIndex = 7;
+            this.btn浏览.Text = "浏览";
+            this.btn浏览.UseVisualStyleBackColor = true;
+            this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
+            // 
+            // btn导入供应商
+            // 
+            this.btn导入供应商.Location = new System.Drawing.Point(740, 30);
+            this.btn导入供应商.Name = "btn导入供应商";
+            this.btn导入供应商.Size = new System.Drawing.Size(103, 23);
+            this.btn导入供应商.TabIndex = 8;
+            this.btn导入供应商.Text = "导入供应商";
+            this.btn导入供应商.UseVisualStyleBackColor = true;
+            this.btn导入供应商.Click += new System.EventHandler(this.btn导入供应商_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(349, 31);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(277, 23);
+            this.textBox1.TabIndex = 9;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -155,7 +188,7 @@
             this.ClientSize = new System.Drawing.Size(1358, 699);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.MainPanel);
-            this.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -179,6 +212,9 @@
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btn导入供应商;
+        private System.Windows.Forms.Button btn浏览;
 
 
     }

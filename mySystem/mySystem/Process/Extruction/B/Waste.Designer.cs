@@ -114,17 +114,17 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(32, 147);
+            this.dataGridView1.Location = new System.Drawing.Point(40, 147);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(860, 231);
+            this.dataGridView1.Size = new System.Drawing.Size(1001, 231);
             this.dataGridView1.TabIndex = 60;
             this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellValueChanged);
             this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // btn保存
             // 
-            this.btn保存.Location = new System.Drawing.Point(761, 423);
+            this.btn保存.Location = new System.Drawing.Point(761, 446);
             this.btn保存.Name = "btn保存";
             this.btn保存.Size = new System.Drawing.Size(75, 23);
             this.btn保存.TabIndex = 61;
@@ -134,7 +134,7 @@
             // 
             // btn审核
             // 
-            this.btn审核.Location = new System.Drawing.Point(37, 423);
+            this.btn审核.Location = new System.Drawing.Point(37, 446);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 23);
             this.btn审核.TabIndex = 62;
@@ -144,9 +144,9 @@
             // 
             // btn添加
             // 
-            this.btn添加.Location = new System.Drawing.Point(909, 147);
+            this.btn添加.Location = new System.Drawing.Point(32, 384);
             this.btn添加.Name = "btn添加";
-            this.btn添加.Size = new System.Drawing.Size(59, 90);
+            this.btn添加.Size = new System.Drawing.Size(91, 22);
             this.btn添加.TabIndex = 63;
             this.btn添加.Text = "添加";
             this.btn添加.UseVisualStyleBackColor = true;
@@ -163,9 +163,9 @@
             // 
             // btn删除
             // 
-            this.btn删除.Location = new System.Drawing.Point(995, 147);
+            this.btn删除.Location = new System.Drawing.Point(139, 384);
             this.btn删除.Name = "btn删除";
-            this.btn删除.Size = new System.Drawing.Size(59, 94);
+            this.btn删除.Size = new System.Drawing.Size(95, 22);
             this.btn删除.TabIndex = 66;
             this.btn删除.Text = "删除";
             this.btn删除.UseVisualStyleBackColor = true;
@@ -173,7 +173,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(118, 423);
+            this.btn打印.Location = new System.Drawing.Point(118, 446);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 23);
             this.btn打印.TabIndex = 74;
@@ -183,19 +183,19 @@
             // 
             // btn提交审核
             // 
-            this.btn提交审核.Location = new System.Drawing.Point(850, 423);
+            this.btn提交审核.Location = new System.Drawing.Point(850, 446);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(83, 23);
             this.btn提交审核.TabIndex = 75;
-            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.Text = "最后审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
             this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
             // btn数据审核
             // 
-            this.btn数据审核.Location = new System.Drawing.Point(909, 284);
+            this.btn数据审核.Location = new System.Drawing.Point(818, 384);
             this.btn数据审核.Name = "btn数据审核";
-            this.btn数据审核.Size = new System.Drawing.Size(59, 90);
+            this.btn数据审核.Size = new System.Drawing.Size(97, 27);
             this.btn数据审核.TabIndex = 76;
             this.btn数据审核.Text = "数据审核";
             this.btn数据审核.UseVisualStyleBackColor = true;
@@ -203,9 +203,9 @@
             // 
             // btn提交数据审核
             // 
-            this.btn提交数据审核.Location = new System.Drawing.Point(995, 284);
+            this.btn提交数据审核.Location = new System.Drawing.Point(925, 384);
             this.btn提交数据审核.Name = "btn提交数据审核";
-            this.btn提交数据审核.Size = new System.Drawing.Size(59, 94);
+            this.btn提交数据审核.Size = new System.Drawing.Size(116, 27);
             this.btn提交数据审核.TabIndex = 77;
             this.btn提交数据审核.Text = "提交数据审核";
             this.btn提交数据审核.UseVisualStyleBackColor = true;
@@ -213,7 +213,7 @@
             // 
             // btn查看日志
             // 
-            this.btn查看日志.Location = new System.Drawing.Point(950, 423);
+            this.btn查看日志.Location = new System.Drawing.Point(950, 446);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(83, 23);
             this.btn查看日志.TabIndex = 78;
@@ -250,7 +250,7 @@
             // cmb打印机选择
             // 
             this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(204, 423);
+            this.cmb打印机选择.Location = new System.Drawing.Point(204, 446);
             this.cmb打印机选择.Name = "cmb打印机选择";
             this.cmb打印机选择.Size = new System.Drawing.Size(187, 24);
             this.cmb打印机选择.TabIndex = 147;
@@ -296,7 +296,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1066, 466);
+            this.ClientSize = new System.Drawing.Size(1066, 495);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbl合计不良品数量);
             this.Controls.Add(this.lbl生产开始时间);

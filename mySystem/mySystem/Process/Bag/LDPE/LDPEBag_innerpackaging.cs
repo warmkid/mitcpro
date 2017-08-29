@@ -322,7 +322,7 @@ namespace mySystem.Process.Bag.LDPE
             tb生产批号.ReadOnly = true;
             tb产品数量包数合计A.ReadOnly = true;
             tb产品数量只数合计B.ReadOnly = true;
-            tb成品率.ReadOnly = true;
+            //tb成品率.ReadOnly = true;
             //查询条件始终不可编辑
             cb产品代码.Enabled = false;
             btn查询新建.Enabled = false;
@@ -1009,8 +1009,24 @@ namespace mySystem.Process.Bag.LDPE
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
                     }
                 }
-                else
-                { }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格数量" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "黑点晶点数量" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "指示剂不良数量" ||
+                    dataGridView1.Columns[e.ColumnIndex].Name == "其他数量")
+                {
+                    try
+                    {
+                        int sum = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["热封线不合格数量"].Value) +
+                            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["黑点晶点数量"].Value) +
+                            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["指示剂不良数量"].Value) +
+                            Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["其他数量"].Value);
+                        dataGridView1.Rows[e.RowIndex].Cells["不良合计"].Value = sum;
+                    }
+                    catch
+                    {
+                        dataGridView1.Rows[e.RowIndex].Cells["不良合计"].Value = 0;
+                    }
+                }
             }
         }
 
