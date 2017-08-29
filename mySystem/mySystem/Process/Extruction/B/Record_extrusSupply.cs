@@ -333,6 +333,13 @@ namespace WindowsFormsApplication1
             {
                 if (dataGridView1.SelectedCells[0].RowIndex < 0)
                     return;
+
+                if (!( "" == (Convert.ToString(dt_prodlist.Rows[dataGridView1.SelectedCells[0].RowIndex]["审核员"]).ToString().Trim())))
+                {
+                    return;
+                }
+
+
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
 
@@ -344,12 +351,39 @@ namespace WindowsFormsApplication1
             float sum_out = 0, sum_inmid = 0, sum_mid = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")//外层
-                    sum_out += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//中内层
-                    sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")//内层
-                    sum_mid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() != "")//外层
+                {
+                    try
+                    {
+                        sum_out += float.Parse(dataGridView1.Rows[i].Cells[4].Value.ToString());
+                    }
+                    catch (Exception ee)
+                    {
+                        sum_out += 0;
+                    }
+                }
+                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
+                {//中内层
+                    try
+                    {
+                        sum_inmid += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                    }
+                    catch (Exception ee)
+                    {
+                        sum_out += 0;
+                    }
+                }
+                if (dataGridView1.Rows[i].Cells[6].Value.ToString() != "")
+                {//内层
+                    try
+                    {
+                        sum_mid += float.Parse(dataGridView1.Rows[i].Cells[6].Value.ToString());
+                    }
+                    catch (Exception ee)
+                    {
+                        sum_out += 0;
+                    }
+                }
             }
             dt_prodinstr.Rows[0]["外层供料量合计a"] = sum_out;
             dt_prodinstr.Rows[0]["中内层供料量合计b"] = sum_inmid;
@@ -871,16 +905,24 @@ namespace WindowsFormsApplication1
                     bt审核.Enabled = true;
                 }
                 else setControlFalse();
+                if (Parameter.FormState.审核通过 != _formState)
+                {
+                    btn数据审核.Enabled = true;
+                }
             }
             if (Parameter.UserState.操作员 == _userState)
             {
-                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState)
+                {
+                    setControlTrue();
+                }
                 else
                 {
                     setControlFalse();
                     cb产品代码.Enabled = true;
                     dtp供料日期.Enabled = true;
-                } 
+                }
+                btn数据审核.Enabled = false;
             }
         }
 
@@ -1291,6 +1333,14 @@ namespace WindowsFormsApplication1
         {
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
+                foreach (DataRow dr in dt_prodlist.Rows)
+                {
+                    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == "__待审核")
+                    {
+                        MessageBox.Show("请先完成数据审核!");
+                        return;
+                    }
+                }
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "不合格")
@@ -1432,6 +1482,52 @@ namespace WindowsFormsApplication1
             dtp供料日期.Enabled = false;
             cb产品代码.Enabled = false;
             bt插入查询.Enabled = false;
+        }
+
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dt_prodlist.Rows.Count; i++)
+            {
+                if (Convert.ToString(dt_prodlist.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dt_prodlist.Rows[i]["审核员"] = "__待审核";
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            innerBind();
+        }
+
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if ("__待审核" == Convert.ToString(dt_prodlist.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dt_prodlist.Rows[i]["供料人"].ToString())
+                    {
+                        dt_prodlist.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("供料人和审核员不能相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+            innerBind();
         }
 
     }

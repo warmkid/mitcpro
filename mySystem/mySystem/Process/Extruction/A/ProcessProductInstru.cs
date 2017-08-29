@@ -372,6 +372,23 @@ namespace BatchProductRecord
             bt查询插入.Enabled = true;
             tb指令编号.Text = mySystem.Parameter.proInstruction;
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+        }
+
+        void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            if (dataGridView1.CurrentCell.OwningColumn.Name == "产品编码")
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    acsc.AddRange(ht代码面数.Keys.OfType<String>().ToArray<String>());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                }
+            }
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -425,7 +442,7 @@ namespace BatchProductRecord
             tb指令编号.Enabled = false;
             bt查询插入.Enabled = false;
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
-            
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
         }
 
         private void init()
@@ -1212,7 +1229,7 @@ namespace BatchProductRecord
                         break;
 
                     case "产品编码":
-                        DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
+                        DataGridViewTextBoxColumn c1 = new DataGridViewTextBoxColumn();
                         c1.DataPropertyName = dc.ColumnName;
                         c1.HeaderText = "产品代码（规格型号）";
                         c1.Name = dc.ColumnName;
@@ -1223,10 +1240,10 @@ namespace BatchProductRecord
                         OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置吹膜产品编码", mySystem.Parameter.connOle);
                         DataTable tdt = new DataTable("产品编码");
                         tda.Fill(tdt);
-                        foreach (DataRow tdr in tdt.Rows)
-                        {
-                            c1.Items.Add(tdr["产品编码"]);
-                        }
+                        //foreach (DataRow tdr in tdt.Rows)
+                        //{
+                        //    c1.Items.Add(tdr["产品编码"]);
+                        //}
                         dataGridView1.Columns.Add(c1);
                         // 重写cell value changed 事件，自动填写id
                         break;

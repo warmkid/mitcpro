@@ -197,6 +197,7 @@ namespace mySystem.Process.Extruction.C
                         setControlFalse();
                         
                     }
+                    btn数据审核.Enabled = false;
                     break;
                 case Parameter.UserState.审核员: //1--审核员
                     //the _formState is to be checked
@@ -210,6 +211,10 @@ namespace mySystem.Process.Extruction.C
                     else if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState || Parameter.FormState.审核未通过 == _formState)
                     {
                         setControlFalse();
+                    }
+                    if (Parameter.FormState.审核通过 != _formState)
+                    {
+                        btn数据审核.Enabled = true;
                     }
                     break;
                 case Parameter.UserState.管理员: //2--管理员
@@ -553,6 +558,14 @@ namespace mySystem.Process.Extruction.C
         {
             if (DialogResult.Yes == MessageBox.Show("确认本表已经填完吗？提交审核之后不可修改", "提示", MessageBoxButtons.YesNo))
             {
+                foreach (DataRow dr in dtInner.Rows)
+                {
+                    if (dr["审核员"].ToString() == "" || dr["审核员"].ToString() == __待审核)
+                    {
+                        MessageBox.Show("请先完成数据审核!");
+                        return;
+                    }
+                }
                 //read from database table and find current record
                 string checkName = "待审核";
                 DataTable dtCheck = new DataTable(checkName);
@@ -662,6 +675,10 @@ namespace mySystem.Process.Extruction.C
         private void btn删除_Click(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedCells.Count <= 0)
+            {
+                return;
+            }
+            if (!("" == (Convert.ToString(dtInner.Rows[dataGridView1.SelectedCells[0].RowIndex]["审核员"]).ToString().Trim())))
             {
                 return;
             }
@@ -792,6 +809,52 @@ namespace mySystem.Process.Extruction.C
                 ids.Add(Convert.ToInt32(dr["ID"]));
             }
             return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+        }
+
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dtInner.Rows.Count; i++)
+            {
+                if (Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dtInner.Rows[i]["审核员"] = __待审核;                    
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+        }
+
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if (__待审核 == Convert.ToString(dtInner.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dtInner.Rows[i]["检查员"].ToString())
+                    {
+                        dtInner.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("检查员和审核员不能相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
         }
     }
 	
