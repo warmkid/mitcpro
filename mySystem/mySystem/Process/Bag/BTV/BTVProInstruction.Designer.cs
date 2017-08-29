@@ -37,13 +37,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.dataGridView4 = new System.Windows.Forms.DataGridView();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.tb备注 = new System.Windows.Forms.TextBox();
             this.tb负责人 = new System.Windows.Forms.TextBox();
@@ -69,14 +66,12 @@
             this.tb产品名称 = new System.Windows.Forms.TextBox();
             this.tb生产指令编号 = new System.Windows.Forms.TextBox();
             this.dtp计划生产日期 = new System.Windows.Forms.DateTimePicker();
+            this.btn查询插入 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
@@ -97,7 +92,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(29, 52);
+            this.label2.Location = new System.Drawing.Point(395, 54);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(80, 16);
             this.label2.TabIndex = 1;
@@ -107,7 +102,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(283, 52);
+            this.label3.Location = new System.Drawing.Point(23, 54);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(112, 16);
             this.label3.TabIndex = 2;
@@ -117,7 +112,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(548, 52);
+            this.label4.Location = new System.Drawing.Point(593, 54);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(112, 16);
             this.label4.TabIndex = 3;
@@ -126,11 +121,11 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(26, 84);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 84);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(836, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(865, 150);
             this.dataGridView1.TabIndex = 4;
             // 
             // groupBox1
@@ -171,16 +166,6 @@
             this.label6.Text = "制袋";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(97, 240);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(765, 117);
-            this.dataGridView2.TabIndex = 7;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label7);
@@ -218,26 +203,6 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "外包";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(98, 363);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.RowHeadersVisible = false;
-            this.dataGridView3.RowTemplate.Height = 23;
-            this.dataGridView3.Size = new System.Drawing.Size(764, 78);
-            this.dataGridView3.TabIndex = 10;
-            // 
-            // dataGridView4
-            // 
-            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView4.Location = new System.Drawing.Point(99, 448);
-            this.dataGridView4.Name = "dataGridView4";
-            this.dataGridView4.RowHeadersVisible = false;
-            this.dataGridView4.RowTemplate.Height = 23;
-            this.dataGridView4.Size = new System.Drawing.Size(763, 78);
-            this.dataGridView4.TabIndex = 11;
             // 
             // groupBox5
             // 
@@ -461,7 +426,7 @@
             // tb产品名称
             // 
             this.tb产品名称.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb产品名称.Location = new System.Drawing.Point(114, 47);
+            this.tb产品名称.Location = new System.Drawing.Point(480, 49);
             this.tb产品名称.Name = "tb产品名称";
             this.tb产品名称.Size = new System.Drawing.Size(100, 26);
             this.tb产品名称.TabIndex = 38;
@@ -469,7 +434,7 @@
             // tb生产指令编号
             // 
             this.tb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb生产指令编号.Location = new System.Drawing.Point(400, 47);
+            this.tb生产指令编号.Location = new System.Drawing.Point(140, 49);
             this.tb生产指令编号.Name = "tb生产指令编号";
             this.tb生产指令编号.Size = new System.Drawing.Size(100, 26);
             this.tb生产指令编号.TabIndex = 39;
@@ -477,16 +442,28 @@
             // dtp计划生产日期
             // 
             this.dtp计划生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp计划生产日期.Location = new System.Drawing.Point(662, 47);
+            this.dtp计划生产日期.Location = new System.Drawing.Point(707, 49);
             this.dtp计划生产日期.Name = "dtp计划生产日期";
-            this.dtp计划生产日期.Size = new System.Drawing.Size(200, 26);
+            this.dtp计划生产日期.Size = new System.Drawing.Size(161, 26);
             this.dtp计划生产日期.TabIndex = 40;
+            // 
+            // btn查询插入
+            // 
+            this.btn查询插入.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn查询插入.Location = new System.Drawing.Point(270, 52);
+            this.btn查询插入.Name = "btn查询插入";
+            this.btn查询插入.Size = new System.Drawing.Size(91, 23);
+            this.btn查询插入.TabIndex = 297;
+            this.btn查询插入.Text = "查询/插入";
+            this.btn查询插入.UseVisualStyleBackColor = true;
+            this.btn查询插入.Click += new System.EventHandler(this.btn查询插入_Click);
             // 
             // BTVProInstruction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(889, 745);
+            this.ClientSize = new System.Drawing.Size(889, 741);
+            this.Controls.Add(this.btn查询插入);
             this.Controls.Add(this.dtp计划生产日期);
             this.Controls.Add(this.tb生产指令编号);
             this.Controls.Add(this.tb产品名称);
@@ -494,11 +471,8 @@
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox6);
-            this.Controls.Add(this.dataGridView4);
-            this.Controls.Add(this.dataGridView3);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dataGridView1);
@@ -513,11 +487,8 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox8.ResumeLayout(false);
@@ -542,13 +513,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DataGridView dataGridView3;
-        private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.TextBox tb负责人;
@@ -574,5 +542,6 @@
         private System.Windows.Forms.TextBox tb产品名称;
         private System.Windows.Forms.TextBox tb生产指令编号;
         private System.Windows.Forms.DateTimePicker dtp计划生产日期;
+        private System.Windows.Forms.Button btn查询插入;
     }
 }

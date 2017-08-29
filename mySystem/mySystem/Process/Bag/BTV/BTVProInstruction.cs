@@ -20,5 +20,10 @@ namespace mySystem.Process.Bag.BTV
         {
 
         }
+
+        private void btn查询插入_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
