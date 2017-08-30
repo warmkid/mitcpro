@@ -1294,14 +1294,28 @@ namespace WindowsFormsApplication1
                 my.Cells[9 + i, 6] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
             }
 
-            my.Cells[9, 8].Value = tb余料ab1c.Text;
-            my.Cells[9, 9].Value = tb用料ab1c.Text;
+            //my.Cells[9, 8].Value = tb余料ab1c.Text;
+            my.Cells[9, 8].Value = dt_prodinstr.Rows[0]["外中内层原料用量"];
 
-            my.Cells[10+ind, 8].Value = tb余料b2.Text;
-            my.Cells[10+ind, 9].Value = tb用料b2.Text;
-            my.Cells[9, 10].Value = tb复核人.Text;
-            my.Cells[13+ind, 2].Value = tb外层合计.Text ;
-            my.Cells[13+ind, 4].Value = tb中内层合计.Text;
+            //my.Cells[9, 9].Value = tb用料ab1c.Text;
+            my.Cells[9, 9].Value = dt_prodinstr.Rows[0]["外中内层原料余量"];
+
+
+            //my.Cells[10+ind, 8].Value = tb余料b2.Text;
+            my.Cells[10 + ind, 8].Value = dt_prodinstr.Rows[0]["中层原料用量"];
+
+            //my.Cells[10+ind, 9].Value = tb用料b2.Text;
+            my.Cells[10 + ind, 9].Value = dt_prodinstr.Rows[0]["中层原料余量"];
+
+            //my.Cells[9, 10].Value = tb复核人.Text;
+            my.Cells[9, 10].Value = dt_prodinstr.Rows[0]["审核人"];
+            
+            //my.Cells[13+ind, 2].Value = tb外层合计.Text ;
+            my.Cells[13 + ind, 2].Value = dt_prodinstr.Rows[0]["外层供料量合计a"];
+
+            //my.Cells[13+ind, 4].Value = tb中内层合计.Text;
+            my.Cells[13 + ind, 4].Value = dt_prodinstr.Rows[0]["中内层供料量合计b"];
+
         }
 
         //查找打印的表序号

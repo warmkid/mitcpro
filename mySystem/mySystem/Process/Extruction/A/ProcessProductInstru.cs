@@ -1622,6 +1622,7 @@ namespace BatchProductRecord
                         string log = "\n=====================================\n";
                         log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
                         dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+                        bs_prodinstr.DataSource = dt_prodinstr;
                         bs_prodinstr.EndEdit();
                         da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                     }
