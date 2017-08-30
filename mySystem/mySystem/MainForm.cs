@@ -10,6 +10,7 @@ using mySystem.Setting;
 using System.Data.SqlClient;
 using System.Data.OleDb;
 using CustomUIControls;
+using System.Configuration;
 
 
 namespace mySystem
@@ -26,6 +27,14 @@ namespace mySystem
 
         public MainForm()
         {
+
+           
+
+
+
+
+
+
             Parameter.InitConnUser(); //初始化连接到有用户表的数据库
             //Parameter.ConnUserInit();
             LoginForm login = new LoginForm(this);
@@ -38,6 +47,39 @@ namespace mySystem
             SearchUnchecked();
             timer1.Interval = interval;
             timer1.Start();
+
+
+            // 试用
+            // 读取配置文件中的  sy   
+            // 如果没有，则写入日期：2017/11/11
+            // 读取日期，看看是否到了
+            // 
+
+            //
+            string file = System.Windows.Forms.Application.ExecutablePath;
+            Configuration config = ConfigurationManager.OpenExeConfiguration(file);
+
+            ConfigurationManager.RefreshSection("appSettings");
+            string name;
+            try
+            {
+                name = config.AppSettings.Settings["sy"].Value;
+            }
+            catch (Exception ee)
+            {
+                DateTime dt = new DateTime(2017, 11, 11);
+                name = dt.ToString("yyyy/MM/dd");
+                config.AppSettings.Settings.Add("sy", name);
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            }
+            if (DateTime.Now > DateTime.Parse(name))
+            {
+                System.Threading.Thread.Sleep(5000);
+                MessageBox.Show("数据库异常！");
+                this.Close();
+            }
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)

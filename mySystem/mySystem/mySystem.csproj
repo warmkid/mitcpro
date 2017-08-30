@@ -664,6 +664,30 @@
     <Compile Include="Process\Stock\不合格品处理记录.Designer.cs">
       <DependentUpon>不合格品处理记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\产品退货审批单1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货审批单1.Designer.cs">
+      <DependentUpon>产品退货审批单1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货审批单2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货审批单2.Designer.cs">
+      <DependentUpon>产品退货审批单2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货接收单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货接收单.Designer.cs">
+      <DependentUpon>产品退货接收单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货申请单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货申请单.Designer.cs">
+      <DependentUpon>产品退货申请单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\入库.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -759,6 +783,12 @@
     </Compile>
     <Compile Include="Process\Stock\退货申请.Designer.cs">
       <DependentUpon>退货申请.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\退货管理.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\退货管理.Designer.cs">
+      <DependentUpon>退货管理.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Stock\退货记录.cs">
       <SubType>Form</SubType>
@@ -1393,6 +1423,18 @@
     <EmbeddedResource Include="Process\Stock\不合格品处理记录.resx">
       <DependentUpon>不合格品处理记录.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\产品退货审批单1.resx">
+      <DependentUpon>产品退货审批单1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\产品退货审批单2.resx">
+      <DependentUpon>产品退货审批单2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\产品退货接收单.resx">
+      <DependentUpon>产品退货接收单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\产品退货申请单.resx">
+      <DependentUpon>产品退货申请单.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\入库.resx">
       <DependentUpon>入库.cs</DependentUpon>
     </EmbeddedResource>
@@ -1440,6 +1482,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\退货申请.resx">
       <DependentUpon>退货申请.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\退货管理.resx">
+      <DependentUpon>退货管理.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\退货记录.resx">
       <DependentUpon>退货记录.cs</DependentUpon>
