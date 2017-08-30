@@ -11,7 +11,7 @@ using System.Data.OleDb;
 
 namespace 订单和库存管理
 {
-    public partial class 库存管理 : Form
+    public partial class 库存管理 : mySystem.BaseForm
     {
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
@@ -21,7 +21,7 @@ namespace 订单和库存管理
         DataTable dt;
         BindingSource bs;
 
-        public 库存管理()
+        public 库存管理(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
 
@@ -74,8 +74,8 @@ namespace 订单和库存管理
 
         private void btn退货_Click(object sender, EventArgs e)
         {
-            //退货 form = new 退货();
-            //form.Show();
+            mySystem.Process.Stock.退货管理 form = new mySystem.Process.Stock.退货管理(mainform);
+            form.Show();
         }
 
         private void btn原料入库_Click(object sender, EventArgs e)

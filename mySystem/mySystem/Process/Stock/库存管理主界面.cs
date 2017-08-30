@@ -22,7 +22,7 @@ namespace mySystem.Process.Stock
 
         private void Page库存管理_Paint(object sender, PaintEventArgs e)
         {
-            库存管理 myDlg = new 库存管理();
+            库存管理 myDlg = new 库存管理(mainform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = this.Page库存管理.Size;

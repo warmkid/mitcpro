@@ -69,7 +69,6 @@
             this.btn退货.TabIndex = 2;
             this.btn退货.Text = "退货";
             this.btn退货.UseVisualStyleBackColor = true;
-            this.btn退货.Visible = false;
             this.btn退货.Click += new System.EventHandler(this.btn退货_Click);
             // 
             // dataGridView1
@@ -117,7 +116,7 @@
             this.btn读取.Name = "btn读取";
             this.btn读取.Size = new System.Drawing.Size(75, 23);
             this.btn读取.TabIndex = 10;
-            this.btn读取.Text = "读取";
+            this.btn读取.Text = "读取1";
             this.btn读取.UseVisualStyleBackColor = true;
             this.btn读取.Click += new System.EventHandler(this.btn读取_Click);
             // 
