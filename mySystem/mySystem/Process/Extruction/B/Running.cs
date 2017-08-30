@@ -26,6 +26,7 @@ namespace mySystem.Process.Extruction.B
         OleDbDataAdapter daOuter;
         BindingSource bsOuter;
         OleDbCommandBuilder cbOuter;
+        List<List<String>> array2 = new List<List<String>>();
         List<List<TextBox>> array1 = new List<List<TextBox>>();
         List<string> colname = new List<string>(new string[] { "产品代码", "产品批号", "生产日期", "记录时间", "记录员", "记录员备注", "审核员", "审核意见", "审核是否通过", "A层一区实际温度", "A层二区实际温度", "A层三区实际温度", "A层四区实际温度", "A层换网实际温度", "A层流道实际温度", "B层一区实际温度", "B层二区实际温度", "B层三区实际温度", "B层四区实际温度", "B层换网实际温度", "B层流道实际温度", "C层一区实际温度", "C层二区实际温度", "C层三区实际温度", "C层四区实际温度", "C层换网实际温度", "C层流道实际温度", "模头模颈实际温度", "模头一区实际温度", "模头二区实际温度", "模头口模实际温度", "模头线速度", "第一牵引设置频率", "第一牵引实际频率", "第一牵引电流", "第二牵引设置频率", "第二牵引实际频率", "第二牵引设定张力", "第二牵引实际张力", "第二牵引电流", "外表面电机设置频率", "外表面电机实际频率", "外表面电机设定张力", "外表面电机实际张力", "外表面电机电流", "外冷进风机设置频率", "外冷进风机实际频率", "外冷进风机电流", "A层下料口温度", "B层下料口温度", "C层下料口温度", "挤出机A层实际频率", "挤出机A层电流", "挤出机A层熔体温度", "挤出机A层前熔体", "挤出机A层后熔压", "挤出机A层螺杆转速", "挤出机B层实际频率", "挤出机B层电流", "挤出机B层熔体温度", "挤出机B层前熔体", "挤出机B层后熔压", "挤出机B层螺杆转速", "挤出机C层实际频率", "挤出机C层电流", "挤出机C层熔体温度", "挤出机C层前熔体", "挤出机C层后熔压", "挤出机C层螺杆转速" });
         List<string> tabcol = new List<string>(new string[] { "实际温度(℃)", "一区", "二区", "三区", "四区", "换网", "流道", "参数记录", "设置频率", "实际频率", "设定张力", "实际张力", "电流", "转矩" });
@@ -155,10 +156,7 @@ namespace mySystem.Process.Extruction.B
             cmb产品代码.Items.Add(dtOuter.Rows[0]["产品代码"].ToString());
             outerBind();
 
-            setFormState();
-            setEnableReadOnly();
             
-
             //btn保存.Visible = false;
 
             //cmb产品代码.SelectedIndexChanged += new EventHandler(cmb产品代码_SelectedIndexChanged_without_Id);
@@ -206,9 +204,11 @@ namespace mySystem.Process.Extruction.B
             for (int i = 0; i < 14; i++)
             {
                 List<TextBox> row=new List<TextBox>();
+                List<String> row1 = new List<string>();
                 for (int j = 0; j < 12; j++)
                 {
                     TextBox tb = new TextBox();
+                    string bd = "";
                     tb.Text = "                             ";
                     if (0 == i ||7==i)
                     {
@@ -243,11 +243,13 @@ namespace mySystem.Process.Extruction.B
                     tb.BorderStyle = BorderStyle.Fixed3D;
                     row.Add(tb);
                     this.Controls.Add(tb);
+                    row1.Add(bd);
                 }
                 array1.Add(row);
                 array1[i][0].Text = tabcol[i];
                 array1[i][0].Enabled = false;
                 array1[i][0].BorderStyle = BorderStyle.None;
+                array2.Add(row1);
             }
             for (int i = 0; i < 12; i++)
             {
@@ -944,6 +946,7 @@ namespace mySystem.Process.Extruction.B
                 for (int j = 0; j < 3; j++)
                 {
                     array1[1+i][1+j].DataBindings.Add("Text", bsOuter.DataSource, colname[9 + i + 6 * j]);
+                    array2[1+i][1+j]=Convert.ToString(dtOuter.Rows[0][colname[9 + i + 6 * j]]);
                 }
             }
 
@@ -951,6 +954,7 @@ namespace mySystem.Process.Extruction.B
             for (int i = 0; i < 4; i++)
             {
                 array1[1 + i][5].DataBindings.Add("Text", bsOuter.DataSource, colname[27 + i]);
+                array2[1 + i][5]=Convert.ToString(dtOuter.Rows[0][colname[27 + i]]);
             }
             array1[6][4].DataBindings.Add("Text", bsOuter.DataSource, colname[31]);
             array1[8][2].DataBindings.Add("Text",bsOuter.DataSource,colname[32]);
@@ -959,11 +963,20 @@ namespace mySystem.Process.Extruction.B
             array1[8][5].DataBindings.Add("Text",bsOuter.DataSource,colname[45]);
             array1[9][5].DataBindings.Add("Text",bsOuter.DataSource,colname[46]);
             array1[12][5].DataBindings.Add("Text",bsOuter.DataSource,colname[47]);
+
+            array2[6][4]=Convert.ToString(dtOuter.Rows[0][colname[31]]);
+            array2[8][2]=Convert.ToString(dtOuter.Rows[0][colname[32]]);
+            array2[9][2]=Convert.ToString(dtOuter.Rows[0][colname[33]]);
+            array2[12][2]=Convert.ToString(dtOuter.Rows[0][colname[34]]);
+            array2[8][5]=Convert.ToString(dtOuter.Rows[0][colname[45]]);
+            array2[9][5]=Convert.ToString(dtOuter.Rows[0][colname[46]]);
+            array2[12][5]=Convert.ToString(dtOuter.Rows[0][colname[47]]);
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
                     array1[8+i][3+j].DataBindings.Add("Text", bsOuter.DataSource, colname[ 35+ i + 5 * j]);
+                    array2[8 + i][3 + j]=Convert.ToString(dtOuter.Rows[0][colname[35 + i + 5 * j]]);
                 }
             }
             for (int i = 0; i < 6; i++)
@@ -971,23 +984,37 @@ namespace mySystem.Process.Extruction.B
                 for (int j = 0; j < 3; j++)
                 {
                     array1[1 + i][9 + j].DataBindings.Add("Text", bsOuter.DataSource, colname[51 + i + 6 * j]);
+                    array2[1 + i][9 + j]=Convert.ToString(dtOuter.Rows[0][colname[51 + i + 6 * j]]);
                 }
             }
+
+            array1[9][11].DataBindings.Clear();
             array1[9][11].DataBindings.Add("Text",bsOuter.DataSource,colname[48]);
+            array2[9][11]=Convert.ToString(dtOuter.Rows[0][colname[48]]);
+            array1[11][11].DataBindings.Clear();
             array1[11][11].DataBindings.Add("Text",bsOuter.DataSource,colname[49]);
+            array2[11][11]=Convert.ToString(dtOuter.Rows[0][colname[49]]);
+            array1[13][11].DataBindings.Clear();
             array1[13][11].DataBindings.Add("Text",bsOuter.DataSource,colname[50]);
+            array2[13][11]=Convert.ToString(dtOuter.Rows[0][colname[50]]);
+
 
 
             array1[8][9].DataBindings.Clear();
             array1[8][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机设置频率");
+            array2[8][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机设置频率"]);
             array1[9][9].DataBindings.Clear();
             array1[9][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机实际频率");
+            array2[9][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机实际频率"]);
             array1[10][9].DataBindings.Clear();
             array1[10][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机设定张力");
+            array2[10][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机设定张力"]);
             array1[11][9].DataBindings.Clear();
             array1[11][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机实际张力");
+            array2[11][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机实际张力"]);
             array1[12][9].DataBindings.Clear();
             array1[12][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机电流");
+            array2[12][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机电流"]);
 
 
         }
@@ -1033,9 +1060,7 @@ namespace mySystem.Process.Extruction.B
                     array1[1 + i][9 + j].DataBindings.Clear();
                 }
             }
-            array1[9][11].DataBindings.Clear();
-            array1[11][11].DataBindings.Clear();
-            array1[13][11].DataBindings.Clear();
+           
         }
         public override void CheckResult()
         {
@@ -1161,6 +1186,7 @@ namespace mySystem.Process.Extruction.B
         }
         public void print(bool preview)
 		{
+           
 			// 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -1170,35 +1196,37 @@ namespace mySystem.Process.Extruction.B
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 设置该进程是否可见
             //oXL.Visible = true;
-            // 修改Sheet中某行某列的值
+            // 修改Sheet中某行某列的值z
 
-            my.Cells[3, 1].Value = "产品代码：" + cmb产品代码.Text.ToString();
-            my.Cells[3, 5].Value = "批号：" + txb产品批号.Text;
-            my.Cells[3, 7].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[3, 10].Value = "记录时间：" + dtp记录时间.Value.ToShortTimeString();
-            my.Cells[3, 12].Value = "记录人：" + txb记录员.Text;
-            my.Cells[3, 14].Value = "复核人：" + txb审核员.Text;
+
+
+            my.Cells[3, 1].Value = "产品代码：" + dtOuter.Rows[0]["产品代码"];
+            my.Cells[3, 5].Value = "批号：" + dtOuter.Rows[0]["产品批号"];
+            my.Cells[3, 7].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[3, 10].Value = "记录时间：" +  Convert.ToDateTime(dtOuter.Rows[0]["记录时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[3, 12].Value = "记录人：" + dtOuter.Rows[0]["记录员"];
+            my.Cells[3, 14].Value = "复核人：" + dtOuter.Rows[0]["审核员"];
 
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    my.Cells[6+j, 2+i].Value = array1[i+1][j+1].Text;
+                    my.Cells[6+j, 2+i].Value = array2[i+1][j+1];
                 }
             }
 
             for (int i = 0; i < 4; i++)
             {
-                my.Cells[10, 2 + i].Value = array1[i + 1][5].Text;
+                my.Cells[10, 2 + i].Value = array2[i + 1][5];
             }
 
-            my.Cells[9, 7] = array1[6][4].Text;
+            my.Cells[9, 7] = array2[6][4];
 
             for (int i = 0; i < 6; i++)
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    my.Cells[14 + j, 2 + i].Value = array1[i + 1][j + 9].Text;
+                    my.Cells[14 + j, 2 + i].Value = array2[i + 1][j + 9];
                 }
             }
 
@@ -1206,7 +1234,7 @@ namespace mySystem.Process.Extruction.B
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    my.Cells[7 + j, 10 + i].Value = array1[i + 8][j + 2].Text;
+                    my.Cells[7 + j, 10 + i].Value = array2[i + 8][j + 2];
                 }
             }
 
@@ -1214,18 +1242,18 @@ namespace mySystem.Process.Extruction.B
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    my.Cells[8 + j, 12 + i].Value = array1[i + 10][j + 3].Text;
+                    my.Cells[8 + j, 12 + i].Value = array2[i + 10][j + 3];
                 }
             }
 
             for (int j = 0; j < 4; j++)
             {
-                my.Cells[7 + j, 14].Value = array1[12][j + 2].Text;
+                my.Cells[7 + j, 14].Value = array2[12][j + 2];
             }
 
-            my.Cells[16, 10] =  "A层 "+array1[9][11].Text+"  (℃)";
-            my.Cells[16, 12] = "B层 "+array1[11][11].Text+"  (℃)";
-            my.Cells[16, 14] = "C层 " + array1[13][11].Text + "  (℃)";
+            my.Cells[16, 10] =  "A层 "+array2[9][11]+"  (℃)";
+            my.Cells[16, 12] = "B层 "+array2[11][11]+"  (℃)";
+            my.Cells[16, 14] = "C层 " + array2[13][11] + "  (℃)";
             string instr;
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + _生产指令ID, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
