@@ -510,16 +510,16 @@ namespace mySystem.Extruction.Process
              //oXL.Visible = true;
              // 修改Sheet中某行某列的值
 
-             my.Cells[3, 2].Value = lbl生产指令.Text.ToString();
-             my.Cells[3, 4].Value = lbl生产开始时间.Text.ToString();
-             my.Cells[6, 1].Value = txb成品重量合计.Text;
-             my.Cells[6, 2].Value = txb废品量合计.Text;
-             my.Cells[6, 3].Value = txb领料量.Text;
-             my.Cells[6, 4].Value = txb重量比成品率.Text;
-             my.Cells[6, 5].Value = txb物料平衡.Text;
-             my.Cells[7, 2].Value = txb备注.Text;
-             my.Cells[8, 1].Value = "记录员/日期：" + txb记录员.Text+"   "+dtp记录日期.Value.ToString("yyyy年MM月dd日");
-             my.Cells[8, 4].Value = txb审核员.Text + dtp审核日期.Value.ToString("yyyy年MM月dd日");
+             my.Cells[3, 2].Value = dtOuter.Rows[0]["生产指令"]; //lbl生产指令.Text.ToString();
+             my.Cells[3, 4].Value = dtOuter.Rows[0]["生产日期"]; //lbl生产开始时间.Text.ToString();
+             my.Cells[6, 1].Value = dtOuter.Rows[0]["成品重量合计"]; //txb成品重量合计.Text;
+             my.Cells[6, 2].Value = dtOuter.Rows[0]["废品量合计"]; //txb废品量合计.Text;
+             my.Cells[6, 3].Value = dtOuter.Rows[0]["领料量"]; //txb领料量.Text;
+             my.Cells[6, 4].Value = dtOuter.Rows[0]["重量比成品率"]; //txb重量比成品率.Text;
+             my.Cells[6, 5].Value = dtOuter.Rows[0]["物料平衡"]; //txb物料平衡.Text;
+             my.Cells[7, 2].Value = dtOuter.Rows[0]["备注"];
+             my.Cells[8, 1].Value = "记录员/日期：" + dtOuter.Rows[0]["记录员"] +"   "+Convert.ToDateTime(dtOuter.Rows[0]["记录日期"]).ToString("yyyy年MM月dd日");
+             my.Cells[8, 4].Value = dtOuter.Rows[0]["审核员"] + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"); 
              
 
 			if(preview)

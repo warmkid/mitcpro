@@ -389,6 +389,7 @@ namespace mySystem.Extruction.Process
             matcode = tempdt.Rows[0]["物料代码"].ToString();
             instrid = (int)tempdt.Rows[0]["生产指令ID"];
 
+
             readOuterData(instrid, matcode);
             removeOuterBinding();
             outerBind();
@@ -1067,7 +1068,23 @@ namespace mySystem.Extruction.Process
             return list_id.IndexOf((int)dt_prodinstr.Rows[0]["ID"]) + 1;
 
         }
+        //根据生产指令id转换成生产指令编码
+        private string idtocode(int id)
+        {
+            string ret = "";
 
+            DataTable dt_temp = new DataTable("生产指令表");
+            BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 生产指令信息表 where ID=" + id, mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+
+            if (dt_temp.Rows.Count>0)
+            {
+                ret = dt_temp.Rows[0]["生产指令编号"].ToString();
+            }
+            return ret;
+        }
         public void print(bool b)
         {
             int label_打印成功 = 1;
@@ -1082,7 +1099,8 @@ namespace mySystem.Extruction.Process
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-13-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            string str_instruction = idtocode(instrid);
+            my.PageSetup.RightFooter = str_instruction + "-13-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {

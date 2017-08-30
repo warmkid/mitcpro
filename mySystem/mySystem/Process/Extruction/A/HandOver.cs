@@ -727,8 +727,8 @@ namespace mySystem.Process.Extruction.A
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
-            my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编号.Text;
-            my.Cells[3, 5].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[3, 1].Value = "生产指令编号：" + dtOuter.Rows[0]["生产指令编号"];   // lbl生产指令编号.Text;
+            my.Cells[3, 5].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"); //dtp生产日期.Value.ToString("yyyy年MM月dd日");
 
 
             for (int i = 0; i < dtInner.Rows.Count; i++)
@@ -741,8 +741,8 @@ namespace mySystem.Process.Extruction.A
             }
             my.Cells[12, 6].Value = "交班人：" + dtOuter.Rows[0]["白班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");
             my.Cells[21, 6].Value = "交班人：" + dtOuter.Rows[0]["夜班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["白班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["夜班交接班时间"]).ToString("yyyy年MM月dd日");
-            my.Cells[5, 6].Value = txb白班异常情况处理.Text;
-            my.Cells[15, 6].Value = txb夜班异常情况处理.Text;
+            my.Cells[5, 6].Value = dtOuter.Rows[0]["白班异常情况处理"]; //txb白班异常情况处理.Text;
+            my.Cells[15, 6].Value = dtOuter.Rows[0]["夜班异常情况处理"]; //txb夜班异常情况处理.Text;
             my.PageSetup.RightFooter = __生产指令编号 + "-" + "14" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (preview)

@@ -1274,7 +1274,9 @@ namespace WindowsFormsApplication1
 
             my.Cells[3, 1].Value = "产品代码: "+cb产品代码.Text;
             my.Cells[3, 5].Value = "产品批号: " + tb产品批号.Text ;
-            my.Cells[3, 7].Value = "生产指令编号: " + tb生产指令.Text ;
+            //my.Cells[3, 7].Value = "生产指令编号: " + tb生产指令.Text ;
+            my.Cells[3, 7].Value = "生产指令编号: " + dt_prodinstr.Rows[0]["生产指令编号"];
+
             my.Cells[5, 6].Value = cb原料代码ab1c.Text;
             my.Cells[5, 8].Value = tb原料批号ab1c.Text;
             my.Cells[6, 6].Value = cb原料代码b2.Text;
@@ -1286,20 +1288,34 @@ namespace WindowsFormsApplication1
                 DateTime tempdt=DateTime.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString());
                 string time = string.Format("{0}:{1}:{2}", tempdt.Hour.ToString(), tempdt.Minute.ToString(), tempdt.Second.ToString());
                 my.Cells[9 + i, 1] = time;
-                my.Cells[9 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[9 + i, 4] = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[9 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();
-                my.Cells[9 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[9 + i, 2] = dataGridView1.Rows[i].Cells["外层供料量"].Value.ToString();
+                my.Cells[9 + i, 4] = dataGridView1.Rows[i].Cells["中内层供料量"].Value.ToString();
+                my.Cells[9 + i, 5] = dataGridView1.Rows[i].Cells["原料抽查结果"].Value.ToString();
+                my.Cells[9 + i, 6] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
             }
 
-            my.Cells[9, 8].Value = tb余料ab1c.Text;
-            my.Cells[9, 9].Value = tb用料ab1c.Text;
+            //my.Cells[9, 8].Value = tb余料ab1c.Text;
+            my.Cells[9, 8].Value = dt_prodinstr.Rows[0]["外中内层原料用量"];
 
-            my.Cells[10+ind, 8].Value = tb余料b2.Text;
-            my.Cells[10+ind, 9].Value = tb用料b2.Text;
-            my.Cells[9, 10].Value = tb复核人.Text;
-            my.Cells[13+ind, 2].Value = tb外层合计.Text ;
-            my.Cells[13+ind, 4].Value = tb中内层合计.Text;
+            //my.Cells[9, 9].Value = tb用料ab1c.Text;
+            my.Cells[9, 9].Value = dt_prodinstr.Rows[0]["外中内层原料余量"];
+
+
+            //my.Cells[10+ind, 8].Value = tb余料b2.Text;
+            my.Cells[10 + ind, 8].Value = dt_prodinstr.Rows[0]["中层原料用量"];
+
+            //my.Cells[10+ind, 9].Value = tb用料b2.Text;
+            my.Cells[10 + ind, 9].Value = dt_prodinstr.Rows[0]["中层原料余量"];
+
+            //my.Cells[9, 10].Value = tb复核人.Text;
+            my.Cells[9, 10].Value = dt_prodinstr.Rows[0]["审核人"];
+            
+            //my.Cells[13+ind, 2].Value = tb外层合计.Text ;
+            my.Cells[13 + ind, 2].Value = dt_prodinstr.Rows[0]["外层供料量合计a"];
+
+            //my.Cells[13+ind, 4].Value = tb中内层合计.Text;
+            my.Cells[13 + ind, 4].Value = dt_prodinstr.Rows[0]["中内层供料量合计b"];
+
         }
 
         //查找打印的表序号

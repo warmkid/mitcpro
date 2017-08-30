@@ -418,6 +418,7 @@ namespace BatchProductRecord
             readOuterData(instrcode,id);
             removeOuterBinding();
             outerBind();
+            readOuterData(instrcode, id);
             
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
@@ -851,6 +852,7 @@ namespace BatchProductRecord
                 dt_prodinstr.Rows[0]["中层领料量"] = sum_weight / 100 * (100 - fbili);
             }
 
+            bs_prodinstr.DataSource = dt_prodinstr;
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
         }
@@ -1620,6 +1622,7 @@ namespace BatchProductRecord
                         string log = "\n=====================================\n";
                         log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
                         dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+                        bs_prodinstr.DataSource = dt_prodinstr;
                         bs_prodinstr.EndEdit();
                         da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                     }
@@ -1669,11 +1672,18 @@ namespace BatchProductRecord
             }
 
             my.Cells[2, 1].Value = "PEF 吹膜工序生产指令";
-            my.Cells[3, 1].Value = "产品名称："+comboBox1.Text;
-            my.Cells[3, 9].Value = "生产指令编号：" + tb指令编号.Text;
-            my.Cells[4, 1].Value = "生产工艺：" + cb工艺.Text;          
-            my.Cells[4, 6].Value = "生产设备编号：" + tb设备编号.Text;
-            my.Cells[4, 9].Value = "开始生产日期：" + dtp开始生产日期.Value.ToString("yyyy年MM月dd日");
+            //my.Cells[3, 1].Value = "产品名称："+comboBox1.Text;
+            my.Cells[3, 1].Value = "产品名称：" + dt_prodinstr.Rows[0]["产品名称"];
+            //my.Cells[3, 9].Value = "生产指令编号：" + tb指令编号.Text;
+            my.Cells[3, 9].Value = "生产指令编号：" + dt_prodinstr.Rows[0]["生产指令编号"];
+            //my.Cells[4, 1].Value = "生产工艺：" + cb工艺.Text;   
+            my.Cells[4, 1].Value = "生产工艺：" + dt_prodinstr.Rows[0]["生产工艺"];
+            //my.Cells[4, 6].Value = "生产设备编号：" + tb设备编号.Text;
+            my.Cells[4, 6].Value = "生产设备编号：" + dt_prodinstr.Rows[0]["生产设备编号"];
+
+            //my.Cells[4, 9].Value = "开始生产日期：" + dtp开始生产日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[4, 9].Value = "开始生产日期：" + DateTime.Parse(dt_prodinstr.Rows[0]["开始生产日期"].ToString()).ToString("yyyy年MM月dd日");
+
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -1688,33 +1698,73 @@ namespace BatchProductRecord
                 my.Cells[7 + i, 13] = dataGridView1.Rows[i].Cells[12].Value.ToString();
             }
 
-            my.Cells[14 + ind, 6].Value = textBox6.Text;//计划产量米
-            my.Cells[14 + ind, 7].Value = tb用料重量合计.Text;//用料重量
-            my.Cells[14 + ind, 10].Value = textBox10.Text;//计划产量卷
-            my.Cells[16 + ind, 6].Value = cb内外层物料代码.Text;
-            my.Cells[16 + ind, 8].Value = tb内外层物料批号.Text;
-            my.Cells[16 + ind, 9].Value = tb内外层包装规格.Text;
-            my.Cells[16 + ind, 10].Value = tb内外领料量.Text;
+            //my.Cells[14 + ind, 6].Value = textBox6.Text;//计划产量米
+            my.Cells[14 + ind, 6].Value = dt_prodinstr.Rows[0]["计划产量合计米"];
+            
+            //my.Cells[14 + ind, 7].Value = tb用料重量合计.Text;//用料重量
+            my.Cells[14 + ind, 7].Value = dt_prodinstr.Rows[0]["用料重量合计"];
+            
+            //my.Cells[14 + ind, 10].Value = textBox10.Text;//计划产量卷
+            my.Cells[14 + ind, 10].Value = dt_prodinstr.Rows[0]["计划产量合计卷"];
+            
+            //my.Cells[16 + ind, 6].Value = cb内外层物料代码.Text;
+            my.Cells[16 + ind, 6].Value = dt_prodinstr.Rows[0]["内外层物料代码"];
+            
+            //my.Cells[16 + ind, 8].Value = tb内外层物料批号.Text;
+            my.Cells[16 + ind, 8].Value = dt_prodinstr.Rows[0]["内外层物料批号"];
+            
+            //my.Cells[16 + ind, 9].Value = tb内外层包装规格.Text;
+            my.Cells[16 + ind, 9].Value = dt_prodinstr.Rows[0]["内外层包装规格"];
+            
+            //my.Cells[16 + ind, 10].Value = tb内外领料量.Text;
+            my.Cells[16 + ind, 10].Value = dt_prodinstr.Rows[0]["内外层领料量"];
 
-            my.Cells[17 + ind, 6].Value = cb中层物料代码.Text;
-            my.Cells[17 + ind, 8].Value = tb中层物料批号.Text;
-            my.Cells[17 + ind, 9].Value = tb中层包装规格.Text;
-            my.Cells[17 + ind, 10].Value = tb中层领料量.Text;
 
-            my.Cells[18 + ind, 6].Value = textBox12.Text;
-            my.Cells[18 + ind, 9].Value = textBox13.Text;
-            my.Cells[18 + ind, 10].Value = tb卷心管领料量.Text;
+            //my.Cells[17 + ind, 6].Value = cb中层物料代码.Text;
+            my.Cells[17 + ind, 6].Value = dt_prodinstr.Rows[0]["中层物料代码"];
+            
+            //my.Cells[17 + ind, 8].Value = tb中层物料批号.Text;
+            my.Cells[17 + ind, 8].Value = dt_prodinstr.Rows[0]["中层物料批号"];
+            
+            //my.Cells[17 + ind, 9].Value = tb中层包装规格.Text;
+            my.Cells[17 + ind, 9].Value = dt_prodinstr.Rows[0]["中层包装规格"];
+            
+            //my.Cells[17 + ind, 10].Value = tb中层领料量.Text;
+            my.Cells[17 + ind, 10].Value = dt_prodinstr.Rows[0]["中层领料量"];
 
-            my.Cells[20 + ind, 6].Value = textBox7.Text;
-            my.Cells[20 + ind, 9].Value = textBox9.Text;
-            my.Cells[20 + ind, 10].Value = tb双层包装领料量.Text;
+            //my.Cells[18 + ind, 6].Value = textBox12.Text;
+            my.Cells[18 + ind, 6].Value = dt_prodinstr.Rows[0]["卷心管"];
+            
+            //my.Cells[18 + ind, 9].Value = textBox13.Text;
+            my.Cells[18 + ind, 9].Value = dt_prodinstr.Rows[0]["卷心管规格"];
+            
+            //my.Cells[18 + ind, 10].Value = tb卷心管领料量.Text;
+            my.Cells[18 + ind, 10].Value = dt_prodinstr.Rows[0]["卷心管领料量"];
+
+            //my.Cells[20 + ind, 6].Value = textBox7.Text;
+            my.Cells[20 + ind, 6].Value = "双层洁净包装";
+
+            //my.Cells[20 + ind, 9].Value = textBox9.Text;
+            my.Cells[20 + ind, 9].Value = dt_prodinstr.Rows[0]["双层洁净包装包装规格"];
+
+            //my.Cells[20 + ind, 10].Value = tb双层包装领料量.Text;
+            my.Cells[20 + ind, 10].Value = dt_prodinstr.Rows[0]["双层洁净包装领料量"];
+
 
             my.Cells[16 + ind, 12].Value = "白班：" + tb白班.Text + "\n" + "夜班：" + tb夜班.Text;
-            my.Cells[21 + ind, 2].Value = tb备注.Text;
+            //my.Cells[21 + ind, 2].Value = tb备注.Text;
+            my.Cells[21 + ind, 2].Value = dt_prodinstr.Rows[0]["备注"];
 
-            my.Cells[22 + ind, 1].Value = "编制人：" + tb编制人.Text + "\n" + dateTimePicker2.Value.ToString("yyyy年MM月dd日");
-            my.Cells[22 + ind, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToString("yyyy年MM月dd日");
-            my.Cells[22 + ind, 9].Value = "接收人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToString("yyyy年MM月dd日");
+
+            //my.Cells[22 + ind, 1].Value = "编制人：" + tb编制人.Text + "\n" + dateTimePicker2.Value.ToString("yyyy年MM月dd日");
+            my.Cells[22 + ind, 1].Value = "编制人：" + dt_prodinstr.Rows[0]["编制人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["编制时间"].ToString()).ToString("yyyy年MM月dd日");
+
+            //my.Cells[22 + ind, 6].Value = "审批人：" + tb审批人.Text + "\n" + dateTimePicker3.Value.ToString("yyyy年MM月dd日");
+            my.Cells[22 + ind, 6].Value = "审批人：" + dt_prodinstr.Rows[0]["审批人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["审批时间"].ToString()).ToString("yyyy年MM月dd日");
+
+            //my.Cells[22 + ind, 9].Value = "接收人：" + tb接收人.Text + "\n" + dateTimePicker4.Value.ToString("yyyy年MM月dd日");
+            my.Cells[22 + ind, 9].Value = "接收人：" + dt_prodinstr.Rows[0]["接收人"] + "\n" + DateTime.Parse(dt_prodinstr.Rows[0]["接收时间"].ToString()).ToString("yyyy年MM月dd日");
+
 
         }
 
