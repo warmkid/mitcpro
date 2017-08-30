@@ -1076,8 +1076,8 @@ namespace mySystem.Process.Extruction.B
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
-            my.Cells[3, 1].Value = "生产指令：" + lbl生产指令.Text;
-            my.Cells[3, 5].Value = "生产时段：" + lbl生产开始时间.Text + "--" + dtp生产结束时间.Value.ToString("yyyy年MM月dd日");
+            my.Cells[3, 1].Value = "生产指令：" + dtOuter.Rows[0]["生产指令"];
+            my.Cells[3, 5].Value = "生产时段：" + dtOuter.Rows[0]["生产开始时间"] + "--" + Convert.ToDateTime(dtOuter.Rows[0]["生产结束时间"]).ToString("yyyy年MM月dd日");
             my.Cells[23, 5].Value = dtOuter.Rows[0]["合计不良品数量"];
             my.Cells[23, 7].Value = dtOuter.Rows[0]["审核员"];
 
