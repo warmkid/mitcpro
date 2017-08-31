@@ -161,7 +161,7 @@
             this.tb备注.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb备注.Location = new System.Drawing.Point(98, 292);
             this.tb备注.Name = "tb备注";
-            this.tb备注.Size = new System.Drawing.Size(596, 26);
+            this.tb备注.Size = new System.Drawing.Size(913, 26);
             this.tb备注.TabIndex = 28;
             // 
             // label10

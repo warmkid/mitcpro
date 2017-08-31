@@ -298,7 +298,14 @@ namespace mySystem
             }
         }
 
-        private void btn导入供应商_Click(object sender, EventArgs e)
+        private void btn导入_Click(object sender, EventArgs e)
+        {
+            //import供应商();
+            import存货档案();
+           
+        }
+
+        void import供应商()
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -333,6 +340,71 @@ namespace mySystem
             }
             da.Update(dt);
             MessageBox.Show("导入供应商成功");
+        }
+
+        void import存货档案()
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(textBox1.Text);
+
+
+            List<String> ls存货名称 = new List<string>();
+            List<String> ls存货代码 = new List<string>();
+            List<String> ls规格型号 = new List<string>();
+            List<String> ls主计量单位 = new List<string>();
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+           
+            for (int i = 2; i <= 832; ++i)
+            {
+                ls存货名称.Add(my.Cells[i, 4].Value);
+                ls存货代码.Add(my.Cells[i, 5].Value);
+                ls规格型号.Add(my.Cells[i, 6].Value);
+                ls主计量单位.Add(my.Cells[i, 10].Value);
+            }
+            my = wb.Worksheets[2];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+
+            for (int i = 2; i <= 727; ++i)
+            {
+                ls存货名称.Add(my.Cells[i, 4].Value);
+                ls存货代码.Add(my.Cells[i, 5].Value);
+                ls规格型号.Add(my.Cells[i, 6].Value);
+                ls主计量单位.Add(my.Cells[i, 10].Value);
+            }
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection conn;
+            conn = new OleDbConnection(strConnect);
+            conn.Open();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 0=1", conn);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+           for(int i=0;i<ls主计量单位.Count;++i)
+            {
+                DataRow dr = dt.NewRow();
+                dr["存货名称"] = ls存货名称[i];
+                dr["存货代码"] = ls存货代码[i];
+                dr["规格型号"] = ls规格型号[i];
+                dr["主计量单位名称"] = ls主计量单位[i];
+                dt.Rows.Add(dr);
+            }
+            da.Update(dt);
+            MessageBox.Show("导入存货档案成功");
+        }
+
+        private void MainPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
 

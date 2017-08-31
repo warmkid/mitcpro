@@ -132,6 +132,13 @@ namespace mySystem
             BtnColor();
             Btn库存.BackColor = Color.FromArgb(138, 158, 196);
             QueryPanelRight.Controls.Clear();
+
+            库存查询 myDlg = new 库存查询();
+            myDlg.TopLevel = false;
+            myDlg.FormBorderStyle = FormBorderStyle.None;
+            myDlg.Size = QueryPanelRight.Size;
+            QueryPanelRight.Controls.Add(myDlg);
+            myDlg.Show();
         }
 
         private void BtnPE制袋_Click(object sender, EventArgs e)

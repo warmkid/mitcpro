@@ -108,6 +108,12 @@
     <Compile Include="Other\TaskbarNotifier.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Other\存货编码类型.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\存货编码类型.Designer.cs">
+      <DependentUpon>存货编码类型.cs</DependentUpon>
+    </Compile>
     <Compile Include="Other\属于工序.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -688,6 +694,30 @@
     <Compile Include="Process\Stock\产品退货申请单.Designer.cs">
       <DependentUpon>产品退货申请单.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\产品退货记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货记录.Designer.cs">
+      <DependentUpon>产品退货记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货评审单1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货评审单1.Designer.cs">
+      <DependentUpon>产品退货评审单1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货评审单2.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货评审单2.Designer.cs">
+      <DependentUpon>产品退货评审单2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货请验单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\产品退货请验单.Designer.cs">
+      <DependentUpon>产品退货请验单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\入库.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -855,6 +885,12 @@
     </Compile>
     <Compile Include="Query\QueryInstruForm.Designer.cs">
       <DependentUpon>QueryInstruForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Query\库存查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Query\库存查询.Designer.cs">
+      <DependentUpon>库存查询.cs</DependentUpon>
     </Compile>
     <Compile Include="Query\清洁分切查询.cs">
       <SubType>Form</SubType>
@@ -1148,6 +1184,9 @@
       <DependentUpon>LogForm.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Other\存货编码类型.resx">
+      <DependentUpon>存货编码类型.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Other\属于工序.resx">
       <DependentUpon>属于工序.cs</DependentUpon>
     </EmbeddedResource>
@@ -1435,6 +1474,18 @@
     <EmbeddedResource Include="Process\Stock\产品退货申请单.resx">
       <DependentUpon>产品退货申请单.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\产品退货记录.resx">
+      <DependentUpon>产品退货记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\产品退货评审单1.resx">
+      <DependentUpon>产品退货评审单1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\产品退货评审单2.resx">
+      <DependentUpon>产品退货评审单2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\产品退货请验单.resx">
+      <DependentUpon>产品退货请验单.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\入库.resx">
       <DependentUpon>入库.cs</DependentUpon>
     </EmbeddedResource>
@@ -1524,6 +1575,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Query\QueryMainForm.resx">
       <DependentUpon>QueryMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Query\库存查询.resx">
+      <DependentUpon>库存查询.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Query\清洁分切查询.resx">
       <DependentUpon>清洁分切查询.cs</DependentUpon>

@@ -31,7 +31,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.tb批准人 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tb质量部审批意见 = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.dtp批准日期 = new System.Windows.Forms.DateTimePicker();
             this.tb产品名称 = new System.Windows.Forms.TextBox();
@@ -98,14 +98,14 @@
             this.label15.TabIndex = 295;
             this.label15.Text = "审批意见（质量部）";
             // 
-            // textBox3
+            // tb质量部审批意见
             // 
-            this.textBox3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.textBox3.Location = new System.Drawing.Point(15, 497);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(732, 51);
-            this.textBox3.TabIndex = 294;
+            this.tb质量部审批意见.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb质量部审批意见.Location = new System.Drawing.Point(15, 497);
+            this.tb质量部审批意见.Multiline = true;
+            this.tb质量部审批意见.Name = "tb质量部审批意见";
+            this.tb质量部审批意见.Size = new System.Drawing.Size(732, 51);
+            this.tb质量部审批意见.TabIndex = 294;
             // 
             // label17
             // 
@@ -454,7 +454,7 @@
             this.Controls.Add(this.label14);
             this.Controls.Add(this.tb批准人);
             this.Controls.Add(this.label15);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.tb质量部审批意见);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.dtp批准日期);
             this.Controls.Add(this.tb产品名称);
@@ -537,7 +537,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox tb批准人;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tb质量部审批意见;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.DateTimePicker dtp批准日期;
     }

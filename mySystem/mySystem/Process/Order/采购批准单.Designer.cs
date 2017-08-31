@@ -187,7 +187,7 @@
             // 
             this.label最少应购.AutoSize = true;
             this.label最少应购.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label最少应购.Location = new System.Drawing.Point(412, 295);
+            this.label最少应购.Location = new System.Drawing.Point(394, 295);
             this.label最少应购.Name = "label最少应购";
             this.label最少应购.Size = new System.Drawing.Size(16, 16);
             this.label最少应购.TabIndex = 173;
@@ -197,7 +197,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(318, 295);
+            this.label11.Location = new System.Drawing.Point(310, 295);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(88, 16);
             this.label11.TabIndex = 172;

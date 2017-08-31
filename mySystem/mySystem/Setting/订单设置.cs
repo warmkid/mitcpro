@@ -14,14 +14,11 @@ namespace mySystem.Setting
     public partial class 订单设置 : Form
     {
 
-        private OleDbDataAdapter da组件存货档案;
-        private DataTable dt组件存货档案;
-        private BindingSource bs组件存货档案;
-        private OleDbCommandBuilder cb组件存货档案;
-        private OleDbDataAdapter da产成品存货档案;
-        private DataTable dt产成品存货档案;
-        private BindingSource bs产成品存货档案;
-        private OleDbCommandBuilder cb产成品存货档案;
+       
+        private OleDbDataAdapter da存货档案;
+        private DataTable dt存货档案;
+        private BindingSource bs存货档案;
+        private OleDbCommandBuilder cb存货档案;
 
 
         private OleDbDataAdapter da人员;
@@ -63,25 +60,28 @@ namespace mySystem.Setting
             InitializeComponent();
             Initdgv();
             Bind();
-            dgv产成品存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv产成品存货档案_CellDoubleClick);
-            dgv组件存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv组件存货档案_CellDoubleClick);
+            dgv存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv存货档案_CellDoubleClick);
         }
 
-        void dgv组件存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        void dgv存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgv组件存货档案.Columns[e.ColumnIndex].Name == "属于工序")
+            if (dgv存货档案.Columns[e.ColumnIndex].Name == "属于工序")
             {
                 string data = mySystem.Other.属于工序.getData();
                 if (data != null)
                 {
-                    dgv组件存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                    dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
                 }
             }
-        }
-
-        void dgv产成品存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dgv产成品存货档案.Columns[e.ColumnIndex].Name == "BOM列表")
+            if (dgv存货档案.Columns[e.ColumnIndex].Name == "类型")
+            {
+                string data = mySystem.Other.存货编码类型.getData();
+                if (data != null)
+                {
+                    dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                }
+            }
+            if (dgv存货档案.Columns[e.ColumnIndex].Name == "BOM列表")
             {
                 // 弹出对话框，选择组件
                 //MessageBox.Show("dian");
@@ -91,40 +91,34 @@ namespace mySystem.Setting
                 try
                 {
                     //String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
-                    string d = dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    string d = dgv存货档案[e.ColumnIndex, e.RowIndex].Value.ToString();
                     if (d == "")
                     {
                         string data = mySystem.Other.BOMList.getData();
-                        dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                        if (data != null)
+                            dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
                     }
                     else
                     {
                         JArray ja = JArray.Parse(d);
                         string data = mySystem.Other.BOMList.getData(ja);
-                        dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                        if (data != null)
+                            dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
                     }
                 }
                 catch (Exception ee)
                 {
                 }
             }
-            else if (dgv产成品存货档案.Columns[e.ColumnIndex].Name == "属于工序")
-            {
-                string data = mySystem.Other.属于工序.getData();
-                if (data != null)
-                {
-                    dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value = data;
-                }
-            }
         }
+
 
         private void Initdgv()
         {
-            bs组件存货档案 = new BindingSource();
-            EachInitdgv(dgv组件存货档案);
+            bs存货档案 = new BindingSource();
+            EachInitdgv(dgv存货档案);
 
-            bs产成品存货档案 = new BindingSource();
-            EachInitdgv(dgv产成品存货档案);
+            
 
             bs人员 = new BindingSource();
             EachInitdgv(dgv人员);
@@ -156,40 +150,24 @@ namespace mySystem.Setting
         private void Bind()
         {
             //**************************   设置组件存货档案    ***********************************
-            dt组件存货档案 = new DataTable("设置组件存货档案"); //""中的是表名
-            da组件存货档案 = new OleDbDataAdapter("select * from 设置组件存货档案", mySystem.Parameter.connOle);
-            cb组件存货档案 = new OleDbCommandBuilder(da组件存货档案);
-            dt组件存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
-            da组件存货档案.Fill(dt组件存货档案);
-            bs组件存货档案.DataSource = dt组件存货档案;
-            this.dgv组件存货档案.DataSource = bs组件存货档案.DataSource;
+            dt存货档案 = new DataTable("设置存货档案"); //""中的是表名
+            da存货档案 = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
+            cb存货档案 = new OleDbCommandBuilder(da存货档案);
+            dt存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
+            da存货档案.Fill(dt存货档案);
+            bs存货档案.DataSource = dt存货档案;
+            this.dgv存货档案.DataSource = bs存货档案.DataSource;
             //显示序号
-            setDataGridViewRowNums(this.dgv组件存货档案);
+            setDataGridViewRowNums(this.dgv存货档案);
             //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgv组件存货档案.Columns["ID"].Visible = false;
-            this.dgv组件存货档案.Columns["属于工序"].ReadOnly = true;
+            this.dgv存货档案.Columns["ID"].Visible = false;
+            this.dgv存货档案.Columns["属于工序"].ReadOnly = true;
+            this.dgv存货档案.Columns["BOM列表"].ReadOnly = true;
+            this.dgv存货档案.Columns["类型"].ReadOnly = true;
 
-
-            //**************************   设置产成品存货档案    ***********************************
-            dt产成品存货档案 = new DataTable("设置产成品存货档案"); //""中的是表名
-            da产成品存货档案 = new OleDbDataAdapter("select * from 设置产成品存货档案", mySystem.Parameter.connOle);
-            cb产成品存货档案 = new OleDbCommandBuilder(da产成品存货档案);
-            dt产成品存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
-            da产成品存货档案.Fill(dt产成品存货档案);
-            bs产成品存货档案.DataSource = dt产成品存货档案;
-            this.dgv产成品存货档案.DataSource = bs产成品存货档案.DataSource;
-            //显示序号
-            setDataGridViewRowNums(this.dgv产成品存货档案);
-            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
-            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
-            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            this.dgv产成品存货档案.Columns["ID"].Visible = false;
-            this.dgv产成品存货档案.Columns["BOM列表"].ReadOnly = true;
-            this.dgv产成品存货档案.Columns["属于工序"].ReadOnly = true;
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("订单用户"); //""中的是表名
@@ -350,39 +328,25 @@ namespace mySystem.Setting
             dgv.Font = new Font("宋体", 12);
         }
 
-        private void add组件存货档案_Click(object sender, EventArgs e)
+        private void add存货档案_Click(object sender, EventArgs e)
         {
-            DataRow dr = dt组件存货档案.NewRow();
-            dt组件存货档案.Rows.InsertAt(dt组件存货档案.NewRow(), dt组件存货档案.Rows.Count);
-            setDataGridViewRowNums(this.dgv组件存货档案);
+            DataRow dr = dt存货档案.NewRow();
+            dt存货档案.Rows.InsertAt(dt存货档案.NewRow(), dt存货档案.Rows.Count);
+            setDataGridViewRowNums(this.dgv存货档案);
+            dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
         }
 
-        private void del组件存货档案_Click(object sender, EventArgs e)
+        private void del存货档案_Click(object sender, EventArgs e)
         {
-            int idx = this.dgv组件存货档案.CurrentRow.Index;
-            dt组件存货档案.Rows[idx].Delete();
-            da组件存货档案.Update((DataTable)bs组件存货档案.DataSource);
-            dt组件存货档案.Clear();
-            da组件存货档案.Fill(dt组件存货档案);
-            setDataGridViewRowNums(this.dgv组件存货档案);
+            int idx = this.dgv存货档案.CurrentRow.Index;
+            dt存货档案.Rows[idx].Delete();
+            da存货档案.Update((DataTable)bs存货档案.DataSource);
+            dt存货档案.Clear();
+            da存货档案.Fill(dt存货档案);
+            setDataGridViewRowNums(this.dgv存货档案);
         }
 
-        private void add产成品存货档案_Click(object sender, EventArgs e)
-        {
-            DataRow dr = dt产成品存货档案.NewRow();
-            dt产成品存货档案.Rows.InsertAt(dt产成品存货档案.NewRow(), dt产成品存货档案.Rows.Count);
-            setDataGridViewRowNums(this.dgv产成品存货档案);
-        }
-
-        private void del产成品存货档案_Click(object sender, EventArgs e)
-        {
-            int idx = this.dgv产成品存货档案.CurrentRow.Index;
-            dt产成品存货档案.Rows[idx].Delete();
-            da产成品存货档案.Update((DataTable)bs产成品存货档案.DataSource);
-            dt产成品存货档案.Clear();
-            da产成品存货档案.Fill(dt产成品存货档案);
-            setDataGridViewRowNums(this.dgv产成品存货档案);
-        }
+        
 
         private void Btn保存组件设置_Click(object sender, EventArgs e)
         {
@@ -392,15 +356,12 @@ namespace mySystem.Setting
                 { }
                 else
                 {
-                    da组件存货档案.Update((DataTable)bs组件存货档案.DataSource);
-                    dt组件存货档案.Clear();
-                    da组件存货档案.Fill(dt组件存货档案);
-                    setDataGridViewRowNums(this.dgv组件存货档案);
+                    da存货档案.Update((DataTable)bs存货档案.DataSource);
+                    dt存货档案.Clear();
+                    da存货档案.Fill(dt存货档案);
+                    setDataGridViewRowNums(this.dgv存货档案);
 
-                    da产成品存货档案.Update((DataTable)bs产成品存货档案.DataSource);
-                    dt产成品存货档案.Clear();
-                    da产成品存货档案.Fill(dt产成品存货档案);
-                    setDataGridViewRowNums(this.dgv产成品存货档案);
+                    
 
                 }
                 MessageBox.Show("保存成功！");

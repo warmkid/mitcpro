@@ -35,13 +35,13 @@
             this.MainQueryBtn = new System.Windows.Forms.Button();
             this.MainPanel = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn导入 = new System.Windows.Forms.Button();
+            this.btn浏览 = new System.Windows.Forms.Button();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.userLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btn浏览 = new System.Windows.Forms.Button();
-            this.btn导入供应商 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -102,11 +102,12 @@
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Size = new System.Drawing.Size(1360, 620);
             this.MainPanel.TabIndex = 4;
+            this.MainPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.MainPanel_Paint);
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.textBox1);
-            this.groupBox1.Controls.Add(this.btn导入供应商);
+            this.groupBox1.Controls.Add(this.btn导入);
             this.groupBox1.Controls.Add(this.btn浏览);
             this.groupBox1.Controls.Add(this.ExitBtn);
             this.groupBox1.Controls.Add(this.userLabel);
@@ -119,6 +120,33 @@
             this.groupBox1.Size = new System.Drawing.Size(1360, 74);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(349, 31);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(277, 23);
+            this.textBox1.TabIndex = 9;
+            // 
+            // btn导入
+            // 
+            this.btn导入.Location = new System.Drawing.Point(740, 30);
+            this.btn导入.Name = "btn导入";
+            this.btn导入.Size = new System.Drawing.Size(103, 23);
+            this.btn导入.TabIndex = 8;
+            this.btn导入.Text = "导入存货档案";
+            this.btn导入.UseVisualStyleBackColor = true;
+            this.btn导入.Click += new System.EventHandler(this.btn导入_Click);
+            // 
+            // btn浏览
+            // 
+            this.btn浏览.Location = new System.Drawing.Point(641, 30);
+            this.btn浏览.Name = "btn浏览";
+            this.btn浏览.Size = new System.Drawing.Size(75, 23);
+            this.btn浏览.TabIndex = 7;
+            this.btn浏览.Text = "浏览";
+            this.btn浏览.UseVisualStyleBackColor = true;
+            this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
             // 
             // ExitBtn
             // 
@@ -154,33 +182,6 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // btn浏览
-            // 
-            this.btn浏览.Location = new System.Drawing.Point(641, 30);
-            this.btn浏览.Name = "btn浏览";
-            this.btn浏览.Size = new System.Drawing.Size(75, 23);
-            this.btn浏览.TabIndex = 7;
-            this.btn浏览.Text = "浏览";
-            this.btn浏览.UseVisualStyleBackColor = true;
-            this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
-            // 
-            // btn导入供应商
-            // 
-            this.btn导入供应商.Location = new System.Drawing.Point(740, 30);
-            this.btn导入供应商.Name = "btn导入供应商";
-            this.btn导入供应商.Size = new System.Drawing.Size(103, 23);
-            this.btn导入供应商.TabIndex = 8;
-            this.btn导入供应商.Text = "导入供应商";
-            this.btn导入供应商.UseVisualStyleBackColor = true;
-            this.btn导入供应商.Click += new System.EventHandler(this.btn导入供应商_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(349, 31);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(277, 23);
-            this.textBox1.TabIndex = 9;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -213,7 +214,7 @@
         public System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button btn导入供应商;
+        private System.Windows.Forms.Button btn导入;
         private System.Windows.Forms.Button btn浏览;
 
 

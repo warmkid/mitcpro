@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Collections;
 
 namespace mySystem.Setting
 {
@@ -979,6 +980,113 @@ namespace mySystem.Setting
             dt代码批号.Clear();
             da代码批号.Fill(dt代码批号);
             setDataGridViewRowNums(this.dgv代码批号);
+        }
+
+        private void btn吹膜产品编码刷新_Click(object sender, EventArgs e)
+        {
+            OleDbDataAdapter da;
+            DataTable dt, dtInSetting;
+            OleDbCommandBuilder cb;
+            Hashtable htOld = new Hashtable(); ;
+            da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                if (!htOld.ContainsKey(dr["产品编码"])) htOld[dr["产品编码"]] = dr["面数"];
+                dr.Delete();
+            }
+            da.Update(dt);
+
+
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection conn;
+            conn = new OleDbConnection(strConnect);
+            conn.Open();
+            da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+            dtInSetting = new DataTable();
+            da.Fill(dtInSetting);
+
+
+            da = new OleDbDataAdapter("select * from 设置吹膜产品编码 ", mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow drSetting in dtInSetting.Rows)
+            {
+                DataRow ndr = dt.NewRow();
+                if (htOld.ContainsKey(drSetting["存货代码"]))
+                {
+                    ndr["产品编码"] = drSetting["存货代码"];
+                    ndr["面数"] = htOld[drSetting["存货代码"]];
+                }
+                else
+                {
+                    ndr["产品编码"] = drSetting["存货代码"];
+                    ndr["面数"] = 2;
+                }
+                dt.Rows.Add(ndr);
+            }
+
+            da.Update(dt);
+
+
+            da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
+            dt产品编码 = dt;
+            dgv产品编码.DataSource = dt产品编码;
+        }
+
+        private void btn吹膜物料代码刷新_Click(object sender, EventArgs e)
+        {
+            OleDbDataAdapter da;
+            DataTable dt, dtInSetting;
+            OleDbCommandBuilder cb;
+            da = new OleDbDataAdapter("select * from 设置物料代码", mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                dr.Delete();
+            }
+            da.Update(dt);
+
+
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection conn;
+            conn = new OleDbConnection(strConnect);
+            conn.Open();
+            da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+            dtInSetting = new DataTable();
+            da.Fill(dtInSetting);
+
+
+            da = new OleDbDataAdapter("select * from 设置物料代码 ", mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow drSetting in dtInSetting.Rows)
+            {
+                DataRow ndr = dt.NewRow();
+                ndr["物料代码"] = drSetting["存货代码"];
+                dt.Rows.Add(ndr);
+            }
+
+            da.Update(dt);
+
+
+            da = new OleDbDataAdapter("select * from 设置物料代码", mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
+            dt物料代码 = dt;
+            dgv物料代码.DataSource = dt物料代码;
         }
     }
 }

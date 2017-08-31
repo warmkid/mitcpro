@@ -19,7 +19,7 @@ namespace mySystem.Process.Order
         OleDbConnection conn;
 
         List<String> ls业务类型, ls销售类型, ls客户简称, ls销售部门, ls币种,ls付款条件;
-        List<String> ls存货编码, ls存货名称, ls规格型号;
+        List<String> ls存货代码, ls存货名称, ls规格型号;
        
         List<double> ld数量每件;
         List<String> ls操作员, ls审核员;
@@ -159,19 +159,19 @@ namespace mySystem.Process.Order
             
 
 
-            ls存货编码 = new List<string>();
+            ls存货代码 = new List<string>();
             ls存货名称 = new List<string>();
             ls规格型号 = new List<string>();
             ld数量每件 = new List<double>();
-            da = new OleDbDataAdapter("select * from 设置产成品存货档案", conn);
+            da = new OleDbDataAdapter("select * from 设置存货档案", conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                ls存货编码.Add(dr["存货编码"].ToString());
+                ls存货代码.Add(dr["存货代码"].ToString());
                 ls存货名称.Add(dr["存货名称"].ToString());
                 ls规格型号.Add(dr["规格型号"].ToString());
-                ld数量每件.Add(Convert.ToDouble(dr["主计量单位每辅计量单位"]));
+                ld数量每件.Add(Convert.ToDouble(dr["换算率"]));
             }
         }
 
@@ -708,9 +708,9 @@ namespace mySystem.Process.Order
             if (tb == null) return;
             switch (dataGridView1.CurrentCell.OwningColumn.Name)
             {
-                case "存货编码":
+                case "存货代码":
                     acsc = new AutoCompleteStringCollection();
-                    acsc.AddRange(ls存货编码.ToArray());
+                    acsc.AddRange(ls存货代码.ToArray());
                     tb.AutoCompleteCustomSource = acsc;
                     tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
                     tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -740,18 +740,18 @@ namespace mySystem.Process.Order
             bool ok;
             switch (dataGridView1.Columns[e.ColumnIndex].Name)
             {
-                case "存货编码":
+                case "存货代码":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
-                    idx = ls存货编码.IndexOf(curStr);
+                    idx = ls存货代码.IndexOf(curStr);
                     if (idx >= 0)
                     {
-                        dataGridView1["存货编码", e.RowIndex].Value = ls存货编码[idx];
+                        dataGridView1["存货代码", e.RowIndex].Value = ls存货代码[idx];
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
                     }
                     else
                     {
-                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货代码", e.RowIndex].Value = "";
                         dataGridView1["存货名称", e.RowIndex].Value = "";
                         dataGridView1["规格型号", e.RowIndex].Value = "";
                     }
@@ -761,13 +761,13 @@ namespace mySystem.Process.Order
                     idx = ls存货名称.IndexOf(curStr);
                     if (idx >= 0)
                     {
-                        dataGridView1["存货编码", e.RowIndex].Value = ls存货编码[idx];
+                        dataGridView1["存货代码", e.RowIndex].Value = ls存货代码[idx];
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
                     }
                     else
                     {
-                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货代码", e.RowIndex].Value = "";
                         dataGridView1["存货名称", e.RowIndex].Value = "";
                         dataGridView1["规格型号", e.RowIndex].Value = "";
                     }
@@ -777,13 +777,13 @@ namespace mySystem.Process.Order
                     idx = ls规格型号.IndexOf(curStr);
                     if (idx >=0)
                     {
-                        dataGridView1["存货编码", e.RowIndex].Value = ls存货编码[idx];
+                        dataGridView1["存货代码", e.RowIndex].Value = ls存货代码[idx];
                         dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
                         dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
                     }
                     else
                     {
-                        dataGridView1["存货编码", e.RowIndex].Value = "";
+                        dataGridView1["存货代码", e.RowIndex].Value = "";
                         dataGridView1["存货名称", e.RowIndex].Value = "";
                         dataGridView1["规格型号", e.RowIndex].Value = "";
                     }
@@ -792,7 +792,7 @@ namespace mySystem.Process.Order
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
                     ok = double.TryParse(curStr, out curDou);
                     if(!ok) break;
-                    idx = ls存货编码.IndexOf(dataGridView1["存货编码", e.RowIndex].Value.ToString());
+                    idx = ls存货代码.IndexOf(dataGridView1["存货代码", e.RowIndex].Value.ToString());
                     if (idx >= 0)
                     {
                         dataGridView1["件数", e.RowIndex].Value = Math.Round( curDou / ld数量每件[idx],2);
@@ -803,7 +803,7 @@ namespace mySystem.Process.Order
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
                     ok = double.TryParse(curStr, out curDou);
                     if(!ok) break;
-                    idx = ls存货编码.IndexOf(dataGridView1["存货编码", e.RowIndex].Value.ToString());
+                    idx = ls存货代码.IndexOf(dataGridView1["存货代码", e.RowIndex].Value.ToString());
                     if (idx >= 0)
                     {
                         dataGridView1["数量", e.RowIndex].Value = Math.Round( curDou * ld数量每件[idx],2);

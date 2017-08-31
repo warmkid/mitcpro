@@ -43,6 +43,46 @@ namespace mySystem.Process.Stock
             dgv审批单1.CellDoubleClick += new DataGridViewCellEventHandler(dgv审批单1_CellDoubleClick);
             dgv审批单2.CellDoubleClick += new DataGridViewCellEventHandler(dgv审批单2_CellDoubleClick);
             dgv产品退货接收单.CellDoubleClick += new DataGridViewCellEventHandler(dgv产品退货接收单_CellDoubleClick);
+            dgv退货请验单.CellDoubleClick += new DataGridViewCellEventHandler(dgv退货请验单_CellDoubleClick);
+            dgv评审单1.CellDoubleClick += new DataGridViewCellEventHandler(dgv评审单1_CellDoubleClick);
+            dgv评审单2.CellDoubleClick += new DataGridViewCellEventHandler(dgv评审单2_CellDoubleClick);
+            dgv退货记录.CellDoubleClick += new DataGridViewCellEventHandler(dgv退货记录_CellDoubleClick);
+        }
+
+        void dgv退货记录_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                产品退货记录 form = new 产品退货记录(mainform, dgv退货记录["退货申请单编号", e.RowIndex].Value.ToString());
+                form.Show();
+            }
+        }
+
+        void dgv评审单2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                产品退货评审单2 form = new 产品退货评审单2(mainform, dgv评审单2["退货申请单编号", e.RowIndex].Value.ToString());
+                form.Show();
+            }
+        }
+
+        void dgv评审单1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                产品退货评审单1 form = new 产品退货评审单1(mainform, dgv评审单1["退货申请单编号", e.RowIndex].Value.ToString());
+                form.Show();
+            }
+        }
+
+        void dgv退货请验单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                产品退货请验单 form = new 产品退货请验单(mainform, dgv退货请验单["退货申请单编号", e.RowIndex].Value.ToString());
+                form.Show();
+            }
         }
 
         void dgv产品退货接收单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -97,6 +137,18 @@ namespace mySystem.Process.Stock
                     break;
                 case 3:
                     init产品退货接收单();
+                    break;
+                case 4:
+                    init产品退货请验单();
+                    break;
+                case 5:
+                    init产品退货评审单1();
+                    break;
+                case 6:
+                    init产品退货评审单2();
+                    break;
+                case 7:
+                    init产品退货记录();
                     break;
             }
         }
@@ -284,6 +336,173 @@ namespace mySystem.Process.Stock
         }
         #endregion
 
+
+        #region 产品退货请验单
+
+        void init产品退货请验单()
+        {
+            dtp退货请验单开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp退货请验单结束时间.Value = DateTime.Now;
+            dt = get产品退货请验单(dtp退货请验单开始时间.Value, dtp退货请验单结束时间.Value, tb退货请验单销售订单.Text, tb退货请验单客户名称.Text);
+            dgv退货请验单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv退货请验单_DataBindingComplete);
+            dgv退货请验单.DataSource = dt;
+            dgv退货请验单.ReadOnly = true;
+        }
+
+        void dgv退货请验单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv退货请验单.AllowUserToAddRows = false;
+            dgv退货请验单.Columns["ID"].Visible = false;
+        }
+
+
+
+
+        DataTable get产品退货请验单(DateTime start, DateTime end, string oderNO, string name)
+        {
+            string sql = "select * from 产品退货请验单 where 请验日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("产品退货请验单");
+            da.Fill(dt);
+            return dt;
+        }
+
+        private void btn添加退货请验单_Click(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btn查询退货请验单_Click(object sender, EventArgs e)
+        {
+            dt = get产品退货请验单(dtp退货请验单开始时间.Value, dtp退货请验单结束时间.Value, tb退货请验单销售订单.Text, tb退货请验单客户名称.Text);
+            dgv退货请验单.DataSource = dt;
+        }
+        #endregion
+
+        #region 产品退货评审单1
+
+        void init产品退货评审单1()
+        {
+            dtp评审单1开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp评审单1结束时间.Value = DateTime.Now;
+            dt = get产品退货评审单1(dtp评审单1开始时间.Value, dtp评审单1结束时间.Value, tb评审单1销售订单.Text, tb评审单1客户名称.Text);
+            dgv评审单1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv评审单1_DataBindingComplete);
+            dgv评审单1.DataSource = dt;
+            dgv评审单1.ReadOnly = true;
+        }
+
+        void dgv评审单1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv评审单1.AllowUserToAddRows = false;
+            dgv评审单1.Columns["ID"].Visible = false;
+        }
+
+
+        DataTable get产品退货评审单1(DateTime start, DateTime end, string oderNO, string name)
+        {
+            string sql = "select * from 产品退货评审单1 where 评审日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("产品退货评审单1");
+            da.Fill(dt);
+            return dt;
+        }
+
+        private void btn添加退货评审单1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn查询退货评审单1_Click(object sender, EventArgs e)
+        {
+            dt = get产品退货评审单1(dtp评审单1开始时间.Value, dtp评审单1结束时间.Value, tb评审单1销售订单.Text, tb评审单1客户名称.Text);
+            dgv评审单1.DataSource = dt;
+        }
+        #endregion
+
+        #region 产品退货评审单2
+
+        void init产品退货评审单2()
+        {
+            dtp评审单2开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp评审单2结束时间.Value = DateTime.Now;
+            dt = get产品退货评审单2(dtp评审单2开始时间.Value, dtp评审单2结束时间.Value, tb评审单2销售订单.Text, tb评审单2客户名称.Text);
+            dgv评审单2.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv评审单2_DataBindingComplete);
+            dgv评审单2.DataSource = dt;
+            dgv评审单2.ReadOnly = true;
+        }
+
+        void dgv评审单2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv评审单2.AllowUserToAddRows = false;
+            dgv评审单2.Columns["ID"].Visible = false;
+        }
+
+
+        DataTable get产品退货评审单2(DateTime start, DateTime end, string oderNO, string name)
+        {
+            string sql = "select * from 产品退货评审单2 where 评审日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("产品退货评审单2");
+            da.Fill(dt);
+            return dt;
+        }
+
+        private void btn添加退货评审单2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn查询退货评审单2_Click(object sender, EventArgs e)
+        {
+            dt = get产品退货评审单2(dtp评审单2开始时间.Value, dtp评审单2结束时间.Value, tb评审单2销售订单.Text, tb评审单2客户名称.Text); 
+            dgv评审单2.DataSource = dt;
+        }
+        #endregion
+
+        #region 产品退货记录
+
+        void init产品退货记录()
+        {
+            dtp退货记录开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp退货记录结束时间.Value = DateTime.Now;
+            dt = get产品退货记录(dtp退货记录开始时间.Value, dtp退货记录结束时间.Value, tb退货记录销售订单.Text, tb退货记录客户名称.Text);
+            dgv退货记录.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv退货记录_DataBindingComplete);
+            dgv退货记录.DataSource = dt;
+            dgv退货记录.ReadOnly = true;
+        }
+
+        void dgv退货记录_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv退货记录.AllowUserToAddRows = false;
+            dgv退货记录.Columns["ID"].Visible = false;
+        }
+
+
+
+        DataTable get产品退货记录(DateTime start, DateTime end, string oderNO, string name)
+        {
+            string sql = "select * from 产品退货记录 where 申请日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("产品退货记录2");
+            da.Fill(dt);
+            return dt;
+        }
+
+        private void btn添加退货记录_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn查询退货记录_Click(object sender, EventArgs e)
+        {
+            dt = get产品退货记录(dtp退货记录开始时间.Value, dtp退货记录结束时间.Value, tb退货记录销售订单.Text, tb退货记录客户名称.Text);
+            dgv退货记录.DataSource = dt;
+        }
+        #endregion
 
     }
 }

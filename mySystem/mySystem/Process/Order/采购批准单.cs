@@ -316,15 +316,15 @@ namespace mySystem.Process.Order
             dt未批准需求单详细信息.DefaultView.Sort = "存货代码 ASC";
             dt未批准需求单详细信息 = dt未批准需求单详细信息.DefaultView.ToTable();
 
-            ht组件编码2组件订单需求号 = new Hashtable();
-            string curr编码 = generate组件订单需求流水号();
-            List<String> DaiMaS = ht库存编码2采购数量.Keys.OfType<String>().ToList<String>();
-            foreach (string daima in DaiMaS)
-            {
-                if (ht组件编码2组件订单需求号.ContainsKey(daima)) continue;
-                ht组件编码2组件订单需求号[daima] = curr编码;
-                curr编码 = curr编码.Substring(0, 10) + (Convert.ToInt32(curr编码.Substring(10, 3)) + 1).ToString("D3");
-            }
+            //ht组件编码2组件订单需求号 = new Hashtable();
+            //string curr编码 = generate组件订单需求流水号();
+            //List<String> DaiMaS = ht库存编码2采购数量.Keys.OfType<String>().ToList<String>();
+            //foreach (string daima in DaiMaS)
+            //{
+            //    if (ht组件编码2组件订单需求号.ContainsKey(daima)) continue;
+            //    ht组件编码2组件订单需求号[daima] = curr编码;
+            //    curr编码 = curr编码.Substring(0, 10) + (Convert.ToInt32(curr编码.Substring(10, 3)) + 1).ToString("D3");
+            //}
 
         }
 
@@ -496,10 +496,20 @@ namespace mySystem.Process.Order
 
             foreach (DataRow dr in dt未批准需求单详细信息.Rows)
             {
+                string gyscpbm;
+                OleDbDataAdapter da = new OleDbDataAdapter("select 供应商产品编码 from 设置存货档案 where 存货代码='" + dr["存货代码"].ToString() + "'", conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 0) gyscpbm = "";
+                else
+                {
+                    gyscpbm = dt.Rows[0]["供应商产品编码"].ToString() ;
+                }
+
                 DataRow ndr = dtInner.NewRow();
                 ndr["采购批准单ID"] = dtOuter.Rows[0]["ID"];
                 ndr["是否批准"] = true;
-                ndr["组件订单需求流水号"] = ht组件编码2组件订单需求号[dr["存货代码"].ToString()];
+                ndr["组件订单需求流水号"] = dr["组件订单需求流水号"];
                 ndr["存货代码"] = dr["存货代码"];
                 ndr["存货名称"] = dr["存货名称"];
                 ndr["规格型号"] = dr["规格型号"];
@@ -507,6 +517,8 @@ namespace mySystem.Process.Order
                 ndr["采购数量"] = dr["采购数量"];
                 ndr["用途"] = ht采购需求单ID2用途[dr["采购需求单ID"]];
                 ndr["预计到货时间"] = DateTime.Now;
+                ndr["推荐供应商"] = dr["推荐供应商"];
+                ndr["供应商产品编码"] = gyscpbm;
                 ndr["采购需求单ID"] = dr["ID"];
                 ndr["状态"] = "未采购";
                 ndr["推荐供应商"] = dr["推荐供应商"];
@@ -543,8 +555,21 @@ namespace mySystem.Process.Order
             cbInner库存 = new OleDbCommandBuilder(daInner库存);
             bsInner库存 =new BindingSource();
             daInner库存.Fill(dtInner库存);
+            List<int> inv = new List<int>();
+            for(int i=dtInner库存.Rows.Count-1;i>=0;--i)
+            {
+                if (Convert.ToDouble(dtInner库存.Rows[i]["现存数量"]) <= 0)
+                {
+                    inv.Add(i);
+                }
+            }
+            foreach (int i in inv)
+            {
+                dtInner库存.Rows.RemoveAt(i);
+            }
             dtInner库存Show = dtInner库存;
 
+            //refresh仓库可用数据();
 
             // 实际购入信息
             daInner实际购入 = new OleDbDataAdapter("select * from 采购批准单实际购入信息 where 0=1",conn);
@@ -559,15 +584,22 @@ namespace mySystem.Process.Order
                 ndr["采购批准单ID"] = dtOuter.Rows[0]["ID"];
                 ndr["产品代码"] = daima;
                 ndr["订单需求数量"] = ht库存编码2采购数量[daima];
-                ndr["仓库可用"] = 0;
+                ndr["仓库可用"] = dtInner库存;
                 ndr["实际购入"] = 0;
                 ndr["富余量"] = 0;
                 ndr["借用信息"] = "[]";
                 ndr["可借数量"] = 0;
                 dtInner实际购入.Rows.Add(ndr);
             }
-            
-            //refresh仓库可用数据();
+
+             refresh仓库可用数据();
+            // 第一次填写实际购入值
+             foreach (DataRow dr in dtInner实际购入.Rows)
+             {
+                 double d = Convert.ToDouble(dr["订单需求数量"]) - Convert.ToDouble(dr["仓库可用"]);
+                 if (d < 0) d = 0;
+                 dr["实际购入"] = d;
+             }
 
             daInner实际购入.Update(dtInner实际购入);
 
@@ -576,6 +608,8 @@ namespace mySystem.Process.Order
             dtInner实际购入 = new DataTable("采购批准单实际购入信息");
             cbInner实际购入 = new OleDbCommandBuilder(daInner实际购入);
             daInner实际购入.Fill(dtInner实际购入);
+
+           
 
             // 借用订单数据
             daInner借用订单 = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where 采购批准单ID=" + dtOuter.Rows[0]["ID"], conn);
@@ -790,15 +824,16 @@ namespace mySystem.Process.Order
 
         private void generate因为借用产生的dtInner(string 产品代码)
         {
-            
             DataRow[] drs = dtInner.Select("存货代码='" + 产品代码 + "'");
             if (drs.Length <= 0) return;
             string 存货名称 = null;
             string 规格型号 = null;
             double 主计量单位每辅计量单位 = 1;
+            string 需求单流水号 = "";
             存货名称 = drs[0]["存货名称"].ToString();
             规格型号 = drs[0]["规格型号"].ToString();
             主计量单位每辅计量单位 = Convert.ToDouble(drs[0]["主计量单位每辅计量单位"]);
+            需求单流水号 = drs[0]["需求单流水号"].ToString();
             //原始订单数据复原
             drs[0]["采购数量"] = drs[0]["未借用前需要采购数量"];
             drs[0]["已借用数量"] = 0;
@@ -837,7 +872,7 @@ namespace mySystem.Process.Order
                     }
                     DataRow dr = dtInner借用订单.NewRow();
                     dr["采购批准单ID"] = dtOuter.Rows[0]["ID"];
-                    dr["组件订单需求流水号"] = ht组件编码2组件订单需求号["产品代码"];
+                    dr["组件订单需求流水号"] = 需求单流水号;
                     dr["存货代码"] = 产品代码;
                     dr["存货名称"] = 存货名称;
                     dr["规格型号"] = 规格型号;

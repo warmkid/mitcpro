@@ -23,13 +23,16 @@ namespace mySystem.Process.Order
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
         Hashtable ht产成品BOM;
-        DataTable dt组件存货档案;
+        DataTable dt存货档案;
         List<String> ls操作员, ls审核员;
         mySystem.Parameter.FormState _formState;
         mySystem.Parameter.UserState _userState;
         string _订单号;
         CheckForm ckform;
         List<String> ls供应商;
+
+        OleDbDataAdapter daCH;
+        DataTable dtCH;
 
         public 采购需求单(MainForm mainform, string 订单号):base(mainform)
         {
@@ -111,9 +114,9 @@ namespace mySystem.Process.Order
                 ht产成品BOM.Add(dr["存货编码"].ToString(), dr["BOM列表"].ToString());
             }
 
-            da = new OleDbDataAdapter("select * from 设置组件存货档案", conn);
-            dt组件存货档案 = new DataTable("设置组件存货档案");
-            da.Fill(dt组件存货档案);
+            da = new OleDbDataAdapter("select * from 设置存货档案", conn);
+            dt存货档案 = new DataTable("设置存货档案");
+            da.Fill(dt存货档案);
 
             ls供应商 = new List<string>();
             da = new OleDbDataAdapter("select * from 设置供应商信息", conn);
@@ -175,16 +178,23 @@ namespace mySystem.Process.Order
                 da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + 销售订单ID, conn);
                 dt = new DataTable();
                 da.Fill(dt);
+                // 获取所有存货档案信息
+                daCH = new OleDbDataAdapter("select ID,存货代码,BOM列表 from 设置存货档案", conn) ;
+                dtCH = new DataTable();
+                daCH.Fill(dtCH);
                 foreach (DataRow dr in dt.Rows)
                 {
-                    string 存货编码 = dr["存货编码"].ToString();
+                    string 存货代码 = dr["存货代码"].ToString();
                     double 订单数量 = Convert.ToDouble(dr["数量"]);
-                    if (!ht产成品.ContainsKey(存货编码))
+                    if (!ht产成品.ContainsKey(存货代码))
                     {
-                        ht产成品[存货编码] = 0;
+                        ht产成品[存货代码] = 0;
                     }
-                    ht产成品[存货编码] = Convert.ToDouble(ht产成品[存货编码]) + 订单数量;
-                    JArray BOM_IDS = JArray.Parse(ht产成品BOM[存货编码].ToString());
+                    ht产成品[存货代码] = Convert.ToDouble(ht产成品[存货代码]) + 订单数量;
+                    // 通过函数获得者一个代码需要的组件hashtable
+                    // 然后和总的hashtable 合并
+                    /*
+                    JArray BOM_IDS = JArray.Parse(ht产成品BOM[存货代码].ToString());
                     foreach (JToken sid in BOM_IDS)
                     {
                         int id = Convert.ToInt32(sid["ID"]);
@@ -197,22 +207,35 @@ namespace mySystem.Process.Order
                         {
                             ht组件[id] = 订单数量 * 数量每产品;
                         }
+                    }*/
+                    //写个函数生成ht组件
+                    Hashtable tmp = get组件信息(存货代码, 订单数量);
+                    // 合并
+                    foreach (int k in tmp.Keys.OfType<int>().ToArray<int>())
+                    {
+                        if (!ht组件.ContainsKey(k)) ht组件[k] = 0;
+                        ht组件[k] = Convert.ToDouble(ht组件[k]) + Convert.ToDouble(tmp[k]);
                     }
+                    //
                 }
+                
+               
                 foreach (int id in ht组件.Keys.OfType<int>().ToArray<int>())
                 {
-                    DataRow dr = dt组件存货档案.Select("ID=" + id)[0];
+                    DataRow dr = dt存货档案.Select("ID=" + id)[0];
                     DataRow ndr = dtInner.NewRow();
                     ndr["采购需求单ID"] = dtOuter.Rows[0]["ID"];
-                    ndr["存货代码"] = dr["存货编码"];
+                    ndr["组件订单需求流水号"] = generate组件订单需求流水号();
+                    ndr["存货代码"] = dr["存货代码"];
                     ndr["存货名称"] = dr["存货名称"];
                     ndr["规格型号"] = dr["规格型号"];
                     ndr["件数"] = 1;
-                    ndr["数量"] = dr["主计量单位每辅计量单位"];
+                    ndr["数量"] = dr["换算率"];
                     ndr["单位"] = dr["主计量单位名称"];
                     ndr["订单数量"] = ht组件[id];
                     ndr["采购数量"] = ht组件[id];
-                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["主计量单位每辅计量单位"]), 2);
+                    ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["换算率"]), 2);
+                    ndr["推荐供应商"] = dr["推荐供应商"];
                     dtInner.Rows.Add(ndr);
                 }
                 daInner.Update((DataTable)bsInner.DataSource);
@@ -634,6 +657,66 @@ namespace mySystem.Process.Order
             return true;
         }
 
+
+        Hashtable get组件信息(string 产品代码, double 数量)
+        {
+            Hashtable ret = new Hashtable();
+            DataRow[] drs = dtCH.Select("存货代码='" + 产品代码 + "'");
+            if (drs.Length == 0)
+            {
+                return ret;
+            }
+            
+            foreach (DataRow dr in drs)
+            {
+                string bom = dr["BOM列表"].ToString();
+                if (bom == "")
+                {
+                    ret[ Convert.ToInt32(drs[0]["ID"]) ] = 数量;
+                    return ret;
+                }
+                JArray ja = JArray.Parse(bom);
+                if (ja.Count == 0)
+                {
+                    ret[Convert.ToInt32(drs[0]["ID"])] = 数量;
+                    return ret;
+                }
+                foreach (JToken jt in ja)
+                {
+                    int id = Convert.ToInt32( jt["ID"]);
+                    double num = Convert.ToDouble(jt["数量"]);
+                    DataRow[] drss = dtCH.Select("ID="+id);
+                    if(drss.Length==0) continue;
+
+                    Hashtable tmp = get组件信息(drss[0]["存货代码"].ToString(), 数量 * num);
+                    foreach (int k in tmp.Keys.OfType<int>().ToArray<int>())
+                    {
+                        if (!ret.ContainsKey(k)) ret[k] = 0;
+                        ret[k] = Convert.ToDouble(ret[k]) + Convert.ToDouble(tmp[k]);
+                    }
+                }
+            }
+            return ret;
+        }
+
+        string generate组件订单需求流水号()
+        {
+            string prefix = "PACR";
+            string yymmdd = DateTime.Now.ToString("yyMMdd");
+            string sql = "select * from 采购需求单详细信息 where 组件订单需求流水号 like '{0}%' order by ID";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                return prefix + yymmdd + "001";
+            }
+            else
+            {
+                int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["组件订单需求流水号"].ToString().Substring(10, 3));
+                return prefix + yymmdd + (no + 1).ToString("D3");
+            }
+        }
 
     }
 }

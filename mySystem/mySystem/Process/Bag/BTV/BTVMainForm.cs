@@ -153,7 +153,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清场记录");
             if (b)
             {
-                BTVClearanceRecord mydlg = new BTVClearanceRecord();
+                BTVClearanceRecord mydlg = new BTVClearanceRecord(mainform);
                 mydlg.ShowDialog();
             }
             else

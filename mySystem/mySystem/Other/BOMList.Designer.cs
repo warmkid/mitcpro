@@ -29,13 +29,13 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.存货编码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.存货名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.规格型号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnDone = new System.Windows.Forms.Button();
             this.btnDel = new System.Windows.Forms.Button();
+            this.存货代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.存货名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.规格型号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -46,7 +46,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.存货编码,
+            this.存货代码,
             this.存货名称,
             this.规格型号,
             this.数量});
@@ -56,30 +56,6 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(555, 203);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // 存货编码
-            // 
-            this.存货编码.HeaderText = "存货编码";
-            this.存货编码.Name = "存货编码";
-            this.存货编码.Width = 150;
-            // 
-            // 存货名称
-            // 
-            this.存货名称.HeaderText = "存货名称";
-            this.存货名称.Name = "存货名称";
-            this.存货名称.Width = 150;
-            // 
-            // 规格型号
-            // 
-            this.规格型号.HeaderText = "规格型号";
-            this.规格型号.Name = "规格型号";
-            this.规格型号.Width = 150;
-            // 
-            // 数量
-            // 
-            this.数量.HeaderText = "数量";
-            this.数量.Name = "数量";
-            this.数量.Width = 60;
             // 
             // btnAdd
             // 
@@ -111,6 +87,30 @@
             this.btnDel.UseVisualStyleBackColor = true;
             this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
+            // 存货代码
+            // 
+            this.存货代码.HeaderText = "存货代码";
+            this.存货代码.Name = "存货代码";
+            this.存货代码.Width = 150;
+            // 
+            // 存货名称
+            // 
+            this.存货名称.HeaderText = "存货名称";
+            this.存货名称.Name = "存货名称";
+            this.存货名称.Width = 150;
+            // 
+            // 规格型号
+            // 
+            this.规格型号.HeaderText = "规格型号";
+            this.规格型号.Name = "规格型号";
+            this.规格型号.Width = 150;
+            // 
+            // 数量
+            // 
+            this.数量.HeaderText = "数量";
+            this.数量.Name = "数量";
+            this.数量.Width = 60;
+            // 
             // BOMList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -132,10 +132,10 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnDone;
-        private System.Windows.Forms.DataGridViewTextBoxColumn 存货编码;
+        private System.Windows.Forms.Button btnDel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn 存货代码;
         private System.Windows.Forms.DataGridViewTextBoxColumn 存货名称;
         private System.Windows.Forms.DataGridViewTextBoxColumn 规格型号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 数量;
-        private System.Windows.Forms.Button btnDel;
     }
 }
