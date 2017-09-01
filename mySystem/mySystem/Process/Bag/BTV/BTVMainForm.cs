@@ -169,7 +169,8 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "BPV制袋生产指令");
             if (b)
             {
-                BTVProInstruction mydlg = new BTVProInstruction();
+                //BTVProInstruction mydlg = new BTVProInstruction();
+                BPV制袋生产指令 mydlg = new BPV制袋生产指令(mainform);
                 mydlg.ShowDialog();
             }
             else
