@@ -120,6 +120,12 @@
     <Compile Include="Other\属于工序.Designer.cs">
       <DependentUpon>属于工序.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\BTV\BPV制袋生产指令.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BPV制袋生产指令.Designer.cs">
+      <DependentUpon>BPV制袋生产指令.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\BTV\BTV2DProRecord.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1189,6 +1195,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Other\属于工序.resx">
       <DependentUpon>属于工序.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BPV制袋生产指令.resx">
+      <DependentUpon>BPV制袋生产指令.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BTV2DProRecord.resx">
       <DependentUpon>BTV2DProRecord.cs</DependentUpon>

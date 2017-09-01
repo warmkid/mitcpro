@@ -197,7 +197,8 @@ namespace mySystem
                     case "BPV制袋":
                         //mySystem.Process.Bag.BTV.BTVProInstruction form5 = new Process.Bag.BTV.BTVProInstruction(mainform, ID);
                         //form5.Show();
-
+                        mySystem.Process.Bag.BTV.BPV制袋生产指令 form5 = new Process.Bag.BTV.BPV制袋生产指令(mainform, ID);
+                        form5.Show();
                         break;
                     case "PTV制袋":
                         //mySystem.Process.Bag.PTV.PTVBag_productioninstruction form6 = new Process.Bag.PTV.PTVBag_productioninstruction(mainform, ID);
