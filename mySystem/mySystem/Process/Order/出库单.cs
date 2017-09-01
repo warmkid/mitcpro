@@ -83,7 +83,7 @@ namespace mySystem.Process.Order
             dataGridView2.DataSource = dt未发货信息;
 
             // 填写库存信息
-            read库存信息(tb销售订单号.Text);
+            read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
             // 查找库存中和这些存货代码对应的数据
 
             tb销售订单号.Enabled = false;
@@ -305,7 +305,7 @@ namespace mySystem.Process.Order
             dataGridView2.DataSource = dt未发货信息;
 
             // 填写库存信息
-            read库存信息(tb销售订单号.Text);
+            read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
             // 查找库存中和这些存货代码对应的数据
 
             tb销售订单号.Enabled = false;
@@ -461,7 +461,7 @@ namespace mySystem.Process.Order
             return ret;
         }
 
-        void read库存信息(string dingdanhao)
+        void read库存信息(int id)
         {
             //da库存信息 = new OleDbDataAdapter("select ID,仓库名称,产品代码,产品批号,现存数量,用途,冻结状态 from 库存台帐 where 用途='" + dingdanhao + "' and 状态='合格'", conn);
             //cb库存信息 = new OleDbCommandBuilder(da库存信息);
@@ -569,7 +569,12 @@ namespace mySystem.Process.Order
             innerBind();
 
             da库存信息.Update((DataTable)bs库存信息.DataSource);
-            read库存信息("");
+
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
+
             dataGridView3.DataSource = dt未发货信息;
 
         }
