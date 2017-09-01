@@ -684,7 +684,7 @@ namespace mySystem.Process.Order
             if (check订单是否完成())
             {
                 MessageBox.Show("本订单已全部发货完毕，已关闭订单");
-                OleDbDataAdapter da = new("select * from 销售订单 where 订单号='"+dtOuter.Rows[0]["销售订单号"].ToString()+"'",conn);
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='"+dtOuter.Rows[0]["销售订单号"].ToString()+"'",conn);
                 OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

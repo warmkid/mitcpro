@@ -516,6 +516,6 @@ namespace 订单和库存管理
             dt = get采购出库单(dtp出库单开始时间.Value, dtp出库单结束时间.Value, tb出库单销售订单.Text, cmb出库单审核状态.Text);
             dgv出库单.DataSource = dt;
         }
-
+        #endregion
     }
 }
