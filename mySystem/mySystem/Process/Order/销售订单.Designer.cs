@@ -69,9 +69,9 @@
             this.label14 = new System.Windows.Forms.Label();
             this.tb审核员 = new System.Windows.Forms.TextBox();
             this.label15 = new System.Windows.Forms.Label();
-            this.tb关闭员 = new System.Windows.Forms.TextBox();
+            this.tb取消人 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.btn关闭订单 = new System.Windows.Forms.Button();
+            this.btn取消订单 = new System.Windows.Forms.Button();
             this.cmb付款条件 = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -481,13 +481,13 @@
             this.label15.TabIndex = 121;
             this.label15.Text = "审核员";
             // 
-            // tb关闭员
+            // tb取消人
             // 
-            this.tb关闭员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb关闭员.Location = new System.Drawing.Point(675, 593);
-            this.tb关闭员.Name = "tb关闭员";
-            this.tb关闭员.Size = new System.Drawing.Size(141, 26);
-            this.tb关闭员.TabIndex = 124;
+            this.tb取消人.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb取消人.Location = new System.Drawing.Point(675, 593);
+            this.tb取消人.Name = "tb取消人";
+            this.tb取消人.Size = new System.Drawing.Size(141, 26);
+            this.tb取消人.TabIndex = 124;
             // 
             // label16
             // 
@@ -497,17 +497,18 @@
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(56, 16);
             this.label16.TabIndex = 123;
-            this.label16.Text = "关闭员";
+            this.label16.Text = "取消人";
             // 
-            // btn关闭订单
+            // btn取消订单
             // 
-            this.btn关闭订单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn关闭订单.Location = new System.Drawing.Point(431, 648);
-            this.btn关闭订单.Name = "btn关闭订单";
-            this.btn关闭订单.Size = new System.Drawing.Size(93, 23);
-            this.btn关闭订单.TabIndex = 125;
-            this.btn关闭订单.Text = "关闭订单";
-            this.btn关闭订单.UseVisualStyleBackColor = true;
+            this.btn取消订单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn取消订单.Location = new System.Drawing.Point(431, 648);
+            this.btn取消订单.Name = "btn取消订单";
+            this.btn取消订单.Size = new System.Drawing.Size(93, 23);
+            this.btn取消订单.TabIndex = 125;
+            this.btn取消订单.Text = "取消订单";
+            this.btn取消订单.UseVisualStyleBackColor = true;
+            this.btn取消订单.Click += new System.EventHandler(this.btn取消订单_Click);
             // 
             // cmb付款条件
             // 
@@ -633,8 +634,8 @@
             this.Controls.Add(this.label18);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.cmb付款条件);
-            this.Controls.Add(this.btn关闭订单);
-            this.Controls.Add(this.tb关闭员);
+            this.Controls.Add(this.btn取消订单);
+            this.Controls.Add(this.tb取消人);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.tb审核员);
             this.Controls.Add(this.label15);
@@ -728,9 +729,9 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox tb审核员;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox tb关闭员;
+        private System.Windows.Forms.TextBox tb取消人;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Button btn关闭订单;
+        private System.Windows.Forms.Button btn取消订单;
         private System.Windows.Forms.ComboBox cmb付款条件;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;

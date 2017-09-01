@@ -243,7 +243,17 @@ namespace mySystem.Process.Order
                     setControlTrue();
                     btn审核.Enabled = true;
                 }
-                else setControlFalse();
+                else if (Parameter.FormState.审核通过 == _formState)
+                {
+                    setControlFalse();
+                    btn取消订单.Enabled = true;
+                }
+                else
+                {
+                    btn取消订单.Enabled = true;
+                }
+                    
+                
             }
             if (Parameter.UserState.操作员 == _userState)
             {
@@ -276,7 +286,7 @@ namespace mySystem.Process.Order
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             btn新建.Enabled = false;
-            btn关闭订单.Enabled = false;
+            btn取消订单.Enabled = false;
         }
 
         void setControlFalse()
@@ -852,6 +862,57 @@ namespace mySystem.Process.Order
         private void btn查看日志_Click(object sender, EventArgs e)
         {
             (new mySystem.Other.LogForm()).setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
+        }
+
+        private void btn取消订单_Click(object sender, EventArgs e)
+        {
+            if (DialogResult.OK == MessageBox.Show("确认取消订单吗?"))
+            {
+                // 采购批准单详细信息
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 采购批准单详细信息 where 用途='" + dtOuter.Rows[0]["订单号"].ToString() + "'", conn);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    dr["用途"] = "__自由";
+                }
+                da.Update(dt);
+
+                // 采购批准单借用订单详细信息
+                da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where 用途='" + dtOuter.Rows[0]["订单号"].ToString() + "'", conn);
+                cb = new OleDbCommandBuilder(da);
+                dt = new DataTable();
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    dr["用途"] = "__自由";
+                }
+                da.Update(dt);
+
+                // 采购订单详细信息
+                da = new OleDbDataAdapter("select * from 采购订单详细信息 where 用途='" + dtOuter.Rows[0]["订单号"].ToString() + "'", conn);
+                cb = new OleDbCommandBuilder(da);
+                dt = new DataTable();
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    dr["用途"] = "__自由";
+                }
+                da.Update(dt);
+
+                // 库存台账
+                da = new OleDbDataAdapter("select * from 库存台帐 where 用途='" + dtOuter.Rows[0]["订单号"].ToString() + "'", conn);
+                cb = new OleDbCommandBuilder(da);
+                dt = new DataTable();
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    dr["用途"] = "__自由";
+                }
+                da.Update(dt);
+
+            }
         }
 
     }

@@ -47,6 +47,14 @@ namespace 订单和库存管理
             dgv采购需求单.CellDoubleClick += new DataGridViewCellEventHandler(dgv采购需求单_CellDoubleClick);
             dgv采购批准单.CellDoubleClick += new DataGridViewCellEventHandler(dgv采购批准单_CellDoubleClick);
             dgv采购订单.CellDoubleClick += new DataGridViewCellEventHandler(dgv采购订单_CellDoubleClick);
+            dgv出库单.CellDoubleClick += new DataGridViewCellEventHandler(dgv出库单_CellDoubleClick);
+        }
+
+        void dgv出库单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int id = Convert.ToInt32(dgv出库单["ID", e.RowIndex].Value);
+            mySystem.Process.Order.出库单 form = new mySystem.Process.Order.出库单(mainform, id);
+            form.Show();
         }
 
         void dgv采购订单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -331,7 +339,7 @@ namespace 订单和库存管理
         }
         #endregion
 
-
+        #region 采购订单
         void init采购订单()
         {
             dtp采购订单开始时间.Value = DateTime.Now.AddDays(-7).Date;
@@ -465,5 +473,49 @@ namespace 订单和库存管理
             dt = get采购订单(dtp采购订单开始时间.Value, dtp采购订单结束时间.Value, cmb采购订单审核状态.Text, tb采购合同号.Text);
             dgv采购订单.DataSource = dt;
         }
+        #endregion
+
+        #region 出库单
+        void init出库单()
+        {
+            dtp出库单开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp出库单结束时间.Value = DateTime.Now;
+            cmb出库单审核状态.SelectedItem = "待审核";
+            tb出库单销售订单.Text = "";
+            dt = get采购出库单(dtp出库单开始时间.Value, dtp出库单结束时间.Value, tb出库单销售订单.Text, cmb出库单审核状态.Text);
+            dgv出库单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv出库单_DataBindingComplete);
+            dgv出库单.DataSource = dt;
+            dgv出库单.ReadOnly = true;
+        }
+
+        void dgv出库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv出库单.AllowUserToAddRows = false;
+            dgv出库单.Columns["ID"].Visible = false;
+        }
+
+        private DataTable get采购出库单(DateTime start, DateTime end, string 销售订单号, string statue)
+        {
+            string sql = "select * from 出库单 where 出库日期 between #{0}# and #{1}# and 销售订单号 like '%{2}%' and 状态 like '%{3}%'";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, 销售订单号, statue), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("出库单");
+            da.Fill(dt);
+            return dt;
+        }
+
+
+        private void btn出库单添加_Click(object sender, EventArgs e)
+        {
+
+            mySystem.Process.Order.出库单 form = new mySystem.Process.Order.出库单(mainform);
+            form.Show();
+        }
+
+        private void btn出库单审核状态_Click(object sender, EventArgs e)
+        {
+            dt = get采购出库单(dtp出库单开始时间.Value, dtp出库单结束时间.Value, tb出库单销售订单.Text, cmb出库单审核状态.Text);
+            dgv出库单.DataSource = dt;
+        }
+
     }
 }

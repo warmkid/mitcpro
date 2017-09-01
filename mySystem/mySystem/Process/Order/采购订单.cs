@@ -19,7 +19,7 @@ namespace mySystem.Process.Order
         OleDbConnection conn;
         OleDbDataAdapter daOuter, daInner;
         OleDbCommandBuilder cbOuter, cbInner;
-        DataTable dtOuter, dtInner;
+        DataTable dtOuter, dtInner,dtInnerShow;
         BindingSource bsOuter, bsInner;
 
         List<String> ls操作员, ls审核员;
@@ -45,6 +45,7 @@ namespace mySystem.Process.Order
             generateOuterData(供应商);
             outerBind();
             generateInnerData(供应商);
+            calcSumInner();
             innerBind();
 
 
@@ -70,6 +71,7 @@ namespace mySystem.Process.Order
             readOuterData(id);
             outerBind();
             readInnerData(id);
+            calcSumInner();
             innerBind();
 
 
@@ -78,6 +80,37 @@ namespace mySystem.Process.Order
             setFormState();
             setEnableReadOnly();
             //lbl供应商.Text = dtOuter.Rows[0]["供应商"].ToString();
+        }
+
+        void calcSumInner()
+        {
+            dtInnerShow = dtInner.Clone();
+            // 拿到所有的存货代码
+            HashSet<String> hs存货代码 = new HashSet<string>();
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                hs存货代码.Add(dr["存货代码"].ToString());
+            }
+            // 求和
+            foreach (string dm in hs存货代码)
+            {
+                DataRow[] drs = dtInner.Select("存货代码='" + dm + "'");
+                if (drs.Length <= 0) continue;
+                DataRow ndr = dtInnerShow.NewRow();
+                ndr["存货代码"] = drs[0]["存货代码"];
+                ndr["存货名称"] = drs[0]["存货名称"];
+                ndr["规格型号"] = drs[0]["规格型号"];
+                ndr["采购件数"] = 0;
+                ndr["采购数量"] = 0;
+                ndr["预计到货时间"] = DateTime.Now;
+                foreach (DataRow dr in drs)
+                {
+                    ndr["采购件数"] = Convert.ToDouble(ndr["采购件数"]) + Convert.ToDouble(dr["采购件数"]);
+                    ndr["采购数量"] = Convert.ToDouble(ndr["采购数量"]) + Convert.ToDouble(dr["采购数量"]);
+                }
+                dtInnerShow.Rows.Add(ndr);
+            }
+            //写入dtinnershow
         }
 
         private void getOtherData()
@@ -339,8 +372,16 @@ namespace mySystem.Process.Order
                 ndr["预计到货时间"] = dr["预计到货时间"];
                 ndr["关联的采购批准详细信息ID"] = dr["ID"];
                 ndr["主计量"] = 主计量;
-                ndr["单价"] = 0;
-                ndr["金额"] = 0;
+                daT = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dr["用途"].ToString() + "'", conn);
+                dtT = new DataTable();
+                daT.Fill(dtT);
+                int xsID = Convert.ToInt32(dtT.Rows[0]["ID"]);
+                daT = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + xsID + " and 存货代码='" + dr["存货代码"].ToString() + "'", conn);
+                dtT = new DataTable();
+                daT.Fill(dtT);
+                double 价税合计 = Convert.ToDouble(dtT.Rows[0]["价税合计"]);
+                ndr["单价"] = 价税合计 / Convert.ToDouble(dr["采购数量"]);
+                ndr["金额"] = 价税合计;
                 ndr["付款日期"] = DateTime.Now;
                 dtInner.Rows.Add(ndr);
                 // 改变批准单详细信息中的状态
@@ -365,6 +406,10 @@ namespace mySystem.Process.Order
                         ndr自由["供应商产品编码"] = dr["供应商产品编码"];
                         ndr自由["预计到货时间"] = dr["预计到货时间"];
                         ndr自由["关联的采购批准详细信息ID"] = dr["ID"];
+                        ndr["主计量"] = 主计量;
+                        ndr["单价"] = 价税合计 / Convert.ToDouble(dr["采购数量"]);
+                        ndr["金额"] = 价税合计;
+                        ndr["付款日期"] = DateTime.Now;
                         dtInner.Rows.Add(ndr自由);
                     }
                 }
@@ -402,8 +447,16 @@ namespace mySystem.Process.Order
                 ndr["预计到货时间"] = dr["预计到货时间"];
                 ndr["关联的采购批转单借用单ID"] = dr["ID"];
                 ndr["主计量"] = 主计量;
-                ndr["单价"] = 0;
-                ndr["金额"] = 0;
+                daT = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dr["用途"].ToString() + "'", conn);
+                dtT = new DataTable();
+                daT.Fill(dtT);
+                int xsID = Convert.ToInt32(dtT.Rows[0]["ID"]);
+                daT = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + xsID + " and 存货代码='" + dr["存货代码"].ToString() + "'", conn);
+                dtT = new DataTable();
+                daT.Fill(dtT);
+                double 价税合计 = Convert.ToDouble(dtT.Rows[0]["价税合计"]);
+                ndr["单价"] = 价税合计 / Convert.ToDouble(dr["采购数量"]);
+                ndr["金额"] = 价税合计;
                 ndr["付款日期"] = DateTime.Now;
                 dtInner.Rows.Add(ndr);
                 // 改变批准单详细信息中的状态
@@ -423,18 +476,29 @@ namespace mySystem.Process.Order
 
         void innerBind()
         {
-            bsInner.DataSource = dtInner;
+            bsInner.DataSource = dtInnerShow;
             dataGridView1.DataSource = bsInner.DataSource;
 
         }
 
         void addOtherEventHandler()
         {
+            dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["采购订单ID"].Visible = false;
             dataGridView1.Columns["关联的采购批准详细信息ID"].Visible = false;
             dataGridView1.Columns["关联的采购批转单借用单ID"].Visible = false;
+            dataGridView1.Columns["用途"].Visible = false;
+            dataGridView1.Columns["主计量"].Visible = false;
+            dataGridView1.Columns["单价"].Visible = false;
+            dataGridView1.Columns["金额"].Visible = false;
+            dataGridView1.Columns["进度"].Visible = false;
+            dataGridView1.Columns["COC"].Visible = false;
+            dataGridView1.Columns["进度"].Visible = false;
+            dataGridView1.Columns["付款进度"].Visible = false;
+            dataGridView1.Columns["付款日期"].Visible = false;
+            dataGridView1.Columns["发票"].Visible = false;
         }
 
         void readOuterData(int id)
