@@ -46,7 +46,15 @@ namespace mySystem.Process.Stock
                 ndr["物料代码"] = dr["物料代码"].ToString();
                 ndr["数量"] = Convert.ToInt32(dr["数量"]);
                 ndr["取样人"] = dr["取样人"].ToString();
-                ndr["取样量"] = Convert.ToInt32(dr["取样量"]);
+                try
+                {
+                    ndr["取样量"] = Convert.ToInt32(dr["取样量"]);
+                }
+                catch
+                {
+                    MessageBox.Show("取样量错误，请检查");
+                    return;
+                }
                 ndr["本厂批号"] = dr["本厂批号"].ToString();
                 ndr["单位"] = dr["单位"].ToString();
                 ndr["备注"] = dr["备注"].ToString();

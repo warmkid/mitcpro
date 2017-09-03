@@ -95,6 +95,9 @@ namespace 订单和库存管理
                 case 3:
                     init采购订单();
                     break;
+                case 4:
+                    init出库单();
+                    break;
             } 
         }
 
@@ -334,6 +337,7 @@ namespace 订单和库存管理
             }
             catch (Exception ee)
             {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
             }
 
         }
@@ -511,7 +515,7 @@ namespace 订单和库存管理
             form.Show();
         }
 
-        private void btn出库单审核状态_Click(object sender, EventArgs e)
+        private void btn出库单查询_Click(object sender, EventArgs e)
         {
             dt = get采购出库单(dtp出库单开始时间.Value, dtp出库单结束时间.Value, tb出库单销售订单.Text, cmb出库单审核状态.Text);
             dgv出库单.DataSource = dt;

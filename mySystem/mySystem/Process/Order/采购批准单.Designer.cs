@@ -559,6 +559,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "采购批准单";
             this.Text = "采购批准单";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.采购批准单_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();

@@ -697,7 +697,8 @@ namespace mySystem.Extruction.Process
             setDataGridViewRowNums();
             //da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             //readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
-            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         //审核

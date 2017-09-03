@@ -63,6 +63,7 @@
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn出库 = new System.Windows.Forms.Button();
+            this.btn删除 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -72,7 +73,7 @@
             // 
             this.label44.AutoSize = true;
             this.label44.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label44.Location = new System.Drawing.Point(964, 21);
+            this.label44.Location = new System.Drawing.Point(913, 11);
             this.label44.Name = "label44";
             this.label44.Size = new System.Drawing.Size(93, 16);
             this.label44.TabIndex = 128;
@@ -82,7 +83,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(1079, 21);
+            this.label角色.Location = new System.Drawing.Point(1028, 11);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
             this.label角色.TabIndex = 127;
@@ -102,7 +103,7 @@
             // 
             this.lbl出库单号.AutoSize = true;
             this.lbl出库单号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl出库单号.Location = new System.Drawing.Point(811, 18);
+            this.lbl出库单号.Location = new System.Drawing.Point(751, 12);
             this.lbl出库单号.Name = "lbl出库单号";
             this.lbl出库单号.Size = new System.Drawing.Size(120, 16);
             this.lbl出库单号.TabIndex = 179;
@@ -112,7 +113,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label15.Location = new System.Drawing.Point(725, 18);
+            this.label15.Location = new System.Drawing.Point(665, 12);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(88, 16);
             this.label15.TabIndex = 178;
@@ -258,7 +259,7 @@
             // tb审核人
             // 
             this.tb审核人.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审核人.Location = new System.Drawing.Point(80, 482);
+            this.tb审核人.Location = new System.Drawing.Point(83, 521);
             this.tb审核人.Name = "tb审核人";
             this.tb审核人.Size = new System.Drawing.Size(141, 26);
             this.tb审核人.TabIndex = 197;
@@ -267,7 +268,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label10.Location = new System.Drawing.Point(18, 485);
+            this.label10.Location = new System.Drawing.Point(21, 524);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(56, 16);
             this.label10.TabIndex = 196;
@@ -276,7 +277,7 @@
             // dtp审核日期
             // 
             this.dtp审核日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp审核日期.Location = new System.Drawing.Point(373, 478);
+            this.dtp审核日期.Location = new System.Drawing.Point(376, 517);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
             this.dtp审核日期.TabIndex = 201;
@@ -285,7 +286,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label11.Location = new System.Drawing.Point(291, 485);
+            this.label11.Location = new System.Drawing.Point(294, 524);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(72, 16);
             this.label11.TabIndex = 200;
@@ -342,7 +343,7 @@
             // 
             this.combox打印机选择.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.combox打印机选择.FormattingEnabled = true;
-            this.combox打印机选择.Location = new System.Drawing.Point(234, 537);
+            this.combox打印机选择.Location = new System.Drawing.Point(234, 562);
             this.combox打印机选择.Name = "combox打印机选择";
             this.combox打印机选择.Size = new System.Drawing.Size(182, 24);
             this.combox打印机选择.TabIndex = 211;
@@ -350,7 +351,7 @@
             // btn打印
             // 
             this.btn打印.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn打印.Location = new System.Drawing.Point(127, 537);
+            this.btn打印.Location = new System.Drawing.Point(127, 562);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 23);
             this.btn打印.TabIndex = 210;
@@ -360,7 +361,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn确认.Location = new System.Drawing.Point(629, 538);
+            this.btn确认.Location = new System.Drawing.Point(629, 563);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(75, 23);
             this.btn确认.TabIndex = 209;
@@ -371,7 +372,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(710, 538);
+            this.btn提交审核.Location = new System.Drawing.Point(710, 563);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(100, 23);
             this.btn提交审核.TabIndex = 208;
@@ -382,7 +383,7 @@
             // btn审核
             // 
             this.btn审核.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn审核.Location = new System.Drawing.Point(18, 537);
+            this.btn审核.Location = new System.Drawing.Point(18, 562);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 23);
             this.btn审核.TabIndex = 207;
@@ -401,11 +402,23 @@
             this.btn出库.UseVisualStyleBackColor = true;
             this.btn出库.Click += new System.EventHandler(this.btn出库_Click);
             // 
+            // btn删除
+            // 
+            this.btn删除.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn删除.Location = new System.Drawing.Point(14, 463);
+            this.btn删除.Name = "btn删除";
+            this.btn删除.Size = new System.Drawing.Size(75, 23);
+            this.btn删除.TabIndex = 213;
+            this.btn删除.Text = "删除";
+            this.btn删除.UseVisualStyleBackColor = true;
+            this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
+            // 
             // 出库单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1119, 614);
+            this.Controls.Add(this.btn删除);
             this.Controls.Add(this.btn出库);
             this.Controls.Add(this.combox打印机选择);
             this.Controls.Add(this.btn打印);
@@ -489,5 +502,6 @@
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button btn出库;
+        private System.Windows.Forms.Button btn删除;
     }
 }

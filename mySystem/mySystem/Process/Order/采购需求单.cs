@@ -15,6 +15,7 @@ namespace mySystem.Process.Order
 {
     public partial class 采购需求单 : BaseForm
     {
+        bool isSaved = false;
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
         OleDbConnection conn;
@@ -162,6 +163,10 @@ namespace mySystem.Process.Order
                 readOuterData(订单号);
                 outerBind();
             }
+            else
+            {
+                isSaved = true;
+            }
 
             
 
@@ -218,14 +223,25 @@ namespace mySystem.Process.Order
                     }
                     //
                 }
-                
-               
+
+                bool first = true;
                 foreach (int id in ht组件.Keys.OfType<int>().ToArray<int>())
                 {
                     DataRow dr = dt存货档案.Select("ID=" + id)[0];
                     DataRow ndr = dtInner.NewRow();
                     ndr["采购需求单ID"] = dtOuter.Rows[0]["ID"];
-                    ndr["组件订单需求流水号"] = generate组件订单需求流水号();
+                    if (first)
+                    {
+                        ndr["组件订单需求流水号"] = generate组件订单需求流水号();
+                    }
+                    else
+                    {
+                        string prefix = "PACR";
+                        string yymmdd = DateTime.Now.ToString("yyMMdd");
+                        string s = dtInner.Rows[dtInner.Rows.Count - 1]["组件订单需求流水号"].ToString();
+                        int no = Convert.ToInt32(s.Substring(10, 3));
+                        ndr["组件订单需求流水号"] = prefix + yymmdd + (no + 1).ToString("D3");
+                    }
                     ndr["存货代码"] = dr["存货代码"];
                     ndr["存货名称"] = dr["存货名称"];
                     ndr["规格型号"] = dr["规格型号"];
@@ -237,6 +253,7 @@ namespace mySystem.Process.Order
                     ndr["采购件数"] = Math.Round(Convert.ToDouble(ht组件[id]) / Convert.ToDouble(dr["换算率"]), 2);
                     ndr["推荐供应商"] = dr["推荐供应商"];
                     dtInner.Rows.Add(ndr);
+                    first = false;
                 }
                 daInner.Update((DataTable)bsInner.DataSource);
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
@@ -319,6 +336,7 @@ namespace mySystem.Process.Order
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         private void getPeople()
@@ -452,6 +470,7 @@ namespace mySystem.Process.Order
 
         private void btn确认_Click(object sender, EventArgs e)
         {
+            isSaved = true;
             save();
             if (_userState == Parameter.UserState.操作员)
             {
@@ -715,6 +734,41 @@ namespace mySystem.Process.Order
             {
                 int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["组件订单需求流水号"].ToString().Substring(10, 3));
                 return prefix + yymmdd + (no + 1).ToString("D3");
+            }
+        }
+
+        private void 采购需求单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSaved)
+            {
+                if (dtOuter != null && dtOuter.Rows.Count > 0)
+                {
+                    dtOuter.Rows[0].Delete();
+                    daOuter.Update(dtOuter);
+
+                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + _订单号 + "'", conn);
+                    OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count == 0)
+                    {
+
+
+                    }
+                    else
+                    {
+                        // 修改销售订单的状态
+                        dt.Rows[0]["状态"] = "审核完成";
+                        da.Update(dt);
+                    }
+
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        dr.Delete();
+                    }
+                    daInner.Update(dtInner);
+                }
             }
         }
 

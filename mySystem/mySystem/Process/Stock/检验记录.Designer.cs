@@ -285,6 +285,7 @@
             this.btn审核.TabIndex = 55;
             this.btn审核.Text = "审核";
             this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
             // label11
             // 

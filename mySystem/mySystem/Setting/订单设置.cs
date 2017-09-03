@@ -16,7 +16,7 @@ namespace mySystem.Setting
 
        
         private OleDbDataAdapter da存货档案;
-        private DataTable dt存货档案;
+        private DataTable dt存货档案, dt存货档案Show;
         private BindingSource bs存货档案;
         private OleDbCommandBuilder cb存货档案;
 
@@ -149,13 +149,14 @@ namespace mySystem.Setting
 
         private void Bind()
         {
-            //**************************   设置组件存货档案    ***********************************
+            //**************************   设置存货档案    ***********************************
             dt存货档案 = new DataTable("设置存货档案"); //""中的是表名
             da存货档案 = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
             cb存货档案 = new OleDbCommandBuilder(da存货档案);
             dt存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
             da存货档案.Fill(dt存货档案);
-            bs存货档案.DataSource = dt存货档案;
+            dt存货档案Show = dt存货档案;
+            bs存货档案.DataSource = dt存货档案Show;
             this.dgv存货档案.DataSource = bs存货档案.DataSource;
             //显示序号
             setDataGridViewRowNums(this.dgv存货档案);
@@ -167,6 +168,7 @@ namespace mySystem.Setting
             this.dgv存货档案.Columns["属于工序"].ReadOnly = true;
             this.dgv存货档案.Columns["BOM列表"].ReadOnly = true;
             this.dgv存货档案.Columns["类型"].ReadOnly = true;
+            Utility.setDataGridViewAutoSizeMode(dgv存货档案);
 
 
             //**************************   人员设置    ***********************************
@@ -333,7 +335,8 @@ namespace mySystem.Setting
             DataRow dr = dt存货档案.NewRow();
             dt存货档案.Rows.InsertAt(dt存货档案.NewRow(), dt存货档案.Rows.Count);
             setDataGridViewRowNums(this.dgv存货档案);
-            dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
+            if (dgv存货档案.Rows.Count > 0)
+                dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
         }
 
         private void del存货档案_Click(object sender, EventArgs e)
@@ -651,6 +654,19 @@ namespace mySystem.Setting
             }
             catch
             { MessageBox.Show("保存失败！", "错误"); }
+        }
+
+        private void btn查询订单设置_Click(object sender, EventArgs e)
+        {
+            DataRow[] drs = dt存货档案.Select("存货代码 like'%"+tb代码q.Text+"%' and 存货名称 like '%"+tb名称q.Text+"%'");
+            dt存货档案Show = dt存货档案.Clone();
+            foreach (DataRow dr in drs)
+            {
+                dt存货档案Show.ImportRow(dr);
+            }
+            bs存货档案.DataSource = dt存货档案Show;
+            dgv存货档案.DataSource = bs存货档案.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dgv存货档案);
         }
 
         

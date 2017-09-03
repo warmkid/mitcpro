@@ -329,6 +329,7 @@ namespace mySystem.Process.Order
 
         private void btn确认_Click(object sender, EventArgs e)
         {
+            
             save();
 
             if (_userState == Parameter.UserState.操作员)
@@ -520,6 +521,7 @@ namespace mySystem.Process.Order
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         DataRow writeInnerDefault(DataRow dr)
@@ -714,6 +716,7 @@ namespace mySystem.Process.Order
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             TextBox tb = (e.Control as TextBox);
+            tb.AutoCompleteCustomSource = null;
             AutoCompleteStringCollection acsc;
             if (tb == null) return;
             switch (dataGridView1.CurrentCell.OwningColumn.Name)

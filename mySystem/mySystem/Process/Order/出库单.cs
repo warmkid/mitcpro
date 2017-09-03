@@ -68,7 +68,7 @@ namespace mySystem.Process.Order
             innerBind();
 
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dtOuter.Rows[0]["销售订单号"].ToString() + "'", conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -78,9 +78,10 @@ namespace mySystem.Process.Order
             }
             // 填写未发货信息
 
-            dt未发货信息 = get未发货信息(Convert.ToInt32(dt.Rows[0]["ID"]), tb销售订单号.Text);
+            dt未发货信息 = get未发货信息(Convert.ToInt32(dt.Rows[0]["ID"]), dtOuter.Rows[0]["销售订单号"].ToString());
 
             dataGridView2.DataSource = dt未发货信息;
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
 
             // 填写库存信息
             read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
@@ -94,7 +95,6 @@ namespace mySystem.Process.Order
 
             setFormState();
             setEnableReadOnly();
-            lbl出库单号.Text = generate出库单号();
         }
 
         private void addOtherEventHandler()
@@ -112,6 +112,45 @@ namespace mySystem.Process.Order
             tb销售订单号.AutoCompleteCustomSource = acsc;
             tb销售订单号.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             tb销售订单号.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+          
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView3.AllowUserToAddRows = false;
+
+            dataGridView3.CellEndEdit += new DataGridViewCellEventHandler(dataGridView3_CellEndEdit);
+        }
+
+        void dataGridView3_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                if (dataGridView3.CurrentCell.OwningColumn.Name == "冻结状态")
+                {
+                    bool cur = Convert.ToBoolean(dataGridView3["冻结状态", e.RowIndex].Value);
+                    if (cur)
+                    {
+                        string 产品代码=dataGridView3["产品代码", e.RowIndex].Value.ToString();
+                        string 用途 = dataGridView3["用途", e.RowIndex].Value.ToString();
+                        foreach(DataRow dr in dtInner.Select("存货代码='" + 产品代码 + "' and 原用途='" + 用途 + "'"))
+                        {
+                            dr.Delete();
+                        }
+                        daInner.Update((DataTable)bsInner.DataSource);
+
+                        readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                        innerBind();
+                    }
+                }
+            }
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["出库单ID"].Visible = false;
         }
 
         private void fillPrinter()
@@ -303,6 +342,7 @@ namespace mySystem.Process.Order
             dt未发货信息 = get未发货信息(Convert.ToInt32(dt.Rows[0]["ID"]),tb销售订单号.Text);
             
             dataGridView2.DataSource = dt未发货信息;
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
 
             // 填写库存信息
             read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
@@ -321,11 +361,14 @@ namespace mySystem.Process.Order
                 dtOuter.Rows.Add(dr);
             }
 
-            daOuter.Update((DataTable)bsOuter.DataSource);
-            readOuterData(tb销售订单号.Text);
+            daOuter.Update(dtOuter);
+            readOuterData(lbl出库单号.Text);
             outerBind();
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
+
+            setFormState();
+            setEnableReadOnly();
         }
 
         void readOuterData(string p)
@@ -340,7 +383,7 @@ namespace mySystem.Process.Order
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 出库单 where ID" + id, conn);
+            daOuter = new OleDbDataAdapter("select * from 出库单 where ID=" + id, conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("出库单");
             bsOuter = new BindingSource();
@@ -415,6 +458,7 @@ namespace mySystem.Process.Order
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         private DataTable get未发货信息(int id, string dingdanhao)
@@ -422,7 +466,7 @@ namespace mySystem.Process.Order
             // 拿到本订单下的存货代码和数量
             
             Hashtable ht存货代码2剩余数量 = new Hashtable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 销售订单详细信息 where 销售订单ID=" + id, conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -436,7 +480,7 @@ namespace mySystem.Process.Order
 
             // 拿到对本订单的出库单详细信息
             // 计算剩余未出库量
-            da = new OleDbDataAdapter("select ID from 出库单详细信息 where 用途='" + dingdanhao + "'", conn);
+            da = new OleDbDataAdapter("select * from 出库单详细信息 where 用途='" + dingdanhao + "' and 状态='已出库'", conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -457,6 +501,7 @@ namespace mySystem.Process.Order
                 DataRow dr = ret.NewRow();
                 dr["存货代码"] = k;
                 dr["剩余数量"] = ht存货代码2剩余数量[k];
+                ret.Rows.Add(dr);
             }
             return ret;
         }
@@ -473,7 +518,7 @@ namespace mySystem.Process.Order
             //dataGridView3.DataSource = dt库存信息;
 
             Hashtable ht存货代码2剩余数量 = new Hashtable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 销售订单详细信息 where 销售订单ID=" + id, conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -485,7 +530,7 @@ namespace mySystem.Process.Order
 
             }
             List<String> DaiMaS = ht存货代码2剩余数量.Keys.OfType<String>().ToList<String>();
-            string 库存sql = @"select ID, 产品代码,现存数量,用途,冻结状态 from (select * from 库存台帐 where 状态='合格') where 产品代码='{0}'";
+            string 库存sql = @"select ID, 仓库名称,产品代码,产品名称,产品规格,产品批号,现存数量,用途,冻结状态 from (select * from 库存台帐 where 状态='合格') where 产品代码='{0}'";
             库存sql = string.Format(库存sql, DaiMaS[0]);
             List<String> whereS = new List<string>();
             if (DaiMaS.Count > 1) 库存sql += " or ";
@@ -512,7 +557,15 @@ namespace mySystem.Process.Order
             {
                 dt库存信息.Rows.RemoveAt(i);
             }
-            dataGridView3.DataSource = dt库存信息;
+            bs库存信息.DataSource = dt库存信息;
+            dataGridView3.DataSource = bs库存信息.DataSource;
+            dataGridView3.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView3_DataBindingComplete);
+            Utility.setDataGridViewAutoSizeMode(dataGridView3);
+        }
+
+        void dataGridView3_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView3.Columns["ID"].Visible = false;
         }
 
         private void btn出库_Click(object sender, EventArgs e)
@@ -547,6 +600,8 @@ namespace mySystem.Process.Order
             dr["存货名称"] = dataGridView3["产品名称", ridx].Value.ToString();
             dr["规格型号"] = dataGridView3["产品规格", ridx].Value.ToString();
             dr["批号"] = dataGridView3["产品批号", ridx].Value.ToString();
+            dr["状态"] = "出库中";
+            dr["关联的库存台帐ID"] = Convert.ToInt32(dataGridView3["ID", ridx].Value);
             dtInner.Rows.Add(dr);
         }
 
@@ -575,7 +630,7 @@ namespace mySystem.Process.Order
             da.Fill(dt);
             read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
 
-            dataGridView3.DataSource = dt未发货信息;
+            //dataGridView2.DataSource = dt未发货信息;
 
         }
 
@@ -625,7 +680,7 @@ namespace mySystem.Process.Order
                 string yongtu = dr["原用途"].ToString();
                 if (!ht代码2总出库数量.ContainsKey(daima)) ht代码2总出库数量[daima] = 0;
                 ht代码2总出库数量[daima] = Convert.ToDouble(ht代码2总出库数量[daima]) + num;
-                if (num > Convert.ToDouble(dt库存信息.Select("存货代码='" + daima + "' and 用途='" + yongtu + "'")[0]["现存数量"]))
+                if (num > Convert.ToDouble(dt库存信息.Select("产品代码='" + daima + "' and 用途='" + yongtu + "'")[0]["现存数量"]))
                 {
                     MessageBox.Show("出库数过大");
                     return false;
@@ -664,6 +719,15 @@ namespace mySystem.Process.Order
             if (ckform.ischeckOk)//审核通过
             {
                 dtOuter.Rows[0]["状态"] = "审核完成";
+                foreach (DataRow dr in dtInner.Rows)
+                {
+                    dr["状态"] = "已出库";
+                    // 减去库存中的数量
+                    int kcid = Convert.ToInt32(dr["关联的库存台帐ID"]);
+                    dt库存信息.Select("ID=" + kcid)[0]["现存数量"] = Convert.ToDouble(dt库存信息.Select("ID=" + kcid)[0]["现存数量"]) - Convert.ToDouble(dr["出库数量"]);
+                }
+                
+
             }
             else
             {
@@ -740,5 +804,18 @@ namespace mySystem.Process.Order
                 }
             }
         }
+
+        private void btn删除_Click(object sender, EventArgs e)
+        {
+            int ridx = dataGridView1.CurrentCell.RowIndex;
+            dtInner.Rows[ridx].Delete();
+
+            daInner.Update((DataTable)bsInner.DataSource);
+
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+        }
+
+        
     }
 }

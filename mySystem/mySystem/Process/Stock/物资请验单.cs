@@ -256,7 +256,7 @@ namespace mySystem.Process.Stock
                 switch (sender.ToString())
                 {
                     case "物资验收记录":
-                        物资验收记录 form1 = new 物资验收记录(id);
+                        物资验收记录 form1 = new 物资验收记录(mainform,id);
                         form1.Show();
                         break;
                     case "物资请验单":

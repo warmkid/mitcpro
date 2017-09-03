@@ -282,7 +282,8 @@ namespace mySystem.Setting
             DataRow dr = dt开机.NewRow();
             dt开机.Rows.InsertAt(dt开机.NewRow(), dt开机.Rows.Count);
             setDataGridViewRowNums(this.dgv开机);
-            dgv开机.FirstDisplayedScrollingRowIndex = dgv开机.Rows.Count - 1;
+            if (dgv开机.Rows.Count > 0)
+                dgv开机.FirstDisplayedScrollingRowIndex = dgv开机.Rows.Count - 1;
         }
 
         private void del开机_Click(object sender, EventArgs e)
@@ -300,7 +301,8 @@ namespace mySystem.Setting
             DataRow dr = dt清场.NewRow();
             dt清场.Rows.InsertAt(dt清场.NewRow(), dt清场.Rows.Count);
             setDataGridViewRowNums(this.dgv清场);
-            dgv清场.FirstDisplayedScrollingRowIndex = dgv清场.Rows.Count - 1;
+            if (dgv清场.Rows.Count > 0)
+                dgv清场.FirstDisplayedScrollingRowIndex = dgv清场.Rows.Count - 1;
         }
 
         private void del清场_Click(object sender, EventArgs e)

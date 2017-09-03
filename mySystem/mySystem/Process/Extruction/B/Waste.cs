@@ -918,7 +918,8 @@ namespace mySystem.Process.Extruction.B
             removeOuterBinding();
             outerBind();
             btn保存.Enabled = true;
-            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         private void btn查看日志_Click(object sender, EventArgs e)

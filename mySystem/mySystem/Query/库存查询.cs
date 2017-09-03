@@ -58,7 +58,7 @@ namespace mySystem.Query
 
         private void btn查询出库单_Click(object sender, EventArgs e)
         {
-            string sql = "select * from 出库单详细信息 where 出库日期 between #{0}# and #{1}# and 发货公司 like '%{2}%' and 客户名称 like '%{3}%' and 存货名称 like '%{4}%' and 批号 like '%{5}%'";
+            string sql = "select * from 出库单详细信息 where 出库日期 between #{0}# and #{1}# and 发货公司 like '%{2}%' and 客户 like '%{3}%' and 存货名称 like '%{4}%' and 批号 like '%{5}%'";
             DateTime start = dtp出库单出库开始时间.Value;
             DateTime end = dtp出库单出库结束时间.Value;
             string 发货公司 = tb出库单发货公司.Text;

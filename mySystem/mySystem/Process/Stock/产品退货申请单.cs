@@ -395,30 +395,30 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
 
-            // 如果审核通过自动生产请验单
-            //da = new OleDbDataAdapter("select * from 产品退货审批单1 where 退货申请单编号='" + _code + "'", conn);
-            //cb = new OleDbCommandBuilder(da);
-            //dt = new DataTable();
-            //da.Fill(dt);
-            //if (dt.Rows.Count != 0)
-            //{
-            //    MessageBox.Show("产品退货审批单(1)已存在！");
-            //}
-            //else
-            //{
-            //    DataRow dr = dt.NewRow();
-            //    for (int i = 1; i <= 11; ++i)
-            //    {
-            //        dr[i] = dtOuter.Rows[0][i];
-            //    }
-            //    dr["状态"] = "审批中";
-            //    dr["产品退货申请单ID"] = dtOuter.Rows[0]["ID"];
-            //    dr["批准日期"] = DateTime.Now;
-            //    dt.Rows.Add(dr);
-            //    da.Update(dt);
-            //    MessageBox.Show("产品退货审批单(1)已生成！");
+            // 如果审核通过自动生产产品退货审批单1
+            da = new OleDbDataAdapter("select * from 产品退货审批单1 where 退货申请单编号='" + _code + "'", conn);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count != 0)
+            {
+                MessageBox.Show("产品退货审批单(1)已存在！");
+            }
+            else
+            {
+                DataRow dr = dt.NewRow();
+                for (int i = 1; i <= 11; ++i)
+                {
+                    dr[i] = dtOuter.Rows[0][i];
+                }
+                dr["状态"] = "审批中";
+                dr["产品退货申请单ID"] = dtOuter.Rows[0]["ID"];
+                dr["批准日期"] = DateTime.Now;
+                dt.Rows.Add(dr);
+                da.Update(dt);
+                MessageBox.Show("产品退货审批单(1)已生成！");
 
-            //}
+            }
            
 
 
@@ -455,7 +455,7 @@ namespace mySystem.Process.Stock
             dt= new DataTable();
             da.Fill(dt);
             foreach(DataRow dr in dt.Rows){
-                ls产品代码.Add(dr["存货编码"].ToString());
+                ls产品代码.Add(dr["存货代码"].ToString());
                 ls产品名称.Add(dr["存货名称"].ToString());
             }
             cmb产品名称.Items.Clear();
@@ -474,8 +474,8 @@ namespace mySystem.Process.Stock
                 return;
             }
             dtOuter.Rows[0]["产品代码"] = ls产品代码[idx];
-            
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置产成品存货档案 where 存货编码='" + ls产品代码[idx] + "'", conn);
+
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + ls产品代码[idx] + "'", conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             string 单位 = dt.Rows[0]["辅计量单位名称"].ToString();

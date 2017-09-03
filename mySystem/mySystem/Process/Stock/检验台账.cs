@@ -339,12 +339,12 @@ namespace mySystem.Process.Stock
                 OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
-                if (dataGridView1.SelectedCells[0].Value.ToString() == "Yes")
+                if (dataGridView1[e.ColumnIndex,e.RowIndex].Value.ToString() == "Yes")
                 {
                     
                     dt.Rows[0]["状态"] = "合格";
                 }
-                else if (dataGridView1.SelectedCells[0].Value.ToString() == "No")
+                else if (dataGridView1[e.ColumnIndex,e.RowIndex].Value.ToString() == "No")
                 {
                     dt.Rows[0]["状态"] = "待验";
                 }
@@ -405,22 +405,32 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
             {
-                if (dgvr.Cells["审核人"].Value.ToString() == "")
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int r in hi待审核行号)
+            {
+                if (dataGridView1["审核人",r].Value.ToString() == "")
                 {
-                    dgvr.Cells["审核人"].Value = "__待审核";
+                    dataGridView1["审核人", r].Value = "__待审核";
                 }
             }
         }
 
         private void btn审核_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewRow dgvr in dataGridView1.Rows)
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
             {
-                if (dgvr.Cells["审核人"].Value.ToString() == "__待审核")
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int r in hi待审核行号)
+            {
+                if (dataGridView1["审核人", r].Value.ToString() == "__待审核")
                 {
-                    dgvr.Cells["审核人"].Value = mySystem.Parameter.userName;
+                    dataGridView1["审核人", r].Value = mySystem.Parameter.userName;
                 }
             }
         }

@@ -64,7 +64,8 @@ namespace mySystem.Other
             switch (dataGridView1.Columns[e.ColumnIndex].Name)
             {
                 case "存货代码":
-                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    if (dataGridView1[e.ColumnIndex, e.RowIndex].Value == null) curStr = "";
+                    else curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
                     idx = ls存货代码.IndexOf(curStr);
                     if (idx >= 0)
                     {
@@ -80,7 +81,8 @@ namespace mySystem.Other
                     }
                     break;
                 case "存货名称":
-                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    if (dataGridView1[e.ColumnIndex, e.RowIndex].Value == null) curStr = "";
+                    else curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
                     idx = ls存货名称.IndexOf(curStr);
                     if (idx >= 0)
                     {
@@ -96,7 +98,8 @@ namespace mySystem.Other
                     }
                     break;
                 case "规格型号":
-                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    if (dataGridView1[e.ColumnIndex, e.RowIndex].Value == null) curStr = "";
+                    else curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
                     idx = ls规格型号.IndexOf(curStr);
                     if (idx >= 0)
                     {
@@ -135,6 +138,7 @@ namespace mySystem.Other
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             TextBox tb = (e.Control as TextBox);
+            tb.AutoCompleteCustomSource = null;
             AutoCompleteStringCollection acsc;
             if (tb == null) return;
             switch (dataGridView1.CurrentCell.OwningColumn.Name)

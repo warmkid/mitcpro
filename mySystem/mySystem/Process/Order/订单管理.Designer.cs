@@ -74,6 +74,7 @@
             this.dtp采购订单结束时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp采购订单开始时间 = new System.Windows.Forms.DateTimePicker();
             this.tabPage出库单 = new System.Windows.Forms.TabPage();
+            this.dgv出库单 = new System.Windows.Forms.DataGridView();
             this.btn出库单添加 = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.btn出库单查询 = new System.Windows.Forms.Button();
@@ -83,7 +84,6 @@
             this.label15 = new System.Windows.Forms.Label();
             this.dtp出库单结束时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp出库单开始时间 = new System.Windows.Forms.DateTimePicker();
-            this.dgv出库单 = new System.Windows.Forms.DataGridView();
             this.tabControl1.SuspendLayout();
             this.tabPage销售订单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv销售订单)).BeginInit();
@@ -575,6 +575,15 @@
             this.tabPage出库单.Text = "出库单";
             this.tabPage出库单.UseVisualStyleBackColor = true;
             // 
+            // dgv出库单
+            // 
+            this.dgv出库单.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv出库单.Location = new System.Drawing.Point(13, 124);
+            this.dgv出库单.Name = "dgv出库单";
+            this.dgv出库单.RowTemplate.Height = 23;
+            this.dgv出库单.Size = new System.Drawing.Size(1041, 350);
+            this.dgv出库单.TabIndex = 46;
+            // 
             // btn出库单添加
             // 
             this.btn出库单添加.Location = new System.Drawing.Point(13, 62);
@@ -583,6 +592,7 @@
             this.btn出库单添加.TabIndex = 45;
             this.btn出库单添加.Text = "添加";
             this.btn出库单添加.UseVisualStyleBackColor = true;
+            this.btn出库单添加.Click += new System.EventHandler(this.btn出库单添加_Click);
             // 
             // label13
             // 
@@ -601,6 +611,7 @@
             this.btn出库单查询.TabIndex = 43;
             this.btn出库单查询.Text = "查询";
             this.btn出库单查询.UseVisualStyleBackColor = true;
+            this.btn出库单查询.Click += new System.EventHandler(this.btn出库单查询_Click);
             // 
             // cmb出库单审核状态
             // 
@@ -654,15 +665,6 @@
             this.dtp出库单开始时间.Name = "dtp出库单开始时间";
             this.dtp出库单开始时间.Size = new System.Drawing.Size(200, 26);
             this.dtp出库单开始时间.TabIndex = 37;
-            // 
-            // dgv出库单
-            // 
-            this.dgv出库单.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv出库单.Location = new System.Drawing.Point(13, 124);
-            this.dgv出库单.Name = "dgv出库单";
-            this.dgv出库单.RowTemplate.Height = 23;
-            this.dgv出库单.Size = new System.Drawing.Size(1041, 350);
-            this.dgv出库单.TabIndex = 46;
             // 
             // 订单管理
             // 

@@ -144,11 +144,11 @@ namespace mySystem.Setting
 
                     cbc.Items.Add("白班");
                     cbc.Items.Add("夜班");
-                   
+
                     dgv人员.Columns.Add(cbc);
                     continue;
                 }
-               
+
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
                 {
@@ -384,9 +384,9 @@ namespace mySystem.Setting
             {
                 dgv.Rows[i].Cells[0].Value = (i + 1).ToString();
             }
-        }       
+        }
 
-  
+
         #region 区域设置
         private void add清洁_Click(object sender, EventArgs e)
         {
@@ -619,7 +619,7 @@ namespace mySystem.Setting
             }
 
 
-            MessageBox.Show("保存成功");    
+            MessageBox.Show("保存成功");
         }
 
         #endregion
@@ -651,7 +651,8 @@ namespace mySystem.Setting
             ////dgv产品编码.CurrentCell = dgv产品编码.Rows[dgv产品编码.Rows.Count - 1].Cells[1];
             ////dgv产品编码.BeginEdit(true);
             //dgv产品编码.Rows[dgv产品编码.Rows.Count - 1].Cells
-            dgv产品编码.FirstDisplayedScrollingRowIndex = dgv产品编码.Rows.Count - 1;
+            if (dgv产品编码.Rows.Count > 0)
+                dgv产品编码.FirstDisplayedScrollingRowIndex = dgv产品编码.Rows.Count - 1;
         }
 
         private void del产品编码_Click(object sender, EventArgs e)
@@ -801,7 +802,7 @@ namespace mySystem.Setting
 
                             MessageBox.Show("保存成功！");
                         }
-                    }              
+                    }
                 }
             }
             catch
@@ -842,7 +843,7 @@ namespace mySystem.Setting
             comm.Dispose();
             conn.Dispose();
             return b;
-        }      
+        }
 
         //检查人员是否在吹膜人员中
         private Boolean checkPeopleRight()
@@ -1036,9 +1037,13 @@ namespace mySystem.Setting
             da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
             dt = new DataTable();
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
             dt产品编码 = dt;
+
             dgv产品编码.DataSource = dt产品编码;
+            //显示序号
+            setDataGridViewRowNums(dgv产品编码);
         }
 
         private void btn吹膜物料代码刷新_Click(object sender, EventArgs e)
@@ -1084,9 +1089,13 @@ namespace mySystem.Setting
             da = new OleDbDataAdapter("select * from 设置物料代码", mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
             dt = new DataTable();
+            dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
             dt物料代码 = dt;
             dgv物料代码.DataSource = dt物料代码;
+
+
+            setDataGridViewRowNums(dgv物料代码);
         }
     }
 }

@@ -17,6 +17,7 @@ namespace mySystem.Process.Order
 {
     public partial class 采购批准单 : BaseForm
     {
+        bool isSaved = false;
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
         OleDbConnection conn;
@@ -74,6 +75,7 @@ namespace mySystem.Process.Order
         public 采购批准单(MainForm mainform, int id)
             : base(mainform)
         {
+            isSaved = true;
             // 根据ID显示
             InitializeComponent();
             fillPrinter();
@@ -308,12 +310,10 @@ namespace mySystem.Process.Order
                         ht库存编码2采购数量[存货代码] = 0.0;
                     }
                     ht库存编码2采购数量[存货代码] = 采购数量 + Convert.ToDouble(ht库存编码2采购数量[存货代码]);
-                    dr["批准状态"] = "批准中";
                 }
-                da.Update(dt);
             }
             //按存货代码排序
-            dt未批准需求单详细信息.DefaultView.Sort = "存货代码 ASC";
+            dt未批准需求单详细信息.DefaultView.Sort = "组件订单需求流水号 ASC";
             dt未批准需求单详细信息 = dt未批准需求单详细信息.DefaultView.ToTable();
 
             //ht组件编码2组件订单需求号 = new Hashtable();
@@ -584,7 +584,7 @@ namespace mySystem.Process.Order
                 ndr["采购批准单ID"] = dtOuter.Rows[0]["ID"];
                 ndr["产品代码"] = daima;
                 ndr["订单需求数量"] = ht库存编码2采购数量[daima];
-                ndr["仓库可用"] = dtInner库存;
+                ndr["仓库可用"] = 0;
                 ndr["实际购入"] = 0;
                 ndr["富余量"] = 0;
                 ndr["借用信息"] = "[]";
@@ -720,15 +720,19 @@ namespace mySystem.Process.Order
         {
             bsInner.DataSource = dtInnerShow;
             dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
             bsInner库存.DataSource = dtInner库存Show;
             dataGridView2.DataSource = bsInner库存.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
 
             bsInner实际购入.DataSource = dtInner实际购入;
             dataGridView3.DataSource = bsInner实际购入.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView3);
 
             bsInner借用订单.DataSource = dtInner借用订单;
             dataGridView4.DataSource = bsInner借用订单.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView4);
         }
 
 
@@ -1359,6 +1363,7 @@ namespace mySystem.Process.Order
 
         private void btn确认_Click(object sender, EventArgs e)
         {
+            isSaved = true;
             int idx = combobox存货编码筛选.SelectedIndex;
             save();
             if (_userState == Parameter.UserState.操作员)
@@ -1366,7 +1371,22 @@ namespace mySystem.Process.Order
                 btn提交审核.Enabled = true;
             }
             combobox存货编码筛选.SelectedIndex = 0;
-            
+
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
+            DataTable dt;
+            foreach (DataRow dr in dt未批准需求单详细信息.Rows)
+            {
+                int id = Convert.ToInt32( dr["ID"]);
+                da = new OleDbDataAdapter("select * from 采购需求单详细信息 where ID=" + id, conn);
+                cb = new OleDbCommandBuilder(da);
+                dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 0) continue;
+                dt.Rows[0]["批准状态"] = "批准中";
+                da.Update(dt);
+            }
+
         }
 
         void save()
@@ -1820,6 +1840,35 @@ namespace mySystem.Process.Order
             {
                 int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["组件订单需求流水号"].ToString().Substring(10, 3));
                 return prefix + yymmdd + (no + 1).ToString("D3");
+            }
+        }
+
+        private void 采购批准单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSaved)
+            {
+                if (dtOuter != null && dtOuter.Rows.Count > 0)
+                {
+                    dtOuter.Rows[0].Delete();
+                    daOuter.Update(dtOuter);
+
+                }
+                if (dtInner != null)
+                {
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        dr.Delete();
+                    }
+                    daInner.Update(dtInner);
+                }
+                if (dtInner借用订单 != null)
+                {
+                    foreach (DataRow dr in dtInner借用订单.Rows)
+                    {
+                        dr.Delete();
+                    }
+                    daInner借用订单.Update(dtInner借用订单);
+                }
             }
         }
 

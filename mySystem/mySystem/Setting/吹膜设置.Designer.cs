@@ -137,10 +137,12 @@
             this.del工艺 = new System.Windows.Forms.Button();
             this.add工艺 = new System.Windows.Forms.Button();
             this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.btn吹膜物料代码刷新 = new System.Windows.Forms.Button();
             this.dgv物料代码 = new System.Windows.Forms.DataGridView();
             this.del物料代码 = new System.Windows.Forms.Button();
             this.add物料代码 = new System.Windows.Forms.Button();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.btn吹膜产品编码刷新 = new System.Windows.Forms.Button();
             this.dgv产品编码 = new System.Windows.Forms.DataGridView();
             this.del产品编码 = new System.Windows.Forms.Button();
             this.add产品编码 = new System.Windows.Forms.Button();
@@ -172,8 +174,6 @@
             this.add代码批号 = new System.Windows.Forms.Button();
             this.save代码批号 = new System.Windows.Forms.Button();
             this.dgv代码批号 = new System.Windows.Forms.DataGridView();
-            this.btn吹膜产品编码刷新 = new System.Windows.Forms.Button();
-            this.btn吹膜物料代码刷新 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage区域设置.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -1403,6 +1403,17 @@
             this.groupBox11.TabIndex = 56;
             this.groupBox11.TabStop = false;
             // 
+            // btn吹膜物料代码刷新
+            // 
+            this.btn吹膜物料代码刷新.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn吹膜物料代码刷新.Location = new System.Drawing.Point(186, 15);
+            this.btn吹膜物料代码刷新.Name = "btn吹膜物料代码刷新";
+            this.btn吹膜物料代码刷新.Size = new System.Drawing.Size(70, 30);
+            this.btn吹膜物料代码刷新.TabIndex = 4;
+            this.btn吹膜物料代码刷新.Text = "刷新";
+            this.btn吹膜物料代码刷新.UseVisualStyleBackColor = true;
+            this.btn吹膜物料代码刷新.Click += new System.EventHandler(this.btn吹膜物料代码刷新_Click);
+            // 
             // dgv物料代码
             // 
             this.dgv物料代码.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1422,6 +1433,7 @@
             this.del物料代码.TabIndex = 1;
             this.del物料代码.Text = "删除";
             this.del物料代码.UseVisualStyleBackColor = true;
+            this.del物料代码.Visible = false;
             this.del物料代码.Click += new System.EventHandler(this.del物料代码_Click);
             // 
             // add物料代码
@@ -1433,6 +1445,7 @@
             this.add物料代码.TabIndex = 0;
             this.add物料代码.Text = "添加";
             this.add物料代码.UseVisualStyleBackColor = true;
+            this.add物料代码.Visible = false;
             this.add物料代码.Click += new System.EventHandler(this.add物料代码_Click);
             // 
             // groupBox12
@@ -1446,6 +1459,17 @@
             this.groupBox12.Size = new System.Drawing.Size(530, 250);
             this.groupBox12.TabIndex = 55;
             this.groupBox12.TabStop = false;
+            // 
+            // btn吹膜产品编码刷新
+            // 
+            this.btn吹膜产品编码刷新.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn吹膜产品编码刷新.Location = new System.Drawing.Point(187, 14);
+            this.btn吹膜产品编码刷新.Name = "btn吹膜产品编码刷新";
+            this.btn吹膜产品编码刷新.Size = new System.Drawing.Size(70, 30);
+            this.btn吹膜产品编码刷新.TabIndex = 3;
+            this.btn吹膜产品编码刷新.Text = "刷新";
+            this.btn吹膜产品编码刷新.UseVisualStyleBackColor = true;
+            this.btn吹膜产品编码刷新.Click += new System.EventHandler(this.btn吹膜产品编码刷新_Click);
             // 
             // dgv产品编码
             // 
@@ -1466,6 +1490,7 @@
             this.del产品编码.TabIndex = 1;
             this.del产品编码.Text = "删除";
             this.del产品编码.UseVisualStyleBackColor = true;
+            this.del产品编码.Visible = false;
             this.del产品编码.Click += new System.EventHandler(this.del产品编码_Click);
             // 
             // add产品编码
@@ -1477,6 +1502,7 @@
             this.add产品编码.TabIndex = 0;
             this.add产品编码.Text = "添加";
             this.add产品编码.UseVisualStyleBackColor = true;
+            this.add产品编码.Visible = false;
             this.add产品编码.Click += new System.EventHandler(this.add产品编码_Click);
             // 
             // groupBox13
@@ -1773,28 +1799,6 @@
             this.dgv代码批号.RowTemplate.Height = 23;
             this.dgv代码批号.Size = new System.Drawing.Size(475, 407);
             this.dgv代码批号.TabIndex = 0;
-            // 
-            // btn吹膜产品编码刷新
-            // 
-            this.btn吹膜产品编码刷新.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn吹膜产品编码刷新.Location = new System.Drawing.Point(187, 14);
-            this.btn吹膜产品编码刷新.Name = "btn吹膜产品编码刷新";
-            this.btn吹膜产品编码刷新.Size = new System.Drawing.Size(70, 30);
-            this.btn吹膜产品编码刷新.TabIndex = 3;
-            this.btn吹膜产品编码刷新.Text = "刷新";
-            this.btn吹膜产品编码刷新.UseVisualStyleBackColor = true;
-            this.btn吹膜产品编码刷新.Click += new System.EventHandler(this.btn吹膜产品编码刷新_Click);
-            // 
-            // btn吹膜物料代码刷新
-            // 
-            this.btn吹膜物料代码刷新.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn吹膜物料代码刷新.Location = new System.Drawing.Point(186, 15);
-            this.btn吹膜物料代码刷新.Name = "btn吹膜物料代码刷新";
-            this.btn吹膜物料代码刷新.Size = new System.Drawing.Size(70, 30);
-            this.btn吹膜物料代码刷新.TabIndex = 4;
-            this.btn吹膜物料代码刷新.Text = "刷新";
-            this.btn吹膜物料代码刷新.UseVisualStyleBackColor = true;
-            this.btn吹膜物料代码刷新.Click += new System.EventHandler(this.btn吹膜物料代码刷新_Click);
             // 
             // 吹膜设置
             // 

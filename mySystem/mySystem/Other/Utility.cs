@@ -323,5 +323,13 @@ namespace mySystem
             fillDataGridView(dgv, data);
         }
 
+        public static void setDataGridViewAutoSizeMode(DataGridView dgv, DataGridViewAutoSizeColumnMode mode=DataGridViewAutoSizeColumnMode.AllCells)
+        {
+            foreach(DataGridViewColumn dgvc in dgv.Columns)
+            {
+                dgvc.AutoSizeMode = mode;
+            }
+        }
+
     }
 }

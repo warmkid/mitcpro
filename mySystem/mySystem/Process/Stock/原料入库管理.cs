@@ -11,7 +11,7 @@ using System.Collections;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 原料入库管理 : Form
+    public partial class 原料入库管理 : BaseForm
     {
 
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
@@ -19,7 +19,7 @@ namespace mySystem.Process.Stock
         OleDbConnection conn;
         DataTable dt物资验收记录, dt物资请验单, dt检验记录, dt不合格品处理记录, dt取样记录;
 
-        public 原料入库管理()
+        public 原料入库管理(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             conn = new OleDbConnection(strConn);
@@ -52,7 +52,7 @@ namespace mySystem.Process.Stock
 
         private void btn增加物资验收记录_Click(object sender, EventArgs e)
         {
-            物资验收记录 form = new 物资验收记录();
+            物资验收记录 form = new 物资验收记录(mainform);
             form.Show();
         }
 
@@ -111,14 +111,14 @@ namespace mySystem.Process.Stock
         void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
-            物资验收记录 form = new 物资验收记录(id);
+            物资验收记录 form = new 物资验收记录(mainform,id);
             form.Show();
         }
 
         void dataGridView4_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             int id = Convert.ToInt32(dataGridView4.Rows[e.RowIndex].Cells[0].Value);
-            不合格品处理记录 form = new 不合格品处理记录(id);
+            不合格品处理记录 form = new 不合格品处理记录(mainform, id);
             form.Show();
         }
 

@@ -363,8 +363,9 @@ namespace mySystem
            
             for (int i = 2; i <= 832; ++i)
             {
-                ls存货名称.Add(my.Cells[i, 4].Value);
+                if (ls存货代码.IndexOf(my.Cells[i, 5].Value) >= 0) continue;
                 ls存货代码.Add(my.Cells[i, 5].Value);
+                ls存货名称.Add(my.Cells[i, 4].Value);
                 ls规格型号.Add(my.Cells[i, 6].Value);
                 ls主计量单位.Add(my.Cells[i, 10].Value);
             }
@@ -375,6 +376,7 @@ namespace mySystem
 
             for (int i = 2; i <= 727; ++i)
             {
+                if (ls存货代码.IndexOf(my.Cells[i, 5].Value) >= 0) continue;
                 ls存货名称.Add(my.Cells[i, 4].Value);
                 ls存货代码.Add(my.Cells[i, 5].Value);
                 ls规格型号.Add(my.Cells[i, 6].Value);
