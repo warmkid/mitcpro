@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tb库存台账厂家名称 = new System.Windows.Forms.TabControl();
             this.tabPage退货台账 = new System.Windows.Forms.TabPage();
             this.tb退货台账产品批号 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
@@ -59,24 +59,46 @@
             this.tb出库单发货公司 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
+            this.tabPage库存台账 = new System.Windows.Forms.TabPage();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tb库存台账存货代码 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.cmb库存台账状态 = new System.Windows.Forms.ComboBox();
+            this.btn查询库存台账 = new System.Windows.Forms.Button();
+            this.dgv库存台账 = new System.Windows.Forms.DataGridView();
+            this.tabPage检验台账 = new System.Windows.Forms.TabPage();
+            this.dgv检验台账 = new System.Windows.Forms.DataGridView();
+            this.btn查询检验台账 = new System.Windows.Forms.Button();
+            this.tb检验台账存货代码 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.tb检验台账厂家名称 = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.tb库存台账厂家名称.SuspendLayout();
             this.tabPage退货台账.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv退货台账)).BeginInit();
             this.tabPage出库单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv出库单)).BeginInit();
+            this.tabPage库存台账.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv库存台账)).BeginInit();
+            this.tabPage检验台账.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv检验台账)).BeginInit();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tb库存台账厂家名称
             // 
-            this.tabControl1.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
-            this.tabControl1.Controls.Add(this.tabPage退货台账);
-            this.tabControl1.Controls.Add(this.tabPage出库单);
-            this.tabControl1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tabControl1.Location = new System.Drawing.Point(12, 12);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1081, 552);
-            this.tabControl1.TabIndex = 1;
+            this.tb库存台账厂家名称.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
+            this.tb库存台账厂家名称.Controls.Add(this.tabPage退货台账);
+            this.tb库存台账厂家名称.Controls.Add(this.tabPage出库单);
+            this.tb库存台账厂家名称.Controls.Add(this.tabPage库存台账);
+            this.tb库存台账厂家名称.Controls.Add(this.tabPage检验台账);
+            this.tb库存台账厂家名称.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb库存台账厂家名称.Location = new System.Drawing.Point(12, 12);
+            this.tb库存台账厂家名称.Name = "tb库存台账厂家名称";
+            this.tb库存台账厂家名称.SelectedIndex = 0;
+            this.tb库存台账厂家名称.Size = new System.Drawing.Size(1081, 552);
+            this.tb库存台账厂家名称.TabIndex = 1;
             // 
             // tabPage退货台账
             // 
@@ -378,28 +400,201 @@
             this.label12.TabIndex = 48;
             this.label12.Text = "出库日期";
             // 
+            // tabPage库存台账
+            // 
+            this.tabPage库存台账.Controls.Add(this.dgv库存台账);
+            this.tabPage库存台账.Controls.Add(this.btn查询库存台账);
+            this.tabPage库存台账.Controls.Add(this.cmb库存台账状态);
+            this.tabPage库存台账.Controls.Add(this.label15);
+            this.tabPage库存台账.Controls.Add(this.tb库存台账存货代码);
+            this.tabPage库存台账.Controls.Add(this.label14);
+            this.tabPage库存台账.Controls.Add(this.textBox1);
+            this.tabPage库存台账.Controls.Add(this.label13);
+            this.tabPage库存台账.Location = new System.Drawing.Point(4, 29);
+            this.tabPage库存台账.Name = "tabPage库存台账";
+            this.tabPage库存台账.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage库存台账.Size = new System.Drawing.Size(1073, 519);
+            this.tabPage库存台账.TabIndex = 2;
+            this.tabPage库存台账.Text = "库存台账";
+            this.tabPage库存台账.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.textBox1.Location = new System.Drawing.Point(105, 24);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(202, 26);
+            this.textBox1.TabIndex = 59;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label13.Location = new System.Drawing.Point(19, 27);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(72, 16);
+            this.label13.TabIndex = 58;
+            this.label13.Text = "厂家名称";
+            // 
+            // tb库存台账存货代码
+            // 
+            this.tb库存台账存货代码.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb库存台账存货代码.Location = new System.Drawing.Point(426, 27);
+            this.tb库存台账存货代码.Name = "tb库存台账存货代码";
+            this.tb库存台账存货代码.Size = new System.Drawing.Size(202, 26);
+            this.tb库存台账存货代码.TabIndex = 61;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label14.Location = new System.Drawing.Point(340, 30);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(72, 16);
+            this.label14.TabIndex = 60;
+            this.label14.Text = "存货代码";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label15.Location = new System.Drawing.Point(710, 30);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(40, 16);
+            this.label15.TabIndex = 62;
+            this.label15.Text = "状态";
+            // 
+            // cmb库存台账状态
+            // 
+            this.cmb库存台账状态.FormattingEnabled = true;
+            this.cmb库存台账状态.Items.AddRange(new object[] {
+            "待验",
+            "合格"});
+            this.cmb库存台账状态.Location = new System.Drawing.Point(756, 27);
+            this.cmb库存台账状态.Name = "cmb库存台账状态";
+            this.cmb库存台账状态.Size = new System.Drawing.Size(109, 24);
+            this.cmb库存台账状态.TabIndex = 63;
+            // 
+            // btn查询库存台账
+            // 
+            this.btn查询库存台账.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn查询库存台账.Location = new System.Drawing.Point(973, 24);
+            this.btn查询库存台账.Name = "btn查询库存台账";
+            this.btn查询库存台账.Size = new System.Drawing.Size(75, 30);
+            this.btn查询库存台账.TabIndex = 64;
+            this.btn查询库存台账.Text = "查询";
+            this.btn查询库存台账.UseVisualStyleBackColor = true;
+            this.btn查询库存台账.Click += new System.EventHandler(this.btn查询库存台账_Click);
+            // 
+            // dgv库存台账
+            // 
+            this.dgv库存台账.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv库存台账.Location = new System.Drawing.Point(22, 79);
+            this.dgv库存台账.Name = "dgv库存台账";
+            this.dgv库存台账.RowTemplate.Height = 23;
+            this.dgv库存台账.Size = new System.Drawing.Size(1026, 424);
+            this.dgv库存台账.TabIndex = 65;
+            // 
+            // tabPage检验台账
+            // 
+            this.tabPage检验台账.Controls.Add(this.dgv检验台账);
+            this.tabPage检验台账.Controls.Add(this.btn查询检验台账);
+            this.tabPage检验台账.Controls.Add(this.tb检验台账存货代码);
+            this.tabPage检验台账.Controls.Add(this.label17);
+            this.tabPage检验台账.Controls.Add(this.tb检验台账厂家名称);
+            this.tabPage检验台账.Controls.Add(this.label18);
+            this.tabPage检验台账.Location = new System.Drawing.Point(4, 29);
+            this.tabPage检验台账.Name = "tabPage检验台账";
+            this.tabPage检验台账.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage检验台账.Size = new System.Drawing.Size(1073, 519);
+            this.tabPage检验台账.TabIndex = 3;
+            this.tabPage检验台账.Text = "检验台账";
+            this.tabPage检验台账.UseVisualStyleBackColor = true;
+            // 
+            // dgv检验台账
+            // 
+            this.dgv检验台账.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv检验台账.Location = new System.Drawing.Point(25, 75);
+            this.dgv检验台账.Name = "dgv检验台账";
+            this.dgv检验台账.RowTemplate.Height = 23;
+            this.dgv检验台账.Size = new System.Drawing.Size(1026, 424);
+            this.dgv检验台账.TabIndex = 73;
+            // 
+            // btn查询检验台账
+            // 
+            this.btn查询检验台账.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn查询检验台账.Location = new System.Drawing.Point(976, 20);
+            this.btn查询检验台账.Name = "btn查询检验台账";
+            this.btn查询检验台账.Size = new System.Drawing.Size(75, 30);
+            this.btn查询检验台账.TabIndex = 72;
+            this.btn查询检验台账.Text = "查询";
+            this.btn查询检验台账.UseVisualStyleBackColor = true;
+            this.btn查询检验台账.Click += new System.EventHandler(this.btn查询检验台账_Click);
+            // 
+            // tb检验台账存货代码
+            // 
+            this.tb检验台账存货代码.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb检验台账存货代码.Location = new System.Drawing.Point(429, 23);
+            this.tb检验台账存货代码.Name = "tb检验台账存货代码";
+            this.tb检验台账存货代码.Size = new System.Drawing.Size(202, 26);
+            this.tb检验台账存货代码.TabIndex = 69;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label17.Location = new System.Drawing.Point(343, 26);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(72, 16);
+            this.label17.TabIndex = 68;
+            this.label17.Text = "存货代码";
+            // 
+            // tb检验台账厂家名称
+            // 
+            this.tb检验台账厂家名称.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb检验台账厂家名称.Location = new System.Drawing.Point(108, 20);
+            this.tb检验台账厂家名称.Name = "tb检验台账厂家名称";
+            this.tb检验台账厂家名称.Size = new System.Drawing.Size(202, 26);
+            this.tb检验台账厂家名称.TabIndex = 67;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label18.Location = new System.Drawing.Point(22, 23);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(72, 16);
+            this.label18.TabIndex = 66;
+            this.label18.Text = "厂家名称";
+            // 
             // 库存查询
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1101, 581);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tb库存台账厂家名称);
             this.Name = "库存查询";
             this.Text = "库存查询";
-            this.tabControl1.ResumeLayout(false);
+            this.tb库存台账厂家名称.ResumeLayout(false);
             this.tabPage退货台账.ResumeLayout(false);
             this.tabPage退货台账.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv退货台账)).EndInit();
             this.tabPage出库单.ResumeLayout(false);
             this.tabPage出库单.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv出库单)).EndInit();
+            this.tabPage库存台账.ResumeLayout(false);
+            this.tabPage库存台账.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv库存台账)).EndInit();
+            this.tabPage检验台账.ResumeLayout(false);
+            this.tabPage检验台账.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv检验台账)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tb库存台账厂家名称;
         private System.Windows.Forms.TabPage tabPage退货台账;
         private System.Windows.Forms.DataGridView dgv退货台账;
         private System.Windows.Forms.Button btn退货台账查询;
@@ -430,5 +625,21 @@
         private System.Windows.Forms.TextBox tb出库单发货公司;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TabPage tabPage库存台账;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cmb库存台账状态;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox tb库存台账存货代码;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.DataGridView dgv库存台账;
+        private System.Windows.Forms.Button btn查询库存台账;
+        private System.Windows.Forms.TabPage tabPage检验台账;
+        private System.Windows.Forms.DataGridView dgv检验台账;
+        private System.Windows.Forms.Button btn查询检验台账;
+        private System.Windows.Forms.TextBox tb检验台账存货代码;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox tb检验台账厂家名称;
+        private System.Windows.Forms.Label label18;
     }
 }

@@ -31,10 +31,10 @@ namespace 订单和库存管理
             readFromDatabase();
             bindControl();
 
-            dataGridView1.ReadOnly = true;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+            //dataGridView1.ReadOnly = true;
+            //dataGridView1.AllowUserToAddRows = false;
+            //dataGridView1.RowHeadersVisible = false;
+            //dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

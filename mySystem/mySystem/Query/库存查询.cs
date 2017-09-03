@@ -12,8 +12,8 @@ namespace mySystem.Query
 {
     public partial class 库存查询 : Form
     {
-         OleDbDataAdapter da退货台账,da出库单;
-        DataTable dt退货台账,dt出库单;
+         OleDbDataAdapter da退货台账,da出库单,da库存台账,da检验台账;
+        DataTable dt退货台账,dt出库单,dt库存台账,dt检验台账;
 
         public 库存查询()
         {
@@ -29,6 +29,24 @@ namespace mySystem.Query
             dgv出库单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv出库单_DataBindingComplete);
             dgv出库单.ReadOnly = true;
 
+
+            dgv库存台账.AllowUserToAddRows = false;
+            dgv库存台账.ReadOnly = true;
+            dgv库存台账.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv库存台账_DataBindingComplete);
+
+            dgv检验台账.AllowUserToAddRows = false;
+            dgv检验台账.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv检验台账_DataBindingComplete);
+
+        }
+
+        void dgv检验台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv检验台账.Columns["ID"].Visible = false;
+        }
+
+        void dgv库存台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dgv库存台账.Columns["ID"].Visible = false;
         }
 
         void dgv出库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -40,6 +58,8 @@ namespace mySystem.Query
         {
             dgv退货台账.Columns["ID"].Visible = false;
         }
+
+
 
         private void btn退货台账查询_Click(object sender, EventArgs e)
         {
@@ -69,6 +89,32 @@ namespace mySystem.Query
             dt出库单 = new DataTable("出库单详细信息");
             da出库单.Fill(dt出库单);
             dgv出库单.DataSource = dt出库单;
+        }
+
+        private void btn查询库存台账_Click(object sender, EventArgs e)
+        {
+            string sql = "select * from 库存台帐 where 供应商名称 like '%{0}%' and 产品代码 like '%{1}%' and 状态 like '%{2}%'";
+           
+            string 供应商名称 = tb库存台账厂家名称.Text;
+            string 产品代码 = tb库存台账存货代码.Text;
+            string 状态 = cmb库存台账状态.Text;
+            da库存台账 = new OleDbDataAdapter(string.Format(sql, 供应商名称, 产品代码, 状态), mySystem.Parameter.connOle);
+            dt库存台账 = new DataTable("库存台帐");
+            da库存台账.Fill(dt库存台账);
+            dgv库存台账.DataSource = dt库存台账;
+        }
+
+
+        private void btn查询检验台账_Click(object sender, EventArgs e)
+        {
+            string sql = "select * from 检验台账 where 供应商名称 like '%{0}%' and 物料代码 like '%{1}%'";
+
+            string 供应商名称 = tb检验台账厂家名称.Text;
+            string 产品代码 = tb检验台账存货代码.Text;
+            da检验台账 = new OleDbDataAdapter(string.Format(sql, 供应商名称, 产品代码), mySystem.Parameter.connOle);
+            dt检验台账 = new DataTable("检验台账");
+            da检验台账.Fill(dt检验台账);
+            dgv检验台账.DataSource = dt检验台账;
         }
     }
 }
