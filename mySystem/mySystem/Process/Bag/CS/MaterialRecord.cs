@@ -943,7 +943,7 @@ namespace mySystem.Process.Bag
             mysheet.Cells[3, 5].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
             mysheet.Cells[3, 9].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
             mysheet.Cells[16, 5].Value = "成品率 = " + dt记录.Rows[0]["成品率"].ToString() + " % \n 成品率%=产品数量平米/膜材用量平米X100% （人工计算：产品数量计算成面积/用上面膜材规格和长度计算面积）";
-            mysheet.Cells[16, 11].Value = "废品重量：" + dt记录.Rows[0]["废品"].ToString() + " kg";
+            mysheet.Cells[16, 11].Value = "废品重量：" + dt记录.Rows[0]["废品重量"].ToString() + " kg";
             String stringtemp = "";
             stringtemp = "领料人：" + dt记录.Rows[0]["操作员"].ToString();
             stringtemp = stringtemp + "       领料日期：" + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
