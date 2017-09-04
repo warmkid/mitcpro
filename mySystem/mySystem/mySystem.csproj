@@ -258,11 +258,15 @@
     <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJsingle.Designer.cs">
       <DependentUpon>BTVRunningRecordRHJsingle.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\BTV\产品外观和尺寸检验记录.cs" />
+    <Compile Include="Process\Bag\BTV\产品外观和尺寸检验记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Process\Bag\BTV\产品外观和尺寸检验记录.Designer.cs">
       <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\BTV\产品热合强度检验记录.cs" />
+    <Compile Include="Process\Bag\BTV\产品热合强度检验记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Process\Bag\BTV\产品热合强度检验记录.Designer.cs">
       <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
     </Compile>

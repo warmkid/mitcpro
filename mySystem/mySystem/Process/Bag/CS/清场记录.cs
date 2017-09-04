@@ -53,6 +53,7 @@ namespace mySystem.Process.Bag.CS
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
+        CheckForm ckform;
 
         public 清场记录()
         {
@@ -605,6 +606,17 @@ namespace mySystem.Process.Bag.CS
         private void btn审核_Click(object sender, EventArgs e)
         {
             // TODO 弹出赵梦的窗口
+            if (dtOuter.Rows[0]["操作员"].ToString() == mySystem.Parameter.userName)
+            {
+                MessageBox.Show("操作员和审核员不能是同一个人！");
+                return;
+            }
+            ckform = new CheckForm(this);
+            ckform.Show();  
+        }
+
+        public override void CheckResult()
+        {
 
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
@@ -631,6 +643,7 @@ namespace mySystem.Process.Bag.CS
             setEnableReadOnly();
 
             btn审核.Enabled = false;
+            base.CheckResult();
         }
 
         //添加打印机
@@ -737,12 +750,12 @@ namespace mySystem.Process.Bag.CS
         {
             int ind = 0;
             int i插入行数 = 0;
-            my.Cells[3, 1].Value = "产品代码/规格：" + lbl产品代码.Text;
-            my.Cells[3, 5].Value = "产品批号：" + lbl产品批号.Text;
-            if (lbl生产班次.Text.Equals("白班"))
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[3, 1].Value = "产品代码/规格：" + dtOuter.Rows[0]["产品代码"].ToString();
+            my.Cells[3, 5].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"].ToString(); 
+            if (dtOuter.Rows[0]["生产班次"].ToString().Equals("白班"))
+                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Day.ToString() + "日");
             else
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Day.ToString() + "日");
             //插入新行
             if (dataGridView1.Rows.Count > 14)
             {
@@ -760,14 +773,13 @@ namespace mySystem.Process.Bag.CS
             //写内表数据
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                my.Cells[5 + i, 1].Value = dataGridView1.Rows[i].Cells["序号"].Value.ToString();
-                my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells["清场项目"].Value.ToString();
-                my.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells["清场要点"].Value.ToString();
-                //my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "完成" ? "完成☑  不适用□" : "完成□  不适用☑";
-                my.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString();
+                my.Cells[5 + i, 1].Value = i + 1;
+                my.Cells[5 + i, 2].Value = dtInner.Rows[i]["清场项目"].ToString();
+                my.Cells[5 + i, 3].Value = dtInner.Rows[i]["清场要点"].ToString(); 
+                my.Cells[5 + i, 6].Value = dtInner.Rows[i]["清洁操作"].ToString(); 
             }
-            my.Cells[5, 7].Value = tb操作员.Text;
-            my.Cells[5, 8].Value = cmb检查结果.Text;
+            my.Cells[5, 7].Value = dtOuter.Rows[0]["操作员"].ToString();
+            my.Cells[5, 8].Value = dtOuter.Rows[0]["检查结果"].ToString(); 
 
             //if (cmb检查结果.Text == "合格")
             //    my.Cells[5, 8].Value = "合格☑\n不合格□";
@@ -776,8 +788,8 @@ namespace mySystem.Process.Bag.CS
             //else
             //    my.Cells[5, 8].Value = "合格□\n不合格□";
 
-            my.Cells[5, 9].Value = tb审核员.Text;
-            //my.Cells[9 + ind, 1].Value = "备注：";
+            my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"].ToString(); 
+            my.Cells[19 + ind, 1].Value = "备注：";
 
         }
 
