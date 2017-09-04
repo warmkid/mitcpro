@@ -942,8 +942,8 @@ namespace mySystem.Process.Bag
             mysheet.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
             mysheet.Cells[3, 5].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
             mysheet.Cells[3, 9].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
-            mysheet.Cells[16, 6].Value = "成品率 = " + dt记录.Rows[0]["成品率"].ToString() + " % \n 成品率%=产品数量平米/膜材用量平米X100% （人工计算：产品数量计算成面积/用上面膜材规格和长度计算面积）";
-            mysheet.Cells[16, 12].Value = "废品重量：" + dt记录.Rows[0]["废品重量"].ToString() + " kg";
+            mysheet.Cells[16, 5].Value = "成品率 = " + dt记录.Rows[0]["成品率"].ToString() + " % \n 成品率%=产品数量平米/膜材用量平米X100% （人工计算：产品数量计算成面积/用上面膜材规格和长度计算面积）";
+            mysheet.Cells[16, 11].Value = "废品重量：" + dt记录.Rows[0]["废品"].ToString() + " kg";
             String stringtemp = "";
             stringtemp = "领料人：" + dt记录.Rows[0]["操作员"].ToString();
             stringtemp = stringtemp + "       领料日期：" + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
@@ -956,17 +956,17 @@ namespace mySystem.Process.Bag
             for (int i = 0; i < (rownum > 11 ? 11 : rownum); i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["领料日期时间"].ToString();
-                mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["物料简称"].ToString();
-                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料代码"].ToString();
-                mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料批号"].ToString();
-                mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["接上班数量A"].ToString();
-                mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["领取数量B"].ToString();
-                mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["使用数量C"].ToString();
-                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["退库数量D"].ToString();
-                mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["物料平衡"].ToString();
-                mysheet.Cells[5 + i, 12].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                mysheet.Cells[5 + i, 13].Value = dt记录详情.Rows[i]["审核员"].ToString();
+                mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("yyyy/MM/dd HH:mm:ss");
+                mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["物料简称"].ToString();
+                mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["物料代码"].ToString();
+                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料批号"].ToString();
+                mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["接上班数量A"].ToString();
+                mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["领取数量B"].ToString();
+                mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["使用数量C"].ToString();
+                mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["退库数量D"].ToString();
+                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["物料平衡"].ToString();
+                mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[5 + i, 12].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
             //需要插入的部分
             if (rownum > 11)
@@ -979,17 +979,17 @@ namespace mySystem.Process.Bag
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
                     mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["领料日期时间"].ToString();
-                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["物料简称"].ToString();
-                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料代码"].ToString();
-                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料批号"].ToString();
-                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["接上班数量A"].ToString();
-                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["领取数量B"].ToString();
-                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["使用数量C"].ToString();
-                    mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["退库数量D"].ToString();
-                    mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["物料平衡"].ToString();
-                    mysheet.Cells[5 + i, 12].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                    mysheet.Cells[5 + i, 13].Value = dt记录详情.Rows[i]["审核员"].ToString();                
+                    mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("yyyy/MM/dd HH:mm:ss");
+                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["物料简称"].ToString();
+                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["物料代码"].ToString();
+                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料批号"].ToString();
+                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["接上班数量A"].ToString();
+                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["领取数量B"].ToString();
+                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["使用数量C"].ToString();
+                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["退库数量D"].ToString();
+                    mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["物料平衡"].ToString();
+                    mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                    mysheet.Cells[5 + i, 12].Value = dt记录详情.Rows[i]["审核员"].ToString();
                 }
             }
             //加页脚
@@ -1005,7 +1005,7 @@ namespace mySystem.Process.Bag
             //返回
             return mysheet;
         }
-                  
+               
         //******************************小功能******************************//  
 
         // 检查操作员的姓名（内表）
