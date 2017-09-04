@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Collections;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Bag.LDPE
 {
@@ -49,6 +50,7 @@ namespace mySystem.Process.Bag.LDPE
             : base(mainform)
         {
             InitializeComponent();
+            fill_printer(); //添加打印机
             variableInit();
             getOuterOtherData();
             getPeople();
@@ -83,6 +85,7 @@ namespace mySystem.Process.Bag.LDPE
             : base(mainform)
         {
             InitializeComponent();
+            fill_printer(); //添加打印机
             variableInit();
             getOuterOtherData();
             getPeople();
@@ -746,6 +749,173 @@ namespace mySystem.Process.Bag.LDPE
 
         }
 
+        //添加打印机
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        private void fill_printer()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
+        }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒 打印文档\n");
+                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            //外表信息
+            mysheet.Cells[16, 16].Value = dtOuter.Rows[0]["平均值"].ToString();
+            String stringtemp = "";
+            stringtemp = "整理人：" + dtOuter.Rows[0]["整理人"].ToString();
+            stringtemp = stringtemp + "       整理日期：" + Convert.ToDateTime(dtOuter.Rows[0]["整理时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["整理时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["整理时间"].ToString()).Day.ToString() + "日";
+            mysheet.Cells[17, 1].Value = stringtemp;
+            stringtemp = "复核人：" + dtOuter.Rows[0]["审核员"].ToString();
+            stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
+            mysheet.Cells[17, 7].Value = stringtemp;
+            //内表信息
+            int rownum = dtInner.Rows.Count;
+            //无需插入的部分
+            for (int i = 0; i < (rownum > 11 ? 11 : rownum); i++)
+            {
+                mysheet.Cells[5 + i, 1].Value = dtInner.Rows[i]["产品规格"].ToString();
+                mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["产品批号"].ToString();
+                mysheet.Cells[5 + i, 3].Value = dtInner.Rows[i]["生产日期"].ToString();
+                mysheet.Cells[5 + i, 4].Value = dtInner.Rows[i]["生产时间"].ToString();
+                mysheet.Cells[5 + i, 5].Value = dtInner.Rows[i]["位置1"].ToString();
+                mysheet.Cells[5 + i, 6].Value = dtInner.Rows[i]["位置2"].ToString();
+                mysheet.Cells[5 + i, 7].Value = dtInner.Rows[i]["检测值1"].ToString();
+                mysheet.Cells[5 + i, 8].Value = dtInner.Rows[i]["检测值2"].ToString();
+                mysheet.Cells[5 + i, 9].Value = dtInner.Rows[i]["检测值3"].ToString();
+                mysheet.Cells[5 + i, 10].Value = dtInner.Rows[i]["检测值4"].ToString();
+                mysheet.Cells[5 + i, 11].Value = dtInner.Rows[i]["检测值5"].ToString();
+                mysheet.Cells[5 + i, 12].Value = dtInner.Rows[i]["检测值6"].ToString();
+                mysheet.Cells[5 + i, 13].Value = dtInner.Rows[i]["最小"].ToString();
+                mysheet.Cells[5 + i, 14].Value = dtInner.Rows[i]["最大"].ToString();
+                mysheet.Cells[5 + i, 15].Value = dtInner.Rows[i]["平均"].ToString();
+                mysheet.Cells[5 + i, 16].Value = dtInner.Rows[i]["判定"].ToString() == "Y" ? "√" : "×";
+                mysheet.Cells[5 + i, 17].Value = dtInner.Rows[i]["检测人"].ToString();
+            }
+            //需要插入的部分
+            if (rownum > 11)
+            {
+                for (int i = 11; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    mysheet.Cells[5 + i, 1].Value = dtInner.Rows[i]["产品规格"].ToString();
+                    mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["产品批号"].ToString();
+                    mysheet.Cells[5 + i, 3].Value = dtInner.Rows[i]["生产日期"].ToString();
+                    mysheet.Cells[5 + i, 4].Value = dtInner.Rows[i]["生产时间"].ToString();
+                    mysheet.Cells[5 + i, 5].Value = dtInner.Rows[i]["位置1"].ToString();
+                    mysheet.Cells[5 + i, 6].Value = dtInner.Rows[i]["位置2"].ToString();
+                    mysheet.Cells[5 + i, 7].Value = dtInner.Rows[i]["检测值1"].ToString();
+                    mysheet.Cells[5 + i, 8].Value = dtInner.Rows[i]["检测值2"].ToString();
+                    mysheet.Cells[5 + i, 9].Value = dtInner.Rows[i]["检测值3"].ToString();
+                    mysheet.Cells[5 + i, 10].Value = dtInner.Rows[i]["检测值4"].ToString();
+                    mysheet.Cells[5 + i, 11].Value = dtInner.Rows[i]["检测值5"].ToString();
+                    mysheet.Cells[5 + i, 12].Value = dtInner.Rows[i]["检测值6"].ToString();
+                    mysheet.Cells[5 + i, 13].Value = dtInner.Rows[i]["最小"].ToString();
+                    mysheet.Cells[5 + i, 14].Value = dtInner.Rows[i]["最大"].ToString();
+                    mysheet.Cells[5 + i, 15].Value = dtInner.Rows[i]["平均"].ToString();
+                    mysheet.Cells[5 + i, 16].Value = dtInner.Rows[i]["判定"].ToString() == "Y" ? "√" : "×";
+                    mysheet.Cells[5 + i, 17].Value = dtInner.Rows[i]["检测人"].ToString();
+                }
+            }
+            //加页脚
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 产品热合强度检验记录 where 生产指令ID=" + dtOuter.Rows[0]["ID"].ToString(), conn);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            da = new OleDbDataAdapter("select ID, 生产指令编号 from 生产指令 where ID=" + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
+            dt.Clear(); 
+            da.Fill(dt);
+            String Instruction = dt.Rows[0]["生产指令编号"].ToString();
+            mysheet.PageSetup.RightFooter = Instruction + "-16-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            //返回
+            return mysheet;
+        }
 
     }
 }

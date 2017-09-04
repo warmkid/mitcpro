@@ -677,7 +677,7 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
@@ -779,6 +779,22 @@ namespace mySystem.Process.Bag.LDPE
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+            //读取ID对应的生产指令编码
+            OleDbCommand comm生产指令编码 = new OleDbCommand();
+            comm生产指令编码.Connection = mySystem.Parameter.connOle;
+            comm生产指令编码.CommandText = "select * from 生产指令 where ID= @name";
+            comm生产指令编码.Parameters.AddWithValue("@name", InstruID);
+
+            OleDbDataReader myReader生产指令编码 = comm生产指令编码.ExecuteReader();
+            while (myReader生产指令编码.Read())
+            {
+                Instruction = myReader生产指令编码["生产指令编号"].ToString();
+                //List<String> list班次 = new List<string>();
+                //list班次.Add(myReader班次["班次"].ToString());
+            }
+
+            myReader生产指令编码.Close();
+            comm生产指令编码.Dispose();  
             mysheet.PageSetup.RightFooter = Instruction + "-02-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
