@@ -1034,28 +1034,53 @@ namespace mySystem.Process.Bag.BTV
             // 设置该进程是否可见
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
-
-            my.Cells[3, 3].Value = tb产品代码.Text;
-            my.Cells[3, 5].Value = tb产品批号.Text;
-            my.Cells[3, 7].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            int rowStartAt = 5;
+            my.Cells[3, 3].Value = dt记录详情.Rows[0]["产品代码"];
+            my.Cells[3, 5].Value = dt记录详情.Rows[0]["产品批号"];
+            my.Cells[3, 7].Value = "生产日期：" + "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
             //EVERY SHEET CONTAINS 15 RECORDS
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            int rowNumPerSheet = 14;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
             {
-                my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["产品序号"];
-                my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["生产时间"];
-                my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["袋体与图纸尺寸确认"];
-                my.Cells[i + 5, 4].Value = dt记录详情.Rows[i]["对称性"];
-                my.Cells[i + 5, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
-                my.Cells[i + 5, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
-                my.Cells[i + 5, 7].Value = dt记录详情.Rows[i]["外观检查"];
-                my.Cells[i + 5, 8].Value = dt记录详情.Rows[i]["操作员"];
-                my.Cells[i + 5, 9].Value = dt记录详情.Rows[i]["审核员"];
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["产品序号"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["袋体与图纸尺寸确认"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["对称性"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["外观检查"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["审核员"];
 
             }
-            my.Cells[20, 7].Value = "合格品数量：" + dt记录.Rows[0]["合格品数量"] + "只\n不良品数量："+dt记录.Rows[0]["不良品数量"]+"只";
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
-            my.Cells[20, 8].Value = "审核员:" + dt记录.Rows[0]["审核员"] + "\n审核日期：" + dtp审核日期.Value.ToString("yyyy年MM月dd日"); ;
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["产品序号"];
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
+                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["袋体与图纸尺寸确认"];
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["对称性"];
+                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["外观检查"];
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["操作员"];
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["审核员"];
+                }
+            }
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
+            //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            my.Cells[20 + varOffset, 7].Value = "合格品数量：" + dt记录.Rows[0]["合格品数量"] + "只\n不良品数量：" + dt记录.Rows[0]["不良品数量"] + "只";
+            my.Cells[20 + varOffset, 8].Value = "审核员:" + dt记录.Rows[0]["审核员"] + "\n审核日期：" + dtp审核日期.Value.ToString("yyyy年MM月dd日"); ;
             //my.PageSetup.RightFooter = Instruction + "-" + "14" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (preview)

@@ -946,7 +946,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
         public void print(bool preview)
@@ -962,25 +962,56 @@ namespace mySystem.Process.Bag.BTV
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
-            //EVERY SHEET CONTAINS 15 RECORDS
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            //EVERY SHEET CONTAINS 20 RECORDS
+            int rowStartAt = 5;
+            int rowNumPerSheet = 19;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
             {
 
-                my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["物料代码"];
-                my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["物料批号"];
-                my.Cells[i + 5, 4].Value = dt记录详情.Rows[i]["分装前规格"];
-                my.Cells[i + 5, 5].Value = dt记录详情.Rows[i]["分装前数量"];
-                my.Cells[i + 5, 6].Value = dt记录详情.Rows[i]["分装后规格"];
-                my.Cells[i + 5, 7].Value = dt记录详情.Rows[i]["分装后数量"];
-                my.Cells[i + 5, 8].Value = dt记录详情.Rows[i]["外观"];
-                my.Cells[i + 5, 9].Value = dt记录详情.Rows[i]["数量偏差"];
-                my.Cells[i + 5, 10].Value = dt记录详情.Rows[i]["判定"];
-                my.Cells[i + 5, 11].Value = dt记录详情.Rows[i]["备注"];
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + rowStartAt, 2].Value = dt记录详情.Rows[i]["物料代码"];
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["物料批号"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["分装前规格"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["分装前数量"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["分装后规格"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["分装后数量"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["外观"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["数量偏差"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["判定"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["备注"];
                 
             }
+            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
-            my.Cells[25, 1].Value = "备注： \n" + tb备注.Text ;
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                    my.Cells[i + rowStartAt, 2].Value = dt记录详情.Rows[i]["物料代码"];
+                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["物料批号"];
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["分装前规格"];
+                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["分装前数量"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["分装后规格"];
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["分装后数量"];
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["外观"];
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["数量偏差"];
+                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["判定"];
+                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["备注"];
+                
+                }
+            }
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
+            //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            my.Cells[25 + varOffset, 1].Value = "备注： \n" + dt记录.Rows[0]["备注"];
             if (preview)
             {
                 my.Select();
