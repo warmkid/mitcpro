@@ -852,7 +852,7 @@ namespace mySystem.Process.CleanCut
 
             int ind = 0;
             int i插入行数 = 0;
-            my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编码.Text;
+            my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编码.Text ;
            // my.Cells[3, 4].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
             if (ckb白班.Checked)
                 my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
