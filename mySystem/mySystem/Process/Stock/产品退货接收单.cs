@@ -372,6 +372,34 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
 
+            if (ckform.ischeckOk)
+            {
+                // 自动生产请验单
+                da = new OleDbDataAdapter("select * from 产品退货请验单 where 退货申请单编号='"+dtOuter.Rows[0]["退货申请单编号"].ToString()+"'",conn);
+                cb = new OleDbCommandBuilder(da);
+                dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count >= 1)
+                {
+                    MessageBox.Show("退货请验单已存在！");
+
+                }
+                else
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["退货申请单编号"] = dtOuter.Rows[0]["退货申请单编号"];
+                    dr["请验人"] = mySystem.Parameter.userName;
+                    dr["请验日期"] = DateTime.Now;
+                    dr["审核日期"] = DateTime.Now;
+                    for (int i = 4; i <= 10; ++i)
+                    {
+                        dr[i] = dtOuter.Rows[0][i];
+                    }
+                    dt.Rows.Add(dr);
+                    da.Update(dt);
+                    MessageBox.Show("退货请验单已生成！");
+                }
+            }
 
             //String log = "===================================\n";
             //log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");

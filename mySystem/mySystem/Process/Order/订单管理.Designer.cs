@@ -73,6 +73,17 @@
             this.label12 = new System.Windows.Forms.Label();
             this.dtp采购订单结束时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp采购订单开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.tabPage出库单 = new System.Windows.Forms.TabPage();
+            this.dgv出库单 = new System.Windows.Forms.DataGridView();
+            this.btn出库单添加 = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.btn出库单查询 = new System.Windows.Forms.Button();
+            this.cmb出库单审核状态 = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.tb出库单销售订单 = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.dtp出库单结束时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp出库单开始时间 = new System.Windows.Forms.DateTimePicker();
             this.tabControl1.SuspendLayout();
             this.tabPage销售订单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv销售订单)).BeginInit();
@@ -82,6 +93,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv采购批准单)).BeginInit();
             this.tabPage采购订单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv采购订单)).BeginInit();
+            this.tabPage出库单.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv出库单)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -91,6 +104,7 @@
             this.tabControl1.Controls.Add(this.tabPage采购需求单);
             this.tabControl1.Controls.Add(this.tabPage采购批准单);
             this.tabControl1.Controls.Add(this.tabPage采购订单);
+            this.tabControl1.Controls.Add(this.tabPage出库单);
             this.tabControl1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
@@ -154,8 +168,9 @@
             "编辑中",
             "待审核",
             "审核完成",
+            "已生成采购需求单",
             "已关闭",
-            "已生成采购需求单"});
+            "已取消"});
             this.cmb销售订单审核状态.Location = new System.Drawing.Point(923, 21);
             this.cmb销售订单审核状态.Name = "cmb销售订单审核状态";
             this.cmb销售订单审核状态.Size = new System.Drawing.Size(121, 24);
@@ -540,6 +555,117 @@
             this.dtp采购订单开始时间.Size = new System.Drawing.Size(200, 26);
             this.dtp采购订单开始时间.TabIndex = 28;
             // 
+            // tabPage出库单
+            // 
+            this.tabPage出库单.Controls.Add(this.dgv出库单);
+            this.tabPage出库单.Controls.Add(this.btn出库单添加);
+            this.tabPage出库单.Controls.Add(this.label13);
+            this.tabPage出库单.Controls.Add(this.btn出库单查询);
+            this.tabPage出库单.Controls.Add(this.cmb出库单审核状态);
+            this.tabPage出库单.Controls.Add(this.label14);
+            this.tabPage出库单.Controls.Add(this.tb出库单销售订单);
+            this.tabPage出库单.Controls.Add(this.label15);
+            this.tabPage出库单.Controls.Add(this.dtp出库单结束时间);
+            this.tabPage出库单.Controls.Add(this.dtp出库单开始时间);
+            this.tabPage出库单.Location = new System.Drawing.Point(4, 29);
+            this.tabPage出库单.Name = "tabPage出库单";
+            this.tabPage出库单.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage出库单.Size = new System.Drawing.Size(1064, 480);
+            this.tabPage出库单.TabIndex = 5;
+            this.tabPage出库单.Text = "出库单";
+            this.tabPage出库单.UseVisualStyleBackColor = true;
+            // 
+            // dgv出库单
+            // 
+            this.dgv出库单.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv出库单.Location = new System.Drawing.Point(13, 124);
+            this.dgv出库单.Name = "dgv出库单";
+            this.dgv出库单.RowTemplate.Height = 23;
+            this.dgv出库单.Size = new System.Drawing.Size(1041, 350);
+            this.dgv出库单.TabIndex = 46;
+            // 
+            // btn出库单添加
+            // 
+            this.btn出库单添加.Location = new System.Drawing.Point(13, 62);
+            this.btn出库单添加.Name = "btn出库单添加";
+            this.btn出库单添加.Size = new System.Drawing.Size(75, 23);
+            this.btn出库单添加.TabIndex = 45;
+            this.btn出库单添加.Text = "添加";
+            this.btn出库单添加.UseVisualStyleBackColor = true;
+            this.btn出库单添加.Click += new System.EventHandler(this.btn出库单添加_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(229, 18);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(32, 16);
+            this.label13.TabIndex = 44;
+            this.label13.Text = "---";
+            // 
+            // btn出库单查询
+            // 
+            this.btn出库单查询.Location = new System.Drawing.Point(965, 62);
+            this.btn出库单查询.Name = "btn出库单查询";
+            this.btn出库单查询.Size = new System.Drawing.Size(75, 23);
+            this.btn出库单查询.TabIndex = 43;
+            this.btn出库单查询.Text = "查询";
+            this.btn出库单查询.UseVisualStyleBackColor = true;
+            this.btn出库单查询.Click += new System.EventHandler(this.btn出库单查询_Click);
+            // 
+            // cmb出库单审核状态
+            // 
+            this.cmb出库单审核状态.FormattingEnabled = true;
+            this.cmb出库单审核状态.Items.AddRange(new object[] {
+            "编辑中",
+            "待审核",
+            "审核完成",
+            "已关闭"});
+            this.cmb出库单审核状态.Location = new System.Drawing.Point(919, 11);
+            this.cmb出库单审核状态.Name = "cmb出库单审核状态";
+            this.cmb出库单审核状态.Size = new System.Drawing.Size(121, 24);
+            this.cmb出库单审核状态.TabIndex = 42;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(837, 16);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(72, 16);
+            this.label14.TabIndex = 41;
+            this.label14.Text = "审核状态";
+            // 
+            // tb出库单销售订单
+            // 
+            this.tb出库单销售订单.Location = new System.Drawing.Point(637, 12);
+            this.tb出库单销售订单.Name = "tb出库单销售订单";
+            this.tb出库单销售订单.Size = new System.Drawing.Size(160, 26);
+            this.tb出库单销售订单.TabIndex = 40;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(546, 18);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(72, 16);
+            this.label15.TabIndex = 39;
+            this.label15.Text = "销售订单";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // dtp出库单结束时间
+            // 
+            this.dtp出库单结束时间.Location = new System.Drawing.Point(290, 11);
+            this.dtp出库单结束时间.Name = "dtp出库单结束时间";
+            this.dtp出库单结束时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp出库单结束时间.TabIndex = 38;
+            // 
+            // dtp出库单开始时间
+            // 
+            this.dtp出库单开始时间.Location = new System.Drawing.Point(13, 11);
+            this.dtp出库单开始时间.Name = "dtp出库单开始时间";
+            this.dtp出库单开始时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp出库单开始时间.TabIndex = 37;
+            // 
             // 订单管理
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -561,6 +687,9 @@
             this.tabPage采购订单.ResumeLayout(false);
             this.tabPage采购订单.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv采购订单)).EndInit();
+            this.tabPage出库单.ResumeLayout(false);
+            this.tabPage出库单.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv出库单)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -612,5 +741,16 @@
         private System.Windows.Forms.DateTimePicker dtp采购订单结束时间;
         private System.Windows.Forms.DateTimePicker dtp采购订单开始时间;
         private System.Windows.Forms.DataGridView dgv采购订单;
+        private System.Windows.Forms.TabPage tabPage出库单;
+        private System.Windows.Forms.Button btn出库单添加;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btn出库单查询;
+        private System.Windows.Forms.ComboBox cmb出库单审核状态;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox tb出库单销售订单;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.DateTimePicker dtp出库单结束时间;
+        private System.Windows.Forms.DateTimePicker dtp出库单开始时间;
+        private System.Windows.Forms.DataGridView dgv出库单;
     }
 }

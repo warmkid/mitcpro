@@ -14,11 +14,11 @@ namespace mySystem.Process.Stock
 {
     public partial class 物资验收记录 : BaseForm
     {
-
+        bool isSaved = false;
         List<String> ls操作员;
         List<String> ls审核员;
         List<String> ls供应商代码,ls供应商名称;
-        HashSet<String> hs物料名称, hs物料代码;
+        List<String> ls物料名称, ls物料代码;
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
         /// </summary>
@@ -39,7 +39,7 @@ namespace mySystem.Process.Stock
         OleDbConnection conn;
         CheckForm ckform;
 
-        public 物资验收记录()
+        public 物资验收记录(MainForm mainform):base(mainform)
         {
             // TODO 审核人不走这条路
             InitializeComponent();
@@ -79,17 +79,17 @@ namespace mySystem.Process.Stock
 
         }
 
-        void cmb供应商代码_SelectedIndexChanged(object sender, EventArgs e)
+        void cmb供应商名称_SelectedIndexChanged(object sender, EventArgs e)
         {
-            lbl供应商名称.Text = ls供应商名称[(sender as ComboBox).SelectedIndex];
-            lbl供应商名称.DataBindings[0].WriteValue();
+            lbl供应商代码.Text = ls供应商代码[(sender as ComboBox).SelectedIndex];
+            lbl供应商代码.DataBindings[0].WriteValue();
         }
 
 
-        public 物资验收记录(int id)
+        public 物资验收记录(MainForm mainform,  int id):base(mainform)
         {
             InitializeComponent();
-            
+            isSaved = true;
             conn = new OleDbConnection(strConn);
             conn.Open();
             getPeople();
@@ -263,9 +263,9 @@ namespace mySystem.Process.Stock
 
             bsOuter.DataSource = dtOuter;
 
-            cmb供应商代码.DataBindings.Clear();
-            lbl供应商名称.DataBindings.Clear();
-            lbl供应商名称.DataBindings.Add("Text", bsOuter.DataSource, "供应商名称");
+            cmb供应商名称.DataBindings.Clear();
+            lbl供应商代码.DataBindings.Clear();
+            lbl供应商代码.DataBindings.Add("Text", bsOuter.DataSource, "供应商代码");
             dtp接收时间.DataBindings.Clear();
             tb验收人.DataBindings.Clear();
 
@@ -287,13 +287,21 @@ namespace mySystem.Process.Stock
             lbl验收记录编号.DataBindings.Clear();
             
             // ----
-            cmb供应商代码.Items.Clear();
-            foreach (String s in ls供应商代码)
-            {
-                cmb供应商代码.Items.Add(s);
-            }
 
-            cmb供应商代码.DataBindings.Add("SelectedItem", bsOuter.DataSource, "供应商代码");
+
+            cmb供应商名称.DataSource = ls供应商名称;
+            cmb供应商名称.AutoCompleteSource = AutoCompleteSource.ListItems;
+            cmb供应商名称.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+
+            //cmb供应商名称.Items.Clear();
+
+
+            //foreach (String s in ls供应商名称)
+            //{
+            //    cmb供应商名称.Items.Add(s);
+            //}
+
+            cmb供应商名称.DataBindings.Add("SelectedItem", bsOuter.DataSource, "供应商名称");
             
             dtp接收时间.DataBindings.Add("Value", bsOuter.DataSource, "接收时间");
             tb验收人.DataBindings.Add("Text", bsOuter.DataSource, "验收人");
@@ -345,6 +353,7 @@ namespace mySystem.Process.Stock
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         void addComputerEvnetHandler()
@@ -425,13 +434,53 @@ namespace mySystem.Process.Stock
                 tsi.Click += new EventHandler(tsi_Click);
             }
             dataGridView1.AllowUserToAddRows = false;
-            cmb供应商代码.SelectedIndexChanged += new EventHandler(cmb供应商代码_SelectedIndexChanged);
+            cmb供应商名称.SelectedIndexChanged += new EventHandler(cmb供应商名称_SelectedIndexChanged);
             dataGridView1.ContextMenuStrip = contextMenuStrip1;
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+            dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
 
             // 物料代码和物料名称可选可输
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
             dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
+        }
+
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            String curStr;
+            double curDou;
+            int idx;
+            bool ok;
+            switch (dataGridView1.Columns[e.ColumnIndex].Name)
+            {
+                case "物料代码":
+                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    idx = ls物料代码.IndexOf(curStr);
+                    if (idx >= 0)
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = ls物料代码[idx];
+                        dataGridView1["物料名称", e.RowIndex].Value = ls物料名称[idx];
+                    }
+                    else
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = "";
+                        dataGridView1["物料名称", e.RowIndex].Value = "";
+                    }
+                    break;
+                case "物料名称":
+                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    idx = ls物料名称.IndexOf(curStr);
+                    if (idx >= 0)
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = ls物料代码[idx];
+                        dataGridView1["物料名称", e.RowIndex].Value = ls物料名称[idx];
+                    }
+                    else
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = "";
+                        dataGridView1["物料名称", e.RowIndex].Value = "";
+                    }
+                    break;
+            }
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -492,7 +541,7 @@ namespace mySystem.Process.Stock
                 switch (sender.ToString())
                 {
                     case "物资验收记录":
-                        物资验收记录 form1 = new 物资验收记录(id);
+                        物资验收记录 form1 = new 物资验收记录(mainform, id);
                         form1.Show();
                         break;
                     case "物资请验单":
@@ -572,6 +621,7 @@ namespace mySystem.Process.Stock
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            isSaved = true;
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             outerBind();
@@ -622,50 +672,50 @@ namespace mySystem.Process.Stock
             // TODO 判断，然后决定是新建 请验单 还是  检验记录
             // 还有自动增加若干条检验台账
             
-            bool isAllOK = true;
-            List<Int32> RowToCheck = new List<int>();
-            for (int i = 0; i < dataGridView1.Rows.Count; ++i)
-            {
-                if (dataGridView1.Rows[i].Cells["是否需要检验"].Value.ToString() == "是")
-                {
-                    isAllOK = false;
-                    RowToCheck.Add(i);
-                }
-            }
-            // 开请验单，取样记录，检验台账
-            if (isAllOK)
-            {
-                create请验单();
-                // 
-                create取样记录();
-                insert检验台账();
-                // TODO 加入库存台账
-                insert库存台帐();
-            }
-            // 开检验记录
-            else
-            {
-                foreach (int r in RowToCheck)
-                {
-                    da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dtInner.Rows[r]["物料名称"] + "'", conn);
-                    dt = new DataTable("检验记录");
-                    cb = new OleDbCommandBuilder(da);
-                    BindingSource bs = new BindingSource();
-                    da.Fill(dt);
-                    dr = dt.NewRow();
-                    dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
-                    dr["物料名称"] = dtInner.Rows[r]["物料名称"];
-                    dr["产品批号"] = dtInner.Rows[r]["本厂批号"];
-                    dr["数量"] = dtInner.Rows[r]["数量"];
-                    dr["检验日期"] = DateTime.Now;
-                    dr["审核日期"] = DateTime.Now;
-                    dr["物料代码"] = dtInner.Rows[r]["物料代码"];
-                    dr["检验结论"] = "合格";
-                    dt.Rows.Add(dr);
-                    da.Update(dt);
-                }
-                MessageBox.Show("已自动生产" + RowToCheck.Count + "张检验记录");
-            }
+            //bool isAllOK = true;
+            //List<Int32> RowToCheck = new List<int>();
+            //for (int i = 0; i < dataGridView1.Rows.Count; ++i)
+            //{
+            //    if (dataGridView1.Rows[i].Cells["是否需要检验"].Value.ToString() == "是")
+            //    {
+            //        isAllOK = false;
+            //        RowToCheck.Add(i);
+            //    }
+            //}
+            //// 开请验单，取样记录，检验台账
+            //if (isAllOK)
+            //{
+            //    create请验单();
+            //    // 
+            //    create取样记录();
+            //    insert检验台账();
+            //    // TODO 加入库存台账
+            //    insert库存台帐();
+            //}
+            //// 开检验记录
+            //else
+            //{
+            //    foreach (int r in RowToCheck)
+            //    {
+            //        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dtInner.Rows[r]["物料名称"] + "'", conn);
+            //        dt = new DataTable("检验记录");
+            //        cb = new OleDbCommandBuilder(da);
+            //        BindingSource bs = new BindingSource();
+            //        da.Fill(dt);
+            //        dr = dt.NewRow();
+            //        dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
+            //        dr["物料名称"] = dtInner.Rows[r]["物料名称"];
+            //        dr["产品批号"] = dtInner.Rows[r]["本厂批号"];
+            //        dr["数量"] = dtInner.Rows[r]["数量"];
+            //        dr["检验日期"] = DateTime.Now;
+            //        dr["审核日期"] = DateTime.Now;
+            //        dr["物料代码"] = dtInner.Rows[r]["物料代码"];
+            //        dr["检验结论"] = "合格";
+            //        dt.Rows.Add(dr);
+            //        da.Update(dt);
+            //    }
+            //    MessageBox.Show("已自动生产" + RowToCheck.Count + "张检验记录");
+            //}
 
           
             
@@ -822,7 +872,7 @@ namespace mySystem.Process.Stock
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
             DataTable dt;
-
+            DataRow dr;
             da = new OleDbDataAdapter("select * from 待审核 where 表名='物资验收记录' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
             cb = new OleDbCommandBuilder(da);
 
@@ -834,6 +884,59 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+
+            if (ckform.ischeckOk)
+            {
+                bool isAllOK = true;
+                List<Int32> RowToCheck = new List<int>();
+                for (int i = 0; i < dataGridView1.Rows.Count; ++i)
+                {
+                    if (dataGridView1.Rows[i].Cells["是否需要检验"].Value.ToString() == "是")
+                    {
+                        isAllOK = false;
+                        RowToCheck.Add(i);
+                    }
+                }
+                // 开请验单，取样记录，检验台账
+                if (isAllOK)
+                {
+                    create请验单();
+                    // 
+                    create取样记录();
+                    insert检验台账();
+                    // TODO 加入库存台账
+                    insert库存台帐();
+                }
+                // 开检验记录
+                else
+                {
+                    foreach (int r in RowToCheck)
+                    {
+                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dtInner.Rows[r]["物料名称"] + "'", conn);
+                        dt = new DataTable("检验记录");
+                        cb = new OleDbCommandBuilder(da);
+                        BindingSource bs = new BindingSource();
+                        da.Fill(dt);
+                        dr = dt.NewRow();
+                        dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
+                        dr["物料名称"] = dtInner.Rows[r]["物料名称"];
+                        dr["产品批号"] = dtInner.Rows[r]["本厂批号"];
+                        dr["数量"] = dtInner.Rows[r]["数量"];
+                        dr["检验日期"] = DateTime.Now;
+                        dr["审核日期"] = DateTime.Now;
+                        dr["物料代码"] = dtInner.Rows[r]["物料代码"];
+                        dr["检验结论"] = "合格";
+                        dt.Rows.Add(dr);
+                        da.Update(dt);
+                    }
+                    MessageBox.Show("已自动生产" + RowToCheck.Count + "张检验记录");
+                }
+
+          
+            }
+
+
+
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
@@ -881,7 +984,7 @@ namespace mySystem.Process.Stock
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (string s in hs物料名称)
+                    foreach (string s in ls物料名称)
                     {
                         cbc.Items.Add(s);
                     }
@@ -896,7 +999,7 @@ namespace mySystem.Process.Stock
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (string s in hs物料代码)
+                    foreach (string s in ls物料代码)
                     {
                         cbc.Items.Add(s);
                     }
@@ -1007,7 +1110,10 @@ namespace mySystem.Process.Stock
                 ndr["现存数量"] = dr["数量"];
                 ndr["主计量单位"] = dr["单位"];
                 ndr["实盘数量"] = 0;
+                ndr["用途"] = dr["用途"];
                 ndr["状态"] = "待验";
+                ndr["借用日志"] = "";
+                ndr["冻结状态"] = true;
                 ndr["物资验收记录详细信息ID"] = dr["ID"]; 
                 dt.Rows.Add(ndr);
             }
@@ -1023,32 +1129,38 @@ namespace mySystem.Process.Stock
         {
             OleDbDataAdapter da;
             DataTable dt;
-
-            hs物料代码 = new HashSet<string>();
-            da = new OleDbDataAdapter("select * from 设置物料代码", conn);
+            ls物料代码 = new List<string>();
+            ls物料名称 = new List<string>();
+            da = new OleDbDataAdapter("select * from 设置存货档案",conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                hs物料代码.Add(dr["物料代码"].ToString());
+                ls物料代码.Add(dr["存货代码"].ToString());
+                ls物料名称.Add(dr["存货名称"].ToString());
             }
 
+           
 
-            hs物料名称 = new HashSet<string>();
-            da = new OleDbDataAdapter("select * from 设置物料名称", conn);
-            dt = new DataTable();
-            da.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
+        }
+
+        private void 物资验收记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSaved)
             {
-                hs物料名称.Add(dr["物料名称"].ToString());
-            }
+                if (dtOuter != null && dtOuter.Rows.Count > 0)
+                {
+                    dtOuter.Rows[0].Delete();
+                    daOuter.Update(dtOuter);
 
-            foreach (DataRow dr in dtInner.Rows)
-            {
-                hs物料代码.Add(dr["物料代码"].ToString());
-                hs物料名称.Add(dr["物料名称"].ToString());
-            }
 
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        dr.Delete();
+                    }
+                    daInner.Update(dtInner);
+                }
+            }
         }
 
     }

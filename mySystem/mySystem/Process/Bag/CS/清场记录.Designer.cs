@@ -50,6 +50,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tb备注 = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -121,7 +123,7 @@
             // 
             this.cmb检查结果.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cmb检查结果.FormattingEnabled = true;
-            this.cmb检查结果.Location = new System.Drawing.Point(392, 460);
+            this.cmb检查结果.Location = new System.Drawing.Point(392, 443);
             this.cmb检查结果.Name = "cmb检查结果";
             this.cmb检查结果.Size = new System.Drawing.Size(121, 24);
             this.cmb检查结果.TabIndex = 96;
@@ -130,7 +132,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(314, 466);
+            this.label6.Location = new System.Drawing.Point(314, 449);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(72, 16);
             this.label6.TabIndex = 95;
@@ -139,7 +141,7 @@
             // tb审核员
             // 
             this.tb审核员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审核员.Location = new System.Drawing.Point(769, 460);
+            this.tb审核员.Location = new System.Drawing.Point(769, 443);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(82, 26);
             this.tb审核员.TabIndex = 94;
@@ -148,7 +150,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label17.Location = new System.Drawing.Point(707, 463);
+            this.label17.Location = new System.Drawing.Point(707, 446);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(56, 16);
             this.label17.TabIndex = 93;
@@ -157,7 +159,7 @@
             // tb操作员
             // 
             this.tb操作员.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb操作员.Location = new System.Drawing.Point(79, 460);
+            this.tb操作员.Location = new System.Drawing.Point(79, 443);
             this.tb操作员.Name = "tb操作员";
             this.tb操作员.Size = new System.Drawing.Size(89, 26);
             this.tb操作员.TabIndex = 90;
@@ -166,7 +168,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(19, 463);
+            this.label14.Location = new System.Drawing.Point(19, 446);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(56, 16);
             this.label14.TabIndex = 89;
@@ -178,7 +180,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(20, 86);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(832, 358);
+            this.dataGridView1.Size = new System.Drawing.Size(832, 350);
             this.dataGridView1.TabIndex = 88;
             // 
             // lbl生产班次
@@ -269,11 +271,31 @@
             this.label1.TabIndex = 38;
             this.label1.Text = "清场记录";
             // 
+            // tb备注
+            // 
+            this.tb备注.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb备注.Location = new System.Drawing.Point(79, 475);
+            this.tb备注.Name = "tb备注";
+            this.tb备注.Size = new System.Drawing.Size(772, 26);
+            this.tb备注.TabIndex = 113;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label11.Location = new System.Drawing.Point(17, 478);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(56, 16);
+            this.label11.TabIndex = 112;
+            this.label11.Text = "备注：";
+            // 
             // 清场记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(887, 548);
+            this.Controls.Add(this.tb备注);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn查看日志);
@@ -328,5 +350,7 @@
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.TextBox tb备注;
+        private System.Windows.Forms.Label label11;
     }
 }

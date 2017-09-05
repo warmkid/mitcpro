@@ -359,6 +359,7 @@
             this.Controls.Add(this.label1);
             this.Name = "采购需求单";
             this.Text = "采购需求单";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.采购需求单_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);

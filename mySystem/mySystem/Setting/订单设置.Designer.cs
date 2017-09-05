@@ -30,16 +30,11 @@
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage存货档案设置 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.dgv产成品存货档案 = new System.Windows.Forms.DataGridView();
-            this.del产成品存货档案 = new System.Windows.Forms.Button();
-            this.add产成品存货档案 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.Btn保存组件设置 = new System.Windows.Forms.Button();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.dgv组件存货档案 = new System.Windows.Forms.DataGridView();
-            this.del组件存货档案 = new System.Windows.Forms.Button();
-            this.add组件存货档案 = new System.Windows.Forms.Button();
+            this.dgv存货档案 = new System.Windows.Forms.DataGridView();
+            this.del存货档案 = new System.Windows.Forms.Button();
+            this.add存货档案 = new System.Windows.Forms.Button();
             this.label15 = new System.Windows.Forms.Label();
             this.tabPage人员 = new System.Windows.Forms.TabPage();
             this.Btn保存人员 = new System.Windows.Forms.Button();
@@ -55,6 +50,11 @@
             this.add人员 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.tabPage基本信息设置 = new System.Windows.Forms.TabPage();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.dgv付款条件 = new System.Windows.Forms.DataGridView();
+            this.del付款条件 = new System.Windows.Forms.Button();
+            this.add付款条件 = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.save基本信息设置 = new System.Windows.Forms.Button();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.dgv币种 = new System.Windows.Forms.DataGridView();
@@ -81,23 +81,23 @@
             this.del业务类型 = new System.Windows.Forms.Button();
             this.add业务类型 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.dgv付款条件 = new System.Windows.Forms.DataGridView();
-            this.del付款条件 = new System.Windows.Forms.Button();
-            this.add付款条件 = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
+            this.btn查询订单设置 = new System.Windows.Forms.Button();
+            this.tb代码q = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tb名称q = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage存货档案设置.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv产成品存货档案)).BeginInit();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv组件存货档案)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv存货档案)).BeginInit();
             this.tabPage人员.SuspendLayout();
             this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).BeginInit();
             this.tabPage基本信息设置.SuspendLayout();
+            this.groupBox10.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv付款条件)).BeginInit();
             this.groupBox9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv币种)).BeginInit();
             this.groupBox8.SuspendLayout();
@@ -108,8 +108,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv销售类型)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv业务类型)).BeginInit();
-            this.groupBox10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv付款条件)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -127,8 +125,6 @@
             // 
             // tabPage存货档案设置
             // 
-            this.tabPage存货档案设置.Controls.Add(this.groupBox1);
-            this.tabPage存货档案设置.Controls.Add(this.label1);
             this.tabPage存货档案设置.Controls.Add(this.Btn保存组件设置);
             this.tabPage存货档案设置.Controls.Add(this.groupBox6);
             this.tabPage存货档案设置.Controls.Add(this.label15);
@@ -139,58 +135,6 @@
             this.tabPage存货档案设置.TabIndex = 0;
             this.tabPage存货档案设置.Text = "存货档案设置";
             this.tabPage存货档案设置.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.dgv产成品存货档案);
-            this.groupBox1.Controls.Add(this.del产成品存货档案);
-            this.groupBox1.Controls.Add(this.add产成品存货档案);
-            this.groupBox1.Location = new System.Drawing.Point(35, 285);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1062, 225);
-            this.groupBox1.TabIndex = 59;
-            this.groupBox1.TabStop = false;
-            // 
-            // dgv产成品存货档案
-            // 
-            this.dgv产成品存货档案.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv产成品存货档案.Location = new System.Drawing.Point(12, 51);
-            this.dgv产成品存货档案.Name = "dgv产成品存货档案";
-            this.dgv产成品存货档案.RowTemplate.Height = 23;
-            this.dgv产成品存货档案.Size = new System.Drawing.Size(1022, 165);
-            this.dgv产成品存货档案.TabIndex = 2;
-            // 
-            // del产成品存货档案
-            // 
-            this.del产成品存货档案.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.del产成品存货档案.Location = new System.Drawing.Point(100, 14);
-            this.del产成品存货档案.Name = "del产成品存货档案";
-            this.del产成品存货档案.Size = new System.Drawing.Size(70, 30);
-            this.del产成品存货档案.TabIndex = 1;
-            this.del产成品存货档案.Text = "删除";
-            this.del产成品存货档案.UseVisualStyleBackColor = true;
-            this.del产成品存货档案.Click += new System.EventHandler(this.del产成品存货档案_Click);
-            // 
-            // add产成品存货档案
-            // 
-            this.add产成品存货档案.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.add产成品存货档案.Location = new System.Drawing.Point(12, 14);
-            this.add产成品存货档案.Name = "add产成品存货档案";
-            this.add产成品存货档案.Size = new System.Drawing.Size(70, 30);
-            this.add产成品存货档案.TabIndex = 0;
-            this.add产成品存货档案.Text = "添加";
-            this.add产成品存货档案.UseVisualStyleBackColor = true;
-            this.add产成品存货档案.Click += new System.EventHandler(this.add产成品存货档案_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(35, 266);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(156, 20);
-            this.label1.TabIndex = 58;
-            this.label1.Text = "产成品存货档案";
             // 
             // Btn保存组件设置
             // 
@@ -205,45 +149,50 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.dgv组件存货档案);
-            this.groupBox6.Controls.Add(this.del组件存货档案);
-            this.groupBox6.Controls.Add(this.add组件存货档案);
+            this.groupBox6.Controls.Add(this.tb名称q);
+            this.groupBox6.Controls.Add(this.label10);
+            this.groupBox6.Controls.Add(this.btn查询订单设置);
+            this.groupBox6.Controls.Add(this.dgv存货档案);
+            this.groupBox6.Controls.Add(this.tb代码q);
+            this.groupBox6.Controls.Add(this.label1);
+            this.groupBox6.Controls.Add(this.del存货档案);
+            this.groupBox6.Controls.Add(this.add存货档案);
             this.groupBox6.Location = new System.Drawing.Point(31, 34);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(1066, 225);
+            this.groupBox6.Size = new System.Drawing.Size(1066, 464);
             this.groupBox6.TabIndex = 54;
             this.groupBox6.TabStop = false;
             // 
-            // dgv组件存货档案
+            // dgv存货档案
             // 
-            this.dgv组件存货档案.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv组件存货档案.Location = new System.Drawing.Point(12, 51);
-            this.dgv组件存货档案.Name = "dgv组件存货档案";
-            this.dgv组件存货档案.RowTemplate.Height = 23;
-            this.dgv组件存货档案.Size = new System.Drawing.Size(1026, 165);
-            this.dgv组件存货档案.TabIndex = 2;
+            this.dgv存货档案.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv存货档案.Location = new System.Drawing.Point(12, 65);
+            this.dgv存货档案.Name = "dgv存货档案";
+            this.dgv存货档案.RowTemplate.Height = 23;
+            this.dgv存货档案.Size = new System.Drawing.Size(1026, 393);
+            this.dgv存货档案.TabIndex = 2;
             // 
-            // del组件存货档案
+            // del存货档案
             // 
-            this.del组件存货档案.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.del组件存货档案.Location = new System.Drawing.Point(100, 14);
-            this.del组件存货档案.Name = "del组件存货档案";
-            this.del组件存货档案.Size = new System.Drawing.Size(70, 30);
-            this.del组件存货档案.TabIndex = 1;
-            this.del组件存货档案.Text = "删除";
-            this.del组件存货档案.UseVisualStyleBackColor = true;
-            this.del组件存货档案.Click += new System.EventHandler(this.del组件存货档案_Click);
+            this.del存货档案.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del存货档案.Location = new System.Drawing.Point(100, 14);
+            this.del存货档案.Name = "del存货档案";
+            this.del存货档案.Size = new System.Drawing.Size(70, 30);
+            this.del存货档案.TabIndex = 1;
+            this.del存货档案.Text = "删除";
+            this.del存货档案.UseVisualStyleBackColor = true;
+            this.del存货档案.Click += new System.EventHandler(this.del存货档案_Click);
             // 
-            // add组件存货档案
+            // add存货档案
             // 
-            this.add组件存货档案.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.add组件存货档案.Location = new System.Drawing.Point(12, 14);
-            this.add组件存货档案.Name = "add组件存货档案";
-            this.add组件存货档案.Size = new System.Drawing.Size(70, 30);
-            this.add组件存货档案.TabIndex = 0;
-            this.add组件存货档案.Text = "添加";
-            this.add组件存货档案.UseVisualStyleBackColor = true;
-            this.add组件存货档案.Click += new System.EventHandler(this.add组件存货档案_Click);
+            this.add存货档案.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add存货档案.Location = new System.Drawing.Point(12, 14);
+            this.add存货档案.Name = "add存货档案";
+            this.add存货档案.Size = new System.Drawing.Size(70, 30);
+            this.add存货档案.TabIndex = 0;
+            this.add存货档案.Text = "添加";
+            this.add存货档案.UseVisualStyleBackColor = true;
+            this.add存货档案.Click += new System.EventHandler(this.add存货档案_Click);
             // 
             // label15
             // 
@@ -251,9 +200,9 @@
             this.label15.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.label15.Location = new System.Drawing.Point(31, 15);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(135, 20);
+            this.label15.Size = new System.Drawing.Size(93, 20);
             this.label15.TabIndex = 53;
-            this.label15.Text = "组件存货档案";
+            this.label15.Text = "存货档案";
             // 
             // tabPage人员
             // 
@@ -413,6 +362,58 @@
             this.tabPage基本信息设置.TabIndex = 4;
             this.tabPage基本信息设置.Text = "基本信息设置";
             this.tabPage基本信息设置.UseVisualStyleBackColor = true;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.dgv付款条件);
+            this.groupBox10.Controls.Add(this.del付款条件);
+            this.groupBox10.Controls.Add(this.add付款条件);
+            this.groupBox10.Location = new System.Drawing.Point(630, 310);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(258, 225);
+            this.groupBox10.TabIndex = 62;
+            this.groupBox10.TabStop = false;
+            // 
+            // dgv付款条件
+            // 
+            this.dgv付款条件.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv付款条件.Location = new System.Drawing.Point(12, 51);
+            this.dgv付款条件.Name = "dgv付款条件";
+            this.dgv付款条件.RowTemplate.Height = 23;
+            this.dgv付款条件.Size = new System.Drawing.Size(231, 165);
+            this.dgv付款条件.TabIndex = 2;
+            // 
+            // del付款条件
+            // 
+            this.del付款条件.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del付款条件.Location = new System.Drawing.Point(173, 15);
+            this.del付款条件.Name = "del付款条件";
+            this.del付款条件.Size = new System.Drawing.Size(70, 30);
+            this.del付款条件.TabIndex = 1;
+            this.del付款条件.Text = "删除";
+            this.del付款条件.UseVisualStyleBackColor = true;
+            this.del付款条件.Click += new System.EventHandler(this.del付款条件_Click);
+            // 
+            // add付款条件
+            // 
+            this.add付款条件.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add付款条件.Location = new System.Drawing.Point(12, 14);
+            this.add付款条件.Name = "add付款条件";
+            this.add付款条件.Size = new System.Drawing.Size(70, 30);
+            this.add付款条件.TabIndex = 0;
+            this.add付款条件.Text = "添加";
+            this.add付款条件.UseVisualStyleBackColor = true;
+            this.add付款条件.Click += new System.EventHandler(this.add付款条件_Click);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label9.Location = new System.Drawing.Point(630, 291);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(93, 20);
+            this.label9.TabIndex = 61;
+            this.label9.Text = "付款条件";
             // 
             // save基本信息设置
             // 
@@ -685,57 +686,52 @@
             this.label2.TabIndex = 55;
             this.label2.Text = "业务类型";
             // 
-            // groupBox10
+            // btn查询订单设置
             // 
-            this.groupBox10.Controls.Add(this.dgv付款条件);
-            this.groupBox10.Controls.Add(this.del付款条件);
-            this.groupBox10.Controls.Add(this.add付款条件);
-            this.groupBox10.Location = new System.Drawing.Point(630, 310);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(258, 225);
-            this.groupBox10.TabIndex = 62;
-            this.groupBox10.TabStop = false;
+            this.btn查询订单设置.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn查询订单设置.Location = new System.Drawing.Point(963, 22);
+            this.btn查询订单设置.Name = "btn查询订单设置";
+            this.btn查询订单设置.Size = new System.Drawing.Size(75, 30);
+            this.btn查询订单设置.TabIndex = 60;
+            this.btn查询订单设置.Text = "查询";
+            this.btn查询订单设置.UseVisualStyleBackColor = true;
+            this.btn查询订单设置.Click += new System.EventHandler(this.btn查询订单设置_Click);
             // 
-            // dgv付款条件
+            // tb代码q
             // 
-            this.dgv付款条件.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv付款条件.Location = new System.Drawing.Point(12, 51);
-            this.dgv付款条件.Name = "dgv付款条件";
-            this.dgv付款条件.RowTemplate.Height = 23;
-            this.dgv付款条件.Size = new System.Drawing.Size(231, 165);
-            this.dgv付款条件.TabIndex = 2;
+            this.tb代码q.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb代码q.Location = new System.Drawing.Point(306, 18);
+            this.tb代码q.Name = "tb代码q";
+            this.tb代码q.Size = new System.Drawing.Size(133, 26);
+            this.tb代码q.TabIndex = 59;
             // 
-            // del付款条件
+            // label1
             // 
-            this.del付款条件.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.del付款条件.Location = new System.Drawing.Point(173, 15);
-            this.del付款条件.Name = "del付款条件";
-            this.del付款条件.Size = new System.Drawing.Size(70, 30);
-            this.del付款条件.TabIndex = 1;
-            this.del付款条件.Text = "删除";
-            this.del付款条件.UseVisualStyleBackColor = true;
-            this.del付款条件.Click += new System.EventHandler(this.del付款条件_Click);
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label1.Location = new System.Drawing.Point(240, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 16);
+            this.label1.TabIndex = 58;
+            this.label1.Text = "代码";
             // 
-            // add付款条件
+            // tb名称q
             // 
-            this.add付款条件.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.add付款条件.Location = new System.Drawing.Point(12, 14);
-            this.add付款条件.Name = "add付款条件";
-            this.add付款条件.Size = new System.Drawing.Size(70, 30);
-            this.add付款条件.TabIndex = 0;
-            this.add付款条件.Text = "添加";
-            this.add付款条件.UseVisualStyleBackColor = true;
-            this.add付款条件.Click += new System.EventHandler(this.add付款条件_Click);
+            this.tb名称q.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb名称q.Location = new System.Drawing.Point(564, 22);
+            this.tb名称q.Name = "tb名称q";
+            this.tb名称q.Size = new System.Drawing.Size(141, 26);
+            this.tb名称q.TabIndex = 62;
             // 
-            // label9
+            // label10
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label9.Location = new System.Drawing.Point(630, 291);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(93, 20);
-            this.label9.TabIndex = 61;
-            this.label9.Text = "付款条件";
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label10.Location = new System.Drawing.Point(498, 25);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(40, 16);
+            this.label10.TabIndex = 61;
+            this.label10.Text = "名称";
             // 
             // 订单设置
             // 
@@ -748,10 +744,9 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage存货档案设置.ResumeLayout(false);
             this.tabPage存货档案设置.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv产成品存货档案)).EndInit();
             this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv组件存货档案)).EndInit();
+            this.groupBox6.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv存货档案)).EndInit();
             this.tabPage人员.ResumeLayout(false);
             this.tabPage人员.PerformLayout();
             this.groupBox5.ResumeLayout(false);
@@ -760,6 +755,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).EndInit();
             this.tabPage基本信息设置.ResumeLayout(false);
             this.tabPage基本信息设置.PerformLayout();
+            this.groupBox10.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv付款条件)).EndInit();
             this.groupBox9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv币种)).EndInit();
             this.groupBox8.ResumeLayout(false);
@@ -770,8 +767,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv销售类型)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv业务类型)).EndInit();
-            this.groupBox10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv付款条件)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -780,16 +775,11 @@
 
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage存货档案设置;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.DataGridView dgv产成品存货档案;
-        private System.Windows.Forms.Button del产成品存货档案;
-        private System.Windows.Forms.Button add产成品存货档案;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Btn保存组件设置;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.DataGridView dgv组件存货档案;
-        private System.Windows.Forms.Button del组件存货档案;
-        private System.Windows.Forms.Button add组件存货档案;
+        private System.Windows.Forms.DataGridView dgv存货档案;
+        private System.Windows.Forms.Button del存货档案;
+        private System.Windows.Forms.Button add存货档案;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TabPage tabPage人员;
         private System.Windows.Forms.Button Btn保存人员;
@@ -836,5 +826,10 @@
         private System.Windows.Forms.Button del付款条件;
         private System.Windows.Forms.Button add付款条件;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox tb名称q;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button btn查询订单设置;
+        private System.Windows.Forms.TextBox tb代码q;
+        private System.Windows.Forms.Label label1;
     }
 }

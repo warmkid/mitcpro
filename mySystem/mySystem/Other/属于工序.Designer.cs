@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.benDone = new System.Windows.Forms.Button();
             this.选择 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.工序 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnDone = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,17 +52,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(246, 211);
             this.dataGridView1.TabIndex = 0;
             // 
-            // benDone
-            // 
-            this.benDone.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.benDone.Location = new System.Drawing.Point(117, 238);
-            this.benDone.Name = "benDone";
-            this.benDone.Size = new System.Drawing.Size(75, 23);
-            this.benDone.TabIndex = 1;
-            this.benDone.Text = "完成";
-            this.benDone.UseVisualStyleBackColor = true;
-            this.benDone.Click += new System.EventHandler(this.benDone_Click);
-            // 
             // 选择
             // 
             this.选择.HeaderText = "选择";
@@ -75,12 +64,23 @@
             this.工序.Name = "工序";
             this.工序.Width = 170;
             // 
+            // btnDone
+            // 
+            this.btnDone.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnDone.Location = new System.Drawing.Point(117, 238);
+            this.btnDone.Name = "btnDone";
+            this.btnDone.Size = new System.Drawing.Size(75, 23);
+            this.btnDone.TabIndex = 1;
+            this.btnDone.Text = "完成";
+            this.btnDone.UseVisualStyleBackColor = true;
+            this.btnDone.Click += new System.EventHandler(this.benDone_Click);
+            // 
             // 属于工序
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(292, 273);
-            this.Controls.Add(this.benDone);
+            this.Controls.Add(this.btnDone);
             this.Controls.Add(this.dataGridView1);
             this.Name = "属于工序";
             this.Text = "属于工序";
@@ -92,7 +92,7 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button benDone;
+        private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.DataGridViewCheckBoxColumn 选择;
         private System.Windows.Forms.DataGridViewTextBoxColumn 工序;
     }

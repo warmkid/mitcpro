@@ -323,7 +323,8 @@ namespace WindowsFormsApplication1
             dr = writeInnerDefault(dr);
             dt_prodlist.Rows.Add(dr);
             setDataGridViewRowNums();
-            this.dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+            if (dataGridView1.Rows.Count > 0)
+                this.dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         //删除一条供料记录

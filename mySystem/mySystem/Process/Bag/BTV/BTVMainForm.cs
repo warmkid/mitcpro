@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -169,7 +169,8 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "BPV制袋生产指令");
             if (b)
             {
-                BTVProInstruction mydlg = new BTVProInstruction();
+                //BTVProInstruction mydlg = new BTVProInstruction();
+                BPV制袋生产指令 mydlg = new BPV制袋生产指令(mainform);
                 mydlg.ShowDialog();
             }
             else
@@ -361,7 +362,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "3D袋体生产记录");
             if (b)
             {
-                BTV3DProRecord mydlg = new BTV3DProRecord(mainform);
+                BTV3DProRecord mydlg = new BTV3DProRecord();
                 mydlg.ShowDialog();
             }
             else

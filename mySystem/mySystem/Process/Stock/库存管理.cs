@@ -31,10 +31,10 @@ namespace 订单和库存管理
             readFromDatabase();
             bindControl();
 
-            dataGridView1.ReadOnly = true;
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+            //dataGridView1.ReadOnly = true;
+            //dataGridView1.AllowUserToAddRows = false;
+            //dataGridView1.RowHeadersVisible = false;
+            //dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -80,7 +80,7 @@ namespace 订单和库存管理
 
         private void btn原料入库_Click(object sender, EventArgs e)
         {
-            mySystem.Process.Stock.原料入库管理 form = new mySystem.Process.Stock.原料入库管理();
+            mySystem.Process.Stock.原料入库管理 form = new mySystem.Process.Stock.原料入库管理(mainform);
             form.ShowDialog();
         }
 

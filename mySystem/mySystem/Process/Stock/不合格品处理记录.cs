@@ -44,7 +44,7 @@ namespace mySystem.Process.Stock
         int _id;
 
 
-        public 不合格品处理记录(int id)
+        public 不合格品处理记录(MainForm mainform, int id):base(mainform)
         {
             InitializeComponent();
             _id = id;
@@ -326,7 +326,7 @@ namespace mySystem.Process.Stock
                 }
             }
             MessageBox.Show("本物资验收单下的所有物料均检验完毕，正在生成物资请验单、取样记录、检验台账！");
-            物资验收记录 form = new 物资验收记录(tmpID);
+            物资验收记录 form = new 物资验收记录(mainform, tmpID);
             form.create请验单();
             form.create取样记录();
             form.insert检验台账();

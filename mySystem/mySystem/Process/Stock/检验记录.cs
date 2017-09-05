@@ -41,6 +41,8 @@ namespace mySystem.Process.Stock
 
         int _id;
 
+        CheckForm ckform;
+
         public 检验记录(int id)
         {
             InitializeComponent();
@@ -262,7 +264,7 @@ namespace mySystem.Process.Stock
                 switch (sender.ToString())
                 {
                     case "物资验收记录":
-                        物资验收记录 form1 = new 物资验收记录(id);
+                        物资验收记录 form1 = new 物资验收记录(mainform,id);
                         form1.Show();
                         break;
                     case "物资请验单":
@@ -345,8 +347,8 @@ namespace mySystem.Process.Stock
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(_id);
             outerBind();
-
-            btn提交审核.Enabled = true;
+            if (_userState == Parameter.UserState.操作员)
+                btn提交审核.Enabled = true;
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)
@@ -406,7 +408,7 @@ namespace mySystem.Process.Stock
                 }
                 // 如果都为否了，则自动生成请验单
                 MessageBox.Show("当期验收单下的所有产品都通过检查，正在为您自动生产物资请验单");
-                物资验收记录 form = new 物资验收记录(Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
+                物资验收记录 form = new 物资验收记录(mainform,Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
                 form.create请验单();
                 form.create取样记录();
                 form.insert检验台账();
@@ -473,6 +475,115 @@ namespace mySystem.Process.Stock
                 codeNow = 1;
             }
             return yearNow.ToString() + codeNow.ToString("D4");
+        }
+
+        private void btn审核_Click(object sender, EventArgs e)
+        {
+            ckform = new CheckForm(this);
+            ckform.Show();
+        }
+
+        public override void CheckResult()
+        {
+            //获得审核信息
+            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
+            dtOuter.Rows[0]["审核日期"] = ckform.time;
+            dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
+
+            OleDbDataAdapter da;
+            DataTable dt;
+            OleDbCommandBuilder cb;
+
+            if (ckform.ischeckOk)//审核通过
+            {
+                // 判断检验结论，如果合格，则：
+                if (cmb检验结论.SelectedItem.ToString() == "合格")
+                {
+                    // 修改验收记录，判断可以生产请验单
+                    // 根据dtOuter中的物资验收记录 ID 和 产品名称找到  物资验收记录详细信息  中的那一行数据
+                    String sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0} and 物料名称='{1}'";
+                    da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]), dtOuter.Rows[0]["物料名称"].ToString()), conn);
+                    dt = new DataTable("temp");
+                    cb = new OleDbCommandBuilder(da);
+                    da.Fill(dt);
+                    // 修改  是  为  否
+                    dt.Rows[0]["是否需要检验"] = "否";
+                    da.Update(dt);
+                    // 读取该 物资验收记录 ID 下的所有详细信息，看是否都为否了
+                    sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0}";
+                    da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"])), conn);
+                    dt = new DataTable("temp");
+                    da.Fill(dt);
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        if (dr["是否需要检验"].ToString() == "是") { return; }
+                    }
+                    // 如果都为否了，则自动生成请验单
+                    MessageBox.Show("当期验收单下的所有产品都通过检查，正在为您自动生产物资请验单");
+                    物资验收记录 form = new 物资验收记录(mainform, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
+                    form.create请验单();
+                    form.create取样记录();
+                    form.insert检验台账();
+                    form.insert库存台帐();
+                }
+                // 否则 生成不合格品处理记录
+                else
+                {
+                    // TODO 不合格品记录如何点击？？
+                    da = new OleDbDataAdapter("select * from 不合格品处理记录 where 物资验收记录ID=" + dtOuter.Rows[0]["物资验收记录ID"] + " and 物料名称='" + dtOuter.Rows[0]["物料名称"] + "'", conn);
+                    dt = new DataTable("不合格品处理记录");
+                    cb = new OleDbCommandBuilder(da);
+                    BindingSource bs = new BindingSource();
+                    da.Fill(dt);
+                    if (dt.Rows.Count == 0)
+                    {
+                        DataRow dr = dt.NewRow();
+                        dr["物资验收记录ID"] = dtOuter.Rows[0]["物资验收记录ID"];
+                        dr["物料名称"] = dtOuter.Rows[0]["物料名称"];
+                        dr["物料代码"] = dtOuter.Rows[0]["物料代码"];
+                        dr["编号"] = create检验记录编号();
+                        dr["产品批号"] = dtOuter.Rows[0]["产品批号"];
+                        dr["数量"] = dtOuter.Rows[0]["数量"];
+                        dr["生产日期"] = DateTime.Now;
+                        dr["不合格项描述填写日期"] = DateTime.Now;
+                        dr["现场应急处理措施日期"] = DateTime.Now;
+                        dr["调查日期"] = DateTime.Now;
+                        dr["不合格品处理评审时间"] = DateTime.Now;
+                        dr["不合格品处理批准时间"] = DateTime.Now;
+                        dr["确认日期"] = DateTime.Now;
+                        dr["审核日期"] = DateTime.Now;
+                        dt.Rows.Add(dr);
+                        da.Update(dt);
+                        MessageBox.Show("已经自动生成不合格品记录");
+                    }
+
+
+
+                }
+            }
+            else
+            {
+            }
+
+            //状态
+            setControlFalse();
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='检验记录' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], conn);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+
+
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+            readOuterData(_id);
+            outerBind();
+            base.CheckResult();
         }
     }
 }

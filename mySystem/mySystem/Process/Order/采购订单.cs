@@ -13,13 +13,14 @@ namespace mySystem.Process.Order
 {
     public partial class 采购订单 : BaseForm
     {
+        bool isSaved = false;
         // TODO 没点保存的话怎么办？数据库中状态变了，订单有！
         string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
         OleDbConnection conn;
         OleDbDataAdapter daOuter, daInner;
         OleDbCommandBuilder cbOuter, cbInner;
-        DataTable dtOuter, dtInner;
+        DataTable dtOuter, dtInner,dtInnerShow;
         BindingSource bsOuter, bsInner;
 
         List<String> ls操作员, ls审核员;
@@ -28,6 +29,7 @@ namespace mySystem.Process.Order
         List<String> ls币种;
         
         CheckForm ckform;
+        string _供应商;
         
 
         public 采购订单(MainForm mainform, string 供应商)
@@ -36,6 +38,7 @@ namespace mySystem.Process.Order
             InitializeComponent();
             fillPrinter();
             conn = new OleDbConnection(strConnect);
+            _供应商 = 供应商;
             conn.Open();
             getPeople();
             setUseState();
@@ -45,6 +48,7 @@ namespace mySystem.Process.Order
             generateOuterData(供应商);
             outerBind();
             generateInnerData(供应商);
+            calcSumInner();
             innerBind();
 
 
@@ -59,6 +63,7 @@ namespace mySystem.Process.Order
             : base(mainform)
         {
             InitializeComponent();
+            isSaved = true;
             fillPrinter();
             conn = new OleDbConnection(strConnect);
             conn.Open();
@@ -70,6 +75,7 @@ namespace mySystem.Process.Order
             readOuterData(id);
             outerBind();
             readInnerData(id);
+            calcSumInner();
             innerBind();
 
 
@@ -78,6 +84,37 @@ namespace mySystem.Process.Order
             setFormState();
             setEnableReadOnly();
             //lbl供应商.Text = dtOuter.Rows[0]["供应商"].ToString();
+        }
+
+        void calcSumInner()
+        {
+            dtInnerShow = dtInner.Clone();
+            // 拿到所有的存货代码
+            HashSet<String> hs存货代码 = new HashSet<string>();
+            foreach (DataRow dr in dtInner.Rows)
+            {
+                hs存货代码.Add(dr["存货代码"].ToString());
+            }
+            // 求和
+            foreach (string dm in hs存货代码)
+            {
+                DataRow[] drs = dtInner.Select("存货代码='" + dm + "'");
+                if (drs.Length <= 0) continue;
+                DataRow ndr = dtInnerShow.NewRow();
+                ndr["存货代码"] = drs[0]["存货代码"];
+                ndr["存货名称"] = drs[0]["存货名称"];
+                ndr["规格型号"] = drs[0]["规格型号"];
+                ndr["采购件数"] = 0;
+                ndr["采购数量"] = 0;
+                ndr["预计到货时间"] = DateTime.Now;
+                foreach (DataRow dr in drs)
+                {
+                    ndr["采购件数"] = Convert.ToDouble(ndr["采购件数"]) + Convert.ToDouble(dr["采购件数"]);
+                    ndr["采购数量"] = Convert.ToDouble(ndr["采购数量"]) + Convert.ToDouble(dr["采购数量"]);
+                }
+                dtInnerShow.Rows.Add(ndr);
+            }
+            //写入dtinnershow
         }
 
         private void getOtherData()
@@ -321,7 +358,7 @@ namespace mySystem.Process.Order
             {
                 OleDbDataAdapter daT;
                 DataTable dtT;
-                daT = new OleDbDataAdapter("select * from 设置组件存货档案 where 存货编码='" + dr["存货代码"] + "'", conn);
+                daT = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + dr["存货代码"] + "'", conn);
                 dtT = new DataTable();
                 daT.Fill(dtT);
                 string 主计量 = "";
@@ -339,12 +376,20 @@ namespace mySystem.Process.Order
                 ndr["预计到货时间"] = dr["预计到货时间"];
                 ndr["关联的采购批准详细信息ID"] = dr["ID"];
                 ndr["主计量"] = 主计量;
+                //daT = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dr["用途"].ToString() + "'", conn);
+                //dtT = new DataTable();
+                //daT.Fill(dtT);
+                //int xsID = Convert.ToInt32(dtT.Rows[0]["ID"]);
+                //daT = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + xsID + " and 存货代码='" + dr["存货代码"].ToString() + "'", conn);
+                //dtT = new DataTable();
+                //daT.Fill(dtT);
+                //double 价税合计 = Convert.ToDouble(dtT.Rows[0]["价税合计"]);
                 ndr["单价"] = 0;
                 ndr["金额"] = 0;
                 ndr["付款日期"] = DateTime.Now;
                 dtInner.Rows.Add(ndr);
                 // 改变批准单详细信息中的状态
-                dr["状态"] = "采购订单编制中";
+                //dr["状态"] = "采购订单编制中";
                 // 自由订单部分
                 int 采购批准单ID = Convert.ToInt32(dr["采购批准单ID"]);
                 daT = new OleDbDataAdapter("select * from 采购批准单实际购入信息 where 采购批准单ID=" + 采购批准单ID + " and 产品代码='" + dr["存货代码"].ToString() + "'", conn);
@@ -365,6 +410,10 @@ namespace mySystem.Process.Order
                         ndr自由["供应商产品编码"] = dr["供应商产品编码"];
                         ndr自由["预计到货时间"] = dr["预计到货时间"];
                         ndr自由["关联的采购批准详细信息ID"] = dr["ID"];
+                        ndr["主计量"] = 主计量;
+                        ndr["单价"] = 0;
+                        ndr["金额"] = 0;
+                        ndr["付款日期"] = DateTime.Now;
                         dtInner.Rows.Add(ndr自由);
                     }
                 }
@@ -402,8 +451,16 @@ namespace mySystem.Process.Order
                 ndr["预计到货时间"] = dr["预计到货时间"];
                 ndr["关联的采购批转单借用单ID"] = dr["ID"];
                 ndr["主计量"] = 主计量;
-                ndr["单价"] = 0;
-                ndr["金额"] = 0;
+                daT = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dr["用途"].ToString() + "'", conn);
+                dtT = new DataTable();
+                daT.Fill(dtT);
+                int xsID = Convert.ToInt32(dtT.Rows[0]["ID"]);
+                daT = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + xsID + " and 存货代码='" + dr["存货代码"].ToString() + "'", conn);
+                dtT = new DataTable();
+                daT.Fill(dtT);
+                double 价税合计 = Convert.ToDouble(dtT.Rows[0]["价税合计"]);
+                ndr["单价"] = 价税合计 / Convert.ToDouble(dr["采购数量"]);
+                ndr["金额"] = 价税合计;
                 ndr["付款日期"] = DateTime.Now;
                 dtInner.Rows.Add(ndr);
                 // 改变批准单详细信息中的状态
@@ -423,18 +480,29 @@ namespace mySystem.Process.Order
 
         void innerBind()
         {
-            bsInner.DataSource = dtInner;
+            bsInner.DataSource = dtInnerShow;
             dataGridView1.DataSource = bsInner.DataSource;
-
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         void addOtherEventHandler()
         {
+            dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["采购订单ID"].Visible = false;
             dataGridView1.Columns["关联的采购批准详细信息ID"].Visible = false;
             dataGridView1.Columns["关联的采购批转单借用单ID"].Visible = false;
+            dataGridView1.Columns["用途"].Visible = false;
+            dataGridView1.Columns["主计量"].Visible = false;
+            dataGridView1.Columns["单价"].Visible = false;
+            dataGridView1.Columns["金额"].Visible = false;
+            dataGridView1.Columns["进度"].Visible = false;
+            dataGridView1.Columns["COC"].Visible = false;
+            dataGridView1.Columns["进度"].Visible = false;
+            dataGridView1.Columns["付款进度"].Visible = false;
+            dataGridView1.Columns["付款日期"].Visible = false;
+            dataGridView1.Columns["发票"].Visible = false;
         }
 
         void readOuterData(int id)
@@ -460,9 +528,24 @@ namespace mySystem.Process.Order
 
         private void btn确认_Click(object sender, EventArgs e)
         {
+            isSaved = true;
             save();
             if (_userState == Parameter.UserState.操作员)
                 btn提交审核.Enabled = true;
+
+
+
+            string sql = @"select * from 采购批准单详细信息 where 推荐供应商='{0}' and 状态='未采购'";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _供应商), conn);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                
+                dr["状态"] = "采购订单编制中";
+            }
+            da.Update(dt);
         }
 
         void save()
@@ -619,6 +702,24 @@ namespace mySystem.Process.Order
             {
                 int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["采购合同号"].ToString().Substring(6, 3));
                 return prefix + yymmdd + (no + 1).ToString("D3");
+            }
+        }
+
+        private void 采购订单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSaved)
+            {
+                if (dtOuter != null && dtOuter.Rows.Count != 0)
+                {
+                    dtOuter.Rows[0].Delete();
+                    daOuter.Update(dtOuter);
+
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        dr.Delete();
+                    }
+                    daInner.Update(dtInner);
+                }
             }
         }
     }
