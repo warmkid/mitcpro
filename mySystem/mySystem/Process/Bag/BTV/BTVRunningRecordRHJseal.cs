@@ -873,7 +873,7 @@ namespace mySystem.Process.Bag.BTV
                 }
             }
 
-            icrosoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
             range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
 
             //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
