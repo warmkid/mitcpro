@@ -361,7 +361,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "3D袋体生产记录");
             if (b)
             {
-                BTV3DProRecord mydlg = new BTV3DProRecord();
+                BTV3DProRecord mydlg = new BTV3DProRecord(mainform);
                 mydlg.ShowDialog();
             }
             else
