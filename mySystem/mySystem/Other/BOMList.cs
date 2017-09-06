@@ -242,6 +242,70 @@ namespace mySystem.Other
             dataGridView1.Rows.RemoveAt(ridx);
         }
 
+        private void btn浏览_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (DialogResult.OK == ofd.ShowDialog())
+            {
+                textBox1.Text = ofd.FileName;
+            }
+        }
+
+        private void btn导入_Click(object sender, EventArgs e)
+        {
+            if (textBox1.Text.Trim() == "") return;
+
+
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(textBox1.Text);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+            List<String> ls = new List<string>();
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection conn;
+            conn = new OleDbConnection(strConnect);
+            conn.Open();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            for (int i = 1; ; i++)
+            {
+                String daima =  Convert.ToString( my.Cells[i,2].Value);
+                string guige = Convert.ToString(my.Cells[i, 3].Value);
+                string mingc = Convert.ToString( my.Cells[i, 4].Value);
+                if (daima == null)
+                {
+                    MessageBox.Show("第" + i + "行产品代码缺失！");
+                    break;
+                }
+                if (guige == null) guige = "";
+                if (mingc == null) mingc = "";
+                if (daima.Trim() == "") break;
+                //DataRow[] drs = dt.Select("存货代码='" + daima + "' and 存货名称='" + mingc + "' and 规格型号 ='" + guige + "'");
+                //if (drs.Length == 0)
+                //{
+                //    MessageBox.Show(daima + " 不存在！");
+                //    break;
+                //}
+                double shulaing = Convert.ToDouble(my.Cells[i, 5].Value);
+                int idx = dataGridView1.Rows.Add();
+                dataGridView1["存货代码", idx].Value = daima;
+                dataGridView1["存货名称", idx].Value = mingc;
+                dataGridView1["规格型号", idx].Value = guige;
+                dataGridView1["数量", idx].Value = shulaing;
+            }
+           
+            MessageBox.Show("导入BOM列表成功");
+
+        }
+
 
     }
 }

@@ -187,7 +187,7 @@ namespace mySystem.Process.CleanCut
             addOtherEventHandler();
             //getPeople()--> setUserState()--> getOtherData()--> Computer() --> addOtherEvnetHandler()-->setFormState()-->setEnableReadOnly()
             //setEnableReadOnly();
-            dateTimePicker1.Value = DateTime.Now;
+            datetimepicker结束时间.Value = DateTime.Now;
             //dateTimePicker1.ValueChanged += new EventHandler(dateTimePicker1_ValueChanged);
             cmb物料种类.SelectedItem = "全部";
 
@@ -395,7 +395,7 @@ namespace mySystem.Process.CleanCut
                 }
             }
             btn查看日志.Enabled = true;
-            dateTimePicker1.Enabled = true;
+            datetimepicker结束时间.Enabled = true;
             //btn打印.Enabled = true;
         }
         // “审核”和“提交审核”按钮特殊，在以上两个函数中要设为false。
@@ -643,6 +643,7 @@ namespace mySystem.Process.CleanCut
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         private void removeInnerBind()
@@ -999,26 +1000,27 @@ namespace mySystem.Process.CleanCut
 
         private void btn查询_Click(object sender, EventArgs e)
         {
-            if (cmb物料种类.SelectedItem.ToString() == "全部")
+            dtInner.Clear();
+            if (cmb物料种类.SelectedItem == null || cmb物料种类.SelectedItem.ToString() == "全部")
             {
-                query(dateTimePicker1.Value.Date, "");
+                query(datetimepicker开始时间.Value, datetimepicker结束时间.Value.Date, "");
             }
             else
             {
-                query(dateTimePicker1.Value.Date, cmb物料种类.SelectedItem.ToString());
+                query(datetimepicker开始时间.Value, datetimepicker结束时间.Value.Date, cmb物料种类.SelectedItem.ToString());
             }
             innerBind();
             computerOuterData();
         }
 
-        void query(DateTime time, String matcode)
+        void query(DateTime start,DateTime end, String matcode)
         {
             OleDbDataAdapter da;
             DataTable tmp;
             string sql;
             // 拿到这个日期下的所有ID
-            sql = "select * from 清洁分切生产记录 where 生产日期=#{0}#";
-            da = new OleDbDataAdapter(string.Format(sql, time.Date), mySystem.Parameter.connOle);
+            sql = "select * from 清洁分切生产记录 where 生产日期 between #{0}# and #{1}#";
+            da = new OleDbDataAdapter(string.Format(sql, start.Date,end.Date), mySystem.Parameter.connOle);
             tmp = new DataTable();
             da.Fill(tmp);
             List<int> ids = new List<int>();
@@ -1049,7 +1051,7 @@ namespace mySystem.Process.CleanCut
                 //ndr["T清洁分切日报表ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
                 ndr["序号"] = xuhao++;
                 ndr["生产指令"] = ht生产指令[Convert.ToInt32(dr["T清洁分切生产记录ID"])];
-                ndr["生产日期"] = dateTimePicker1.Value;
+                ndr["生产日期"] = datetimepicker结束时间.Value;
                 ndr["使用物料代码"] = dr["物料代码"];
                 // TODO 能自动填吗？
                 string temp = ndr["使用物料代码"].ToString().TrimStart('X').Split('X')[0];

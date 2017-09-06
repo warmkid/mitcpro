@@ -167,6 +167,7 @@ namespace mySystem.Setting
             this.dgv人员.Columns["班次"].MinimumWidth = 100;
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv人员.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv人员);
 
             //************************    人员权限     *******************************************
             dt权限 = new DataTable("用户权限"); //""中的是表名
@@ -184,6 +185,7 @@ namespace mySystem.Setting
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv权限);
 
         }
 

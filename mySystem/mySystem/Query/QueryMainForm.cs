@@ -116,7 +116,7 @@ namespace mySystem
             Btn订单.BackColor = Color.FromArgb(138, 158, 196);
             QueryPanelRight.Controls.Clear();
             // TODO 
-            订单查询 myDlg = new 订单查询();
+            订单查询 myDlg = new 订单查询(mainform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = QueryPanelRight.Size;

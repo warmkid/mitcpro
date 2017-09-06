@@ -67,9 +67,11 @@
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.datetimepicker结束时间 = new System.Windows.Forms.DateTimePicker();
             this.label17 = new System.Windows.Forms.Label();
             this.btn查询 = new System.Windows.Forms.Button();
+            this.datetimepicker开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.label18 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -77,7 +79,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(510, 21);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -323,7 +325,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn打印.Location = new System.Drawing.Point(113, 545);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(63, 25);
@@ -334,7 +336,7 @@
             // 
             // bt保存
             // 
-            this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt保存.Location = new System.Drawing.Point(829, 546);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(63, 25);
@@ -347,7 +349,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(970, 24);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -422,12 +424,12 @@
             this.btn审核.UseWaitCursor = true;
             this.btn审核.Visible = false;
             // 
-            // dateTimePicker1
+            // datetimepicker结束时间
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(359, 55);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 26);
-            this.dateTimePicker1.TabIndex = 164;
+            this.datetimepicker结束时间.Location = new System.Drawing.Point(711, 57);
+            this.datetimepicker结束时间.Name = "datetimepicker结束时间";
+            this.datetimepicker结束时间.Size = new System.Drawing.Size(200, 26);
+            this.datetimepicker结束时间.TabIndex = 164;
             // 
             // label17
             // 
@@ -440,8 +442,8 @@
             // 
             // btn查询
             // 
-            this.btn查询.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn查询.Location = new System.Drawing.Point(609, 58);
+            this.btn查询.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn查询.Location = new System.Drawing.Point(930, 59);
             this.btn查询.Name = "btn查询";
             this.btn查询.Size = new System.Drawing.Size(63, 25);
             this.btn查询.TabIndex = 166;
@@ -449,14 +451,32 @@
             this.btn查询.UseVisualStyleBackColor = true;
             this.btn查询.Click += new System.EventHandler(this.btn查询_Click);
             // 
+            // datetimepicker开始时间
+            // 
+            this.datetimepicker开始时间.Location = new System.Drawing.Point(408, 57);
+            this.datetimepicker开始时间.Name = "datetimepicker开始时间";
+            this.datetimepicker开始时间.Size = new System.Drawing.Size(200, 26);
+            this.datetimepicker开始时间.TabIndex = 167;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(644, 61);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(32, 16);
+            this.label18.TabIndex = 168;
+            this.label18.Text = "---";
+            // 
             // DailyRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1098, 581);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.datetimepicker开始时间);
             this.Controls.Add(this.btn查询);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.datetimepicker结束时间);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.btn查看日志);
             this.Controls.Add(this.btn提交审核);
@@ -495,7 +515,7 @@
             this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DailyRecord";
             this.Text = "清洁分切日报表";
@@ -546,8 +566,10 @@
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn审核;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker datetimepicker结束时间;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button btn查询;
+        private System.Windows.Forms.DateTimePicker datetimepicker开始时间;
+        private System.Windows.Forms.Label label18;
     }
 }

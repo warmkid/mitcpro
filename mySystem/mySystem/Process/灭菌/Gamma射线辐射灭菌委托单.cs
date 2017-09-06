@@ -95,6 +95,24 @@ namespace mySystem.Process.灭菌
         {
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+        }
+
+        void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            if (dataGridView1.CurrentCell.OwningColumn.Name == "产品代码")
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(list_产品代码.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                }
+
+            }
         }
 
         //表格填写错误提示
@@ -200,6 +218,7 @@ namespace mySystem.Process.灭菌
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //设置DataGridView中下拉框
@@ -209,19 +228,19 @@ namespace mySystem.Process.灭菌
             {
                 switch (dc.ColumnName)
                 {
-                    case "产品代码":
-                        DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
-                        c1.DataPropertyName = dc.ColumnName;
-                        c1.HeaderText = "产品代码";
-                        c1.Name = dc.ColumnName;
-                        c1.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c1.ValueType = dc.DataType;
-                        foreach (string sdr in list_产品代码)
-                        {
-                            c1.Items.Add(sdr);
-                        }
-                        dataGridView1.Columns.Add(c1);
-                        break;
+                    //case "产品代码":
+                    //    DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
+                    //    c1.DataPropertyName = dc.ColumnName;
+                    //    c1.HeaderText = "产品代码";
+                    //    c1.Name = dc.ColumnName;
+                    //    c1.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    c1.ValueType = dc.DataType;
+                    //    foreach (string sdr in list_产品代码)
+                    //    {
+                    //        c1.Items.Add(sdr);
+                    //    }
+                    //    dataGridView1.Columns.Add(c1);
+                    //    break;
                     case "产品名称":
                         DataGridViewComboBoxColumn c5 = new DataGridViewComboBoxColumn();
                         c5.DataPropertyName = dc.ColumnName;
@@ -657,7 +676,7 @@ namespace mySystem.Process.灭菌
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
             dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
-            dt_prodinstr.Rows[0]["状态"] = 1;
+            //dt_prodinstr.Rows[0]["状态"] = 1;
             dt_prodinstr.Rows[0]["审批"] = "__待审核";
             dt_prodinstr.Rows[0]["审批日期"] = DateTime.Now;
 
@@ -685,7 +704,10 @@ namespace mySystem.Process.灭菌
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
             //状态,不论是否通过,都不能再点
-
+            if (checkform.ischeckOk)
+            {
+                dt_prodinstr.Rows[0]["状态"] = 2;
+            }
             //改变控件状态
             setControlsFalse();
 

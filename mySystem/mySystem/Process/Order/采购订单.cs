@@ -107,6 +107,7 @@ namespace mySystem.Process.Order
                 ndr["采购件数"] = 0;
                 ndr["采购数量"] = 0;
                 ndr["预计到货时间"] = DateTime.Now;
+                ndr["供应商产品编码"] = drs[0]["供应商产品编码"];
                 foreach (DataRow dr in drs)
                 {
                     ndr["采购件数"] = Convert.ToDouble(ndr["采购件数"]) + Convert.ToDouble(dr["采购件数"]);
@@ -366,6 +367,7 @@ namespace mySystem.Process.Order
                     主计量 = dtT.Rows[0]["主计量单位名称"].ToString();
                 DataRow ndr = dtInner.NewRow();
                 ndr["采购订单ID"] = dtOuter.Rows[0]["ID"];
+                ndr["供应商"] = _供应商;
                 ndr["存货代码"] = dr["存货代码"];
                 ndr["存货名称"] = dr["存货名称"];
                 ndr["规格型号"] = dr["规格型号"];
@@ -380,10 +382,13 @@ namespace mySystem.Process.Order
                 //dtT = new DataTable();
                 //daT.Fill(dtT);
                 //int xsID = Convert.ToInt32(dtT.Rows[0]["ID"]);
-                //daT = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + xsID + " and 存货代码='" + dr["存货代码"].ToString() + "'", conn);
+                //sql = "select 销售订单详细信息.件数 as 件数,销售订单详细信息.数量 as 数量, 销售订单详细信息.价税合计 as 价税合计 from 销售订单,销售订单详细信息 where 销售订单详细信息.销售订单ID=销售订单.ID and 销售订单.订单号='{0}' and 销售订单详细信息.存货代码='{1}'";
+                //daT = new OleDbDataAdapter(string.Format(sql, ndr["用途"].ToString(), dr["存货代码"].ToString()), conn);
                 //dtT = new DataTable();
                 //daT.Fill(dtT);
                 //double 价税合计 = Convert.ToDouble(dtT.Rows[0]["价税合计"]);
+                //double 数量 = Convert.ToDouble(dtT.Rows[0]["数量"]);
+                // 得不到单价和金额，因为这里是组件代码， 销售订单里面是成品代码，对不不上
                 ndr["单价"] = 0;
                 ndr["金额"] = 0;
                 ndr["付款日期"] = DateTime.Now;
@@ -401,6 +406,7 @@ namespace mySystem.Process.Order
                     {
                         DataRow ndr自由 = dtInner.NewRow();
                         ndr自由["采购订单ID"] = dtOuter.Rows[0]["ID"];
+                        ndr["供应商"] = _供应商;
                         ndr自由["存货代码"] = dr["存货代码"];
                         ndr自由["存货名称"] = dr["存货名称"];
                         ndr自由["规格型号"] = dr["规格型号"];
@@ -555,7 +561,7 @@ namespace mySystem.Process.Order
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             outerBind();
 
-            daInner.Update((DataTable)bsInner.DataSource);
+            daInner.Update(dtInner);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
         }

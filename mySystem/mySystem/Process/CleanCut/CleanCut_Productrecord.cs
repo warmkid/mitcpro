@@ -699,7 +699,7 @@ namespace mySystem.Process.CleanCut
             dr["膜卷卷号"] = dt记录详情.Rows[dataGridView1.CurrentRow.Index]["膜卷卷号"].ToString();
             dr["物料代码"] = dt记录详情.Rows[dataGridView1.CurrentRow.Index]["物料代码"].ToString();
             dr["膜卷批号"] = dt记录详情.Rows[dataGridView1.CurrentRow.Index]["膜卷批号"].ToString();
-            dr["清洁分切后代码"] = getCodeAfter(dr["物料代码"].ToString());
+            dr["清洁分切后代码"] = "";
             dr["外观检查"] = "Yes";
             dr["长度A"] = 0;
             dr["长度B"] = 0;

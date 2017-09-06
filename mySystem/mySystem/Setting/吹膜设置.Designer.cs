@@ -1300,7 +1300,7 @@
             this.groupBox2.Controls.Add(this.dgv废品);
             this.groupBox2.Controls.Add(this.del废品);
             this.groupBox2.Controls.Add(this.add废品);
-            this.groupBox2.Location = new System.Drawing.Point(12, 635);
+            this.groupBox2.Location = new System.Drawing.Point(13, 326);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(1081, 250);
             this.groupBox2.TabIndex = 59;
@@ -1342,7 +1342,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(12, 608);
+            this.label2.Location = new System.Drawing.Point(13, 299);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(177, 20);
             this.label2.TabIndex = 58;
@@ -1353,7 +1353,7 @@
             this.groupBox10.Controls.Add(this.dgv工艺);
             this.groupBox10.Controls.Add(this.del工艺);
             this.groupBox10.Controls.Add(this.add工艺);
-            this.groupBox10.Location = new System.Drawing.Point(563, 330);
+            this.groupBox10.Location = new System.Drawing.Point(582, 34);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(530, 250);
             this.groupBox10.TabIndex = 57;
@@ -1397,11 +1397,12 @@
             this.groupBox11.Controls.Add(this.dgv物料代码);
             this.groupBox11.Controls.Add(this.del物料代码);
             this.groupBox11.Controls.Add(this.add物料代码);
-            this.groupBox11.Location = new System.Drawing.Point(17, 330);
+            this.groupBox11.Location = new System.Drawing.Point(524, 585);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(534, 250);
+            this.groupBox11.Size = new System.Drawing.Size(120, 44);
             this.groupBox11.TabIndex = 56;
             this.groupBox11.TabStop = false;
+            this.groupBox11.Visible = false;
             // 
             // btn吹膜物料代码刷新
             // 
@@ -1454,11 +1455,12 @@
             this.groupBox12.Controls.Add(this.dgv产品编码);
             this.groupBox12.Controls.Add(this.del产品编码);
             this.groupBox12.Controls.Add(this.add产品编码);
-            this.groupBox12.Location = new System.Drawing.Point(563, 34);
+            this.groupBox12.Location = new System.Drawing.Point(424, 584);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(530, 250);
+            this.groupBox12.Size = new System.Drawing.Size(75, 60);
             this.groupBox12.TabIndex = 55;
             this.groupBox12.TabStop = false;
+            this.groupBox12.Visible = false;
             // 
             // btn吹膜产品编码刷新
             // 
@@ -1552,17 +1554,18 @@
             // 
             this.label37.AutoSize = true;
             this.label37.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label37.Location = new System.Drawing.Point(17, 303);
+            this.label37.Location = new System.Drawing.Point(10, 601);
             this.label37.Name = "label37";
             this.label37.Size = new System.Drawing.Size(135, 20);
             this.label37.TabIndex = 53;
             this.label37.Text = "物料代码设置";
+            this.label37.Visible = false;
             // 
             // label38
             // 
             this.label38.AutoSize = true;
             this.label38.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label38.Location = new System.Drawing.Point(568, 303);
+            this.label38.Location = new System.Drawing.Point(587, 7);
             this.label38.Name = "label38";
             this.label38.Size = new System.Drawing.Size(135, 20);
             this.label38.TabIndex = 52;
@@ -1572,11 +1575,12 @@
             // 
             this.label39.AutoSize = true;
             this.label39.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label39.Location = new System.Drawing.Point(568, 15);
+            this.label39.Location = new System.Drawing.Point(151, 601);
             this.label39.Name = "label39";
             this.label39.Size = new System.Drawing.Size(177, 20);
             this.label39.TabIndex = 51;
             this.label39.Text = "吹膜产品编码设置";
+            this.label39.Visible = false;
             // 
             // label40
             // 
@@ -1590,7 +1594,7 @@
             // 
             // panel1
             // 
-            this.panel1.Location = new System.Drawing.Point(861, 930);
+            this.panel1.Location = new System.Drawing.Point(678, 601);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(289, 10);
             this.panel1.TabIndex = 49;
@@ -1598,7 +1602,7 @@
             // Btn保存产品设置
             // 
             this.Btn保存产品设置.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存产品设置.Location = new System.Drawing.Point(972, 893);
+            this.Btn保存产品设置.Location = new System.Drawing.Point(973, 584);
             this.Btn保存产品设置.Name = "Btn保存产品设置";
             this.Btn保存产品设置.Size = new System.Drawing.Size(90, 33);
             this.Btn保存产品设置.TabIndex = 47;

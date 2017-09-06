@@ -10,14 +10,14 @@ using System.Data.OleDb;
 
 namespace mySystem.Query
 {
-    public partial class 订单查询 : Form
+    public partial class 订单查询 : BaseForm
     {
 
         OleDbDataAdapter da销售订单,da采购订单;
         DataTable dt销售订单,dt采购订单;
         OleDbCommandBuilder cb采购订单;
 
-        public 订单查询()
+        public 订单查询(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             dgv销售订单.AllowUserToAddRows = false;
@@ -26,6 +26,23 @@ namespace mySystem.Query
 
             dgv采购订单.AllowUserToAddRows = false;
             dgv采购订单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv采购订单_DataBindingComplete);
+            dgv采购订单.CellDoubleClick += new DataGridViewCellEventHandler(dgv采购订单_CellDoubleClick);
+        }
+
+        void dgv采购订单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                string 销售订单号 = dgv采购订单["用途", e.RowIndex].Value.ToString();
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 销售订单号 + "'", mySystem.Parameter.connOle);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    int id = Convert.ToInt32(dt.Rows[0]["ID"]);
+                    (new mySystem.Process.Order.销售订单(mainform, id)).ShowDialog();
+                }
+            }
         }
 
         void dgv采购订单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -62,8 +79,9 @@ namespace mySystem.Query
         {
             string 产品代码 = tb采购订单产品代码.Text;
             string 用途 = tb采购订单销售订单.Text;
-            string sql = "select * from 采购订单详细信息 where 存货代码 like '%{0}%' and 用途 like '%{1}%'";
-            da采购订单 = new OleDbDataAdapter(string.Format(sql, 产品代码, 用途), mySystem.Parameter.connOle);
+            string 供应商= tb采购订单供应商.Text;
+            string sql = "select * from 采购订单详细信息 where 存货代码 like '%{0}%' and 用途 like '%{1}%' and 供应商 like '%{2}%'";
+            da采购订单 = new OleDbDataAdapter(string.Format(sql, 产品代码, 用途, 供应商), mySystem.Parameter.connOle);
             dt采购订单 = new DataTable("采购订单详细信息");
             cb采购订单 = new OleDbCommandBuilder(da采购订单);
             da采购订单.Fill(dt采购订单);

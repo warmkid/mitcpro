@@ -44,6 +44,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btn采购订单保存 = new System.Windows.Forms.Button();
+            this.tb采购订单供应商 = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage销售订单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv销售订单)).BeginInit();
@@ -137,6 +139,8 @@
             // 
             // tabPage采购订单
             // 
+            this.tabPage采购订单.Controls.Add(this.tb采购订单供应商);
+            this.tabPage采购订单.Controls.Add(this.label5);
             this.tabPage采购订单.Controls.Add(this.btn采购订单保存);
             this.tabPage采购订单.Controls.Add(this.dgv采购订单);
             this.tabPage采购订单.Controls.Add(this.btn查询采购订单);
@@ -175,24 +179,24 @@
             // tb采购订单销售订单
             // 
             this.tb采购订单销售订单.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb采购订单销售订单.Location = new System.Drawing.Point(545, 20);
+            this.tb采购订单销售订单.Location = new System.Drawing.Point(406, 20);
             this.tb采购订单销售订单.Name = "tb采购订单销售订单";
-            this.tb采购订单销售订单.Size = new System.Drawing.Size(202, 26);
+            this.tb采购订单销售订单.Size = new System.Drawing.Size(123, 26);
             this.tb采购订单销售订单.TabIndex = 42;
             // 
             // tb采购订单产品代码
             // 
             this.tb采购订单产品代码.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb采购订单产品代码.Location = new System.Drawing.Point(108, 20);
+            this.tb采购订单产品代码.Location = new System.Drawing.Point(115, 20);
             this.tb采购订单产品代码.Name = "tb采购订单产品代码";
-            this.tb采购订单产品代码.Size = new System.Drawing.Size(202, 26);
+            this.tb采购订单产品代码.Size = new System.Drawing.Size(123, 26);
             this.tb采购订单产品代码.TabIndex = 41;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label3.Location = new System.Drawing.Point(440, 23);
+            this.label3.Location = new System.Drawing.Point(301, 23);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 40;
@@ -218,6 +222,24 @@
             this.btn采购订单保存.Text = "保存";
             this.btn采购订单保存.UseVisualStyleBackColor = true;
             this.btn采购订单保存.Click += new System.EventHandler(this.btn采购订单保存_Click);
+            // 
+            // tb采购订单供应商
+            // 
+            this.tb采购订单供应商.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb采购订单供应商.Location = new System.Drawing.Point(663, 20);
+            this.tb采购订单供应商.Name = "tb采购订单供应商";
+            this.tb采购订单供应商.Size = new System.Drawing.Size(123, 26);
+            this.tb采购订单供应商.TabIndex = 47;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label5.Location = new System.Drawing.Point(558, 23);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(56, 16);
+            this.label5.TabIndex = 46;
+            this.label5.Text = "供应商";
             // 
             // 订单查询
             // 
@@ -256,5 +278,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn采购订单保存;
+        private System.Windows.Forms.TextBox tb采购订单供应商;
+        private System.Windows.Forms.Label label5;
     }
 }

@@ -113,6 +113,7 @@ namespace mySystem.Process.灭菌
             setDataGridViewColumns();
             bs台帐.DataSource = dt台帐;
             dataGridView1.DataSource = bs台帐.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
             index = dt台帐.Rows.Count;
         }
         // 设置自动计算类事件
@@ -611,6 +612,8 @@ namespace mySystem.Process.灭菌
             da台帐.Fill(dt台帐);
 
             innerBind();
+            
+            setDataGridViewRowNums();
         }
 
 

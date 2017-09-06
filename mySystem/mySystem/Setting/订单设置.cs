@@ -108,6 +108,7 @@ namespace mySystem.Setting
                 }
                 catch (Exception ee)
                 {
+                    MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
                 }
             }
         }
@@ -155,7 +156,7 @@ namespace mySystem.Setting
             cb存货档案 = new OleDbCommandBuilder(da存货档案);
             dt存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
             da存货档案.Fill(dt存货档案);
-            dt存货档案Show = dt存货档案;
+            dt存货档案Show = topN(dt存货档案,20);
             bs存货档案.DataSource = dt存货档案Show;
             this.dgv存货档案.DataSource = bs存货档案.DataSource;
             //显示序号
@@ -168,7 +169,8 @@ namespace mySystem.Setting
             this.dgv存货档案.Columns["属于工序"].ReadOnly = true;
             this.dgv存货档案.Columns["BOM列表"].ReadOnly = true;
             this.dgv存货档案.Columns["类型"].ReadOnly = true;
-            Utility.setDataGridViewAutoSizeMode(dgv存货档案);
+            //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
+            setDGV存货档案Column();
 
 
             //**************************   人员设置    ***********************************
@@ -669,9 +671,27 @@ namespace mySystem.Setting
             Utility.setDataGridViewAutoSizeMode(dgv存货档案);
         }
 
-        
 
+        DataTable topN(DataTable dt, int N)
+        {
+            if (dt.Rows.Count < N) return dt;
+            DataTable ret = dt.Clone();
+            for (int i = 0; i < N; ++i)
+            {
+                ret.ImportRow(dt.Rows[i]);
+            }
+            return ret;
+        }
 
+        void setDGV存货档案Column()
+        {
+            dgv存货档案.Columns["存货代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv存货档案.Columns["存货名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv存货档案.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
+            dgv存货档案.Columns["存货代码"].Width = 100;
+            dgv存货档案.Columns["存货名称"].Width = 300;
+            dgv存货档案.Columns["规格型号"].Width = 300;
+        }
     }
 }

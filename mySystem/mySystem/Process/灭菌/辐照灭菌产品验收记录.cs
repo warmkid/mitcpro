@@ -476,7 +476,7 @@ namespace mySystem.Process.灭菌
             dr["验收人"] = mySystem.Parameter.userName;
             dr["操作人"] = mySystem.Parameter.userName;
             dr["操作日期"] = DateTime.Now;
-
+            dr["说明"] = "无";
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
             log += "灭菌委托单编号：" + cb委托单号.Text + "\n";

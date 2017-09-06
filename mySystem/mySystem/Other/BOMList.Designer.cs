@@ -29,13 +29,16 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnAdd = new System.Windows.Forms.Button();
-            this.btnDone = new System.Windows.Forms.Button();
-            this.btnDel = new System.Windows.Forms.Button();
             this.存货代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.存货名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.规格型号 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.数量 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnAdd = new System.Windows.Forms.Button();
+            this.btnDone = new System.Windows.Forms.Button();
+            this.btnDel = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.btn导入 = new System.Windows.Forms.Button();
+            this.btn浏览 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,36 +59,6 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(555, 203);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // btnAdd
-            // 
-            this.btnAdd.Location = new System.Drawing.Point(12, 238);
-            this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnAdd.TabIndex = 1;
-            this.btnAdd.Text = "添加";
-            this.btnAdd.UseVisualStyleBackColor = true;
-            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
-            // 
-            // btnDone
-            // 
-            this.btnDone.Location = new System.Drawing.Point(492, 238);
-            this.btnDone.Name = "btnDone";
-            this.btnDone.Size = new System.Drawing.Size(75, 23);
-            this.btnDone.TabIndex = 2;
-            this.btnDone.Text = "完成";
-            this.btnDone.UseVisualStyleBackColor = true;
-            this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
-            // 
-            // btnDel
-            // 
-            this.btnDel.Location = new System.Drawing.Point(245, 238);
-            this.btnDel.Name = "btnDel";
-            this.btnDel.Size = new System.Drawing.Size(75, 23);
-            this.btnDel.TabIndex = 3;
-            this.btnDel.Text = "删除";
-            this.btnDel.UseVisualStyleBackColor = true;
-            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
             // 
             // 存货代码
             // 
@@ -111,11 +84,71 @@
             this.数量.Name = "数量";
             this.数量.Width = 60;
             // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(12, 238);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnAdd.TabIndex = 1;
+            this.btnAdd.Text = "添加";
+            this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnDone
+            // 
+            this.btnDone.Location = new System.Drawing.Point(492, 238);
+            this.btnDone.Name = "btnDone";
+            this.btnDone.Size = new System.Drawing.Size(75, 23);
+            this.btnDone.TabIndex = 2;
+            this.btnDone.Text = "完成";
+            this.btnDone.UseVisualStyleBackColor = true;
+            this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
+            // 
+            // btnDel
+            // 
+            this.btnDel.Location = new System.Drawing.Point(93, 238);
+            this.btnDel.Name = "btnDel";
+            this.btnDel.Size = new System.Drawing.Size(75, 23);
+            this.btnDel.TabIndex = 3;
+            this.btnDel.Text = "删除";
+            this.btnDel.UseVisualStyleBackColor = true;
+            this.btnDel.Click += new System.EventHandler(this.btnDel_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(186, 240);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(131, 21);
+            this.textBox1.TabIndex = 4;
+            // 
+            // btn导入
+            // 
+            this.btn导入.Location = new System.Drawing.Point(411, 238);
+            this.btn导入.Name = "btn导入";
+            this.btn导入.Size = new System.Drawing.Size(75, 23);
+            this.btn导入.TabIndex = 6;
+            this.btn导入.Text = "导入";
+            this.btn导入.UseVisualStyleBackColor = true;
+            this.btn导入.Click += new System.EventHandler(this.btn导入_Click);
+            // 
+            // btn浏览
+            // 
+            this.btn浏览.Location = new System.Drawing.Point(330, 238);
+            this.btn浏览.Name = "btn浏览";
+            this.btn浏览.Size = new System.Drawing.Size(75, 23);
+            this.btn浏览.TabIndex = 5;
+            this.btn浏览.Text = "浏览";
+            this.btn浏览.UseVisualStyleBackColor = true;
+            this.btn浏览.Click += new System.EventHandler(this.btn浏览_Click);
+            // 
             // BOMList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(588, 273);
+            this.Controls.Add(this.btn导入);
+            this.Controls.Add(this.btn浏览);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.btnDel);
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.btnAdd);
@@ -124,6 +157,7 @@
             this.Text = "BOMList";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -137,5 +171,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 存货名称;
         private System.Windows.Forms.DataGridViewTextBoxColumn 规格型号;
         private System.Windows.Forms.DataGridViewTextBoxColumn 数量;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button btn导入;
+        private System.Windows.Forms.Button btn浏览;
     }
 }

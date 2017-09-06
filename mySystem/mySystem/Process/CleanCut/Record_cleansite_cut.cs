@@ -419,8 +419,8 @@ namespace mySystem.Process.CleanCut
             //dr["产品批号"] = dict_prod[prodcode];
             dr["生产日期"] = DateTime.Now;
             dr["生产班次"] = mySystem.Parameter.userflight=="白班"?true:false;
-            dr["清场人"] = mySystem.Parameter.userName;
-            dr["检查人"] = "";
+            dr["确认人"] = mySystem.Parameter.userName;
+            //dr["检查人"] = "";
             dr["审核人"] = "";
 
             string log = "=====================================\n";

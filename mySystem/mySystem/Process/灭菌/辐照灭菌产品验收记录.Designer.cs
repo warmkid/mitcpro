@@ -137,7 +137,7 @@
             this.tb辐照批号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb辐照批号.Location = new System.Drawing.Point(476, 453);
             this.tb辐照批号.Name = "tb辐照批号";
-            this.tb辐照批号.Size = new System.Drawing.Size(158, 26);
+            this.tb辐照批号.Size = new System.Drawing.Size(229, 26);
             this.tb辐照批号.TabIndex = 84;
             // 
             // tb报告编号
@@ -145,7 +145,7 @@
             this.tb报告编号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tb报告编号.Location = new System.Drawing.Point(476, 421);
             this.tb报告编号.Name = "tb报告编号";
-            this.tb报告编号.Size = new System.Drawing.Size(158, 26);
+            this.tb报告编号.Size = new System.Drawing.Size(229, 26);
             this.tb报告编号.TabIndex = 83;
             // 
             // label47
@@ -422,7 +422,7 @@
             this.cb运输商内.FormattingEnabled = true;
             this.cb运输商内.Location = new System.Drawing.Point(594, 213);
             this.cb运输商内.Name = "cb运输商内";
-            this.cb运输商内.Size = new System.Drawing.Size(83, 20);
+            this.cb运输商内.Size = new System.Drawing.Size(164, 20);
             this.cb运输商内.TabIndex = 54;
             // 
             // cb辐照商
@@ -430,7 +430,7 @@
             this.cb辐照商.FormattingEnabled = true;
             this.cb辐照商.Location = new System.Drawing.Point(594, 164);
             this.cb辐照商.Name = "cb辐照商";
-            this.cb辐照商.Size = new System.Drawing.Size(83, 20);
+            this.cb辐照商.Size = new System.Drawing.Size(164, 20);
             this.cb辐照商.TabIndex = 53;
             // 
             // label31
