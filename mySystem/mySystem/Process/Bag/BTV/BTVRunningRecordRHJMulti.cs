@@ -847,7 +847,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
         public void print(bool preview)
@@ -863,7 +863,14 @@ namespace mySystem.Process.Bag.BTV
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
             
-            int rowStartAt = 9;
+            int rowStartAt = 9;            
+            my.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 13].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
+            my.Cells[3, 21].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[4, 1].Value = "袋体代码：" + dt记录.Rows[0]["袋体代码"];
+            my.Cells[3, 13].Value = "组件代码：" + dt记录.Rows[0]["组件代码"];
+            my.Cells[3, 21].Value = "电压：" + dt记录.Rows[0]["电压"];
+
             my.Cells[rowStartAt - 1, 3].Value = dt记录.Rows[0]["控制器1参数1"];
             my.Cells[rowStartAt - 1, 4].Value = dt记录.Rows[0]["控制器1参数2"];
             my.Cells[rowStartAt - 1, 5].Value = dt记录.Rows[0]["控制器1参数3"];
@@ -887,13 +894,13 @@ namespace mySystem.Process.Bag.BTV
             my.Cells[rowStartAt - 1, 22].Value = dt记录.Rows[0]["控制器4参数5"];
 
             //EVERY SHEET CONTAINS 12 RECORDS
-            int rowNumPerSheet = 12;
+            int rowNumPerSheet = 11;
             int rowNumTotal = dt记录详情.Rows.Count;
             for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
             {
 
                 my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + rowStartAt, 2].Value = dt记录详情.Rows[i]["生产时间"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
                 my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["控制器1参数1"];
                 my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["控制器1参数2"];
                 my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["控制器1参数3"];
@@ -925,13 +932,14 @@ namespace mySystem.Process.Bag.BTV
             {
                 for (int i = rowNumPerSheet; i < rowNumTotal; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[5 + i, Type.Missing];
+
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
                     my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                    my.Cells[i + rowStartAt, 2].Value = dt记录详情.Rows[i]["生产时间"];
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
                     my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["控制器1参数1"];
                     my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["控制器1参数2"];
                     my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["控制器1参数3"];
@@ -959,10 +967,13 @@ namespace mySystem.Process.Bag.BTV
                 }
             }
 
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
             //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
-            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet : 0;
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
             my.Cells[21 + varOffset, 18].Value = "合格品数量： " + dt记录.Rows[0]["合格品数量"] + " 个，\n不良品数量： " + dt记录.Rows[0]["不良品数量"] + " 个。";
-            my.Cells[21 + varOffset, 23].Value = "审核员/日期： " + dt记录.Rows[0]["审核员"] + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[21 + varOffset, 23].Value = "审核员： " + dt记录.Rows[0]["审核员"] + "\n日期： " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
             if (preview)
             {
                 my.Select();

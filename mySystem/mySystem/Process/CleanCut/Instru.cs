@@ -893,33 +893,39 @@ namespace mySystem.Process.CleanCut
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             int ind = 0;
-            if (dataGridView1.Rows.Count > 3)
+            if (dt_prodlist.Rows.Count > 3)
             {
                 //在第7行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 3; i++)
+                for (int i = 0; i < dt_prodlist.Rows.Count - 3; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[7, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 3;
+                ind = dt_prodlist.Rows.Count - 3;
             }
 
-            my.Cells[3, 1].Value = "指令编号："+tb指令编号.Text;
-            my.Cells[3, 3].Value = "生产设备：" + tb设备编号.Text;
-            my.Cells[3, 6].Value = dtp计划生产日期.Value.ToString("yyyy年MM月dd日");
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            my.Cells[3, 1].Value = "指令编号：" + dt_prodinstr.Rows[0]["生产指令编号"].ToString();
+            my.Cells[3, 3].Value = "生产设备：" + dt_prodinstr.Rows[0]["生产设备"].ToString();
+            my.Cells[3, 6].Value = Convert.ToDateTime(dt_prodinstr.Rows[0]["计划生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["计划生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["计划生产日期"].ToString()).Day.ToString() + "日";
+            for (int i = 0; i < dt_prodlist.Rows.Count; i++)
             {
-                my.Cells[6 + i, 1] = i+1;
-                my.Cells[6 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[6 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[6 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();
-                my.Cells[6 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();
-                my.Cells[6 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[6 + i, 1] = i + 1;
+                my.Cells[6 + i, 2] = dt_prodlist.Rows[i]["清洁前产品代码"].ToString();
+                my.Cells[6 + i, 3] = dt_prodlist.Rows[i]["清洁前批号"].ToString();
+                my.Cells[6 + i, 4] = dt_prodlist.Rows[i]["数量卷"].ToString();
+                my.Cells[6 + i, 5] = dt_prodlist.Rows[i]["数量米"].ToString();
+                my.Cells[6 + i, 6] = dt_prodlist.Rows[i]["清洁后产品代码"].ToString();
             }
 
-            my.Cells[10 + ind, 1].Value = "备注：" + tb备注.Text;
-            my.Cells[11 + ind, 1].Value = String.Format(" 编制人：{0}    {1}        审批人：{2}    {3}        接收人：{4}      {5}", tb编制人.Text, dtp编制日期.Value.ToString("yyyy年MM月dd日"), tb审批人.Text, dtp审批日期.Value.ToString("yyyy年MM月dd日"), tb接收人.Text, dtp接收日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[10 + ind, 1].Value = "备注：" + dt_prodinstr.Rows[0]["备注"].ToString();
+            my.Cells[11 + ind, 1].Value = String.Format("编制人：{0}  {1}        审批人：{2}  {3}        接收人：{4}  {5}", 
+                dt_prodinstr.Rows[0]["编制人"].ToString(), 
+                Convert.ToDateTime(dt_prodinstr.Rows[0]["编制时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["编制时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["编制时间"].ToString()).Day.ToString() + "日",
+                dt_prodinstr.Rows[0]["审批人"].ToString(),
+                Convert.ToDateTime(dt_prodinstr.Rows[0]["审批时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["审批时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["审批时间"].ToString()).Day.ToString() + "日",
+                dt_prodinstr.Rows[0]["接收人"].ToString(),
+                Convert.ToDateTime(dt_prodinstr.Rows[0]["接收时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["接收时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["接收时间"].ToString()).Day.ToString() + "日");
         }
 
         //查找打印的表序号

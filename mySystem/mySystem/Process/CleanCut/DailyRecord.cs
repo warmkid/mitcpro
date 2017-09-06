@@ -838,7 +838,7 @@ namespace mySystem.Process.CleanCut
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
 
@@ -921,6 +921,7 @@ namespace mySystem.Process.CleanCut
             //行数不超过模板行数的部分
             for (int i = 0; i < (i内表行数 > 8 ? 8 : i内表行数); i++)
             {
+                mysheet.Cells[5 + i, 1].Value = i + 1;
                 mysheet.Cells[5 + i, 2].Value=dataGridView1.Rows[i].Cells[3].Value.ToString();
                 mysheet.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
                 mysheet.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
@@ -945,6 +946,7 @@ namespace mySystem.Process.CleanCut
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    mysheet.Cells[5 + i, 1].Value = i + 1;
                     mysheet.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
                     mysheet.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
                     mysheet.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
@@ -985,7 +987,23 @@ namespace mySystem.Process.CleanCut
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
-            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+          //  sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            //读取ID对应的生产指令编码
+            OleDbCommand comm生产指令编码 = new OleDbCommand();
+            comm生产指令编码.Connection = mySystem.Parameter.connOle;
+            comm生产指令编码.CommandText = "select * from 清洁分切工序生产指令 where ID= @name";
+            comm生产指令编码.Parameters.AddWithValue("@name", __生产指令ID);
+
+            OleDbDataReader myReader生产指令编码 = comm生产指令编码.ExecuteReader();
+            while (myReader生产指令编码.Read())
+            {
+                __生产指令 = myReader生产指令编码["生产指令编号"].ToString();
+                //List<String> list班次 = new List<string>();
+                //list班次.Add(myReader班次["班次"].ToString());
+            }
+
+            myReader生产指令编码.Close();
+            comm生产指令编码.Dispose();  
             mysheet.PageSetup.RightFooter = __生产指令 + "-05-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;

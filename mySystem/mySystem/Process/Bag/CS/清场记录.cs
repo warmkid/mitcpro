@@ -757,9 +757,9 @@ namespace mySystem.Process.Bag.CS
             else
                 my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Day.ToString() + "日");
             //插入新行
-            if (dataGridView1.Rows.Count > 14)
+            if (dtInner.Rows.Count > 14)
             {
-                i插入行数 = dataGridView1.Rows.Count -14;
+                i插入行数 = dtInner.Rows.Count - 14;
                 for (int i = 0; i < i插入行数; i++)
                 {
                     //在第6行插入
@@ -771,7 +771,7 @@ namespace mySystem.Process.Bag.CS
             }
 
             //写内表数据
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < dtInner.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1].Value = i + 1;
                 my.Cells[5 + i, 2].Value = dtInner.Rows[i]["清场项目"].ToString();
