@@ -111,7 +111,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋工序批生产记录");
             if (b)
             {
-                PTVBag_batchproduction batch = new PTVBag_batchproduction();
+                PTVBag_batchproduction batch = new PTVBag_batchproduction(mainform);
                 batch.ShowDialog();
             }
             else
@@ -158,7 +158,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "PTV生产指令");
             if (b)
             {
-                PTVBag_productioninstruction pro_ins = new PTVBag_productioninstruction();
+                PTVBag_productioninstruction pro_ins = new PTVBag_productioninstruction(mainform);
                 pro_ins.ShowDialog();
             }
             else

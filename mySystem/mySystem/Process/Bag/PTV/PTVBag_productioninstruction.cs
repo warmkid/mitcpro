@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
+using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Bag.PTV
 {
@@ -49,7 +50,8 @@ namespace mySystem.Process.Bag.PTV
         CheckForm ckform;
 
 
-        public PTVBag_productioninstruction()
+        public PTVBag_productioninstruction(mySystem.MainForm mainform)
+            : base(mainform)
         {
             InitializeComponent();
             variableInit();
@@ -60,7 +62,8 @@ namespace mySystem.Process.Bag.PTV
             setEnableReadOnly();
         }
 
-        public PTVBag_productioninstruction(int id)
+        public PTVBag_productioninstruction(mySystem.MainForm mainform, int id)
+            : base(mainform)
         {
             // 显示前的准备工作
             InitializeComponent();
@@ -991,6 +994,33 @@ namespace mySystem.Process.Bag.PTV
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             MessageBox.Show(name + "填写错误");
         }
+
+        //添加打印机
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        private void fill_printer()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
+        }
+
+        //打印按钮
+        private void btn打印_Click_1(object sender, EventArgs e)
+        {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            print(false);
+            GC.Collect();
+        }
+        public void print(bool b)
+        { }
 
     }
 }
