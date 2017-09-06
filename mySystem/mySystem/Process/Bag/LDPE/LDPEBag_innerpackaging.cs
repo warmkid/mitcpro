@@ -15,7 +15,6 @@ namespace mySystem.Process.Bag.LDPE
 {
     public partial class LDPEBag_innerpackaging : BaseForm
     {
-
         private String table = "产品内包装记录";
         private String tableInfo = "产品内包装记录详细信息";
 
@@ -874,13 +873,152 @@ namespace mySystem.Process.Bag.LDPE
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPEBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            // 修改Sheet中某行某列的值
+            fill_excel(my, wb);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = Instruction + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+                        bs记录.EndEdit();
+                        da记录.Update((DataTable)bs记录.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+        //打印填数据
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            int ind = 0;
+            if (dt记录详情.Rows.Count > 12)
+            {
+                //在第7行插入
+                for (int i = 0; i < dt记录详情.Rows.Count - 12; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dt记录详情.Rows.Count - 12;
+            }
+
+            //外表信息
+            mysheet.Cells[3, 1].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
+            mysheet.Cells[3, 5].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[3, 10].Value = "生产批号：" + dt记录.Rows[0]["生产批号"].ToString();
+            mysheet.Cells[3, 15].Value = "标签：" + "中文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]) == true ? "☑" : "□") + "  英文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否英文"]) == true ? "☑" : "□");
+
+            mysheet.Cells[18 + ind, 5].Value = dt记录.Rows[0]["产品数量包合计A"].ToString();
+            mysheet.Cells[18 + ind, 6].Value = dt记录.Rows[0]["产品数量只合计B"].ToString();
+            mysheet.Cells[18 + ind, 7].Value = "理论产量： " + dt记录.Rows[0]["理论产量C"].ToString();
+            mysheet.Cells[19 + ind, 7].Value = "成品率 = " + dt记录.Rows[0]["成品率"].ToString();
+
+            //内表信息
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                mysheet.Cells[6 + i, 1] = i + 1;
+                mysheet.Cells[6 + i, 2] = dt记录详情.Rows[i]["生产日期时间"].ToString();
+                mysheet.Cells[6 + i, 3] = dt记录详情.Rows[i]["内包序号"].ToString();
+                mysheet.Cells[6 + i, 4] = dt记录详情.Rows[i]["包装规格每包只数"].ToString();
+                mysheet.Cells[6 + i, 5] = dt记录详情.Rows[i]["产品数量包"].ToString();
+                mysheet.Cells[6 + i, 6] = dt记录详情.Rows[i]["产品数量只"].ToString();
+                mysheet.Cells[6 + i, 7] = dt记录详情.Rows[i]["热封线不合格数量"].ToString();
+                mysheet.Cells[6 + i, 8] = dt记录详情.Rows[i]["黑点晶点数量"].ToString();
+                mysheet.Cells[6 + i, 9] = dt记录详情.Rows[i]["指示剂不良数量"].ToString();
+                mysheet.Cells[6 + i, 10] = dt记录详情.Rows[i]["其他数量"].ToString();
+                mysheet.Cells[6 + i, 11] = dt记录详情.Rows[i]["不良合计"].ToString();
+                mysheet.Cells[6 + i, 12] = dt记录详情.Rows[i]["包装袋热封线"].ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 13] = dt记录详情.Rows[i]["内标签"].ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 14] = dt记录详情.Rows[i]["内包装外观"].ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 15] = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[6 + i, 16] = dt记录详情.Rows[i]["审核员"].ToString(); 
+
+            }
+        }
+
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from " + table + " where 生产指令ID=" + InstruID.ToString();
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt记录.Rows[0]["ID"]) + 1;
 
         }
+
+
 
         //******************************小功能******************************//  
 

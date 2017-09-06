@@ -33,7 +33,7 @@
             this.btn保存 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn查看日志 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.btn打印 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
@@ -127,14 +127,14 @@
             this.btn查看日志.UseVisualStyleBackColor = true;
             this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
             // 
-            // comboBox1
+            // cb打印机
             // 
-            this.comboBox1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(237, 562);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
-            this.comboBox1.TabIndex = 117;
+            this.cb打印机.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(237, 562);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(237, 24);
+            this.cb打印机.TabIndex = 117;
             // 
             // btn打印
             // 
@@ -507,7 +507,7 @@
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn查看日志);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.label16);
@@ -560,7 +560,7 @@
         private System.Windows.Forms.Button btn保存;
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn查看日志;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Label label16;

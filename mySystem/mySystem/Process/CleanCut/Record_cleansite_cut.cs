@@ -852,7 +852,7 @@ namespace mySystem.Process.CleanCut
 
             int ind = 0;
             int i插入行数 = 0;
-            my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编码.Text;
+            my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编码.Text ;
            // my.Cells[3, 4].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
             if (ckb白班.Checked)
                 my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
@@ -915,15 +915,12 @@ namespace mySystem.Process.CleanCut
             my.Cells[10 + ind, 4].Value = String.Format("复核人/日期：{0}      {1}", tb检查人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
 
         }
-        public void print(bool b)
+        public void print(bool isShow)
         {
-            int label_打印成功 = 1;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            string dir = System.IO.Directory.GetCurrentDirectory();
-            dir += "./../../xls/cleancut/SOP-MFG-302-R04A 清场记录.xlsx";
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\cleancut/SOP-MFG-302-R04A 清场记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
@@ -937,11 +934,12 @@ namespace mySystem.Process.CleanCut
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
-            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"])) + 1;           
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"])) + 1;
             my.PageSetup.RightFooter = instrcode + "-07-" + sheetnum.ToString("D3") + "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
-            if (b)
+            if (isShow)
             {
+                //true->预览
                 // 设置该进程是否可见
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
@@ -949,22 +947,26 @@ namespace mySystem.Process.CleanCut
             }
             else
             {
-                // 直接用默认打印机打印该Sheet
+                bool isPrint = true;
+                //false->打印
                 try
                 {
-                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
                 }
                 catch
-                {
-                    label_打印成功 = 0;
-                }
+                { isPrint = false; }
                 finally
                 {
-                    if (1 == label_打印成功)
+                    if (isPrint)
                     {
-                        string log = "\n=====================================\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
                         dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
                         bs_prodinstr.EndEdit();
                         da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                     }
@@ -978,10 +980,9 @@ namespace mySystem.Process.CleanCut
                     wb = null;
                     oXL = null;
                 }
-
-            }    
+            }
         }
-
+        
 
         private void setDataGridViewBackColor()
         {

@@ -827,31 +827,68 @@ namespace mySystem.Process.Bag.BTV
             // 设置该进程是否可见
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
-            my.Cells[3, 1].Value = "生产指令编号：\n" + tb生产指令编号.Text;
-            my.Cells[3, 3].Value = "产品代码/规格：" + tb产品代码.Text;
-            my.Cells[3, 7].Value = "产品批号：" + tb产品批号.Text;
-            my.Cells[3, 10].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            int rowStartAt = 5;
+            my.Cells[3, 1].Value = "生产指令编号：\n" + dt记录.Rows[0]["生产指令编号"];
+            my.Cells[3, 3].Value = "产品代码/规格：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 7].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
+            my.Cells[3, 10].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
             //EVERY SHEET CONTAINS 15 RECORDS
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            int rowNumPerSheet = 14;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
             {
-                my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["生产时间"];
-                my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["焊接温度上"];
-                my.Cells[i + 5, 4].Value = dt记录详情.Rows[i]["焊接温度下"];
-                my.Cells[i + 5, 5].Value = dt记录详情.Rows[i]["焊接时间"];
-                my.Cells[i + 5, 6].Value = dt记录详情.Rows[i]["焊接压力"];
-                my.Cells[i + 5, 7].Value = dt记录详情.Rows[i]["管组件1"];
-                my.Cells[i + 5, 8].Value = dt记录详情.Rows[i]["管组件2"];
-                my.Cells[i + 5, 9].Value = dt记录详情.Rows[i]["管组件3"];
-                my.Cells[i + 5, 10].Value = dt记录详情.Rows[i]["合格产品数量"];
-                my.Cells[i + 5, 11].Value = dt记录详情.Rows[i]["操作员"];
-                my.Cells[i + 5, 12].Value = dt记录详情.Rows[i]["备注"];
-            }
-            my.Cells[20, 6].Value = "合格品数量：" + dt记录.Rows[0]["合格品数量"] + "只\n\n不良品数量：" + dt记录.Rows[0]["不良品数量"] + "只";
 
-            my.Cells[20, 9].Value = "操作员:" + dt记录.Rows[0]["操作员"] + "\t操作日期：" + dtp操作日期.Value.ToString("yyyy年MM月dd日") + "\n审核员:" + dt记录.Rows[0]["审核员"] + "\t审核日期：" + dtp审核日期.Value.ToString("yyyy年MM月dd日");
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
+                my.Cells[i + rowStartAt, 2].Font.Size = 11; 
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["焊接温度上"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["焊接温度下"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["焊接时间"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["焊接压力"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["管组件1"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["管组件2"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["管组件3"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["合格产品数量"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["备注"];
+            }
             
+            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
+                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["焊接温度上"];
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["焊接温度下"];
+                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["焊接时间"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["焊接压力"];
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["管组件1"];
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["管组件2"];
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["管组件3"];
+                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["合格产品数量"];
+                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["操作员"];
+                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["备注"];
+                }
+            }
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
+            //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            
+            my.Cells[20 + varOffset, 6].Value = "合格品数量：" + dt记录.Rows[0]["合格品数量"] + "只\n\n不良品数量：" + dt记录.Rows[0]["不良品数量"] + "只";
+
+            my.Cells[20 + varOffset, 9].Value = "审核员： " + dt记录.Rows[0]["审核员"] + "\n日期： " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
+           
             if (preview)
             {
                 my.Select();

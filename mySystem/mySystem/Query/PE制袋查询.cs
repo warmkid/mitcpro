@@ -228,12 +228,12 @@ namespace mySystem.Query
                 switch (tableName)
                 {
                     case "生产领料使用记录":
-                        //LDPEBag_materialrecord material = new LDPEBag_materialrecord(mainform, ID);
-                        //material.Show();
+                        LDPEBag_materialrecord material = new LDPEBag_materialrecord(mainform, ID);
+                        material.Show();
                         break;
                     case "产品内包装记录":
-                        //LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging(mainform, ID);
-                        //inner.Show();
+                        LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging(mainform, ID);
+                        inner.Show();
                         break;
                     case "LDPE生产日报表":
                         //LDPEBag_dailyreport daily = new LDPEBag_dailyreport(mainform, ID);
@@ -244,16 +244,16 @@ namespace mySystem.Query
                         check.Show();
                         break;
                     case "1#制袋机运行记录":
-                        //LDPEBag_runningrecord run = new LDPEBag_runningrecord(mainform, ID);
-                        //run.Show();
+                        LDPEBag_runningrecord run = new LDPEBag_runningrecord(mainform, ID);
+                        run.Show();
                         break;
                     case "清场记录":
-                        //LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance(mainform, ID);
-                        //cleanrance.Show();
+                        LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance(mainform, ID);
+                        cleanrance.Show();
                         break;
                     case "制袋工序批生产记录":
-                        //LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform, ID);
-                        //batch.Show();
+                        LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform, ID);
+                        batch.Show();
                         break;
 
                     default:

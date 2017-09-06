@@ -29,6 +29,7 @@ namespace mySystem.Process.Bag.LDPE
         Parameter.UserState _userState;
         Parameter.FormState _formState;
         Int32 InstruID;
+        String str生产指令;
         DateTime date;
 
         public LDPEBag_runningrecord(MainForm mainform)
@@ -606,8 +607,145 @@ namespace mySystem.Process.Bag.LDPE
             print(false);
             GC.Collect();
         }
-        public void print(bool b)
-        { }
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\SOP-MFG-304-R03A 1#制袋机运行记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+                        bs记录.EndEdit();
+                        da记录.Update((DataTable)bs记录.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            int ind = 0;
+            //外表信息
+            String str生产日期 = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
+            String str温度湿度 = "环境温度：" + Convert.ToDouble(dt记录.Rows[0]["生产环境温度"]).ToString() + " ℃      环境湿度：" + Convert.ToDouble(dt记录.Rows[0]["生产环境湿度"]).ToString() + "%";
+            mysheet.Cells[5, 1].Value = str生产日期 + str温度湿度;
+            
+
+            //内表信息
+            int rownum = dt记录详情.Rows.Count;
+            //无需插入的部分
+            for (int i = 0; i < (rownum > 6 ? 6 : rownum); i++)
+            {
+                mysheet.Cells[8 + i, 1].Value = dt记录详情.Rows[i]["检查时间"].ToString();
+                mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["热封刀温度"].ToString();
+                mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["底座温度"].ToString();
+                mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["制袋速度"].ToString();
+                mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+            }
+            //需要插入的部分
+            if (rownum > 6)
+            {
+                for (int i = 6; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8 + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    mysheet.Cells[8 + i, 1].Value = dt记录详情.Rows[i]["检查时间"].ToString();
+                    mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["热封刀温度"].ToString();
+                    mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["底座温度"].ToString();
+                    mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["制袋速度"].ToString();
+                    mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                    mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                }
+                ind = rownum - 6;
+            }
+           
+            mysheet.Cells[14 + ind, 1].Value = " 备注：填写方式：正常或合格划“√”，异常写明原因。 ";
+            mysheet.Cells[15 + ind, 6].Value = dt记录.Rows[0]["审核员"].ToString();
+            mysheet.Cells[15 + ind, 7].Value = Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("D");
+            //加页脚
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+            //instrcode怎样获取？
+            //读取ID对应的生产指令编码
+            OleDbCommand comm生产指令编码 = new OleDbCommand();
+            comm生产指令编码.Connection = mySystem.Parameter.connOle;
+            comm生产指令编码.CommandText = "select * from 生产指令 where ID= @name";
+            comm生产指令编码.Parameters.AddWithValue("@name", InstruID);
+
+            OleDbDataReader myReader生产指令编码 = comm生产指令编码.ExecuteReader();
+            while (myReader生产指令编码.Read())
+            {
+                str生产指令 = myReader生产指令编码["生产指令编号"].ToString();
+                //List<String> list班次 = new List<string>();
+                //list班次.Add(myReader班次["班次"].ToString());
+            }
+
+            myReader生产指令编码.Close();
+            comm生产指令编码.Dispose();  
+            mysheet.PageSetup.RightFooter = str生产指令 + "-03-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            //返回
+            return mysheet;
+        }
         //******************************datagridview******************************//  
 
         // 处理DataGridView中数据类型输错的函数

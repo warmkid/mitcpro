@@ -885,7 +885,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
         public void print(bool preview)
@@ -901,29 +901,60 @@ namespace mySystem.Process.Bag.BTV
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
-            my.Cells[3, 1].Value = "产品代码/规格："+tb产品代码.Text;
-            my.Cells[3, 5].Value = "产品批号："+tb产品批号.Text;
-            my.Cells[3, 8].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            int rowStartAt = 5;
+            my.Cells[3, 1].Value = "产品代码/规格："+dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 5].Value = "产品批号："+dt记录.Rows[0]["产品批号"];
+            my.Cells[3, 8].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
-            //EVERY SHEET CONTAINS 15 RECORDS
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            //EVERY SHEET CONTAINS 12 RECORDS
+            int rowNumPerSheet = 11;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
             {
-                my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["生产时间"];
-                my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["切片尺寸长"];
-                my.Cells[i + 5, 4].Value = dt记录详情.Rows[i]["切片尺寸宽"];
-                my.Cells[i + 5, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
-                my.Cells[i + 5, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
-                my.Cells[i + 5, 7].Value = dt记录详情.Rows[i]["袋体外观检查"];
-                my.Cells[i + 5, 8].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
-                my.Cells[i + 5, 9].Value = dt记录详情.Rows[i]["热封线检查"];
-                my.Cells[i + 5, 10].Value = dt记录详情.Rows[i]["合格品数量"];
-                my.Cells[i + 5, 11].Value = dt记录详情.Rows[i]["不良品数量"];
-                my.Cells[i + 5, 12].Value = dt记录详情.Rows[i]["操作员"];
-                my.Cells[i + 5, 13].Value = dt记录详情.Rows[i]["审核员"];     
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
+                my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["切片尺寸长"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["切片尺寸宽"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["袋体外观检查"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["热封线检查"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["合格品数量"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良品数量"];
+                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["审核员"];     
 
             }
-            
+             //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
+                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["切片尺寸长"];
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["切片尺寸宽"];
+                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["袋体外观检查"];
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["热封线检查"];
+                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["合格品数量"];
+                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良品数量"];
+                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["操作员"];
+                    my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["审核员"];
+                }
+            }
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
             if (preview)
             {
                 my.Select();

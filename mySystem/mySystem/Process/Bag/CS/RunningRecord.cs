@@ -77,7 +77,7 @@ namespace mySystem.Process.Bag
             da.Fill(tempdt);
             instrid = (int)tempdt.Rows[0]["生产指令ID"];
             date = DateTime.Parse(tempdt.Rows[0]["生产日期"].ToString());
-            instrcode = Parameter.csbagInstruction;
+           // instrcode = Parameter.csbagInstruction;
 
             readOuterData(instrid,date);
             outerBind();
@@ -607,7 +607,7 @@ namespace mySystem.Process.Bag
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
         //打印功能
@@ -706,7 +706,7 @@ namespace mySystem.Process.Bag
             {
                 for (int i = 10; i < rownum; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7 + i, Type.Missing];
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
@@ -743,6 +743,22 @@ namespace mySystem.Process.Bag
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt_out.Rows[0]["ID"])) + 1;
             //instrcode怎样获取？
+            //读取ID对应的生产指令编码
+            OleDbCommand comm生产指令编码 = new OleDbCommand();
+            comm生产指令编码.Connection = mySystem.Parameter.connOle;
+            comm生产指令编码.CommandText = "select * from 生产指令 where ID= @name";
+            comm生产指令编码.Parameters.AddWithValue("@name", instrid);
+
+            OleDbDataReader myReader生产指令编码 = comm生产指令编码.ExecuteReader();
+            while (myReader生产指令编码.Read())
+            {
+                instrcode = myReader生产指令编码["生产指令编号"].ToString();
+                //List<String> list班次 = new List<string>();
+                //list班次.Add(myReader班次["班次"].ToString());
+            }
+
+            myReader生产指令编码.Close();
+            comm生产指令编码.Dispose();  
             mysheet.PageSetup.RightFooter = instrcode + "-03-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;

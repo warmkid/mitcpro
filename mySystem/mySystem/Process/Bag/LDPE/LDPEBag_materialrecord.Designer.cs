@@ -43,7 +43,6 @@
             this.btn提交数据审核 = new System.Windows.Forms.Button();
             this.btn删除记录 = new System.Windows.Forms.Button();
             this.btn添加记录 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tb操作员备注 = new System.Windows.Forms.TextBox();
             this.label50 = new System.Windows.Forms.Label();
@@ -64,6 +63,8 @@
             this.btn确认 = new System.Windows.Forms.Button();
             this.label27 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
+            this.tb成品率 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -134,7 +135,7 @@
             // tb废品重量
             // 
             this.tb废品重量.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb废品重量.Location = new System.Drawing.Point(527, 448);
+            this.tb废品重量.Location = new System.Drawing.Point(949, 450);
             this.tb废品重量.Name = "tb废品重量";
             this.tb废品重量.Size = new System.Drawing.Size(100, 26);
             this.tb废品重量.TabIndex = 196;
@@ -143,7 +144,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(638, 455);
+            this.label5.Location = new System.Drawing.Point(1060, 457);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(24, 16);
             this.label5.TabIndex = 195;
@@ -153,7 +154,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(439, 455);
+            this.label4.Location = new System.Drawing.Point(861, 457);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 16);
             this.label4.TabIndex = 194;
@@ -211,16 +212,6 @@
             this.btn添加记录.Text = "添加";
             this.btn添加记录.UseVisualStyleBackColor = true;
             this.btn添加记录.Click += new System.EventHandler(this.btn添加记录_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(78, 433);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(320, 48);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "物料平衡=接上班+领取-使用-退库，应为0；\r\n膜卷以长度计数，偏差应≤2%；\r\n管类以长度计数，允许偏差为每整包±1M。";
             // 
             // label2
             // 
@@ -416,11 +407,31 @@
             this.label角色.TabIndex = 228;
             this.label角色.Text = "角色";
             // 
+            // tb成品率
+            // 
+            this.tb成品率.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb成品率.Location = new System.Drawing.Point(99, 448);
+            this.tb成品率.Name = "tb成品率";
+            this.tb成品率.Size = new System.Drawing.Size(104, 26);
+            this.tb成品率.TabIndex = 231;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label3.Location = new System.Drawing.Point(30, 453);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(656, 16);
+            this.label3.TabIndex = 230;
+            this.label3.Text = "成品率：             （人工计算：产品数量计算成面积/用上面膜材规格和长度计算面积)";
+            // 
             // LDPEBag_materialrecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1119, 590);
+            this.Controls.Add(this.tb成品率);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.tb操作员备注);
@@ -440,7 +451,6 @@
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.btn确认);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btn数据审核);
             this.Controls.Add(this.btn提交数据审核);
@@ -482,7 +492,6 @@
         private System.Windows.Forms.Button btn提交数据审核;
         private System.Windows.Forms.Button btn删除记录;
         private System.Windows.Forms.Button btn添加记录;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tb操作员备注;
         private System.Windows.Forms.Label label50;
@@ -503,5 +512,7 @@
         private System.Windows.Forms.Button btn确认;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.TextBox tb成品率;
+        private System.Windows.Forms.Label label3;
     }
 }

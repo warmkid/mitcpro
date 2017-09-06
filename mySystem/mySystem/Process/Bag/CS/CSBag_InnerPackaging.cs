@@ -988,39 +988,37 @@ namespace mySystem.Process.Bag
             }
             
             //外表信息
-            mysheet.Cells[3, 1].Value = "生产指令编号：" + tb生产指令编号.Text;
-            mysheet.Cells[3, 5].Value = "产品代码：" + cb产品代码.Text;
-            mysheet.Cells[3, 10].Value = "生产批号：" + tb生产批号.Text;
-            mysheet.Cells[3, 15].Value = "标签：" + "中文" + (cb标签语言中文.Checked == true ? "☑" : "□") + "  英文" + (cb标签语言英文.Checked == true ? "☑" : "□");
+            mysheet.Cells[3, 1].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
+            mysheet.Cells[3, 5].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[3, 10].Value = "生产批号：" + dt记录.Rows[0]["生产批号"].ToString();
+            mysheet.Cells[3, 15].Value = "标签：" + "中文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言中文"]) == true ? "☑" : "□") + "  英文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言英文"]) == true ? "☑" : "□");
 
-            mysheet.Cells[18 + ind, 5].Value = tb产品数量包数合计A.Text;
-            mysheet.Cells[18 + ind, 6].Value = tb产品数量只数合计B.Text;
-            mysheet.Cells[18 + ind, 7].Value = "理论产量： " + tb理论产量C.Text;
-            mysheet.Cells[19 + ind, 7].Value = "成品率 = " + tb成品率.Text;
+            mysheet.Cells[18 + ind, 5].Value = dt记录.Rows[0]["产品数量包数合计A"].ToString(); 
+            mysheet.Cells[18 + ind, 6].Value = dt记录.Rows[0]["产品数量只数合计B"].ToString(); 
+            mysheet.Cells[18 + ind, 7].Value = "理论产量： " + dt记录.Rows[0]["理论产量C"].ToString(); 
+            mysheet.Cells[19 + ind, 7].Value = "成品率 = " + dt记录.Rows[0]["成品率"].ToString();
 
             //内表信息
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 mysheet.Cells[6 + i, 1] = i + 1;
-                mysheet.Cells[6 + i, 2] = dataGridView1.Rows[i].Cells["生产开始时间"].Value.ToString();
-                mysheet.Cells[6 + i, 3] = dataGridView1.Rows[i].Cells["内包序号"].Value.ToString();
-                mysheet.Cells[6 + i, 4] = dataGridView1.Rows[i].Cells["包装规格每包只数"].Value.ToString();
-                mysheet.Cells[6 + i, 5] = dataGridView1.Rows[i].Cells["产品数量包数"].Value.ToString();
-                mysheet.Cells[6 + i, 6] = dataGridView1.Rows[i].Cells["产品数量只数"].Value.ToString();
-                mysheet.Cells[6 + i, 7] = dataGridView1.Rows[i].Cells["热封线不合格"].Value.ToString();
-                mysheet.Cells[6 + i, 8] = dataGridView1.Rows[i].Cells["黑点晶点"].Value.ToString();
-                mysheet.Cells[6 + i, 9] = dataGridView1.Rows[i].Cells["指示剂不良"].Value.ToString();
-                mysheet.Cells[6 + i, 10] = dataGridView1.Rows[i].Cells["其他"].Value.ToString();
-                mysheet.Cells[6 + i, 11] = dataGridView1.Rows[i].Cells["不良合计"].Value.ToString();
-                mysheet.Cells[6 + i, 12] = dataGridView1.Rows[i].Cells["包装袋热封线"].Value.ToString().Equals("Yes") ? "√" : "×";
-                mysheet.Cells[6 + i, 13] = dataGridView1.Rows[i].Cells["内标签"].Value.ToString().Equals("Yes") ? "√" : "×";
-                mysheet.Cells[6 + i, 14] = dataGridView1.Rows[i].Cells["内包装外观"].Value.ToString().Equals("Yes") ? "√" : "×";
-                mysheet.Cells[6 + i, 15] = dataGridView1.Rows[i].Cells["操作员"].Value.ToString();
-                mysheet.Cells[6 + i, 16] = dataGridView1.Rows[i].Cells["审核员"].Value.ToString();
+                mysheet.Cells[6 + i, 2] = dt记录详情.Rows[i]["生产开始时间"].ToString(); 
+                mysheet.Cells[6 + i, 3] = dt记录详情.Rows[i]["内包序号"].ToString(); 
+                mysheet.Cells[6 + i, 4] = dt记录详情.Rows[i]["包装规格每包只数"].ToString(); 
+                mysheet.Cells[6 + i, 5] = dt记录详情.Rows[i]["产品数量包数"].ToString(); 
+                mysheet.Cells[6 + i, 6] = dt记录详情.Rows[i]["产品数量只数"].ToString(); 
+                mysheet.Cells[6 + i, 7] = dt记录详情.Rows[i]["热封线不合格"].ToString(); 
+                mysheet.Cells[6 + i, 8] = dt记录详情.Rows[i]["黑点晶点"].ToString(); 
+                mysheet.Cells[6 + i, 9] = dt记录详情.Rows[i]["指示剂不良"].ToString(); 
+                mysheet.Cells[6 + i, 10] = dt记录详情.Rows[i]["其他"].ToString(); 
+                mysheet.Cells[6 + i, 11] = dt记录详情.Rows[i]["不良合计"].ToString(); 
+                mysheet.Cells[6 + i, 12] = dt记录详情.Rows[i]["包装袋热封线"].ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 13] = dt记录详情.Rows[i]["内标签"].ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 14] = dt记录详情.Rows[i]["内包装外观"].ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[6 + i, 15] = dt记录详情.Rows[i]["操作员"].ToString(); 
+                mysheet.Cells[6 + i, 16] = dt记录详情.Rows[i]["审核员"].ToString(); 
 
             }
-            
-            return;
         }
 
         //查找打印的表序号

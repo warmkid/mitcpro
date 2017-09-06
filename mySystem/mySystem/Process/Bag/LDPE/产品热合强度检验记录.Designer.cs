@@ -30,7 +30,7 @@
         {
             this.btn添加 = new System.Windows.Forms.Button();
             this.btn删除 = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
             this.btn保存 = new System.Windows.Forms.Button();
@@ -68,14 +68,14 @@
             this.btn删除.UseVisualStyleBackColor = true;
             this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
             // 
-            // comboBox1
+            // cb打印机
             // 
-            this.comboBox1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(211, 605);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(189, 24);
-            this.comboBox1.TabIndex = 123;
+            this.cb打印机.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cb打印机.FormattingEnabled = true;
+            this.cb打印机.Location = new System.Drawing.Point(211, 605);
+            this.cb打印机.Name = "cb打印机";
+            this.cb打印机.Size = new System.Drawing.Size(231, 24);
+            this.cb打印机.TabIndex = 123;
             // 
             // btn查看日志
             // 
@@ -119,6 +119,7 @@
             this.btn打印.TabIndex = 119;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn审核
             // 
@@ -203,7 +204,7 @@
             this.ClientSize = new System.Drawing.Size(1133, 641);
             this.Controls.Add(this.btn添加);
             this.Controls.Add(this.btn删除);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.btn查看日志);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn保存);
@@ -228,7 +229,7 @@
 
         private System.Windows.Forms.Button btn添加;
         private System.Windows.Forms.Button btn删除;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn保存;

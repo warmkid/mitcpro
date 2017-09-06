@@ -847,7 +847,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
         public void print(bool preview)
@@ -867,53 +867,104 @@ namespace mySystem.Process.Bag.BTV
             my.Cells[3, 13].Value = "产品批号："+tb产品批号.Text;
             my.Cells[3, 18].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
 
-            my.Cells[7, 3].Value = tb焊线1参数1.Text;
-            my.Cells[7, 4].Value = tb焊线1参数2.Text;
-            my.Cells[7, 5].Value = tb焊线1参数3.Text;
-            my.Cells[7, 6].Value = tb焊线1参数4.Text;
-            my.Cells[7, 7].Value = tb焊线1参数5.Text;
+            int rowStartAt = 8;
+            my.Cells[3, 1].Value = "膜或袋体代码：" + dt记录.Rows[0]["膜或袋体代码"];
+            my.Cells[3, 6].Value = "产品代码：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 13].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
+            my.Cells[3, 18].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
-            my.Cells[7, 8].Value = tb焊线2参数1.Text;
-            my.Cells[7, 9].Value = tb焊线2参数2.Text;
-            my.Cells[7,10].Value = tb焊线2参数3.Text;
-            my.Cells[7,11].Value = tb焊线2参数4.Text;
-            my.Cells[7,12].Value = tb焊线2参数5.Text;
+            my.Cells[rowStartAt - 1, 3].Value = dt记录.Rows[0]["焊线1参数1"];
+            my.Cells[rowStartAt - 1, 4].Value = dt记录.Rows[0]["焊线1参数2"];
+            my.Cells[rowStartAt - 1, 5].Value = dt记录.Rows[0]["焊线1参数3"];
+            my.Cells[rowStartAt - 1, 6].Value = dt记录.Rows[0]["焊线1参数4"];
+            my.Cells[rowStartAt - 1, 7].Value = dt记录.Rows[0]["焊线1参数5"];
+            my.Cells[rowStartAt - 1, 8].Value = dt记录.Rows[0]["焊线2参数1"];
+            my.Cells[rowStartAt - 1, 9].Value = dt记录.Rows[0]["焊线2参数2"];
+            my.Cells[rowStartAt - 1, 10].Value = dt记录.Rows[0]["焊线2参数3"];
+            my.Cells[rowStartAt - 1, 11].Value = dt记录.Rows[0]["焊线2参数4"];
+            my.Cells[rowStartAt - 1, 12].Value = dt记录.Rows[0]["焊线2参数5"];
 
-            my.Cells[7, 13].Value = tb焊线3参数1.Text;
-            my.Cells[7, 14].Value = tb焊线3参数2.Text;
-            my.Cells[7, 15].Value = tb焊线3参数3.Text;
-            my.Cells[7, 16].Value = tb焊线3参数4.Text;
-            my.Cells[7, 17].Value = tb焊线3参数5.Text;
-            //EVERY SHEET CONTAINS 15 RECORDS
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            my.Cells[rowStartAt - 1, 13].Value = dt记录.Rows[0]["焊线3参数1"];
+            my.Cells[rowStartAt - 1, 14].Value = dt记录.Rows[0]["焊线3参数2"];
+            my.Cells[rowStartAt - 1, 15].Value = dt记录.Rows[0]["焊线3参数3"];
+            my.Cells[rowStartAt - 1, 16].Value = dt记录.Rows[0]["焊线3参数4"];
+            my.Cells[rowStartAt - 1, 17].Value = dt记录.Rows[0]["焊线3参数5"];
+           
+
+            //EVERY SHEET CONTAINS 12 RECORDS
+            int rowNumPerSheet = 11;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
             {
 
-                my.Cells[i + 8, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + 8, 2].Value = dt记录详情.Rows[i]["生产时间"];
-                my.Cells[i + 8, 3].Value = dt记录详情.Rows[i]["焊线1参数1"];
-                my.Cells[i + 8, 4].Value = dt记录详情.Rows[i]["焊线1参数2"];
-                my.Cells[i + 8, 5].Value = dt记录详情.Rows[i]["焊线1参数3"];
-                my.Cells[i + 8, 6].Value = dt记录详情.Rows[i]["焊线1参数4"];
-                my.Cells[i + 8, 7].Value = dt记录详情.Rows[i]["焊线1参数5"];
-                my.Cells[i + 8, 8].Value = dt记录详情.Rows[i]["焊线2参数1"];
-                my.Cells[i + 8, 9].Value = dt记录详情.Rows[i]["焊线2参数2"];
-                my.Cells[i + 8, 10].Value = dt记录详情.Rows[i]["焊线2参数3"];
-                my.Cells[i + 8, 11].Value = dt记录详情.Rows[i]["焊线2参数4"];
-                my.Cells[i + 8, 12].Value = dt记录详情.Rows[i]["焊线2参数5"];
-                my.Cells[i + 8, 13].Value = dt记录详情.Rows[i]["焊线3参数1"];
-                my.Cells[i + 8, 14].Value = dt记录详情.Rows[i]["焊线3参数2"];
-                my.Cells[i + 8, 15].Value = dt记录详情.Rows[i]["焊线3参数3"];
-                my.Cells[i + 8, 16].Value = dt记录详情.Rows[i]["焊线3参数4"];
-                my.Cells[i + 8, 17].Value = dt记录详情.Rows[i]["焊线3参数5"];
-                my.Cells[i + 8, 18].Value = dt记录详情.Rows[i]["外观"];
-                my.Cells[i + 8, 19].Value = dt记录详情.Rows[i]["合格品数量"];
-                my.Cells[i + 8, 20].Value = dt记录详情.Rows[i]["不良品数量"];
-                my.Cells[i + 8, 21].Value = dt记录详情.Rows[i]["操作员"];                
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
+                my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["焊线1参数1"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["焊线1参数2"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["焊线1参数3"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["焊线1参数4"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["焊线1参数5"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["焊线2参数1"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["焊线2参数2"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["焊线2参数3"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["焊线2参数4"];
+                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["焊线2参数5"];
+                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["焊线3参数1"];
+                my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["焊线3参数2"];
+                my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["焊线3参数3"];
+                my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["焊线3参数4"];
+                my.Cells[i + rowStartAt, 17].Value = dt记录详情.Rows[i]["焊线3参数5"];
+                my.Cells[i + rowStartAt, 18].Value = dt记录详情.Rows[i]["外观"];
+                my.Cells[i + rowStartAt, 19].Value = dt记录详情.Rows[i]["合格品数量"];
+                my.Cells[i + rowStartAt, 20].Value = dt记录详情.Rows[i]["不良品数量"];
+                my.Cells[i + rowStartAt, 21].Value = dt记录详情.Rows[i]["操作员"];                
             }
 
-            my.Cells[20, 13].Value = "合格品数量：" + dt记录.Rows[0]["合格品数量"] + "只\n不良品数量：" + dt记录.Rows[0]["不良品数量"] + "只";
+            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
-            my.Cells[20, 18].Value = "审核员:" + dt记录.Rows[0]["审核员"] + "\n审核日期：" + dtp审核日期.Value.ToString("yyyy年MM月dd日"); ;
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
+                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["焊线1参数1"];
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["焊线1参数2"];
+                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["焊线1参数3"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["焊线1参数4"];
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["焊线1参数5"];
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["焊线2参数1"];
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["焊线2参数2"];
+                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["焊线2参数3"];
+                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["焊线2参数4"];
+                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["焊线2参数5"];
+                    my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["焊线3参数1"];
+                    my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["焊线3参数2"];
+                    my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["焊线3参数3"];
+                    my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["焊线3参数4"];
+                    my.Cells[i + rowStartAt, 17].Value = dt记录详情.Rows[i]["焊线3参数5"];
+                    my.Cells[i + rowStartAt, 18].Value = dt记录详情.Rows[i]["外观"];
+                    my.Cells[i + rowStartAt, 19].Value = dt记录详情.Rows[i]["合格品数量"];
+                    my.Cells[i + rowStartAt, 20].Value = dt记录详情.Rows[i]["不良品数量"];
+                    my.Cells[i + rowStartAt, 21].Value = dt记录详情.Rows[i]["操作员"];
+                }
+            }
+
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
+            //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            
+
+            my.Cells[20 + varOffset, 13].Value = "合格品数量：" + dt记录.Rows[0]["合格品数量"] + "只\n不良品数量：" + dt记录.Rows[0]["不良品数量"] + "只";
+
+            my.Cells[20 + varOffset, 18].Value = "审核员:" + dt记录.Rows[0]["审核员"] + "\n审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
             
             if (preview)
             {
