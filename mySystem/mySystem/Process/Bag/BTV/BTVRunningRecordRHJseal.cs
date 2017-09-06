@@ -822,6 +822,7 @@ namespace mySystem.Process.Bag.BTV
 
                 my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
                 my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
+                my.Cells[i + rowStartAt, 2].Font.Size = 11;
                 my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["焊线1参数1"];
                 my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["焊线1参数2"];
                 my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["焊线1参数3"];
@@ -846,7 +847,6 @@ namespace mySystem.Process.Bag.BTV
             {
                 for (int i = rowNumPerSheet; i < rowNumTotal; i++)
                 {
-
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
@@ -854,6 +854,7 @@ namespace mySystem.Process.Bag.BTV
 
                     my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
                     my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
+                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
                     my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["焊线1参数1"];
                     my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["焊线1参数2"];
                     my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["焊线1参数3"];

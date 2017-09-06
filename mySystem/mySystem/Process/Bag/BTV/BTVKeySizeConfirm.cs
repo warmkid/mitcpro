@@ -827,7 +827,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
         public void print(bool preview)

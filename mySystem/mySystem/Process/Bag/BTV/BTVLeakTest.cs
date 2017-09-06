@@ -885,41 +885,77 @@ namespace mySystem.Process.Bag.BTV
             // 设置该进程是否可见
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
-            
-            my.Cells[3, 1].Value = "产品代码/规格：" + tb产品代码.Text;
-            my.Cells[3, 8].Value = "产品批号：" + tb产品批号.Text;
-            my.Cells[3, 12].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            int rowStartAt = 7;
+            my.Cells[3, 1].Value = "产品代码/规格：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 8].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
+            my.Cells[3, 12].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
-            my.Cells[6, 3].Value = tbprefill.Text;
-            my.Cells[6, 4].Value = tbcharde.Text;
-            my.Cells[6, 5].Value = tbsettle.Text;
-            my.Cells[6, 6].Value = tbtest.Text;
-            my.Cells[6, 7].Value = tbfinel.Text;
-            my.Cells[6, 8].Value = tbfiner.Text;
-            my.Cells[6, 9].Value = tbflow.Text;
+            my.Cells[rowStartAt - 1, 3].Value = dt记录.Rows[0]["prefill"];
+            my.Cells[rowStartAt - 1, 4].Value = dt记录.Rows[0]["charde"];
+            my.Cells[rowStartAt - 1, 5].Value = dt记录.Rows[0]["settle"];
+            my.Cells[rowStartAt - 1, 6].Value = dt记录.Rows[0]["test"];
+            my.Cells[rowStartAt - 1, 7].Value = dt记录.Rows[0]["finel"];
+            my.Cells[rowStartAt - 1, 8].Value = dt记录.Rows[0]["finer"];
+            my.Cells[rowStartAt - 1, 9].Value = dt记录.Rows[0]["flow"];
             //EVERY SHEET CONTAINS 15 RECORDS
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            int rowNumPerSheet = 14;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
             {
-                
-                my.Cells[i + 7, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + 7, 2].Value = dt记录详情.Rows[i]["检测时间"];
-                my.Cells[i + 7, 3].Value = dt记录详情.Rows[i]["prefill"];
-                my.Cells[i + 7, 4].Value = dt记录详情.Rows[i]["charde"];
-                my.Cells[i + 7, 5].Value = dt记录详情.Rows[i]["settle"];
-                my.Cells[i + 7, 6].Value = dt记录详情.Rows[i]["test"];
-                my.Cells[i + 7, 7].Value = dt记录详情.Rows[i]["finel"];
-                my.Cells[i + 7, 8].Value = dt记录详情.Rows[i]["finer"];
-                my.Cells[i + 7, 9].Value = dt记录详情.Rows[i]["flow"];
-                my.Cells[i + 7, 10].Value = dt记录详情.Rows[i]["检测产品数量"];
-                my.Cells[i + 7, 11].Value = dt记录详情.Rows[i]["不良品数量"];
-                my.Cells[i + 7, 12].Value = dt记录详情.Rows[i]["判定"];
-                my.Cells[i + 7, 13].Value = dt记录详情.Rows[i]["操作员"];
-                my.Cells[i + 7, 14].Value = dt记录详情.Rows[i]["备注"];
+
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检测时间"]).ToString("HH:mm");
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["prefill"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["charde"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["settle"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["test"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["finel"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["finer"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["flow"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["检测产品数量"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良品数量"];
+                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["判定"];
+                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["备注"];
                
             }
+            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
-            my.Cells[22, 8].Value = "合格品数量： " + tb合格品数量.Text + " 个，\n不良品数量： " + tb不良品数量.Text + " 个。";
-            my.Cells[22, 12].Value = "审核员/日期： " + tb审核员.Text + dtp审核日期.Value.ToString("yyyy年MM月dd日");
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+
+
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检测时间"]).ToString("HH:mm");
+                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["prefill"];
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["charde"];
+                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["settle"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["test"];
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["finel"];
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["finer"];
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["flow"];
+                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["检测产品数量"];
+                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良品数量"];
+                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["判定"];
+                    my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["操作员"];
+                    my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["备注"];
+                }
+            }
+
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
+            //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            
+            my.Cells[22 + varOffset, 8].Value = "合格品数量： " + dt记录.Rows[0]["合格品数量"] + " 个，\n不良品数量： " + dt记录.Rows[0]["不良品数量"] + " 个。";
+            my.Cells[22 + varOffset, 12].Value = "审核员： " + dt记录.Rows[0]["审核员"] + "\n日期： " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
             if (preview)
             {
                 my.Select();
