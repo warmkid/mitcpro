@@ -385,6 +385,7 @@ namespace mySystem.Process.Stock
             mysheet.Cells[6, 5].Value = dtOuter.Rows[0]["辅计量单位"].ToString();
             mysheet.Cells[7, 2].Value = dtOuter.Rows[0]["退货理由"].ToString();
             mysheet.Cells[8, 2].Value = dtOuter.Rows[0]["销售总监审批意见"].ToString();
+            mysheet.Cells[14, 3].Value = dtOuter.Rows[0]["批准结果"].ToString() == "True" ? "批准" : "不予批准";
             mysheet.Cells[14, 5].Value = Convert.ToDateTime(dtOuter.Rows[0]["批准日期"]).ToString("D");
             ///
             /// TODO:加页脚
