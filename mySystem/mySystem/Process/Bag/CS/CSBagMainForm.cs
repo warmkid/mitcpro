@@ -255,6 +255,8 @@ namespace mySystem.Process.Bag
 
         private void Btn交接班_Click(object sender, EventArgs e)
         {
+            CS.HandOver myform = new HandOver(mainform);
+            myform.ShowDialog();
 
         }
 
