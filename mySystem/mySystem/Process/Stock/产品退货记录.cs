@@ -270,18 +270,7 @@ namespace mySystem.Process.Stock
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
             fill_excel(my);
-
-            ////"生产指令-步骤序号- 表序号 /&P"
-            //int sheetnum;
-            //OleDbDataAdapter da = new OleDbDataAdapter("select ID from 清场记录" + " where 生产指令ID=" + ID.ToString(), mySystem.Parameter.connOle);
-            //DataTable dt = new DataTable("temp");
-            //da.Fill(dt);
-            //List<Int32> sheetList = new List<Int32>();
-            //for (int i = 0; i < dt.Rows.Count; i++)
-            //{ sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
-            //sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
-            //my.PageSetup.RightFooter = CODE + "-" + sheetnum.ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
-            my.PageSetup.RightFooter = dtOuter.Rows[0]["退货申请单编号"] + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
 
             if (b)
@@ -306,16 +295,6 @@ namespace mySystem.Process.Stock
                 {
                     if (1 == label_打印成功)
                     {
-                        //string str角色;
-                        //if (_userState == Parameter.UserState.操作员)
-                        //    str角色 = "操作员";
-                        //else if (_userState == Parameter.UserState.审核员)
-                        //    str角色 = "审核员";
-                        //else
-                        //    str角色 = "管理员";
-                        //string log = "\n=====================================\n";
-                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + str角色 + ":" + mySystem.Parameter.userName + " 完成打印\n";
-                        //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
                         bsOuter.EndEdit();
                         daOuter.Update((DataTable)bsOuter.DataSource);
                     }
