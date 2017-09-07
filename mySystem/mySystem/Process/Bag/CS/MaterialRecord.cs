@@ -549,14 +549,18 @@ namespace mySystem.Process.Bag
             dr["序号"] = 0;
             dr["TCS制袋领料记录ID"] = ID;
             dr["领料日期时间"] = DateTime.Now;
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 用户 where 用户名='" + mySystem.Parameter.userName + "'", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dr["班次"] = dt.Rows[0]["班次"].ToString();
             dr["物料简称"] = dt物料.Rows[0]["物料简称"];
             dr["物料代码"] = dt物料.Rows[0]["物料代码"];
             dr["物料批号"] = dt物料.Rows[0]["物料批号"];
-            dr["接上班数量A"] = 0;
+            //dr["接上班数量A"] = 0;
             dr["领取数量B"] = 0;
-            dr["使用数量C"] = 0;
-            dr["退库数量D"] = 0;
-            dr["物料平衡"] = 0;
+            //dr["使用数量C"] = 0;
+            //dr["退库数量D"] = 0;
+            //dr["物料平衡"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
             return dr;
@@ -621,14 +625,14 @@ namespace mySystem.Process.Bag
             //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["物料代码"].ReadOnly = true;
-            dataGridView1.Columns["物料平衡"].ReadOnly = true;
+            //dataGridView1.Columns["物料平衡"].ReadOnly = true;
             dataGridView1.Columns["审核员"].ReadOnly = true;
             //HeaderText
             dataGridView1.Columns["领料日期时间"].HeaderText = "领料日期、时间";
-            dataGridView1.Columns["接上班数量A"].HeaderText = "接上班\r数量";
+            //dataGridView1.Columns["接上班数量A"].HeaderText = "接上班\r数量";
             dataGridView1.Columns["领取数量B"].HeaderText = "领取\r数量";
-            dataGridView1.Columns["使用数量C"].HeaderText = "使用\r数量";
-            dataGridView1.Columns["退库数量D"].HeaderText = "退库\r数量";
+            //dataGridView1.Columns["使用数量C"].HeaderText = "使用\r数量";
+            //dataGridView1.Columns["退库数量D"].HeaderText = "退库\r数量";
         }
 
         //******************************按钮功能******************************//
@@ -686,7 +690,12 @@ namespace mySystem.Process.Bag
         //内表审核按钮
         private void btn数据审核_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int i in hi待审核行号)
             {
                 if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
                 {
@@ -1125,6 +1134,12 @@ namespace mySystem.Process.Bag
                         dt记录详情.Rows[e.RowIndex]["操作员"] = mySystem.Parameter.userName;
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
                     }
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "物料简称")
+                {
+                    DataRow[] drs = dt物料.Select("物料简称='" + dataGridView1["物料简称", e.RowIndex].Value.ToString() + "'");
+                    dataGridView1["物料代码", e.RowIndex].Value = drs[0]["物料代码"].ToString();
+                    dataGridView1["物料批号", e.RowIndex].Value = drs[0]["物料批号"].ToString();
                 }
                 else
                 { }

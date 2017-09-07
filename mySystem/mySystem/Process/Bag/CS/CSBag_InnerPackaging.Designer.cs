@@ -65,6 +65,10 @@
             this.label角色 = new System.Windows.Forms.Label();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.label40 = new System.Windows.Forms.Label();
+            this.tb生产日期 = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tb班次 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -73,10 +77,10 @@
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(22, 96);
+            this.dataGridView1.Location = new System.Drawing.Point(22, 141);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1199, 320);
+            this.dataGridView1.Size = new System.Drawing.Size(1199, 275);
             this.dataGridView1.TabIndex = 28;
             // 
             // Title
@@ -133,7 +137,7 @@
             // 
             this.cb标签语言英文.AutoSize = true;
             this.cb标签语言英文.Font = new System.Drawing.Font("SimSun", 12F);
-            this.cb标签语言英文.Location = new System.Drawing.Point(1059, 63);
+            this.cb标签语言英文.Location = new System.Drawing.Point(864, 104);
             this.cb标签语言英文.Name = "cb标签语言英文";
             this.cb标签语言英文.Size = new System.Drawing.Size(59, 20);
             this.cb标签语言英文.TabIndex = 47;
@@ -146,7 +150,7 @@
             this.cb标签语言中文.Checked = true;
             this.cb标签语言中文.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb标签语言中文.Font = new System.Drawing.Font("SimSun", 12F);
-            this.cb标签语言中文.Location = new System.Drawing.Point(996, 63);
+            this.cb标签语言中文.Location = new System.Drawing.Point(801, 104);
             this.cb标签语言中文.Name = "cb标签语言中文";
             this.cb标签语言中文.Size = new System.Drawing.Size(59, 20);
             this.cb标签语言中文.TabIndex = 46;
@@ -157,7 +161,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label3.Location = new System.Drawing.Point(935, 64);
+            this.label3.Location = new System.Drawing.Point(740, 105);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 16);
             this.label3.TabIndex = 45;
@@ -440,11 +444,51 @@
             this.label40.TabIndex = 182;
             this.label40.Text = "选择打印机：";
             // 
+            // tb生产日期
+            // 
+            this.tb生产日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb生产日期.Location = new System.Drawing.Point(133, 99);
+            this.tb生产日期.Name = "tb生产日期";
+            this.tb生产日期.Size = new System.Drawing.Size(164, 26);
+            this.tb生产日期.TabIndex = 184;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label12.Location = new System.Drawing.Point(19, 104);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(88, 16);
+            this.label12.TabIndex = 183;
+            this.label12.Text = "生产日期：";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label13.Location = new System.Drawing.Point(326, 104);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(56, 16);
+            this.label13.TabIndex = 185;
+            this.label13.Text = "班次：";
+            // 
+            // tb班次
+            // 
+            this.tb班次.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb班次.Location = new System.Drawing.Point(404, 101);
+            this.tb班次.Name = "tb班次";
+            this.tb班次.Size = new System.Drawing.Size(164, 26);
+            this.tb班次.TabIndex = 186;
+            // 
             // CSBag_InnerPackaging
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1240, 565);
+            this.Controls.Add(this.tb班次);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.tb生产日期);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.label27);
@@ -529,5 +573,9 @@
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox tb生产日期;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox tb班次;
     }
 }
