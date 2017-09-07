@@ -758,7 +758,7 @@ namespace mySystem.Process.Bag.LDPE
                     mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
                     mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
                 }
-                ind = rownum - 14;
+                ind = rownum - 9;
             }
 
             //外表信息
