@@ -270,6 +270,36 @@ namespace mySystem.Process.Bag.PTV
             
         }
 
+        private void Btn外包装_Click(object sender, EventArgs e)
+        {
+            PTV.PTV产品外包装记录 myform = new PTV.PTV产品外包装记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn退料_Click(object sender, EventArgs e)
+        {
+            PTV.PTV生产退料记录 myform = new PTV.PTV生产退料记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn洁净_Click(object sender, EventArgs e)
+        {
+            PTV.PTV洁净区温湿度记录 myform = new PTV.PTV洁净区温湿度记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn交接班_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn结束_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
         private void PTVMainForm_Load(object sender, EventArgs e)
         {
 
@@ -312,8 +342,7 @@ namespace mySystem.Process.Bag.PTV
             return b = false;
         }
 
-        
-
+       
 
     }
 }

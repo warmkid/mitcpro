@@ -92,6 +92,11 @@ namespace mySystem.Process.Bag
             Btn清场.Enabled = b;
             Btn批生产.Enabled = b;
             Btn热合强度.Enabled = b;
+            Btn外包装.Enabled = b;
+            Btn洁净.Enabled = b;
+            Btn退料.Enabled = b;
+            Btn交接班.Enabled = b;
+            Btn结束.Enabled = b;
         }
 
 
@@ -230,6 +235,35 @@ namespace mySystem.Process.Bag
             myform.ShowDialog();
         }
 
+        private void Btn外包装_Click(object sender, EventArgs e)
+        {
+            CS.CS产品外包装记录 myform = new CS产品外包装记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn退料_Click(object sender, EventArgs e)
+        {
+            CS.CS生产退料记录 myform = new CS生产退料记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn洁净_Click(object sender, EventArgs e)
+        {
+            CS.CS洁净区温湿度记录 myform = new CS洁净区温湿度记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn交接班_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn结束_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
 
         //判断是否能查看
         private Boolean checkUser(String user, int role, String tblName)
@@ -267,8 +301,6 @@ namespace mySystem.Process.Bag
             }
             return b = false;
         }
-
-        
 
     }
 }
