@@ -777,7 +777,7 @@ namespace mySystem.Process.Bag
             }
             mysheet.Cells[7, 17].Value = dt_out.Rows[0]["审核员"].ToString() + "\n" + Convert.ToDateTime(dt_out.Rows[0]["审核日期"]).ToString("D");
             
-            mysheet.Cells[17 + ind, 1].Value = " 备注：填写方式：正常或合格划“√”，异常写明原因。 ";
+            mysheet.Cells[18 + ind, 1].Value = " 备注：填写方式：正常或合格划“√”，异常写明原因。 ";
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + instrid.ToString(), mySystem.Parameter.connOle);

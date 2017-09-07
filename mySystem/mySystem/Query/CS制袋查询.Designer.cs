@@ -56,7 +56,12 @@
             "2#制袋机开机前确认表",
             "2#制袋机运行记录",
             "清场记录",
-            "制袋工序批生产记录"});
+            "制袋工序批生产记录",
+            "产品外包装记录",
+            "生产退料记录",
+            "洁净区温湿度记录",
+            "岗位交接班记录",
+            "结束工序"});
             this.comboBox2.Location = new System.Drawing.Point(612, 20);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(255, 24);
@@ -189,7 +194,7 @@
             this.Controls.Add(this.label2);
             this.Font = new System.Drawing.Font("SimSun", 12F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "CS制袋查询";
             this.Text = "CS制袋查询";
             ((System.ComponentModel.ISupportInitialize)(this.dgv)).EndInit();

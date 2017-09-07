@@ -370,5 +370,96 @@ namespace mySystem.Process.Stock
             base.CheckResult();
         }
 
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            if (combox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(combox打印机选择.Text);
+            print(true);
+            GC.Collect();
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\tuihuo\表5产品退货接请验单.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            //外表信息
+            mysheet.Cells[2, 2].Value = dtOuter.Rows[0]["退货申请单编号"].ToString();
+            mysheet.Cells[3, 2].Value = dtOuter.Rows[0]["请验人"].ToString();
+            mysheet.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["请验日期"]).ToString("D");
+            mysheet.Cells[4, 2].Value = dtOuter.Rows[0]["拟退货产品销售订单编号"].ToString();
+            mysheet.Cells[4, 4].Value = dtOuter.Rows[0]["客户名称"].ToString();
+            mysheet.Cells[5, 2].Value = dtOuter.Rows[0]["产品名称"].ToString();
+            mysheet.Cells[5, 4].Value = dtOuter.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[6, 2].Value = dtOuter.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[6, 4].Value = dtOuter.Rows[0]["拟退货数量"].ToString();
+            mysheet.Cells[6, 5].Value = dtOuter.Rows[0]["辅计量单位"].ToString();
+            mysheet.Cells[7, 2].Value = dtOuter.Rows[0]["审核人"].ToString();
+            mysheet.Cells[7, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["审核日期"]).ToString("D");
+
+            ///
+            /// TODO:加页脚
+            ///
+
+            //返回
+            return mysheet;
+        }
+
     }
 }

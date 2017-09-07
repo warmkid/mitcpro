@@ -88,6 +88,11 @@ namespace mySystem.Process.Bag.PTV
             Btn瓶口焊接机.Enabled = b;
             Btn清场记录.Enabled = b;
             Btn批生产记录.Enabled = b;
+            Btn外包装.Enabled = b;
+            Btn退料.Enabled = b;
+            Btn洁净.Enabled = b;
+            Btn交接班.Enabled = b;
+            Btn结束.Enabled = b;
         }
 
         private void A1Btn_Click(object sender, EventArgs e)
@@ -270,6 +275,36 @@ namespace mySystem.Process.Bag.PTV
             
         }
 
+        private void Btn外包装_Click(object sender, EventArgs e)
+        {
+            PTV.PTV产品外包装记录 myform = new PTV.PTV产品外包装记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn退料_Click(object sender, EventArgs e)
+        {
+            PTV.PTV生产退料记录 myform = new PTV.PTV生产退料记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn洁净_Click(object sender, EventArgs e)
+        {
+            PTV.PTV洁净区温湿度记录 myform = new PTV.PTV洁净区温湿度记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn交接班_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn结束_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
         private void PTVMainForm_Load(object sender, EventArgs e)
         {
 
@@ -312,8 +347,7 @@ namespace mySystem.Process.Bag.PTV
             return b = false;
         }
 
-        
-
+       
 
     }
 }

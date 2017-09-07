@@ -98,6 +98,15 @@ namespace mySystem.Process.Bag.BTV
             Btn90度热合机.Enabled = b;
             Btn封口热合机.Enabled = b;
             Btn打孔及与图纸.Enabled = b;
+            Btn热合强度.Enabled = b;
+            Btn外观尺寸.Enabled = b;
+            Btn日报表.Enabled = b;
+            Btn外包装.Enabled = b;
+            Btn退料.Enabled = b;
+            Btn洁净.Enabled = b;
+            Btn交接班.Enabled = b;
+            Btn结束.Enabled = b;
+
         }
 
         private void Btn生产领料_Click(object sender, EventArgs e)
@@ -437,6 +446,54 @@ namespace mySystem.Process.Bag.BTV
             
         }
 
+        private void Btn外包装_Click(object sender, EventArgs e)
+        {
+            BTV.BPV产品外包装记录 myform = new BTV.BPV产品外包装记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn退料_Click(object sender, EventArgs e)
+        {
+            BTV.BPV生产退料记录 myform = new BTV.BPV生产退料记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn洁净_Click(object sender, EventArgs e)
+        {
+            BTV.BPV洁净区温湿度记录 myform = new BTV.BPV洁净区温湿度记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn结束_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn热合强度_Click(object sender, EventArgs e)
+        {
+            BTV.产品热合强度检验记录 myform = new BTV.产品热合强度检验记录(mainform);
+            myform.ShowDialog();
+        }
+
+        private void Btn外观尺寸_Click(object sender, EventArgs e)
+        {
+            BTV.产品外观和尺寸检验记录 myform = new BTV.产品外观和尺寸检验记录(mainform);
+            myform.ShowDialog();
+        }
+
+        private void Btn日报表_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn交接班_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+
         //判断是否能查看
         private Boolean checkUser(String user, int role, String tblName)
         {
@@ -473,6 +530,8 @@ namespace mySystem.Process.Bag.BTV
             }
             return b = false;
         }
+
+        
         
     }
 }

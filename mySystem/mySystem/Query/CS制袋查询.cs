@@ -153,6 +153,33 @@ namespace mySystem.Query
                         else
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", null); }
                         break;
+                    case "产品外包装记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品外包装记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品外包装记录表", "审核员", null, null); }
+                        break;
+                    case "生产退料记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "生产退料记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "生产退料记录表", "审核员", null, null); }
+                        break;
+                    case "洁净区温湿度记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "洁净区温湿度记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "洁净区温湿度记录表", "审核员", null, null); }
+                        break;
+                    case "岗位交接班记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", null); }
+                        break;
+                    case "结束工序":
+
+                        break;
 
                     default:
                         break;
@@ -277,6 +304,26 @@ namespace mySystem.Query
                         Record_batch_bag form8 = new Record_batch_bag(mainform, ID);
                         form8.Show();
                         break;
+                    case "产品外包装记录":
+                        CS产品外包装记录 form9 = new CS产品外包装记录(mainform, ID);
+                        form9.ShowDialog();
+                        break;
+                    case "生产退料记录":
+                        //CS生产退料记录 form10 = new CS生产退料记录(mainform, ID);
+                        //form10.ShowDialog();
+                        break;
+                    case "洁净区温湿度记录":
+                        //CS洁净区温湿度记录 form11 = new CS洁净区温湿度记录(mainform, ID);
+                        //form11.ShowDialog();
+                        break;
+                    case "岗位交接班记录":
+                        HandOver form12 = new HandOver(mainform, ID);
+                        form12.ShowDialog();
+                        break;
+                    case "结束工序":
+
+                        break;
+
 
                     default:
                         break;

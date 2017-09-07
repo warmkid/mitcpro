@@ -228,6 +228,7 @@
             this.btn打印.TabIndex = 271;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn审核
             // 

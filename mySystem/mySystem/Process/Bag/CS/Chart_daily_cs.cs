@@ -1186,7 +1186,7 @@ namespace mySystem.Process.CleanCut
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(true);
+            print(false);
             //写日志
             string log = "\n=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";

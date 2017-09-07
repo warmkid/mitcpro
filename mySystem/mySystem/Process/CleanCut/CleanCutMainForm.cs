@@ -152,23 +152,10 @@ namespace mySystem.Process.CleanCut
 
         private void A5Btn_Click(object sender, EventArgs e)
         {
-            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清洁分切日报表");
-            if (b)
-            {
-                DailyRecord form2 = new DailyRecord(mainform);
-                form2.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("您无权查看该页面！");
-                return;
-            }
+            DailyRecord form2 = new DailyRecord(mainform);
+            form2.ShowDialog();
             
         }
-
-
-
-        
 
         private void A6Btn_Click(object sender, EventArgs e)
         {

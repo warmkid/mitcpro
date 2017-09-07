@@ -245,6 +245,101 @@ namespace mySystem.Process.Stock
             save();
         }
 
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            if (combox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(combox打印机选择.Text);
+            print(false);
+            GC.Collect();
+        }
+
+        public void print(bool b)
+        {
+            int label_打印成功 = 1;
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            dir += "./../../xls/tuihuo/表8产品退货记录表.xlsx";
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                {
+                    label_打印成功 = 0;
+                }
+                finally
+                {
+                    if (1 == label_打印成功)
+                    {
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[2, 2].Value = dtOuter.Rows[0]["退货申请单编号"].ToString();
+            my.Cells[3, 2].Value = dtOuter.Rows[0]["申请人"].ToString();
+            my.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["申请日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["申请日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["申请日期"].ToString()).Day.ToString() + "日";
+            my.Cells[4, 2].Value = dtOuter.Rows[0]["拟退货产品销售订单编号"].ToString();
+            my.Cells[4, 4].Value = dtOuter.Rows[0]["客户名称"].ToString();
+            my.Cells[5, 2].Value = dtOuter.Rows[0]["产品名称"].ToString();
+            my.Cells[5, 4].Value = dtOuter.Rows[0]["产品代码"].ToString();
+            my.Cells[6, 2].Value = dtOuter.Rows[0]["产品批号"].ToString();
+            my.Cells[6, 4].Value = dtOuter.Rows[0]["拟退货数量"].ToString();
+            my.Cells[6, 5].Value = dtOuter.Rows[0]["辅计量单位"].ToString();
+            my.Cells[7, 2].Value = dtOuter.Rows[0]["退货理由"].ToString();
+            my.Cells[9, 2].Value = dtOuter.Rows[0]["销售总监审批意见"].ToString();
+            my.Cells[11, 2].Value = dtOuter.Rows[0]["PA质量部审批意见"].ToString();
+            my.Cells[14, 2].Value = dtOuter.Rows[0]["接收人"].ToString();
+            my.Cells[14, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["接收日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["接收日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["接收日期"].ToString()).Day.ToString() + "日";
+            my.Cells[15, 2].Value = dtOuter.Rows[0]["外包装单据验收情况"].ToString();
+            my.Cells[16, 2].Value = dtOuter.Rows[0]["检验报告单编号"].ToString();
+            my.Cells[17, 2].Value = dtOuter.Rows[0]["检验结果"].ToString();
+            my.Cells[18, 2].Value = dtOuter.Rows[0]["PA质量部处理建议"].ToString();
+            my.Cells[21, 2].Value = dtOuter.Rows[0]["PA生产部处理记录"].ToString();
+            my.Cells[24, 2].Value = dtOuter.Rows[0]["PA质量部验证结论"].ToString();
+            my.Cells[26, 3].Value = dtOuter.Rows[0]["验证人"].ToString();
+            my.Cells[26, 5].Value = Convert.ToDateTime(dtOuter.Rows[0]["验证日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["验证日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["验证日期"].ToString()).Day.ToString() + "日";
+           
+        }
+
         
        
     }

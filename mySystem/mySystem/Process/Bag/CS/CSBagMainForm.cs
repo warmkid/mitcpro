@@ -92,6 +92,11 @@ namespace mySystem.Process.Bag
             Btn清场.Enabled = b;
             Btn批生产.Enabled = b;
             Btn热合强度.Enabled = b;
+            Btn外包装.Enabled = b;
+            Btn洁净.Enabled = b;
+            Btn退料.Enabled = b;
+            Btn交接班.Enabled = b;
+            Btn结束.Enabled = b;
         }
 
 
@@ -204,8 +209,18 @@ namespace mySystem.Process.Bag
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Record_batch_bag form9 = new Record_batch_bag(mainform);           
-            form9.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋工序批生产记录");
+            if (b)
+            {
+                Record_batch_bag form9 = new Record_batch_bag(mainform);
+                form9.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+                       
         }
 
         private void Btn外观及检验_Click(object sender, EventArgs e)
@@ -226,9 +241,90 @@ namespace mySystem.Process.Bag
 
         private void Btn热合强度_Click(object sender, EventArgs e)
         {
-            CS.产品热合强度检验记录 myform = new 产品热合强度检验记录(mainform);
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品热合强度检验记录");
+            if (b)
+            {
+                CS.产品热合强度检验记录 myform = new 产品热合强度检验记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
         }
+
+        private void Btn外包装_Click(object sender, EventArgs e)
+        {
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外包装记录表");
+            if (b)
+            {
+                CS.CS产品外包装记录 myform = new CS产品外包装记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
+        }
+
+        private void Btn退料_Click(object sender, EventArgs e)
+        {
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
+            if (b)
+            {
+                CS.CS生产退料记录 myform = new CS生产退料记录();
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
+        }
+
+        private void Btn洁净_Click(object sender, EventArgs e)
+        {
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
+            if (b)
+            {
+                CS.CS洁净区温湿度记录 myform = new CS洁净区温湿度记录();
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
+        }
+
+        private void Btn交接班_Click(object sender, EventArgs e)
+        {
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "岗位交接班记录");
+            if (b)
+            {
+                CS.HandOver myform = new HandOver(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
+
+        }
+
+        private void Btn结束_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
 
         //判断是否能查看
@@ -267,8 +363,6 @@ namespace mySystem.Process.Bag
             }
             return b = false;
         }
-
-        
 
     }
 }

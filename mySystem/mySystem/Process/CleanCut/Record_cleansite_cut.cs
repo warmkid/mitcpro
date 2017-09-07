@@ -935,7 +935,7 @@ namespace mySystem.Process.CleanCut
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"])) + 1;
-            my.PageSetup.RightFooter = instrcode + "-07-" + sheetnum.ToString("D3") + "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+            my.PageSetup.RightFooter = instrcode + "-07-" + sheetnum.ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
             if (isShow)
             {

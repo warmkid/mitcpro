@@ -89,67 +89,246 @@ namespace mySystem.Process.Bag.LDPE
             Btn批生产记录.Enabled = b;
             Btn热合强度.Enabled = b;
             Btn外观及检验.Enabled = b;
+            Btn外包装.Enabled = b;
+            Btn洁净.Enabled = b;
+            Btn退料.Enabled = b;
+            Btn交接班.Enabled = b;
+            Btn结束.Enabled = b;
         }
 
         private void A1Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_materialrecord material = new LDPEBag_materialrecord(mainform);
-            material.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "LDPE制袋生产领料记录");
+            if (b)
+            {
+                LDPEBag_materialrecord material = new LDPEBag_materialrecord(mainform);
+                material.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform);
-            batch.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋工序批生产记录");
+            if (b)
+            {
+                LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform);
+                batch.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void A2Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging(mainform);
-            inner.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品内包装记录");
+            if (b)
+            {
+                LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging(mainform);
+                inner.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void B4Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance(mainform);
-            cleanrance.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "清场记录");
+            if (b)
+            {
+                LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance(mainform);
+                cleanrance.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void B1Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_productioninstruction pro_ins = new LDPEBag_productioninstruction(mainform);
-            pro_ins.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "LDPE制袋生产指令");
+            if (b)
+            {
+                LDPEBag_productioninstruction pro_ins = new LDPEBag_productioninstruction(mainform);
+                pro_ins.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void B2Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_checklist check = new LDPEBag_checklist(mainform);
-            check.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋机开机前确认表");
+            if (b)
+            {
+                LDPEBag_checklist check = new LDPEBag_checklist(mainform);
+                check.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+           
         }
 
         private void B3Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_runningrecord run = new LDPEBag_runningrecord(mainform);
-            run.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋机运行记录");
+            if (b)
+            {
+                LDPEBag_runningrecord run = new LDPEBag_runningrecord(mainform);
+                run.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            LDPEBag_dailyreport daily = new LDPEBag_dailyreport();
-            daily.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "LDPE制袋日报表");
+            if (b)
+            {
+                LDPEBag_dailyreport daily = new LDPEBag_dailyreport();
+                daily.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn热合强度_Click(object sender, EventArgs e)
         {
-            mySystem.Process.Bag.LDPE.产品热合强度检验记录 rhform = new 产品热合强度检验记录(mainform);
-            rhform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品热合强度检验记录");
+            if (b)
+            {
+                mySystem.Process.Bag.LDPE.产品热合强度检验记录 rhform = new 产品热合强度检验记录(mainform);
+                rhform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn外观及检验_Click(object sender, EventArgs e)
         {
-            mySystem.Process.Bag.LDPE.产品外观和尺寸检验记录 wgform = new 产品外观和尺寸检验记录(mainform);
-            wgform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外观和尺寸检验记录");
+            if (b)
+            {
+                mySystem.Process.Bag.LDPE.产品外观和尺寸检验记录 wgform = new 产品外观和尺寸检验记录(mainform);
+                wgform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
+
+        private void Btn外包装_Click(object sender, EventArgs e)
+        {
+            LDPE.LDPE产品外包装记录 myform = new LDPE.LDPE产品外包装记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn退料_Click(object sender, EventArgs e)
+        {
+            LDPE.LDPE生产退料记录 myform = new LDPE.LDPE生产退料记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn洁净_Click(object sender, EventArgs e)
+        {
+            LDPE.LDPE洁净区温湿度记录 myform = new LDPE.LDPE洁净区温湿度记录();
+            myform.ShowDialog();
+        }
+
+        private void Btn结束_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn交接班_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Btn标签_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+
+        //判断是否能查看
+        private Boolean checkUser(String user, int role, String tblName)
+        {
+            Boolean b = false;
+            String[] name操作员 = null;
+            String[] name审核员 = null;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
+            comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
+            OleDbDataReader reader = comm.ExecuteReader();
+            while (reader.Read())
+            {
+                name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
+                name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
+            }
+
+            if (role == 3)
+            {
+                return b = true;
+            }
+            else
+            {
+                foreach (String name in name操作员)
+                {
+                    if (user == name)
+                    { return b = true; }
+                }
+                foreach (String name in name审核员)
+                {
+                    if (user == name)
+                    { return b = true; }
+                }
+
+            }
+            return b = false;
+        }
+
+        
 
 
     }
