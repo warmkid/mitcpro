@@ -495,5 +495,123 @@ namespace mySystem.Process.Stock
             }
         }
 
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            if (combox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(combox打印机选择.Text);
+            print(true);
+            GC.Collect();
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\tuihuo\表1产品退货申请单.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        //string log = "=====================================\n";
+                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            //外表信息
+            mysheet.Cells[2, 2].Value = dtOuter.Rows[0]["退货申请单编号"].ToString();
+            mysheet.Cells[3, 2].Value = dtOuter.Rows[0]["申请人"].ToString();
+            mysheet.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["申请日期"]).ToString("D");
+            mysheet.Cells[4, 2].Value = dtOuter.Rows[0]["拟退货产品销售订单编号"].ToString();
+            mysheet.Cells[4, 4].Value = dtOuter.Rows[0]["客户名称"].ToString();
+            mysheet.Cells[5, 2].Value = dtOuter.Rows[0]["产品名称"].ToString();
+            mysheet.Cells[5, 4].Value = dtOuter.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[6, 2].Value = dtOuter.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[6, 4].Value = dtOuter.Rows[0]["拟退货数量"].ToString();
+            mysheet.Cells[6, 5].Value = dtOuter.Rows[0]["辅计量单位"].ToString();
+            mysheet.Cells[7, 2].Value = dtOuter.Rows[0]["退货理由"].ToString();
+            ///
+            /// TODO:加页脚
+            ///
+            //int sheetnum;
+            //OleDbDataAdapter da = new OleDbDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.connOle);
+            //DataTable dt = new DataTable("temp");
+            //da.Fill(dt);
+            //List<Int32> sheetList = new List<Int32>();
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{ sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            //sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            ////instrcode怎样获取？
+            ////读取ID对应的生产指令编码
+            //OleDbCommand comm生产指令编码 = new OleDbCommand();
+            //comm生产指令编码.Connection = mySystem.Parameter.connOle;
+            //comm生产指令编码.CommandText = "select * from 生产指令 where ID= @name";
+            //comm生产指令编码.Parameters.AddWithValue("@name", InstruID);
+
+            //OleDbDataReader myReader生产指令编码 = comm生产指令编码.ExecuteReader();
+            //while (myReader生产指令编码.Read())
+            //{
+            //    str生产指令 = myReader生产指令编码["生产指令编号"].ToString();
+            //    //List<String> list班次 = new List<string>();
+            //    //list班次.Add(myReader班次["班次"].ToString());
+            //}
+
+            //myReader生产指令编码.Close();
+            //comm生产指令编码.Dispose();
+            //mysheet.PageSetup.RightFooter = str生产指令 + "-03-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            //返回
+            return mysheet;
+        }
+
     }
 }
