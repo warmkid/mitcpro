@@ -396,5 +396,111 @@ namespace mySystem.Process.Stock
             base.CheckResult();
         }
 
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            if (combox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(combox打印机选择.Text);
+            print(false);
+            GC.Collect();
+        }
+
+        public void print(bool b)
+        {
+            int label_打印成功 = 1;
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            dir += "./../../xls/tuihuo/表7退货产品评审单.xlsx";
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            ////"生产指令-步骤序号- 表序号 /&P"
+            //int sheetnum;
+            //OleDbDataAdapter da = new OleDbDataAdapter("select ID from 清场记录" + " where 生产指令ID=" + ID.ToString(), mySystem.Parameter.connOle);
+            //DataTable dt = new DataTable("temp");
+            //da.Fill(dt);
+            //List<Int32> sheetList = new List<Int32>();
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{ sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            //sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            //my.PageSetup.RightFooter = CODE + "-" + sheetnum.ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+            my.PageSetup.RightFooter = dtOuter.Rows[0]["退货申请单编号"] + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                {
+                    label_打印成功 = 0;
+                }
+                finally
+                {
+                    if (1 == label_打印成功)
+                    {
+                        //string str角色;
+                        //if (_userState == Parameter.UserState.操作员)
+                        //    str角色 = "操作员";
+                        //else if (_userState == Parameter.UserState.审核员)
+                        //    str角色 = "审核员";
+                        //else
+                        //    str角色 = "管理员";
+                        //string log = "\n=====================================\n";
+                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + str角色 + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[2, 2].Value = dtOuter.Rows[0]["退货申请单编号"].ToString();
+            my.Cells[3, 2].Value = dtOuter.Rows[0]["PA生产部经理"].ToString();
+            my.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["评审日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["评审日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["评审日期"].ToString()).Day.ToString() + "日";
+            my.Cells[4, 2].Value = dtOuter.Rows[0]["拟退货产品销售订单编号"].ToString();
+            my.Cells[4, 4].Value = dtOuter.Rows[0]["客户名称"].ToString();
+            my.Cells[5, 2].Value = dtOuter.Rows[0]["产品名称"].ToString();
+            my.Cells[5, 4].Value = dtOuter.Rows[0]["产品代码"].ToString();
+            my.Cells[6, 2].Value = dtOuter.Rows[0]["产品批号"].ToString();
+            my.Cells[6, 4].Value = dtOuter.Rows[0]["拟退货数量"].ToString();
+            my.Cells[6, 5].Value = dtOuter.Rows[0]["辅计量单位"].ToString();
+            my.Cells[7, 2].Value = dtOuter.Rows[0]["PA质量部处理建议"].ToString();
+            my.Cells[9, 2].Value = dtOuter.Rows[0]["PA生产部处理记录"].ToString();
+
+        }
+
+
     }
 }

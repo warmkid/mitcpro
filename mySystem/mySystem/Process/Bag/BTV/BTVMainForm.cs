@@ -98,6 +98,15 @@ namespace mySystem.Process.Bag.BTV
             Btn90度热合机.Enabled = b;
             Btn封口热合机.Enabled = b;
             Btn打孔及与图纸.Enabled = b;
+            Btn热合强度.Enabled = b;
+            Btn外观尺寸.Enabled = b;
+            Btn日报表.Enabled = b;
+            Btn外包装.Enabled = b;
+            Btn退料.Enabled = b;
+            Btn洁净.Enabled = b;
+            Btn交接班.Enabled = b;
+            Btn结束.Enabled = b;
+
         }
 
         private void Btn生产领料_Click(object sender, EventArgs e)

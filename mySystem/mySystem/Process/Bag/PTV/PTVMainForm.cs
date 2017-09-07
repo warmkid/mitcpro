@@ -88,6 +88,11 @@ namespace mySystem.Process.Bag.PTV
             Btn瓶口焊接机.Enabled = b;
             Btn清场记录.Enabled = b;
             Btn批生产记录.Enabled = b;
+            Btn外包装.Enabled = b;
+            Btn退料.Enabled = b;
+            Btn洁净.Enabled = b;
+            Btn交接班.Enabled = b;
+            Btn结束.Enabled = b;
         }
 
         private void A1Btn_Click(object sender, EventArgs e)

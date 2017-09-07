@@ -92,6 +92,7 @@ namespace mySystem.Process.Bag.LDPE
             Btn外包装.Enabled = b;
             Btn洁净.Enabled = b;
             Btn退料.Enabled = b;
+            Btn交接班.Enabled = b;
             Btn结束.Enabled = b;
         }
 
