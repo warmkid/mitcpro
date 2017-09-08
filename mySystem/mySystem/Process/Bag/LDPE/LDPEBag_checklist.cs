@@ -762,14 +762,14 @@ namespace mySystem.Process.Bag.LDPE
             }
 
             //外表信息
-            mysheet.Cells[13 + ind, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
+            mysheet.Cells[14 + ind, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
             String stringtemp = "";
             stringtemp = "确认人：" + dt记录.Rows[0]["操作员"].ToString();
             stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[14 + ind, 1].Value = stringtemp;
+            mysheet.Cells[15 + ind, 1].Value = stringtemp;
             stringtemp = "复核人：" + dt记录.Rows[0]["审核员"].ToString();
             stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[14 + ind, 5].Value = stringtemp;
+            mysheet.Cells[15 + ind, 5].Value = stringtemp;
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
