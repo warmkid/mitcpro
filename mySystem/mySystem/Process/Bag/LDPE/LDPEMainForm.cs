@@ -210,17 +210,8 @@ namespace mySystem.Process.Bag.LDPE
 
         private void A3Btn_Click(object sender, EventArgs e)
         {
-            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "LDPE制袋日报表");
-            if (b)
-            {
-                LDPEBag_dailyreport daily = new LDPEBag_dailyreport();
-                daily.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("您无权查看该页面！");
-                return;
-            } 
+            LDPEBag_dailyreport daily = new LDPEBag_dailyreport();
+            daily.ShowDialog();
             
         }
 
@@ -258,20 +249,50 @@ namespace mySystem.Process.Bag.LDPE
 
         private void Btn外包装_Click(object sender, EventArgs e)
         {
-            LDPE.LDPE产品外包装记录 myform = new LDPE.LDPE产品外包装记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外包装记录表");
+            if (b)
+            {
+                LDPE.LDPE产品外包装记录 myform = new LDPE.LDPE产品外包装记录();
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn退料_Click(object sender, EventArgs e)
         {
-            LDPE.LDPE生产退料记录 myform = new LDPE.LDPE生产退料记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
+            if (b)
+            {
+                LDPE.LDPE生产退料记录 myform = new LDPE.LDPE生产退料记录();
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn洁净_Click(object sender, EventArgs e)
         {
-            LDPE.LDPE洁净区温湿度记录 myform = new LDPE.LDPE洁净区温湿度记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
+            if (b)
+            {
+                LDPE.LDPE洁净区温湿度记录 myform = new LDPE.LDPE洁净区温湿度记录();
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn结束_Click(object sender, EventArgs e)

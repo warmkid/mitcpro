@@ -309,12 +309,12 @@ namespace mySystem.Query
                         form9.ShowDialog();
                         break;
                     case "生产退料记录":
-                        //CS生产退料记录 form10 = new CS生产退料记录(mainform, ID);
-                        //form10.ShowDialog();
+                        CS生产退料记录 form10 = new CS生产退料记录(mainform, ID);
+                        form10.ShowDialog();
                         break;
                     case "洁净区温湿度记录":
-                        //CS洁净区温湿度记录 form11 = new CS洁净区温湿度记录(mainform, ID);
-                        //form11.ShowDialog();
+                        CS洁净区温湿度记录 form11 = new CS洁净区温湿度记录(mainform, ID);
+                        form11.ShowDialog();
                         break;
                     case "岗位交接班记录":
                         HandOver form12 = new HandOver(mainform, ID);
