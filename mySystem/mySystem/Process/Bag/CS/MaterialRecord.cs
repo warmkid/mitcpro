@@ -732,11 +732,11 @@ namespace mySystem.Process.Bag
                 MessageBox.Show("操作员不存在，请重新输入！");
                 return false;
             }
-            else if (TextBox_check() == false)
-            {
-                /*数字框不合格*/
-                return false;
-            }
+            //else if (TextBox_check() == false)
+            //{
+            //    /*数字框不合格*/
+            //    return false;
+            //}
             else if (Batch_check() == false)
             {
                 /*批号不合格*/
@@ -1086,15 +1086,15 @@ namespace mySystem.Process.Bag
         //实时求收率
         private void getNum(Int32 Rownum)
         {
-            int numA, numB, numC, numD;
-            // 膜卷长度求和
-            if ((Int32.TryParse(dt记录详情.Rows[Rownum]["接上班数量A"].ToString(), out numA) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["领取数量B"].ToString(), out numB) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["使用数量C"].ToString(), out numC) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["退库数量D"].ToString(), out numD) == true))
-            {
-                //均为数值类型
-                dt记录详情.Rows[Rownum]["物料平衡"] = (Int32)(numA + numB - numC - numD);
-            }
-            else
-            { dt记录详情.Rows[Rownum]["物料平衡"] = -1; }
+            //int numA, numB, numC, numD;
+            //// 膜卷长度求和
+            //if ((Int32.TryParse(dt记录详情.Rows[Rownum]["接上班数量A"].ToString(), out numA) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["领取数量B"].ToString(), out numB) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["使用数量C"].ToString(), out numC) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["退库数量D"].ToString(), out numD) == true))
+            //{
+            //    //均为数值类型
+            //    dt记录详情.Rows[Rownum]["物料平衡"] = (Int32)(numA + numB - numC - numD);
+            //}
+            //else
+            //{ dt记录详情.Rows[Rownum]["物料平衡"] = -1; }
         }
 
         //******************************datagridview******************************//  
