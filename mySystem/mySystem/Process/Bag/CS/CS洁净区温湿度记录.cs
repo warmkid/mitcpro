@@ -9,11 +9,17 @@ using System.Windows.Forms;
 
 namespace mySystem.Process.Bag.CS
 {
-    public partial class CS洁净区温湿度记录 : Form
+    public partial class CS洁净区温湿度记录 : BaseForm
     {
-        public CS洁净区温湿度记录()
+        public CS洁净区温湿度记录(mySystem.MainForm mainform) : base(mainform)
         {
             InitializeComponent();
         }
+
+        public CS洁净区温湿度记录(mySystem.MainForm mainform, Int32 ID)  : base(mainform)
+        {
+            InitializeComponent();
+        }
+
     }
 }

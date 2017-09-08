@@ -276,7 +276,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
             if (b)
             {
-                CS.CS生产退料记录 myform = new CS生产退料记录();
+                CS.CS生产退料记录 myform = new CS生产退料记录(mainform);
                 myform.ShowDialog();
             }
             else
@@ -292,7 +292,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
             if (b)
             {
-                CS.CS洁净区温湿度记录 myform = new CS洁净区温湿度记录();
+                CS.CS洁净区温湿度记录 myform = new CS洁净区温湿度记录(mainform);
                 myform.ShowDialog();
             }
             else
