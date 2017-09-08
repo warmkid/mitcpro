@@ -237,7 +237,7 @@ namespace mySystem.Process.Bag
 
         private void Btn外包装_Click(object sender, EventArgs e)
         {
-            CS.CS产品外包装记录 myform = new CS产品外包装记录();
+            CS.CS产品外包装记录 myform = new CS产品外包装记录(mainform);
             myform.ShowDialog();
         }
 
