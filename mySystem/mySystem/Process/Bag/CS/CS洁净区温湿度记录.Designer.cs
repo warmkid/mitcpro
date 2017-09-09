@@ -31,7 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CS洁净区温湿度记录));
             this.btn提交数据审核 = new System.Windows.Forms.Button();
             this.btn数据审核 = new System.Windows.Forms.Button();
-            this.lb产品批号 = new System.Windows.Forms.Label();
             this.lb生产指令编号 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
@@ -49,10 +48,7 @@
             this.btn确认 = new System.Windows.Forms.Button();
             this.tb审核员 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.cb产品代码 = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lb生产工序 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -69,6 +65,7 @@
             this.btn提交数据审核.TabIndex = 326;
             this.btn提交数据审核.Text = "提交数据审核";
             this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
             // 
             // btn数据审核
             // 
@@ -79,22 +76,13 @@
             this.btn数据审核.TabIndex = 325;
             this.btn数据审核.Text = "数据审核";
             this.btn数据审核.UseVisualStyleBackColor = true;
-            // 
-            // lb产品批号
-            // 
-            this.lb产品批号.AutoSize = true;
-            this.lb产品批号.Font = new System.Drawing.Font("SimSun", 12F);
-            this.lb产品批号.Location = new System.Drawing.Point(482, 123);
-            this.lb产品批号.Name = "lb产品批号";
-            this.lb产品批号.Size = new System.Drawing.Size(72, 16);
-            this.lb产品批号.TabIndex = 322;
-            this.lb产品批号.Text = "产品批号";
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
             // 
             // lb生产指令编号
             // 
             this.lb生产指令编号.AutoSize = true;
             this.lb生产指令编号.Font = new System.Drawing.Font("SimSun", 12F);
-            this.lb生产指令编号.Location = new System.Drawing.Point(517, 87);
+            this.lb生产指令编号.Location = new System.Drawing.Point(407, 87);
             this.lb生产指令编号.Name = "lb生产指令编号";
             this.lb生产指令编号.Size = new System.Drawing.Size(104, 16);
             this.lb生产指令编号.TabIndex = 321;
@@ -104,7 +92,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label13.Location = new System.Drawing.Point(404, 87);
+            this.label13.Location = new System.Drawing.Point(294, 87);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(120, 16);
             this.label13.TabIndex = 320;
@@ -143,7 +131,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(669, 48);
+            this.label27.Location = new System.Drawing.Point(669, 41);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(93, 16);
             this.label27.TabIndex = 316;
@@ -153,7 +141,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label角色.Location = new System.Drawing.Point(774, 48);
+            this.label角色.Location = new System.Drawing.Point(774, 41);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
             this.label角色.TabIndex = 315;
@@ -162,12 +150,13 @@
             // btn查询新建
             // 
             this.btn查询新建.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn查询新建.Location = new System.Drawing.Point(720, 115);
+            this.btn查询新建.Location = new System.Drawing.Point(720, 80);
             this.btn查询新建.Name = "btn查询新建";
             this.btn查询新建.Size = new System.Drawing.Size(96, 30);
             this.btn查询新建.TabIndex = 314;
             this.btn查询新建.Text = "查询/新建";
             this.btn查询新建.UseVisualStyleBackColor = true;
+            this.btn查询新建.Click += new System.EventHandler(this.btn查询新建_Click);
             // 
             // btn查看日志
             // 
@@ -178,6 +167,7 @@
             this.btn查看日志.TabIndex = 313;
             this.btn查看日志.Text = "查看日志";
             this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
             // 
             // btn提交审核
             // 
@@ -188,6 +178,7 @@
             this.btn提交审核.TabIndex = 312;
             this.btn提交审核.Text = "最后审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
             // DelLineBtn
             // 
@@ -198,6 +189,7 @@
             this.DelLineBtn.TabIndex = 311;
             this.DelLineBtn.Text = "删除";
             this.DelLineBtn.UseVisualStyleBackColor = true;
+            this.DelLineBtn.Click += new System.EventHandler(this.DelLineBtn_Click);
             // 
             // AddLineBtn
             // 
@@ -208,6 +200,7 @@
             this.AddLineBtn.TabIndex = 310;
             this.AddLineBtn.Text = "添加";
             this.AddLineBtn.UseVisualStyleBackColor = true;
+            this.AddLineBtn.Click += new System.EventHandler(this.AddLineBtn_Click);
             // 
             // btn打印
             // 
@@ -218,6 +211,7 @@
             this.btn打印.TabIndex = 309;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn审核
             // 
@@ -228,6 +222,7 @@
             this.btn审核.TabIndex = 308;
             this.btn审核.Text = "审核";
             this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
             // btn确认
             // 
@@ -238,6 +233,7 @@
             this.btn确认.TabIndex = 307;
             this.btn确认.Text = "确认";
             this.btn确认.UseVisualStyleBackColor = true;
+            this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
             // 
             // tb审核员
             // 
@@ -257,49 +253,20 @@
             this.label5.TabIndex = 305;
             this.label5.Text = "审核员：";
             // 
-            // cb产品代码
-            // 
-            this.cb产品代码.Font = new System.Drawing.Font("SimSun", 12F);
-            this.cb产品代码.FormattingEnabled = true;
-            this.cb产品代码.Location = new System.Drawing.Point(107, 120);
-            this.cb产品代码.Name = "cb产品代码";
-            this.cb产品代码.Size = new System.Drawing.Size(234, 24);
-            this.cb产品代码.TabIndex = 304;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(30, 156);
+            this.dataGridView1.Location = new System.Drawing.Point(30, 116);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(786, 201);
+            this.dataGridView1.Size = new System.Drawing.Size(786, 241);
             this.dataGridView1.TabIndex = 303;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label3.Location = new System.Drawing.Point(404, 123);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(88, 16);
-            this.label3.TabIndex = 302;
-            this.label3.Text = "产品批号：";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label2.Location = new System.Drawing.Point(27, 125);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(88, 16);
-            this.label2.TabIndex = 301;
-            this.label2.Text = "产品代码：";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(344, 41);
+            this.label1.Location = new System.Drawing.Point(344, 34);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(177, 20);
@@ -335,7 +302,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btn提交数据审核);
             this.Controls.Add(this.btn数据审核);
-            this.Controls.Add(this.lb产品批号);
             this.Controls.Add(this.lb生产指令编号);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.cb打印机);
@@ -353,10 +319,7 @@
             this.Controls.Add(this.btn确认);
             this.Controls.Add(this.tb审核员);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.cb产品代码);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "CS洁净区温湿度记录";
             this.Text = "CS洁净区温湿度记录";
@@ -371,7 +334,6 @@
 
         private System.Windows.Forms.Button btn提交数据审核;
         private System.Windows.Forms.Button btn数据审核;
-        private System.Windows.Forms.Label lb产品批号;
         private System.Windows.Forms.Label lb生产指令编号;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.ComboBox cb打印机;
@@ -389,10 +351,7 @@
         private System.Windows.Forms.Button btn确认;
         private System.Windows.Forms.TextBox tb审核员;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox cb产品代码;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lb生产工序;
         private System.Windows.Forms.Label label7;
