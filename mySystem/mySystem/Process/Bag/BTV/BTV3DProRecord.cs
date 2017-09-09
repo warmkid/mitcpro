@@ -230,6 +230,7 @@ namespace mySystem.Process.Bag.BTV
                         dic膜材.Add(dtemp.Rows[i][1].ToString(), dtemp.Rows[i][1].ToString());
                     }
                 }
+                addMaterialToDt();
                 datemp2.Dispose();
             }
             else
@@ -237,7 +238,19 @@ namespace mySystem.Process.Bag.BTV
                 //从SQL数据库中读取;                
             }
         }
-
+        private void addMaterialToDt()
+        {
+            OleDbDataAdapter daGetMaterial = new OleDbDataAdapter("select * from 生产指令物料 where T生产指令ID =" + InstruID, connOle);
+            DataTable dtResult = new DataTable();
+            daGetMaterial.Fill(dtResult);
+            for (int i = 0; i < dtResult.Rows.Count; i++)
+            {
+                
+                 //dtResult.Rows[i]["物料名称"];                 
+               dic膜材.Add(dtResult.Rows[i]["物料代码"].ToString(),dtResult.Rows[i]["物料批号"].ToString());
+            }
+            daGetMaterial.Dispose();
+        }
         //根据状态设置可读写性
         private void setEnableReadOnly()
         {
@@ -1347,6 +1360,9 @@ namespace mySystem.Process.Bag.BTV
             DataRow dr = dt领料记录.NewRow();
             dr = writeInnerDefault1(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt领料记录.Rows.InsertAt(dr, dt领料记录.Rows.Count);
+            da领料记录.Update((DataTable)bs领料记录.DataSource);
+            readInnerData1(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind1();
         }
 
         private void btn删除领料记录_Click(object sender, EventArgs e)

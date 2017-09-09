@@ -170,7 +170,7 @@ namespace mySystem.Process.Bag.BTV
         private void getOtherData()
         {
             dt代码批号 = new DataTable("代码批号");
-            
+            dt物料 = new DataTable("物料");
 
             if (!isSqlOk)
             {
@@ -180,6 +180,7 @@ namespace mySystem.Process.Bag.BTV
                 DataTable dt生产指令 = new DataTable("生产指令");
                 OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
                 datemp1.Fill(dt生产指令);
+                
                 if (dt生产指令.Rows.Count == 0)
                 {
                     MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！");
@@ -188,18 +189,19 @@ namespace mySystem.Process.Bag.BTV
                 {
                     //TO ASK : IS THIS PART HAND ADDED? IS DATABASE UNAVAILIBLE NOW? AND HOW CAN PROGRAM KNOWS HOW MANY ROWS SHOULD BE?
                     //外表物料
-                    //dt物料.Columns.Add("物料简称", typeof(String));   //新建第1列
-                    //dt物料.Columns.Add("物料代码", typeof(String));   //新建第2列
-                    //dt物料.Columns.Add("物料批号", typeof(String));   //新建第3列
+                    dt物料.Columns.Add("物料简称", typeof(String));   //新建第1列
+                    dt物料.Columns.Add("物料代码", typeof(String));   //新建第2列
+                    dt物料.Columns.Add("物料批号", typeof(String));   //新建第3列
                     //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称1"].ToString(), dt生产指令.Rows[0]["制袋物料代码1"].ToString(), dt生产指令.Rows[0]["制袋物料批号1"].ToString());
                     //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称2"].ToString(), dt生产指令.Rows[0]["制袋物料代码2"].ToString(), dt生产指令.Rows[0]["制袋物料批号2"].ToString());
                     //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称3"].ToString(), dt生产指令.Rows[0]["制袋物料代码3"].ToString(), dt生产指令.Rows[0]["制袋物料批号3"].ToString());
-                    //dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称1"].ToString(), dt生产指令.Rows[0]["内包物料代码1"].ToString(), dt生产指令.Rows[0]["内包物料批号1"].ToString());
-                    //dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称2"].ToString(), dt生产指令.Rows[0]["内包物料代码2"].ToString(), dt生产指令.Rows[0]["内包物料批号2"].ToString());
-                    //dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称1"].ToString(), dt生产指令.Rows[0]["外包物料代码1"].ToString(), dt生产指令.Rows[0]["外包物料批号1"].ToString());
-                    //dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
-                    //dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称1"].ToString(), dt生产指令.Rows[0]["内包物料代码1"].ToString(), dt生产指令.Rows[0]["内包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称2"].ToString(), dt生产指令.Rows[0]["内包物料代码2"].ToString(), dt生产指令.Rows[0]["内包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称1"].ToString(), dt生产指令.Rows[0]["外包物料代码1"].ToString(), dt生产指令.Rows[0]["外包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
                     //内表代码批号
+                    addMaterialToDt();
                     OleDbCommand comm2 = new OleDbCommand();
                     comm2.Connection = Parameter.connOle;
                     comm2.CommandText = "select * from 生产指令详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
@@ -223,7 +225,20 @@ namespace mySystem.Process.Bag.BTV
             { }
         }
 
-        
+        private void addMaterialToDt()
+        {
+            OleDbDataAdapter daGetMaterial = new OleDbDataAdapter("select * from 生产指令物料 where T生产指令ID =" + InstruID, connOle);
+            DataTable dtResult = new DataTable();
+            daGetMaterial.Fill(dtResult);
+            for (int i = 0; i < dtResult.Rows.Count; i++)
+            {
+                DataRow dr = dt物料.NewRow();
+                dr["物料简称"] = dtResult.Rows[i]["物料名称"];
+                dr["物料代码"] = dtResult.Rows[i]["物料代码"];
+                dr["物料批号"] = dtResult.Rows[i]["物料批号"];
+                dt物料.Rows.Add(dr);
+            }
+        }
 
         //根据状态设置可读写性
         private void setEnableReadOnly()
