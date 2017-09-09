@@ -55,7 +55,7 @@ namespace mySystem.Process.Bag.CS
 
         CheckForm ckform;
 
-        public 清场记录()
+        public 清场记录(MainForm mainform):base(mainform)
         {
             // 判断设置是否变化
             InitializeComponent();
@@ -108,7 +108,7 @@ namespace mySystem.Process.Bag.CS
             addOtherEvenHandler();
         }
 
-        public 清场记录(int id)
+        public 清场记录( MainForm mainform, int id):base(mainform)
         {
 
             InitializeComponent();

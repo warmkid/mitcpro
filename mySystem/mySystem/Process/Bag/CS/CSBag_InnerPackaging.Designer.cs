@@ -80,6 +80,9 @@
             this.lbl指示剂不良合计 = new System.Windows.Forms.Label();
             this.lbl黑点晶点合计 = new System.Windows.Forms.Label();
             this.lbl热封线不合格合计 = new System.Windows.Forms.Label();
+            this.tb内包装规格 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -148,7 +151,7 @@
             // 
             this.cb标签语言英文.AutoSize = true;
             this.cb标签语言英文.Font = new System.Drawing.Font("SimSun", 12F);
-            this.cb标签语言英文.Location = new System.Drawing.Point(864, 104);
+            this.cb标签语言英文.Location = new System.Drawing.Point(955, 107);
             this.cb标签语言英文.Name = "cb标签语言英文";
             this.cb标签语言英文.Size = new System.Drawing.Size(59, 20);
             this.cb标签语言英文.TabIndex = 47;
@@ -161,7 +164,7 @@
             this.cb标签语言中文.Checked = true;
             this.cb标签语言中文.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cb标签语言中文.Font = new System.Drawing.Font("SimSun", 12F);
-            this.cb标签语言中文.Location = new System.Drawing.Point(801, 104);
+            this.cb标签语言中文.Location = new System.Drawing.Point(892, 107);
             this.cb标签语言中文.Name = "cb标签语言中文";
             this.cb标签语言中文.Size = new System.Drawing.Size(59, 20);
             this.cb标签语言中文.TabIndex = 46;
@@ -172,7 +175,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label3.Location = new System.Drawing.Point(740, 105);
+            this.label3.Location = new System.Drawing.Point(831, 108);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 16);
             this.label3.TabIndex = 45;
@@ -452,7 +455,7 @@
             this.tb班次.Font = new System.Drawing.Font("SimSun", 12F);
             this.tb班次.Location = new System.Drawing.Point(404, 101);
             this.tb班次.Name = "tb班次";
-            this.tb班次.Size = new System.Drawing.Size(164, 26);
+            this.tb班次.Size = new System.Drawing.Size(114, 26);
             this.tb班次.TabIndex = 186;
             // 
             // tb废品
@@ -601,11 +604,42 @@
             this.lbl热封线不合格合计.TabIndex = 192;
             this.lbl热封线不合格合计.Text = "0";
             // 
+            // tb内包装规格
+            // 
+            this.tb内包装规格.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb内包装规格.Location = new System.Drawing.Point(661, 101);
+            this.tb内包装规格.Name = "tb内包装规格";
+            this.tb内包装规格.Size = new System.Drawing.Size(107, 26);
+            this.tb内包装规格.TabIndex = 203;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label20.Location = new System.Drawing.Point(551, 104);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(104, 16);
+            this.label20.TabIndex = 202;
+            this.label20.Text = "内包装规格：";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label21.Location = new System.Drawing.Point(770, 107);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(48, 16);
+            this.label21.TabIndex = 204;
+            this.label21.Text = "只/包";
+            // 
             // CSBag_InnerPackaging
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1240, 615);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.tb内包装规格);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label17);
@@ -720,5 +754,8 @@
         private System.Windows.Forms.Label lbl指示剂不良合计;
         private System.Windows.Forms.Label lbl黑点晶点合计;
         private System.Windows.Forms.Label lbl热封线不合格合计;
+        private System.Windows.Forms.TextBox tb内包装规格;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
     }
 }

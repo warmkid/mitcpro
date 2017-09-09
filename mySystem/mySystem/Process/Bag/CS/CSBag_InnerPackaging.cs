@@ -525,6 +525,8 @@ namespace mySystem.Process.Bag
             lbl不良总合计.DataBindings.Clear();
             lbl不良总合计.DataBindings.Add("Text", bs记录.DataSource, "不良总合计");
 
+            tb内包装规格.DataBindings.Clear();
+            tb内包装规格.DataBindings.Add("Text", bs记录.DataSource, "内包装规格");
 
             tb审核员.DataBindings.Clear();
             tb审核员.DataBindings.Add("Text", bs记录.DataSource, "审核员");
@@ -560,6 +562,11 @@ namespace mySystem.Process.Bag
             dr["不良总合计"] = 0;
             dr["审核员"] = "";
             dr["审核是否通过"] = false;
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + InstruID + " and 产品代码='" + cb产品代码.Text + "'", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0) MessageBox.Show("生产指令详细信息读取失败");
+            else dr["内包装规格"] = dt.Rows[0]["内包装规格每包只数"];
 
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + Instruction + "\n";
@@ -912,6 +919,44 @@ namespace mySystem.Process.Bag
             dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
 
             Save();
+
+            if (checkform.ischeckOk)
+            {
+                // 废品入库
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + Convert.ToInt32(dt记录.Rows[0]["生产指令ID"]), mySystem.Parameter.connOle);
+                DataTable dt = new DataTable();
+                OleDbCommandBuilder cb;
+                da.Fill(dt);
+                string 订单号 = dt.Rows[0]["客户或订单号"].ToString();
+                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                OleDbConnection Tconn;
+                Tconn = new OleDbConnection(strConnect);
+                Tconn.Open();
+                string sql = "select * from 库存台帐 where 产品代码='废品' and 用途='{0}' and 状态='合格'";
+                da = new OleDbDataAdapter(string.Format(sql, 订单号), Tconn);
+                cb = new OleDbCommandBuilder(da);
+                dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 0)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["产品代码"] = "CS制袋废品";
+                    dr["产品名称"] = "CS制袋废品";
+                    dr["产品规格"] = "";
+                    dr["产品批号"] = "";
+                    dr["现存数量"] = Convert.ToDouble(dt记录.Rows[0]["废品重量"]);
+                    dr["主计量单位"] = "";
+                    dr["状态"] = "合格";
+                    dr["用途"] = 订单号;
+                    dt.Rows.Add(dr);
+                }
+                else
+                {
+                    dt.Rows[0]["现存数量"] = Convert.ToDouble(dt记录.Rows[0]["废品重量"]) + Convert.ToDouble(dt.Rows[0]["现存数量"]);
+                }
+                da.Update(dt);
+            }
 
             //修改状态，设置可控性
             if (checkform.ischeckOk)

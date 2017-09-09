@@ -833,7 +833,6 @@ namespace BatchProductRecord
 
         private void btn打印_Click(object sender, EventArgs e)
         {
-            // TODO GC.Collect()
             List<Int32> checkedRows = new List<int>();
             for (int i = 0; i < dataGridView1.Rows.Count; ++i)
             {

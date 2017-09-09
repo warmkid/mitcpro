@@ -822,6 +822,43 @@ namespace mySystem.Process.Bag.CS
 
             Save();
 
+
+            if (checkform.ischeckOk)
+            {
+                // 退料入库
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + Convert.ToInt32(dt记录.Rows[0]["生产指令ID"]), mySystem.Parameter.connOle);
+                DataTable dt = new DataTable();
+                OleDbCommandBuilder cb;
+                da.Fill(dt);
+                string 订单号 = dt.Rows[0]["客户或订单号"].ToString();
+                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                OleDbConnection Tconn;
+                Tconn = new OleDbConnection(strConnect);
+                Tconn.Open();
+                foreach (DataRow dr in dt记录详情.Rows)
+                {
+                    string 代码 = dr["物料代码"].ToString();
+                    string 批号 = dr["物料批号"].ToString();
+                    double 退库数量 = Convert.ToDouble(dr["退库数量"]);
+                    string sql = "select * from 库存台帐 where 产品代码='{0}' and 产品批号='{1}' and 用途='{2}' and 状态='合格'";
+                    da = new OleDbDataAdapter(string.Format(sql, 代码, 批号, 订单号), Tconn);
+                    cb = new OleDbCommandBuilder(da);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count == 0)
+                    {
+                        MessageBox.Show("原料:" + 代码 + ",批号：" + 批号 + "退库失败");
+                        return;
+                    }
+                    else
+                    {
+                        dt.Rows[0]["现存数量"] = 退库数量 + Convert.ToDouble(dt.Rows[0]["现存数量"]);
+                        da.Update(dt);
+                    }
+                }
+            }
+
             //修改状态，设置可控性
             if (checkform.ischeckOk)
             { _formState = Parameter.FormState.审核通过; }//审核通过

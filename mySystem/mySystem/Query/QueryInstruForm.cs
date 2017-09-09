@@ -186,7 +186,7 @@ namespace mySystem
 
                         break;
                     case "CS制袋":
-                        mySystem.Process.Bag.CS.CS制袋生产指令 form3 = new Process.Bag.CS.CS制袋生产指令(ID);
+                        mySystem.Process.Bag.CS.CS制袋生产指令 form3 = new Process.Bag.CS.CS制袋生产指令(mainform, ID);
                         form3.Show();
 
                         break;

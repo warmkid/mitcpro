@@ -277,8 +277,8 @@ namespace mySystem.Query
                         form2.Show();
                         break;
                     case "CS制袋日报表":
-                        Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
-                        form3.Show();
+                        //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
+                        //form3.Show();
                         break;
                     case "产品外观和尺寸检验记录":
                         产品外观和尺寸检验记录 form4 = new 产品外观和尺寸检验记录(mainform, ID);
@@ -297,7 +297,7 @@ namespace mySystem.Query
                         form7.Show();
                         break;
                     case "清场记录":
-                        清场记录 myform = new 清场记录( ID);
+                        清场记录 myform = new 清场记录(mainform, ID);
                         myform.Show();
                         break;
                     case "制袋工序批生产记录":
