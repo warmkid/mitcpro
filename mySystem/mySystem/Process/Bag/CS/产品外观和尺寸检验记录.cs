@@ -186,17 +186,19 @@ namespace mySystem.Process.Bag.CS
         DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = i生产指令ID;
+            dr["生产指令编码"] = str生产指令编号;
             dr["产品代码"] = str产品代码;
             dr["产品批号"] = str产品批号;
             dr["生产日期"] = DateTime.Now;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作日期"] = DateTime.Now;
             dr["审核日期"] = DateTime.Now;
-            dr["抽检量合计"] = 0;
+            dr["外观抽检量合计"] = 0;
             dr["游离异物合计"] = 0;
             dr["内含黑点晶点合计"] = 0;
             dr["热封线不良合计"] = 0;
             dr["其他合计"] = 0;
+            dr["尺寸抽检量合计"] = 0;
             dr["不良合计"] = 0;
             return dr;
         }
@@ -459,14 +461,14 @@ namespace mySystem.Process.Bag.CS
             int sum;
             switch (e.ColumnIndex)
             {
-                // 抽检量合计
+                // 外观抽检量合计
                 case 3:
                     sum = 0;
                     foreach (DataRow dr in dtInner.Rows)
                     {
                         sum += Convert.ToInt32(dr["抽检量外观检查"]);
                     }
-                    dtOuter.Rows[0]["抽检量合计"] = sum;
+                    dtOuter.Rows[0]["外观抽检量合计"] = sum;
                     break;
                 // 游离异物合计
                 case 4:
@@ -513,13 +515,21 @@ namespace mySystem.Process.Bag.CS
                 //    }
                 //    dtOuter.Rows[0]["不良合计"] = sum;
                 //    break;
-
+                    // 尺寸合计
+                case 11:
+                    sum = 0;
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        sum += Convert.ToInt32(dr["抽检量尺寸检测"]);
+                    }
+                    dtOuter.Rows[0]["尺寸抽检量合计"] = sum;
+                    break;
             }
 
-            if (e.ColumnIndex >= 3 && e.ColumnIndex <= 7)
+            if (e.ColumnIndex >= 4 && e.ColumnIndex <= 7)
             {
                 sum = 0;
-                for (int i = 3; i <= 7; ++i)
+                for (int i = 4; i <= 7; ++i)
                 {
                     sum += Convert.ToInt32(dtInner.Rows[e.RowIndex][i]);
                 }
