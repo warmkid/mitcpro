@@ -130,7 +130,14 @@ namespace mySystem.Process.CleanCut
                 da.Fill(dt);
                 DataRow[] drs;
                 double sum;
-                if (dt.Rows.Count == 0) MessageBox.Show("生产指令ID为" + id + "的生产指令详细信息读取错误");
+                if (dt.Rows.Count == 0)
+                {
+                    MessageBox.Show("生产指令ID为" + id + "的生产指令详细信息读取错误（无对应的领料日期）");
+                    dr["TY膜用量（米）"] = 0;
+                    dr["XP1膜用量（米）"] = 0;
+                    dr["内包装袋用量（只）"] = 0;
+                    dr["外包装袋用量"] = 0;
+                }
                 else
                 {
                     // TY膜用量
@@ -223,5 +230,22 @@ namespace mySystem.Process.CleanCut
             dtShow = query(dateTimePickerStart.Value, dateTimePickerEnd.Value);
             setDGV(dtShow);
         }
+
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+
+        private void bt打印_Click(object sender, EventArgs e)
+        {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            //print(false);
+            //GC.Collect();
+        }
+
+       
     }
 }

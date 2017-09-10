@@ -1166,7 +1166,8 @@ namespace mySystem.Process.Bag.CS
                 my.Cells[6 + i, 5].Value = dtInner.Rows[i]["产品批号"].ToString(); 
                 my.Cells[6 + i, 6].Value = dtInner.Rows[i]["内标签"].ToString(); 
                 my.Cells[6 + i, 7].Value = dtInner.Rows[i]["封边"].ToString(); 
-                my.Cells[6 + i, 8].Value = dtInner.Rows[i]["外包规格"].ToString(); 
+                my.Cells[6 + i, 8].Value = dtInner.Rows[i]["外包规格"].ToString();
+                my.Cells[6 + i, 9].Value = dtInner.Rows[i]["生产系数"].ToString(); 
                 my.Cells[6 + i, 10].Value = dtInner.Rows[i]["客户或订单号"].ToString(); 
             }
 
@@ -1194,16 +1195,16 @@ namespace mySystem.Process.Bag.CS
 
             my.Cells[13 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称1"].ToString(); 
             my.Cells[14 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称2"].ToString(); 
-            my.Cells[15 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称3"].ToString(); 
+            //my.Cells[15 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称3"].ToString(); 
             my.Cells[13 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码1"].ToString(); 
             my.Cells[14 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码2"].ToString(); 
-            my.Cells[15 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码3"].ToString(); 
+            //my.Cells[15 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码3"].ToString(); 
             my.Cells[13 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号1"].ToString(); 
             my.Cells[14 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号2"].ToString(); 
-            my.Cells[15 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号3"].ToString(); 
+            //my.Cells[15 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号3"].ToString(); 
             my.Cells[13 + ind, 8].Value = dtOuter.Rows[0]["外包物料领料量1"].ToString(); 
             my.Cells[14 + ind, 8].Value = dtOuter.Rows[0]["外包物料领料量2"].ToString(); 
-            my.Cells[15 + ind, 8].Value = dtOuter.Rows[0]["外包物料领料量3"].ToString(); 
+            //my.Cells[15 + ind, 8].Value = dtOuter.Rows[0]["外包物料领料量3"].ToString(); 
 
             my.Cells[8 + ind, 10].Value = "白班：\n" + dtOuter.Rows[0]["制袋内包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["制袋内包夜班负责人"].ToString(); 
             my.Cells[13 + ind, 10].Value = "白班：\n" + dtOuter.Rows[0]["外包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["外包夜班负责人"].ToString(); 
