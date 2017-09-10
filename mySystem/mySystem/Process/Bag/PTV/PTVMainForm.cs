@@ -277,20 +277,50 @@ namespace mySystem.Process.Bag.PTV
 
         private void Btn外包装_Click(object sender, EventArgs e)
         {
-            PTV.PTV产品外包装记录 myform = new PTV.PTV产品外包装记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外包装记录表");
+            if (b)
+            {
+                PTV.PTV产品外包装记录 myform = new PTV.PTV产品外包装记录();
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn退料_Click(object sender, EventArgs e)
         {
-            PTV.PTV生产退料记录 myform = new PTV.PTV生产退料记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
+            if (b)
+            {
+                PTV.PTV生产退料记录 myform = new PTV.PTV生产退料记录();
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn洁净_Click(object sender, EventArgs e)
         {
-            PTV.PTV洁净区温湿度记录 myform = new PTV.PTV洁净区温湿度记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
+            if (b)
+            {
+                PTV.PTV洁净区温湿度记录 myform = new PTV.PTV洁净区温湿度记录();
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn交接班_Click(object sender, EventArgs e)

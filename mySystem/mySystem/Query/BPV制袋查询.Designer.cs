@@ -67,7 +67,14 @@
             "单管口热合机运行记录",
             "90度热合机运行记录",
             "封口热合机运行记录",
-            "打孔及与图纸确认记录"});
+            "打孔及与图纸确认记录",
+            "产品外观和尺寸检验记录",
+            "产品热合强度检验记录",
+            "BPV制袋日报表",
+            "产品外包装记录",
+            "生产退料记录",
+            "洁净区温湿度记录",
+            "岗位交接班记录"});
             this.comboBox2.Location = new System.Drawing.Point(612, 20);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(255, 24);

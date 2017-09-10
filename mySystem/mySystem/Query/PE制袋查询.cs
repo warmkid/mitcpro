@@ -109,10 +109,10 @@ namespace mySystem.Query
                         { EachBind(this.dgv, "产品内包装记录", "审核员", null, null); }
                         break;
                     case "LDPE生产日报表":
-                        //if (comboBox1.SelectedIndex != -1)
-                        //{ EachBind(this.dgv, "CS制袋日报表", "审核员", null, "生产指令ID"); }
-                        //else
-                        //{ EachBind(this.dgv, "CS制袋日报表", "审核员", null, null); }
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "LDPE制袋日报表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "LDPE制袋日报表", "审核员", null, null); }
                         break;                   
                     case "1#制袋机开机前确认表":
                         if (comboBox1.SelectedIndex != -1)
@@ -173,9 +173,6 @@ namespace mySystem.Query
                         { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", null); }
-                        break;
-                    case "结束工序":
-
                         break;
 
                     default:
@@ -315,9 +312,6 @@ namespace mySystem.Query
                         //form11.ShowDialog();
                         break;
                     case "岗位交接班记录":
-
-                        break;
-                    case "结束工序":
 
                         break;
 
