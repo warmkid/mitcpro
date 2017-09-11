@@ -38,7 +38,20 @@ namespace mySystem.Query
             dgv检验台账.AllowUserToAddRows = false;
             dgv检验台账.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv检验台账_DataBindingComplete);
 
+
+            this.tb出库单发货公司.PreviewKeyDown += new PreviewKeyDownEventHandler(tb出库单发货公司_PreviewKeyDown);
+
         }
+
+        void tb出库单发货公司_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btn查询出库单.PerformClick();
+            }
+        }
+
+       
 
         void dgv检验台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -51,7 +64,7 @@ namespace mySystem.Query
             // readonly
             foreach (DataGridViewColumn dgvc in dgv库存台账.Columns)
             {
-                if (dgvc.Name == "实盘数量")
+                if (dgvc.Name == "实盘数量"||dgvc.Name=="货柜"||dgvc.Name=="有效期")
                 {
                     dgvc.ReadOnly = false;
                 }
@@ -120,7 +133,7 @@ namespace mySystem.Query
         {
             string sql = "select * from 库存台帐 where 供应商名称 like '%{0}%' and 产品代码 like '%{1}%' and 状态 like '%{2}%'";
            
-            string 供应商名称 = tb库存台账厂家名称.Text;
+            string 供应商名称 = tabControl1.Text;
             string 产品代码 = tb库存台账存货代码.Text;
             string 状态 = cmb库存台账状态.Text;
             da库存台账 = new OleDbDataAdapter(string.Format(sql, 供应商名称, 产品代码, 状态), mySystem.Parameter.connOle);

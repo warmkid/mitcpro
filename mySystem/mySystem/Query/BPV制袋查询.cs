@@ -29,6 +29,13 @@ namespace mySystem.Query
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
             Initdgv();
+
+            comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+        }
+
+        void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            SearchBtn.PerformClick();
         }
 
         //下拉框获取生产指令

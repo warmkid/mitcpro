@@ -108,6 +108,14 @@ namespace mySystem.Process.Order
                 ndr["采购数量"] = 0;
                 ndr["预计到货时间"] = DateTime.Now;
                 ndr["供应商产品编码"] = drs[0]["供应商产品编码"];
+                ndr["主计量"] = drs[0]["主计量"];
+                ndr["单价"] = drs[0]["单价"];
+                ndr["金额"] = drs[0]["金额"];
+                ndr["进度"] = drs[0]["进度"];
+                ndr["COC"] = drs[0]["COC"];
+                ndr["付款进度"] = drs[0]["付款进度"];
+                ndr["付款日期"] = drs[0]["付款日期"];
+                ndr["发票"] = drs[0]["发票"];
                 foreach (DataRow dr in drs)
                 {
                     ndr["采购件数"] = Convert.ToDouble(ndr["采购件数"]) + Convert.ToDouble(dr["采购件数"]);
@@ -503,15 +511,15 @@ namespace mySystem.Process.Order
             dataGridView1.Columns["关联的采购批准详细信息ID"].Visible = false;
             dataGridView1.Columns["关联的采购批转单借用单ID"].Visible = false;
             dataGridView1.Columns["用途"].Visible = false;
-            dataGridView1.Columns["主计量"].Visible = false;
-            dataGridView1.Columns["单价"].Visible = false;
-            dataGridView1.Columns["金额"].Visible = false;
-            dataGridView1.Columns["进度"].Visible = false;
-            dataGridView1.Columns["COC"].Visible = false;
-            dataGridView1.Columns["进度"].Visible = false;
-            dataGridView1.Columns["付款进度"].Visible = false;
-            dataGridView1.Columns["付款日期"].Visible = false;
-            dataGridView1.Columns["发票"].Visible = false;
+            //dataGridView1.Columns["主计量"].Visible = false;
+            //dataGridView1.Columns["单价"].Visible = false;
+            //dataGridView1.Columns["金额"].Visible = false;
+            //dataGridView1.Columns["进度"].Visible = false;
+            //dataGridView1.Columns["COC"].Visible = false;
+            //dataGridView1.Columns["进度"].Visible = false;
+            //dataGridView1.Columns["付款进度"].Visible = false;
+            //dataGridView1.Columns["付款日期"].Visible = false;
+            //dataGridView1.Columns["发票"].Visible = false;
         }
 
         void readOuterData(int id)
@@ -563,6 +571,7 @@ namespace mySystem.Process.Order
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             outerBind();
+
 
             daInner.Update(dtInner);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));

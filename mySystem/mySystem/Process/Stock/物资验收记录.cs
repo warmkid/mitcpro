@@ -1124,6 +1124,7 @@ namespace mySystem.Process.Stock
                 ndr["实盘数量"] = ndr["现存件数"];
                 
                 ndr["是否盘点"] = false;
+                ndr["有效期"] = DateTime.Now;
                 dt.Rows.Add(ndr);
             }
 
