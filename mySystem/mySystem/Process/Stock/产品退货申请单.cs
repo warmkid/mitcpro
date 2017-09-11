@@ -503,7 +503,7 @@ namespace mySystem.Process.Stock
                 return;
             }
             SetDefaultPrinter(combox打印机选择.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
 
