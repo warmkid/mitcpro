@@ -273,6 +273,7 @@ namespace mySystem.Process.Order
 
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            btn退回.Enabled = true;
         }
 
         void generateOuterData(string 供应商)
@@ -406,7 +407,7 @@ namespace mySystem.Process.Order
                     {
                         DataRow ndr自由 = dtInner.NewRow();
                         ndr自由["采购订单ID"] = dtOuter.Rows[0]["ID"];
-                        ndr["供应商"] = _供应商;
+                        ndr自由["供应商"] = _供应商;
                         ndr自由["存货代码"] = dr["存货代码"];
                         ndr自由["存货名称"] = dr["存货名称"];
                         ndr自由["规格型号"] = dr["规格型号"];
@@ -496,6 +497,8 @@ namespace mySystem.Process.Order
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["供应商"].Visible = false;
+             
             dataGridView1.Columns["采购订单ID"].Visible = false;
             dataGridView1.Columns["关联的采购批准详细信息ID"].Visible = false;
             dataGridView1.Columns["关联的采购批转单借用单ID"].Visible = false;
@@ -852,6 +855,67 @@ namespace mySystem.Process.Order
                 mysheet.Cells[7 + i, 17] = Convert.ToDateTime(dtInner.Rows[i]["付款日期"].ToString()).ToString("yy/MM/dd");
                 mysheet.Cells[7 + i, 18] = dtInner.Rows[i]["发票"].ToString();
 
+            }
+        }
+
+        private void btn退回_Click(object sender, EventArgs e)
+        {
+            if (!isSaved)
+            {
+                MessageBox.Show("本表单尚未保存，直接关闭即可");
+                return;
+            }
+            else
+            {
+                OleDbDataAdapter da;
+                OleDbCommandBuilder cb;
+                DataTable dt;
+                dtOuter.Rows[0]["状态"] = "已退回";
+                daOuter.Update(dtOuter);
+
+                foreach (DataRow dr in dtInner.Rows)
+                {
+                    int 批准单详细信息id;
+                    bool is借用 = false;
+                    if (Int32.TryParse(dr["关联的采购批准详细信息ID"].ToString(), out 批准单详细信息id))
+                    {
+                        is借用 = false;
+                    }
+                    else
+                    {
+                        Int32.TryParse(dr["关联的采购批转单借用单ID"].ToString(), out 批准单详细信息id);
+                        is借用 = true;
+                    }
+                    if (!is借用)
+                    {
+                        da = new OleDbDataAdapter("select * from 采购批准单详细信息 where ID=" + 批准单详细信息id,conn);
+                        cb = new OleDbCommandBuilder(da);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        if (dt.Rows.Count == 0)
+                        {
+                            MessageBox.Show("ID为"+批准单详细信息id+"的批准单详细信息未找到，请检查数据库");
+                            continue;
+                        }
+                        dt.Rows[0]["状态"] = "未采购";
+                    }
+                    else
+                    {
+                        da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where ID=" + 批准单详细信息id, conn);
+                        cb = new OleDbCommandBuilder(da);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        if (dt.Rows.Count == 0)
+                        {
+                            MessageBox.Show("ID为" + 批准单详细信息id + "的批准单借用信息未找到，请检查数据库");
+                            continue;
+                        }
+                        dt.Rows[0]["状态"] = "未采购";
+                    }
+                    da.Update(dt);
+                }
+                MessageBox.Show("成功！");
+                this.Close();
             }
         }
 
