@@ -31,6 +31,9 @@ namespace WindowsFormsApplication1
         private BindingSource bs_out, bs_in;
         private OleDbCommandBuilder cb_out, cb_in;
 
+        private SqlDataAdapter da_out_sql, da_in_sql;
+        private SqlCommandBuilder cb_out_sql, cb_in_sql;
+
         private string person_操作员;
         private string person_审核员;
         private List<string> list_操作员;
@@ -53,99 +56,210 @@ namespace WindowsFormsApplication1
         public Record_extrusClean(mySystem.MainForm mainform)
             : base(mainform)
         {
-            conn = mainform.conn;
-            connOle = mainform.connOle;
-            isSqlOk = mainform.isSqlOk;
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                conn = mainform.conn;
+                connOle = mainform.connOle;
+                isSqlOk = mainform.isSqlOk;
 
-            InitializeComponent();
-            Init();
-            getPeople();
-            setUserState();
-            getOtherData();
+                InitializeComponent();
+                Init();
+                getPeople();
+                setUserState();
+                getOtherData();
 
-            begin();
-            instrid = Convert.ToInt32(dt_out.Rows[0]["生产指令ID"]);
-            String asql = "select * from 生产指令信息表 where ID=" + instrid;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
-            instr = tempdt.Rows[0]["生产指令编号"].ToString();
+                begin();
+                instrid = Convert.ToInt32(dt_out.Rows[0]["生产指令ID"]);
+                String asql = "select * from 生产指令信息表 where ID=" + instrid;
+
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+
+                instr = tempdt.Rows[0]["生产指令编号"].ToString();
+            }
+            else
+            {
+                conn = mainform.conn;
+                connOle = mainform.connOle;
+                isSqlOk = mainform.isSqlOk;
+
+                InitializeComponent();
+                Init();
+                getPeople();
+                setUserState();
+                getOtherData();
+
+                begin();
+                instrid = Convert.ToInt32(dt_out.Rows[0]["生产指令ID"]);
+                String asql = "select * from 生产指令信息表 where ID=" + instrid;
+
+                //OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                //OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                //DataTable tempdt = new DataTable();
+                //da.Fill(tempdt);
+
+                //*****************改为sql连接***********************
+                SqlCommand comm_sql = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da_sql = new SqlDataAdapter(comm_sql);
+                DataTable tempdt = new DataTable();
+                da_sql.Fill(tempdt);
+
+                instr = tempdt.Rows[0]["生产指令编号"].ToString();
+            }
+
         }
 
         public Record_extrusClean(mySystem.MainForm mainform, int id)
             : base(mainform)
         {
-            conn = mainform.conn;
-            connOle = mainform.connOle;
-            isSqlOk = mainform.isSqlOk;
-
-            InitializeComponent();
-            Init();
-            getPeople();
-            setUserState();
-            getOtherData();
-
-            string asql = "select * from 吹膜机组清洁记录表 where ID=" + id;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
-            instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
-
-
-            asql = "select * from 生产指令信息表 where ID=" + instrid;
-            comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            da = new OleDbDataAdapter(comm);
-            tempdt = new DataTable();
-            da.Fill(tempdt);
-            instr = tempdt.Rows[0]["生产指令编号"].ToString();
-
-
-            readOuterData(instrid);
-            removeOuterBinding();
-            outerBind();
-
-            ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
-            ckb夜班.Checked = !ckb白班.Checked;
-
-            readInnerData((int)dt_out.Rows[0]["ID"]);
-            innerBind();
-
-            DialogResult result;
-            if (!is_sameto_setting())
+            if (!mySystem.Parameter.isSqlOk)
             {
-                result = MessageBox.Show("检测到之前的记录与目前设置中不一致，保留当前设置选择是，保留之前记录设置选择否", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)//保留当前设置
+                conn = mainform.conn;
+                connOle = mainform.connOle;
+                isSqlOk = mainform.isSqlOk;
+
+                InitializeComponent();
+                Init();
+                getPeople();
+                setUserState();
+                getOtherData();
+
+                string asql = "select * from 吹膜机组清洁记录表 where ID=" + id;
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+
+
+                asql = "select * from 生产指令信息表 where ID=" + instrid;
+                comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                da = new OleDbDataAdapter(comm);
+                tempdt = new DataTable();
+                da.Fill(tempdt);
+                instr = tempdt.Rows[0]["生产指令编号"].ToString();
+
+
+                readOuterData(instrid);
+                removeOuterBinding();
+                outerBind();
+
+                ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
+                ckb夜班.Checked = !ckb白班.Checked;
+
+                readInnerData((int)dt_out.Rows[0]["ID"]);
+                innerBind();
+
+                DialogResult result;
+                if (!is_sameto_setting())
                 {
-                    while (dataGridView1.Rows.Count > 0)
-                        dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-                    da_in.Update((DataTable)bs_in.DataSource);
-                    foreach (DataRow dr in dt.Rows)
+                    result = MessageBox.Show("检测到之前的记录与目前设置中不一致，保留当前设置选择是，保留之前记录设置选择否", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)//保留当前设置
                     {
-                        DataRow ndr = dt_in.NewRow();
-                        ndr[1] = (int)dt_out.Rows[0]["ID"];
-                        // 注意ID不要复制过去了，所以从1开始
-                        for (int i = 1; i < dr.Table.Columns.Count; ++i)
+                        while (dataGridView1.Rows.Count > 0)
+                            dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+                        da_in.Update((DataTable)bs_in.DataSource);
+                        foreach (DataRow dr in dt.Rows)
                         {
-                            ndr[i + 1] = dr[i];
+                            DataRow ndr = dt_in.NewRow();
+                            ndr[1] = (int)dt_out.Rows[0]["ID"];
+                            // 注意ID不要复制过去了，所以从1开始
+                            for (int i = 1; i < dr.Table.Columns.Count; ++i)
+                            {
+                                ndr[i + 1] = dr[i];
+                            }
+                            // 这里添加检查是否合格、检查人、审核人等默认信息
+                            ndr["合格"] = "合格";
+                            ndr["清洁人"] = mySystem.Parameter.userName;
+                            ndr["检查人"] = "";
+                            ndr["清洁员备注"] = "";
+                            dt_in.Rows.Add(ndr);
                         }
-                        // 这里添加检查是否合格、检查人、审核人等默认信息
-                        ndr["合格"] = "合格";
-                        ndr["清洁人"] = mySystem.Parameter.userName;
-                        ndr["检查人"] = "";
-                        ndr["清洁员备注"] = "";
-                        dt_in.Rows.Add(ndr);
+                        dataGridView1.Columns[0].Visible = false;
+                        dataGridView1.Columns[1].Visible = false;
+                        //da_in.Update((DataTable)bs_in.DataSource);
+
                     }
-                    dataGridView1.Columns[0].Visible = false;
-                    dataGridView1.Columns[1].Visible = false;
-                    //da_in.Update((DataTable)bs_in.DataSource);
-
                 }
-            }
 
-            setFormState();
-            setEnableReadOnly();
+                setFormState();
+                setEnableReadOnly();
+            }
+            else
+            {
+                conn = mainform.conn;
+                connOle = mainform.connOle;
+                isSqlOk = mainform.isSqlOk;
+
+                InitializeComponent();
+                Init();
+                getPeople();
+                setUserState();
+                getOtherData();
+
+                string asql = "select * from 吹膜机组清洁记录表 where ID=" + id;
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                instrid = int.Parse(tempdt.Rows[0]["生产指令ID"].ToString());
+
+
+                asql = "select * from 生产指令信息表 where ID=" + instrid;
+                comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                da = new SqlDataAdapter(comm);
+                tempdt = new DataTable();
+                da.Fill(tempdt);
+                instr = tempdt.Rows[0]["生产指令编号"].ToString();
+
+
+                readOuterData(instrid);
+                removeOuterBinding();
+                outerBind();
+
+                ckb白班.Checked = (bool)dt_out.Rows[0]["班次"];
+                ckb夜班.Checked = !ckb白班.Checked;
+
+                readInnerData((int)dt_out.Rows[0]["ID"]);
+                innerBind();
+
+                DialogResult result;
+                if (!is_sameto_setting())
+                {
+                    result = MessageBox.Show("检测到之前的记录与目前设置中不一致，保留当前设置选择是，保留之前记录设置选择否", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)//保留当前设置
+                    {
+                        while (dataGridView1.Rows.Count > 0)
+                            dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
+                        da_in.Update((DataTable)bs_in.DataSource);
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            DataRow ndr = dt_in.NewRow();
+                            ndr[1] = (int)dt_out.Rows[0]["ID"];
+                            // 注意ID不要复制过去了，所以从1开始
+                            for (int i = 1; i < dr.Table.Columns.Count; ++i)
+                            {
+                                ndr[i + 1] = dr[i];
+                            }
+                            // 这里添加检查是否合格、检查人、审核人等默认信息
+                            ndr["合格"] = "合格";
+                            ndr["清洁人"] = mySystem.Parameter.userName;
+                            ndr["检查人"] = "";
+                            ndr["清洁员备注"] = "";
+                            dt_in.Rows.Add(ndr);
+                        }
+                        dataGridView1.Columns[0].Visible = false;
+                        dataGridView1.Columns[1].Visible = false;
+                        //da_in.Update((DataTable)bs_in.DataSource);
+
+                    }
+                }
+
+                setFormState();
+                setEnableReadOnly();
+            }
 
         }
 
@@ -158,29 +272,66 @@ namespace WindowsFormsApplication1
         //// 获取操作员和审核员
         void getPeople()
         {
-            list_操作员 = new List<string>();
-            list_审核员 = new List<string>();
-            DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.connOle);
-            da.Fill(dt);
-
-            if (dt.Rows.Count > 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                person_操作员 = dt.Rows[0]["操作员"].ToString();
-                person_审核员 = dt.Rows[0]["审核员"].ToString();
-                string[] s=Regex.Split(person_操作员, ",|，");
-                for (int i = 0; i < s.Length; i++)
+                list_操作员 = new List<string>();
+                list_审核员 = new List<string>();
+                DataTable dt = new DataTable("用户权限");
+
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.connOle);
+
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
                 {
-                    if (s[i] != "")
-                        list_操作员.Add(s[i]);
-                }
-                string[] s1 = Regex.Split(person_审核员, ",|，");
-                for (int i = 0; i < s1.Length; i++)
-                {
-                    if (s1[i] != "")
-                        list_审核员.Add(s1[i]);
+                    person_操作员 = dt.Rows[0]["操作员"].ToString();
+                    person_审核员 = dt.Rows[0]["审核员"].ToString();
+                    string[] s = Regex.Split(person_操作员, ",|，");
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        if (s[i] != "")
+                            list_操作员.Add(s[i]);
+                    }
+                    string[] s1 = Regex.Split(person_审核员, ",|，");
+                    for (int i = 0; i < s1.Length; i++)
+                    {
+                        if (s1[i] != "")
+                            list_审核员.Add(s1[i]);
+                    }
                 }
             }
+            else
+            {
+                list_操作员 = new List<string>();
+                list_审核员 = new List<string>();
+                DataTable dt = new DataTable("用户权限");
+
+
+                //OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.connOle);
+
+                //*****************改为sql连接***********************
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.conn);
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    person_操作员 = dt.Rows[0]["操作员"].ToString();
+                    person_审核员 = dt.Rows[0]["审核员"].ToString();
+                    string[] s = Regex.Split(person_操作员, ",|，");
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        if (s[i] != "")
+                            list_操作员.Add(s[i]);
+                    }
+                    string[] s1 = Regex.Split(person_审核员, ",|，");
+                    for (int i = 0; i < s1.Length; i++)
+                    {
+                        if (s1[i] != "")
+                            list_审核员.Add(s1[i]);
+                    }
+                }
+            }
+
             
         }
 
@@ -296,12 +447,22 @@ namespace WindowsFormsApplication1
         //读取设置里面的清洁内容
         private void readset()
         {
-            string asql = "select * from 设置吹膜机组清洁项目";
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                string asql = "select * from 设置吹膜机组清洁项目";
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(dt);
+            }
+            else
+            {
+                string asql = "select * from 设置吹膜机组清洁项目";
+                SqlCommand comm_sql = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da_sql = new SqlDataAdapter(comm_sql);
+                da_sql.Fill(dt);
+            }
 
-            da.Fill(dt);
-            
+                   
         }
         //判断之前的内容是否与设置表中内容一致
         private bool is_sameto_setting()
@@ -401,31 +562,45 @@ namespace WindowsFormsApplication1
             connOle = mySystem.Parameter.connOle;
             dt_out = new DataTable();
             dt_in = new DataTable();
+
             da_out = new OleDbDataAdapter();
             da_in = new OleDbDataAdapter();
+
+            da_out_sql = new SqlDataAdapter();
+            da_in_sql = new SqlDataAdapter();
+
             bs_out = new BindingSource();
             bs_in = new BindingSource();
+
             cb_out = new OleDbCommandBuilder();
             cb_in = new OleDbCommandBuilder();
+
+            cb_out_sql = new SqlCommandBuilder();
+            cb_in_sql = new SqlCommandBuilder();
             
         }
 
-       //供界面显示,参数为数据库中对应记录的id
+       //供界面显示,参数为数据库中对应记录的id，------------------------作废的函数-----------------------
         public void show(int paraid)
         {
             string asql = "select 生产指令ID from 吹膜机组清洁记录表 where ID=" + paraid;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            //OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            //OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            //DataTable tempdt = new DataTable();
+            //da.Fill(tempdt);
 
+            //*****************改为sql连接***********************
+            SqlCommand comm_sql = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da_sql = new SqlDataAdapter(comm_sql);
             DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+            da_sql.Fill(tempdt);
             if (tempdt.Rows.Count == 0)
                 return;
             else
                 fill_by_id((int)tempdt.Rows[0][0]);
         }
 
-        //根据生产指令id将数据填写到各控件中
+        //根据生产指令id将数据填写到各控件中,------------------------作废的函数-----------------------
         private int fill_by_id(int id)
         {
             #region 以前
@@ -589,16 +764,36 @@ namespace WindowsFormsApplication1
         //查找输入清场人和检查人名字是否合法
         private int queryid(string s)
         {
-            string asql = "select ID from users where 姓名=" + "'" + s + "'";
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOleUser);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                string asql = "select ID from users where 姓名=" + "'" + s + "'";
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOleUser);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
-            if (tempdt.Rows.Count == 0)
-                return -1;
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                if (tempdt.Rows.Count == 0)
+                    return -1;
+                else
+                    return (int)tempdt.Rows[0][0];
+            }
             else
-                return (int)tempdt.Rows[0][0];
+            {
+                string asql = "select ID from users where 姓名=" + "'" + s + "'";
+                //OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOleUser);
+                //OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                //*****************改为sql连接***********************
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.connUser);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                if (tempdt.Rows.Count == 0)
+                    return -1;
+                else
+                    return (int)tempdt.Rows[0][0];
+            }
 
         }
 
@@ -624,17 +819,34 @@ namespace WindowsFormsApplication1
                 return false;
             }
 
-            //外表保存
-            bs_out.EndEdit();
-            da_out.Update((DataTable)bs_out.DataSource);
-            readOuterData(instrid);
-            removeOuterBinding();
-            outerBind();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                //外表保存
+                bs_out.EndEdit();
+                da_out.Update((DataTable)bs_out.DataSource);
+                readOuterData(instrid);
+                removeOuterBinding();
+                outerBind();
 
-            //内表保存
-            da_in.Update((DataTable)bs_in.DataSource);
-            readInnerData(Convert.ToInt32(dt_out.Rows[0]["ID"]));
-            innerBind();
+                //内表保存
+                da_in.Update((DataTable)bs_in.DataSource);
+                readInnerData(Convert.ToInt32(dt_out.Rows[0]["ID"]));
+                innerBind();
+            }
+            else
+            {
+                //外表保存
+                bs_out.EndEdit();
+                da_out_sql.Update((DataTable)bs_out.DataSource);
+                readOuterData(instrid);
+                removeOuterBinding();
+                outerBind();
+
+                //内表保存
+                da_in_sql.Update((DataTable)bs_in.DataSource);
+                readInnerData(Convert.ToInt32(dt_out.Rows[0]["ID"]));
+                innerBind();
+            }
 
             setUndoColor();
             return true;
@@ -670,33 +882,68 @@ namespace WindowsFormsApplication1
             //状态
             setControlFalse();
 
-            //写待审核表
-            DataTable dt_temp = new DataTable("待审核");
-            //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
-
-            //写日志
-            string log = "\n=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
-            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
-            log += "审核意见：" + checkform.opinion;
-            dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
-
-            bs_out.EndEdit();
-            da_out.Update((DataTable)bs_out.DataSource);
-            base.CheckResult();
-            try
+            if (!mySystem.Parameter.isSqlOk)
             {
-                (this.Owner as ExtructionMainForm).InitBtn();
-            }
-            catch (NullReferenceException exp)
-            {
+                //写待审核表
+                DataTable dt_temp = new DataTable("待审核");
+                //BindingSource bs_temp = new BindingSource();
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
 
+                //写日志
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+                log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+                log += "审核意见：" + checkform.opinion;
+                dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
+
+                bs_out.EndEdit();
+                da_out.Update((DataTable)bs_out.DataSource);
+                base.CheckResult();
+                try
+                {
+                    (this.Owner as ExtructionMainForm).InitBtn();
+                }
+                catch (NullReferenceException exp)
+                {
+
+                }
             }
+            else
+            {
+                //写待审核表
+                DataTable dt_temp = new DataTable("待审核");
+                //BindingSource bs_temp = new BindingSource();
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+
+                //写日志
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+                log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+                log += "审核意见：" + checkform.opinion;
+                dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
+
+                bs_out.EndEdit();
+                //da_out.Update((DataTable)bs_out.DataSource);
+                da_out_sql.Update((DataTable)bs_out.DataSource);
+                base.CheckResult();
+                try
+                {
+                    (this.Owner as ExtructionMainForm).InitBtn();
+                }
+                catch (NullReferenceException exp)
+                {
+
+                }
+            }
+
 
         }
 
@@ -716,6 +963,7 @@ namespace WindowsFormsApplication1
 
         }
 
+        //测试清场记录
         private void button4_Click(object sender, EventArgs e)
         {
             Record_extrusSiteClean s = new Record_extrusSiteClean(mainform);
@@ -754,40 +1002,101 @@ namespace WindowsFormsApplication1
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(int instrid)
         {
-            dt_out = new DataTable("吹膜机组清洁记录表");
-            bs_out = new BindingSource();
-            da_out = new OleDbDataAdapter("select * from 吹膜机组清洁记录表 where 生产指令ID=" +instrid, connOle);
-            cb_out = new OleDbCommandBuilder(da_out);
-            da_out.Fill(dt_out);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_out = new DataTable("吹膜机组清洁记录表");
+                bs_out = new BindingSource();
+
+                da_out = new OleDbDataAdapter("select * from 吹膜机组清洁记录表 where 生产指令ID=" +instrid, connOle);
+                cb_out = new OleDbCommandBuilder(da_out);
+                da_out.Fill(dt_out);
+
+            }
+            else
+            {
+                dt_out = new DataTable("吹膜机组清洁记录表");
+                bs_out = new BindingSource();
+
+                //da_out = new OleDbDataAdapter("select * from 吹膜机组清洁记录表 where 生产指令ID=" +instrid, connOle);
+                //cb_out = new OleDbCommandBuilder(da_out);
+                //da_out.Fill(dt_out);
+
+                //*****************改为sql连接***********************
+                da_out_sql = new SqlDataAdapter("select * from 吹膜机组清洁记录表 where 生产指令ID=" + instrid, mySystem.Parameter.conn);
+                cb_out_sql = new SqlCommandBuilder(da_out_sql);
+                da_out_sql.Fill(dt_out);
+            }
+
+
+
         }
         // 根据条件从数据库中读取多行内表数据
         void readInnerData(int id)
         {
-            dt_in = new DataTable("吹膜机组清洁项目记录表");
-            bs_in = new BindingSource();
-            da_in = new OleDbDataAdapter("select * from 吹膜机组清洁项目记录表 where 吹膜机组清洁记录ID=" + id, connOle);
-            cb_in = new OleDbCommandBuilder(da_in);
-            da_in.Fill(dt_in);
-
-            if (dt_in.Rows.Count <= 0)//空表，按照设置表内容进行插入
+            if (!mySystem.Parameter.isSqlOk)
             {
-                foreach (DataRow dr in dt.Rows)
+                dt_in = new DataTable("吹膜机组清洁项目记录表");
+                bs_in = new BindingSource();
+
+                da_in = new OleDbDataAdapter("select * from 吹膜机组清洁项目记录表 where 吹膜机组清洁记录ID=" + id, connOle);
+                cb_in = new OleDbCommandBuilder(da_in);
+                da_in.Fill(dt_in);
+
+                if (dt_in.Rows.Count <= 0)//空表，按照设置表内容进行插入
                 {
-                    DataRow ndr = dt_in.NewRow();
-                    ndr[1] = (int)dt_out.Rows[0]["ID"];
-                    // 注意ID不要复制过去了，所以从1开始
-                    for (int i = 1; i < dr.Table.Columns.Count; ++i)
+                    foreach (DataRow dr in dt.Rows)
                     {
-                        ndr[i + 1] = dr[i];
+                        DataRow ndr = dt_in.NewRow();
+                        ndr[1] = (int)dt_out.Rows[0]["ID"];
+                        // 注意ID不要复制过去了，所以从1开始
+                        for (int i = 1; i < dr.Table.Columns.Count; ++i)
+                        {
+                            ndr[i + 1] = dr[i];
+                        }
+                        // 这里添加检查是否合格、检查人、审核人等默认信息
+                        ndr["合格"] = "合格";
+                        ndr["清洁人"] = mySystem.Parameter.userName;
+                        ndr["检查人"] = "";
+                        ndr["清洁员备注"] = "无";
+                        dt_in.Rows.Add(ndr);
                     }
-                    // 这里添加检查是否合格、检查人、审核人等默认信息
-                    ndr["合格"] = "合格";
-                    ndr["清洁人"] = mySystem.Parameter.userName;
-                    ndr["检查人"] = "";
-                    ndr["清洁员备注"] = "无";
-                    dt_in.Rows.Add(ndr);
                 }
             }
+            else
+            {
+                dt_in = new DataTable("吹膜机组清洁项目记录表");
+                bs_in = new BindingSource();
+
+                //da_in = new OleDbDataAdapter("select * from 吹膜机组清洁项目记录表 where 吹膜机组清洁记录ID=" + id, connOle);
+                //cb_in = new OleDbCommandBuilder(da_in);
+                //da_in.Fill(dt_in);
+
+                //*****************改为sql连接***********************
+                da_in_sql = new SqlDataAdapter("select * from 吹膜机组清洁项目记录表 where 吹膜机组清洁记录ID=" + id, mySystem.Parameter.conn);
+                cb_in_sql = new SqlCommandBuilder(da_in_sql);
+                da_in_sql.Fill(dt_in);
+
+                if (dt_in.Rows.Count <= 0)//空表，按照设置表内容进行插入
+                {
+                    foreach (DataRow dr in dt.Rows)
+                    {
+                        DataRow ndr = dt_in.NewRow();
+                        ndr[1] = (int)dt_out.Rows[0]["ID"];
+                        // 注意ID不要复制过去了，所以从1开始
+                        for (int i = 1; i < dr.Table.Columns.Count; ++i)
+                        {
+                            ndr[i + 1] = dr[i];
+                        }
+                        // 这里添加检查是否合格、检查人、审核人等默认信息
+                        ndr["合格"] = "合格";
+                        ndr["清洁人"] = mySystem.Parameter.userName;
+                        ndr["检查人"] = "";
+                        ndr["清洁员备注"] = "无";
+                        dt_in.Rows.Add(ndr);
+                    }
+                }
+            }
+
         }
         // 移除外表和控件的绑定，建议使用Control.DataBinds.RemoveAt(0)
         void removeOuterBinding()
@@ -961,7 +1270,16 @@ namespace WindowsFormsApplication1
                         log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
                         dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
                         bs_out.EndEdit();
-                        da_out.Update((DataTable)bs_out.DataSource);
+
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da_out.Update((DataTable)bs_out.DataSource);
+                        }
+                        else
+                        {
+                            da_out_sql.Update((DataTable)bs_out.DataSource);
+                        }
+                        
                     }
                     // 关闭文件，false表示不保存
                     wb.Close(false);
@@ -1006,16 +1324,38 @@ namespace WindowsFormsApplication1
         //查找打印的表序号
         private int find_indexofprint()
         {
-            List<int> list_id = new List<int>();
-            string asql = "select * from 吹膜机组清洁记录表 where 生产指令ID=" + instrid;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                List<int> list_id = new List<int>();
+                string asql = "select * from 吹膜机组清洁记录表 where 生产指令ID=" + instrid;
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
-            for (int i = 0; i < tempdt.Rows.Count; i++)
-                list_id.Add((int)tempdt.Rows[i]["ID"]);
-            return list_id.IndexOf((int)dt_out.Rows[0]["ID"])+1;
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                    list_id.Add((int)tempdt.Rows[i]["ID"]);
+                return list_id.IndexOf((int)dt_out.Rows[0]["ID"]) + 1;
+            }
+            else
+            {
+                List<int> list_id = new List<int>();
+                string asql = "select * from 吹膜机组清洁记录表 where 生产指令ID=" + instrid;
+                //OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                //OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                //*****************改为sql连接***********************
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                    list_id.Add((int)tempdt.Rows[i]["ID"]);
+                return list_id.IndexOf((int)dt_out.Rows[0]["ID"]) + 1;
+            }
 
         }
 
@@ -1041,38 +1381,85 @@ namespace WindowsFormsApplication1
                 }
             }
 
-            //写待审核表
-            DataTable dt_temp = new DataTable("待审核");
-            BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-
-            if (dt_temp.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "吹膜机组清洁记录表";
-                dr["对应ID"] = (int)dt_out.Rows[0]["ID"];
-                dt_temp.Rows.Add(dr);
+                //写待审核表
+                DataTable dt_temp = new DataTable("待审核");
+                BindingSource bs_temp = new BindingSource();
+
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+
+
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "吹膜机组清洁记录表";
+                    dr["对应ID"] = (int)dt_out.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                bs_temp.DataSource = dt_temp;
+                da_temp.Update((DataTable)bs_temp.DataSource);
+
+                //写日志 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 提交审核
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+                dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
+
+                dt_out.Rows[0]["审核人"] = "__待审核";
+                dt_out.Rows[0]["审核时间"] = DateTime.Now;
+
+                save();
+
+                //空间都不能点
+                setControlFalse();
             }
-            bs_temp.DataSource = dt_temp;
-            da_temp.Update((DataTable)bs_temp.DataSource);
+            else
+            {
+                //写待审核表
+                DataTable dt_temp = new DataTable("待审核");
+                BindingSource bs_temp = new BindingSource();
 
-            //写日志 
-            //格式： 
-            // =================================================
-            // yyyy年MM月dd日，操作员：XXX 提交审核
-            string log = "\n=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
-            dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
+                //OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.connOle);
+                //OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
 
-            dt_out.Rows[0]["审核人"] = "__待审核";
-            dt_out.Rows[0]["审核时间"] = DateTime.Now;
+                //*****************改为sql连接***********************
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='吹膜机组清洁记录表' and 对应ID=" + (int)dt_out.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
 
-            save();
 
-            //空间都不能点
-            setControlFalse();
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "吹膜机组清洁记录表";
+                    dr["对应ID"] = (int)dt_out.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                bs_temp.DataSource = dt_temp;
+                da_temp.Update((DataTable)bs_temp.DataSource);
+
+                //写日志 
+                //格式： 
+                // =================================================
+                // yyyy年MM月dd日，操作员：XXX 提交审核
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
+                dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
+
+                dt_out.Rows[0]["审核人"] = "__待审核";
+                dt_out.Rows[0]["审核时间"] = DateTime.Now;
+
+                save();
+
+                //空间都不能点
+                setControlFalse();
+            }
+
         }
 
         private void bt日志_Click(object sender, EventArgs e)
