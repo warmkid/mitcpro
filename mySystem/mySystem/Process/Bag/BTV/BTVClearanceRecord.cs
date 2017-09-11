@@ -815,10 +815,10 @@ namespace mySystem.Process.Bag.BTV
             // 修改Sheet中某行某列的值
 
             int rowStartAt = 5;
-            my.Cells[3, 1].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"];
+            my.Cells[3, 1].Value = "生产指令编号：" + dtOuter.Rows[0]["生产指令编号"];
             my.Cells[3, 1].Value = "产品代码/规格：" + dtOuter.Rows[0]["产品代码"];
             my.Cells[3, 5].Value = "生产批号：" + dtOuter.Rows[0]["生产批号"];
-            my.Cells[3, 7].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日")+"生产班次："+ dtOuter.Rows[0]["生产班次"];
+            my.Cells[3, 7].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日")+"生产班次："+ dtOuter.Rows[0]["生产班次"];
 
 
             //EVERY SHEET CONTAINS 14 RECORDS
@@ -832,7 +832,7 @@ namespace mySystem.Process.Bag.BTV
                 //my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
                 //my.Cells[i + rowStartAt, 2].Font.Size = 11;
                 my.Cells[i + rowStartAt, 3].Value = dtInner.Rows[i]["清场要点"];
-                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["清洁操作"];
+                my.Cells[i + rowStartAt, 6].Value = dtInner.Rows[i]["清洁操作"];
                
             }
 
@@ -851,7 +851,7 @@ namespace mySystem.Process.Bag.BTV
                     //my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
                     //my.Cells[i + rowStartAt, 2].Font.Size = 11;
                     my.Cells[i + rowStartAt, 3].Value = dtInner.Rows[i]["清场要点"];
-                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["清洁操作"];
+                    my.Cells[i + rowStartAt, 6].Value = dtInner.Rows[i]["清洁操作"];
                
                 }
             }
@@ -873,7 +873,7 @@ namespace mySystem.Process.Bag.BTV
             else
             {
                 //add footer
-                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+                my.PageSetup.RightFooter = CODE + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
                 // 直接用默认打印机打印该Sheet
                 try
@@ -898,7 +898,7 @@ namespace mySystem.Process.Bag.BTV
 
         int find_indexofprint()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + ID, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();
@@ -906,7 +906,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 ids.Add(Convert.ToInt32(dr["ID"]));
             }
-            return ids.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+            return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
         }
 
        
