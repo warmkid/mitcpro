@@ -177,9 +177,6 @@ namespace mySystem.Query
                         else
                         { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", null); }
                         break;
-                    case "结束工序":
-
-                        break;
 
                     default:
                         break;
@@ -320,10 +317,6 @@ namespace mySystem.Query
                         HandOver form12 = new HandOver(mainform, ID);
                         form12.ShowDialog();
                         break;
-                    case "结束工序":
-
-                        break;
-
 
                     default:
                         break;
