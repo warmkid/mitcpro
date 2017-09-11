@@ -736,12 +736,6 @@
     <Compile Include="Process\Order\出库单.Designer.cs">
       <DependentUpon>出库单.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Order\添加订单.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Order\添加订单.Designer.cs">
-      <DependentUpon>添加订单.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\Order\订单管理.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -826,18 +820,6 @@
     <Compile Include="Process\Stock\产品退货请验单.Designer.cs">
       <DependentUpon>产品退货请验单.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Stock\入库.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\入库.Designer.cs">
-      <DependentUpon>入库.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\出库.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\出库.Designer.cs">
-      <DependentUpon>出库.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\Stock\原料入库管理.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -855,12 +837,6 @@
     </Compile>
     <Compile Include="Process\Stock\取样证.Designer.cs">
       <DependentUpon>取样证.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\商品设置.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\商品设置.Designer.cs">
-      <DependentUpon>商品设置.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Stock\文件上传.cs">
       <SubType>Form</SubType>
@@ -898,12 +874,6 @@
     <Compile Include="Process\Stock\库存管理主界面.Designer.cs">
       <DependentUpon>库存管理主界面.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Stock\添加采购单.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\添加采购单.designer.cs">
-      <DependentUpon>添加采购单.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\Stock\物资请验单.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -933,12 +903,6 @@
     </Compile>
     <Compile Include="Process\Stock\退货记录.Designer.cs">
       <DependentUpon>退货记录.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\采购单管理.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\采购单管理.Designer.cs">
-      <DependentUpon>采购单管理.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\灭菌\Gamma射线辐射灭菌委托单.cs">
       <SubType>Form</SubType>
@@ -1174,23 +1138,11 @@
     <Compile Include="Setting\Setting_CleanSite.Designer.cs">
       <DependentUpon>Setting_CleanSite.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Stock\BuyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\BuyForm.Designer.cs">
-      <DependentUpon>BuyForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Other\Connect2SqlForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Other\Connect2SqlForm.designer.cs">
       <DependentUpon>Connect2SqlForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\InOutListForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\InOutListForm.Designer.cs">
-      <DependentUpon>InOutListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\LoginForm.cs">
       <SubType>Form</SubType>
@@ -1222,18 +1174,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\StockOrderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\StockOrderForm.designer.cs">
-      <DependentUpon>StockOrderForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Process\Stock\StockCheckForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Stock\StockCheckForm.Designer.cs">
-      <DependentUpon>StockCheckForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Setting\SettingForm.cs">
       <SubType>Form</SubType>
@@ -1600,9 +1540,6 @@
     <EmbeddedResource Include="Process\Order\出库单.resx">
       <DependentUpon>出库单.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Order\添加订单.resx">
-      <DependentUpon>添加订单.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Order\订单管理.resx">
       <DependentUpon>订单管理.cs</DependentUpon>
     </EmbeddedResource>
@@ -1648,12 +1585,6 @@
     <EmbeddedResource Include="Process\Stock\产品退货请验单.resx">
       <DependentUpon>产品退货请验单.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\入库.resx">
-      <DependentUpon>入库.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\出库.resx">
-      <DependentUpon>出库.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\原料入库管理.resx">
       <DependentUpon>原料入库管理.cs</DependentUpon>
     </EmbeddedResource>
@@ -1662,9 +1593,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\取样证.resx">
       <DependentUpon>取样证.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\商品设置.resx">
-      <DependentUpon>商品设置.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\文件上传.resx">
       <DependentUpon>文件上传.cs</DependentUpon>
@@ -1684,9 +1612,6 @@
     <EmbeddedResource Include="Process\Stock\库存管理主界面.resx">
       <DependentUpon>库存管理主界面.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\添加采购单.resx">
-      <DependentUpon>添加采购单.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\物资请验单.resx">
       <DependentUpon>物资请验单.cs</DependentUpon>
     </EmbeddedResource>
@@ -1701,9 +1626,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\退货记录.resx">
       <DependentUpon>退货记录.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\采购单管理.resx">
-      <DependentUpon>采购单管理.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\灭菌\Gamma射线辐射灭菌委托单.resx">
       <DependentUpon>Gamma射线辐射灭菌委托单.cs</DependentUpon>
@@ -1819,15 +1741,9 @@
     <EmbeddedResource Include="Setting\Setting_CleanSite.resx">
       <DependentUpon>Setting_CleanSite.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\BuyForm.resx">
-      <DependentUpon>BuyForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Other\Connect2SqlForm.resx">
       <DependentUpon>Connect2SqlForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\InOutListForm.resx">
-      <DependentUpon>InOutListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Other\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -1855,12 +1771,6 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\StockOrderForm.resx">
-      <DependentUpon>StockOrderForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\StockCheckForm.resx">
-      <DependentUpon>StockCheckForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Setting\SettingForm.resx">
       <DependentUpon>SettingForm.cs</DependentUpon>
