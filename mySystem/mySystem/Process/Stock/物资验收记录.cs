@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
+using System.Collections;
 
 
 namespace mySystem.Process.Stock
@@ -18,7 +19,7 @@ namespace mySystem.Process.Stock
         List<String> ls操作员;
         List<String> ls审核员;
         List<String> ls供应商代码,ls供应商名称;
-        List<String> ls物料名称, ls物料代码;
+        Hashtable ht代码2名称单位换算率;
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
         /// </summary>
@@ -441,7 +442,6 @@ namespace mySystem.Process.Stock
 
             // 物料代码和物料名称可选可输
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
-            dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
         }
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -454,69 +454,72 @@ namespace mySystem.Process.Stock
             {
                 case "物料代码":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
-                    idx = ls物料代码.IndexOf(curStr);
-                    if (idx >= 0)
+                    if (ht代码2名称单位换算率.ContainsKey(curStr))
                     {
-                        dataGridView1["物料代码", e.RowIndex].Value = ls物料代码[idx];
-                        dataGridView1["物料名称", e.RowIndex].Value = ls物料名称[idx];
+                        dataGridView1["物料代码", e.RowIndex].Value = curStr;
+                        dataGridView1["物料名称", e.RowIndex].Value =((List<object>) ht代码2名称单位换算率[curStr] ).ElementAt(0).ToString();
+                        dataGridView1["单位", e.RowIndex].Value = ((List<object>)ht代码2名称单位换算率[curStr]).ElementAt(1).ToString();
+                        dataGridView1["换算率", e.RowIndex].Value = Convert.ToDouble(((List<object>)ht代码2名称单位换算率[curStr]).ElementAt(2));
                     }
                     else
                     {
                         dataGridView1["物料代码", e.RowIndex].Value = "";
                         dataGridView1["物料名称", e.RowIndex].Value = "";
-                    }
-                    break;
-                case "物料名称":
-                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
-                    idx = ls物料名称.IndexOf(curStr);
-                    if (idx >= 0)
-                    {
-                        dataGridView1["物料代码", e.RowIndex].Value = ls物料代码[idx];
-                        dataGridView1["物料名称", e.RowIndex].Value = ls物料名称[idx];
-                    }
-                    else
-                    {
-                        dataGridView1["物料代码", e.RowIndex].Value = "";
-                        dataGridView1["物料名称", e.RowIndex].Value = "";
+                        dataGridView1["单位", e.RowIndex].Value = "";
+                        dataGridView1["换算率", e.RowIndex].Value = 0;
                     }
                     break;
             }
         }
 
-        void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
-        {
-            DataGridView dgv = (sender as DataGridView);
-            if (dgv.SelectedCells.Count == 0) return;
-            int colIdx = dgv.SelectedCells[0].ColumnIndex;
-            if (2==colIdx || 3==colIdx)
-            {
-                object eFV = e.FormattedValue;
-                DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;
-                if (!cbc.Items.Contains(eFV))
-                {
-                    cbc.Items.Add(eFV);
-                    dataGridView1.SelectedCells[0].Value = eFV;
-                }
-            }
-        }
+        //void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        //{
+        //    DataGridView dgv = (sender as DataGridView);
+        //    if (dgv.SelectedCells.Count == 0) return;
+        //    int colIdx = dgv.SelectedCells[0].ColumnIndex;
+        //    if (2==colIdx || 3==colIdx)
+        //    {
+        //        object eFV = e.FormattedValue;
+        //        DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;
+        //        if (!cbc.Items.Contains(eFV))
+        //        {
+        //            cbc.Items.Add(eFV);
+        //            dataGridView1.SelectedCells[0].Value = eFV;
+        //        }
+        //    }
+        //}
 
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            DataGridView dgv = (sender as DataGridView);
-
-            if (dgv.SelectedCells.Count == 0) return;
-            int colIdx = dgv.SelectedCells[0].ColumnIndex;
-            if (2==colIdx || 3==colIdx)
+            TextBox tb = (e.Control as TextBox);
+            if (tb != null) tb.AutoCompleteCustomSource = null;
+            if (dataGridView1.CurrentCell.OwningColumn.Name == "物料代码")
             {
-                ComboBox c = e.Control as ComboBox;
-                if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+                if (tb != null)
+                {
+                    AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ht代码2名称单位换算率.Keys.OfType<String>().ToArray<string>());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                }
             }
+            //DataGridView dgv = (sender as DataGridView);
+
+            //if (dgv.SelectedCells.Count == 0) return;
+            //int colIdx = dgv.SelectedCells[0].ColumnIndex;
+            //if (2==colIdx || 3==colIdx)
+            //{
+            //    ComboBox c = e.Control as ComboBox;
+            //    if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            //}
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["物资验收记录ID"].Visible = false;
+            dataGridView1.Columns["物料名称"].ReadOnly = true;
         }
 
         void tsi_Click(object sender, EventArgs e)
@@ -760,7 +763,7 @@ namespace mySystem.Process.Stock
                 if (dtInner.Rows[i]["是否需要检验"].ToString() == "是") continue;
                 DataRow ndr = dtMore.NewRow();
                 // 注意ID的值
-                for (int j = 2; j < dtInner.Rows[i].ItemArray.Length - 1; ++j)
+                for (int j = 2; j < dtInner.Rows[i].ItemArray.Length - 2; ++j)
                 {
                     ndr[j] = dtInner.Rows[i][j];
                 }
@@ -976,36 +979,36 @@ namespace mySystem.Process.Stock
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
-                if (dc.ColumnName == "物料名称")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (string s in ls物料名称)
-                    {
-                        cbc.Items.Add(s);
-                    }
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
-                if (dc.ColumnName == "物料代码")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (string s in ls物料代码)
-                    {
-                        cbc.Items.Add(s);
-                    }
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
+                //if (dc.ColumnName == "物料名称")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (string s in ls物料名称)
+                //    {
+                //        cbc.Items.Add(s);
+                //    }
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
+                //if (dc.ColumnName == "物料代码")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (string s in ls物料代码)
+                //    {
+                //        cbc.Items.Add(s);
+                //    }
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
                 {
@@ -1103,18 +1106,24 @@ namespace mySystem.Process.Stock
                 ndr["仓库名称"] = "SPM仓库";
                 ndr["供应商代码"] = dtOuter.Rows[0]["供应商代码"];
                 ndr["供应商名称"] = dtOuter.Rows[0]["供应商名称"];
+                ndr["产品代码"] = dr["物料代码"];
                 ndr["产品名称"] = dr["物料名称"];
                 ndr["产品规格"] = dr["包装规格"];
                 ndr["产品批号"] = dr["本厂批号"];
-                ndr["现存件数"] = 0;
+                
                 ndr["现存数量"] = dr["数量"];
                 ndr["主计量单位"] = dr["单位"];
-                ndr["实盘数量"] = 0;
+                
                 ndr["用途"] = dr["用途"];
                 ndr["状态"] = "待验";
                 ndr["借用日志"] = "";
                 ndr["冻结状态"] = true;
-                ndr["物资验收记录详细信息ID"] = dr["ID"]; 
+                ndr["物资验收记录详细信息ID"] = dr["ID"];
+                ndr["换算率"] = dr["换算率"];
+                ndr["现存件数"] = Convert.ToDouble(ndr["现存数量"]) / Convert.ToDouble(ndr["换算率"]);
+                ndr["实盘数量"] = ndr["现存件数"];
+                
+                ndr["是否盘点"] = false;
                 dt.Rows.Add(ndr);
             }
 
@@ -1129,15 +1138,31 @@ namespace mySystem.Process.Stock
         {
             OleDbDataAdapter da;
             DataTable dt;
-            ls物料代码 = new List<string>();
-            ls物料名称 = new List<string>();
+            ht代码2名称单位换算率 = new Hashtable();
+            //ls物料名称 = new List<string>();
             da = new OleDbDataAdapter("select * from 设置存货档案",conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                ls物料代码.Add(dr["存货代码"].ToString());
-                ls物料名称.Add(dr["存货名称"].ToString());
+                string daima = dr["存货代码"].ToString();
+                if (!ht代码2名称单位换算率.ContainsKey(daima))
+                {
+                    List<object> lo = new List<object>();
+                    lo.Add(dr["存货名称"].ToString());
+                    lo.Add(dr["主计量单位名称"].ToString());
+                    try
+                    {
+                        lo.Add(Convert.ToDouble(dr["换算率"]));
+                    }
+                    catch (Exception ee)
+                    {
+                        MessageBox.Show(dr["存货代码"].ToString() + " 的换算率读取失败，默认设为0");
+                        lo.Add(0);
+                    }
+                    ht代码2名称单位换算率[daima] = lo;
+                }
+
             }
 
            
