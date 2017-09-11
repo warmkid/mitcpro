@@ -276,6 +276,12 @@
     <Compile Include="Process\Bag\BTV\BTVRunningRecordRHJsingle.Designer.cs">
       <DependentUpon>BTVRunningRecordRHJsingle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\BTV\HandOver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\HandOver.Designer.cs">
+      <DependentUpon>HandOver.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\BTV\产品外观和尺寸检验记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -390,6 +396,12 @@
     <Compile Include="Process\Bag\CS\清场记录.Designer.cs">
       <DependentUpon>清场记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\LDPE\HandOver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\HandOver.Designer.cs">
+      <DependentUpon>HandOver.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\LDPE\LDPEBag_batchproduction.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -473,6 +485,12 @@
     </Compile>
     <Compile Include="Process\Bag\LDPE\产品热合强度检验记录.Designer.cs">
       <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\HandOver.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\HandOver.Designer.cs">
+      <DependentUpon>HandOver.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Bag\PTV\PTVBag_batchproduction.cs">
       <SubType>Form</SubType>
@@ -1320,6 +1338,9 @@
     <EmbeddedResource Include="Process\Bag\BTV\BTVRunningRecordRHJsingle.resx">
       <DependentUpon>BTVRunningRecordRHJsingle.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\HandOver.resx">
+      <DependentUpon>HandOver.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\产品外观和尺寸检验记录.resx">
       <DependentUpon>产品外观和尺寸检验记录.cs</DependentUpon>
     </EmbeddedResource>
@@ -1377,6 +1398,9 @@
     <EmbeddedResource Include="Process\Bag\CS\清场记录.resx">
       <DependentUpon>清场记录.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\HandOver.resx">
+      <DependentUpon>HandOver.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\LDPEBag_batchproduction.resx">
       <DependentUpon>LDPEBag_batchproduction.cs</DependentUpon>
     </EmbeddedResource>
@@ -1418,6 +1442,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\产品热合强度检验记录.resx">
       <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\HandOver.resx">
+      <DependentUpon>HandOver.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTVBag_batchproduction.resx">
       <DependentUpon>PTVBag_batchproduction.cs</DependentUpon>

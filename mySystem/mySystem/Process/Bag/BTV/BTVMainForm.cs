@@ -542,7 +542,8 @@ namespace mySystem.Process.Bag.BTV
             if (b)
             {
                 //new窗口
-
+                BTV.HandOver myform = new BTV.HandOver(mainform);
+                myform.ShowDialog();
             }
             else
             {

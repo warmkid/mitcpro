@@ -852,20 +852,20 @@ namespace mySystem.Process.CleanCut
 
             int ind = 0;
             int i插入行数 = 0;
-            my.Cells[3, 1].Value = "生产指令编号：" + lbl生产指令编码.Text ;
+            my.Cells[3, 1].Value = "生产指令编号：" + dt_prodinstr.Rows[0]["生产指令编码"].ToString();
            // my.Cells[3, 4].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
             if (ckb白班.Checked)
-                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□",Convert.ToDateTime(dt_prodinstr.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
             else
-                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班□   夜班☑", dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班□   夜班☑", Convert.ToDateTime(dt_prodinstr.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
             int i内表序号判断=0;
             //插入新行
-            if (dataGridView1.Rows.Count > 8)
+            if (dt_prodlist.Rows.Count > 8)
             {
-                if ((dataGridView1.Rows.Count - 8) % 2 == 0)
-                    i插入行数 = (dataGridView1.Rows.Count - 8) / 2;
-                if ((dataGridView1.Rows.Count - 8) % 2 == 1)
-                    i插入行数 = (dataGridView1.Rows.Count - 8) / 2 + 1;
+                if ((dt_prodlist.Rows.Count - 8) % 2 == 0)
+                    i插入行数 = (dt_prodlist.Rows.Count - 8) / 2;
+                if ((dt_prodlist.Rows.Count - 8) % 2 == 1)
+                    i插入行数 = (dt_prodlist.Rows.Count - 8) / 2 + 1;
                 for (int i = 0; i < i插入行数; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[9 + i, Type.Missing];
@@ -876,28 +876,28 @@ namespace mySystem.Process.CleanCut
             }
            
             //写内表数据
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < dt_prodlist.Rows.Count; i++)
             {
-                if (dataGridView1.Rows.Count % 2 == 1)
-                    i内表序号判断 = dataGridView1.Rows.Count + 1;
+                if (dt_prodlist.Rows.Count % 2 == 1)
+                    i内表序号判断 = dt_prodlist.Rows.Count + 1;
                 else
-                    i内表序号判断 = dataGridView1.Rows.Count;
+                    i内表序号判断 = dt_prodlist.Rows.Count;
                 if (i < (i内表序号判断 / 2)||i<4)
                 {
                     my.Cells[5 + i, 1].Value = i + 1;
-                    my.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                    if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
+                    my.Cells[5 + i, 2].Value = dt_prodlist.Rows[i]["清场内容"].ToString();
+                    if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "合格")
                         my.Cells[5 + i, 3].Value = "√";
-                    else if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                    else if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "不合格")
                         my.Cells[5 + i, 3].Value = "×";
                 }
                 else
                 {
                     my.Cells[5 + i - i内表序号判断 / 2, 4].Value = i + 1;
-                    my.Cells[5 + i - i内表序号判断 / 2, 5].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                    if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
+                    my.Cells[5 + i - i内表序号判断 / 2, 5].Value = dt_prodlist.Rows[i]["清场内容"].ToString();
+                    if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "合格")
                         my.Cells[5 + i - i内表序号判断 / 2, 6].Value = "√";
-                    else if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                    else if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "不合格")
                         my.Cells[5 + i - i内表序号判断 / 2, 6].Value = "×";
                 }
             }
@@ -911,8 +911,8 @@ namespace mySystem.Process.CleanCut
             
             //TODO:读取确认日期和审核日期
             my.Cells[9 + ind, 1].Value = "备注：清场打“√”，没清洁打“×”。";
-            my.Cells[10 + ind, 1].Value = String.Format("确认人/日期：{0}      {1}", tb清场人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
-            my.Cells[10 + ind, 4].Value = String.Format("复核人/日期：{0}      {1}", tb检查人.Text, dtp生产日期.Value.ToString("yyyy年MM月dd日"));
+            my.Cells[10 + ind, 1].Value = String.Format("确认人/日期：{0}      {1}", dt_prodinstr.Rows[0]["确认人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["确认日期"]).ToString("yyyy年MM月dd日"));
+            my.Cells[10 + ind, 4].Value = String.Format("复核人/日期：{0}      {1}", dt_prodinstr.Rows[0]["审核人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
 
         }
         public void print(bool isShow)

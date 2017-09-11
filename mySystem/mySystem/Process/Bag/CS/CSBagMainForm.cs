@@ -310,7 +310,7 @@ namespace mySystem.Process.Bag
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "岗位交接班记录");
             if (b)
             {
-                CS.HandOver myform = new HandOver(mainform);
+                CS.HandOver myform = new CS.HandOver(mainform);
                 myform.ShowDialog();
             }
             else

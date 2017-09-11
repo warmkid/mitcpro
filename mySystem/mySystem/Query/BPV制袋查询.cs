@@ -453,7 +453,8 @@ namespace mySystem.Query
                         mydlg26.Show();
                         break;
                     case "岗位交接班记录":
-
+                        HandOver mydlg27 = new HandOver(mainform, ID);
+                        mydlg27.Show();
                         break;
 
                     default:

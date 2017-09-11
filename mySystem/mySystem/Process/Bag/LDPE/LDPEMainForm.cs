@@ -302,7 +302,18 @@ namespace mySystem.Process.Bag.LDPE
 
         private void Btn交接班_Click(object sender, EventArgs e)
         {
-
+           Boolean b = checkUser(Parameter.userName, Parameter.userRole, "岗位交接班记录");
+            if (b)
+            {
+                //new窗口
+                LDPE.HandOver myform = new LDPE.HandOver(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
         }
 
         private void Btn标签_Click(object sender, EventArgs e)

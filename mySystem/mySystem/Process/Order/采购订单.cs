@@ -752,7 +752,7 @@ namespace mySystem.Process.Order
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\caigou\表93. PALL AUSTAR采购订单.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\订单\表93. PALL AUSTAR采购订单.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
@@ -807,16 +807,16 @@ namespace mySystem.Process.Order
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             int ind = 0;
-            if (dtInner.Rows.Count > 13)
+            if (dtInnerShow.Rows.Count > 13)
             {
                 //在第8行插入
-                for (int i = 0; i < dtInner.Rows.Count - 13; i++)
+                for (int i = 0; i < dtInnerShow.Rows.Count - 13; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dtInner.Rows.Count - 13;
+                ind = dtInnerShow.Rows.Count - 13;
             }
 
             //外表信息
@@ -837,23 +837,23 @@ namespace mySystem.Process.Order
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
                 //mysheet.Cells[7 + i, 1] = i + 1; //组件订单需求流水号
-                mysheet.Cells[7 + i, 2] = dtInner.Rows[i]["存货代码"].ToString();
-                mysheet.Cells[7 + i, 3] = dtInner.Rows[i]["存货名称"].ToString();
-                mysheet.Cells[7 + i, 4] = dtInner.Rows[i]["规格型号"].ToString();
-                mysheet.Cells[7 + i, 5] = dtInner.Rows[i]["采购件数"].ToString();
-                mysheet.Cells[7 + i, 6] = dtInner.Rows[i]["采购数量"].ToString();
-                mysheet.Cells[7 + i, 7] = dtInner.Rows[i]["供应商产品编码"].ToString();
-                mysheet.Cells[7 + i, 8] = dtInner.Rows[i]["用途"].ToString();
-                mysheet.Cells[7 + i, 9] = Convert.ToDateTime(dtInner.Rows[i]["预计到货时间"].ToString()).ToString("yy/MM/dd");
-                mysheet.Cells[7 + i, 10] = dtInner.Rows[i]["备注"].ToString();
-                mysheet.Cells[7 + i, 11] = dtInner.Rows[i]["主计量"].ToString();
-                mysheet.Cells[7 + i, 12] = dtInner.Rows[i]["单价"].ToString();
-                mysheet.Cells[7 + i, 13] = dtInner.Rows[i]["金额"].ToString();
-                mysheet.Cells[7 + i, 14] = dtInner.Rows[i]["进度"].ToString();
-                mysheet.Cells[7 + i, 15] = dtInner.Rows[i]["COC"].ToString();
-                mysheet.Cells[7 + i, 16] = dtInner.Rows[i]["付款进度"].ToString();
-                mysheet.Cells[7 + i, 17] = Convert.ToDateTime(dtInner.Rows[i]["付款日期"].ToString()).ToString("yy/MM/dd");
-                mysheet.Cells[7 + i, 18] = dtInner.Rows[i]["发票"].ToString();
+                mysheet.Cells[7 + i, 2] = dtInnerShow.Rows[i]["存货代码"].ToString();
+                mysheet.Cells[7 + i, 3] = dtInnerShow.Rows[i]["存货名称"].ToString();
+                mysheet.Cells[7 + i, 4] = dtInnerShow.Rows[i]["规格型号"].ToString();
+                mysheet.Cells[7 + i, 5] = dtInnerShow.Rows[i]["采购件数"].ToString();
+                mysheet.Cells[7 + i, 6] = dtInnerShow.Rows[i]["采购数量"].ToString();
+                mysheet.Cells[7 + i, 7] = dtInnerShow.Rows[i]["供应商产品编码"].ToString();
+                mysheet.Cells[7 + i, 8] = dtInnerShow.Rows[i]["用途"].ToString();
+                mysheet.Cells[7 + i, 9] = Convert.ToDateTime(dtInnerShow.Rows[i]["预计到货时间"].ToString()).ToString("yy/MM/dd");
+                mysheet.Cells[7 + i, 10] = dtInnerShow.Rows[i]["备注"].ToString();
+                mysheet.Cells[7 + i, 11] = dtInnerShow.Rows[i]["主计量"].ToString();
+                mysheet.Cells[7 + i, 12] = dtInnerShow.Rows[i]["单价"].ToString();
+                mysheet.Cells[7 + i, 13] = dtInnerShow.Rows[i]["金额"].ToString();
+                mysheet.Cells[7 + i, 14] = dtInnerShow.Rows[i]["进度"].ToString();
+                mysheet.Cells[7 + i, 15] = dtInnerShow.Rows[i]["COC"].ToString();
+                mysheet.Cells[7 + i, 16] = dtInnerShow.Rows[i]["付款进度"].ToString();
+                mysheet.Cells[7 + i, 17] = Convert.ToDateTime(dtInnerShow.Rows[i]["付款日期"].ToString()).ToString("yy/MM/dd");
+                mysheet.Cells[7 + i, 18] = dtInnerShow.Rows[i]["发票"].ToString();
 
             }
         }
