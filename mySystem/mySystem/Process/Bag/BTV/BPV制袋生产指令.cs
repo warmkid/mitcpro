@@ -1221,11 +1221,21 @@ namespace mySystem.Process.Bag.BTV
             my.Cells[6, 11].Value = dtInner.Rows[0]["内标签"];
             my.Cells[6, 12].Value = dtInner.Rows[0]["图纸编号"];
             my.Cells[6, 13].Value = dtInner.Rows[0]["订单号"];
-            
-            my.Cells[8, 4].Value = dtOuter.Rows[0]["制袋物料代码1"];
-            my.Cells[9, 4].Value = dtOuter.Rows[0]["制袋物料代码2"];
-            my.Cells[10, 4].Value = dtOuter.Rows[0]["制袋物料代码3"];
 
+            for (int i = 0; i < dtMaterial.Rows.Count; i++)
+            {
+                my.Cells[8 + i, 2].Value = dtMaterial.Rows[i]["序号"];
+                my.Cells[8 + i, 4].Value = dtMaterial.Rows[i]["物料名称"];
+                my.Cells[8 + i, 6].Value = dtMaterial.Rows[i]["单个用量"];
+                my.Cells[8 + i, 8].Value = dtMaterial.Rows[i]["单位"];
+                
+                if (i > 13)
+                {
+                    MessageBox.Show("物料项目超出打印范围");
+                    break;
+                }
+                
+            }
             my.Cells[8, 6].Value = dtOuter.Rows[0]["制袋单个用量1"];
             my.Cells[9, 6].Value = dtOuter.Rows[0]["制袋单个用量2"];
             my.Cells[10, 6].Value = dtOuter.Rows[0]["制袋单个用量3"];

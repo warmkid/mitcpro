@@ -351,7 +351,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1016, 383);
+            this.ClientSize = new System.Drawing.Size(806, 383);
             this.Controls.Add(this.tb审核员);
             this.Controls.Add(this.tb操作员);
             this.Controls.Add(this.label11);
