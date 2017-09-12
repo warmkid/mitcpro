@@ -31,9 +31,13 @@ namespace BatchProductRecord
         int label = 0;
         OleDbConnection connOle;
         private DataTable dt_prodinstr,dt_prodlist;
+
         private OleDbDataAdapter da_prodinstr,da_prodlist;
         private BindingSource bs_prodinstr,bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr,cb_prodlist;
+
+        private SqlDataAdapter da_prodinstr_sql, da_prodlist_sql;
+        private SqlCommandBuilder cb_prodinstr_sql, cb_prodlist_sql;
 
         private Dictionary<string, string> dict_白班;
         private Dictionary<string, string> dict_夜班;
@@ -222,9 +226,17 @@ namespace BatchProductRecord
             list_操作员 = new List<string>();
             list_审核员 = new List<string>();
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.connOle);
-            da.Fill(dt);
 
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.connOle);
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.conn);
+                da.Fill(dt);
+            }
             if (dt.Rows.Count > 0)
             {
                 person_操作员 = dt.Rows[0]["操作员"].ToString();
@@ -271,9 +283,19 @@ namespace BatchProductRecord
             }
             label = 1;
             ht代码面数 = new Hashtable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
-            da.Fill(dt);
+
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);                
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.conn);
+                da.Fill(dt);
+            }
+
             foreach (DataRow dr in dt.Rows)
             {
                 ht代码面数.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["面数"]));
@@ -284,75 +306,159 @@ namespace BatchProductRecord
         //读取产品列表填入产品名称下拉列表
         private void fill_prodname()
         {
-            DataTable dt = new System.Data.DataTable();
-            OleDbDataAdapter da= new OleDbDataAdapter("select 产品名称 from 设置吹膜产品", mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            da.Fill(dt);
-            da.Dispose();
-            cb.Dispose();
-            for (int i = 0; i < dt.Rows.Count; i++)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                comboBox1.Items.Add(dt.Rows[i][0].ToString());
+                DataTable dt = new System.Data.DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter("select 产品名称 from 设置吹膜产品", mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                da.Fill(dt);
+                da.Dispose();
+                cb.Dispose();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    comboBox1.Items.Add(dt.Rows[i][0].ToString());
+                }
             }
+            else
+            {
+                DataTable dt = new System.Data.DataTable();
+                SqlDataAdapter da = new SqlDataAdapter("select 产品名称 from 设置吹膜产品", mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                da.Fill(dt);
+                da.Dispose();
+                cb.Dispose();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    comboBox1.Items.Add(dt.Rows[i][0].ToString());
+                }
+            }
+
         }
         //读取设置中生产工艺到下拉列表中
         private void fill_prodart()
         {
-            DataTable dt = new System.Data.DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select 工艺名称 from 设置吹膜工艺", mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            da.Fill(dt);
-            da.Dispose();
-            cb.Dispose();
-            for (int i = 0; i < dt.Rows.Count; i++)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                cb工艺.Items.Add(dt.Rows[i][0].ToString());
+                DataTable dt = new System.Data.DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter("select 工艺名称 from 设置吹膜工艺", mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                da.Fill(dt);
+                da.Dispose();
+                cb.Dispose();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cb工艺.Items.Add(dt.Rows[i][0].ToString());
+                }
             }
+            else
+            {
+                DataTable dt = new System.Data.DataTable();
+                SqlDataAdapter da = new SqlDataAdapter("select 工艺名称 from 设置吹膜工艺", mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                da.Fill(dt);
+                da.Dispose();
+                cb.Dispose();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cb工艺.Items.Add(dt.Rows[i][0].ToString());
+                }
+            }
+
         }
 
         //读取设置中物料代码到下拉列表中
         private void fill_matcode()
         {
-            DataTable dt = new System.Data.DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select 物料代码 from 设置物料代码", mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            da.Fill(dt);
-            da.Dispose();
-            cb.Dispose();
-            for (int i = 0; i < dt.Rows.Count; i++)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                cb内外层物料代码.Items.Add(dt.Rows[i][0].ToString());
-                cb中层物料代码.Items.Add(dt.Rows[i][0].ToString());
+                DataTable dt = new System.Data.DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter("select 物料代码 from 设置物料代码", mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                da.Fill(dt);
+                da.Dispose();
+                cb.Dispose();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cb内外层物料代码.Items.Add(dt.Rows[i][0].ToString());
+                    cb中层物料代码.Items.Add(dt.Rows[i][0].ToString());
+                }
             }
+            else
+            {
+                DataTable dt = new System.Data.DataTable();
+                SqlDataAdapter da = new SqlDataAdapter("select 物料代码 from 设置物料代码", mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                da.Fill(dt);
+                da.Dispose();
+                cb.Dispose();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cb内外层物料代码.Items.Add(dt.Rows[i][0].ToString());
+                    cb中层物料代码.Items.Add(dt.Rows[i][0].ToString());
+                }
+            }
+
         }
 
         //读取负责人人员到下拉列表中
         private void fill_respons_user()
         {
-            DataTable tempdt = new DataTable("users");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户", mySystem.Parameter.connOle);
-            da.Fill(tempdt);
-            da.Dispose();
-            for (int i = 0; i < tempdt.Rows.Count; i++)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                cb负责人.Items.Add(tempdt.Rows[i][1].ToString());//姓名
+                DataTable tempdt = new DataTable("users");
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户", mySystem.Parameter.connOle);
+                da.Fill(tempdt);
+                da.Dispose();
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    cb负责人.Items.Add(tempdt.Rows[i][1].ToString());//姓名
+                }
             }
+            else
+            {
+                DataTable tempdt = new DataTable("users");
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户", mySystem.Parameter.conn);
+                da.Fill(tempdt);
+                da.Dispose();
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    cb负责人.Items.Add(tempdt.Rows[i][1].ToString());//姓名
+                }
+            }
+
         }
 
         //读取生产指令参数
         private void readparam()
         {
-            DataTable tempdt = new System.Data.DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置生产指令参数", mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            da.Fill(tempdt);
-            da.Dispose();
-            cb.Dispose();
-            面=float.Parse(tempdt.Rows[0][1].ToString());
-            密度=float.Parse(tempdt.Rows[0][2].ToString());
-            系数1=float.Parse(tempdt.Rows[0][3].ToString());
-            系数2 = float.Parse(tempdt.Rows[0][4].ToString());
-            tempdt.Dispose();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                DataTable tempdt = new System.Data.DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置生产指令参数", mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                da.Fill(tempdt);
+                da.Dispose();
+                cb.Dispose();
+                面 = float.Parse(tempdt.Rows[0][1].ToString());
+                密度 = float.Parse(tempdt.Rows[0][2].ToString());
+                系数1 = float.Parse(tempdt.Rows[0][3].ToString());
+                系数2 = float.Parse(tempdt.Rows[0][4].ToString());
+                tempdt.Dispose();
+            }
+            else
+            {
+                DataTable tempdt = new System.Data.DataTable();
+                SqlDataAdapter da = new SqlDataAdapter("select * from 设置生产指令参数", mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                da.Fill(tempdt);
+                da.Dispose();
+                cb.Dispose();
+                面 = float.Parse(tempdt.Rows[0][1].ToString());
+                密度 = float.Parse(tempdt.Rows[0][2].ToString());
+                系数1 = float.Parse(tempdt.Rows[0][3].ToString());
+                系数2 = float.Parse(tempdt.Rows[0][4].ToString());
+                tempdt.Dispose();
+            }
         }
 
         public ProcessProductInstru(mySystem.MainForm mainform):base(mainform)
@@ -407,11 +513,22 @@ namespace BatchProductRecord
             getOtherData();
 
             string asql = "select * from 生产指令信息表 where ID=" + id;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
             DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+
+
             instrcode = tempdt.Rows[0]["生产指令编号"].ToString();
             
 
@@ -512,22 +629,33 @@ namespace BatchProductRecord
         //根据筛选条件得到指令id,没有返回-1
         private int getid(string instrcode)
         {
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
-            comm.CommandText = "select ID from 生产指令信息表 where 生产指令编号='" + instrcode + "'";
-
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = mySystem.Parameter.connOle;
+                comm.CommandText = "select ID from 生产指令信息表 where 生产指令编号='" + instrcode + "'";
+
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = mySystem.Parameter.conn;
+                comm.CommandText = "select ID from 生产指令信息表 where 生产指令编号='" + instrcode + "'";
+
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(tempdt);
+            }
             if (tempdt.Rows.Count == 0)
             {
-                da.Dispose();
                 tempdt.Dispose();
                 return -1;
             }
             else
             {
-                da.Dispose();
                 return (int)tempdt.Rows[0][0];
             }
         }
@@ -584,26 +712,51 @@ namespace BatchProductRecord
             //状态
             setControlFalse();
 
-            //写待审核表
-            DataTable dt_temp = new DataTable("待审核");
-            //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='生产指令信息表' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                //写待审核表
+                DataTable dt_temp = new DataTable("待审核");
+                //BindingSource bs_temp = new BindingSource();
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='生产指令信息表' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
 
-            //写日志
-            string log = "\n=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
-            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
-            log += "审核意见：" + checkform.opinion;
-            dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+                //写日志
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+                log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+                log += "审核意见：" + checkform.opinion;
+                dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
-            bs_prodinstr.DataSource = dt_prodinstr;
-            bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            base.CheckResult();
+                bs_prodinstr.DataSource = dt_prodinstr;
+                bs_prodinstr.EndEdit();
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                base.CheckResult();
+            }
+            else
+            {
+                //写待审核表
+                DataTable dt_temp = new DataTable("待审核");
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='生产指令信息表' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+
+                //写日志
+                string log = "\n=====================================\n";
+                log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
+                log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+                log += "审核意见：" + checkform.opinion;
+                dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+
+                bs_prodinstr.DataSource = dt_prodinstr;
+                bs_prodinstr.EndEdit();
+                da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
+                base.CheckResult();
+            }
 
         }
         private void button2_Click(object sender, EventArgs e)
@@ -638,17 +791,36 @@ namespace BatchProductRecord
             {
                 dt_prodinstr.Rows[0]["比例"] = float.Parse(tb内外层比例.Text);
             }
-            bs_prodinstr.DataSource = dt_prodinstr;
-            bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-            readOuterData(instrcode);
-            removeOuterBinding();
-            outerBind();
 
-            //内表保存
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-            readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
-            innerBind();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs_prodinstr.DataSource = dt_prodinstr;
+                bs_prodinstr.EndEdit();
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(instrcode);
+                removeOuterBinding();
+                outerBind();
+
+                //内表保存
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+                innerBind();
+            }
+            else
+            {
+                bs_prodinstr.DataSource = dt_prodinstr;
+                bs_prodinstr.EndEdit();
+                da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
+                readOuterData(instrcode);
+                removeOuterBinding();
+                outerBind();
+
+                //内表保存
+                da_prodlist_sql.Update((DataTable)bs_prodlist.DataSource);
+                readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
+                innerBind();
+            }
+
             return true;
         }
 
@@ -683,9 +855,19 @@ namespace BatchProductRecord
                     if (!ok2) leng = 0;
                     //产品批号
                     string temp = array[1];
-                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.connOle);
                     DataTable dt = new DataTable();
-                    da.Fill(dt);
+
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.connOle);
+                        da.Fill(dt);
+                    }
+                    else
+                    {
+                        SqlDataAdapter da = new SqlDataAdapter("select * from 设置产品代码和产品批号的对应关系", mySystem.Parameter.conn);
+                        da.Fill(dt);
+                    }
+
                     Hashtable ht = new Hashtable();
                     foreach (DataRow dr in dt.Rows)
                     {
@@ -854,7 +1036,10 @@ namespace BatchProductRecord
 
             bs_prodinstr.DataSource = dt_prodinstr;
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)        
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            else
+                da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
         }
 
 
@@ -874,13 +1059,24 @@ namespace BatchProductRecord
         //根据id填空
         private void fill(int id)
         {
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
-            comm.CommandText = "select * from 生产指令信息表 where ID=" +id;
-
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = mySystem.Parameter.connOle;
+                comm.CommandText = "select * from 生产指令信息表 where ID=" + id;
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = mySystem.Parameter.conn;
+                comm.CommandText = "select * from 生产指令信息表 where ID=" + id;
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+
             if (tempdt.Rows.Count == 0)
             {
                 //tb工艺.Text = "";
@@ -942,7 +1138,6 @@ namespace BatchProductRecord
                 dateTimePicker4.Value = (DateTime)tempdt.Rows[0][25];
                 tb备注.Text = (string)tempdt.Rows[0][29];
 
-                da.Dispose();
                 tempdt.Dispose();
 
             }
@@ -964,12 +1159,19 @@ namespace BatchProductRecord
         private int id_findby_instrcode(string code)
         {
             string acsql = "select ID from 生产指令信息表 where 生产指令编号='" + code + "'";
-            OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable dt1 = new DataTable();
-            da.Fill(dt1);
-            comm.Dispose();
-            da.Dispose();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand(acsql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(dt1);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand(acsql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(dt1);
+            }
             if (dt1.Rows.Count == 0)
             {
                 dt1.Dispose();
@@ -1003,7 +1205,10 @@ namespace BatchProductRecord
                 DataRow dr = dt_prodinstr.NewRow();
                 dr = writeOuterDefault(dr);
                 dt_prodinstr.Rows.Add(dr);
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                else
+                    da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
                 readOuterData(tb指令编号.Text);
                 removeOuterBinding();
                 outerBind();
@@ -1098,19 +1303,41 @@ namespace BatchProductRecord
             else { sql = "select * from 生产指令信息表 where ID=" + id; }
             dt_prodinstr = new DataTable("生产指令信息表");
             bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter(sql, connOle);
-            //da_prodinstr = new OleDbDataAdapter(String.Format(sql, code) , connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
+
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr = new OleDbDataAdapter(sql, connOle);
+                //da_prodinstr = new OleDbDataAdapter(String.Format(sql, code) , connOle);
+                cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+                da_prodinstr.Fill(dt_prodinstr);
+            }
+            else
+            {
+                da_prodinstr_sql = new SqlDataAdapter(sql, mySystem.Parameter.conn);
+                cb_prodinstr_sql = new SqlCommandBuilder(da_prodinstr_sql);
+                da_prodinstr_sql.Fill(dt_prodinstr);
+            }
+
         }
         // 根据条件从数据库中读取多行内表数据
         void readInnerData(int id)
         {
-            dt_prodlist = new DataTable("生产指令产品列表");
-            bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID="+id, connOle);
-            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
-            da_prodlist.Fill(dt_prodlist);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_prodlist = new DataTable("生产指令产品列表");
+                bs_prodlist = new BindingSource();
+                da_prodlist = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + id, connOle);
+                cb_prodlist = new OleDbCommandBuilder(da_prodlist);
+                da_prodlist.Fill(dt_prodlist);
+            }
+            else
+            {
+                dt_prodlist = new DataTable("生产指令产品列表");
+                bs_prodlist = new BindingSource();
+                da_prodlist_sql = new SqlDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + id, mySystem.Parameter.conn);
+                cb_prodlist_sql = new SqlCommandBuilder(da_prodlist_sql);
+                da_prodlist_sql.Fill(dt_prodlist);
+            }
         }
         // 移除外表和控件的绑定，建议使用Control.DataBinds.RemoveAt(0)
         void removeOuterBinding() 
@@ -1240,9 +1467,17 @@ namespace BatchProductRecord
                         c1.ValueType = dc.DataType;
                         // 如果换了名字会报错，把当前值也加上就好了
                         // 加序号，按序号显示
-                        OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置吹膜产品编码", mySystem.Parameter.connOle);
                         DataTable tdt = new DataTable("产品编码");
-                        tda.Fill(tdt);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            OleDbDataAdapter tda = new OleDbDataAdapter("select 产品编码 from 设置吹膜产品编码", mySystem.Parameter.connOle);
+                            tda.Fill(tdt);
+                        }
+                        else
+                        {
+                            SqlDataAdapter tda = new SqlDataAdapter("select 产品编码 from 设置吹膜产品编码", mySystem.Parameter.conn);
+                            tda.Fill(tdt);
+                        }
                         //foreach (DataRow tdr in tdt.Rows)
                         //{
                         //    c1.Items.Add(tdr["产品编码"]);
@@ -1384,7 +1619,10 @@ namespace BatchProductRecord
                 dt_prodinstr.Rows[0]["比例"] = a;
 
                 bs_prodinstr.EndEdit();
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                if(!mySystem.Parameter.isSqlOk)
+                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                else
+                    da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
             }
 
         }
@@ -1422,8 +1660,10 @@ namespace BatchProductRecord
                     return;
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
-
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            else
+                da_prodlist_sql.Update((DataTable)bs_prodlist.DataSource);
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
@@ -1457,7 +1697,10 @@ namespace BatchProductRecord
             }
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            else
+                da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
         }
 
         private void bt上移_Click(object sender, System.EventArgs e)
@@ -1487,9 +1730,20 @@ namespace BatchProductRecord
                 tcurrRow.Delete();
                 dt_prodlist.Rows.Add(tdesRow);
             }
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-            dt_prodlist.Clear();
-            da_prodlist.Fill(dt_prodlist);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                dt_prodlist.Clear();
+                da_prodlist.Fill(dt_prodlist);
+            }
+            else
+            {
+                da_prodlist_sql.Update((DataTable)bs_prodlist.DataSource);
+                dt_prodlist.Clear();
+                da_prodlist_sql.Fill(dt_prodlist);
+            }
+                
+
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index - 1].Selected = true;
 
@@ -1540,9 +1794,19 @@ namespace BatchProductRecord
                 tcurrRow.Delete();
                 dt_prodlist.Rows.Add(tdesRow);
             }
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-            dt_prodlist.Clear();
-            da_prodlist.Fill(dt_prodlist);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                dt_prodlist.Clear();
+                da_prodlist.Fill(dt_prodlist);
+            }
+            else
+            {
+                da_prodlist_sql.Update((DataTable)bs_prodlist.DataSource);
+                dt_prodlist.Clear();
+                da_prodlist_sql.Fill(dt_prodlist);
+            }
+
             dataGridView1.ClearSelection();
             dataGridView1.Rows[index + 1].Selected = true;
 
@@ -1625,7 +1889,11 @@ namespace BatchProductRecord
                         dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
                         bs_prodinstr.DataSource = dt_prodinstr;
                         bs_prodinstr.EndEdit();
-                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                        if (!mySystem.Parameter.isSqlOk)
+                            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                        else
+                            da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
+
                     }
 
                     // 关闭文件，false表示不保存
@@ -1646,10 +1914,21 @@ namespace BatchProductRecord
         {
             List<int> list_id = new List<int>();
             string asql = "select * from 生产指令信息表 where 生产指令编号='" + tb指令编号.Text+"'";
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+
 
             for (int i = 0; i < tempdt.Rows.Count; i++)
                 list_id.Add((int)tempdt.Rows[i]["ID"]);
@@ -1806,7 +2085,10 @@ namespace BatchProductRecord
             }
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            else
+                da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
         }
 
         private void bt日志_Click(object sender, System.EventArgs e)
@@ -1819,21 +2101,40 @@ namespace BatchProductRecord
         {
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
-            BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='生产指令信息表' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-
-            if (dt_temp.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "生产指令信息表";
-                dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
-                dt_temp.Rows.Add(dr);
+                BindingSource bs_temp = new BindingSource();
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='生产指令信息表' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "生产指令信息表";
+                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                bs_prodinstr.DataSource = dt_prodinstr;
+                bs_temp.DataSource = dt_temp;
+                da_temp.Update((DataTable)bs_temp.DataSource);
             }
-            bs_prodinstr.DataSource = dt_prodinstr;
-            bs_temp.DataSource = dt_temp;
-            da_temp.Update((DataTable)bs_temp.DataSource);
+            else
+            {
+                BindingSource bs_temp = new BindingSource();
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='生产指令信息表' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "生产指令信息表";
+                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                bs_prodinstr.DataSource = dt_prodinstr;
+                bs_temp.DataSource = dt_temp;
+                da_temp.Update((DataTable)bs_temp.DataSource);
+            }
 
             //写日志 
             //格式： 
@@ -1871,7 +2172,10 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
             dt_prodinstr.Rows.Add(dr);
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            else
+                da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
             readOuterData(newcode);
 
             int newid = (int)dt_prodinstr.Rows[dt_prodinstr.Rows.Count-1]["ID"];
@@ -1883,7 +2187,10 @@ namespace BatchProductRecord
                 dr_list["生产指令ID"] = newid;
                 dt_prodlist.Rows.Add(dr_list);
             }
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            else
+                da_prodlist_sql.Update((DataTable)bs_prodlist.DataSource);
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
