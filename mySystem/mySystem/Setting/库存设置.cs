@@ -70,6 +70,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv供应商);
             this.dgv供应商.Columns["ID"].Visible = false;
 
             //**************************   检验标准    ***********************************
@@ -86,6 +87,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv检验标准);
             this.dgv检验标准.Columns["ID"].Visible = false;
 
             //**************************   人员设置    ***********************************
@@ -101,6 +103,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv人员);
             this.dgv人员.Columns["用户名"].MinimumWidth = 150;
             //this.dgv人员.Columns["班次"].MinimumWidth = 100;
+            Utility.setDataGridViewAutoSizeMode(dgv人员);
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv人员.Columns["ID"].Visible = false;
 
@@ -118,6 +121,7 @@ namespace mySystem.Setting
             this.dgv权限.Columns["操作员"].MinimumWidth = 150;
             this.dgv权限.Columns["审核员"].MinimumWidth = 150;
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv权限);
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
 
@@ -150,6 +154,8 @@ namespace mySystem.Setting
             DataRow dr = dt供应商.NewRow();
             dt供应商.Rows.InsertAt(dt供应商.NewRow(), dt供应商.Rows.Count);
             setDataGridViewRowNums(this.dgv供应商);
+            if (dgv供应商.Rows.Count > 0)
+                dgv供应商.FirstDisplayedScrollingRowIndex = dgv供应商.Rows.Count - 1;
         }
 
         private void del供应商_Click(object sender, EventArgs e)
@@ -167,6 +173,8 @@ namespace mySystem.Setting
             DataRow dr = dt检验标准.NewRow();
             dt检验标准.Rows.InsertAt(dt检验标准.NewRow(), dt检验标准.Rows.Count);
             setDataGridViewRowNums(this.dgv检验标准);
+            if (dgv检验标准.Rows.Count > 0)
+                dgv检验标准.FirstDisplayedScrollingRowIndex = dgv检验标准.Rows.Count - 1;
         }
 
         private void del检验标准_Click(object sender, EventArgs e)
@@ -211,6 +219,8 @@ namespace mySystem.Setting
             DataRow dr = dt人员.NewRow();
             dt人员.Rows.InsertAt(dt人员.NewRow(), dt人员.Rows.Count);
             setDataGridViewRowNums(this.dgv人员);
+            if (dgv人员.Rows.Count > 0)
+                dgv人员.FirstDisplayedScrollingRowIndex = dgv人员.Rows.Count - 1;
         }
 
         private void del人员_Click(object sender, EventArgs e)

@@ -65,50 +65,53 @@ namespace mySystem.Setting
 
         void dgv存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (dgv存货档案.Columns[e.ColumnIndex].Name == "属于工序")
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                string data = mySystem.Other.属于工序.getData();
-                if (data != null)
+                if (dgv存货档案.Columns[e.ColumnIndex].Name == "属于工序")
                 {
-                    dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
-                }
-            }
-            if (dgv存货档案.Columns[e.ColumnIndex].Name == "类型")
-            {
-                string data = mySystem.Other.存货编码类型.getData();
-                if (data != null)
-                {
-                    dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
-                }
-            }
-            if (dgv存货档案.Columns[e.ColumnIndex].Name == "BOM列表")
-            {
-                // 弹出对话框，选择组件
-                //MessageBox.Show("dian");
-                //OleDbDataAdapter da = new OleDbDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.connOle);
-                //DataTable dt = new DataTable();
-                //da.Fill(dt);
-                try
-                {
-                    //String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
-                    string d = dgv存货档案[e.ColumnIndex, e.RowIndex].Value.ToString();
-                    if (d == "")
+                    string data = mySystem.Other.属于工序.getData();
+                    if (data != null)
                     {
-                        string data = mySystem.Other.BOMList.getData();
-                        if (data != null)
-                            dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
-                    }
-                    else
-                    {
-                        JArray ja = JArray.Parse(d);
-                        string data = mySystem.Other.BOMList.getData(ja);
-                        if (data != null)
-                            dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                        dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
                     }
                 }
-                catch (Exception ee)
+                if (dgv存货档案.Columns[e.ColumnIndex].Name == "类型")
                 {
-                    MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                    string data = mySystem.Other.存货编码类型.getData();
+                    if (data != null)
+                    {
+                        dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                    }
+                }
+                if (dgv存货档案.Columns[e.ColumnIndex].Name == "BOM列表")
+                {
+                    // 弹出对话框，选择组件
+                    //MessageBox.Show("dian");
+                    //OleDbDataAdapter da = new OleDbDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.connOle);
+                    //DataTable dt = new DataTable();
+                    //da.Fill(dt);
+                    try
+                    {
+                        //String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
+                        string d = dgv存货档案[e.ColumnIndex, e.RowIndex].Value.ToString();
+                        if (d == "")
+                        {
+                            string data = mySystem.Other.BOMList.getData();
+                            if (data != null)
+                                dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                        }
+                        else
+                        {
+                            JArray ja = JArray.Parse(d);
+                            string data = mySystem.Other.BOMList.getData(ja);
+                            if (data != null)
+                                dgv存货档案[e.ColumnIndex, e.RowIndex].Value = data;
+                        }
+                    }
+                    catch (Exception ee)
+                    {
+                        MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                    }
                 }
             }
         }
@@ -165,6 +168,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv存货档案);
             this.dgv存货档案.Columns["ID"].Visible = false;
             this.dgv存货档案.Columns["属于工序"].ReadOnly = true;
             this.dgv存货档案.Columns["BOM列表"].ReadOnly = true;
@@ -186,6 +190,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv人员);
             this.dgv人员.Columns["用户名"].MinimumWidth = 150;
             //this.dgv人员.Columns["班次"].MinimumWidth = 100;
+            Utility.setDataGridViewAutoSizeMode(dgv人员);
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv人员.Columns["ID"].Visible = false;
 
@@ -203,6 +208,7 @@ namespace mySystem.Setting
             this.dgv权限.Columns["操作员"].MinimumWidth = 150;
             this.dgv权限.Columns["审核员"].MinimumWidth = 150;
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv权限);
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
 
@@ -221,6 +227,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv业务类型);
             this.dgv业务类型.Columns["ID"].Visible = false;
 
 
@@ -238,6 +245,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv销售类型);
             this.dgv销售类型.Columns["ID"].Visible = false;
 
 
@@ -255,6 +263,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv客户简称);
             this.dgv客户简称.Columns["ID"].Visible = false;
 
 
@@ -272,6 +281,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv销售部门);
             this.dgv销售部门.Columns["ID"].Visible = false;
 
 
@@ -289,6 +299,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv币种);
             this.dgv币种.Columns["ID"].Visible = false;
 
 
@@ -306,6 +317,7 @@ namespace mySystem.Setting
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dgv付款条件);
             this.dgv付款条件.Columns["ID"].Visible = false;
 
         }
@@ -414,6 +426,8 @@ namespace mySystem.Setting
             DataRow dr = dt人员.NewRow();
             dt人员.Rows.InsertAt(dt人员.NewRow(), dt人员.Rows.Count);
             setDataGridViewRowNums(this.dgv人员);
+            if (dgv人员.Rows.Count > 0)
+                dgv人员.FirstDisplayedScrollingRowIndex = dgv人员.Rows.Count - 1;
         }
 
         private void del人员_Click(object sender, EventArgs e)
@@ -514,6 +528,8 @@ namespace mySystem.Setting
             DataRow dr = dt业务类型.NewRow();
             dt业务类型.Rows.InsertAt(dt业务类型.NewRow(), dt业务类型.Rows.Count);
             setDataGridViewRowNums(this.dgv业务类型);
+            if (dgv业务类型.Rows.Count > 0)
+                dgv业务类型.FirstDisplayedScrollingRowIndex = dgv业务类型.Rows.Count - 1;
         }
 
         private void add销售类型_Click(object sender, EventArgs e)
@@ -521,6 +537,8 @@ namespace mySystem.Setting
             DataRow dr = dt销售类型.NewRow();
             dt销售类型.Rows.InsertAt(dt销售类型.NewRow(), dt销售类型.Rows.Count);
             setDataGridViewRowNums(this.dgv销售类型);
+            if (dgv销售类型.Rows.Count > 0)
+                dgv销售类型.FirstDisplayedScrollingRowIndex = dgv销售类型.Rows.Count - 1;
         }
 
         private void add客户简称_Click(object sender, EventArgs e)
@@ -528,6 +546,8 @@ namespace mySystem.Setting
             DataRow dr = dt客户简称.NewRow();
             dt客户简称.Rows.InsertAt(dt客户简称.NewRow(), dt客户简称.Rows.Count);
             setDataGridViewRowNums(this.dgv客户简称);
+            if (dgv客户简称.Rows.Count > 0)
+                dgv客户简称.FirstDisplayedScrollingRowIndex = dgv客户简称.Rows.Count - 1;
         }
 
         private void add销售部门_Click(object sender, EventArgs e)
@@ -535,6 +555,8 @@ namespace mySystem.Setting
             DataRow dr = dt销售部门.NewRow();
             dt销售部门.Rows.InsertAt(dt销售部门.NewRow(), dt销售部门.Rows.Count);
             setDataGridViewRowNums(this.dgv销售部门);
+            if (dgv销售部门.Rows.Count > 0)
+                dgv销售部门.FirstDisplayedScrollingRowIndex = dgv销售部门.Rows.Count - 1;
         }
 
         private void add币种_Click(object sender, EventArgs e)
@@ -542,6 +564,8 @@ namespace mySystem.Setting
             DataRow dr = dt币种.NewRow();
             dt币种.Rows.InsertAt(dt币种.NewRow(), dt币种.Rows.Count);
             setDataGridViewRowNums(this.dgv币种);
+            if (dgv币种.Rows.Count > 0)
+                dgv币种.FirstDisplayedScrollingRowIndex = dgv币种.Rows.Count - 1;
         }
 
         private void add付款条件_Click(object sender, EventArgs e)
@@ -549,6 +573,8 @@ namespace mySystem.Setting
             DataRow dr = dt付款条件.NewRow();
             dt付款条件.Rows.InsertAt(dt付款条件.NewRow(), dt付款条件.Rows.Count);
             setDataGridViewRowNums(this.dgv付款条件);
+            if (dgv付款条件.Rows.Count > 0)
+                dgv付款条件.FirstDisplayedScrollingRowIndex = dgv付款条件.Rows.Count - 1;
         }
 
         private void del业务类型_Click(object sender, EventArgs e)

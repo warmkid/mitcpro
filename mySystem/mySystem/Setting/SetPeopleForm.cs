@@ -197,7 +197,7 @@ namespace mySystem.Setting
             changeColView(); //列改为combobox                    
             this.dgvUser.DataSource = bsuser.DataSource;
             setDataGridViewRowNums(); //序号           
-            
+            Utility.setDataGridViewAutoSizeMode(dgvUser);
         }
 
         //角色和角色ID的统一
@@ -226,8 +226,9 @@ namespace mySystem.Setting
         {
             AddPeopleForm addform = new AddPeopleForm(base.mainform, this);
             addform.ShowDialog();
-            dgvUser.FirstDisplayedScrollingRowIndex = dgvUser.Rows.Count - 1;
-      
+            //dgvUser.FirstDisplayedScrollingRowIndex = dgvUser.Rows.Count - 1;
+            if (dgvUser.Rows.Count > 0)
+                dgvUser.FirstDisplayedScrollingRowIndex = dgvUser.Rows.Count - 1;
         }
 
         private void DeleteBtn_Click(object sender, EventArgs e)

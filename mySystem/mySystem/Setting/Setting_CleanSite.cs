@@ -100,6 +100,7 @@ namespace mySystem.Setting
 
             this.dgv供料.Columns["清场内容"].MinimumWidth = 200;
             this.dgv供料.Columns["清场内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv供料);
             this.dgv供料.Columns["清场内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv供料.Columns["ID"].Visible = false;
             this.dgv供料.Columns["序号"].Visible = true;
@@ -119,6 +120,7 @@ namespace mySystem.Setting
 
             this.dgv吹膜.Columns["清场内容"].MinimumWidth = 200;
             this.dgv吹膜.Columns["清场内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv吹膜);
             this.dgv吹膜.Columns["清场内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv吹膜.Columns["ID"].Visible = false;
             this.dgv吹膜.Columns["序号"].Visible = true;
@@ -140,6 +142,8 @@ namespace mySystem.Setting
             DataRow dr = dt1.NewRow();
             dt1.Rows.InsertAt(dt1.NewRow(), dt1.Rows.Count);
             numFresh(this.dgv供料);
+            if (dgv供料.Rows.Count > 0)
+                dgv供料.FirstDisplayedScrollingRowIndex = dgv供料.Rows.Count - 1;
         }
 
         private void del供料_Click(object sender, EventArgs e)
@@ -154,6 +158,8 @@ namespace mySystem.Setting
             DataRow dr = dt2.NewRow();
             dt2.Rows.InsertAt(dt2.NewRow(), dt2.Rows.Count);
             numFresh(this.dgv吹膜);
+            if (dgv吹膜.Rows.Count > 0)
+                dgv吹膜.FirstDisplayedScrollingRowIndex = dgv吹膜.Rows.Count - 1;
         }
 
         private void del吹膜_Click(object sender, EventArgs e)

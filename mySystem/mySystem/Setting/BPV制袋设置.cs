@@ -110,6 +110,7 @@ namespace mySystem.Setting
             this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
             this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv开机);
             this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv开机.Columns["ID"].Visible = false;
 
@@ -126,6 +127,7 @@ namespace mySystem.Setting
             this.dgv清场.Columns["清场项目"].MinimumWidth = 200;
             this.dgv清场.Columns["清场要点"].MinimumWidth = 250;
             this.dgv清场.Columns["清场要点"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv清场);
             this.dgv清场.Columns["清场要点"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv清场.Columns["ID"].Visible = false;
 
@@ -141,6 +143,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv产品);
             this.dgv产品.Columns["产品名称"].MinimumWidth = 200;
             this.dgv产品.Columns["产品名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv产品);
             this.dgv产品.Columns["产品名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品.Columns["ID"].Visible = false;
 
@@ -156,6 +159,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv产品编码);
             this.dgv产品编码.Columns["产品编码"].MinimumWidth = 200;
             this.dgv产品编码.Columns["产品编码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv产品编码);
             this.dgv产品编码.Columns["产品编码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品编码.Columns["ID"].Visible = false;
 
@@ -171,6 +175,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv产品规格);
             this.dgv产品规格.Columns["产品规格"].MinimumWidth = 200;
             this.dgv产品规格.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv产品规格);
             this.dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品规格.Columns["ID"].Visible = false;
 
@@ -186,6 +191,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv封边);
             this.dgv封边.Columns["封边名称"].MinimumWidth = 200;
             this.dgv封边.Columns["封边名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv封边);
             this.dgv封边.Columns["封边名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv封边.Columns["ID"].Visible = false;
 
@@ -201,6 +207,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv工艺);
             this.dgv工艺.Columns["工艺名称"].MinimumWidth = 200;
             this.dgv工艺.Columns["工艺名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv工艺);
             this.dgv工艺.Columns["工艺名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv工艺.Columns["ID"].Visible = false;
 
@@ -216,6 +223,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv物料代码);
             this.dgv物料代码.Columns["物料代码"].MinimumWidth = 200;
             this.dgv物料代码.Columns["物料代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv物料代码);
             this.dgv物料代码.Columns["物料代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv物料代码.Columns["ID"].Visible = false;
 
@@ -232,6 +240,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv人员);
             this.dgv人员.Columns["用户名"].MinimumWidth = 150;
             this.dgv人员.Columns["班次"].MinimumWidth = 100;
+            Utility.setDataGridViewAutoSizeMode(dgv人员);
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv人员.Columns["ID"].Visible = false;
 
@@ -249,6 +258,7 @@ namespace mySystem.Setting
             this.dgv权限.Columns["操作员"].MinimumWidth = 150;
             this.dgv权限.Columns["审核员"].MinimumWidth = 150;
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv权限);
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv权限.Columns["ID"].Visible = false;
 
@@ -347,7 +357,9 @@ namespace mySystem.Setting
             DataRow dr = dt产品.NewRow();
             dt产品.Rows.InsertAt(dt产品.NewRow(), dt产品.Rows.Count);
             setDataGridViewRowNums(this.dgv产品);
-            dgv产品.FirstDisplayedScrollingRowIndex = dgv产品.Rows.Count - 1;
+            //dgv产品.FirstDisplayedScrollingRowIndex = dgv产品.Rows.Count - 1;
+            if (dgv产品.Rows.Count > 0)
+                dgv产品.FirstDisplayedScrollingRowIndex = dgv产品.Rows.Count - 1;
         }
 
 
@@ -366,7 +378,9 @@ namespace mySystem.Setting
             DataRow dr = dt产品编码.NewRow();
             dt产品编码.Rows.InsertAt(dt产品编码.NewRow(), dt产品编码.Rows.Count);
             setDataGridViewRowNums(this.dgv产品编码);
-            dgv产品编码.FirstDisplayedScrollingRowIndex = dgv产品编码.Rows.Count - 1;
+            //dgv产品编码.FirstDisplayedScrollingRowIndex = dgv产品编码.Rows.Count - 1;
+            if (dgv产品编码.Rows.Count > 0)
+                dgv产品编码.FirstDisplayedScrollingRowIndex = dgv产品编码.Rows.Count - 1;
         }
 
         private void del产品编码_Click(object sender, EventArgs e)
@@ -384,7 +398,9 @@ namespace mySystem.Setting
             DataRow dr = dt产品规格.NewRow();
             dt产品规格.Rows.InsertAt(dt产品规格.NewRow(), dt产品规格.Rows.Count);
             setDataGridViewRowNums(this.dgv产品规格);
-            dgv产品规格.FirstDisplayedScrollingRowIndex = dgv产品规格.Rows.Count - 1;
+            //dgv产品规格.FirstDisplayedScrollingRowIndex = dgv产品规格.Rows.Count - 1;
+            if (dgv产品规格.Rows.Count > 0)
+                dgv产品规格.FirstDisplayedScrollingRowIndex = dgv产品规格.Rows.Count - 1;
         }
 
         private void del产品规格_Click(object sender, EventArgs e)
@@ -402,7 +418,9 @@ namespace mySystem.Setting
             DataRow dr = dt封边.NewRow();
             dt封边.Rows.InsertAt(dt封边.NewRow(), dt封边.Rows.Count);
             setDataGridViewRowNums(this.dgv封边);
-            dgv封边.FirstDisplayedScrollingRowIndex = dgv封边.Rows.Count - 1;
+            //dgv封边.FirstDisplayedScrollingRowIndex = dgv封边.Rows.Count - 1;
+            if (dgv封边.Rows.Count > 0)
+                dgv封边.FirstDisplayedScrollingRowIndex = dgv封边.Rows.Count - 1;
         }
 
         private void del封边_Click(object sender, EventArgs e)
@@ -420,6 +438,8 @@ namespace mySystem.Setting
             DataRow dr = dt工艺.NewRow();
             dt工艺.Rows.InsertAt(dt工艺.NewRow(), dt工艺.Rows.Count);
             setDataGridViewRowNums(this.dgv工艺);
+            if (dgv工艺.Rows.Count > 0)
+                dgv工艺.FirstDisplayedScrollingRowIndex = dgv工艺.Rows.Count - 1;
         }
 
         private void del工艺_Click(object sender, EventArgs e)
@@ -437,6 +457,8 @@ namespace mySystem.Setting
             DataRow dr = dt物料代码.NewRow();
             dt物料代码.Rows.InsertAt(dt物料代码.NewRow(), dt物料代码.Rows.Count);
             setDataGridViewRowNums(this.dgv物料代码);
+            if (dgv物料代码.Rows.Count > 0)
+                dgv物料代码.FirstDisplayedScrollingRowIndex = dgv物料代码.Rows.Count - 1;
         }
 
         private void del物料代码_Click(object sender, EventArgs e)
@@ -501,7 +523,9 @@ namespace mySystem.Setting
             DataRow dr = dt人员.NewRow();
             dt人员.Rows.InsertAt(dt人员.NewRow(), dt人员.Rows.Count);
             setDataGridViewRowNums(this.dgv人员);
-            dgv人员.FirstDisplayedScrollingRowIndex = dgv人员.Rows.Count - 1;
+            //dgv人员.FirstDisplayedScrollingRowIndex = dgv人员.Rows.Count - 1;
+            if (dgv人员.Rows.Count > 0)
+                dgv人员.FirstDisplayedScrollingRowIndex = dgv人员.Rows.Count - 1;
         }
 
         private void del人员_Click(object sender, EventArgs e)
