@@ -14,9 +14,9 @@ namespace mySystem.Process.Stock
     public partial class 产品退货审批单2 : BaseForm
     {
 
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         OleDbDataAdapter daOuter;
         OleDbCommandBuilder cbOute;
         DataTable dtOuter;
@@ -36,8 +36,8 @@ namespace mySystem.Process.Stock
 
         public 产品退货审批单2(MainForm mainform, string code):base(mainform)
         {
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             InitializeComponent();
             _code = code;
             fillPrinter();
@@ -63,7 +63,7 @@ namespace mySystem.Process.Stock
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货审批单2'", conn);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货审批单2'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -189,7 +189,7 @@ namespace mySystem.Process.Stock
 
         void readOuterData(String code)
         {
-            daOuter = new OleDbDataAdapter("select * from 产品退货审批单2 where 退货申请单编号='" + code + "'", conn);
+            daOuter = new OleDbDataAdapter("select * from 产品退货审批单2 where 退货申请单编号='" + code + "'", mySystem.Parameter.connOle);
             dtOuter = new DataTable("产品退货审批单2");
             cbOute = new OleDbCommandBuilder(daOuter);
             bsOuter = new BindingSource();

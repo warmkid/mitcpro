@@ -14,16 +14,16 @@ namespace mySystem.Process.Stock
     public partial class 原料入库管理 : BaseForm
     {
 
-        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         DataTable dt物资验收记录, dt物资请验单, dt检验记录, dt不合格品处理记录, dt取样记录;
 
         public 原料入库管理(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            conn = new OleDbConnection(strConn);
-            conn.Open();
+            //conn = new OleDbConnection(strConn);
+            //conn.Open();
 
 
             // TODO 默认不读全部记录，一周内的
@@ -60,7 +60,7 @@ namespace mySystem.Process.Stock
         {
 
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资验收记录 where 接收时间 between #" +
-                DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "# ", conn);
+                DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "# ", mySystem.Parameter.connOle);
             dt物资验收记录 = new DataTable("物资验收记录");
             da.Fill(dt物资验收记录);
         }
@@ -148,7 +148,7 @@ namespace mySystem.Process.Stock
         void read物资请验单Data()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单 where 请验时间 between #"
-            + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "#", conn);
+            + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "#", mySystem.Parameter.connOle);
             dt物资请验单 = new DataTable("物资请验单");
             da.Fill(dt物资请验单);
         }
@@ -167,7 +167,7 @@ namespace mySystem.Process.Stock
         void read检验记录Data()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录 where  检验日期 between #"
-            + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "#", conn);
+            + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "#", mySystem.Parameter.connOle);
             dt检验记录 = new DataTable("检验记录");
             da.Fill(dt检验记录);
         }
@@ -182,7 +182,7 @@ namespace mySystem.Process.Stock
 
         void read不合格品记录Data()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 不合格品处理记录", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 不合格品处理记录", mySystem.Parameter.connOle);
             dt不合格品处理记录 = new DataTable("不合格品处理记录");
             da.Fill(dt不合格品处理记录);
         }
@@ -206,7 +206,7 @@ namespace mySystem.Process.Stock
 
         void read取样记录Data()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录 where 审核员='__待审核'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录 where 审核员='__待审核'", mySystem.Parameter.connOle);
             dt取样记录 = new DataTable("取样记录");
             da.Fill(dt取样记录);
         }
@@ -236,12 +236,12 @@ namespace mySystem.Process.Stock
                     if (shr != "")
                     {
                         sql = @"select * from 物资验收记录 where 审核员 like '%{0}%' and 接收时间 between #{1}# and #{2}#";
-                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.connOle);
                     }
                     else
                     {
                         sql = @"select * from 物资验收记录 where 审核员 is null and 接收时间 between #{0}# and #{1}#";
-                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), conn);
+                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.connOle);
                     }
                     dt物资验收记录 = new DataTable("物资验收记录");
                     da.Fill(dt物资验收记录);
@@ -251,12 +251,12 @@ namespace mySystem.Process.Stock
                     if (shr != "")
                     {
                         sql = @"select * from 物资请验单 where 审核员 like '%{0}%' and 请验时间 between #{1}# and #{2}#";
-                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.connOle);
                     }
                     else
                     {
                         sql = @"select * from 物资请验单 where 审核员 is null and 请验时间 between #{0}# and #{1}#";
-                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), conn);
+                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.connOle);
                     }
                     dt物资请验单 = new DataTable("物资请验单");
                     da.Fill(dt物资请验单);
@@ -266,12 +266,12 @@ namespace mySystem.Process.Stock
                     if (shr != "")
                     {
                         sql = @"select * from 检验记录 where 审核员 like '%{0}%' and 检验日期 between #{1}# and #{2}#";
-                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), conn);
+                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.connOle);
                     }
                     else
                     {
                         sql = @"select * from 检验记录 where 审核员 is null and 检验日期 between #{0}# and #{1}#";
-                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), conn);
+                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.connOle);
                     }
                     dt检验记录 = new DataTable("检验记录");
                     da.Fill(dt检验记录);
@@ -284,12 +284,12 @@ namespace mySystem.Process.Stock
                     if (shr != "")
                     {
                         sql = @"select * from 取样记录 where 审核员 like '%{0}%'";
-                        da = new OleDbDataAdapter(string.Format(sql, shr), conn);
+                        da = new OleDbDataAdapter(string.Format(sql, shr), mySystem.Parameter.connOle);
                     }
                     else
                     {
                         sql = @"select * from 取样记录 where 审核员 is null";
-                        da = new OleDbDataAdapter(sql, conn);
+                        da = new OleDbDataAdapter(sql, mySystem.Parameter.connOle);
                     }
                     dt取样记录 = new DataTable("取样记录");
                     da.Fill(dt取样记录);

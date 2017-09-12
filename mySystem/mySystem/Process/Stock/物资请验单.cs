@@ -33,16 +33,16 @@ namespace mySystem.Process.Stock
         BindingSource bsOuter, bsInner;
         DataTable dtOuter, dtInner;
 
-        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 
-        OleDbConnection conn;
+//        OleDbConnection conn;
 
         public 物资请验单(int id)
         {
             InitializeComponent();
-            conn = new OleDbConnection(strConn);
-            conn.Open();
+            //conn = new OleDbConnection(strConn);
+            //conn.Open();
             getPeople();
             setUserState();
             getOtherData();
@@ -71,7 +71,7 @@ namespace mySystem.Process.Stock
             ls操作员 = new List<string>();
             OleDbDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "物资验收记录" + "'", conn);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "物资验收记录" + "'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -129,7 +129,7 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 物资请验单 where ID=" + id, conn);
+            daOuter = new OleDbDataAdapter("select * from 物资请验单 where ID=" + id, mySystem.Parameter.connOle);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("物资请验单");
             bsOuter = new BindingSource();
@@ -160,7 +160,7 @@ namespace mySystem.Process.Stock
 
         void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 物资请验单详细信息 where 物资请验单ID=" + id, conn);
+            daInner = new OleDbDataAdapter("select * from 物资请验单详细信息 where 物资请验单ID=" + id, mySystem.Parameter.connOle);
             cbInner = new OleDbCommandBuilder(daInner);
             dtInner = new DataTable("物资请验单详细信息");
             bsInner = new BindingSource();
@@ -260,14 +260,14 @@ namespace mySystem.Process.Stock
                         form1.Show();
                         break;
                     case "物资请验单":
-                        da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, conn);
+                        da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
                         物资请验单 form2 = new 物资请验单(Convert.ToInt32(dt.Rows[0]["ID"]));
                         form2.Show();
                         break;
                     case "检验记录":
-                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + id, conn);
+                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
@@ -277,7 +277,7 @@ namespace mySystem.Process.Stock
                         }
                         break;
                     case "取样记录":
-                        da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, conn);
+                        da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
                         取样记录 form4 = new 取样记录(Convert.ToInt32(dt.Rows[0]["ID"]));
@@ -356,7 +356,7 @@ namespace mySystem.Process.Stock
 
 
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资请验单' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资请验单' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
@@ -394,7 +394,7 @@ namespace mySystem.Process.Stock
             OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资请验单' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资请验单' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("物资请验单");

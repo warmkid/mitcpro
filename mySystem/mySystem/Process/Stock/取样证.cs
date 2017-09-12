@@ -13,9 +13,9 @@ namespace mySystem.Process.Stock
     // TODO 打印
     public partial class 取样证 : BaseForm
     {
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         OleDbDataAdapter daOuter;
         DataTable dtOuter;
         OleDbCommandBuilder cbOuter;
@@ -24,8 +24,8 @@ namespace mySystem.Process.Stock
         {
             InitializeComponent();
             
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
 
 
             readOuterData(id);
@@ -34,7 +34,7 @@ namespace mySystem.Process.Stock
             if (dtOuter.Rows.Count == 0)
             {
 
-                OleDbDataAdapter daT = new OleDbDataAdapter("select * from 取样记录详细信息 where ID=" + id, conn);
+                OleDbDataAdapter daT = new OleDbDataAdapter("select * from 取样记录详细信息 where ID=" + id, mySystem.Parameter.connOle);
                 DataTable dtT = new DataTable("取样记录详细信息");
 
                 daT.Fill(dtT);
@@ -80,7 +80,7 @@ namespace mySystem.Process.Stock
             // TODO 完成打印
 
             // TODO 记录
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样证打印记录 where 0=1", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样证打印记录 where 0=1", mySystem.Parameter.connOle);
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             DataTable dt = new DataTable("取样证打印记录");
             da.Fill(dt);
@@ -98,7 +98,7 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 取样证 where 取样记录详细信息ID=" + id, conn);
+            daOuter = new OleDbDataAdapter("select * from 取样证 where 取样记录详细信息ID=" + id, mySystem.Parameter.connOle);
             dtOuter = new DataTable("取样证");
             daOuter.Fill(dtOuter);
             cbOuter = new OleDbCommandBuilder(daOuter);

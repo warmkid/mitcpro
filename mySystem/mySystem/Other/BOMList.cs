@@ -278,22 +278,22 @@ namespace mySystem.Other
             for (int i = 1; ; i++)
             {
                 String daima =  Convert.ToString( my.Cells[i,2].Value);
-                string guige = Convert.ToString(my.Cells[i, 3].Value);
-                string mingc = Convert.ToString( my.Cells[i, 4].Value);
+                
+                if (daima == "CODE") break;
                 if (daima == null)
                 {
                     MessageBox.Show("第" + i + "行产品代码缺失！");
                     break;
                 }
-                if (guige == null) guige = "";
-                if (mingc == null) mingc = "";
                 if (daima.Trim() == "") break;
-                //DataRow[] drs = dt.Select("存货代码='" + daima + "' and 存货名称='" + mingc + "' and 规格型号 ='" + guige + "'");
-                //if (drs.Length == 0)
-                //{
-                //    MessageBox.Show(daima + " 不存在！");
-                //    break;
-                //}
+                DataRow[] drs = dt.Select("存货代码='" + daima + "'");
+                if (drs.Length == 0)
+                {
+                    MessageBox.Show(daima + " 不存在！");
+                    break;
+                }
+                string guige = drs[0]["规格型号"].ToString();
+                string mingc = drs[0]["存货名称"].ToString(); ;
                 double shulaing = Convert.ToDouble(my.Cells[i, 5].Value);
                 int idx = dataGridView1.Rows.Add();
                 dataGridView1["存货代码", idx].Value = daima;

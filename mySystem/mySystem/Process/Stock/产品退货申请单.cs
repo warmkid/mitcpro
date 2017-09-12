@@ -14,9 +14,9 @@ namespace mySystem.Process.Stock
     public partial class 产品退货申请单 : BaseForm
     {
 
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         OleDbDataAdapter daOuter;
         OleDbCommandBuilder cbOute;
         DataTable dtOuter;
@@ -37,8 +37,8 @@ namespace mySystem.Process.Stock
 
         public 产品退货申请单(MainForm mainform):base(mainform)
         {
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             InitializeComponent();
             _code = generate退货申请单编号();
             fillPrinter();
@@ -72,8 +72,8 @@ namespace mySystem.Process.Stock
             : base(mainform)
         {
             isSaved = true;
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             InitializeComponent();
            
             fillPrinter();
@@ -98,7 +98,7 @@ namespace mySystem.Process.Stock
 
         private void getOtherData()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             ls销售订单编号 = new List<string>();
@@ -113,7 +113,7 @@ namespace mySystem.Process.Stock
             string prefix = "PA-PRS-";
             string yymmdd = DateTime.Now.ToString("yyyy");
             string sql = "select * from 产品退货申请单 where 退货申请单编号 like '{0}%' order by ID";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -134,7 +134,7 @@ namespace mySystem.Process.Stock
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货申请单'", conn);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货申请单'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -273,7 +273,7 @@ namespace mySystem.Process.Stock
 
         void readOuterData(String code)
         {
-            daOuter = new OleDbDataAdapter("select * from 产品退货申请单 where 退货申请单编号='" + code + "'", conn);
+            daOuter = new OleDbDataAdapter("select * from 产品退货申请单 where 退货申请单编号='" + code + "'", mySystem.Parameter.connOle);
             dtOuter = new DataTable("产品退货申请单");
             cbOute = new OleDbCommandBuilder(daOuter);
             bsOuter = new BindingSource();
@@ -353,7 +353,7 @@ namespace mySystem.Process.Stock
             OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货申请单' and 对应ID=" + _id, conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货申请单' and 对应ID=" + _id, mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
@@ -383,7 +383,7 @@ namespace mySystem.Process.Stock
             OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货申请单' and 对应ID=" + _id, conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货申请单' and 对应ID=" + _id, mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
@@ -396,7 +396,7 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
 
             // 如果审核通过自动生产产品退货审批单1
-            da = new OleDbDataAdapter("select * from 产品退货审批单1 where 退货申请单编号='" + _code + "'", conn);
+            da = new OleDbDataAdapter("select * from 产品退货审批单1 where 退货申请单编号='" + _code + "'", mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
             dt = new DataTable();
             da.Fill(dt);
@@ -439,7 +439,7 @@ namespace mySystem.Process.Stock
         private void btn查找产品_Click(object sender, EventArgs e)
         {
             string 订单号 = tb拟退货产品销售订单编号.Text;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 订单号 + "'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 订单号 + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -451,7 +451,7 @@ namespace mySystem.Process.Stock
             outerBind();
             ls产品代码 = new List<string>();
             ls产品名称 = new List<string>();
-            da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID="+Convert.ToInt32( dt.Rows[0]["ID"]),conn);
+            da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + Convert.ToInt32(dt.Rows[0]["ID"]), mySystem.Parameter.connOle);
             dt= new DataTable();
             da.Fill(dt);
             foreach(DataRow dr in dt.Rows){
@@ -475,7 +475,7 @@ namespace mySystem.Process.Stock
             }
             dtOuter.Rows[0]["产品代码"] = ls产品代码[idx];
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + ls产品代码[idx] + "'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + ls产品代码[idx] + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             string 单位 = dt.Rows[0]["辅计量单位名称"].ToString();
