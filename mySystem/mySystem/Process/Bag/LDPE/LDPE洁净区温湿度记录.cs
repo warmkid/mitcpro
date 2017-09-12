@@ -404,7 +404,7 @@ namespace mySystem.Process.Bag.LDPE
         private DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = InstruID;
-            dr["生产工序"] = "CS制袋";
+            dr["生产工序"] = "LDPE制袋";
             dr["生产指令编号"] = Instruction;
             dr["审核员"] = "";
             dr["审核是否通过"] = false;

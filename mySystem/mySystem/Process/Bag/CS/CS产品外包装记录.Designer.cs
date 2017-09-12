@@ -174,6 +174,7 @@
             this.DelLineBtn.TabIndex = 197;
             this.DelLineBtn.Text = "删除";
             this.DelLineBtn.UseVisualStyleBackColor = true;
+            this.DelLineBtn.Click += new System.EventHandler(this.DelLineBtn_Click);
             // 
             // AddLineBtn
             // 

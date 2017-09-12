@@ -655,13 +655,14 @@ namespace mySystem.Process.Bag.CS
         }
 
         //删除按钮
-        private void DelBtn_Click(object sender, EventArgs e)
+        private void DelLineBtn_Click(object sender, EventArgs e)
         {
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
+                getTotal();
 
                 // 保存
                 da记录详情.Update((DataTable)bs记录详情.DataSource);

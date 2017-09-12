@@ -62,9 +62,9 @@
             this.lb生产工序.Font = new System.Drawing.Font("SimSun", 12F);
             this.lb生产工序.Location = new System.Drawing.Point(115, 87);
             this.lb生产工序.Name = "lb生产工序";
-            this.lb生产工序.Size = new System.Drawing.Size(56, 16);
+            this.lb生产工序.Size = new System.Drawing.Size(64, 16);
             this.lb生产工序.TabIndex = 351;
-            this.lb生产工序.Text = "CS制袋";
+            this.lb生产工序.Text = "PTV制袋";
             // 
             // label7
             // 

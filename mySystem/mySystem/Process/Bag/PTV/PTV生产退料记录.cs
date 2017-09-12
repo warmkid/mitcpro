@@ -1052,9 +1052,14 @@ namespace mySystem.Process.Bag.PTV
             {
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "物料简称")
                 {
-                    DataRow[] rows = dt物料简称批号代码.Select("物料简称 = '" + dt记录详情.Rows[e.RowIndex]["物料简称"].ToString() + "'"); 
-                    dt记录详情.Rows[e.RowIndex]["物料代码"] = rows[0]["物料代码"];
-                    dt记录详情.Rows[e.RowIndex]["物料批号"] = rows[0]["物料批号"];
+                    DataRow[] rows = dt物料简称批号代码.Select("物料简称 = '" + dt记录详情.Rows[e.RowIndex]["物料简称"].ToString() + "'");
+                    if (rows.Length > 0)
+                    {
+                        dt记录详情.Rows[e.RowIndex]["物料代码"] = rows[0]["物料代码"];
+                        dt记录详情.Rows[e.RowIndex]["物料批号"] = rows[0]["物料批号"];
+                    }
+                    else
+                    { MessageBox.Show("尚未查到物料简称为『" + dt记录详情.Rows[e.RowIndex]["物料简称"].ToString() + "』的数据，请完善后再填写!"); }
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
                 {

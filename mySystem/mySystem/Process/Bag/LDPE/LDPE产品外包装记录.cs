@@ -662,6 +662,7 @@ namespace mySystem.Process.Bag.LDPE
                 int deletenum = dataGridView1.CurrentRow.Index;
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
+                getTotal();
 
                 // 保存
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
