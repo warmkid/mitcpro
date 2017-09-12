@@ -56,14 +56,14 @@ namespace mySystem.Process.Bag.PTV
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             instruction = comboBox1.SelectedItem.ToString();
-            Parameter.bpvbagInstruction = instruction;
+            Parameter.ptvbagInstruction = instruction;
             String tblName = "生产指令";
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
-            Parameter.bpvbagInstruID = instruID;
+            Parameter.ptvbagInstruID = instruID;
             InitBtn();
         }
 

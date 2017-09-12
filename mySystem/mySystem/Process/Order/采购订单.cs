@@ -728,5 +728,134 @@ namespace mySystem.Process.Order
                 }
             }
         }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            if (combox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(combox打印机选择.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\caigou\表93. PALL AUSTAR采购订单.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my, wb);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+
+        //打印填数据
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            int ind = 0;
+            if (dtInner.Rows.Count > 13)
+            {
+                //在第8行插入
+                for (int i = 0; i < dtInner.Rows.Count - 13; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dtInner.Rows.Count - 13;
+            }
+
+            //外表信息
+            mysheet.Cells[4, 3].Value = dtOuter.Rows[0]["供应商"].ToString();
+            mysheet.Cells[4, 6].Value = dtOuter.Rows[0]["采购合同号"].ToString();
+            mysheet.Cells[4, 12].Value = Convert.ToDateTime(dtOuter.Rows[0]["订单日期"].ToString()).ToString("yy/MM/dd");
+            mysheet.Cells[4, 14].Value = dtOuter.Rows[0]["采购分类"].ToString();
+            mysheet.Cells[4, 16].Value = dtOuter.Rows[0]["币种"].ToString();
+            mysheet.Cells[4, 18].Value = dtOuter.Rows[0]["汇率"].ToString();
+
+            mysheet.Cells[21 + ind, 3].Value = Convert.ToDateTime(dtOuter.Rows[0]["申请日期"].ToString()).ToString("yy/MM/dd");
+            mysheet.Cells[21 + ind, 5].Value = dtOuter.Rows[0]["申请人"].ToString();
+            mysheet.Cells[21 + ind, 7].Value = dtOuter.Rows[0]["申请部门"].ToString();
+            mysheet.Cells[21 + ind, 9].Value = dtOuter.Rows[0]["审核人"].ToString();
+            mysheet.Cells[21 + ind, 11].Value = Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).ToString("yy/MM/dd");
+
+            //内表信息
+            for (int i = 0; i < dtInner.Rows.Count; i++)
+            {
+                //mysheet.Cells[7 + i, 1] = i + 1; //组件订单需求流水号
+                mysheet.Cells[7 + i, 2] = dtInner.Rows[i]["存货代码"].ToString();
+                mysheet.Cells[7 + i, 3] = dtInner.Rows[i]["存货名称"].ToString();
+                mysheet.Cells[7 + i, 4] = dtInner.Rows[i]["规格型号"].ToString();
+                mysheet.Cells[7 + i, 5] = dtInner.Rows[i]["采购件数"].ToString();
+                mysheet.Cells[7 + i, 6] = dtInner.Rows[i]["采购数量"].ToString();
+                mysheet.Cells[7 + i, 7] = dtInner.Rows[i]["供应商产品编码"].ToString();
+                mysheet.Cells[7 + i, 8] = dtInner.Rows[i]["用途"].ToString();
+                mysheet.Cells[7 + i, 9] = Convert.ToDateTime(dtInner.Rows[i]["预计到货时间"].ToString()).ToString("yy/MM/dd");
+                mysheet.Cells[7 + i, 10] = dtInner.Rows[i]["备注"].ToString();
+                mysheet.Cells[7 + i, 11] = dtInner.Rows[i]["主计量"].ToString();
+                mysheet.Cells[7 + i, 12] = dtInner.Rows[i]["单价"].ToString();
+                mysheet.Cells[7 + i, 13] = dtInner.Rows[i]["金额"].ToString();
+                mysheet.Cells[7 + i, 14] = dtInner.Rows[i]["进度"].ToString();
+                mysheet.Cells[7 + i, 15] = dtInner.Rows[i]["COC"].ToString();
+                mysheet.Cells[7 + i, 16] = dtInner.Rows[i]["付款进度"].ToString();
+                mysheet.Cells[7 + i, 17] = Convert.ToDateTime(dtInner.Rows[i]["付款日期"].ToString()).ToString("yy/MM/dd");
+                mysheet.Cells[7 + i, 18] = dtInner.Rows[i]["发票"].ToString();
+
+            }
+        }
+
+
+
     }
 }
