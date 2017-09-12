@@ -280,7 +280,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外包装记录表");
             if (b)
             {
-                PTV.PTV产品外包装记录 myform = new PTV.PTV产品外包装记录();
+                PTV.PTV产品外包装记录 myform = new PTV.PTV产品外包装记录(mainform);
                 myform.ShowDialog();
             }
             else
@@ -296,7 +296,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
             if (b)
             {
-                PTV.PTV生产退料记录 myform = new PTV.PTV生产退料记录();
+                PTV.PTV生产退料记录 myform = new PTV.PTV生产退料记录(mainform);
                 myform.ShowDialog();
             }
             else
@@ -312,7 +312,7 @@ namespace mySystem.Process.Bag.PTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
             if (b)
             {
-                PTV.PTV洁净区温湿度记录 myform = new PTV.PTV洁净区温湿度记录();
+                PTV.PTV洁净区温湿度记录 myform = new PTV.PTV洁净区温湿度记录(mainform);
                 myform.ShowDialog();
             }
             else

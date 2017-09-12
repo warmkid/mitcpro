@@ -252,7 +252,7 @@ namespace mySystem.Process.Bag.LDPE
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外包装记录表");
             if (b)
             {
-                LDPE.LDPE产品外包装记录 myform = new LDPE.LDPE产品外包装记录();
+                LDPE.LDPE产品外包装记录 myform = new LDPE.LDPE产品外包装记录(mainform);
                 myform.ShowDialog();
             }
             else
@@ -268,7 +268,7 @@ namespace mySystem.Process.Bag.LDPE
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
             if (b)
             {
-                LDPE.LDPE生产退料记录 myform = new LDPE.LDPE生产退料记录();
+                LDPE.LDPE生产退料记录 myform = new LDPE.LDPE生产退料记录(mainform);
                 myform.ShowDialog();
             }
             else
@@ -284,7 +284,7 @@ namespace mySystem.Process.Bag.LDPE
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
             if (b)
             {
-                LDPE.LDPE洁净区温湿度记录 myform = new LDPE.LDPE洁净区温湿度记录();
+                LDPE.LDPE洁净区温湿度记录 myform = new LDPE.LDPE洁净区温湿度记录(mainform);
                 myform.ShowDialog();
             }
             else

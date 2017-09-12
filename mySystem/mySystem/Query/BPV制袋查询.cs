@@ -441,15 +441,15 @@ namespace mySystem.Query
 
                         break;
                     case "产品外包装记录":
-                        BPV产品外包装记录 mydlg24 = new BPV产品外包装记录();
+                        BPV产品外包装记录 mydlg24 = new BPV产品外包装记录(mainform);
                         mydlg24.Show();
                         break;
                     case "生产退料记录":
-                        BPV生产退料记录 mydlg25 = new BPV生产退料记录();
+                        BPV生产退料记录 mydlg25 = new BPV生产退料记录(mainform);
                         mydlg25.Show();
                         break;
                     case "洁净区温湿度记录":
-                        BPV洁净区温湿度记录 mydlg26 = new BPV洁净区温湿度记录();
+                        BPV洁净区温湿度记录 mydlg26 = new BPV洁净区温湿度记录(mainform);
                         mydlg26.Show();
                         break;
                     case "岗位交接班记录":

@@ -451,7 +451,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外包装记录表");
             if (b)
             {
-                BTV.BPV产品外包装记录 myform = new BTV.BPV产品外包装记录();
+                BTV.BPV产品外包装记录 myform = new BTV.BPV产品外包装记录(mainform);
                 myform.ShowDialog();
             }
             else
@@ -467,7 +467,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
             if (b)
             {
-                BTV.BPV生产退料记录 myform = new BTV.BPV生产退料记录();
+                BTV.BPV生产退料记录 myform = new BTV.BPV生产退料记录(mainform);
                 myform.ShowDialog();
             }
             else
@@ -483,7 +483,7 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
             if (b)
             {
-                BTV.BPV洁净区温湿度记录 myform = new BTV.BPV洁净区温湿度记录();
+                BTV.BPV洁净区温湿度记录 myform = new BTV.BPV洁净区温湿度记录(mainform);
                 myform.ShowDialog();
             }
             else
