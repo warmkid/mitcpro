@@ -95,26 +95,33 @@ namespace mySystem
 
         private void SearchUnchecked()
         {
-//            String strCon吹膜 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-//                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
-//            list吹膜 = EachSearchUnchecked(strCon吹膜);
-//            String strCon清洁分切 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-//                                Data Source=../../database/welding.mdb;Persist Security Info=False";
-//            list清洁分切 = EachSearchUnchecked(strCon清洁分切);
-//            String strConCS制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-//                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
-//            listCS制袋 = EachSearchUnchecked(strConCS制袋);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                String strCon吹膜 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
+                list吹膜 = EachSearchUnchecked(strCon吹膜);
+                String strCon清洁分切 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/welding.mdb;Persist Security Info=False";
+                list清洁分切 = EachSearchUnchecked(strCon清洁分切);
+                String strConCS制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
+                listCS制袋 = EachSearchUnchecked(strConCS制袋);
+                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+            }
+            else
+            {
+                //********************改为sql数据库*********************************
+                String strCon吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                list吹膜 = EachSearchUnchecked(strCon吹膜);
+                String strCon清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                list清洁分切 = EachSearchUnchecked(strCon清洁分切);
+                String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                listCS制袋 = EachSearchUnchecked(strConCS制袋);
 
-            //********************改为sql数据库*********************************
-            String strCon吹膜 = "server="+mySystem.Parameter.IP_port+";database=extrusionnew;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-            list吹膜 = EachSearchUnchecked(strCon吹膜);
-            String strCon清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-            list清洁分切 = EachSearchUnchecked(strCon清洁分切);
-            String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-            listCS制袋 = EachSearchUnchecked(strConCS制袋);
-
-            String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-            //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+            }
 
             if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count == 0) return;
 

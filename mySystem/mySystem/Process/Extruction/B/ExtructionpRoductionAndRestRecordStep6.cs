@@ -29,9 +29,13 @@ namespace mySystem.Extruction.Process
         private int[] sum = { 0, 0 };
 
         private DataTable dt记录, dt记录详情, dt代码批号, dt工艺设备;
+
         private OleDbDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
+
+        private OleDbDataAdapter da记录_sql, da记录详情_sql;
+        private OleDbCommandBuilder cb记录_sql, cb记录详情_sql;
 
         #region
         //private string person_操作员;
@@ -89,25 +93,51 @@ namespace mySystem.Extruction.Process
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where ID=" + ID, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
-            da.Fill(dt);
-            InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+            if (!isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where ID=" + ID, mySystem.Parameter.connOle);
+                da.Fill(dt);
+                InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
 
-            da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, mySystem.Parameter.connOle);
-            dt = new DataTable();
-            da.Fill(dt);
-            Instruction = dt.Rows[0]["生产指令编号"].ToString();
+                da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, mySystem.Parameter.connOle);
+                dt = new DataTable();
+                da.Fill(dt);
+                Instruction = dt.Rows[0]["生产指令编号"].ToString();
 
 
-            fill_printer(); //添加打印机
-            getPeople();  // 获取操作员和审核员
-            setUserState();  // 根据登录人，设置stat_user
-            //getOtherData();  //读取设置内容
-            addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
-            addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+                fill_printer(); //添加打印机
+                getPeople();  // 获取操作员和审核员
+                setUserState();  // 根据登录人，设置stat_user
+                //getOtherData();  //读取设置内容
+                addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+                addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            IDShow(ID);
+                IDShow(ID);
+            }
+            else          
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from 吹膜工序生产和检验记录 where ID=" + ID, mySystem.Parameter.conn);
+                da.Fill(dt);
+                InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+
+                da = new SqlDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, mySystem.Parameter.conn);
+                dt = new DataTable();
+                da.Fill(dt);
+                Instruction = dt.Rows[0]["生产指令编号"].ToString();
+
+
+                fill_printer(); //添加打印机
+                getPeople();  // 获取操作员和审核员
+                setUserState();  // 根据登录人，设置stat_user
+                //getOtherData();  //读取设置内容
+                addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
+                addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
+
+                IDShow(ID);
+            }
+
+
         }
 
         //******************************初始化******************************//
