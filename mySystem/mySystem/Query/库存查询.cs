@@ -14,6 +14,7 @@ namespace mySystem.Query
     {
          OleDbDataAdapter da退货台账,da出库单,da库存台账,da检验台账;
         DataTable dt退货台账,dt出库单,dt库存台账,dt检验台账;
+        OleDbCommandBuilder cb库存台账;
 
         public 库存查询()
         {
@@ -31,13 +32,26 @@ namespace mySystem.Query
 
 
             dgv库存台账.AllowUserToAddRows = false;
-            dgv库存台账.ReadOnly = true;
+            //dgv库存台账.ReadOnly = true;
             dgv库存台账.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv库存台账_DataBindingComplete);
 
             dgv检验台账.AllowUserToAddRows = false;
             dgv检验台账.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv检验台账_DataBindingComplete);
 
+
+            this.tb出库单发货公司.PreviewKeyDown += new PreviewKeyDownEventHandler(tb出库单发货公司_PreviewKeyDown);
+
         }
+
+        void tb出库单发货公司_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btn查询出库单.PerformClick();
+            }
+        }
+
+       
 
         void dgv检验台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
@@ -47,6 +61,30 @@ namespace mySystem.Query
         void dgv库存台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dgv库存台账.Columns["ID"].Visible = false;
+            // readonly
+            foreach (DataGridViewColumn dgvc in dgv库存台账.Columns)
+            {
+                if (dgvc.Name == "实盘数量"||dgvc.Name=="货柜"||dgvc.Name=="有效期")
+                {
+                    dgvc.ReadOnly = false;
+                }
+                else
+                {
+                    dgvc.ReadOnly = true;
+                }
+            }
+            // 设置颜色
+            foreach (DataGridViewRow dgvr in dgv库存台账.Rows)
+            {
+                if (Convert.ToBoolean(dgvr.Cells["是否盘点"].Value))
+                {
+                }
+                else
+                {
+                    dgvr.DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
+            
         }
 
         void dgv出库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -95,11 +133,12 @@ namespace mySystem.Query
         {
             string sql = "select * from 库存台帐 where 供应商名称 like '%{0}%' and 产品代码 like '%{1}%' and 状态 like '%{2}%'";
            
-            string 供应商名称 = tb库存台账厂家名称.Text;
+            string 供应商名称 = tabControl1.Text;
             string 产品代码 = tb库存台账存货代码.Text;
             string 状态 = cmb库存台账状态.Text;
             da库存台账 = new OleDbDataAdapter(string.Format(sql, 供应商名称, 产品代码, 状态), mySystem.Parameter.connOle);
             dt库存台账 = new DataTable("库存台帐");
+            cb库存台账 = new OleDbCommandBuilder(da库存台账);
             da库存台账.Fill(dt库存台账);
             dgv库存台账.DataSource = dt库存台账;
         }
@@ -115,6 +154,21 @@ namespace mySystem.Query
             dt检验台账 = new DataTable("检验台账");
             da检验台账.Fill(dt检验台账);
             dgv检验台账.DataSource = dt检验台账;
+        }
+
+        private void btn保存库存台账_Click(object sender, EventArgs e)
+        {
+            da库存台账.Update(dt库存台账);
+        }
+
+        private void btn盘点库存台账_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewCell dgvc in dgv库存台账.SelectedCells)
+            {
+                dgv库存台账["是否盘点", dgvc.RowIndex].Value = true;
+                dgv库存台账.Rows[dgvc.RowIndex].DefaultCellStyle.BackColor = Color.White;
+            }
+
         }
     }
 }

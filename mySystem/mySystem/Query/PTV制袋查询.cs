@@ -320,15 +320,15 @@ namespace mySystem.Query
                         batch.Show();
                         break;
                     case "产品外包装记录":
-                        PTV产品外包装记录 outer = new PTV产品外包装记录();
+                        PTV产品外包装记录 outer = new PTV产品外包装记录(mainform);
                         outer.Show();
                         break;
                     case "生产退料记录":
-                        PTV生产退料记录 tuiliaoform = new PTV生产退料记录();
+                        PTV生产退料记录 tuiliaoform = new PTV生产退料记录(mainform);
                         tuiliaoform.Show();
                         break;
                     case "洁净区温湿度记录":
-                        PTV洁净区温湿度记录 wenshiduform = new PTV洁净区温湿度记录();
+                        PTV洁净区温湿度记录 wenshiduform = new PTV洁净区温湿度记录(mainform);
                         wenshiduform.Show();
                         break;
                     case "岗位交接班记录":
