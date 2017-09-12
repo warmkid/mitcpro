@@ -881,9 +881,9 @@ namespace mySystem.Process.CleanCut
                     if (isPrint)
                     {
                         //写日志
-                        string log = "=====================================\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
-                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                        //string log = "=====================================\n";
+                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
                         bsOuter.EndEdit();
                         daOuter.Update((DataTable)bsOuter.DataSource);
@@ -917,25 +917,25 @@ namespace mySystem.Process.CleanCut
                 mysheet.Cells[3, 1].Value = "物料种类：  LDPE □  TY □   TK8 □    UP1 □" + cmb物料种类.Text + " ☑ ";
             
             //内表信息
-            int i内表行数 = dataGridView1.Rows.Count;
+            int i内表行数 = dtInner.Rows.Count;
             int i超出行数 = 0;
             //行数不超过模板行数的部分
             for (int i = 0; i < (i内表行数 > 8 ? 8 : i内表行数); i++)
             {
                 mysheet.Cells[5 + i, 1].Value = i + 1;
-                mysheet.Cells[5 + i, 2].Value=dataGridView1.Rows[i].Cells[3].Value.ToString();
-                mysheet.Cells[5 + i, 3].Value = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                mysheet.Cells[5 + i, 4].Value = dataGridView1.Rows[i].Cells[5].Value.ToString();
-                mysheet.Cells[5 + i, 5].Value = dataGridView1.Rows[i].Cells[6].Value.ToString();
-                mysheet.Cells[5 + i, 6].Value = dataGridView1.Rows[i].Cells[7].Value.ToString();
-                mysheet.Cells[5 + i, 7].Value = dataGridView1.Rows[i].Cells[8].Value.ToString();
-                mysheet.Cells[5 + i, 8].Value = dataGridView1.Rows[i].Cells[9].Value.ToString();
-                mysheet.Cells[5 + i, 9].Value = dataGridView1.Rows[i].Cells[10].Value.ToString();
-                mysheet.Cells[5 + i, 10].Value = dataGridView1.Rows[i].Cells[11].Value.ToString();
-                mysheet.Cells[5 + i, 11].Value = dataGridView1.Rows[i].Cells[12].Value.ToString();
-                mysheet.Cells[5 + i, 12].Value = dataGridView1.Rows[i].Cells[13].Value.ToString();
-                mysheet.Cells[5 + i, 13].Value = dataGridView1.Rows[i].Cells[14].Value.ToString();
-                mysheet.Cells[5 + i, 14].Value = dataGridView1.Rows[i].Cells[15].Value.ToString();
+                mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["生产指令"].ToString();
+                mysheet.Cells[5 + i, 3].Value = dtInner.Rows[i]["生产日期"].ToString();
+                mysheet.Cells[5 + i, 4].Value = dtInner.Rows[i]["使用物料代码"].ToString();
+                mysheet.Cells[5 + i, 5].Value = dtInner.Rows[i]["规格a1"].ToString();
+                mysheet.Cells[5 + i, 6].Value = dtInner.Rows[i]["用量b1"].ToString();
+                mysheet.Cells[5 + i, 7].Value = dtInner.Rows[i]["使用量"].ToString();
+                mysheet.Cells[5 + i, 8].Value = dtInner.Rows[i]["清洁分切后代码"].ToString();
+                mysheet.Cells[5 + i, 9].Value = dtInner.Rows[i]["规格a2"].ToString();
+                mysheet.Cells[5 + i, 10].Value = dtInner.Rows[i]["数量b2"].ToString();
+                mysheet.Cells[5 + i, 11].Value = dtInner.Rows[i]["数量"].ToString();
+                mysheet.Cells[5 + i, 12].Value = dtInner.Rows[i]["工时"].ToString();
+                mysheet.Cells[5 + i, 13].Value = dtInner.Rows[i]["操作人"].ToString();
+                mysheet.Cells[5 + i, 14].Value = dtInner.Rows[i]["审核人"].ToString();
             }
             //超过模板行数的部分，插入
             if (i内表行数 > 8)
