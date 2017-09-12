@@ -312,7 +312,8 @@ namespace mySystem.Query
                         //form11.ShowDialog();
                         break;
                     case "岗位交接班记录":
-
+                        HandOver form12 = new HandOver(mainform, ID);
+                        form12.Show();
                         break;
 
                     default:

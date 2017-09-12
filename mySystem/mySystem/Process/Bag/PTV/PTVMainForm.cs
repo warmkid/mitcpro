@@ -325,7 +325,18 @@ namespace mySystem.Process.Bag.PTV
 
         private void Btn交接班_Click(object sender, EventArgs e)
         {
-
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "岗位交接班记录");
+            if (b)
+            {
+                //new窗口
+                PTV.HandOver myform = new PTV.HandOver(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
         }
 
         private void Btn结束_Click(object sender, EventArgs e)

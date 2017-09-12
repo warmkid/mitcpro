@@ -332,7 +332,8 @@ namespace mySystem.Query
                         wenshiduform.Show();
                         break;
                     case "岗位交接班记录":
-
+                        HandOver ho = new HandOver(mainform, ID);
+                        ho.Show();
                         break;
 
                     default:
