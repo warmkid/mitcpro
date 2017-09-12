@@ -13,9 +13,9 @@ namespace 订单和库存管理
 {
     public partial class 库存管理 : mySystem.BaseForm
     {
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         OleDbDataAdapter da;
         OleDbCommandBuilder cb;
         DataTable dt;
@@ -25,8 +25,8 @@ namespace 订单和库存管理
         {
             InitializeComponent();
 
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             // 绑定控件
             readFromDatabase();
             bindControl();
@@ -47,7 +47,7 @@ namespace 订单和库存管理
 
         private void readFromDatabase()
         {
-            da = new OleDbDataAdapter("select * from 库存台帐", conn);
+            da = new OleDbDataAdapter("select * from 库存台帐", mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
             dt = new DataTable("库存台帐");
             bs = new BindingSource();

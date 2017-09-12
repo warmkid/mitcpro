@@ -34,18 +34,18 @@ namespace mySystem.Process.Stock
         BindingSource bsOuter, bsInner;
         DataTable dtOuter, dtInner;
 
-        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 
-        OleDbConnection conn;
+//        OleDbConnection conn;
         CheckForm ckform;
 
         public 物资验收记录(MainForm mainform):base(mainform)
         {
             // TODO 审核人不走这条路
             InitializeComponent();
-            conn = new OleDbConnection(strConn);
-            conn.Open();
+            //conn = new OleDbConnection(strConn);
+            //conn.Open();
             getPeople();
             setUserState();
             getOtherData();
@@ -60,8 +60,8 @@ namespace mySystem.Process.Stock
 
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 OleDbCommand comm = new OleDbCommand();
-                
-                comm.Connection = conn;
+
+                comm.Connection = mySystem.Parameter.connOle;
                 comm.CommandText = "select @@identity";
                 Int32 idd1 = (Int32)comm.ExecuteScalar();
                 readOuterData(idd1);
@@ -91,8 +91,8 @@ namespace mySystem.Process.Stock
         {
             InitializeComponent();
             isSaved = true;
-            conn = new OleDbConnection(strConn);
-            conn.Open();
+            //conn = new OleDbConnection(strConn);
+            //conn.Open();
             getPeople();
             setUserState();
             getOtherData();
@@ -125,7 +125,7 @@ namespace mySystem.Process.Stock
             ls操作员 = new List<string>();
             OleDbDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "物资验收记录" + "'", conn);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "物资验收记录" + "'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -187,7 +187,7 @@ namespace mySystem.Process.Stock
 
             OleDbDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 设置供应商信息", conn);
+            da = new OleDbDataAdapter("select * from 设置供应商信息", mySystem.Parameter.connOle);
             dt = new DataTable("tmp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -199,16 +199,16 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id = -1)
         {
-            conn = new OleDbConnection(strConn);
+            //conn = new OleDbConnection(strConn);
 
-            conn.Open();
+            //conn.Open();
             if (-1 == id)
             {
-                daOuter = new OleDbDataAdapter("select * from 物资验收记录 where 验收记录编号='" + lbl验收记录编号.Text + "'", conn);
+                daOuter = new OleDbDataAdapter("select * from 物资验收记录 where 验收记录编号='" + lbl验收记录编号.Text + "'", mySystem.Parameter.connOle);
             }
             else
             {
-                daOuter = new OleDbDataAdapter("select * from 物资验收记录 where ID=" + id, conn);
+                daOuter = new OleDbDataAdapter("select * from 物资验收记录 where ID=" + id, mySystem.Parameter.connOle);
             }
 
             cbOuter = new OleDbCommandBuilder(daOuter);
@@ -233,7 +233,7 @@ namespace mySystem.Process.Stock
 
         String create验收记录编号()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 验收记录编号 from 物资验收记录 order by ID DESC", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 验收记录编号 from 物资验收记录 order by ID DESC", mySystem.Parameter.connOle);
             DataTable dt = new DataTable("物资验收记录");
             da.Fill(dt);
             int yearNow = DateTime.Now.Year;
@@ -335,7 +335,7 @@ namespace mySystem.Process.Stock
         void readInnerData(int id)
         {
 
-            daInner = new OleDbDataAdapter("select * from 物资验收记录详细信息 where 物资验收记录ID=" + id, strConn);
+            daInner = new OleDbDataAdapter("select * from 物资验收记录详细信息 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
             cbInner = new OleDbCommandBuilder(daInner);
             bsInner = new BindingSource();
             dtInner = new DataTable("物资验收记录详细信息");
@@ -548,14 +548,14 @@ namespace mySystem.Process.Stock
                         form1.Show();
                         break;
                     case "物资请验单":
-                        da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID="+id,conn);
+                        da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
                         物资请验单 form2 = new 物资请验单(Convert.ToInt32(dt.Rows[0]["ID"]));
                         form2.Show();
                         break;
                     case "检验记录":
-                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + id, conn);
+                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
@@ -565,7 +565,7 @@ namespace mySystem.Process.Stock
                         }
                         break;
                     case "取样记录":
-                        da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, conn);
+                        da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
                         取样记录 form4 = new 取样记录(Convert.ToInt32(dt.Rows[0]["ID"]));
@@ -646,7 +646,7 @@ namespace mySystem.Process.Stock
 
 
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资验收记录' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资验收记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
@@ -730,7 +730,7 @@ namespace mySystem.Process.Stock
             {
                 return;
             }
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             DataTable dt = new DataTable("物资请验单");
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             BindingSource bs = new BindingSource();
@@ -749,12 +749,12 @@ namespace mySystem.Process.Stock
             dt.Rows.Add(dr);
 
             da.Update(dt);
-            da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
 
             dt = new DataTable("物资请验单");
             da.Fill(dt);
             // Inner
-            da = new OleDbDataAdapter("select * from 物资请验单详细信息 where 物资请验单ID=" + dt.Rows[0]["ID"], conn);
+            da = new OleDbDataAdapter("select * from 物资请验单详细信息 where 物资请验单ID=" + dt.Rows[0]["ID"], mySystem.Parameter.connOle);
             DataTable dtMore = new DataTable("物资请验单详细信息");
             cb = new OleDbCommandBuilder(da);
             da.Fill(dtMore);
@@ -777,7 +777,7 @@ namespace mySystem.Process.Stock
 
         public void create取样记录()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             DataTable dt = new DataTable("取样记录");
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             BindingSource bs = new BindingSource();
@@ -794,12 +794,12 @@ namespace mySystem.Process.Stock
             dt.Rows.Add(dr);
 
             da.Update(dt);
-            da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
 
             dt = new DataTable("取样记录");
             da.Fill(dt);
             // Inner
-            da = new OleDbDataAdapter("select * from 取样记录详细信息 where 取样记录ID=" + dt.Rows[0]["ID"], conn);
+            da = new OleDbDataAdapter("select * from 取样记录详细信息 where 取样记录ID=" + dt.Rows[0]["ID"], mySystem.Parameter.connOle);
             DataTable dtMore = new DataTable("取样记录详细信息");
             cb = new OleDbCommandBuilder(da);
             da.Fill(dtMore);
@@ -826,7 +826,7 @@ namespace mySystem.Process.Stock
 
         private string create请验编号()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 请验编号 from 物资请验单 order by ID DESC", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 请验编号 from 物资请验单 order by ID DESC", mySystem.Parameter.connOle);
             DataTable dt = new DataTable("物资请验单");
             da.Fill(dt);
             int yearNow = DateTime.Now.Year;
@@ -876,7 +876,7 @@ namespace mySystem.Process.Stock
             OleDbCommandBuilder cb;
             DataTable dt;
             DataRow dr;
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资验收记录' and 对应ID=" + dtOuter.Rows[0]["ID"], conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='物资验收记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
@@ -915,7 +915,7 @@ namespace mySystem.Process.Stock
                 {
                     foreach (int r in RowToCheck)
                     {
-                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dtInner.Rows[r]["物料名称"] + "'", conn);
+                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dtInner.Rows[r]["物料名称"] + "'", mySystem.Parameter.connOle);
                         dt = new DataTable("检验记录");
                         cb = new OleDbCommandBuilder(da);
                         BindingSource bs = new BindingSource();
@@ -1041,7 +1041,7 @@ namespace mySystem.Process.Stock
 
         public void insert检验台账()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验台账 where 0=1" + dtOuter.Rows[0]["ID"], conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验台账 where 0=1" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             DataTable dt = new DataTable("检验台账");
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             BindingSource bs = new BindingSource();
@@ -1078,7 +1078,7 @@ namespace mySystem.Process.Stock
 
         public void insert库存台帐()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 库存台帐 where 0=1" + dtOuter.Rows[0]["ID"], conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 库存台帐 where 0=1" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             DataTable dt = new DataTable("库存台帐");
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             BindingSource bs = new BindingSource();
@@ -1141,7 +1141,7 @@ namespace mySystem.Process.Stock
             DataTable dt;
             ht代码2名称单位换算率 = new Hashtable();
             //ls物料名称 = new List<string>();
-            da = new OleDbDataAdapter("select * from 设置存货档案",conn);
+            da = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)

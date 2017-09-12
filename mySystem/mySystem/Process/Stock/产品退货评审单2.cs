@@ -13,9 +13,9 @@ namespace mySystem.Process.Stock
 {
     public partial class 产品退货评审单2 : BaseForm
     {
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         OleDbDataAdapter daOuter;
         OleDbCommandBuilder cbOute;
         DataTable dtOuter;
@@ -34,8 +34,8 @@ namespace mySystem.Process.Stock
 
         public 产品退货评审单2(MainForm mainform, string code):base(mainform)
         {
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             InitializeComponent();
             _code = code;
             fillPrinter();
@@ -62,7 +62,7 @@ namespace mySystem.Process.Stock
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货评审单1'", conn);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货评审单1'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -201,7 +201,7 @@ namespace mySystem.Process.Stock
 
         void readOuterData(String code)
         {
-            daOuter = new OleDbDataAdapter("select * from 产品退货评审单2 where 退货申请单编号='" + code + "'", conn);
+            daOuter = new OleDbDataAdapter("select * from 产品退货评审单2 where 退货申请单编号='" + code + "'", mySystem.Parameter.connOle);
             dtOuter = new DataTable("产品退货评审单2");
             cbOute = new OleDbCommandBuilder(daOuter);
             bsOuter = new BindingSource();
@@ -285,7 +285,7 @@ namespace mySystem.Process.Stock
             OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货评审单2' and 对应ID=" + _id, conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货评审单2' and 对应ID=" + _id, mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
@@ -315,7 +315,7 @@ namespace mySystem.Process.Stock
             OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货评审单2' and 对应ID=" + _id, conn);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货评审单2' and 对应ID=" + _id, mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
@@ -330,7 +330,7 @@ namespace mySystem.Process.Stock
             if (ckform.ischeckOk)
             {
                 // 自动生产退货记录
-                da = new OleDbDataAdapter("select * from 产品退货记录 where 退货申请单编号='" + _code + "'", conn);
+                da = new OleDbDataAdapter("select * from 产品退货记录 where 退货申请单编号='" + _code + "'", mySystem.Parameter.connOle);
                 cb = new OleDbCommandBuilder(da);
                 dt = new DataTable();
                 da.Fill(dt);
@@ -342,7 +342,7 @@ namespace mySystem.Process.Stock
                 {
                     DataRow dr = dt.NewRow();
 
-                    OleDbDataAdapter daT = new OleDbDataAdapter("select * from 产品退货审批单2 where 退货申请单编号='" + _code + "'", conn);
+                    OleDbDataAdapter daT = new OleDbDataAdapter("select * from 产品退货审批单2 where 退货申请单编号='" + _code + "'", mySystem.Parameter.connOle);
                     DataTable dtT = new DataTable();
                     daT.Fill(dtT);
 
@@ -353,14 +353,14 @@ namespace mySystem.Process.Stock
                     }
                     dr["PA质量部审批意见"] = dtT.Rows[0]["质量部审批意见"];
 
-                    daT = new OleDbDataAdapter("select * from 产品退货接收单 where 退货申请单编号='" + _code + "'", conn);
+                    daT = new OleDbDataAdapter("select * from 产品退货接收单 where 退货申请单编号='" + _code + "'", mySystem.Parameter.connOle);
                     dtT = new DataTable();
                     daT.Fill(dtT);
                     dr["接收人"] = dtT.Rows[0]["接收人"];
                     dr["接收日期"] = dtT.Rows[0]["接收日期"];
                     dr["外包装单据验收情况"] = dtT.Rows[0]["外包装单据验收情况"];
 
-                    daT = new OleDbDataAdapter("select * from 产品退货评审单1 where 退货申请单编号='" + _code + "'", conn);
+                    daT = new OleDbDataAdapter("select * from 产品退货评审单1 where 退货申请单编号='" + _code + "'", mySystem.Parameter.connOle);
                     dtT = new DataTable();
                     daT.Fill(dtT);
                     dr["检验报告单编号"] = dtT.Rows[0]["检验报告单编号"];
@@ -368,7 +368,7 @@ namespace mySystem.Process.Stock
                     dr["PA质量部处理建议"] = dtT.Rows[0]["PA质量部处理建议"];
 
 
-                    daT = new OleDbDataAdapter("select * from 产品退货评审单2 where 退货申请单编号='" + _code + "'", conn);
+                    daT = new OleDbDataAdapter("select * from 产品退货评审单2 where 退货申请单编号='" + _code + "'", mySystem.Parameter.connOle);
                     dtT = new DataTable();
                     daT.Fill(dtT);
                     dr["PA生产部处理记录"] = dtT.Rows[0]["PA生产部处理记录"];

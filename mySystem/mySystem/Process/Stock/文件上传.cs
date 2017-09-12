@@ -12,15 +12,15 @@ namespace mySystem.Process.Stock
 {
     public partial class 文件上传 : BaseForm
     {
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
 
         public 文件上传()
         {
             InitializeComponent();
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             refresh();
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
@@ -32,7 +32,7 @@ namespace mySystem.Process.Stock
 
         void refresh()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 文件上传记录", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 文件上传记录", mySystem.Parameter.connOle);
             DataTable dt = new DataTable("文件上传记录");
             da.Fill(dt);
             dataGridView1.DataSource = dt;
@@ -50,7 +50,7 @@ namespace mySystem.Process.Stock
                 DateTime now = DateTime.Now;
                 String path = System.Environment.CurrentDirectory + @"/../../物料入场检验报告/";
                 System.IO.File.Copy(fullName, path + name, true);
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 文件上传记录 where 0=1",conn);
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 文件上传记录 where 0=1", mySystem.Parameter.connOle);
                 DataTable dt = new DataTable("文件上传记录");
                 OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
                 da.Fill(dt);

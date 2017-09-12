@@ -13,9 +13,9 @@ namespace mySystem.Process.Stock
     public partial class 退货管理 : BaseForm
     {
 
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         OleDbDataAdapter da;
         OleDbCommandBuilder cb;
         DataTable dt;
@@ -24,8 +24,8 @@ namespace mySystem.Process.Stock
         public 退货管理(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             tabControl1.SelectedIndexChanged += new EventHandler(tabControl1_SelectedIndexChanged);
             switch (tabControl1.SelectedIndex)
             {
@@ -313,7 +313,7 @@ namespace mySystem.Process.Stock
 
         private void btn添加退货接收单_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品退货审批单2 where 批准结果=true and 状态='已批准'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品退货审批单2 where 批准结果=true and 状态='已批准'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             try
