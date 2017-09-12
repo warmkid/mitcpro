@@ -30,8 +30,11 @@ namespace mySystem.Extruction.Process
 
         private DataTable dt设置, dt记录, dt记录详情;
         private OleDbDataAdapter da记录, da记录详情;
+        private SqlDataAdapter da记录_sql, da记录详情_sql;
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
+        private SqlCommandBuilder cb记录_sql, cb记录详情_sql;
+
 
         #region
         //private string person_操作员;
@@ -80,16 +83,30 @@ namespace mySystem.Extruction.Process
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜机组开机前确认表 where ID=" + ID, connOle);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜机组开机前确认表 where ID=" + ID, connOle);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
 
-            da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, connOle);
-            dt = new DataTable();
-            da.Fill(dt);
-            Instruction = dt.Rows[0]["生产指令编号"].ToString();
+                da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, connOle);
+                dt = new DataTable();
+                da.Fill(dt);
+                Instruction = dt.Rows[0]["生产指令编号"].ToString();
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from 吹膜机组开机前确认表 where ID=" + ID, conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
 
+                da = new SqlDataAdapter("select * from 生产指令信息表 where ID=" + InstruID, conn);
+                dt = new DataTable();
+                da.Fill(dt);
+                Instruction = dt.Rows[0]["生产指令编号"].ToString();
+            }
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -117,30 +134,61 @@ namespace mySystem.Extruction.Process
             //}
             #endregion
 
-            OleDbDataAdapter da;
-            DataTable dt;
-
-            ls操作员 = new List<string>();
-            ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜开机前确认表'", connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-
-            if (dt.Rows.Count > 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
-                for (int i = 0; i < s.Length; i++)
+                OleDbDataAdapter da;
+                DataTable dt;
+
+                ls操作员 = new List<string>();
+                ls审核员 = new List<string>();
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜开机前确认表'", connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
                 {
-                    if (s[i] != "")
-                        ls操作员.Add(s[i]);
-                }
-                string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
-                for (int i = 0; i < s1.Length; i++)
-                {
-                    if (s1[i] != "")
-                        ls审核员.Add(s1[i]);
+                    string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        if (s[i] != "")
+                            ls操作员.Add(s[i]);
+                    }
+                    string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
+                    for (int i = 0; i < s1.Length; i++)
+                    {
+                        if (s1[i] != "")
+                            ls审核员.Add(s1[i]);
+                    }
                 }
             }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+
+                ls操作员 = new List<string>();
+                ls审核员 = new List<string>();
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜开机前确认表'", conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+
+                if (dt.Rows.Count > 0)
+                {
+                    string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
+                    for (int i = 0; i < s.Length; i++)
+                    {
+                        if (s[i] != "")
+                            ls操作员.Add(s[i]);
+                    }
+                    string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
+                    for (int i = 0; i < s1.Length; i++)
+                    {
+                        if (s1[i] != "")
+                            ls审核员.Add(s1[i]);
+                    }
+                }
+            }
+
         }
 
         // 根据登录人，设置stat_user
@@ -210,10 +258,21 @@ namespace mySystem.Extruction.Process
         private void getOtherData()
         {
             //连数据库
-            dt设置 = new DataTable("设置");
-            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from " + tableSet, connOle);
-            datemp.Fill(dt设置);
-            datemp.Dispose();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt设置 = new DataTable("设置");
+                OleDbDataAdapter datemp = new OleDbDataAdapter("select * from " + tableSet, connOle);
+                datemp.Fill(dt设置);
+                datemp.Dispose();
+            }
+            else
+            {
+                dt设置 = new DataTable("设置");
+                SqlDataAdapter datemp = new SqlDataAdapter("select * from " + tableSet, conn);
+                datemp.Fill(dt设置);
+                datemp.Dispose();
+            
+            }
         }
 
         //根据状态设置可读写性
@@ -344,28 +403,55 @@ namespace mySystem.Extruction.Process
             //*******************************表格内部******************************// 
             if (dt记录.Rows.Count <= 0)
             {
-                //********* 外表新建、保存、重新绑定 *********//                
-                //初始化外表这一行
-                DataRow dr1 = dt记录.NewRow();
-                dr1 = writeOuterDefault(dr1);
-                dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
-                //立马保存这一行
-                bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
-                //外表重新绑定
-                readOuterData(InstruID);
-                outerBind();
+                //********* 外表新建、保存、重新绑定 *********//   
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    //初始化外表这一行
+                    DataRow dr1 = dt记录.NewRow();
+                    dr1 = writeOuterDefault(dr1);
+                    dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
+                    //立马保存这一行
+                    bs记录.EndEdit();
+                    da记录.Update((DataTable)bs记录.DataSource);
+                    //外表重新绑定
+                    readOuterData(InstruID);
+                    outerBind();
 
-                //********* 内表新建、保存 *********//
+                    //********* 内表新建、保存 *********//
 
-                //内表绑定
-                readInnerData((int)dt记录.Rows[0]["ID"]);
-                innerBind();
-                dt记录详情.Rows.Clear();
-                dt记录详情 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dt记录详情);
-                setDataGridViewRowNums();
-                //立马保存内表
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                    //内表绑定
+                    readInnerData((int)dt记录.Rows[0]["ID"]);
+                    innerBind();
+                    dt记录详情.Rows.Clear();
+                    dt记录详情 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dt记录详情);
+                    setDataGridViewRowNums();
+                    //立马保存内表
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    //初始化外表这一行
+                    DataRow dr1 = dt记录.NewRow();
+                    dr1 = writeOuterDefault(dr1);
+                    dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
+                    //立马保存这一行
+                    bs记录.EndEdit();
+                    da记录_sql.Update((DataTable)bs记录.DataSource);
+                    //外表重新绑定
+                    readOuterData(InstruID);
+                    outerBind();
+
+                    //********* 内表新建、保存 *********//
+
+                    //内表绑定
+                    readInnerData((int)dt记录.Rows[0]["ID"]);
+                    innerBind();
+                    dt记录详情.Rows.Clear();
+                    dt记录详情 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dt记录详情);
+                    setDataGridViewRowNums();
+                    //立马保存内表
+                    da记录详情_sql.Update((DataTable)bs记录详情.DataSource);
+                }
             }
             dataGridView1.Columns.Clear();
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
@@ -380,15 +466,30 @@ namespace mySystem.Extruction.Process
         //根据主键显示
         private void IDShow(Int32 ID)
         {
-            OleDbCommand comm1 = new OleDbCommand();
-            comm1.Connection = Parameter.connOle;
-            comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
-            OleDbDataReader reader1 = comm1.ExecuteReader();
-            if (reader1.Read())
+            if (!mySystem.Parameter.isSqlOk)
             {
-                InstruID = Convert.ToInt32(reader1["生产指令ID"].ToString()); 
-                DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()));
-            }            
+                OleDbCommand comm1 = new OleDbCommand();
+                comm1.Connection = Parameter.connOle;
+                comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
+                OleDbDataReader reader1 = comm1.ExecuteReader();
+                if (reader1.Read())
+                {
+                    InstruID = Convert.ToInt32(reader1["生产指令ID"].ToString());
+                    DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()));
+                }
+            }
+            else
+            {
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = Parameter.conn;
+                comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
+                SqlDataReader reader1 = comm1.ExecuteReader();
+                if (reader1.Read())
+                {
+                    InstruID = Convert.ToInt32(reader1["生产指令ID"].ToString());
+                    DataShow(Convert.ToInt32(reader1["生产指令ID"].ToString()));
+                }
+            }
         }
 
         //****************************** 嵌套 ******************************//
@@ -396,11 +497,22 @@ namespace mySystem.Extruction.Process
         //外表读数据，填datatable
         private void readOuterData(Int32 InstruID)
         {
-            bs记录 = new BindingSource();
-            dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
-            da记录.Fill(dt记录);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
+            else
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                da记录_sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), conn);
+                cb记录_sql = new SqlCommandBuilder(da记录_sql);
+                da记录_sql.Fill(dt记录);
+            }
         }
 
         //外表控件绑定
@@ -441,11 +553,22 @@ namespace mySystem.Extruction.Process
         private void readInnerData(Int32 ID)
         {
             //读取记录表里的记录
-            bs记录详情 = new BindingSource();
-            dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T吹膜机组开机前确认表ID = " + ID.ToString(), connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
-            da记录详情.Fill(dt记录详情);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T吹膜机组开机前确认表ID = " + ID.ToString(), connOle);
+                cb记录详情 = new OleDbCommandBuilder(da记录详情);
+                da记录详情.Fill(dt记录详情);
+            }
+            else
+            {
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情_sql = new SqlDataAdapter("select * from " + tableInfo + " where T吹膜机组开机前确认表ID = " + ID.ToString(), conn);
+                cb记录详情_sql = new SqlCommandBuilder(da记录详情_sql);
+                da记录详情_sql.Fill(dt记录详情);
+            }
         }
 
         //内表控件绑定
@@ -580,19 +703,38 @@ namespace mySystem.Extruction.Process
             }
             else
             {
-                // 内表保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
-                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-                innerBind();
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    // 内表保存
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                    innerBind();
 
-                //外表保存
-                bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID);
-                outerBind();
+                    //外表保存
+                    bs记录.EndEdit();
+                    da记录.Update((DataTable)bs记录.DataSource);
+                    readOuterData(InstruID);
+                    outerBind();
 
-                setDataGridViewBackColor();
-                return true;
+                    setDataGridViewBackColor();
+                    return true;
+                }
+                else
+                {
+                    // 内表保存
+                    da记录详情_sql.Update((DataTable)bs记录详情.DataSource);
+                    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                    innerBind();
+
+                    //外表保存
+                    bs记录.EndEdit();
+                    da记录_sql.Update((DataTable)bs记录.DataSource);
+                    readOuterData(InstruID);
+                    outerBind();
+
+                    setDataGridViewBackColor();
+                    return true;
+                }
             }
         }
         
@@ -614,19 +756,38 @@ namespace mySystem.Extruction.Process
                 return;
                
             //写待审核表
-            DataTable dt_temp = new DataTable("待审核");
-            //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            if (dt_temp.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "吹膜开机前确认表";
-                dr["对应ID"] = Convert.ToInt32(dt记录.Rows[0]["ID"]);
-                dt_temp.Rows.Add(dr);
+                DataTable dt_temp = new DataTable("待审核");
+                //BindingSource bs_temp = new BindingSource();
+                OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "吹膜开机前确认表";
+                    dr["对应ID"] = Convert.ToInt32(dt记录.Rows[0]["ID"]);
+                    dt_temp.Rows.Add(dr);
+                }
+                da_temp.Update(dt_temp);
             }
-            da_temp.Update(dt_temp);
+            else
+            {
+                DataTable dt_temp = new DataTable("待审核");
+                //BindingSource bs_temp = new BindingSource();
+                SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='吹膜开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "吹膜开机前确认表";
+                    dr["对应ID"] = Convert.ToInt32(dt记录.Rows[0]["ID"]);
+                    dt_temp.Rows.Add(dr);
+                }
+                da_temp.Update(dt_temp);
+            }
 
             //写日志 
             //格式： 
@@ -687,13 +848,26 @@ namespace mySystem.Extruction.Process
             dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
 
             //写待审核表
-            DataTable dt_temp = new DataTable("待审核");
-            //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                DataTable dt_temp = new DataTable("待审核");
+                //BindingSource bs_temp = new BindingSource();
+                OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='吹膜开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            else
+            {
+                DataTable dt_temp = new DataTable("待审核");
+                //BindingSource bs_temp = new BindingSource();
+                SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='吹膜开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
 
             //写日志
             string log = "=====================================\n";
@@ -784,7 +958,11 @@ namespace mySystem.Extruction.Process
                         dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
 
                         bs记录.EndEdit();
-                        da记录.Update((DataTable)bs记录.DataSource);
+                        if(!mySystem.Parameter.isSqlOk)
+                            da记录.Update((DataTable)bs记录.DataSource);
+                        else
+                            da记录_sql.Update((DataTable)bs记录.DataSource);
+
                     }
                     // 关闭文件，false表示不保存
                     wb.Close(false);
@@ -835,15 +1013,31 @@ namespace mySystem.Extruction.Process
                 }
             }
             //加页脚
-            int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
-            DataTable dt = new DataTable("temp");
-            da.Fill(dt);
-            List<Int32> sheetList = new List<Int32>();
-            for (int i = 0; i < dt.Rows.Count; i++)
-            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
-            sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = Instruction + "-04-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                int sheetnum;
+                OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
+                DataTable dt = new DataTable("temp");
+                da.Fill(dt);
+                List<Int32> sheetList = new List<Int32>();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+                sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+                mysheet.PageSetup.RightFooter = Instruction + "-04-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            }
+            else
+            {
+                int sheetnum;
+                SqlDataAdapter da = new SqlDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), conn);
+                DataTable dt = new DataTable("temp");
+                da.Fill(dt);
+                List<Int32> sheetList = new List<Int32>();
+                for (int i = 0; i < dt.Rows.Count; i++)
+                { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+                sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+                mysheet.PageSetup.RightFooter = Instruction + "-04-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            
+            }
             //返回
             return mysheet;
         }
