@@ -232,17 +232,21 @@ namespace mySystem.Process.Bag.BTV
                 else
                 {
                     //外表物料
-                    
+
+                    dt物料.Columns.Add("物料简称", typeof(String));   //新建第1列
                     dt物料.Columns.Add("物料代码", typeof(String));   //新建第2列
-                    
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料代码1"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料代码2"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料代码3"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料代码1"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料代码2"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料代码1"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料代码2"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料代码3"].ToString());
+                    dt物料.Columns.Add("物料批号", typeof(String));   //新建第3列
+                    //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称1"].ToString(), dt生产指令.Rows[0]["制袋物料代码1"].ToString(), dt生产指令.Rows[0]["制袋物料批号1"].ToString());
+                    //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称2"].ToString(), dt生产指令.Rows[0]["制袋物料代码2"].ToString(), dt生产指令.Rows[0]["制袋物料批号2"].ToString());
+                    //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称3"].ToString(), dt生产指令.Rows[0]["制袋物料代码3"].ToString(), dt生产指令.Rows[0]["制袋物料批号3"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称1"].ToString(), dt生产指令.Rows[0]["内包物料代码1"].ToString(), dt生产指令.Rows[0]["内包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称2"].ToString(), dt生产指令.Rows[0]["内包物料代码2"].ToString(), dt生产指令.Rows[0]["内包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称3"].ToString(), dt生产指令.Rows[0]["内包物料代码3"].ToString(), dt生产指令.Rows[0]["内包物料批号3"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称1"].ToString(), dt生产指令.Rows[0]["外包物料代码1"].ToString(), dt生产指令.Rows[0]["外包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
+                    //内表代码批号
+                    addMaterialToDt();
                     //内表代码批号
                     OleDbCommand comm2 = new OleDbCommand();
                     comm2.Connection = Parameter.connOle;
@@ -264,6 +268,22 @@ namespace mySystem.Process.Bag.BTV
             }
             else
             { }
+        }
+
+        private void addMaterialToDt()
+        {
+            OleDbDataAdapter daGetMaterial = new OleDbDataAdapter("select * from 生产指令物料 where T生产指令ID =" + InstruID, connOle);
+            DataTable dtResult = new DataTable();
+            daGetMaterial.Fill(dtResult);
+            for (int i = 0; i < dtResult.Rows.Count; i++)
+            {
+                DataRow dr = dt物料.NewRow();
+                dr["物料简称"] = dtResult.Rows[i]["物料名称"];
+                dr["物料代码"] = dtResult.Rows[i]["物料代码"];
+                dr["物料批号"] = dtResult.Rows[i]["物料批号"];
+                dt物料.Rows.Add(dr);
+            }
+            daGetMaterial.Dispose();
         }
 
         //根据状态设置可读写性

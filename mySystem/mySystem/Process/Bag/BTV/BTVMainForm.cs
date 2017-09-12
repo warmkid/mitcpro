@@ -448,20 +448,50 @@ namespace mySystem.Process.Bag.BTV
 
         private void Btn外包装_Click(object sender, EventArgs e)
         {
-            BTV.BPV产品外包装记录 myform = new BTV.BPV产品外包装记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外包装记录表");
+            if (b)
+            {
+                BTV.BPV产品外包装记录 myform = new BTV.BPV产品外包装记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
         }
 
         private void Btn退料_Click(object sender, EventArgs e)
         {
-            BTV.BPV生产退料记录 myform = new BTV.BPV生产退料记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
+            if (b)
+            {
+                BTV.BPV生产退料记录 myform = new BTV.BPV生产退料记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+            
         }
 
         private void Btn洁净_Click(object sender, EventArgs e)
         {
-            BTV.BPV洁净区温湿度记录 myform = new BTV.BPV洁净区温湿度记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
+            if (b)
+            {
+                BTV.BPV洁净区温湿度记录 myform = new BTV.BPV洁净区温湿度记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn结束_Click(object sender, EventArgs e)
@@ -471,14 +501,34 @@ namespace mySystem.Process.Bag.BTV
 
         private void Btn热合强度_Click(object sender, EventArgs e)
         {
-            BTV.产品热合强度检验记录 myform = new BTV.产品热合强度检验记录(mainform);
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品热合强度检验记录");
+            if (b)
+            {
+                BTV.产品热合强度检验记录 myform = new BTV.产品热合强度检验记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn外观尺寸_Click(object sender, EventArgs e)
         {
-            BTV.产品外观和尺寸检验记录 myform = new BTV.产品外观和尺寸检验记录(mainform);
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外观和尺寸检验记录");
+            if (b)
+            {
+                BTV.产品外观和尺寸检验记录 myform = new BTV.产品外观和尺寸检验记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn日报表_Click(object sender, EventArgs e)
@@ -488,7 +538,18 @@ namespace mySystem.Process.Bag.BTV
 
         private void Btn交接班_Click(object sender, EventArgs e)
         {
-
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "岗位交接班记录");
+            if (b)
+            {
+                //new窗口
+                BTV.HandOver myform = new BTV.HandOver(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
         }
 
 

@@ -94,6 +94,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv运输商);
             this.dgv运输商.Columns["运输商"].MinimumWidth = 200;
             this.dgv运输商.Columns["运输商"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv运输商);
             this.dgv运输商.Columns["运输商"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             //************************    产品     *******************************************
             dt产品 = new DataTable("设置灭菌产品"); //""中的是表名
@@ -106,6 +107,7 @@ namespace mySystem.Setting
             //显示序号
             setDataGridViewRowNums(this.dgv产品);
             this.dgv产品.Columns["产品名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv产品);
             this.dgv产品.Columns["产品名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //**************************   产品编码    ***********************************
@@ -119,6 +121,7 @@ namespace mySystem.Setting
             //显示序号
             setDataGridViewRowNums(this.dgv产品编码);
             this.dgv产品编码.Columns["产品编码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv产品编码);
             this.dgv产品编码.Columns["产品编码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //************************    产品规格     *******************************************
@@ -132,6 +135,7 @@ namespace mySystem.Setting
             //显示序号
             setDataGridViewRowNums(this.dgv产品规格);
             this.dgv产品规格.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv产品规格);
             this.dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //************************    辐照单位     *******************************************
@@ -145,6 +149,7 @@ namespace mySystem.Setting
             //显示序号
             setDataGridViewRowNums(this.dgv辐照单位);
             this.dgv辐照单位.Columns["辐照单位"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv辐照单位);
             this.dgv辐照单位.Columns["辐照单位"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //************************   产品名称     *******************************************
@@ -158,6 +163,7 @@ namespace mySystem.Setting
             //显示序号
             setDataGridViewRowNums(this.dgv产品名称);
             this.dgv产品名称.Columns["产品名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv产品名称);
             this.dgv产品名称.Columns["产品名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             //**************************   人员设置    ***********************************
@@ -173,6 +179,7 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv人员);
             this.dgv人员.Columns["用户名"].MinimumWidth = 150;
             this.dgv人员.Columns["班次"].MinimumWidth = 100;
+            Utility.setDataGridViewAutoSizeMode(dgv人员);
             this.dgv人员.Columns["用户名"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             
             //************************    人员权限     *******************************************
@@ -188,6 +195,7 @@ namespace mySystem.Setting
             this.dgv权限.Columns["操作员"].MinimumWidth = 150;
             this.dgv权限.Columns["审核员"].MinimumWidth = 150;
             this.dgv权限.Columns["步骤"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Utility.setDataGridViewAutoSizeMode(dgv权限);
             this.dgv权限.Columns["步骤"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
         }
@@ -220,6 +228,8 @@ namespace mySystem.Setting
             DataRow dr = dt产品.NewRow();
             dt产品.Rows.InsertAt(dt产品.NewRow(), dt产品.Rows.Count);
             setDataGridViewRowNums(this.dgv产品);
+            if (dgv产品.Rows.Count > 0)
+                dgv产品.FirstDisplayedScrollingRowIndex = dgv产品.Rows.Count - 1;
         }
 
         private void del产品_Click(object sender, EventArgs e)
@@ -237,6 +247,8 @@ namespace mySystem.Setting
             DataRow dr = dt产品编码.NewRow();
             dt产品编码.Rows.InsertAt(dt产品编码.NewRow(), dt产品编码.Rows.Count);
             setDataGridViewRowNums(this.dgv产品编码);
+            if (dgv产品编码.Rows.Count > 0)
+                dgv产品编码.FirstDisplayedScrollingRowIndex = dgv产品编码.Rows.Count - 1;
         }
 
         private void del产品编码_Click(object sender, EventArgs e)
@@ -254,6 +266,8 @@ namespace mySystem.Setting
             DataRow dr = dt产品规格.NewRow();
             dt产品规格.Rows.InsertAt(dt产品规格.NewRow(), dt产品规格.Rows.Count);
             setDataGridViewRowNums(this.dgv产品规格);
+            if (dgv产品规格.Rows.Count > 0)
+                dgv产品规格.FirstDisplayedScrollingRowIndex = dgv产品规格.Rows.Count - 1;
         }
 
         private void del规格_Click(object sender, EventArgs e)
@@ -271,6 +285,8 @@ namespace mySystem.Setting
             DataRow dr = dt运输商.NewRow();
             dt运输商.Rows.InsertAt(dt运输商.NewRow(), dt运输商.Rows.Count);
             setDataGridViewRowNums(this.dgv运输商);
+            if (dgv运输商.Rows.Count > 0)
+                dgv运输商.FirstDisplayedScrollingRowIndex = dgv运输商.Rows.Count - 1;
         }
 
         private void del运输商_Click(object sender, EventArgs e)
@@ -288,6 +304,8 @@ namespace mySystem.Setting
             DataRow dr = dt辐照单位.NewRow();
             dt辐照单位.Rows.InsertAt(dt辐照单位.NewRow(), dt辐照单位.Rows.Count);
             setDataGridViewRowNums(this.dgv辐照单位);
+            if (dgv辐照单位.Rows.Count > 0)
+                dgv辐照单位.FirstDisplayedScrollingRowIndex = dgv辐照单位.Rows.Count - 1;
         }
 
         private void del辐照单位_Click(object sender, EventArgs e)
@@ -353,6 +371,8 @@ namespace mySystem.Setting
             DataRow dr = dt人员.NewRow();
             dt人员.Rows.InsertAt(dt人员.NewRow(), dt人员.Rows.Count);
             setDataGridViewRowNums(this.dgv人员);
+            if (dgv人员.Rows.Count > 0)
+                dgv人员.FirstDisplayedScrollingRowIndex = dgv人员.Rows.Count - 1;
         }
 
         private void del人员_Click(object sender, EventArgs e)
@@ -592,6 +612,8 @@ namespace mySystem.Setting
             DataRow dr = dt产品名称.NewRow();
             dt产品名称.Rows.InsertAt(dt产品名称.NewRow(), dt产品名称.Rows.Count);
             setDataGridViewRowNums(this.dgv产品名称);
+            if (dgv产品名称.Rows.Count > 0)
+                dgv产品名称.FirstDisplayedScrollingRowIndex = dgv产品名称.Rows.Count - 1;
         }
 
         private void del产品名称_Click(object sender, EventArgs e)

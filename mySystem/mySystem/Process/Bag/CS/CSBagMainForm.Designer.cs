@@ -38,17 +38,18 @@
             this.Btn外观及检验 = new System.Windows.Forms.Button();
             this.Btn领料记录 = new System.Windows.Forms.Button();
             this.Btn内包装 = new System.Windows.Forms.Button();
-            this.Btn标签 = new System.Windows.Forms.Button();
+            this.Btn内标签 = new System.Windows.Forms.Button();
             this.Btn日报表 = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.Btn批生产 = new System.Windows.Forms.Button();
-            this.Btn外包装 = new System.Windows.Forms.Button();
-            this.Btn退料 = new System.Windows.Forms.Button();
-            this.Btn洁净 = new System.Windows.Forms.Button();
-            this.Btn结束 = new System.Windows.Forms.Button();
             this.Btn交接班 = new System.Windows.Forms.Button();
+            this.Btn结束 = new System.Windows.Forms.Button();
+            this.Btn洁净 = new System.Windows.Forms.Button();
+            this.Btn退料 = new System.Windows.Forms.Button();
+            this.Btn外包装 = new System.Windows.Forms.Button();
+            this.Btn批生产 = new System.Windows.Forms.Button();
+            this.Btn外标签 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -56,16 +57,17 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.Btn热合强度);
+            this.groupBox1.Controls.Add(this.Btn外标签);
             this.groupBox1.Controls.Add(this.Btn生产指令);
             this.groupBox1.Controls.Add(this.Btn开机确认);
             this.groupBox1.Controls.Add(this.Btn清场);
             this.groupBox1.Controls.Add(this.Btn运行记录);
+            this.groupBox1.Controls.Add(this.Btn内标签);
             this.groupBox1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.groupBox1.Location = new System.Drawing.Point(443, 105);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(260, 399);
+            this.groupBox1.Size = new System.Drawing.Size(260, 460);
             this.groupBox1.TabIndex = 21;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "管理类";
@@ -73,7 +75,7 @@
             // Btn热合强度
             // 
             this.Btn热合强度.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn热合强度.Location = new System.Drawing.Point(31, 324);
+            this.Btn热合强度.Location = new System.Drawing.Point(28, 324);
             this.Btn热合强度.Name = "Btn热合强度";
             this.Btn热合强度.Size = new System.Drawing.Size(200, 38);
             this.Btn热合强度.TabIndex = 17;
@@ -127,10 +129,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.Btn热合强度);
             this.groupBox2.Controls.Add(this.Btn外观及检验);
             this.groupBox2.Controls.Add(this.Btn领料记录);
             this.groupBox2.Controls.Add(this.Btn内包装);
-            this.groupBox2.Controls.Add(this.Btn标签);
             this.groupBox2.Controls.Add(this.Btn日报表);
             this.groupBox2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.groupBox2.Location = new System.Drawing.Point(112, 105);
@@ -144,7 +146,7 @@
             // Btn外观及检验
             // 
             this.Btn外观及检验.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn外观及检验.Location = new System.Drawing.Point(28, 324);
+            this.Btn外观及检验.Location = new System.Drawing.Point(28, 250);
             this.Btn外观及检验.Name = "Btn外观及检验";
             this.Btn外观及检验.Size = new System.Drawing.Size(200, 38);
             this.Btn外观及检验.TabIndex = 17;
@@ -174,16 +176,16 @@
             this.Btn内包装.UseVisualStyleBackColor = true;
             this.Btn内包装.Click += new System.EventHandler(this.A2Btn_Click);
             // 
-            // Btn标签
+            // Btn内标签
             // 
-            this.Btn标签.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn标签.Location = new System.Drawing.Point(28, 250);
-            this.Btn标签.Name = "Btn标签";
-            this.Btn标签.Size = new System.Drawing.Size(200, 38);
-            this.Btn标签.TabIndex = 15;
-            this.Btn标签.Text = "CS制袋标签";
-            this.Btn标签.UseVisualStyleBackColor = true;
-            this.Btn标签.Click += new System.EventHandler(this.A4Btn_Click);
+            this.Btn内标签.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn内标签.Location = new System.Drawing.Point(31, 314);
+            this.Btn内标签.Name = "Btn内标签";
+            this.Btn内标签.Size = new System.Drawing.Size(200, 38);
+            this.Btn内标签.TabIndex = 15;
+            this.Btn内标签.Text = "CS制袋内标签";
+            this.Btn内标签.UseVisualStyleBackColor = true;
+            this.Btn内标签.Click += new System.EventHandler(this.A4Btn_Click);
             // 
             // Btn日报表
             // 
@@ -233,49 +235,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "封面";
             // 
-            // Btn批生产
+            // Btn交接班
             // 
-            this.Btn批生产.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn批生产.Location = new System.Drawing.Point(28, 40);
-            this.Btn批生产.Name = "Btn批生产";
-            this.Btn批生产.Size = new System.Drawing.Size(200, 38);
-            this.Btn批生产.TabIndex = 12;
-            this.Btn批生产.Text = "制袋工序批生产记录";
-            this.Btn批生产.UseVisualStyleBackColor = true;
-            this.Btn批生产.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // Btn外包装
-            // 
-            this.Btn外包装.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn外包装.Location = new System.Drawing.Point(28, 110);
-            this.Btn外包装.Name = "Btn外包装";
-            this.Btn外包装.Size = new System.Drawing.Size(200, 38);
-            this.Btn外包装.TabIndex = 13;
-            this.Btn外包装.Text = "产品外包装记录";
-            this.Btn外包装.UseVisualStyleBackColor = true;
-            this.Btn外包装.Click += new System.EventHandler(this.Btn外包装_Click);
-            // 
-            // Btn退料
-            // 
-            this.Btn退料.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn退料.Location = new System.Drawing.Point(28, 180);
-            this.Btn退料.Name = "Btn退料";
-            this.Btn退料.Size = new System.Drawing.Size(200, 38);
-            this.Btn退料.TabIndex = 14;
-            this.Btn退料.Text = "生产退料记录";
-            this.Btn退料.UseVisualStyleBackColor = true;
-            this.Btn退料.Click += new System.EventHandler(this.Btn退料_Click);
-            // 
-            // Btn洁净
-            // 
-            this.Btn洁净.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn洁净.Location = new System.Drawing.Point(28, 250);
-            this.Btn洁净.Name = "Btn洁净";
-            this.Btn洁净.Size = new System.Drawing.Size(200, 38);
-            this.Btn洁净.TabIndex = 15;
-            this.Btn洁净.Text = "洁净区温湿度记录";
-            this.Btn洁净.UseVisualStyleBackColor = true;
-            this.Btn洁净.Click += new System.EventHandler(this.Btn洁净_Click);
+            this.Btn交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn交接班.Location = new System.Drawing.Point(28, 324);
+            this.Btn交接班.Name = "Btn交接班";
+            this.Btn交接班.Size = new System.Drawing.Size(200, 38);
+            this.Btn交接班.TabIndex = 17;
+            this.Btn交接班.Text = "岗位交接班记录";
+            this.Btn交接班.UseVisualStyleBackColor = true;
+            this.Btn交接班.Click += new System.EventHandler(this.Btn交接班_Click);
             // 
             // Btn结束
             // 
@@ -288,16 +257,60 @@
             this.Btn结束.UseVisualStyleBackColor = true;
             this.Btn结束.Click += new System.EventHandler(this.Btn结束_Click);
             // 
-            // Btn交接班
+            // Btn洁净
             // 
-            this.Btn交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn交接班.Location = new System.Drawing.Point(28, 324);
-            this.Btn交接班.Name = "Btn交接班";
-            this.Btn交接班.Size = new System.Drawing.Size(200, 38);
-            this.Btn交接班.TabIndex = 17;
-            this.Btn交接班.Text = "岗位交接班记录";
-            this.Btn交接班.UseVisualStyleBackColor = true;
-            this.Btn交接班.Click += new System.EventHandler(this.Btn交接班_Click);
+            this.Btn洁净.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn洁净.Location = new System.Drawing.Point(28, 250);
+            this.Btn洁净.Name = "Btn洁净";
+            this.Btn洁净.Size = new System.Drawing.Size(200, 38);
+            this.Btn洁净.TabIndex = 15;
+            this.Btn洁净.Text = "洁净区温湿度记录";
+            this.Btn洁净.UseVisualStyleBackColor = true;
+            this.Btn洁净.Click += new System.EventHandler(this.Btn洁净_Click);
+            // 
+            // Btn退料
+            // 
+            this.Btn退料.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn退料.Location = new System.Drawing.Point(28, 180);
+            this.Btn退料.Name = "Btn退料";
+            this.Btn退料.Size = new System.Drawing.Size(200, 38);
+            this.Btn退料.TabIndex = 14;
+            this.Btn退料.Text = "生产退料记录";
+            this.Btn退料.UseVisualStyleBackColor = true;
+            this.Btn退料.Click += new System.EventHandler(this.Btn退料_Click);
+            // 
+            // Btn外包装
+            // 
+            this.Btn外包装.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn外包装.Location = new System.Drawing.Point(28, 110);
+            this.Btn外包装.Name = "Btn外包装";
+            this.Btn外包装.Size = new System.Drawing.Size(200, 38);
+            this.Btn外包装.TabIndex = 13;
+            this.Btn外包装.Text = "产品外包装记录";
+            this.Btn外包装.UseVisualStyleBackColor = true;
+            this.Btn外包装.Click += new System.EventHandler(this.Btn外包装_Click);
+            // 
+            // Btn批生产
+            // 
+            this.Btn批生产.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn批生产.Location = new System.Drawing.Point(28, 40);
+            this.Btn批生产.Name = "Btn批生产";
+            this.Btn批生产.Size = new System.Drawing.Size(200, 38);
+            this.Btn批生产.TabIndex = 12;
+            this.Btn批生产.Text = "制袋工序批生产记录";
+            this.Btn批生产.UseVisualStyleBackColor = true;
+            this.Btn批生产.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // Btn外标签
+            // 
+            this.Btn外标签.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn外标签.Location = new System.Drawing.Point(31, 383);
+            this.Btn外标签.Name = "Btn外标签";
+            this.Btn外标签.Size = new System.Drawing.Size(200, 38);
+            this.Btn外标签.TabIndex = 23;
+            this.Btn外标签.Text = "CS制袋外标签";
+            this.Btn外标签.UseVisualStyleBackColor = true;
+            this.Btn外标签.Click += new System.EventHandler(this.Btn外标签_Click);
             // 
             // CSBagMainForm
             // 
@@ -329,7 +342,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button Btn领料记录;
         private System.Windows.Forms.Button Btn内包装;
-        private System.Windows.Forms.Button Btn标签;
+        private System.Windows.Forms.Button Btn内标签;
         private System.Windows.Forms.Button Btn日报表;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button Btn生产指令;
@@ -345,5 +358,6 @@
         private System.Windows.Forms.Button Btn退料;
         private System.Windows.Forms.Button Btn外包装;
         private System.Windows.Forms.Button Btn交接班;
+        private System.Windows.Forms.Button Btn外标签;
     }
 }

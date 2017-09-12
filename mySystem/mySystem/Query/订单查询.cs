@@ -27,20 +27,37 @@ namespace mySystem.Query
             dgv采购订单.AllowUserToAddRows = false;
             dgv采购订单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv采购订单_DataBindingComplete);
             dgv采购订单.CellDoubleClick += new DataGridViewCellEventHandler(dgv采购订单_CellDoubleClick);
+            dgv采购订单.CellEndEdit += new DataGridViewCellEventHandler(dgv采购订单_CellEndEdit);
+        }
+
+        void dgv采购订单_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                if (dgv采购订单.Columns[e.ColumnIndex].Name == "单价")
+                {
+                    double 单价 = Convert.ToDouble(dgv采购订单["单价", e.RowIndex].Value);
+                    double 数量 = Convert.ToDouble(dgv采购订单["采购数量", e.RowIndex].Value);
+                    dgv采购订单["金额", e.RowIndex].Value = 数量 * 单价;
+                }
+            }
         }
 
         void dgv采购订单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                string 销售订单号 = dgv采购订单["用途", e.RowIndex].Value.ToString();
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 销售订单号 + "'", mySystem.Parameter.connOle);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                if (dt.Rows.Count > 0)
+                if (dgv采购订单.Columns[e.ColumnIndex].Name == "用途")
                 {
-                    int id = Convert.ToInt32(dt.Rows[0]["ID"]);
-                    (new mySystem.Process.Order.销售订单(mainform, id)).ShowDialog();
+                    string 销售订单号 = dgv采购订单["用途", e.RowIndex].Value.ToString();
+                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 销售订单号 + "'", mySystem.Parameter.connOle);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        int id = Convert.ToInt32(dt.Rows[0]["ID"]);
+                        (new mySystem.Process.Order.销售订单(mainform, id)).ShowDialog();
+                    }
                 }
             }
         }
@@ -52,10 +69,11 @@ namespace mySystem.Query
             dgv采购订单.Columns["关联的采购批准详细信息ID"].Visible = false;
             dgv采购订单.Columns["关联的采购批转单借用单ID"].Visible = false;
             int cidx = dgv采购订单.Columns["金额"].Index;
-            for (int i = 0; i < cidx; ++i)
+            for (int i = 0; i <= cidx; ++i)
             {
                 dgv采购订单.Columns[i].ReadOnly = true;
             }
+            dgv采购订单.Columns["单价"].ReadOnly = false;
         }
 
         void dgv销售订单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -86,6 +104,8 @@ namespace mySystem.Query
             cb采购订单 = new OleDbCommandBuilder(da采购订单);
             da采购订单.Fill(dt采购订单);
             dgv采购订单.DataSource = dt采购订单;
+
+
         }
 
         private void btn采购订单保存_Click(object sender, EventArgs e)

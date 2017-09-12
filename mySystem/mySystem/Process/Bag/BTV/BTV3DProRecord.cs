@@ -230,6 +230,7 @@ namespace mySystem.Process.Bag.BTV
                         dic膜材.Add(dtemp.Rows[i][1].ToString(), dtemp.Rows[i][1].ToString());
                     }
                 }
+                addMaterialToDt();
                 datemp2.Dispose();
             }
             else
@@ -237,7 +238,19 @@ namespace mySystem.Process.Bag.BTV
                 //从SQL数据库中读取;                
             }
         }
-
+        private void addMaterialToDt()
+        {
+            OleDbDataAdapter daGetMaterial = new OleDbDataAdapter("select * from 生产指令物料 where T生产指令ID =" + InstruID, connOle);
+            DataTable dtResult = new DataTable();
+            daGetMaterial.Fill(dtResult);
+            for (int i = 0; i < dtResult.Rows.Count; i++)
+            {
+                
+                 //dtResult.Rows[i]["物料名称"];                 
+               dic膜材.Add(dtResult.Rows[i]["物料代码"].ToString(),dtResult.Rows[i]["物料批号"].ToString());
+            }
+            daGetMaterial.Dispose();
+        }
         //根据状态设置可读写性
         private void setEnableReadOnly()
         {
@@ -1096,68 +1109,142 @@ namespace mySystem.Process.Bag.BTV
         }
         public void print(bool preview)
         {
-            //// 打开一个Excel进程
-            //Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
-            //// 利用这个进程打开一个Excel文件
-            ////System.IO.Directory.GetCurrentDirectory;
-            //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R06A  2D袋体生产记录.xlsx");
-            //// 选择一个Sheet，注意Sheet的序号是从1开始的
-            //Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
-            //// 设置该进程是否可见
-            ////oXL.Visible = true;
-            //// 修改Sheet中某行某列的值
-
-            //my.Cells[3, 1].Value = "产品代码/规格："+tb产品代码.Text;
-            //my.Cells[3, 5].Value = "产品批号："+tb产品批号.Text;
-            //my.Cells[3, 8].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
-
-            ////EVERY SHEET CONTAINS 15 RECORDS
-            //for (int i = 0; i < dt记录详情.Rows.Count; i++)
-            //{
-            //    my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["序号"];
-            //    my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["生产时间"];
-            //    my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["切片尺寸长"];
-            //    my.Cells[i + 5, 4].Value = dt记录详情.Rows[i]["切片尺寸宽"];
-            //    my.Cells[i + 5, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
-            //    my.Cells[i + 5, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
-            //    my.Cells[i + 5, 7].Value = dt记录详情.Rows[i]["袋体外观检查"];
-            //    my.Cells[i + 5, 8].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
-            //    my.Cells[i + 5, 9].Value = dt记录详情.Rows[i]["热封线检查"];
-            //    my.Cells[i + 5, 10].Value = dt记录详情.Rows[i]["合格品数量"];
-            //    my.Cells[i + 5, 11].Value = dt记录详情.Rows[i]["不良品数量"];
-            //    my.Cells[i + 5, 12].Value = dt记录详情.Rows[i]["操作员"];
-            //    my.Cells[i + 5, 13].Value = dt记录详情.Rows[i]["审核员"];     
-
-            //}
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-502-R01A  3D袋体生产记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+            int rowStartAt = 5;
+            my.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
+            my.Cells[3, 9].Value = "开始生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["开始生产日期"]).ToString("yyyy年MM月dd日");
             
-            //if (preview)
-            //{
-            //    my.Select();
-            //    oXL.Visible = true; //加上这一行  就相当于预览功能            
-            //}
-            //else
-            //{
-            //    //add footer
-            //    my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            int rowNumPerSheet = 1;
+            int rowNumTotal = dt领料记录.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
+            {
+                my.Cells[i + rowStartAt, 1].Value = dt领料记录.Rows[i]["膜材代码"];
+                my.Cells[i + rowStartAt, 2].Value = dt领料记录.Rows[i]["物料批号"]; ;
+                my.Cells[i + rowStartAt, 3].Value = dt领料记录.Rows[i]["领料数量"];
+                my.Cells[i + rowStartAt, 4].Value = dt领料记录.Rows[i]["使用数量"];
+                my.Cells[i + rowStartAt, 4].Value = dt领料记录.Rows[i]["退库数量"];
+                
+            }
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
-            //    // 直接用默认打印机打印该Sheet
-            //    try
-            //    {
-            //        my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
-            //    }
-            //    catch { }
-            //    // 关闭文件，false表示不保存
-            //    wb.Close(false);
-            //    // 关闭Excel进程
-            //    oXL.Quit();
-            //    // 释放COM资源
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    my.Cells[i + rowStartAt, 1].Value = dt领料记录.Rows[i]["膜材代码"];
+                    my.Cells[i + rowStartAt, 2].Value = dt领料记录.Rows[i]["物料批号"]; ;
+                    my.Cells[i + rowStartAt, 3].Value = dt领料记录.Rows[i]["领料数量"];
+                    my.Cells[i + rowStartAt, 4].Value = dt领料记录.Rows[i]["使用数量"];
+                    my.Cells[i + rowStartAt, 4].Value = dt领料记录.Rows[i]["退库数量"];
+                }
+            }
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            rowStartAt = 9 + varOffset;
+            
+            rowNumPerSheet = 9;
+            rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
+            {
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
+                my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                my.Cells[i + rowStartAt, 3].Value = "";
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["A较大片"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["B较小片"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["袋体外观检查有缺陷时填写内容"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["热封线检查"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["合格品数量"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["不良品数量"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["审核员"];
+                    
+            }
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
-            //    Marshal.ReleaseComObject(wb);
-            //    Marshal.ReleaseComObject(oXL);
-            //    oXL = null;
-            //    my = null;
-            //    wb = null;
-            //}
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
+                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                    my.Cells[i + rowStartAt, 3].Value = "";
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["A较大片"];
+                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["B较小片"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["袋体外观检查有缺陷时填写内容"];
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["热封线检查"];
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["合格品数量"];
+                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["不良品数量"];
+                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["操作员"];
+                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["审核员"];                   
+                }
+            }
+            int rowNum1, rowNum2, rowNum3, rowNum4, rowNum5;
+            rowNum2 = 2;
+            if (dt领料记录.Rows.Count < 2)
+            {
+                rowNum1 = rowNum2;
+            }
+            else
+            {
+                rowNum1 = dt领料记录.Rows.Count;
+            }
+            rowNum4 = 10;
+            if (dt记录详情.Rows.Count < 2)
+            {
+                rowNum3 = rowNum4;
+            }
+            else
+            {
+                rowNum3 = dt记录详情.Rows.Count;
+            }
+            rowNum5 = rowNum1 = rowNum3 + 7;
+            my.Cells[rowNum5, 9].Value = dt记录.Rows[0]["合格品数量"];
+            my.Cells[rowNum5, 10].Value = dt记录.Rows[0]["不良品数量"];
+            if (preview)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                //add footer
+                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                my = null;
+                wb = null;
+            }
         }
 
 
@@ -1347,6 +1434,9 @@ namespace mySystem.Process.Bag.BTV
             DataRow dr = dt领料记录.NewRow();
             dr = writeInnerDefault1(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt领料记录.Rows.InsertAt(dr, dt领料记录.Rows.Count);
+            da领料记录.Update((DataTable)bs领料记录.DataSource);
+            readInnerData1(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind1();
         }
 
         private void btn删除领料记录_Click(object sender, EventArgs e)

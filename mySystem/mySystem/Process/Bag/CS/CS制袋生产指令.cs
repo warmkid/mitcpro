@@ -25,7 +25,7 @@ namespace mySystem.Process.Bag.CS
 
         // 显示界面需要的信息
         List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员;
-        HashSet<String> hs产品代码,hs封边;
+        HashSet<String> hs产品代码,hs封边,hs物料代码;
         HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs外包白班负责人, hs外包夜班负责人;
 
         // DataGridView 中用到的一些变量
@@ -44,7 +44,7 @@ namespace mySystem.Process.Bag.CS
         CheckForm ckform;
 
 
-        public CS制袋生产指令()
+        public CS制袋生产指令(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             fillPrinter();
@@ -57,7 +57,7 @@ namespace mySystem.Process.Bag.CS
             tb生产指令编号.Text = mySystem.Parameter.csbagInstruction;
         }
 
-        public CS制袋生产指令(int id)
+        public CS制袋生产指令(MainForm mainform,int id):base(mainform)
         {
             // 显示前的准备工作
             InitializeComponent();
@@ -136,7 +136,7 @@ namespace mySystem.Process.Bag.CS
             hs制袋内包夜班负责人 = new HashSet<string>();
 
             li可选可输的列 = new List<int>();
-            li可选可输的列.Add(2);
+            //li可选可输的列.Add(2);
             li可选可输的列.Add(8);
         }
 
@@ -209,6 +209,19 @@ namespace mySystem.Process.Bag.CS
             }
 
 
+            hs物料代码 = new HashSet<string>();
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%CS制袋%'", Tconn);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                hs物料代码.Add(dr["存货代码"].ToString());
+            }
+
         }
 
         /// <summary>
@@ -222,12 +235,16 @@ namespace mySystem.Process.Bag.CS
             hs产品代码 = new HashSet<string>();
             hs封边 = new HashSet<string>();
             //　产品代码
-            da = new OleDbDataAdapter("select * from 设置CS制袋产品代码", conn);
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%CS制袋%'", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                hs产品代码.Add(dr["产品代码"].ToString());
+                hs产品代码.Add(dr["存货代码"].ToString());
             }
             
             // 封边
@@ -242,7 +259,7 @@ namespace mySystem.Process.Bag.CS
             // 自定义数据
             foreach (DataRow dr in dtInner.Rows)
             {
-                hs产品代码.Add(dr["产品代码"].ToString());
+                //hs产品代码.Add(dr["产品代码"].ToString());
                 hs封边.Add(dr["封边"].ToString());
             }
         }
@@ -402,21 +419,21 @@ namespace mySystem.Process.Bag.CS
             foreach (DataColumn dc in dtInner.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "产品代码")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (String s in hs产品代码)
-                    {
-                        cbc.Items.Add(s);
-                    }
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
+                //if (dc.ColumnName == "产品代码")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (String s in hs产品代码)
+                //    {
+                //        cbc.Items.Add(s);
+                //    }
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
                 if (dc.ColumnName == "封边")
                 {
                     cbc = new DataGridViewComboBoxColumn();
@@ -643,6 +660,41 @@ namespace mySystem.Process.Bag.CS
 
             // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+
+            // 物料代码自动补全
+            AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(hs物料代码.ToArray());
+            tb内包物料代码1.AutoCompleteCustomSource = acsc;
+            tb内包物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb内包物料代码2.AutoCompleteCustomSource = acsc;
+            tb内包物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码1.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码2.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码3.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码1.AutoCompleteCustomSource = acsc;
+            tb外包物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码2.AutoCompleteCustomSource = acsc;
+            tb外包物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码3.AutoCompleteCustomSource = acsc;
+            tb外包物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
         /// <summary>
@@ -724,6 +776,18 @@ namespace mySystem.Process.Bag.CS
             {
                 ComboBox c = e.Control as ComboBox;
                 if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+            if (colIdx == 2)
+            {
+                TextBox tb = (e.Control as TextBox);
+                tb.AutoCompleteCustomSource = null;
+                AutoCompleteStringCollection acsc;
+                if (tb == null) return;
+                acsc = new AutoCompleteStringCollection();
+                acsc.AddRange(hs产品代码.ToArray());
+                tb.AutoCompleteCustomSource = acsc;
+                tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
         }
        
@@ -1102,7 +1166,8 @@ namespace mySystem.Process.Bag.CS
                 my.Cells[6 + i, 5].Value = dtInner.Rows[i]["产品批号"].ToString(); 
                 my.Cells[6 + i, 6].Value = dtInner.Rows[i]["内标签"].ToString(); 
                 my.Cells[6 + i, 7].Value = dtInner.Rows[i]["封边"].ToString(); 
-                my.Cells[6 + i, 8].Value = dtInner.Rows[i]["外包规格"].ToString(); 
+                my.Cells[6 + i, 8].Value = dtInner.Rows[i]["外包规格"].ToString();
+                my.Cells[6 + i, 9].Value = dtInner.Rows[i]["生产系数"].ToString(); 
                 my.Cells[6 + i, 10].Value = dtInner.Rows[i]["客户或订单号"].ToString(); 
             }
 
@@ -1130,16 +1195,16 @@ namespace mySystem.Process.Bag.CS
 
             my.Cells[13 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称1"].ToString(); 
             my.Cells[14 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称2"].ToString(); 
-            my.Cells[15 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称3"].ToString(); 
+            //my.Cells[15 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称3"].ToString(); 
             my.Cells[13 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码1"].ToString(); 
             my.Cells[14 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码2"].ToString(); 
-            my.Cells[15 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码3"].ToString(); 
+            //my.Cells[15 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码3"].ToString(); 
             my.Cells[13 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号1"].ToString(); 
             my.Cells[14 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号2"].ToString(); 
-            my.Cells[15 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号3"].ToString(); 
+            //my.Cells[15 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号3"].ToString(); 
             my.Cells[13 + ind, 8].Value = dtOuter.Rows[0]["外包物料领料量1"].ToString(); 
             my.Cells[14 + ind, 8].Value = dtOuter.Rows[0]["外包物料领料量2"].ToString(); 
-            my.Cells[15 + ind, 8].Value = dtOuter.Rows[0]["外包物料领料量3"].ToString(); 
+            //my.Cells[15 + ind, 8].Value = dtOuter.Rows[0]["外包物料领料量3"].ToString(); 
 
             my.Cells[8 + ind, 10].Value = "白班：\n" + dtOuter.Rows[0]["制袋内包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["制袋内包夜班负责人"].ToString(); 
             my.Cells[13 + ind, 10].Value = "白班：\n" + dtOuter.Rows[0]["外包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["外包夜班负责人"].ToString(); 

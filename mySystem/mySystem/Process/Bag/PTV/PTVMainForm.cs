@@ -56,14 +56,14 @@ namespace mySystem.Process.Bag.PTV
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             instruction = comboBox1.SelectedItem.ToString();
-            Parameter.bpvbagInstruction = instruction;
+            Parameter.ptvbagInstruction = instruction;
             String tblName = "生产指令";
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
             List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             instruID = Convert.ToInt32(res[0][0]);
-            Parameter.bpvbagInstruID = instruID;
+            Parameter.ptvbagInstruID = instruID;
             InitBtn();
         }
 
@@ -277,25 +277,66 @@ namespace mySystem.Process.Bag.PTV
 
         private void Btn外包装_Click(object sender, EventArgs e)
         {
-            PTV.PTV产品外包装记录 myform = new PTV.PTV产品外包装记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外包装记录表");
+            if (b)
+            {
+                PTV.PTV产品外包装记录 myform = new PTV.PTV产品外包装记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn退料_Click(object sender, EventArgs e)
         {
-            PTV.PTV生产退料记录 myform = new PTV.PTV生产退料记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产退料记录表");
+            if (b)
+            {
+                PTV.PTV生产退料记录 myform = new PTV.PTV生产退料记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn洁净_Click(object sender, EventArgs e)
         {
-            PTV.PTV洁净区温湿度记录 myform = new PTV.PTV洁净区温湿度记录();
-            myform.ShowDialog();
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "洁净区温湿度记录表");
+            if (b)
+            {
+                PTV.PTV洁净区温湿度记录 myform = new PTV.PTV洁净区温湿度记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+            
         }
 
         private void Btn交接班_Click(object sender, EventArgs e)
         {
-
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "岗位交接班记录");
+            if (b)
+            {
+                //new窗口
+                PTV.HandOver myform = new PTV.HandOver(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
         }
 
         private void Btn结束_Click(object sender, EventArgs e)

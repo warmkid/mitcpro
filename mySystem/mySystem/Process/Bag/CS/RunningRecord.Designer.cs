@@ -31,32 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RunningRecord));
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
-            this.bt插入查询 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.tb环境温度 = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.tb环境湿度 = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.tb上切刀温度 = new System.Windows.Forms.TextBox();
-            this.tb下切刀温度 = new System.Windows.Forms.TextBox();
-            this.tb冷却温度 = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.tb审核员 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
@@ -73,10 +47,11 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bt删除 = new System.Windows.Forms.Button();
             this.bt添加 = new System.Windows.Forms.Button();
+            this.tb生产指令编码 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.btn数据审核 = new System.Windows.Forms.Button();
+            this.btn提交数据审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,236 +69,16 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 234);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 121);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(953, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(953, 263);
             this.dataGridView1.TabIndex = 5;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(160, 190);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(199, 38);
-            this.panel1.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(42, 3);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(104, 32);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "横封温度(℃)\r\n（170-220）";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label3);
-            this.panel2.Location = new System.Drawing.Point(356, 190);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(292, 38);
-            this.panel2.TabIndex = 7;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(97, 3);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(104, 32);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "纵封温度(℃)\r\n（170-220）";
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.label4);
-            this.panel3.Location = new System.Drawing.Point(654, 190);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(198, 38);
-            this.panel3.TabIndex = 8;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(64, 3);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(96, 32);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "热封时间(S)\r\n（1.0-3.0）";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(31, 67);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 16);
-            this.label5.TabIndex = 9;
-            this.label5.Text = "生产日期";
-            // 
-            // dtp生产日期
-            // 
-            this.dtp生产日期.Location = new System.Drawing.Point(119, 60);
-            this.dtp生产日期.Name = "dtp生产日期";
-            this.dtp生产日期.Size = new System.Drawing.Size(154, 26);
-            this.dtp生产日期.TabIndex = 10;
-            // 
-            // bt插入查询
-            // 
-            this.bt插入查询.Location = new System.Drawing.Point(304, 62);
-            this.bt插入查询.Name = "bt插入查询";
-            this.bt插入查询.Size = new System.Drawing.Size(96, 27);
-            this.bt插入查询.TabIndex = 11;
-            this.bt插入查询.Text = "插入查询";
-            this.bt插入查询.UseVisualStyleBackColor = true;
-            this.bt插入查询.Click += new System.EventHandler(this.bt插入查询_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(31, 103);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(88, 16);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "生产环境：";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(143, 103);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(72, 16);
-            this.label7.TabIndex = 13;
-            this.label7.Text = "环境温度";
-            // 
-            // tb环境温度
-            // 
-            this.tb环境温度.Location = new System.Drawing.Point(238, 100);
-            this.tb环境温度.Name = "tb环境温度";
-            this.tb环境温度.Size = new System.Drawing.Size(76, 26);
-            this.tb环境温度.TabIndex = 14;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(320, 103);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(24, 16);
-            this.label8.TabIndex = 15;
-            this.label8.Text = "℃";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(410, 103);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(72, 16);
-            this.label9.TabIndex = 16;
-            this.label9.Text = "环境湿度";
-            // 
-            // tb环境湿度
-            // 
-            this.tb环境湿度.Location = new System.Drawing.Point(488, 100);
-            this.tb环境湿度.Name = "tb环境湿度";
-            this.tb环境湿度.Size = new System.Drawing.Size(76, 26);
-            this.tb环境湿度.TabIndex = 17;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(570, 103);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(16, 16);
-            this.label10.TabIndex = 18;
-            this.label10.Text = "%";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(31, 151);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(88, 16);
-            this.label11.TabIndex = 19;
-            this.label11.Text = "切刀温度：";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(143, 151);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(88, 16);
-            this.label12.TabIndex = 20;
-            this.label12.Text = "上切刀温度";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(401, 151);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(88, 16);
-            this.label13.TabIndex = 21;
-            this.label13.Text = "下切刀温度";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(644, 151);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(72, 16);
-            this.label14.TabIndex = 22;
-            this.label14.Text = "冷却温度";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(323, 151);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(24, 16);
-            this.label15.TabIndex = 23;
-            this.label15.Text = "℃";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(572, 151);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(24, 16);
-            this.label16.TabIndex = 24;
-            this.label16.Text = "℃";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(820, 151);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(24, 16);
-            this.label17.TabIndex = 25;
-            this.label17.Text = "℃";
-            // 
-            // tb上切刀温度
-            // 
-            this.tb上切刀温度.Location = new System.Drawing.Point(241, 148);
-            this.tb上切刀温度.Name = "tb上切刀温度";
-            this.tb上切刀温度.Size = new System.Drawing.Size(76, 26);
-            this.tb上切刀温度.TabIndex = 26;
-            // 
-            // tb下切刀温度
-            // 
-            this.tb下切刀温度.Location = new System.Drawing.Point(490, 148);
-            this.tb下切刀温度.Name = "tb下切刀温度";
-            this.tb下切刀温度.Size = new System.Drawing.Size(76, 26);
-            this.tb下切刀温度.TabIndex = 27;
-            // 
-            // tb冷却温度
-            // 
-            this.tb冷却温度.Location = new System.Drawing.Point(722, 148);
-            this.tb冷却温度.Name = "tb冷却温度";
-            this.tb冷却温度.Size = new System.Drawing.Size(83, 26);
-            this.tb冷却温度.TabIndex = 28;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(31, 408);
+            this.label18.Location = new System.Drawing.Point(17, 406);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(56, 16);
             this.label18.TabIndex = 29;
@@ -331,7 +86,7 @@
             // 
             // tb审核员
             // 
-            this.tb审核员.Location = new System.Drawing.Point(93, 398);
+            this.tb审核员.Location = new System.Drawing.Point(79, 400);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.ReadOnly = true;
             this.tb审核员.Size = new System.Drawing.Size(110, 26);
@@ -340,7 +95,7 @@
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(261, 401);
+            this.label19.Location = new System.Drawing.Point(247, 403);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(72, 16);
             this.label19.TabIndex = 31;
@@ -348,7 +103,7 @@
             // 
             // dtp审核日期
             // 
-            this.dtp审核日期.Location = new System.Drawing.Point(339, 398);
+            this.dtp审核日期.Location = new System.Drawing.Point(325, 400);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(154, 26);
             this.dtp审核日期.TabIndex = 32;
@@ -411,7 +166,7 @@
             this.bt提交审核.Name = "bt提交审核";
             this.bt提交审核.Size = new System.Drawing.Size(75, 23);
             this.bt提交审核.TabIndex = 38;
-            this.bt提交审核.Text = "提交审核";
+            this.bt提交审核.Text = "最后审核";
             this.bt提交审核.UseVisualStyleBackColor = true;
             this.bt提交审核.Click += new System.EventHandler(this.bt提交审核_Click);
             // 
@@ -476,11 +231,51 @@
             this.bt添加.UseVisualStyleBackColor = true;
             this.bt添加.Click += new System.EventHandler(this.bt添加_Click);
             // 
+            // tb生产指令编码
+            // 
+            this.tb生产指令编码.Location = new System.Drawing.Point(775, 67);
+            this.tb生产指令编码.Name = "tb生产指令编码";
+            this.tb生产指令编码.Size = new System.Drawing.Size(160, 26);
+            this.tb生产指令编码.TabIndex = 45;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(665, 73);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(104, 16);
+            this.label21.TabIndex = 46;
+            this.label21.Text = "生产指令编码";
+            // 
+            // btn数据审核
+            // 
+            this.btn数据审核.Location = new System.Drawing.Point(668, 402);
+            this.btn数据审核.Name = "btn数据审核";
+            this.btn数据审核.Size = new System.Drawing.Size(101, 23);
+            this.btn数据审核.TabIndex = 48;
+            this.btn数据审核.Text = "数据审核";
+            this.btn数据审核.UseVisualStyleBackColor = true;
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
+            // 
+            // btn提交数据审核
+            // 
+            this.btn提交数据审核.Location = new System.Drawing.Point(523, 402);
+            this.btn提交数据审核.Name = "btn提交数据审核";
+            this.btn提交数据审核.Size = new System.Drawing.Size(123, 23);
+            this.btn提交数据审核.TabIndex = 47;
+            this.btn提交数据审核.Text = "提交数据审核";
+            this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
+            // 
             // RunningRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(975, 484);
+            this.Controls.Add(this.btn数据审核);
+            this.Controls.Add(this.btn提交数据审核);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.tb生产指令编码);
             this.Controls.Add(this.bt删除);
             this.Controls.Add(this.bt添加);
             this.Controls.Add(this.pictureBox1);
@@ -497,29 +292,6 @@
             this.Controls.Add(this.label19);
             this.Controls.Add(this.tb审核员);
             this.Controls.Add(this.label18);
-            this.Controls.Add(this.tb冷却温度);
-            this.Controls.Add(this.tb下切刀温度);
-            this.Controls.Add(this.tb上切刀温度);
-            this.Controls.Add(this.label17);
-            this.Controls.Add(this.label16);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.label13);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.tb环境湿度);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.tb环境温度);
-            this.Controls.Add(this.label7);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.bt插入查询);
-            this.Controls.Add(this.dtp生产日期);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -528,12 +300,6 @@
             this.Name = "RunningRecord";
             this.Text = "RunningRecord";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -544,32 +310,6 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.DateTimePicker dtp生产日期;
-        private System.Windows.Forms.Button bt插入查询;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox tb环境温度;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox tb环境湿度;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox tb上切刀温度;
-        private System.Windows.Forms.TextBox tb下切刀温度;
-        private System.Windows.Forms.TextBox tb冷却温度;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox tb审核员;
         private System.Windows.Forms.Label label19;
@@ -586,5 +326,9 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button bt删除;
         private System.Windows.Forms.Button bt添加;
+        private System.Windows.Forms.TextBox tb生产指令编码;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Button btn数据审核;
+        private System.Windows.Forms.Button btn提交数据审核;
     }
 }

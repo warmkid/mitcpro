@@ -23,8 +23,10 @@ namespace mySystem.Process.Bag.BTV
         /// 生产指令详细信息
         /// </summary>
         private String tableInfo = "生产指令详细信息";
-
-
+        /// <summary>
+        /// 生产指令物料
+        /// </summary>
+        private String tablePartialMaterial = "生产指令物料";
 
         // 需要保存的状态
         Parameter.UserState _userState;
@@ -33,7 +35,7 @@ namespace mySystem.Process.Bag.BTV
         String _code;
 
         // 显示界面需要的信息
-        List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员;
+        List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员, ls物料代码, ls物料名称, ls单位;
         HashSet<String> hs产品代码,hs封边;
         HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs负责人, hs外包夜班负责人;
 
@@ -44,10 +46,10 @@ namespace mySystem.Process.Bag.BTV
         // 数据库连接
         
         OleDbConnection conn;
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
-        DataTable dtOuter, dtInner;
-        BindingSource bsOuter, bsInner;
+        OleDbDataAdapter daOuter, daInner,daMaterial;
+        OleDbCommandBuilder cbOuter, cbInner,cbMaterial;
+        DataTable dtOuter, dtInner,dtMaterial;
+        BindingSource bsOuter, bsInner,bsMaterial;
 
         CheckForm ckform;
 
@@ -80,9 +82,12 @@ namespace mySystem.Process.Bag.BTV
             outerBind();
             setKeyInfoFromDataTable(id);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            readMaterialData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
+            getMaterialOtherData();
             setDataGridViewColumn();
             innerBind();
+            materialBind();
             getPeople();
             setFormState();
             setEnableReadOnly();
@@ -113,9 +118,12 @@ namespace mySystem.Process.Bag.BTV
             }
             setKeyInfoFromDataTable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            readMaterialData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
+            getMaterialOtherData();
             setDataGridViewColumn();
             innerBind();
+            materialBind();
             setFormState();
             setEnableReadOnly();
 
@@ -269,6 +277,28 @@ namespace mySystem.Process.Bag.BTV
             }
         }
 
+        void getMaterialOtherData()
+        {
+            ls物料代码 = new List<string>();
+            ls物料名称 = new List<string>();
+            ls单位 = new List<string>();
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection connToOrder = new OleDbConnection(strConnect);
+            OleDbDataAdapter da;
+            DataTable dt;
+            da = new OleDbDataAdapter("select * from 设置存货档案", connToOrder);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls物料代码.Add(dr["存货代码"].ToString());
+                ls物料名称.Add(dr["存货名称"].ToString());
+                ls单位.Add(dr["主计量单位名称"].ToString());                
+            }
+            da.Dispose();
+        }
+
         /// <summary>
         /// 根据外表ID读取外表数据
         /// </summary>
@@ -384,7 +414,15 @@ namespace mySystem.Process.Bag.BTV
 
             daInner.Fill(dtInner);
         }
+        void readMaterialData(int outerID)
+        {
+            daMaterial = new OleDbDataAdapter("select * from "+tablePartialMaterial +" where T生产指令ID=" + outerID, conn);
+            dtMaterial = new DataTable(tablePartialMaterial);
+            cbMaterial = new OleDbCommandBuilder(daMaterial);
+            bsMaterial = new BindingSource();
 
+            daMaterial.Fill(dtMaterial);
+        }
 
         /// <summary>
         /// 内表写默认值
@@ -401,18 +439,30 @@ namespace mySystem.Process.Bag.BTV
             //dr["封边"] = "底封";
             return dr;
         }
-
+        DataRow writeMaterialDefault(DataRow dr)
+        {
+            dr["T生产指令ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            dr["序号"] = 1;
+            dr["物料名称"] = "";
+            dr["物料代码"] = "";
+            dr["物料批号"] = "";
+            dr["单个用量"] = 0;
+            dr["单位"] = "";
+            return dr;
+        }
         /// <summary>
         /// 内表绑定
         /// </summary>
         void innerBind()
         {
             bsInner.DataSource = dtInner;
-
             dataGridView1.DataSource = bsInner.DataSource;
-
         }
-
+        void materialBind()
+        {
+            bsMaterial.DataSource = dtMaterial;
+            dataGridView2.DataSource = bsMaterial.DataSource;
+        }
         /// <summary>
         /// 设置DataGridView的列
         /// 该函数主要设置列的类型，尤其要注意变成下拉框的列
@@ -514,6 +564,12 @@ namespace mySystem.Process.Bag.BTV
             }
         }
 
+        //序号刷新
+        private void setDataGridView2RowNums()
+        {
+            for (int i = 0; i < dtMaterial.Rows.Count; i++)
+            { dtMaterial.Rows[i]["序号"] = (i + 1); }
+        }
         /// <summary>
         /// 设置用户状态
         /// </summary>
@@ -728,6 +784,12 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns[7].HeaderText = "外包装规格（只/箱）";
         }
 
+        void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView2.Columns[0].Visible = false;
+            dataGridView2.Columns[1].Visible = false;            
+        }
+
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             if (li可选可输的列.IndexOf(e.ColumnIndex) >= 0)
@@ -754,7 +816,95 @@ namespace mySystem.Process.Bag.BTV
                 if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
             }
         }
-       
+        
+        void dataGridView2_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            TextBox tb = (e.Control as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+            switch (dataGridView2.CurrentCell.OwningColumn.Name)
+            {
+                case "物料代码":
+                    acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls物料代码.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    break;
+                case "物料名称":
+                    acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls物料名称.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    break;
+                case "单位":
+                    acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls单位.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    break;
+            }
+        }
+
+        void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            String curStr;
+            double curDou;
+            int idx;
+            bool ok;
+            switch (dataGridView2.Columns[e.ColumnIndex].Name)
+            {
+                case "物料代码":
+                    curStr = dataGridView2[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    idx = ls物料代码.IndexOf(curStr);
+                    if (idx >= 0)
+                    {
+                        dataGridView2["物料代码", e.RowIndex].Value = ls物料代码[idx];
+                        dataGridView2["物料名称", e.RowIndex].Value = ls物料名称[idx];
+                        dataGridView2["单位", e.RowIndex].Value = ls单位[idx];
+                    }
+                    else
+                    {
+                        dataGridView2["物料代码", e.RowIndex].Value = "";
+                        dataGridView2["物料名称", e.RowIndex].Value = "";
+                        dataGridView2["单位", e.RowIndex].Value = "";
+                    }
+                    break;
+                case "物料名称":
+                    curStr = dataGridView2[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    idx = ls物料名称.IndexOf(curStr);
+                    if (idx >= 0)
+                    {
+                        dataGridView2["物料代码", e.RowIndex].Value = ls物料代码[idx];
+                        dataGridView2["物料名称", e.RowIndex].Value = ls物料名称[idx];
+                        dataGridView2["单位", e.RowIndex].Value = ls单位[idx];
+                    }
+                    else
+                    {
+                        dataGridView2["物料代码", e.RowIndex].Value = "";
+                        dataGridView2["物料名称", e.RowIndex].Value = "";
+                        dataGridView2["单位", e.RowIndex].Value = "";
+                    }
+                    break;
+                
+                //case "数量":
+                //    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                //    ok = double.TryParse(curStr, out curDou);
+                //    if (!ok) break;
+                //    idx = ls存货代码.IndexOf(dataGridView1["存货代码", e.RowIndex].Value.ToString());
+                //    if (idx >= 0)
+                //    {
+                //        dataGridView1["件数", e.RowIndex].Value = Math.Round(curDou / ld数量每件[idx], 2);
+                //    }
+                //    calc合计();
+                //    break;
+                
+            }
+        }
+
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
@@ -846,8 +996,10 @@ namespace mySystem.Process.Bag.BTV
             
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            daMaterial.Update((DataTable)bsMaterial.DataSource);
+            readMaterialData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
-
+            materialBind();
             if (_userState == Parameter.UserState.操作员) btn提交审核.Enabled = true;
             
         }
@@ -995,6 +1147,30 @@ namespace mySystem.Process.Bag.BTV
             dtInner.Rows.Add(dr);
         }
 
+        private void btn添加物料_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dtMaterial.NewRow();
+            dr = writeMaterialDefault(dr);
+            dtMaterial.Rows.Add(dr);
+
+            daMaterial.Update((DataTable)bsMaterial.DataSource);
+            readMaterialData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            materialBind();
+            setDataGridView2RowNums();
+        }
+        private void btn删除物料_Click(object sender, EventArgs e)
+        {
+            if (dtMaterial.Rows.Count >= 2)
+            {
+                int deletenum = dataGridView2.CurrentRow.Index;
+                dtMaterial.Rows[deletenum].Delete();
+                // 保存
+                daMaterial.Update((DataTable)bsMaterial.DataSource);
+                readMaterialData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                materialBind();
+                setDataGridView2RowNums();
+            }
+        }
         //添加打印机
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
@@ -1045,11 +1221,21 @@ namespace mySystem.Process.Bag.BTV
             my.Cells[6, 11].Value = dtInner.Rows[0]["内标签"];
             my.Cells[6, 12].Value = dtInner.Rows[0]["图纸编号"];
             my.Cells[6, 13].Value = dtInner.Rows[0]["订单号"];
-            
-            my.Cells[8, 4].Value = dtOuter.Rows[0]["制袋物料代码1"];
-            my.Cells[9, 4].Value = dtOuter.Rows[0]["制袋物料代码2"];
-            my.Cells[10, 4].Value = dtOuter.Rows[0]["制袋物料代码3"];
 
+            for (int i = 0; i < dtMaterial.Rows.Count; i++)
+            {
+                my.Cells[8 + i, 2].Value = dtMaterial.Rows[i]["序号"];
+                my.Cells[8 + i, 4].Value = dtMaterial.Rows[i]["物料名称"];
+                my.Cells[8 + i, 6].Value = dtMaterial.Rows[i]["单个用量"];
+                my.Cells[8 + i, 8].Value = dtMaterial.Rows[i]["单位"];
+                
+                if (i > 13)
+                {
+                    MessageBox.Show("物料项目超出打印范围");
+                    break;
+                }
+                
+            }
             my.Cells[8, 6].Value = dtOuter.Rows[0]["制袋单个用量1"];
             my.Cells[9, 6].Value = dtOuter.Rows[0]["制袋单个用量2"];
             my.Cells[10, 6].Value = dtOuter.Rows[0]["制袋单个用量3"];
@@ -1134,6 +1320,12 @@ namespace mySystem.Process.Bag.BTV
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             MessageBox.Show(name + "填写错误");
         }
+        void dataGridView2_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            MessageBox.Show(name + "填写错误");
+        }
         private bool TextBox_check()
         {
             bool TypeCheck = true;
@@ -1158,5 +1350,10 @@ namespace mySystem.Process.Bag.BTV
             }
             return TypeCheck;
         }
+
+        
+        
+
+        
     }
 }

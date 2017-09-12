@@ -109,10 +109,10 @@ namespace mySystem.Query
                         { EachBind(this.dgv, "产品内包装记录", "审核员", null, null); }
                         break;
                     case "LDPE生产日报表":
-                        //if (comboBox1.SelectedIndex != -1)
-                        //{ EachBind(this.dgv, "CS制袋日报表", "审核员", null, "生产指令ID"); }
-                        //else
-                        //{ EachBind(this.dgv, "CS制袋日报表", "审核员", null, null); }
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "LDPE制袋日报表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "LDPE制袋日报表", "审核员", null, null); }
                         break;                   
                     case "1#制袋机开机前确认表":
                         if (comboBox1.SelectedIndex != -1)
@@ -138,15 +138,51 @@ namespace mySystem.Query
                         else
                         { EachBind(this.dgv, "批生产记录表", "汇总员", "生产日期", null); }
                         break;
+                    case "产品热合强度检验记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", null); }
+                        break;
+                    case "产品外观和尺寸检验记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "生产日期", null); }
+                        break;
+                    case "产品外包装记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品外包装记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品外包装记录表", "审核员", null, null); }
+                        break;
+                    case "生产退料记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "生产退料记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "生产退料记录表", "审核员", null, null); }
+                        break;
+                    case "洁净区温湿度记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "洁净区温湿度记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "洁净区温湿度记录表", "审核员", null, null); }
+                        break;
+                    case "岗位交接班记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", null); }
+                        break;
 
                     default:
                         break;
                 }
             }
 
-            catch
+            catch (Exception ee)
             {
-                MessageBox.Show("输入有误，请重新输入", "错误");
+                MessageBox.Show("输入有误，请重新输入" + ee.Message + "\n" + ee.StackTrace, "错误");
                 return;
             }
 
@@ -255,13 +291,39 @@ namespace mySystem.Query
                         LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform, ID);
                         batch.Show();
                         break;
+                    case "产品热合强度检验记录":
+                        产品热合强度检验记录 form7 = new 产品热合强度检验记录(mainform, ID);
+                        form7.Show();
+                        break;
+                    case "产品外观和尺寸检验记录":
+                        产品外观和尺寸检验记录 form8 = new 产品外观和尺寸检验记录(mainform, ID);
+                        form8.Show();
+                        break;
+                    case "产品外包装记录":
+                        //LDPE产品外包装记录 form9 = new LDPE产品外包装记录(mainform, ID);
+                        //form9.ShowDialog();
+                        break;
+                    case "生产退料记录":
+                        //LDPE生产退料记录 form10 = new LDPE生产退料记录(mainform, ID);
+                        //form10.ShowDialog();
+                        break;
+                    case "洁净区温湿度记录":
+                        //LDPE洁净区温湿度记录 form11 = new LDPE洁净区温湿度记录(mainform, ID);
+                        //form11.ShowDialog();
+                        break;
+                    case "岗位交接班记录":
+                        HandOver form12 = new HandOver(mainform, ID);
+                        form12.Show();
+                        break;
 
                     default:
                         break;
                 }
             }
-            catch
-            { }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+            }
         }
 
         private void dgv_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

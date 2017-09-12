@@ -901,8 +901,8 @@ namespace mySystem.Process.Bag.BTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
-
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
@@ -912,11 +912,142 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
-        public void print(bool b)
-        { }
+        public void print(bool preview)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+
+            int rowStartAt = 6;
+            my.Cells[3, 1].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"];
+            my.Cells[3, 5].Value = "产品代码：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 10].Value = "生产批号：" + dt记录.Rows[0]["生产批号"];
+            my.Cells[3, 15].Value = fill标签();
+            //my.Cells[3, 21].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+
+            
+            //EVERY SHEET CONTAINS 12 RECORDS
+            int rowNumPerSheet = 11;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
+            {
+
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
+                my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["内包序号"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["包装规格每包只数"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["产品数量包"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["产品数量只"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["热封线不合格数量"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["黑点晶点数量"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["指示剂不良数量"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["其他数量"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良合计"];
+                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["包装袋热封线"];
+                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["内标签"];
+                my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["内包装外观"];
+                my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["审核员"];
+                
+            }
+
+            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
+                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["内包序号"];
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["包装规格每包只数"];
+                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["产品数量包"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["产品数量只"];
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["热封线不合格数量"];
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["黑点晶点数量"];
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["指示剂不良数量"];
+                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["其他数量"];
+                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良合计"];
+                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["包装袋热封线"];
+                    my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["内标签"];
+                    my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["内包装外观"];
+                    my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["操作员"];
+                    my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["审核员"];
+                
+                }
+            }
+
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
+            //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            my.Cells[18 + varOffset, 5].Value = dt记录.Rows[0]["产品数量包合计A"];
+            my.Cells[18 + varOffset, 6].Value = dt记录.Rows[0]["产品数量只合计B"];
+            my.Cells[18 + varOffset, 7].Value = dt记录.Rows[0]["理论产量C"];
+            my.Cells[19 + varOffset, 7].Value = Convert.ToDouble(dt记录.Rows[0]["成品率"]).ToString("0.00") + "%";
+            if (preview)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                //add footer
+                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                my = null;
+                wb = null;
+            }
+        }
+
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+        }
+
+
         //******************************小功能******************************//  
 
         // 检查 操作员的姓名
@@ -1048,7 +1179,29 @@ namespace mySystem.Process.Bag.BTV
                 { }
             }
         }
-
+        private string fill标签()
+        {
+            string rtn = "";
+            rtn +="标签：中文";
+            if (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]))
+            {
+                rtn += "☑";
+            }
+            else
+            {
+                rtn += "□";
+            }
+            rtn += "英文";
+            if (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否英文"]))
+            {
+                rtn += "☑";
+            }
+            else
+            {
+                rtn += "□";
+            }
+            return rtn;
+        }
     }
 }
 

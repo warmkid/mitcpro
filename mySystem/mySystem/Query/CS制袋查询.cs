@@ -153,6 +153,30 @@ namespace mySystem.Query
                         else
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", null); }
                         break;
+                    case "产品外包装记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品外包装记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品外包装记录表", "审核员", null, null); }
+                        break;
+                    case "生产退料记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "生产退料记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "生产退料记录表", "审核员", null, null); }
+                        break;
+                    case "洁净区温湿度记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "洁净区温湿度记录表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "洁净区温湿度记录表", "审核员", null, null); }
+                        break;
+                    case "岗位交接班记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", null); }
+                        break;
 
                     default:
                         break;
@@ -250,8 +274,8 @@ namespace mySystem.Query
                         form2.Show();
                         break;
                     case "CS制袋日报表":
-                        Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
-                        form3.Show();
+                        //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
+                        //form3.Show();
                         break;
                     case "产品外观和尺寸检验记录":
                         产品外观和尺寸检验记录 form4 = new 产品外观和尺寸检验记录(mainform, ID);
@@ -270,12 +294,28 @@ namespace mySystem.Query
                         form7.Show();
                         break;
                     case "清场记录":
-                        清场记录 myform = new 清场记录( ID);
+                        清场记录 myform = new 清场记录(mainform, ID);
                         myform.Show();
                         break;
                     case "制袋工序批生产记录":
                         Record_batch_bag form8 = new Record_batch_bag(mainform, ID);
                         form8.Show();
+                        break;
+                    case "产品外包装记录":
+                        CS产品外包装记录 form9 = new CS产品外包装记录(mainform, ID);
+                        form9.ShowDialog();
+                        break;
+                    case "生产退料记录":
+                        CS生产退料记录 form10 = new CS生产退料记录(mainform, ID);
+                        form10.ShowDialog();
+                        break;
+                    case "洁净区温湿度记录":
+                        CS洁净区温湿度记录 form11 = new CS洁净区温湿度记录(mainform, ID);
+                        form11.ShowDialog();
+                        break;
+                    case "岗位交接班记录":
+                        HandOver form12 = new HandOver(mainform, ID);
+                        form12.ShowDialog();
                         break;
 
                     default:

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.Btn交接班 = new System.Windows.Forms.Button();
             this.Btn结束 = new System.Windows.Forms.Button();
             this.Btn洁净 = new System.Windows.Forms.Button();
             this.Btn退料 = new System.Windows.Forms.Button();
@@ -48,7 +49,6 @@
             this.Btn产品内包装 = new System.Windows.Forms.Button();
             this.Btn标签 = new System.Windows.Forms.Button();
             this.Btn日报表 = new System.Windows.Forms.Button();
-            this.Btn交接班 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -70,6 +70,17 @@
             this.groupBox3.TabIndex = 27;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "封面";
+            // 
+            // Btn交接班
+            // 
+            this.Btn交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn交接班.Location = new System.Drawing.Point(28, 310);
+            this.Btn交接班.Name = "Btn交接班";
+            this.Btn交接班.Size = new System.Drawing.Size(200, 38);
+            this.Btn交接班.TabIndex = 21;
+            this.Btn交接班.Text = "岗位交接班记录";
+            this.Btn交接班.UseVisualStyleBackColor = true;
+            this.Btn交接班.Click += new System.EventHandler(this.Btn交接班_Click);
             // 
             // Btn结束
             // 
@@ -275,6 +286,7 @@
             this.Btn标签.TabIndex = 15;
             this.Btn标签.Text = "LDPE制袋标签";
             this.Btn标签.UseVisualStyleBackColor = true;
+            this.Btn标签.Click += new System.EventHandler(this.Btn标签_Click);
             // 
             // Btn日报表
             // 
@@ -286,17 +298,6 @@
             this.Btn日报表.Text = "LDPE生产日报表";
             this.Btn日报表.UseVisualStyleBackColor = true;
             this.Btn日报表.Click += new System.EventHandler(this.A3Btn_Click);
-            // 
-            // Btn交接班
-            // 
-            this.Btn交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn交接班.Location = new System.Drawing.Point(28, 310);
-            this.Btn交接班.Name = "Btn交接班";
-            this.Btn交接班.Size = new System.Drawing.Size(200, 38);
-            this.Btn交接班.TabIndex = 21;
-            this.Btn交接班.Text = "岗位交接班记录";
-            this.Btn交接班.UseVisualStyleBackColor = true;
-            this.Btn交接班.Click += new System.EventHandler(this.Btn交接班_Click);
             // 
             // LDPEMainForm
             // 

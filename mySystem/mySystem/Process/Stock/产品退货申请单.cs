@@ -503,7 +503,7 @@ namespace mySystem.Process.Stock
                 return;
             }
             SetDefaultPrinter(combox打印机选择.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
 
@@ -513,7 +513,7 @@ namespace mySystem.Process.Stock
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\tuihuo\表1产品退货申请单.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\库存\表1产品退货申请单.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值

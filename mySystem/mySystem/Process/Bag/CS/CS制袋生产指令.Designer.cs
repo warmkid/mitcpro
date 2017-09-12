@@ -129,6 +129,8 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.cmb类型 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -166,22 +168,22 @@
             // 
             // dtp计划生产日期
             // 
-            this.dtp计划生产日期.Location = new System.Drawing.Point(959, 38);
+            this.dtp计划生产日期.Location = new System.Drawing.Point(854, 38);
             this.dtp计划生产日期.Name = "dtp计划生产日期";
-            this.dtp计划生产日期.Size = new System.Drawing.Size(145, 21);
+            this.dtp计划生产日期.Size = new System.Drawing.Size(103, 21);
             this.dtp计划生产日期.TabIndex = 35;
             // 
             // tb生产设备
             // 
-            this.tb生产设备.Location = new System.Drawing.Point(723, 38);
+            this.tb生产设备.Location = new System.Drawing.Point(680, 38);
             this.tb生产设备.Name = "tb生产设备";
-            this.tb生产设备.Size = new System.Drawing.Size(129, 21);
+            this.tb生产设备.Size = new System.Drawing.Size(99, 21);
             this.tb生产设备.TabIndex = 34;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(876, 41);
+            this.label6.Location = new System.Drawing.Point(794, 40);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 32;
@@ -190,7 +192,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(665, 41);
+            this.label5.Location = new System.Drawing.Point(622, 41);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 31;
@@ -701,7 +703,7 @@
             this.cmb生产工艺.FormattingEnabled = true;
             this.cmb生产工艺.Location = new System.Drawing.Point(517, 37);
             this.cmb生产工艺.Name = "cmb生产工艺";
-            this.cmb生产工艺.Size = new System.Drawing.Size(121, 20);
+            this.cmb生产工艺.Size = new System.Drawing.Size(94, 20);
             this.cmb生产工艺.TabIndex = 103;
             // 
             // tb制袋物料名称3
@@ -1041,11 +1043,34 @@
             this.label角色.TabIndex = 145;
             this.label角色.Text = "角色";
             // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(960, 42);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(29, 12);
+            this.label39.TabIndex = 146;
+            this.label39.Text = "类型";
+            // 
+            // cmb类型
+            // 
+            this.cmb类型.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmb类型.FormattingEnabled = true;
+            this.cmb类型.Items.AddRange(new object[] {
+            "正常",
+            "返工"});
+            this.cmb类型.Location = new System.Drawing.Point(994, 38);
+            this.cmb类型.Name = "cmb类型";
+            this.cmb类型.Size = new System.Drawing.Size(94, 20);
+            this.cmb类型.TabIndex = 147;
+            // 
             // CS制袋生产指令
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1135, 620);
+            this.Controls.Add(this.cmb类型);
+            this.Controls.Add(this.label39);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.label38);
             this.Controls.Add(this.label37);
@@ -1258,5 +1283,7 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label角色;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.ComboBox cmb类型;
     }
 }

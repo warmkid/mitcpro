@@ -374,7 +374,6 @@
             this.btn打印.TabIndex = 187;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
-            this.btn打印.Click += new System.EventHandler(this.btn打印_Click_1);
             // 
             // btn审核
             // 
@@ -413,7 +412,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1006, 381);
+            this.ClientSize = new System.Drawing.Size(1030, 381);
             this.Controls.Add(this.ckb夜班);
             this.Controls.Add(this.ckb白班);
             this.Controls.Add(this.cb打印机);

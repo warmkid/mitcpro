@@ -697,10 +697,10 @@ namespace mySystem.Process.Bag.BTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
-
         //打印按钮
-        private void btn打印_Click_1(object sender, EventArgs e)
+        private void btn打印_Click(object sender, EventArgs e)
         {
             if (cb打印机.Text == "")
             {
@@ -708,11 +708,125 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(false);
+            print(true);
             GC.Collect();
         }
-        public void print(bool b)
-        { }
+        public void print(bool preview)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R02A  BPV生产前确认记录.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+
+            int rowStartAt = 5;
+            
+            my.Cells[3, 1].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日")+"\t" + fill生产班次();
+            my.Cells[3, 5].Value = fill生产产品() + "生产指令编号：" + dt记录.Rows[0]["生产指令编号"];
+            
+
+            //EVERY SHEET CONTAINS 11 RECORDS
+            int rowNumPerSheet = 10;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
+            {
+
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                try
+                {
+                    my.Cells[i + rowStartAt, 2].Valie = dt记录详情.Rows[i]["确认项目"];
+                }
+                catch
+                { }
+                //my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
+                //my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                //my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["领取管数量米"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["确认内容"];
+                //my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["切管数量个"];
+                
+            }
+
+            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+
+                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                    try
+                    {
+                        my.Cells[i + rowStartAt, 2].Valie = dt记录详情.Rows[i]["确认项目"];
+                    }
+                    catch
+                    { }
+                    //my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
+                    //my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                    //my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["领取管数量米"];
+                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["确认内容"];
+                    //my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["切管数量个"];
+                
+                }
+            }
+
+            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+
+            //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            my.Cells[19 + varOffset, 23].Value = "审核员： " + dt记录.Rows[0]["操作员"] + "\t日期： " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"]).ToString("yyyy年MM月dd日") + "审核员： " + dt记录.Rows[0]["审核员"] + "\t日期： " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
+            if (preview)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                //add footer
+                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                my = null;
+                wb = null;
+            }
+        }
+
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+        }
 
         //******************************datagridview******************************//  
 
@@ -737,6 +851,52 @@ namespace mySystem.Process.Bag.BTV
             //throw new NotImplementedException();
             setDataGridViewBackColor();
             setDataGridViewFormat();
+        }
+        private string fill生产班次()
+        {
+            string rtn = "";
+            rtn += "生产班次：白班";
+            if (Convert.ToBoolean(dt记录.Rows[0]["生产班次白班"]))
+            {
+                rtn += "☑";
+            }
+            else
+            {
+                rtn += "□";
+            }
+            rtn += "夜班";
+            if (Convert.ToBoolean(dt记录.Rows[0]["生产班次夜班"]))
+            {
+                rtn += "☑";
+            }
+            else
+            {
+                rtn += "□";
+            }
+            return rtn;
+        }
+        private string fill生产产品()
+        {
+            string rtn = "";
+            rtn += "生产产品：2D";
+            if (Convert.ToBoolean(dt记录.Rows[0]["生产产品2D"]))
+            {
+                rtn += "☑";
+            }
+            else
+            {
+                rtn += "□";
+            }
+            rtn += "3D";
+            if (Convert.ToBoolean(dt记录.Rows[0]["生产产品3D"]))
+            {
+                rtn += "☑";
+            }
+            else
+            {
+                rtn += "□";
+            }
+            return rtn;
         }
     }
 }

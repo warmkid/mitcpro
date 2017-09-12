@@ -241,14 +241,22 @@ namespace mySystem.Process.Order
                 {
                     (c as DataGridView).ReadOnly = true;
                 }
+                else if (c is GroupBox)
+                {
+                    foreach (Control cc in c.Controls)
+                    {
+                        if (cc is DataGridView) (cc as DataGridView).ReadOnly = true;
+                    }
+                }
                 else
                 {
                     c.Enabled = false;
                 }
             }
-
+            
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            
         }
 
         void getOtherData(string ids)
@@ -589,6 +597,24 @@ namespace mySystem.Process.Order
                 ndr["富余量"] = 0;
                 ndr["借用信息"] = "[]";
                 ndr["可借数量"] = 0;
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + daima + "'", conn);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if(dt.Rows.Count==0)    {
+                    MessageBox.Show("找不到代码为:"+daima+" 的组件");
+                    continue;
+                }
+                double 换算率;
+                try
+                {
+                    换算率 = Convert.ToDouble(dt.Rows[0]["换算率"]);
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(daima + " 的换算率读取失败，默认设为0");
+                    换算率 = 0;
+                }
+                ndr["换算率"] = 换算率;
                 dtInner实际购入.Rows.Add(ndr);
             }
 
@@ -784,7 +810,16 @@ namespace mySystem.Process.Order
                     double 订单需求数量 = Convert.ToDouble(dataGridView3["订单需求数量", e.RowIndex].Value);
                     double 仓库可用 = Convert.ToDouble(dataGridView3["仓库可用", e.RowIndex].Value);
                     double 实际购入 = Convert.ToDouble(dataGridView3["实际购入", e.RowIndex].Value);
+                    double 换算率 = Convert.ToDouble(dataGridView3["换算率", e.RowIndex].Value);
                     dataGridView3["富余量", e.RowIndex].Value = 实际购入 - (订单需求数量 - 仓库可用);
+                    if (0 != 实际购入 % 换算率)
+                    {
+                        dataGridView3.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                    }
+                    else
+                    {
+                        dataGridView3.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    }
                 }
             }
         }

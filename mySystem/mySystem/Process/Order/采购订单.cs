@@ -108,6 +108,14 @@ namespace mySystem.Process.Order
                 ndr["采购数量"] = 0;
                 ndr["预计到货时间"] = DateTime.Now;
                 ndr["供应商产品编码"] = drs[0]["供应商产品编码"];
+                ndr["主计量"] = drs[0]["主计量"];
+                ndr["单价"] = drs[0]["单价"];
+                ndr["金额"] = drs[0]["金额"];
+                ndr["进度"] = drs[0]["进度"];
+                ndr["COC"] = drs[0]["COC"];
+                ndr["付款进度"] = drs[0]["付款进度"];
+                ndr["付款日期"] = drs[0]["付款日期"];
+                ndr["发票"] = drs[0]["发票"];
                 foreach (DataRow dr in drs)
                 {
                     ndr["采购件数"] = Convert.ToDouble(ndr["采购件数"]) + Convert.ToDouble(dr["采购件数"]);
@@ -273,6 +281,7 @@ namespace mySystem.Process.Order
 
             btn打印.Enabled = true;
             combox打印机选择.Enabled = true;
+            btn退回.Enabled = true;
         }
 
         void generateOuterData(string 供应商)
@@ -406,7 +415,7 @@ namespace mySystem.Process.Order
                     {
                         DataRow ndr自由 = dtInner.NewRow();
                         ndr自由["采购订单ID"] = dtOuter.Rows[0]["ID"];
-                        ndr["供应商"] = _供应商;
+                        ndr自由["供应商"] = _供应商;
                         ndr自由["存货代码"] = dr["存货代码"];
                         ndr自由["存货名称"] = dr["存货名称"];
                         ndr自由["规格型号"] = dr["规格型号"];
@@ -496,19 +505,21 @@ namespace mySystem.Process.Order
             dataGridView1.ReadOnly = true;
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["供应商"].Visible = false;
+             
             dataGridView1.Columns["采购订单ID"].Visible = false;
             dataGridView1.Columns["关联的采购批准详细信息ID"].Visible = false;
             dataGridView1.Columns["关联的采购批转单借用单ID"].Visible = false;
             dataGridView1.Columns["用途"].Visible = false;
-            dataGridView1.Columns["主计量"].Visible = false;
-            dataGridView1.Columns["单价"].Visible = false;
-            dataGridView1.Columns["金额"].Visible = false;
-            dataGridView1.Columns["进度"].Visible = false;
-            dataGridView1.Columns["COC"].Visible = false;
-            dataGridView1.Columns["进度"].Visible = false;
-            dataGridView1.Columns["付款进度"].Visible = false;
-            dataGridView1.Columns["付款日期"].Visible = false;
-            dataGridView1.Columns["发票"].Visible = false;
+            //dataGridView1.Columns["主计量"].Visible = false;
+            //dataGridView1.Columns["单价"].Visible = false;
+            //dataGridView1.Columns["金额"].Visible = false;
+            //dataGridView1.Columns["进度"].Visible = false;
+            //dataGridView1.Columns["COC"].Visible = false;
+            //dataGridView1.Columns["进度"].Visible = false;
+            //dataGridView1.Columns["付款进度"].Visible = false;
+            //dataGridView1.Columns["付款日期"].Visible = false;
+            //dataGridView1.Columns["发票"].Visible = false;
         }
 
         void readOuterData(int id)
@@ -560,6 +571,7 @@ namespace mySystem.Process.Order
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             outerBind();
+
 
             daInner.Update(dtInner);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
@@ -728,5 +740,195 @@ namespace mySystem.Process.Order
                 }
             }
         }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+            if (combox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(combox打印机选择.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
+
+        //打印功能
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\订单\表93. PALL AUSTAR采购订单.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my, wb);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = "&P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+
+        //打印填数据
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            int ind = 0;
+            if (dtInnerShow.Rows.Count > 13)
+            {
+                //在第8行插入
+                for (int i = 0; i < dtInnerShow.Rows.Count - 13; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dtInnerShow.Rows.Count - 13;
+            }
+
+            //外表信息
+            mysheet.Cells[4, 3].Value = dtOuter.Rows[0]["供应商"].ToString();
+            mysheet.Cells[4, 6].Value = dtOuter.Rows[0]["采购合同号"].ToString();
+            mysheet.Cells[4, 12].Value = Convert.ToDateTime(dtOuter.Rows[0]["订单日期"].ToString()).ToString("yy/MM/dd");
+            mysheet.Cells[4, 14].Value = dtOuter.Rows[0]["采购分类"].ToString();
+            mysheet.Cells[4, 16].Value = dtOuter.Rows[0]["币种"].ToString();
+            mysheet.Cells[4, 18].Value = dtOuter.Rows[0]["汇率"].ToString();
+
+            mysheet.Cells[21 + ind, 3].Value = Convert.ToDateTime(dtOuter.Rows[0]["申请日期"].ToString()).ToString("yy/MM/dd");
+            mysheet.Cells[21 + ind, 5].Value = dtOuter.Rows[0]["申请人"].ToString();
+            mysheet.Cells[21 + ind, 7].Value = dtOuter.Rows[0]["申请部门"].ToString();
+            mysheet.Cells[21 + ind, 9].Value = dtOuter.Rows[0]["审核人"].ToString();
+            mysheet.Cells[21 + ind, 11].Value = Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).ToString("yy/MM/dd");
+
+            //内表信息
+            for (int i = 0; i < dtInner.Rows.Count; i++)
+            {
+                //mysheet.Cells[7 + i, 1] = i + 1; //组件订单需求流水号
+                mysheet.Cells[7 + i, 2] = dtInnerShow.Rows[i]["存货代码"].ToString();
+                mysheet.Cells[7 + i, 3] = dtInnerShow.Rows[i]["存货名称"].ToString();
+                mysheet.Cells[7 + i, 4] = dtInnerShow.Rows[i]["规格型号"].ToString();
+                mysheet.Cells[7 + i, 5] = dtInnerShow.Rows[i]["采购件数"].ToString();
+                mysheet.Cells[7 + i, 6] = dtInnerShow.Rows[i]["采购数量"].ToString();
+                mysheet.Cells[7 + i, 7] = dtInnerShow.Rows[i]["供应商产品编码"].ToString();
+                mysheet.Cells[7 + i, 8] = dtInnerShow.Rows[i]["用途"].ToString();
+                mysheet.Cells[7 + i, 9] = Convert.ToDateTime(dtInnerShow.Rows[i]["预计到货时间"].ToString()).ToString("yy/MM/dd");
+                mysheet.Cells[7 + i, 10] = dtInnerShow.Rows[i]["备注"].ToString();
+                mysheet.Cells[7 + i, 11] = dtInnerShow.Rows[i]["主计量"].ToString();
+                mysheet.Cells[7 + i, 12] = dtInnerShow.Rows[i]["单价"].ToString();
+                mysheet.Cells[7 + i, 13] = dtInnerShow.Rows[i]["金额"].ToString();
+                mysheet.Cells[7 + i, 14] = dtInnerShow.Rows[i]["进度"].ToString();
+                mysheet.Cells[7 + i, 15] = dtInnerShow.Rows[i]["COC"].ToString();
+                mysheet.Cells[7 + i, 16] = dtInnerShow.Rows[i]["付款进度"].ToString();
+                mysheet.Cells[7 + i, 17] = Convert.ToDateTime(dtInnerShow.Rows[i]["付款日期"].ToString()).ToString("yy/MM/dd");
+                mysheet.Cells[7 + i, 18] = dtInnerShow.Rows[i]["发票"].ToString();
+
+            }
+        }
+
+        private void btn退回_Click(object sender, EventArgs e)
+        {
+            if (!isSaved)
+            {
+                MessageBox.Show("本表单尚未保存，直接关闭即可");
+                return;
+            }
+            else
+            {
+                OleDbDataAdapter da;
+                OleDbCommandBuilder cb;
+                DataTable dt;
+                dtOuter.Rows[0]["状态"] = "已退回";
+                daOuter.Update(dtOuter);
+
+                foreach (DataRow dr in dtInner.Rows)
+                {
+                    int 批准单详细信息id;
+                    bool is借用 = false;
+                    if (Int32.TryParse(dr["关联的采购批准详细信息ID"].ToString(), out 批准单详细信息id))
+                    {
+                        is借用 = false;
+                    }
+                    else
+                    {
+                        Int32.TryParse(dr["关联的采购批转单借用单ID"].ToString(), out 批准单详细信息id);
+                        is借用 = true;
+                    }
+                    if (!is借用)
+                    {
+                        da = new OleDbDataAdapter("select * from 采购批准单详细信息 where ID=" + 批准单详细信息id,conn);
+                        cb = new OleDbCommandBuilder(da);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        if (dt.Rows.Count == 0)
+                        {
+                            MessageBox.Show("ID为"+批准单详细信息id+"的批准单详细信息未找到，请检查数据库");
+                            continue;
+                        }
+                        dt.Rows[0]["状态"] = "未采购";
+                    }
+                    else
+                    {
+                        da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where ID=" + 批准单详细信息id, conn);
+                        cb = new OleDbCommandBuilder(da);
+                        dt = new DataTable();
+                        da.Fill(dt);
+                        if (dt.Rows.Count == 0)
+                        {
+                            MessageBox.Show("ID为" + 批准单详细信息id + "的批准单借用信息未找到，请检查数据库");
+                            continue;
+                        }
+                        dt.Rows[0]["状态"] = "未采购";
+                    }
+                    da.Update(dt);
+                }
+                MessageBox.Show("成功！");
+                this.Close();
+            }
+        }
+
+
+
     }
 }

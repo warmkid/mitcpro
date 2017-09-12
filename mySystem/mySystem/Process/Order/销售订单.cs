@@ -171,7 +171,15 @@ namespace mySystem.Process.Order
                 ls存货代码.Add(dr["存货代码"].ToString());
                 ls存货名称.Add(dr["存货名称"].ToString());
                 ls规格型号.Add(dr["规格型号"].ToString());
-                ld数量每件.Add(Convert.ToDouble(dr["换算率"]));
+                try
+                {
+                    ld数量每件.Add(Convert.ToDouble(dr["换算率"]));
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(dr["存货代码"].ToString() + " 的换算率读取失败，默认设为0");
+                    ld数量每件.Add(0);
+                }
             }
         }
 

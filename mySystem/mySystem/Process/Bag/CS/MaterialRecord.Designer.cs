@@ -124,7 +124,7 @@
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(80, 30);
             this.btn提交审核.TabIndex = 157;
-            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.Text = "最后审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
             this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
@@ -243,6 +243,7 @@
             this.tb成品率.Name = "tb成品率";
             this.tb成品率.Size = new System.Drawing.Size(104, 26);
             this.tb成品率.TabIndex = 184;
+            this.tb成品率.Visible = false;
             // 
             // label4
             // 
@@ -253,6 +254,7 @@
             this.label4.Size = new System.Drawing.Size(656, 16);
             this.label4.TabIndex = 183;
             this.label4.Text = "成品率：             （人工计算：产品数量计算成面积/用上面膜材规格和长度计算面积)";
+            this.label4.Visible = false;
             // 
             // tb废品重量
             // 
@@ -261,6 +263,7 @@
             this.tb废品重量.Name = "tb废品重量";
             this.tb废品重量.Size = new System.Drawing.Size(104, 26);
             this.tb废品重量.TabIndex = 186;
+            this.tb废品重量.Visible = false;
             // 
             // label6
             // 
@@ -271,6 +274,7 @@
             this.label6.Size = new System.Drawing.Size(224, 16);
             this.label6.TabIndex = 185;
             this.label6.Text = "废品重量：               kg";
+            this.label6.Visible = false;
             // 
             // tb产品代码
             // 
