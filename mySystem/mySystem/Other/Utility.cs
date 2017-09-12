@@ -6,6 +6,7 @@ using System.Data.OleDb;
 using System.Collections;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
+using System.Data.SqlClient;
 
 namespace mySystem
 {
@@ -105,6 +106,88 @@ namespace mySystem
             return ret;
         }
 
+        public static List<List<Object>> selectAccess(SqlConnection conn, String tblName, List<String> queryCols,
+    List<String> whereCols, List<Object> whereVals, String likeCol, String likeVal, String betweenCol,
+    Object left, Object right)
+        {
+            bool isWhere = false;
+            String strSQL = String.Format("SELECT * FROM {0}", tblName);
+            if (null != whereCols)
+            {
+                if (!isWhere)
+                {
+                    strSQL += " WHERE ";
+                    isWhere = true;
+                }
+                List<String> temp = new List<string>();
+                foreach (String s in whereCols)
+                {
+                    temp.Add(s + "=@" + s);
+                }
+                strSQL += joinList(temp, " AND ");
+            }
+            if (null != likeCol)
+            {
+                if (!isWhere)
+                {
+                    strSQL += " WHERE ";
+                    isWhere = true;
+                }
+                else
+                {
+                    strSQL += " AND ";
+                }
+                strSQL += likeCol + " LIKE @" + likeCol;
+            }
+            if (null != betweenCol)
+            {
+                if (!isWhere)
+                {
+                    strSQL += " WHERE ";
+                    isWhere = true;
+                }
+                else
+                {
+                    strSQL += " AND ";
+                }
+                strSQL += betweenCol + " BETWEEN @l" + betweenCol + " AND @r" + betweenCol;
+            }
+
+
+            SqlCommand cmd = new SqlCommand(strSQL, conn);
+            if (null != whereCols)
+            {
+                for (int i = 0; i < whereCols.Count; ++i)
+                {
+                    String c = whereCols[i];
+                    Object v = whereVals[i];
+                    cmd.Parameters.AddWithValue("@" + c, v);
+                }
+            }
+            if (null != likeCol)
+            {
+                cmd.Parameters.AddWithValue("@" + likeCol, "%" + likeVal + "%");
+            }
+            if (null != betweenCol)
+            {
+                cmd.Parameters.AddWithValue("@l" + betweenCol, left);
+                cmd.Parameters.AddWithValue("@r" + betweenCol, right);
+            }
+            List<List<Object>> ret = new List<List<Object>>();
+            SqlDataReader reader = null;
+            reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                List<Object> row = new List<Object>();
+                foreach (String str in queryCols)
+                {
+                    row.Add(reader[str]);
+                }
+                ret.Add(row);
+            }
+            return ret;
+        }
+
 
         // conn: connection to Access
         // tblName : Name of table
@@ -124,6 +207,35 @@ namespace mySystem
 
             String strSQL = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", tblName, cols, vals);
             OleDbCommand cmd = new OleDbCommand(strSQL, conn);
+            for (int i = 0; i < insertCols.Count; ++i)
+            {
+                String c = insertCols[i];
+                Object v = insertVals[i];
+                cmd.Parameters.AddWithValue("@" + c, v);
+            }
+            int n = cmd.ExecuteNonQuery();
+            if (n > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static Boolean insertAccess(SqlConnection conn, String tblName, List<String> insertCols, List<Object> insertVals)
+        {
+
+            String cols = joinList(insertCols, ",");
+            List<String> temp = new List<string>();
+            foreach (String s in insertCols)
+            {
+                temp.Add("@" + s);
+            }
+            String vals = joinList(temp, ",");
+
+            String strSQL = String.Format("INSERT INTO {0} ({1}) VALUES ({2})", tblName, cols, vals);
+            SqlCommand cmd = new SqlCommand(strSQL, conn);
             for (int i = 0; i < insertCols.Count; ++i)
             {
                 String c = insertCols[i];
@@ -190,6 +302,48 @@ namespace mySystem
                 return false;
             }
         }
+        public static Boolean updateAccess(SqlConnection conn, String tblName, List<String> updateCols, List<Object> updateVals,
+    List<String> whereCols, List<Object> whereVals)
+        {
+            List<String> temp = new List<string>();
+            foreach (String s in updateCols)
+            {
+                temp.Add(s + "=@" + s);
+            }
+            String updates = joinList(temp, ",");
+
+            temp = new List<string>();
+            foreach (String s in whereCols)
+            {
+                temp.Add(s + "=@" + s);
+            }
+            //String wheres = joinList(temp, ",");
+            String wheres = joinList(temp, " AND ");
+
+            String strSQL = String.Format("UPDATE {0} SET {1} WHERE {2}", tblName, updates, wheres);
+            SqlCommand cmd = new SqlCommand(strSQL, conn);
+            for (int i = 0; i < updateCols.Count; ++i)
+            {
+                String c = updateCols[i];
+                Object v = updateVals[i];
+                cmd.Parameters.AddWithValue("@" + c, v);
+            }
+            for (int i = 0; i < whereCols.Count; ++i)
+            {
+                String c = whereCols[i];
+                Object v = whereVals[i];
+                cmd.Parameters.AddWithValue("@" + c, v);
+            }
+            int n = cmd.ExecuteNonQuery();
+            if (n > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         // conn: connection to Access
         // tblName : Name of table
@@ -205,6 +359,32 @@ namespace mySystem
             String where = joinList(temp, ",");
             String strSQL = String.Format("DELETE FROM {0} WHERE {1}", tblName, where);
             OleDbCommand cmd = new OleDbCommand(strSQL, conn);
+            for (int i = 0; i < whereCols.Count; ++i)
+            {
+                String c = whereCols[i];
+                Object v = whereVals[i];
+                cmd.Parameters.AddWithValue("@" + c, v);
+            }
+            int n = cmd.ExecuteNonQuery();
+            if (n > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static Boolean deleteAccess(SqlConnection conn, String tblName, List<String> whereCols, List<Object> whereVals)
+        {
+            List<String> temp = new List<string>();
+            foreach (String s in whereCols)
+            {
+                temp.Add(s + "=@" + s);
+            }
+            String where = joinList(temp, ",");
+            String strSQL = String.Format("DELETE FROM {0} WHERE {1}", tblName, where);
+            SqlCommand cmd = new SqlCommand(strSQL, conn);
             for (int i = 0; i < whereCols.Count; ++i)
             {
                 String c = whereCols[i];
@@ -328,7 +508,6 @@ namespace mySystem
             foreach(DataGridViewColumn dgvc in dgv.Columns)
             {
                 dgvc.AutoSizeMode = mode;
-                dgvc.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
 

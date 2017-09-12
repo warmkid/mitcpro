@@ -317,15 +317,31 @@ namespace mySystem
         //班次查询
         private void checkFlight()
         {
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
-            comm.CommandText = "SELECT * FROM 用户 WHERE 用户名= " + "'" + Parameter.userName + "'";
-            OleDbDataReader reader = comm.ExecuteReader();
-            while (reader.Read())
-                Parameter.userflight = reader["班次"].ToString();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
+                comm.CommandText = "SELECT * FROM 用户 WHERE 用户名= " + "'" + Parameter.userName + "'";
+                OleDbDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                    Parameter.userflight = reader["班次"].ToString();
 
-            reader.Dispose();
-            comm.Dispose();
+                reader.Dispose();
+                comm.Dispose();
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = Parameter.conn;
+                comm.CommandText = "SELECT * FROM 用户 WHERE 用户名= " + "'" + Parameter.userName + "'";
+                SqlDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                    Parameter.userflight = reader["班次"].ToString();
+
+                reader.Dispose();
+                comm.Dispose();
+            }
+
         }
 
         

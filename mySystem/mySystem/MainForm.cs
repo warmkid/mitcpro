@@ -95,18 +95,33 @@ namespace mySystem
 
         private void SearchUnchecked()
         {
-            String strCon吹膜 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
-            list吹膜 = EachSearchUnchecked(strCon吹膜);
-            String strCon清洁分切 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/welding.mdb;Persist Security Info=False";
-            list清洁分切 = EachSearchUnchecked(strCon清洁分切);
-            String strConCS制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
-            listCS制袋 = EachSearchUnchecked(strConCS制袋);
-            String strConPE制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/LDPE.mdb;Persist Security Info=False";
-            //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                String strCon吹膜 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/extrusionnew.mdb;Persist Security Info=False";
+                list吹膜 = EachSearchUnchecked(strCon吹膜);
+                String strCon清洁分切 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/welding.mdb;Persist Security Info=False";
+                list清洁分切 = EachSearchUnchecked(strCon清洁分切);
+                String strConCS制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
+                listCS制袋 = EachSearchUnchecked(strConCS制袋);
+                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+            }
+            else
+            {
+                //********************改为sql数据库*********************************
+                String strCon吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                list吹膜 = EachSearchUnchecked(strCon吹膜);
+                String strCon清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                list清洁分切 = EachSearchUnchecked(strCon清洁分切);
+                String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                listCS制袋 = EachSearchUnchecked(strConCS制袋);
+
+                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+            }
 
             if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count == 0) return;
 
@@ -139,35 +154,71 @@ namespace mySystem
 
         private List<String> EachSearchUnchecked(string strcon)
         {
-            OleDbConnection Conn;
-            OleDbCommand comm;
-            Conn = new OleDbConnection(strcon);
-            Conn.Open();
-            comm = new OleDbCommand();
-            comm.Connection = Conn;
-            comm.CommandText = "SELECT * FROM 用户权限 WHERE 审核员 LIKE " + "'%" + Parameter.userName + "%'";
-            OleDbDataReader reader1 = comm.ExecuteReader();
-            List<String> rightlist = new List<String>();
-            while (reader1.Read())
+            if (!mySystem.Parameter.isSqlOk)
             {
-                rightlist.Add(reader1["步骤"].ToString());
-            }
-            reader1.Dispose();
+                OleDbConnection Conn;
+                OleDbCommand comm;
+                Conn = new OleDbConnection(strcon);
+                Conn.Open();
+                comm = new OleDbCommand();
+                comm.Connection = Conn;
+                comm.CommandText = "SELECT * FROM 用户权限 WHERE 审核员 LIKE " + "'%" + Parameter.userName + "%'";
+                OleDbDataReader reader1 = comm.ExecuteReader();
+                List<String> rightlist = new List<String>();
+                while (reader1.Read())
+                {
+                    rightlist.Add(reader1["步骤"].ToString());
+                }
+                reader1.Dispose();
 
-            comm.CommandText = "SELECT * FROM 待审核";
-            OleDbDataReader reader2 = comm.ExecuteReader();
-            List<String> formlist = new List<String>();
-            while (reader2.Read())
+                comm.CommandText = "SELECT * FROM 待审核";
+                OleDbDataReader reader2 = comm.ExecuteReader();
+                List<String> formlist = new List<String>();
+                while (reader2.Read())
+                {
+                    formlist.Add(reader2["表名"].ToString());
+                }
+                reader2.Dispose();
+                comm.Dispose();
+                Conn.Dispose();
+
+                List<String> list = rightlist.Intersect(formlist).ToList<String>();
+
+                return list;
+            }
+            else 
             {
-                formlist.Add(reader2["表名"].ToString());
+                SqlConnection Conn;
+                SqlCommand comm;
+                Conn = new SqlConnection(strcon);
+                Conn.Open();
+                comm = new SqlCommand();
+                comm.Connection = Conn;
+                comm.CommandText = "SELECT * FROM 用户权限 WHERE 审核员 LIKE " + "'%" + Parameter.userName + "%'";
+                SqlDataReader reader1 = comm.ExecuteReader();
+                List<String> rightlist = new List<String>();
+                while (reader1.Read())
+                {
+                    rightlist.Add(reader1["步骤"].ToString());
+                }
+                reader1.Dispose();
+
+                comm.CommandText = "SELECT * FROM 待审核";
+                SqlDataReader reader2 = comm.ExecuteReader();
+                List<String> formlist = new List<String>();
+                while (reader2.Read())
+                {
+                    formlist.Add(reader2["表名"].ToString());
+                }
+                reader2.Dispose();
+                comm.Dispose();
+                Conn.Dispose();
+
+                List<String> list = rightlist.Intersect(formlist).ToList<String>();
+
+                return list;
             }
-            reader2.Dispose();
-            comm.Dispose();
-            Conn.Dispose();
 
-            List<String> list = rightlist.Intersect(formlist).ToList<String>();
-
-            return list;
         }
 
 
@@ -307,39 +358,78 @@ namespace mySystem
 
         void import供应商()
         {
-            // 打开一个Excel进程
-            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
-            // 利用这个进程打开一个Excel文件
-            //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(textBox1.Text);
-            // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
-            // 设置该进程是否可见
-            //oXL.Visible = true;
-            // 修改Sheet中某行某列的值
-            List<String> ls = new List<string>();
-            for (int i = 3; i <= 66; ++i)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                ls.Add(my.Cells[i, 2].Value);
-            }
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                // 打开一个Excel进程
+                Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+                // 利用这个进程打开一个Excel文件
+                //System.IO.Directory.GetCurrentDirectory;
+                Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(textBox1.Text);
+                // 选择一个Sheet，注意Sheet的序号是从1开始的
+                Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+                // 设置该进程是否可见
+                //oXL.Visible = true;
+                // 修改Sheet中某行某列的值
+                List<String> ls = new List<string>();
+                for (int i = 3; i <= 66; ++i)
+                {
+                    ls.Add(my.Cells[i, 2].Value);
+                }
+                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection conn;
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置供应商信息 where 0=1", conn);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            foreach (string gys in ls)
-            {
-                DataRow dr = dt.NewRow();
-                dr["供应商代码"] = "";
-                dr["供应商名称"] = gys;
-                dt.Rows.Add(dr);
+                OleDbConnection conn;
+                conn = new OleDbConnection(strConnect);
+                conn.Open();
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置供应商信息 where 0=1", conn);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                foreach (string gys in ls)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["供应商代码"] = "";
+                    dr["供应商名称"] = gys;
+                    dt.Rows.Add(dr);
+                }
+                da.Update(dt);
+                MessageBox.Show("导入供应商成功");
             }
-            da.Update(dt);
-            MessageBox.Show("导入供应商成功");
+            else
+            {
+                // 打开一个Excel进程
+                Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+                // 利用这个进程打开一个Excel文件
+                //System.IO.Directory.GetCurrentDirectory;
+                Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(textBox1.Text);
+                // 选择一个Sheet，注意Sheet的序号是从1开始的
+                Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+                // 设置该进程是否可见
+                //oXL.Visible = true;
+                // 修改Sheet中某行某列的值
+                List<String> ls = new List<string>();
+                for (int i = 3; i <= 66; ++i)
+                {
+                    ls.Add(my.Cells[i, 2].Value);
+                }
+                string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                SqlConnection conn;
+                conn = new SqlConnection(strConnect);
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter("select * from 设置供应商信息 where 0=1", conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                foreach (string gys in ls)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["供应商代码"] = "";
+                    dr["供应商名称"] = gys;
+                    dt.Rows.Add(dr);
+                }
+                da.Update(dt);
+                MessageBox.Show("导入供应商成功");
+            }
+
         }
 
         void import存货档案()
@@ -382,26 +472,53 @@ namespace mySystem
                 ls规格型号.Add(my.Cells[i, 6].Value);
                 ls主计量单位.Add(my.Cells[i, 10].Value);
             }
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection conn;
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 0=1", conn);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-           for(int i=0;i<ls主计量单位.Count;++i)
+
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt.NewRow();
-                dr["存货名称"] = ls存货名称[i];
-                dr["存货代码"] = ls存货代码[i];
-                dr["规格型号"] = ls规格型号[i];
-                dr["主计量单位名称"] = ls主计量单位[i];
-                dt.Rows.Add(dr);
+                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                OleDbConnection conn;
+                conn = new OleDbConnection(strConnect);
+                conn.Open();
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 0=1", conn);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                for (int i = 0; i < ls主计量单位.Count; ++i)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["存货名称"] = ls存货名称[i];
+                    dr["存货代码"] = ls存货代码[i];
+                    dr["规格型号"] = ls规格型号[i];
+                    dr["主计量单位名称"] = ls主计量单位[i];
+                    dt.Rows.Add(dr);
+                }
+                da.Update(dt);
+                MessageBox.Show("导入存货档案成功");
             }
-            da.Update(dt);
-            MessageBox.Show("导入存货档案成功");
+            else
+            {
+                string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                SqlConnection conn;
+                conn = new SqlConnection(strConnect);
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter("select * from 设置存货档案 where 0=1", conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                for (int i = 0; i < ls主计量单位.Count; ++i)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["存货名称"] = ls存货名称[i];
+                    dr["存货代码"] = ls存货代码[i];
+                    dr["规格型号"] = ls规格型号[i];
+                    dr["主计量单位名称"] = ls主计量单位[i];
+                    dt.Rows.Add(dr);
+                }
+                da.Update(dt);
+                MessageBox.Show("导入存货档案成功");
+            }
+
         }
 
         private void MainPanel_Paint(object sender, PaintEventArgs e)

@@ -35,6 +35,7 @@ namespace mySystem
         public static int userRole; //登录用户角色（权限）
         public static string userflight; //登录人班次
 
+        public static string IP_port="10.105.223.19,56625";//sql服务器IP和端口
         public static SqlConnection conn;
         public static OleDbConnection connOle;
         public static SqlConnection connUser;
@@ -95,6 +96,26 @@ namespace mySystem
                 comm.Dispose();
                 myConn.Dispose();
             }
+            else
+            {
+                strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                SqlConnection myConn = new SqlConnection(strCon);
+                myConn.Open();
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = myConn;
+                comm.CommandText = "select * from [users] where 用户ID= @ID";
+                comm.Parameters.AddWithValue("@ID", id);
+
+                SqlDataReader myReader = comm.ExecuteReader();
+                while (myReader.Read())
+                {
+                    name = myReader["姓名"].ToString();
+                }
+
+                myReader.Close();
+                comm.Dispose();
+                myConn.Dispose();
+            }
             return name;
         }
 
@@ -107,6 +128,33 @@ namespace mySystem
                 string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/user.mdb;Persist Security Info=False";
                 OleDbConnection myConn = new OleDbConnection(strCon);
+                myConn.Open();
+                String tblName = "users";
+                List<String> queryCols = new List<String>(new String[] { "用户ID" });
+                List<String> whereCols = new List<String>(new String[] { "姓名" });
+                List<Object> whereVals = new List<Object>(new Object[] { name });
+                List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+
+                if (res.Count > 1)
+                {
+                    MessageBox.Show("该姓名的员工不唯一，请在设置中更改", "警告");
+                    id = Convert.ToInt32(res[0][0]);
+                }
+                else if (res.Count == 0)
+                {
+                    //MessageBox.Show("未找到结果", "错误");
+                    id = 0;
+                }
+                else
+                {
+                    id = Convert.ToInt32(res[0][0]);
+                }
+                myConn.Dispose();
+            }
+            else
+            {
+                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                SqlConnection myConn = new SqlConnection(strCon);
                 myConn.Open();
                 String tblName = "users";
                 List<String> queryCols = new List<String>(new String[] { "用户ID" });
@@ -151,7 +199,20 @@ namespace mySystem
                 List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
                 flight = res[0][0].ToString();
                 myConn.Dispose();
-            }  
+            }
+            else
+            {
+                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                SqlConnection myConn = new SqlConnection(strCon);
+                myConn.Open();
+                String tblName = "users";
+                List<String> queryCols = new List<String>(new String[] { "班次" });
+                List<String> whereCols = new List<String>(new String[] { "用户ID" });
+                List<Object> whereVals = new List<Object>(new Object[] { id });
+                List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                flight = res[0][0].ToString();
+                myConn.Dispose();
+            }
 
             return flight; 
         }
@@ -173,7 +234,20 @@ namespace mySystem
                 List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
                 role = Convert.ToInt32(res[0][0]);
                 myConn.Dispose();
-            }           
+            }
+            else
+            {
+                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                SqlConnection myConn = new SqlConnection(strCon);
+                myConn.Open();
+                String tblName = "users";
+                List<String> queryCols = new List<String>(new String[] { "角色ID" });
+                List<String> whereCols = new List<String>(new String[] { "用户ID" });
+                List<Object> whereVals = new List<Object>(new Object[] { id });
+                List<List<Object>> res = Utility.selectAccess(myConn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                role = Convert.ToInt32(res[0][0]);
+                myConn.Dispose();
+            }
             return role;
         }
         #endregion
@@ -201,8 +275,7 @@ namespace mySystem
             else  //sql
             {
                 //要改数据库！！！
-                strConn = @"server=10.105.223.19,56625;database=ProductionPlan;
-                                MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                strConn = @"server="+mySystem.Parameter.IP_port+";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
                 isOk = false;
                 ConnUser = connToServer(strConn);
                 while (!isOk)
@@ -294,6 +367,19 @@ namespace mySystem
             {
                 //connUser = Init(connUser);
 
+                strConn = "server="+IP_port+";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                isOk = false;
+                connUser = connToServer(strConn);
+                while (!isOk)
+                {
+                    MessageBox.Show("连接数据库失败", "error");
+                    Connect2SqlForm con2sql = new Connect2SqlForm();
+                    con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
+                    con2sql.ShowDialog();
+
+                    connUser = connToServer(strConn);
+                }
+
             }
         }
 
@@ -349,6 +435,42 @@ namespace mySystem
             else
             {
                 //conn = Init(conn);
+
+                switch (selectCon)
+                {
+                    case 1:  //吹膜
+                        strConn = "server=" + IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        conn = Init(strConn);
+                        break;
+                    case 2:  //清洁分切
+                        strConn = "server=" + IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        conn = Init(strConn);
+                        break;
+                    case 3:  //CS制袋
+                        strConn = "server=" + IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        conn = Init(strConn);
+                        break;
+                    case 4: //订单、库存
+                        strConn = "server=" + IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        conn = Init(strConn);
+                        break;
+                    case 5: //灭菌
+                        strConn = "server=" + IP_port + ";database=miejun;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        conn = Init(strConn);
+                        break;
+                    case 6: //BPV制袋
+                        strConn = "server=" + IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        conn = Init(strConn);
+                        break;
+                    case 7: //LDPE制袋
+                        strConn = "server=" + IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        conn = Init(strConn);
+                        break;
+                    case 8: //PTV制袋
+                        strConn = "server=" + IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        conn = Init(strConn);
+                        break;
+                }
             }
 
         }
