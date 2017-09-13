@@ -55,8 +55,8 @@ namespace mySystem.Process.Bag.PTV
         public PTVBag_dailyreport(MainForm mainform):base(mainform)
         {
             InitializeComponent();
-            ID生产指令 = mySystem.Parameter.csbagInstruID;
-            str生产指令编码 = mySystem.Parameter.csbagInstruction;
+            ID生产指令 = mySystem.Parameter.ptvbagInstruID;
+            str生产指令编码 = mySystem.Parameter.ptvbagInstruction;
             bt打印.Enabled = false;
 
             getPeople();

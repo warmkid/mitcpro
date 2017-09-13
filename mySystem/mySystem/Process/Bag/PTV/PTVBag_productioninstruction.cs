@@ -223,19 +223,52 @@ namespace mySystem.Process.Bag.PTV
         /// </summary>
         void getInnerOtherData()
         {
+            //OleDbDataAdapter da;
+            //DataTable dt;
+            //hs产品代码 = new HashSet<string>();
+            //hs封边 = new HashSet<string>();
+            ////　产品代码
+            //da = new OleDbDataAdapter("select * from 设置PTV产品编码", conn);
+            //dt = new DataTable("temp");
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    hs产品代码.Add(dr["产品编码"].ToString());
+            //}
+            
+            //// 封边
+            //da = new OleDbDataAdapter("select * from 设置PTV制袋封边", conn);
+            //dt = new DataTable("temp");
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    hs封边.Add(dr["封边名称"].ToString());
+            //}
+
+            //// 自定义数据
+            //foreach (DataRow dr in dtInner.Rows)
+            //{
+            //    hs产品代码.Add(dr["产品代码"].ToString());
+            //    hs封边.Add(dr["封边"].ToString());
+            //}
+
             OleDbDataAdapter da;
             DataTable dt;
             hs产品代码 = new HashSet<string>();
             hs封边 = new HashSet<string>();
             //　产品代码
-            da = new OleDbDataAdapter("select * from 设置PTV产品编码", conn);
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%PTV%'", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                hs产品代码.Add(dr["产品编码"].ToString());
+                hs产品代码.Add(dr["存货代码"].ToString());
             }
-            
+
             // 封边
             da = new OleDbDataAdapter("select * from 设置PTV制袋封边", conn);
             dt = new DataTable("temp");
@@ -731,6 +764,18 @@ namespace mySystem.Process.Bag.PTV
             {
                 ComboBox c = e.Control as ComboBox;
                 if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+            if (colIdx == 2)
+            {
+                TextBox tb = (e.Control as TextBox);
+                tb.AutoCompleteCustomSource = null;
+                AutoCompleteStringCollection acsc;
+                if (tb == null) return;
+                acsc = new AutoCompleteStringCollection();
+                acsc.AddRange(hs产品代码.ToArray());
+                tb.AutoCompleteCustomSource = acsc;
+                tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
         }
        

@@ -166,11 +166,7 @@ namespace mySystem.Process.Bag.PTV
             ID = mySystem.Parameter.ptvbagInstruID;
             i生产指令ID = ID;
             CODE = mySystem.Parameter.ptvbagInstruction;
-
-            //TODO:手动设置生产指令ID和生产指令编码,方便测试*************************************
-            i生产指令ID = 1;
-            CODE = "E-2017-08";
-            
+          
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
             ls清场项目 = new List<string>();

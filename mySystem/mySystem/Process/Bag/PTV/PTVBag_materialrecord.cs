@@ -40,8 +40,6 @@ namespace mySystem.Process.Bag.PTV
         {
             InitializeComponent();
 
-            Parameter.ptvbagInstruID = 1;
-            Parameter.ptvbagInstruction = "E-2017-08";
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
@@ -480,7 +478,7 @@ namespace mySystem.Process.Bag.PTV
             tb生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
             
             tb废品.DataBindings.Clear();
-            tb废品.DataBindings.Add("Text", bs记录.DataSource, "废品重量");
+            tb废品.DataBindings.Add("Text", bs记录.DataSource, "废品");
 
             tb操作员.DataBindings.Clear();
             tb操作员.DataBindings.Add("Text", bs记录.DataSource, "操作员");
@@ -502,7 +500,7 @@ namespace mySystem.Process.Bag.PTV
             dr["产品代码"] = tb产品代码.Text;
             dr["产品代码"] = tb产品批号.Text;
             //dr["成品率"] = -1;
-            dr["废品重量"] = 0;
+            dr["废品"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作日期"] = Convert.ToDateTime(dtp操作日期.Value.ToString("yyyy/MM/dd"));
             dr["操作员备注"] = "";
@@ -539,14 +537,16 @@ namespace mySystem.Process.Bag.PTV
             dr["序号"] = 0;
             dr["T生产领料使用记录ID"] = ID;
             dr["领料日期时间"] = DateTime.Now;
+            dr["班次"] = mySystem.Parameter.userflight;
             dr["物料简称"] = dt物料.Rows[0]["物料简称"];
             dr["物料代码"] = dt物料.Rows[0]["物料代码"];
             dr["物料批号"] = dt物料.Rows[0]["物料批号"];
-            dr["接上班数量A"] = 0;
-            dr["领取数量B"] = 0;
-            dr["使用数量C"] = 0;
-            dr["退库数量D"] = 0;
-            dr["物料平衡"] = 0;
+            //dr["接上班数量A"] = 0;
+            //dr["领取数量B"] = 0;
+            //dr["使用数量C"] = 0;
+            //dr["退库数量D"] = 0;
+            //dr["物料平衡"] = 0;
+            dr["领取数量"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
             return dr;
@@ -611,14 +611,10 @@ namespace mySystem.Process.Bag.PTV
             //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["物料代码"].ReadOnly = true;
-            dataGridView1.Columns["物料平衡"].ReadOnly = true;
+            dataGridView1.Columns["物料批号"].ReadOnly = true;
             dataGridView1.Columns["审核员"].ReadOnly = true;
             //HeaderText
             dataGridView1.Columns["领料日期时间"].HeaderText = "领料日期、时间";
-            dataGridView1.Columns["接上班数量A"].HeaderText = "接上班\r数量";
-            dataGridView1.Columns["领取数量B"].HeaderText = "领取\r数量";
-            dataGridView1.Columns["使用数量C"].HeaderText = "使用\r数量";
-            dataGridView1.Columns["退库数量D"].HeaderText = "退库\r数量";
         }
 
         //******************************按钮功能******************************//
@@ -675,7 +671,21 @@ namespace mySystem.Process.Bag.PTV
         //内表审核按钮
         private void btn数据审核_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            //for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            //{
+            //    if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
+            //    {
+            //        dt记录详情.Rows[i]["审核员"] = mySystem.Parameter.userName;
+            //        dataGridView1.Rows[i].ReadOnly = true;
+            //    }
+            //}
+
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int i in hi待审核行号)
             {
                 if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
                 {
@@ -881,7 +891,7 @@ namespace mySystem.Process.Bag.PTV
         {
             bool TypeCheck = true;
             List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb废品 });
-            List<String> StringList = new List<String>(new String[] { "废品重量" });
+            List<String> StringList = new List<String>(new String[] { "废品" });
             int numtemp = 0;
             for (int i = 0; i < TextBoxList.Count; i++)
             {
@@ -929,15 +939,15 @@ namespace mySystem.Process.Bag.PTV
         //实时求收率
         private void getNum(Int32 Rownum)
         {
-            int numA, numB, numC, numD;
-            // 膜卷长度求和
-            if ((Int32.TryParse(dt记录详情.Rows[Rownum]["接上班数量A"].ToString(), out numA) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["领取数量B"].ToString(), out numB) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["使用数量C"].ToString(), out numC) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["退库数量D"].ToString(), out numD) == true))
-            {
-                //均为数值类型
-                dt记录详情.Rows[Rownum]["物料平衡"] = (Int32)(numA + numB - numC - numD);
-            }
-            else
-            { dt记录详情.Rows[Rownum]["物料平衡"] = -1; }
+            //int numA, numB, numC, numD;
+            //// 膜卷长度求和
+            //if ((Int32.TryParse(dt记录详情.Rows[Rownum]["接上班数量A"].ToString(), out numA) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["领取数量B"].ToString(), out numB) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["使用数量C"].ToString(), out numC) == true) && (Int32.TryParse(dt记录详情.Rows[Rownum]["退库数量D"].ToString(), out numD) == true))
+            //{
+            //    //均为数值类型
+            //    dt记录详情.Rows[Rownum]["物料平衡"] = (Int32)(numA + numB - numC - numD);
+            //}
+            //else
+            //{ dt记录详情.Rows[Rownum]["物料平衡"] = -1; }
         }
 
         //******************************datagridview******************************//  
@@ -962,13 +972,7 @@ namespace mySystem.Process.Bag.PTV
         {
             if (e.ColumnIndex >= 0)
             {
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "接上班数量A")
-                { getNum(e.RowIndex); }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "领取数量B")
-                { getNum(e.RowIndex); }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "使用数量C")
-                { getNum(e.RowIndex); }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "退库数量D")
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "领取数量")
                 { getNum(e.RowIndex); }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
                 {
@@ -977,6 +981,12 @@ namespace mySystem.Process.Bag.PTV
                         dt记录详情.Rows[e.RowIndex]["操作员"] = mySystem.Parameter.userName;
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
                     }
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "物料简称")
+                {
+                    DataRow[] drs = dt物料.Select("物料简称='" + dataGridView1["物料简称", e.RowIndex].Value.ToString() + "'");
+                    dataGridView1["物料代码", e.RowIndex].Value = drs[0]["物料代码"].ToString();
+                    dataGridView1["物料批号", e.RowIndex].Value = drs[0]["物料批号"].ToString();
                 }
                 else
                 { }

@@ -341,7 +341,15 @@ namespace mySystem.Process.Bag.PTV
 
         private void Btn结束_Click(object sender, EventArgs e)
         {
-
+            if (DialogResult.Yes == MessageBox.Show("是否确认结束工序？", "提示", MessageBoxButtons.YesNo))
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.csbagInstruID, mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dt.Rows[0]["状态"] = 4;
+                da.Update(dt);
+            }
         }
 
 

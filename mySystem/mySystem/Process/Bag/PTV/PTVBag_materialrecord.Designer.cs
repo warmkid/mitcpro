@@ -138,10 +138,10 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(37, 83);
+            this.dataGridView1.Location = new System.Drawing.Point(26, 83);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1053, 150);
+            this.dataGridView1.Size = new System.Drawing.Size(1064, 201);
             this.dataGridView1.TabIndex = 21;
             // 
             // dtp审核日期
@@ -365,7 +365,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(1000, 255);
+            this.btn数据审核.Location = new System.Drawing.Point(1000, 307);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(90, 30);
             this.btn数据审核.TabIndex = 210;
@@ -376,7 +376,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(874, 256);
+            this.btn提交数据审核.Location = new System.Drawing.Point(874, 308);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(120, 30);
             this.btn提交数据审核.TabIndex = 209;
@@ -387,7 +387,7 @@
             // btn删除记录
             // 
             this.btn删除记录.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn删除记录.Location = new System.Drawing.Point(798, 256);
+            this.btn删除记录.Location = new System.Drawing.Point(798, 308);
             this.btn删除记录.Name = "btn删除记录";
             this.btn删除记录.Size = new System.Drawing.Size(70, 30);
             this.btn删除记录.TabIndex = 208;
@@ -398,7 +398,7 @@
             // btn添加记录
             // 
             this.btn添加记录.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn添加记录.Location = new System.Drawing.Point(722, 256);
+            this.btn添加记录.Location = new System.Drawing.Point(722, 308);
             this.btn添加记录.Name = "btn添加记录";
             this.btn添加记录.Size = new System.Drawing.Size(70, 30);
             this.btn添加记录.TabIndex = 207;
@@ -446,7 +446,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1146, 577);
+            this.ClientSize = new System.Drawing.Size(1113, 577);
             this.Controls.Add(this.dtp操作日期);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.tb操作员备注);
