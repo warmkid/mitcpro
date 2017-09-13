@@ -86,17 +86,20 @@ namespace mySystem.Process.Stock
 
         void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            string 退货编号 = dataGridView1.Rows[e.RowIndex].Cells["退货编号"].Value.ToString();
-            switch (退货申请or退货记录)
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                case 0:
-                    退货申请 form1 = new 退货申请(mainform, 退货编号);
-                    form1.Show();
-                    break;
-                case 1:
-                    退货记录 form2 = new 退货记录(mainform, 退货编号);
-                    form2.Show();
-                    break;
+                string 退货编号 = dataGridView1.Rows[e.RowIndex].Cells["退货编号"].Value.ToString();
+                switch (退货申请or退货记录)
+                {
+                    case 0:
+                        退货申请 form1 = new 退货申请(mainform, 退货编号);
+                        form1.Show();
+                        break;
+                    case 1:
+                        退货记录 form2 = new 退货记录(mainform, 退货编号);
+                        form2.Show();
+                        break;
+                }
             }
         }
 

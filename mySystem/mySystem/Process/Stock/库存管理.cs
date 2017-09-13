@@ -58,6 +58,7 @@ namespace 订单和库存管理
         {
             bs.DataSource = dt;
             dataGridView1.DataSource = bs.DataSource;
+            mySystem.Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         private void btn入库_Click(object sender, EventArgs e)
