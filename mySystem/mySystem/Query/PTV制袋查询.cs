@@ -29,6 +29,28 @@ namespace mySystem.Query
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
             Initdgv();
+
+            textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
+            comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
+            comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+        }
+
+        void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void comboBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void textBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
         }
 
         //下拉框获取生产指令
@@ -320,15 +342,15 @@ namespace mySystem.Query
                         batch.Show();
                         break;
                     case "产品外包装记录":
-                        PTV产品外包装记录 outer = new PTV产品外包装记录(mainform);
+                        PTV产品外包装记录 outer = new PTV产品外包装记录(mainform, ID);
                         outer.Show();
                         break;
                     case "生产退料记录":
-                        PTV生产退料记录 tuiliaoform = new PTV生产退料记录(mainform);
+                        PTV生产退料记录 tuiliaoform = new PTV生产退料记录(mainform, ID);
                         tuiliaoform.Show();
                         break;
                     case "洁净区温湿度记录":
-                        PTV洁净区温湿度记录 wenshiduform = new PTV洁净区温湿度记录(mainform);
+                        PTV洁净区温湿度记录 wenshiduform = new PTV洁净区温湿度记录(mainform, ID);
                         wenshiduform.Show();
                         break;
                     case "岗位交接班记录":
