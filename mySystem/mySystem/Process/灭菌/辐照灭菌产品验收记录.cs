@@ -376,27 +376,30 @@ namespace mySystem.Process.灭菌
         //填充excel
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
-            my.Cells[3, 4].Value = "灭菌委托单编号：" + cb委托单号.Text;
-            my.Cells[4, 2].Value = dtp运回日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[6, 3].Value = "应是合格辐照商。\n辐照商：" + cb辐照商.Text;
-            my.Cells[6, 5].Value = cb检查结果1.Text;
-            my.Cells[7, 3].Value = "应是合格运输商。\n运输商：" + cb运输商内.Text;
-            my.Cells[7, 5].Value = cb检查结果2.Text;
-            my.Cells[8, 1].Value = String.Format("3. 辐照产品数量:{0}箱\n              计{1}托", tb箱.Text, tb托.Text);
-            my.Cells[8, 5].Value = cb检查结果3.Text;
-            my.Cells[9, 5].Value = cb检查结果4.Text;
-            my.Cells[10, 5].Value = cb检查结果5.Text;
-            my.Cells[11, 3].Value = String.Format("每批照射产品均应有照射报告，且报告中辐照批号与辐照标签上的批号一致。\n\n报告编号：{0}\n\n辐照批号：{1}", tb报告编号.Text, tb辐照批号.Text);
-            my.Cells[11, 5].Value = cb检查结果6.Text;
-            my.Cells[12, 5].Value = "取样时间："+dtp取样时间.Value.ToString("yyyy年MM月dd日");
-            my.Cells[13, 1].Value = "说明：" + tb说明.Text;
-            if (ckb符合要求.Checked)
+            my.Cells[3, 4].Value = "灭菌委托单编号：" + dt_out.Rows[0]["灭菌委托单编号"].ToString();
+            my.Cells[4, 2].Value = Convert.ToDateTime(dt_out.Rows[0]["辐照产品运回日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[6, 3].Value = "应是合格辐照商。\n辐照商：" + dt_out.Rows[0]["辐照商"].ToString();
+            my.Cells[6, 5].Value = dt_out.Rows[0]["辐照供应商检查结果"].ToString();
+            my.Cells[7, 3].Value = "应是合格运输商。\n运输商：" + dt_out.Rows[0]["检查运输商"].ToString();
+            my.Cells[7, 5].Value = dt_out.Rows[0]["运输商检查结果"].ToString();
+            my.Cells[8, 1].Value = String.Format("3. 辐照产品数量:{0}箱\n              计{1}托", dt_out.Rows[0]["辐照产品数量箱"].ToString(), dt_out.Rows[0]["辐照产品数量托"].ToString());
+            my.Cells[8, 5].Value = dt_out.Rows[0]["辐照产品数量检查结果"].ToString();
+            my.Cells[9, 5].Value = dt_out.Rows[0]["外包装检查结果"].ToString();
+            my.Cells[10, 5].Value = dt_out.Rows[0]["标签检查结果"].ToString();
+            my.Cells[11, 3].Value = String.Format("每批照射产品均应有照射报告，且报告中辐照批号与辐照标签上的批号一致。\n\n报告编号：{0}\n\n辐照批号：{1}", dt_out.Rows[0]["报告编号"].ToString(), dt_out.Rows[0]["辐照批号"].ToString());
+            my.Cells[11, 5].Value = dt_out.Rows[0]["辐照检查结果"].ToString();
+            my.Cells[12, 5].Value = "取样时间：" + Convert.ToDateTime(dt_out.Rows[0]["取样时间"]).ToString("yyyy年MM月dd日"); 
+            my.Cells[13, 1].Value = "说明：" + dt_out.Rows[0]["说明"].ToString();
+            if (Convert.ToBoolean(dt_out.Rows[0]["符合要求"]))
             {
                 my.Cells[15, 1].Value = "结论：  辐照产品符合要求，正常入库☑\n不符合要求，按不合格品处理□";
             }
             else { my.Cells[15, 1].Value = "结论：  辐照产品符合要求，正常入库□\n不符合要求，按不合格品处理☑"; }
-            my.Cells[17, 1].Value = String.Format("验收人：{0}    {1}        复核人：{2}     {3}",tb验收人.Text,dtp验收日期.Value.ToString("yyyy年MM月dd日"),tb审核人.Text,dtp审核日期.Value.ToString("yyyy年MM月dd日"));
-            my.Cells[18, 1].Value = String.Format("运输商：{0}            操作人：{1}      {2}", cb运输商.Text,tb操作人.Text,dtp操作日期.Value.ToString("yyyy年MM月dd日"));    
+            my.Cells[17, 1].Value = String.Format("验收人：{0}    {1}        复核人：{2}     {3}",
+                dt_out.Rows[0]["验收人"].ToString(), Convert.ToDateTime(dt_out.Rows[0]["验收日期"]).ToString("yyyy年MM月dd日"),
+                dt_out.Rows[0]["审核人"].ToString(), Convert.ToDateTime(dt_out.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
+            my.Cells[18, 1].Value = String.Format("运输商：{0}            操作人：{1}      {2}",
+                dt_out.Rows[0]["运输商"].ToString(), dt_out.Rows[0]["操作人"].ToString(), Convert.ToDateTime(dt_out.Rows[0]["操作日期"]).ToString("yyyy年MM月dd日"));    
         }
 
         private void bt插入查询_Click(object sender, EventArgs e)

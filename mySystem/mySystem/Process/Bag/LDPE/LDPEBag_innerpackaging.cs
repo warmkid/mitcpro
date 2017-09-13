@@ -983,7 +983,7 @@ namespace mySystem.Process.Bag.LDPE
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 mysheet.Cells[6 + i, 1] = i + 1;
-                mysheet.Cells[6 + i, 2] = dt记录详情.Rows[i]["生产日期时间"].ToString();
+                mysheet.Cells[6 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("yyyy年MM月dd日");
                 mysheet.Cells[6 + i, 3] = dt记录详情.Rows[i]["内包序号"].ToString();
                 mysheet.Cells[6 + i, 4] = dt记录详情.Rows[i]["包装规格每包只数"].ToString();
                 mysheet.Cells[6 + i, 5] = dt记录详情.Rows[i]["产品数量包"].ToString();

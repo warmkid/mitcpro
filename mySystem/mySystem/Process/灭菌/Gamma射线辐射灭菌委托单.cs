@@ -387,44 +387,43 @@ namespace mySystem.Process.灭菌
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             int ind = 0;//偏移
-            if (dataGridView1.Rows.Count > 13)
+            if (dt_prodlist.Rows.Count > 13)
             {
                 //在第8行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 13; i++)
+                for (int i = 0; i < dt_prodlist.Rows.Count - 13; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[8, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 13;
+                ind = dt_prodlist.Rows.Count - 13;
             }
 
-            my.Cells[3, 3].Value = tb委托单号.Text;
-            my.Cells[5, 3].Value = cb辐照单位.Text;
+            my.Cells[3, 3].Value = dt_prodinstr.Rows[0]["委托单号"].ToString();
+            my.Cells[5, 3].Value = dt_prodinstr.Rows[0]["辐照单位"].ToString();
 
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            for (int i = 0; i < dt_prodlist.Rows.Count; i++)
             {
-                my.Cells[7 + i, 1] = dataGridView1.Rows[i].Cells[9].Value.ToString();
-                //my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                my.Cells[7 + i, 1] = dt_prodlist.Rows[0]["产品名称"].ToString();
                 my.Cells[7 + i, 2] = i + 1;
-                my.Cells[7 + i, 3] = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[7 + i, 4] = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[7 + i, 5] = dataGridView1.Rows[i].Cells[5].Value.ToString();
-                my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[6].Value.ToString();
-                my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[7].Value.ToString();
-                my.Cells[7 + i, 8] = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                my.Cells[7 + i, 3] = dt_prodlist.Rows[0]["产品代码"].ToString();
+                my.Cells[7 + i, 4] = dt_prodlist.Rows[0]["产品批号"].ToString();
+                my.Cells[7 + i, 5] = dt_prodlist.Rows[0]["纸箱规格"].ToString();
+                my.Cells[7 + i, 6] = dt_prodlist.Rows[0]["数量箱"].ToString();
+                my.Cells[7 + i, 7] = dt_prodlist.Rows[0]["数量只"].ToString();
+                my.Cells[7 + i, 8] = dt_prodlist.Rows[0]["每箱重量"].ToString();
             }
 
-            my.Cells[20 + ind, 6] = tb箱数.Text;
-            my.Cells[20 + ind, 8] = tb托数.Text;
-            my.Cells[22 + ind, 2] = tb其他说明.Text;
-            my.Cells[23 + ind, 3] = tb委托人.Text;
-            my.Cells[23 + ind, 5] = tb审批人.Text;
-            my.Cells[24 + ind, 3] = dtp委托日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[24 + ind, 5] = dtp审批日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[25 + ind, 3] = cb运输商.Text;
-            my.Cells[25 + ind, 5] = tb委托人.Text;
-            my.Cells[25 + ind, 7] = dtp操作日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[20 + ind, 6] = dt_prodinstr.Rows[0]["合计箱数"].ToString();
+            my.Cells[20 + ind, 8] = dt_prodinstr.Rows[0]["合计托数"].ToString();
+            my.Cells[22 + ind, 2] = dt_prodinstr.Rows[0]["其他说明"].ToString();
+            my.Cells[23 + ind, 3] = dt_prodinstr.Rows[0]["委托人"].ToString();
+            my.Cells[23 + ind, 5] = dt_prodinstr.Rows[0]["审批"].ToString();
+            my.Cells[24 + ind, 3] = Convert.ToDateTime(dt_prodinstr.Rows[0]["委托日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[24 + ind, 5] = Convert.ToDateTime(dt_prodinstr.Rows[0]["审批日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[25 + ind, 3] = dt_prodinstr.Rows[0]["运输商"].ToString();
+            my.Cells[25 + ind, 5] = dt_prodinstr.Rows[0]["委托人"].ToString();
+            my.Cells[25 + ind, 7] = Convert.ToDateTime(dt_prodinstr.Rows[0]["操作日期"]).ToString("yyyy年MM月dd日");
         }
 
         // 获取其他需要的数据，比如产品代码，产生废品原因等
