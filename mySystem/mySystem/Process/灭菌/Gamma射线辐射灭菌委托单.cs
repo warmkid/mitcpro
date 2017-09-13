@@ -803,6 +803,8 @@ namespace mySystem.Process.灭菌
 
             dt_prodlist.Rows.Add(dr);
             setDataGridViewRowNums();
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         private void bt删除_Click(object sender, EventArgs e)
