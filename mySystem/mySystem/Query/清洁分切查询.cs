@@ -30,6 +30,28 @@ namespace mySystem.Query
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
             Initdgv();
+
+            textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
+            comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
+            comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+        }
+
+        void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void comboBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void textBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
         }
 
         //下拉框获取生产指令

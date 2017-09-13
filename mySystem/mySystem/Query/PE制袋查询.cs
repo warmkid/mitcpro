@@ -29,6 +29,28 @@ namespace mySystem.Query
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
             Initdgv();
+
+            textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
+            comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
+            comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+        }
+
+        void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void comboBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void textBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
         }
 
         //下拉框获取生产指令
@@ -300,16 +322,16 @@ namespace mySystem.Query
                         form8.Show();
                         break;
                     case "产品外包装记录":
-                        //LDPE产品外包装记录 form9 = new LDPE产品外包装记录(mainform, ID);
-                        //form9.ShowDialog();
+                        LDPE产品外包装记录 form9 = new LDPE产品外包装记录(mainform, ID);
+                        form9.ShowDialog();
                         break;
                     case "生产退料记录":
-                        //LDPE生产退料记录 form10 = new LDPE生产退料记录(mainform, ID);
-                        //form10.ShowDialog();
+                        LDPE生产退料记录 form10 = new LDPE生产退料记录(mainform, ID);
+                        form10.ShowDialog();
                         break;
                     case "洁净区温湿度记录":
-                        //LDPE洁净区温湿度记录 form11 = new LDPE洁净区温湿度记录(mainform, ID);
-                        //form11.ShowDialog();
+                        LDPE洁净区温湿度记录 form11 = new LDPE洁净区温湿度记录(mainform, ID);
+                        form11.ShowDialog();
                         break;
                     case "岗位交接班记录":
                         HandOver form12 = new HandOver(mainform, ID);

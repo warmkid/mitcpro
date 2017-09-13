@@ -23,11 +23,46 @@ namespace mySystem.Query
             dgv销售订单.AllowUserToAddRows = false;
             dgv销售订单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv销售订单_DataBindingComplete);
             dgv销售订单.ReadOnly = true;
+            tb销售订单产品代码.PreviewKeyDown += new PreviewKeyDownEventHandler(tb销售订单产品代码_PreviewKeyDown);
+            tb销售订单产品名称.PreviewKeyDown += new PreviewKeyDownEventHandler(tb销售订单产品名称_PreviewKeyDown);
 
             dgv采购订单.AllowUserToAddRows = false;
             dgv采购订单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv采购订单_DataBindingComplete);
             dgv采购订单.CellDoubleClick += new DataGridViewCellEventHandler(dgv采购订单_CellDoubleClick);
             dgv采购订单.CellEndEdit += new DataGridViewCellEventHandler(dgv采购订单_CellEndEdit);
+            tb采购订单产品代码.PreviewKeyDown += new PreviewKeyDownEventHandler(tb采购订单产品代码_PreviewKeyDown);
+            tb采购订单供应商.PreviewKeyDown += new PreviewKeyDownEventHandler(tb采购订单供应商_PreviewKeyDown);
+            tb采购订单销售订单.PreviewKeyDown += new PreviewKeyDownEventHandler(tb采购订单销售订单_PreviewKeyDown);
+        }
+
+        void tb采购订单销售订单_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询采购订单.PerformClick();
+        }
+
+        void tb采购订单供应商_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询采购订单.PerformClick();
+        }
+
+        void tb采购订单产品代码_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询采购订单.PerformClick();
+        }
+
+        void tb销售订单产品名称_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn销售订单查询.PerformClick();
+        }
+
+        void tb销售订单产品代码_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn销售订单查询.PerformClick();
         }
 
         void dgv采购订单_CellEndEdit(object sender, DataGridViewCellEventArgs e)

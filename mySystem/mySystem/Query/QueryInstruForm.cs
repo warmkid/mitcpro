@@ -27,6 +27,20 @@ namespace mySystem
             InitializeComponent();
             Initdgv();
 
+            textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
+            comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
+        }
+
+        void comboBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void textBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
         }
 
         //dgv样式初始化

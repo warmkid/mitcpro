@@ -30,12 +30,27 @@ namespace mySystem.Query
             comboInit(); //从数据库中读取生产指令
             Initdgv();
 
+            textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
+            comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
             comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+        }
+
+        void textBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void comboBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
         }
 
         void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            SearchBtn.PerformClick();
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
         }
 
         //下拉框获取生产指令
@@ -437,26 +452,26 @@ namespace mySystem.Query
                         mydlg20.Show();
                         break;
                     case "产品热合强度检验记录":
-                        产品热合强度检验记录 mydlg21 = new 产品热合强度检验记录(mainform);
+                        产品热合强度检验记录 mydlg21 = new 产品热合强度检验记录(mainform, ID);
                         mydlg21.Show();
                         break;
                     case "产品外观和尺寸检验记录":
-                        产品外观和尺寸检验记录 mydlg22 = new 产品外观和尺寸检验记录(mainform);
+                        产品外观和尺寸检验记录 mydlg22 = new 产品外观和尺寸检验记录(mainform, ID);
                         mydlg22.Show();
                         break;
                     case "BPV制袋日报表":
 
                         break;
                     case "产品外包装记录":
-                        BPV产品外包装记录 mydlg24 = new BPV产品外包装记录(mainform);
+                        BPV产品外包装记录 mydlg24 = new BPV产品外包装记录(mainform, ID);
                         mydlg24.Show();
                         break;
                     case "生产退料记录":
-                        BPV生产退料记录 mydlg25 = new BPV生产退料记录(mainform);
+                        BPV生产退料记录 mydlg25 = new BPV生产退料记录(mainform, ID);
                         mydlg25.Show();
                         break;
                     case "洁净区温湿度记录":
-                        BPV洁净区温湿度记录 mydlg26 = new BPV洁净区温湿度记录(mainform);
+                        BPV洁净区温湿度记录 mydlg26 = new BPV洁净区温湿度记录(mainform, ID);
                         mydlg26.Show();
                         break;
                     case "岗位交接班记录":
