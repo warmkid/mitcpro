@@ -33,6 +33,7 @@ namespace mySystem.Query
             textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
             comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
             comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+            dgv.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
         }
 
         void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -145,7 +146,7 @@ namespace mySystem.Query
                 MessageBox.Show("输入有误，请重新输入" + ee.Message + "\n" + ee.StackTrace, "错误");
                 return;
             }
-
+            Utility.setDataGridViewAutoSizeMode(dgv);
         }
 
         // 各表查询
@@ -214,33 +215,36 @@ namespace mySystem.Query
         }
 
         //双击弹出界面
-        private void dgv_DoubleClick(object sender, EventArgs e)
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                int selectIndex = this.dgv.CurrentRow.Index;
-                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-                switch (tableName)
+                try
                 {
-                    case "Gamma 射线辐射灭菌委托单":
-                        Gamma射线辐射灭菌委托单 mydlg1 = new Gamma射线辐射灭菌委托单(mainform, ID);
-                        mydlg1.Show();
-                        break;
-                    case "Gamma 射线辐照灭菌产品验收记录":
-                        辐照灭菌产品验收记录 mydlg2 = new 辐照灭菌产品验收记录(mainform, ID);
-                        mydlg2.Show();
-                        break;
-                    case "辐照灭菌台帐":
+                    int selectIndex = this.dgv.CurrentRow.Index;
+                    int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                    switch (tableName)
+                    {
+                        case "Gamma 射线辐射灭菌委托单":
+                            Gamma射线辐射灭菌委托单 mydlg1 = new Gamma射线辐射灭菌委托单(mainform, ID);
+                            mydlg1.Show();
+                            break;
+                        case "Gamma 射线辐照灭菌产品验收记录":
+                            辐照灭菌产品验收记录 mydlg2 = new 辐照灭菌产品验收记录(mainform, ID);
+                            mydlg2.Show();
+                            break;
+                        case "辐照灭菌台帐":
 
-                        break;
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                }
             }
         }
 

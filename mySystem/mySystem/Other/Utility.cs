@@ -508,6 +508,7 @@ namespace mySystem
             foreach(DataGridViewColumn dgvc in dgv.Columns)
             {
                 dgvc.AutoSizeMode = mode;
+                dgvc.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
 
