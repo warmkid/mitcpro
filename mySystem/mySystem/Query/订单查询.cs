@@ -60,6 +60,11 @@ namespace mySystem.Query
                     }
                 }
             }
+            if (dgv采购订单.Columns[e.ColumnIndex].Name == "进度")
+            {
+                //string t = mySystem.Other.InputTextWindow.getString("jindu");
+                //dgv采购订单[e.ColumnIndex, e.RowIndex].Value = t;
+            }
         }
 
         void dgv采购订单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -68,6 +73,7 @@ namespace mySystem.Query
             dgv采购订单.Columns["采购订单ID"].Visible = false;
             dgv采购订单.Columns["关联的采购批准详细信息ID"].Visible = false;
             dgv采购订单.Columns["关联的采购批转单借用单ID"].Visible = false;
+            dgv采购订单.Columns["进度"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
             int cidx = dgv采购订单.Columns["金额"].Index;
             for (int i = 0; i <= cidx; ++i)
             {

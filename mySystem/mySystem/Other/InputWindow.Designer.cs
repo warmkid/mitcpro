@@ -44,14 +44,14 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(149, 24);
+            this.textBox1.Location = new System.Drawing.Point(107, 30);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(128, 21);
+            this.textBox1.Size = new System.Drawing.Size(149, 21);
             this.textBox1.TabIndex = 1;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(329, 22);
+            this.button1.Location = new System.Drawing.Point(287, 28);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 2;
@@ -59,15 +59,15 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // InputWindow
+            // InputTextWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 66);
+            this.ClientSize = new System.Drawing.Size(401, 82);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
-            this.Name = "InputWindow";
+            this.Name = "InputTextWindow";
             this.Text = "InputWindow";
             this.ResumeLayout(false);
             this.PerformLayout();
