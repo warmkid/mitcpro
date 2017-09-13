@@ -120,7 +120,7 @@
             this.dgv.Size = new System.Drawing.Size(1089, 460);
             this.dgv.TabIndex = 64;
             this.dgv.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DataBindingComplete);
-            this.dgv.DoubleClick += new System.EventHandler(this.dgv_DoubleClick);
+           // this.dgv.DoubleClick += new System.EventHandler(this.dgv_DoubleClick);
             // 
             // SearchBtn
             // 

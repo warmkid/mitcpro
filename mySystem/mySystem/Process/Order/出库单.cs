@@ -15,9 +15,9 @@ namespace mySystem.Process.Order
     public partial class 出库单 : BaseForm
     {
 
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
 
         List<String> ls操作员, ls审核员;
 
@@ -37,8 +37,8 @@ namespace mySystem.Process.Order
 
         public 出库单(MainForm mainform):base(mainform)
         {
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             InitializeComponent();
             fillPrinter();
             getPeople();
@@ -54,8 +54,8 @@ namespace mySystem.Process.Order
             : base(mainform)
         {
             isSaved = true;
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             InitializeComponent();
             fillPrinter();
             getPeople();
@@ -68,7 +68,7 @@ namespace mySystem.Process.Order
             innerBind();
 
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dtOuter.Rows[0]["销售订单号"].ToString() + "'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dtOuter.Rows[0]["销售订单号"].ToString() + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -99,7 +99,7 @@ namespace mySystem.Process.Order
 
         private void addOtherEventHandler()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select 订单号 from 销售订单 where 状态='审核完成' OR 状态='已生成采购需求单'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select 订单号 from 销售订单 where 状态='审核完成' OR 状态='已生成采购需求单'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<string> 销售订单号 = new List<string>();
@@ -172,7 +172,7 @@ namespace mySystem.Process.Order
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 订单用户权限 where 步骤='出库单'", conn);
+            da = new OleDbDataAdapter("select * from 订单用户权限 where 步骤='出库单'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -312,7 +312,7 @@ namespace mySystem.Process.Order
             string prefix = "XSCK";
             string yymmdd = DateTime.Now.ToString("yyyyMM");
             string sql = "select * from 出库单 where 出库单号 like '{0}%' order by ID";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -329,7 +329,7 @@ namespace mySystem.Process.Order
 
         private void btn查询_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -373,7 +373,7 @@ namespace mySystem.Process.Order
 
         void readOuterData(string p)
         {
-            daOuter = new OleDbDataAdapter("select * from 出库单 where 出库单号='" + p + "'", conn);
+            daOuter = new OleDbDataAdapter("select * from 出库单 where 出库单号='" + p + "'", mySystem.Parameter.connOle);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("出库单");
             bsOuter = new BindingSource();
@@ -383,7 +383,7 @@ namespace mySystem.Process.Order
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 出库单 where ID=" + id, conn);
+            daOuter = new OleDbDataAdapter("select * from 出库单 where ID=" + id, mySystem.Parameter.connOle);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("出库单");
             bsOuter = new BindingSource();
@@ -426,7 +426,7 @@ namespace mySystem.Process.Order
 
         DataRow writeOuterDefault(DataRow dr)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='"+tb销售订单号.Text+"'",conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -446,7 +446,7 @@ namespace mySystem.Process.Order
 
         void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 出库单详细信息 where 出库单ID=" + id, conn);
+            daInner = new OleDbDataAdapter("select * from 出库单详细信息 where 出库单ID=" + id, mySystem.Parameter.connOle);
             dtInner = new DataTable("出库单详细信息");
             bsInner = new BindingSource();
             cbInner = new OleDbCommandBuilder(daInner);
@@ -466,7 +466,7 @@ namespace mySystem.Process.Order
             // 拿到本订单下的存货代码和数量
             
             Hashtable ht存货代码2剩余数量 = new Hashtable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -480,7 +480,7 @@ namespace mySystem.Process.Order
 
             // 拿到对本订单的出库单详细信息
             // 计算剩余未出库量
-            da = new OleDbDataAdapter("select * from 出库单详细信息 where 用途='" + dingdanhao + "' and 状态='已出库'", conn);
+            da = new OleDbDataAdapter("select * from 出库单详细信息 where 用途='" + dingdanhao + "' and 状态='已出库'", mySystem.Parameter.connOle);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -518,7 +518,7 @@ namespace mySystem.Process.Order
             //dataGridView3.DataSource = dt库存信息;
 
             Hashtable ht存货代码2剩余数量 = new Hashtable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -540,7 +540,7 @@ namespace mySystem.Process.Order
             }
             库存sql += String.Join(" or ", whereS.ToArray());
             库存sql += " order by 产品代码";
-            da库存信息 = new OleDbDataAdapter(库存sql, conn);
+            da库存信息 = new OleDbDataAdapter(库存sql, mySystem.Parameter.connOle);
             dt库存信息 = new DataTable("关联库存信息");
             cb库存信息 = new OleDbCommandBuilder(da库存信息);
             bs库存信息 = new BindingSource();
@@ -584,7 +584,7 @@ namespace mySystem.Process.Order
             dr["出库单ID"] = dtOuter.Rows[0]["ID"];
             dr["出库单号"] = dtOuter.Rows[0]["出库单号"];
             dr["出库日期"] = DateTime.Now;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='"+tb销售订单号.Text+"'",conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -625,7 +625,7 @@ namespace mySystem.Process.Order
 
             da库存信息.Update((DataTable)bs库存信息.DataSource);
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
@@ -644,7 +644,7 @@ namespace mySystem.Process.Order
 
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='出库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], conn);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='出库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
 
@@ -739,7 +739,7 @@ namespace mySystem.Process.Order
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='出库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], conn);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='出库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
@@ -753,7 +753,7 @@ namespace mySystem.Process.Order
             if (check订单是否完成())
             {
                 MessageBox.Show("本订单已全部发货完毕，已关闭订单");
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='"+dtOuter.Rows[0]["销售订单号"].ToString()+"'",conn);
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dtOuter.Rows[0]["销售订单号"].ToString() + "'", mySystem.Parameter.connOle);
                 OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

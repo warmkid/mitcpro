@@ -23,11 +23,46 @@ namespace mySystem.Query
             dgv销售订单.AllowUserToAddRows = false;
             dgv销售订单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv销售订单_DataBindingComplete);
             dgv销售订单.ReadOnly = true;
+            tb销售订单产品代码.PreviewKeyDown += new PreviewKeyDownEventHandler(tb销售订单产品代码_PreviewKeyDown);
+            tb销售订单产品名称.PreviewKeyDown += new PreviewKeyDownEventHandler(tb销售订单产品名称_PreviewKeyDown);
 
             dgv采购订单.AllowUserToAddRows = false;
             dgv采购订单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv采购订单_DataBindingComplete);
             dgv采购订单.CellDoubleClick += new DataGridViewCellEventHandler(dgv采购订单_CellDoubleClick);
             dgv采购订单.CellEndEdit += new DataGridViewCellEventHandler(dgv采购订单_CellEndEdit);
+            tb采购订单产品代码.PreviewKeyDown += new PreviewKeyDownEventHandler(tb采购订单产品代码_PreviewKeyDown);
+            tb采购订单供应商.PreviewKeyDown += new PreviewKeyDownEventHandler(tb采购订单供应商_PreviewKeyDown);
+            tb采购订单销售订单.PreviewKeyDown += new PreviewKeyDownEventHandler(tb采购订单销售订单_PreviewKeyDown);
+        }
+
+        void tb采购订单销售订单_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询采购订单.PerformClick();
+        }
+
+        void tb采购订单供应商_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询采购订单.PerformClick();
+        }
+
+        void tb采购订单产品代码_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询采购订单.PerformClick();
+        }
+
+        void tb销售订单产品名称_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn销售订单查询.PerformClick();
+        }
+
+        void tb销售订单产品代码_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn销售订单查询.PerformClick();
         }
 
         void dgv采购订单_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -60,6 +95,11 @@ namespace mySystem.Query
                     }
                 }
             }
+            if (dgv采购订单.Columns[e.ColumnIndex].Name == "进度")
+            {
+                //string t = mySystem.Other.InputTextWindow.getString("jindu");
+                //dgv采购订单[e.ColumnIndex, e.RowIndex].Value = t;
+            }
         }
 
         void dgv采购订单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -68,6 +108,9 @@ namespace mySystem.Query
             dgv采购订单.Columns["采购订单ID"].Visible = false;
             dgv采购订单.Columns["关联的采购批准详细信息ID"].Visible = false;
             dgv采购订单.Columns["关联的采购批转单借用单ID"].Visible = false;
+            dgv采购订单.Columns["进度"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgv采购订单.RowHeadersVisible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv采购订单);
             int cidx = dgv采购订单.Columns["金额"].Index;
             for (int i = 0; i <= cidx; ++i)
             {
@@ -80,6 +123,8 @@ namespace mySystem.Query
         {
             //dgv销售订单.Columns["ID"].Visible = false;
             //dgv销售订单.Columns["销售订单ID"].Visible = false;
+            dgv销售订单.RowHeadersVisible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv销售订单);
         }
 
         private void btn销售订单查询_Click(object sender, EventArgs e)

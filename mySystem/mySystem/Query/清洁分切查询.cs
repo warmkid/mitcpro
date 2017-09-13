@@ -30,6 +30,29 @@ namespace mySystem.Query
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
             Initdgv();
+
+            textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
+            comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
+            comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+            dgv.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
+        }
+
+        void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void comboBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void textBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
         }
 
         //下拉框获取生产指令
@@ -101,7 +124,7 @@ namespace mySystem.Query
             dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.Font = new Font("宋体", 12);
-
+         
         }
 
         private void Bind()
@@ -150,6 +173,7 @@ namespace mySystem.Query
                     default:
                         break;
                 }
+               
             }
 
             catch (Exception ee)
@@ -157,7 +181,8 @@ namespace mySystem.Query
                 MessageBox.Show("输入有误，请重新输入" + ee.Message + "\n" + ee.StackTrace, "错误");
                 return;
             }
-
+            Utility.setDataGridViewAutoSizeMode(dgv);
+         
         }
 
         // 各表查询
@@ -227,46 +252,50 @@ namespace mySystem.Query
         }
 
         //双击弹出界面
-        private void dgv_DoubleClick(object sender, EventArgs e)
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                int selectIndex = this.dgv.CurrentRow.Index;
-                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-                switch (tableName)
+                try
                 {
-                    case "清洁分切生产记录":
-                        CleanCut_Productrecord form1 = new CleanCut_Productrecord(mainform, ID);
-                        form1.Show();
-                        break;
-                    case "清洁分切日报表":
-                        //DailyRecord form2 = new DailyRecord(mainform, ID);
-                        //form2.Show();
-                        break;
-                    case "清洁分切开机前确认表":
-                        CleanCut_CheckBeforePower form3 = new CleanCut_CheckBeforePower(mainform, ID);
-                        form3.Show();
-                        break;
-                    case "清洁分切运行记录":
-                        CleanCut_RunRecord form4 = new CleanCut_RunRecord(mainform, ID);
-                        form4.Show();
-                        break;
-                    case "清场记录":
-                        Record_cleansite_cut form5 = new Record_cleansite_cut(mainform, ID);
-                        form5.Show();
-                        break;
-                    case "清洁分切批生产记录":
-                        //CleanCut_Cover form6= new CleanCut_Cover(mainform, ID);
-                        //form6.Show();
-                        break;
+                    int selectIndex = this.dgv.CurrentRow.Index;
+                    int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                    switch (tableName)
+                    {
+                        case "清洁分切生产记录":
+                            CleanCut_Productrecord form1 = new CleanCut_Productrecord(mainform, ID);
+                            form1.Show();
+                            break;
+                        case "清洁分切日报表":
+                            //DailyRecord form2 = new DailyRecord(mainform, ID);
+                            //form2.Show();
+                            break;
+                        case "清洁分切开机前确认表":
+                            CleanCut_CheckBeforePower form3 = new CleanCut_CheckBeforePower(mainform, ID);
+                            form3.Show();
+                            break;
+                        case "清洁分切运行记录":
+                            CleanCut_RunRecord form4 = new CleanCut_RunRecord(mainform, ID);
+                            form4.Show();
+                            break;
+                        case "清场记录":
+                            Record_cleansite_cut form5 = new Record_cleansite_cut(mainform, ID);
+                            form5.Show();
+                            break;
+                        case "清洁分切批生产记录":
+                            //CleanCut_Cover form6= new CleanCut_Cover(mainform, ID);
+                            //form6.Show();
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                }
             }
         }
 

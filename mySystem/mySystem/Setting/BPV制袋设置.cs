@@ -27,6 +27,10 @@ namespace mySystem.Setting
         private DataTable dt清场;
         private BindingSource bs清场;
         private OleDbCommandBuilder cb清场;
+        private OleDbDataAdapter da交接班;
+        private DataTable dt交接班;
+        private BindingSource bs交接班;
+        private OleDbCommandBuilder cb交接班;
         private OleDbDataAdapter da产品;
         private DataTable dt产品;
         private BindingSource bs产品;
@@ -69,6 +73,9 @@ namespace mySystem.Setting
 
             bs清场 = new BindingSource();
             EachInitdgv(dgv清场);
+
+            bs交接班 = new BindingSource();
+            EachInitdgv(dgv交接班);
 
             bs产品 = new BindingSource();
             EachInitdgv(dgv产品);
@@ -130,6 +137,21 @@ namespace mySystem.Setting
             Utility.setDataGridViewAutoSizeMode(dgv清场);
             this.dgv清场.Columns["清场要点"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv清场.Columns["ID"].Visible = false;
+
+            //**************************   岗位交接班    ***********************************
+            dt交接班 = new DataTable("设置岗位交接班项目"); //""中的是表名
+            da交接班 = new OleDbDataAdapter("select * from 设置岗位交接班项目", mySystem.Parameter.connOle);
+            cb交接班 = new OleDbCommandBuilder(da交接班);
+            dt交接班.Columns.Add("序号", System.Type.GetType("System.String"));
+            da交接班.Fill(dt交接班);
+            bs交接班.DataSource = dt交接班;
+            this.dgv交接班.DataSource = bs交接班.DataSource;
+            //显示序号
+            setDataGridViewRowNums(this.dgv交接班);
+            this.dgv交接班.Columns["确认项目"].MinimumWidth = 300;
+            Utility.setDataGridViewAutoSizeMode(dgv交接班);
+            this.dgv交接班.Columns["确认项目"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv交接班.Columns["ID"].Visible = false;
 
             //************************    产品     *******************************************
             dt产品 = new DataTable("设置BPV产品"); //""中的是表名
@@ -325,6 +347,26 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv清场);
         }
 
+        private void add交接班_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dt交接班.NewRow();
+            dt交接班.Rows.InsertAt(dt交接班.NewRow(), dt交接班.Rows.Count);
+            setDataGridViewRowNums(this.dgv交接班);
+            //dgv交接班.FirstDisplayedScrollingRowIndex = dgv交接班.Rows.Count - 1;
+            if (dgv交接班.Rows.Count > 0)
+                dgv交接班.FirstDisplayedScrollingRowIndex = dgv交接班.Rows.Count - 1;
+        }
+
+        private void del交接班_Click(object sender, EventArgs e)
+        {
+            int idx = this.dgv交接班.CurrentRow.Index;
+            dt交接班.Rows[idx].Delete();
+            da交接班.Update((DataTable)bs交接班.DataSource);
+            dt交接班.Clear();
+            da交接班.Fill(dt交接班);
+            setDataGridViewRowNums(this.dgv交接班);
+        }
+
         private void Btn保存项目_Click(object sender, EventArgs e)
         {
             try
@@ -342,6 +384,11 @@ namespace mySystem.Setting
                     dt清场.Clear();
                     da清场.Fill(dt清场);
                     setDataGridViewRowNums(this.dgv清场);
+
+                    da交接班.Update((DataTable)bs交接班.DataSource);
+                    dt交接班.Clear();
+                    da交接班.Fill(dt交接班);
+                    setDataGridViewRowNums(this.dgv交接班);
 
                 }
                 MessageBox.Show("保存成功！");
@@ -713,6 +760,8 @@ namespace mySystem.Setting
                 }
             }
         }
+
+        
 
     }
 }

@@ -27,6 +27,21 @@ namespace mySystem
             InitializeComponent();
             Initdgv();
 
+            textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
+            dgv.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
+            comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
+        }
+
+        void comboBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
+        }
+
+        void textBox1_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                SearchBtn.PerformClick();
         }
 
         //dgv样式初始化
@@ -103,8 +118,8 @@ namespace mySystem
             this.dgv.DataBindings.Clear();
             this.dgv.DataSource = bs.DataSource; //绑定
             //显示序号
-            setDataGridViewRowNums();      
-            
+            setDataGridViewRowNums();
+            Utility.setDataGridViewAutoSizeMode(dgv);
         }
 
         private void setDataGridViewRowNums()
@@ -167,51 +182,53 @@ namespace mySystem
         }
 
         //双击弹出界面
-        private void dgv_DoubleClick(object sender, EventArgs e)
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                int selectIndex = this.dgv.CurrentRow.Index;
-                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-                switch (processName)
+                try
                 {
-                    case "吹膜":
-                        BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
-                        form1.Show();
+                    int selectIndex = this.dgv.CurrentRow.Index;
+                    int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                    switch (processName)
+                    {
+                        case "吹膜":
+                            BatchProductRecord.ProcessProductInstru form1 = new BatchProductRecord.ProcessProductInstru(base.mainform, ID);
+                            form1.Show();
 
-                        break;
-                    case "清洁分切":
-                        mySystem.Process.CleanCut.Instru form2 = new Process.CleanCut.Instru(mainform, ID);
-                        form2.Show();
+                            break;
+                        case "清洁分切":
+                            mySystem.Process.CleanCut.Instru form2 = new Process.CleanCut.Instru(mainform, ID);
+                            form2.Show();
 
-                        break;
-                    case "CS制袋":
-                        mySystem.Process.Bag.CS.CS制袋生产指令 form3 = new Process.Bag.CS.CS制袋生产指令(mainform, ID);
-                        form3.Show();
+                            break;
+                        case "CS制袋":
+                            mySystem.Process.Bag.CS.CS制袋生产指令 form3 = new Process.Bag.CS.CS制袋生产指令(mainform, ID);
+                            form3.Show();
 
-                        break;
-                    case "PE制袋":
-                        mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction form4 = new Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, ID);
-                        form4.Show();
+                            break;
+                        case "PE制袋":
+                            mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction form4 = new Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, ID);
+                            form4.Show();
 
-                        break;
-                    case "BPV制袋":
-                        mySystem.Process.Bag.BTV.BPV制袋生产指令 form5 = new Process.Bag.BTV.BPV制袋生产指令(mainform, ID);
-                        form5.Show();
-                        break;
-                    case "PTV制袋":
-                        mySystem.Process.Bag.PTV.PTVBag_productioninstruction form6 = new Process.Bag.PTV.PTVBag_productioninstruction(mainform, ID);
-                        form6.Show();
+                            break;
+                        case "BPV制袋":
+                            mySystem.Process.Bag.BTV.BPV制袋生产指令 form5 = new Process.Bag.BTV.BPV制袋生产指令(mainform, ID);
+                            form5.Show();
+                            break;
+                        case "PTV制袋":
+                            mySystem.Process.Bag.PTV.PTVBag_productioninstruction form6 = new Process.Bag.PTV.PTVBag_productioninstruction(mainform, ID);
+                            form6.Show();
 
-                        break;
+                            break;
 
+                    }
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
                 }
             }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
-            }
-            
         }
        
 

@@ -169,6 +169,7 @@ namespace mySystem.Process.Stock
         {
             dgv产品退货申请单.AllowUserToAddRows = false;
             dgv产品退货申请单.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv产品退货申请单);
         }
 
         DataTable get产品退货申请单(DateTime start, DateTime end, string oderNO, string name)
@@ -185,6 +186,8 @@ namespace mySystem.Process.Stock
         {
             产品退货申请单 form = new 产品退货申请单(mainform);
             form.Show();
+            if (dgv产品退货申请单.Rows.Count > 0)
+                dgv产品退货申请单.FirstDisplayedScrollingRowIndex = dgv产品退货申请单.Rows.Count - 1;
         }
 
         private void btn查询退货申请单_Click(object sender, EventArgs e)
@@ -212,6 +215,7 @@ namespace mySystem.Process.Stock
         {
             dgv审批单1.AllowUserToAddRows = false;
             dgv审批单1.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv审批单1);
         }
 
 
@@ -255,6 +259,7 @@ namespace mySystem.Process.Stock
         {
             dgv审批单2.AllowUserToAddRows = false;
             dgv审批单2.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv审批单2);
         }
 
 
@@ -297,6 +302,7 @@ namespace mySystem.Process.Stock
         {
             dgv产品退货接收单.AllowUserToAddRows = false;
             dgv产品退货接收单.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv产品退货接收单);
         }
 
 
@@ -327,6 +333,8 @@ namespace mySystem.Process.Stock
             catch (Exception ee)
             {
             }
+            if (dgv产品退货接收单.Rows.Count > 0)
+                dgv产品退货接收单.FirstDisplayedScrollingRowIndex = dgv产品退货接收单.Rows.Count - 1;
         }
 
         private void btn查询退货接收单_Click(object sender, EventArgs e)
@@ -353,6 +361,7 @@ namespace mySystem.Process.Stock
         {
             dgv退货请验单.AllowUserToAddRows = false;
             dgv退货请验单.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv退货请验单);
         }
 
 
@@ -396,6 +405,7 @@ namespace mySystem.Process.Stock
         {
             dgv评审单1.AllowUserToAddRows = false;
             dgv评审单1.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv评审单1);
         }
 
 
@@ -437,6 +447,7 @@ namespace mySystem.Process.Stock
         {
             dgv评审单2.AllowUserToAddRows = false;
             dgv评审单2.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv评审单2);
         }
 
 
@@ -478,6 +489,7 @@ namespace mySystem.Process.Stock
         {
             dgv退货记录.AllowUserToAddRows = false;
             dgv退货记录.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv退货记录);
         }
 
 

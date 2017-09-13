@@ -17,13 +17,13 @@ namespace mySystem.Other
         List<string> ls存货代码, ls存货名称, ls规格型号;
         List<int> lsID;
 
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
 
         public BOMList()
         {
-            conn = new OleDbConnection(strConnect);
+            //conn = new OleDbConnection(strConnect);
             InitializeComponent();
             getOtherData();
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
@@ -32,7 +32,7 @@ namespace mySystem.Other
 
         public BOMList(JArray ja)
         {
-            conn = new OleDbConnection(strConnect);
+            //conn = new OleDbConnection(strConnect);
             InitializeComponent();
             getOtherData();
             fillFromJA(ja);
@@ -122,7 +122,7 @@ namespace mySystem.Other
             ls存货名称 = new List<string>();
             ls规格型号 = new List<string>();
             lsID = new List<Int32>();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -216,8 +216,8 @@ namespace mySystem.Other
                     存货名称 = dgvr.Cells["存货名称"].Value.ToString();
                     规格型号 = dgvr.Cells["规格型号"].Value.ToString();
                     数量 = Convert.ToDouble(dgvr.Cells["数量"].Value);
-                    sql = "select * from 设置存货档案 where 存货代码='{0}' and 存货名称='{1}' and 规格型号='{2}'";
-                    da = new OleDbDataAdapter(string.Format(sql, 存货代码, 存货名称, 规格型号), conn);
+                    sql = "select * from 设置存货档案 where 存货代码='{0}'";
+                    da = new OleDbDataAdapter(string.Format(sql, 存货代码, 存货名称, 规格型号), mySystem.Parameter.connOle);
                     dt = new DataTable();
                     da.Fill(dt);
                     if (dt.Rows.Count == 0) throw new Exception();
@@ -267,12 +267,12 @@ namespace mySystem.Other
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
             List<String> ls = new List<string>();
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection conn;
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", conn);
+//            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//            OleDbConnection conn;
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             for (int i = 1; ; i++)

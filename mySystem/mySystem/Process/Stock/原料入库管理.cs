@@ -54,6 +54,8 @@ namespace mySystem.Process.Stock
         {
             物资验收记录 form = new 物资验收记录(mainform);
             form.Show();
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         void read物资验收记录Data()
@@ -68,6 +70,8 @@ namespace mySystem.Process.Stock
         void 物资验收记录Bind()
         {
             dataGridView1.DataSource = dt物资验收记录;
+
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         void addOtherEventHandler()
@@ -103,38 +107,53 @@ namespace mySystem.Process.Stock
 
         void dataGridView5_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dataGridView5.Rows[e.RowIndex].Cells[0].Value);
-            取样记录 form = new 取样记录(id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dataGridView5.Rows[e.RowIndex].Cells[0].Value);
+                取样记录 form = new 取样记录(id);
+                form.Show();
+            }
         }
 
         void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
-            物资验收记录 form = new 物资验收记录(mainform,id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
+                物资验收记录 form = new 物资验收记录(mainform, id);
+                form.Show();
+            }
         }
 
         void dataGridView4_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dataGridView4.Rows[e.RowIndex].Cells[0].Value);
-            不合格品处理记录 form = new 不合格品处理记录(mainform, id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dataGridView4.Rows[e.RowIndex].Cells[0].Value);
+                不合格品处理记录 form = new 不合格品处理记录(mainform, id);
+                form.Show();
+            }
         }
 
         void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dataGridView3.Rows[e.RowIndex].Cells[0].Value);
-            检验记录 form = new 检验记录(id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dataGridView3.Rows[e.RowIndex].Cells[0].Value);
+                检验记录 form = new 检验记录(id);
+                form.Show();
+            }
         }
 
         void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            //双击 显示请验单
-            int id = Convert.ToInt32(dataGridView2.Rows[e.RowIndex].Cells[0].Value);
-            物资请验单 form = new 物资请验单(id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                //双击 显示请验单
+                int id = Convert.ToInt32(dataGridView2.Rows[e.RowIndex].Cells[0].Value);
+                物资请验单 form = new 物资请验单(id);
+                form.Show();
+            }
         }
 
         private void btn读取_Click(object sender, EventArgs e)
@@ -156,6 +175,8 @@ namespace mySystem.Process.Stock
         void 物资请验单Bind()
         {
             dataGridView2.DataSource = dt物资请验单;
+
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         private void btn读取检验记录_Click(object sender, EventArgs e)
@@ -175,6 +196,8 @@ namespace mySystem.Process.Stock
         void 检验记录Bind()
         {
             dataGridView3.DataSource = dt检验记录;
+
+            Utility.setDataGridViewAutoSizeMode(dataGridView3);
         }
 
        
@@ -190,6 +213,8 @@ namespace mySystem.Process.Stock
         void 不合格品记录Bind()
         {
             dataGridView4.DataSource = dt不合格品处理记录;
+
+            Utility.setDataGridViewAutoSizeMode(dataGridView4);
         }
 
         private void btn读取不合格品记录_Click(object sender, EventArgs e)
@@ -214,6 +239,8 @@ namespace mySystem.Process.Stock
         void 取样记录Bind()
         {
             dataGridView5.DataSource = dt取样记录;
+
+            Utility.setDataGridViewAutoSizeMode(dataGridView5);
         }
 
         private void btn读取取样记录_Click(object sender, EventArgs e)

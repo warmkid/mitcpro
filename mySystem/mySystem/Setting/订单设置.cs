@@ -155,15 +155,15 @@ namespace mySystem.Setting
         {
             //**************************   设置存货档案    ***********************************
             dt存货档案 = new DataTable("设置存货档案"); //""中的是表名
-            da存货档案 = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
+            da存货档案 = new OleDbDataAdapter("select * from 设置存货档案 where 0=1", mySystem.Parameter.connOle);
             cb存货档案 = new OleDbCommandBuilder(da存货档案);
-            dt存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
+            //dt存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
             da存货档案.Fill(dt存货档案);
-            dt存货档案Show = topN(dt存货档案,20);
-            bs存货档案.DataSource = dt存货档案Show;
+            //dt存货档案Show = topN(dt存货档案,20);
+            bs存货档案.DataSource = dt存货档案;
             this.dgv存货档案.DataSource = bs存货档案.DataSource;
             //显示序号
-            setDataGridViewRowNums(this.dgv存货档案);
+            //setDataGridViewRowNums(this.dgv存货档案);
             //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
             //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
             //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -346,8 +346,8 @@ namespace mySystem.Setting
 
         private void add存货档案_Click(object sender, EventArgs e)
         {
-            DataRow dr = dt存货档案Show.NewRow();
-            dt存货档案Show.Rows.InsertAt(dt存货档案Show.NewRow(), dt存货档案Show.Rows.Count);
+            //DataRow dr = dt存货档案.NewRow();
+            dt存货档案.Rows.InsertAt(dt存货档案.NewRow(), dt存货档案.Rows.Count);
             setDataGridViewRowNums(this.dgv存货档案);
             if (dgv存货档案.Rows.Count > 0)
                 dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
@@ -374,9 +374,9 @@ namespace mySystem.Setting
                 else
                 {
                     da存货档案.Update((DataTable)bs存货档案.DataSource);
-                    dt存货档案.Clear();
-                    da存货档案.Fill(dt存货档案);
-                    setDataGridViewRowNums(this.dgv存货档案);
+                    //dt存货档案.Clear();
+                    //da存货档案.Fill(dt存货档案);
+                    //setDataGridViewRowNums(this.dgv存货档案);
 
                     
 
@@ -686,15 +686,38 @@ namespace mySystem.Setting
 
         private void btn查询订单设置_Click(object sender, EventArgs e)
         {
-            DataRow[] drs = dt存货档案.Select("存货代码 like'%"+tb代码q.Text+"%' and 存货名称 like '%"+tb名称q.Text+"%'");
-            dt存货档案Show = dt存货档案.Clone();
-            foreach (DataRow dr in drs)
-            {
-                dt存货档案Show.ImportRow(dr);
-            }
-            bs存货档案.DataSource = dt存货档案Show;
-            dgv存货档案.DataSource = bs存货档案.DataSource;
+            //DataRow[] drs = dt存货档案.Select("存货代码 like'%"+tb代码q.Text+"%' and 存货名称 like '%"+tb名称q.Text+"%'");
+            //dt存货档案Show = dt存货档案.Clone();
+            //foreach (DataRow dr in drs)
+            //{
+            //    dt存货档案Show.ImportRow(dr);
+            //}
+            //bs存货档案.DataSource = dt存货档案Show;
+            //dgv存货档案.DataSource = bs存货档案.DataSource;
+            //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
+
+            string sql = "select * from 设置存货档案 where  存货代码 like '%{0}%' and 存货名称 like '%{1}%'";
+            dt存货档案 = new DataTable("设置存货档案"); //""中的是表名
+            da存货档案 = new OleDbDataAdapter(string.Format(sql, tb代码q.Text, tb名称q.Text), mySystem.Parameter.connOle);
+            cb存货档案 = new OleDbCommandBuilder(da存货档案);
+            //dt存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
+            da存货档案.Fill(dt存货档案);
+            //dt存货档案Show = topN(dt存货档案,20);
+            bs存货档案.DataSource = dt存货档案;
+            this.dgv存货档案.DataSource = bs存货档案.DataSource;
+            //显示序号
+            //setDataGridViewRowNums(this.dgv存货档案);
+            //this.dgv开机.Columns["确认项目"].MinimumWidth = 200;
+            //this.dgv开机.Columns["确认内容"].MinimumWidth = 250;
+            //this.dgv开机.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.dgv开机.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             Utility.setDataGridViewAutoSizeMode(dgv存货档案);
+            this.dgv存货档案.Columns["ID"].Visible = false;
+            this.dgv存货档案.Columns["属于工序"].ReadOnly = true;
+            this.dgv存货档案.Columns["BOM列表"].ReadOnly = true;
+            this.dgv存货档案.Columns["类型"].ReadOnly = true;
+            //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
+            setDGV存货档案Column();
         }
 
 

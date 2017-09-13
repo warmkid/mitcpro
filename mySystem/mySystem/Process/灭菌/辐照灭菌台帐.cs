@@ -115,6 +115,7 @@ namespace mySystem.Process.灭菌
             dataGridView1.DataSource = bs台帐.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
             index = dt台帐.Rows.Count;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
         // 设置自动计算类事件
         private void addComputerEventHandler()

@@ -24,42 +24,126 @@ namespace mySystem.Query
             dgv退货台账.AllowUserToAddRows = false;
             dgv退货台账.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv退货台账_DataBindingComplete);
             dgv退货台账.ReadOnly = true;
+            tb退货台账产品名称.PreviewKeyDown += new PreviewKeyDownEventHandler(tb退货台账产品名称_PreviewKeyDown);
+            tb退货台账产品批号.PreviewKeyDown += new PreviewKeyDownEventHandler(tb退货台账产品批号_PreviewKeyDown);
+            tb退货台账客户名称.PreviewKeyDown += new PreviewKeyDownEventHandler(tb退货台账客户名称_PreviewKeyDown);
+            tb退货台账销售合同号.PreviewKeyDown += new PreviewKeyDownEventHandler(tb退货台账销售合同号_PreviewKeyDown);
 
             dtp出库单出库开始时间.Value = DateTime.Now.AddDays(-7).Date;
             dgv出库单.AllowUserToAddRows = false;
             dgv出库单.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv出库单_DataBindingComplete);
             dgv出库单.ReadOnly = true;
-
+            tb出库单产品名称.PreviewKeyDown += new PreviewKeyDownEventHandler(tb出库单产品名称_PreviewKeyDown);
+            tb出库单产品批号.PreviewKeyDown += new PreviewKeyDownEventHandler(tb出库单产品批号_PreviewKeyDown);
+            tb出库单客户名称.PreviewKeyDown += new PreviewKeyDownEventHandler(tb出库单客户名称_PreviewKeyDown);
+            tb出库单发货公司.PreviewKeyDown += new PreviewKeyDownEventHandler(tb出库单发货公司_PreviewKeyDown);
 
             dgv库存台账.AllowUserToAddRows = false;
             //dgv库存台账.ReadOnly = true;
             dgv库存台账.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv库存台账_DataBindingComplete);
+            tb存货台账厂家名称.PreviewKeyDown += new PreviewKeyDownEventHandler(tb存货台账厂家名称_PreviewKeyDown);
+            tb库存台账存货代码.PreviewKeyDown += new PreviewKeyDownEventHandler(tb库存台账存货代码_PreviewKeyDown);
+            cmb库存台账状态.PreviewKeyDown += new PreviewKeyDownEventHandler(cmb库存台账状态_PreviewKeyDown);
 
             dgv检验台账.AllowUserToAddRows = false;
             dgv检验台账.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv检验台账_DataBindingComplete);
+            tb检验台账厂家名称.PreviewKeyDown += new PreviewKeyDownEventHandler(tb检验台账厂家名称_PreviewKeyDown);
+            tb检验台账存货代码.PreviewKeyDown += new PreviewKeyDownEventHandler(tb检验台账存货代码_PreviewKeyDown);
 
+        }
 
-            this.tb出库单发货公司.PreviewKeyDown += new PreviewKeyDownEventHandler(tb出库单发货公司_PreviewKeyDown);
+        void tb检验台账存货代码_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询检验台账.PerformClick();
+        }
 
+        void tb检验台账厂家名称_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询检验台账.PerformClick();
+        }
+
+        void cmb库存台账状态_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询库存台账.PerformClick();
+        }
+
+        void tb库存台账存货代码_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询库存台账.PerformClick();
+        }
+
+        void tb存货台账厂家名称_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询库存台账.PerformClick();
+        }
+
+        void tb出库单客户名称_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询出库单.PerformClick();
+        }
+
+        void tb出库单产品批号_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询出库单.PerformClick();
+        }
+
+        void tb出库单产品名称_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询出库单.PerformClick();
         }
 
         void tb出库单发货公司_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-            {
                 btn查询出库单.PerformClick();
-            }
         }
+
+        void tb退货台账销售合同号_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn退货台账查询.PerformClick();
+        }
+
+        void tb退货台账客户名称_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn退货台账查询.PerformClick();
+        }
+
+        void tb退货台账产品批号_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn退货台账查询.PerformClick();
+        }
+
+        void tb退货台账产品名称_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn退货台账查询.PerformClick();
+        }
+
+        
 
        
 
         void dgv检验台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgv检验台账.RowHeadersVisible = false;
             dgv检验台账.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv检验台账);
         }
 
         void dgv库存台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgv库存台账.RowHeadersVisible = false;
             dgv库存台账.Columns["ID"].Visible = false;
             // readonly
             foreach (DataGridViewColumn dgvc in dgv库存台账.Columns)
@@ -84,17 +168,21 @@ namespace mySystem.Query
                     dgvr.DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
-            
+            Utility.setDataGridViewAutoSizeMode(dgv库存台账);
         }
 
         void dgv出库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgv出库单.RowHeadersVisible = false;
             dgv出库单.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv出库单);
         }
 
         void dgv退货台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgv退货台账.RowHeadersVisible = false;
             dgv退货台账.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv退货台账);
         }
 
 

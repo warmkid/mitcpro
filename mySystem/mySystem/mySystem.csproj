@@ -1162,12 +1162,6 @@
     <Compile Include="Other\LoginForm.designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Order\AddOrderForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Process\Order\AddOrderForm.designer.cs">
-      <DependentUpon>AddOrderForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Process\Plan\PlanForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1766,9 +1760,6 @@
     <EmbeddedResource Include="Other\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Process\Order\AddOrderForm.resx">
-      <DependentUpon>AddOrderForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Plan\PlanForm.resx">
       <DependentUpon>PlanForm.cs</DependentUpon>
