@@ -216,7 +216,7 @@ namespace mySystem.Other
                     存货名称 = dgvr.Cells["存货名称"].Value.ToString();
                     规格型号 = dgvr.Cells["规格型号"].Value.ToString();
                     数量 = Convert.ToDouble(dgvr.Cells["数量"].Value);
-                    sql = "select * from 设置存货档案 where 存货代码='{0}' and 存货名称='{1}' and 规格型号='{2}'";
+                    sql = "select * from 设置存货档案 where 存货代码='{0}'";
                     da = new OleDbDataAdapter(string.Format(sql, 存货代码, 存货名称, 规格型号), mySystem.Parameter.connOle);
                     dt = new DataTable();
                     da.Fill(dt);
