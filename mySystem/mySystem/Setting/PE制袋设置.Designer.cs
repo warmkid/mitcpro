@@ -90,6 +90,12 @@
             this.del人员 = new System.Windows.Forms.Button();
             this.add人员 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.dgv交接班 = new System.Windows.Forms.DataGridView();
+            this.del交接班 = new System.Windows.Forms.Button();
+            this.add交接班 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage项目.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -114,6 +120,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).BeginInit();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv交接班)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -131,6 +139,9 @@
             // tabPage项目
             // 
             this.tabPage项目.AutoScroll = true;
+            this.tabPage项目.Controls.Add(this.groupBox11);
+            this.tabPage项目.Controls.Add(this.label2);
+            this.tabPage项目.Controls.Add(this.panel4);
             this.tabPage项目.Controls.Add(this.groupBox1);
             this.tabPage项目.Controls.Add(this.label1);
             this.tabPage项目.Controls.Add(this.Btn保存项目);
@@ -152,7 +163,7 @@
             this.groupBox1.Controls.Add(this.del清场);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.add清场);
-            this.groupBox1.Location = new System.Drawing.Point(17, 299);
+            this.groupBox1.Location = new System.Drawing.Point(17, 590);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(846, 225);
             this.groupBox1.TabIndex = 52;
@@ -220,7 +231,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(17, 278);
+            this.label1.Location = new System.Drawing.Point(17, 569);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(135, 20);
             this.label1.TabIndex = 51;
@@ -229,7 +240,7 @@
             // Btn保存项目
             // 
             this.Btn保存项目.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存项目.Location = new System.Drawing.Point(936, 526);
+            this.Btn保存项目.Location = new System.Drawing.Point(936, 821);
             this.Btn保存项目.Name = "Btn保存项目";
             this.Btn保存项目.Size = new System.Drawing.Size(90, 33);
             this.Btn保存项目.TabIndex = 53;
@@ -780,6 +791,65 @@
             this.label4.TabIndex = 53;
             this.label4.Text = "CS制袋人员设置";
             // 
+            // panel4
+            // 
+            this.panel4.Location = new System.Drawing.Point(909, 855);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(200, 10);
+            this.panel4.TabIndex = 71;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.dgv交接班);
+            this.groupBox11.Controls.Add(this.del交接班);
+            this.groupBox11.Controls.Add(this.add交接班);
+            this.groupBox11.Location = new System.Drawing.Point(17, 314);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(846, 225);
+            this.groupBox11.TabIndex = 73;
+            this.groupBox11.TabStop = false;
+            // 
+            // dgv交接班
+            // 
+            this.dgv交接班.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv交接班.Location = new System.Drawing.Point(12, 51);
+            this.dgv交接班.Name = "dgv交接班";
+            this.dgv交接班.RowTemplate.Height = 23;
+            this.dgv交接班.Size = new System.Drawing.Size(813, 165);
+            this.dgv交接班.TabIndex = 2;
+            // 
+            // del交接班
+            // 
+            this.del交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del交接班.Location = new System.Drawing.Point(100, 14);
+            this.del交接班.Name = "del交接班";
+            this.del交接班.Size = new System.Drawing.Size(70, 30);
+            this.del交接班.TabIndex = 1;
+            this.del交接班.Text = "删除";
+            this.del交接班.UseVisualStyleBackColor = true;
+            this.del交接班.Click += new System.EventHandler(this.del交接班_Click);
+            // 
+            // add交接班
+            // 
+            this.add交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add交接班.Location = new System.Drawing.Point(12, 14);
+            this.add交接班.Name = "add交接班";
+            this.add交接班.Size = new System.Drawing.Size(70, 30);
+            this.add交接班.TabIndex = 0;
+            this.add交接班.Text = "添加";
+            this.add交接班.UseVisualStyleBackColor = true;
+            this.add交接班.Click += new System.EventHandler(this.add交接班_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(17, 295);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(240, 20);
+            this.label2.TabIndex = 72;
+            this.label2.Text = "岗位交接班确认项目设置";
+            // 
             // PE制袋设置
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -818,6 +888,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).EndInit();
             this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).EndInit();
+            this.groupBox11.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv交接班)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -886,5 +958,11 @@
         private System.Windows.Forms.Button del人员;
         private System.Windows.Forms.Button add人员;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.DataGridView dgv交接班;
+        private System.Windows.Forms.Button del交接班;
+        private System.Windows.Forms.Button add交接班;
+        private System.Windows.Forms.Label label2;
     }
 }
