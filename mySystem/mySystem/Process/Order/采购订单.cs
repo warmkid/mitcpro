@@ -15,9 +15,9 @@ namespace mySystem.Process.Order
     {
         bool isSaved = false;
         // TODO 没点保存的话怎么办？数据库中状态变了，订单有！
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         OleDbDataAdapter daOuter, daInner;
         OleDbCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner,dtInnerShow;
@@ -37,9 +37,9 @@ namespace mySystem.Process.Order
         {
             InitializeComponent();
             fillPrinter();
-            conn = new OleDbConnection(strConnect);
+            //conn = new OleDbConnection(strConnect);
             _供应商 = 供应商;
-            conn.Open();
+            //conn.Open();
             getPeople();
             setUseState();
 
@@ -65,8 +65,8 @@ namespace mySystem.Process.Order
             InitializeComponent();
             isSaved = true;
             fillPrinter();
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             getPeople();
             setUseState();
 
@@ -131,7 +131,7 @@ namespace mySystem.Process.Order
             OleDbDataAdapter da;
             DataTable dt;
             ls币种 = new List<string>();
-            da = new OleDbDataAdapter("select * from 设置币种", conn);
+            da = new OleDbDataAdapter("select * from 设置币种", mySystem.Parameter.connOle);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -161,7 +161,7 @@ namespace mySystem.Process.Order
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 订单用户权限 where 步骤='采购批准单'", conn);
+            da = new OleDbDataAdapter("select * from 订单用户权限 where 步骤='采购批准单'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -286,7 +286,7 @@ namespace mySystem.Process.Order
 
         void generateOuterData(string 供应商)
         {
-            daOuter = new OleDbDataAdapter("select * from 采购订单 where 0=1", conn);
+            daOuter = new OleDbDataAdapter("select * from 采购订单 where 0=1", mySystem.Parameter.connOle);
             cbOuter = new OleDbCommandBuilder(daOuter);
             bsOuter = new BindingSource();
             dtOuter = new DataTable("采购订单");
@@ -305,10 +305,10 @@ namespace mySystem.Process.Order
             dtOuter.Rows.Add(dr);
             daOuter.Update(dtOuter);
             OleDbCommand comm = new OleDbCommand();
-            comm.Connection = conn;
+            comm.Connection = mySystem.Parameter.connOle;
             comm.CommandText = "select @@identity";
             int id = (Int32)comm.ExecuteScalar();
-            daOuter = new OleDbDataAdapter("select * from 采购订单 where ID=" + id, conn);
+            daOuter = new OleDbDataAdapter("select * from 采购订单 where ID=" + id, mySystem.Parameter.connOle);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("采购订单");
             daOuter.Fill(dtOuter);
@@ -351,7 +351,7 @@ namespace mySystem.Process.Order
         void generateInnerData(String 供应商)
         {
 
-            daInner = new OleDbDataAdapter("select * from 采购订单详细信息 where 0=1", conn);
+            daInner = new OleDbDataAdapter("select * from 采购订单详细信息 where 0=1", mySystem.Parameter.connOle);
             cbInner = new OleDbCommandBuilder(daInner);
             bsInner = new BindingSource();
             dtInner = new DataTable("采购订单详细信息");
@@ -360,7 +360,7 @@ namespace mySystem.Process.Order
 
 
             string sql = @"select * from 采购批准单详细信息 where 推荐供应商='{0}' and 状态='未采购'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, 供应商), conn);
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, 供应商), mySystem.Parameter.connOle);
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -368,7 +368,7 @@ namespace mySystem.Process.Order
             {
                 OleDbDataAdapter daT;
                 DataTable dtT;
-                daT = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + dr["存货代码"] + "'", conn);
+                daT = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + dr["存货代码"] + "'", mySystem.Parameter.connOle);
                 dtT = new DataTable();
                 daT.Fill(dtT);
                 string 主计量 = "";
@@ -406,7 +406,7 @@ namespace mySystem.Process.Order
                 //dr["状态"] = "采购订单编制中";
                 // 自由订单部分
                 int 采购批准单ID = Convert.ToInt32(dr["采购批准单ID"]);
-                daT = new OleDbDataAdapter("select * from 采购批准单实际购入信息 where 采购批准单ID=" + 采购批准单ID + " and 产品代码='" + dr["存货代码"].ToString() + "'", conn);
+                daT = new OleDbDataAdapter("select * from 采购批准单实际购入信息 where 采购批准单ID=" + 采购批准单ID + " and 产品代码='" + dr["存货代码"].ToString() + "'", mySystem.Parameter.connOle);
                 dtT = new DataTable();
                 daT.Fill(dtT);
                 if(dtT.Rows.Count>0){
@@ -441,7 +441,7 @@ namespace mySystem.Process.Order
             da.Update(dt);
 
             sql = @"select * from 采购批准单借用订单详细信息 where 推荐供应商='{0}' and 状态='未采购'";
-            da = new OleDbDataAdapter(string.Format(sql, 供应商), conn);
+            da = new OleDbDataAdapter(string.Format(sql, 供应商), mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
             dt = new DataTable();
             da.Fill(dt);
@@ -449,7 +449,7 @@ namespace mySystem.Process.Order
             {
                 OleDbDataAdapter daT;
                 DataTable dtT;
-                daT = new OleDbDataAdapter("select * from 设置组件存货档案 where 存货编码='" + dr["存货代码"] + "'", conn);
+                daT = new OleDbDataAdapter("select * from 设置组件存货档案 where 存货编码='" + dr["存货代码"] + "'", mySystem.Parameter.connOle);
                 dtT = new DataTable();
                 daT.Fill(dtT);
                 string 主计量 = "";
@@ -466,11 +466,11 @@ namespace mySystem.Process.Order
                 ndr["预计到货时间"] = dr["预计到货时间"];
                 ndr["关联的采购批转单借用单ID"] = dr["ID"];
                 ndr["主计量"] = 主计量;
-                daT = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dr["用途"].ToString() + "'", conn);
+                daT = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dr["用途"].ToString() + "'", mySystem.Parameter.connOle);
                 dtT = new DataTable();
                 daT.Fill(dtT);
                 int xsID = Convert.ToInt32(dtT.Rows[0]["ID"]);
-                daT = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + xsID + " and 存货代码='" + dr["存货代码"].ToString() + "'", conn);
+                daT = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + xsID + " and 存货代码='" + dr["存货代码"].ToString() + "'", mySystem.Parameter.connOle);
                 dtT = new DataTable();
                 daT.Fill(dtT);
                 double 价税合计 = Convert.ToDouble(dtT.Rows[0]["价税合计"]);
@@ -485,7 +485,7 @@ namespace mySystem.Process.Order
 
             
             daInner.Update(dtInner);
-            daInner = new OleDbDataAdapter("select * from 采购订单详细信息 where 采购订单ID=" + dtOuter.Rows[0]["ID"], conn);
+            daInner = new OleDbDataAdapter("select * from 采购订单详细信息 where 采购订单ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             cbInner = new OleDbCommandBuilder(daInner);
             bsInner = new BindingSource();
             dtInner = new DataTable("采购订单详细信息");
@@ -524,7 +524,7 @@ namespace mySystem.Process.Order
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 采购订单 where ID="+id, conn);
+            daOuter = new OleDbDataAdapter("select * from 采购订单 where ID=" + id, mySystem.Parameter.connOle);
             cbOuter = new OleDbCommandBuilder(daOuter);
             bsOuter = new BindingSource();
             dtOuter = new DataTable("采购订单");
@@ -535,7 +535,7 @@ namespace mySystem.Process.Order
 
         void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 采购订单详细信息 where 采购订单ID=" + id, conn);
+            daInner = new OleDbDataAdapter("select * from 采购订单详细信息 where 采购订单ID=" + id, mySystem.Parameter.connOle);
             cbInner = new OleDbCommandBuilder(daInner);
             bsInner = new BindingSource();
             dtInner = new DataTable("采购订单详细信息");
@@ -553,7 +553,7 @@ namespace mySystem.Process.Order
 
 
             string sql = @"select * from 采购批准单详细信息 where 推荐供应商='{0}' and 状态='未采购'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _供应商), conn);
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _供应商), mySystem.Parameter.connOle);
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             DataTable dt = new DataTable();
             da.Fill(dt);
@@ -584,7 +584,7 @@ namespace mySystem.Process.Order
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='采购订单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], conn);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='采购订单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
 
@@ -638,7 +638,7 @@ namespace mySystem.Process.Order
                     if (dr["关联的采购批准详细信息ID"] == DBNull.Value)
                     {
                         xid = Convert.ToInt32(dr["关联的采购批转单借用单ID"]);
-                        da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where ID=" + xid, conn);
+                        da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where ID=" + xid, mySystem.Parameter.connOle);
                         cb = new OleDbCommandBuilder(da);
                         dt = new DataTable();
                         da.Fill(dt);
@@ -648,7 +648,7 @@ namespace mySystem.Process.Order
                         // 更新借用日志
                         string 产品代码 = dt.Rows[0]["存货代码"].ToString();
                         string 用途 = dt.Rows[0]["用途"].ToString();
-                        OleDbDataAdapter daT = new OleDbDataAdapter("select * from 库存台帐 where 产品代码='" + 产品代码 + "' and 用途='" + 用途 + "'", conn);
+                        OleDbDataAdapter daT = new OleDbDataAdapter("select * from 库存台帐 where 产品代码='" + 产品代码 + "' and 用途='" + 用途 + "'", mySystem.Parameter.connOle);
                         OleDbCommandBuilder cbT = new OleDbCommandBuilder(daT);
                         DataTable dtT = new DataTable();
                         daT.Fill(dtT);
@@ -667,7 +667,7 @@ namespace mySystem.Process.Order
                     else
                     {
                         xid = Convert.ToInt32(dr["关联的采购批准详细信息ID"]);
-                        da = new OleDbDataAdapter("select * from 采购批准单详细信息 where ID=" + xid, conn);
+                        da = new OleDbDataAdapter("select * from 采购批准单详细信息 where ID=" + xid, mySystem.Parameter.connOle);
                         cb = new OleDbCommandBuilder(da);
                         dt = new DataTable();
                         da.Fill(dt);
@@ -692,7 +692,7 @@ namespace mySystem.Process.Order
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='采购订单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], conn);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='采购订单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
@@ -709,7 +709,7 @@ namespace mySystem.Process.Order
             string prefix = "PAPO";
             string yymmdd = DateTime.Now.ToString("yy");
             string sql = "select * from 采购订单 where 采购合同号 like '{0}%' order by ID";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), conn);
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -897,7 +897,7 @@ namespace mySystem.Process.Order
                     }
                     if (!is借用)
                     {
-                        da = new OleDbDataAdapter("select * from 采购批准单详细信息 where ID=" + 批准单详细信息id,conn);
+                        da = new OleDbDataAdapter("select * from 采购批准单详细信息 where ID=" + 批准单详细信息id, mySystem.Parameter.connOle);
                         cb = new OleDbCommandBuilder(da);
                         dt = new DataTable();
                         da.Fill(dt);
@@ -910,7 +910,7 @@ namespace mySystem.Process.Order
                     }
                     else
                     {
-                        da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where ID=" + 批准单详细信息id, conn);
+                        da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where ID=" + 批准单详细信息id, mySystem.Parameter.connOle);
                         cb = new OleDbCommandBuilder(da);
                         dt = new DataTable();
                         da.Fill(dt);

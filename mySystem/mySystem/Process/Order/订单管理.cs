@@ -14,9 +14,9 @@ namespace 订单和库存管理
 {
     public partial class 订单管理 : mySystem.BaseForm
     {
-        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-        OleDbConnection conn;
+//        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//        OleDbConnection conn;
         OleDbDataAdapter da;
         OleDbCommandBuilder cb;
         DataTable dt;
@@ -28,8 +28,8 @@ namespace 订单和库存管理
         {
             InitializeComponent();
             // 连接数据库
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
             tabControl1.SelectedIndexChanged += new EventHandler(tabControl1_SelectedIndexChanged);
             switch (tabControl1.SelectedIndex)
             {
@@ -218,7 +218,7 @@ namespace 订单和库存管理
         private void btn添加采购需求单_Click(object sender, EventArgs e)
         {
             // 获取所有审核完成的订单
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 状态='审核完成'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 状态='审核完成'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             try
@@ -282,7 +282,7 @@ namespace 订单和库存管理
             DataTable dt未批准需求单详细信息;
             Hashtable ht未批准需求单号2详细信息条数, ht未批准需求单号ID2详细信息,ht未批准需求单号2ID;
             dt未批准需求单详细信息 = new DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 采购需求单详细信息 where 批准状态='未批准'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 采购需求单详细信息 where 批准状态='未批准'", mySystem.Parameter.connOle);
             da.Fill(dt未批准需求单详细信息);
 
             ht未批准需求单号ID2详细信息 = new Hashtable();
@@ -291,7 +291,7 @@ namespace 订单和库存管理
             foreach (DataRow dr in dt未批准需求单详细信息.Rows)
             {
                 int id = Convert.ToInt32(dr["采购需求单ID"]);
-                da = new OleDbDataAdapter("select * from 采购需求单 where ID="+id,conn);
+                da = new OleDbDataAdapter("select * from 采购需求单 where ID=" + id, mySystem.Parameter.connOle);
                 DataTable tmp=new DataTable();
                 da.Fill(tmp);
                 if (tmp.Rows.Count == 0)
@@ -379,7 +379,7 @@ namespace 订单和库存管理
             DataTable dt未采购批准单详细信息, dt未采购借用单详细信息;
             Hashtable ht供应商2详细信息条数, ht供应商2详细信息;
             dt未采购批准单详细信息 = new DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 采购批准单详细信息 where 状态='未采购'", conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 采购批准单详细信息 where 状态='未采购'", mySystem.Parameter.connOle);
             da.Fill(dt未采购批准单详细信息);
 
             ht供应商2详细信息 = new Hashtable();
@@ -387,7 +387,7 @@ namespace 订单和库存管理
             foreach (DataRow dr in dt未采购批准单详细信息.Rows)
             {
                 int id = Convert.ToInt32(dr["采购批准单ID"]);
-                da = new OleDbDataAdapter("select * from 采购批准单 where ID=" + id, conn);
+                da = new OleDbDataAdapter("select * from 采购批准单 where ID=" + id, mySystem.Parameter.connOle);
                 DataTable tmp = new DataTable();
                 da.Fill(tmp);
                 if (tmp.Rows.Count == 0)
@@ -411,12 +411,12 @@ namespace 订单和库存管理
 
 
             dt未采购借用单详细信息 = new DataTable();
-            da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where 状态='未采购'", conn);
+            da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where 状态='未采购'", mySystem.Parameter.connOle);
             da.Fill(dt未采购借用单详细信息);
             foreach (DataRow dr in dt未采购借用单详细信息.Rows)
             {
                 int id = Convert.ToInt32(dr["采购批准单ID"]);
-                da = new OleDbDataAdapter("select * from 采购批准单 where ID=" + id, conn);
+                da = new OleDbDataAdapter("select * from 采购批准单 where ID=" + id, mySystem.Parameter.connOle);
                 DataTable tmp = new DataTable();
                 da.Fill(tmp);
                 if (tmp.Rows.Count == 0)
