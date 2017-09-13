@@ -35,6 +35,7 @@ namespace mySystem.Query
             textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
             comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
             comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+            dgv.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
         }
 
         void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -210,7 +211,7 @@ namespace mySystem.Query
                 MessageBox.Show("输入有误，请重新输入"+ee.Message+"\n"+ee.StackTrace, "错误");
                 return;
             }
-
+            Utility.setDataGridViewAutoSizeMode(dgv);
         }
 
         // 各表查询
@@ -279,74 +280,77 @@ namespace mySystem.Query
 
 
         //双击弹出界面
-        private void dgv_DoubleClick(object sender, EventArgs e)
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                int selectIndex = this.dgv.CurrentRow.Index;
-                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-                switch (tableName)
+                try
                 {
-                    case "制袋生产领料记录":
-                        MaterialRecord form1 = new MaterialRecord(mainform, ID);
-                        form1.Show();
-                        break;
-                    case "产品内包装记录":
-                        CSBag_InnerPackaging form2 = new CSBag_InnerPackaging(mainform, ID);
-                        form2.Show();
-                        break;
-                    case "CS制袋日报表":
-                        //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
-                        //form3.Show();
-                        break;
-                    case "产品外观和尺寸检验记录":
-                        产品外观和尺寸检验记录 form4 = new 产品外观和尺寸检验记录(mainform, ID);
-                        form4.Show();
-                        break;
-                    case "产品热合强度检验记录":
-                        产品热合强度检验记录 form5 = new 产品热合强度检验记录(mainform, ID);
-                        form5.Show();
-                        break;
-                    case "2#制袋机开机前确认表":
-                        CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform, ID);
-                        form6.Show();
-                        break;
-                    case "2#制袋机运行记录":
-                        RunningRecord form7 = new RunningRecord(mainform, ID);
-                        form7.Show();
-                        break;
-                    case "清场记录":
-                        清场记录 myform = new 清场记录(mainform, ID);
-                        myform.Show();
-                        break;
-                    case "制袋工序批生产记录":
-                        Record_batch_bag form8 = new Record_batch_bag(mainform, ID);
-                        form8.Show();
-                        break;
-                    case "产品外包装记录":
-                        CS产品外包装记录 form9 = new CS产品外包装记录(mainform, ID);
-                        form9.ShowDialog();
-                        break;
-                    case "生产退料记录":
-                        CS生产退料记录 form10 = new CS生产退料记录(mainform, ID);
-                        form10.ShowDialog();
-                        break;
-                    case "洁净区温湿度记录":
-                        CS洁净区温湿度记录 form11 = new CS洁净区温湿度记录(mainform, ID);
-                        form11.ShowDialog();
-                        break;
-                    case "岗位交接班记录":
-                        HandOver form12 = new HandOver(mainform, ID);
-                        form12.ShowDialog();
-                        break;
+                    int selectIndex = this.dgv.CurrentRow.Index;
+                    int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                    switch (tableName)
+                    {
+                        case "制袋生产领料记录":
+                            MaterialRecord form1 = new MaterialRecord(mainform, ID);
+                            form1.Show();
+                            break;
+                        case "产品内包装记录":
+                            CSBag_InnerPackaging form2 = new CSBag_InnerPackaging(mainform, ID);
+                            form2.Show();
+                            break;
+                        case "CS制袋日报表":
+                            //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
+                            //form3.Show();
+                            break;
+                        case "产品外观和尺寸检验记录":
+                            产品外观和尺寸检验记录 form4 = new 产品外观和尺寸检验记录(mainform, ID);
+                            form4.Show();
+                            break;
+                        case "产品热合强度检验记录":
+                            产品热合强度检验记录 form5 = new 产品热合强度检验记录(mainform, ID);
+                            form5.Show();
+                            break;
+                        case "2#制袋机开机前确认表":
+                            CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform, ID);
+                            form6.Show();
+                            break;
+                        case "2#制袋机运行记录":
+                            RunningRecord form7 = new RunningRecord(mainform, ID);
+                            form7.Show();
+                            break;
+                        case "清场记录":
+                            清场记录 myform = new 清场记录(mainform, ID);
+                            myform.Show();
+                            break;
+                        case "制袋工序批生产记录":
+                            Record_batch_bag form8 = new Record_batch_bag(mainform, ID);
+                            form8.Show();
+                            break;
+                        case "产品外包装记录":
+                            CS产品外包装记录 form9 = new CS产品外包装记录(mainform, ID);
+                            form9.ShowDialog();
+                            break;
+                        case "生产退料记录":
+                            CS生产退料记录 form10 = new CS生产退料记录(mainform, ID);
+                            form10.ShowDialog();
+                            break;
+                        case "洁净区温湿度记录":
+                            CS洁净区温湿度记录 form11 = new CS洁净区温湿度记录(mainform, ID);
+                            form11.ShowDialog();
+                            break;
+                        case "岗位交接班记录":
+                            HandOver form12 = new HandOver(mainform, ID);
+                            form12.ShowDialog();
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                }
             }
         }
 

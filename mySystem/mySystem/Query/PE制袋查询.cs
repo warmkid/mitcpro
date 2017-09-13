@@ -33,6 +33,7 @@ namespace mySystem.Query
             textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
             comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
             comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+            dgv.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
         }
 
         void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -207,7 +208,7 @@ namespace mySystem.Query
                 MessageBox.Show("输入有误，请重新输入" + ee.Message + "\n" + ee.StackTrace, "错误");
                 return;
             }
-
+            Utility.setDataGridViewAutoSizeMode(dgv);
         }
 
         // 各表查询
@@ -277,74 +278,77 @@ namespace mySystem.Query
         }
 
         //双击弹出界面
-        private void dgv_DoubleClick(object sender, EventArgs e)
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                int selectIndex = this.dgv.CurrentRow.Index;
-                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-                switch (tableName)
+                try
                 {
-                    case "生产领料使用记录":
-                        LDPEBag_materialrecord material = new LDPEBag_materialrecord(mainform, ID);
-                        material.Show();
-                        break;
-                    case "产品内包装记录":
-                        LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging(mainform, ID);
-                        inner.Show();
-                        break;
-                    case "LDPE生产日报表":
-                        //LDPEBag_dailyreport daily = new LDPEBag_dailyreport(mainform, ID);
-                        //daily.Show();
-                        break;
-                    case "1#制袋机开机前确认表":
-                        LDPEBag_checklist check = new LDPEBag_checklist(mainform, ID);
-                        check.Show();
-                        break;
-                    case "1#制袋机运行记录":
-                        LDPEBag_runningrecord run = new LDPEBag_runningrecord(mainform, ID);
-                        run.Show();
-                        break;
-                    case "清场记录":
-                        LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance(mainform, ID);
-                        cleanrance.Show();
-                        break;
-                    case "制袋工序批生产记录":
-                        LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform, ID);
-                        batch.Show();
-                        break;
-                    case "产品热合强度检验记录":
-                        产品热合强度检验记录 form7 = new 产品热合强度检验记录(mainform, ID);
-                        form7.Show();
-                        break;
-                    case "产品外观和尺寸检验记录":
-                        产品外观和尺寸检验记录 form8 = new 产品外观和尺寸检验记录(mainform, ID);
-                        form8.Show();
-                        break;
-                    case "产品外包装记录":
-                        LDPE产品外包装记录 form9 = new LDPE产品外包装记录(mainform, ID);
-                        form9.ShowDialog();
-                        break;
-                    case "生产退料记录":
-                        LDPE生产退料记录 form10 = new LDPE生产退料记录(mainform, ID);
-                        form10.ShowDialog();
-                        break;
-                    case "洁净区温湿度记录":
-                        LDPE洁净区温湿度记录 form11 = new LDPE洁净区温湿度记录(mainform, ID);
-                        form11.ShowDialog();
-                        break;
-                    case "岗位交接班记录":
-                        HandOver form12 = new HandOver(mainform, ID);
-                        form12.Show();
-                        break;
+                    int selectIndex = this.dgv.CurrentRow.Index;
+                    int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                    switch (tableName)
+                    {
+                        case "生产领料使用记录":
+                            LDPEBag_materialrecord material = new LDPEBag_materialrecord(mainform, ID);
+                            material.Show();
+                            break;
+                        case "产品内包装记录":
+                            LDPEBag_innerpackaging inner = new LDPEBag_innerpackaging(mainform, ID);
+                            inner.Show();
+                            break;
+                        case "LDPE生产日报表":
+                            //LDPEBag_dailyreport daily = new LDPEBag_dailyreport(mainform, ID);
+                            //daily.Show();
+                            break;
+                        case "1#制袋机开机前确认表":
+                            LDPEBag_checklist check = new LDPEBag_checklist(mainform, ID);
+                            check.Show();
+                            break;
+                        case "1#制袋机运行记录":
+                            LDPEBag_runningrecord run = new LDPEBag_runningrecord(mainform, ID);
+                            run.Show();
+                            break;
+                        case "清场记录":
+                            LDPEBag_cleanrance cleanrance = new LDPEBag_cleanrance(mainform, ID);
+                            cleanrance.Show();
+                            break;
+                        case "制袋工序批生产记录":
+                            LDPEBag_batchproduction batch = new LDPEBag_batchproduction(mainform, ID);
+                            batch.Show();
+                            break;
+                        case "产品热合强度检验记录":
+                            产品热合强度检验记录 form7 = new 产品热合强度检验记录(mainform, ID);
+                            form7.Show();
+                            break;
+                        case "产品外观和尺寸检验记录":
+                            产品外观和尺寸检验记录 form8 = new 产品外观和尺寸检验记录(mainform, ID);
+                            form8.Show();
+                            break;
+                        case "产品外包装记录":
+                            LDPE产品外包装记录 form9 = new LDPE产品外包装记录(mainform, ID);
+                            form9.ShowDialog();
+                            break;
+                        case "生产退料记录":
+                            LDPE生产退料记录 form10 = new LDPE生产退料记录(mainform, ID);
+                            form10.ShowDialog();
+                            break;
+                        case "洁净区温湿度记录":
+                            LDPE洁净区温湿度记录 form11 = new LDPE洁净区温湿度记录(mainform, ID);
+                            form11.ShowDialog();
+                            break;
+                        case "岗位交接班记录":
+                            HandOver form12 = new HandOver(mainform, ID);
+                            form12.Show();
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
                 }
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                }
             }
         }
 

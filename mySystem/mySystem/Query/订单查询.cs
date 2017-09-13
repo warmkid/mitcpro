@@ -109,6 +109,8 @@ namespace mySystem.Query
             dgv采购订单.Columns["关联的采购批准详细信息ID"].Visible = false;
             dgv采购订单.Columns["关联的采购批转单借用单ID"].Visible = false;
             dgv采购订单.Columns["进度"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
+            dgv采购订单.RowHeadersVisible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv采购订单);
             int cidx = dgv采购订单.Columns["金额"].Index;
             for (int i = 0; i <= cidx; ++i)
             {
@@ -121,6 +123,8 @@ namespace mySystem.Query
         {
             //dgv销售订单.Columns["ID"].Visible = false;
             //dgv销售订单.Columns["销售订单ID"].Visible = false;
+            dgv销售订单.RowHeadersVisible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv销售订单);
         }
 
         private void btn销售订单查询_Click(object sender, EventArgs e)

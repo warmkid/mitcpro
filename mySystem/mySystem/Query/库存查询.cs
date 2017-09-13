@@ -136,11 +136,14 @@ namespace mySystem.Query
 
         void dgv检验台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgv检验台账.RowHeadersVisible = false;
             dgv检验台账.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv检验台账);
         }
 
         void dgv库存台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgv库存台账.RowHeadersVisible = false;
             dgv库存台账.Columns["ID"].Visible = false;
             // readonly
             foreach (DataGridViewColumn dgvc in dgv库存台账.Columns)
@@ -165,17 +168,21 @@ namespace mySystem.Query
                     dgvr.DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
-            
+            Utility.setDataGridViewAutoSizeMode(dgv库存台账);
         }
 
         void dgv出库单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgv出库单.RowHeadersVisible = false;
             dgv出库单.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv出库单);
         }
 
         void dgv退货台账_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dgv退货台账.RowHeadersVisible = false;
             dgv退货台账.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dgv退货台账);
         }
 
 

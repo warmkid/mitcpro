@@ -33,6 +33,7 @@ namespace mySystem.Query
             textBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(textBox1_PreviewKeyDown);
             comboBox1.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox1_PreviewKeyDown);
             comboBox2.PreviewKeyDown += new PreviewKeyDownEventHandler(comboBox2_PreviewKeyDown);
+            dgv.CellDoubleClick += new DataGridViewCellEventHandler(dgv_CellDoubleClick);
         }
 
         void comboBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -220,7 +221,7 @@ namespace mySystem.Query
                 MessageBox.Show("输入有误，请重新输入" + ee.Message + "\n" + ee.StackTrace, "错误");
                 return;
             }
-
+            Utility.setDataGridViewAutoSizeMode(dgv);
         }
 
         // 各表查询
@@ -289,83 +290,86 @@ namespace mySystem.Query
         }
 
         //双击弹出界面
-        private void dgv_DoubleClick(object sender, EventArgs e)
+        private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            try
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                int selectIndex = this.dgv.CurrentRow.Index;
-                int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
-                switch (tableName)
+                try
                 {
-                    case "生产领料使用记录":
-                        PTVBag_materialrecord material = new PTVBag_materialrecord(mainform, ID);
-                        material.Show();
-                        break;
-                    case "产品内包装记录":
-                        PTVBag_innerpackaging inner = new PTVBag_innerpackaging(mainform, ID);
-                        inner.Show();
-                        break;
-                    case "PTV生产日报表":
-                        PTVBag_dailyreport daily = new PTVBag_dailyreport(mainform, ID);
-                        daily.Show();
-                        break;
-                    case "PTV生产开机确认表":
-                        PTVBag_checklist check = new PTVBag_checklist(mainform, ID);
-                        check.Show();
-                        break;
-                    case "底封机运行记录":
-                        PTVBag_runningrecordofdf df = new PTVBag_runningrecordofdf(mainform, ID);
-                        df.Show();
-                        break;
-                    case "圆口焊接机运行记录":
-                        PTVBag_runningrecordofyk yk = new PTVBag_runningrecordofyk(mainform, ID);
-                        yk.Show();
-                        break;
-                    case "泄漏测试记录":
-                        PTVBag_testrecordofdisclose xlDlg = new PTVBag_testrecordofdisclose(mainform, ID);
-                        xlDlg.Show();
-                        break;
-                    case "超声波焊接记录":
-                        PTVBag_weldingrecordofwave wave = new PTVBag_weldingrecordofwave(mainform, ID);
-                        wave.Show();
-                        break;
-                    case "瓶口焊接机运行记录":
-                        PTVBag_runningrecordofpk pk = new PTVBag_runningrecordofpk(mainform, ID);
-                        pk.Show();
-                        break;
-                    case "清场记录":
-                        PTVBag_clearance clearance = new PTVBag_clearance(mainform, ID);
-                        clearance.Show();
-                        break;
-                    case "制袋工序批生产记录":
-                        PTVBag_batchproduction batch = new PTVBag_batchproduction(mainform, ID);
-                        batch.Show();
-                        break;
-                    case "产品外包装记录":
-                        PTV产品外包装记录 outer = new PTV产品外包装记录(mainform, ID);
-                        outer.Show();
-                        break;
-                    case "生产退料记录":
-                        PTV生产退料记录 tuiliaoform = new PTV生产退料记录(mainform, ID);
-                        tuiliaoform.Show();
-                        break;
-                    case "洁净区温湿度记录":
-                        PTV洁净区温湿度记录 wenshiduform = new PTV洁净区温湿度记录(mainform, ID);
-                        wenshiduform.Show();
-                        break;
-                    case "岗位交接班记录":
-                        HandOver ho = new HandOver(mainform, ID);
-                        ho.Show();
-                        break;
+                    int selectIndex = this.dgv.CurrentRow.Index;
+                    int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
+                    switch (tableName)
+                    {
+                        case "生产领料使用记录":
+                            PTVBag_materialrecord material = new PTVBag_materialrecord(mainform, ID);
+                            material.Show();
+                            break;
+                        case "产品内包装记录":
+                            PTVBag_innerpackaging inner = new PTVBag_innerpackaging(mainform, ID);
+                            inner.Show();
+                            break;
+                        case "PTV生产日报表":
+                            PTVBag_dailyreport daily = new PTVBag_dailyreport(mainform, ID);
+                            daily.Show();
+                            break;
+                        case "PTV生产开机确认表":
+                            PTVBag_checklist check = new PTVBag_checklist(mainform, ID);
+                            check.Show();
+                            break;
+                        case "底封机运行记录":
+                            PTVBag_runningrecordofdf df = new PTVBag_runningrecordofdf(mainform, ID);
+                            df.Show();
+                            break;
+                        case "圆口焊接机运行记录":
+                            PTVBag_runningrecordofyk yk = new PTVBag_runningrecordofyk(mainform, ID);
+                            yk.Show();
+                            break;
+                        case "泄漏测试记录":
+                            PTVBag_testrecordofdisclose xlDlg = new PTVBag_testrecordofdisclose(mainform, ID);
+                            xlDlg.Show();
+                            break;
+                        case "超声波焊接记录":
+                            PTVBag_weldingrecordofwave wave = new PTVBag_weldingrecordofwave(mainform, ID);
+                            wave.Show();
+                            break;
+                        case "瓶口焊接机运行记录":
+                            PTVBag_runningrecordofpk pk = new PTVBag_runningrecordofpk(mainform, ID);
+                            pk.Show();
+                            break;
+                        case "清场记录":
+                            PTVBag_clearance clearance = new PTVBag_clearance(mainform, ID);
+                            clearance.Show();
+                            break;
+                        case "制袋工序批生产记录":
+                            PTVBag_batchproduction batch = new PTVBag_batchproduction(mainform, ID);
+                            batch.Show();
+                            break;
+                        case "产品外包装记录":
+                            PTV产品外包装记录 outer = new PTV产品外包装记录(mainform, ID);
+                            outer.Show();
+                            break;
+                        case "生产退料记录":
+                            PTV生产退料记录 tuiliaoform = new PTV生产退料记录(mainform, ID);
+                            tuiliaoform.Show();
+                            break;
+                        case "洁净区温湿度记录":
+                            PTV洁净区温湿度记录 wenshiduform = new PTV洁净区温湿度记录(mainform, ID);
+                            wenshiduform.Show();
+                            break;
+                        case "岗位交接班记录":
+                            HandOver ho = new HandOver(mainform, ID);
+                            ho.Show();
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
+
                 }
-
-            }
-            catch (Exception ee)
-            {
-                MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                catch (Exception ee)
+                {
+                    MessageBox.Show(ee.Message + "\n" + ee.StackTrace);
+                }
             }
         }
 
