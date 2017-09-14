@@ -892,6 +892,8 @@ namespace mySystem.Extruction.Process
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
             setDataGridViewRowNums();
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            
         }
 
         void innerBind2()
@@ -904,6 +906,7 @@ namespace mySystem.Extruction.Process
             dataGridView2.DataSource = bs_prodlist2.DataSource;
             setDataGridViewColumns2();
             setDataGridViewRowNums2();
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
         //设置DataGridView中下拉框
         void setDataGridViewCombox()
