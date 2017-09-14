@@ -52,30 +52,42 @@ namespace 订单和库存管理
 
         void dgv出库单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dgv出库单["ID", e.RowIndex].Value);
-            mySystem.Process.Order.出库单 form = new mySystem.Process.Order.出库单(mainform, id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dgv出库单["ID", e.RowIndex].Value);
+                mySystem.Process.Order.出库单 form = new mySystem.Process.Order.出库单(mainform, id);
+                form.Show();
+            }
         }
 
         void dgv采购订单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dgv采购订单["ID", e.RowIndex].Value);
-            mySystem.Process.Order.采购订单 form = new mySystem.Process.Order.采购订单(mainform, id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dgv采购订单["ID", e.RowIndex].Value);
+                mySystem.Process.Order.采购订单 form = new mySystem.Process.Order.采购订单(mainform, id);
+                form.Show();
+            }
         }
 
         void dgv采购批准单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dgv采购批准单["ID", e.RowIndex].Value);
-            mySystem.Process.Order.采购批准单 form = new mySystem.Process.Order.采购批准单(mainform, id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dgv采购批准单["ID", e.RowIndex].Value);
+                mySystem.Process.Order.采购批准单 form = new mySystem.Process.Order.采购批准单(mainform, id);
+                form.Show();
+            }
         }
 
         void dgv采购需求单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            string 订单号 = dgv采购需求单["用途", e.RowIndex].Value.ToString();
-            mySystem.Process.Order.采购需求单 form = new mySystem.Process.Order.采购需求单(mainform, 订单号);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                string 订单号 = dgv采购需求单["用途", e.RowIndex].Value.ToString();
+                mySystem.Process.Order.采购需求单 form = new mySystem.Process.Order.采购需求单(mainform, 订单号);
+                form.Show();
+            }
         }
 
         void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -104,9 +116,12 @@ namespace 订单和库存管理
         #region 销售订单
         void dgv销售订单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            int id = Convert.ToInt32(dgv销售订单[0, e.RowIndex].Value);
-            mySystem.Process.Order.销售订单 form = new mySystem.Process.Order.销售订单(mainform, id);
-            form.Show();
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dgv销售订单[0, e.RowIndex].Value);
+                mySystem.Process.Order.销售订单 form = new mySystem.Process.Order.销售订单(mainform, id);
+                form.Show();
+            }
         }
 
         void init销售订单()
@@ -133,6 +148,7 @@ namespace 订单和库存管理
         void dgv销售订单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDGV销售订单格式();
+            mySystem.Utility.setDataGridViewAutoSizeMode(dgv销售订单);
         }
 
         private void setDGV销售订单格式()
@@ -180,6 +196,7 @@ namespace 订单和库存管理
         void dgv采购需求单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDGV采购需求单格式();
+            mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购需求单);
         }
 
         private void setDGV采购需求单格式()
@@ -263,6 +280,7 @@ namespace 订单和库存管理
         void dgv采购批准单_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDGV采购批准单格式();
+            mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购批准单);
         }
 
         private void setDGV采购批准单格式()
@@ -369,6 +387,7 @@ namespace 订单和库存管理
         {
             dgv采购订单.AllowUserToAddRows = false;
             dgv采购订单.Columns["ID"].Visible = false;
+            mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购订单);
         }
 
         private void btn采购订单添加_Click(object sender, EventArgs e)
@@ -496,6 +515,7 @@ namespace 订单和库存管理
         {
             dgv出库单.AllowUserToAddRows = false;
             dgv出库单.Columns["ID"].Visible = false;
+            mySystem.Utility.setDataGridViewAutoSizeMode(dgv出库单);
         }
 
         private DataTable get采购出库单(DateTime start, DateTime end, string 销售订单号, string statue)
