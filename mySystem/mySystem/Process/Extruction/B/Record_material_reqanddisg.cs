@@ -857,6 +857,7 @@ namespace mySystem.Extruction.Process
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewRowNums();
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
         // 设置DataGridView中各列的格式
         void setDataGridViewColumns()
