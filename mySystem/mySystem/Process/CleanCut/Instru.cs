@@ -907,7 +907,7 @@ namespace mySystem.Process.CleanCut
 
             my.Cells[3, 1].Value = "指令编号：" + dt_prodinstr.Rows[0]["生产指令编号"].ToString();
             my.Cells[3, 3].Value = "生产设备：" + dt_prodinstr.Rows[0]["生产设备"].ToString();
-            my.Cells[3, 6].Value = Convert.ToDateTime(dt_prodinstr.Rows[0]["计划生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["计划生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["计划生产日期"].ToString()).Day.ToString() + "日";
+            my.Cells[3, 6].Value = Convert.ToDateTime(dt_prodinstr.Rows[0]["计划生产日期"]).ToString("yyyy年MM月dd日");
             for (int i = 0; i < dt_prodlist.Rows.Count; i++)
             {
                 my.Cells[6 + i, 1] = i + 1;
@@ -919,13 +919,10 @@ namespace mySystem.Process.CleanCut
             }
 
             my.Cells[10 + ind, 1].Value = "备注：" + dt_prodinstr.Rows[0]["备注"].ToString();
-            my.Cells[11 + ind, 1].Value = String.Format("编制人：{0}  {1}        审批人：{2}  {3}        接收人：{4}  {5}", 
-                dt_prodinstr.Rows[0]["编制人"].ToString(), 
-                Convert.ToDateTime(dt_prodinstr.Rows[0]["编制时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["编制时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["编制时间"].ToString()).Day.ToString() + "日",
-                dt_prodinstr.Rows[0]["审批人"].ToString(),
-                Convert.ToDateTime(dt_prodinstr.Rows[0]["审批时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["审批时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["审批时间"].ToString()).Day.ToString() + "日",
-                dt_prodinstr.Rows[0]["接收人"].ToString(),
-                Convert.ToDateTime(dt_prodinstr.Rows[0]["接收时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["接收时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt_prodinstr.Rows[0]["接收时间"].ToString()).Day.ToString() + "日");
+            my.Cells[11 + ind, 1].Value = String.Format("编制人：{0}  {1}        审批人：{2}  {3}        接收人：{4}  {5}",
+                dt_prodinstr.Rows[0]["编制人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["编制时间"]).ToString("yyyy年MM月dd日"),
+                dt_prodinstr.Rows[0]["审批人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["审批时间"]).ToString("yyyy年MM月dd日"),
+                dt_prodinstr.Rows[0]["接收人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["接收时间"]).ToString("yyyy年MM月dd日"));
         }
 
         //查找打印的表序号

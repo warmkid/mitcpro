@@ -505,6 +505,7 @@ namespace mySystem
 
         public static void setDataGridViewAutoSizeMode(DataGridView dgv, DataGridViewAutoSizeColumnMode mode=DataGridViewAutoSizeColumnMode.AllCells)
         {
+            dgv.RowHeadersVisible = false;
             foreach(DataGridViewColumn dgvc in dgv.Columns)
             {
                 dgvc.AutoSizeMode = mode;

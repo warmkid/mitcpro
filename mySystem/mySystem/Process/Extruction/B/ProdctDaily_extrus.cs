@@ -102,7 +102,7 @@ namespace mySystem
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                ht代码宽度.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["宽"]));
+                ht代码宽度.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["宽"].ToString()));
             }
         }
 
@@ -673,6 +673,7 @@ namespace mySystem
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         // 设置DataGridView中各列的格式

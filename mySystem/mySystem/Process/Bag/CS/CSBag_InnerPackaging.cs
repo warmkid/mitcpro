@@ -1084,26 +1084,26 @@ namespace mySystem.Process.Bag
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             int ind = 0;
-            if (dataGridView1.Rows.Count > 12)
+            if (dt记录详情.Rows.Count > 12)
             {
                 //在第7行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 12; i++)
+                for (int i = 0; i < dt记录详情.Rows.Count - 12; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 12;
+                ind = dt记录详情.Rows.Count - 12;
             }
-            
+
             //外表信息
             mysheet.Cells[3, 14].Value = dt记录.Rows[0]["生产指令编号"].ToString();
-            mysheet.Cells[4, 1].Value =  dt记录.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[4, 1].Value = dt记录.Rows[0]["产品代码"].ToString();
             mysheet.Cells[4, 4].Value = dt记录.Rows[0]["生产批号"].ToString();
             mysheet.Cells[4, 9].Value = Convert.ToBoolean(dt记录.Rows[0]["标签语言中文"]) ? "中文" : "英文";
             mysheet.Cells[4, 6].Value = Convert.ToDouble(dt记录.Rows[0]["内包装规格"]);
             mysheet.Cells[4, 15].Value = dt记录.Rows[0]["班次"].ToString();
-                //"标签：" + "中文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言中文"]) == true ? "☑" : "□") + "  英文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言英文"]) == true ? "☑" : "□");
+            //"标签：" + "中文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言中文"]) == true ? "☑" : "□") + "  英文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言英文"]) == true ? "☑" : "□");
             mysheet.Cells[4, 14].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy/MM/dd");
             //mysheet.Cells[18 + ind, 5].Value = dt记录.Rows[0]["产品数量包数合计A"].ToString(); 
             //mysheet.Cells[18 + ind, 6].Value = dt记录.Rows[0]["产品数量只数合计B"].ToString(); 
@@ -1123,21 +1123,21 @@ namespace mySystem.Process.Bag
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 mysheet.Cells[7 + i, 1] = i + 1;
-                mysheet.Cells[7 + i, 2] = dt记录详情.Rows[i]["生产开始时间"].ToString(); 
-                mysheet.Cells[7 + i, 3] = dt记录详情.Rows[i]["内包序号"].ToString(); 
+                mysheet.Cells[7 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产开始时间"]).ToString("yyyy/MM/dd");
+                mysheet.Cells[7 + i, 3] = dt记录详情.Rows[i]["内包序号"].ToString();
                 //mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["包装规格每包只数"].ToString(); 
-                mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["产品数量包数"].ToString(); 
-                mysheet.Cells[7 + i, 5] = dt记录详情.Rows[i]["产品数量只数"].ToString(); 
-                mysheet.Cells[7 + i, 6] = dt记录详情.Rows[i]["热封线不合格"].ToString(); 
-                mysheet.Cells[7 + i, 7] = dt记录详情.Rows[i]["黑点晶点"].ToString(); 
-                mysheet.Cells[7 + i, 8] = dt记录详情.Rows[i]["指示剂不良"].ToString(); 
-                mysheet.Cells[7 + i, 9] = dt记录详情.Rows[i]["其他"].ToString(); 
-                mysheet.Cells[7 + i, 10] = dt记录详情.Rows[i]["不良合计"].ToString(); 
+                mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["产品数量包数"].ToString();
+                mysheet.Cells[7 + i, 5] = dt记录详情.Rows[i]["产品数量只数"].ToString();
+                mysheet.Cells[7 + i, 6] = dt记录详情.Rows[i]["热封线不合格"].ToString();
+                mysheet.Cells[7 + i, 7] = dt记录详情.Rows[i]["黑点晶点"].ToString();
+                mysheet.Cells[7 + i, 8] = dt记录详情.Rows[i]["指示剂不良"].ToString();
+                mysheet.Cells[7 + i, 9] = dt记录详情.Rows[i]["其他"].ToString();
+                mysheet.Cells[7 + i, 10] = dt记录详情.Rows[i]["不良合计"].ToString();
                 mysheet.Cells[7 + i, 11] = dt记录详情.Rows[i]["包装袋热封线"].ToString().Equals("Yes") ? "√" : "×";
                 mysheet.Cells[7 + i, 12] = dt记录详情.Rows[i]["内标签"].ToString().Equals("Yes") ? "√" : "×";
                 mysheet.Cells[7 + i, 13] = dt记录详情.Rows[i]["内包装外观"].ToString().Equals("Yes") ? "√" : "×";
-                mysheet.Cells[7 + i, 14] = dt记录详情.Rows[i]["操作员"].ToString(); 
-                mysheet.Cells[7 + i, 15] = dt记录详情.Rows[i]["审核员"].ToString(); 
+                mysheet.Cells[7 + i, 14] = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[7 + i, 15] = dt记录详情.Rows[i]["审核员"].ToString();
 
             }
         }

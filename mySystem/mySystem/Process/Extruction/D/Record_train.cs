@@ -177,6 +177,8 @@ namespace mySystem.Extruction.Process
             bs_in.DataSource = dt_in;
             dataGridView2.DataSource = bs_in.DataSource;
             setDataGridViewColumns();
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
         //设置DataGridView中下拉框
         void setDataGridViewCombox()
@@ -298,6 +300,8 @@ namespace mySystem.Extruction.Process
 
             dt_in.Rows.Add(dr);
             setDataGridViewRowNums();
+            if (dataGridView2.Rows.Count > 0)
+                dataGridView2.FirstDisplayedScrollingRowIndex = dataGridView2.Rows.Count - 1;
         }
 
         private void bt删除_Click(object sender, EventArgs e)

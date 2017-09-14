@@ -207,6 +207,8 @@ namespace mySystem.Extruction.Process
             AddLineBtn.Enabled = false;
             SaveBtn.Enabled = true;
             DelLineBtn.Enabled = true;
+            if (TransportRecordView.Rows.Count > 0)
+                TransportRecordView.FirstDisplayedScrollingRowIndex = TransportRecordView.Rows.Count - 1;
         }
 
         public void DataShow()

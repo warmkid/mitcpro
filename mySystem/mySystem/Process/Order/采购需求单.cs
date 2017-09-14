@@ -337,6 +337,7 @@ namespace mySystem.Process.Order
 
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         private void getPeople()

@@ -459,6 +459,8 @@ namespace mySystem.Process.Order
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            Utility.setDataGridViewAutoSizeMode(dataGridView3);
         }
 
         private DataTable get未发货信息(int id, string dingdanhao)

@@ -1139,8 +1139,8 @@ namespace mySystem.Process.Bag.CS
             my.Cells[3, 1].Value = "产品名称：" + dtOuter.Rows[0]["产品名称"].ToString(); 
             my.Cells[3, 8].Value = dtOuter.Rows[0]["生产指令编号"].ToString(); 
             my.Cells[4, 1].Value = "生产工艺：" + dtOuter.Rows[0]["生产工艺"].ToString(); 
-            my.Cells[4, 3].Value = "生产设备：" + dtOuter.Rows[0]["生产设备"].ToString(); 
-            my.Cells[4, 8].Value = dtp计划生产日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[4, 3].Value = "生产设备：" + dtOuter.Rows[0]["生产设备"].ToString();
+            my.Cells[4, 8].Value = Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"]).ToString("yyyy年MM月dd日"); 
 
             //插入新行
             if (dtInner.Rows.Count > 1)
@@ -1211,14 +1211,11 @@ namespace mySystem.Process.Bag.CS
 
             my.Cells[17 + ind, 2].Value = dtOuter.Rows[0]["备注"].ToString();
             my.Cells[18 + ind, 1].Value = String.Format("编制人：{0}   {1}",
-                dtOuter.Rows[0]["操作员"].ToString(),
-                Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Day.ToString() + "日");
+                dtOuter.Rows[0]["操作员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["操作时间"]).ToString("yyyy年MM月dd日")); 
             my.Cells[18 + ind, 3].Value = String.Format("审批人：{0}   {1}",
-                dtOuter.Rows[0]["审核员"].ToString(),
-            Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Day.ToString() + "日");
+                dtOuter.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日")); 
             my.Cells[18 + ind, 7].Value = String.Format("接收人：{0}   {1}",
-                dtOuter.Rows[0]["接收人"].ToString(),
-            Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Day.ToString() + "日");
+                dtOuter.Rows[0]["接收人"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["接收时间"]).ToString("yyyy年MM月dd日"));
 
         }
 

@@ -913,7 +913,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(935, 761);
+            this.ClientSize = new System.Drawing.Size(935, 755);
             this.Controls.Add(this.cb委托单号);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.tb辐照批号);

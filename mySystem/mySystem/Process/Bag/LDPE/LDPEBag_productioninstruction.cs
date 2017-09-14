@@ -1111,7 +1111,7 @@ namespace mySystem.Process.Bag.LDPE
             int i插入行数 = 0;
             my.Cells[3, 1].Value = "指令编号：" + dtOuter.Rows[0]["生产指令编号"].ToString();
             my.Cells[3, 3].Value = "产品名称：" + dtOuter.Rows[0]["产品名称"].ToString();
-            my.Cells[3, 8].Value = Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"].ToString()).Day.ToString() + "日";
+            my.Cells[3, 8].Value = Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"]).ToString("yyyy年MM月dd日");
             my.Cells[4, 8].Value = dtOuter.Rows[0]["生产工艺"].ToString();
             my.Cells[5, 8].Value = dtOuter.Rows[0]["生产设备"].ToString();
 
@@ -1182,14 +1182,11 @@ namespace mySystem.Process.Bag.LDPE
             my.Cells[14 + ind, 10].Value = "白班：\n" + dtOuter.Rows[0]["外包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["外包夜班负责人"].ToString();
             my.Cells[18 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
             my.Cells[19 + ind, 1].Value = String.Format("编制人：{0}\n日期：{1}",
-                dtOuter.Rows[0]["操作员"].ToString(),
-                Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Day.ToString() + "日");
+                dtOuter.Rows[0]["操作员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["操作时间"]).ToString("yyyy年MM月dd日"));
             my.Cells[19 + ind, 3].Value = String.Format("审批人：{0}\n日期：{1}",
-                dtOuter.Rows[0]["审核员"].ToString(),
-            Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Day.ToString() + "日");
+                dtOuter.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日"));
             my.Cells[19 + ind, 7].Value = String.Format("接收人：{0}\n日期：{1}",
-                dtOuter.Rows[0]["接收人"].ToString(),
-            Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Day.ToString() + "日");
+                dtOuter.Rows[0]["接收人"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["接收时间"]).ToString("yyyy年MM月dd日"));
 
         }
 
