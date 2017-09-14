@@ -153,7 +153,7 @@ namespace mySystem.Process.Bag.BTV
 
             li可选可输的列 = new List<int>();
             //set 3ed column special 
-            li可选可输的列.Add(3);
+            //li可选可输的列.Add(3);
             
         }
 
@@ -252,14 +252,20 @@ namespace mySystem.Process.Bag.BTV
             hs产品代码 = new HashSet<string>();
             hs封边 = new HashSet<string>();
             //　产品代码
-            da = new OleDbDataAdapter("select * from 设置BPV产品编码", conn);
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%BPV制袋%'", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
-                hs产品代码.Add(dr["产品编码"].ToString());
+                hs产品代码.Add(dr["存货代码"].ToString());
             }
-            
+            Tconn.Dispose();
+
+
             // 封边
             da = new OleDbDataAdapter("select * from 设置BPV制袋封边", conn);
             dt = new DataTable("temp");
@@ -287,7 +293,7 @@ namespace mySystem.Process.Bag.BTV
             OleDbConnection connToOrder = new OleDbConnection(strConnect);
             OleDbDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 设置存货档案", connToOrder);
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '组件' and 属于工序 like '%BPV制袋%'", connToOrder);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -479,21 +485,21 @@ namespace mySystem.Process.Bag.BTV
             foreach (DataColumn dc in dtInner.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "产品代码")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (String s in hs产品代码)
-                    {
-                        cbc.Items.Add(s);
-                    }
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
+                //if (dc.ColumnName == "产品代码")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (String s in hs产品代码)
+                //    {
+                //        cbc.Items.Add(s);
+                //    }
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
                 if (dc.ColumnName == "封边")
                 {
                     cbc = new DataGridViewComboBoxColumn();
@@ -814,6 +820,19 @@ namespace mySystem.Process.Bag.BTV
             {
                 ComboBox c = e.Control as ComboBox;
                 if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+            if ("产品代码" == dgv.Columns[colIdx].Name)
+            //if (colIdx == 2)
+            {
+                TextBox tb = (e.Control as TextBox);
+                tb.AutoCompleteCustomSource = null;
+                AutoCompleteStringCollection acsc;
+                if (tb == null) return;
+                acsc = new AutoCompleteStringCollection();
+                acsc.AddRange(hs产品代码.ToArray());
+                tb.AutoCompleteCustomSource = acsc;
+                tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
         }
         
