@@ -106,6 +106,7 @@ namespace mySystem.Process.Stock
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView1.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         int 退货申请or退货记录 = 0;

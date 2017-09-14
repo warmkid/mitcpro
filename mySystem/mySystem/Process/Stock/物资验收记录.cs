@@ -866,6 +866,9 @@ namespace mySystem.Process.Stock
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefaultValue(dr);
             dtInner.Rows.Add(dr);
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+
         }
 
 

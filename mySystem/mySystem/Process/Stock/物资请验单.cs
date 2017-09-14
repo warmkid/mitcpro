@@ -172,6 +172,7 @@ namespace mySystem.Process.Stock
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         void addComputerEventHandler()
