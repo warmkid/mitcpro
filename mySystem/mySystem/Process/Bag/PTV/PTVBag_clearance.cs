@@ -791,6 +791,8 @@ namespace mySystem.Process.Bag.PTV
         {
 
         }
+        public void print(bool b)
+        { }
        
 
     }

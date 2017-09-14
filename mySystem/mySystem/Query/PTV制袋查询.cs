@@ -309,8 +309,8 @@ namespace mySystem.Query
                             inner.Show();
                             break;
                         case "PTV生产日报表":
-                            PTVBag_dailyreport daily = new PTVBag_dailyreport(mainform, ID);
-                            daily.Show();
+                            //PTVBag_dailyreport daily = new PTVBag_dailyreport(mainform, ID);
+                            //daily.Show();
                             break;
                         case "PTV生产开机确认表":
                             PTVBag_checklist check = new PTVBag_checklist(mainform, ID);
