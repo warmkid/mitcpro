@@ -188,6 +188,8 @@ namespace mySystem.Process.Bag.BTV
                         {
                             cmb产品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
                         }
+                        OleDbCommand str = new OleDbCommand("SELECT 内包 FROM 生产指令详细信息where T生产指令ID = " + reader1["ID"].ToString(), connOle);
+                        tb内包装规格.Text = str.ExecuteScalar().ToString();
                     }
                     datemp.Dispose();
                 }
@@ -555,15 +557,8 @@ namespace mySystem.Process.Bag.BTV
             dr["审核是否通过"] = false;
 
 
-            try
-            {
-                if (dt代码批号.Rows[cmb产品代码.FindString(cmb产品代码.Text)]["内包装规格每包只数"].ToString() != "")
-                    dr["内包装规格"] = dt代码批号.Rows[cmb产品代码.FindString(cmb产品代码.Text)]["内包装规格每包只数"].ToString();
-                else
-                    dr["内包装规格"] = 0;
-            }
-            catch
-            { dr["内包装规格"] = 100; }
+            dr["内包装规格"] = Convert.ToInt32(tb内包装规格.Text);
+               
             dr["生产日期"] = PdDate;
             dr["班次"] = Flight;
             dr["工时"] = 0;
@@ -710,6 +705,7 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T产品内包装记录ID"].Visible = false;
             //不可用
+            dataGridView1.Columns["产品数量只"].ReadOnly = true;
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["审核员"].ReadOnly = true;
             //HeaderText
@@ -1197,6 +1193,9 @@ namespace mySystem.Process.Bag.BTV
                     }
                     dt记录详情.Rows[e.RowIndex]["产品数量只"] = Convert.ToInt32(dt记录.Rows[0]["内包装规格"]) * Convert.ToInt32(dt记录详情.Rows[e.RowIndex]["产品数量包"]);
                     //dt记录.Rows[0]["产品数量包数合计A"] = sum;
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                    //innerBind();
                     outerDataSync("tb产品数量包数合计A", sumA.ToString());
                     int sumB= sumA * Convert.ToInt32(dt记录.Rows[0]["内包装规格"]);
                     outerDataSync("tb产品数量只数合计B", sumB.ToString());
@@ -1211,7 +1210,7 @@ namespace mySystem.Process.Bag.BTV
                         { sumA += numtemp; }
                     }
                     //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("tb黑点晶点合计", sumA.ToString());
+                    outerDataSync("lbl黑点晶点合计", sumA.ToString());
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格数量")
                 {
@@ -1223,7 +1222,7 @@ namespace mySystem.Process.Bag.BTV
                         { sumA += numtemp; }
                     }
                     //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("tb热封线不合格合计", sumA.ToString());
+                    outerDataSync("lbl热封线不合格合计", sumA.ToString());
                     
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "指示剂不良数量")
@@ -1236,7 +1235,7 @@ namespace mySystem.Process.Bag.BTV
                         { sumA += numtemp; }
                     }
                     //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("tb指示剂不良合计", sumA.ToString());
+                    outerDataSync("lbl指示剂不良合计", sumA.ToString());
 
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "不良合计")
@@ -1249,7 +1248,7 @@ namespace mySystem.Process.Bag.BTV
                         { sumA += numtemp; }
                     }
                     //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("tb不良总合计", sumA.ToString());
+                    outerDataSync("lbl不良总合计", sumA.ToString());
 
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "其他数量")
@@ -1262,7 +1261,7 @@ namespace mySystem.Process.Bag.BTV
                         { sumA += numtemp; }
                     }
                     //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("tb其他合计", sumA.ToString());
+                    outerDataSync("lbl其他合计", sumA.ToString());
 
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")

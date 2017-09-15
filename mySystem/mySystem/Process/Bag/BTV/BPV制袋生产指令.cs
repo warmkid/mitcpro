@@ -65,6 +65,8 @@ namespace mySystem.Process.Bag.BTV
             setUseState();
             setFormState(true);
             setEnableReadOnly();
+
+           
         }
 
         public BPV制袋生产指令(MainForm mainform, int id):base(mainform)
@@ -104,6 +106,10 @@ namespace mySystem.Process.Bag.BTV
         private void btn查询插入_Click(object sender, EventArgs e)
         {
             // 读取数据
+            if ("" == tb生产指令编号.Text)
+            {
+                return;
+            }
             _code = tb生产指令编号.Text;
             readOuterData(_code);
             outerBind();
@@ -346,17 +352,15 @@ namespace mySystem.Process.Bag.BTV
             dr["生产指令编号"] = _code;
             //dr["生产设备"] = "制袋机 AA-EQU-001";
             dr["计划生产日期"] = DateTime.Now;
-            dr["制袋物料代码1"] = "Tyvek印刷卷材";
-            dr["制袋物料代码2"] = "药品包装用聚乙烯膜（XP1）";
-            dr["制袋物料代码3"] = "蒸汽灭菌指示剂";
-            dr["内包物料代码1"] = "内包装袋";
-            dr["内包物料代码2"] = "内标签";
-            dr["外包物料代码1"] = "外标签";
-            dr["外包物料代码2"] = "纸箱";
-            dr["外包物料代码2"] = "————————";
-            dr["外包物料代码3"] = "内衬袋";
-            dr["外包物料代码3"] = "专用袋";
-            dr["外包物料代码3"] = "————————";
+            dr["制袋物料代码1"] = "";
+            dr["制袋物料代码2"] = "";
+            dr["制袋物料代码3"] = "";
+            dr["内包物料名称1"] = "内包装袋";
+            dr["内包物料名称2"] = "内标签";
+            dr["内包物料名称3"] = "灭菌指示剂";
+            dr["外包物料名称1"] = "外标签";
+            dr["外包物料名称2"] = "纸箱";
+            dr["外包物料名称3"] = "内衬袋";
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
@@ -788,12 +792,16 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns[4].HeaderText = "计划产量（只）";
             dataGridView1.Columns[6].HeaderText = "内包装规格（只/包）";
             dataGridView1.Columns[7].HeaderText = "外包装规格（只/箱）";
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.RowHeadersVisible = false;
         }
 
         void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView2.Columns[0].Visible = false;
-            dataGridView2.Columns[1].Visible = false;            
+            dataGridView2.Columns[1].Visible = false;
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView2.RowHeadersVisible = false;
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -928,19 +936,34 @@ namespace mySystem.Process.Bag.BTV
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
 
-            int a = 4, b = 6, c = 7;
 
-            int i计划产量只 = Convert.ToInt32(dataGridView1[a, e.RowIndex].Value);
-            int i内包装规格 = Convert.ToInt32(dataGridView1[b, e.RowIndex].Value);
-            int i外包装规格 = Convert.ToInt32(dataGridView1[c, e.RowIndex].Value);
+            List<string> cols;
+            int i计划产量只 ;
+            int i内包装规格 ;
+            int i外包装规格 ;
+            cols =new List<string>{"计划产量只","内包","外包"};
             try
             {
-
-
-                switch (e.ColumnIndex)
+                if ("" == dataGridView1.Rows[e.RowIndex].Cells["计划产量只"].Value.ToString())
+                {
+                    return;
+                }
+                if ("" == dataGridView1.Rows[e.RowIndex].Cells["内包"].Value.ToString())
+                {
+                    return;
+                }
+                if ("" == dataGridView1.Rows[e.RowIndex].Cells["外包"].Value.ToString())
+                {
+                    return;
+                }
+                 i计划产量只 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["计划产量只"].Value);
+                 i内包装规格 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["内包"].Value);
+                 i外包装规格 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["外包"].Value);
+                string colName=dataGridView1.Columns[e.ColumnIndex].Name.ToString();
+                switch (cols.IndexOf(colName))
                 {       
                     // 计划产量
-                    case 4:
+                    case 0:
                         //灭菌指示剂
                         //dtOuter.Rows[0]["制袋物料领料量3"] = i计划产量只.ToString();
                         outerDataSync("tb制袋物料领料量3", i计划产量只.ToString());
@@ -966,7 +989,7 @@ namespace mySystem.Process.Bag.BTV
                         //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
                         break;
                     // 内包装规格
-                    case 6:
+                    case 1:
                         //内包装
                         //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
                         //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
@@ -977,7 +1000,7 @@ namespace mySystem.Process.Bag.BTV
                         outerDataSync("tb内包物料领料量2", (i计划产量只 / i内包装规格).ToString());
                         break;
                     // 外包装规格
-                    case 7:
+                    case 2:
                         // 外标签
                         //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
                         //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
@@ -1031,29 +1054,6 @@ namespace mySystem.Process.Bag.BTV
             //tb外包白班负责人.Text = 
         }
 
-        private void btn外包夜班_Click(object sender, EventArgs e)
-        {
-            hs外包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
-            //dtOuter.Rows[0]["外包夜班负责人"] = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
-            outerDataSync("tb外包夜班负责人", String.Join(",", hs外包夜班负责人.ToList<String>().ToArray()));
-            //tb外包夜班负责人.Text = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
-        }
-
-        private void btn制袋内包白班_Click(object sender, EventArgs e)
-        {
-            hs制袋内包白班负责人.Add(cmb负责人.SelectedItem.ToString());
-            //dtOuter.Rows[0]["制袋内包白班负责人"] = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
-            outerDataSync("tb制袋内包白班负责人", String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray()));
-            //tb制袋内包白班负责人.Text = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
-        }
-
-        private void btn制袋内包夜班_Click(object sender, EventArgs e)
-        {
-            hs制袋内包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
-            //dtOuter.Rows[0]["制袋内包夜班负责人"] = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
-            outerDataSync("tb制袋内包夜班负责人", String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray()));
-            //tb制袋内包夜班负责人.Text = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
-        }
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
@@ -1349,11 +1349,9 @@ namespace mySystem.Process.Bag.BTV
         {
             bool TypeCheck = true;
             List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb内包需求1, tb内包需求2,
-                tb内包需求3,tb外包需求1,tb外包需求2,tb外包需求3,tb制袋单个用量1,
-                tb制袋单个用量2,tb制袋单个用量3});
+                tb内包需求3,tb外包需求1,tb外包需求2,tb外包需求3});
             List<String> StringList = new List<String>(new String[] { "内包用量1", "内包用量2",
-                "内包用量3","外包用量1","外包用量2","外包用量3","制袋单个用量1",
-                "制袋单个用量2","制袋单个用量3"});
+                "内包用量3","外包用量1","外包用量2","外包用量3"});
             int numtemp = 0;
             for (int i = 0; i < TextBoxList.Count; i++)
             {
@@ -1369,6 +1367,42 @@ namespace mySystem.Process.Bag.BTV
             }
             return TypeCheck;
         }
+
+        private void BPV制袋生产指令_Shown(object sender, EventArgs e)
+        {
+            try
+            {                
+                tb生产指令编号.Text = Parameter.bpvbagInstruction;
+                //btn查询插入.PerformClick();
+            }
+            catch { }
+        }
+
+        private void tb内包物料代码1_Enter(object sender, EventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+            
+                    acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls物料代码.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
+
+        private void tb内包物料代码1_Leave(object sender, EventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            if (ls物料代码.IndexOf(tb.Text) >= 0)
+            {
+                tb内包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+            }
+        }
+
+       
+        
 
         
         
