@@ -238,8 +238,11 @@ namespace mySystem.Other
 
         private void btnDel_Click(object sender, EventArgs e)
         {
-            int ridx = dataGridView1.CurrentCell.RowIndex;
-            dataGridView1.Rows.RemoveAt(ridx);
+            if (dataGridView1.CurrentCell != null)
+            {
+                int ridx = dataGridView1.CurrentCell.RowIndex;
+                dataGridView1.Rows.RemoveAt(ridx);
+            }
         }
 
         private void btn浏览_Click(object sender, EventArgs e)
@@ -292,9 +295,23 @@ namespace mySystem.Other
                     MessageBox.Show(daima + " 不存在！");
                     break;
                 }
-                string guige = drs[0]["规格型号"].ToString();
-                string mingc = drs[0]["存货名称"].ToString(); ;
-                double shulaing = Convert.ToDouble(my.Cells[i, 5].Value);
+                string guige="";
+                string mingc="";
+                double shulaing=0;
+                try
+                {
+                     guige = drs[0]["规格型号"].ToString();
+                     mingc = drs[0]["存货名称"].ToString();
+                    
+                    if (my.Cells[i, 5].Value == null) shulaing = 0;
+                    else shulaing = Convert.ToDouble(my.Cells[i, 5].Value);
+                }
+                catch (Exception ee)
+                {
+                    MessageBox.Show("读取第"+i+"行数据失败，请检查！");
+                }
+                
+                
                 int idx = dataGridView1.Rows.Add();
                 dataGridView1["存货代码", idx].Value = daima;
                 dataGridView1["存货名称", idx].Value = mingc;
