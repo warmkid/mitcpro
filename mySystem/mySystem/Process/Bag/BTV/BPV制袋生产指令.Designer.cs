@@ -28,10 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.label14 = new System.Windows.Forms.Label();
+            this.cmb类型 = new System.Windows.Forms.ComboBox();
+            this.btn删除物料 = new System.Windows.Forms.Button();
+            this.btn添加物料 = new System.Windows.Forms.Button();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.label15 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
-            this.txb内包物料名称3 = new System.Windows.Forms.TextBox();
+            this.tb内包物料名称3 = new System.Windows.Forms.TextBox();
             this.tb内包需求3 = new System.Windows.Forms.TextBox();
-            this.txb内包物料批号3 = new System.Windows.Forms.TextBox();
+            this.tb内包物料批号3 = new System.Windows.Forms.TextBox();
             this.tb内包物料代码3 = new System.Windows.Forms.TextBox();
             this.label角色 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
@@ -39,35 +45,20 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
             this.txb外包物料名称3 = new System.Windows.Forms.TextBox();
             this.tb外包需求3 = new System.Windows.Forms.TextBox();
-            this.txb外包物料批号3 = new System.Windows.Forms.TextBox();
+            this.tb外包物料批号3 = new System.Windows.Forms.TextBox();
             this.tb外包物料代码3 = new System.Windows.Forms.TextBox();
             this.cmb产品名称 = new System.Windows.Forms.ComboBox();
             this.btn添加 = new System.Windows.Forms.Button();
             this.btn添加负责人 = new System.Windows.Forms.Button();
-            this.btn外包夜班 = new System.Windows.Forms.Button();
-            this.btn制袋内包夜班 = new System.Windows.Forms.Button();
-            this.txb外包夜班负责人 = new System.Windows.Forms.TextBox();
             this.tb负责人 = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.txb制袋内包夜班负责人 = new System.Windows.Forms.TextBox();
-            this.txb制袋内包白班负责人 = new System.Windows.Forms.TextBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.btn制袋内包白班 = new System.Windows.Forms.Button();
             this.cmb负责人 = new System.Windows.Forms.ComboBox();
-            this.txb外包物料名称2 = new System.Windows.Forms.TextBox();
-            this.txb外包物料名称1 = new System.Windows.Forms.TextBox();
-            this.txb内包物料名称2 = new System.Windows.Forms.TextBox();
-            this.txb内包物料名称1 = new System.Windows.Forms.TextBox();
-            this.txb制袋物料名称3 = new System.Windows.Forms.TextBox();
-            this.txb制袋物料名称2 = new System.Windows.Forms.TextBox();
-            this.txb制袋物料名称1 = new System.Windows.Forms.TextBox();
+            this.tb外包物料名称2 = new System.Windows.Forms.TextBox();
+            this.tb外包物料名称1 = new System.Windows.Forms.TextBox();
+            this.tb内包物料名称2 = new System.Windows.Forms.TextBox();
+            this.tb内包物料名称1 = new System.Windows.Forms.TextBox();
             this.comob生产工艺 = new System.Windows.Forms.ComboBox();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
             this.btn查看日志 = new System.Windows.Forms.Button();
@@ -90,29 +81,19 @@
             this.tb备注 = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.tb外包需求2 = new System.Windows.Forms.TextBox();
-            this.txb外包物料批号2 = new System.Windows.Forms.TextBox();
+            this.tb外包物料批号2 = new System.Windows.Forms.TextBox();
             this.tb外包物料代码2 = new System.Windows.Forms.TextBox();
             this.tb外包需求1 = new System.Windows.Forms.TextBox();
-            this.txb外包物料批号1 = new System.Windows.Forms.TextBox();
+            this.tb外包物料批号1 = new System.Windows.Forms.TextBox();
             this.tb外包物料代码1 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.tb内包需求2 = new System.Windows.Forms.TextBox();
             this.tb内包需求1 = new System.Windows.Forms.TextBox();
-            this.tb制袋单个用量3 = new System.Windows.Forms.TextBox();
-            this.tb制袋单个用量2 = new System.Windows.Forms.TextBox();
-            this.txb内包物料批号2 = new System.Windows.Forms.TextBox();
-            this.txb内包物料批号1 = new System.Windows.Forms.TextBox();
-            this.txb制袋物料批号3 = new System.Windows.Forms.TextBox();
-            this.txb制袋物料批号2 = new System.Windows.Forms.TextBox();
+            this.tb内包物料批号2 = new System.Windows.Forms.TextBox();
+            this.tb内包物料批号1 = new System.Windows.Forms.TextBox();
             this.tb内包物料代码2 = new System.Windows.Forms.TextBox();
             this.tb内包物料代码1 = new System.Windows.Forms.TextBox();
-            this.tb制袋物料代码3 = new System.Windows.Forms.TextBox();
-            this.tb制袋物料代码2 = new System.Windows.Forms.TextBox();
-            this.tb制袋单个用量1 = new System.Windows.Forms.TextBox();
-            this.txb制袋物料批号1 = new System.Windows.Forms.TextBox();
-            this.tb制袋物料代码1 = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
@@ -131,15 +112,75 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.btn添加物料 = new System.Windows.Forms.Button();
-            this.btn删除物料 = new System.Windows.Forms.Button();
-            this.cmb类型 = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(1122, 41);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(29, 12);
+            this.label14.TabIndex = 156;
+            this.label14.Text = "类型";
+            // 
+            // cmb类型
+            // 
+            this.cmb类型.FormattingEnabled = true;
+            this.cmb类型.Items.AddRange(new object[] {
+            "正常",
+            "返工"});
+            this.cmb类型.Location = new System.Drawing.Point(1158, 37);
+            this.cmb类型.Name = "cmb类型";
+            this.cmb类型.Size = new System.Drawing.Size(81, 20);
+            this.cmb类型.TabIndex = 155;
+            // 
+            // btn删除物料
+            // 
+            this.btn删除物料.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn删除物料.Location = new System.Drawing.Point(642, 271);
+            this.btn删除物料.Name = "btn删除物料";
+            this.btn删除物料.Size = new System.Drawing.Size(30, 75);
+            this.btn删除物料.TabIndex = 154;
+            this.btn删除物料.Text = "删除物料";
+            this.btn删除物料.UseVisualStyleBackColor = true;
+            this.btn删除物料.Click += new System.EventHandler(this.btn删除物料_Click);
+            // 
+            // btn添加物料
+            // 
+            this.btn添加物料.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn添加物料.Location = new System.Drawing.Point(642, 196);
+            this.btn添加物料.Name = "btn添加物料";
+            this.btn添加物料.Size = new System.Drawing.Size(30, 75);
+            this.btn添加物料.TabIndex = 153;
+            this.btn添加物料.Text = "添加物料";
+            this.btn添加物料.UseVisualStyleBackColor = true;
+            this.btn添加物料.Click += new System.EventHandler(this.btn添加物料_Click);
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(15, 196);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 23;
+            this.dataGridView2.Size = new System.Drawing.Size(603, 150);
+            this.dataGridView2.TabIndex = 152;
+            this.dataGridView2.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellEndEdit);
+            this.dataGridView2.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView2_DataBindingComplete);
+            this.dataGridView2.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView2_DataError);
+            this.dataGridView2.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView2_EditingControlShowing);
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label15.Location = new System.Drawing.Point(701, 278);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(497, 14);
+            this.label15.TabIndex = 151;
+            this.label15.Text = "----------------------------------------------------------------------";
             // 
             // label39
             // 
@@ -153,12 +194,11 @@
             // 
             // txb内包物料名称3
             // 
-            this.txb内包物料名称3.Location = new System.Drawing.Point(754, 253);
-            this.txb内包物料名称3.Name = "txb内包物料名称3";
-            this.txb内包物料名称3.ReadOnly = true;
-            this.txb内包物料名称3.Size = new System.Drawing.Size(104, 21);
-            this.txb内包物料名称3.TabIndex = 149;
-            this.txb内包物料名称3.Visible = false;
+            this.tb内包物料名称3.Location = new System.Drawing.Point(754, 253);
+            this.tb内包物料名称3.Name = "txb内包物料名称3";
+            this.tb内包物料名称3.ReadOnly = true;
+            this.tb内包物料名称3.Size = new System.Drawing.Size(104, 21);
+            this.tb内包物料名称3.TabIndex = 149;
             // 
             // tb内包需求3
             // 
@@ -170,12 +210,11 @@
             // 
             // txb内包物料批号3
             // 
-            this.txb内包物料批号3.Enabled = false;
-            this.txb内包物料批号3.Location = new System.Drawing.Point(974, 253);
-            this.txb内包物料批号3.Name = "txb内包物料批号3";
-            this.txb内包物料批号3.Size = new System.Drawing.Size(104, 21);
-            this.txb内包物料批号3.TabIndex = 147;
-            this.txb内包物料批号3.Visible = false;
+            this.tb内包物料批号3.Enabled = false;
+            this.tb内包物料批号3.Location = new System.Drawing.Point(974, 253);
+            this.tb内包物料批号3.Name = "txb内包物料批号3";
+            this.tb内包物料批号3.Size = new System.Drawing.Size(104, 21);
+            this.tb内包物料批号3.TabIndex = 147;
             // 
             // tb内包物料代码3
             // 
@@ -244,42 +283,6 @@
             this.label24.TabIndex = 140;
             this.label24.Text = "只";
             // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Enabled = false;
-            this.label22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label22.Location = new System.Drawing.Point(590, 220);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(24, 16);
-            this.label22.TabIndex = 139;
-            this.label22.Text = "个";
-            this.label22.Visible = false;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Enabled = false;
-            this.label21.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label21.Location = new System.Drawing.Point(590, 193);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(24, 16);
-            this.label21.TabIndex = 138;
-            this.label21.Text = "米";
-            this.label21.Visible = false;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Enabled = false;
-            this.label20.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label20.Location = new System.Drawing.Point(590, 166);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(24, 16);
-            this.label20.TabIndex = 137;
-            this.label20.Text = "米";
-            this.label20.Visible = false;
-            // 
             // txb外包物料名称3
             // 
             this.txb外包物料名称3.Location = new System.Drawing.Point(753, 350);
@@ -287,7 +290,6 @@
             this.txb外包物料名称3.ReadOnly = true;
             this.txb外包物料名称3.Size = new System.Drawing.Size(104, 21);
             this.txb外包物料名称3.TabIndex = 136;
-            this.txb外包物料名称3.Visible = false;
             // 
             // tb外包需求3
             // 
@@ -299,12 +301,11 @@
             // 
             // txb外包物料批号3
             // 
-            this.txb外包物料批号3.Enabled = false;
-            this.txb外包物料批号3.Location = new System.Drawing.Point(974, 351);
-            this.txb外包物料批号3.Name = "txb外包物料批号3";
-            this.txb外包物料批号3.Size = new System.Drawing.Size(104, 21);
-            this.txb外包物料批号3.TabIndex = 134;
-            this.txb外包物料批号3.Visible = false;
+            this.tb外包物料批号3.Enabled = false;
+            this.tb外包物料批号3.Location = new System.Drawing.Point(974, 351);
+            this.tb外包物料批号3.Name = "txb外包物料批号3";
+            this.tb外包物料批号3.Size = new System.Drawing.Size(104, 21);
+            this.tb外包物料批号3.TabIndex = 134;
             // 
             // tb外包物料代码3
             // 
@@ -335,7 +336,7 @@
             // btn添加负责人
             // 
             this.btn添加负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn添加负责人.Location = new System.Drawing.Point(959, 549);
+            this.btn添加负责人.Location = new System.Drawing.Point(835, 411);
             this.btn添加负责人.Name = "btn添加负责人";
             this.btn添加负责人.Size = new System.Drawing.Size(77, 23);
             this.btn添加负责人.TabIndex = 126;
@@ -343,205 +344,65 @@
             this.btn添加负责人.UseVisualStyleBackColor = true;
             this.btn添加负责人.Click += new System.EventHandler(this.btn添加负责人_Click);
             // 
-            // btn外包夜班
-            // 
-            this.btn外包夜班.Enabled = false;
-            this.btn外包夜班.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn外包夜班.Location = new System.Drawing.Point(278, 251);
-            this.btn外包夜班.Name = "btn外包夜班";
-            this.btn外包夜班.Size = new System.Drawing.Size(77, 23);
-            this.btn外包夜班.TabIndex = 125;
-            this.btn外包夜班.Text = "外包夜班";
-            this.btn外包夜班.UseVisualStyleBackColor = true;
-            this.btn外包夜班.Visible = false;
-            this.btn外包夜班.Click += new System.EventHandler(this.btn外包夜班_Click);
-            // 
-            // btn制袋内包夜班
-            // 
-            this.btn制袋内包夜班.Enabled = false;
-            this.btn制袋内包夜班.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn制袋内包夜班.Location = new System.Drawing.Point(278, 306);
-            this.btn制袋内包夜班.Name = "btn制袋内包夜班";
-            this.btn制袋内包夜班.Size = new System.Drawing.Size(119, 23);
-            this.btn制袋内包夜班.TabIndex = 124;
-            this.btn制袋内包夜班.Text = "制袋内包夜班";
-            this.btn制袋内包夜班.UseVisualStyleBackColor = true;
-            this.btn制袋内包夜班.Visible = false;
-            this.btn制袋内包夜班.Click += new System.EventHandler(this.btn制袋内包夜班_Click);
-            // 
-            // txb外包夜班负责人
-            // 
-            this.txb外包夜班负责人.Enabled = false;
-            this.txb外包夜班负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txb外包夜班负责人.Location = new System.Drawing.Point(190, 304);
-            this.txb外包夜班负责人.Name = "txb外包夜班负责人";
-            this.txb外包夜班负责人.ReadOnly = true;
-            this.txb外包夜班负责人.Size = new System.Drawing.Size(76, 23);
-            this.txb外包夜班负责人.TabIndex = 123;
-            this.txb外包夜班负责人.Visible = false;
-            // 
             // tb负责人
             // 
             this.tb负责人.Enabled = false;
             this.tb负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb负责人.Location = new System.Drawing.Point(903, 583);
+            this.tb负责人.Location = new System.Drawing.Point(779, 445);
             this.tb负责人.Name = "tb负责人";
             this.tb负责人.ReadOnly = true;
             this.tb负责人.Size = new System.Drawing.Size(165, 23);
             this.tb负责人.TabIndex = 122;
             // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Enabled = false;
-            this.label18.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label18.Location = new System.Drawing.Point(80, 307);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(63, 14);
-            this.label18.TabIndex = 121;
-            this.label18.Text = "外包夜班";
-            this.label18.Visible = false;
-            // 
             // label19
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label19.Location = new System.Drawing.Point(851, 588);
+            this.label19.Location = new System.Drawing.Point(727, 450);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(49, 14);
             this.label19.TabIndex = 120;
             this.label19.Text = "负责人";
             // 
-            // txb制袋内包夜班负责人
-            // 
-            this.txb制袋内包夜班负责人.Enabled = false;
-            this.txb制袋内包夜班负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txb制袋内包夜班负责人.Location = new System.Drawing.Point(189, 278);
-            this.txb制袋内包夜班负责人.Name = "txb制袋内包夜班负责人";
-            this.txb制袋内包夜班负责人.ReadOnly = true;
-            this.txb制袋内包夜班负责人.Size = new System.Drawing.Size(77, 23);
-            this.txb制袋内包夜班负责人.TabIndex = 117;
-            this.txb制袋内包夜班负责人.Visible = false;
-            // 
-            // txb制袋内包白班负责人
-            // 
-            this.txb制袋内包白班负责人.Enabled = false;
-            this.txb制袋内包白班负责人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.txb制袋内包白班负责人.Location = new System.Drawing.Point(189, 252);
-            this.txb制袋内包白班负责人.Name = "txb制袋内包白班负责人";
-            this.txb制袋内包白班负责人.ReadOnly = true;
-            this.txb制袋内包白班负责人.Size = new System.Drawing.Size(77, 23);
-            this.txb制袋内包白班负责人.TabIndex = 116;
-            this.txb制袋内包白班负责人.Visible = false;
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.Enabled = false;
-            this.label34.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label34.Location = new System.Drawing.Point(80, 282);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(91, 14);
-            this.label34.TabIndex = 115;
-            this.label34.Text = "制袋内包夜班";
-            this.label34.Visible = false;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Enabled = false;
-            this.label12.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label12.Location = new System.Drawing.Point(81, 259);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(91, 14);
-            this.label12.TabIndex = 114;
-            this.label12.Text = "制袋内包白班";
-            this.label12.Visible = false;
-            // 
-            // btn制袋内包白班
-            // 
-            this.btn制袋内包白班.Enabled = false;
-            this.btn制袋内包白班.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn制袋内包白班.Location = new System.Drawing.Point(278, 277);
-            this.btn制袋内包白班.Name = "btn制袋内包白班";
-            this.btn制袋内包白班.Size = new System.Drawing.Size(125, 23);
-            this.btn制袋内包白班.TabIndex = 112;
-            this.btn制袋内包白班.Text = "制袋内包白班";
-            this.btn制袋内包白班.UseVisualStyleBackColor = true;
-            this.btn制袋内包白班.Visible = false;
-            this.btn制袋内包白班.Click += new System.EventHandler(this.btn制袋内包白班_Click);
-            // 
             // cmb负责人
             // 
             this.cmb负责人.FormattingEnabled = true;
-            this.cmb负责人.Location = new System.Drawing.Point(853, 552);
+            this.cmb负责人.Location = new System.Drawing.Point(729, 414);
             this.cmb负责人.Name = "cmb负责人";
             this.cmb负责人.Size = new System.Drawing.Size(100, 20);
             this.cmb负责人.TabIndex = 111;
             // 
             // txb外包物料名称2
             // 
-            this.txb外包物料名称2.Location = new System.Drawing.Point(753, 322);
-            this.txb外包物料名称2.Name = "txb外包物料名称2";
-            this.txb外包物料名称2.ReadOnly = true;
-            this.txb外包物料名称2.Size = new System.Drawing.Size(104, 21);
-            this.txb外包物料名称2.TabIndex = 110;
-            this.txb外包物料名称2.Visible = false;
+            this.tb外包物料名称2.Location = new System.Drawing.Point(753, 322);
+            this.tb外包物料名称2.Name = "txb外包物料名称2";
+            this.tb外包物料名称2.ReadOnly = true;
+            this.tb外包物料名称2.Size = new System.Drawing.Size(104, 21);
+            this.tb外包物料名称2.TabIndex = 110;
             // 
             // txb外包物料名称1
             // 
-            this.txb外包物料名称1.Location = new System.Drawing.Point(753, 294);
-            this.txb外包物料名称1.Name = "txb外包物料名称1";
-            this.txb外包物料名称1.ReadOnly = true;
-            this.txb外包物料名称1.Size = new System.Drawing.Size(104, 21);
-            this.txb外包物料名称1.TabIndex = 109;
-            this.txb外包物料名称1.Visible = false;
+            this.tb外包物料名称1.Location = new System.Drawing.Point(753, 294);
+            this.tb外包物料名称1.Name = "txb外包物料名称1";
+            this.tb外包物料名称1.ReadOnly = true;
+            this.tb外包物料名称1.Size = new System.Drawing.Size(104, 21);
+            this.tb外包物料名称1.TabIndex = 109;
             // 
             // txb内包物料名称2
             // 
-            this.txb内包物料名称2.Location = new System.Drawing.Point(754, 226);
-            this.txb内包物料名称2.Name = "txb内包物料名称2";
-            this.txb内包物料名称2.ReadOnly = true;
-            this.txb内包物料名称2.Size = new System.Drawing.Size(104, 21);
-            this.txb内包物料名称2.TabIndex = 108;
-            this.txb内包物料名称2.Visible = false;
+            this.tb内包物料名称2.Location = new System.Drawing.Point(754, 226);
+            this.tb内包物料名称2.Name = "txb内包物料名称2";
+            this.tb内包物料名称2.ReadOnly = true;
+            this.tb内包物料名称2.Size = new System.Drawing.Size(104, 21);
+            this.tb内包物料名称2.TabIndex = 108;
             // 
-            // txb内包物料名称1
+            // tb内包物料名称1
             // 
-            this.txb内包物料名称1.Location = new System.Drawing.Point(754, 198);
-            this.txb内包物料名称1.Name = "txb内包物料名称1";
-            this.txb内包物料名称1.ReadOnly = true;
-            this.txb内包物料名称1.Size = new System.Drawing.Size(104, 21);
-            this.txb内包物料名称1.TabIndex = 107;
-            this.txb内包物料名称1.Visible = false;
-            // 
-            // txb制袋物料名称3
-            // 
-            this.txb制袋物料名称3.Enabled = false;
-            this.txb制袋物料名称3.Location = new System.Drawing.Point(78, 220);
-            this.txb制袋物料名称3.Name = "txb制袋物料名称3";
-            this.txb制袋物料名称3.ReadOnly = true;
-            this.txb制袋物料名称3.Size = new System.Drawing.Size(152, 21);
-            this.txb制袋物料名称3.TabIndex = 106;
-            this.txb制袋物料名称3.Visible = false;
-            // 
-            // txb制袋物料名称2
-            // 
-            this.txb制袋物料名称2.Enabled = false;
-            this.txb制袋物料名称2.Location = new System.Drawing.Point(78, 193);
-            this.txb制袋物料名称2.Name = "txb制袋物料名称2";
-            this.txb制袋物料名称2.Size = new System.Drawing.Size(152, 21);
-            this.txb制袋物料名称2.TabIndex = 105;
-            this.txb制袋物料名称2.Visible = false;
-            // 
-            // txb制袋物料名称1
-            // 
-            this.txb制袋物料名称1.Enabled = false;
-            this.txb制袋物料名称1.Location = new System.Drawing.Point(78, 166);
-            this.txb制袋物料名称1.Name = "txb制袋物料名称1";
-            this.txb制袋物料名称1.Size = new System.Drawing.Size(152, 21);
-            this.txb制袋物料名称1.TabIndex = 104;
-            this.txb制袋物料名称1.Visible = false;
+            this.tb内包物料名称1.Location = new System.Drawing.Point(754, 198);
+            this.tb内包物料名称1.Name = "tb内包物料名称1";
+            this.tb内包物料名称1.ReadOnly = true;
+            this.tb内包物料名称1.Size = new System.Drawing.Size(104, 21);
+            this.tb内包物料名称1.TabIndex = 107;
             // 
             // comob生产工艺
             // 
@@ -557,7 +418,7 @@
             // 
             this.cb打印机.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(202, 684);
+            this.cb打印机.Location = new System.Drawing.Point(196, 645);
             this.cb打印机.Name = "cb打印机";
             this.cb打印机.Size = new System.Drawing.Size(121, 24);
             this.cb打印机.TabIndex = 102;
@@ -565,7 +426,7 @@
             // btn查看日志
             // 
             this.btn查看日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn查看日志.Location = new System.Drawing.Point(1019, 682);
+            this.btn查看日志.Location = new System.Drawing.Point(1013, 643);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(94, 27);
             this.btn查看日志.TabIndex = 101;
@@ -576,7 +437,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(888, 682);
+            this.btn提交审核.Location = new System.Drawing.Point(882, 643);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(97, 27);
             this.btn提交审核.TabIndex = 100;
@@ -587,7 +448,7 @@
             // btn保存
             // 
             this.btn保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn保存.Location = new System.Drawing.Point(777, 682);
+            this.btn保存.Location = new System.Drawing.Point(771, 643);
             this.btn保存.Name = "btn保存";
             this.btn保存.Size = new System.Drawing.Size(75, 27);
             this.btn保存.TabIndex = 99;
@@ -598,7 +459,7 @@
             // btn打印
             // 
             this.btn打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn打印.Location = new System.Drawing.Point(96, 681);
+            this.btn打印.Location = new System.Drawing.Point(90, 642);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 28);
             this.btn打印.TabIndex = 98;
@@ -609,7 +470,7 @@
             // btn审核
             // 
             this.btn审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn审核.Location = new System.Drawing.Point(15, 682);
+            this.btn审核.Location = new System.Drawing.Point(9, 643);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 27);
             this.btn审核.TabIndex = 97;
@@ -620,7 +481,7 @@
             // dtp接收时间
             // 
             this.dtp接收时间.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp接收时间.Location = new System.Drawing.Point(977, 645);
+            this.dtp接收时间.Location = new System.Drawing.Point(971, 606);
             this.dtp接收时间.Name = "dtp接收时间";
             this.dtp接收时间.Size = new System.Drawing.Size(136, 23);
             this.dtp接收时间.TabIndex = 92;
@@ -629,7 +490,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label30.Location = new System.Drawing.Point(922, 652);
+            this.label30.Location = new System.Drawing.Point(916, 613);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(40, 16);
             this.label30.TabIndex = 91;
@@ -638,7 +499,7 @@
             // tb接收人
             // 
             this.tb接收人.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb接收人.Location = new System.Drawing.Point(1003, 611);
+            this.tb接收人.Location = new System.Drawing.Point(997, 572);
             this.tb接收人.Name = "tb接收人";
             this.tb接收人.Size = new System.Drawing.Size(110, 23);
             this.tb接收人.TabIndex = 90;
@@ -647,7 +508,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label31.Location = new System.Drawing.Point(906, 618);
+            this.label31.Location = new System.Drawing.Point(900, 579);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(56, 16);
             this.label31.TabIndex = 89;
@@ -656,7 +517,7 @@
             // dtp审核时间
             // 
             this.dtp审核时间.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp审核时间.Location = new System.Drawing.Point(539, 652);
+            this.dtp审核时间.Location = new System.Drawing.Point(533, 613);
             this.dtp审核时间.Name = "dtp审核时间";
             this.dtp审核时间.Size = new System.Drawing.Size(136, 23);
             this.dtp审核时间.TabIndex = 88;
@@ -665,7 +526,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label28.Location = new System.Drawing.Point(473, 652);
+            this.label28.Location = new System.Drawing.Point(467, 613);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(40, 16);
             this.label28.TabIndex = 87;
@@ -674,7 +535,7 @@
             // tb审核员
             // 
             this.tb审核员.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb审核员.Location = new System.Drawing.Point(565, 617);
+            this.tb审核员.Location = new System.Drawing.Point(559, 578);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(110, 23);
             this.tb审核员.TabIndex = 86;
@@ -683,7 +544,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label29.Location = new System.Drawing.Point(473, 624);
+            this.label29.Location = new System.Drawing.Point(467, 585);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(56, 16);
             this.label29.TabIndex = 85;
@@ -692,7 +553,7 @@
             // dtp操作时间
             // 
             this.dtp操作时间.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp操作时间.Location = new System.Drawing.Point(122, 652);
+            this.dtp操作时间.Location = new System.Drawing.Point(116, 613);
             this.dtp操作时间.Name = "dtp操作时间";
             this.dtp操作时间.Size = new System.Drawing.Size(136, 23);
             this.dtp操作时间.TabIndex = 84;
@@ -701,7 +562,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label26.Location = new System.Drawing.Point(49, 656);
+            this.label26.Location = new System.Drawing.Point(43, 617);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(40, 16);
             this.label26.TabIndex = 83;
@@ -710,7 +571,7 @@
             // tb操作员
             // 
             this.tb操作员.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb操作员.Location = new System.Drawing.Point(122, 617);
+            this.tb操作员.Location = new System.Drawing.Point(116, 578);
             this.tb操作员.Name = "tb操作员";
             this.tb操作员.Size = new System.Drawing.Size(110, 23);
             this.tb操作员.TabIndex = 82;
@@ -719,7 +580,7 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label27.Location = new System.Drawing.Point(49, 618);
+            this.label27.Location = new System.Drawing.Point(43, 579);
             this.label27.Name = "label27";
             this.label27.Size = new System.Drawing.Size(56, 16);
             this.label27.TabIndex = 81;
@@ -727,17 +588,17 @@
             // 
             // tb备注
             // 
-            this.tb备注.Location = new System.Drawing.Point(134, 552);
+            this.tb备注.Location = new System.Drawing.Point(69, 413);
             this.tb备注.Multiline = true;
             this.tb备注.Name = "tb备注";
-            this.tb备注.Size = new System.Drawing.Size(647, 48);
+            this.tb备注.Size = new System.Drawing.Size(604, 48);
             this.tb备注.TabIndex = 80;
             // 
             // label25
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label25.Location = new System.Drawing.Point(49, 569);
+            this.label25.Location = new System.Drawing.Point(23, 413);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(40, 16);
             this.label25.TabIndex = 79;
@@ -753,12 +614,11 @@
             // 
             // txb外包物料批号2
             // 
-            this.txb外包物料批号2.Enabled = false;
-            this.txb外包物料批号2.Location = new System.Drawing.Point(974, 323);
-            this.txb外包物料批号2.Name = "txb外包物料批号2";
-            this.txb外包物料批号2.Size = new System.Drawing.Size(104, 21);
-            this.txb外包物料批号2.TabIndex = 76;
-            this.txb外包物料批号2.Visible = false;
+            this.tb外包物料批号2.Enabled = false;
+            this.tb外包物料批号2.Location = new System.Drawing.Point(974, 323);
+            this.tb外包物料批号2.Name = "txb外包物料批号2";
+            this.tb外包物料批号2.Size = new System.Drawing.Size(104, 21);
+            this.tb外包物料批号2.TabIndex = 76;
             // 
             // tb外包物料代码2
             // 
@@ -777,12 +637,11 @@
             // 
             // txb外包物料批号1
             // 
-            this.txb外包物料批号1.Enabled = false;
-            this.txb外包物料批号1.Location = new System.Drawing.Point(974, 294);
-            this.txb外包物料批号1.Name = "txb外包物料批号1";
-            this.txb外包物料批号1.Size = new System.Drawing.Size(104, 21);
-            this.txb外包物料批号1.TabIndex = 73;
-            this.txb外包物料批号1.Visible = false;
+            this.tb外包物料批号1.Enabled = false;
+            this.tb外包物料批号1.Location = new System.Drawing.Point(974, 294);
+            this.tb外包物料批号1.Name = "txb外包物料批号1";
+            this.tb外包物料批号1.Size = new System.Drawing.Size(104, 21);
+            this.tb外包物料批号1.TabIndex = 73;
             // 
             // tb外包物料代码1
             // 
@@ -817,60 +676,21 @@
             this.tb内包需求1.Size = new System.Drawing.Size(88, 21);
             this.tb内包需求1.TabIndex = 65;
             // 
-            // tb制袋单个用量3
-            // 
-            this.tb制袋单个用量3.Enabled = false;
-            this.tb制袋单个用量3.Location = new System.Drawing.Point(496, 220);
-            this.tb制袋单个用量3.Name = "tb制袋单个用量3";
-            this.tb制袋单个用量3.ReadOnly = true;
-            this.tb制袋单个用量3.Size = new System.Drawing.Size(88, 21);
-            this.tb制袋单个用量3.TabIndex = 64;
-            this.tb制袋单个用量3.Visible = false;
-            // 
-            // tb制袋单个用量2
-            // 
-            this.tb制袋单个用量2.Enabled = false;
-            this.tb制袋单个用量2.Location = new System.Drawing.Point(496, 193);
-            this.tb制袋单个用量2.Name = "tb制袋单个用量2";
-            this.tb制袋单个用量2.Size = new System.Drawing.Size(88, 21);
-            this.tb制袋单个用量2.TabIndex = 63;
-            this.tb制袋单个用量2.Visible = false;
-            // 
             // txb内包物料批号2
             // 
-            this.txb内包物料批号2.Enabled = false;
-            this.txb内包物料批号2.Location = new System.Drawing.Point(974, 226);
-            this.txb内包物料批号2.Name = "txb内包物料批号2";
-            this.txb内包物料批号2.Size = new System.Drawing.Size(104, 21);
-            this.txb内包物料批号2.TabIndex = 62;
-            this.txb内包物料批号2.Visible = false;
+            this.tb内包物料批号2.Enabled = false;
+            this.tb内包物料批号2.Location = new System.Drawing.Point(974, 226);
+            this.tb内包物料批号2.Name = "txb内包物料批号2";
+            this.tb内包物料批号2.Size = new System.Drawing.Size(104, 21);
+            this.tb内包物料批号2.TabIndex = 62;
             // 
             // txb内包物料批号1
             // 
-            this.txb内包物料批号1.Enabled = false;
-            this.txb内包物料批号1.Location = new System.Drawing.Point(974, 198);
-            this.txb内包物料批号1.Name = "txb内包物料批号1";
-            this.txb内包物料批号1.Size = new System.Drawing.Size(104, 21);
-            this.txb内包物料批号1.TabIndex = 61;
-            this.txb内包物料批号1.Visible = false;
-            // 
-            // txb制袋物料批号3
-            // 
-            this.txb制袋物料批号3.Enabled = false;
-            this.txb制袋物料批号3.Location = new System.Drawing.Point(366, 220);
-            this.txb制袋物料批号3.Name = "txb制袋物料批号3";
-            this.txb制袋物料批号3.Size = new System.Drawing.Size(124, 21);
-            this.txb制袋物料批号3.TabIndex = 60;
-            this.txb制袋物料批号3.Visible = false;
-            // 
-            // txb制袋物料批号2
-            // 
-            this.txb制袋物料批号2.Enabled = false;
-            this.txb制袋物料批号2.Location = new System.Drawing.Point(366, 193);
-            this.txb制袋物料批号2.Name = "txb制袋物料批号2";
-            this.txb制袋物料批号2.Size = new System.Drawing.Size(124, 21);
-            this.txb制袋物料批号2.TabIndex = 59;
-            this.txb制袋物料批号2.Visible = false;
+            this.tb内包物料批号1.Enabled = false;
+            this.tb内包物料批号1.Location = new System.Drawing.Point(974, 198);
+            this.tb内包物料批号1.Name = "txb内包物料批号1";
+            this.tb内包物料批号1.Size = new System.Drawing.Size(104, 21);
+            this.tb内包物料批号1.TabIndex = 61;
             // 
             // tb内包物料代码2
             // 
@@ -885,51 +705,8 @@
             this.tb内包物料代码1.Name = "tb内包物料代码1";
             this.tb内包物料代码1.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料代码1.TabIndex = 57;
-            // 
-            // tb制袋物料代码3
-            // 
-            this.tb制袋物料代码3.Enabled = false;
-            this.tb制袋物料代码3.Location = new System.Drawing.Point(236, 220);
-            this.tb制袋物料代码3.Name = "tb制袋物料代码3";
-            this.tb制袋物料代码3.Size = new System.Drawing.Size(124, 21);
-            this.tb制袋物料代码3.TabIndex = 56;
-            this.tb制袋物料代码3.Visible = false;
-            // 
-            // tb制袋物料代码2
-            // 
-            this.tb制袋物料代码2.Enabled = false;
-            this.tb制袋物料代码2.Location = new System.Drawing.Point(236, 193);
-            this.tb制袋物料代码2.Name = "tb制袋物料代码2";
-            this.tb制袋物料代码2.Size = new System.Drawing.Size(124, 21);
-            this.tb制袋物料代码2.TabIndex = 55;
-            this.tb制袋物料代码2.Visible = false;
-            // 
-            // tb制袋单个用量1
-            // 
-            this.tb制袋单个用量1.Enabled = false;
-            this.tb制袋单个用量1.Location = new System.Drawing.Point(496, 166);
-            this.tb制袋单个用量1.Name = "tb制袋单个用量1";
-            this.tb制袋单个用量1.Size = new System.Drawing.Size(88, 21);
-            this.tb制袋单个用量1.TabIndex = 54;
-            this.tb制袋单个用量1.Visible = false;
-            // 
-            // txb制袋物料批号1
-            // 
-            this.txb制袋物料批号1.Enabled = false;
-            this.txb制袋物料批号1.Location = new System.Drawing.Point(366, 166);
-            this.txb制袋物料批号1.Name = "txb制袋物料批号1";
-            this.txb制袋物料批号1.Size = new System.Drawing.Size(124, 21);
-            this.txb制袋物料批号1.TabIndex = 53;
-            this.txb制袋物料批号1.Visible = false;
-            // 
-            // tb制袋物料代码1
-            // 
-            this.tb制袋物料代码1.Enabled = false;
-            this.tb制袋物料代码1.Location = new System.Drawing.Point(236, 166);
-            this.tb制袋物料代码1.Name = "tb制袋物料代码1";
-            this.tb制袋物料代码1.Size = new System.Drawing.Size(124, 21);
-            this.tb制袋物料代码1.TabIndex = 52;
-            this.tb制袋物料代码1.Visible = false;
+            this.tb内包物料代码1.Enter += new System.EventHandler(this.tb内包物料代码1_Enter);
+            this.tb内包物料代码1.Leave += new System.EventHandler(this.tb内包物料代码1_Leave);
             // 
             // label17
             // 
@@ -940,18 +717,6 @@
             this.label17.Size = new System.Drawing.Size(40, 16);
             this.label17.TabIndex = 46;
             this.label17.Text = "内包";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Enabled = false;
-            this.label16.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label16.Location = new System.Drawing.Point(26, 192);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(40, 16);
-            this.label16.TabIndex = 45;
-            this.label16.Text = "制袋";
-            this.label16.Visible = false;
             // 
             // label13
             // 
@@ -972,7 +737,6 @@
             this.label11.Size = new System.Drawing.Size(72, 16);
             this.label11.TabIndex = 42;
             this.label11.Text = "物料批号";
-            this.label11.Visible = false;
             // 
             // label10
             // 
@@ -993,7 +757,6 @@
             this.label9.Size = new System.Drawing.Size(72, 16);
             this.label9.TabIndex = 40;
             this.label9.Text = "物料名称";
-            this.label9.Visible = false;
             // 
             // label8
             // 
@@ -1034,7 +797,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1222, 75);
+            this.dataGridView1.Size = new System.Drawing.Size(1199, 75);
             this.dataGridView1.TabIndex = 36;
             // 
             // dtp计划生产日期
@@ -1128,72 +891,6 @@
             this.label23.TabIndex = 93;
             this.label23.Text = "----------------------------------------------------------------------";
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label15.Location = new System.Drawing.Point(701, 278);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(497, 14);
-            this.label15.TabIndex = 151;
-            this.label15.Text = "----------------------------------------------------------------------";
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(29, 350);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(635, 150);
-            this.dataGridView2.TabIndex = 152;
-            this.dataGridView2.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellEndEdit);
-            this.dataGridView2.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView2_DataBindingComplete);
-            this.dataGridView2.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.dataGridView2_DataError);
-            this.dataGridView2.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dataGridView2_EditingControlShowing);
-            // 
-            // btn添加物料
-            // 
-            this.btn添加物料.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn添加物料.Location = new System.Drawing.Point(656, 350);
-            this.btn添加物料.Name = "btn添加物料";
-            this.btn添加物料.Size = new System.Drawing.Size(30, 75);
-            this.btn添加物料.TabIndex = 153;
-            this.btn添加物料.Text = "添加物料";
-            this.btn添加物料.UseVisualStyleBackColor = true;
-            this.btn添加物料.Click += new System.EventHandler(this.btn添加物料_Click);
-            // 
-            // btn删除物料
-            // 
-            this.btn删除物料.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn删除物料.Location = new System.Drawing.Point(656, 425);
-            this.btn删除物料.Name = "btn删除物料";
-            this.btn删除物料.Size = new System.Drawing.Size(30, 75);
-            this.btn删除物料.TabIndex = 154;
-            this.btn删除物料.Text = "删除物料";
-            this.btn删除物料.UseVisualStyleBackColor = true;
-            this.btn删除物料.Click += new System.EventHandler(this.btn删除物料_Click);
-            // 
-            // cmb类型
-            // 
-            this.cmb类型.FormattingEnabled = true;
-            this.cmb类型.Items.AddRange(new object[] {
-            "正常",
-            "返工"});
-            this.cmb类型.Location = new System.Drawing.Point(1158, 37);
-            this.cmb类型.Name = "cmb类型";
-            this.cmb类型.Size = new System.Drawing.Size(81, 20);
-            this.cmb类型.TabIndex = 155;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(1122, 41);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(29, 12);
-            this.label14.TabIndex = 156;
-            this.label14.Text = "类型";
-            // 
             // BPV制袋生产指令
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1206,9 +903,9 @@
             this.Controls.Add(this.dataGridView2);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label39);
-            this.Controls.Add(this.txb内包物料名称3);
+            this.Controls.Add(this.tb内包物料名称3);
             this.Controls.Add(this.tb内包需求3);
-            this.Controls.Add(this.txb内包物料批号3);
+            this.Controls.Add(this.tb内包物料批号3);
             this.Controls.Add(this.tb内包物料代码3);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.label38);
@@ -1216,35 +913,20 @@
             this.Controls.Add(this.label36);
             this.Controls.Add(this.label35);
             this.Controls.Add(this.label24);
-            this.Controls.Add(this.label22);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.label20);
             this.Controls.Add(this.txb外包物料名称3);
             this.Controls.Add(this.tb外包需求3);
-            this.Controls.Add(this.txb外包物料批号3);
+            this.Controls.Add(this.tb外包物料批号3);
             this.Controls.Add(this.tb外包物料代码3);
             this.Controls.Add(this.cmb产品名称);
             this.Controls.Add(this.btn添加);
             this.Controls.Add(this.btn添加负责人);
-            this.Controls.Add(this.btn外包夜班);
-            this.Controls.Add(this.btn制袋内包夜班);
-            this.Controls.Add(this.txb外包夜班负责人);
             this.Controls.Add(this.tb负责人);
-            this.Controls.Add(this.label18);
             this.Controls.Add(this.label19);
-            this.Controls.Add(this.txb制袋内包夜班负责人);
-            this.Controls.Add(this.txb制袋内包白班负责人);
-            this.Controls.Add(this.label34);
-            this.Controls.Add(this.label12);
-            this.Controls.Add(this.btn制袋内包白班);
             this.Controls.Add(this.cmb负责人);
-            this.Controls.Add(this.txb外包物料名称2);
-            this.Controls.Add(this.txb外包物料名称1);
-            this.Controls.Add(this.txb内包物料名称2);
-            this.Controls.Add(this.txb内包物料名称1);
-            this.Controls.Add(this.txb制袋物料名称3);
-            this.Controls.Add(this.txb制袋物料名称2);
-            this.Controls.Add(this.txb制袋物料名称1);
+            this.Controls.Add(this.tb外包物料名称2);
+            this.Controls.Add(this.tb外包物料名称1);
+            this.Controls.Add(this.tb内包物料名称2);
+            this.Controls.Add(this.tb内包物料名称1);
             this.Controls.Add(this.comob生产工艺);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.btn查看日志);
@@ -1267,29 +949,19 @@
             this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.tb外包需求2);
-            this.Controls.Add(this.txb外包物料批号2);
+            this.Controls.Add(this.tb外包物料批号2);
             this.Controls.Add(this.tb外包物料代码2);
             this.Controls.Add(this.tb外包需求1);
-            this.Controls.Add(this.txb外包物料批号1);
+            this.Controls.Add(this.tb外包物料批号1);
             this.Controls.Add(this.tb外包物料代码1);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.tb内包需求2);
             this.Controls.Add(this.tb内包需求1);
-            this.Controls.Add(this.tb制袋单个用量3);
-            this.Controls.Add(this.tb制袋单个用量2);
-            this.Controls.Add(this.txb内包物料批号2);
-            this.Controls.Add(this.txb内包物料批号1);
-            this.Controls.Add(this.txb制袋物料批号3);
-            this.Controls.Add(this.txb制袋物料批号2);
+            this.Controls.Add(this.tb内包物料批号2);
+            this.Controls.Add(this.tb内包物料批号1);
             this.Controls.Add(this.tb内包物料代码2);
             this.Controls.Add(this.tb内包物料代码1);
-            this.Controls.Add(this.tb制袋物料代码3);
-            this.Controls.Add(this.tb制袋物料代码2);
-            this.Controls.Add(this.tb制袋单个用量1);
-            this.Controls.Add(this.txb制袋物料批号1);
-            this.Controls.Add(this.tb制袋物料代码1);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.label16);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.label10);
@@ -1310,8 +982,9 @@
             this.Controls.Add(this.label23);
             this.Name = "BPV制袋生产指令";
             this.Text = "BPV制袋生产指令";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Shown += new System.EventHandler(this.BPV制袋生产指令_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1337,28 +1010,18 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox tb内包需求2;
         private System.Windows.Forms.TextBox tb内包需求1;
-        private System.Windows.Forms.TextBox tb制袋单个用量3;
-        private System.Windows.Forms.TextBox tb制袋单个用量2;
-        private System.Windows.Forms.TextBox txb内包物料批号2;
-        private System.Windows.Forms.TextBox txb内包物料批号1;
-        private System.Windows.Forms.TextBox txb制袋物料批号3;
-        private System.Windows.Forms.TextBox txb制袋物料批号2;
+        private System.Windows.Forms.TextBox tb内包物料批号2;
+        private System.Windows.Forms.TextBox tb内包物料批号1;
         private System.Windows.Forms.TextBox tb内包物料代码2;
         private System.Windows.Forms.TextBox tb内包物料代码1;
-        private System.Windows.Forms.TextBox tb制袋物料代码3;
-        private System.Windows.Forms.TextBox tb制袋物料代码2;
-        private System.Windows.Forms.TextBox tb制袋单个用量1;
-        private System.Windows.Forms.TextBox txb制袋物料批号1;
-        private System.Windows.Forms.TextBox tb制袋物料代码1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox tb外包需求2;
-        private System.Windows.Forms.TextBox txb外包物料批号2;
+        private System.Windows.Forms.TextBox tb外包物料批号2;
         private System.Windows.Forms.TextBox tb外包物料代码2;
         private System.Windows.Forms.TextBox tb外包需求1;
-        private System.Windows.Forms.TextBox txb外包物料批号1;
+        private System.Windows.Forms.TextBox tb外包物料批号1;
         private System.Windows.Forms.TextBox tb外包物料代码1;
         private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label25;
@@ -1382,35 +1045,20 @@
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.ComboBox comob生产工艺;
-        private System.Windows.Forms.TextBox txb制袋物料名称3;
-        private System.Windows.Forms.TextBox txb制袋物料名称2;
-        private System.Windows.Forms.TextBox txb制袋物料名称1;
-        private System.Windows.Forms.TextBox txb内包物料名称2;
-        private System.Windows.Forms.TextBox txb内包物料名称1;
-        private System.Windows.Forms.TextBox txb外包物料名称2;
-        private System.Windows.Forms.TextBox txb外包物料名称1;
-        private System.Windows.Forms.TextBox txb制袋内包夜班负责人;
-        private System.Windows.Forms.TextBox txb制袋内包白班负责人;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button btn制袋内包白班;
+        private System.Windows.Forms.TextBox tb内包物料名称2;
+        private System.Windows.Forms.TextBox tb内包物料名称1;
+        private System.Windows.Forms.TextBox tb外包物料名称2;
+        private System.Windows.Forms.TextBox tb外包物料名称1;
         private System.Windows.Forms.ComboBox cmb负责人;
-        private System.Windows.Forms.TextBox txb外包夜班负责人;
         private System.Windows.Forms.TextBox tb负责人;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button btn制袋内包夜班;
-        private System.Windows.Forms.Button btn外包夜班;
         private System.Windows.Forms.Button btn添加负责人;
         private System.Windows.Forms.Button btn添加;
         private System.Windows.Forms.ComboBox cmb产品名称;
         private System.Windows.Forms.TextBox txb外包物料名称3;
         private System.Windows.Forms.TextBox tb外包需求3;
-        private System.Windows.Forms.TextBox txb外包物料批号3;
+        private System.Windows.Forms.TextBox tb外包物料批号3;
         private System.Windows.Forms.TextBox tb外包物料代码3;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label35;
         private System.Windows.Forms.Label label36;
@@ -1418,9 +1066,9 @@
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.TextBox txb内包物料名称3;
+        private System.Windows.Forms.TextBox tb内包物料名称3;
         private System.Windows.Forms.TextBox tb内包需求3;
-        private System.Windows.Forms.TextBox txb内包物料批号3;
+        private System.Windows.Forms.TextBox tb内包物料批号3;
         private System.Windows.Forms.TextBox tb内包物料代码3;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.DataGridView dataGridView2;

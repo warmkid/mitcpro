@@ -467,7 +467,7 @@ namespace mySystem.Process.Stock
         {
             my.Cells[2, 2].Value = dtOuter.Rows[0]["退货申请单编号"].ToString();
             my.Cells[3, 2].Value = dtOuter.Rows[0]["PA生产部经理"].ToString();
-            my.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["评审日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["评审日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["评审日期"].ToString()).Day.ToString() + "日";
+            my.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["评审日期"]).ToString("yyyy年MM月dd日");
             my.Cells[4, 2].Value = dtOuter.Rows[0]["拟退货产品销售订单编号"].ToString();
             my.Cells[4, 4].Value = dtOuter.Rows[0]["客户名称"].ToString();
             my.Cells[5, 2].Value = dtOuter.Rows[0]["产品名称"].ToString();

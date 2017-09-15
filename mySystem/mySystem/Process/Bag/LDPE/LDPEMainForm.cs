@@ -297,7 +297,15 @@ namespace mySystem.Process.Bag.LDPE
 
         private void Btn结束_Click(object sender, EventArgs e)
         {
-
+            if (DialogResult.Yes == MessageBox.Show("是否确认结束工序？", "提示", MessageBoxButtons.YesNo))
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.ldpebagInstruID, mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dt.Rows[0]["状态"] = 4;
+                da.Update(dt);
+            }
         }
 
         private void Btn交接班_Click(object sender, EventArgs e)
@@ -359,9 +367,6 @@ namespace mySystem.Process.Bag.LDPE
             }
             return b = false;
         }
-
         
-
-
     }
 }

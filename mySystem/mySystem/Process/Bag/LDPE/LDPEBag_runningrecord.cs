@@ -46,8 +46,9 @@ namespace mySystem.Process.Bag.LDPE
             cb打印机.Enabled = false;
             btn打印.Enabled = false;
 
-            dtp日期.Enabled = true;
             bt插入查询.Enabled = true;
+            str生产指令 = mySystem.Parameter.ldpebagInstruction;
+            lb生产指令编号.Text = str生产指令;
         }
 
         public LDPEBag_runningrecord(MainForm mainform, Int32 ID)
@@ -66,9 +67,8 @@ namespace mySystem.Process.Bag.LDPE
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
             InstruID = (int)tempdt.Rows[0]["生产指令ID"];
-            date = DateTime.Parse(tempdt.Rows[0]["生产日期"].ToString());
 
-            readOuterData(InstruID, date);
+            readOuterData(InstruID);
             outerBind();
 
             readInnerData((int)dt记录.Rows[0]["ID"]);
@@ -77,7 +77,6 @@ namespace mySystem.Process.Bag.LDPE
             setFormState();
             setEnableReadOnly();
 
-            dtp日期.Enabled = false;
             bt插入查询.Enabled = false;
         }
 
@@ -171,15 +170,41 @@ namespace mySystem.Process.Bag.LDPE
             }
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                if (_formState == Parameter.FormState.待审核)
-                {
-                    setControlTrue();
-                    btn审核.Enabled = true;
-                }
-                else
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
+                }
+                else if (_formState == Parameter.FormState.未保存)//0未保存
+                {
+                    //控件都不能点，只有打印,日志可点
+                    setControlFalse();
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
+                }
+                else //1待审核
+                {
+                    //发送审核不可点，其他都可点
+                    setControlTrue();
+                    btn审核.Enabled = true;
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
             }
             else//操作员
@@ -189,12 +214,39 @@ namespace mySystem.Process.Bag.LDPE
                     //控件都不能点
                     setControlFalse();
                 }
-                else
+                else if (_formState == Parameter.FormState.未保存) //0未保存
                 {
                     //发送审核，审核不能点
                     setControlTrue();
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
+                }
+                else //3审核未通过
+                {
+                    //发送审核，审核不能点
+                    setControlTrue();
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
                 }
             }
+            //datagridview格式，包含序号不可编辑
+            setDataGridViewFormat();
         }
 
         /// <summary>
@@ -223,8 +275,12 @@ namespace mySystem.Process.Bag.LDPE
             // 保证这两个按钮、审核人姓名框一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+            btn数据审核.Enabled = false;
+            btn提交数据审核.Enabled = false;
             tb审核员.ReadOnly = true;
-            
+            //部分空间防作弊，不可改
+            //查询条件始终不可编辑
+            bt插入查询.Enabled = false;
         }
 
         /// <summary>
@@ -288,11 +344,11 @@ namespace mySystem.Process.Bag.LDPE
         //****************************** 嵌套 ******************************//
 
         //外表读数据，填datatable
-        private void readOuterData(Int32 InstruID,DateTime dtime)
+        private void readOuterData(Int32 InstruID)
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable("制袋机组运行记录");
-            da记录 = new OleDbDataAdapter("select * from 制袋机组运行记录 where 生产指令ID = " + InstruID + " and 生产日期=#" + dtime + "#", mySystem.Parameter.connOle);
+            da记录 = new OleDbDataAdapter("select * from 制袋机组运行记录 where 生产指令ID = " + InstruID , mySystem.Parameter.connOle);
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -302,10 +358,8 @@ namespace mySystem.Process.Bag.LDPE
         {
             bs记录.DataSource = dt记录;
             //解绑->绑定
-            tb环境温度.DataBindings.Clear();
-            tb环境温度.DataBindings.Add("Text", bs记录.DataSource, "生产环境温度");
-            tb环境湿度.DataBindings.Clear();
-            tb环境湿度.DataBindings.Add("Text", bs记录.DataSource, "生产环境湿度");
+            lb生产指令编号.DataBindings.Clear();
+            lb生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
             tb审核员.DataBindings.Clear();
             tb审核员.DataBindings.Add("Text", bs记录.DataSource, "审核员");
             dtp审核日期.DataBindings.Clear();
@@ -316,7 +370,7 @@ namespace mySystem.Process.Bag.LDPE
         private DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = InstruID;
-            dr["生产日期"] = DateTime.Parse(dtp日期.Value.ToShortDateString());
+            dr["生产指令编号"] = str生产指令;
             dr["审核员"] = "";
             dr["审核日期"] = DateTime.Now;
             dr["审核是否通过"] = false;
@@ -351,13 +405,25 @@ namespace mySystem.Process.Bag.LDPE
         private DataRow writeInnerDefault(DataRow dr)
         {
             dr["T制袋机组运行记录ID"] = dt记录.Rows[0]["ID"];
+            dr["生产日期"] = DateTime.Now;
             dr["检查时间"] = DateTime.Now;
-            dr["热封刀温度"] = 0;
-            dr["底座温度"] = 0;
-            dr["制袋速度"] = 0;
-            dr["切刀工作是否正常"] = "是";
-            dr["张力控制是否正常"] = "是";
-            dr["膜材运转是否平整"] = "是";
+            dr["上切刀切刀温度"] = 0;
+            dr["下切刀切刀温度"] = 0;
+            dr["冷却切刀温度"] = 0;
+            dr["横封温度1"] = 0;
+            dr["横封温度2"] = 0;
+            dr["纵封温度3"] = 0;
+            dr["纵封温度4"] = 0;
+            dr["纵封温度5"] = 0;
+            dr["横封热封时间"] = 0;
+            dr["纵封热封时间"] = 0;
+            dr["传输速度"] = 0;
+            dr["流量计"] = 0;
+            dr["产品质量是否正常"] = "正常";
+            dr["张力均匀是否正常"] = "正常";
+            dr["膜材运转是否正常"] = "正常";
+            dr["纠偏控制器是否正常"] = "正常";
+            dr["切刀运行是否正常"] = "正常";
             dr["操作员"] = mySystem.Parameter.userName;
             return dr;
         }
@@ -371,45 +437,71 @@ namespace mySystem.Process.Bag.LDPE
             {
                 switch (dc.ColumnName)
                 {
-                    case "切刀工作是否正常":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        cbc.Items.Add("是");
-                        cbc.Items.Add("否");
-                        dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
-                        break;
-                    case "张力控制是否正常":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        cbc.Items.Add("是");
-                        cbc.Items.Add("否");
-                        dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
-                        break;
-                    case "膜材运转是否平整":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        cbc.Items.Add("是");
-                        cbc.Items.Add("否");
-                        dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
-                        break;
+                    //case "产品质量是否正常":
+                    //    cbc = new DataGridViewComboBoxColumn();
+                    //    cbc.DataPropertyName = dc.ColumnName;
+                    //    cbc.HeaderText = dc.ColumnName;
+                    //    cbc.Name = dc.ColumnName;
+                    //    cbc.ValueType = dc.DataType;
+                    //    cbc.Items.Add("是");
+                    //    cbc.Items.Add("否");
+                    //    dataGridView1.Columns.Add(cbc);
+                    //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    //    cbc.MinimumWidth = 120;
+                    //    break;
+                    //case "张力均匀是否正常":
+                    //    cbc = new DataGridViewComboBoxColumn();
+                    //    cbc.DataPropertyName = dc.ColumnName;
+                    //    cbc.HeaderText = dc.ColumnName;
+                    //    cbc.Name = dc.ColumnName;
+                    //    cbc.ValueType = dc.DataType;
+                    //    cbc.Items.Add("是");
+                    //    cbc.Items.Add("否");
+                    //    dataGridView1.Columns.Add(cbc);
+                    //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    //    cbc.MinimumWidth = 120;
+                    //    break;
+                    //case "膜材运转是否正常":
+                    //    cbc = new DataGridViewComboBoxColumn();
+                    //    cbc.DataPropertyName = dc.ColumnName;
+                    //    cbc.HeaderText = dc.ColumnName;
+                    //    cbc.Name = dc.ColumnName;
+                    //    cbc.ValueType = dc.DataType;
+                    //    cbc.Items.Add("是");
+                    //    cbc.Items.Add("否");
+                    //    dataGridView1.Columns.Add(cbc);
+                    //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    //    cbc.MinimumWidth = 120;
+                    //    break;
+                    //case "纠偏控制器是否正常":
+                    //    cbc = new DataGridViewComboBoxColumn();
+                    //    cbc.DataPropertyName = dc.ColumnName;
+                    //    cbc.HeaderText = dc.ColumnName;
+                    //    cbc.Name = dc.ColumnName;
+                    //    cbc.ValueType = dc.DataType;
+                    //    cbc.Items.Add("是");
+                    //    cbc.Items.Add("否");
+                    //    dataGridView1.Columns.Add(cbc);
+                    //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    //    cbc.MinimumWidth = 120;
+                    //    break;
+                    //case "切刀运行是否正常":
+                    //    cbc = new DataGridViewComboBoxColumn();
+                    //    cbc.DataPropertyName = dc.ColumnName;
+                    //    cbc.HeaderText = dc.ColumnName;
+                    //    cbc.Name = dc.ColumnName;
+                    //    cbc.ValueType = dc.DataType;
+                    //    cbc.Items.Add("是");
+                    //    cbc.Items.Add("否");
+                    //    dataGridView1.Columns.Add(cbc);
+                    //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                    //    cbc.MinimumWidth = 120;
+                    //    break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
                         tbc.DataPropertyName = dc.ColumnName;
@@ -437,7 +529,25 @@ namespace mySystem.Process.Bag.LDPE
             //隐藏
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T制袋机组运行记录ID"].Visible = false;
-
+            //不可用
+            //HeaderText
+            dataGridView1.Columns["上切刀切刀温度"].HeaderText = "切刀温度(°C)\r上切刀";
+            dataGridView1.Columns["下切刀切刀温度"].HeaderText = "切刀温度(°C)\r下切刀";
+            dataGridView1.Columns["冷却切刀温度"].HeaderText = "切刀温度(°C)\r冷却";
+            dataGridView1.Columns["横封温度1"].HeaderText = "横封温度(°C)\r(170-220)\r1#";
+            dataGridView1.Columns["横封温度2"].HeaderText = "横封温度(°C)\r(170-220)\r2#";
+            dataGridView1.Columns["纵封温度3"].HeaderText = "纵封温度(°C)\r(170-220)\r3#";
+            dataGridView1.Columns["纵封温度4"].HeaderText = "纵封温度(°C)\r(170-220)\r4#";
+            dataGridView1.Columns["纵封温度5"].HeaderText = "纵封温度(°C)\r(170-220)\r5#";
+            dataGridView1.Columns["横封热封时间"].HeaderText = "热封时间(S)\r(1.0-3.0)\r横封";
+            dataGridView1.Columns["纵封热封时间"].HeaderText = "热封时间(S)\r(1.0-3.0)\r纵封";
+            dataGridView1.Columns["传输速度"].HeaderText = "传输速度\r(米/S)";
+            dataGridView1.Columns["流量计"].HeaderText = "流量计\r(L/S)";
+            dataGridView1.Columns["产品质量是否正常"].HeaderText = "产品\r质量";
+            dataGridView1.Columns["张力均匀是否正常"].HeaderText = "张力\r均匀";
+            dataGridView1.Columns["膜材运转是否正常"].HeaderText = "膜材\r运转";
+            dataGridView1.Columns["纠偏控制器是否正常"].HeaderText = "纠偏\r控制器";
+            dataGridView1.Columns["切刀运行是否正常"].HeaderText = "切刀\r运行";
         }
 
         //保存按钮
@@ -452,18 +562,6 @@ namespace mySystem.Process.Bag.LDPE
         //保存功能
         private bool Save()
         {
-            //温度湿度是否是数字
-            float a;
-            if (!float.TryParse(tb环境温度.Text, out a))
-            {
-                MessageBox.Show("环境温度必须为数字");
-                return false;
-            }
-            if (!float.TryParse(tb环境湿度.Text, out a))
-            {
-                MessageBox.Show("环境湿度必须为数字");
-                return false;
-            }
             //检查操作员是否存在
             for(int i=0;i<dataGridView1.Rows.Count;i++)
             {
@@ -483,7 +581,7 @@ namespace mySystem.Process.Bag.LDPE
             //外表保存
             bs记录.EndEdit();
             da记录.Update((DataTable)bs记录.DataSource);
-            readOuterData(InstruID,date);
+            readOuterData(InstruID);
             outerBind();
             return true;
 
@@ -613,9 +711,9 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\SOP-MFG-304-R03A 1#制袋机运行记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPEBag\SOP-MFG-303-R03A 2# 制袋机运行记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
             my = printValue(my, wb);
 
@@ -670,52 +768,74 @@ namespace mySystem.Process.Bag.LDPE
         {
             int ind = 0;
             //外表信息
-            String str生产日期 = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
-            String str温度湿度 = "环境温度：" + Convert.ToDouble(dt记录.Rows[0]["生产环境温度"]).ToString() + " ℃      环境湿度：" + Convert.ToDouble(dt记录.Rows[0]["生产环境湿度"]).ToString() + "%";
-            mysheet.Cells[5, 1].Value = str生产日期 + str温度湿度;
+            //String str生产日期 = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
+            //String str温度湿度 = "环境温度：" + Convert.ToDouble(dt记录.Rows[0]["生产环境温度"]).ToString() + " ℃      环境湿度：" + Convert.ToDouble(dt记录.Rows[0]["生产环境湿度"]).ToString() + "%";
+            //mysheet.Cells[5, 1].Value = str生产日期 + str温度湿度;
+            mysheet.Cells[3, 18].Value = dt记录.Rows[0]["生产指令编号"].ToString();
+            mysheet.Cells[20, 11].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString() + "   审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).ToString("yyyy/MM/dd");
             
-
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分
-            for (int i = 0; i < (rownum > 6 ? 6 : rownum); i++)
+            for (int i = 0; i < (rownum > 13 ? 13 : rownum); i++)
             {
-                mysheet.Cells[8 + i, 1].Value = dt记录详情.Rows[i]["检查时间"].ToString();
-                mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["热封刀温度"].ToString();
-                mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["底座温度"].ToString();
-                mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["制袋速度"].ToString();
-                mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString() == "Yes" ? "√" : "×";
-                mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString() == "Yes" ? "√" : "×";
-                mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString() == "Yes" ? "√" : "×";
-                mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                mysheet.Cells[6 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期"].ToString()).ToString("yyyy/MM/dd");
+                mysheet.Cells[6 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
+                mysheet.Cells[6 + i, 3].Value = dt记录详情.Rows[i]["上切刀切刀温度"].ToString();
+                mysheet.Cells[6 + i, 4].Value = dt记录详情.Rows[i]["下切刀切刀温度"].ToString();
+                mysheet.Cells[6 + i, 5].Value = dt记录详情.Rows[i]["冷却切刀温度"].ToString();
+                mysheet.Cells[6 + i, 6].Value = dt记录详情.Rows[i]["横封温度1"].ToString();
+                mysheet.Cells[6 + i, 7].Value = dt记录详情.Rows[i]["横封温度2"].ToString();
+                mysheet.Cells[6 + i, 8].Value = dt记录详情.Rows[i]["纵封温度3"].ToString();
+                mysheet.Cells[6 + i, 9].Value = dt记录详情.Rows[i]["纵封温度4"].ToString();
+                mysheet.Cells[6 + i, 10].Value = dt记录详情.Rows[i]["纵封温度5"].ToString();
+                mysheet.Cells[6 + i, 11].Value = dt记录详情.Rows[i]["横封热封时间"].ToString();
+                mysheet.Cells[6 + i, 12].Value = dt记录详情.Rows[i]["纵封热封时间"].ToString();
+                mysheet.Cells[6 + i, 13].Value = dt记录详情.Rows[i]["传输速度"].ToString();
+                mysheet.Cells[6 + i, 14].Value = dt记录详情.Rows[i]["流量计"].ToString();
+                mysheet.Cells[6 + i, 15].Value = dt记录详情.Rows[i]["产品质量是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["产品质量是否正常"].ToString();
+                mysheet.Cells[6 + i, 16].Value = dt记录详情.Rows[i]["张力均匀是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["张力均匀是否正常"].ToString();
+                mysheet.Cells[6 + i, 17].Value = dt记录详情.Rows[i]["膜材运转是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["膜材运转是否正常"].ToString();
+                mysheet.Cells[6 + i, 18].Value = dt记录详情.Rows[i]["纠偏控制器是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["纠偏控制器是否正常"].ToString();
+                mysheet.Cells[6 + i, 19].Value = dt记录详情.Rows[i]["切刀运行是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["切刀运行是否正常"].ToString();
+                mysheet.Cells[6 + i, 20].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[6 + i, 21].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                mysheet.Cells[6 + i, 22].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
             //需要插入的部分
-            if (rownum > 6)
+            if (rownum > 13)
             {
-                for (int i = 6; i < rownum; i++)
+                for (int i = 13; i < rownum; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8 + i, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
-                    mysheet.Cells[8 + i, 1].Value = dt记录详情.Rows[i]["检查时间"].ToString();
-                    mysheet.Cells[8 + i, 2].Value = dt记录详情.Rows[i]["热封刀温度"].ToString();
-                    mysheet.Cells[8 + i, 3].Value = dt记录详情.Rows[i]["底座温度"].ToString();
-                    mysheet.Cells[8 + i, 4].Value = dt记录详情.Rows[i]["制袋速度"].ToString();
-                    mysheet.Cells[8 + i, 5].Value = dt记录详情.Rows[i]["切刀工作是否正常"].ToString() == "Yes" ? "√" : "×";
-                    mysheet.Cells[8 + i, 6].Value = dt记录详情.Rows[i]["张力控制是否正常"].ToString() == "Yes" ? "√" : "×";
-                    mysheet.Cells[8 + i, 7].Value = dt记录详情.Rows[i]["膜材运转是否平整"].ToString() == "Yes" ? "√" : "×";
-                    mysheet.Cells[8 + i, 8].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                    mysheet.Cells[8 + i, 9].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                    mysheet.Cells[6 + i, 1].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期"].ToString()).ToString("yyyy/MM/dd");
+                    mysheet.Cells[6 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["检查时间"].ToString()).ToString("HH：mm");
+                    mysheet.Cells[6 + i, 3].Value = dt记录详情.Rows[i]["上切刀切刀温度"].ToString();
+                    mysheet.Cells[6 + i, 4].Value = dt记录详情.Rows[i]["下切刀切刀温度"].ToString();
+                    mysheet.Cells[6 + i, 5].Value = dt记录详情.Rows[i]["冷却切刀温度"].ToString();
+                    mysheet.Cells[6 + i, 6].Value = dt记录详情.Rows[i]["横封温度1"].ToString();
+                    mysheet.Cells[6 + i, 7].Value = dt记录详情.Rows[i]["横封温度2"].ToString();
+                    mysheet.Cells[6 + i, 8].Value = dt记录详情.Rows[i]["纵封温度3"].ToString();
+                    mysheet.Cells[6 + i, 9].Value = dt记录详情.Rows[i]["纵封温度4"].ToString();
+                    mysheet.Cells[6 + i, 10].Value = dt记录详情.Rows[i]["纵封温度5"].ToString();
+                    mysheet.Cells[6 + i, 11].Value = dt记录详情.Rows[i]["横封热封时间"].ToString();
+                    mysheet.Cells[6 + i, 12].Value = dt记录详情.Rows[i]["纵封热封时间"].ToString();
+                    mysheet.Cells[6 + i, 13].Value = dt记录详情.Rows[i]["传输速度"].ToString();
+                    mysheet.Cells[6 + i, 14].Value = dt记录详情.Rows[i]["流量计"].ToString();
+                    mysheet.Cells[6 + i, 15].Value = dt记录详情.Rows[i]["产品质量是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["产品质量是否正常"].ToString();
+                    mysheet.Cells[6 + i, 16].Value = dt记录详情.Rows[i]["张力均匀是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["张力均匀是否正常"].ToString();
+                    mysheet.Cells[6 + i, 17].Value = dt记录详情.Rows[i]["膜材运转是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["膜材运转是否正常"].ToString();
+                    mysheet.Cells[6 + i, 18].Value = dt记录详情.Rows[i]["纠偏控制器是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["纠偏控制器是否正常"].ToString();
+                    mysheet.Cells[6 + i, 19].Value = dt记录详情.Rows[i]["切刀运行是否正常"].ToString() == "正常" ? "√" : dt记录详情.Rows[i]["切刀运行是否正常"].ToString();
+                    mysheet.Cells[6 + i, 20].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                    mysheet.Cells[6 + i, 21].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                    mysheet.Cells[6 + i, 22].Value = dt记录详情.Rows[i]["审核员"].ToString();
                 }
-                ind = rownum - 6;
-            }
-           
-            mysheet.Cells[15 + ind, 1].Value = " 备注：填写方式：正常或合格划“√”，异常写明原因。 ";
-            mysheet.Cells[16 + ind, 6].Value = dt记录.Rows[0]["审核员"].ToString();
-            mysheet.Cells[16 + ind, 7].Value = Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("D");
+            }           
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.connOle);
@@ -746,6 +866,7 @@ namespace mySystem.Process.Bag.LDPE
             //返回
             return mysheet;
         }
+        
         //******************************datagridview******************************//  
 
         // 处理DataGridView中数据类型输错的函数
@@ -761,8 +882,7 @@ namespace mySystem.Process.Bag.LDPE
         private void bt插入查询_Click(object sender, EventArgs e)
         {
             InstruID = mySystem.Parameter.ldpebagInstruID;
-            date = DateTime.Parse(dtp日期.Value.ToShortDateString());
-            readOuterData(InstruID,date);
+            readOuterData(InstruID);
             outerBind();
             if (dt记录.Rows.Count <= 0 && _userState != Parameter.UserState.操作员)
             {
@@ -781,7 +901,7 @@ namespace mySystem.Process.Bag.LDPE
                 dr = writeOuterDefault(dr);
                 dt记录.Rows.Add(dr);
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID, date);
+                readOuterData(InstruID);
                 outerBind();
             }
 
@@ -791,7 +911,6 @@ namespace mySystem.Process.Bag.LDPE
             setFormState();
             setEnableReadOnly();
 
-            dtp日期.Enabled = false;
             bt插入查询.Enabled = false;
         }
 
@@ -813,6 +932,54 @@ namespace mySystem.Process.Bag.LDPE
                     return;
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
+        }
+
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if ("__待审核" == Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dt记录详情.Rows[i]["操作员"].ToString())
+                    {
+                        dt记录详情.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("记录员,审核员相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
+        }
+
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dt记录详情.Rows[i]["审核员"] = "__待审核";
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
+            setEnableReadOnly();
         }       
     }
 }

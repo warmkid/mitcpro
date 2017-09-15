@@ -553,6 +553,7 @@ namespace mySystem.Process.CleanCut
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //设置DataGridView中下拉框

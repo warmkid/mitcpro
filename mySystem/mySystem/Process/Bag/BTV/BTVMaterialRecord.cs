@@ -194,6 +194,8 @@ namespace mySystem.Process.Bag.BTV
                     dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
                     dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
                     addMaterialToDt();
+                    
+                    
                     //内表代码批号
                     OleDbCommand comm2 = new OleDbCommand();
                     comm2.Connection = Parameter.connOle;
@@ -760,7 +762,21 @@ namespace mySystem.Process.Bag.BTV
         //内表审核按钮
         private void btn数据审核_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            //for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            //{
+            //    if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
+            //    {
+            //        dt记录详情.Rows[i]["审核员"] = mySystem.Parameter.userName;
+            //        dataGridView1.Rows[i].ReadOnly = true;
+            //    }
+            //}
+
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int i in hi待审核行号)
             {
                 if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
                 {

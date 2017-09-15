@@ -316,7 +316,7 @@ namespace mySystem.Process.Stock
         {
             my.Cells[2, 2].Value = dtOuter.Rows[0]["退货申请单编号"].ToString();
             my.Cells[3, 2].Value = dtOuter.Rows[0]["申请人"].ToString();
-            my.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["申请日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["申请日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["申请日期"].ToString()).Day.ToString() + "日";
+            my.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["申请日期"]).ToString("yyyy年MM月dd日");
             my.Cells[4, 2].Value = dtOuter.Rows[0]["拟退货产品销售订单编号"].ToString();
             my.Cells[4, 4].Value = dtOuter.Rows[0]["客户名称"].ToString();
             my.Cells[5, 2].Value = dtOuter.Rows[0]["产品名称"].ToString();
@@ -328,7 +328,7 @@ namespace mySystem.Process.Stock
             my.Cells[9, 2].Value = dtOuter.Rows[0]["销售总监审批意见"].ToString();
             my.Cells[11, 2].Value = dtOuter.Rows[0]["PA质量部审批意见"].ToString();
             my.Cells[14, 2].Value = dtOuter.Rows[0]["接收人"].ToString();
-            my.Cells[14, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["接收日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["接收日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["接收日期"].ToString()).Day.ToString() + "日";
+            my.Cells[14, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["接收日期"]).ToString("yyyy年MM月dd日");
             my.Cells[15, 2].Value = dtOuter.Rows[0]["外包装单据验收情况"].ToString();
             my.Cells[16, 2].Value = dtOuter.Rows[0]["检验报告单编号"].ToString();
             my.Cells[17, 2].Value = dtOuter.Rows[0]["检验结果"].ToString();
@@ -336,7 +336,7 @@ namespace mySystem.Process.Stock
             my.Cells[21, 2].Value = dtOuter.Rows[0]["PA生产部处理记录"].ToString();
             my.Cells[24, 2].Value = dtOuter.Rows[0]["PA质量部验证结论"].ToString();
             my.Cells[26, 3].Value = dtOuter.Rows[0]["验证人"].ToString();
-            my.Cells[26, 5].Value = Convert.ToDateTime(dtOuter.Rows[0]["验证日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["验证日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["验证日期"].ToString()).Day.ToString() + "日";
+            my.Cells[26, 5].Value = Convert.ToDateTime(dtOuter.Rows[0]["验证日期"]).ToString("yyyy年MM月dd日");
            
         }
 
