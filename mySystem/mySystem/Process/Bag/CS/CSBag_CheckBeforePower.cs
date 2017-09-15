@@ -404,6 +404,7 @@ namespace mySystem.Process.Bag
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码，从设置表里读取
@@ -480,7 +481,7 @@ namespace mySystem.Process.Bag
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["确认内容"].ReadOnly = true;
             dataGridView1.Columns["确认项目"].ReadOnly = true;
-            dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
         }
 
