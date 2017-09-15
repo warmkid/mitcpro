@@ -514,6 +514,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.DataSource = bs_prodlist.DataSource;
             //setDataGridViewColumns();
             setDataGridViewRowNums();
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
         //设置DataGridView中下拉框
         void setDataGridViewCombox()

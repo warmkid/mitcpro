@@ -577,6 +577,7 @@ namespace mySystem.Process.CleanCut
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView2.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         // 根据条件从数据库中读取内表数据,汇总
@@ -599,6 +600,7 @@ namespace mySystem.Process.CleanCut
             bs_prodlist2.DataSource = dt_prodlist2;
             dataGridView2.DataSource = bs_prodlist2.DataSource;
             setDataGridViewColumns2();
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         void setDataGridViewCombox()

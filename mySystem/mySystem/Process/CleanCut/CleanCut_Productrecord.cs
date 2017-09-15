@@ -515,6 +515,7 @@ namespace mySystem.Process.CleanCut
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码, 要求：dt物料代码.Rows.Count > 0
@@ -561,7 +562,7 @@ namespace mySystem.Process.CleanCut
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         cbc.MinimumWidth = 80;
                         break;
                     case "物料代码":
@@ -577,7 +578,7 @@ namespace mySystem.Process.CleanCut
                         }                        
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         cbc.MinimumWidth = 80;
                         break;
                     case "清洁分切后代码":
@@ -593,7 +594,7 @@ namespace mySystem.Process.CleanCut
                         }  
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         cbc.MinimumWidth = 80;
                         break;
 
@@ -605,7 +606,7 @@ namespace mySystem.Process.CleanCut
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                         tbc.MinimumWidth = 80;
                         break;
                 }
@@ -631,7 +632,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns["长度B"].HeaderText = "长度\r(m)";
             dataGridView1.Columns["收率"].ReadOnly = true;
             dataGridView1.Columns["收率"].HeaderText = "收率\r(%)";
-            dataGridView1.Columns["物料代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+         //   dataGridView1.Columns["物料代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         //******************************按钮功能******************************//
@@ -667,6 +668,7 @@ namespace mySystem.Process.CleanCut
             da记录详情.Update((DataTable)bs记录详情.DataSource);
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             innerBind();
+            if (dataGridView1.Rows.Count > 0)
             dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
 
         }
