@@ -180,6 +180,10 @@ namespace mySystem.Process.Bag.LDPE
                 cmb生产工艺.Items.Add(dr["工艺名称"].ToString());
             }
 
+            //类型
+            cmb类型.Items.Add("正常");
+            cmb类型.Items.Add("返工");
+            cmb类型.SelectedIndex = 0;
 
         }
 
@@ -193,6 +197,18 @@ namespace mySystem.Process.Bag.LDPE
             DataTable dt;
             hs产品代码 = new HashSet<string>();
             hs封边 = new HashSet<string>();
+            //　产品代码
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%LDPE制袋%'", Tconn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                hs产品代码.Add(dr["存货代码"].ToString());
+            }
             //　产品代码
             da = new OleDbDataAdapter("select * from 设置LDPE产品编码", conn);
             dt = new DataTable("temp");
@@ -214,7 +230,7 @@ namespace mySystem.Process.Bag.LDPE
             // 自定义数据
             foreach (DataRow dr in dtInner.Rows)
             {
-                hs产品代码.Add(dr["产品代码"].ToString());
+                //hs产品代码.Add(dr["产品代码"].ToString());
                 hs封边.Add(dr["封边"].ToString());
             }
         }
@@ -275,6 +291,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["审核时间"] = DateTime.Now;
             dr["接收时间"] = DateTime.Now;
             dr["状态"] = 0;
+            dr["类型"] = "正常";
             return dr;
         }
 
@@ -343,6 +360,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["计划产量只"] = 0;
             dr["内包装规格每包只数"] = 0;
             dr["外包规格"] = 0;
+            dr["生产系数"] = 0;
             dr["封边"] = "底封";
             return dr;
         }
@@ -698,6 +716,18 @@ namespace mySystem.Process.Bag.LDPE
             {
                 ComboBox c = e.Control as ComboBox;
                 if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            }
+            if (colIdx == 2)
+            {
+                TextBox tb = (e.Control as TextBox);
+                tb.AutoCompleteCustomSource = null;
+                AutoCompleteStringCollection acsc;
+                if (tb == null) return;
+                acsc = new AutoCompleteStringCollection();
+                acsc.AddRange(hs产品代码.ToArray());
+                tb.AutoCompleteCustomSource = acsc;
+                tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
         }
 
@@ -1111,7 +1141,7 @@ namespace mySystem.Process.Bag.LDPE
             int i插入行数 = 0;
             my.Cells[3, 1].Value = "指令编号：" + dtOuter.Rows[0]["生产指令编号"].ToString();
             my.Cells[3, 3].Value = "产品名称：" + dtOuter.Rows[0]["产品名称"].ToString();
-            my.Cells[3, 8].Value = Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[3, 8].Value = Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"].ToString()).Day.ToString() + "日";
             my.Cells[4, 8].Value = dtOuter.Rows[0]["生产工艺"].ToString();
             my.Cells[5, 8].Value = dtOuter.Rows[0]["生产设备"].ToString();
 
@@ -1182,11 +1212,14 @@ namespace mySystem.Process.Bag.LDPE
             my.Cells[14 + ind, 10].Value = "白班：\n" + dtOuter.Rows[0]["外包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["外包夜班负责人"].ToString();
             my.Cells[18 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
             my.Cells[19 + ind, 1].Value = String.Format("编制人：{0}\n日期：{1}",
-                dtOuter.Rows[0]["操作员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["操作时间"]).ToString("yyyy年MM月dd日"));
+                dtOuter.Rows[0]["操作员"].ToString(),
+                Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"].ToString()).Day.ToString() + "日");
             my.Cells[19 + ind, 3].Value = String.Format("审批人：{0}\n日期：{1}",
-                dtOuter.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日"));
+                dtOuter.Rows[0]["审核员"].ToString(),
+            Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"].ToString()).Day.ToString() + "日");
             my.Cells[19 + ind, 7].Value = String.Format("接收人：{0}\n日期：{1}",
-                dtOuter.Rows[0]["接收人"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["接收时间"]).ToString("yyyy年MM月dd日"));
+                dtOuter.Rows[0]["接收人"].ToString(),
+            Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["接收时间"].ToString()).Day.ToString() + "日");
 
         }
 
