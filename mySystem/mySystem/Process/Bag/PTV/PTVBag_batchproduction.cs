@@ -281,6 +281,9 @@ namespace mySystem.Process.Bag.PTV
             //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
             //}
 
+            //日报表台账，先不打印
+            idx++;
+            disableRow(idx);
 
             //  交接班
             idx++;
@@ -842,7 +845,7 @@ namespace mySystem.Process.Bag.PTV
                             GC.Collect();
                         }
                         break;
-                    //case 6:// 日报
+                    case 6:// 日报
 
                         //da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         //dt = new DataTable("吹膜机组运行记录");
@@ -853,8 +856,8 @@ namespace mySystem.Process.Bag.PTV
                         //    (new mySystem.Process.Extruction.B.Running(mainform, id)).print(false);
                         //    GC.Collect();
                         //}
-                   //     break;
-                    case 6:// 交接
+                        break;
+                    case 7:// 交接
                         da = new OleDbDataAdapter("select * from 岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         dt = new DataTable("岗位交接班记录");
                         da.Fill(dt);
@@ -865,7 +868,7 @@ namespace mySystem.Process.Bag.PTV
                             GC.Collect();
                         }
                         break;
-                    case 7:// 内标签
+                    case 8:// 内标签
 
                         //da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         //dt = new DataTable("吹膜工序废品记录");
@@ -877,7 +880,7 @@ namespace mySystem.Process.Bag.PTV
                         //    GC.Collect();
                         //}
                         break;
-                    case 8:
+                    case 9:
                         // 外标签
                         //da = new OleDbDataAdapter("select * from 吹膜工序清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         //dt = new DataTable("吹膜工序清场记录");
@@ -893,6 +896,7 @@ namespace mySystem.Process.Bag.PTV
                 }
             }
         }
+
     }
 }
 

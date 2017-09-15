@@ -31,7 +31,7 @@ namespace mySystem.Process.Bag.PTV
 
         // 显示界面需要的信息
         List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员;
-        HashSet<String> hs产品代码,hs封边;
+        HashSet<String> hs产品代码,hs封边,hs物料代码;
         HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs外包白班负责人, hs外包夜班负责人;
 
         // DataGridView 中用到的一些变量
@@ -60,6 +60,8 @@ namespace mySystem.Process.Bag.PTV
             setUseState();
             setFormState(true);
             setEnableReadOnly();
+
+            tb生产指令编号.Text = mySystem.Parameter.ptvbagInstruction;
         }
 
         public PTVBag_productioninstruction(mySystem.MainForm mainform, int id)
@@ -140,7 +142,7 @@ namespace mySystem.Process.Bag.PTV
             hs制袋内包夜班负责人 = new HashSet<string>();
 
             li可选可输的列 = new List<int>();
-            li可选可输的列.Add(2);
+            //li可选可输的列.Add(2);
             li可选可输的列.Add(8);
         }
 
@@ -214,6 +216,20 @@ namespace mySystem.Process.Bag.PTV
             foreach(DataRow dr in dt.Rows){
                 ls产品名称.Add(dr["产品名称"].ToString());
                 cmb产品名称.Items.Add(dr["产品名称"].ToString());
+            }
+
+
+            hs物料代码 = new HashSet<string>();
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%PTV制袋%'", Tconn);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                hs物料代码.Add(dr["存货代码"].ToString());
             }
         }
 
@@ -425,6 +441,9 @@ namespace mySystem.Process.Bag.PTV
 
             dataGridView1.DataSource = bsInner.DataSource;
 
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+
         }
 
         /// <summary>
@@ -443,21 +462,21 @@ namespace mySystem.Process.Bag.PTV
             foreach (DataColumn dc in dtInner.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "产品代码")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (String s in hs产品代码)
-                    {
-                        cbc.Items.Add(s);
-                    }
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
+                //if (dc.ColumnName == "产品代码")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (String s in hs产品代码)
+                //    {
+                //        cbc.Items.Add(s);
+                //    }
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
                 if (dc.ColumnName == "封边")
                 {
                     cbc = new DataGridViewComboBoxColumn();
@@ -684,6 +703,42 @@ namespace mySystem.Process.Bag.PTV
 
             // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+
+            // 物料代码自动补全
+            AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(hs物料代码.ToArray());
+            tb内包物料代码1.AutoCompleteCustomSource = acsc;
+            tb内包物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb内包物料代码2.AutoCompleteCustomSource = acsc;
+            tb内包物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码1.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码2.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码3.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码1.AutoCompleteCustomSource = acsc;
+            tb外包物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码2.AutoCompleteCustomSource = acsc;
+            tb外包物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码3.AutoCompleteCustomSource = acsc;
+            tb外包物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
         }
 
         /// <summary>
@@ -784,7 +839,7 @@ namespace mySystem.Process.Bag.PTV
         {
 
             int i计划产量只 = Convert.ToInt32(dataGridView1[3, e.RowIndex].Value);
-            int i内包装规格 = Convert.ToInt32(dataGridView1[4, e.RowIndex].Value);
+            int i内包装规格 = Convert.ToInt32(dataGridView1[5, e.RowIndex].Value);
             int i外包装规格 = Convert.ToInt32(dataGridView1[9, e.RowIndex].Value);
             try
             {
@@ -860,6 +915,48 @@ namespace mySystem.Process.Bag.PTV
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            //检查物料代码是否合法
+            //TODO:  *****有待替换
+            if (!hs物料代码.Contains(tb制袋物料代码1.Text))
+            {
+                MessageBox.Show("制袋****物料代码 有误！");
+                return;
+            }
+            if (!hs物料代码.Contains(tb制袋物料代码2.Text))
+            {
+                MessageBox.Show("制袋****物料代码 有误！");
+                return;
+            }
+            if (!hs物料代码.Contains(tb制袋物料代码3.Text))
+            {
+                MessageBox.Show("制袋****物料代码 有误！");
+                return;
+            }
+            if (!hs物料代码.Contains(tb内包物料代码1.Text))
+            {
+                MessageBox.Show("内包装****物料代码 有误！");
+                return;
+            }
+            if (!hs物料代码.Contains(tb内包物料代码2.Text))
+            {
+                MessageBox.Show("内包装****物料代码 有误！");
+                return;
+            }
+            if (!hs物料代码.Contains(tb外包物料代码1.Text))
+            {
+                MessageBox.Show("外包装****物料代码 有误！");
+                return;
+            }
+            if (!hs物料代码.Contains(tb外包物料代码2.Text))
+            {
+                MessageBox.Show("外包装****物料代码 有误！");
+                return;
+            }
+            if (!hs物料代码.Contains(tb外包物料代码3.Text))
+            {
+                MessageBox.Show("外包装****物料代码 有误！");
+                return;
+            }
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
