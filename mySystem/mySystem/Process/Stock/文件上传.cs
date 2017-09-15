@@ -28,6 +28,7 @@ namespace mySystem.Process.Stock
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView1.Columns["ID"].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         void refresh()
@@ -66,7 +67,7 @@ namespace mySystem.Process.Stock
 
         private void dataGridView1_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex > 0)
+            if (e.RowIndex > 0 && e.ColumnIndex >= 0)
             {
                 try
                 {

@@ -400,6 +400,8 @@ namespace BatchProductRecord
         {
             bsInner2.DataSource = dtInner2;
             dataGridView2.DataSource = bsInner2.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         private void init()

@@ -1131,6 +1131,8 @@ namespace WindowsFormsApplication1
             bs_in.DataSource = dt_in;
             dataGridView1.DataSource = bs_in.DataSource;
             setDataGridViewColumns();
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+
         }
         //设置DataGridView中下拉框
         void setDataGridViewCombox()

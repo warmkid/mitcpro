@@ -472,6 +472,9 @@ namespace mySystem.Process.Order
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
+
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         private void btn新建_Click(object sender, EventArgs e)

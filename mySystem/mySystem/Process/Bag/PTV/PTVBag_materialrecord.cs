@@ -868,6 +868,9 @@ namespace mySystem.Process.Bag.PTV
         {
 
         }
+
+        public void print(bool b)
+        { }
         //******************************小功能******************************//  
 
         // 检查操作员的姓名（内表）

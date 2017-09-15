@@ -135,6 +135,8 @@
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.btn添加物料 = new System.Windows.Forms.Button();
             this.btn删除物料 = new System.Windows.Forms.Button();
+            this.cmb类型 = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -1172,11 +1174,33 @@
             this.btn删除物料.UseVisualStyleBackColor = true;
             this.btn删除物料.Click += new System.EventHandler(this.btn删除物料_Click);
             // 
+            // cmb类型
+            // 
+            this.cmb类型.FormattingEnabled = true;
+            this.cmb类型.Items.AddRange(new object[] {
+            "正常",
+            "返工"});
+            this.cmb类型.Location = new System.Drawing.Point(1158, 37);
+            this.cmb类型.Name = "cmb类型";
+            this.cmb类型.Size = new System.Drawing.Size(81, 20);
+            this.cmb类型.TabIndex = 155;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(1122, 41);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(29, 12);
+            this.label14.TabIndex = 156;
+            this.label14.Text = "类型";
+            // 
             // BPV制袋生产指令
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1310, 715);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.cmb类型);
             this.Controls.Add(this.btn删除物料);
             this.Controls.Add(this.btn添加物料);
             this.Controls.Add(this.dataGridView2);
@@ -1402,5 +1426,7 @@
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Button btn添加物料;
         private System.Windows.Forms.Button btn删除物料;
+        private System.Windows.Forms.ComboBox cmb类型;
+        private System.Windows.Forms.Label label14;
     }
 }
