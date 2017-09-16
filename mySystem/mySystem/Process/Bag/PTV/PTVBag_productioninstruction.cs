@@ -428,6 +428,8 @@ namespace mySystem.Process.Bag.PTV
             dr["计划产量只"] = 0;
             dr["内包装规格每包只数"] = 0;
             dr["外包规格"] = 0;
+
+            dr["生产系数"] = 0.0;
             dr["封边"] = "";
             return dr;
         }
@@ -791,7 +793,7 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns[1].Visible = false;
             dataGridView1.Columns[2].HeaderText = "产品代码（规格型号）";
             dataGridView1.Columns[3].HeaderText = "计划产量（只）";
-            dataGridView1.Columns[4].HeaderText = "内包装规格（只/包）";
+            dataGridView1.Columns[5].HeaderText = "内包装规格（只/包）";
             dataGridView1.Columns[9].HeaderText = "外包装规格（只/箱）";
         }
 
@@ -917,46 +919,55 @@ namespace mySystem.Process.Bag.PTV
         {
             //检查物料代码是否合法
             //TODO:  *****有待替换
-            if (!hs物料代码.Contains(tb制袋物料代码1.Text))
+            if (hs物料代码.Count > 0)
             {
-                MessageBox.Show("制袋****物料代码 有误！");
+                if (!hs物料代码.Contains(tb制袋物料代码1.Text))
+                {
+                    MessageBox.Show("制袋****物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb制袋物料代码2.Text))
+                {
+                    MessageBox.Show("制袋****物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb制袋物料代码3.Text))
+                {
+                    MessageBox.Show("制袋****物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码1.Text))
+                {
+                    MessageBox.Show("内包装****物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码2.Text))
+                {
+                    MessageBox.Show("内包装****物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码1.Text))
+                {
+                    MessageBox.Show("外包装****物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码2.Text))
+                {
+                    MessageBox.Show("外包装****物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码3.Text))
+                {
+                    MessageBox.Show("外包装****物料代码 有误！");
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("存档中物料代码不存在，保存失败！");
                 return;
             }
-            if (!hs物料代码.Contains(tb制袋物料代码2.Text))
-            {
-                MessageBox.Show("制袋****物料代码 有误！");
-                return;
-            }
-            if (!hs物料代码.Contains(tb制袋物料代码3.Text))
-            {
-                MessageBox.Show("制袋****物料代码 有误！");
-                return;
-            }
-            if (!hs物料代码.Contains(tb内包物料代码1.Text))
-            {
-                MessageBox.Show("内包装****物料代码 有误！");
-                return;
-            }
-            if (!hs物料代码.Contains(tb内包物料代码2.Text))
-            {
-                MessageBox.Show("内包装****物料代码 有误！");
-                return;
-            }
-            if (!hs物料代码.Contains(tb外包物料代码1.Text))
-            {
-                MessageBox.Show("外包装****物料代码 有误！");
-                return;
-            }
-            if (!hs物料代码.Contains(tb外包物料代码2.Text))
-            {
-                MessageBox.Show("外包装****物料代码 有误！");
-                return;
-            }
-            if (!hs物料代码.Contains(tb外包物料代码3.Text))
-            {
-                MessageBox.Show("外包装****物料代码 有误！");
-                return;
-            }
+            
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
@@ -1032,7 +1043,10 @@ namespace mySystem.Process.Bag.PTV
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log+= "\n操作员："+mySystem.Parameter.userName+" 提交审核\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-            btn保存.PerformClick();
+
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+
             setFormState();
             setEnableReadOnly();
             btn提交审核.Enabled = false;
@@ -1080,7 +1094,7 @@ namespace mySystem.Process.Bag.PTV
             dt.Rows[0].Delete();
             da.Update(dt);
 
-            dtOuter.Rows[0]["审核员"] = ckform.userName;
+            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核是否通过"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
             if (ckform.ischeckOk)
@@ -1093,7 +1107,11 @@ namespace mySystem.Process.Bag.PTV
             log += "审核结果为：" + (ckform.ischeckOk ? "通过" : "不通过") + "\n";
             log += "审核意见为：" + ckform.opinion + "\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-            btn保存.PerformClick();
+            //btn保存.PerformClick();
+
+            bsOuter.EndEdit();
+            daOuter.Update((DataTable)bsOuter.DataSource);
+
             setFormState();
             setEnableReadOnly();
 

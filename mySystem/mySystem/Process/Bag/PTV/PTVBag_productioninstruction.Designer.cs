@@ -64,7 +64,7 @@
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.btn提交审核 = new System.Windows.Forms.Button();
-            this.btn保存 = new System.Windows.Forms.Button();
+            this.b1 = new System.Windows.Forms.Button();
             this.label角色 = new System.Windows.Forms.Label();
             this.tb制袋物料名称1 = new System.Windows.Forms.TextBox();
             this.tb制袋物料名称2 = new System.Windows.Forms.TextBox();
@@ -83,11 +83,6 @@
             this.label17 = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
             this.cb打印机 = new System.Windows.Forms.ComboBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.btn添加 = new System.Windows.Forms.Button();
             this.btn删除 = new System.Windows.Forms.Button();
             this.btn查询插入 = new System.Windows.Forms.Button();
@@ -452,52 +447,57 @@
             // btn打印
             // 
             this.btn打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn打印.Location = new System.Drawing.Point(303, 762);
+            this.btn打印.Location = new System.Drawing.Point(103, 675);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 28);
             this.btn打印.TabIndex = 104;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click_1);
             // 
             // btn审核
             // 
             this.btn审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn审核.Location = new System.Drawing.Point(12, 765);
+            this.btn审核.Location = new System.Drawing.Point(16, 675);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 27);
             this.btn审核.TabIndex = 103;
             this.btn审核.Text = "审核";
             this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
             // btn查看日志
             // 
             this.btn查看日志.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn查看日志.Location = new System.Drawing.Point(774, 762);
+            this.btn查看日志.Location = new System.Drawing.Point(939, 675);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(94, 27);
             this.btn查看日志.TabIndex = 108;
             this.btn查看日志.Text = "查看日志";
             this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
             // 
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn提交审核.Location = new System.Drawing.Point(643, 762);
+            this.btn提交审核.Location = new System.Drawing.Point(824, 676);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(97, 27);
             this.btn提交审核.TabIndex = 107;
             this.btn提交审核.Text = "提交审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
-            // btn保存
+            // b1
             // 
-            this.btn保存.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn保存.Location = new System.Drawing.Point(532, 762);
-            this.btn保存.Name = "btn保存";
-            this.btn保存.Size = new System.Drawing.Size(75, 27);
-            this.btn保存.TabIndex = 106;
-            this.btn保存.Text = "保存";
-            this.btn保存.UseVisualStyleBackColor = true;
+            this.b1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.b1.Location = new System.Drawing.Point(737, 676);
+            this.b1.Name = "b1";
+            this.b1.Size = new System.Drawing.Size(67, 27);
+            this.b1.TabIndex = 106;
+            this.b1.Text = "保存";
+            this.b1.UseVisualStyleBackColor = true;
+            this.b1.Click += new System.EventHandler(this.btn保存_Click);
             // 
             // label角色
             // 
@@ -645,65 +645,10 @@
             // 
             this.cb打印机.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(191, 676);
+            this.cb打印机.Location = new System.Drawing.Point(184, 680);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(276, 22);
+            this.cb打印机.Size = new System.Drawing.Size(325, 22);
             this.cb打印机.TabIndex = 290;
-            // 
-            // button2
-            // 
-            this.button2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button2.Location = new System.Drawing.Point(97, 672);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 28);
-            this.button2.TabIndex = 289;
-            this.button2.Text = "打印";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.btn打印_Click_1);
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button3.Location = new System.Drawing.Point(16, 673);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 27);
-            this.button3.TabIndex = 288;
-            this.button3.Text = "审核";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btn审核_Click);
-            // 
-            // button4
-            // 
-            this.button4.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button4.Location = new System.Drawing.Point(925, 672);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(94, 27);
-            this.button4.TabIndex = 293;
-            this.button4.Text = "查看日志";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.btn查看日志_Click);
-            // 
-            // button5
-            // 
-            this.button5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button5.Location = new System.Drawing.Point(822, 672);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(97, 27);
-            this.button5.TabIndex = 292;
-            this.button5.Text = "提交审核";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.btn提交审核_Click);
-            // 
-            // button6
-            // 
-            this.button6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button6.Location = new System.Drawing.Point(740, 672);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 27);
-            this.button6.TabIndex = 291;
-            this.button6.Text = "保存";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.btn保存_Click);
             // 
             // btn添加
             // 
@@ -1156,9 +1101,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1039, 707);
+            this.ClientSize = new System.Drawing.Size(1039, 712);
             this.Controls.Add(this.cmb类型);
             this.Controls.Add(this.label39);
+            this.Controls.Add(this.btn审核);
             this.Controls.Add(this.dtp操作时间);
             this.Controls.Add(this.tb操作员);
             this.Controls.Add(this.dtp审核时间);
@@ -1205,12 +1151,7 @@
             this.Controls.Add(this.btn查询插入);
             this.Controls.Add(this.btn删除);
             this.Controls.Add(this.btn添加);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.cb打印机);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button3);
             this.Controls.Add(this.tb记录);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.tb备注);
@@ -1240,10 +1181,9 @@
             this.Controls.Add(this.btn查看日志);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.btn提交审核);
-            this.Controls.Add(this.btn保存);
+            this.Controls.Add(this.b1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.btn打印);
-            this.Controls.Add(this.btn审核);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dataGridView1);
@@ -1308,7 +1248,7 @@
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.Button btn提交审核;
-        private System.Windows.Forms.Button btn保存;
+        private System.Windows.Forms.Button b1;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.TextBox tb制袋物料名称1;
         private System.Windows.Forms.TextBox tb制袋物料名称2;
@@ -1327,11 +1267,6 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ComboBox cb打印机;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button btn添加;
         private System.Windows.Forms.Button btn删除;
         private System.Windows.Forms.Button btn查询插入;
