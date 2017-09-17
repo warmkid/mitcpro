@@ -202,7 +202,7 @@ namespace mySystem.Process.Bag.LDPE
         void readOuterData()
         {
             string sql = "select * from 产品热合强度检验记录 where 生产指令ID={0} and 整理时间=#{1}#";
-            daOuter = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.csbagInstruID, nowString), conn);
+            daOuter = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.ldpebagInstruID, nowString), conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("产品热合强度检验记录");
             bsOuter = new BindingSource();
@@ -445,7 +445,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             if (Parameter.UserState.操作员 == _userState)
             {
-                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState) setControlTrue();
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
                 else setControlFalse();
             }
 
@@ -506,7 +506,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
-
+            cb打印机.Enabled = true;
         }
 
         /// <summary>
