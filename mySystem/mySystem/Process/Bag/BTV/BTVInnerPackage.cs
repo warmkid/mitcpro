@@ -189,7 +189,12 @@ namespace mySystem.Process.Bag.BTV
                             cmb产品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
                         }
                         OleDbCommand str = new OleDbCommand("SELECT 内包 FROM 生产指令详细信息where T生产指令ID = " + reader1["ID"].ToString(), connOle);
-                        tb内包装规格.Text = str.ExecuteScalar().ToString();
+                        try
+                        {
+                            tb内包装规格.Text = str.ExecuteScalar().ToString();
+                        }
+                        catch
+                        { }
                     }
                     datemp.Dispose();
                 }
