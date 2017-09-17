@@ -646,6 +646,11 @@ namespace mySystem.Process.Bag.LDPE
 
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+
+        }
         
     }
 }

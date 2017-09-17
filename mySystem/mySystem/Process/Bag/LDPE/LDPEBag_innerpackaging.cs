@@ -1031,10 +1031,10 @@ namespace mySystem.Process.Bag.LDPE
             int ind = 0;
             if (dt记录详情.Rows.Count > 12)
             {
-                //在第7行插入
+                //在第8行插入
                 for (int i = 0; i < dt记录详情.Rows.Count - 12; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
@@ -1243,6 +1243,7 @@ namespace mySystem.Process.Bag.LDPE
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            setEnableReadOnly();
         }
 
         //实时求合计、检查人名合法性

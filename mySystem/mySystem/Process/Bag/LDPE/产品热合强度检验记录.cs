@@ -218,7 +218,7 @@ namespace mySystem.Process.Bag.LDPE
         /// <returns></returns>
         DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.csbagInstruID;
+            dr["生产指令ID"] = mySystem.Parameter.ldpebagInstruID;
             dr["整理人"] = mySystem.Parameter.userName;
             dr["整理时间"] = nowString;
             dr["审核日期"] = DateTime.Now;

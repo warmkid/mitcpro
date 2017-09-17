@@ -315,11 +315,20 @@ namespace mySystem.Process.Bag.LDPE
         {
             dataGridView1.DataError += dataGridView1_DataError;
             dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            
+
+        }
+
+
+        //数据绑定结束，设置表格格式
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            setDataGridViewFormat();
+            setEnableReadOnly();
         }
 
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged

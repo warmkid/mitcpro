@@ -42,7 +42,6 @@ namespace mySystem.Process.Bag.LDPE
         List<String> ls操作员;
         List<String> ls审核员;
 
-
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/LDPE.mdb;Persist Security Info=False";
@@ -425,6 +424,7 @@ namespace mySystem.Process.Bag.LDPE
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+
         }
 
         void setControlFalse()
@@ -446,7 +446,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
-
+            cb打印机.Enabled = true;
         }
 
         // 事件部分
@@ -693,8 +693,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn审核_Click(object sender, EventArgs e)
         {
-            // TODO 弹出赵梦的窗口
-
+            // TODO 弹出赵梦的窗口            
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
             DataTable dt;
@@ -721,7 +720,7 @@ namespace mySystem.Process.Bag.LDPE
 
             btn审核.Enabled = false;
         }
-
+        
         //添加打印机
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
@@ -842,11 +841,11 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[6 + i, 5].Value = dtInner.Rows[i]["热封线不良"].ToString();
                 mysheet.Cells[6 + i, 6].Value = dtInner.Rows[i]["其他"].ToString();
                 mysheet.Cells[6 + i, 7].Value = dtInner.Rows[i]["不良合计"].ToString();
-                mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "合格" ? "√" : "×";
                 mysheet.Cells[6 + i, 9].Value = Convert.ToDateTime(dtInner.Rows[i]["抽检时间尺寸检测"].ToString()).ToString("yyyy/MM/dd HH:mm");
                 mysheet.Cells[6 + i, 10].Value = dtInner.Rows[i]["抽检量尺寸检测"].ToString();
                 mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["宽"].ToString() + " × " + dtInner.Rows[i]["长"].ToString();
-                mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "合格" ? "√" : "×";
             }
             //需要插入的部分
             if (rownum > 6)
@@ -865,11 +864,11 @@ namespace mySystem.Process.Bag.LDPE
                     mysheet.Cells[6 + i, 5].Value = dtInner.Rows[i]["热封线不良"].ToString();
                     mysheet.Cells[6 + i, 6].Value = dtInner.Rows[i]["其他"].ToString();
                     mysheet.Cells[6 + i, 7].Value = dtInner.Rows[i]["不良合计"].ToString();
-                    mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "合格" ? "√" : "×";
                     mysheet.Cells[6 + i, 9].Value = Convert.ToDateTime(dtInner.Rows[i]["抽检时间尺寸检测"].ToString()).ToString("yyyy/MM/dd HH:mm");
                     mysheet.Cells[6 + i, 10].Value = dtInner.Rows[i]["抽检量尺寸检测"].ToString();
                     mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["宽"].ToString() + " × " + dtInner.Rows[i]["长"].ToString();
-                    mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "合格" ? "√" : "×";
 
                 }
             }

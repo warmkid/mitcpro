@@ -107,7 +107,7 @@ namespace mySystem.Process.Bag.LDPE
             hs制袋内包夜班负责人 = new HashSet<string>();
 
             li可选可输的列 = new List<int>();
-            li可选可输的列.Add(2);
+            //li可选可输的列.Add(2);
             li可选可输的列.Add(8);
         }
 
@@ -392,21 +392,21 @@ namespace mySystem.Process.Bag.LDPE
             foreach (DataColumn dc in dtInner.Columns)
             {
                 // 要下拉框的特殊处理
-                if (dc.ColumnName == "产品代码")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (String s in hs产品代码)
-                    {
-                        cbc.Items.Add(s);
-                    }
-                    dataGridView1.Columns.Add(cbc);
-                    continue;
-                }
+                //if (dc.ColumnName == "产品代码")
+                //{
+                //    cbc = new DataGridViewComboBoxColumn();
+                //    cbc.HeaderText = dc.ColumnName;
+                //    cbc.Name = dc.ColumnName;
+                //    cbc.ValueType = dc.DataType;
+                //    cbc.DataPropertyName = dc.ColumnName;
+                //    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                //    foreach (String s in hs产品代码)
+                //    {
+                //        cbc.Items.Add(s);
+                //    }
+                //    dataGridView1.Columns.Add(cbc);
+                //    continue;
+                //}
                 if (dc.ColumnName == "封边")
                 {
                     cbc = new DataGridViewComboBoxColumn();
@@ -617,7 +617,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
-
+            comboBox1.Enabled = true;
         }
 
         /// <summary>
@@ -694,7 +694,7 @@ namespace mySystem.Process.Bag.LDPE
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (li可选可输的列.IndexOf(e.ColumnIndex) >= 0)
+            if (li可选可输的列.IndexOf(e.ColumnIndex) >= 0 )
             {
                 object eFV = e.FormattedValue;
                 DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;

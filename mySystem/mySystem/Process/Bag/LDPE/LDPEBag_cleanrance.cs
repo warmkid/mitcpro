@@ -508,7 +508,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
-
+            cb打印机.Enabled = true;
         }
 
         // 事件部分

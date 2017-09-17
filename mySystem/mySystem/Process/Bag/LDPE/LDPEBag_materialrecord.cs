@@ -789,7 +789,7 @@ namespace mySystem.Process.Bag.LDPE
         //审核功能
         private void btn审核_Click(object sender, EventArgs e)
         {
-            if (mySystem.Parameter.userName == dt记录.Rows[0]["操作员"].ToString())
+            if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
@@ -1090,6 +1090,7 @@ namespace mySystem.Process.Bag.LDPE
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            setEnableReadOnly();
         }
 
         //实时求合计、检查人名合法性
