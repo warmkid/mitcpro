@@ -431,6 +431,7 @@ namespace mySystem.Process.Bag.CS
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码
@@ -515,7 +516,7 @@ namespace mySystem.Process.Bag.CS
             dataGridView1.ColumnHeadersHeight = 40;
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T洁净区温湿度记录ID"].Visible = false;
-            dataGridView1.Columns["操作员"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["操作员"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //HeaderText
             dataGridView1.Columns["温度"].HeaderText = "温度\r18℃-26℃";
             dataGridView1.Columns["相对湿度"].HeaderText = "相对湿度\r≤70%";
@@ -536,6 +537,8 @@ namespace mySystem.Process.Bag.CS
             dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             setDataGridViewRowNums();
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         //删除按钮

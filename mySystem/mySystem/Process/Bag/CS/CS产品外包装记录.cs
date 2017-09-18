@@ -536,6 +536,7 @@ namespace mySystem.Process.Bag.CS
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码
@@ -628,7 +629,7 @@ namespace mySystem.Process.Bag.CS
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T产品外包装记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.Columns["包装明细"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["包装明细"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //HeaderText
             dataGridView1.Columns["包装数量箱数"].HeaderText = "包装数量\r（箱）";
             dataGridView1.Columns["产品数量只数"].HeaderText = "产品数量\r（只）";
@@ -652,6 +653,8 @@ namespace mySystem.Process.Bag.CS
             dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             setDataGridViewRowNums();
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         //删除按钮

@@ -829,6 +829,8 @@ namespace mySystem.Process.Bag
             // 如果行有默认值，在这里写代码填上
             dr = writeInnerDefault(dr);
             dt_in.Rows.Add(dr);
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         private void bt删除_Click(object sender, EventArgs e)
