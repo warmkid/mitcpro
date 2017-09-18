@@ -324,11 +324,11 @@ namespace mySystem.Setting
 
         private void setDataGridViewRowNums(DataGridView dgv)
         {
-            int coun = dgv.RowCount;
-            for (int i = 0; i < coun; i++)
-            {
-                dgv.Rows[i].Cells[0].Value = (i + 1).ToString();
-            }
+            //int coun = dgv.RowCount;
+            //for (int i = 0; i < coun; i++)
+            //{
+            //    dgv.Rows[i].Cells[0].Value = (i + 1).ToString();
+            //}
         }
 
         private void EachInitdgv(DataGridView dgv)
