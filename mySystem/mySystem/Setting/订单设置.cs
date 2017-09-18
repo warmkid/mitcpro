@@ -324,11 +324,11 @@ namespace mySystem.Setting
 
         private void setDataGridViewRowNums(DataGridView dgv)
         {
-            //int coun = dgv.RowCount;
-            //for (int i = 0; i < coun; i++)
-            //{
-            //    dgv.Rows[i].Cells[0].Value = (i + 1).ToString();
-            //}
+            int coun = dgv.RowCount;
+            for (int i = 0; i < coun; i++)
+            {
+                dgv.Rows[i].Cells[0].Value = (i + 1).ToString();
+            }
         }
 
         private void EachInitdgv(DataGridView dgv)
@@ -348,7 +348,7 @@ namespace mySystem.Setting
         {
             //DataRow dr = dt存货档案.NewRow();
             dt存货档案.Rows.InsertAt(dt存货档案.NewRow(), dt存货档案.Rows.Count);
-            setDataGridViewRowNums(this.dgv存货档案);
+            //setDataGridViewRowNums(this.dgv存货档案);
             if (dgv存货档案.Rows.Count > 0)
                 dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
         }
