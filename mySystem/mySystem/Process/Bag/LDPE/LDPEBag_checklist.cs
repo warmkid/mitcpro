@@ -823,6 +823,7 @@ namespace mySystem.Process.Bag.LDPE
             //throw new NotImplementedException();
             setDataGridViewBackColor();
             setDataGridViewFormat();
+            setEnableReadOnly();
         }
     }
 }

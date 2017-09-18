@@ -662,13 +662,11 @@ namespace mySystem.Process.Bag.LDPE
                 int deletenum = dataGridView1.CurrentRow.Index;
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
-                getTotal();
-
                 // 保存
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
-
+                getTotal();
                 setDataGridViewRowNums();
             }
         }
@@ -825,31 +823,6 @@ namespace mySystem.Process.Bag.LDPE
 
             base.CheckResult();
 
-            dt记录.Rows[0]["审核员"] = mySystem.Parameter.userName;
-            dt记录.Rows[0]["审核意见"] = checkform.opinion;
-            dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
-
-            
-
-            //写待审核表
-            DataTable dt_temp = new DataTable("待审核");
-            //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='产品外包装记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
-
-            //写日志
-            string log = "=====================================\n";
-            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 完成审核\n";
-            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
-            log += "审核意见：" + checkform.opinion + "\n";
-            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
-
-            Save();
-
-
             if (checkform.ischeckOk)
             {
                 // 产品入库
@@ -901,6 +874,28 @@ namespace mySystem.Process.Bag.LDPE
                 }
                 da.Update(dt);
             }
+
+            dt记录.Rows[0]["审核员"] = mySystem.Parameter.userName;
+            dt记录.Rows[0]["审核意见"] = checkform.opinion;
+            dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
+
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='产品外包装记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            dt_temp.Rows[0].Delete();
+            da_temp.Update(dt_temp);
+
+            //写日志
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 完成审核\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion + "\n";
+            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+            Save();
 
             //修改状态，设置可控性
             if (checkform.ischeckOk)

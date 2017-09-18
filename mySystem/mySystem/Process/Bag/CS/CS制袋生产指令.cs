@@ -400,7 +400,7 @@ namespace mySystem.Process.Bag.CS
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
-
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         /// <summary>
@@ -1027,6 +1027,8 @@ namespace mySystem.Process.Bag.CS
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
 

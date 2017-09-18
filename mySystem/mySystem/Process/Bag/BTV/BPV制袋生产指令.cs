@@ -100,6 +100,8 @@ namespace mySystem.Process.Bag.BTV
 
             // 禁用
             btn查询插入.Enabled = false;
+            //tb生产指令编号.Text = dtOuter.Rows[0]["生产指令编号"].ToString();
+            outerDataSync("tb生产指令编号", dtOuter.Rows[0]["生产指令编号"].ToString());
             tb生产指令编号.Enabled = false;
         }
 
@@ -366,6 +368,7 @@ namespace mySystem.Process.Bag.BTV
             dr["审核时间"] = DateTime.Now;
             dr["接收时间"] = DateTime.Now;
             dr["状态"] = 0;
+            dr["类型"] = "正常";
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + _code + "\n";
             dr["日志"] = log;
@@ -830,7 +833,7 @@ namespace mySystem.Process.Bag.BTV
                 if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
             }
             if ("产品代码" == dgv.Columns[colIdx].Name)
-            //if (colIdx == 2)
+            
             {
                 TextBox tb = (e.Control as TextBox);
                 tb.AutoCompleteCustomSource = null;
@@ -966,26 +969,26 @@ namespace mySystem.Process.Bag.BTV
                     case 0:
                         //灭菌指示剂
                         //dtOuter.Rows[0]["制袋物料领料量3"] = i计划产量只.ToString();
-                        outerDataSync("tb制袋物料领料量3", i计划产量只.ToString());
+                        outerDataSync("tb内包需求3", i计划产量只.ToString());
                         //内包装
                         //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
                         //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
-                        outerDataSync("tb内包物料领料量1", (i计划产量只 / i内包装规格 * 2).ToString());
+                        outerDataSync("tb内包需求1", (i计划产量只 / i内包装规格 * 2).ToString());
                         // 内标签
                         //tb内包物料领料量2.Text = (i计划产量只 / i内包装规格).ToString();
                         //dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
-                        outerDataSync("tb内包物料领料量2", (i计划产量只 / i内包装规格).ToString());
+                        outerDataSync("tb内包需求2", (i计划产量只 / i内包装规格).ToString());
                         // 外标签
                         //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
                         //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
-                        outerDataSync("tb外包物料领料量1", (i计划产量只 / i外包装规格 * 2).ToString());
+                        outerDataSync("tb外包需求1", (i计划产量只 / i外包装规格 * 2).ToString());
                         // 纸箱
                         //tb外包物料领料量2.Text = (i计划产量只 / i外包装规格).ToString();
                         //dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
-                        outerDataSync("tb外包物料领料量2", (i计划产量只 / i外包装规格).ToString());
+                        outerDataSync("tb外包需求2", (i计划产量只 / i外包装规格).ToString());
                         // 内衬袋
                         //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
-                        outerDataSync("tb外包物料领料量3", (i计划产量只 / i外包装规格).ToString());
+                        outerDataSync("tb外包需求3", (i计划产量只 / i外包装规格).ToString());
                         //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
                         break;
                     // 内包装规格
@@ -993,26 +996,26 @@ namespace mySystem.Process.Bag.BTV
                         //内包装
                         //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
                         //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
-                        outerDataSync("tb内包物料领料量1", (i计划产量只 / i内包装规格 * 2).ToString());
+                        outerDataSync("tb内包需求1", (i计划产量只 / i内包装规格 * 2).ToString());
                         // 内标签
                         //tb内包物料领料量2.Text = (i计划产量只 / i内包装规格).ToString();
                         //dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
-                        outerDataSync("tb内包物料领料量2", (i计划产量只 / i内包装规格).ToString());
+                        outerDataSync("tb内包需求2", (i计划产量只 / i内包装规格).ToString());
                         break;
                     // 外包装规格
                     case 2:
                         // 外标签
                         //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
                         //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
-                        outerDataSync("tb外包物料领料量1", (i计划产量只 / i外包装规格 * 2).ToString());
+                        outerDataSync("tb外包需求1", (i计划产量只 / i外包装规格 * 2).ToString());
                         // 纸箱
                         //tb外包物料领料量2.Text = (i计划产量只 / i外包装规格).ToString();
                         //dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
-                        outerDataSync("tb外包物料领料量2", (i计划产量只 / i外包装规格).ToString());
+                        outerDataSync("tb外包需求2", (i计划产量只 / i外包装规格).ToString());
                         // 内衬袋
                         //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
                         //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
-                        outerDataSync("tb外包物料领料量3", (i计划产量只 / i外包装规格).ToString());
+                        outerDataSync("tb外包需求3", (i计划产量只 / i外包装规格).ToString());
                         break;
                 }
                 //String a = cmb产品名称.Text;
@@ -1132,7 +1135,7 @@ namespace mySystem.Process.Bag.BTV
             dt.Rows[0].Delete();
             da.Update(dt);
 
-            dtOuter.Rows[0]["审核员"] = ckform.userName;
+            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核是否通过"] = ckform.ischeckOk;
             dtOuter.Rows[0]["审核意见"] = ckform.opinion;
             if (ckform.ischeckOk)
@@ -1371,9 +1374,12 @@ namespace mySystem.Process.Bag.BTV
         private void BPV制袋生产指令_Shown(object sender, EventArgs e)
         {
             try
-            {                
-                tb生产指令编号.Text = Parameter.bpvbagInstruction;
-                //btn查询插入.PerformClick();
+            {
+                if ("" == tb生产指令编号.Text)
+                {
+                    tb生产指令编号.Text = Parameter.bpvbagInstruction;
+                    //btn查询插入.PerformClick();
+                }
             }
             catch { }
         }
