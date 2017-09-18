@@ -963,62 +963,120 @@ namespace mySystem.Process.Bag.BTV
                  i内包装规格 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["内包"].Value);
                  i外包装规格 = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells["外包"].Value);
                 string colName=dataGridView1.Columns[e.ColumnIndex].Name.ToString();
-                switch (cols.IndexOf(colName))
-                {       
-                    // 计划产量
-                    case 0:
-                        //灭菌指示剂
-                        //dtOuter.Rows[0]["制袋物料领料量3"] = i计划产量只.ToString();
+                //switch (cols.IndexOf(colName))
+                //{       
+                //    // 计划产量
+                //    case 0:
+                //        //灭菌指示剂
+                //        //dtOuter.Rows[0]["制袋物料领料量3"] = i计划产量只.ToString();
+                //        outerDataSync("tb内包需求3", i计划产量只.ToString());
+                //        //内包装
+                //        //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
+                //        //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
+                //        outerDataSync("tb内包需求1", (i计划产量只 / i内包装规格 * 2).ToString());
+                //        // 内标签
+                //        //tb内包物料领料量2.Text = (i计划产量只 / i内包装规格).ToString();
+                //        //dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
+                //        outerDataSync("tb内包需求2", (i计划产量只 / i内包装规格).ToString());
+                //        // 外标签
+                //        //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
+                //        //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
+                //        outerDataSync("tb外包需求1", (i计划产量只 / i外包装规格 * 2).ToString());
+                //        // 纸箱
+                //        //tb外包物料领料量2.Text = (i计划产量只 / i外包装规格).ToString();
+                //        //dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
+                //        outerDataSync("tb外包需求2", (i计划产量只 / i外包装规格).ToString());
+                //        // 内衬袋
+                //        //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
+                //        outerDataSync("tb外包需求3", (i计划产量只 / i外包装规格).ToString());
+                //        //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
+                //        break;
+                //    // 内包装规格
+                //    case 1:
+                //        //内包装
+                //        //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
+                //        //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
+                //        outerDataSync("tb内包需求1", (i计划产量只 / i内包装规格 * 2).ToString());
+                //        // 内标签
+                //        //tb内包物料领料量2.Text = (i计划产量只 / i内包装规格).ToString();
+                //        //dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
+                //        outerDataSync("tb内包需求2", (i计划产量只 / i内包装规格).ToString());
+                //        break;
+                //    // 外包装规格
+                //    case 2:
+                //        // 外标签
+                //        //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
+                //        //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
+                //        outerDataSync("tb外包需求1", (i计划产量只 / i外包装规格 * 2).ToString());
+                //        // 纸箱
+                //        //tb外包物料领料量2.Text = (i计划产量只 / i外包装规格).ToString();
+                //        //dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
+                //        outerDataSync("tb外包需求2", (i计划产量只 / i外包装规格).ToString());
+                //        // 内衬袋
+                //        //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
+                //        //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
+                //        outerDataSync("tb外包需求3", (i计划产量只 / i外包装规格).ToString());
+                //        break;
+                //}
+                //String a = cmb产品名称.Text;
+                String curStr;
+                double curDou;
+                int idx;
+                bool ok;
+                switch (dataGridView1.Columns[e.ColumnIndex].Name)
+                {
+                    //case "物料代码":
+                    //    curStr = dataGridView2[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    //    idx = ls物料代码.IndexOf(curStr);
+                    //    if (idx >= 0)
+                    //    {
+                    //        dataGridView2["物料代码", e.RowIndex].Value = ls物料代码[idx];
+                    //        dataGridView2["物料名称", e.RowIndex].Value = ls物料名称[idx];
+                    //        dataGridView2["单位", e.RowIndex].Value = ls单位[idx];
+                    //    }
+                    //    else
+                    //    {
+                    //        dataGridView2["物料代码", e.RowIndex].Value = "";
+                    //        dataGridView2["物料名称", e.RowIndex].Value = "";
+                    //        dataGridView2["单位", e.RowIndex].Value = "";
+                    //    }
+                    //    break;
+                    //case "物料名称":
+                    //    curStr = dataGridView2[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    //    idx = ls物料名称.IndexOf(curStr);
+                    //    if (idx >= 0)
+                    //    {
+                    //        dataGridView2["物料代码", e.RowIndex].Value = ls物料代码[idx];
+                    //        dataGridView2["物料名称", e.RowIndex].Value = ls物料名称[idx];
+                    //        dataGridView2["单位", e.RowIndex].Value = ls单位[idx];
+                    //    }
+                    //    else
+                    //    {
+                    //        dataGridView2["物料代码", e.RowIndex].Value = "";
+                    //        dataGridView2["物料名称", e.RowIndex].Value = "";
+                    //        dataGridView2["单位", e.RowIndex].Value = "";
+                    //    }
+                    //    break;
+
+                    case "计划产量":
                         outerDataSync("tb内包需求3", i计划产量只.ToString());
-                        //内包装
-                        //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
-                        //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
                         outerDataSync("tb内包需求1", (i计划产量只 / i内包装规格 * 2).ToString());
-                        // 内标签
-                        //tb内包物料领料量2.Text = (i计划产量只 / i内包装规格).ToString();
-                        //dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
                         outerDataSync("tb内包需求2", (i计划产量只 / i内包装规格).ToString());
-                        // 外标签
-                        //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
-                        //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
                         outerDataSync("tb外包需求1", (i计划产量只 / i外包装规格 * 2).ToString());
-                        // 纸箱
-                        //tb外包物料领料量2.Text = (i计划产量只 / i外包装规格).ToString();
-                        //dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
                         outerDataSync("tb外包需求2", (i计划产量只 / i外包装规格).ToString());
-                        // 内衬袋
-                        //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
                         outerDataSync("tb外包需求3", (i计划产量只 / i外包装规格).ToString());
-                        //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
                         break;
-                    // 内包装规格
-                    case 1:
-                        //内包装
-                        //tb内包物料领料量1.Text = (i计划产量只 / i内包装规格 * 2).ToString();
-                        //dtOuter.Rows[0]["内包物料领料量1"] = (i计划产量只 / i内包装规格 * 2).ToString();
+                    case "内包":
                         outerDataSync("tb内包需求1", (i计划产量只 / i内包装规格 * 2).ToString());
-                        // 内标签
-                        //tb内包物料领料量2.Text = (i计划产量只 / i内包装规格).ToString();
-                        //dtOuter.Rows[0]["内包物料领料量2"] = (i计划产量只 / i内包装规格).ToString();
                         outerDataSync("tb内包需求2", (i计划产量只 / i内包装规格).ToString());
                         break;
-                    // 外包装规格
-                    case 2:
-                        // 外标签
-                        //tb外包物料领料量1.Text = (i计划产量只 / i外包装规格 * 2).ToString();
-                        //dtOuter.Rows[0]["外包物料领料量1"] = (i计划产量只 / i外包装规格 * 2).ToString();
+                    case "外包":
                         outerDataSync("tb外包需求1", (i计划产量只 / i外包装规格 * 2).ToString());
-                        // 纸箱
-                        //tb外包物料领料量2.Text = (i计划产量只 / i外包装规格).ToString();
-                        //dtOuter.Rows[0]["外包物料领料量2"] = (i计划产量只 / i外包装规格).ToString();
                         outerDataSync("tb外包需求2", (i计划产量只 / i外包装规格).ToString());
-                        // 内衬袋
-                        //tb外包物料领料量3.Text = (i计划产量只 / i外包装规格).ToString();
-                        //dtOuter.Rows[0]["外包物料领料量3"] = (i计划产量只 / i外包装规格).ToString();
                         outerDataSync("tb外包需求3", (i计划产量只 / i外包装规格).ToString());
                         break;
                 }
-                //String a = cmb产品名称.Text;
+
             }
             catch (System.DivideByZeroException)
             {
@@ -1407,12 +1465,173 @@ namespace mySystem.Process.Bag.BTV
             }
         }
 
-       
-        
+        private void tb内包物料代码1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
 
-        
-        
+        private void tb内包物料代码2_Enter(object sender, EventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
 
+            acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(ls物料代码.ToArray());
+            tb.AutoCompleteCustomSource = acsc;
+            tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
+
+        private void tb内包物料代码3_Enter(object sender, EventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+
+            acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(ls物料代码.ToArray());
+            tb.AutoCompleteCustomSource = acsc;
+            tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
+
+        private void tb外包物料代码1_Enter(object sender, EventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+
+            acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(ls物料代码.ToArray());
+            tb.AutoCompleteCustomSource = acsc;
+            tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
+
+        private void tb外包物料代码2_TextChanged(object sender, EventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+
+            acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(ls物料代码.ToArray());
+            tb.AutoCompleteCustomSource = acsc;
+            tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
+
+        private void tb外包物料代码3_Enter(object sender, EventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+
+            acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(ls物料代码.ToArray());
+            tb.AutoCompleteCustomSource = acsc;
+            tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
+
+        private void tb内包物料代码2_support(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb内包物料代码3_support(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码1_support(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称1.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码2_support(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称2.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码3_support(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb外包物料名称3.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
+
+        private void tb外包物料代码2_Enter(object sender, EventArgs e)
+        {
+            TextBox tb = (sender as TextBox);
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            if (tb == null) return;
+
+            acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(ls物料代码.ToArray());
+            tb.AutoCompleteCustomSource = acsc;
+            tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
         
     }
 }

@@ -29,7 +29,7 @@ namespace mySystem.Process.Bag.BTV
         private bool isSqlOk;
         private CheckForm checkform = null;
 
-        private DataTable dt记录, dt记录详情, dt代码批号, dt膜代码;
+        private DataTable dt记录, dt记录详情, dt代码批号, dt膜代码, dt物料;
         private OleDbDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
@@ -170,6 +170,7 @@ namespace mySystem.Process.Bag.BTV
         {
             dt膜代码 = new DataTable("膜代码");
             dt代码批号 = new DataTable("代码批号");
+            dt物料 = new DataTable("物料");
 
             //*********产品名称、产品批号、产品工艺、设备 -----> 数据获取*********//
             if (!isSqlOk)
@@ -187,22 +188,54 @@ namespace mySystem.Process.Bag.BTV
                 {
                     MessageBox.Show("该生产指令编码下的『计划生产日期』尚未填写");
                 }
-                //查找该生产ID下的产品编码、产品批号
-                OleDbCommand comm2 = new OleDbCommand();
-                comm2.Connection = Parameter.connOle;
-                comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + InstruID;
-                OleDbDataAdapter datemp = new OleDbDataAdapter(comm2);
-                datemp.Fill(dt代码批号);
-                if (dt代码批号.Rows.Count == 0)
+
+                OleDbCommand comm1 = new OleDbCommand();
+                comm1.Connection = Parameter.connOle;
+                comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
+                DataTable dt生产指令 = new DataTable("生产指令");
+                OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
+                datemp1.Fill(dt生产指令);
+                if (dt生产指令.Rows.Count == 0)
                 {
-                    MessageBox.Show("该生产指令编码下的『生产指令产品列表』尚未生成！");
+                    MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！");
                 }
                 else
                 {
-                    tb产品代码.Text = dt代码批号.Rows[0]["产品代码"].ToString();
-                    tb产品批号.Text = dt代码批号.Rows[0]["产品批号"].ToString();
+                    //TO ASK : IS THIS PART HAND ADDED? IS DATABASE UNAVAILIBLE NOW? AND HOW CAN PROGRAM KNOWS HOW MANY ROWS SHOULD BE?
+                    //外表物料
+                    dt物料.Columns.Add("物料简称", typeof(String));   //新建第1列
+                    dt物料.Columns.Add("物料代码", typeof(String));   //新建第2列
+                    dt物料.Columns.Add("物料批号", typeof(String));   //新建第3列
+                    //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称1"].ToString(), dt生产指令.Rows[0]["制袋物料代码1"].ToString(), dt生产指令.Rows[0]["制袋物料批号1"].ToString());
+                    //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称2"].ToString(), dt生产指令.Rows[0]["制袋物料代码2"].ToString(), dt生产指令.Rows[0]["制袋物料批号2"].ToString());
+                    //dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称3"].ToString(), dt生产指令.Rows[0]["制袋物料代码3"].ToString(), dt生产指令.Rows[0]["制袋物料批号3"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称1"].ToString(), dt生产指令.Rows[0]["内包物料代码1"].ToString(), dt生产指令.Rows[0]["内包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称2"].ToString(), dt生产指令.Rows[0]["内包物料代码2"].ToString(), dt生产指令.Rows[0]["内包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称1"].ToString(), dt生产指令.Rows[0]["外包物料代码1"].ToString(), dt生产指令.Rows[0]["外包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
+                    addMaterialToDt();
+
+
+                    //内表代码批号
+                    OleDbCommand comm2 = new OleDbCommand();
+                    comm2.Connection = Parameter.connOle;
+                    comm2.CommandText = "select * from 生产指令详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
+                    DataTable dttemp = new DataTable("dttemp");
+                    OleDbDataAdapter datemp2 = new OleDbDataAdapter(comm2);
+                    datemp2.Fill(dttemp);
+                    if (dttemp.Rows.Count == 0)
+                    { MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！"); }
+                    else
+                    {
+                        dt代码批号.Columns.Add("产品代码", typeof(String));   //新建第一列
+                        dt代码批号.Columns.Add("产品批号", typeof(String));      //新建第二列
+                        dt代码批号.Rows.Add(dttemp.Rows[0]["产品代码"].ToString(), dttemp.Rows[0]["产品批号"].ToString());
+                        tb产品代码.Text = dttemp.Rows[0]["产品代码"].ToString();
+                        tb产品批号.Text = dttemp.Rows[0]["产品批号"].ToString();
+                    }
                 }
-                datemp.Dispose();                               
+                datemp1.Dispose();                      
             }
             else
             {
@@ -210,6 +243,21 @@ namespace mySystem.Process.Bag.BTV
             }           
         }
 
+        private void addMaterialToDt()
+        {
+            OleDbDataAdapter daGetMaterial = new OleDbDataAdapter("select * from 生产指令物料 where T生产指令ID =" + InstruID, connOle);
+            DataTable dtResult = new DataTable();
+            daGetMaterial.Fill(dtResult);
+            for (int i = 0; i < dtResult.Rows.Count; i++)
+            {
+                DataRow dr = dt物料.NewRow();
+                dr["物料简称"] = dtResult.Rows[i]["物料名称"];
+                dr["物料代码"] = dtResult.Rows[i]["物料代码"];
+                dr["物料批号"] = dtResult.Rows[i]["物料批号"];
+                dt物料.Rows.Add(dr);
+            }
+            daGetMaterial.Dispose();
+        }
         //根据状态设置可读写性
         private void setEnableReadOnly()
         {
