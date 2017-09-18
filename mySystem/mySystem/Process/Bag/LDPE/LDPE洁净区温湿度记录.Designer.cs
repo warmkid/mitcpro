@@ -79,7 +79,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(700, 363);
+            this.btn提交数据审核.Location = new System.Drawing.Point(758, 365);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
             this.btn提交数据审核.TabIndex = 349;
@@ -90,7 +90,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(597, 363);
+            this.btn数据审核.Location = new System.Drawing.Point(655, 365);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(97, 30);
             this.btn数据审核.TabIndex = 348;
@@ -124,7 +124,7 @@
             this.cb打印机.FormattingEnabled = true;
             this.cb打印机.Location = new System.Drawing.Point(309, 459);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(207, 24);
+            this.cb打印机.Size = new System.Drawing.Size(272, 24);
             this.cb打印机.TabIndex = 344;
             // 
             // label40
@@ -170,7 +170,7 @@
             // btn查询新建
             // 
             this.btn查询新建.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn查询新建.Location = new System.Drawing.Point(720, 80);
+            this.btn查询新建.Location = new System.Drawing.Point(778, 82);
             this.btn查询新建.Name = "btn查询新建";
             this.btn查询新建.Size = new System.Drawing.Size(96, 30);
             this.btn查询新建.TabIndex = 340;
@@ -181,7 +181,7 @@
             // btn查看日志
             // 
             this.btn查看日志.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn查看日志.Location = new System.Drawing.Point(736, 453);
+            this.btn查看日志.Location = new System.Drawing.Point(794, 455);
             this.btn查看日志.Name = "btn查看日志";
             this.btn查看日志.Size = new System.Drawing.Size(80, 30);
             this.btn查看日志.TabIndex = 339;
@@ -192,7 +192,7 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn提交审核.Location = new System.Drawing.Point(644, 453);
+            this.btn提交审核.Location = new System.Drawing.Point(702, 455);
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(80, 30);
             this.btn提交审核.TabIndex = 338;
@@ -203,7 +203,7 @@
             // DelLineBtn
             // 
             this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.DelLineBtn.Location = new System.Drawing.Point(511, 363);
+            this.DelLineBtn.Location = new System.Drawing.Point(569, 365);
             this.DelLineBtn.Name = "DelLineBtn";
             this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
             this.DelLineBtn.TabIndex = 337;
@@ -214,7 +214,7 @@
             // AddLineBtn
             // 
             this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
-            this.AddLineBtn.Location = new System.Drawing.Point(425, 363);
+            this.AddLineBtn.Location = new System.Drawing.Point(483, 365);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
             this.AddLineBtn.TabIndex = 336;
@@ -247,7 +247,7 @@
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn确认.Location = new System.Drawing.Point(550, 453);
+            this.btn确认.Location = new System.Drawing.Point(608, 455);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(80, 30);
             this.btn确认.TabIndex = 333;
@@ -258,7 +258,7 @@
             // tb审核员
             // 
             this.tb审核员.Font = new System.Drawing.Font("SimSun", 12F);
-            this.tb审核员.Location = new System.Drawing.Point(716, 417);
+            this.tb审核员.Location = new System.Drawing.Point(774, 419);
             this.tb审核员.Name = "tb审核员";
             this.tb审核员.Size = new System.Drawing.Size(100, 26);
             this.tb审核员.TabIndex = 332;
@@ -267,7 +267,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 12F);
-            this.label5.Location = new System.Drawing.Point(654, 421);
+            this.label5.Location = new System.Drawing.Point(712, 423);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(72, 16);
             this.label5.TabIndex = 331;
@@ -279,7 +279,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(30, 116);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(786, 241);
+            this.dataGridView1.Size = new System.Drawing.Size(844, 241);
             this.dataGridView1.TabIndex = 330;
             // 
             // label1
@@ -297,7 +297,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(846, 505);
+            this.ClientSize = new System.Drawing.Size(915, 505);
             this.Controls.Add(this.lb生产工序);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.btn提交数据审核);

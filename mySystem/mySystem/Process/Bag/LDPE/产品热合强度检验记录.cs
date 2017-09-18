@@ -539,6 +539,7 @@ namespace mySystem.Process.Bag.LDPE
         void addComputerEventHandler()
         {
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            dataGridView1.DataError += dataGridView1_DataError;
         }
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -586,7 +587,7 @@ namespace mySystem.Process.Bag.LDPE
         /// <returns></returns>
         private bool dataValidate()
         {
-            dataGridView1.DataError += dataGridView1_DataError;
+            
 
             // TODO 更多条件有待补充
 

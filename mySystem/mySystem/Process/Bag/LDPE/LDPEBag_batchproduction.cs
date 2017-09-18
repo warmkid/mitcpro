@@ -37,6 +37,8 @@ namespace mySystem.Process.Bag.LDPE
         {
             InitializeComponent();
             fillPrinter();
+            dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView2.DataError += dataGridView2_DataError;
             _生产指令ID = mySystem.Parameter.ldpebagInstruID;
             _生产指令 = mySystem.Parameter.ldpebagInstruction;
             tb生产指令编号.Text = _生产指令;
@@ -66,6 +68,8 @@ namespace mySystem.Process.Bag.LDPE
         {
             InitializeComponent();
             fillPrinter();
+            dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView2.DataError += dataGridView2_DataError;
             _生产指令ID = id;
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + id, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
@@ -650,6 +654,24 @@ namespace mySystem.Process.Bag.LDPE
         private void btn打印_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // 处理DataGridView中数据类型输错的函数
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
+            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+        }
+
+        // 处理DataGridView中数据类型输错的函数
+        private void dataGridView2_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {            
+            // 获取选中的列，然后提示
+            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
+            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
         
     }
