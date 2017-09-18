@@ -61,6 +61,20 @@ namespace mySystem.Setting
             Initdgv();
             Bind();
             dgv存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv存货档案_CellDoubleClick);
+            tb代码q.PreviewKeyDown += new PreviewKeyDownEventHandler(tb代码q_PreviewKeyDown);
+            tb名称q.PreviewKeyDown += new PreviewKeyDownEventHandler(tb名称q_PreviewKeyDown);
+        }
+
+        void tb名称q_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询订单设置.PerformClick();
+        }
+
+        void tb代码q_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btn查询订单设置.PerformClick();
         }
 
         void dgv存货档案_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -734,6 +748,10 @@ namespace mySystem.Setting
 
         void setDGV存货档案Column()
         {
+            dgv存货档案.Columns["存货代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dgv存货档案.Columns["存货名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dgv存货档案.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
             dgv存货档案.Columns["存货代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv存货档案.Columns["存货名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv存货档案.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;

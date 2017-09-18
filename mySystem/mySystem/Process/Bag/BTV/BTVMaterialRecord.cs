@@ -32,6 +32,7 @@ namespace mySystem.Process.Bag.BTV
         private OleDbCommandBuilder cb记录, cb记录详情;
 
         List<String> ls操作员, ls审核员;
+        List<String> ls物料代码, ls物料简称, ls物料批号;
         Parameter.UserState _userState;
         Parameter.FormState _formState;
         Int32 InstruID;
@@ -215,6 +216,16 @@ namespace mySystem.Process.Bag.BTV
                     }
                 }
                 datemp1.Dispose();
+                ls物料代码 = new List<string>();
+                ls物料简称 = new List<string>();
+                ls物料批号 = new List<string>();
+
+                foreach (DataRow dr in dt物料.Rows)
+                {
+                    ls物料代码.Add(dr["物料代码"].ToString());
+                    ls物料简称.Add(dr["物料简称"].ToString());
+                    ls物料批号.Add(dr["物料批号"].ToString());
+                }  
             }
             else
             { }
@@ -236,59 +247,7 @@ namespace mySystem.Process.Bag.BTV
         }
         //TO ANOUNCE: THIS FUNCTION IS TO READ THE 生产指令 INFORMATION, AS BPV DATABASE IS LITTLE DIFFERENT 
         //FROM CS BAG ANF PTV BAG. 'GETOUTHER' FUNCTION HAS TO BE ADJUSTED
-        private void getOtherDataLocal()
-        {
-            dt代码批号 = new DataTable("代码批号");
-            dt物料 = new DataTable("物料");
-
-            if (!isSqlOk)
-            {
-                OleDbCommand comm1 = new OleDbCommand();
-                comm1.Connection = Parameter.connOle;
-                comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "'";//这里应有生产指令编码
-                DataTable dt生产指令 = new DataTable("生产指令");
-                OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
-                datemp1.Fill(dt生产指令);
-                if (dt生产指令.Rows.Count == 0)
-                {
-                    MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！");
-                }
-                else
-                {
-                    //TO ASK : IS THIS PART HAND ADDED? IS DATABASE UNAVAILIBLE NOW? AND HOW CAN PROGRAM KNOWS HOW MANY ROWS SHOULD BE?
-                    //外表物料
-                    dt物料.Columns.Add("物料代码", typeof(String));   //新建第1列
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料代码1"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料代码2"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料代码3"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料代码1"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料代码2"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料代码1"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料代码2"].ToString());
-                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料代码3"].ToString());
-                    //内表代码批号
-                    OleDbCommand comm2 = new OleDbCommand();
-                    comm2.Connection = Parameter.connOle;
-                    comm2.CommandText = "select * from 生产指令详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
-                    DataTable dttemp = new DataTable("dttemp");
-                    OleDbDataAdapter datemp2 = new OleDbDataAdapter(comm2);
-                    datemp2.Fill(dttemp);
-                    if (dttemp.Rows.Count == 0)
-                    { MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！"); }
-                    else
-                    {
-                        dt代码批号.Columns.Add("产品代码", typeof(String));   //新建第一列
-                        dt代码批号.Columns.Add("产品批号", typeof(String));      //新建第二列
-                        dt代码批号.Rows.Add(dttemp.Rows[0]["产品代码"].ToString(), dttemp.Rows[0]["产品批号"].ToString());
-                        tb产品代码.Text = dttemp.Rows[0]["产品代码"].ToString();
-                        tb产品批号.Text = dttemp.Rows[0]["产品批号"].ToString();
-                    }
-                }
-                datemp1.Dispose();
-            }
-            else
-            { }
-        }
+        
 
 
         //根据状态设置可读写性
@@ -619,7 +578,7 @@ namespace mySystem.Process.Bag.BTV
             dr["领料日期时间"] = DateTime.Now;
             dr["班次"] = mySystem.Parameter.userflight;
             dr["物料简称"] = "";
-            dr["物料代码"] = dt物料.Rows[0]["物料代码"];
+            dr["物料代码"] = "";
             dr["物料批号"] = "";
             dr["领取数量"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
@@ -643,7 +602,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 switch (dc.ColumnName)
                 {
-                    case "物料代码":
+                    case "物料简称":
                         //IF READ ACCORDING TO ID, LET IT BE TEXTBOX
                         if (dt物料 == null)
                         {
@@ -664,7 +623,7 @@ namespace mySystem.Process.Bag.BTV
                         cbc.Name = dc.ColumnName;
                         cbc.ValueType = dc.DataType;
                         for (int i = 0; i < dt物料.Rows.Count; i++)
-                        { cbc.Items.Add(dt物料.Rows[i]["物料代码"].ToString()); }
+                        { cbc.Items.Add(dt物料.Rows[i]["物料简称"].ToString()); }
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -1272,23 +1231,23 @@ namespace mySystem.Process.Bag.BTV
         //实时求合计、检查人名合法性
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex >= 0)
+            if (e.ColumnIndex > 0)
             {
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "接上班数量A")
-                { getNum(e.RowIndex); }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "领取数量B")
-                { getNum(e.RowIndex); }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "使用数量C")
-                { getNum(e.RowIndex); }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "退库数量D")
-                { getNum(e.RowIndex); }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "物料简称")
-                {
-                    DataRow[] drs = dt物料.Select("物料简称='" + dataGridView1["物料简称", e.RowIndex].Value.ToString() + "'");
-                    dataGridView1["物料代码", e.RowIndex].Value = drs[0]["物料代码"].ToString();
-                    dataGridView1["物料批号", e.RowIndex].Value = drs[0]["物料批号"].ToString();
-                }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
+                //if (dataGridView1.Columns[e.ColumnIndex].Name == "接上班数量A")
+                //{ getNum(e.RowIndex); }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "领取数量B")
+                //{ getNum(e.RowIndex); }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "使用数量C")
+                //{ getNum(e.RowIndex); }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "退库数量D")
+                //{ getNum(e.RowIndex); }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "物料代码")
+                //{
+                //    DataRow[] drs = dt物料.Select("物料代码='" + dataGridView1["物料代码", e.RowIndex].Value.ToString() + "'");
+                //    dataGridView1.Rows[e.RowIndex].Cells["物料简称"].Value = drs[0]["物料简称"].ToString();
+                //    dataGridView1.Rows[e.RowIndex].Cells["物料批号"].Value = drs[0]["物料批号"].ToString();
+                //}
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
                 {
                     if (mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) == 0)
                     {
@@ -1299,6 +1258,116 @@ namespace mySystem.Process.Bag.BTV
                 else
                 { }
             }
+            String curStr;
+            double curDou;
+            int idx;
+            bool ok;
+            switch (dataGridView1.Columns[e.ColumnIndex].Name)
+            {
+                case "物料代码":
+                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    idx = ls物料代码.IndexOf(curStr);
+                    if (idx >= 0)
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = ls物料代码[idx];
+                        dataGridView1["物料简称", e.RowIndex].Value = ls物料简称[idx];
+                        dataGridView1["物料批号", e.RowIndex].Value = ls物料批号[idx];
+                    }
+                    else
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = "";
+                        dataGridView1["物料简称", e.RowIndex].Value = "";
+                        dataGridView1["物料批号", e.RowIndex].Value = "";
+                    }
+                    break;
+                case "物料简称":
+                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    idx = ls物料简称.IndexOf(curStr);
+                    if (idx >= 0)
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = ls物料代码[idx];
+                        dataGridView1["物料简称", e.RowIndex].Value = ls物料简称[idx];
+                        dataGridView1["物料批号", e.RowIndex].Value = ls物料批号[idx];
+                    }
+                    else
+                    {
+                        dataGridView1["物料代码", e.RowIndex].Value = "";
+                        dataGridView1["物料简称", e.RowIndex].Value = "";
+                        dataGridView1["物料批号", e.RowIndex].Value = "";
+                    }
+                    break;
+
+                //case "数量":
+                //    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                //    ok = double.TryParse(curStr, out curDou);
+                //    if (!ok) break;
+                //    idx = ls存货代码.IndexOf(dataGridView1["存货代码", e.RowIndex].Value.ToString());
+                //    if (idx >= 0)
+                //    {
+                //        dataGridView1["件数", e.RowIndex].Value = Math.Round(curDou / ld数量每件[idx], 2);
+                //    }
+                //    calc合计();
+                //    break;
+
+            }
         }
+
+        private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            
+            TextBox tb = (e.Control as TextBox);
+            if (tb == null) return;
+            tb.AutoCompleteCustomSource = null;
+            AutoCompleteStringCollection acsc;
+            
+            ls物料代码=new List<string>();
+            ls物料简称 = new List<string>();
+            ls物料批号=new List<string>();
+            
+            foreach (DataRow dr in dt物料.Rows)   
+            {   
+                ls物料代码.Add(dr["物料代码"].ToString());
+                ls物料简称.Add(dr["物料简称"].ToString());
+                ls物料批号.Add(dr["物料批号"].ToString());
+            }  
+            switch (dataGridView1.CurrentCell.OwningColumn.Name)
+            {
+                case "物料代码":
+                    acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls物料代码.ToArray());
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    break;
+                case "物料简称":
+                    acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls物料简称.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    break;
+                case "物料批号":
+                    acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(ls物料批号.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    break;
+            }
+        }
+        //public static List<String> ConvertTo(DataTable dt,string name)
+        //{
+        //    if (dt == null) return null;
+        //    if (dt.Rows.Count <= 0) return null;
+        //    List<String> list = new List<String>();
+        //    list = (from DataRow dr in dt.Rows
+        //            select new String
+        //            {
+        //                PID = Int32.Parse(dr["PID"].ToString()),
+        //                PName = dr["PName"].ToString(),
+        //                PPass = dr["PPass"].ToString(),
+        //                PAddr = dr["PAddr"].ToString()
+        //            }).ToList();
+        //    return list;
+        //}
     }
 }

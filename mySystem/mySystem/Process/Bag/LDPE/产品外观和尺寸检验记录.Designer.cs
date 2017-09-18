@@ -71,6 +71,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.lbl尺寸抽检量合计 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -133,7 +135,7 @@
             this.cb打印机.FormattingEnabled = true;
             this.cb打印机.Location = new System.Drawing.Point(237, 562);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(237, 24);
+            this.cb打印机.Size = new System.Drawing.Size(268, 24);
             this.cb打印机.TabIndex = 117;
             // 
             // btn打印
@@ -292,7 +294,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(259, 381);
+            this.label8.Location = new System.Drawing.Point(147, 382);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(104, 16);
             this.label8.TabIndex = 100;
@@ -302,7 +304,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(149, 381);
+            this.label7.Location = new System.Drawing.Point(27, 381);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(104, 16);
             this.label7.TabIndex = 99;
@@ -332,7 +334,7 @@
             // 
             this.lbl热封线不良合计.AutoSize = true;
             this.lbl热封线不良合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl热封线不良合计.Location = new System.Drawing.Point(73, 463);
+            this.lbl热封线不良合计.Location = new System.Drawing.Point(67, 463);
             this.lbl热封线不良合计.Name = "lbl热封线不良合计";
             this.lbl热封线不良合计.Size = new System.Drawing.Size(16, 16);
             this.lbl热封线不良合计.TabIndex = 96;
@@ -342,7 +344,7 @@
             // 
             this.lbl内含黑点晶点合计.AutoSize = true;
             this.lbl内含黑点晶点合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl内含黑点晶点合计.Location = new System.Drawing.Point(301, 404);
+            this.lbl内含黑点晶点合计.Location = new System.Drawing.Point(189, 405);
             this.lbl内含黑点晶点合计.Name = "lbl内含黑点晶点合计";
             this.lbl内含黑点晶点合计.Size = new System.Drawing.Size(16, 16);
             this.lbl内含黑点晶点合计.TabIndex = 95;
@@ -352,7 +354,7 @@
             // 
             this.lbl游离异物合计.AutoSize = true;
             this.lbl游离异物合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl游离异物合计.Location = new System.Drawing.Point(189, 405);
+            this.lbl游离异物合计.Location = new System.Drawing.Point(67, 405);
             this.lbl游离异物合计.Name = "lbl游离异物合计";
             this.lbl游离异物合计.Size = new System.Drawing.Size(16, 16);
             this.lbl游离异物合计.TabIndex = 94;
@@ -362,7 +364,7 @@
             // 
             this.lbl抽检量合计.AutoSize = true;
             this.lbl抽检量合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl抽检量合计.Location = new System.Drawing.Point(73, 405);
+            this.lbl抽检量合计.Location = new System.Drawing.Point(435, 405);
             this.lbl抽检量合计.Name = "lbl抽检量合计";
             this.lbl抽检量合计.Size = new System.Drawing.Size(16, 16);
             this.lbl抽检量合计.TabIndex = 93;
@@ -423,7 +425,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(23, 381);
+            this.label4.Location = new System.Drawing.Point(385, 381);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(120, 16);
             this.label4.TabIndex = 87;
@@ -497,11 +499,33 @@
             this.label5.TabIndex = 80;
             this.label5.Text = "产品代码/规格";
             // 
+            // lbl尺寸抽检量合计
+            // 
+            this.lbl尺寸抽检量合计.AutoSize = true;
+            this.lbl尺寸抽检量合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl尺寸抽检量合计.Location = new System.Drawing.Point(434, 463);
+            this.lbl尺寸抽检量合计.Name = "lbl尺寸抽检量合计";
+            this.lbl尺寸抽检量合计.Size = new System.Drawing.Size(16, 16);
+            this.lbl尺寸抽检量合计.TabIndex = 124;
+            this.lbl尺寸抽检量合计.Text = "0";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label20.Location = new System.Drawing.Point(385, 430);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(120, 16);
+            this.label20.TabIndex = 123;
+            this.label20.Text = "尺寸抽检量合计";
+            // 
             // 产品外观和尺寸检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1006, 601);
+            this.Controls.Add(this.lbl尺寸抽检量合计);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.lbl产品批号);
             this.Controls.Add(this.lbl产品代码);
             this.Controls.Add(this.btn保存);
@@ -598,5 +622,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lbl尺寸抽检量合计;
+        private System.Windows.Forms.Label label20;
     }
 }

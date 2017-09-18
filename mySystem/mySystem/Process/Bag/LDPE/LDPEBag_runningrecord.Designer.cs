@@ -125,7 +125,7 @@
             this.cb打印机.FormattingEnabled = true;
             this.cb打印机.Location = new System.Drawing.Point(321, 386);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(221, 24);
+            this.cb打印机.Size = new System.Drawing.Size(261, 24);
             this.cb打印机.TabIndex = 163;
             // 
             // label40
@@ -178,7 +178,7 @@
             this.btn提交审核.Name = "btn提交审核";
             this.btn提交审核.Size = new System.Drawing.Size(80, 30);
             this.btn提交审核.TabIndex = 166;
-            this.btn提交审核.Text = "提交审核";
+            this.btn提交审核.Text = "最后审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
             this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click_1);
             // 

@@ -698,7 +698,12 @@ namespace mySystem.Process.Bag.BTV
         //内表审核按钮
         private void btn数据审核_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int i in hi待审核行号)
             {
                 if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
                 {

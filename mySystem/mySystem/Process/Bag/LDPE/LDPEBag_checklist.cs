@@ -654,6 +654,7 @@ namespace mySystem.Process.Bag.LDPE
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮

@@ -45,7 +45,7 @@
             this.label36 = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
-            this.txb外包物料名称3 = new System.Windows.Forms.TextBox();
+            this.tb外包物料名称3 = new System.Windows.Forms.TextBox();
             this.tb外包需求3 = new System.Windows.Forms.TextBox();
             this.tb外包物料批号3 = new System.Windows.Forms.TextBox();
             this.tb外包物料代码3 = new System.Windows.Forms.TextBox();
@@ -192,10 +192,10 @@
             this.label39.TabIndex = 150;
             this.label39.Text = "张";
             // 
-            // txb内包物料名称3
+            // tb内包物料名称3
             // 
             this.tb内包物料名称3.Location = new System.Drawing.Point(754, 253);
-            this.tb内包物料名称3.Name = "txb内包物料名称3";
+            this.tb内包物料名称3.Name = "tb内包物料名称3";
             this.tb内包物料名称3.ReadOnly = true;
             this.tb内包物料名称3.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料名称3.TabIndex = 149;
@@ -208,11 +208,10 @@
             this.tb内包需求3.Size = new System.Drawing.Size(88, 21);
             this.tb内包需求3.TabIndex = 148;
             // 
-            // txb内包物料批号3
+            // tb内包物料批号3
             // 
-            this.tb内包物料批号3.Enabled = false;
             this.tb内包物料批号3.Location = new System.Drawing.Point(974, 253);
-            this.tb内包物料批号3.Name = "txb内包物料批号3";
+            this.tb内包物料批号3.Name = "tb内包物料批号3";
             this.tb内包物料批号3.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料批号3.TabIndex = 147;
             // 
@@ -222,6 +221,9 @@
             this.tb内包物料代码3.Name = "tb内包物料代码3";
             this.tb内包物料代码3.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料代码3.TabIndex = 146;
+            this.tb内包物料代码3.TextChanged += new System.EventHandler(this.tb内包物料代码3_support);
+            this.tb内包物料代码3.Enter += new System.EventHandler(this.tb内包物料代码3_Enter);
+            this.tb内包物料代码3.Leave += new System.EventHandler(this.tb内包物料代码3_support);
             // 
             // label角色
             // 
@@ -283,13 +285,13 @@
             this.label24.TabIndex = 140;
             this.label24.Text = "只";
             // 
-            // txb外包物料名称3
+            // tb外包物料名称3
             // 
-            this.txb外包物料名称3.Location = new System.Drawing.Point(753, 350);
-            this.txb外包物料名称3.Name = "txb外包物料名称3";
-            this.txb外包物料名称3.ReadOnly = true;
-            this.txb外包物料名称3.Size = new System.Drawing.Size(104, 21);
-            this.txb外包物料名称3.TabIndex = 136;
+            this.tb外包物料名称3.Location = new System.Drawing.Point(753, 350);
+            this.tb外包物料名称3.Name = "tb外包物料名称3";
+            this.tb外包物料名称3.ReadOnly = true;
+            this.tb外包物料名称3.Size = new System.Drawing.Size(104, 21);
+            this.tb外包物料名称3.TabIndex = 136;
             // 
             // tb外包需求3
             // 
@@ -299,11 +301,10 @@
             this.tb外包需求3.Size = new System.Drawing.Size(88, 21);
             this.tb外包需求3.TabIndex = 135;
             // 
-            // txb外包物料批号3
+            // tb外包物料批号3
             // 
-            this.tb外包物料批号3.Enabled = false;
             this.tb外包物料批号3.Location = new System.Drawing.Point(974, 351);
-            this.tb外包物料批号3.Name = "txb外包物料批号3";
+            this.tb外包物料批号3.Name = "tb外包物料批号3";
             this.tb外包物料批号3.Size = new System.Drawing.Size(104, 21);
             this.tb外包物料批号3.TabIndex = 134;
             // 
@@ -313,6 +314,9 @@
             this.tb外包物料代码3.Name = "tb外包物料代码3";
             this.tb外包物料代码3.Size = new System.Drawing.Size(104, 21);
             this.tb外包物料代码3.TabIndex = 133;
+            this.tb外包物料代码3.TextChanged += new System.EventHandler(this.tb外包物料代码3_support);
+            this.tb外包物料代码3.Enter += new System.EventHandler(this.tb外包物料代码3_Enter);
+            this.tb外包物料代码3.Leave += new System.EventHandler(this.tb外包物料代码3_support);
             // 
             // cmb产品名称
             // 
@@ -372,26 +376,26 @@
             this.cmb负责人.Size = new System.Drawing.Size(100, 20);
             this.cmb负责人.TabIndex = 111;
             // 
-            // txb外包物料名称2
+            // tb外包物料名称2
             // 
             this.tb外包物料名称2.Location = new System.Drawing.Point(753, 322);
-            this.tb外包物料名称2.Name = "txb外包物料名称2";
+            this.tb外包物料名称2.Name = "tb外包物料名称2";
             this.tb外包物料名称2.ReadOnly = true;
             this.tb外包物料名称2.Size = new System.Drawing.Size(104, 21);
             this.tb外包物料名称2.TabIndex = 110;
             // 
-            // txb外包物料名称1
+            // tb外包物料名称1
             // 
             this.tb外包物料名称1.Location = new System.Drawing.Point(753, 294);
-            this.tb外包物料名称1.Name = "txb外包物料名称1";
+            this.tb外包物料名称1.Name = "tb外包物料名称1";
             this.tb外包物料名称1.ReadOnly = true;
             this.tb外包物料名称1.Size = new System.Drawing.Size(104, 21);
             this.tb外包物料名称1.TabIndex = 109;
             // 
-            // txb内包物料名称2
+            // tb内包物料名称2
             // 
             this.tb内包物料名称2.Location = new System.Drawing.Point(754, 226);
-            this.tb内包物料名称2.Name = "txb内包物料名称2";
+            this.tb内包物料名称2.Name = "tb内包物料名称2";
             this.tb内包物料名称2.ReadOnly = true;
             this.tb内包物料名称2.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料名称2.TabIndex = 108;
@@ -612,11 +616,10 @@
             this.tb外包需求2.Size = new System.Drawing.Size(88, 21);
             this.tb外包需求2.TabIndex = 77;
             // 
-            // txb外包物料批号2
+            // tb外包物料批号2
             // 
-            this.tb外包物料批号2.Enabled = false;
             this.tb外包物料批号2.Location = new System.Drawing.Point(974, 323);
-            this.tb外包物料批号2.Name = "txb外包物料批号2";
+            this.tb外包物料批号2.Name = "tb外包物料批号2";
             this.tb外包物料批号2.Size = new System.Drawing.Size(104, 21);
             this.tb外包物料批号2.TabIndex = 76;
             // 
@@ -626,6 +629,9 @@
             this.tb外包物料代码2.Name = "tb外包物料代码2";
             this.tb外包物料代码2.Size = new System.Drawing.Size(104, 21);
             this.tb外包物料代码2.TabIndex = 75;
+            this.tb外包物料代码2.TextChanged += new System.EventHandler(this.tb外包物料代码2_support);
+            this.tb外包物料代码2.Enter += new System.EventHandler(this.tb外包物料代码2_Enter);
+            this.tb外包物料代码2.Leave += new System.EventHandler(this.tb外包物料代码2_support);
             // 
             // tb外包需求1
             // 
@@ -635,11 +641,10 @@
             this.tb外包需求1.Size = new System.Drawing.Size(88, 21);
             this.tb外包需求1.TabIndex = 74;
             // 
-            // txb外包物料批号1
+            // tb外包物料批号1
             // 
-            this.tb外包物料批号1.Enabled = false;
             this.tb外包物料批号1.Location = new System.Drawing.Point(974, 294);
-            this.tb外包物料批号1.Name = "txb外包物料批号1";
+            this.tb外包物料批号1.Name = "tb外包物料批号1";
             this.tb外包物料批号1.Size = new System.Drawing.Size(104, 21);
             this.tb外包物料批号1.TabIndex = 73;
             // 
@@ -649,6 +654,9 @@
             this.tb外包物料代码1.Name = "tb外包物料代码1";
             this.tb外包物料代码1.Size = new System.Drawing.Size(104, 21);
             this.tb外包物料代码1.TabIndex = 72;
+            this.tb外包物料代码1.TextChanged += new System.EventHandler(this.tb外包物料代码1_support);
+            this.tb外包物料代码1.Enter += new System.EventHandler(this.tb外包物料代码1_Enter);
+            this.tb外包物料代码1.Leave += new System.EventHandler(this.tb外包物料代码1_support);
             // 
             // label7
             // 
@@ -676,19 +684,17 @@
             this.tb内包需求1.Size = new System.Drawing.Size(88, 21);
             this.tb内包需求1.TabIndex = 65;
             // 
-            // txb内包物料批号2
+            // tb内包物料批号2
             // 
-            this.tb内包物料批号2.Enabled = false;
             this.tb内包物料批号2.Location = new System.Drawing.Point(974, 226);
-            this.tb内包物料批号2.Name = "txb内包物料批号2";
+            this.tb内包物料批号2.Name = "tb内包物料批号2";
             this.tb内包物料批号2.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料批号2.TabIndex = 62;
             // 
-            // txb内包物料批号1
+            // tb内包物料批号1
             // 
-            this.tb内包物料批号1.Enabled = false;
             this.tb内包物料批号1.Location = new System.Drawing.Point(974, 198);
-            this.tb内包物料批号1.Name = "txb内包物料批号1";
+            this.tb内包物料批号1.Name = "tb内包物料批号1";
             this.tb内包物料批号1.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料批号1.TabIndex = 61;
             // 
@@ -698,6 +704,9 @@
             this.tb内包物料代码2.Name = "tb内包物料代码2";
             this.tb内包物料代码2.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料代码2.TabIndex = 58;
+            this.tb内包物料代码2.TextChanged += new System.EventHandler(this.tb内包物料代码2_support);
+            this.tb内包物料代码2.Enter += new System.EventHandler(this.tb内包物料代码2_Enter);
+            this.tb内包物料代码2.Leave += new System.EventHandler(this.tb内包物料代码2_support);
             // 
             // tb内包物料代码1
             // 
@@ -705,6 +714,7 @@
             this.tb内包物料代码1.Name = "tb内包物料代码1";
             this.tb内包物料代码1.Size = new System.Drawing.Size(104, 21);
             this.tb内包物料代码1.TabIndex = 57;
+            this.tb内包物料代码1.TextChanged += new System.EventHandler(this.tb内包物料代码1_TextChanged);
             this.tb内包物料代码1.Enter += new System.EventHandler(this.tb内包物料代码1_Enter);
             this.tb内包物料代码1.Leave += new System.EventHandler(this.tb内包物料代码1_Leave);
             // 
@@ -913,7 +923,7 @@
             this.Controls.Add(this.label36);
             this.Controls.Add(this.label35);
             this.Controls.Add(this.label24);
-            this.Controls.Add(this.txb外包物料名称3);
+            this.Controls.Add(this.tb外包物料名称3);
             this.Controls.Add(this.tb外包需求3);
             this.Controls.Add(this.tb外包物料批号3);
             this.Controls.Add(this.tb外包物料代码3);
@@ -1055,7 +1065,7 @@
         private System.Windows.Forms.Button btn添加负责人;
         private System.Windows.Forms.Button btn添加;
         private System.Windows.Forms.ComboBox cmb产品名称;
-        private System.Windows.Forms.TextBox txb外包物料名称3;
+        private System.Windows.Forms.TextBox tb外包物料名称3;
         private System.Windows.Forms.TextBox tb外包需求3;
         private System.Windows.Forms.TextBox tb外包物料批号3;
         private System.Windows.Forms.TextBox tb外包物料代码3;

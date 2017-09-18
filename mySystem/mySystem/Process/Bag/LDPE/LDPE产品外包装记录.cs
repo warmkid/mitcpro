@@ -760,6 +760,16 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            //判断内表是否完全提交审核
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "")
+                {
+                    MessageBox.Show("第" + (i + 1) + "行未提交数据审核");
+                    return;
+                }
+            }
+
             //保存
             bool isSaved = Save();
             if (isSaved == false)

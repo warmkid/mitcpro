@@ -154,15 +154,15 @@
             // 
             this.cb打印机.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(309, 446);
+            this.cb打印机.Location = new System.Drawing.Point(233, 446);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(181, 24);
+            this.cb打印机.Size = new System.Drawing.Size(263, 24);
             this.cb打印机.TabIndex = 101;
             // 
             // btn打印
             // 
             this.btn打印.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn打印.Location = new System.Drawing.Point(219, 446);
+            this.btn打印.Location = new System.Drawing.Point(143, 446);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 26);
             this.btn打印.TabIndex = 100;

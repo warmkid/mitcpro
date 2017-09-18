@@ -820,11 +820,7 @@ namespace mySystem.Process.Bag.BTV
             bool isSaved = Save();
             if (isSaved == false)
             { return; }
-            else if (need提交数据审核())
-            {
-                MessageBox.Show("需要提交数据审核");
-                return;
-            }
+            
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -1052,19 +1048,7 @@ namespace mySystem.Process.Bag.BTV
 		
         //******************************小功能******************************//  
 
-        //need提交数据审核
-        private bool need提交数据审核()
-        {
-            bool rtn = false;
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
-            {
-                if (dt记录详情.Rows[i]["审核员"].ToString() == "")
-                {
-                    rtn = true;
-                }
-            }
-            return rtn;
-        }
+        
 
         //内表审核按钮
         private bool need数据审核()

@@ -197,6 +197,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["游离异物合计"] = 0;
             dr["内含黑点晶点合计"] = 0;
             dr["热封线不良合计"] = 0;
+            dr["尺寸抽检量合计"] = 0;
             dr["其他合计"] = 0;
             dr["不良合计"] = 0;
             return dr;
@@ -453,6 +454,7 @@ namespace mySystem.Process.Bag.LDPE
         void addComputerEventHandler()
         {
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            dataGridView1.DataError += dataGridView1_DataError;
         }
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -514,9 +516,17 @@ namespace mySystem.Process.Bag.LDPE
                 //    }
                 //    dtOuter.Rows[0]["不良合计"] = sum;
                 //    break;
+                case 11:
+                    sum = 0;
+                    foreach (DataRow dr in dtInner.Rows)
+                    {
+                        sum += Convert.ToInt32(dr["抽检量尺寸检测"]);
+                    }
+                    dtOuter.Rows[0]["尺寸抽检量合计"] = sum;
+                    break;
 
             }
-            if (e.ColumnIndex >= 3 && e.ColumnIndex <= 7)
+            if (e.ColumnIndex >= 3 && e.ColumnIndex <= 7 )
             {
                 sum = 0;
                 for (int i = 3; i <= 7; ++i)
@@ -534,6 +544,16 @@ namespace mySystem.Process.Bag.LDPE
                 dtOuter.Rows[0]["不良合计"] = sum;
             }
         }
+        
+        // 处理DataGridView中数据类型输错的函数
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
+            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+        }
+
         void addOtherEvenHandler()
         {
             dataGridView1.AllowUserToAddRows = false;

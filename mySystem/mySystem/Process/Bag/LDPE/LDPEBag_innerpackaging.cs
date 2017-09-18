@@ -843,6 +843,16 @@ namespace mySystem.Process.Bag.LDPE
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            //判断内表是否完全提交审核
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "")
+                {
+                    MessageBox.Show("第" + (i + 1) + "行未提交数据审核");
+                    return;
+                }
+            }
+
             //保存
             bool isSaved = Save();
             if (isSaved == false)
@@ -853,7 +863,7 @@ namespace mySystem.Process.Bag.LDPE
             //BindingSource bs_temp = new BindingSource();
             OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='产品内包装记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
+            da_temp.Fill(dt_temp);                     
             if (dt_temp.Rows.Count == 0)
             {
                 DataRow dr = dt_temp.NewRow();

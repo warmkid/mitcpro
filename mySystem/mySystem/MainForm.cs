@@ -92,6 +92,8 @@ namespace mySystem
         List<String> list清洁分切;
         List<String> listCS制袋;
         List<String> listPE制袋;
+        List<String> listBPV制袋;
+        List<String> listPTV制袋;
 
         private void SearchUnchecked()
         {
@@ -106,8 +108,15 @@ namespace mySystem
                 String strConCS制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                                 Data Source=../../database/csbag.mdb;Persist Security Info=False";
                 listCS制袋 = EachSearchUnchecked(strConCS制袋);
-                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-                //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+                String strConPE制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/LDPE.mdb;Persist Security Info=False"; 
+                listPE制袋 = EachSearchUnchecked(strConPE制袋);
+                String strConBPV制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/BPV.mdb;Persist Security Info=False";
+                listBPV制袋 = EachSearchUnchecked(strConBPV制袋);
+                String strConPTV制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                                Data Source=../../database/PTV.mdb;Persist Security Info=False";
+                listPTV制袋 = EachSearchUnchecked(strConPTV制袋);
             }
             else
             {
@@ -118,12 +127,15 @@ namespace mySystem
                 list清洁分切 = EachSearchUnchecked(strCon清洁分切);
                 String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
                 listCS制袋 = EachSearchUnchecked(strConCS制袋);
-
                 String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
-                //listPE制袋 = EachSearchUnchecked(strConPE制袋);
+                listPE制袋 = EachSearchUnchecked(strConPE制袋);
+                String strConBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                listBPV制袋 = EachSearchUnchecked(strConBPV制袋);
+                String strConPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                listPTV制袋 = EachSearchUnchecked(strConPTV制袋);
             }
 
-            if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count == 0) return;
+            if (list吹膜.Count + list清洁分切.Count + listCS制袋.Count + listPE制袋.Count + listBPV制袋.Count + listPTV制袋.Count == 0) return;
 
             String message = "以下表单中有待审核记录：\n";
             if (list吹膜.Count != 0)
@@ -144,9 +156,24 @@ namespace mySystem
                 foreach (string table in listCS制袋)
                 { message += "   " + table + "\n"; }
             }
-            //message += "PE制袋：\n";
-            //foreach (string table in listPE制袋)
-            //{ message += "   " + table + "\n"; }
+            if (listPE制袋.Count != 0)
+            {
+                message += "PE制袋：\n";
+                foreach (string table in listPE制袋)
+                { message += "   " + table + "\n"; }
+            }
+            if (listBPV制袋.Count != 0)
+            {
+                message += "BPV制袋：\n";
+                foreach (string table in listBPV制袋)
+                { message += "   " + table + "\n"; }
+            }
+            if (listPTV制袋.Count != 0)
+            {
+                message += "PTV制袋：\n";
+                foreach (string table in listPTV制袋)
+                { message += "   " + table + "\n"; }
+            }
 
             MessageBox.Show(message, "提示");
             //taskbarNotifier1.Show("提示", message, 500, 10000, 500);
