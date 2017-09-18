@@ -751,14 +751,17 @@ namespace mySystem.Setting
             dgv存货档案.Columns["存货代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
             dgv存货档案.Columns["存货名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
             dgv存货档案.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dgv存货档案.Columns["BOM列表"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 
             dgv存货档案.Columns["存货代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv存货档案.Columns["存货名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv存货档案.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv存货档案.Columns["BOM列表"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             dgv存货档案.Columns["存货代码"].Width = 100;
             dgv存货档案.Columns["存货名称"].Width = 300;
             dgv存货档案.Columns["规格型号"].Width = 300;
+            dgv存货档案.Columns["BOM列表"].Width = 100;
         }
     }
 }
