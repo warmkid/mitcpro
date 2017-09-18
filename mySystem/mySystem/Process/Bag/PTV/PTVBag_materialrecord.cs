@@ -614,6 +614,7 @@ namespace mySystem.Process.Bag.PTV
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         cbc.MinimumWidth = 120;
                         break;
+
                     default:
                         tbc = new DataGridViewTextBoxColumn();
                         tbc.DataPropertyName = dc.ColumnName;
@@ -917,11 +918,131 @@ namespace mySystem.Process.Bag.PTV
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
+
+        //打印填数据
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            int ind = 0;
+            if (dataGridView1.Rows.Count > 10)
+            {
+                //在第7行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 10; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 10;
+            }
+            
+            //外表信息
+            mysheet.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[3, 9].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
+
+            //内表信息
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                mysheet.Cells[5 + i, 1] = i + 1;
+                mysheet.Cells[5 + i, 2] = dt记录详情.Rows[i]["领料日期时间"].ToString();
+                mysheet.Cells[5 + i, 3] = dt记录详情.Rows[i]["班次"].ToString();
+                mysheet.Cells[5 + i, 4] = dt记录详情.Rows[i]["物料简称"].ToString();
+                mysheet.Cells[5 + i, 5] = dt记录详情.Rows[i]["物料代码"].ToString();
+                mysheet.Cells[5 + i, 6] = dt记录详情.Rows[i]["物料批号"].ToString();
+                mysheet.Cells[5 + i, 7] = dt记录详情.Rows[i]["领取数量"].ToString();
+                mysheet.Cells[5 + i, 8] = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[5 + i, 9] = dt记录详情.Rows[i]["审核员"].ToString(); 
+            }
+        }
+
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from " + table + " where 生产指令ID=" + InstruID.ToString();
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt记录.Rows[0]["ID"]) + 1;
 
         }
 
         public void print(bool b)
-        { }
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\SOP-MFG-102-R01A 生产领料记录.xlsx");
+
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            // 修改Sheet中某行某列的值
+            fill_excel(my, wb);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = Instruction + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (b)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+                        bs记录.EndEdit();
+                        da记录.Update((DataTable)bs记录.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
         //******************************小功能******************************//  
 
         // 检查操作员的姓名（内表）

@@ -668,7 +668,111 @@ namespace mySystem.Process.Bag.PTV
             GC.Collect();
         }
         public void print(bool b)
-        { }
+        {
+            int label_打印成功 = 1;
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\SOP-MFG-305-R03A PTV生产开机确认表.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+           
+            my.PageSetup.RightFooter = Instruction + "-" + "2" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+
+            if (b)
+            {
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能            
+            }
+            else
+            {
+                // 让这个Sheet为被选中状态
+                //my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                {
+                    label_打印成功 = 0;
+                }
+                finally
+                {
+                    if (1 == label_打印成功)
+                    {
+                        string log = "\n=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+                        bs记录.EndEdit();
+                        da记录.Update((DataTable)bs记录.DataSource);
+                    }
+
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    oXL = null;
+                    my = null;
+                    wb = null;
+                }
+
+            }
+        }
+
+        int find_indexofprint()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 制袋机组开机前确认表 where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            List<int> ids = new List<int>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                ids.Add(Convert.ToInt32(dr["ID"]));
+            }
+            return ids.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            int ind = 0;//偏移
+            if (dataGridView1.Rows.Count > 17)
+            {
+                //在第10行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 17; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 17;
+            }
+
+            my.Cells[3, 1].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"];   // lbl生产指令编号.Text;
+
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                my.Cells[i + 5, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + 5, 2].Value = dt记录详情.Rows[i]["确认项目"];
+                my.Cells[i + 5, 3].Value = dt记录详情.Rows[i]["确认内容"];
+                if(dt记录详情.Rows[i]["确认结果"].ToString()=="Yes")
+                    my.Cells[i + 5, 6].Value = "是☑    否□ ";
+                else
+                    my.Cells[i + 5, 6].Value = "是□    否☑";
+            }
+
+            my.Cells[23 + ind, 1].Value = String.Format("确认人/日期：    {0}   {1}", dt记录.Rows[0]["操作员"], Convert.ToDateTime(dt记录.Rows[0]["操作日期"]).ToString("yyyy年MM月dd日"));
+            my.Cells[23 + ind, 5].Value = String.Format("复核人/日期：：    {0}   {1}", dt记录.Rows[0]["审核员"], Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
+        }
 
         //******************************datagridview******************************//  
 
