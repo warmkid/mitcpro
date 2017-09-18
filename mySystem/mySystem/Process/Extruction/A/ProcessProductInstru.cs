@@ -283,22 +283,40 @@ namespace BatchProductRecord
             }
             label = 1;
             ht代码面数 = new Hashtable();
-            DataTable dt = new DataTable();
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection conn;
+            conn = new OleDbConnection(strConnect);
+            conn.Open();
+            OleDbDataAdapter da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
 
-            if (!mySystem.Parameter.isSqlOk)
-            {
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);                
-                da.Fill(dt);
-            }
-            else
-            {
-                SqlDataAdapter da = new SqlDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.conn);
-                da.Fill(dt);
-            }
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+
+            //if (!mySystem.Parameter.isSqlOk)
+            //{
+            //    OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);                
+            //    da.Fill(dt);
+            //}
+            //else
+            //{
+            //    SqlDataAdapter da = new SqlDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.conn);
+            //    da.Fill(dt);
+            //}
 
             foreach (DataRow dr in dt.Rows)
             {
-                ht代码面数.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["面数"]));
+                string code = dr["存货代码"].ToString();
+                int mian = 0;
+                if (code.Split('-')[1].StartsWith("S"))
+                {
+                    mian = 1;
+                }
+                else
+                {
+                    mian = 2;
+                }
+                ht代码面数.Add(code, mian);
             }
         }
 
@@ -369,34 +387,48 @@ namespace BatchProductRecord
         //读取设置中物料代码到下拉列表中
         private void fill_matcode()
         {
-            if (!mySystem.Parameter.isSqlOk)
-            {
-                DataTable dt = new System.Data.DataTable();
-                OleDbDataAdapter da = new OleDbDataAdapter("select 物料代码 from 设置物料代码", mySystem.Parameter.connOle);
-                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-                da.Fill(dt);
-                da.Dispose();
-                cb.Dispose();
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    cb内外层物料代码.Items.Add(dt.Rows[i][0].ToString());
-                    cb中层物料代码.Items.Add(dt.Rows[i][0].ToString());
-                }
-            }
-            else
-            {
-                DataTable dt = new System.Data.DataTable();
-                SqlDataAdapter da = new SqlDataAdapter("select 物料代码 from 设置物料代码", mySystem.Parameter.conn);
-                SqlCommandBuilder cb = new SqlCommandBuilder(da);
-                da.Fill(dt);
-                da.Dispose();
-                cb.Dispose();
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    cb内外层物料代码.Items.Add(dt.Rows[i][0].ToString());
-                    cb中层物料代码.Items.Add(dt.Rows[i][0].ToString());
-                }
-            }
+            //if (!mySystem.Parameter.isSqlOk)
+            //{
+            //    DataTable dt = new System.Data.DataTable();
+            //    OleDbDataAdapter da = new OleDbDataAdapter("select 物料代码 from 设置物料代码", mySystem.Parameter.connOle);
+            //    OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            //    da.Fill(dt);
+            //    da.Dispose();
+            //    cb.Dispose();
+            //    for (int i = 0; i < dt.Rows.Count; i++)
+            //    {
+            //        cb内外层物料代码.Items.Add(dt.Rows[i][0].ToString());
+            //        cb中层物料代码.Items.Add(dt.Rows[i][0].ToString());
+            //    }
+            //}
+            //else
+            //{
+            //    DataTable dt = new System.Data.DataTable();
+            //    SqlDataAdapter da = new SqlDataAdapter("select 物料代码 from 设置物料代码", mySystem.Parameter.conn);
+            //    SqlCommandBuilder cb = new SqlCommandBuilder(da);
+            //    da.Fill(dt);
+            //    da.Dispose();
+            //    cb.Dispose();
+            //    for (int i = 0; i < dt.Rows.Count; i++)
+            //    {
+            //        cb内外层物料代码.Items.Add(dt.Rows[i][0].ToString());
+            //        cb中层物料代码.Items.Add(dt.Rows[i][0].ToString());
+            //    }
+            //}
+
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection conn;
+            conn = new OleDbConnection(strConnect);
+            conn.Open();
+            OleDbDataAdapter da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+             for (int i = 0; i < dt.Rows.Count; i++)
+             {
+                 cb内外层物料代码.Items.Add(dt.Rows[i][0].ToString());
+                 cb中层物料代码.Items.Add(dt.Rows[i][0].ToString());
+             }
 
         }
 
