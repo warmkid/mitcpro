@@ -135,6 +135,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -257,13 +259,12 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(521, 688);
+            this.button1.Location = new System.Drawing.Point(525, 54);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 26;
-            this.button1.Text = "测试";
+            this.button1.Text = "导入";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // cb工艺
@@ -295,7 +296,7 @@
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(459, 51);
+            this.button7.Location = new System.Drawing.Point(238, 18);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(37, 23);
             this.button7.TabIndex = 22;
@@ -306,7 +307,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(411, 50);
+            this.button6.Location = new System.Drawing.Point(190, 17);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(38, 23);
             this.button6.TabIndex = 21;
@@ -1292,11 +1293,32 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "吹膜工序生产指令";
             // 
+            // textBox1
+            // 
+            this.textBox1.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.textBox1.Location = new System.Drawing.Point(303, 55);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(135, 23);
+            this.textBox1.TabIndex = 35;
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button4.Location = new System.Drawing.Point(444, 54);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.TabIndex = 36;
+            this.button4.Text = "浏览";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click_1);
+            // 
             // ProcessProductInstru
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1009, 720);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.bt更改);
             this.Controls.Add(this.label41);
@@ -1493,5 +1515,7 @@
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Button bt更改;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button4;
     }
 }
