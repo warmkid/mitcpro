@@ -91,7 +91,7 @@ namespace mySystem.Process.Bag.PTV
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='瓶口焊接机运行记录'", connOle);
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='底封机运行记录'", connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -389,8 +389,8 @@ namespace mySystem.Process.Bag.PTV
             if (dt1.Rows.Count > 0)
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
-                MoCode = dt1.Rows[0]["膜代码"].ToString();
-                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["膜代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+                MoCode = dt1.Rows[0]["膜或袋体代码"].ToString();
+                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["膜或袋体代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
             }
         }
 

@@ -449,6 +449,36 @@ namespace mySystem.Process.Bag.PTV
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
                 Instruction = dt1.Rows[0]["生产指令编号"].ToString();
+
+                //把dt物料读进来
+                OleDbCommand comm1 = new OleDbCommand();
+                comm1.Connection = Parameter.connOle;
+                comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
+                DataTable dt生产指令 = new DataTable("生产指令");
+                OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
+                datemp1.Fill(dt生产指令);
+                if (dt生产指令.Rows.Count == 0)
+                {
+                    MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！");
+                }
+                else
+                {
+                    //TO ASK : IS THIS PART HAND ADDED? IS DATABASE UNAVAILIBLE NOW? AND HOW CAN PROGRAM KNOWS HOW MANY ROWS SHOULD BE?
+                    //外表物料
+                    dt物料 = new DataTable("物料");
+                    dt物料.Columns.Add("物料简称", typeof(String));   //新建第1列
+                    dt物料.Columns.Add("物料代码", typeof(String));   //新建第2列
+                    dt物料.Columns.Add("物料批号", typeof(String));   //新建第3列
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称1"].ToString(), dt生产指令.Rows[0]["制袋物料代码1"].ToString(), dt生产指令.Rows[0]["制袋物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称2"].ToString(), dt生产指令.Rows[0]["制袋物料代码2"].ToString(), dt生产指令.Rows[0]["制袋物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["制袋物料名称3"].ToString(), dt生产指令.Rows[0]["制袋物料代码3"].ToString(), dt生产指令.Rows[0]["制袋物料批号3"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称1"].ToString(), dt生产指令.Rows[0]["内包物料代码1"].ToString(), dt生产指令.Rows[0]["内包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["内包物料名称2"].ToString(), dt生产指令.Rows[0]["内包物料代码2"].ToString(), dt生产指令.Rows[0]["内包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称1"].ToString(), dt生产指令.Rows[0]["外包物料代码1"].ToString(), dt生产指令.Rows[0]["外包物料批号1"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
+                    dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
+                }
+
                 DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()));
             }
         }
@@ -498,7 +528,7 @@ namespace mySystem.Process.Bag.PTV
             dr["生产指令ID"] = InstruID;
             dr["生产指令编号"] = Instruction;
             dr["产品代码"] = tb产品代码.Text;
-            dr["产品代码"] = tb产品批号.Text;
+            dr["产品批号"] = tb产品批号.Text;
             //dr["成品率"] = -1;
             dr["废品"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
@@ -574,9 +604,12 @@ namespace mySystem.Process.Bag.PTV
                         cbc.HeaderText = dc.ColumnName;
                         cbc.Name = dc.ColumnName;
                         cbc.ValueType = dc.DataType;
-                        for (int i = 0; i < dt物料.Rows.Count; i++)
-                        { cbc.Items.Add(dt物料.Rows[i]["物料简称"].ToString()); }
-                        dataGridView1.Columns.Add(cbc);
+                        if(dt物料!=null)
+                        {
+                            for (int i = 0; i < dt物料.Rows.Count; i++)
+                            { cbc.Items.Add(dt物料.Rows[i]["物料简称"].ToString()); }
+                            dataGridView1.Columns.Add(cbc);
+                        }
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         cbc.MinimumWidth = 120;
@@ -761,6 +794,15 @@ namespace mySystem.Process.Bag.PTV
             if (isSaved == false)
                 return;
 
+            //检查是否可以提交最后审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "")
+                {
+                    MessageBox.Show("第『" + i+1 + "』行数据尚未审核，不能提交最后审核！");
+                    return;
+                }
+            }
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
@@ -806,6 +848,16 @@ namespace mySystem.Process.Bag.PTV
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
             }
+
+           //先进行内表审核，再进行外表审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                {
+                    MessageBox.Show("第"+i+1+"行数据没有审核，请先审核表内数据！");
+                    return;
+                }
+            }
             checkform = new CheckForm(this);
             checkform.Show();
         }
@@ -818,7 +870,6 @@ namespace mySystem.Process.Bag.PTV
             bool isSaved = Save();
             if (isSaved == false)
                 return;
-
             base.CheckResult();
 
             dt记录.Rows[0]["审核员"] = mySystem.Parameter.userName;
