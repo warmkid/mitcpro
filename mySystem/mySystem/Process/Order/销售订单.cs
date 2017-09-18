@@ -533,6 +533,7 @@ namespace mySystem.Process.Order
 
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            setDGV规格型号Column();
         }
 
         DataRow writeInnerDefault(DataRow dr)
@@ -927,6 +928,16 @@ namespace mySystem.Process.Order
                 da.Update(dt);
 
             }
+        }
+
+        void setDGV规格型号Column()
+        {
+            dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
+            dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dataGridView1.Columns["规格型号"].Width = 300;
+
         }
 
     }

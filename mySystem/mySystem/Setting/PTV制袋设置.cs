@@ -200,6 +200,7 @@ namespace mySystem.Setting
             Utility.setDataGridViewAutoSizeMode(dgv产品规格);
             this.dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv产品规格.Columns["ID"].Visible = false;
+            setDGV产品规格Column();
 
             //**************************   封边    ***********************************
             dt封边 = new DataTable("设置PTV制袋封边"); //""中的是表名
@@ -754,7 +755,15 @@ namespace mySystem.Setting
             }
         }
 
-        
+        void setDGV产品规格Column()
+        {
+            dgv产品规格.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
+            dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dgv产品规格.Columns["产品规格"].Width = 300;
+
+        }
 
     }
 }

@@ -137,6 +137,7 @@ namespace mySystem.Setting
             this.dgv产品规格.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv产品规格);
             this.dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            setDGV产品规格Column();
 
             //************************    辐照单位     *******************************************
             dt辐照单位 = new DataTable("设置辐照单位"); //""中的是表名
@@ -626,7 +627,16 @@ namespace mySystem.Setting
             setDataGridViewRowNums(this.dgv产品名称);
         }
 
-        
+        void setDGV产品规格Column()
+        {
+            dgv产品规格.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
+            dgv产品规格.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+                       
+            dgv产品规格.Columns["产品规格"].Width = 300;
+          
+        }
+
 
     }
 }

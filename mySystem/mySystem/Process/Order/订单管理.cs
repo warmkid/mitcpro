@@ -281,12 +281,14 @@ namespace 订单和库存管理
         {
             setDGV采购批准单格式();
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购批准单);
+            
         }
 
         private void setDGV采购批准单格式()
         {
             dgv采购批准单.AllowUserToAddRows = false;
             dgv采购批准单.Columns["ID"].Visible = false;
+            
         }
 
         private void btn采购批准单查询_Click(object sender, EventArgs e)

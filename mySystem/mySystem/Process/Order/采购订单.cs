@@ -498,6 +498,7 @@ namespace mySystem.Process.Order
             bsInner.DataSource = dtInnerShow;
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            setDGV产品规格Column();
         }
 
         void addOtherEventHandler()
@@ -928,7 +929,15 @@ namespace mySystem.Process.Order
             }
         }
 
+        void setDGV产品规格Column()
+        {
+            dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 
+            dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dataGridView1.Columns["规格型号"].Width = 300;
+
+        }
 
     }
 }

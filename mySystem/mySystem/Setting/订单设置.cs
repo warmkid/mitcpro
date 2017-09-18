@@ -734,6 +734,10 @@ namespace mySystem.Setting
 
         void setDGV存货档案Column()
         {
+            dgv存货档案.Columns["存货代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dgv存货档案.Columns["存货名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dgv存货档案.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
             dgv存货档案.Columns["存货代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv存货档案.Columns["存货名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv存货档案.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;

@@ -747,6 +747,7 @@ namespace mySystem.Process.Order
             bsInner.DataSource = dtInnerShow;
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            setDGV本订单采购信息Column();
 
             bsInner库存.DataSource = dtInner库存Show;
             dataGridView2.DataSource = bsInner库存.DataSource;
@@ -759,6 +760,7 @@ namespace mySystem.Process.Order
             bsInner借用订单.DataSource = dtInner借用订单;
             dataGridView4.DataSource = bsInner借用订单.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView4);
+            setDGV借用订单采购信息Column();
         }
 
 
@@ -1907,5 +1909,24 @@ namespace mySystem.Process.Order
             }
         }
 
+        void setDGV本订单采购信息Column()
+        {
+            dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
+            dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dataGridView1.Columns["规格型号"].Width = 300;
+
+        }
+
+        void setDGV借用订单采购信息Column()
+        {
+            dataGridView4.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
+            dataGridView4.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dataGridView4.Columns["规格型号"].Width = 300;
+
+        }
     }
 }
