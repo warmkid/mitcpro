@@ -263,7 +263,11 @@ namespace mySystem
             {
                 if (dgv.Rows[i].Cells[checker].Value.ToString() == "__待审核")
                 {
-                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 127, 0);
+                }
+                else if (dgv.Rows[i].Cells[checker].Value.ToString() == "")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
                 }
             }
         }

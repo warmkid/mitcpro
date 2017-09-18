@@ -190,6 +190,19 @@ namespace mySystem
                 connOlePE制袋.Open();
                 InstruStateChange(connOlePE制袋, "生产指令");
 
+                String strConnBPV制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/BPV.mdb;Persist Security Info=False";
+                OleDbConnection connOleBPV制袋 = new OleDbConnection(strConnBPV制袋);
+                connOleBPV制袋.Open();
+                InstruStateChange(connOleBPV制袋, "生产指令");
+
+                String strConnPTV制袋 = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/PTV.mdb;Persist Security Info=False";
+                OleDbConnection connOlePTV制袋 = new OleDbConnection(strConnPTV制袋);
+                connOlePTV制袋.Open();
+                InstruStateChange(connOlePTV制袋, "生产指令");
+
+
                 //去掉最后一个"、"，弹框提示
                 if (Instru != null)
                 {
@@ -199,6 +212,10 @@ namespace mySystem
 
                 connOle吹膜.Dispose();
                 connOle清洁分切.Dispose();
+                connOleCS制袋.Dispose();
+                connOlePE制袋.Dispose();
+                connOleBPV制袋.Dispose();
+                connOlePTV制袋.Dispose();
             }
             else
             {
@@ -225,6 +242,17 @@ namespace mySystem
                 connPE制袋.Open();
                 InstruStateChange(connPE制袋, "生产指令");
 
+                String strConnBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                SqlConnection connBPV制袋 = new SqlConnection(strConnBPV制袋);
+                connBPV制袋.Open();
+                InstruStateChange(connBPV制袋, "生产指令");
+
+                String strConnPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                SqlConnection connPTV制袋 = new SqlConnection(strConnPTV制袋);
+                connPTV制袋.Open();
+                InstruStateChange(connPTV制袋, "生产指令");
+                
+
                 //去掉最后一个"、"，弹框提示
                 if (Instru != null)
                 {
@@ -234,6 +262,10 @@ namespace mySystem
 
                 conn吹膜.Dispose();
                 conn清洁分切.Dispose();
+                connCS制袋.Dispose();
+                connPE制袋.Dispose();
+                connBPV制袋.Dispose();
+                connPTV制袋.Dispose();
             }
 
         }

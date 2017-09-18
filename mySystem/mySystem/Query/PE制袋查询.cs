@@ -121,15 +121,15 @@ namespace mySystem.Query
                 {
                     case "生产领料使用记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "生产领料使用记录", "领料员", "领料日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "生产领料使用记录", "审核员", null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "生产领料使用记录", "领料员", "领料日期", null); }
+                        { EachBind(this.dgv, "生产领料使用记录", "审核员", null, null); }
                         break;
                     case "产品内包装记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品内包装记录", "审核员", null, "生产指令ID"); }
+                        { EachBind(this.dgv, "产品内包装记录", "审核员", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "产品内包装记录", "审核员", null, null); }
+                        { EachBind(this.dgv, "产品内包装记录", "审核员", "生产日期", null); }
                         break;
                     case "LDPE生产日报表":
                         if (comboBox1.SelectedIndex != -1)
@@ -145,9 +145,9 @@ namespace mySystem.Query
                         break;
                     case "1#制袋机运行记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "制袋机组运行记录", "审核员", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "制袋机组运行记录", "审核员", null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "制袋机组运行记录", "审核员", "生产日期", null); }
+                        { EachBind(this.dgv, "制袋机组运行记录", "审核员", null, null); }
                         break;
                     case "清场记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -157,9 +157,9 @@ namespace mySystem.Query
                         break;
                     case "制袋工序批生产记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "批生产记录表", "汇总员", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "批生产记录表", "汇总员", "开始生产时间", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "批生产记录表", "汇总员", "生产日期", null); }
+                        { EachBind(this.dgv, "批生产记录表", "汇总员", "开始生产时间", null); }
                         break;
                     case "产品热合强度检验记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -380,7 +380,11 @@ namespace mySystem.Query
             {
                 if (dgv.Rows[i].Cells[checker].Value.ToString() == "__待审核")
                 {
-                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 127, 0);
+                }
+                else if (dgv.Rows[i].Cells[checker].Value.ToString() == "")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
                 }
             }
         }
