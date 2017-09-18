@@ -521,6 +521,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+            dataGridView1.DataError += dataGridView1_DataError;
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -534,6 +535,15 @@ namespace mySystem.Process.Bag.LDPE
                 dataGridView1.Columns[i].ReadOnly = true;
             }
                 
+        }
+
+        // 处理DataGridView中数据类型输错的函数
+        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
+            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -661,6 +671,7 @@ namespace mySystem.Process.Bag.LDPE
         {
 
         }
+
 
         private void btn打印_Click(object sender, EventArgs e)
         {

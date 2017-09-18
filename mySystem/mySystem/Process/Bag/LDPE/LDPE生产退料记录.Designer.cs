@@ -138,7 +138,7 @@
             this.cb打印机.FormattingEnabled = true;
             this.cb打印机.Location = new System.Drawing.Point(309, 507);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(207, 24);
+            this.cb打印机.Size = new System.Drawing.Size(256, 24);
             this.cb打印机.TabIndex = 318;
             // 
             // label40
@@ -340,7 +340,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(940, 567);
+            this.ClientSize = new System.Drawing.Size(940, 561);
             this.Controls.Add(this.btn提交数据审核);
             this.Controls.Add(this.btn数据审核);
             this.Controls.Add(this.tb备注);

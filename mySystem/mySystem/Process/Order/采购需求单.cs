@@ -71,6 +71,7 @@ namespace mySystem.Process.Order
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.Columns["ID"].Visible = false;
             dataGridView2.Columns["销售订单ID"].Visible = false;
+            setDGV销售订单信息Column();
             //
         }
 
@@ -338,6 +339,8 @@ namespace mySystem.Process.Order
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
             Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            setDGV需要采购组件信息Column();
+            //setDGV销售订单信息Column();
         }
 
         private void getPeople()
@@ -904,5 +907,23 @@ namespace mySystem.Process.Order
             return mysheet;
         }
 
+        void setDGV销售订单信息Column()
+        {
+            dataGridView2.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dataGridView2.Columns["存货代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dataGridView2.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridView2.Columns["存货代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridView2.Columns["规格型号"].Width = 300;
+            dataGridView2.Columns["存货代码"].Width = 150;
+        }
+        void setDGV需要采购组件信息Column()
+        {
+            dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
+            dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dataGridView1.Columns["规格型号"].Width = 300;
+
+        }
     }
 }

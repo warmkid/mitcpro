@@ -460,7 +460,8 @@ namespace mySystem.Process.Order
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
             Utility.setDataGridViewAutoSizeMode(dataGridView2);
-            Utility.setDataGridViewAutoSizeMode(dataGridView3);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView3);
+            setDGV产品规格Column();
         }
 
         private DataTable get未发货信息(int id, string dingdanhao)
@@ -563,6 +564,7 @@ namespace mySystem.Process.Order
             dataGridView3.DataSource = bs库存信息.DataSource;
             dataGridView3.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView3_DataBindingComplete);
             Utility.setDataGridViewAutoSizeMode(dataGridView3);
+            setDGV库存信息Column();
         }
 
         void dataGridView3_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -818,6 +820,24 @@ namespace mySystem.Process.Order
             innerBind();
         }
 
-        
+        void setDGV产品规格Column()
+        {
+            dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
+            dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dataGridView1.Columns["规格型号"].Width = 300;
+
+        }
+        void setDGV库存信息Column()
+        {
+            dataGridView3.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+
+            dataGridView3.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+
+            dataGridView3.Columns["产品规格"].Width = 300;
+
+        }
+
     }
 }

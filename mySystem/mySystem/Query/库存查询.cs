@@ -138,6 +138,10 @@ namespace mySystem.Query
         {
             dgv检验台账.RowHeadersVisible = false;
             dgv检验台账.Columns["ID"].Visible = false;
+            try
+            { setDataGridViewBackColor("审核人", dgv检验台账); }
+            catch
+            { }
             Utility.setDataGridViewAutoSizeMode(dgv检验台账);
         }
 
@@ -258,5 +262,23 @@ namespace mySystem.Query
             }
 
         }
+
+        //设置datagridview背景颜色，待审核标红
+        private void setDataGridViewBackColor(String checker, DataGridView dgv)
+        {
+            for (int i = 0; i < dgv.Rows.Count; i++)
+            {
+                if (dgv.Rows[i].Cells[checker].Value.ToString() == "__待审核")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.FromArgb(255, 127, 0);
+                }
+                else if (dgv.Rows[i].Cells[checker].Value.ToString() == "")
+                {
+                    dgv.Rows[i].DefaultCellStyle.BackColor = Color.Gray;
+                }
+            }
+        }
+
+
     }
 }

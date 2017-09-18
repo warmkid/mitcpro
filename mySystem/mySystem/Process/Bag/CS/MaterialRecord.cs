@@ -554,7 +554,16 @@ namespace mySystem.Process.Bag
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 用户 where 用户名='" + mySystem.Parameter.userName + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
-            dr["班次"] = dt.Rows[0]["班次"].ToString();
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("该用户无班次信息，默认填入白班");
+                dr["班次"] = "白班";
+            }
+            else
+            {
+                dr["班次"] = dt.Rows[0]["班次"].ToString();
+            }
+            
             dr["物料简称"] = dt物料.Rows[0]["物料简称"];
             dr["物料代码"] = dt物料.Rows[0]["物料代码"];
             dr["物料批号"] = dt物料.Rows[0]["物料批号"];

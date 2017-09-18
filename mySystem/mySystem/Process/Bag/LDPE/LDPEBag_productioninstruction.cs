@@ -29,7 +29,7 @@ namespace mySystem.Process.Bag.LDPE
 
         // 显示界面需要的信息
         List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员;
-        HashSet<String> hs产品代码, hs封边;
+        HashSet<String> hs产品代码, hs封边, hs物料代码;
         HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs外包白班负责人, hs外包夜班负责人;
 
         // DataGridView 中用到的一些变量
@@ -180,6 +180,20 @@ namespace mySystem.Process.Bag.LDPE
                 cmb生产工艺.Items.Add(dr["工艺名称"].ToString());
             }
 
+            //物料代码
+            hs物料代码 = new HashSet<string>();
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%PE制袋%'", Tconn);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                hs物料代码.Add(dr["存货代码"].ToString());
+            }
+
             //类型
             cmb类型.Items.Add("正常");
             cmb类型.Items.Add("返工");
@@ -202,21 +216,21 @@ namespace mySystem.Process.Bag.LDPE
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
             OleDbConnection Tconn = new OleDbConnection(strConnect);
             Tconn.Open();
-            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%LDPE制袋%'", Tconn);
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%PE制袋%'", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
             {
                 hs产品代码.Add(dr["存货代码"].ToString());
             }
-            //　产品代码
-            da = new OleDbDataAdapter("select * from 设置LDPE产品编码", conn);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
-            {
-                hs产品代码.Add(dr["产品编码"].ToString());
-            }
+            ////　产品代码
+            //da = new OleDbDataAdapter("select * from 设置LDPE产品编码", conn);
+            //dt = new DataTable("temp");
+            //da.Fill(dt);
+            //foreach (DataRow dr in dt.Rows)
+            //{
+            //    hs产品代码.Add(dr["产品编码"].ToString());
+            //}
 
             // 封边
             da = new OleDbDataAdapter("select * from 设置LDPE制袋封边", conn);
@@ -625,6 +639,9 @@ namespace mySystem.Process.Bag.LDPE
         /// </summary>
         void addOtherEvenHandler()
         {
+            
+            dataGridView1.DataError += dataGridView1_DataError;
+
             // TODO 其他无法分类的代码放在这里
             dataGridView1.AllowUserToAddRows = false;
             // 实现下拉框可选可输
@@ -635,6 +652,41 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns[1].Visible = false;
             // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+
+            // 物料代码自动补全
+            AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(hs物料代码.ToArray());
+            tb内包物料代码1.AutoCompleteCustomSource = acsc;
+            tb内包物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb内包物料代码2.AutoCompleteCustomSource = acsc;
+            tb内包物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码1.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码2.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb制袋物料代码3.AutoCompleteCustomSource = acsc;
+            tb制袋物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb制袋物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码1.AutoCompleteCustomSource = acsc;
+            tb外包物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码2.AutoCompleteCustomSource = acsc;
+            tb外包物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb外包物料代码3.AutoCompleteCustomSource = acsc;
+            tb外包物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb外包物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
         }
 
         /// <summary>
@@ -671,8 +723,6 @@ namespace mySystem.Process.Bag.LDPE
         /// <returns></returns>
         private bool dataValidate()
         {
-            dataGridView1.DataError += dataGridView1_DataError;
-
             // TODO 更多条件有待补充
             if (cmb产品名称.Text == "") return false;
             if (cmb生产工艺.Text == "") return false;
@@ -709,6 +759,11 @@ namespace mySystem.Process.Bag.LDPE
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             DataGridView dgv = (sender as DataGridView);
+            TextBox tb = (e.Control as TextBox);
+            if (tb != null)
+            {
+                tb.AutoCompleteCustomSource = null;
+            }
 
             if (dgv.SelectedCells.Count == 0) return;
             int colIdx = dgv.SelectedCells[0].ColumnIndex;
@@ -718,9 +773,7 @@ namespace mySystem.Process.Bag.LDPE
                 if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
             }
             if (colIdx == 2)
-            {
-                TextBox tb = (e.Control as TextBox);
-                tb.AutoCompleteCustomSource = null;
+            {                
                 AutoCompleteStringCollection acsc;
                 if (tb == null) return;
                 acsc = new AutoCompleteStringCollection();
@@ -734,14 +787,33 @@ namespace mySystem.Process.Bag.LDPE
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            int i计划产量只, i内包装规格, i外包装规格;
 
-            int i计划产量只 = Convert.ToInt32(dataGridView1[3, e.RowIndex].Value);
-            int i内包装规格 = Convert.ToInt32(dataGridView1[4, e.RowIndex].Value);
-            int i外包装规格 = Convert.ToInt32(dataGridView1[9, e.RowIndex].Value);
+            try
+            { i计划产量只 = Convert.ToInt32(dataGridView1[3, e.RowIndex].Value); }
+            catch
+            {
+                dataGridView1[3, e.RowIndex].Value = -1;
+                i计划产量只 = -1;
+            }
+
+            try
+            { i内包装规格 = Convert.ToInt32(dataGridView1[4, e.RowIndex].Value); }
+            catch
+            { 
+                dataGridView1[4, e.RowIndex].Value = -1; 
+                i内包装规格 = -1; 
+            }
+
+            try
+            { i外包装规格 = Convert.ToInt32(dataGridView1[9, e.RowIndex].Value); }
+            catch
+            { 
+                dataGridView1[9, e.RowIndex].Value = -1;
+                i外包装规格 = -1; }
+
             try
             {
-
-
                 switch (e.ColumnIndex)
                 {
                     // 计划产量
@@ -813,8 +885,9 @@ namespace mySystem.Process.Bag.LDPE
         void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
-            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
-            MessageBox.Show(name + "填写错误");
+            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
+            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
         private void textBox13_TextChanged(object sender, EventArgs e)
@@ -957,6 +1030,57 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn保存_Click_1(object sender, EventArgs e)
         {
+            //检查物料代码是否合法
+            //TODO:  *****有待替换
+            if (hs物料代码.Count > 0)
+            {
+                if (!hs物料代码.Contains(tb制袋物料代码1.Text))
+                {
+                    MessageBox.Show("制袋 " + tb制袋物料名称1.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb制袋物料代码2.Text))
+                {
+                    MessageBox.Show("制袋 " + tb制袋物料名称2.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb制袋物料代码3.Text))
+                {
+                    MessageBox.Show("制袋 " + tb制袋物料名称3.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码1.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称1.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码2.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称2.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码1.Text))
+                {
+                    MessageBox.Show("外包装 " + tb外包物料名称1.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码2.Text))
+                {
+                    MessageBox.Show("外包装 " + tb外包物料名称2.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码3.Text))
+                {
+                    MessageBox.Show("外包装 " + tb外包物料名称3.Text + " 物料代码 有误！");
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("存档中物料代码不存在，保存失败！");
+                return;
+            }
+
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));

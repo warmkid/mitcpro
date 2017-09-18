@@ -188,13 +188,13 @@ namespace mySystem.Process.Bag.BTV
                         {
                             cmb产品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
                         }
-                        OleDbCommand str = new OleDbCommand("SELECT 内包 FROM 生产指令详细信息where T生产指令ID = " + reader1["ID"].ToString(), connOle);
+                        OleDbCommand str = new OleDbCommand("SELECT 内包 FROM 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString(), connOle);
                         try
                         {
                             tb内包装规格.Text = str.ExecuteScalar().ToString();
                         }
                         catch
-                        { }
+                        { tb内包装规格.Text = 100.ToString(); }
                     }
                     datemp.Dispose();
                 }
@@ -561,9 +561,14 @@ namespace mySystem.Process.Bag.BTV
             dr["审核员"] = "";
             dr["审核是否通过"] = false;
 
-
-            dr["内包装规格"] = Convert.ToInt32(tb内包装规格.Text);
-               
+            try
+            {
+                dr["内包装规格"] = Convert.ToInt32(tb内包装规格.Text);
+            }
+            catch
+            {
+                dr["内包装规格"] = Convert.ToInt32(100.ToString());
+            }
             dr["生产日期"] = PdDate;
             dr["班次"] = Flight;
             dr["工时"] = 0;
@@ -788,7 +793,13 @@ namespace mySystem.Process.Bag.BTV
         //内表审核按钮
         private void btn数据审核_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int i in hi待审核行号)
             {
                 if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
                 {

@@ -74,7 +74,7 @@
             this.cb打印机.FormattingEnabled = true;
             this.cb打印机.Location = new System.Drawing.Point(211, 605);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(231, 24);
+            this.cb打印机.Size = new System.Drawing.Size(285, 24);
             this.cb打印机.TabIndex = 123;
             // 
             // btn查看日志

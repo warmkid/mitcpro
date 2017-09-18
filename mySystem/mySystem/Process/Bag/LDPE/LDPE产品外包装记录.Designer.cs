@@ -379,7 +379,7 @@
             this.cb打印机.FormattingEnabled = true;
             this.cb打印机.Location = new System.Drawing.Point(319, 507);
             this.cb打印机.Name = "cb打印机";
-            this.cb打印机.Size = new System.Drawing.Size(279, 24);
+            this.cb打印机.Size = new System.Drawing.Size(291, 24);
             this.cb打印机.TabIndex = 272;
             // 
             // label40
@@ -581,7 +581,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1063, 574);
+            this.ClientSize = new System.Drawing.Size(1063, 560);
             this.Controls.Add(this.lb产品数量只数合计);
             this.Controls.Add(this.lb包装数量箱数合计);
             this.Controls.Add(this.label7);

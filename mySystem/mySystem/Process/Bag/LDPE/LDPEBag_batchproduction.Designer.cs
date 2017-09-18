@@ -78,7 +78,7 @@
             this.comboBox打印机选择.FormattingEnabled = true;
             this.comboBox打印机选择.Location = new System.Drawing.Point(210, 582);
             this.comboBox打印机选择.Name = "comboBox打印机选择";
-            this.comboBox打印机选择.Size = new System.Drawing.Size(175, 24);
+            this.comboBox打印机选择.Size = new System.Drawing.Size(304, 24);
             this.comboBox打印机选择.TabIndex = 160;
             // 
             // btn提交审核
@@ -410,7 +410,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1107, 613);
+            this.ClientSize = new System.Drawing.Size(1107, 624);
             this.Controls.Add(this.comboBox打印机选择);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn保存);
