@@ -388,8 +388,8 @@ namespace mySystem.Setting
                 else
                 {
                     da存货档案.Update((DataTable)bs存货档案.DataSource);
-                    //dt存货档案.Clear();
-                    //da存货档案.Fill(dt存货档案);
+                    dt存货档案.Clear();
+                    da存货档案.Fill(dt存货档案);
                     //setDataGridViewRowNums(this.dgv存货档案);
 
                     
