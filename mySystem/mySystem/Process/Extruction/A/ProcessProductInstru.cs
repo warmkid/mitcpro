@@ -872,6 +872,12 @@ namespace BatchProductRecord
                 while (true)
                 {
                     string str = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
+                    if (!ht代码面数.ContainsKey(str))
+                    {
+                        MessageBox.Show("产品代码不存在，请重新输入");
+                        dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
+                        return;
+                    }
                     string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]";//正则表达式
                     if (!Regex.IsMatch(str, pattern))
                     {
