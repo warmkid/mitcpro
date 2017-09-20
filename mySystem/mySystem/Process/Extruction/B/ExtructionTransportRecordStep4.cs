@@ -495,5 +495,10 @@ namespace mySystem.Extruction.Process
             TransportRecordView.Rows[checknum].Cells["复核人"].Value = reviewer_name;
             checknum++;
         }
+
+        private void bt查看人员信息_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

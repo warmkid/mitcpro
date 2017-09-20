@@ -946,7 +946,8 @@ namespace mySystem.Process.Extruction.B
                 for (int j = 0; j < 3; j++)
                 {
                     array1[1+i][1+j].DataBindings.Add("Text", bsOuter.DataSource, colname[9 + i + 6 * j]);
-                    array2[1+i][1+j]=Convert.ToString(dtOuter.Rows[0][colname[9 + i + 6 * j]]);
+                    if (dtOuter.Rows.Count != 0)
+                        array2[1 + i][1 + j] = Convert.ToString(dtOuter.Rows[0][colname[9 + i + 6 * j]]);
                 }
             }
 
@@ -954,7 +955,8 @@ namespace mySystem.Process.Extruction.B
             for (int i = 0; i < 4; i++)
             {
                 array1[1 + i][5].DataBindings.Add("Text", bsOuter.DataSource, colname[27 + i]);
-                array2[1 + i][5]=Convert.ToString(dtOuter.Rows[0][colname[27 + i]]);
+                if (dtOuter.Rows.Count != 0)
+                    array2[1 + i][5] = Convert.ToString(dtOuter.Rows[0][colname[27 + i]]);
             }
             array1[6][4].DataBindings.Add("Text", bsOuter.DataSource, colname[31]);
             array1[8][2].DataBindings.Add("Text",bsOuter.DataSource,colname[32]);
@@ -964,19 +966,23 @@ namespace mySystem.Process.Extruction.B
             array1[9][5].DataBindings.Add("Text",bsOuter.DataSource,colname[46]);
             array1[12][5].DataBindings.Add("Text",bsOuter.DataSource,colname[47]);
 
-            array2[6][4]=Convert.ToString(dtOuter.Rows[0][colname[31]]);
-            array2[8][2]=Convert.ToString(dtOuter.Rows[0][colname[32]]);
-            array2[9][2]=Convert.ToString(dtOuter.Rows[0][colname[33]]);
-            array2[12][2]=Convert.ToString(dtOuter.Rows[0][colname[34]]);
-            array2[8][5]=Convert.ToString(dtOuter.Rows[0][colname[45]]);
-            array2[9][5]=Convert.ToString(dtOuter.Rows[0][colname[46]]);
-            array2[12][5]=Convert.ToString(dtOuter.Rows[0][colname[47]]);
+            if (dtOuter.Rows.Count != 0)
+            {
+                array2[6][4] = Convert.ToString(dtOuter.Rows[0][colname[31]]);
+                array2[8][2] = Convert.ToString(dtOuter.Rows[0][colname[32]]);
+                array2[9][2] = Convert.ToString(dtOuter.Rows[0][colname[33]]);
+                array2[12][2] = Convert.ToString(dtOuter.Rows[0][colname[34]]);
+                array2[8][5] = Convert.ToString(dtOuter.Rows[0][colname[45]]);
+                array2[9][5] = Convert.ToString(dtOuter.Rows[0][colname[46]]);
+                array2[12][5] = Convert.ToString(dtOuter.Rows[0][colname[47]]);
+            }
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
                     array1[8+i][3+j].DataBindings.Add("Text", bsOuter.DataSource, colname[ 35+ i + 5 * j]);
-                    array2[8 + i][3 + j]=Convert.ToString(dtOuter.Rows[0][colname[35 + i + 5 * j]]);
+                    if (dtOuter.Rows.Count != 0)
+                        array2[8 + i][3 + j] = Convert.ToString(dtOuter.Rows[0][colname[35 + i + 5 * j]]);
                 }
             }
             for (int i = 0; i < 6; i++)
@@ -984,37 +990,46 @@ namespace mySystem.Process.Extruction.B
                 for (int j = 0; j < 3; j++)
                 {
                     array1[1 + i][9 + j].DataBindings.Add("Text", bsOuter.DataSource, colname[51 + i + 6 * j]);
-                    array2[1 + i][9 + j]=Convert.ToString(dtOuter.Rows[0][colname[51 + i + 6 * j]]);
+                    if (dtOuter.Rows.Count != 0)
+                        array2[1 + i][9 + j] = Convert.ToString(dtOuter.Rows[0][colname[51 + i + 6 * j]]);
                 }
             }
 
             array1[9][11].DataBindings.Clear();
             array1[9][11].DataBindings.Add("Text",bsOuter.DataSource,colname[48]);
-            array2[9][11]=Convert.ToString(dtOuter.Rows[0][colname[48]]);
+            if (dtOuter.Rows.Count != 0)
+                array2[9][11] = Convert.ToString(dtOuter.Rows[0][colname[48]]);
             array1[11][11].DataBindings.Clear();
             array1[11][11].DataBindings.Add("Text",bsOuter.DataSource,colname[49]);
-            array2[11][11]=Convert.ToString(dtOuter.Rows[0][colname[49]]);
+            if (dtOuter.Rows.Count != 0)
+                array2[11][11] = Convert.ToString(dtOuter.Rows[0][colname[49]]);
             array1[13][11].DataBindings.Clear();
             array1[13][11].DataBindings.Add("Text",bsOuter.DataSource,colname[50]);
-            array2[13][11]=Convert.ToString(dtOuter.Rows[0][colname[50]]);
+            if (dtOuter.Rows.Count != 0)
+                array2[13][11] = Convert.ToString(dtOuter.Rows[0][colname[50]]);
 
 
 
             array1[8][9].DataBindings.Clear();
             array1[8][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机设置频率");
-            array2[8][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机设置频率"]);
+            if (dtOuter.Rows.Count != 0)
+                array2[8][9] = Convert.ToString(dtOuter.Rows[0]["内表面电机设置频率"]);
             array1[9][9].DataBindings.Clear();
             array1[9][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机实际频率");
-            array2[9][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机实际频率"]);
+            if (dtOuter.Rows.Count != 0)
+                array2[9][9] = Convert.ToString(dtOuter.Rows[0]["内表面电机实际频率"]);
             array1[10][9].DataBindings.Clear();
             array1[10][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机设定张力");
-            array2[10][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机设定张力"]);
+            if (dtOuter.Rows.Count != 0)
+                array2[10][9] = Convert.ToString(dtOuter.Rows[0]["内表面电机设定张力"]);
             array1[11][9].DataBindings.Clear();
             array1[11][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机实际张力");
-            array2[11][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机实际张力"]);
+            if (dtOuter.Rows.Count != 0)
+                array2[11][9] = Convert.ToString(dtOuter.Rows[0]["内表面电机实际张力"]);
             array1[12][9].DataBindings.Clear();
             array1[12][9].DataBindings.Add("Text", bsOuter.DataSource, "内表面电机电流");
-            array2[12][9]=Convert.ToString(dtOuter.Rows[0]["内表面电机电流"]);
+            if (dtOuter.Rows.Count != 0)
+                array2[12][9] = Convert.ToString(dtOuter.Rows[0]["内表面电机电流"]); ;
 
 
         }
@@ -1689,6 +1704,19 @@ namespace mySystem.Process.Extruction.B
         private void c(object sender, EventArgs e)
         {
 
+        }
+
+        private void bt查看人员信息_Click(object sender, EventArgs e)
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜机组运行记录'", mySystem.Parameter.connOle);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            String str操作员 = dt.Rows[0]["操作员"].ToString();
+            String str审核员 = dt.Rows[0]["审核员"].ToString();
+            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+            MessageBox.Show(str人员信息);
         }
 
 

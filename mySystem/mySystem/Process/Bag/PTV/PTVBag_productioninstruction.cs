@@ -529,6 +529,7 @@ namespace mySystem.Process.Bag.PTV
 
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
         }
         void innerBind_制袋()
@@ -1276,6 +1277,8 @@ namespace mySystem.Process.Bag.PTV
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
         private void btn删除_Click(object sender, EventArgs e)
         {

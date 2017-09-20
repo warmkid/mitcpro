@@ -53,6 +53,7 @@
             this.lbl生产开始时间 = new System.Windows.Forms.Label();
             this.lbl合计不良品数量 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.bt查看人员信息 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -60,7 +61,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.Location = new System.Drawing.Point(477, 32);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
@@ -71,7 +72,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label2.Location = new System.Drawing.Point(281, 106);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
@@ -81,7 +82,7 @@
             // 
             // dtp生产结束时间
             // 
-            this.dtp生产结束时间.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp生产结束时间.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp生产结束时间.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp生产结束时间.Location = new System.Drawing.Point(339, 99);
             this.dtp生产结束时间.Margin = new System.Windows.Forms.Padding(4);
@@ -92,7 +93,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(35, 106);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -103,7 +104,7 @@
             // lbInstruction
             // 
             this.lbInstruction.AutoSize = true;
-            this.lbInstruction.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbInstruction.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbInstruction.Location = new System.Drawing.Point(37, 72);
             this.lbInstruction.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbInstruction.Name = "lbInstruction";
@@ -240,7 +241,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(677, 32);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -292,11 +293,23 @@
             this.pictureBox1.TabIndex = 151;
             this.pictureBox1.TabStop = false;
             // 
+            // bt查看人员信息
+            // 
+            this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看人员信息.Location = new System.Drawing.Point(584, 446);
+            this.bt查看人员信息.Name = "bt查看人员信息";
+            this.bt查看人员信息.Size = new System.Drawing.Size(123, 23);
+            this.bt查看人员信息.TabIndex = 152;
+            this.bt查看人员信息.Text = "查看人员信息";
+            this.bt查看人员信息.UseVisualStyleBackColor = true;
+            this.bt查看人员信息.Click += new System.EventHandler(this.bt查看人员信息_Click);
+            // 
             // Waste
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1066, 495);
+            this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lbl合计不良品数量);
             this.Controls.Add(this.lbl生产开始时间);
@@ -321,7 +334,7 @@
             this.Controls.Add(this.btn保存);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label7);
-            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Waste";
             this.Text = "吹膜工序废品记录";
@@ -359,5 +372,6 @@
         private System.Windows.Forms.Label lbl生产开始时间;
         private System.Windows.Forms.Label lbl合计不良品数量;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button bt查看人员信息;
     }
 }

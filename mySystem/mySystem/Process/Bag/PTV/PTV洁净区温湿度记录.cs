@@ -430,6 +430,7 @@ namespace mySystem.Process.Bag.PTV
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码
@@ -535,6 +536,8 @@ namespace mySystem.Process.Bag.PTV
             dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             setDataGridViewRowNums();
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         //删除按钮

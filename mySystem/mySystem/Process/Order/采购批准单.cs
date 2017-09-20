@@ -874,7 +874,7 @@ namespace mySystem.Process.Order
             存货名称 = drs[0]["存货名称"].ToString();
             规格型号 = drs[0]["规格型号"].ToString();
             主计量单位每辅计量单位 = Convert.ToDouble(drs[0]["主计量单位每辅计量单位"]);
-            需求单流水号 = drs[0]["需求单流水号"].ToString();
+            需求单流水号 = drs[0]["组件订单需求流水号"].ToString();
             //原始订单数据复原
             drs[0]["采购数量"] = drs[0]["未借用前需要采购数量"];
             drs[0]["已借用数量"] = 0;

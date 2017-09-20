@@ -66,6 +66,7 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.bt查看人员信息 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -415,11 +416,23 @@
             this.pictureBox1.TabIndex = 45;
             this.pictureBox1.TabStop = false;
             // 
+            // bt查看人员信息
+            // 
+            this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看人员信息.Location = new System.Drawing.Point(496, 440);
+            this.bt查看人员信息.Name = "bt查看人员信息";
+            this.bt查看人员信息.Size = new System.Drawing.Size(123, 23);
+            this.bt查看人员信息.TabIndex = 46;
+            this.bt查看人员信息.Text = "查看人员信息";
+            this.bt查看人员信息.UseVisualStyleBackColor = true;
+            this.bt查看人员信息.Click += new System.EventHandler(this.bt查看人员信息_Click);
+            // 
             // Record_material_reqanddisg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(950, 475);
+            this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.label角色);
@@ -508,5 +521,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button bt查看人员信息;
     }
 }

@@ -304,6 +304,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.DataSource = dt;
             dataGridView2.ReadOnly = true;
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
         private void initrecord()
         {

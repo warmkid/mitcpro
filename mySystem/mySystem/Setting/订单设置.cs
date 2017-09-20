@@ -108,7 +108,7 @@ namespace mySystem.Setting
                     {
                         //String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
                         string d = dgv存货档案[e.ColumnIndex, e.RowIndex].Value.ToString();
-                        if (d == "")
+                        if (d == "" || d.Trim()=="空")
                         {
                             string data = mySystem.Other.BOMList.getData();
                             if (data != null)
@@ -388,8 +388,8 @@ namespace mySystem.Setting
                 else
                 {
                     da存货档案.Update((DataTable)bs存货档案.DataSource);
-                    //dt存货档案.Clear();
-                    //da存货档案.Fill(dt存货档案);
+                    dt存货档案.Clear();
+                    da存货档案.Fill(dt存货档案);
                     //setDataGridViewRowNums(this.dgv存货档案);
 
                     
@@ -751,14 +751,17 @@ namespace mySystem.Setting
             dgv存货档案.Columns["存货代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
             dgv存货档案.Columns["存货名称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
             dgv存货档案.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            dgv存货档案.Columns["BOM列表"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 
             dgv存货档案.Columns["存货代码"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv存货档案.Columns["存货名称"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dgv存货档案.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dgv存货档案.Columns["BOM列表"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             dgv存货档案.Columns["存货代码"].Width = 100;
             dgv存货档案.Columns["存货名称"].Width = 300;
             dgv存货档案.Columns["规格型号"].Width = 300;
+            dgv存货档案.Columns["BOM列表"].Width = 100;
         }
     }
 }
