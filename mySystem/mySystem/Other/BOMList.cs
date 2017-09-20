@@ -172,7 +172,9 @@ namespace mySystem.Other
             BOMList form = new BOMList();
             if (DialogResult.OK == form.ShowDialog())
             {
-                return form._data.ToString().Replace("\r\n","");
+                string ret = form._data.ToString().Replace("\r\n", "");
+                if (ret == "[]") return "空";
+                else return form._data.ToString().Replace("\r\n", "");
             }
             else
             {
@@ -186,7 +188,9 @@ namespace mySystem.Other
             BOMList form = new BOMList(ja);
             if (DialogResult.OK == form.ShowDialog())
             {
-                return form._data.ToString().Replace("\r\n", "");
+                string ret = form._data.ToString().Replace("\r\n", "");
+                if (ret == "[]") return "空";
+                else return form._data.ToString().Replace("\r\n", "");
             }
             else
             {
@@ -198,6 +202,8 @@ namespace mySystem.Other
         private void btnAdd_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Add();
+            if (dataGridView1.RowCount > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.RowCount - 1;
         }
 
         private void btnDone_Click(object sender, EventArgs e)

@@ -108,7 +108,7 @@ namespace mySystem.Setting
                     {
                         //String ids = mySystem.Other.InputDataGridView.getIDs(dgv产成品存货档案[e.ColumnIndex, e.RowIndex].Value.ToString(), dt);
                         string d = dgv存货档案[e.ColumnIndex, e.RowIndex].Value.ToString();
-                        if (d == "")
+                        if (d == "" || d.Trim()=="空")
                         {
                             string data = mySystem.Other.BOMList.getData();
                             if (data != null)
