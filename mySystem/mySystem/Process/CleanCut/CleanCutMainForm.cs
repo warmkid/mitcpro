@@ -159,7 +159,8 @@ namespace mySystem.Process.CleanCut
 
         private void A6Btn_Click(object sender, EventArgs e)
         {
-
+            清洁分切标签 myform = new 清洁分切标签();
+            myform.ShowDialog();
         }
 
         private void A7Btn_Click(object sender, EventArgs e)
