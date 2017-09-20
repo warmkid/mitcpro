@@ -395,6 +395,7 @@ namespace mySystem.Process.Bag.PTV
         {
             bs记录详情.DataSource = dt记录详情;
             dataGridView1.DataSource = bs记录详情.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码，从设置表里读取

@@ -458,6 +458,7 @@ namespace mySystem.Process.Bag.PTV
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         private void setDataGridViewColumns()
