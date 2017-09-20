@@ -53,6 +53,7 @@
             this.bt删除 = new System.Windows.Forms.Button();
             this.bt上移 = new System.Windows.Forms.Button();
             this.bt下移 = new System.Windows.Forms.Button();
+            this.bt查看人员信息 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -290,11 +291,23 @@
             this.bt下移.UseVisualStyleBackColor = true;
             this.bt下移.Click += new System.EventHandler(this.bt下移_Click);
             // 
+            // bt查看人员信息
+            // 
+            this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看人员信息.Location = new System.Drawing.Point(408, 544);
+            this.bt查看人员信息.Name = "bt查看人员信息";
+            this.bt查看人员信息.Size = new System.Drawing.Size(123, 23);
+            this.bt查看人员信息.TabIndex = 27;
+            this.bt查看人员信息.Text = "查看人员信息";
+            this.bt查看人员信息.UseVisualStyleBackColor = true;
+            this.bt查看人员信息.Click += new System.EventHandler(this.bt查看人员信息_Click);
+            // 
             // Record_train
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(835, 579);
+            this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.bt下移);
             this.Controls.Add(this.bt上移);
             this.Controls.Add(this.bt删除);
@@ -355,5 +368,6 @@
         private System.Windows.Forms.Button bt删除;
         private System.Windows.Forms.Button bt上移;
         private System.Windows.Forms.Button bt下移;
+        private System.Windows.Forms.Button bt查看人员信息;
     }
 }

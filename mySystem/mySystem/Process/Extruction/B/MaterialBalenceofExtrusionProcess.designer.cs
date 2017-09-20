@@ -60,6 +60,7 @@
             this.lbl生产开始时间 = new System.Windows.Forms.Label();
             this.lbl生产指令 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
+            this.bt查看人员信息 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -375,11 +376,23 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // bt查看人员信息
+            // 
+            this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看人员信息.Location = new System.Drawing.Point(462, 352);
+            this.bt查看人员信息.Name = "bt查看人员信息";
+            this.bt查看人员信息.Size = new System.Drawing.Size(123, 34);
+            this.bt查看人员信息.TabIndex = 162;
+            this.bt查看人员信息.Text = "查看人员信息";
+            this.bt查看人员信息.UseVisualStyleBackColor = true;
+            this.bt查看人员信息.Click += new System.EventHandler(this.bt查看人员信息_Click);
+            // 
             // MaterialBalenceofExtrusionProcess
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1370, 445);
+            this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.lbl生产指令);
             this.Controls.Add(this.lbl生产开始时间);
             this.Controls.Add(this.cmb打印机选择);
@@ -413,7 +426,6 @@
             this.Controls.Add(this.label3);
             this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MaterialBalenceofExtrusionProcess";
             this.Text = "吹膜工序物料平衡记录";
@@ -456,5 +468,6 @@
         private System.Windows.Forms.Label lbl生产开始时间;
         private System.Windows.Forms.Label lbl生产指令;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button bt查看人员信息;
     }
 }

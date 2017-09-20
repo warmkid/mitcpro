@@ -50,12 +50,13 @@
             this.Title = new System.Windows.Forms.Label();
             this.PSLabel = new System.Windows.Forms.Label();
             this.printBtn = new System.Windows.Forms.Button();
+            this.bt查看人员信息 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // dtp更换日期
             // 
-            this.dtp更换日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp更换日期.Font = new System.Drawing.Font("宋体", 12F);
             this.dtp更换日期.Location = new System.Drawing.Point(359, 65);
             this.dtp更换日期.Name = "dtp更换日期";
             this.dtp更换日期.Size = new System.Drawing.Size(163, 26);
@@ -64,7 +65,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label8.Font = new System.Drawing.Font("宋体", 12F);
             this.label8.Location = new System.Drawing.Point(278, 72);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(88, 16);
@@ -73,7 +74,7 @@
             // 
             // tb更换后模芯型号
             // 
-            this.tb更换后模芯型号.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb更换后模芯型号.Font = new System.Drawing.Font("宋体", 12F);
             this.tb更换后模芯型号.Location = new System.Drawing.Point(1014, 65);
             this.tb更换后模芯型号.Name = "tb更换后模芯型号";
             this.tb更换后模芯型号.Size = new System.Drawing.Size(125, 26);
@@ -82,7 +83,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label7.Font = new System.Drawing.Font("宋体", 12F);
             this.label7.Location = new System.Drawing.Point(877, 72);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(136, 16);
@@ -91,7 +92,7 @@
             // 
             // tb更换前模芯型号
             // 
-            this.tb更换前模芯型号.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb更换前模芯型号.Font = new System.Drawing.Font("宋体", 12F);
             this.tb更换前模芯型号.Location = new System.Drawing.Point(725, 65);
             this.tb更换前模芯型号.Name = "tb更换前模芯型号";
             this.tb更换前模芯型号.Size = new System.Drawing.Size(125, 26);
@@ -100,7 +101,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label6.Font = new System.Drawing.Font("宋体", 12F);
             this.label6.Location = new System.Drawing.Point(598, 72);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(136, 16);
@@ -109,7 +110,7 @@
             // 
             // tb更换原因
             // 
-            this.tb更换原因.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb更换原因.Font = new System.Drawing.Font("宋体", 12F);
             this.tb更换原因.Location = new System.Drawing.Point(111, 65);
             this.tb更换原因.Name = "tb更换原因";
             this.tb更换原因.Size = new System.Drawing.Size(150, 26);
@@ -118,7 +119,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label5.Font = new System.Drawing.Font("宋体", 12F);
             this.label5.Location = new System.Drawing.Point(27, 72);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(88, 16);
@@ -127,7 +128,7 @@
             // 
             // dtp审核日期
             // 
-            this.dtp审核日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp审核日期.Font = new System.Drawing.Font("宋体", 12F);
             this.dtp审核日期.Location = new System.Drawing.Point(939, 477);
             this.dtp审核日期.Name = "dtp审核日期";
             this.dtp审核日期.Size = new System.Drawing.Size(200, 26);
@@ -136,7 +137,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label4.Font = new System.Drawing.Font("宋体", 12F);
             this.label4.Location = new System.Drawing.Point(858, 484);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(88, 16);
@@ -145,7 +146,7 @@
             // 
             // dtp检查日期
             // 
-            this.dtp检查日期.Font = new System.Drawing.Font("SimSun", 12F);
+            this.dtp检查日期.Font = new System.Drawing.Font("宋体", 12F);
             this.dtp检查日期.Location = new System.Drawing.Point(337, 476);
             this.dtp检查日期.Name = "dtp检查日期";
             this.dtp检查日期.Size = new System.Drawing.Size(200, 26);
@@ -154,7 +155,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label3.Font = new System.Drawing.Font("宋体", 12F);
             this.label3.Location = new System.Drawing.Point(256, 483);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(88, 16);
@@ -163,7 +164,7 @@
             // 
             // tb审核人
             // 
-            this.tb审核人.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb审核人.Font = new System.Drawing.Font("宋体", 12F);
             this.tb审核人.Location = new System.Drawing.Point(693, 480);
             this.tb审核人.Name = "tb审核人";
             this.tb审核人.Size = new System.Drawing.Size(100, 26);
@@ -172,7 +173,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label2.Font = new System.Drawing.Font("宋体", 12F);
             this.label2.Location = new System.Drawing.Point(625, 487);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(72, 16);
@@ -181,7 +182,7 @@
             // 
             // tb检查人
             // 
-            this.tb检查人.Font = new System.Drawing.Font("SimSun", 12F);
+            this.tb检查人.Font = new System.Drawing.Font("宋体", 12F);
             this.tb检查人.Location = new System.Drawing.Point(92, 476);
             this.tb检查人.Name = "tb检查人";
             this.tb检查人.Size = new System.Drawing.Size(100, 26);
@@ -190,7 +191,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.label1.Font = new System.Drawing.Font("宋体", 12F);
             this.label1.Location = new System.Drawing.Point(24, 483);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(72, 16);
@@ -199,7 +200,7 @@
             // 
             // CheckBtn
             // 
-            this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.CheckBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.CheckBtn.Location = new System.Drawing.Point(965, 515);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);
@@ -210,7 +211,7 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.SaveBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.SaveBtn.Location = new System.Drawing.Point(873, 515);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
@@ -233,7 +234,7 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.Title.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold);
             this.Title.Location = new System.Drawing.Point(425, 21);
             this.Title.Name = "Title";
             this.Title.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -244,7 +245,7 @@
             // 
             // PSLabel
             // 
-            this.PSLabel.Font = new System.Drawing.Font("SimSun", 12F);
+            this.PSLabel.Font = new System.Drawing.Font("宋体", 12F);
             this.PSLabel.Location = new System.Drawing.Point(27, 443);
             this.PSLabel.Name = "PSLabel";
             this.PSLabel.Size = new System.Drawing.Size(498, 15);
@@ -253,7 +254,7 @@
             // 
             // printBtn
             // 
-            this.printBtn.Font = new System.Drawing.Font("SimSun", 12F);
+            this.printBtn.Font = new System.Drawing.Font("宋体", 12F);
             this.printBtn.Location = new System.Drawing.Point(1059, 514);
             this.printBtn.Name = "printBtn";
             this.printBtn.Size = new System.Drawing.Size(80, 30);
@@ -262,11 +263,23 @@
             this.printBtn.UseVisualStyleBackColor = true;
             this.printBtn.Click += new System.EventHandler(this.printBtn_Click);
             // 
+            // bt查看人员信息
+            // 
+            this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看人员信息.Location = new System.Drawing.Point(725, 515);
+            this.bt查看人员信息.Name = "bt查看人员信息";
+            this.bt查看人员信息.Size = new System.Drawing.Size(123, 33);
+            this.bt查看人员信息.TabIndex = 47;
+            this.bt查看人员信息.Text = "查看人员信息";
+            this.bt查看人员信息.UseVisualStyleBackColor = true;
+            this.bt查看人员信息.Click += new System.EventHandler(this.bt查看人员信息_Click);
+            // 
             // ExtructionReplaceCore
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1166, 558);
+            this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.printBtn);
             this.Controls.Add(this.PSLabel);
             this.Controls.Add(this.dtp更换日期);
@@ -321,6 +334,7 @@
         private System.Windows.Forms.Label Title;
         private System.Windows.Forms.Label PSLabel;
         private System.Windows.Forms.Button printBtn;
+        private System.Windows.Forms.Button bt查看人员信息;
 
     }
 }
