@@ -1335,6 +1335,7 @@ namespace mySystem.Process.Order
                 dtInner库存Show = dtInner库存;
 
                 double sum = 0;
+                if (dtInner实际购入 == null) return;
                 foreach (DataRow dr in dtInner实际购入.Rows)
                 {
                     sum += Convert.ToDouble(dr["仓库可用"]);
@@ -1412,16 +1413,42 @@ namespace mySystem.Process.Order
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
             DataTable dt;
-            foreach (DataRow dr in dt未批准需求单详细信息.Rows)
+            //foreach (DataRow dr in dt未批准需求单详细信息.Rows)
+            //{
+            //    int id = Convert.ToInt32( dr["ID"]);
+            //    da = new OleDbDataAdapter("select * from 采购需求单详细信息 where ID=" + id, mySystem.Parameter.connOle);
+            //    cb = new OleDbCommandBuilder(da);
+            //    dt = new DataTable();
+            //    da.Fill(dt);
+            //    if (dt.Rows.Count == 0) continue;
+            //    dt.Rows[0]["批准状态"] = "批准中";
+            //    da.Update(dt);
+            //}
+            // 根据内表改，上面是错误的
+            foreach (DataRow dr in dtInner.Rows)
             {
-                int id = Convert.ToInt32( dr["ID"]);
-                da = new OleDbDataAdapter("select * from 采购需求单详细信息 where ID=" + id, mySystem.Parameter.connOle);
-                cb = new OleDbCommandBuilder(da);
-                dt = new DataTable();
-                da.Fill(dt);
-                if (dt.Rows.Count == 0) continue;
-                dt.Rows[0]["批准状态"] = "批准中";
-                da.Update(dt);
+                if (Convert.ToBoolean(dr["是否批准"]))
+                {
+                    int xqdID = Convert.ToInt32(dr["采购需求单ID"]);
+                    da = new OleDbDataAdapter("select * from 采购需求单详细信息 where ID=" + xqdID, mySystem.Parameter.connOle);
+                    cb = new OleDbCommandBuilder(da);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count == 0) continue;
+                    dt.Rows[0]["批准状态"] = "批准中";
+                    da.Update(dt);
+                }
+                else
+                {
+                    int xqdID = Convert.ToInt32(dr["采购需求单ID"]);
+                    da = new OleDbDataAdapter("select * from 采购需求单详细信息 where ID=" + xqdID, mySystem.Parameter.connOle);
+                    cb = new OleDbCommandBuilder(da);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count == 0) continue;
+                    dt.Rows[0]["批准状态"] = "未批准";
+                    da.Update(dt);
+                }
             }
 
         }
@@ -1928,5 +1955,7 @@ namespace mySystem.Process.Order
             dataGridView4.Columns["规格型号"].Width = 300;
 
         }
+
+
     }
 }
