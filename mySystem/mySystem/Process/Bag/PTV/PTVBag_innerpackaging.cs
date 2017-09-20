@@ -607,6 +607,7 @@ namespace mySystem.Process.Bag.PTV
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码
@@ -747,6 +748,8 @@ namespace mySystem.Process.Bag.PTV
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             setDataGridViewRowNums();
             setEnableReadOnly();
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         //删除按钮
@@ -870,6 +873,15 @@ namespace mySystem.Process.Bag.PTV
             bool isSaved = Save();
             if (isSaved == false)
                 return;
+            //检查是否可以提交最后审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "")
+                {
+                    MessageBox.Show("第『" + i + 1 + "』行数据尚未审核，不能提交最后审核！");
+                    return;
+                }
+            }
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -914,6 +926,16 @@ namespace mySystem.Process.Bag.PTV
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
+            }
+
+            //先进行内表审核，再进行外表审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                {
+                    MessageBox.Show("第" + i + 1 + "行数据没有审核，请先审核表内数据！");
+                    return;
+                }
             }
             checkform = new CheckForm(this);
             checkform.Show();

@@ -462,6 +462,12 @@
     <Compile Include="Process\Bag\LDPE\LDPE产品外包装记录.Designer.cs">
       <DependentUpon>LDPE产品外包装记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPE标签.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPE标签.Designer.cs">
+      <DependentUpon>LDPE标签.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\LDPE\LDPE洁净区温湿度记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -635,6 +641,12 @@
     </Compile>
     <Compile Include="Process\CleanCut\Record_cleansite_cut.Designer.cs">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\CleanCut\清洁分切标签.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\CleanCut\清洁分切标签.Designer.cs">
+      <DependentUpon>清洁分切标签.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\A\HandOver.cs">
       <SubType>Form</SubType>
@@ -1419,6 +1431,9 @@
     <EmbeddedResource Include="Process\Bag\LDPE\LDPE产品外包装记录.resx">
       <DependentUpon>LDPE产品外包装记录.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPE标签.resx">
+      <DependentUpon>LDPE标签.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\LDPE洁净区温湿度记录.resx">
       <DependentUpon>LDPE洁净区温湿度记录.cs</DependentUpon>
     </EmbeddedResource>
@@ -1505,6 +1520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\清洁分切标签.resx">
+      <DependentUpon>清洁分切标签.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\A\HandOver.resx">
       <DependentUpon>HandOver.cs</DependentUpon>

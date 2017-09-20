@@ -367,12 +367,12 @@
             // 
             this.lbl生产指令编号.AutoSize = true;
             this.lbl生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl生产指令编号.Location = new System.Drawing.Point(134, 74);
+            this.lbl生产指令编号.Location = new System.Drawing.Point(123, 75);
             this.lbl生产指令编号.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl生产指令编号.Name = "lbl生产指令编号";
-            this.lbl生产指令编号.Size = new System.Drawing.Size(64, 16);
+            this.lbl生产指令编号.Size = new System.Drawing.Size(72, 16);
             this.lbl生产指令编号.TabIndex = 17;
-            this.lbl生产指令编号.Text = "label18";
+            this.lbl生产指令编号.Text = "生产指令";
             // 
             // label18
             // 

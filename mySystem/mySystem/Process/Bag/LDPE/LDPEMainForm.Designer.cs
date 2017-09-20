@@ -47,8 +47,9 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Btn热合强度 = new System.Windows.Forms.Button();
             this.Btn产品内包装 = new System.Windows.Forms.Button();
-            this.Btn标签 = new System.Windows.Forms.Button();
+            this.Btn内标签 = new System.Windows.Forms.Button();
             this.Btn日报表 = new System.Windows.Forms.Button();
+            this.Btn外标签 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -241,16 +242,17 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.Btn外标签);
             this.groupBox2.Controls.Add(this.Btn热合强度);
             this.groupBox2.Controls.Add(this.Btn生产领料);
             this.groupBox2.Controls.Add(this.Btn产品内包装);
-            this.groupBox2.Controls.Add(this.Btn标签);
+            this.groupBox2.Controls.Add(this.Btn内标签);
             this.groupBox2.Controls.Add(this.Btn日报表);
             this.groupBox2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
             this.groupBox2.Location = new System.Drawing.Point(112, 105);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox2.Size = new System.Drawing.Size(260, 368);
+            this.groupBox2.Size = new System.Drawing.Size(260, 431);
             this.groupBox2.TabIndex = 25;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "物料流转";
@@ -258,7 +260,7 @@
             // Btn热合强度
             // 
             this.Btn热合强度.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn热合强度.Location = new System.Drawing.Point(28, 310);
+            this.Btn热合强度.Location = new System.Drawing.Point(28, 250);
             this.Btn热合强度.Name = "Btn热合强度";
             this.Btn热合强度.Size = new System.Drawing.Size(200, 38);
             this.Btn热合强度.TabIndex = 19;
@@ -277,16 +279,16 @@
             this.Btn产品内包装.UseVisualStyleBackColor = true;
             this.Btn产品内包装.Click += new System.EventHandler(this.A2Btn_Click);
             // 
-            // Btn标签
+            // Btn内标签
             // 
-            this.Btn标签.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn标签.Location = new System.Drawing.Point(28, 250);
-            this.Btn标签.Name = "Btn标签";
-            this.Btn标签.Size = new System.Drawing.Size(200, 38);
-            this.Btn标签.TabIndex = 15;
-            this.Btn标签.Text = "LDPE制袋标签";
-            this.Btn标签.UseVisualStyleBackColor = true;
-            this.Btn标签.Click += new System.EventHandler(this.Btn标签_Click);
+            this.Btn内标签.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn内标签.Location = new System.Drawing.Point(28, 310);
+            this.Btn内标签.Name = "Btn内标签";
+            this.Btn内标签.Size = new System.Drawing.Size(200, 38);
+            this.Btn内标签.TabIndex = 15;
+            this.Btn内标签.Text = "LDPE制袋内标签";
+            this.Btn内标签.UseVisualStyleBackColor = true;
+            this.Btn内标签.Click += new System.EventHandler(this.Btn标签_Click);
             // 
             // Btn日报表
             // 
@@ -298,6 +300,17 @@
             this.Btn日报表.Text = "LDPE生产日报表";
             this.Btn日报表.UseVisualStyleBackColor = true;
             this.Btn日报表.Click += new System.EventHandler(this.A3Btn_Click);
+            // 
+            // Btn外标签
+            // 
+            this.Btn外标签.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn外标签.Location = new System.Drawing.Point(28, 374);
+            this.Btn外标签.Name = "Btn外标签";
+            this.Btn外标签.Size = new System.Drawing.Size(200, 38);
+            this.Btn外标签.TabIndex = 20;
+            this.Btn外标签.Text = "LDPE制袋外标签";
+            this.Btn外标签.UseVisualStyleBackColor = true;
+            this.Btn外标签.Click += new System.EventHandler(this.Btn外标签_Click);
             // 
             // LDPEMainForm
             // 
@@ -336,7 +349,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button Btn产品内包装;
-        private System.Windows.Forms.Button Btn标签;
+        private System.Windows.Forms.Button Btn内标签;
         private System.Windows.Forms.Button Btn日报表;
         private System.Windows.Forms.Button Btn外观及检验;
         private System.Windows.Forms.Button Btn热合强度;
@@ -345,5 +358,6 @@
         private System.Windows.Forms.Button Btn退料;
         private System.Windows.Forms.Button Btn外包装;
         private System.Windows.Forms.Button Btn交接班;
+        private System.Windows.Forms.Button Btn外标签;
     }
 }

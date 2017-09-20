@@ -407,7 +407,8 @@ namespace mySystem.Process.Bag.LDPE
             setDataGridViewColumns();
             setDataGridViewFormat();
             bs记录详情.DataSource = dt记录详情;
-            dataGridView1.DataSource = bs记录详情.DataSource;           
+            dataGridView1.DataSource = bs记录详情.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码
@@ -942,6 +943,8 @@ namespace mySystem.Process.Bag.LDPE
             // 如果行有默认值，在这里写代码填上
             dr = writeInnerDefault(dr);
             dt记录详情.Rows.Add(dr);
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
         //删除按钮
         private void bt删除_Click(object sender, EventArgs e)

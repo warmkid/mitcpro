@@ -34,7 +34,6 @@ namespace mySystem.Process.Bag.PTV
         Parameter.FormState _formState;
         Int32 InstruID;
         String Instruction;
-        String MoCode;
 
         public PTVBag_runningrecordofdf(MainForm mainform) : base(mainform)
         {
@@ -45,6 +44,7 @@ namespace mySystem.Process.Bag.PTV
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ptvbagInstruID;
             Instruction = Parameter.ptvbagInstruction;
+            tb生产指令编码.Text = Instruction;
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -53,14 +53,8 @@ namespace mySystem.Process.Bag.PTV
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            setControlFalse();
-            cmb膜代码.Enabled = true;
-            dtp生产日期.Enabled = true;
-            btn查询新建.Enabled = true;
-            //打印、查看日志按钮不可用
-            btn打印.Enabled = false;
-            btn查看日志.Enabled = false;
-            cb打印机.Enabled = false;
+            DataShow(InstruID); 
+
         }
 
         public PTVBag_runningrecordofdf(MainForm mainform, Int32 ID) : base(mainform)
@@ -91,7 +85,7 @@ namespace mySystem.Process.Bag.PTV
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='瓶口焊接机运行记录'", connOle);
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='底封机运行记录'", connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -160,7 +154,7 @@ namespace mySystem.Process.Bag.PTV
         //读取设置内容  //GetProductInfo //产品名称、产品批号列表获取+产品工艺、设备、班次填写
         private void getOtherData()
         {
-            dt膜代码 = new DataTable("膜代码");
+            //dt膜代码 = new DataTable("膜代码");
             dt代码批号 = new DataTable("代码批号");
 
             //*********产品名称、产品批号、产品工艺、设备 -----> 数据获取*********//
@@ -173,13 +167,13 @@ namespace mySystem.Process.Bag.PTV
                 OleDbDataReader reader1 = comm1.ExecuteReader();
                 if (reader1.Read())
                 {
-                    dt膜代码.Columns.Add("膜代码", typeof(String));  
-                    //填入膜代码
-                    dt膜代码.Rows.Add(reader1["制袋物料代码1"].ToString());
-                    dt膜代码.Rows.Add(reader1["制袋物料代码2"].ToString());
-                    dt膜代码.Rows.Add(reader1["制袋物料代码3"].ToString());
-                    for (int i = 0; i < dt膜代码.Rows.Count; i++)
-                    { cmb膜代码.Items.Add(dt膜代码.Rows[i]["膜代码"].ToString()); }
+                    //dt膜代码.Columns.Add("膜代码", typeof(String));  
+                    ////填入膜代码
+                    //dt膜代码.Rows.Add(reader1["制袋物料代码1"].ToString());
+                    //dt膜代码.Rows.Add(reader1["制袋物料代码2"].ToString());
+                    //dt膜代码.Rows.Add(reader1["制袋物料代码3"].ToString());
+                    //for (int i = 0; i < dt膜代码.Rows.Count; i++)
+                    //{ cmb膜代码.Items.Add(dt膜代码.Rows[i]["膜代码"].ToString()); }
 
                     //查找该生产ID下的产品编码、产品批号
                     OleDbCommand comm2 = new OleDbCommand();
@@ -201,6 +195,7 @@ namespace mySystem.Process.Bag.PTV
                 else
                 {
                     MessageBox.Show("该生产指令编码下的『生产指令信息表』尚未生成！");
+                    this.Close();
                 }
                 reader1.Dispose();
             }
@@ -210,7 +205,6 @@ namespace mySystem.Process.Bag.PTV
             }
 
             //*********数据填写*********//
-            cmb膜代码.SelectedIndex = -1;
         }
         
         //根据状态设置可读写性
@@ -280,14 +274,13 @@ namespace mySystem.Process.Bag.PTV
             btn提交审核.Enabled = false;
             tb审核员.Enabled = false;
             //部分空间防作弊，不可改
+            tb生产指令编码.ReadOnly = true;
             tb产品批号.ReadOnly = true;
             tb产品代码.ReadOnly = true;
             tb不良品数量.ReadOnly = true;
             tb合格品数量.ReadOnly = true;
             //查询条件始终不可编辑
-            cmb膜代码.Enabled = false;
-            dtp生产日期.Enabled = false;
-            btn查询新建.Enabled = false;
+
         }
 
         /// <summary>
@@ -334,10 +327,10 @@ namespace mySystem.Process.Bag.PTV
         //******************************显示数据******************************//
 
         //显示根据信息查找
-        private void DataShow(Int32 InstruID, String MoProductCode, DateTime searchTime)
+        private void DataShow(Int32 InstruID)
         {
             //******************************外表 根据条件绑定******************************//  
-            readOuterData(InstruID, MoProductCode, searchTime);
+            readOuterData(InstruID);
             outerBind();
             //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
@@ -353,7 +346,7 @@ namespace mySystem.Process.Bag.PTV
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
                 //外表重新绑定
-                readOuterData(InstruID, MoProductCode, searchTime);
+                readOuterData(InstruID);
                 outerBind();
 
                 //********* 内表新建、保存、重新绑定 *********//
@@ -383,25 +376,24 @@ namespace mySystem.Process.Bag.PTV
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID, connOle);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
-                MoCode = dt1.Rows[0]["膜代码"].ToString();
-                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["膜代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+                DataShow(InstruID);
             }
         }
 
         //****************************** 嵌套 ******************************//
 
         //外表读数据，填datatable
-        private void readOuterData(Int32 InstruID, String MoProductCode, DateTime searchTime)
+        private void readOuterData(Int32 InstruID)
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 膜或袋体代码 = '" + MoProductCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID, connOle);
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -411,14 +403,13 @@ namespace mySystem.Process.Bag.PTV
         {
             bs记录.DataSource = dt记录;
             //控件绑定（先解除，再绑定）
-            cmb膜代码.DataBindings.Clear();
-            cmb膜代码.DataBindings.Add("Text", bs记录.DataSource, "膜或袋体代码");
+            tb生产指令编码.DataBindings.Clear();
+            tb生产指令编码.DataBindings.Add("Text", bs记录.DataSource, "生产指令编码");
             tb产品代码.DataBindings.Clear();
             tb产品代码.DataBindings.Add("Text", bs记录.DataSource, "产品代码");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
-            dtp生产日期.DataBindings.Clear();
-            dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
+
             //各种参数设定
             tb焊线1参数1.DataBindings.Clear();
             tb焊线1参数1.DataBindings.Add("Text", bs记录.DataSource, "焊线1参数1");
@@ -467,10 +458,10 @@ namespace mySystem.Process.Bag.PTV
         private DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = InstruID;
-            dr["膜或袋体代码"] = cmb膜代码.Text;
+            dr["生产指令编码"] = tb生产指令编码.Text;
             dr["产品代码"] = tb产品代码.Text;
             dr["产品批号"] = tb产品批号.Text;
-            dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
+
             dr["焊线1参数1"] = 0;
             dr["焊线1参数2"] = 0;
             dr["焊线1参数3"] = 0;
@@ -494,6 +485,7 @@ namespace mySystem.Process.Bag.PTV
 
             dr["审核员"] = "";
             dr["审核是否通过"] = false;
+            dr["审核日期"] = DateTime.Now;
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
@@ -628,18 +620,7 @@ namespace mySystem.Process.Bag.PTV
             }
         }
 
-        //******************************按钮功能******************************//
-        
-        //用于显示/新建数据
-        private void btn查询新建_Click(object sender, EventArgs e)
-        {
-            if (cmb膜代码.SelectedIndex >= 0 && dt代码批号.Rows.Count > 0 && dt膜代码.Rows.Count > 0)
-            {
-                MoCode = cmb膜代码.Text;
-                DataShow(InstruID, MoCode, dtp生产日期.Value); 
-            }
-        }
-        
+        //******************************按钮功能******************************//              
         //添加行按钮
         private void btn添加记录_Click(object sender, EventArgs e)
         {
@@ -699,7 +680,7 @@ namespace mySystem.Process.Bag.PTV
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID, MoCode, dtp生产日期.Value);
+                readOuterData(InstruID);
                 outerBind();
 
                 return true;
@@ -817,7 +798,167 @@ namespace mySystem.Process.Bag.PTV
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
+        //打印填数据
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            int ind = 0;
+            if (dataGridView1.Rows.Count > 12)
+            {
+                //在第7行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 12; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[9, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 12;
+            }
 
+            //外表信息
+            mysheet.Cells[3, 1].Value = "生产指令编码：" + dt记录.Rows[0]["生产指令编码"].ToString();
+            mysheet.Cells[3, 6].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[3, 13].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
+            //mysheet.Cells[3, 18].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+
+            mysheet.Cells[7, 3].Value = dt记录.Rows[0]["焊线1参数1"];
+            mysheet.Cells[7, 4].Value = dt记录.Rows[0]["焊线1参数2"];
+            mysheet.Cells[7, 5].Value = dt记录.Rows[0]["焊线1参数3"];
+            mysheet.Cells[7, 6].Value = dt记录.Rows[0]["焊线1参数4"];
+            mysheet.Cells[7, 7].Value = dt记录.Rows[0]["焊线1参数5"];
+
+            mysheet.Cells[7, 8].Value = dt记录.Rows[0]["焊线2参数1"];
+            mysheet.Cells[7, 9].Value = dt记录.Rows[0]["焊线2参数2"];
+            mysheet.Cells[7, 10].Value = dt记录.Rows[0]["焊线2参数3"];
+            mysheet.Cells[7, 11].Value = dt记录.Rows[0]["焊线2参数4"];
+            mysheet.Cells[7, 12].Value = dt记录.Rows[0]["焊线2参数5"];
+
+
+            mysheet.Cells[7, 13].Value = dt记录.Rows[0]["焊线3参数1"];
+            mysheet.Cells[7, 14].Value = dt记录.Rows[0]["焊线3参数2"];
+            mysheet.Cells[7, 15].Value = dt记录.Rows[0]["焊线3参数3"];
+            mysheet.Cells[7, 16].Value = dt记录.Rows[0]["焊线3参数4"];
+            mysheet.Cells[7, 17].Value = dt记录.Rows[0]["焊线3参数5"];
+
+            //内表信息
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                mysheet.Cells[8 + i, 1] = i + 1;
+                mysheet.Cells[8 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString("yyyy年MM月dd日");
+                mysheet.Cells[8 + i, 3] = dt记录详情.Rows[i]["焊线1参数1"].ToString();
+                mysheet.Cells[8 + i, 4] = dt记录详情.Rows[i]["焊线1参数2"].ToString();
+                mysheet.Cells[8 + i, 5] = dt记录详情.Rows[i]["焊线1参数3"].ToString();
+                mysheet.Cells[8 + i, 6] = dt记录详情.Rows[i]["焊线1参数4"].ToString();
+                mysheet.Cells[8 + i, 7] = dt记录详情.Rows[i]["焊线1参数5"].ToString();
+                mysheet.Cells[8 + i, 8] = dt记录详情.Rows[i]["焊线2参数1"].ToString();
+                mysheet.Cells[8 + i, 9] = dt记录详情.Rows[i]["焊线2参数2"].ToString();
+                mysheet.Cells[8 + i, 10] = dt记录详情.Rows[i]["焊线2参数3"].ToString();
+                mysheet.Cells[8 + i, 11] = dt记录详情.Rows[i]["焊线2参数4"].ToString();
+                mysheet.Cells[8 + i, 12] = dt记录详情.Rows[i]["焊线2参数5"].ToString();
+                mysheet.Cells[8 + i, 13] = dt记录详情.Rows[i]["焊线3参数1"].ToString();
+                mysheet.Cells[8 + i, 14] = dt记录详情.Rows[i]["焊线3参数2"].ToString();
+                mysheet.Cells[8 + i, 15] = dt记录详情.Rows[i]["焊线3参数3"].ToString();
+                mysheet.Cells[8 + i, 16] = dt记录详情.Rows[i]["焊线3参数4"].ToString();
+                mysheet.Cells[8 + i, 17] = dt记录详情.Rows[i]["焊线3参数5"].ToString();
+                mysheet.Cells[8 + i, 18] = dt记录详情.Rows[i]["外观"].ToString();
+                mysheet.Cells[8 + i, 19] = dt记录详情.Rows[i]["合格品数量"];
+                mysheet.Cells[8 + i, 20] = dt记录详情.Rows[i]["不良品数量"];
+                mysheet.Cells[8 + i, 21] = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[8 + i, 22] = dt记录详情.Rows[i]["操作员备注"].ToString();
+
+            }
+
+
+            mysheet.Cells[20 + ind, 13].Value = string.Format("合格品数量：    {0}只\n不良品数量：    {1}只", dt记录.Rows[0]["合格品数量"], dt记录.Rows[0]["不良品数量"]);
+            mysheet.Cells[20 + ind, 18].Value = string.Format("复核人： {0}\n日期：{1}", dt记录.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
+        }
+
+        //查找打印的表序号
+        private int find_indexofprint()
+        {
+            List<int> list_id = new List<int>();
+            string asql = "select * from " + table + " where 生产指令ID=" + InstruID;
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            DataTable tempdt = new DataTable();
+            da.Fill(tempdt);
+
+            for (int i = 0; i < tempdt.Rows.Count; i++)
+                list_id.Add((int)tempdt.Rows[i]["ID"]);
+            return list_id.IndexOf((int)dt记录.Rows[0]["ID"]) + 1;
+
+        }
+
+        public void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\SOP-MFG-412-R01A 底封机运行记录.xlsx");
+
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            // 修改Sheet中某行某列的值
+            fill_excel(my, wb);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = Instruction + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (b)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+                        bs记录.EndEdit();
+                        da记录.Update((DataTable)bs记录.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
         }
 
         //******************************小功能******************************//  

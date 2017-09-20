@@ -57,6 +57,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.bt查看人员信息 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -293,8 +294,8 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label角色);
@@ -345,11 +346,23 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "吹膜机组清洁记录";
             // 
+            // bt查看人员信息
+            // 
+            this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看人员信息.Location = new System.Drawing.Point(499, 427);
+            this.bt查看人员信息.Name = "bt查看人员信息";
+            this.bt查看人员信息.Size = new System.Drawing.Size(123, 23);
+            this.bt查看人员信息.TabIndex = 33;
+            this.bt查看人员信息.Text = "查看人员信息";
+            this.bt查看人员信息.UseVisualStyleBackColor = true;
+            this.bt查看人员信息.Click += new System.EventHandler(this.bt查看人员信息_Click);
+            // 
             // Record_extrusClean
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 459);
+            this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.button1);
@@ -403,5 +416,6 @@
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button bt查看人员信息;
     }
 }

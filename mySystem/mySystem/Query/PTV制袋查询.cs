@@ -146,15 +146,15 @@ namespace mySystem.Query
                         break;
                     case "底封机运行记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "底封机运行记录", "审核员", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "底封机运行记录", "审核员", null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "底封机运行记录", "审核员", "生产日期", null); }
+                        { EachBind(this.dgv, "底封机运行记录", "审核员", null, null); }
                         break;
                     case "圆口焊接机运行记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "圆口焊接机运行记录", "审核员", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "圆口焊接机运行记录", "审核员", null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "圆口焊接机运行记录", "审核员", "生产日期", null); }
+                        { EachBind(this.dgv, "圆口焊接机运行记录", "审核员", null, null); }
                         break;
                     case "泄漏测试记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -170,9 +170,9 @@ namespace mySystem.Query
                         break;
                     case "瓶口焊接机运行记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "瓶口焊接机运行记录", "审核员", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "瓶口焊接机运行记录", "审核员", null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "瓶口焊接机运行记录", "审核员", "生产日期", null); }
+                        { EachBind(this.dgv, "瓶口焊接机运行记录", "审核员", null, null); }
                         break;                   
                     case "清场记录":
                         if (comboBox1.SelectedIndex != -1)

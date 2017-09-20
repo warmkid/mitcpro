@@ -1308,6 +1308,19 @@ namespace mySystem.Extruction.Process
             }
         }
 
+        private void bt查看人员信息_Click(object sender, EventArgs e)
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜生产和检验记录表'", mySystem.Parameter.connOle);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            String str操作员 = dt.Rows[0]["操作员"].ToString();
+            String str审核员 = dt.Rows[0]["审核员"].ToString();
+            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+            MessageBox.Show(str人员信息);
+        }
+
     
 
         //private void setOtherEventHandler()

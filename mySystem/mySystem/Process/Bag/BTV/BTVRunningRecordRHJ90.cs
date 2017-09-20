@@ -57,13 +57,12 @@ namespace mySystem.Process.Bag.BTV
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             setControlFalse();
-            cmb膜代码.Enabled = true;
-            dtp生产日期.Enabled = true;
-            btn查询新建.Enabled = true;
+            
             //打印、查看日志按钮不可用
             btn打印.Enabled = false;
             btn查看日志.Enabled = false;
             cb打印机.Enabled = false;
+            DataShow(InstruID);
         }
 
         public BTVRunningRecordRHJ90(MainForm mainform, Int32 ID) : base(mainform)
@@ -196,9 +195,7 @@ namespace mySystem.Process.Bag.BTV
                     dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称2"].ToString(), dt生产指令.Rows[0]["外包物料代码2"].ToString(), dt生产指令.Rows[0]["外包物料批号2"].ToString());
                     dt物料.Rows.Add(dt生产指令.Rows[0]["外包物料名称3"].ToString(), dt生产指令.Rows[0]["外包物料代码3"].ToString(), dt生产指令.Rows[0]["外包物料批号3"].ToString());
                     addMaterialToDt();
-                    for (int i = 0; i < dt物料.Rows.Count; i++)
-                    { cmb膜代码.Items.Add(dt物料.Rows[i]["物料简称"].ToString()); }
-
+                    
                     //内表代码批号
                     OleDbCommand comm2 = new OleDbCommand();
                     comm2.Connection = Parameter.connOle;
@@ -217,8 +214,7 @@ namespace mySystem.Process.Bag.BTV
                         tb产品批号.Text = dttemp.Rows[0]["产品批号"].ToString();
                     }
                 }
-                datemp1.Dispose();
-                cmb膜代码.SelectedItem = -1;
+                datemp1.Dispose(); 
             }
             else
             {
@@ -314,9 +310,7 @@ namespace mySystem.Process.Bag.BTV
             tb不良品数量.ReadOnly = true;
             tb合格品数量.ReadOnly = true;
             //查询条件始终不可编辑
-            cmb膜代码.Enabled = false;
-            dtp生产日期.Enabled = false;
-            btn查询新建.Enabled = false;
+            
         }
 
         /// <summary>
@@ -408,7 +402,51 @@ namespace mySystem.Process.Bag.BTV
             setEnableReadOnly();  //根据状态设置可读写性  
 
         }
+        private void DataShow(Int32 InstruID)
+        {
+            //******************************外表 根据条件绑定******************************//  
+            readOuterData(InstruID);
+            outerBind();
+            //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
+            //*******************************表格内部******************************// 
+            if (dt记录.Rows.Count <= 0)
+            {
+                //********* 外表新建、保存、重新绑定 *********//                
+                //初始化外表这一行
+                DataRow dr1 = dt记录.NewRow();
+                dr1 = writeOuterDefault(dr1);
+                dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
+                //立马保存这一行
+                bs记录.EndEdit();
+                da记录.Update((DataTable)bs记录.DataSource);
+                //外表重新绑定
+                readOuterData(InstruID);
+                outerBind();
+
+                //********* 内表新建、保存、重新绑定 *********//
+
+                //内表绑定
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind();
+                DataRow dr2 = dt记录详情.NewRow();
+                dr2 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr2);
+                dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
+                setDataGridViewRowNums();
+                //立马保存内表
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+            }
+            //内表绑定
+            dataGridView1.Columns.Clear();
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            setDataGridViewColumns();
+            innerBind();
+
+            addComputerEventHandler();  // 设置自动计算类事件
+            setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+            setEnableReadOnly();  //根据状态设置可读写性  
+
+        }
         //根据主键显示
         public void IDShow(Int32 ID)
         {
@@ -434,20 +472,25 @@ namespace mySystem.Process.Bag.BTV
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
-
+        private void readOuterData(Int32 InstruID)
+        {
+            bs记录 = new BindingSource();
+            dt记录 = new DataTable(table);
+            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " ; ", connOle);
+            cb记录 = new OleDbCommandBuilder(da记录);
+            da记录.Fill(dt记录);
+        }
         //外表控件绑定
         private void outerBind()
         {
             bs记录.DataSource = dt记录;
             //控件绑定（先解除，再绑定）
-            cmb膜代码.DataBindings.Clear();
-            cmb膜代码.DataBindings.Add("Text", bs记录.DataSource, "膜代码");
+            lbl生产指令编号.DataBindings.Clear();
+            lbl生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
             tb产品代码.DataBindings.Clear();
             tb产品代码.DataBindings.Add("Text", bs记录.DataSource, "产品代码");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
-            dtp生产日期.DataBindings.Clear();
-            dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
             //各种参数设定
             tb控制器1参数1.DataBindings.Clear();
             tb控制器1参数1.DataBindings.Add("Text", bs记录.DataSource, "控制器1参数1");
@@ -507,10 +550,9 @@ namespace mySystem.Process.Bag.BTV
         private DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = InstruID;
-            dr["膜代码"] = cmb膜代码.Text;
+            dr["生产指令编号"] = Instruction;
             dr["产品代码"] = tb产品代码.Text;
             dr["产品批号"] = tb产品批号.Text;
-            dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
             dr["控制器1参数1"] = 0;
             dr["控制器1参数2"] = 0;
             dr["控制器1参数3"] = 0;
@@ -644,33 +686,40 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T90度热合机运行记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
+            dataGridView1.ColumnHeadersVisible = false;
 
             dataGridView1.Columns["控制器1参数1"].HeaderText = "控制器1#\rWELDING\rPRESSURE\r(bar)";
-            dataGridView1.Columns["控制器1参数2"].HeaderText = "控制器1#\rSEALING\rTEMP\r(°C)";
+            dataGridView1.Columns["控制器1参数2"].HeaderText = "控制器1#\rSEALING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器1参数3"].HeaderText = "控制器1#\rSEALING\rTIME\r(s)";
-            dataGridView1.Columns["控制器1参数4"].HeaderText = "控制器1#\rCOOLING\rTEMP\r(°C)";
+            dataGridView1.Columns["控制器1参数4"].HeaderText = "控制器1#\rCOOLING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器1参数5"].HeaderText = "控制器1#\rTCR";
 
             dataGridView1.Columns["控制器2参数1"].HeaderText = "控制器2#\rWELDING\rPRESSURE\r(bar)";
-            dataGridView1.Columns["控制器2参数2"].HeaderText = "控制器2#\rSEALING\rTEMP\r(°C)";
+            dataGridView1.Columns["控制器2参数2"].HeaderText = "控制器2#\rSEALING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器2参数3"].HeaderText = "控制器2#\rSEALING\rTIME\r(s)";
-            dataGridView1.Columns["控制器2参数4"].HeaderText = "控制器2#\rCOOLING\rTEMP\r(°C)";
+            dataGridView1.Columns["控制器2参数4"].HeaderText = "控制器2#\rCOOLING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器2参数5"].HeaderText = "控制器2#\rTCR";
 
             dataGridView1.Columns["控制器3参数1"].HeaderText = "控制器3#\rWELDING\rPRESSURE\r(bar)";
-            dataGridView1.Columns["控制器3参数2"].HeaderText = "控制器3#\rSEALING\rTEMP\r(°C)";
+            dataGridView1.Columns["控制器3参数2"].HeaderText = "控制器3#\rSEALING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器3参数3"].HeaderText = "控制器3#\rSEALING\rTIME\r(s)";
-            dataGridView1.Columns["控制器3参数4"].HeaderText = "控制器3#\rCOOLING\rTEMP\r(°C)";
+            dataGridView1.Columns["控制器3参数4"].HeaderText = "控制器3#\rCOOLING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器3参数5"].HeaderText = "控制器3#\rTCR";
 
             dataGridView1.Columns["控制器4参数1"].HeaderText = "控制器4#\rWELDING\rPRESSURE\r(bar)";
-            dataGridView1.Columns["控制器4参数2"].HeaderText = "控制器4#\rSEALING\rTEMP\r(°C)";
+            dataGridView1.Columns["控制器4参数2"].HeaderText = "控制器4#\rSEALING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器4参数3"].HeaderText = "控制器4#\rSEALING\rTIME\r(s)";
-            dataGridView1.Columns["控制器4参数4"].HeaderText = "控制器4#\rCOOLING\rTEMP\r(°C)";
+            dataGridView1.Columns["控制器4参数4"].HeaderText = "控制器4#\rCOOLING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器4参数5"].HeaderText = "控制器4#\rTCR";
 
             dataGridView1.Columns["合格品数量"].HeaderText = "合格品\r数量\r(只)";
             dataGridView1.Columns["不良品数量"].HeaderText = "不良品\r数量\r(只)";
+
+            try
+            {
+                this.dataGridView1.FirstDisplayedScrollingRowIndex = this.dataGridView1.Rows.Count - 1;
+            }
+            catch { }
         }
 
         //修改单个控件的值
@@ -689,14 +738,7 @@ namespace mySystem.Process.Bag.BTV
         //******************************按钮功能******************************//
 
         //用于显示/新建数据
-        private void btn查询新建_Click(object sender, EventArgs e)
-        {
-            if (cmb膜代码.SelectedIndex >= 0 && dt代码批号.Rows.Count > 0 && dt膜代码.Rows.Count > 0)
-            {
-                MoCode = cmb膜代码.Text;
-                DataShow(InstruID, MoCode, dtp生产日期.Value);
-            }
-        }
+        
 
         //添加行按钮
         private void btn添加记录_Click(object sender, EventArgs e)
@@ -757,7 +799,7 @@ namespace mySystem.Process.Bag.BTV
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID, MoCode, dtp生产日期.Value);
+                readOuterData(InstruID);
                 outerBind();
 
                 return true;
