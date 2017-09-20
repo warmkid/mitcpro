@@ -540,6 +540,7 @@ namespace mySystem.Process.Bag.PTV
 
             dataGridView2.Columns[0].Visible = false;
             dataGridView2.Columns[1].Visible = false;
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
 
         }
 
@@ -647,47 +648,47 @@ namespace mySystem.Process.Bag.PTV
 
         void setDataGridViewColumn_制袋()
         {
-            dataGridView2.Columns.Clear();
-            DataGridViewTextBoxColumn tbc;
-            DataGridViewComboBoxColumn cbc;
-            DataGridViewCheckBoxColumn ckbc;
+            //dataGridView2.Columns.Clear();
+            //DataGridViewTextBoxColumn tbc;
+            //DataGridViewComboBoxColumn cbc;
+            //DataGridViewCheckBoxColumn ckbc;
 
-            // 先把所有的列都加好，基本属性附上
-            foreach (DataColumn dc in dtInner_制袋.Columns)
-            {
-                 //要下拉框的特殊处理
-                if (dc.ColumnName == "制袋物料代码")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (String s in hs物料代码)
-                    {
-                        cbc.Items.Add(s);
-                    }
-                    dataGridView2.Columns.Add(cbc);
-                    continue;
-                }
+            //// 先把所有的列都加好，基本属性附上
+            //foreach (DataColumn dc in dtInner_制袋.Columns)
+            //{
+            //     //要下拉框的特殊处理
+            //    if (dc.ColumnName == "制袋物料代码")
+            //    {
+            //        cbc = new DataGridViewComboBoxColumn();
+            //        cbc.HeaderText = dc.ColumnName;
+            //        cbc.Name = dc.ColumnName;
+            //        cbc.ValueType = dc.DataType;
+            //        cbc.DataPropertyName = dc.ColumnName;
+            //        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+            //        foreach (String s in hs物料代码)
+            //        {
+            //            cbc.Items.Add(s);
+            //        }
+            //        dataGridView2.Columns.Add(cbc);
+            //        continue;
+            //    }
 
-                if (dc.ColumnName == "制袋物料名称")
-                {
-                    cbc = new DataGridViewComboBoxColumn();
-                    cbc.HeaderText = dc.ColumnName;
-                    cbc.Name = dc.ColumnName;
-                    cbc.ValueType = dc.DataType;
-                    cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    foreach (String s in ls制袋物料名称)
-                    {
-                        cbc.Items.Add(s);
-                    }
-                    dataGridView2.Columns.Add(cbc);
-                    continue;
-                }
-            }
+            //    if (dc.ColumnName == "制袋物料名称")
+            //    {
+            //        cbc = new DataGridViewComboBoxColumn();
+            //        cbc.HeaderText = dc.ColumnName;
+            //        cbc.Name = dc.ColumnName;
+            //        cbc.ValueType = dc.DataType;
+            //        cbc.DataPropertyName = dc.ColumnName;
+            //        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+            //        foreach (String s in ls制袋物料名称)
+            //        {
+            //            cbc.Items.Add(s);
+            //        }
+            //        dataGridView2.Columns.Add(cbc);
+            //        continue;
+            //    }
+            //}
         }
 
         /// <summary>
@@ -844,6 +845,7 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
             dataGridView1.CellValidating += dataGridView1_CellValidating;
 
+            dataGridView2.EditingControlShowing += dataGridView2_EditingControlShowing;
             // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
             dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
 
@@ -971,6 +973,39 @@ namespace mySystem.Process.Bag.PTV
                 if (tb == null) return;
                 acsc = new AutoCompleteStringCollection();
                 acsc.AddRange(hs产品代码.ToArray());
+                tb.AutoCompleteCustomSource = acsc;
+                tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            }
+        }
+
+        void dataGridView2_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            DataGridView dgv = (sender as DataGridView);
+
+            if (dgv.SelectedCells.Count == 0) return;
+            int colIdx = dgv.SelectedCells[0].ColumnIndex;
+
+            if (colIdx == 3)
+            {
+                TextBox tb = (e.Control as TextBox);
+                tb.AutoCompleteCustomSource = null;
+                AutoCompleteStringCollection acsc;
+                if (tb == null) return;
+                acsc = new AutoCompleteStringCollection();
+                acsc.AddRange(hs物料代码.ToArray());
+                tb.AutoCompleteCustomSource = acsc;
+                tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            }
+            if (colIdx == 2)
+            {
+                TextBox tb = (e.Control as TextBox);
+                tb.AutoCompleteCustomSource = null;
+                AutoCompleteStringCollection acsc;
+                if (tb == null) return;
+                acsc = new AutoCompleteStringCollection();
+                acsc.AddRange(ls制袋物料名称.ToArray());
                 tb.AutoCompleteCustomSource = acsc;
                 tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
                 tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;

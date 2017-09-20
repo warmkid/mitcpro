@@ -349,6 +349,16 @@ namespace mySystem.Process.Bag.PTV
             dt = new DataTable();
             da.Fill(dt);
 
+            if (dt.Rows.Count > 1)
+            {
+                int sum = 0;
+                for (int i = 0; i < dt.Rows.Count; i++)
+                    sum += Convert.ToInt32(dt.Rows[i]["产品数量只数合计B"].ToString());
+                dt.Rows[0]["产品数量只数合计B"] = sum;
+                while (1 != dt.Rows.Count)
+                    dt.Rows.RemoveAt(dt.Rows.Count - 1);                                     
+            }
+
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.DataSource = dt;
             dataGridView2.ReadOnly = true;
