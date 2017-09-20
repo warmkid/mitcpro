@@ -37,7 +37,7 @@ namespace mySystem.Process.Bag.BTV
         // 显示界面需要的信息
         List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员, ls物料代码, ls物料名称, ls单位;
         HashSet<String> hs产品代码,hs封边;
-        HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs负责人, hs外包夜班负责人;
+        HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs负责人, hs外包白班负责人,hs外包夜班负责人;
 
         // DataGridView 中用到的一些变量
         List<Int32> li可选可输的列;
@@ -155,6 +155,7 @@ namespace mySystem.Process.Bag.BTV
             ls负责人 = new List<string>();
             ls工艺 = new List<string>();
             hs负责人 = new HashSet<string>();
+            hs外包白班负责人 = new HashSet<string>();
             hs外包夜班负责人 = new HashSet<string>();
             hs制袋内包白班负责人 = new HashSet<string>();
             hs制袋内包夜班负责人 = new HashSet<string>();
@@ -1115,6 +1116,36 @@ namespace mySystem.Process.Bag.BTV
             //tb外包白班负责人.Text = 
         }
 
+        private void btn外包白班_Click(object sender, EventArgs e)
+        {
+            hs外包白班负责人.Add(cmb负责人.SelectedItem.ToString());
+            //dtOuter.Rows[0]["外包白班负责人"] = String.Join(",", hs外包白班负责人.ToList<String>().ToArray());
+            outerDataSync("tb外包白班负责人", String.Join(",", hs外包白班负责人.ToList<String>().ToArray()));
+            //tb外包白班负责人.Text = 
+        }
+        private void btn外包夜班_Click(object sender, EventArgs e)
+        {
+            hs外包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
+            //dtOuter.Rows[0]["外包夜班负责人"] = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
+            outerDataSync("tb外包夜班负责人", String.Join(",", hs外包夜班负责人.ToList<String>().ToArray()));
+            //tb外包夜班负责人.Text = String.Join(",", hs外包夜班负责人.ToList<String>().ToArray());
+        }
+
+        private void btn制袋内包白班_Click(object sender, EventArgs e)
+        {
+            hs制袋内包白班负责人.Add(cmb负责人.SelectedItem.ToString());
+            //dtOuter.Rows[0]["制袋内包白班负责人"] = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
+            outerDataSync("tb制袋内包白班负责人", String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray()));
+            //tb制袋内包白班负责人.Text = String.Join(",", hs制袋内包白班负责人.ToList<String>().ToArray());
+        }
+
+        private void btn制袋内包夜班_Click(object sender, EventArgs e)
+        {
+            hs制袋内包夜班负责人.Add(cmb负责人.SelectedItem.ToString());
+            //dtOuter.Rows[0]["制袋内包夜班负责人"] = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
+            outerDataSync("tb制袋内包夜班负责人", String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray()));
+            //tb制袋内包夜班负责人.Text = String.Join(",", hs制袋内包夜班负责人.ToList<String>().ToArray());
+        }
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
@@ -1577,6 +1608,19 @@ namespace mySystem.Process.Bag.BTV
             { }
         }
 
+        private void tb内包物料代码4_support(object sender, EventArgs e)
+        {
+            try
+            {
+                TextBox tb = (sender as TextBox);
+                if (ls物料代码.IndexOf(tb.Text) >= 0)
+                {
+                    tb内包物料名称4.Text = ls物料名称[ls物料代码.IndexOf(tb.Text)];
+                }
+            }
+            catch
+            { }
+        }
         private void tb外包物料代码1_support(object sender, EventArgs e)
         {
             try
