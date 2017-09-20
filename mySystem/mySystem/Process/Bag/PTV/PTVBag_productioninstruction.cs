@@ -30,7 +30,7 @@ namespace mySystem.Process.Bag.PTV
         String _code;
 
         // 显示界面需要的信息
-        List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员;
+        List<String> ls产品名称, ls工艺, ls负责人, ls操作员, ls审核员,ls制袋物料名称;
         HashSet<String> hs产品代码,hs封边,hs物料代码;
         HashSet<String> hs制袋内包白班负责人, hs制袋内包夜班负责人, hs外包白班负责人, hs外包夜班负责人;
 
@@ -42,10 +42,10 @@ namespace mySystem.Process.Bag.PTV
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/PTV.mdb;Persist Security Info=False";
         OleDbConnection conn;
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
-        DataTable dtOuter, dtInner;
-        BindingSource bsOuter, bsInner;
+        OleDbDataAdapter daOuter, daInner,daInner_制袋;
+        OleDbCommandBuilder cbOuter, cbInner,cbInner_制袋;
+        DataTable dtOuter, dtInner,dtInner_制袋;
+        BindingSource bsOuter, bsInner,bsInner_制袋;
 
         CheckForm ckform;
 
@@ -78,10 +78,17 @@ namespace mySystem.Process.Bag.PTV
             readOuterData(id);
             outerBind();
             setKeyInfoFromDataTable(id);
+
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
+
+            readInnerData_制袋(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            getInnerOtherData_制袋();
+            setDataGridViewColumn_制袋();
+            innerBind_制袋();
+
             getPeople();
             setFormState();
             setEnableReadOnly();
@@ -110,10 +117,17 @@ namespace mySystem.Process.Bag.PTV
                 outerBind();
             }
             setKeyInfoFromDataTable(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
             setDataGridViewColumn();
             innerBind();
+
+            readInnerData_制袋(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            getInnerOtherData_制袋();
+            setDataGridViewColumn_制袋();
+            innerBind_制袋();
+
             setFormState();
             setEnableReadOnly();
 
@@ -302,6 +316,49 @@ namespace mySystem.Process.Bag.PTV
             }
         }
 
+        void getInnerOtherData_制袋()
+        {
+//            OleDbDataAdapter da;
+//            DataTable dt;
+//            hs产品代码 = new HashSet<string>();
+//            hs封边 = new HashSet<string>();
+//            //　产品代码
+//            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+//            OleDbConnection Tconn = new OleDbConnection(strConnect);
+//            Tconn.Open();
+//            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%PTV%'", Tconn);
+//            dt = new DataTable("temp");
+//            da.Fill(dt);
+//            foreach (DataRow dr in dt.Rows)
+//            {
+//                hs产品代码.Add(dr["存货代码"].ToString());
+//            }
+
+//            // 封边
+//            da = new OleDbDataAdapter("select * from 设置PTV制袋封边", conn);
+//            dt = new DataTable("temp");
+//            da.Fill(dt);
+//            foreach (DataRow dr in dt.Rows)
+//            {
+//                hs封边.Add(dr["封边名称"].ToString());
+//            }
+
+//            // 自定义数据
+//            foreach (DataRow dr in dtInner.Rows)
+//            {
+//                hs产品代码.Add(dr["产品代码"].ToString());
+//                hs封边.Add(dr["封边"].ToString());
+//            }
+
+            ls制袋物料名称 = new List<string>();
+            ls制袋物料名称.Add("制袋物料名称1");
+            ls制袋物料名称.Add("制袋物料名称2");
+            ls制袋物料名称.Add("制袋物料名称3");
+            ls制袋物料名称.Add("制袋物料名称4");
+            ls制袋物料名称.Add("制袋物料名称5");
+        }
+
         /// <summary>
         /// 根据外表ID读取外表数据
         /// </summary>
@@ -342,18 +399,25 @@ namespace mySystem.Process.Bag.PTV
             dr["生产指令编号"] = _code;
             dr["生产设备"] = "接口焊接机AA-EQU-082、底封焊接机AA-EQU-083、泄漏测试仪AA-EQU-077、超声波焊接机AA-EQU-076";
             dr["计划生产日期"] = DateTime.Now;
-            dr["制袋物料名称1"] = "制袋物料名称1";
-            dr["制袋物料名称2"] = "制袋物料名称2";
-            dr["制袋物料名称3"] = "制袋物料名称3";
+
             dr["内包物料名称1"] = "内包物料名称1";
             dr["内包物料名称2"] = "内包物料名称2";
+            dr["内包物料名称3"] = "内包物料名称3";
+            dr["内包物料名称4"] = "内包物料名称4";
+
             dr["外包物料名称1"] = "外包物料名称1";
             dr["外包物料名称2"] = "外包物料名称2";
             dr["外包物料名称3"] = "外包物料名称3";
-            dr["外包物料批号2"] = "";
-            dr["外包物料名称3"] = "";
-            dr["外包物料代码3"] = "";
-            dr["外包物料批号3"] = "";
+
+            dr["内包物料领料量1"] = 0;
+            dr["内包物料领料量2"] = 0;
+            dr["内包物料领料量3"] = 0;
+            dr["内包物料领料量4"] = 0;
+
+            dr["外包物料领料量1"] = 0;
+            dr["外包物料领料量2"] = 0;
+            dr["外包物料领料量3"] = 0;
+
             dr["记录"] = "制袋工序记录、内包记录、外包记录";
             dr["审核员"] = "";
             dr["操作员"] = mySystem.Parameter.userName;
@@ -417,6 +481,16 @@ namespace mySystem.Process.Bag.PTV
             daInner.Fill(dtInner);
         }
 
+        void readInnerData_制袋(int outerID)
+        {
+            daInner_制袋 = new OleDbDataAdapter("select * from 生产指令制袋详细信息 where T生产指令ID=" + outerID, conn);
+            dtInner_制袋 = new DataTable("生产指令制袋详细信息");
+            cbInner_制袋 = new OleDbCommandBuilder(daInner_制袋);
+            bsInner_制袋 = new BindingSource();
+
+            daInner_制袋.Fill(dtInner_制袋);
+        }
+
 
         /// <summary>
         /// 内表写默认值
@@ -435,6 +509,15 @@ namespace mySystem.Process.Bag.PTV
             return dr;
         }
 
+        DataRow writeInnerDefault_制袋(DataRow dr)
+        {
+            dr["T生产指令ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            dr["制袋物料名称"] = "";
+            dr["制袋物料领料量"] = 0;
+
+            return dr;
+        }
+
         /// <summary>
         /// 内表绑定
         /// </summary>
@@ -448,6 +531,17 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns[1].Visible = false;
 
         }
+        void innerBind_制袋()
+        {
+            bsInner_制袋.DataSource = dtInner_制袋;
+
+            dataGridView2.DataSource = bsInner_制袋.DataSource;
+
+            dataGridView2.Columns[0].Visible = false;
+            dataGridView2.Columns[1].Visible = false;
+
+        }
+
 
         /// <summary>
         /// 设置DataGridView的列
@@ -546,6 +640,51 @@ namespace mySystem.Process.Bag.PTV
                         ckbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         dataGridView1.Columns.Add(ckbc);
                         break;
+                }
+            }
+        }
+
+        void setDataGridViewColumn_制袋()
+        {
+            dataGridView2.Columns.Clear();
+            DataGridViewTextBoxColumn tbc;
+            DataGridViewComboBoxColumn cbc;
+            DataGridViewCheckBoxColumn ckbc;
+
+            // 先把所有的列都加好，基本属性附上
+            foreach (DataColumn dc in dtInner_制袋.Columns)
+            {
+                 //要下拉框的特殊处理
+                if (dc.ColumnName == "制袋物料代码")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    foreach (String s in hs物料代码)
+                    {
+                        cbc.Items.Add(s);
+                    }
+                    dataGridView2.Columns.Add(cbc);
+                    continue;
+                }
+
+                if (dc.ColumnName == "制袋物料名称")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    foreach (String s in ls制袋物料名称)
+                    {
+                        cbc.Items.Add(s);
+                    }
+                    dataGridView2.Columns.Add(cbc);
+                    continue;
                 }
             }
         }
@@ -718,17 +857,14 @@ namespace mySystem.Process.Bag.PTV
             tb内包物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             tb内包物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-            tb制袋物料代码1.AutoCompleteCustomSource = acsc;
-            tb制袋物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            tb制袋物料代码1.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb内包物料代码3.AutoCompleteCustomSource = acsc;
+            tb内包物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-            tb制袋物料代码2.AutoCompleteCustomSource = acsc;
-            tb制袋物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            tb制袋物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            tb内包物料代码4.AutoCompleteCustomSource = acsc;
+            tb内包物料代码4.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码4.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
-            tb制袋物料代码3.AutoCompleteCustomSource = acsc;
-            tb制袋物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            tb制袋物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
             tb外包物料代码1.AutoCompleteCustomSource = acsc;
             tb外包物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
@@ -750,6 +886,8 @@ namespace mySystem.Process.Bag.PTV
         void addComputerEventHandler()
         {
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+
+            dataGridView2.CellEndEdit += dataGridView2_CellEndEdit;
         }
 
 
@@ -779,6 +917,7 @@ namespace mySystem.Process.Bag.PTV
         private bool dataValidate()
         {
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView2.DataError += dataGridView2_DataError;
 
             // TODO 更多条件有待补充
             if (cmb产品名称.Text == "") return false;
@@ -911,7 +1050,13 @@ namespace mySystem.Process.Bag.PTV
             }
         }
 
-
+        void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            //if (3 == e.ColumnIndex)
+            //{
+ 
+            //}
+        }
         
 
        
@@ -922,21 +1067,6 @@ namespace mySystem.Process.Bag.PTV
             //TODO:  *****有待替换
             if (hs物料代码.Count > 0)
             {
-                if (!hs物料代码.Contains(tb制袋物料代码1.Text))
-                {
-                    MessageBox.Show("制袋****物料代码 有误！");
-                    return;
-                }
-                if (!hs物料代码.Contains(tb制袋物料代码2.Text))
-                {
-                    MessageBox.Show("制袋****物料代码 有误！");
-                    return;
-                }
-                if (!hs物料代码.Contains(tb制袋物料代码3.Text))
-                {
-                    MessageBox.Show("制袋****物料代码 有误！");
-                    return;
-                }
                 if (!hs物料代码.Contains(tb内包物料代码1.Text))
                 {
                     MessageBox.Show("内包装****物料代码 有误！");
@@ -947,6 +1077,17 @@ namespace mySystem.Process.Bag.PTV
                     MessageBox.Show("内包装****物料代码 有误！");
                     return;
                 }
+                if (!hs物料代码.Contains(tb内包物料代码3.Text))
+                {
+                    MessageBox.Show("内包装****物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码4.Text))
+                {
+                    MessageBox.Show("内包装****物料代码 有误！");
+                    return;
+                }
+
                 if (!hs物料代码.Contains(tb外包物料代码1.Text))
                 {
                     MessageBox.Show("外包装****物料代码 有误！");
@@ -978,6 +1119,10 @@ namespace mySystem.Process.Bag.PTV
             daInner.Update((DataTable)bsInner.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
+
+            daInner_制袋.Update((DataTable)bsInner_制袋.DataSource);
+            readInnerData_制袋(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind_制袋();
 
             if (_userState == Parameter.UserState.操作员) btn提交审核.Enabled = true;
             
@@ -1156,6 +1301,13 @@ namespace mySystem.Process.Bag.PTV
             MessageBox.Show(name + "填写错误");
         }
 
+        void dataGridView2_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            MessageBox.Show(name + "填写错误");
+        }
+
         //添加打印机
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
@@ -1182,6 +1334,26 @@ namespace mySystem.Process.Bag.PTV
         }
         public void print(bool b)
         { }
+
+        private void btn制袋添加_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dtInner_制袋.NewRow();
+            dr = writeInnerDefault_制袋(dr);
+            dtInner_制袋.Rows.Add(dr);
+        }
+
+        private void btn制袋删除_Click(object sender, EventArgs e)
+        {
+            if (dtInner_制袋.Rows.Count > 0)
+            {
+                int deletenum = dataGridView2.CurrentRow.Index;
+                dtInner_制袋.Rows[deletenum].Delete();
+                // 保存
+                daInner_制袋.Update((DataTable)bsInner_制袋.DataSource);
+                readInnerData_制袋(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                innerBind_制袋();
+            }
+        }
 
     }
 }

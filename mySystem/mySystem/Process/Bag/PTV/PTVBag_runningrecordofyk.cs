@@ -34,7 +34,6 @@ namespace mySystem.Process.Bag.PTV
         Parameter.FormState _formState;
         Int32 InstruID;
         String Instruction;
-        String prodCode;
 
         public PTVBag_runningrecordofyk(MainForm mainform) : base(mainform)
         {
@@ -45,6 +44,7 @@ namespace mySystem.Process.Bag.PTV
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ptvbagInstruID;
             Instruction = Parameter.ptvbagInstruction;
+            tb生产指令编码.Text = Instruction;
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -53,13 +53,8 @@ namespace mySystem.Process.Bag.PTV
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
-            setControlFalse();
-            dtp生产日期.Enabled = true;
-            btn查询新建.Enabled = true;
-            //打印、查看日志按钮不可用
-            btn打印.Enabled = false;
-            btn查看日志.Enabled = false;
-            cb打印机.Enabled = false;
+            DataShow(InstruID);
+
         }
 
         public PTVBag_runningrecordofyk(MainForm mainform, Int32 ID) : base(mainform)
@@ -250,13 +245,12 @@ namespace mySystem.Process.Bag.PTV
             btn提交审核.Enabled = false;
             tb审核员.Enabled = false;
             //部分空间防作弊，不可改
+            tb生产指令编码.ReadOnly = true;
             tb产品批号.ReadOnly = true;
             tb产品代码.ReadOnly = true;
             tb不良品数量.ReadOnly = true;
             tb合格品数量.ReadOnly = true;
             //查询条件始终不可编辑
-            dtp生产日期.Enabled = false;
-            btn查询新建.Enabled = false;
         }
 
         /// <summary>
@@ -303,10 +297,10 @@ namespace mySystem.Process.Bag.PTV
         //******************************显示数据******************************//
 
         //显示根据信息查找
-        private void DataShow(Int32 InstruID, String MoProductCode, DateTime searchTime)
+        private void DataShow(Int32 InstruID)
         {
             //******************************外表 根据条件绑定******************************//  
-            readOuterData(InstruID, MoProductCode, searchTime);
+            readOuterData(InstruID);
             outerBind();
             //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
@@ -322,7 +316,7 @@ namespace mySystem.Process.Bag.PTV
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
                 //外表重新绑定
-                readOuterData(InstruID, MoProductCode, searchTime);
+                readOuterData(InstruID);
                 outerBind();
 
                 //********* 内表新建、保存、重新绑定 *********//
@@ -358,19 +352,18 @@ namespace mySystem.Process.Bag.PTV
             if (dt1.Rows.Count > 0)
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
-                prodCode = dt1.Rows[0]["产品代码"].ToString();
-                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+                DataShow(InstruID);
             }
         }
 
         //****************************** 嵌套 ******************************//
 
         //外表读数据，填datatable
-        private void readOuterData(Int32 InstruID, String prodCode, DateTime searchTime)
+        private void readOuterData(Int32 InstruID)
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + prodCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID, connOle);
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -380,16 +373,12 @@ namespace mySystem.Process.Bag.PTV
         {
             bs记录.DataSource = dt记录;
             //控件绑定（先解除，再绑定）
+            tb生产指令编码.DataBindings.Clear();
+            tb生产指令编码.DataBindings.Add("Text", bs记录.DataSource, "生产指令编码");
             tb产品代码.DataBindings.Clear();
             tb产品代码.DataBindings.Add("Text", bs记录.DataSource, "产品代码");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
-            dtp生产日期.DataBindings.Clear();
-            dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
-            tb圆口代码.DataBindings.Clear();
-            tb圆口代码.DataBindings.Add("Text", bs记录.DataSource, "圆口代码");
-            tb把手代码.DataBindings.Clear();
-            tb把手代码.DataBindings.Add("Text", bs记录.DataSource, "把手代码");
             tb电压.DataBindings.Clear();
             tb电压.DataBindings.Add("Text", bs记录.DataSource, "电压");
             //各种参数设定
@@ -429,9 +418,10 @@ namespace mySystem.Process.Bag.PTV
         private DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = InstruID;
+            dr["生产指令编码"] = tb生产指令编码.Text;
             dr["产品代码"] = tb产品代码.Text;
             dr["产品批号"] = tb产品批号.Text;
-            dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
+
             dr["电压"] = 0;
             dr["焊线1参数1"] = 0;
             dr["焊线1参数2"] = 0;
@@ -574,22 +564,7 @@ namespace mySystem.Process.Bag.PTV
         }
 
         //******************************按钮功能******************************//
-        
-        //用于显示/新建数据
-        private void btn查询新建_Click(object sender, EventArgs e)
-        {
-            if(tb产品代码.Text=="")
-            {
-                MessageBox.Show("生产指令信息不完善");
-                return;
-            }
-            else
-            {
-                prodCode = tb产品代码.Text;
-                DataShow(InstruID, tb产品代码.Text, dtp生产日期.Value);
-            }
-        }
-        
+               
         //添加行按钮
         private void btn添加记录_Click(object sender, EventArgs e)
         {
@@ -649,7 +624,7 @@ namespace mySystem.Process.Bag.PTV
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID, prodCode, dtp生产日期.Value);
+                readOuterData(InstruID);
                 outerBind();
 
                 return true;
@@ -798,10 +773,9 @@ namespace mySystem.Process.Bag.PTV
             //外表信息
             mysheet.Cells[3, 1].Value = "产品代码/规格：" + dt记录.Rows[0]["产品代码"].ToString();
             mysheet.Cells[3, 9].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
-            mysheet.Cells[3, 15].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            mysheet.Cells[3, 15].Value = "生产指令编码：" + dt记录.Rows[0]["生产指令编码"].ToString();
+            //mysheet.Cells[3, 15].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
-            mysheet.Cells[4, 1].Value = "圆口代码：" + dt记录.Rows[0]["圆口代码"].ToString();
-            mysheet.Cells[4, 9].Value = "把手代码：" + dt记录.Rows[0]["把手代码"].ToString();
             mysheet.Cells[4, 15].Value = "电压 voltage:            " + dt记录.Rows[0]["电压"] + "V";
 
             mysheet.Cells[8, 3].Value = dt记录.Rows[0]["焊线1参数1"];

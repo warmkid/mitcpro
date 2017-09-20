@@ -32,10 +32,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.tb产品代码 = new System.Windows.Forms.TextBox();
             this.tb产品批号 = new System.Windows.Forms.TextBox();
-            this.dtp生产日期 = new System.Windows.Forms.DateTimePicker();
             this.label23 = new System.Windows.Forms.Label();
             this.label24 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
@@ -60,7 +58,6 @@
             this.btn打印 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btn查询新建 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.tb焊线3参数5 = new System.Windows.Forms.TextBox();
             this.tb焊线3参数4 = new System.Windows.Forms.TextBox();
@@ -97,7 +94,7 @@
             this.label37 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
             this.label39 = new System.Windows.Forms.Label();
-            this.cmb膜代码 = new System.Windows.Forms.ComboBox();
+            this.tb生产指令编码 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -122,13 +119,13 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 16);
             this.label2.TabIndex = 1;
-            this.label2.Text = "膜或袋体代码:";
+            this.label2.Text = "生产指令编码:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(260, 52);
+            this.label3.Location = new System.Drawing.Point(336, 52);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(80, 16);
             this.label3.TabIndex = 2;
@@ -138,45 +135,27 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(452, 52);
+            this.label4.Location = new System.Drawing.Point(688, 52);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 16);
             this.label4.TabIndex = 3;
             this.label4.Text = "产品批号:";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(646, 52);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 16);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "生产日期:";
-            // 
             // tb产品代码
             // 
             this.tb产品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb产品代码.Location = new System.Drawing.Point(340, 48);
+            this.tb产品代码.Location = new System.Drawing.Point(416, 48);
             this.tb产品代码.Name = "tb产品代码";
-            this.tb产品代码.Size = new System.Drawing.Size(100, 26);
+            this.tb产品代码.Size = new System.Drawing.Size(200, 26);
             this.tb产品代码.TabIndex = 7;
             // 
             // tb产品批号
             // 
             this.tb产品批号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb产品批号.Location = new System.Drawing.Point(529, 48);
+            this.tb产品批号.Location = new System.Drawing.Point(765, 48);
             this.tb产品批号.Name = "tb产品批号";
-            this.tb产品批号.Size = new System.Drawing.Size(100, 26);
+            this.tb产品批号.Size = new System.Drawing.Size(168, 26);
             this.tb产品批号.TabIndex = 8;
-            // 
-            // dtp生产日期
-            // 
-            this.dtp生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp生产日期.Location = new System.Drawing.Point(726, 48);
-            this.dtp生产日期.Name = "dtp生产日期";
-            this.dtp生产日期.Size = new System.Drawing.Size(150, 26);
-            this.dtp生产日期.TabIndex = 9;
             // 
             // label23
             // 
@@ -414,17 +393,6 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1113, 170);
             this.dataGridView1.TabIndex = 237;
-            // 
-            // btn查询新建
-            // 
-            this.btn查询新建.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn查询新建.Location = new System.Drawing.Point(920, 44);
-            this.btn查询新建.Name = "btn查询新建";
-            this.btn查询新建.Size = new System.Drawing.Size(96, 30);
-            this.btn查询新建.TabIndex = 238;
-            this.btn查询新建.Text = "查询/新建";
-            this.btn查询新建.UseVisualStyleBackColor = true;
-            this.btn查询新建.Click += new System.EventHandler(this.btn查询新建_Click);
             // 
             // groupBox4
             // 
@@ -798,25 +766,23 @@
             this.label39.TabIndex = 0;
             this.label39.Text = "焊线1#";
             // 
-            // cmb膜代码
+            // tb生产指令编码
             // 
-            this.cmb膜代码.Font = new System.Drawing.Font("宋体", 12F);
-            this.cmb膜代码.FormattingEnabled = true;
-            this.cmb膜代码.Location = new System.Drawing.Point(124, 48);
-            this.cmb膜代码.Name = "cmb膜代码";
-            this.cmb膜代码.Size = new System.Drawing.Size(130, 24);
-            this.cmb膜代码.TabIndex = 242;
+            this.tb生产指令编码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb生产指令编码.Location = new System.Drawing.Point(124, 48);
+            this.tb生产指令编码.Name = "tb生产指令编码";
+            this.tb生产指令编码.Size = new System.Drawing.Size(196, 26);
+            this.tb生产指令编码.TabIndex = 242;
             // 
             // PTVBag_runningrecordofdf
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1130, 491);
-            this.Controls.Add(this.cmb膜代码);
+            this.ClientSize = new System.Drawing.Size(1130, 503);
+            this.Controls.Add(this.tb生产指令编码);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.btn查询新建);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.label32);
@@ -841,10 +807,8 @@
             this.Controls.Add(this.label24);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.label角色);
-            this.Controls.Add(this.dtp生产日期);
             this.Controls.Add(this.tb产品批号);
             this.Controls.Add(this.tb产品代码);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -869,10 +833,8 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tb产品代码;
         private System.Windows.Forms.TextBox tb产品批号;
-        private System.Windows.Forms.DateTimePicker dtp生产日期;
         private System.Windows.Forms.Label label23;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.Label label25;
@@ -897,7 +859,6 @@
         private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button btn查询新建;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox tb焊线3参数5;
         private System.Windows.Forms.TextBox tb焊线3参数4;
@@ -934,6 +895,6 @@
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label38;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.ComboBox cmb膜代码;
+        private System.Windows.Forms.TextBox tb生产指令编码;
     }
 }

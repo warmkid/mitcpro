@@ -387,7 +387,7 @@ namespace mySystem.Process.Bag.PTV
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = '" + InstruID.ToString() + "' and 产品代码 = '" + ProductCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID + " and 产品代码 = '" + ProductCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -839,7 +839,7 @@ namespace mySystem.Process.Bag.PTV
             //"生产指令-步骤序号- 表序号 /&P"
             //my.PageSetup.RightFooter = Instruction + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
-            my.PageSetup.RightFooter = Instruction + "-"  + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+            my.PageSetup.RightFooter = Instruction + "-"  +find_indexofprint().ToString("D3")+  " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
             if (b)
             {
                 //true->预览
