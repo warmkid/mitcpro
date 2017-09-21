@@ -170,8 +170,8 @@ namespace BatchProductRecord
                 else if (Parameter.FormState.审核通过 == _formState)
                 {
                     setControlFalse();
-                    if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) != 4)
-                        bt更改.Enabled = true;
+                    //if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) != 4)
+                    //    bt更改.Enabled = true;
                 }
                 else setControlFalse();
             }
@@ -179,6 +179,9 @@ namespace BatchProductRecord
             {
                 if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
                 else setControlFalse();
+                 if (Parameter.FormState.审核通过 == _formState)
+                     if (Convert.ToInt32(dt_prodinstr.Rows[0]["状态"]) != 4)
+                         bt更改.Enabled = true;
             }
         }
 

@@ -785,6 +785,29 @@ namespace mySystem.Process.Order
             dataGridView4.RowHeadersVisible = false;
             dataGridView4.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView4_DataBindingComplete);
             dataGridView4.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView4_EditingControlShowing);
+
+            foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
+            {
+                if (dgvc.Name != "是否批准")
+                    dgvc.ReadOnly = true;
+            }
+            foreach (DataGridViewColumn dgvc in dataGridView2.Columns)
+            {
+                if (dgvc.Name != "冻结状态")
+                    dgvc.ReadOnly = true;
+            }
+            foreach (DataGridViewColumn dgvc in dataGridView3.Columns)
+            {
+                if (dgvc.Name != "实际购入")
+                    dgvc.ReadOnly = true;
+            }
+            foreach (DataGridViewColumn dgvc in dataGridView4.Columns)
+            {
+                dgvc.ReadOnly = true;
+            }
+
+            dataGridView3.Columns["换算率"].Visible = false;
+
         }
 
         void dataGridView4_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
