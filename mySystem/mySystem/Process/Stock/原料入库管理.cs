@@ -17,7 +17,7 @@ namespace mySystem.Process.Stock
 //        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
-        DataTable dt物资验收记录, dt物资请验单, dt检验记录, dt不合格品处理记录, dt取样记录;
+        DataTable dt物资验收记录, dt物资请验单, dt检验记录, dt不合格品处理记录, dt取样记录,dt到货单,dt入库单;
 
         public 原料入库管理(MainForm mainform):base(mainform)
         {
@@ -27,8 +27,12 @@ namespace mySystem.Process.Stock
 
 
             // TODO 默认不读全部记录，一周内的
+            read到货单Data();
+            到货单Bind();
             read物资验收记录Data();
             物资验收记录Bind();
+            read入库单Data();
+            入库单Bind();
             read物资请验单Data();
             物资请验单Bind();
             read检验记录Data();
@@ -74,6 +78,22 @@ namespace mySystem.Process.Stock
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
+        void read入库单Data()
+        {
+
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 入库单 where 入库日期 between #" +
+                DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "# ", mySystem.Parameter.connOle);
+            dt入库单 = new DataTable("入库单");
+            da.Fill(dt入库单);
+        }
+
+        void 入库单Bind()
+        {
+            dgv入库单.DataSource = dt入库单;
+
+            Utility.setDataGridViewAutoSizeMode(dgv入库单);
+        }
+
         void addOtherEventHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
@@ -81,12 +101,16 @@ namespace mySystem.Process.Stock
             dataGridView3.AllowUserToAddRows = false;
             dataGridView4.AllowUserToAddRows = false;
             dataGridView5.AllowUserToAddRows = false;
+            dgv到货单.AllowUserToAddRows = false;
+            dgv入库单.AllowUserToAddRows = false;
             // TODO  加一个绑定完成事件，把需要审核的行标记
             dataGridView1.CellDoubleClick += new DataGridViewCellEventHandler(dataGridView1_CellDoubleClick);
             dataGridView2.CellDoubleClick += dataGridView2_CellDoubleClick;
             dataGridView3.CellDoubleClick += dataGridView3_CellDoubleClick;
             dataGridView4.CellDoubleClick += dataGridView4_CellDoubleClick;
             dataGridView5.CellDoubleClick += new DataGridViewCellEventHandler(dataGridView5_CellDoubleClick);
+            dgv到货单.CellDoubleClick += new DataGridViewCellEventHandler(dgv到货单_CellDoubleClick);
+            dgv入库单.CellDoubleClick += new DataGridViewCellEventHandler(dgv入库单_CellDoubleClick);
 
             // 隐藏ID等列
             dataGridView1.Columns["ID"].Visible = false;
@@ -103,6 +127,32 @@ namespace mySystem.Process.Stock
 
             dataGridView5.Columns["ID"].Visible = false;
             dataGridView5.Columns["物资验收记录ID"].Visible = false;
+
+            dgv到货单.Columns["ID"].Visible = false;
+
+            dgv入库单.Columns["ID"].Visible = false;
+            dgv入库单.Columns["关联的验收记录ID"].Visible = false;
+        }
+
+        void dgv入库单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dgv入库单.Rows[e.RowIndex].Cells[0].Value);
+                入库单 form = new 入库单(mainform, id);
+                form.Show();
+            }
+        }
+
+
+        void dgv到货单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                int id = Convert.ToInt32(dgv到货单.Rows[e.RowIndex].Cells[0].Value);
+                到货单 form = new 到货单(mainform,id);
+                form.Show();
+            }
         }
 
         void dataGridView5_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -110,7 +160,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 int id = Convert.ToInt32(dataGridView5.Rows[e.RowIndex].Cells[0].Value);
-                取样记录 form = new 取样记录(id);
+                取样记录 form = new 取样记录(mainform, id);
                 form.Show();
             }
         }
@@ -140,7 +190,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 int id = Convert.ToInt32(dataGridView3.Rows[e.RowIndex].Cells[0].Value);
-                复验记录 form = new 复验记录(id);
+                复验记录 form = new 复验记录(mainform, id);
                 form.Show();
             }
         }
@@ -151,7 +201,7 @@ namespace mySystem.Process.Stock
             {
                 //双击 显示请验单
                 int id = Convert.ToInt32(dataGridView2.Rows[e.RowIndex].Cells[0].Value);
-                物资请验单 form = new 物资请验单(id);
+                物资请验单 form = new 物资请验单(mainform, id);
                 form.Show();
             }
         }
@@ -187,9 +237,9 @@ namespace mySystem.Process.Stock
 
         void read检验记录Data()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录 where  检验日期 between #"
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 复验记录 where  检验日期 between #"
             + DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "#", mySystem.Parameter.connOle);
-            dt检验记录 = new DataTable("检验记录");
+            dt检验记录 = new DataTable("复验记录");
             da.Fill(dt检验记录);
         }
 
@@ -259,7 +309,22 @@ namespace mySystem.Process.Stock
             String sql;
             switch (tabControl1.SelectedIndex)
             {
-                case 0: // 验收记录
+                case 0:// 到货单
+                     if (shr != "")
+                    {
+                        sql = @"select * from 到货单 where 审核员 like '%{0}%' and 日期 between #{1}# and #{2}#";
+                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.connOle);
+                    }
+                    else
+                    {
+                        sql = @"select * from 到货单 where 审核员 is null and 日期 between #{0}# and #{1}#";
+                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.connOle);
+                    }
+                    dt到货单 = new DataTable("到货单");
+                    da.Fill(dt到货单);
+                    到货单Bind();
+                    break;
+                case 1: // 验收记录
                     if (shr != "")
                     {
                         sql = @"select * from 物资验收记录 where 审核员 like '%{0}%' and 接收时间 between #{1}# and #{2}#";
@@ -274,7 +339,22 @@ namespace mySystem.Process.Stock
                     da.Fill(dt物资验收记录);
                     物资验收记录Bind();
                     break;
-                case 1: // 请验记录
+                case 2: //入库单
+                    if (shr != "")
+                    {
+                        sql = @"select * from 入库单 where 审核员 like '%{0}%' and 入库日期 between #{1}# and #{2}#";
+                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.connOle);
+                    }
+                    else
+                    {
+                        sql = @"select * from 入库单 where 审核员 is null and 入库日期 between #{0}# and #{1}#";
+                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.connOle);
+                    }
+                    dt入库单 = new DataTable("入库单");
+                    da.Fill(dt入库单);
+                    入库单Bind();
+                    break;
+                case 3: // 请验记录
                     if (shr != "")
                     {
                         sql = @"select * from 物资请验单 where 审核员 like '%{0}%' and 请验时间 between #{1}# and #{2}#";
@@ -289,7 +369,7 @@ namespace mySystem.Process.Stock
                     da.Fill(dt物资请验单);
                     物资请验单Bind();
                     break;
-                case 2: // 检验记录
+                case 4: // 检验记录
                     if (shr != "")
                     {
                         sql = @"select * from 检验记录 where 审核员 like '%{0}%' and 检验日期 between #{1}# and #{2}#";
@@ -304,10 +384,10 @@ namespace mySystem.Process.Stock
                     da.Fill(dt检验记录);
                     检验记录Bind();
                     break;
-                case 3: // 不合格品记录
+                case 5: // 不合格品记录
                     MessageBox.Show("该表格数据项太多，不知道以哪几个为依据查询");
                     break;
-                case 4: // 取样记录
+                case 6: // 取样记录
                     if (shr != "")
                     {
                         sql = @"select * from 取样记录 where 审核员 like '%{0}%'";
@@ -324,6 +404,39 @@ namespace mySystem.Process.Stock
                     break;
             }
         }
+
+        private void btn到货单增加记录_Click(object sender, EventArgs e)
+        {
+            到货单 form = new 到货单(mainform);
+            form.Show();
+        }
+
+        private void btn到货单读取_Click(object sender, EventArgs e)
+        {
+            read到货单Data();
+            到货单Bind();
+        }
+
+        void read到货单Data()
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 到货单 where 审核员='__待审核'", mySystem.Parameter.connOle);
+            dt到货单 = new DataTable("到货单");
+            da.Fill(dt到货单);
+        }
+
+        void 到货单Bind()
+        {
+            dgv到货单.DataSource = dt到货单;
+
+            Utility.setDataGridViewAutoSizeMode(dgv到货单);
+        }
+
+        private void btn读取入库单_Click(object sender, EventArgs e)
+        {
+            read入库单Data();
+            入库单Bind();
+        }
+
 
     }
 }

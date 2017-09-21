@@ -30,7 +30,7 @@ namespace mySystem.Process.Stock
 
         CheckForm ckform;
 
-        public 取样记录(int id)
+        public 取样记录(MainForm mainform, int id):base(mainform)
         {
             _id = id;
             InitializeComponent();
@@ -474,7 +474,7 @@ namespace mySystem.Process.Stock
                         da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
-                        物资请验单 form2 = new 物资请验单(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        物资请验单 form2 = new 物资请验单(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form2.Show();
                         break;
                     case "检验记录":
@@ -484,14 +484,14 @@ namespace mySystem.Process.Stock
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
                         foreach (DataRow dr in dt.Rows)
                         {
-                            (new 复验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
+                            (new 复验记录(mainform, Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
                         }
                         break;
                     case "取样记录":
                         da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
-                        取样记录 form4 = new 取样记录(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        取样记录 form4 = new 取样记录(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form4.Show();
                         break;
                 }

@@ -18,7 +18,7 @@ namespace mySystem.Process.Stock
         bool isSaved = false;
         List<String> ls操作员;
         List<String> ls审核员;
-        List<String> ls供应商代码,ls供应商名称;
+        List<String> ls供应商代码,ls供应商名称,ls采购订单合同号;
         Hashtable ht代码2名称单位换算率;
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
@@ -183,6 +183,7 @@ namespace mySystem.Process.Stock
             // TODO
             ls供应商代码 = new List<string>();
             ls供应商名称 = new List<string>();
+            ls采购订单合同号 = new List<string>();
             //ls供应商代码.Add("厂家1");
 
             OleDbDataAdapter da;
@@ -195,6 +196,18 @@ namespace mySystem.Process.Stock
                 ls供应商代码.Add(dr["供应商代码"].ToString());
                 ls供应商名称.Add(dr["供应商名称"].ToString());
             }
+
+            da = new OleDbDataAdapter("select * from 采购订单 where 状态='审核完成'",mySystem.Parameter.connOle);
+            dt = new DataTable();
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                ls采购订单合同号.Add(dr["采购合同号"].ToString());
+            }
+
+            AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+            acsc.AddRange(ls采购订单合同号.ToArray());
+            
         }
 
         void readOuterData(int id = -1)
@@ -231,7 +244,7 @@ namespace mySystem.Process.Stock
             return dr;
         }
 
-        String create验收记录编号()
+        public static String create验收记录编号()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select top 1 验收记录编号 from 物资验收记录 order by ID DESC", mySystem.Parameter.connOle);
             DataTable dt = new DataTable("物资验收记录");
@@ -290,9 +303,9 @@ namespace mySystem.Process.Stock
             // ----
 
 
-            cmb供应商名称.DataSource = ls供应商名称;
-            cmb供应商名称.AutoCompleteSource = AutoCompleteSource.ListItems;
-            cmb供应商名称.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            cmb供应商名称.Items.AddRange(ls供应商名称.ToArray());
+            //cmb供应商名称.AutoCompleteSource = AutoCompleteSource.ListItems;
+            //cmb供应商名称.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
 
             //cmb供应商名称.Items.Clear();
 
@@ -303,7 +316,7 @@ namespace mySystem.Process.Stock
             //}
 
             cmb供应商名称.DataBindings.Add("SelectedItem", bsOuter.DataSource, "供应商名称");
-            
+
             dtp接收时间.DataBindings.Add("Value", bsOuter.DataSource, "接收时间");
             tb验收人.DataBindings.Add("Text", bsOuter.DataSource, "验收人");
 
@@ -329,6 +342,8 @@ namespace mySystem.Process.Stock
             dtp审核时间.DataBindings.Add("Value", bsOuter.DataSource, "审核时间");
 
             lbl验收记录编号.DataBindings.Add("Text", bsOuter.DataSource, "验收记录编号");
+
+           
             
         }
 
@@ -346,7 +361,12 @@ namespace mySystem.Process.Stock
         {
             dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
             dr["数量"] = 0;
-            dr["是否需要检验"] = "否";
+            dr["外包装验收情况"] = "合格";
+            dr["厂家COA"] = "齐全";
+            dr["厂家样品"] = "有";
+            dr["拒收原因"] = "无";
+            dr["拒收数量"] = 0;
+            dr["换算率"] = 0;
             return dr;
         }
 
@@ -469,6 +489,14 @@ namespace mySystem.Process.Stock
                         dataGridView1["换算率", e.RowIndex].Value = 0;
                     }
                     break;
+                case "数量(辅计量)":
+                    curDou = Convert.ToDouble(dataGridView1[e.ColumnIndex, e.RowIndex].Value);
+                    dataGridView1["数量(主计量)", e.RowIndex].Value = Math.Round(curDou * Convert.ToDouble(dataGridView1["换算率", e.RowIndex].Value), 2);
+                    break;
+                case "数量(主计量)":
+                    curDou = Convert.ToDouble(dataGridView1[e.ColumnIndex, e.RowIndex].Value);
+                    dataGridView1["数量(辅计量)", e.RowIndex].Value = Math.Round(curDou / Convert.ToDouble(dataGridView1["换算率", e.RowIndex].Value), 2);
+                    break;
             }
         }
 
@@ -519,7 +547,10 @@ namespace mySystem.Process.Stock
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["物资验收记录ID"].Visible = false;
+            dataGridView1.Columns["换算率"].Visible = false;
             dataGridView1.Columns["物料名称"].ReadOnly = true;
+            dataGridView1.Columns["物料代码"].ReadOnly = true;
+            dataGridView1.Columns["单位"].ReadOnly = true;
         }
 
         void tsi_Click(object sender, EventArgs e)
@@ -551,7 +582,7 @@ namespace mySystem.Process.Stock
                         da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
-                        物资请验单 form2 = new 物资请验单(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        物资请验单 form2 = new 物资请验单(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form2.Show();
                         break;
                     case "检验记录":
@@ -561,14 +592,14 @@ namespace mySystem.Process.Stock
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
                         foreach (DataRow dr in dt.Rows)
                         {
-                            (new 复验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
+                            (new 复验记录(mainform, Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
                         }
                         break;
                     case "取样记录":
                         da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
-                        取样记录 form4 = new 取样记录(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        取样记录 form4 = new 取样记录(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form4.Show();
                         break;
                 }
@@ -940,13 +971,18 @@ namespace mySystem.Process.Stock
                 //}
                 foreach (DataRow tdr in dtInner.Rows)
                 {
-                    if (tdr["外观检查结果"].ToString() == "符合")
+                    if (tdr["外包装验收情况"].ToString() == "合格")
                     {
                         // 生成入库单
+                        生成入库单(tdr);
                     }
-                    else if (tdr["外观检查结果"].ToString() == "不符合")
+                    else if (tdr["外包装验收情况"].ToString() == "不合格")
                     {
+                        // 合格部分生成入库单
+                        生成入库单(tdr);
+
                         // 生成复验记录
+                        生成复验记录(tdr);
                     }
                 }
           
@@ -968,6 +1004,66 @@ namespace mySystem.Process.Stock
             base.CheckResult();
         }
 
+        void 生成复验记录(DataRow dr)
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            OleDbCommandBuilder cb;
+            da = new OleDbDataAdapter("select * from 复验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dr["物料名称"] + "'", mySystem.Parameter.connOle);
+            dt = new DataTable("复验记录");
+            cb = new OleDbCommandBuilder(da);
+            BindingSource bs = new BindingSource();
+            da.Fill(dt);
+            DataRow ndr = dt.NewRow();
+            ndr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
+            ndr["物料名称"] = dr["物料名称"];
+            ndr["产品批号"] = dr["本厂批号"];
+            ndr["数量"] = dr["拒收数量"];
+            ndr["检验日期"] = DateTime.Now;
+            ndr["审核日期"] = DateTime.Now;
+            ndr["物料代码"] = dr["物料代码"];
+            ndr["检验结论"] = "合格";
+            ndr["采购订单号"] = dr["采购订单号"];
+            ndr["供应商名称"] = dtOuter.Rows[0]["供应商名称"];
+            ndr["规格型号"] = dr["规格型号"];
+            ndr["单位"] = dr["单位"];
+            ndr["换算率"] = dr["换算率"];
+            dt.Rows.Add(ndr);
+            da.Update(dt);
+            MessageBox.Show("已为物料：" + dr["物料名称"] + "生成复验记录");
+        }
+
+        void 生成入库单(DataRow dr)
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            OleDbCommandBuilder cb;
+            string haoma = 入库单.create入库单号();
+            da = new OleDbDataAdapter("select * from 入库单 where 入库单号='" + haoma + "'", mySystem.Parameter.connOle);
+            dt = new DataTable("入库单");
+            cb = new OleDbCommandBuilder(da);
+            BindingSource bs = new BindingSource();
+            da.Fill(dt);
+            DataRow ndr = dt.NewRow();
+            ndr["关联的验收记录ID"] = dtOuter.Rows[0]["ID"];
+            ndr["入库单号"] = haoma;
+            ndr["入库日期"] = DateTime.Now;
+            ndr["采购订单号"] = dr["采购订单号"];
+            ndr["供应商"] = dtOuter.Rows[0]["供应商名称"];
+            ndr["产品代码"] = dr["物料代码"];
+            ndr["产品名称"] = dr["物料名称"];
+            ndr["规格型号"] = dr["规格型号"];
+            ndr["批号"] = dr["本厂批号"];
+            ndr["主计量单位"] = dr["单位"];
+            ndr["数量"] = Convert.ToDouble(dr["数量(主计量)"]) - Convert.ToDouble(dr["拒收数量"]);
+            ndr["换算率"] = dr["换算率"];
+            ndr["入库人"] = mySystem.Parameter.userName;
+            ndr["审核日期"] = DateTime.Now;
+            dt.Rows.Add(ndr);
+            da.Update(dt);
+            MessageBox.Show("已为物料：" + dr["物料名称"] + "生成入库单");
+        }
+
         void setDataGridViewColumn()
         {
             dataGridView1.Columns.Clear();
@@ -980,7 +1076,7 @@ namespace mySystem.Process.Stock
             {
                 // 要下拉框的特殊处理
 
-                if (dc.ColumnName == "是否需要检验")
+                if (dc.ColumnName == "厂家COA")
                 {
                     cbc = new DataGridViewComboBoxColumn();
                     cbc.HeaderText = dc.ColumnName;
@@ -988,8 +1084,35 @@ namespace mySystem.Process.Stock
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    cbc.Items.Add("符合");
-                    cbc.Items.Add("不符合");
+                    cbc.Items.Add("齐全");
+                    cbc.Items.Add("不齐全");
+                    cbc.Items.Add("无");
+                    dataGridView1.Columns.Add(cbc);
+                    continue;
+                }
+                if (dc.ColumnName == "厂家样品")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    cbc.Items.Add("有");
+                    cbc.Items.Add("无");
+                    dataGridView1.Columns.Add(cbc);
+                    continue;
+                }
+                if (dc.ColumnName == "外包装验收情况")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    cbc.Items.Add("合格");
+                    cbc.Items.Add("不合格");
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
@@ -1175,6 +1298,7 @@ namespace mySystem.Process.Stock
                         MessageBox.Show(dr["存货代码"].ToString() + " 的换算率读取失败，默认设为0");
                         lo.Add(0);
                     }
+                    lo.Add(dr["规格型号"].ToString());
                     ht代码2名称单位换算率[daima] = lo;
                 }
 
@@ -1202,6 +1326,7 @@ namespace mySystem.Process.Stock
                 }
             }
         }
+
 
     }
 }

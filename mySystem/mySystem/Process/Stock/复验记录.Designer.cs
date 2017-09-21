@@ -67,16 +67,16 @@
             // tb检查项目
             // 
             this.tb检查项目.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb检查项目.Location = new System.Drawing.Point(23, 218);
+            this.tb检查项目.Location = new System.Drawing.Point(23, 241);
             this.tb检查项目.Multiline = true;
             this.tb检查项目.Name = "tb检查项目";
-            this.tb检查项目.Size = new System.Drawing.Size(976, 333);
+            this.tb检查项目.Size = new System.Drawing.Size(976, 310);
             this.tb检查项目.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 203);
+            this.label1.Location = new System.Drawing.Point(24, 214);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 1;
@@ -97,7 +97,7 @@
             // 
             this.Title.AutoSize = true;
             this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
-            this.Title.Location = new System.Drawing.Point(238, 23);
+            this.Title.Location = new System.Drawing.Point(351, 23);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(89, 19);
             this.Title.TabIndex = 36;
@@ -310,7 +310,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
-            this.label角色.Location = new System.Drawing.Point(367, 23);
+            this.label角色.Location = new System.Drawing.Point(859, 23);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(49, 19);
             this.label角色.TabIndex = 58;
@@ -350,7 +350,7 @@
             this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.取样记录ToolStripMenuItem.Text = "取样记录";
             // 
-            // 检验记录
+            // 复验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -382,7 +382,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tb检查项目);
-            this.Name = "检验记录";
+            this.Name = "复验记录";
             this.Text = "检验记录";
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);

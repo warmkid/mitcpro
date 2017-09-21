@@ -43,7 +43,7 @@ namespace mySystem.Process.Stock
 
         CheckForm ckform;
 
-        public 复验记录(int id)
+        public 复验记录(MainForm mainform, int id):base(mainform)
         {
             InitializeComponent();
             _id = id;
@@ -73,7 +73,7 @@ namespace mySystem.Process.Stock
             ls操作员 = new List<string>();
             OleDbDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "检验记录" + "'", mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "复验记录" + "'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -131,9 +131,9 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 检验记录 where ID=" + id, mySystem.Parameter.connOle);
+            daOuter = new OleDbDataAdapter("select * from 复验记录 where ID=" + id, mySystem.Parameter.connOle);
             cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable("检验记录");
+            dtOuter = new DataTable("复验记录");
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -271,7 +271,7 @@ namespace mySystem.Process.Stock
                         da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
-                        物资请验单 form2 = new 物资请验单(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        物资请验单 form2 = new 物资请验单(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form2.Show();
                         break;
                     case "检验记录":
@@ -281,14 +281,14 @@ namespace mySystem.Process.Stock
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
                         foreach (DataRow dr in dt.Rows)
                         {
-                           (new 复验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
+                            (new 复验记录(mainform, Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
                         }
                         break;
                     case "取样记录":
                         da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
-                        取样记录 form4 = new 取样记录(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        取样记录 form4 = new 取样记录(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form4.Show();
                         break;
                 }
@@ -359,13 +359,13 @@ namespace mySystem.Process.Stock
 
 
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='检验记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='复验记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
             DataRow odr = dt.NewRow();
-            odr["表名"] = "检验记录";
+            odr["表名"] = "复验记录";
             odr["对应ID"] = dtOuter.Rows[0]["ID"];
             dt.Rows.Add(odr);
             da.Update(dt);
@@ -385,69 +385,69 @@ namespace mySystem.Process.Stock
 
             
             // 判断检验结论，如果合格，则：
-            if (cmb检验结论.SelectedItem.ToString() == "合格")
-            {
-                // 修改验收记录，判断可以生产请验单
-                // 根据dtOuter中的物资验收记录 ID 和 产品名称找到  物资验收记录详细信息  中的那一行数据
-                String sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0} and 物料名称='{1}'";
-                da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]), dtOuter.Rows[0]["物料名称"].ToString()), mySystem.Parameter.connOle);
-                 dt = new DataTable("temp");
-                 cb = new OleDbCommandBuilder(da);
-                da.Fill(dt);
-                // 修改  是  为  否
-                dt.Rows[0]["是否需要检验"] = "否";
-                da.Update(dt);
-                // 读取该 物资验收记录 ID 下的所有详细信息，看是否都为否了
-                sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0}";
-                da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"])), mySystem.Parameter.connOle);
-                dt = new DataTable("temp");
-                da.Fill(dt);
-                foreach (DataRow dr in dt.Rows)
-                {
-                    if (dr["是否需要检验"].ToString() == "是") { return; }
-                }
-                // 如果都为否了，则自动生成请验单
-                MessageBox.Show("当期验收单下的所有产品都通过检查，正在为您自动生产物资请验单");
-                物资验收记录 form = new 物资验收记录(mainform,Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
-                form.create请验单();
-                form.create取样记录();
-                form.insert检验台账();
-                form.insert库存台帐();
-            }
-            // 否则 生成不合格品处理记录
-            else
-            {
-                // TODO 不合格品记录如何点击？？
-                da = new OleDbDataAdapter("select * from 不合格品处理记录 where 物资验收记录ID=" + dtOuter.Rows[0]["物资验收记录ID"] + " and 物料名称='" + dtOuter.Rows[0]["物料名称"] + "'", mySystem.Parameter.connOle);
-                 dt = new DataTable("不合格品处理记录");
-                 cb = new OleDbCommandBuilder(da);
-                BindingSource bs = new BindingSource();
-                da.Fill(dt);
-                if (dt.Rows.Count == 0)
-                {
-                    DataRow dr = dt.NewRow();
-                    dr["物资验收记录ID"] = dtOuter.Rows[0]["物资验收记录ID"];
-                    dr["物料名称"] = dtOuter.Rows[0]["物料名称"];
-                    dr["物料代码"] = dtOuter.Rows[0]["物料代码"];
-                    dr["编号"] = create检验记录编号();
-                    dr["产品批号"] = dtOuter.Rows[0]["产品批号"];
-                    dr["数量"] = dtOuter.Rows[0]["数量"];
-                    dr["生产日期"] = DateTime.Now;
-                    dr["不合格项描述填写日期"] = DateTime.Now;
-                    dr["现场应急处理措施日期"] = DateTime.Now;
-                    dr["调查日期"] = DateTime.Now;
-                    dr["不合格品处理评审时间"] = DateTime.Now;
-                    dr["不合格品处理批准时间"] = DateTime.Now;
-                    dr["确认日期"] = DateTime.Now;
-                    dr["审核日期"] = DateTime.Now;
-                    dt.Rows.Add(dr);
-                    da.Update(dt);
-                    MessageBox.Show("已经自动生成不合格品记录");
-                }
+            //if (cmb检验结论.SelectedItem.ToString() == "合格")
+            //{
+            //    // 修改验收记录，判断可以生产请验单
+            //    // 根据dtOuter中的物资验收记录 ID 和 产品名称找到  物资验收记录详细信息  中的那一行数据
+            //    String sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0} and 物料名称='{1}'";
+            //    da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]), dtOuter.Rows[0]["物料名称"].ToString()), mySystem.Parameter.connOle);
+            //    dt = new DataTable("temp");
+            //    cb = new OleDbCommandBuilder(da);
+            //    da.Fill(dt);
+            //    // 修改  是  为  否
+            //    dt.Rows[0]["是否需要检验"] = "否";
+            //    da.Update(dt);
+            //    // 读取该 物资验收记录 ID 下的所有详细信息，看是否都为否了
+            //    sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0}";
+            //    da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"])), mySystem.Parameter.connOle);
+            //    dt = new DataTable("temp");
+            //    da.Fill(dt);
+            //    foreach (DataRow dr in dt.Rows)
+            //    {
+            //        if (dr["是否需要检验"].ToString() == "是") { return; }
+            //    }
+            //    // 如果都为否了，则自动生成请验单
+            //    MessageBox.Show("当期验收单下的所有产品都通过检查，正在为您自动生产物资请验单");
+            //    物资验收记录 form = new 物资验收记录(mainform, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
+            //    form.create请验单();
+            //    form.create取样记录();
+            //    form.insert检验台账();
+            //    form.insert库存台帐();
+            //}
+            //// 否则 生成不合格品处理记录
+            //else
+            //{
+            //    // TODO 不合格品记录如何点击？？
+            //    da = new OleDbDataAdapter("select * from 不合格品处理记录 where 物资验收记录ID=" + dtOuter.Rows[0]["物资验收记录ID"] + " and 物料名称='" + dtOuter.Rows[0]["物料名称"] + "'", mySystem.Parameter.connOle);
+            //    dt = new DataTable("不合格品处理记录");
+            //    cb = new OleDbCommandBuilder(da);
+            //    BindingSource bs = new BindingSource();
+            //    da.Fill(dt);
+            //    if (dt.Rows.Count == 0)
+            //    {
+            //        DataRow dr = dt.NewRow();
+            //        dr["物资验收记录ID"] = dtOuter.Rows[0]["物资验收记录ID"];
+            //        dr["物料名称"] = dtOuter.Rows[0]["物料名称"];
+            //        dr["物料代码"] = dtOuter.Rows[0]["物料代码"];
+            //        dr["编号"] = create检验记录编号();
+            //        dr["产品批号"] = dtOuter.Rows[0]["产品批号"];
+            //        dr["数量"] = dtOuter.Rows[0]["数量"];
+            //        dr["生产日期"] = DateTime.Now;
+            //        dr["不合格项描述填写日期"] = DateTime.Now;
+            //        dr["现场应急处理措施日期"] = DateTime.Now;
+            //        dr["调查日期"] = DateTime.Now;
+            //        dr["不合格品处理评审时间"] = DateTime.Now;
+            //        dr["不合格品处理批准时间"] = DateTime.Now;
+            //        dr["确认日期"] = DateTime.Now;
+            //        dr["审核日期"] = DateTime.Now;
+            //        dt.Rows.Add(dr);
+            //        da.Update(dt);
+            //        MessageBox.Show("已经自动生成不合格品记录");
+            //    }
                 
                
                 
-            }
+            //}
             
         }
 
@@ -499,32 +499,38 @@ namespace mySystem.Process.Stock
                 // 判断检验结论，如果合格，则：
                 if (cmb检验结论.SelectedItem.ToString() == "合格")
                 {
-                    // 修改验收记录，判断可以生产请验单
-                    // 根据dtOuter中的物资验收记录 ID 和 产品名称找到  物资验收记录详细信息  中的那一行数据
-                    String sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0} and 物料名称='{1}'";
-                    da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]), dtOuter.Rows[0]["物料名称"].ToString()), mySystem.Parameter.connOle);
-                    dt = new DataTable("temp");
-                    cb = new OleDbCommandBuilder(da);
-                    da.Fill(dt);
-                    // 修改  是  为  否
-                    dt.Rows[0]["是否需要检验"] = "否";
-                    da.Update(dt);
-                    // 读取该 物资验收记录 ID 下的所有详细信息，看是否都为否了
-                    sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0}";
-                    da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"])), mySystem.Parameter.connOle);
-                    dt = new DataTable("temp");
-                    da.Fill(dt);
-                    foreach (DataRow dr in dt.Rows)
-                    {
-                        if (dr["是否需要检验"].ToString() == "是") { return; }
-                    }
-                    // 如果都为否了，则自动生成请验单
-                    MessageBox.Show("当期验收单下的所有产品都通过检查，正在为您自动生产物资请验单");
-                    物资验收记录 form = new 物资验收记录(mainform, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
-                    form.create请验单();
-                    form.create取样记录();
-                    form.insert检验台账();
-                    form.insert库存台帐();
+                    //// 修改验收记录，判断可以生产请验单
+                    //// 根据dtOuter中的物资验收记录 ID 和 产品名称找到  物资验收记录详细信息  中的那一行数据
+                    //String sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0} and 物料名称='{1}'";
+                    //da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]), dtOuter.Rows[0]["物料名称"].ToString()), mySystem.Parameter.connOle);
+                    //dt = new DataTable("temp");
+                    //cb = new OleDbCommandBuilder(da);
+                    //da.Fill(dt);
+                    //// 修改  是  为  否
+                    //dt.Rows[0]["是否需要检验"] = "否";
+                    //da.Update(dt);
+                    //// 读取该 物资验收记录 ID 下的所有详细信息，看是否都为否了
+                    //sql = "select * from 物资验收记录详细信息 where 物资验收记录ID={0}";
+                    //da = new OleDbDataAdapter(String.Format(sql, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"])), mySystem.Parameter.connOle);
+                    //dt = new DataTable("temp");
+                    //da.Fill(dt);
+                    //foreach (DataRow dr in dt.Rows)
+                    //{
+                    //    if (dr["是否需要检验"].ToString() == "是") { return; }
+                    //}
+                    //// 如果都为否了，则自动生成请验单
+                    //MessageBox.Show("当期验收单下的所有产品都通过检查，正在为您自动生产物资请验单");
+                    //物资验收记录 form = new 物资验收记录(mainform, Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]));
+                    //form.create请验单();
+                    //form.create取样记录();
+                    //form.insert检验台账();
+                    //form.insert库存台帐();
+
+
+
+
+                    // 生成入库单
+                    create入库单();
                 }
                 // 否则 生成不合格品处理记录
                 else
@@ -571,7 +577,7 @@ namespace mySystem.Process.Stock
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='检验记录' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='复验记录' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
@@ -584,6 +590,39 @@ namespace mySystem.Process.Stock
             readOuterData(_id);
             outerBind();
             base.CheckResult();
+        }
+
+
+        void create入库单()
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            OleDbCommandBuilder cb;
+            string haoma = 入库单.create入库单号();
+            da = new OleDbDataAdapter("select * from 入库单 where 入库单号='" + haoma + "'", mySystem.Parameter.connOle);
+            dt = new DataTable("入库单");
+            cb = new OleDbCommandBuilder(da);
+            BindingSource bs = new BindingSource();
+            da.Fill(dt);
+            DataRow ndr = dt.NewRow();
+            DataRow dr = dtOuter.Rows[0];
+            ndr["关联的验收记录ID"] = dr["物资验收记录ID"];
+            ndr["入库单号"] = haoma;
+            ndr["入库日期"] = DateTime.Now;
+            ndr["采购订单号"] = dr["采购订单号"];//
+            ndr["供应商"] = dr["供应商名称"];
+            ndr["产品代码"] = dr["物料代码"];
+            ndr["产品名称"] = dr["物料名称"];
+            ndr["规格型号"] = dr["规格型号"];
+            ndr["批号"] = dr["产品批号"];
+            ndr["主计量单位"] = dr["单位"];
+            ndr["数量"] = dr["数量"];
+            ndr["换算率"] = dr["换算率"];
+            ndr["入库人"] = mySystem.Parameter.userName;
+            ndr["审核日期"] = DateTime.Now;
+            dt.Rows.Add(ndr);
+            da.Update(dt);
+            MessageBox.Show("已为物料：" + dr["物料名称"] + "生成入库单");
         }
     }
 }
