@@ -132,6 +132,10 @@
     <Compile Include="Process\Bag\BTV\BPV制袋生产指令.Designer.cs">
       <DependentUpon>BPV制袋生产指令.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\BTV\BPV批生产记录.cs" />
+    <Compile Include="Process\Bag\BTV\BPV批生产记录.Designer.cs">
+      <DependentUpon>BPV批生产记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\BTV\BPV洁净区温湿度记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1273,6 +1277,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BPV制袋生产指令.resx">
       <DependentUpon>BPV制袋生产指令.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BPV批生产记录.resx">
+      <DependentUpon>BPV批生产记录.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BPV洁净区温湿度记录.resx">
       <DependentUpon>BPV洁净区温湿度记录.cs</DependentUpon>

@@ -352,13 +352,11 @@
             this.groupBox3.Controls.Add(this.label20);
             this.groupBox3.Controls.Add(this.label21);
             this.groupBox3.Controls.Add(this.label22);
-            this.groupBox3.Enabled = false;
             this.groupBox3.Location = new System.Drawing.Point(720, 86);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(276, 113);
             this.groupBox3.TabIndex = 56;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Visible = false;
             // 
             // tb焊线3参数5
             // 
@@ -486,13 +484,11 @@
             this.groupBox5.Controls.Add(this.label14);
             this.groupBox5.Controls.Add(this.label15);
             this.groupBox5.Controls.Add(this.label16);
-            this.groupBox5.Enabled = false;
             this.groupBox5.Location = new System.Drawing.Point(444, 86);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(282, 113);
             this.groupBox5.TabIndex = 55;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Visible = false;
             // 
             // tb焊线2参数5
             // 
@@ -683,11 +679,11 @@
             this.Column19,
             this.Column20,
             this.Column21});
-            this.dataGridView1.Location = new System.Drawing.Point(38, 86);
+            this.dataGridView1.Location = new System.Drawing.Point(38, 196);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1183, 318);
+            this.dataGridView1.Size = new System.Drawing.Size(1183, 208);
             this.dataGridView1.TabIndex = 51;
             // 
             // Column1
@@ -865,13 +861,11 @@
             this.groupBox2.Controls.Add(this.label57);
             this.groupBox2.Controls.Add(this.label59);
             this.groupBox2.Controls.Add(this.label60);
-            this.groupBox2.Enabled = false;
             this.groupBox2.Location = new System.Drawing.Point(169, 86);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(278, 113);
             this.groupBox2.TabIndex = 53;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Visible = false;
             // 
             // tb焊线1参数5
             // 
@@ -984,13 +978,11 @@
             this.groupBox4.Controls.Add(this.label11);
             this.groupBox4.Controls.Add(this.label12);
             this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Enabled = false;
             this.groupBox4.Location = new System.Drawing.Point(992, 86);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(229, 113);
             this.groupBox4.TabIndex = 54;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Visible = false;
             // 
             // label9
             // 
@@ -1037,13 +1029,11 @@
             this.groupBox1.Controls.Add(this.label51);
             this.groupBox1.Controls.Add(this.label52);
             this.groupBox1.Controls.Add(this.label53);
-            this.groupBox1.Enabled = false;
             this.groupBox1.Location = new System.Drawing.Point(38, 86);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(133, 113);
             this.groupBox1.TabIndex = 52;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Visible = false;
             // 
             // label51
             // 
