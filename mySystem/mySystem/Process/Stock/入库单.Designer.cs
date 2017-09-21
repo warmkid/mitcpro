@@ -64,7 +64,6 @@
             this.lbl入库单号 = new System.Windows.Forms.Label();
             this.label角色 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.lbl验收记录编号 = new System.Windows.Forms.Label();
             this.Title = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -408,15 +407,6 @@
             this.label12.TabIndex = 40;
             this.label12.Text = "入库单号：";
             // 
-            // lbl验收记录编号
-            // 
-            this.lbl验收记录编号.AutoSize = true;
-            this.lbl验收记录编号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl验收记录编号.Location = new System.Drawing.Point(385, 26);
-            this.lbl验收记录编号.Name = "lbl验收记录编号";
-            this.lbl验收记录编号.Size = new System.Drawing.Size(0, 16);
-            this.lbl验收记录编号.TabIndex = 39;
-            // 
             // Title
             // 
             this.Title.AutoSize = true;
@@ -468,7 +458,6 @@
             this.Controls.Add(this.lbl入库单号);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.lbl验收记录编号);
             this.Controls.Add(this.Title);
             this.Name = "入库单";
             this.Text = "入库单";
@@ -481,7 +470,6 @@
 
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label lbl验收记录编号;
         private System.Windows.Forms.Label Title;
         private System.Windows.Forms.Label lbl入库单号;
         private System.Windows.Forms.Label label4;

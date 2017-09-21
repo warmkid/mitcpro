@@ -45,6 +45,8 @@
             this.物资请验单ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.检验记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.取样记录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lbl取样单号 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -53,7 +55,7 @@
             // 
             this.label角色.AutoSize = true;
             this.label角色.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
-            this.label角色.Location = new System.Drawing.Point(315, 20);
+            this.label角色.Location = new System.Drawing.Point(566, 20);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(49, 19);
             this.label角色.TabIndex = 46;
@@ -192,11 +194,32 @@
             this.取样记录ToolStripMenuItem.Size = new System.Drawing.Size(142, 22);
             this.取样记录ToolStripMenuItem.Text = "取样记录";
             // 
+            // lbl取样单号
+            // 
+            this.lbl取样单号.AutoSize = true;
+            this.lbl取样单号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl取样单号.Location = new System.Drawing.Point(413, 23);
+            this.lbl取样单号.Name = "lbl取样单号";
+            this.lbl取样单号.Size = new System.Drawing.Size(0, 16);
+            this.lbl取样单号.TabIndex = 53;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label12.Location = new System.Drawing.Point(319, 23);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(88, 16);
+            this.label12.TabIndex = 52;
+            this.label12.Text = "取样单号：";
+            // 
             // 取样记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(645, 528);
+            this.Controls.Add(this.lbl取样单号);
+            this.Controls.Add(this.label12);
             this.Controls.Add(this.btn取样证);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.tb审核员);
@@ -235,5 +258,7 @@
         private System.Windows.Forms.ToolStripMenuItem 物资请验单ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 检验记录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 取样记录ToolStripMenuItem;
+        private System.Windows.Forms.Label lbl取样单号;
+        private System.Windows.Forms.Label label12;
     }
 }
