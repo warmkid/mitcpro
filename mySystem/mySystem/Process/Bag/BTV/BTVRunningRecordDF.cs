@@ -686,28 +686,28 @@ namespace mySystem.Process.Bag.BTV
             //dataGridView1.Columns["序号"].Frozen = true;
             dataGridView1.Columns["生产时间"].HeaderText = "生产时间\r\r\r设定";
             //dataGridView1.Columns["生产时间"].Frozen = true;
-            dataGridView1.Columns["焊线1参数1"].HeaderText = "焊线1#\rWELDING\rPRESSURE\r"+dt记录.Rows[0]["焊线1参数1"]+"(bar)";
+            dataGridView1.Columns["焊线1参数1"].HeaderText = "焊线1#\rWELDING\rPRESSURE\r"+""+"(bar)";
             dataGridView1.Columns["焊线1参数1"].Width = 55;
-            dataGridView1.Columns["焊线1参数2"].HeaderText = "焊线1#\rSEALING\rTEMP\r" + dt记录.Rows[0]["焊线1参数2"] + "(℃)";
+            dataGridView1.Columns["焊线1参数2"].HeaderText = "焊线1#\rSEALING\rTEMP\r" + "" + "(℃)";
             dataGridView1.Columns["焊线1参数2"].Width = 55;
-            dataGridView1.Columns["焊线1参数3"].HeaderText = "焊线1#\rSEALING\rTIME\r" + dt记录.Rows[0]["焊线1参数3"] + "(s)";
+            dataGridView1.Columns["焊线1参数3"].HeaderText = "焊线1#\rSEALING\rTIME\r" + "" + "(s)";
             dataGridView1.Columns["焊线1参数3"].Width = 55;
-            dataGridView1.Columns["焊线1参数4"].HeaderText = "焊线1#\rCOOLING\rTEMP\r" + dt记录.Rows[0]["焊线1参数4"] + "(℃)";
+            dataGridView1.Columns["焊线1参数4"].HeaderText = "焊线1#\rCOOLING\rTEMP\r" + "" + "(℃)";
             dataGridView1.Columns["焊线1参数4"].Width = 55;
-            dataGridView1.Columns["焊线1参数5"].HeaderText = "焊线1#\rTCR\r\r" + dt记录.Rows[0]["焊线1参数5"];
+            dataGridView1.Columns["焊线1参数5"].HeaderText = "焊线1#\rTCR\r\r" + "";
             dataGridView1.Columns["焊线1参数5"].Width = 55;
 
-            dataGridView1.Columns["焊线2参数1"].HeaderText = "焊线2#\rWELDING\rPRESSURE\r" + dt记录.Rows[0]["焊线2参数1"] + "(bar)";
-            dataGridView1.Columns["焊线2参数2"].HeaderText = "焊线2#\rSEALING\rTEMP\r" + dt记录.Rows[0]["焊线2参数2"] + "(℃)";
-            dataGridView1.Columns["焊线2参数3"].HeaderText = "焊线2#\rSEALING\rTIME\r" + dt记录.Rows[0]["焊线2参数3"] + "(s)";
-            dataGridView1.Columns["焊线2参数4"].HeaderText = "焊线2#\rCOOLING\rTEMP\r" + dt记录.Rows[0]["焊线2参数4"] + "(℃)";
-            dataGridView1.Columns["焊线2参数5"].HeaderText = "焊线2#\rTCR\r\r" + dt记录.Rows[0]["焊线2参数5"];
+            dataGridView1.Columns["焊线2参数1"].HeaderText = "焊线2#\rWELDING\rPRESSURE\r" + "" + "(bar)";
+            dataGridView1.Columns["焊线2参数2"].HeaderText = "焊线2#\rSEALING\rTEMP\r" + ""+ "(℃)";
+            dataGridView1.Columns["焊线2参数3"].HeaderText = "焊线2#\rSEALING\rTIME\r" +""+ "(s)";
+            dataGridView1.Columns["焊线2参数4"].HeaderText = "焊线2#\rCOOLING\rTEMP\r" + "" + "(℃)";
+            dataGridView1.Columns["焊线2参数5"].HeaderText = "焊线2#\rTCR\r\r" + "";
 
-            dataGridView1.Columns["焊线3参数1"].HeaderText = "焊线3#\rWELDING\rPRESSURE\r" + dt记录.Rows[0]["焊线3参数1"] + "(bar)";
-            dataGridView1.Columns["焊线3参数2"].HeaderText = "焊线3#\rSEALING\rTEMP\r" + dt记录.Rows[0]["焊线3参数2"] + "(℃)";
-            dataGridView1.Columns["焊线3参数3"].HeaderText = "焊线3#\rSEALING\rTIME\r" + dt记录.Rows[0]["焊线3参数3"] + "(s)";
-            dataGridView1.Columns["焊线3参数4"].HeaderText = "焊线3#\rCOOLING\rTEMP\r" + dt记录.Rows[0]["焊线3参数4"] + "(℃)";
-            dataGridView1.Columns["焊线3参数5"].HeaderText = "焊线3#\rTCR\r\r" + dt记录.Rows[0]["焊线3参数5"];
+            dataGridView1.Columns["焊线3参数1"].HeaderText = "焊线3#\rWELDING\rPRESSURE\r" + "" + "(bar)";
+            dataGridView1.Columns["焊线3参数2"].HeaderText = "焊线3#\rSEALING\rTEMP\r" + "" + "(℃)";
+            dataGridView1.Columns["焊线3参数3"].HeaderText = "焊线3#\rSEALING\rTIME\r" + "" + "(s)";
+            dataGridView1.Columns["焊线3参数4"].HeaderText = "焊线3#\rCOOLING\rTEMP\r" + "" + "(℃)";
+            dataGridView1.Columns["焊线3参数5"].HeaderText = "焊线3#\rTCR\r\r" + "";
 
             
             dataGridView1.Columns["合格品数量"].HeaderText = "合格品\r数量\r(只)";

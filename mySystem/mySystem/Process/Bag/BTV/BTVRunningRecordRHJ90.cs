@@ -686,7 +686,7 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T90度热合机运行记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.ColumnHeadersVisible = false;
+            
 
             dataGridView1.Columns["控制器1参数1"].HeaderText = "控制器1#\rWELDING\rPRESSURE\r(bar)";
             dataGridView1.Columns["控制器1参数2"].HeaderText = "控制器1#\rSEALING\rTEMP\r(℃)";
