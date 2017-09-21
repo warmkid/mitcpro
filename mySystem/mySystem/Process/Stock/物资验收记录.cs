@@ -561,7 +561,7 @@ namespace mySystem.Process.Stock
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
                         foreach (DataRow dr in dt.Rows)
                         {
-                            (new 检验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
+                            (new 复验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
                         }
                         break;
                     case "取样记录":
@@ -893,51 +893,62 @@ namespace mySystem.Process.Stock
 
             if (ckform.ischeckOk)
             {
-                bool isAllOK = true;
-                List<Int32> RowToCheck = new List<int>();
-                for (int i = 0; i < dataGridView1.Rows.Count; ++i)
-                {
-                    if (dataGridView1.Rows[i].Cells["是否需要检验"].Value.ToString() == "是")
-                    {
-                        isAllOK = false;
-                        RowToCheck.Add(i);
-                    }
-                }
-                // 开请验单，取样记录，检验台账
-                if (isAllOK)
-                {
-                    create请验单();
-                    // 
-                    create取样记录();
-                    insert检验台账();
-                    // TODO 加入库存台账
-                    insert库存台帐();
-                }
-                // 开检验记录
-                else
-                {
-                    foreach (int r in RowToCheck)
-                    {
-                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dtInner.Rows[r]["物料名称"] + "'", mySystem.Parameter.connOle);
-                        dt = new DataTable("检验记录");
-                        cb = new OleDbCommandBuilder(da);
-                        BindingSource bs = new BindingSource();
-                        da.Fill(dt);
-                        dr = dt.NewRow();
-                        dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
-                        dr["物料名称"] = dtInner.Rows[r]["物料名称"];
-                        dr["产品批号"] = dtInner.Rows[r]["本厂批号"];
-                        dr["数量"] = dtInner.Rows[r]["数量"];
-                        dr["检验日期"] = DateTime.Now;
-                        dr["审核日期"] = DateTime.Now;
-                        dr["物料代码"] = dtInner.Rows[r]["物料代码"];
-                        dr["检验结论"] = "合格";
-                        dt.Rows.Add(dr);
-                        da.Update(dt);
-                    }
-                    MessageBox.Show("已自动生产" + RowToCheck.Count + "张检验记录");
-                }
+                //bool isAllOK = true;
+                //List<Int32> RowToCheck = new List<int>();
+                //for (int i = 0; i < dataGridView1.Rows.Count; ++i)
+                //{
+                //    if (dataGridView1.Rows[i].Cells["是否需要检验"].Value.ToString() == "是")
+                //    {
+                //        isAllOK = false;
+                //        RowToCheck.Add(i);
+                //    }
+                //}
+                //// 开请验单，取样记录，检验台账
+                //if (isAllOK)
+                //{
+                //    create请验单();
+                //    // 
+                //    create取样记录();
+                //    insert检验台账();
+                //    // TODO 加入库存台账
+                //    insert库存台帐();
+                //}
+                //// 开检验记录
+                //else
+                //{
+                //    foreach (int r in RowToCheck)
+                //    {
+                //        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + dtOuter.Rows[0]["ID"] + " and 物料名称='" + dtInner.Rows[r]["物料名称"] + "'", mySystem.Parameter.connOle);
+                //        dt = new DataTable("检验记录");
+                //        cb = new OleDbCommandBuilder(da);
+                //        BindingSource bs = new BindingSource();
+                //        da.Fill(dt);
+                //        dr = dt.NewRow();
+                //        dr["物资验收记录ID"] = dtOuter.Rows[0]["ID"];
+                //        dr["物料名称"] = dtInner.Rows[r]["物料名称"];
+                //        dr["产品批号"] = dtInner.Rows[r]["本厂批号"];
+                //        dr["数量"] = dtInner.Rows[r]["数量"];
+                //        dr["检验日期"] = DateTime.Now;
+                //        dr["审核日期"] = DateTime.Now;
+                //        dr["物料代码"] = dtInner.Rows[r]["物料代码"];
+                //        dr["检验结论"] = "合格";
+                //        dt.Rows.Add(dr);
+                //        da.Update(dt);
+                //    }
+                //    MessageBox.Show("已自动生产" + RowToCheck.Count + "张检验记录");
 
+                //}
+                foreach (DataRow tdr in dtInner.Rows)
+                {
+                    if (tdr["外观检查结果"].ToString() == "符合")
+                    {
+                        // 生成入库单
+                    }
+                    else if (tdr["外观检查结果"].ToString() == "不符合")
+                    {
+                        // 生成复验记录
+                    }
+                }
           
             }
 
@@ -977,8 +988,8 @@ namespace mySystem.Process.Stock
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
                     cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                    cbc.Items.Add("是");
-                    cbc.Items.Add("否");
+                    cbc.Items.Add("符合");
+                    cbc.Items.Add("不符合");
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }

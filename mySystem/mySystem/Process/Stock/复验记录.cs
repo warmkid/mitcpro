@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 检验记录 : BaseForm
+    public partial class 复验记录 : BaseForm
     {
 
         List<String> ls操作员 = new List<string>();
@@ -43,7 +43,7 @@ namespace mySystem.Process.Stock
 
         CheckForm ckform;
 
-        public 检验记录(int id)
+        public 复验记录(int id)
         {
             InitializeComponent();
             _id = id;
@@ -281,7 +281,7 @@ namespace mySystem.Process.Stock
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
                         foreach (DataRow dr in dt.Rows)
                         {
-                           (new 检验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
+                           (new 复验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
                         }
                         break;
                     case "取样记录":

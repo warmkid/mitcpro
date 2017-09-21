@@ -880,11 +880,11 @@
     <Compile Include="Process\Stock\检验台账.Designer.cs">
       <DependentUpon>检验台账.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Stock\检验记录.cs">
+    <Compile Include="Process\Stock\复验记录.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Stock\检验记录.Designer.cs">
-      <DependentUpon>检验记录.cs</DependentUpon>
+    <Compile Include="Process\Stock\复验记录.Designer.cs">
+      <DependentUpon>复验记录.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Stock\物资验收记录.cs">
       <SubType>Form</SubType>
@@ -1633,8 +1633,8 @@
     <EmbeddedResource Include="Process\Stock\检验台账.resx">
       <DependentUpon>检验台账.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\检验记录.resx">
-      <DependentUpon>检验记录.cs</DependentUpon>
+    <EmbeddedResource Include="Process\Stock\复验记录.resx">
+      <DependentUpon>复验记录.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\物资验收记录.resx">
       <DependentUpon>物资验收记录.cs</DependentUpon>

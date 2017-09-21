@@ -1,6 +1,6 @@
 ﻿namespace mySystem.Process.Stock
 {
-    partial class 检验记录
+    partial class 复验记录
     {
         /// <summary>
         /// Required designer variable.
@@ -101,7 +101,7 @@
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(89, 19);
             this.Title.TabIndex = 36;
-            this.Title.Text = "检验记录";
+            this.Title.Text = "复验记录";
             // 
             // label2
             // 

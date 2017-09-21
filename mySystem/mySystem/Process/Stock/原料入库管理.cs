@@ -140,7 +140,7 @@ namespace mySystem.Process.Stock
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 int id = Convert.ToInt32(dataGridView3.Rows[e.RowIndex].Cells[0].Value);
-                检验记录 form = new 检验记录(id);
+                复验记录 form = new 复验记录(id);
                 form.Show();
             }
         }
