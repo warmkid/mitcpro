@@ -10,9 +10,8 @@ using System.Data.OleDb;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 入库单 : BaseForm
+    public partial class 检验记录 : BaseForm
     {
-
         List<String> ls操作员;
         List<String> ls审核员;
         /// <summary>
@@ -25,15 +24,17 @@ namespace mySystem.Process.Stock
         mySystem.Parameter.FormState _formState;
 
         OleDbDataAdapter daOuter;
-        OleDbCommandBuilder cbOuter ;
+        OleDbCommandBuilder cbOuter;
         BindingSource bsOuter;
         DataTable dtOuter;
 
         int _id;
-       
+        string fname;
+
         CheckForm ckform;
 
-        public 入库单(MainForm mainform, int id):base(mainform)
+        public 检验记录(MainForm mainform, int id)
+            : base(mainform)
         {
             InitializeComponent();
             //conn = new OleDbConnection(strConnect);
@@ -48,7 +49,6 @@ namespace mySystem.Process.Stock
             setFormState();
             setEnableReadOnly();
             addOtherEventHandler();
-            
         }
 
         private void addOtherEventHandler()
@@ -65,10 +65,10 @@ namespace mySystem.Process.Stock
                 }
             }
         }
-        public static string create入库单号()
+        public static string create检验单号()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 入库单号 from 入库单 order by ID DESC", mySystem.Parameter.connOle);
-            DataTable dt = new DataTable("入库单");
+            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 检验单号 from 检验记录 order by ID DESC", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("检验记录");
             da.Fill(dt);
             int yearNow = DateTime.Now.Year;
             int codeNow;
@@ -100,7 +100,7 @@ namespace mySystem.Process.Stock
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='入库单'", mySystem.Parameter.connOle);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='检验记录'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -151,9 +151,9 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 入库单 where ID=" + id, mySystem.Parameter.connOle);
+            daOuter = new OleDbDataAdapter("select * from 检验记录 where ID=" + id, mySystem.Parameter.connOle);
             cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable("入库单");
+            dtOuter = new DataTable("检验记录");
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -259,6 +259,7 @@ namespace mySystem.Process.Stock
                     c.Enabled = false;
                 }
             }
+            btn查看.Enabled = true;
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -281,14 +282,14 @@ namespace mySystem.Process.Stock
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='入库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='检验记录' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
 
             if (dt_temp.Rows.Count == 0)
             {
                 DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "入库单";
+                dr["表名"] = "检验记录";
                 dr["对应ID"] = (int)dtOuter.Rows[0]["ID"];
                 dt_temp.Rows.Add(dr);
             }
@@ -335,14 +336,35 @@ namespace mySystem.Process.Stock
 
             if (ckform.ischeckOk)//审核通过
             {
-               // 生产请验单
-                create请验单();
-                // 生成取样记录
-                create取样记录();
-               // 入库
-                insert库存台帐();
-                // 生成检验记录
-                create检验记录();
+
+                if (dtOuter.Rows[0]["检验结论"].ToString() == "合格")
+                {
+                    // 修改库存台账
+                    da = new OleDbDataAdapter("select * from 库存台帐 where 入库单号='" + dtOuter.Rows[0]["入库单号"] + "'", mySystem.Parameter.connOle);
+                    cb = new OleDbCommandBuilder(da);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        dt.Rows[0]["状态"] = "合格";
+                        da.Update(dt);
+                    }
+                }
+                else
+                {
+                    // 修改库存台账
+                    da = new OleDbDataAdapter("select * from 库存台帐 where 入库单号='" + dtOuter.Rows[0]["入库单号"] + "'", mySystem.Parameter.connOle);
+                    cb = new OleDbCommandBuilder(da);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        dt.Rows[0]["状态"] = "不合格";
+                        da.Update(dt);
+                    }
+                    // 生成退货申请
+
+                }
             }
             else
             {
@@ -354,7 +376,7 @@ namespace mySystem.Process.Stock
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='入库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='检验记录' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
@@ -369,264 +391,82 @@ namespace mySystem.Process.Stock
             base.CheckResult();
         }
 
-
-
-        public void insert库存台帐()
+        private void btn保存_Click_1(object sender, EventArgs e)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 库存台帐 where " + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            DataTable dt = new DataTable("库存台帐");
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            BindingSource bs = new BindingSource();
-            da.Fill(dt);
+            save();
+        }
 
-            // 填写值
-            // Outer
-            DataRow ndr = dt.NewRow();
-            DataRow dr = dtOuter.Rows[0];
-            ndr["仓库名称"] = dr["仓库名"];
-            //ndr["供应商代码"] = dr["供应商"];
-            ndr["供应商名称"] = dr["供应商"];
-            ndr["产品代码"] = dr["产品代码"];
-            ndr["产品名称"] = dr["产品名称"];
-            ndr["产品规格"] = dr["规格型号"];
-            ndr["产品批号"] = dr["批号"];
+        private void btn浏览_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (DialogResult.OK == ofd.ShowDialog())
+            {
 
-            ndr["现存数量"] = dr["数量"];
-            ndr["主计量单位"] = dr["主计量单位"];
+                String fullName = ofd.FileName;
+                fname = ofd.SafeFileName;
+                textBox1.Text = fullName;
+                DateTime now = DateTime.Now;
+            }
+        }
 
-            ndr["用途"] = dr["采购订单号"];
-            ndr["状态"] = "待验";
-            ndr["借用日志"] = "";
-            ndr["冻结状态"] = true;
-            ndr["物资验收记录详细信息ID"] = dr["关联的验收记录ID"];
-            ndr["换算率"] = dr["换算率"];
-            ndr["现存件数"] = Convert.ToDouble(ndr["现存数量"]) / Convert.ToDouble(ndr["换算率"]);
-            ndr["实盘数量"] = ndr["现存件数"];
+        private void btn上传_Click(object sender, EventArgs e)
+        {
+            if (fname == null || fname == "")
+            {
+                MessageBox.Show("请先选择一个文件");
+                return;
+            }
+            String path = System.Environment.CurrentDirectory + @"/../../物料入场检验报告/";
+            System.IO.File.Copy(textBox1.Text, path + fname, true);
+            dtOuter.Rows[0]["检验报告路径"] = path + fname;
+        }
 
-            ndr["是否盘点"] = false;
-            ndr["有效期"] = DateTime.Now;
-            ndr["入库单号"] = dr["入库单号"];
-            dt.Rows.Add(ndr);
-
-
-
-            da.Update(dt);
-
-            MessageBox.Show("已加入库存台账！");
+        private void btn查看_Click(object sender, EventArgs e)
+        {
+            string path = dtOuter.Rows[0]["检验报告路径"].ToString();
+            try
+            {
+                System.Diagnostics.Process.Start(path);
+            }
+            catch
+            {
+                MessageBox.Show("找不到文件！");
+            }
         }
 
 
-        public void create请验单()
+        private string generate退货申请单编号()
         {
-            string haoma = create请验编号();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单 where 请验编号='" + haoma + "'", mySystem.Parameter.connOle);
-            DataTable dt = new DataTable("物资请验单");
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            BindingSource bs = new BindingSource();
+            string prefix = "PA-PRS-";
+            string yymmdd = DateTime.Now.ToString("yyyy");
+            string sql = "select * from 产品退货申请单 where 退货申请单编号 like '{0}%' order by ID";
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
             da.Fill(dt);
-
-            // 填写值
-            // Outer
-            DataRow ndr = dt.NewRow();
-            DataRow dr = dtOuter.Rows[0];
-            ndr["供应商名称"] = dr["供应商"];
-            ndr["请验时间"] = DateTime.Now;
-            ndr["审核时间"] = DateTime.Now;
-            ndr["请验人"] = mySystem.Parameter.userName;
-            ndr["请验编号"] = haoma;
-            ndr["物资验收记录ID"] = dr["关联的验收记录ID"];
-            dt.Rows.Add(ndr);
-
-            da.Update(dt);
-            da = new OleDbDataAdapter("select * from 物资请验单 where 请验编号='" + haoma + "'", mySystem.Parameter.connOle);
-
-            dt = new DataTable("物资请验单");
-            da.Fill(dt);
-            // Inner
-            da = new OleDbDataAdapter("select * from 物资请验单详细信息 where 物资请验单ID=" + dt.Rows[0]["ID"], mySystem.Parameter.connOle);
-            DataTable dtMore = new DataTable("物资请验单详细信息");
-            cb = new OleDbCommandBuilder(da);
-            da.Fill(dtMore);
-
-            ndr = dtMore.NewRow();
-            // 注意ID的值
-            ndr["物资请验单ID"] = dt.Rows[0]["ID"];
-            ndr["产品名称"] = dr["产品名称"];
-            ndr["产品代码"] = dr["产品代码"];
-            ndr["包装规格"] = dr["规格型号"];
-            ndr["本厂批号"] = dr["批号"];
-            ndr["单位"] = dr["主计量单位"];
-            ndr["数量"] = dr["数量"];
-
-            dtMore.Rows.Add(ndr);
-
-            da.Update(dtMore);
-            MessageBox.Show("已自动生产物资请验单！");
-        }
-
-        private string create请验编号()
-        {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 请验编号 from 物资请验单 order by ID DESC", mySystem.Parameter.connOle);
-            DataTable dt = new DataTable("物资请验单");
-            da.Fill(dt);
-            int yearNow = DateTime.Now.Year;
-            int codeNow;
             if (dt.Rows.Count == 0)
             {
-                codeNow = 1;
-                return yearNow.ToString() + codeNow.ToString("D4");
-            }
-            string yearInCode = dt.Rows[0][0].ToString().Substring(0, 4);
-            string NOInCode = dt.Rows[0][0].ToString().Substring(4, 4);
-            if (Int32.Parse(yearInCode) == yearNow)
-            {
-                codeNow = Int32.Parse(NOInCode) + 1;
+                return prefix + yymmdd + "001";
             }
             else
             {
-                codeNow = 1;
+                int no = Convert.ToInt32(dt.Rows[dt.Rows.Count - 1]["退货申请单编号"].ToString().Substring(11, 3));
+                return prefix + yymmdd + (no + 1).ToString("D3");
             }
-            return yearNow.ToString() + codeNow.ToString("D4");
-
         }
 
-
-        private string create取样单号()
+        void create退货申请()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 取样单号 from 取样记录 order by ID DESC", mySystem.Parameter.connOle);
-            DataTable dt = new DataTable("取样记录");
-            da.Fill(dt);
-            int yearNow = DateTime.Now.Year;
-            int codeNow;
-            if (dt.Rows.Count == 0)
-            {
-                codeNow = 1;
-                return yearNow.ToString() + codeNow.ToString("D4");
-            }
-            string yearInCode = dt.Rows[0][0].ToString().Substring(0, 4);
-            string NOInCode = dt.Rows[0][0].ToString().Substring(4, 4);
-            if (Int32.Parse(yearInCode) == yearNow)
-            {
-                codeNow = Int32.Parse(NOInCode) + 1;
-            }
-            else
-            {
-                codeNow = 1;
-            }
-            return yearNow.ToString() + codeNow.ToString("D4");
-
-        }
-
-        public void create取样记录()
-        {
-            string haoma = create取样单号();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录 where 取样单号='" + haoma + "'", mySystem.Parameter.connOle);
-            DataTable dt = new DataTable("取样记录");
+            // ???? 产品退货申请单是别人退回来，这个是退给别人
+            string haoma = generate退货申请单编号();
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品退货申请单 where 退货申请单编号='" + haoma + "'", mySystem.Parameter.connOle);
             OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            BindingSource bs = new BindingSource();
+            DataTable dt = new DataTable();
             da.Fill(dt);
-
-            // 填写值
-            // Outer
             DataRow ndr = dt.NewRow();
-            DataRow dr = dtOuter.Rows[0];
-            ndr["物资验收记录ID"] = dr["关联的验收记录ID"];
-            ndr["审核时间"] = DateTime.Now;
-            ndr["取样单号"] = haoma;
-            //dr["供应商代码"] = dtOuter.Rows[0]["供应商代码"].ToString();
-            ndr["供应商名称"] = dr["供应商"];
-            dt.Rows.Add(ndr);
-
-            da.Update(dt);
-            da = new OleDbDataAdapter("select * from 取样记录 where 取样单号='" + haoma + "'", mySystem.Parameter.connOle);
-
-            dt = new DataTable("取样记录");
-            da.Fill(dt);
-            // Inner
-            da = new OleDbDataAdapter("select * from 取样记录详细信息 where 取样记录ID=" + dt.Rows[0]["ID"], mySystem.Parameter.connOle);
-            DataTable dtMore = new DataTable("取样记录详细信息");
-            cb = new OleDbCommandBuilder(da);
-            da.Fill(dtMore);
-
-
-            ndr = dtMore.NewRow();
-            // 注意ID的值
-            ndr["取样记录ID"] = dt.Rows[0]["ID"];
-            ndr["物料名称"] = dr["产品名称"];
-            ndr["物料代码"] = dr["产品代码"];
-            ndr["包装规格"] = dr["规格型号"];
-            ndr["本厂批号"] = dr["批号"];
-            ndr["单位"] = dr["主计量单位"];
-            ndr["数量"] = dr["数量"];
-            ndr["日期"] = DateTime.Now;
-            ndr["取样人"] = mySystem.Parameter.userName;
-            dtMore.Rows.Add(ndr);
-
-            da.Update(dtMore);
-            MessageBox.Show("已自动生产取样记录！");
-        }
-
-
-        private string create检验单号()
-        {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 检验单号 from 检验记录 order by ID DESC", mySystem.Parameter.connOle);
-            DataTable dt = new DataTable("检验记录");
-            da.Fill(dt);
-            int yearNow = DateTime.Now.Year;
-            int codeNow;
-            if (dt.Rows.Count == 0)
-            {
-                codeNow = 1;
-                return yearNow.ToString() + codeNow.ToString("D4");
-            }
-            string yearInCode = dt.Rows[0][0].ToString().Substring(0, 4);
-            string NOInCode = dt.Rows[0][0].ToString().Substring(4, 4);
-            if (Int32.Parse(yearInCode) == yearNow)
-            {
-                codeNow = Int32.Parse(NOInCode) + 1;
-            }
-            else
-            {
-                codeNow = 1;
-            }
-            return yearNow.ToString() + codeNow.ToString("D4");
-
-        }
-
-        public void create检验记录()
-        {
-            string haoma = create检验单号();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录 where 检验单号='" + haoma + "'", mySystem.Parameter.connOle);
-            DataTable dt = new DataTable("检验记录");
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            BindingSource bs = new BindingSource();
-            da.Fill(dt);
-
-            // 填写值
-            // Outer
-            DataRow ndr = dt.NewRow();
-            DataRow dr = dtOuter.Rows[0];
-            ndr["物资验收记录ID"] = dr["关联的验收记录ID"];
-            ndr["检验日期"] = DateTime.Now;
-            ndr["检验单号"] = haoma;
-            //dr["供应商代码"] = dtOuter.Rows[0]["供应商代码"].ToString();
-            ndr["供应商"] = dr["供应商"];
-            ndr["产品代码"] = dr["产品代码"];
-            ndr["产品名称"] = dr["产品名称"];
-            ndr["规格型号"] = dr["规格型号"];
-            ndr["批号"] = dr["批号"];
-            ndr["主计量单位"] = dr["主计量单位"];
-            ndr["数量"] = dr["数量"];
-            ndr["产品代码"] = dr["产品代码"];
-            ndr["检验人"] = mySystem.Parameter.userName;
-            ndr["审核日期"] = DateTime.Now;
-            ndr["检验结论"] = "合格";
-            ndr["入库单号"] = dr["入库单号"];
-            ndr["采购订单号"] = dr["采购订单号"];
-            dt.Rows.Add(ndr);
-
-            da.Update(dt);
-            MessageBox.Show("已自动生产检验记录！");
+            ndr["退货申请单编号"] = haoma;
+            ndr["申请人"] = mySystem.Parameter.userName;
+            ndr["申请日期"] = DateTime.Now;
+            
         }
 
     }

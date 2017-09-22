@@ -43,8 +43,8 @@
             this.tp物资请验单 = new System.Windows.Forms.TabPage();
             this.btn读取物资请验单 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.tp检验记录 = new System.Windows.Forms.TabPage();
-            this.btn读取检验记录 = new System.Windows.Forms.Button();
+            this.tp复验记录 = new System.Windows.Forms.TabPage();
+            this.btn读取复验记录 = new System.Windows.Forms.Button();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.tp不合格品处理记录 = new System.Windows.Forms.TabPage();
             this.btn读取不合格品记录 = new System.Windows.Forms.Button();
@@ -59,6 +59,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox审核状态 = new System.Windows.Forms.ComboBox();
             this.button查询 = new System.Windows.Forms.Button();
+            this.tp检验记录 = new System.Windows.Forms.TabPage();
+            this.dgv检验记录 = new System.Windows.Forms.DataGridView();
+            this.btn读取检验记录 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tp到货单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv到货单)).BeginInit();
@@ -68,12 +71,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv入库单)).BeginInit();
             this.tp物资请验单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
-            this.tp检验记录.SuspendLayout();
+            this.tp复验记录.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.tp不合格品处理记录.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.tp取样记录.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+            this.tp检验记录.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv检验记录)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -83,9 +88,10 @@
             this.tabControl1.Controls.Add(this.tp物资验收记录);
             this.tabControl1.Controls.Add(this.tp入库单);
             this.tabControl1.Controls.Add(this.tp物资请验单);
-            this.tabControl1.Controls.Add(this.tp检验记录);
-            this.tabControl1.Controls.Add(this.tp不合格品处理记录);
             this.tabControl1.Controls.Add(this.tp取样记录);
+            this.tabControl1.Controls.Add(this.tp检验记录);
+            this.tabControl1.Controls.Add(this.tp复验记录);
+            this.tabControl1.Controls.Add(this.tp不合格品处理记录);
             this.tabControl1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(19, 91);
             this.tabControl1.Name = "tabControl1";
@@ -243,27 +249,27 @@
             this.dataGridView2.Size = new System.Drawing.Size(702, 342);
             this.dataGridView2.TabIndex = 0;
             // 
-            // tp检验记录
+            // tp复验记录
             // 
-            this.tp检验记录.Controls.Add(this.btn读取检验记录);
-            this.tp检验记录.Controls.Add(this.dataGridView3);
-            this.tp检验记录.Location = new System.Drawing.Point(4, 29);
-            this.tp检验记录.Name = "tp检验记录";
-            this.tp检验记录.Padding = new System.Windows.Forms.Padding(3);
-            this.tp检验记录.Size = new System.Drawing.Size(759, 428);
-            this.tp检验记录.TabIndex = 2;
-            this.tp检验记录.Text = "复验记录";
-            this.tp检验记录.UseVisualStyleBackColor = true;
+            this.tp复验记录.Controls.Add(this.btn读取复验记录);
+            this.tp复验记录.Controls.Add(this.dataGridView3);
+            this.tp复验记录.Location = new System.Drawing.Point(4, 29);
+            this.tp复验记录.Name = "tp复验记录";
+            this.tp复验记录.Padding = new System.Windows.Forms.Padding(3);
+            this.tp复验记录.Size = new System.Drawing.Size(759, 428);
+            this.tp复验记录.TabIndex = 2;
+            this.tp复验记录.Text = "复验记录";
+            this.tp复验记录.UseVisualStyleBackColor = true;
             // 
-            // btn读取检验记录
+            // btn读取复验记录
             // 
-            this.btn读取检验记录.Location = new System.Drawing.Point(649, 19);
-            this.btn读取检验记录.Name = "btn读取检验记录";
-            this.btn读取检验记录.Size = new System.Drawing.Size(75, 23);
-            this.btn读取检验记录.TabIndex = 3;
-            this.btn读取检验记录.Text = "读取";
-            this.btn读取检验记录.UseVisualStyleBackColor = true;
-            this.btn读取检验记录.Click += new System.EventHandler(this.btn读取检验记录_Click);
+            this.btn读取复验记录.Location = new System.Drawing.Point(649, 19);
+            this.btn读取复验记录.Name = "btn读取复验记录";
+            this.btn读取复验记录.Size = new System.Drawing.Size(75, 23);
+            this.btn读取复验记录.TabIndex = 3;
+            this.btn读取复验记录.Text = "读取";
+            this.btn读取复验记录.UseVisualStyleBackColor = true;
+            this.btn读取复验记录.Click += new System.EventHandler(this.btn读取检验记录_Click);
             // 
             // dataGridView3
             // 
@@ -402,6 +408,38 @@
             this.button查询.UseVisualStyleBackColor = true;
             this.button查询.Click += new System.EventHandler(this.button查询_Click);
             // 
+            // tp检验记录
+            // 
+            this.tp检验记录.Controls.Add(this.dgv检验记录);
+            this.tp检验记录.Controls.Add(this.btn读取检验记录);
+            this.tp检验记录.Location = new System.Drawing.Point(4, 29);
+            this.tp检验记录.Name = "tp检验记录";
+            this.tp检验记录.Padding = new System.Windows.Forms.Padding(3);
+            this.tp检验记录.Size = new System.Drawing.Size(759, 428);
+            this.tp检验记录.TabIndex = 7;
+            this.tp检验记录.Text = "检验记录";
+            this.tp检验记录.UseVisualStyleBackColor = true;
+            // 
+            // dgv检验记录
+            // 
+            this.dgv检验记录.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv检验记录.Location = new System.Drawing.Point(33, 62);
+            this.dgv检验记录.Name = "dgv检验记录";
+            this.dgv检验记录.RowTemplate.Height = 23;
+            this.dgv检验记录.Size = new System.Drawing.Size(693, 348);
+            this.dgv检验记录.TabIndex = 5;
+            // 
+            // btn读取检验记录
+            // 
+            this.btn读取检验记录.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn读取检验记录.Location = new System.Drawing.Point(651, 18);
+            this.btn读取检验记录.Name = "btn读取检验记录";
+            this.btn读取检验记录.Size = new System.Drawing.Size(75, 28);
+            this.btn读取检验记录.TabIndex = 6;
+            this.btn读取检验记录.Text = "读取";
+            this.btn读取检验记录.UseVisualStyleBackColor = true;
+            this.btn读取检验记录.Click += new System.EventHandler(this.btn读取检验记录_Click_1);
+            // 
             // 原料入库管理
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -426,12 +464,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv入库单)).EndInit();
             this.tp物资请验单.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
-            this.tp检验记录.ResumeLayout(false);
+            this.tp复验记录.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.tp不合格品处理记录.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.tp取样记录.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+            this.tp检验记录.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv检验记录)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -442,13 +482,13 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tp物资验收记录;
         private System.Windows.Forms.TabPage tp物资请验单;
-        private System.Windows.Forms.TabPage tp检验记录;
+        private System.Windows.Forms.TabPage tp复验记录;
         private System.Windows.Forms.TabPage tp不合格品处理记录;
         private System.Windows.Forms.Button btn增加物资验收记录;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btn读取物资请验单;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.Button btn读取检验记录;
+        private System.Windows.Forms.Button btn读取复验记录;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.Button btn读取不合格品记录;
         private System.Windows.Forms.DataGridView dataGridView4;
@@ -470,5 +510,8 @@
         private System.Windows.Forms.TabPage tp入库单;
         private System.Windows.Forms.DataGridView dgv入库单;
         private System.Windows.Forms.Button btn读取入库单;
+        private System.Windows.Forms.TabPage tp检验记录;
+        private System.Windows.Forms.DataGridView dgv检验记录;
+        private System.Windows.Forms.Button btn读取检验记录;
     }
 }
