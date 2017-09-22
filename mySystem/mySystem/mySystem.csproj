@@ -132,6 +132,12 @@
     <Compile Include="Process\Bag\BTV\BPV制袋生产指令.Designer.cs">
       <DependentUpon>BPV制袋生产指令.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\BTV\BPV批生产记录.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BPV批生产记录.Designer.cs">
+      <DependentUpon>BPV批生产记录.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\BTV\BPV洁净区温湿度记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -462,6 +468,12 @@
     <Compile Include="Process\Bag\LDPE\LDPE产品外包装记录.Designer.cs">
       <DependentUpon>LDPE产品外包装记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPE标签.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPE标签.Designer.cs">
+      <DependentUpon>LDPE标签.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\LDPE\LDPE洁净区温湿度记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -635,6 +647,12 @@
     </Compile>
     <Compile Include="Process\CleanCut\Record_cleansite_cut.Designer.cs">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\CleanCut\清洁分切标签.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\CleanCut\清洁分切标签.Designer.cs">
+      <DependentUpon>清洁分切标签.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\A\HandOver.cs">
       <SubType>Form</SubType>
@@ -838,6 +856,18 @@
     <Compile Include="Process\Stock\产品退货请验单.Designer.cs">
       <DependentUpon>产品退货请验单.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\入库单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\入库单.Designer.cs">
+      <DependentUpon>入库单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Stock\到货单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\到货单.Designer.cs">
+      <DependentUpon>到货单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\原料入库管理.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -868,11 +898,11 @@
     <Compile Include="Process\Stock\检验台账.Designer.cs">
       <DependentUpon>检验台账.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Stock\检验记录.cs">
+    <Compile Include="Process\Stock\复验记录.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Stock\检验记录.Designer.cs">
-      <DependentUpon>检验记录.cs</DependentUpon>
+    <Compile Include="Process\Stock\复验记录.Designer.cs">
+      <DependentUpon>复验记录.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Stock\物资验收记录.cs">
       <SubType>Form</SubType>
@@ -1250,6 +1280,9 @@
     <EmbeddedResource Include="Process\Bag\BTV\BPV制袋生产指令.resx">
       <DependentUpon>BPV制袋生产指令.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\BPV批生产记录.resx">
+      <DependentUpon>BPV批生产记录.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BPV洁净区温湿度记录.resx">
       <DependentUpon>BPV洁净区温湿度记录.cs</DependentUpon>
     </EmbeddedResource>
@@ -1419,6 +1452,9 @@
     <EmbeddedResource Include="Process\Bag\LDPE\LDPE产品外包装记录.resx">
       <DependentUpon>LDPE产品外包装记录.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\LDPE\LDPE标签.resx">
+      <DependentUpon>LDPE标签.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\LDPE\LDPE洁净区温湿度记录.resx">
       <DependentUpon>LDPE洁净区温湿度记录.cs</DependentUpon>
     </EmbeddedResource>
@@ -1505,6 +1541,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\Record_cleansite_cut.resx">
       <DependentUpon>Record_cleansite_cut.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\清洁分切标签.resx">
+      <DependentUpon>清洁分切标签.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\A\HandOver.resx">
       <DependentUpon>HandOver.cs</DependentUpon>
@@ -1600,6 +1639,12 @@
     <EmbeddedResource Include="Process\Stock\产品退货请验单.resx">
       <DependentUpon>产品退货请验单.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\入库单.resx">
+      <DependentUpon>入库单.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\到货单.resx">
+      <DependentUpon>到货单.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\原料入库管理.resx">
       <DependentUpon>原料入库管理.cs</DependentUpon>
     </EmbeddedResource>
@@ -1615,8 +1660,8 @@
     <EmbeddedResource Include="Process\Stock\检验台账.resx">
       <DependentUpon>检验台账.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Stock\检验记录.resx">
-      <DependentUpon>检验记录.cs</DependentUpon>
+    <EmbeddedResource Include="Process\Stock\复验记录.resx">
+      <DependentUpon>复验记录.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\物资验收记录.resx">
       <DependentUpon>物资验收记录.cs</DependentUpon>

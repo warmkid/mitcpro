@@ -82,7 +82,8 @@ namespace mySystem.Process.Bag.LDPE
             Btn生产领料.Enabled = b;
             Btn产品内包装.Enabled = b;
             Btn日报表.Enabled = b;
-            Btn标签.Enabled = b;
+            Btn内标签.Enabled = b;
+            Btn外标签.Enabled = b;
             Btn开机前确认.Enabled = b;
             Btn运行记录.Enabled = b;
             Btn清场.Enabled = b;
@@ -326,9 +327,15 @@ namespace mySystem.Process.Bag.LDPE
 
         private void Btn标签_Click(object sender, EventArgs e)
         {
-
+            LDPE标签 myform = new LDPE标签(true);
+            myform.ShowDialog();
         }
 
+        private void Btn外标签_Click(object sender, EventArgs e)
+        {
+            LDPE标签 myform = new LDPE标签(false);
+            myform.ShowDialog();
+        }
 
 
         //判断是否能查看
@@ -367,6 +374,8 @@ namespace mySystem.Process.Bag.LDPE
             }
             return b = false;
         }
+
+        
         
     }
 }

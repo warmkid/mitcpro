@@ -80,6 +80,15 @@ namespace mySystem.Process.Order
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            dataGridView1.Columns["件数"].Visible = false;
+            dataGridView1.Columns["数量"].Visible = false;
+            dataGridView1.Columns["订单数量"].Visible = false;
+            foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
+            {
+                if (dgvc.Name != "推荐供应商")
+                    dgvc.ReadOnly = true;
+
+            }
         }
 
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)

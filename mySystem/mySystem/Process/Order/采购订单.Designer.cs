@@ -60,6 +60,7 @@
             this.tb汇率 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.btn退回 = new System.Windows.Forms.Button();
+            this.btn删除 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -367,11 +368,23 @@
             this.btn退回.UseVisualStyleBackColor = true;
             this.btn退回.Click += new System.EventHandler(this.btn退回_Click);
             // 
+            // btn删除
+            // 
+            this.btn删除.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn删除.Location = new System.Drawing.Point(608, 473);
+            this.btn删除.Name = "btn删除";
+            this.btn删除.Size = new System.Drawing.Size(75, 23);
+            this.btn删除.TabIndex = 167;
+            this.btn删除.Text = "删除";
+            this.btn删除.UseVisualStyleBackColor = true;
+            this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
+            // 
             // 采购订单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(965, 609);
+            this.Controls.Add(this.btn删除);
             this.Controls.Add(this.btn退回);
             this.Controls.Add(this.tb汇率);
             this.Controls.Add(this.label12);
@@ -447,5 +460,6 @@
         private System.Windows.Forms.TextBox tb汇率;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button btn退回;
+        private System.Windows.Forms.Button btn删除;
     }
 }

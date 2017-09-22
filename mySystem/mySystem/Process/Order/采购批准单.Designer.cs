@@ -423,6 +423,7 @@
             this.combobox存货编码筛选.Name = "combobox存货编码筛选";
             this.combobox存货编码筛选.Size = new System.Drawing.Size(141, 24);
             this.combobox存货编码筛选.TabIndex = 119;
+            this.combobox存货编码筛选.SelectedIndexChanged += new System.EventHandler(this.combobox存货编码筛选_SelectedIndexChanged);
             // 
             // label7
             // 

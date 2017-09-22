@@ -515,12 +515,25 @@ namespace mySystem.Process.Order
             //dataGridView1.Columns["主计量"].Visible = false;
             //dataGridView1.Columns["单价"].Visible = false;
             //dataGridView1.Columns["金额"].Visible = false;
-            //dataGridView1.Columns["进度"].Visible = false;
-            //dataGridView1.Columns["COC"].Visible = false;
-            //dataGridView1.Columns["进度"].Visible = false;
-            //dataGridView1.Columns["付款进度"].Visible = false;
-            //dataGridView1.Columns["付款日期"].Visible = false;
-            //dataGridView1.Columns["发票"].Visible = false;
+            dataGridView1.Columns["进度"].Visible = false;
+            dataGridView1.Columns["COC"].Visible = false;
+            dataGridView1.Columns["进度"].Visible = false;
+            dataGridView1.Columns["付款进度"].Visible = false;
+            dataGridView1.Columns["付款日期"].Visible = false;
+            dataGridView1.Columns["发票"].Visible = false;
+
+            dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
+        }
+
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.CurrentCell != null)
+            {
+                if (dataGridView1.CurrentCell.OwningColumn.Name == "单价")
+                {
+                    dataGridView1["金额", e.RowIndex].Value = Convert.ToDouble(dataGridView1["单价", e.RowIndex].Value) * Convert.ToDouble(dataGridView1["采购件数", e.RowIndex].Value);
+                }
+            }
         }
 
         void readOuterData(int id)
@@ -552,18 +565,46 @@ namespace mySystem.Process.Order
                 btn提交审核.Enabled = true;
 
 
-
-            string sql = @"select * from 采购批准单详细信息 where 推荐供应商='{0}' and 状态='未采购'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _供应商), mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
+            foreach (DataRow dr in dtInner.Rows)
             {
-                
-                dr["状态"] = "采购订单编制中";
+                int pzdID = 0;
+                bool ok;
+                ok = int.TryParse(dr["关联的采购批准详细信息ID"].ToString(), out pzdID);
+                if (ok)
+                {
+                    string sql = @"select * from 采购批准单详细信息 where ID={0}";
+                    OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, pzdID), mySystem.Parameter.connOle);
+                    OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    foreach (DataRow ddr in dt.Rows)
+                    {
+
+                        ddr["状态"] = "采购订单编制中";
+                    }
+                    da.Update(dt);
+                    continue;
+                }
+                int jyID = 0;
+                ok = int.TryParse(dr["关联的采购批转单借用单ID"].ToString(), out jyID);
+                if (ok)
+                {
+                    string sql = @"select * from 采购批准单借用订单详细信息 where ID={0}";
+                    OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, jyID), mySystem.Parameter.connOle);
+                    OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    foreach (DataRow ddr in dt.Rows)
+                    {
+
+                        ddr["状态"] = "采购订单编制中";
+                    }
+                    da.Update(dt);
+                    continue;
+                }
             }
-            da.Update(dt);
+
+           
         }
 
         void save()
@@ -939,5 +980,92 @@ namespace mySystem.Process.Order
 
         }
 
+        private void btn删除_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> rows =new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                rows.Add(dgvc.RowIndex);
+            }
+            foreach (int r in rows)
+            {
+                string daima = dataGridView1["存货代码", r].Value.ToString();
+                DataRow[] drs = dtInner.Select("存货代码='" + daima + "'");
+                foreach (DataRow dr in drs)
+                {
+                    int pzdID = 0;
+                    bool ok;
+                    ok = int.TryParse(dr["关联的采购批准详细信息ID"].ToString(), out pzdID);
+                    if (ok)
+                    {
+                        _批准单状态还原("采购批准单详细信息", pzdID);
+                        continue;
+                    }
+                    int jyID = 0;
+                    ok = int.TryParse(dr["关联的采购批转单借用单ID"].ToString(), out jyID);
+                    if (ok)
+                    {
+                        _批准单状态还原("采购批准单借用订单详细信息", jyID);
+                        continue;
+                    }
+                }
+                _内表数据删除(daima);
+                
+            }
+            save();
+            calcSumInner();
+            innerBind();
+        }
+
+        void _批准单状态还原(string tblName, int id)
+        {
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
+            DataTable dt;
+            da = new OleDbDataAdapter("select * from " + tblName + " where ID=" + id, mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
+            dt = new DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("ID为：" + id + "的" + tblName + "未找到");
+                return;
+            }
+            dt.Rows[0]["状态"] = "未采购";
+            da.Update(dt);
+        }
+
+        void _内表数据删除(string daima)
+        {
+            for(int i=0;i<dtInnerShow.Rows.Count; ++i)
+            {
+                try
+                {
+                    if (dtInnerShow.Rows[i]["存货代码"].ToString() == daima)
+                    {
+                        dtInnerShow.Rows[i].Delete();
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+
+            for (int i = 0; i < dtInner.Rows.Count; ++i)
+            {
+                try
+                {
+                    if (dtInner.Rows[i]["存货代码"].ToString() == daima)
+                    {
+                        dtInner.Rows[i].Delete();
+                    }
+                }
+                catch
+                {
+                    continue;
+                }
+            }
+        }
     }
 }

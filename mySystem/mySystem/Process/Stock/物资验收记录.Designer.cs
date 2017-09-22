@@ -165,6 +165,7 @@
             this.btn下移.TabIndex = 34;
             this.btn下移.Text = "下移";
             this.btn下移.UseVisualStyleBackColor = true;
+            this.btn下移.Visible = false;
             // 
             // btn上移
             // 
@@ -175,6 +176,7 @@
             this.btn上移.TabIndex = 33;
             this.btn上移.Text = "上移";
             this.btn上移.UseVisualStyleBackColor = true;
+            this.btn上移.Visible = false;
             // 
             // btn添加
             // 
@@ -185,6 +187,7 @@
             this.btn添加.TabIndex = 32;
             this.btn添加.Text = "添加";
             this.btn添加.UseVisualStyleBackColor = true;
+            this.btn添加.Visible = false;
             this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
             // 
             // btn审核
@@ -291,6 +294,7 @@
             this.tb样品理由.Name = "tb样品理由";
             this.tb样品理由.Size = new System.Drawing.Size(149, 26);
             this.tb样品理由.TabIndex = 21;
+            this.tb样品理由.Visible = false;
             // 
             // label7
             // 
@@ -301,6 +305,7 @@
             this.label7.Size = new System.Drawing.Size(56, 16);
             this.label7.TabIndex = 20;
             this.label7.Text = "理由：";
+            this.label7.Visible = false;
             // 
             // cmb是否有样品
             // 
@@ -310,6 +315,7 @@
             this.cmb是否有样品.Name = "cmb是否有样品";
             this.cmb是否有样品.Size = new System.Drawing.Size(52, 24);
             this.cmb是否有样品.TabIndex = 19;
+            this.cmb是否有样品.Visible = false;
             // 
             // label6
             // 
@@ -320,6 +326,7 @@
             this.label6.Size = new System.Drawing.Size(88, 16);
             this.label6.TabIndex = 18;
             this.label6.Text = "是否有样品";
+            this.label6.Visible = false;
             // 
             // cmb厂家随附检验报告
             // 
@@ -329,6 +336,7 @@
             this.cmb厂家随附检验报告.Name = "cmb厂家随附检验报告";
             this.cmb厂家随附检验报告.Size = new System.Drawing.Size(90, 24);
             this.cmb厂家随附检验报告.TabIndex = 17;
+            this.cmb厂家随附检验报告.Visible = false;
             // 
             // label5
             // 
@@ -339,6 +347,7 @@
             this.label5.Size = new System.Drawing.Size(136, 16);
             this.label5.TabIndex = 16;
             this.label5.Text = "厂家随附检验报告";
+            this.label5.Visible = false;
             // 
             // dataGridView1
             // 
@@ -346,7 +355,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(19, 128);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1095, 264);
+            this.dataGridView1.Size = new System.Drawing.Size(1095, 364);
             this.dataGridView1.TabIndex = 15;
             // 
             // label4
@@ -370,16 +379,16 @@
             // dtp接收时间
             // 
             this.dtp接收时间.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dtp接收时间.Location = new System.Drawing.Point(701, 81);
+            this.dtp接收时间.Location = new System.Drawing.Point(759, 78);
             this.dtp接收时间.Name = "dtp接收时间";
-            this.dtp接收时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp接收时间.Size = new System.Drawing.Size(142, 26);
             this.dtp接收时间.TabIndex = 12;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(604, 84);
+            this.label3.Location = new System.Drawing.Point(685, 81);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(72, 16);
             this.label3.TabIndex = 11;
@@ -423,6 +432,7 @@
             this.label1.Size = new System.Drawing.Size(56, 16);
             this.label1.TabIndex = 7;
             this.label1.Text = "理由：";
+            this.label1.Visible = false;
             // 
             // tb检验报告理由
             // 
@@ -431,6 +441,7 @@
             this.tb检验报告理由.Name = "tb检验报告理由";
             this.tb检验报告理由.Size = new System.Drawing.Size(165, 26);
             this.tb检验报告理由.TabIndex = 6;
+            this.tb检验报告理由.Visible = false;
             // 
             // cmb供应商名称
             // 

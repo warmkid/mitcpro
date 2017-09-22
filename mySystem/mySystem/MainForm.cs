@@ -22,18 +22,11 @@ namespace mySystem
         public SqlConnection conn;
         public OleDbConnection connOle;
         //TODO:时间间隔设置
-        int interval = 600000; //十分钟
+        int interval = 7200000; //两小时
         TaskbarNotifier taskbarNotifier1; //右下角提示框
 
         public MainForm()
         {
-
-           
-
-
-
-
-
 
             Parameter.InitConnUser(); //初始化连接到有用户表的数据库
             //Parameter.ConnUserInit();
@@ -41,7 +34,6 @@ namespace mySystem
             login.ShowDialog();
             
             InitializeComponent();
-            RoleInit();
             userLabel.Text = Parameter.userName;
             InitTaskBar();
             SearchUnchecked();
@@ -248,24 +240,6 @@ namespace mySystem
 
         }
 
-
-        private void RoleInit()
-        {
-            switch (Parameter.userRole)
-            {
-                case 1:
-
-                    break;
-                case 2:
-
-                    break;
-                case 3:
-                    
-                    break;
-                default:
-                    break;
-            }
-        }
         
 
         //工序按钮
@@ -334,7 +308,6 @@ namespace mySystem
             if (Parameter.userName != null)
             {
                 userLabel.Text = Parameter.userName;
-                RoleInit();
                 MainProduceBtn.BackColor = Color.FromName("Control");
                 MainSettingBtn.BackColor = Color.FromName("Control");
                 MainQueryBtn.BackColor = Color.FromName("Control");

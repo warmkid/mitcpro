@@ -723,6 +723,7 @@ namespace mySystem.Process.Order
             dataGridView1.DataError += new DataGridViewDataErrorEventHandler(dataGridView1_DataError);
             dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
             dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            
         }
 
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -740,20 +741,20 @@ namespace mySystem.Process.Order
                     tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
                     tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                     break;
-                case "存货名称":
-                    acsc = new AutoCompleteStringCollection();
-                    acsc.AddRange(ls存货名称.ToArray());
-                    tb.AutoCompleteCustomSource = acsc;
-                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    break;
-                case "规格型号":
-                    acsc = new AutoCompleteStringCollection();
-                    acsc.AddRange(ls规格型号.ToArray());
-                    tb.AutoCompleteCustomSource = acsc;
-                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
-                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-                    break;
+                //case "存货名称":
+                //    acsc = new AutoCompleteStringCollection();
+                //    acsc.AddRange(ls存货名称.ToArray());
+                //    tb.AutoCompleteCustomSource = acsc;
+                //    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                //    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                //    break;
+                //case "规格型号":
+                //    acsc = new AutoCompleteStringCollection();
+                //    acsc.AddRange(ls规格型号.ToArray());
+                //    tb.AutoCompleteCustomSource = acsc;
+                //    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                //    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                //    break;
             }
         }
 
@@ -781,38 +782,38 @@ namespace mySystem.Process.Order
                         dataGridView1["规格型号", e.RowIndex].Value = "";
                     }
                     break;
-                case "存货名称":
-                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
-                    idx = ls存货名称.IndexOf(curStr);
-                    if (idx >= 0)
-                    {
-                        dataGridView1["存货代码", e.RowIndex].Value = ls存货代码[idx];
-                        dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
-                        dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
-                    }
-                    else
-                    {
-                        dataGridView1["存货代码", e.RowIndex].Value = "";
-                        dataGridView1["存货名称", e.RowIndex].Value = "";
-                        dataGridView1["规格型号", e.RowIndex].Value = "";
-                    }
-                    break;
-                case "规格型号":
-                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
-                    idx = ls规格型号.IndexOf(curStr);
-                    if (idx >=0)
-                    {
-                        dataGridView1["存货代码", e.RowIndex].Value = ls存货代码[idx];
-                        dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
-                        dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
-                    }
-                    else
-                    {
-                        dataGridView1["存货代码", e.RowIndex].Value = "";
-                        dataGridView1["存货名称", e.RowIndex].Value = "";
-                        dataGridView1["规格型号", e.RowIndex].Value = "";
-                    }
-                    break;
+                //case "存货名称":
+                //    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                //    idx = ls存货名称.IndexOf(curStr);
+                //    if (idx >= 0)
+                //    {
+                //        dataGridView1["存货代码", e.RowIndex].Value = ls存货代码[idx];
+                //        dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
+                //        dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
+                //    }
+                //    else
+                //    {
+                //        dataGridView1["存货代码", e.RowIndex].Value = "";
+                //        dataGridView1["存货名称", e.RowIndex].Value = "";
+                //        dataGridView1["规格型号", e.RowIndex].Value = "";
+                //    }
+                //    break;
+                //case "规格型号":
+                //    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                //    idx = ls规格型号.IndexOf(curStr);
+                //    if (idx >=0)
+                //    {
+                //        dataGridView1["存货代码", e.RowIndex].Value = ls存货代码[idx];
+                //        dataGridView1["存货名称", e.RowIndex].Value = ls存货名称[idx];
+                //        dataGridView1["规格型号", e.RowIndex].Value = ls规格型号[idx];
+                //    }
+                //    else
+                //    {
+                //        dataGridView1["存货代码", e.RowIndex].Value = "";
+                //        dataGridView1["存货名称", e.RowIndex].Value = "";
+                //        dataGridView1["规格型号", e.RowIndex].Value = "";
+                //    }
+                //    break;
                 case "数量":
                     curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
                     ok = double.TryParse(curStr, out curDou);
@@ -852,6 +853,8 @@ namespace mySystem.Process.Order
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["销售订单ID"].Visible = false;
+            dataGridView1.Columns["存货名称"].ReadOnly = true;
+            dataGridView1.Columns["规格型号"].ReadOnly = true;
         }
 
         void calc合计()
@@ -926,8 +929,13 @@ namespace mySystem.Process.Order
                     dr["用途"] = "__自由";
                 }
                 da.Update(dt);
-
+                dtOuter.Rows[0]["状态"] = "已取消";
+                dtOuter.Rows[0]["取消人"] = mySystem.Parameter.userName;
+                save();
+                this.Close();
             }
+
+
         }
 
         void setDGV规格型号Column()

@@ -152,7 +152,7 @@ namespace mySystem.Query
             // readonly
             foreach (DataGridViewColumn dgvc in dgv库存台账.Columns)
             {
-                if (dgvc.Name == "实盘数量"||dgvc.Name=="货柜"||dgvc.Name=="有效期")
+                if (dgvc.Name == "实盘数量"||dgvc.Name=="货位"||dgvc.Name=="有效期")
                 {
                     dgvc.ReadOnly = false;
                 }
@@ -225,7 +225,7 @@ namespace mySystem.Query
         {
             string sql = "select * from 库存台帐 where 供应商名称 like '%{0}%' and 产品代码 like '%{1}%' and 状态 like '%{2}%'";
            
-            string 供应商名称 = tabControl1.Text;
+            string 供应商名称 = tb存货台账厂家名称.Text;
             string 产品代码 = tb库存台账存货代码.Text;
             string 状态 = cmb库存台账状态.Text;
             da库存台账 = new OleDbDataAdapter(string.Format(sql, 供应商名称, 产品代码, 状态), mySystem.Parameter.connOle);
@@ -255,12 +255,15 @@ namespace mySystem.Query
 
         private void btn盘点库存台账_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewCell dgvc in dgv库存台账.SelectedCells)
+            if (dgv库存台账.SelectedCells != null)
             {
-                dgv库存台账["是否盘点", dgvc.RowIndex].Value = true;
-                dgv库存台账.Rows[dgvc.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                foreach (DataGridViewCell dgvc in dgv库存台账.SelectedCells)
+                {
+                    dgv库存台账["是否盘点", dgvc.RowIndex].Value = true;
+                    dgv库存台账.Rows[dgvc.RowIndex].DefaultCellStyle.BackColor = Color.White;
+                    dgv库存台账["现存件数", dgvc.RowIndex].Value = dgv库存台账["实盘数量", dgvc.RowIndex].Value;
+                }
             }
-
         }
 
         //设置datagridview背景颜色，待审核标红

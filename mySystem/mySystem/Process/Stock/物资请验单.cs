@@ -38,7 +38,7 @@ namespace mySystem.Process.Stock
 
 //        OleDbConnection conn;
 
-        public 物资请验单(int id)
+        public 物资请验单(MainForm mainform, int id):base(mainform)
         {
             InitializeComponent();
             //conn = new OleDbConnection(strConn);
@@ -264,7 +264,7 @@ namespace mySystem.Process.Stock
                         da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
-                        物资请验单 form2 = new 物资请验单(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        物资请验单 form2 = new 物资请验单(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form2.Show();
                         break;
                     case "检验记录":
@@ -274,14 +274,14 @@ namespace mySystem.Process.Stock
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
                         foreach (DataRow dr in dt.Rows)
                         {
-                            (new 检验记录(Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
+                            (new 复验记录(mainform, Convert.ToInt32(dr["ID"]))).Show();                            //form3.Show();
                         }
                         break;
                     case "取样记录":
                         da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
                         dt = new DataTable();
                         da.Fill(dt);
-                        取样记录 form4 = new 取样记录(Convert.ToInt32(dt.Rows[0]["ID"]));
+                        取样记录 form4 = new 取样记录(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form4.Show();
                         break;
                 }
@@ -405,7 +405,7 @@ namespace mySystem.Process.Stock
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
-            dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            //dtOuter.Rows[0]["审核意见"] = ckform.opinion;
 
             btn保存.PerformClick();
             setFormState();
