@@ -309,6 +309,8 @@ namespace mySystem.Process.Bag.CS
             dr["制袋物料名称3"] = "蒸汽灭菌指示剂";
             dr["内包物料名称1"] = "内包装袋";
             dr["内包物料名称2"] = "内标签";
+            dr["内包物料名称3"] = "内包物料名称3";
+            dr["内包物料名称4"] = "内包物料名称4";
             dr["外包物料名称1"] = "外标签";
             dr["外包物料名称2"] = "纸箱";
             dr["外包物料批号2"] = "————————";
@@ -671,6 +673,14 @@ namespace mySystem.Process.Bag.CS
             tb内包物料代码2.AutoCompleteCustomSource = acsc;
             tb内包物料代码2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             tb内包物料代码2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb内包物料代码3.AutoCompleteCustomSource = acsc;
+            tb内包物料代码3.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码3.AutoCompleteSource = AutoCompleteSource.CustomSource;
+
+            tb内包物料代码4.AutoCompleteCustomSource = acsc;
+            tb内包物料代码4.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            tb内包物料代码4.AutoCompleteSource = AutoCompleteSource.CustomSource;
 
             tb制袋物料代码1.AutoCompleteCustomSource = acsc;
             tb制袋物料代码1.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
