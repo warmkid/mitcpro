@@ -1447,6 +1447,7 @@ namespace WindowsFormsApplication1
             bt日志.Enabled = true;
             bt打印.Enabled = true;
             cb打印机.Enabled = true;
+            bt查看人员信息.Enabled = true;
         }
 
         private void bt日志_Click(object sender, EventArgs e)

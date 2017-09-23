@@ -1237,6 +1237,7 @@ namespace mySystem.Process.Extruction.A
             //this act as the same in function upper
             
             btn查看日志.Enabled = true;
+            bt查看人员信息.Enabled = true;
         }
 
         private void bt查看人员信息_Click(object sender, EventArgs e)

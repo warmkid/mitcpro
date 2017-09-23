@@ -281,6 +281,7 @@ namespace mySystem.Extruction.Process
             bt日志.Enabled = true;
             bt打印.Enabled = true;
             cb打印机.Enabled = true;
+            bt查看人员信息.Enabled = true;
         }
 
         //通过原料代码查找原料id

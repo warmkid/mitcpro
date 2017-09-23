@@ -224,6 +224,7 @@ namespace BatchProductRecord
             button1.Enabled = true;
             button4.Enabled = true;
             textBox1.Enabled = true;
+            bt查看人员信息.Enabled = true;
         }
 
         //// 获取操作员和审核员

@@ -1473,6 +1473,7 @@ namespace mySystem.Process.Extruction.B
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
             cmb打印机选择.Enabled = true;
+            bt查看人员信息.Enabled = true;
         }
         private void getPeople()
         {

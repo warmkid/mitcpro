@@ -318,6 +318,7 @@ namespace mySystem.Extruction.Chart
             btn查看日志.Enabled = true;
             btn打印.Enabled = true;
             cb打印机.Enabled = true;
+            bt查看人员信息.Enabled = true;
         }
 
         // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete

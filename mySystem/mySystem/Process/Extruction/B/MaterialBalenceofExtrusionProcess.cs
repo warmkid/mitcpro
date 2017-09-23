@@ -313,6 +313,7 @@ namespace mySystem.Extruction.Process
             btn查看日志.Enabled = true;
             //only checkman can print
             //btn打印.Enabled = true;
+            bt查看人员信息.Enabled = true;
         }
 
         
