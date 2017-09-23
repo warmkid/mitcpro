@@ -201,8 +201,12 @@ namespace mySystem.Process.Bag.CS
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["制袋物料名称1"], dt生产指令.Rows[0]["制袋物料代码1"], dt生产指令.Rows[0]["制袋物料批号1"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["制袋物料名称2"], dt生产指令.Rows[0]["制袋物料代码2"], dt生产指令.Rows[0]["制袋物料批号2"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["制袋物料名称3"], dt生产指令.Rows[0]["制袋物料代码3"], dt生产指令.Rows[0]["制袋物料批号3"] });
+
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["内包物料名称1"], dt生产指令.Rows[0]["内包物料代码1"], dt生产指令.Rows[0]["内包物料批号1"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["内包物料名称2"], dt生产指令.Rows[0]["内包物料代码2"], dt生产指令.Rows[0]["内包物料批号2"] });
+                    dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["内包物料名称3"], dt生产指令.Rows[0]["内包物料代码3"], dt生产指令.Rows[0]["内包物料批号3"] });
+                    dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["内包物料名称4"], dt生产指令.Rows[0]["内包物料代码4"], dt生产指令.Rows[0]["内包物料批号4"] });
+                    
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["外包物料名称1"], dt生产指令.Rows[0]["外包物料代码1"], dt生产指令.Rows[0]["外包物料批号1"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["外包物料名称2"], dt生产指令.Rows[0]["外包物料代码2"], dt生产指令.Rows[0]["外包物料批号2"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["外包物料名称3"], dt生产指令.Rows[0]["外包物料代码3"], dt生产指令.Rows[0]["外包物料批号3"] });
