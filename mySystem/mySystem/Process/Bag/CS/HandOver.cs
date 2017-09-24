@@ -458,7 +458,6 @@ namespace mySystem.Process.Bag.CS
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         private void setDataGridViewColumns()
@@ -861,7 +860,36 @@ namespace mySystem.Process.Bag.CS
             btn提交审核.Enabled = false;
             btn保存.Enabled = false;
         }
-
+        private void btn上一条记录_Click(object sender, EventArgs e)
+        {
+            DataTable dtOuter1;
+            OleDbDataAdapter daOuter1;
+            BindingSource bsOuter1;
+            OleDbCommandBuilder cbOuter1;
+            List<int> idList = new List<int>();
+            daOuter1 = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' ORDER BY ID ASC;", conOle);
+            cbOuter1 = new OleDbCommandBuilder(daOuter);
+            dtOuter1 = new DataTable(tablename1);
+            bsOuter1 = new BindingSource();
+            daOuter1.Fill(dtOuter1);
+            for (int i = 0; i < dtOuter1.Rows.Count; i++)
+            {
+                idList.Add(Convert.ToInt32(dtOuter1.Rows[i]["ID"]));
+            }
+            int nowLocateion = idList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            if (0 == nowLocateion)
+            {
+                MessageBox.Show("此消息为第一条");
+                return;
+            }
+            try
+            {
+                HandOver previous = new HandOver(mainform, idList[nowLocateion - 1]);
+                previous.ShowDialog();
+            }
+            catch
+            { }
+        }
         private void setEnableReadOnly(bool bl)
         {
             dtp生产日期.Enabled = false;

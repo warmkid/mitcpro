@@ -59,6 +59,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label角色 = new System.Windows.Forms.Label();
             this.lbl生产指令编号 = new System.Windows.Forms.Label();
+            this.btn上一条记录 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -334,11 +335,22 @@
             this.lbl生产指令编号.TabIndex = 163;
             this.lbl生产指令编号.Text = "生产指令编号";
             // 
+            // btn上一条记录
+            // 
+            this.btn上一条记录.Location = new System.Drawing.Point(657, 85);
+            this.btn上一条记录.Name = "btn上一条记录";
+            this.btn上一条记录.Size = new System.Drawing.Size(117, 23);
+            this.btn上一条记录.TabIndex = 165;
+            this.btn上一条记录.Text = "上一条记录";
+            this.btn上一条记录.UseVisualStyleBackColor = true;
+            this.btn上一条记录.Click += new System.EventHandler(this.btn上一条记录_Click);
+            // 
             // HandOver
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1124, 755);
+            this.Controls.Add(this.btn上一条记录);
             this.Controls.Add(this.lbl生产指令编号);
             this.Controls.Add(this.label角色);
             this.Controls.Add(this.pictureBox1);
@@ -412,5 +424,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label lbl生产指令编号;
+        private System.Windows.Forms.Button btn上一条记录;
     }
 }

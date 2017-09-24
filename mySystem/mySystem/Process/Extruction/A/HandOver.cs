@@ -1083,7 +1083,36 @@ namespace mySystem.Process.Extruction.A
             }
 
         }
-
+        private void btn上一条记录_Click(object sender, EventArgs e)
+        {
+            DataTable dtOuter1;
+            OleDbDataAdapter daOuter1;
+            BindingSource bsOuter1;
+            OleDbCommandBuilder cbOuter1;
+            List<int> idList = new List<int>();
+            daOuter1 = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' ORDER BY ID ASC;", conOle);
+            cbOuter1 = new OleDbCommandBuilder(daOuter);
+            dtOuter1 = new DataTable(tablename1);
+            bsOuter1 = new BindingSource();
+            daOuter1.Fill(dtOuter1);
+            for (int i = 0; i < dtOuter1.Rows.Count; i++)
+            {
+                idList.Add(Convert.ToInt32(dtOuter1.Rows[i]["ID"]));
+            }
+            int nowLocateion = idList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            if (0 == nowLocateion)
+            {
+                MessageBox.Show("此消息为第一条");
+                return;
+            }
+            try
+            {
+                HandOver previous = new HandOver(mainform, idList[nowLocateion - 1]);
+                previous.ShowDialog();
+            }
+            catch
+            { }
+        }
         private void setEnableReadOnly(bool bl)
         {
             dtp生产日期.Enabled = false;
@@ -1237,20 +1266,6 @@ namespace mySystem.Process.Extruction.A
             //this act as the same in function upper
             
             btn查看日志.Enabled = true;
-            bt查看人员信息.Enabled = true;
-        }
-
-        private void bt查看人员信息_Click(object sender, EventArgs e)
-        {
-            OleDbDataAdapter da;
-            DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜岗位交接班记录'", mySystem.Parameter.connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            String str操作员 = dt.Rows[0]["操作员"].ToString();
-            String str审核员 = dt.Rows[0]["审核员"].ToString();
-            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-            MessageBox.Show(str人员信息);
         }
 
         //leave datagridview check the right things
