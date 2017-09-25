@@ -653,7 +653,7 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns["序号"].ReadOnly = true;
             //dataGridView1.Columns["物料代码"].ReadOnly = true;
             dataGridView1.Columns["物料简称"].ReadOnly = true;
-            dataGridView1.Columns["物料批号"].ReadOnly = true;
+            //dataGridView1.Columns["物料批号"].ReadOnly = true;
             dataGridView1.Columns["审核员"].ReadOnly = true;
             //HeaderText
             dataGridView1.Columns["领料日期时间"].HeaderText = "领料日期、时间";

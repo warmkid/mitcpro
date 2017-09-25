@@ -609,12 +609,14 @@ namespace mySystem.Process.Bag.CS
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ColumnHeadersHeight = 40;
+            //隐藏
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T生产退料记录ID"].Visible = false;
+            //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
             //dataGridView1.Columns["物料代码"].ReadOnly = true;
             dataGridView1.Columns["物料简称"].ReadOnly = true;
-            dataGridView1.Columns["物料批号"].ReadOnly = true;
+            //dataGridView1.Columns["物料批号"].ReadOnly = true;
             //dataGridView1.Columns["物料简称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 

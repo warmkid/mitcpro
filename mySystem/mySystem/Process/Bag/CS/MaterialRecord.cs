@@ -639,7 +639,7 @@ namespace mySystem.Process.Bag
             dataGridView1.Columns["序号"].ReadOnly = true;
             //dataGridView1.Columns["物料代码"].ReadOnly = true;
             dataGridView1.Columns["物料简称"].ReadOnly = true;
-            dataGridView1.Columns["物料批号"].ReadOnly = true;
+            //dataGridView1.Columns["物料批号"].ReadOnly = true;
             //dataGridView1.Columns["物料平衡"].ReadOnly = true;
             dataGridView1.Columns["审核员"].ReadOnly = true;
             //HeaderText
