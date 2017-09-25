@@ -561,14 +561,14 @@ namespace mySystem.Process.Bag.LDPE
             {
                 switch (dc.ColumnName)
                 {
-                    case "物料简称":
+                    case "物料代码":
                         cbc = new DataGridViewComboBoxColumn();
                         cbc.DataPropertyName = dc.ColumnName;
                         cbc.HeaderText = dc.ColumnName;
                         cbc.Name = dc.ColumnName;
                         cbc.ValueType = dc.DataType;
                         for (int i = 0; i < dt物料.Rows.Count; i++)
-                        { cbc.Items.Add(dt物料.Rows[i]["物料简称"].ToString()); }
+                        { cbc.Items.Add(dt物料.Rows[i]["物料代码"].ToString()); }
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -603,7 +603,8 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns["T生产领料使用记录ID"].Visible = false;
             //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.Columns["物料代码"].ReadOnly = true;
+            //dataGridView1.Columns["物料代码"].ReadOnly = true;
+            dataGridView1.Columns["物料简称"].ReadOnly = true;
             dataGridView1.Columns["物料批号"].ReadOnly = true;
             dataGridView1.Columns["审核员"].ReadOnly = true;
             //HeaderText
@@ -1057,7 +1058,8 @@ namespace mySystem.Process.Bag.LDPE
                 List<String> ls批号原始 = new List<string>();
                 List<String> ls批号 = new List<string>();
                 //从数据库获取信息->ls批号原始
-                DataRow[] dr物料 = dt物料.Select("物料简称 = '" + dt记录详情.Rows[i]["物料简称"].ToString() + "'");
+                //DataRow[] dr物料 = dt物料.Select("物料简称 = '" + dt记录详情.Rows[i]["物料简称"].ToString() + "'");
+                DataRow[] dr物料 = dt物料.Select("物料代码 = '" + dt记录详情.Rows[i]["物料代码"].ToString() + "'");
                 string[] s = Regex.Split(dr物料[0]["物料批号"].ToString(), ",|，");
                 for (int j = 0; j < s.Length; j++)
                 { if (s[j] != "") { ls批号原始.Add(s[j]); } }
@@ -1132,15 +1134,24 @@ namespace mySystem.Process.Bag.LDPE
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
                     }
                 }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "物料简称")
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "物料代码")
                 {
-                    DataRow[] drs =  dt物料.Select("物料简称='" + dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString() + "'");
+                    DataRow[] drs = dt物料.Select("物料代码='" + dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString() + "'");
                     if (drs.Length > 0)
                     {
-                        dataGridView1["物料代码", e.RowIndex].Value = drs[0]["物料代码"];
+                        dataGridView1["物料简称", e.RowIndex].Value = drs[0]["物料简称"];
                         dataGridView1["物料批号", e.RowIndex].Value = drs[0]["物料批号"];
                     }
                 }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "物料简称")
+                //{
+                //    DataRow[] drs =  dt物料.Select("物料简称='" + dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString() + "'");
+                //    if (drs.Length > 0)
+                //    {
+                //        dataGridView1["物料代码", e.RowIndex].Value = drs[0]["物料代码"];
+                //        dataGridView1["物料批号", e.RowIndex].Value = drs[0]["物料批号"];
+                //    }
+                //}
             }
         }
         
