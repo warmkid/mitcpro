@@ -1100,43 +1100,42 @@ namespace mySystem.Process.Bag.PTV
         private void btn保存_Click(object sender, EventArgs e)
         {
             //检查物料代码是否合法
-            //TODO:  *****有待替换
             if (hs物料代码.Count > 0)
             {
                 if (!hs物料代码.Contains(tb内包物料代码1.Text))
                 {
-                    MessageBox.Show("内包装****物料代码 有误！");
+                    MessageBox.Show("内包装" + tb内包物料名称1.Text + "物料代码 有误！");
                     return;
                 }
                 if (!hs物料代码.Contains(tb内包物料代码2.Text))
                 {
-                    MessageBox.Show("内包装****物料代码 有误！");
+                    MessageBox.Show("内包装" + tb内包物料名称2.Text + "物料代码 有误！");
                     return;
                 }
                 if (!hs物料代码.Contains(tb内包物料代码3.Text))
                 {
-                    MessageBox.Show("内包装****物料代码 有误！");
+                    MessageBox.Show("内包装" + tb内包物料名称3.Text + "物料代码 有误！");
                     return;
                 }
                 if (!hs物料代码.Contains(tb内包物料代码4.Text))
                 {
-                    MessageBox.Show("内包装****物料代码 有误！");
+                    MessageBox.Show("内包装" + tb内包物料名称4.Text + "物料代码 有误！");
                     return;
                 }
 
                 if (!hs物料代码.Contains(tb外包物料代码1.Text))
                 {
-                    MessageBox.Show("外包装****物料代码 有误！");
+                    MessageBox.Show("外包装" + tb内包物料名称1.Text + "物料代码 有误！");
                     return;
                 }
                 if (!hs物料代码.Contains(tb外包物料代码2.Text))
                 {
-                    MessageBox.Show("外包装****物料代码 有误！");
+                    MessageBox.Show("外包装" + tb内包物料名称2.Text + "物料代码 有误！");
                     return;
                 }
                 if (!hs物料代码.Contains(tb外包物料代码3.Text))
                 {
-                    MessageBox.Show("外包装****物料代码 有误！");
+                    MessageBox.Show("外包装" + tb内包物料名称3.Text + "物料代码 有误！");
                     return;
                 }
             }

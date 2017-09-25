@@ -882,6 +882,65 @@ namespace mySystem.Process.Bag.CS
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            if (hs物料代码.Count > 0)
+            {
+                if (!hs物料代码.Contains(tb制袋物料代码1.Text))
+                {
+                    MessageBox.Show("制袋 " + tb制袋物料名称1.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb制袋物料代码2.Text))
+                {
+                    MessageBox.Show("制袋 " + tb制袋物料名称2.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb制袋物料代码3.Text))
+                {
+                    MessageBox.Show("制袋 " + tb制袋物料名称3.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码1.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称1.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码2.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称2.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码3.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称3.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码4.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称4.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码1.Text))
+                {
+                    MessageBox.Show("外包装 " + tb外包物料名称1.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码2.Text))
+                {
+                    MessageBox.Show("外包装 " + tb外包物料名称2.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb外包物料代码3.Text))
+                {
+                    MessageBox.Show("外包装 " + tb外包物料名称3.Text + " 物料代码 有误！");
+                    return;
+                }
+            }
+            else
+            {
+                MessageBox.Show("存档中物料代码不存在，保存失败！");
+                return;
+            }
+
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
@@ -1228,6 +1287,11 @@ namespace mySystem.Process.Bag.CS
                 dtOuter.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日")); 
             my.Cells[18 + ind, 7].Value = String.Format("接收人：{0}   {1}",
                 dtOuter.Rows[0]["接收人"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["接收时间"]).ToString("yyyy年MM月dd日"));
+
+        }
+
+        private void tb内包物料领料量1_TextChanged(object sender, EventArgs e)
+        {
 
         }
 

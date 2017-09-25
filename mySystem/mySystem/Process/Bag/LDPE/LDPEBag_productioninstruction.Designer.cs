@@ -255,7 +255,6 @@
             // 
             this.tb外包物料领料量3.Location = new System.Drawing.Point(684, 490);
             this.tb外包物料领料量3.Name = "tb外包物料领料量3";
-            this.tb外包物料领料量3.ReadOnly = true;
             this.tb外包物料领料量3.Size = new System.Drawing.Size(88, 21);
             this.tb外包物料领料量3.TabIndex = 234;
             // 
@@ -468,6 +467,7 @@
             // 
             this.tb制袋物料名称2.Location = new System.Drawing.Point(151, 226);
             this.tb制袋物料名称2.Name = "tb制袋物料名称2";
+            this.tb制袋物料名称2.ReadOnly = true;
             this.tb制袋物料名称2.Size = new System.Drawing.Size(152, 21);
             this.tb制袋物料名称2.TabIndex = 210;
             // 
@@ -475,6 +475,7 @@
             // 
             this.tb制袋物料名称1.Location = new System.Drawing.Point(151, 199);
             this.tb制袋物料名称1.Name = "tb制袋物料名称1";
+            this.tb制袋物料名称1.ReadOnly = true;
             this.tb制袋物料名称1.Size = new System.Drawing.Size(152, 21);
             this.tb制袋物料名称1.TabIndex = 209;
             // 
@@ -680,7 +681,6 @@
             // 
             this.tb外包物料领料量2.Location = new System.Drawing.Point(684, 459);
             this.tb外包物料领料量2.Name = "tb外包物料领料量2";
-            this.tb外包物料领料量2.ReadOnly = true;
             this.tb外包物料领料量2.Size = new System.Drawing.Size(88, 21);
             this.tb外包物料领料量2.TabIndex = 185;
             // 
@@ -702,7 +702,6 @@
             // 
             this.tb外包物料领料量1.Location = new System.Drawing.Point(684, 428);
             this.tb外包物料领料量1.Name = "tb外包物料领料量1";
-            this.tb外包物料领料量1.ReadOnly = true;
             this.tb外包物料领料量1.Size = new System.Drawing.Size(88, 21);
             this.tb外包物料领料量1.TabIndex = 182;
             // 
@@ -734,7 +733,6 @@
             // 
             this.tb内包物料领料量2.Location = new System.Drawing.Point(684, 327);
             this.tb内包物料领料量2.Name = "tb内包物料领料量2";
-            this.tb内包物料领料量2.ReadOnly = true;
             this.tb内包物料领料量2.Size = new System.Drawing.Size(88, 21);
             this.tb内包物料领料量2.TabIndex = 178;
             // 
@@ -742,7 +740,6 @@
             // 
             this.tb内包物料领料量1.Location = new System.Drawing.Point(684, 299);
             this.tb内包物料领料量1.Name = "tb内包物料领料量1";
-            this.tb内包物料领料量1.ReadOnly = true;
             this.tb内包物料领料量1.Size = new System.Drawing.Size(88, 21);
             this.tb内包物料领料量1.TabIndex = 177;
             // 
@@ -750,7 +747,6 @@
             // 
             this.tb制袋物料领料量3.Location = new System.Drawing.Point(684, 253);
             this.tb制袋物料领料量3.Name = "tb制袋物料领料量3";
-            this.tb制袋物料领料量3.ReadOnly = true;
             this.tb制袋物料领料量3.Size = new System.Drawing.Size(88, 21);
             this.tb制袋物料领料量3.TabIndex = 176;
             // 
@@ -1077,7 +1073,6 @@
             // 
             this.tb内包物料领料量4.Location = new System.Drawing.Point(684, 382);
             this.tb内包物料领料量4.Name = "tb内包物料领料量4";
-            this.tb内包物料领料量4.ReadOnly = true;
             this.tb内包物料领料量4.Size = new System.Drawing.Size(88, 21);
             this.tb内包物料领料量4.TabIndex = 253;
             // 
@@ -1085,7 +1080,6 @@
             // 
             this.tb内包物料领料量3.Location = new System.Drawing.Point(684, 354);
             this.tb内包物料领料量3.Name = "tb内包物料领料量3";
-            this.tb内包物料领料量3.ReadOnly = true;
             this.tb内包物料领料量3.Size = new System.Drawing.Size(88, 21);
             this.tb内包物料领料量3.TabIndex = 252;
             // 

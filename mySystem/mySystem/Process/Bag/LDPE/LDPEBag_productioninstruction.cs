@@ -1072,6 +1072,26 @@ namespace mySystem.Process.Bag.LDPE
                     MessageBox.Show("内包装 " + tb内包物料名称2.Text + " 物料代码 有误！");
                     return;
                 }
+                if (!hs物料代码.Contains(tb内包物料代码3.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称3.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码4.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称4.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码1.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称1.Text + " 物料代码 有误！");
+                    return;
+                }
+                if (!hs物料代码.Contains(tb内包物料代码2.Text))
+                {
+                    MessageBox.Show("内包装 " + tb内包物料名称2.Text + " 物料代码 有误！");
+                    return;
+                }
                 if (!hs物料代码.Contains(tb外包物料代码1.Text))
                 {
                     MessageBox.Show("外包装 " + tb外包物料名称1.Text + " 物料代码 有误！");
