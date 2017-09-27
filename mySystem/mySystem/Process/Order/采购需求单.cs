@@ -229,7 +229,7 @@ namespace mySystem.Process.Order
                     foreach (int k in tmp.Keys.OfType<int>().ToArray<int>())
                     {
                         if (!ht组件.ContainsKey(k)) ht组件[k] = 0;
-                        ht组件[k] = Convert.ToDouble(ht组件[k]) + Convert.ToDouble(tmp[k]);
+                        ht组件[k] = Math.Round(Convert.ToDouble(ht组件[k]) + Convert.ToDouble(tmp[k]), 2);
                     }
                     //
                 }
