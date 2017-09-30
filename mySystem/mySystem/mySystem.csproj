@@ -892,6 +892,12 @@
     <Compile Include="Process\Stock\文件上传.Designer.cs">
       <DependentUpon>文件上传.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Stock\材料退库出库单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Stock\材料退库出库单.Designer.cs">
+      <DependentUpon>材料退库出库单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Stock\检验台账.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1662,6 +1668,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\文件上传.resx">
       <DependentUpon>文件上传.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Stock\材料退库出库单.resx">
+      <DependentUpon>材料退库出库单.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Stock\检验台账.resx">
       <DependentUpon>检验台账.cs</DependentUpon>
