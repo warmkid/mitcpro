@@ -607,7 +607,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 switch (dc.ColumnName)
                 {
-                    case "物料简称":
+                    case "物料代码":
                         //IF READ ACCORDING TO ID, LET IT BE TEXTBOX
                         if (dt物料 == null)
                         {
@@ -628,7 +628,7 @@ namespace mySystem.Process.Bag.BTV
                         cbc.Name = dc.ColumnName;
                         cbc.ValueType = dc.DataType;
                         for (int i = 0; i < dt物料.Rows.Count; i++)
-                        { cbc.Items.Add(dt物料.Rows[i]["物料简称"].ToString()); }
+                        { cbc.Items.Add(dt物料.Rows[i]["物料代码"].ToString()); }
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -663,6 +663,8 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["T生产领料使用记录ID"].Visible = false;
             //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
+            dataGridView1.Columns["物料简称"].ReadOnly = true;
+            //dataGridView1.Columns["物料批号"].ReadOnly = true;
             //dataGridView1.Columns["物料代码"].ReadOnly = true;
             //dataGridView1.Columns["物料平衡"].ReadOnly = true;
             //dataGridView1.Columns["审核员"].ReadOnly = true;
@@ -1180,7 +1182,8 @@ namespace mySystem.Process.Bag.BTV
                 List<String> ls批号原始 = new List<string>();
                 List<String> ls批号 = new List<string>();
                 //从数据库获取信息->ls批号原始
-                DataRow[] dr物料 = dt物料.Select("物料简称 = '" + dt记录详情.Rows[i]["物料简称"].ToString() + "'");
+                //DataRow[] dr物料 = dt物料.Select("物料简称 = '" + dt记录详情.Rows[i]["物料简称"].ToString() + "'");
+                DataRow[] dr物料 = dt物料.Select("物料代码 = '" + dt记录详情.Rows[i]["物料代码"].ToString() + "'");
                 string[] s = Regex.Split(dr物料[0]["物料批号"].ToString(), ",|，");
                 for (int j = 0; j < s.Length; j++)
                 { if (s[j] != "") { ls批号原始.Add(s[j]); } }

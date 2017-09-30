@@ -556,7 +556,7 @@ namespace mySystem.Process.Bag.CS
             {
                 switch (dc.ColumnName)
                 {
-                    case "物料简称":
+                    case "物料代码":
                         cbc = new DataGridViewComboBoxColumn();
                         cbc.DataPropertyName = dc.ColumnName;
                         cbc.HeaderText = dc.ColumnName;
@@ -565,7 +565,7 @@ namespace mySystem.Process.Bag.CS
                         if (dt物料简称批号代码 != null)
                         {
                             for (int i = 0; i < dt物料简称批号代码.Rows.Count; i++)
-                            { cbc.Items.Add(dt物料简称批号代码.Rows[i]["物料简称"]); }
+                            { cbc.Items.Add(dt物料简称批号代码.Rows[i]["物料代码"]); }
                         }   
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
@@ -609,11 +609,14 @@ namespace mySystem.Process.Bag.CS
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ColumnHeadersHeight = 40;
+            //隐藏
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T生产退料记录ID"].Visible = false;
+            //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.Columns["物料代码"].ReadOnly = true;
-            dataGridView1.Columns["物料批号"].ReadOnly = true;
+            //dataGridView1.Columns["物料代码"].ReadOnly = true;
+            dataGridView1.Columns["物料简称"].ReadOnly = true;
+            //dataGridView1.Columns["物料批号"].ReadOnly = true;
             //dataGridView1.Columns["物料简称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
@@ -1057,16 +1060,24 @@ namespace mySystem.Process.Bag.CS
         {
             if (e.ColumnIndex >= 0)
             {
-                if (dataGridView1.Columns[e.ColumnIndex].Name == "物料简称")
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "物料代码")
                 {
-                    DataRow[] rows = dt物料简称批号代码.Select("物料简称 = '" + dt记录详情.Rows[e.RowIndex]["物料简称"].ToString() + "'");
+                    //DataRow[] rows = dt物料简称批号代码.Select("物料简称 = '" + dt记录详情.Rows[e.RowIndex]["物料简称"].ToString() + "'");
+                    //if (rows.Length > 0)
+                    //{
+                    //    dt记录详情.Rows[e.RowIndex]["物料代码"] = rows[0]["物料代码"];
+                    //    dt记录详情.Rows[e.RowIndex]["物料批号"] = rows[0]["物料批号"];
+                    //}
+                    //else
+                    //{ MessageBox.Show("尚未查到物料简称为『" + dt记录详情.Rows[e.RowIndex]["物料简称"].ToString() + "』的数据，请完善后再填写!"); }
+                    DataRow[] rows = dt物料简称批号代码.Select("物料代码 = '" + dt记录详情.Rows[e.RowIndex]["物料代码"].ToString() + "'");
                     if (rows.Length > 0)
                     {
-                        dt记录详情.Rows[e.RowIndex]["物料代码"] = rows[0]["物料代码"];
+                        dt记录详情.Rows[e.RowIndex]["物料简称"] = rows[0]["物料简称"];
                         dt记录详情.Rows[e.RowIndex]["物料批号"] = rows[0]["物料批号"];
                     }
                     else
-                    { MessageBox.Show("尚未查到物料简称为『" + dt记录详情.Rows[e.RowIndex]["物料简称"].ToString() + "』的数据，请完善后再填写!"); }
+                    { MessageBox.Show("尚未查到物料代码为『" + dt记录详情.Rows[e.RowIndex]["物料代码"].ToString() + "』的数据，请完善后再填写!"); }
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
                 {

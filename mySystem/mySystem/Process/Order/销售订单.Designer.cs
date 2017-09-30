@@ -78,7 +78,7 @@
             this.lbl件数合计 = new System.Windows.Forms.Label();
             this.lbl数量合计 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.lbl价税合计合计 = new System.Windows.Forms.Label();
+            this.lbl价税总计 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.btn查看日志 = new System.Windows.Forms.Button();
             this.dtp拟交货日期 = new System.Windows.Forms.DateTimePicker();
@@ -569,15 +569,15 @@
             this.label20.TabIndex = 129;
             this.label20.Text = "数量合计：";
             // 
-            // lbl价税合计合计
+            // lbl价税总计
             // 
-            this.lbl价税合计合计.AutoSize = true;
-            this.lbl价税合计合计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbl价税合计合计.Location = new System.Drawing.Point(817, 520);
-            this.lbl价税合计合计.Name = "lbl价税合计合计";
-            this.lbl价税合计合计.Size = new System.Drawing.Size(16, 16);
-            this.lbl价税合计合计.TabIndex = 132;
-            this.lbl价税合计合计.Text = "0";
+            this.lbl价税总计.AutoSize = true;
+            this.lbl价税总计.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbl价税总计.Location = new System.Drawing.Point(817, 520);
+            this.lbl价税总计.Name = "lbl价税总计";
+            this.lbl价税总计.Size = new System.Drawing.Size(16, 16);
+            this.lbl价税总计.TabIndex = 132;
+            this.lbl价税总计.Text = "0";
             // 
             // label22
             // 
@@ -585,9 +585,9 @@
             this.label22.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label22.Location = new System.Drawing.Point(704, 520);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(120, 16);
+            this.label22.Size = new System.Drawing.Size(88, 16);
             this.label22.TabIndex = 131;
-            this.label22.Text = "价税合计合计：";
+            this.label22.Text = "价税总计：";
             // 
             // btn查看日志
             // 
@@ -626,7 +626,7 @@
             this.Controls.Add(this.dtp拟交货日期);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.btn查看日志);
-            this.Controls.Add(this.lbl价税合计合计);
+            this.Controls.Add(this.lbl价税总计);
             this.Controls.Add(this.label22);
             this.Controls.Add(this.lbl数量合计);
             this.Controls.Add(this.label20);
@@ -738,7 +738,7 @@
         private System.Windows.Forms.Label lbl件数合计;
         private System.Windows.Forms.Label lbl数量合计;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label lbl价税合计合计;
+        private System.Windows.Forms.Label lbl价税总计;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Button btn查看日志;
         private System.Windows.Forms.DateTimePicker dtp拟交货日期;

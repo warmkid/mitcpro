@@ -405,7 +405,7 @@ namespace mySystem.Process.Order
             dr["件数合计"] = 0;
             dr["数量合计"] = 0;
             dr["拟交货日期"] = DateTime.Now;
-            dr["价税合计合计"] = 0;
+            dr["价税总计"] = 0;
             string log = "=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 新建记录\n";
             dr["日志"] = log;
@@ -541,6 +541,7 @@ namespace mySystem.Process.Order
             dr["销售订单ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
             dr["数量"] = 0;
             dr["件数"] = 0;
+            dr["含税单价"] = 0;
             dr["价税合计"] = 0;
             return dr;
         }
@@ -822,6 +823,16 @@ namespace mySystem.Process.Order
                     if (idx >= 0)
                     {
                         dataGridView1["件数", e.RowIndex].Value = Math.Round( curDou / ld数量每件[idx],2);
+                        double danjia;
+                        try
+                        {
+                             danjia = Convert.ToDouble(dataGridView1["含税单价", e.RowIndex].Value);
+                        }
+                        catch
+                        {
+                            danjia = 0;
+                        }
+                        dataGridView1["价税合计", e.RowIndex].Value = Math.Round(curDou * danjia, 2);
                     }
                     calc合计();
                     break;
@@ -833,12 +844,43 @@ namespace mySystem.Process.Order
                     if (idx >= 0)
                     {
                         dataGridView1["数量", e.RowIndex].Value = Math.Round( curDou * ld数量每件[idx],2);
+                        double shulaing = Convert.ToDouble(dataGridView1["数量", e.RowIndex].Value);
+                        double danjia;
+                        try
+                        {
+                            danjia = Convert.ToDouble(dataGridView1["含税单价", e.RowIndex].Value);
+                        }
+                        catch
+                        {
+                            danjia = 0;
+                        }
+                        dataGridView1["价税合计", e.RowIndex].Value = Math.Round(shulaing * danjia, 2);
                     }
                     calc合计();
                     break;
-                case "价税合计":
+                case "含税单价":
+                    curStr = dataGridView1[e.ColumnIndex, e.RowIndex].Value.ToString();
+                    ok = double.TryParse(curStr, out curDou);
+                    if(!ok) break;
+                    idx = ls存货代码.IndexOf(dataGridView1["存货代码", e.RowIndex].Value.ToString());
+                    if (idx >= 0)
+                    {
+                        double shulaing;
+                        try
+                        {
+                             shulaing = Convert.ToDouble(dataGridView1["数量", e.RowIndex].Value);
+                        }
+                        catch
+                        {
+                            shulaing = 0;
+                        }
+                        dataGridView1["价税合计", e.RowIndex].Value = Math.Round(curDou * shulaing, 2);
+                    }
                     calc合计();
                     break;
+                //case "价税合计":
+                //    calc合计();
+                //    break;
             }
         }
 
@@ -855,6 +897,7 @@ namespace mySystem.Process.Order
             dataGridView1.Columns["销售订单ID"].Visible = false;
             dataGridView1.Columns["存货名称"].ReadOnly = true;
             dataGridView1.Columns["规格型号"].ReadOnly = true;
+            dataGridView1.Columns["价税合计"].ReadOnly = true;
         }
 
         void calc合计()
@@ -871,8 +914,8 @@ namespace mySystem.Process.Order
             }
             dtOuter.Rows[0]["件数合计"] = 件数合计;
             dtOuter.Rows[0]["数量合计"] = 数量合计;
-            dtOuter.Rows[0]["价税合计合计"] = 价税合计合计;
-            lbl价税合计合计.DataBindings[0].ReadValue();
+            dtOuter.Rows[0]["价税总计"] = 价税合计合计;
+            lbl价税总计.DataBindings[0].ReadValue();
             lbl数量合计.DataBindings[0].ReadValue();
             lbl件数合计.DataBindings[0].ReadValue();
         }
