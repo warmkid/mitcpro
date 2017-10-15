@@ -65,6 +65,10 @@
             this.label角色 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.Title = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btn删除 = new System.Windows.Forms.Button();
+            this.btn添加 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn审核
@@ -417,11 +421,45 @@
             this.Title.TabIndex = 38;
             this.Title.Text = "入库单";
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(852, 66);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(240, 280);
+            this.dataGridView1.TabIndex = 84;
+            // 
+            // btn删除
+            // 
+            this.btn删除.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn删除.Location = new System.Drawing.Point(1017, 371);
+            this.btn删除.Name = "btn删除";
+            this.btn删除.Size = new System.Drawing.Size(75, 23);
+            this.btn删除.TabIndex = 85;
+            this.btn删除.Text = "删除";
+            this.btn删除.UseVisualStyleBackColor = true;
+            this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
+            // 
+            // btn添加
+            // 
+            this.btn添加.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn添加.Location = new System.Drawing.Point(852, 371);
+            this.btn添加.Name = "btn添加";
+            this.btn添加.Size = new System.Drawing.Size(75, 23);
+            this.btn添加.TabIndex = 86;
+            this.btn添加.Text = "添加";
+            this.btn添加.UseVisualStyleBackColor = true;
+            this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
+            // 
             // 入库单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(853, 514);
+            this.ClientSize = new System.Drawing.Size(1117, 514);
+            this.Controls.Add(this.btn添加);
+            this.Controls.Add(this.btn删除);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btn审核);
             this.Controls.Add(this.btn提交审核);
             this.Controls.Add(this.btn保存);
@@ -461,6 +499,7 @@
             this.Controls.Add(this.Title);
             this.Name = "入库单";
             this.Text = "入库单";
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -505,5 +544,8 @@
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button btn提交审核;
         private System.Windows.Forms.Button btn保存;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btn删除;
+        private System.Windows.Forms.Button btn添加;
     }
 }

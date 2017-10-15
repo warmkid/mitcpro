@@ -24,10 +24,10 @@ namespace mySystem.Process.Stock
         /// </summary>
         mySystem.Parameter.FormState _formState;
 
-        OleDbDataAdapter daOuter;
-        OleDbCommandBuilder cbOuter ;
-        BindingSource bsOuter;
-        DataTable dtOuter;
+        OleDbDataAdapter daOuter, daInner;
+        OleDbCommandBuilder cbOuter, cbInner;
+        BindingSource bsOuter, bsInner;
+        DataTable dtOuter, dtInner;
 
         int _id;
        
@@ -44,6 +44,8 @@ namespace mySystem.Process.Stock
             setUseState();
             readOuterData(_id);
             outerBind();
+            readInnerData(_id);
+            innerBind();
             readFromBinding();
             setFormState();
             setEnableReadOnly();
@@ -51,8 +53,44 @@ namespace mySystem.Process.Stock
             
         }
 
+        void readInnerData(int id)
+        {
+            
+            dtInner = new DataTable("入库单详细信息");
+            bsInner = new BindingSource();
+            daInner = new OleDbDataAdapter("select * from 入库单详细信息 where 入库单ID=" + id, mySystem.Parameter.connOle);
+            cbInner = new OleDbCommandBuilder(daInner);
+            daInner.Fill(dtInner);
+        }
+
+        void innerBind()
+        {
+            bsInner.DataSource = dtInner;
+            dataGridView1.DataSource = bsInner.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+        }
+
         private void addOtherEventHandler()
         {
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+        }
+
+        void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.CurrentCell.OwningColumn.Name == "二维码" && dataGridView1.CurrentCell.RowIndex == dataGridView1.Rows.Count - 1)
+            {
+                DataRow dr = dtInner.NewRow();
+                dr["入库单ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+                dtInner.Rows.Add(dr);
+            }
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["入库单ID"].Visible = false;   
         }
 
         void readFromBinding()
@@ -272,6 +310,11 @@ namespace mySystem.Process.Stock
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(_id);
             outerBind();
+
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            innerBind();
+
             if (_userState == Parameter.UserState.操作员)
                 btn提交审核.Enabled = true;
         }
@@ -340,9 +383,11 @@ namespace mySystem.Process.Stock
                 // 生成取样记录
                 create取样记录();
                // 入库
-                insert库存台帐();
+                int 库存ID = insert库存台帐();
                 // 生成检验记录
                 create检验记录();
+                // 拿到库存ID，向两张二维码表插入数据
+                save二维码信息(dtInner, 库存ID);
             }
             else
             {
@@ -369,9 +414,41 @@ namespace mySystem.Process.Stock
             base.CheckResult();
         }
 
+        void save二维码信息(DataTable dt, int id)
+        {
+            OleDbDataAdapter daLishi, daXinxi;
+            OleDbCommandBuilder cbLishi, cbXinxi;
+            DataTable dtLishi, dtXinxi;
+            daLishi = new OleDbDataAdapter("select * from 二维码历史记录 where 0=1",mySystem.Parameter.connOle);
+            daXinxi = new OleDbDataAdapter("select * from 二维码信息 where 0=1", mySystem.Parameter.connOle);
+            cbLishi = new OleDbCommandBuilder(daLishi);
+            cbXinxi = new OleDbCommandBuilder(daXinxi);
+            dtLishi = new DataTable("二维码历史记录");
+            dtXinxi = new DataTable("二维码信息");
+            daLishi.Fill(dtLishi);
+            daXinxi.Fill(dtXinxi);
+            foreach (DataRow dr in dt.Rows)
+            {
+                string erweima = dr["二维码"].ToString();
+                if (erweima.Trim() == "") continue;
+                double shulaing = Convert.ToDouble(dr["数量"]);
+                DataRow ndr;
+                ndr = dtLishi.NewRow();
+                ndr["时间"] = DateTime.Now;
+                ndr["二维码"] = erweima;
+                ndr["操作"] = "入库";
+                dtLishi.Rows.Add(ndr);
+                ndr = dtXinxi.NewRow();
+                ndr["二维码"] = erweima;
+                ndr["库存ID"] = id;
+                ndr["数量"] = shulaing;
+                dtXinxi.Rows.Add(ndr);
+            }
+            daLishi.Update(dtLishi);
+            daXinxi.Update(dtXinxi);
+        }
 
-
-        public void insert库存台帐()
+        public int insert库存台帐()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 库存台帐 where " + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
             DataTable dt = new DataTable("库存台帐");
@@ -412,7 +489,13 @@ namespace mySystem.Process.Stock
 
             da.Update(dt);
 
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select @@identity";
+            Int32 idd1 = (Int32)comm.ExecuteScalar();
+
             MessageBox.Show("已加入库存台账！");
+            return idd1;
         }
 
 
@@ -627,6 +710,24 @@ namespace mySystem.Process.Stock
 
             da.Update(dt);
             MessageBox.Show("已自动生产检验记录！");
+        }
+
+        private void btn删除_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentCell != null)
+            {
+                dataGridView1.Rows.RemoveAt(dataGridView1.CurrentCell.RowIndex);
+                daInner.Update((DataTable)bsInner.DataSource);
+                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                innerBind();
+            }
+        }
+
+        private void btn添加_Click(object sender, EventArgs e)
+        {
+            DataRow dr = dtInner.NewRow();
+            dr["入库单ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            dtInner.Rows.Add(dr);
         }
 
     }
