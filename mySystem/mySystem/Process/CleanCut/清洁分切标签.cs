@@ -18,7 +18,7 @@ namespace mySystem.Process.CleanCut
         public 清洁分切标签()
         {
             InitializeComponent();
-
+            fill_printer();
             System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
             foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
             {
@@ -46,8 +46,18 @@ namespace mySystem.Process.CleanCut
         private void c打印机_SelectedIndexChanged(object sender, EventArgs e)
         {
             SetDefaultPrinter(c打印机.SelectedItem.ToString());
+            
         }
+        private void fill_printer()
+        {
 
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                c打印机.Items.Add(sPrint);
+            }
+            c打印机.SelectedItem = print.PrinterSettings.PrinterName;
+        }
         private void BtnPrint_Click(object sender, EventArgs e)
         {
             printLable();

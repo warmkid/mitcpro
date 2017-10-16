@@ -717,6 +717,7 @@ namespace mySystem.Process.Bag.BTV
                 this.dataGridView1.FirstDisplayedScrollingRowIndex = this.dataGridView1.Rows.Count - 1;
             }
             catch { }
+            //cb打印机.SelectedIndex = cb打印机.Items.Count - 1;
         }
 
         //修改单个控件的值

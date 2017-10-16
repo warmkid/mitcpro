@@ -709,6 +709,7 @@ namespace mySystem.Process.CleanCut
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //****************************** 小功能 ******************************//  
