@@ -28,7 +28,8 @@ namespace mySystem.Process.灭菌
         private BindingSource bs_prodinstr, bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
 
-        private List<string> list_产品代码,list_产品名称;
+        private HashSet<string> hs产品代码, hs纸箱规格;           
+        private Dictionary<string, string> dic代码_名称;
         private string person_操作员;
         private string person_审核员;
         private List<string> list_操作员;
@@ -106,7 +107,20 @@ namespace mySystem.Process.灭菌
                 if (tb != null)
                 {
                     AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
-                    acsc.AddRange(list_产品代码.ToArray());
+                    acsc.AddRange(hs产品代码.ToArray());
+                    tb.AutoCompleteCustomSource = acsc;
+                    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                }
+
+            }
+            if (dataGridView1.CurrentCell.OwningColumn.Name == "纸箱规格")
+            {
+                TextBox tb = e.Control as TextBox;
+                if (tb != null)
+                {
+                    AutoCompleteStringCollection acsc = new AutoCompleteStringCollection();
+                    acsc.AddRange(hs纸箱规格.ToArray());
                     tb.AutoCompleteCustomSource = acsc;
                     tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
                     tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
@@ -170,6 +184,8 @@ namespace mySystem.Process.灭菌
             dtp审批日期.DataBindings.Clear();
             tb操作人.DataBindings.Clear();
             dtp操作日期.DataBindings.Clear();
+            tb产品名称.DataBindings.Clear();
+            tb辐照剂量.DataBindings.Clear();
 
             bs_prodinstr.DataSource = dt_prodinstr;
 
@@ -185,6 +201,8 @@ namespace mySystem.Process.灭菌
             dtp审批日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "审批日期");
             tb操作人.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作人");
             dtp操作日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "操作日期");
+            tb产品名称.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品名称");
+            tb辐照剂量.DataBindings.Add("Text", bs_prodinstr.DataSource, "辐照剂量");
             
         }
 
@@ -241,19 +259,20 @@ namespace mySystem.Process.灭菌
                     //    }
                     //    dataGridView1.Columns.Add(c1);
                     //    break;
-                    case "产品名称":
-                        DataGridViewComboBoxColumn c5 = new DataGridViewComboBoxColumn();
-                        c5.DataPropertyName = dc.ColumnName;
-                        c5.HeaderText = "产品名称";
-                        c5.Name = dc.ColumnName;
-                        c5.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c5.ValueType = dc.DataType;
-                        foreach (string sdr in list_产品名称)
-                        {
-                            c5.Items.Add(sdr);
-                        }
-                        dataGridView1.Columns.Add(c5);
-                        break;
+
+                    //case "产品名称":
+                    //    DataGridViewComboBoxColumn c5 = new DataGridViewComboBoxColumn();
+                    //    c5.DataPropertyName = dc.ColumnName;
+                    //    c5.HeaderText = "产品名称";
+                    //    c5.Name = dc.ColumnName;
+                    //    c5.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //    c5.ValueType = dc.DataType;
+                    //    foreach (string sdr in list_产品名称)
+                    //    {
+                    //        c5.Items.Add(sdr);
+                    //    }
+                    //    dataGridView1.Columns.Add(c5);
+                    //    break;
                     case "数量箱":
                         DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
                         c3.DataPropertyName = dc.ColumnName;
@@ -292,7 +311,7 @@ namespace mySystem.Process.灭菌
         {
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            //dataGridView1.Columns[7].ReadOnly = true;//数量只
+            dataGridView1.Columns[7].ReadOnly = true;//数量只
         }
 
         // 刷新DataGridView中的列：序号
@@ -308,7 +327,10 @@ namespace mySystem.Process.灭菌
 	    // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
         void addDateEventHandler(){}
 	    // 设置自动计算类事件
-
+        void addOtherEvenHandler()
+        {
+            //dataGridView1.EditingControlShowing +=new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+        }
         // 打印函数
         void print(bool b)
         {
@@ -432,19 +454,25 @@ namespace mySystem.Process.灭菌
             get_辐照单位();
             get_运输商();
             get_产品代码();
-            get_产品名称();
+            get_纸箱规格();
             fill_printer();
         }
 
-        private void get_产品名称()
+        private void get_纸箱规格()
         {
-            list_产品名称 = new List<string>();
-            DataTable dt = new DataTable("设置产品名称");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置产品名称", mySystem.Parameter.connOle);
+            OleDbDataAdapter da;
+            DataTable dt;
+            hs纸箱规格= new HashSet<string>();
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 属于工序 like '%灭菌%'", Tconn);
+            dt = new DataTable("temp");
             da.Fill(dt);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            foreach (DataRow dr in dt.Rows)
             {
-                list_产品名称.Add(dt.Rows[i][1].ToString());
+                hs纸箱规格.Add(dr["规格型号"].ToString());
             }
         }
 
@@ -470,13 +498,31 @@ namespace mySystem.Process.灭菌
         }
         private void get_产品代码()
         {
-            list_产品代码 = new List<string>();
-            DataTable dt = new DataTable("设置灭菌产品代码");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置灭菌产品代码", mySystem.Parameter.connOle);
+            //list_产品代码 = new List<string>();
+            //DataTable dt = new DataTable("设置灭菌产品代码");
+            //OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置灭菌产品代码", mySystem.Parameter.connOle);
+            //da.Fill(dt);
+            //for (int i = 0; i < dt.Rows.Count; i++)
+            //{
+            //    list_产品代码.Add(dt.Rows[i][1].ToString());
+            //}
+
+
+            OleDbDataAdapter da;
+            DataTable dt;
+            hs产品代码 = new HashSet<string>();
+            dic代码_名称 = new Dictionary<string, string>();
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 属于工序 like '%灭菌%'", Tconn);
+            dt = new DataTable("temp");
             da.Fill(dt);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            foreach (DataRow dr in dt.Rows)
             {
-                list_产品代码.Add(dt.Rows[i][1].ToString());
+                hs产品代码.Add(dr["存货代码"].ToString());
+                dic代码_名称.Add(dr["存货代码"].ToString(), dr["存货名称"].ToString());
             }
         }
         // 获取操作员和审核员
@@ -568,6 +614,8 @@ namespace mySystem.Process.灭菌
             dataGridView1.ReadOnly = false;
             bt发送审核.Enabled = false;
             bt审核.Enabled = false;
+
+            tb产品名称.ReadOnly = true;
         }
         void setControlsFalse()
         {
@@ -790,6 +838,8 @@ namespace mySystem.Process.灭菌
             setFormState();
             setEnableReadOnly();
 
+            addOtherEvenHandler();
+
             tb委托单号.Enabled = false;
             bt查询插入.Enabled = false;
         }
@@ -804,6 +854,16 @@ namespace mySystem.Process.灭菌
             setDataGridViewRowNums();
             if (dataGridView1.Rows.Count > 0)
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+
+            if (dataGridView1.Rows.Count == 0)
+                tb产品名称.Text = "";
+            if (dataGridView1.Rows.Count == 1)
+            {
+                string temp=dataGridView1.Rows[0].Cells["产品代码"].Value.ToString();
+                if(temp!="")
+                    outerDataSync("tb产品名称", dic代码_名称[temp]);
+            }
+                
         }
 
         private void bt删除_Click(object sender, EventArgs e)
@@ -823,6 +883,15 @@ namespace mySystem.Process.灭菌
 
             //刷新合计
             sumDataGridView1();
+
+            if (dataGridView1.Rows.Count == 0)
+                tb产品名称.Text = "";
+            if (dataGridView1.Rows.Count == 1)
+            {
+                string temp = dataGridView1.Rows[0].Cells["产品代码"].Value.ToString();
+                if (temp != "")
+                    outerDataSync("tb产品名称", dic代码_名称[temp]);
+            }
         }
 
         //中文逗号转英文逗号
@@ -842,30 +911,62 @@ namespace mySystem.Process.灭菌
             return new string(c);
         }
 
+        /// <summary>
+        /// 确保控件和DataTable中的数据能同步的方法
+        /// 凡是需要在程序中通过代码来改变控件值时，请用本方法避免不同步的情况
+        /// 第一个参数是控件的变量名，第二个参数是要填入的值
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="val"></param>
+        private void outerDataSync(String name, String val)
+        {
+            foreach (Control c in this.Controls)
+            {
+                if (c.Name == name)
+                {
+                    c.Text = val;
+                    c.DataBindings[0].WriteValue();
+                }
+            }
+        }
         private void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
              if (e.RowIndex < 0)
                 return;
-             if (e.ColumnIndex == 2)
+             //if (e.ColumnIndex == 3)
+             //{
+             //    string str=ToDBC(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
+             //    string pattern = "([0-9][,]?)+";//正则表达式
+             //    if (!Regex.IsMatch(str, pattern))
+             //    {
+             //        MessageBox.Show("产品代码格式不符合规定，重新输入，例如 1,2,4");
+             //        dataGridView1.Rows[e.RowIndex].Cells[2].Value = "";
+             //        return;   
+             //    }
+             //}
+
+             if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
              {
-                 string str=ToDBC(dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString());
-                 string pattern = "([0-9][,]?)+";//正则表达式
-                 if (!Regex.IsMatch(str, pattern))
+                 float perweight = 0, num = 0;
+                 string temp1 = dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString();
+                 string temp2 = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
+                 if (temp1 != null && temp2 != null)
                  {
-                     MessageBox.Show("产品代码格式不符合规定，重新输入，例如 1,2,4");
-                     dataGridView1.Rows[e.RowIndex].Cells[2].Value = "";
-                     return;   
+                     perweight = float.Parse(temp1);
+                     num = float.Parse(temp2);
+                     dataGridView1.Rows[e.RowIndex].Cells[7].Value = num * perweight;
+                 }
+
+             }
+             sumDataGridView1();
+             if (e.ColumnIndex == 3 && e.RowIndex==0)
+             {
+                 string temp = dataGridView1.Rows[0].Cells["产品代码"].Value.ToString();
+                 if (temp != "")
+                 {
+                     outerDataSync("tb产品名称", dic代码_名称[temp]);
                  }
              }
-
-             //if (e.ColumnIndex == 6 || e.ColumnIndex == 8)
-             //{
-             //    float perweight = 0, num = 0;
-             //    perweight = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
-             //    num = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString());
-             //    dataGridView1.Rows[e.RowIndex].Cells[7].Value = num*perweight;
-             //}
-             sumDataGridView1();
         }
 
         //刷新合计

@@ -495,8 +495,8 @@ namespace mySystem.Process.CleanCut
             cb产品代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品代码");
             tb产品规格.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品规格");
             tb产品批号.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品批号");
-            tb清场人.DataBindings.Add("Text", bs_prodinstr.DataSource, "清场人");
-            tb检查人.DataBindings.Add("Text", bs_prodinstr.DataSource, "检查人");
+            tb清场人.DataBindings.Add("Text", bs_prodinstr.DataSource, "确认人");
+            tb检查人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审核人");
             dtp生产日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "生产日期");
             tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "备注");
             tb操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作员备注");
