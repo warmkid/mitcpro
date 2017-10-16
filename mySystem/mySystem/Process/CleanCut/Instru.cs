@@ -486,6 +486,7 @@ namespace mySystem.Process.CleanCut
             dr["序号"] = 0;
             dr["数量卷"] = 0;
             dr["数量米"] = 0;
+            dr["分切后卷数"] = 1;
             return dr;
         }
         // 根据条件从数据库中读取一行外表的数据
