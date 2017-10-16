@@ -54,6 +54,16 @@ namespace mySystem.Process.Bag
             {
 
             }
+            //默认下拉框选最后一个
+            comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
+            Parameter.csbagInstruction = comboBox1.SelectedItem.ToString();
+            String tblName = "生产指令";
+            List<String> queryCols = new List<String>(new String[] { "ID" });
+            List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
+            List<Object> whereVals = new List<Object>(new Object[] { Parameter.csbagInstruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            Parameter.csbagInstruID = Convert.ToInt32(res[0][0]);
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)

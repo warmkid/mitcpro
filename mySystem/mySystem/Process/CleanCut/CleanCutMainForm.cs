@@ -25,6 +25,7 @@ namespace mySystem.Process.CleanCut
 
         private void Init()
         {
+            HashSet<String> hash = new HashSet<String>();
             if (!Parameter.isSqlOk)
             {
                 OleDbCommand comm = new OleDbCommand();
@@ -35,9 +36,14 @@ namespace mySystem.Process.CleanCut
                 {
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["生产指令编号"]);  //下拉框获取生产指令
+                        hash.Add(reader["生产指令编号"].ToString());
+                    }
+                    foreach (String code in hash)
+                    {
+                        comboBox1.Items.Add(code);
                     }
                 }
+                comm.Dispose();
             }
             else
             {
@@ -49,11 +55,25 @@ namespace mySystem.Process.CleanCut
                 {
                     while (reader.Read())
                     {
-                        comboBox1.Items.Add(reader["生产指令编号"]);
+                        hash.Add(reader["生产指令编号"].ToString());
+                    }
+                    foreach (String code in hash)
+                    {
+                        comboBox1.Items.Add(code);
                     }
                 }
+                comm.Dispose();
 
             }
+            //默认下拉框选最后一个
+            comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
+            Parameter.cleancutInstruction = comboBox1.SelectedItem.ToString();
+            String tblName = "清洁分切工序生产指令";
+            List<String> queryCols = new List<String>(new String[] { "ID" });
+            List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
+            List<Object> whereVals = new List<Object>(new Object[] { Parameter.cleancutInstruction });
+            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            Parameter.cleancutInstruID = Convert.ToInt32(res[0][0]);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
