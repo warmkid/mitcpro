@@ -654,7 +654,7 @@
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label7);
-            this.groupBox1.Location = new System.Drawing.Point(54, 97);
+            this.groupBox1.Location = new System.Drawing.Point(-251, 97);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(150, 85);
             this.groupBox1.TabIndex = 44;
@@ -811,7 +811,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1111, 587);
+            this.ClientSize = new System.Drawing.Size(806, 587);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.btn查看日志);

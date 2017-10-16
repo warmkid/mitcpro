@@ -55,7 +55,7 @@ namespace mySystem.Process.CleanCut
             setUserState();
             getOtherData();
             addDataEventHandler();
-
+            fill_printer();
             readOuterData(mySystem.Parameter.cleancutInstruID);
             outerBind();
 
@@ -883,6 +883,17 @@ namespace mySystem.Process.CleanCut
             daOuter.Update((DataTable)bsOuter.DataSource);
         }
 
+        [DllImport("winspool.drv")]
+        public static extern bool SetDefaultPrinter(string Name);
+        private void fill_printer()
+        {
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cmb打印.Items.Add(sPrint);
+            }
+            cmb打印.SelectedItem = print.PrinterSettings.PrinterName;
+        }
         private void bt打印_Click(object sender, EventArgs e)
         {
 

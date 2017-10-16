@@ -824,7 +824,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(1199, 75);
+            this.dataGridView1.Size = new System.Drawing.Size(695, 75);
             this.dataGridView1.TabIndex = 36;
             // 
             // dtp计划生产日期
@@ -1089,7 +1089,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1310, 715);
+            this.ClientSize = new System.Drawing.Size(806, 587);
             this.Controls.Add(this.btn外包白班);
             this.Controls.Add(this.btn外包夜班);
             this.Controls.Add(this.btn制袋内包夜班);
