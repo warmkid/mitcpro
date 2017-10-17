@@ -36,6 +36,7 @@
             this.btn入库 = new System.Windows.Forms.Button();
             this.btn读取 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btn出库退库单 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -123,11 +124,22 @@
             this.dataGridView1.TabIndex = 3;
             this.dataGridView1.Visible = false;
             // 
+            // btn出库退库单
+            // 
+            this.btn出库退库单.Location = new System.Drawing.Point(361, 289);
+            this.btn出库退库单.Name = "btn出库退库单";
+            this.btn出库退库单.Size = new System.Drawing.Size(75, 23);
+            this.btn出库退库单.TabIndex = 11;
+            this.btn出库退库单.Text = "出库/退库单";
+            this.btn出库退库单.UseVisualStyleBackColor = true;
+            this.btn出库退库单.Click += new System.EventHandler(this.btn出库退库单_Click);
+            // 
             // 库存管理
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(878, 407);
+            this.Controls.Add(this.btn出库退库单);
             this.Controls.Add(this.btn读取);
             this.Controls.Add(this.btn文件上传);
             this.Controls.Add(this.btn检验台账);
@@ -153,5 +165,6 @@
         private System.Windows.Forms.Button btn文件上传;
         private System.Windows.Forms.Button btn读取;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button btn出库退库单;
     }
 }

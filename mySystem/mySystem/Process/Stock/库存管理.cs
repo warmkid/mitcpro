@@ -120,6 +120,12 @@ namespace 订单和库存管理
             bindControl();
         }
 
+        private void btn出库退库单_Click(object sender, EventArgs e)
+        {
+            mySystem.Process.Stock.出库退库单 form = new mySystem.Process.Stock.出库退库单(mainform);
+            form.Show();
+        }
+
 
     }
 }
