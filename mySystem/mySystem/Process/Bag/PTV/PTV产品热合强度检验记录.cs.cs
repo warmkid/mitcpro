@@ -6,16 +6,15 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Data.OleDb;
 using System.Collections;
+using System.Data.OleDb;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-namespace mySystem.Process.Bag.CS
+namespace mySystem.Process.Bag.PTV
 {
-    public partial class 产品热合强度检验记录 : BaseForm
+    public partial class PTV产品热合强度检验记录 : BaseForm
     {
-
         // TODO ：要加到Mainform中去
         // TODO: 打印  选打印机
         // TODO：构造函数添加参数mainform
@@ -24,7 +23,7 @@ namespace mySystem.Process.Bag.CS
         // 需要保存的状态
         Parameter.UserState _userState;
         Parameter.FormState _formState;
-        int _id,_instrId;
+        int _id, _instrId;
         String _code;
 
         // 显示界面需要的信息
@@ -38,7 +37,7 @@ namespace mySystem.Process.Bag.CS
 
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
+                                Data Source=../../database/PTV.mdb;Persist Security Info=False";
         OleDbConnection conn;
         OleDbDataAdapter daOuter, daInner;
         OleDbCommandBuilder cbOuter, cbInner;
@@ -47,7 +46,8 @@ namespace mySystem.Process.Bag.CS
 
         CheckForm ckForm = null;
 
-        public 产品热合强度检验记录(MainForm mainform):base(mainform)
+        public PTV产品热合强度检验记录(MainForm mainform) 
+            : base(mainform)
         {
             InitializeComponent();
             fill_printer();
@@ -80,8 +80,8 @@ namespace mySystem.Process.Bag.CS
 
         }
 
-
-        public 产品热合强度检验记录(MainForm mainform,int id):base(mainform)
+        public PTV产品热合强度检验记录(MainForm mainform, int id) 
+            : base(mainform)
         {
             InitializeComponent();
             fill_printer();
@@ -103,8 +103,7 @@ namespace mySystem.Process.Bag.CS
             addComputerEventHandler();
             addOtherEvenHandler();
         }
-
-
+        
         /// <summary>
         /// 所有变量实例化，一些固定的变量赋值
         /// </summary>
@@ -131,9 +130,9 @@ namespace mySystem.Process.Bag.CS
 
         void setKeyInfoFromDataTable()
         {
-            _instrId = mySystem.Parameter.csbagInstruID;
-            _id = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
-            _code = mySystem.Parameter.csbagInstruction;
+            _instrId = mySystem.Parameter.ptvbagInstruID;
+            _id = Convert.ToInt32(dtOuter.Rows[0]["ID"]); 
+            _code = mySystem.Parameter.ptvbagInstruction;
         }
 
         /// <summary>
@@ -153,7 +152,7 @@ namespace mySystem.Process.Bag.CS
             //ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
 
             //ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
-            
+
             if (dt.Rows.Count > 0)
             {
                 string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
@@ -169,6 +168,7 @@ namespace mySystem.Process.Bag.CS
                         ls审核员.Add(s1[i]);
                 }
             }
+
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace mySystem.Process.Bag.CS
         /// </summary>
         void getOuterOtherData()
         {
-            
+
         }
 
         /// <summary>
@@ -216,7 +216,7 @@ namespace mySystem.Process.Bag.CS
         void readOuterData()
         {
             string sql = "select * from 产品热合强度检验记录 where 生产指令ID={0} and 整理时间=#{1}#";
-            daOuter = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.csbagInstruID, nowString), conn);
+            daOuter = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.ptvbagInstruID, nowString), conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("产品热合强度检验记录");
             bsOuter = new BindingSource();
@@ -232,14 +232,14 @@ namespace mySystem.Process.Bag.CS
         /// <returns></returns>
         DataRow writeOuterDefault(DataRow dr)
         {
-            dr["生产指令ID"] = mySystem.Parameter.csbagInstruID;
+            dr["生产指令ID"] = mySystem.Parameter.ptvbagInstruID;
             dr["标准"] = 15;
             dr["整理人"] = mySystem.Parameter.userName;
             dr["整理时间"] = nowString;
             dr["审核日期"] = DateTime.Now;
             string log = "===================================\n";
-            log+="时间： "+DateTime.Now.ToLocalTime()+"\n";
-            log+="生产指令： "+mySystem.Parameter.csbagInstruction+"\n";
+            log += "时间： " + DateTime.Now.ToLocalTime() + "\n";
+            log += "生产指令： " + mySystem.Parameter.ptvbagInstruction + "\n";
             log += mySystem.Parameter.userName + " 开始填写产品热合检验记录";
             dr["日志"] = log;
             return dr;
@@ -311,7 +311,7 @@ namespace mySystem.Process.Bag.CS
             dr["产品批号"] = 产品批号;
             dr["生产日期"] = DateTime.Now.ToString("yyyy年MM月dd日");
             dr["生产时间"] = DateTime.Now.ToString("HH:mm");
-            dr["判定"] = "Y"; 
+            dr["判定"] = "Y";
             dr["位置1"] = "东";
             dr["位置2"] = "左";
             dr["检测人"] = mySystem.Parameter.userName;
@@ -633,7 +633,7 @@ namespace mySystem.Process.Bag.CS
             //dataGridView1.DataError += dataGridView1_DataError;
 
             // TODO 更多条件有待补充
-            
+
             return true;
         }
 
@@ -710,6 +710,7 @@ namespace mySystem.Process.Bag.CS
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+
             if (setDataGridViewBackColor() == false)
             {
                 MessageBox.Show("红色的检测值不符合要求，不可保存！");
@@ -728,7 +729,7 @@ namespace mySystem.Process.Bag.CS
 
             if (_userState == Parameter.UserState.操作员) btn提交审核.Enabled = true;
         }
-
+          
         private void btn提交审核_Click(object sender, EventArgs e)
         {
 
@@ -781,7 +782,7 @@ namespace mySystem.Process.Bag.CS
         {
 
 
-            
+
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
             DataTable dt;
@@ -796,7 +797,7 @@ namespace mySystem.Process.Bag.CS
 
 
             base.CheckResult();
-            
+
 
             dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核是否通过"] = ckForm.ischeckOk;
@@ -804,7 +805,7 @@ namespace mySystem.Process.Bag.CS
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
             log += "审核结果为：" + (ckForm.ischeckOk ? "通过" : "不通过") + "\n";
-            log += "审核意见为："+ckForm.opinion+"\n";
+            log += "审核意见为：" + ckForm.opinion + "\n";
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             btn保存.PerformClick();
             setFormState();
@@ -898,7 +899,7 @@ namespace mySystem.Process.Bag.CS
             print(false);
             GC.Collect();
         }
-
+        
         //打印功能
         public void print(bool isShow)
         {
@@ -1039,6 +1040,6 @@ namespace mySystem.Process.Bag.CS
             //返回
             return mysheet;
         }
-          
+
     }
 }

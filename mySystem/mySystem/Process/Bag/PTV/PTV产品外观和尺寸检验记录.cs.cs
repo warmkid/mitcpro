@@ -10,10 +10,10 @@ using System.Data.OleDb;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
-namespace mySystem.Process.Bag.LDPE
+namespace mySystem.Process.Bag.PTV
 {
-    public partial class 产品外观和尺寸检验记录 : BaseForm
-    {
+    public partial class PTV产品外观和尺寸检验记录 : BaseForm
+    {        
         // TODO   需要从Parameter 中读取生产指令ID或编号，这里假装填写当前生产指令编号和ID
         string CODE;
         int ID;
@@ -45,7 +45,7 @@ namespace mySystem.Process.Bag.LDPE
 
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/LDPE.mdb;Persist Security Info=False";
+                                Data Source=../../database/PTV.mdb;Persist Security Info=False";
         OleDbConnection conn;
         OleDbDataAdapter daOuter, daInner;
         OleDbCommandBuilder cbOuter, cbInner;
@@ -53,7 +53,7 @@ namespace mySystem.Process.Bag.LDPE
         BindingSource bsOuter, bsInner;
 
 
-        public 产品外观和尺寸检验记录(MainForm mainform)
+        public PTV产品外观和尺寸检验记录(MainForm mainform) 
             : base(mainform)
         {
             InitializeComponent();
@@ -85,8 +85,8 @@ namespace mySystem.Process.Bag.LDPE
             addComputerEventHandler();
             addOtherEvenHandler();
         }
-
-        public 产品外观和尺寸检验记录(MainForm mainform, int id)
+        
+        public PTV产品外观和尺寸检验记录(MainForm mainform, int id) 
             : base(mainform)
         {
             // 待显示
@@ -116,19 +116,19 @@ namespace mySystem.Process.Bag.LDPE
             addComputerEventHandler();
             addOtherEvenHandler();
         }
-
+        
         void variableInit()
         {
             conn = new OleDbConnection(strConn);
             conn.Open();
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            i生产指令ID = mySystem.Parameter.ldpebagInstruID;
-            str生产指令编号 = mySystem.Parameter.ldpebagInstruction;
+            i生产指令ID = mySystem.Parameter.ptvbagInstruID;
+            str生产指令编号 = mySystem.Parameter.ptvbagInstruction;
             ID = i生产指令ID;
             CODE = str生产指令编号;
         }
-
+        
         void variableInit(int id)
         {
             conn = new OleDbConnection(strConn);
@@ -144,7 +144,7 @@ namespace mySystem.Process.Bag.LDPE
             da.Fill(dt);
             str生产指令编号 = dt.Rows[0]["生产指令编号"].ToString();
         }
-
+        
         void getOtherData()
         {
             // 读取用于显示界面的重要信息
@@ -203,7 +203,7 @@ namespace mySystem.Process.Bag.LDPE
 
             daOuter.Fill(dtOuter);
         }
-
+        
         DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = i生产指令ID;
@@ -222,7 +222,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["不良合计"] = 0;
             return dr;
         }
-
+        
         void outerBind()
         {
             bsOuter.DataSource = dtOuter;
@@ -339,7 +339,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns[10].HeaderText = "抽样时间（尺寸）";
             dataGridView1.Columns[14].HeaderText = "判定（尺寸）";
         }
-
+        
         DataRow writeInnerDefault(DataRow dr)
         {
             dr["T产品外观和尺寸检验记录ID"] = dtOuter.Rows[0]["ID"];
@@ -358,7 +358,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["判定尺寸检测"] = "合格";
             return dr;
         }
-
+        
         void innerBind()
         {
             bsInner.DataSource = dtInner;
@@ -366,13 +366,13 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
-
+        
         // 获取和显示内容有关的变量
         void setFormVariable(int id)
         {
             _id = id;
         }
-        
+
         void getPeople()
         {
             OleDbDataAdapter da;
@@ -404,7 +404,7 @@ namespace mySystem.Process.Bag.LDPE
                 }
             }
         }
-        
+
         void setFormState()
         {
             //string s = dtOuter.Rows[0]["审核员"].ToString();
@@ -519,7 +519,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             dataGridView1.DataError += dataGridView1_DataError;
         }
-
+        
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             int sum;
@@ -638,7 +638,7 @@ namespace mySystem.Process.Bag.LDPE
         }
 
         private void btn添加_Click(object sender, EventArgs e)
-        {
+        {            
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
@@ -727,7 +727,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-            if (!dataValidate())
+             if (!dataValidate())
             {
                 MessageBox.Show("数据填写不完整，请仔细检查！");
                 return;
@@ -758,14 +758,14 @@ namespace mySystem.Process.Bag.LDPE
             setEnableReadOnly();
             btn提交审核.Enabled = false;
         }
-
+        
         bool dataValidate()
         {
             return true;
         }
 
         private void btn查看日志_Click(object sender, EventArgs e)
-        {
+        {            
             try
             {
                 MessageBox.Show(dtOuter.Rows[0]["日志"].ToString());
@@ -777,7 +777,7 @@ namespace mySystem.Process.Bag.LDPE
         }
 
         private void btn审核_Click(object sender, EventArgs e)
-        {
+        {            
             // TODO 弹出赵梦的窗口            
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
@@ -832,7 +832,7 @@ namespace mySystem.Process.Bag.LDPE
             print(false);
             GC.Collect();
         }
-
+        
         //打印功能
         public void print(bool isShow)
         {
@@ -975,5 +975,6 @@ namespace mySystem.Process.Bag.LDPE
             return mysheet;
         }
            
+
     }
 }

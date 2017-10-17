@@ -26,11 +26,11 @@ namespace mySystem.Process.Bag.BTV
         /// <summary>
         /// 0:操作员，1：审核员，2：管理员
         /// </summary>
-        int _userState;
+        Parameter.UserState _userState;
         /// <summary>
         /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
         /// </summary>
-        int _formState;
+        Parameter.FormState _formState;
         // 当前数据在自己表中的id
         int _id;
         String _code;
@@ -155,9 +155,28 @@ namespace mySystem.Process.Bag.BTV
 
         void setUseState()
         {
-            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 0;
-            else if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 1;
-            else _userState = 2;
+            //if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 0;
+            //else if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 1;
+            //else _userState = 2;
+
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
         // 读取数据，根据自己表的ID
@@ -387,38 +406,64 @@ namespace mySystem.Process.Bag.BTV
 
         void setFormState()
         {
+            //string s = dtOuter.Rows[0]["审核员"].ToString();
+            //bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核是否通过"]);
+            //if (s == "") _formState = 0;
+            //else if (s == "__待审核") _formState = 1;
+            //else
+            //{
+            //    if (b) _formState = 2;
+            //    else _formState = 3;
+            //}
             string s = dtOuter.Rows[0]["审核员"].ToString();
             bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核是否通过"]);
             if (s == "") _formState = 0;
-            else if (s == "__待审核") _formState = 1;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
             else
             {
-                if (b) _formState = 2;
-                else _formState = 3;
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
             }
         }
 
         void setEnableReadOnly()
         {
-            
-            if (2 == _userState)
+            if (Parameter.UserState.管理员 == _userState)
             {
                 setControlTrue();
             }
-            if (1 == _userState)
+            if (Parameter.UserState.审核员 == _userState)
             {
-                if (1 == _formState)
+                if (Parameter.FormState.待审核 == _formState)
                 {
                     setControlTrue();
                     btn审核.Enabled = true;
                 }
                 else setControlFalse();
             }
-            if (0 == _userState)
+            if (Parameter.UserState.操作员 == _userState)
             {
-                if (0 == _formState || 3 == _formState) setControlTrue();
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState) setControlTrue();
                 else setControlFalse();
             }
+            //if (2 == _userState)
+            //{
+            //    setControlTrue();
+            //}
+            //if (1 == _userState)
+            //{
+            //    if (1 == _formState)
+            //    {
+            //        setControlTrue();
+            //        btn审核.Enabled = true;
+            //    }
+            //    else setControlFalse();
+            //}
+            //if (0 == _userState)
+            //{
+            //    if (0 == _formState || 3 == _formState) setControlTrue();
+            //    else setControlFalse();
+            //}
         }
 
         void setControlTrue()
@@ -570,7 +615,7 @@ namespace mySystem.Process.Bag.BTV
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
 
-            if (_userState == 0) btn提交审核.Enabled = true;
+            if (_userState == Parameter.UserState.操作员) btn提交审核.Enabled = true;
         }
 
         private void btn添加_Click(object sender, EventArgs e)

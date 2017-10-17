@@ -75,6 +75,7 @@
             this.label19 = new System.Windows.Forms.Label();
             this.lbl尺寸抽检量合计 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -541,11 +542,22 @@
             this.label20.TabIndex = 82;
             this.label20.Text = "尺寸抽检量合计";
             // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(613, 9);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 84;
+            this.label角色.Text = "角色";
+            // 
             // 产品外观和尺寸检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 589);
+            this.Controls.Add(this.label角色);
             this.Controls.Add(this.lbl尺寸抽检量合计);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.lbl生产指令编码);
@@ -650,5 +662,6 @@
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label lbl尺寸抽检量合计;
         private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label角色;
     }
 }

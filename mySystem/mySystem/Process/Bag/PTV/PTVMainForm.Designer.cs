@@ -36,9 +36,12 @@
             this.Btn产品内包装 = new System.Windows.Forms.Button();
             this.Btn瓶口焊接机 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Btn产品外观 = new System.Windows.Forms.Button();
+            this.Btn产品热合 = new System.Windows.Forms.Button();
             this.Btn生产日报表 = new System.Windows.Forms.Button();
             this.Btn底封机 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.Btn交接班 = new System.Windows.Forms.Button();
             this.Btn结束 = new System.Windows.Forms.Button();
             this.Btn批生产记录 = new System.Windows.Forms.Button();
             this.Btn洁净 = new System.Windows.Forms.Button();
@@ -49,7 +52,6 @@
             this.Btn清场记录 = new System.Windows.Forms.Button();
             this.Btn超声波 = new System.Windows.Forms.Button();
             this.Btn圆口焊接机 = new System.Windows.Forms.Button();
-            this.Btn交接班 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -100,9 +102,9 @@
             // Btn生产领料
             // 
             this.Btn生产领料.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn生产领料.Location = new System.Drawing.Point(28, 40);
+            this.Btn生产领料.Location = new System.Drawing.Point(21, 40);
             this.Btn生产领料.Name = "Btn生产领料";
-            this.Btn生产领料.Size = new System.Drawing.Size(200, 38);
+            this.Btn生产领料.Size = new System.Drawing.Size(226, 38);
             this.Btn生产领料.TabIndex = 12;
             this.Btn生产领料.Text = "生产领料使用记录";
             this.Btn生产领料.UseVisualStyleBackColor = true;
@@ -111,9 +113,9 @@
             // Btn产品内包装
             // 
             this.Btn产品内包装.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn产品内包装.Location = new System.Drawing.Point(28, 110);
+            this.Btn产品内包装.Location = new System.Drawing.Point(21, 110);
             this.Btn产品内包装.Name = "Btn产品内包装";
-            this.Btn产品内包装.Size = new System.Drawing.Size(200, 38);
+            this.Btn产品内包装.Size = new System.Drawing.Size(226, 38);
             this.Btn产品内包装.TabIndex = 16;
             this.Btn产品内包装.Text = "产品内包装记录";
             this.Btn产品内包装.UseVisualStyleBackColor = true;
@@ -132,24 +134,48 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.Btn产品外观);
+            this.groupBox2.Controls.Add(this.Btn产品热合);
             this.groupBox2.Controls.Add(this.Btn生产领料);
             this.groupBox2.Controls.Add(this.Btn产品内包装);
             this.groupBox2.Controls.Add(this.Btn生产日报表);
             this.groupBox2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox2.Location = new System.Drawing.Point(112, 105);
+            this.groupBox2.Location = new System.Drawing.Point(104, 105);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox2.Size = new System.Drawing.Size(260, 321);
+            this.groupBox2.Size = new System.Drawing.Size(267, 400);
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "物料流转";
             // 
+            // Btn产品外观
+            // 
+            this.Btn产品外观.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn产品外观.Location = new System.Drawing.Point(21, 323);
+            this.Btn产品外观.Name = "Btn产品外观";
+            this.Btn产品外观.Size = new System.Drawing.Size(226, 38);
+            this.Btn产品外观.TabIndex = 18;
+            this.Btn产品外观.Text = "PTV产品外观和尺寸检验记录";
+            this.Btn产品外观.UseVisualStyleBackColor = true;
+            this.Btn产品外观.Click += new System.EventHandler(this.Btn产品外观_Click);
+            // 
+            // Btn产品热合
+            // 
+            this.Btn产品热合.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn产品热合.Location = new System.Drawing.Point(21, 250);
+            this.Btn产品热合.Name = "Btn产品热合";
+            this.Btn产品热合.Size = new System.Drawing.Size(226, 38);
+            this.Btn产品热合.TabIndex = 17;
+            this.Btn产品热合.Text = "PTV产品热合强度检验记录";
+            this.Btn产品热合.UseVisualStyleBackColor = true;
+            this.Btn产品热合.Click += new System.EventHandler(this.Btn产品热合_Click);
+            // 
             // Btn生产日报表
             // 
             this.Btn生产日报表.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn生产日报表.Location = new System.Drawing.Point(28, 180);
+            this.Btn生产日报表.Location = new System.Drawing.Point(21, 180);
             this.Btn生产日报表.Name = "Btn生产日报表";
-            this.Btn生产日报表.Size = new System.Drawing.Size(200, 38);
+            this.Btn生产日报表.Size = new System.Drawing.Size(226, 38);
             this.Btn生产日报表.TabIndex = 11;
             this.Btn生产日报表.Text = "PTV生产日报表";
             this.Btn生产日报表.UseVisualStyleBackColor = true;
@@ -175,13 +201,24 @@
             this.groupBox3.Controls.Add(this.Btn外包装);
             this.groupBox3.Controls.Add(this.Btn退料);
             this.groupBox3.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox3.Location = new System.Drawing.Point(796, 105);
+            this.groupBox3.Location = new System.Drawing.Point(812, 105);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox3.Size = new System.Drawing.Size(260, 478);
             this.groupBox3.TabIndex = 32;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "封面";
+            // 
+            // Btn交接班
+            // 
+            this.Btn交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Btn交接班.Location = new System.Drawing.Point(28, 329);
+            this.Btn交接班.Name = "Btn交接班";
+            this.Btn交接班.Size = new System.Drawing.Size(200, 38);
+            this.Btn交接班.TabIndex = 37;
+            this.Btn交接班.Text = "岗位交接班记录";
+            this.Btn交接班.UseVisualStyleBackColor = true;
+            this.Btn交接班.Click += new System.EventHandler(this.Btn交接班_Click);
             // 
             // Btn结束
             // 
@@ -249,7 +286,7 @@
             this.groupBox1.Controls.Add(this.Btn圆口焊接机);
             this.groupBox1.Controls.Add(this.Btn底封机);
             this.groupBox1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.groupBox1.Location = new System.Drawing.Point(443, 105);
+            this.groupBox1.Location = new System.Drawing.Point(459, 105);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.groupBox1.Size = new System.Drawing.Size(260, 505);
@@ -301,17 +338,6 @@
             this.Btn圆口焊接机.UseVisualStyleBackColor = true;
             this.Btn圆口焊接机.Click += new System.EventHandler(this.B4Btn_Click);
             // 
-            // Btn交接班
-            // 
-            this.Btn交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Btn交接班.Location = new System.Drawing.Point(28, 329);
-            this.Btn交接班.Name = "Btn交接班";
-            this.Btn交接班.Size = new System.Drawing.Size(200, 38);
-            this.Btn交接班.TabIndex = 37;
-            this.Btn交接班.Text = "岗位交接班记录";
-            this.Btn交接班.UseVisualStyleBackColor = true;
-            this.Btn交接班.Click += new System.EventHandler(this.Btn交接班_Click);
-            // 
             // PTVMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -360,5 +386,7 @@
         private System.Windows.Forms.Button Btn外包装;
         private System.Windows.Forms.Button Btn退料;
         private System.Windows.Forms.Button Btn交接班;
+        private System.Windows.Forms.Button Btn产品外观;
+        private System.Windows.Forms.Button Btn产品热合;
     }
 }

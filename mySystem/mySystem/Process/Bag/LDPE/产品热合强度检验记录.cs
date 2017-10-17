@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Collections;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Bag.LDPE
 {
@@ -151,10 +152,25 @@ namespace mySystem.Process.Bag.LDPE
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
+            //ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
 
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
-
+            //ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            
+            if (dt.Rows.Count > 0)
+            {
+                string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        ls操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        ls审核员.Add(s1[i]);
+                }
+            }
         }
 
         /// <summary>
@@ -219,6 +235,7 @@ namespace mySystem.Process.Bag.LDPE
         DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = mySystem.Parameter.ldpebagInstruID;
+            dr["标准"] = 15;
             dr["整理人"] = mySystem.Parameter.userName;
             dr["整理时间"] = nowString;
             dr["审核日期"] = DateTime.Now;
@@ -297,6 +314,8 @@ namespace mySystem.Process.Bag.LDPE
             dr["生产日期"] = DateTime.Now.ToString("yyyy年MM月dd日");
             dr["生产时间"] = DateTime.Now.ToString("HH:mm");
             dr["判定"] = "Y";
+            dr["位置1"] = "东";
+            dr["位置2"] = "左";
             dr["检测人"] = mySystem.Parameter.userName;
             dr["检测值1"] = 0;
             dr["检测值2"] = 0;
@@ -350,6 +369,34 @@ namespace mySystem.Process.Bag.LDPE
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
+                if (dc.ColumnName == "位置1")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    cbc.Items.Add("东");
+                    cbc.Items.Add("西");
+                    dataGridView1.Columns.Add(cbc);
+                    continue;
+                }
+                if (dc.ColumnName == "位置2")
+                {
+                    cbc = new DataGridViewComboBoxColumn();
+                    cbc.HeaderText = dc.ColumnName;
+                    cbc.Name = dc.ColumnName;
+                    cbc.ValueType = dc.DataType;
+                    cbc.DataPropertyName = dc.ColumnName;
+                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    cbc.Items.Add("左");
+                    cbc.Items.Add("右");
+                    cbc.Items.Add("底");
+                    dataGridView1.Columns.Add(cbc);
+                    continue;
+                }
+
                 // 根据数据类型自动生成列的关键信息
                 switch (dc.DataType.ToString())
                 {
@@ -524,9 +571,10 @@ namespace mySystem.Process.Bag.LDPE
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setDataGridViewBackColor();
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            int[] readonlyIdx = { 2, 3, 4, 6, 7, 14, 15, 16 };
+            int[] readonlyIdx = { 2, 3, 4, 14, 15, 16 };
             foreach (int i in readonlyIdx)
             {
                 dataGridView1.Columns[i].ReadOnly = true;
@@ -557,11 +605,7 @@ namespace mySystem.Process.Bag.LDPE
                 dtInner.Rows[e.RowIndex][16] = Double.Parse(vals.Average().ToString("0.0"));
             }
         }
-
-
-
-
-
+        
         /// <summary>
         /// 确保控件和DataTable中的数据能同步的方法
         /// 凡是需要在程序中通过代码来改变控件值时，请用本方法避免不同步的情况
@@ -603,50 +647,76 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn添加_Click(object sender, EventArgs e)
         {
-            // 一次加六条
-            DataRow[] drs = new DataRow[6];
-            for (int i = 0; i < 6; ++i)
-            {
-                drs[i] = dtInner.NewRow();
-                drs[i] = writeInnerDefault(drs[i]);
-                if (i <= 2) drs[i]["位置1"] = "东";
-                else drs[i]["位置1"] = "西";
-            }
-            drs[0]["位置2"] = "左";
-            drs[1]["位置2"] = "右";
-            drs[2]["位置2"] = "底";
-            drs[3]["位置2"] = "左";
-            drs[4]["位置2"] = "右";
-            drs[5]["位置2"] = "底";
-            foreach (DataRow dr in drs)
-            {
-                dtInner.Rows.Add(dr);
-            }
+            // 一次加一条
+            DataRow dr = dtInner.NewRow();
+            dr = writeInnerDefault(dr);
+            dtInner.Rows.InsertAt(dr, dtInner.Rows.Count);
             if (dataGridView1.Rows.Count > 0)
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+
+            // 一次加六条
+            //DataRow[] drs = new DataRow[6];
+            //for (int i = 0; i < 6; ++i)
+            //{
+            //    drs[i] = dtInner.NewRow();
+            //    drs[i] = writeInnerDefault(drs[i]);
+            //    if (i <= 2) drs[i]["位置1"] = "东";
+            //    else drs[i]["位置1"] = "西";
+            //}
+            //drs[0]["位置2"] = "左";
+            //drs[1]["位置2"] = "右";
+            //drs[2]["位置2"] = "底";
+            //drs[3]["位置2"] = "左";
+            //drs[4]["位置2"] = "右";
+            //drs[5]["位置2"] = "底";
+            //foreach (DataRow dr in drs)
+            //{
+            //    dtInner.Rows.Add(dr);
+            //}
+            //if (dataGridView1.Rows.Count > 0)
+            //    dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         private void btn删除_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == MessageBox.Show("确认要一次性删除六条记录吗？", "提示", MessageBoxButtons.OK))
-            {
-                int rIdx = dataGridView1.SelectedCells[0].RowIndex;
-                int startIdx = rIdx - rIdx % 6;
-                int endIdx = startIdx + 6; // not included
-                List<DataRow> toDel = new List<DataRow>();
-                for (int i = startIdx; i < endIdx; ++i)
-                {
-                    toDel.Add(dtInner.Rows[i]);
-                }
-                foreach (DataRow dr in toDel) dr.Delete();
-                daInner.Update((DataTable)bsInner.DataSource);
-                readInnerData(_id);
-                innerBind();
-            }
+            // 一次性删除1行
+            int deletenum = dataGridView1.CurrentRow.Index;
+            //dt记录详情.Rows.RemoveAt(deletenum);
+            dtInner.Rows[deletenum].Delete();
+
+            // 保存
+            daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(_id);
+            innerBind();
+
+            setDataGridViewBackColor();
+
+            // 一次性删除6行
+            //if (DialogResult.OK == MessageBox.Show("确认要一次性删除六条记录吗？", "提示", MessageBoxButtons.OK))
+            //{
+            //    int rIdx = dataGridView1.SelectedCells[0].RowIndex;
+            //    int startIdx = rIdx - rIdx % 6;
+            //    int endIdx = startIdx + 6; // not included
+            //    List<DataRow> toDel = new List<DataRow>();
+            //    for (int i = startIdx; i < endIdx; ++i)
+            //    {
+            //        toDel.Add(dtInner.Rows[i]);
+            //    }
+            //    foreach (DataRow dr in toDel) dr.Delete();
+            //    daInner.Update((DataTable)bsInner.DataSource);
+            //    readInnerData(_id);
+            //    innerBind();
+            //}
         }
 
         private void btn保存_Click(object sender, EventArgs e)
         {
+            if (setDataGridViewBackColor() == false)
+            {
+                MessageBox.Show("红色的检测值不符合要求，不可保存！");
+                return;
+            }
+
             bsOuter.EndEdit();
             daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
@@ -749,6 +819,58 @@ namespace mySystem.Process.Bag.LDPE
             ckForm = new CheckForm(this);
             ckForm.Show();
 
+        }
+
+        //设置datagridview背景颜色
+        private Boolean setDataGridViewBackColor()
+        {
+            Boolean ColorReturn = true; //全部为白-True；有红色-False
+            Double DoubleStandard = 0;
+            if (Double.TryParse(tb标准.Text, out DoubleStandard))
+            {
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值1"].Value.ToString()) > DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值1"].Style.BackColor = Color.Red;
+                        //dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值2"].Value.ToString()) > DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值2"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值3"].Value.ToString()) > DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值3"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值4"].Value.ToString()) > DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值4"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值5"].Value.ToString()) > DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值5"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值6"].Value.ToString()) > DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值6"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                }
+            }
+            else
+            {
+                ColorReturn = false;
+                MessageBox.Show("【标准】框内数据不符合要求，请重新输入！");
+            }
+
+            return ColorReturn;
         }
 
         //添加打印机

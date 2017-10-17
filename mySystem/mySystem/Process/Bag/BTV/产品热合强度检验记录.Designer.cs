@@ -43,6 +43,8 @@
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn删除 = new System.Windows.Forms.Button();
             this.btn添加 = new System.Windows.Forms.Button();
+            this.tb标准 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -197,11 +199,30 @@
             this.btn添加.UseVisualStyleBackColor = true;
             this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
             // 
+            // tb标准
+            // 
+            this.tb标准.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb标准.Location = new System.Drawing.Point(973, 18);
+            this.tb标准.Name = "tb标准";
+            this.tb标准.Size = new System.Drawing.Size(110, 23);
+            this.tb标准.TabIndex = 114;
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(909, 21);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 16);
+            this.label2.TabIndex = 113;
+            this.label2.Text = "标准:";
+            // 
             // 产品热合强度检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1127, 650);
+            this.Controls.Add(this.tb标准);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.btn添加);
             this.Controls.Add(this.btn删除);
             this.Controls.Add(this.cb打印机);
@@ -242,5 +263,7 @@
         private System.Windows.Forms.Button btn审核;
         private System.Windows.Forms.Button btn删除;
         private System.Windows.Forms.Button btn添加;
+        private System.Windows.Forms.TextBox tb标准;
+        private System.Windows.Forms.Label label2;
     }
 }

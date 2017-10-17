@@ -51,15 +51,6 @@ namespace mySystem.Process.Bag.PTV
             {
 
             }
-            //默认下拉框选最后一个
-            comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
-            Parameter.ptvbagInstruction = comboBox1.SelectedItem.ToString();
-            String tblName = "生产指令";
-            List<String> queryCols = new List<String>(new String[] { "ID" });
-            List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
-            List<Object> whereVals = new List<Object>(new Object[] { instruction });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
-            Parameter.ptvbagInstruID = Convert.ToInt32(res[0][0]);
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -359,6 +350,37 @@ namespace mySystem.Process.Bag.PTV
                 dt.Rows[0]["状态"] = 4;
                 da.Update(dt);
             }
+        }
+
+
+        private void Btn产品热合_Click(object sender, EventArgs e)
+        {
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品热合强度检验记录");
+            if (b)
+            {
+                PTV.PTV产品热合强度检验记录 myform = new PTV.PTV产品热合强度检验记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
+        }
+
+        private void Btn产品外观_Click(object sender, EventArgs e)
+        {
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "产品外观和尺寸检验记录");
+            if (b)
+            {
+                PTV.PTV产品外观和尺寸检验记录 myform = new PTV.PTV产品外观和尺寸检验记录(mainform);
+                myform.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            } 
         }
 
 
