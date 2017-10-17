@@ -51,6 +51,18 @@ namespace mySystem.Process.Bag.PTV
             {
 
             }
+            //默认下拉框选最后一个
+            if (comboBox1.Items.Count > 0)
+            {
+                comboBox1.SelectedIndex = comboBox1.Items.Count - 1;
+                Parameter.ptvbagInstruction = comboBox1.SelectedItem.ToString();
+                String tblName = "生产指令";
+                List<String> queryCols = new List<String>(new String[] { "ID" });
+                List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
+                List<Object> whereVals = new List<Object>(new Object[] { instruction });
+                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                Parameter.ptvbagInstruID = Convert.ToInt32(res[0][0]);
+            }
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -80,6 +92,8 @@ namespace mySystem.Process.Bag.PTV
             Btn生产领料.Enabled = b;
             Btn产品内包装.Enabled = b;
             Btn生产日报表.Enabled = b;
+            Btn产品热合.Enabled = b;
+            Btn产品外观.Enabled = b;
             Btn开机前确认.Enabled = b;
             Btn底封机.Enabled = b;
             Btn圆口焊接机.Enabled = b;
