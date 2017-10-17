@@ -773,6 +773,30 @@ namespace BatchProductRecord
                 bs_prodinstr.EndEdit();
                 da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                 base.CheckResult();
+
+                //如果审核通过，更新数据库用户表的班次信息
+                if (checkform.ischeckOk)
+                {
+                    DataTable dt_用户 = new DataTable("用户");
+                    BindingSource bs_用户 = new BindingSource();
+                    OleDbDataAdapter da_用户 = new OleDbDataAdapter(@"select * from 用户", mySystem.Parameter.connOle);
+                    OleDbCommandBuilder cb_用户 = new OleDbCommandBuilder(da_用户);
+                    da_用户.Fill(dt_用户);
+                    //遍历白班，夜班负责人表
+                    for (int i = 0; i < dt_用户.Rows.Count; i++)
+                    {
+                        string name = dt_用户.Rows[i]["用户名"].ToString();
+                        if(dict_白班.ContainsKey(name))
+                            dt_用户.Rows[i]["班次"]="白班";
+                        else if (dict_夜班.ContainsKey(name))
+                            dt_用户.Rows[i]["班次"] = "夜班";
+                        else { }
+                    }
+
+                    bs_用户.DataSource = dt_用户;
+                    da_用户.Update((DataTable)bs_用户.DataSource);
+
+                }
             }
             else
             {
@@ -795,6 +819,30 @@ namespace BatchProductRecord
                 bs_prodinstr.EndEdit();
                 da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
                 base.CheckResult();
+
+                //如果审核通过，更新数据库用户表的班次信息
+                if (checkform.ischeckOk)
+                {
+                    DataTable dt_用户 = new DataTable("用户");
+                    BindingSource bs_用户 = new BindingSource();
+                    SqlDataAdapter da_用户 = new SqlDataAdapter(@"select * from 用户", mySystem.Parameter.conn);
+                    SqlCommandBuilder cb_用户 = new SqlCommandBuilder(da_用户);
+                    da_用户.Fill(dt_用户);
+                    //遍历白班，夜班负责人表
+                    for (int i = 0; i < dt_用户.Rows.Count; i++)
+                    {
+                        string name = dt_用户.Rows[i]["用户名"].ToString();
+                        if (dict_白班.ContainsKey(name))
+                            dt_用户.Rows[i]["班次"] = "白班";
+                        else if (dict_夜班.ContainsKey(name))
+                            dt_用户.Rows[i]["班次"] = "夜班";
+                        else { }
+                    }
+
+                    bs_用户.DataSource = dt_用户;
+                    da_用户.Update((DataTable)bs_用户.DataSource);
+
+                }
             }
 
         }

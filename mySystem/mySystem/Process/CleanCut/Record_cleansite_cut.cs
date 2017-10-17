@@ -495,8 +495,8 @@ namespace mySystem.Process.CleanCut
             cb产品代码.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品代码");
             tb产品规格.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品规格");
             tb产品批号.DataBindings.Add("Text", bs_prodinstr.DataSource, "产品批号");
-            tb清场人.DataBindings.Add("Text", bs_prodinstr.DataSource, "清场人");
-            tb检查人.DataBindings.Add("Text", bs_prodinstr.DataSource, "检查人");
+            tb清场人.DataBindings.Add("Text", bs_prodinstr.DataSource, "确认人");
+            tb检查人.DataBindings.Add("Text", bs_prodinstr.DataSource, "审核人");
             dtp生产日期.DataBindings.Add("Value", bs_prodinstr.DataSource, "生产日期");
             tb备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "备注");
             tb操作员备注.DataBindings.Add("Text", bs_prodinstr.DataSource, "操作员备注");
@@ -673,7 +673,6 @@ namespace mySystem.Process.CleanCut
         public override void CheckResult()
         {
             dt_prodinstr.Rows[0]["审核人"] = mySystem.Parameter.userName;
-            dt_prodinstr.Rows[0]["检查人"] = mySystem.Parameter.userName;
 
             dt_prodinstr.Rows[0]["检查结果"] = checkform.ischeckOk==true?"合格":"不合格" ;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
@@ -752,7 +751,7 @@ namespace mySystem.Process.CleanCut
 
             dt_prodinstr.Rows[0]["审核人"] = "__待审核";
             //dt_prodinstr.Rows[0]["审批时间"] = DateTime.Now;
-            dt_prodinstr.Rows[0]["检查人"] = "__待审核";
+            //dt_prodinstr.Rows[0]["检查人"] = "__待审核";
 
             save();
 
@@ -834,6 +833,7 @@ namespace mySystem.Process.CleanCut
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         private void bt打印_Click(object sender, EventArgs e)
