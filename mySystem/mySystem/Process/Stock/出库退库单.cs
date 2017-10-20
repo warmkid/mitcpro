@@ -76,6 +76,8 @@ namespace mySystem.Process.Stock
         }
 
 
+
+        //show outer information
         void dgv退库单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
@@ -87,18 +89,19 @@ namespace mySystem.Process.Stock
             }
         }
 
+        //show inner information
         void dgv出库单_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                int id = Convert.ToInt32(dgv出库单.Rows[e.RowIndex].Cells[0].Value);
+                int id = Convert.ToInt32(dgv出库单.Rows[e.RowIndex].Cells[1].Value);
                 材料退库出库单 form = new 材料退库出库单(mainform, id, 2);
                 form.Show();
             }
         }
 
   
-
+        //show history between any two timepoints
         private void button查询_Click(object sender, EventArgs e)
         {
             //MessageBox.Show(tabControl1.SelectedIndex.ToString()+"\n"+comboBox审核状态.Text);
@@ -112,12 +115,12 @@ namespace mySystem.Process.Stock
                 case 0:// 退库单
                      if (shr != "")
                     {
-                        sql = @"select * from 材料退库单详细信息 where 审核员 like '%{0}%' and 退库日期时间 between #{1}# and #{2}#";
+                        sql = @"SELECT * FROM 材料退库单 where ID in (select T材料退库单ID from 材料退库单详细信息 where 审核员 like '%{0}%' and 退库日期时间 between #{1}# and #{2}#)";
                         da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.connOle);
                     }
                     else
                     {
-                        sql = @"select * from 材料退库单详细信息 where 审核员 is null and 退库日期时间 between #{0}# and #{1}#";
+                        sql = @"SELECT * FROM 材料退库单 where ID in (select T材料退库单ID from 材料退库单详细信息 where 审核员 is null and 退库日期时间 between #{0}# and #{1}#)";
                         da = new OleDbDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.connOle);
                     }
                      dt退库单 = new DataTable("退库单");
@@ -147,7 +150,7 @@ namespace mySystem.Process.Stock
         
 
         
-
+        //read history in recent 7 days defaultly
         void read退库单Data()
         {
             OleDbDataAdapter da = new OleDbDataAdapter("select * from 材料退库单详细信息 where 退库日期时间 between #" +
