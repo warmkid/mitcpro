@@ -17,17 +17,23 @@ namespace mySystem.Process.Stock
     {
         
         private String table;
-        private String tableInfo;
+        private String tableInfo;//退库或出库详细信息
+        private String tableInfo_二维码;//退库或出库二维码信息
+
+        //HashSet<string> hs_cach;//存储已扫描的二维码
+        private Dictionary<string, string> dic_二维码;//存储表3中二维码和材料代码
+        private Dictionary<string, int> dic_材料代码;//存储材料代码和对应的行号
+        private int NUM;//当鼠标刚进入单元格时，获取二维码对应出库或退库数量，用于更新
 
         private SqlConnection conn = null;
         private OleDbConnection connOle = null;
         private bool isSqlOk;
         private CheckForm checkform = null;
 
-        private DataTable dt记录, dt记录详情;
-        private OleDbDataAdapter da记录, da记录详情;
-        private BindingSource bs记录, bs记录详情;
-        private OleDbCommandBuilder cb记录, cb记录详情;
+        private DataTable dt记录, dt记录详情,dt二维码信息;
+        private OleDbDataAdapter da记录, da记录详情, da二维码信息;
+        private BindingSource bs记录, bs记录详情, bs二维码信息;
+        private OleDbCommandBuilder cb记录, cb记录详情, cb二维码信息;
         
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
@@ -159,18 +165,40 @@ namespace mySystem.Process.Stock
             isSqlOk = Parameter.isSqlOk;
             this.label = label;
 
+            dic_二维码 = new Dictionary<string, string>();
+            dic_材料代码 = new Dictionary<string, int>();
+            for (int i = 0; i < 4; i++)
+            {
+                dataGridView3.Columns.Add(new DataGridViewTextBoxColumn());
+            }
+            dataGridView3.Columns[0].Name = "序号";
+            dataGridView3.Columns[1].Name = "物料代码";
+            dataGridView3.Columns[2].Name = "物料批号";
+            dataGridView3.Columns[3].Name = "数量";
+                
             if (1 == label)
             {
                 lb标题.Text = "材料退库单";
                 table = "材料退库单";
                 tableInfo = "材料退库单详细信息";
+                tableInfo_二维码 = "材料退库单二维码信息";
+
+                dataGridView3.Columns[3].HeaderText = "退库数量";
             }
             else
             {
                 lb标题.Text = "材料出库单";
                 table = "材料出库单";
                 tableInfo = "材料出库单详细信息";
+                tableInfo_二维码 = "材料出库单二维码信息";
+
+                dataGridView3.Columns[3].HeaderText= "出库数量";
             }
+            dataGridView3.Columns.Add(new DataGridViewTextBoxColumn());
+            dataGridView3.Columns[4].Name = "库存ID";//用于写入二维码信息表
+
+            dataGridView3.Columns[4].Visible = false;
+
         }
 
         //******************************初始化******************************//
@@ -183,7 +211,7 @@ namespace mySystem.Process.Stock
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤="+table, connOle);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='"+table+"'", connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -256,41 +284,42 @@ namespace mySystem.Process.Stock
             }
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //2审核通过||3审核未通过
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过 || _formState == Parameter.FormState.未保存)  //2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
                 }
-                else if (_formState == Parameter.FormState.未保存)//0未保存
-                {
-                    //控件都不能点，只有打印,日志可点
-                    setControlFalse();
-                    btn数据审核.Enabled = true;
-                    //遍历datagridview，如果有一行为待审核，则该行可以修改
-                    dataGridView1.ReadOnly = false;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
-                            dataGridView1.Rows[i].ReadOnly = false;
-                        else
-                            dataGridView1.Rows[i].ReadOnly = true;
-                    }
-                }
+                //else if (_formState == Parameter.FormState.未保存)//0未保存
+                //{
+                //    //控件都不能点，只有打印,日志可点
+                //    setControlFalse();
+                //    btn数据审核.Enabled = true;
+                //    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                //    dataGridView1.ReadOnly = false;
+                //    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                //    {
+                //        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                //            dataGridView1.Rows[i].ReadOnly = false;
+                //        else
+                //            dataGridView1.Rows[i].ReadOnly = true;
+                //    }
+                //}
                 else //1待审核
                 {
                     //发送审核不可点，其他都可点
                     setControlTrue();
                     btn审核.Enabled = true;
-                    btn数据审核.Enabled = true;
-                    //遍历datagridview，如果有一行为待审核，则该行可以修改
-                    dataGridView1.ReadOnly = false;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
-                            dataGridView1.Rows[i].ReadOnly = false;
-                        else
-                            dataGridView1.Rows[i].ReadOnly = true;
-                    }
+
+                    //btn数据审核.Enabled = true;
+                    ////遍历datagridview，如果有一行为待审核，则该行可以修改
+                    //dataGridView1.ReadOnly = false;
+                    //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    //{
+                    //    if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                    //        dataGridView1.Rows[i].ReadOnly = false;
+                    //    else
+                    //        dataGridView1.Rows[i].ReadOnly = true;
+                    //}
                 }
             }
             else//操作员
@@ -304,31 +333,33 @@ namespace mySystem.Process.Stock
                 {
                     //发送审核，审核不能点
                     setControlTrue();
-                    btn提交数据审核.Enabled = true;
-                    //遍历datagridview，如果有一行为未审核，则该行可以修改
-                    dataGridView1.ReadOnly = false;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
-                            dataGridView1.Rows[i].ReadOnly = true;
-                        else
-                            dataGridView1.Rows[i].ReadOnly = false;
-                    }
+
+                    //btn提交数据审核.Enabled = true;
+                    ////遍历datagridview，如果有一行为未审核，则该行可以修改
+                    //dataGridView1.ReadOnly = false;
+                    //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    //{
+                    //    if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                    //        dataGridView1.Rows[i].ReadOnly = true;
+                    //    else
+                    //        dataGridView1.Rows[i].ReadOnly = false;
+                    //}
                 }
                 else //3审核未通过
                 {
                     //发送审核，审核不能点
                     setControlTrue();
-                    btn提交数据审核.Enabled = true;
-                    //遍历datagridview，如果有一行为未审核，则该行可以修改
-                    dataGridView1.ReadOnly = false;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
-                            dataGridView1.Rows[i].ReadOnly = true;
-                        else
-                            dataGridView1.Rows[i].ReadOnly = false;
-                    }
+
+                    //btn提交数据审核.Enabled = true;
+                    ////遍历datagridview，如果有一行为未审核，则该行可以修改
+                    //dataGridView1.ReadOnly = false;
+                    //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    //{
+                    //    if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                    //        dataGridView1.Rows[i].ReadOnly = true;
+                    //    else
+                    //        dataGridView1.Rows[i].ReadOnly = false;
+                    //}
                 }
             }
             //datagridview格式，包含序号不可编辑
@@ -404,6 +435,10 @@ namespace mySystem.Process.Stock
             dataGridView1.DataError += dataGridView1_DataError;
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
+
+            dataGridView2.DataError += dataGridView2_DataError;
+            dataGridView2.CellBeginEdit += new DataGridViewCellCancelEventHandler(dataGridView2_CellBeginEdit);
+            dataGridView2.CellEndEdit += dataGridView2_CellEndEdit;
         }
 
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
@@ -444,12 +479,18 @@ namespace mySystem.Process.Stock
                 MessageBox.Show("改ID下没有对应的记录");
                 return;
             }
+            //二维码表绑定
+            dataGridView2.Columns.Clear();
+            readInnerData_二维码(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind_二维码();
+
             //内表绑定
             dataGridView1.Columns.Clear();
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             setDataGridViewColumns();
             innerBind();
 
+            fill_datagridview3();
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
             setEnableReadOnly();  //根据状态设置可读写性  
@@ -473,6 +514,7 @@ namespace mySystem.Process.Stock
             dtp审核日期.DataBindings.Add("Text", bs记录.DataSource, "审核日期");
         }
         
+        //*************************************************出库/退库详细信息***************************************************
         private void readInnerData(Int32 ID)
         {
             bs记录详情 = new BindingSource();
@@ -485,7 +527,6 @@ namespace mySystem.Process.Stock
             cb记录详情 = new OleDbCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
-
         //内表控件绑定
         private void innerBind()
         {
@@ -494,6 +535,75 @@ namespace mySystem.Process.Stock
             dataGridView1.DataSource = bs记录详情.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
+        }
+
+        //*************************************************二维码详细信息***************************************************
+        private void readInnerData_二维码(Int32 ID)
+        {
+            bs二维码信息= new BindingSource();
+            dt二维码信息 = new DataTable(tableInfo_二维码);
+            if (1 == label)//材料退库单
+                da二维码信息 = new OleDbDataAdapter("select * from " + tableInfo_二维码 + " where T材料退库单ID = " + ID, connOle);
+            else//材料出库单
+                da二维码信息 = new OleDbDataAdapter("select * from " + tableInfo_二维码 + " where T材料出库单ID = " + ID, connOle);
+
+            cb二维码信息 = new OleDbCommandBuilder(da二维码信息);
+            da二维码信息.Fill(dt二维码信息);
+        }
+        //控件绑定
+        private void innerBind_二维码()
+        {
+            bs二维码信息.DataSource = dt二维码信息;
+            //dataGridView1.DataBindings.Clear();
+            dataGridView2.DataSource = bs二维码信息.DataSource;
+            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+
+        }
+        private void fill_datagridview3()
+        {
+            for (int i = 0; i < dataGridView2.Rows.Count; i++) 
+            {
+                string code;
+                string num = "";
+                int num_int;//数量
+                if (1 == label)//退库
+                {
+                    code = dataGridView2.Rows[i].Cells["二维码"].Value.ToString();
+                    num = dataGridView2.Rows[i].Cells["数量"].Value.ToString();
+                }
+                    
+                else//出库
+                {
+                    code = dataGridView2.Rows[i].Cells["二维码内"].Value.ToString();
+                    num = dataGridView2.Rows[i].Cells["数量"].Value.ToString();
+                }
+                    
+                if (num == "")
+                    num_int = 0;
+                else
+                    num_int = int.Parse(num);
+
+                if (!dic_二维码.ContainsKey(code))
+                {
+                    List<object> li = parse_二维码(code);
+                    if (!dic_材料代码.ContainsKey(li[0].ToString()))
+                    {
+                        int rownum = dataGridView3.Rows.Add();
+                        dataGridView3.Rows[rownum].Cells["序号"].Value = rownum + 1;//序号
+                        dataGridView3.Rows[rownum].Cells["物料代码"].Value = li[0];//物料代码
+                        dataGridView3.Rows[rownum].Cells["物料批号"].Value = li[1];//物料批号
+                        dataGridView3.Rows[rownum].Cells["数量"].Value = num_int;//出库/退库数量
+
+                        dic_材料代码.Add(li[0].ToString(), rownum);
+                    }
+                    else//物料代码已经存在，只需要更新数量
+                    {
+                        dataGridView3.Rows[dic_材料代码[li[0].ToString()]].Cells["数量"].Value = int.Parse(dataGridView3.Rows[dic_材料代码[li[0].ToString()]].Cells["数量"].Value.ToString())+num_int;//出库/退库数量
+                    }
+
+                    dic_二维码.Add(code, li[0].ToString());
+                }
+            }
         }
 
         //设置DataGridView中各列的格式+设置datagridview基本属性
@@ -546,11 +656,14 @@ namespace mySystem.Process.Stock
             dataGridView1.ColumnHeadersHeight = 40;
             //隐藏
             dataGridView1.Columns["ID"].Visible = false;
+            dataGridView2.Columns["ID"].Visible = false;
             if (1 == label)//材料退库单
             {
                 dataGridView1.Columns["T材料退库单ID"].Visible = false;
                 dataGridView1.Columns["退库日期时间"].ReadOnly = true;
                 dataGridView1.Columns["退库数量"].ReadOnly = true;
+
+                dataGridView2.Columns["T材料退库单ID"].Visible = false;
             }
 
             else//材料出库单
@@ -558,6 +671,10 @@ namespace mySystem.Process.Stock
                 dataGridView1.Columns["T材料出库单ID"].Visible = false;
                 dataGridView1.Columns["出库日期时间"].ReadOnly = true;
                 dataGridView1.Columns["发料数量"].ReadOnly = true;
+
+                dataGridView2.Columns["T材料出库单ID"].Visible = false;
+                dataGridView2.Columns["二维码外"].HeaderText = "二维码";
+                dataGridView2.Columns["二维码内"].HeaderText = "二维码(内)";
             }
                 
             //不可用
@@ -573,7 +690,7 @@ namespace mySystem.Process.Stock
 
         //******************************按钮功能******************************//
 
-        //添加按钮
+        //TODO:添加按钮
         private void btn添加记录_Click(object sender, EventArgs e)
         {
             //DataRow dr = dt记录详情.NewRow();
@@ -583,6 +700,25 @@ namespace mySystem.Process.Stock
             //setEnableReadOnly();
             //if (dataGridView1.Rows.Count > 0)
             //    dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+
+            DataRow dr = dt二维码信息.NewRow();
+            if (1 == label)//退库
+            {
+                dr["T材料退库单ID"] = int.Parse(dt记录.Rows[0]["ID"].ToString());
+                dr["二维码"] = "12312321";
+            }
+               
+            else
+            {
+                dr["T材料出库单ID"] = int.Parse(dt记录.Rows[0]["ID"].ToString());
+                dr["二维码外"] = "12312321";
+                dr["二维码内"] = "12312321";
+            }
+            
+            dr["数量"] = 50;
+            dt二维码信息.Rows.InsertAt(dr, dt二维码信息.Rows.Count);
+
+            //addrow("12312321", 50);
         }
 
         //删除按钮
@@ -606,6 +742,40 @@ namespace mySystem.Process.Stock
             //        setEnableReadOnly();
             //    }
             //}
+            if (dt二维码信息.Rows.Count > 0)
+            {
+                int delnum = dataGridView2.CurrentCell.RowIndex;
+                if (delnum < 0)
+                    return;
+                string code;
+                if (1 == label)//退库
+                    code = dataGridView2.Rows[delnum].Cells["二维码"].Value.ToString();//二维码
+                else
+                    code = dataGridView2.Rows[delnum].Cells["二维码内"].Value.ToString();//二维码内
+                string matcode= dic_二维码[code];
+                int num = int.Parse(dataGridView2.Rows[delnum].Cells["数量"].Value.ToString());
+
+                //从二维码列表中删除
+                dataGridView2.Rows.RemoveAt(delnum);
+                dic_二维码.Remove(code);
+
+                //更新表2，如有必要删除行
+                int oldnum = int.Parse(dataGridView3.Rows[dic_材料代码[matcode]].Cells["数量"].Value.ToString());
+                if (oldnum > num)//更新
+                    dataGridView3.Rows[dic_材料代码[matcode]].Cells["数量"].Value = oldnum - num;
+                else
+                {
+                    dataGridView3.Rows.RemoveAt(dic_材料代码[matcode]);
+
+                    for (int i = dic_材料代码[matcode]; i < dataGridView3.Rows.Count; i++)
+                    {
+                        dataGridView3.Rows[i].Cells["序号"].Value = int.Parse(dataGridView3.Rows[i].Cells["序号"].Value.ToString()) - 1;
+                    }
+
+                    dic_材料代码.Remove(matcode);
+                }                        
+       
+            }
         }
 
         //内表移交审核按钮
@@ -656,6 +826,29 @@ namespace mySystem.Process.Stock
                 btn提交审核.Enabled = true;
         }
 
+        //检查表三和表一是否相同
+        private bool isOk_Table()
+        {
+            if (dataGridView1.Rows.Count != dataGridView3.Rows.Count)
+                return false;
+            for (int i = 0; i < dataGridView3.Rows.Count; i++)
+            {
+                DataRow[] dr = dt记录详情.Select(string.Format("物料代码='{0}' and 物料批号='{1}'", dataGridView3.Rows[i].Cells["物料代码"].Value.ToString(), dataGridView3.Rows[i].Cells["物料批号"].Value.ToString()));
+                if (dr.Length == 0)
+                {
+                    MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString()+"不匹配");
+                    return false;
+                }
+                else if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库或出库数量
+                {
+                    MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
+                    return false;
+                }
+                else { }
+                    
+            }
+            return true;
+        }
         //保存功能
         private bool Save()
         {
@@ -680,24 +873,27 @@ namespace mySystem.Process.Stock
             //    /*批号不合格*/
             //    return false;
             //}
-            //else
-            //{
-            //    // 内表保存
-            //    da记录详情.Update((DataTable)bs记录详情.DataSource);
-            //    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-            //    innerBind();
+            else
+            {
+                //外表保存
+                da记录.Update(dt记录);
 
-            //    //外表保存
-            //    bs记录.EndEdit();
-            //    da记录.Update((DataTable)bs记录.DataSource);
-            //    readOuterData(InstruID);
-            //    outerBind();
+                // 内表保存
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                innerBind();
 
-            //    setEnableReadOnly();
+                //二维码表保存
+                bs二维码信息.EndEdit();
+                da二维码信息.Update((DataTable)bs二维码信息.DataSource);
+                readInnerData_二维码(int.Parse(dt记录.Rows[0]["ID"].ToString()));
+                innerBind_二维码();
 
-            //    return true;
-            //}
-            return true;
+                setEnableReadOnly();
+
+                return true;
+            }
+
         }
 
         //提交审核按钮
@@ -707,10 +903,20 @@ namespace mySystem.Process.Stock
             bool isSaved = Save();
             if (isSaved == false)
                 return;
+                          
+            //检查表3和表1是否相同
+            if (!isOk_Table())
+                return;
 
             //写待审核表
+            //填写表格1内的审核员
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //    dataGridView1.Rows[i].Cells["审核员"].Value = "__待审核";
+            for (int i = 0; i < dt记录.Rows.Count; i++)
+                dt记录详情 .Rows[i]["审核员"] = "__待审核";
+
             DataTable dt_temp = new DataTable("待审核");
-            OleDbDataAdapter da_temp=new OleDbDataAdapter("select * from 待审核 where 表名="+ table +" and 对应ID=" + dt记录.Rows[0]["ID"], connOle);
+            OleDbDataAdapter da_temp=new OleDbDataAdapter("select * from 待审核 where 表名='"+ table +"' and 对应ID=" + dt记录.Rows[0]["ID"], connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
@@ -733,6 +939,7 @@ namespace mySystem.Process.Stock
 
             Save();
             _formState = Parameter.FormState.待审核;
+
             setEnableReadOnly();
         }
 
@@ -770,10 +977,16 @@ namespace mySystem.Process.Stock
             dt记录.Rows[0]["审核是否通过"] = checkform.ischeckOk;
             dt记录.Rows[0]["审核日期"] = DateTime.Now;
 
+            //填写表格1内的审核员
+            //for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            //    dataGridView1.Rows[i].Cells["审核员"].Value = mySystem.Parameter.userName;
+            for (int i = 0; i < dt记录.Rows.Count; i++)
+                dt记录详情.Rows[i]["审核员"] = mySystem.Parameter.userName;
+
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名="+ table +" and 对应ID=" + dt记录.Rows[0]["ID"], connOle);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='"+ table +"' and 对应ID=" + dt记录.Rows[0]["ID"], connOle);
             OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
@@ -788,55 +1001,171 @@ namespace mySystem.Process.Stock
 
             Save();
 
-//            if (checkform.ischeckOk)
-//            {
-//                // 原料出库
-//                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + Convert.ToInt32(dt记录.Rows[0]["生产指令ID"]), mySystem.Parameter.connOle);
-//                DataTable dt = new DataTable();
-//                OleDbCommandBuilder cb;
-//                da.Fill(dt);
-//                string 订单号 = dt.Rows[0]["客户或订单号"].ToString();
-
-//                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-//                OleDbConnection Tconn;
-//                Tconn = new OleDbConnection(strConnect);
-//                Tconn.Open();
-
-//                foreach (DataRow dr in dt记录详情.Rows)
-//                {
-//                    string 代码 = dr["物料代码"].ToString();
-//                    string 批号 = dr["物料批号"].ToString();
-//                    double 出库数量 = Convert.ToDouble(dr["领取数量B"]);
-//                    string sql = "select * from 库存台帐 where 产品代码='{0}' and 产品批号='{1}' and 用途='{2}' and 状态='合格'";
-//                    da = new OleDbDataAdapter(string.Format(sql, 代码, 批号, 订单号), Tconn);
-//                    cb = new OleDbCommandBuilder(da);
-//                    dt = new DataTable();
-//                    da.Fill(dt);
-//                    if (dt.Rows.Count == 0)
-//                    {
-//                        MessageBox.Show("原料:" + 代码 + ",批号：" + 批号 + "出库失败");
-//                        return;
-//                    }
-//                    else
-//                    {
-//                        if (Convert.ToDouble(dt.Rows[0]["现存数量"]) < 出库数量)
-//                        {
-//                            MessageBox.Show("原料:" + 代码 + ",批号：" + 批号 + "库存不足");
-//                            return;
-//                        }
-//                        else
-//                        {
-//                            dt.Rows[0]["现存数量"] = Convert.ToDouble(dt.Rows[0]["现存数量"]) - 出库数量;
-//                            da.Update(dt);
-//                        }
-//                    }
-//                }
-//            }
-
             //修改状态，设置可控性
-            if (checkform.ischeckOk)
-            { _formState = Parameter.FormState.审核通过; }//审核通过
+            if (checkform.ischeckOk)//审核通过
+            { 
+                _formState = Parameter.FormState.审核通过; 
+
+                //更新二维码记录，二维码信息，库存台账
+                OleDbCommand cmd = new OleDbCommand();
+                cmd.Connection = connOle;
+                string strcmd;
+
+                if (1 == label)//退库
+                {
+                    for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                    {
+                        //更新二维码信息表，update操作
+                        string strname = dataGridView2.Rows[i].Cells["二维码"].Value.ToString();//二维码
+                        int num = int.Parse(dataGridView2.Rows[i].Cells["数量"].Value.ToString());//数量
+
+                        strcmd = string.Format("UPDATE {0} SET {1}={2}+{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, strname);
+                        cmd.CommandText = strcmd;
+                        int n = cmd.ExecuteNonQuery();
+                        if (n <= 0)
+                        {
+                            MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息表 有误", i + 1));
+                            return;
+                        }
+
+                        //更新库存台账，update操作
+                        strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", strname);
+                        cmd.CommandText = strcmd;
+                        List<List<Object>> ret = new List<List<Object>>();
+                        OleDbDataReader reader = null;
+                        reader = cmd.ExecuteReader();
+                        int id_库存 = 0;
+                        while (reader.Read())//只有一行
+                        {
+                            id_库存 = int.Parse(reader[2].ToString());
+                        }
+
+                        strcmd = string.Format("UPDATE {0} SET {1}={2}+{3} WHERE ID={4}", "库存台账", "现存数量", "现存数量", num, id_库存);
+                        cmd.CommandText = strcmd;
+                        n = cmd.ExecuteNonQuery();
+                        if (n <= 0)
+                        {
+                            MessageBox.Show(string.Format("表格第 {0} 行更新 库存台账表 有误", i + 1));
+                            return;
+                        }
+
+                        //更新二维码历史记录,insert操作
+                        List<string> name = new List<string>();
+                        List<object> value = new List<object>();
+                        name.Add("时间");
+                        name.Add("二维码");
+                        name.Add("操作");
+                        name.Add("备注");
+
+                        value.Add(DateTime.Now);
+                        value.Add(strname);
+                        value.Add("入库");
+                        value.Add("");
+
+                        if (!Utility.insertAccess(connOle, "二维码历史记录", name, value))
+                        {
+                            MessageBox.Show(string.Format("表格第 {0} 行更新 二维码历史记录表 有误", i + 1));
+                            return;
+                        }
+                    }
+
+                }
+                else//出库
+                {
+                    for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                    {
+                        //更新二维码信息表
+                        string strname = dataGridView2.Rows[i].Cells["二维码内"].Value.ToString();//二维码
+                        int num = int.Parse(dataGridView2.Rows[i].Cells["数量"].Value.ToString());//数量
+                        int id_库存 = 0;
+
+                        //先获得库存id
+                        strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", dataGridView2.Rows[i].Cells["二维码外"].Value.ToString());
+                        cmd.CommandText = strcmd;
+                        List<List<Object>> ret = new List<List<Object>>();
+                        OleDbDataReader reader = null;
+                        reader = cmd.ExecuteReader();
+
+                        while (reader.Read())//只有一行
+                        {
+                            id_库存 = int.Parse(reader[2].ToString());
+                        }
+                        reader.Close();
+
+                        if (strname == dataGridView2.Rows[i].Cells["二维码外"].Value.ToString())//update操作
+                        {
+                            strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, strname);
+                            cmd.CommandText = strcmd;
+                            int n = cmd.ExecuteNonQuery();
+                            if (n <= 0)
+                            {
+                                MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息表 有误", i + 1));
+                                return;
+                            }
+                        }
+                        else//insert操作
+                        {
+                            //插入小包二维码
+                            List<string> name = new List<string>();
+                            List<object> value = new List<object>();
+                            name.Add("二维码");
+                            name.Add("库存ID");
+                            name.Add("数量");
+
+                            value.Add(strname);
+                            value.Add(id_库存);
+                            value.Add(0);
+
+                            if (!Utility.insertAccess(connOle, "二维码信息", name, value))
+                            {
+                                MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息 有误", i + 1));
+                                return;
+                            }
+
+                            //更新大包二维码对应数量
+                            strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, strname);
+                            cmd.CommandText = strcmd;
+                            int n = cmd.ExecuteNonQuery();
+                            if (n <= 0)
+                            {
+                                MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息表 有误", i + 1));
+                                return;
+                            }
+                        }
+
+                        //更新库存台账，update操作
+                        strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE ID={4}", "库存台帐", "现存数量", "现存数量", num, id_库存);
+                        cmd.CommandText = strcmd;
+                        int m = cmd.ExecuteNonQuery();
+                        if (m <= 0)
+                        {
+                            MessageBox.Show(string.Format("表格第 {0} 行更新 库存台账表 有误", i + 1));
+                            return;
+                        }
+
+                        //更新二维码历史记录,insert操作
+                        List<string> name1 = new List<string>();
+                        List<object> value1 = new List<object>();
+                        name1.Add("时间");
+                        name1.Add("二维码");
+                        name1.Add("操作");
+                        name1.Add("备注");
+
+                        //TODO：时间插入datatime.now有问题
+                        value1.Add(DateTime.Now.ToLongTimeString());
+                        value1.Add(strname);
+                        value1.Add("出库");
+                        value1.Add(id_库存.ToString());
+
+                        if (!Utility.insertAccess(connOle, "二维码历史记录", name1, value1))
+                        {
+                            MessageBox.Show(string.Format("表格第 {0} 行更新 二维码历史记录表 有误", i + 1));
+                            return;
+                        }
+                    }
+                }
+
+            }
             else
             { _formState = Parameter.FormState.审核未通过; }//审核未通过              
             setEnableReadOnly();
@@ -1019,7 +1348,43 @@ namespace mySystem.Process.Stock
         }
                
         //******************************小功能******************************//  
+        //TODO：解析二维码
+        List<object> parse_二维码(string code)
+        {
+            //测试
+            List<object> ret = new List<object>();
+            if (code == "12312321")
+            {
+                ret.Add("物料代码1");//物料代码
+                ret.Add("物料批号1");//物料批号
+            }
+            return ret;
+        }
 
+        //讲根据二维码添加行
+        private void addrow(string code,int num)
+        {
+            if (!dic_二维码.ContainsKey(code))
+            {
+                List<object> li = parse_二维码(code);
+                if (!dic_材料代码.ContainsKey(li[0].ToString()))
+                {
+                    int rownum = dataGridView3.Rows.Add();
+                    dataGridView3.Rows[rownum].Cells["序号"].Value = rownum + 1;//序号
+                    dataGridView3.Rows[rownum].Cells["物料代码"].Value = li[0];//物料代码
+                    dataGridView3.Rows[rownum].Cells["物料批号"].Value = li[1];//物料批号
+                    dataGridView3.Rows[rownum].Cells["数量"].Value = num;//出库/退库数量
+
+                    dic_材料代码.Add(li[0].ToString(), rownum);
+                }
+                else//物料代码已经存在，只需要更新数量
+                {
+                    dataGridView3.Rows[dic_材料代码[li[0].ToString()]].Cells["数量"].Value = int.Parse(dataGridView3.Rows[dic_材料代码[li[0].ToString()]].Cells["数量"].Value.ToString()) + num;//出库/退库数量
+                }
+
+                dic_二维码.Add(code, li[0].ToString());
+            }
+        }
         // 检查操作员的姓名（内表）
         private bool Name_check()
         {
@@ -1112,6 +1477,13 @@ namespace mySystem.Process.Stock
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
+        private void dataGridView2_DataError(object sender, DataGridViewDataErrorEventArgs e)
+        {
+            // 获取选中的列，然后提示
+            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
+            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
+            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+        }
 
         //数据绑定结束，设置表格格式
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -1149,6 +1521,50 @@ namespace mySystem.Process.Stock
             //    else
             //    { }
             //}
+        }
+
+        //改变单元格之前
+        void dataGridView2_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (dataGridView2.CurrentCell.OwningColumn.Name == "数量")
+            {
+                int row = dataGridView2.CurrentCell.RowIndex;
+                if (dataGridView2.Rows[row].Cells["数量"].Value.ToString() == "")
+                    NUM = 0;
+                else
+                    NUM = int.Parse(dataGridView2.Rows[row].Cells["数量"].Value.ToString());
+            }
+           
+        }
+        private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView2.CurrentCell.OwningColumn.Name == "二维码" || dataGridView2.CurrentCell.OwningColumn.Name == "二维码外" || dataGridView2.CurrentCell.OwningColumn.Name == "二维码内")
+            {
+                string code = dataGridView2.CurrentCell.Value.ToString();//二维码
+                int row=dataGridView2.CurrentCell.RowIndex;
+
+                string num = dataGridView2.Rows[row].Cells["数量"].Value.ToString();
+                int num_int;//数量;
+                if (num == "")
+                    num_int = 0;
+                else
+                    num_int = int.Parse(num);
+
+                addrow(code, num_int);
+            }
+            else if (dataGridView2.CurrentCell.OwningColumn.Name == "数量")
+            {
+                int row = dataGridView2.CurrentCell.RowIndex;               
+                int num=int.Parse(dataGridView2.CurrentCell.Value.ToString());
+                string code = "";
+                if(1==label)//退库
+                    code = dataGridView2.Rows[row].Cells["二维码"].Value.ToString();//二维码列
+                else//出库
+                    code = dataGridView2.Rows[row].Cells["二维码内"].Value.ToString();//二维码内列，因为如果有大包，大包和小包有同样的二维码，如果小包，则是对应的二维码
+                addrow(code, NUM);
+                dataGridView3.Rows[dic_材料代码[dic_二维码[code]]].Cells["数量"].Value = int.Parse(dataGridView3.Rows[dic_材料代码[dic_二维码[code]]].Cells["数量"].Value.ToString()) - NUM + num;//出库/退库数量
+            }
+            else{}
         }
         
     }
