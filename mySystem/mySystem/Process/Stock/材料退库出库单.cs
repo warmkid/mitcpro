@@ -115,7 +115,7 @@ namespace mySystem.Process.Stock
                 dt_temp.Rows.Add(dr);
                 daout.Update(dt_temp);
 
-                daout_reader = new OleDbDataAdapter("select * from " + temptable + " where 生产指令ID = "+ Convert.ToInt32(dtOut.Rows[0]["生产指令ID"].ToString())+"and 属于工序="+str工序, connOle_材料退库出库);
+                daout_reader = new OleDbDataAdapter("select * from " + temptable + " where 生产指令ID = "+ Convert.ToInt32(dtOut.Rows[0]["生产指令ID"].ToString())+" and 属于工序='"+str工序+"'", connOle_材料退库出库);
                 cb_reader = new OleDbCommandBuilder(daout_reader);
                 daout_reader.Fill(dt_reader);
                 if (dt_reader.Rows.Count <= 0)
@@ -136,22 +136,22 @@ namespace mySystem.Process.Stock
                         DataRow dr = dt_temp2.NewRow();
                         if(1==label)//退库单
                         {
-                            dr["T材料退库单ID"] = dt_reader.Rows[i]["ID"];
-                            dr["退库日期时间"] = dt_reader.Rows[i]["退库日期时间"];
-                            dr["退库数量"] = dt_reader.Rows[i]["退库数量"];
+                            dr["T材料退库单ID"] = dt_reader.Rows[0]["ID"];
+                            dr["退库日期时间"] = dtInner.Rows[i]["退库日期时间"];
+                            dr["退库数量"] = dtInner.Rows[i]["退库数量"];
                         }
                             
                         else//出库单
                         {
-                            dr["T材料出库单ID"] = dt_reader.Rows[i]["ID"];
-                            dr["出库日期时间"] = dt_reader.Rows[i]["出库日期时间"];
-                            dr["发料数量"] = dt_reader.Rows[i]["发料数量"];
+                            dr["T材料出库单ID"] = dt_reader.Rows[0]["ID"];
+                            dr["出库日期时间"] = dtInner.Rows[i]["出库日期时间"];
+                            dr["发料数量"] = dtInner.Rows[i]["发料数量"];
                         }
 
                         dr["序号"] = i+1;
-                        dr["班次"] = dt_reader.Rows[i]["班次"];
-                        dr["物料代码"] = dt_reader.Rows[i]["物料代码"];
-                        dr["物料批号"] = dt_reader.Rows[i]["物料批号"];
+                        //dr["班次"] = dt_reader.Rows[i]["班次"];
+                        dr["物料代码"] = dtInner.Rows[i]["物料代码"];
+                        dr["物料批号"] = dtInner.Rows[i]["物料批号"];
 
                         dt_temp2.Rows.Add(dr);                       
                     }
