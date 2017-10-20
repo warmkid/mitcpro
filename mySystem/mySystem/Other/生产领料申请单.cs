@@ -581,31 +581,89 @@ namespace mySystem.Other
         //添加行按钮
         private void btn添加_Click(object sender, EventArgs e)
         {
-
+            DataRow dr = dt记录详情.NewRow();
+            dr = writeInnerDefault(_id, dr);
+            dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
+            setDataGridViewRowNums();
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
 
         //删除按钮
         private void btn删除_Click(object sender, EventArgs e)
         {
+            if (dt记录详情.Rows.Count >= 1)
+            {
+                int deletenum = dataGridView1.CurrentRow.Index;
+                //dt记录详情.Rows.RemoveAt(deletenum);
+                dt记录详情.Rows[deletenum].Delete();
 
+                // 保存
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                readInnerData(_id);
+                innerBind();
+
+                setDataGridViewRowNums();
+            }
         }
 
         //内标审核按钮 //this function just fill the name but dooesn't catch the opinion
         private void btn数据审核_Click(object sender, EventArgs e)
         {
-
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if ("__待审核" == Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dt记录详情.Rows[i]["操作员"].ToString())
+                    {
+                        dt记录详情.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("记录员,审核员相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(_id);
+            innerBind();
         }
 
         //内表提交审核按钮
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
-
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dt记录详情.Rows[i]["审核员"] = "__待审核";
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(_id);
+            innerBind();
+            setEnableReadOnly();
         }
 
         //保存按钮
         private void btn确认_Click(object sender, EventArgs e)
         {
-
+            bool isSaved = Save();
+            //控件可见性
+            if (_userState == Parameter.UserState.操作员 && isSaved == true)
+                btn提交审核.Enabled = true;
         }
 
         //保存功能
@@ -654,7 +712,38 @@ namespace mySystem.Other
         //提交审核按钮
         private void btn提交审核_Click(object sender, EventArgs e)
         {
+            //保存
+            bool isSaved = Save();
+            if (isSaved == false)
+                return;
 
+            //写待审核表
+            DataTable dt_temp = new DataTable("待审核");
+            //BindingSource bs_temp = new BindingSource();
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='生产领料申请单表' and 对应ID=" + dt记录.Rows[0]["ID"], connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            da_temp.Fill(dt_temp);
+            if (dt_temp.Rows.Count == 0)
+            {
+                DataRow dr = dt_temp.NewRow();
+                dr["表名"] = "生产领料申请单表";
+                dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
+                dt_temp.Rows.Add(dr);
+            }
+            da_temp.Update(dt_temp);
+
+            //写日志 
+            //格式： 
+            // =================================================
+            // yyyy年MM月dd日，操作员：XXX 提交审核
+            string log = "=====================================\n";
+            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 提交审核\n";
+            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+            dt记录.Rows[0]["审核员"] = "__待审核";
+
+            Save();
+            _formState = Parameter.FormState.待审核;
+            setEnableReadOnly();
         }
 
         //查看日志按钮
@@ -667,7 +756,13 @@ namespace mySystem.Other
         //审核功能
         private void btn审核_Click(object sender, EventArgs e)
         {
-
+            if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
+            {
+                MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
+                return;
+            }
+            checkform = new CheckForm(this);
+            checkform.Show();
         }
 
         //审核功能
@@ -763,7 +858,16 @@ namespace mySystem.Other
         //打印按钮
         private void btn打印_Click(object sender, EventArgs e)
         {
-
+            if (cb打印机.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cb打印机.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
         }
 
         //打印功能

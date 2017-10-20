@@ -81,6 +81,7 @@
             this.btn提交数据审核.TabIndex = 333;
             this.btn提交数据审核.Text = "提交数据审核";
             this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
             // 
             // btn数据审核
             // 
@@ -91,6 +92,7 @@
             this.btn数据审核.TabIndex = 332;
             this.btn数据审核.Text = "数据审核";
             this.btn数据审核.UseVisualStyleBackColor = true;
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
             // 
             // cb打印机
             // 
@@ -120,6 +122,7 @@
             this.btn查看日志.TabIndex = 329;
             this.btn查看日志.Text = "查看日志";
             this.btn查看日志.UseVisualStyleBackColor = true;
+            this.btn查看日志.Click += new System.EventHandler(this.btn查看日志_Click);
             // 
             // btn提交审核
             // 
@@ -130,6 +133,7 @@
             this.btn提交审核.TabIndex = 328;
             this.btn提交审核.Text = "最后审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
+            this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
             // btn删除
             // 
@@ -140,6 +144,7 @@
             this.btn删除.TabIndex = 327;
             this.btn删除.Text = "删除";
             this.btn删除.UseVisualStyleBackColor = true;
+            this.btn删除.Click += new System.EventHandler(this.btn删除_Click);
             // 
             // btn添加
             // 
@@ -150,6 +155,7 @@
             this.btn添加.TabIndex = 326;
             this.btn添加.Text = "添加";
             this.btn添加.UseVisualStyleBackColor = true;
+            this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
             // 
             // btn打印
             // 
@@ -160,6 +166,7 @@
             this.btn打印.TabIndex = 325;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn审核
             // 
@@ -170,6 +177,7 @@
             this.btn审核.TabIndex = 324;
             this.btn审核.Text = "审核";
             this.btn审核.UseVisualStyleBackColor = true;
+            this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
             // btn确认
             // 
@@ -180,6 +188,7 @@
             this.btn确认.TabIndex = 323;
             this.btn确认.Text = "确认";
             this.btn确认.UseVisualStyleBackColor = true;
+            this.btn确认.Click += new System.EventHandler(this.btn确认_Click);
             // 
             // tb备注
             // 
