@@ -43,6 +43,10 @@ namespace mySystem.Process.Stock
         Int32 InstruID;
         String Instruction;
 
+        //仅供测试
+        private System.Collections.Queue queue;
+        private string qs;//出队元素
+
         public 材料退库出库单(MainForm mainform)
             : base(mainform)
         {
@@ -198,6 +202,11 @@ namespace mySystem.Process.Stock
             dataGridView3.Columns[4].Name = "库存ID";//用于写入二维码信息表
 
             dataGridView3.Columns[4].Visible = false;
+
+            queue = new System.Collections.Queue();
+            queue.Enqueue("12312321");
+            queue.Enqueue("88888");
+            queue.Enqueue("77");
 
         }
 
@@ -494,6 +503,19 @@ namespace mySystem.Process.Stock
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
             setEnableReadOnly();  //根据状态设置可读写性  
+
+            if (_userState == mySystem.Parameter.UserState.操作员 && (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核未通过))
+            {
+                //填写内表的班次信息
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    if(dataGridView1.Rows[i].Cells["班次"].Value.ToString()=="")
+                        dt记录详情.Rows[i]["班次"] = mySystem.Parameter.userflight;
+                    if (dataGridView1.Rows[i].Cells["操作员"].Value.ToString() == "")
+                        dt记录详情.Rows[i]["操作员"] = mySystem.Parameter.userName;
+                }
+                    
+            }
         }
 
         //外表控件绑定
@@ -702,21 +724,27 @@ namespace mySystem.Process.Stock
             //    dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
 
             DataRow dr = dt二维码信息.NewRow();
-            if (1 == label)//退库
+            if (queue.Count > 0)
             {
-                dr["T材料退库单ID"] = int.Parse(dt记录.Rows[0]["ID"].ToString());
-                dr["二维码"] = "12312321";
+                qs = queue.Dequeue().ToString();
+                if (1 == label)//退库
+                {
+                    dr["T材料退库单ID"] = int.Parse(dt记录.Rows[0]["ID"].ToString());
+                    dr["二维码"] = qs;
+                }
+
+                else
+                {
+                    dr["T材料出库单ID"] = int.Parse(dt记录.Rows[0]["ID"].ToString());
+                    dr["二维码外"] = qs;
+                    dr["二维码内"] = qs;
+                }
+
+                dr["数量"] = 50;
+                if(!dic_二维码.ContainsKey(qs))
+                    dt二维码信息.Rows.InsertAt(dr, dt二维码信息.Rows.Count);
             }
-               
-            else
-            {
-                dr["T材料出库单ID"] = int.Parse(dt记录.Rows[0]["ID"].ToString());
-                dr["二维码外"] = "12312321";
-                dr["二维码内"] = "12312321";
-            }
-            
-            dr["数量"] = 50;
-            dt二维码信息.Rows.InsertAt(dr, dt二维码信息.Rows.Count);
+
 
             //addrow("12312321", 50);
         }
@@ -1357,6 +1385,16 @@ namespace mySystem.Process.Stock
             {
                 ret.Add("物料代码1");//物料代码
                 ret.Add("物料批号1");//物料批号
+            }
+            else if (code == "88888")
+            {
+                ret.Add("物料代码1");//物料代码
+                ret.Add("物料批号1");//物料批号
+            }
+            else if (code == "77")
+            {
+                ret.Add("物料代码2");//物料代码
+                ret.Add("物料批号2");//物料批号
             }
             return ret;
         }
