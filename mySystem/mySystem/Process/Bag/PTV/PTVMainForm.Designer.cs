@@ -52,6 +52,7 @@
             this.Btn清场记录 = new System.Windows.Forms.Button();
             this.Btn超声波 = new System.Windows.Forms.Button();
             this.Btn圆口焊接机 = new System.Windows.Forms.Button();
+            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -134,6 +135,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn生产领料申请单);
             this.groupBox2.Controls.Add(this.Btn产品外观);
             this.groupBox2.Controls.Add(this.Btn产品热合);
             this.groupBox2.Controls.Add(this.Btn生产领料);
@@ -143,7 +145,7 @@
             this.groupBox2.Location = new System.Drawing.Point(104, 105);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox2.Size = new System.Drawing.Size(267, 400);
+            this.groupBox2.Size = new System.Drawing.Size(267, 459);
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "物料流转";
@@ -338,6 +340,17 @@
             this.Btn圆口焊接机.UseVisualStyleBackColor = true;
             this.Btn圆口焊接机.Click += new System.EventHandler(this.B4Btn_Click);
             // 
+            // btn生产领料申请单
+            // 
+            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn生产领料申请单.Location = new System.Drawing.Point(21, 389);
+            this.btn生产领料申请单.Name = "btn生产领料申请单";
+            this.btn生产领料申请单.Size = new System.Drawing.Size(226, 38);
+            this.btn生产领料申请单.TabIndex = 34;
+            this.btn生产领料申请单.Text = "生产领料申请单";
+            this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
+            // 
             // PTVMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -388,5 +401,6 @@
         private System.Windows.Forms.Button Btn交接班;
         private System.Windows.Forms.Button Btn产品外观;
         private System.Windows.Forms.Button Btn产品热合;
+        private System.Windows.Forms.Button btn生产领料申请单;
     }
 }

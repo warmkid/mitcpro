@@ -392,5 +392,19 @@ namespace mySystem.Process.Bag
             form.Show();
         }
 
+        private void btn生产领料申请单_Click(object sender, EventArgs e)
+        {
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
+            if (b)
+            {
+                CS生产领料申请单 form生产领料申请单 = new CS生产领料申请单(mainform);
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }  
+        }
+
     }
 }

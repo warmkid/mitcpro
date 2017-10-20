@@ -59,6 +59,7 @@
             this.Btn热合强度 = new System.Windows.Forms.Button();
             this.Btn日报表 = new System.Windows.Forms.Button();
             this.Btn交接班 = new System.Windows.Forms.Button();
+            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -249,7 +250,7 @@
             // Btn打孔及与图纸
             // 
             this.Btn打孔及与图纸.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn打孔及与图纸.Location = new System.Drawing.Point(550, 530);
+            this.Btn打孔及与图纸.Location = new System.Drawing.Point(550, 466);
             this.Btn打孔及与图纸.Name = "Btn打孔及与图纸";
             this.Btn打孔及与图纸.Size = new System.Drawing.Size(200, 38);
             this.Btn打孔及与图纸.TabIndex = 38;
@@ -260,7 +261,7 @@
             // Btn90度热合机
             // 
             this.Btn90度热合机.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn90度热合机.Location = new System.Drawing.Point(550, 390);
+            this.Btn90度热合机.Location = new System.Drawing.Point(550, 338);
             this.Btn90度热合机.Name = "Btn90度热合机";
             this.Btn90度热合机.Size = new System.Drawing.Size(200, 38);
             this.Btn90度热合机.TabIndex = 39;
@@ -271,7 +272,7 @@
             // Btn封口热合机
             // 
             this.Btn封口热合机.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn封口热合机.Location = new System.Drawing.Point(550, 460);
+            this.Btn封口热合机.Location = new System.Drawing.Point(550, 398);
             this.Btn封口热合机.Name = "Btn封口热合机";
             this.Btn封口热合机.Size = new System.Drawing.Size(200, 38);
             this.Btn封口热合机.TabIndex = 37;
@@ -282,7 +283,7 @@
             // Btn单管口热合机
             // 
             this.Btn单管口热合机.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn单管口热合机.Location = new System.Drawing.Point(547, 314);
+            this.Btn单管口热合机.Location = new System.Drawing.Point(550, 276);
             this.Btn单管口热合机.Name = "Btn单管口热合机";
             this.Btn单管口热合机.Size = new System.Drawing.Size(200, 38);
             this.Btn单管口热合机.TabIndex = 35;
@@ -293,7 +294,7 @@
             // Btn多功能热合机
             // 
             this.Btn多功能热合机.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn多功能热合机.Location = new System.Drawing.Point(547, 174);
+            this.Btn多功能热合机.Location = new System.Drawing.Point(550, 158);
             this.Btn多功能热合机.Name = "Btn多功能热合机";
             this.Btn多功能热合机.Size = new System.Drawing.Size(200, 38);
             this.Btn多功能热合机.TabIndex = 36;
@@ -304,7 +305,7 @@
             // Btn3D袋体生产记录
             // 
             this.Btn3D袋体生产记录.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn3D袋体生产记录.Location = new System.Drawing.Point(547, 244);
+            this.Btn3D袋体生产记录.Location = new System.Drawing.Point(550, 216);
             this.Btn3D袋体生产记录.Name = "Btn3D袋体生产记录";
             this.Btn3D袋体生产记录.Size = new System.Drawing.Size(200, 38);
             this.Btn3D袋体生产记录.TabIndex = 34;
@@ -400,11 +401,23 @@
             this.Btn交接班.UseVisualStyleBackColor = true;
             this.Btn交接班.Click += new System.EventHandler(this.Btn交接班_Click);
             // 
+            // btn生产领料申请单
+            // 
+            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn生产领料申请单.Location = new System.Drawing.Point(550, 530);
+            this.btn生产领料申请单.Name = "btn生产领料申请单";
+            this.btn生产领料申请单.Size = new System.Drawing.Size(200, 38);
+            this.btn生产领料申请单.TabIndex = 48;
+            this.btn生产领料申请单.Text = "生产领料申请单";
+            this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
+            // 
             // BTVMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 615);
+            this.Controls.Add(this.btn生产领料申请单);
             this.Controls.Add(this.Btn交接班);
             this.Controls.Add(this.Btn日报表);
             this.Controls.Add(this.Btn外观尺寸);
@@ -479,5 +492,6 @@
         private System.Windows.Forms.Button Btn热合强度;
         private System.Windows.Forms.Button Btn日报表;
         private System.Windows.Forms.Button Btn交接班;
+        private System.Windows.Forms.Button btn生产领料申请单;
     }
 }

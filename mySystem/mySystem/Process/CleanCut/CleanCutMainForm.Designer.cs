@@ -42,6 +42,7 @@
             this.Btn批生产 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn工序结束 = new System.Windows.Forms.Button();
+            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -91,6 +92,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btn生产领料申请单);
             this.groupBox2.Controls.Add(this.Btn标签);
             this.groupBox2.Controls.Add(this.Btn日报表);
             this.groupBox2.Controls.Add(this.Btn生产记录);
@@ -209,6 +211,17 @@
             this.btn工序结束.Visible = false;
             this.btn工序结束.Click += new System.EventHandler(this.btn工序结束_Click);
             // 
+            // btn生产领料申请单
+            // 
+            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn生产领料申请单.Location = new System.Drawing.Point(15, 250);
+            this.btn生产领料申请单.Name = "btn生产领料申请单";
+            this.btn生产领料申请单.Size = new System.Drawing.Size(269, 38);
+            this.btn生产领料申请单.TabIndex = 24;
+            this.btn生产领料申请单.Text = "生产领料申请单";
+            this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
+            // 
             // CleanCutMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -248,5 +261,6 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Button Btn运行记录;
         private System.Windows.Forms.Button btn工序结束;
+        private System.Windows.Forms.Button btn生产领料申请单;
     }
 }

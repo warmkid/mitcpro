@@ -45,11 +45,12 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.Btn外标签 = new System.Windows.Forms.Button();
             this.Btn热合强度 = new System.Windows.Forms.Button();
             this.Btn产品内包装 = new System.Windows.Forms.Button();
             this.Btn内标签 = new System.Windows.Forms.Button();
             this.Btn日报表 = new System.Windows.Forms.Button();
-            this.Btn外标签 = new System.Windows.Forms.Button();
+            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -140,6 +141,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btn生产领料申请单);
             this.groupBox1.Controls.Add(this.Btn外观及检验);
             this.groupBox1.Controls.Add(this.Btn生产指令);
             this.groupBox1.Controls.Add(this.Btn开机前确认);
@@ -149,7 +151,7 @@
             this.groupBox1.Location = new System.Drawing.Point(443, 105);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(260, 368);
+            this.groupBox1.Size = new System.Drawing.Size(260, 431);
             this.groupBox1.TabIndex = 26;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "管理类";
@@ -257,6 +259,17 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "物料流转";
             // 
+            // Btn外标签
+            // 
+            this.Btn外标签.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn外标签.Location = new System.Drawing.Point(28, 374);
+            this.Btn外标签.Name = "Btn外标签";
+            this.Btn外标签.Size = new System.Drawing.Size(200, 38);
+            this.Btn外标签.TabIndex = 20;
+            this.Btn外标签.Text = "LDPE制袋外标签";
+            this.Btn外标签.UseVisualStyleBackColor = true;
+            this.Btn外标签.Click += new System.EventHandler(this.Btn外标签_Click);
+            // 
             // Btn热合强度
             // 
             this.Btn热合强度.Font = new System.Drawing.Font("SimSun", 12F);
@@ -301,16 +314,16 @@
             this.Btn日报表.UseVisualStyleBackColor = true;
             this.Btn日报表.Click += new System.EventHandler(this.A3Btn_Click);
             // 
-            // Btn外标签
+            // btn生产领料申请单
             // 
-            this.Btn外标签.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn外标签.Location = new System.Drawing.Point(28, 374);
-            this.Btn外标签.Name = "Btn外标签";
-            this.Btn外标签.Size = new System.Drawing.Size(200, 38);
-            this.Btn外标签.TabIndex = 20;
-            this.Btn外标签.Text = "LDPE制袋外标签";
-            this.Btn外标签.UseVisualStyleBackColor = true;
-            this.Btn外标签.Click += new System.EventHandler(this.Btn外标签_Click);
+            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn生产领料申请单.Location = new System.Drawing.Point(31, 374);
+            this.btn生产领料申请单.Name = "btn生产领料申请单";
+            this.btn生产领料申请单.Size = new System.Drawing.Size(200, 38);
+            this.btn生产领料申请单.TabIndex = 29;
+            this.btn生产领料申请单.Text = "生产领料申请单";
+            this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
             // 
             // LDPEMainForm
             // 
@@ -359,5 +372,6 @@
         private System.Windows.Forms.Button Btn外包装;
         private System.Windows.Forms.Button Btn交接班;
         private System.Windows.Forms.Button Btn外标签;
+        private System.Windows.Forms.Button btn生产领料申请单;
     }
 }

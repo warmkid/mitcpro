@@ -553,6 +553,20 @@ namespace mySystem.Process.Bag.BTV
             
         }
 
+        private void btn生产领料申请单_Click(object sender, EventArgs e)
+        {
+            Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
+            if (b)
+            {
+                BPV生产领料申请单 form生产领料申请单 = new BPV生产领料申请单(mainform);
+            }
+            else
+            {
+                MessageBox.Show("您无权查看该页面！");
+                return;
+            }
+        }
+
         private void Btn日报表_Click(object sender, EventArgs e)
         {
 
@@ -613,7 +627,6 @@ namespace mySystem.Process.Bag.BTV
             }
             return b = false;
         }
-
         
         
     }

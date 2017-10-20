@@ -1375,6 +1375,12 @@ namespace mySystem
             form24.ShowDialog();
         }
 
+        private void btn生产领料申请单_Click(object sender, EventArgs e)
+        {
+            吹膜生产领料申请单 form生产领料申请单 = new 吹膜生产领料申请单(mainform);
+            form生产领料申请单.Owner = this;
+        }
+
         #endregion
 
         //判断是否能查看
@@ -1467,6 +1473,7 @@ namespace mySystem
             taskbarNotifier1.KeepVisibleOnMousOver = true;
             taskbarNotifier1.ReShowOnMouseOver = true;
         }
+
         
     }
 }

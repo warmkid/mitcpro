@@ -23,7 +23,7 @@ namespace mySystem.Process.Bag.PTV
         private Boolean isSqlOk;
         private CheckForm checkform = null;
 
-        private DataTable dt记录, dt记录详情, dt生产指令, dt生产指令详情, dt物料简称批号代码;
+        private DataTable dt记录, dt记录详情, dt生产指令, dt生产指令详情, dt生产指令制袋, dt物料简称批号代码;
         private OleDbDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
@@ -35,7 +35,8 @@ namespace mySystem.Process.Bag.PTV
         String Instruction;
         String Flight = "";
 
-        public PTV生产退料记录(mySystem.MainForm mainform) : base(mainform)
+        public PTV生产退料记录(mySystem.MainForm mainform)
+            : base(mainform)
         {
             InitializeComponent();
 
@@ -63,7 +64,8 @@ namespace mySystem.Process.Bag.PTV
             cb打印机.Enabled = false;
         }
 
-        public PTV生产退料记录(mySystem.MainForm mainform, Int32 ID) : base(mainform)
+        public PTV生产退料记录(mySystem.MainForm mainform, Int32 ID)
+            : base(mainform)
         {
             InitializeComponent();
 
@@ -180,6 +182,7 @@ namespace mySystem.Process.Bag.PTV
 
             dt生产指令 = new DataTable("生产指令");
             dt生产指令详情 = new DataTable("生产指令详情");
+            dt生产指令制袋 = new DataTable("生产指令制袋");
             dt物料简称批号代码 = new DataTable("物料简称批号代码");
             dt物料简称批号代码.Columns.Add("物料简称", Type.GetType("System.String"));
             dt物料简称批号代码.Columns.Add("物料代码", Type.GetType("System.String"));
@@ -198,14 +201,14 @@ namespace mySystem.Process.Bag.PTV
                 if (dt生产指令.Rows.Count > 0)
                 {
                     //添加物料简称、批号、代码
-                    dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["制袋物料名称1"], dt生产指令.Rows[0]["制袋物料代码1"], dt生产指令.Rows[0]["制袋物料批号1"] });
-                    dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["制袋物料名称2"], dt生产指令.Rows[0]["制袋物料代码2"], dt生产指令.Rows[0]["制袋物料批号2"] });
-                    
+                    //dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["制袋物料名称1"], dt生产指令.Rows[0]["制袋物料代码1"], dt生产指令.Rows[0]["制袋物料批号1"] });
+                    //dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["制袋物料名称2"], dt生产指令.Rows[0]["制袋物料代码2"], dt生产指令.Rows[0]["制袋物料批号2"] });
+
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["内包物料名称1"], dt生产指令.Rows[0]["内包物料代码1"], dt生产指令.Rows[0]["内包物料批号1"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["内包物料名称2"], dt生产指令.Rows[0]["内包物料代码2"], dt生产指令.Rows[0]["内包物料批号2"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["内包物料名称3"], dt生产指令.Rows[0]["内包物料代码3"], dt生产指令.Rows[0]["内包物料批号3"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["内包物料名称4"], dt生产指令.Rows[0]["内包物料代码4"], dt生产指令.Rows[0]["内包物料批号4"] });
-                    
+
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["外包物料名称1"], dt生产指令.Rows[0]["外包物料代码1"], dt生产指令.Rows[0]["外包物料批号1"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["外包物料名称2"], dt生产指令.Rows[0]["外包物料代码2"], dt生产指令.Rows[0]["外包物料批号2"] });
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["外包物料名称3"], dt生产指令.Rows[0]["外包物料代码3"], dt生产指令.Rows[0]["外包物料批号3"] });
@@ -218,6 +221,18 @@ namespace mySystem.Process.Bag.PTV
                     OleDbDataAdapter datemp2 = new OleDbDataAdapter(comm2);
                     datemp2.Fill(dt生产指令详情);
                     datemp2.Dispose();
+
+                    //读取生产指令物料
+                    OleDbCommand comm3 = new OleDbCommand();
+                    comm3.Connection = Parameter.connOle;
+                    //comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
+                    comm3.CommandText = "select * from 生产指令制袋详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
+                    OleDbDataAdapter datemp3 = new OleDbDataAdapter(comm3);
+                    datemp3.Fill(dt生产指令制袋);
+                    datemp3.Dispose();
+                    for (int i = 0; i < dt生产指令制袋.Rows.Count; i++)
+                    { dt物料简称批号代码.Rows.Add(new object[] { dt生产指令制袋.Rows[i]["制袋物料名称"], dt生产指令制袋.Rows[i]["制袋物料代码"], dt生产指令制袋.Rows[i]["制袋物料批号"] }); }
+
                 }
                 else
                 {
@@ -565,7 +580,7 @@ namespace mySystem.Process.Bag.PTV
                         {
                             for (int i = 0; i < dt物料简称批号代码.Rows.Count; i++)
                             { cbc.Items.Add(dt物料简称批号代码.Rows[i]["物料代码"]); }
-                        }   
+                        }
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -578,7 +593,7 @@ namespace mySystem.Process.Bag.PTV
                         cbc.Name = dc.ColumnName;
                         cbc.ValueType = dc.DataType;
                         cbc.Items.Add("白班");
-                        cbc.Items.Add("夜班"); 
+                        cbc.Items.Add("夜班");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
@@ -625,7 +640,7 @@ namespace mySystem.Process.Bag.PTV
         private void btn查询新建_Click(object sender, EventArgs e)
         {
             if (cb产品代码.SelectedIndex >= 0)
-            { DataShow(InstruID, cb产品代码.Text); } 
+            { DataShow(InstruID, cb产品代码.Text); }
         }
 
         //添加行按钮
@@ -656,7 +671,7 @@ namespace mySystem.Process.Bag.PTV
                 setDataGridViewRowNums();
             }
         }
-        
+
         //内表提交审核按钮
         private void btn提交数据审核_Click(object sender, EventArgs e)
         {
@@ -1088,6 +1103,6 @@ namespace mySystem.Process.Bag.PTV
         {
             setDataGridViewFormat();
         }
-          
+
     }
 }

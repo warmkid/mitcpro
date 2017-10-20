@@ -120,6 +120,12 @@
     <Compile Include="Other\属于工序.Designer.cs">
       <DependentUpon>属于工序.cs</DependentUpon>
     </Compile>
+    <Compile Include="Other\生产领料申请单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Other\生产领料申请单.Designer.cs">
+      <DependentUpon>生产领料申请单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\BTV\BPV产品外包装记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,6 +155,12 @@
     </Compile>
     <Compile Include="Process\Bag\BTV\BPV生产退料记录.Designer.cs">
       <DependentUpon>BPV生产退料记录.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BPV生产领料申请单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\BPV生产领料申请单.Designer.cs">
+      <DependentUpon>BPV生产领料申请单.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Bag\BTV\BTV2DProRecord.cs">
       <SubType>Form</SubType>
@@ -348,6 +360,12 @@
     <Compile Include="Process\Bag\CS\CS生产退料记录.Designer.cs">
       <DependentUpon>CS生产退料记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\CS\CS生产领料申请单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\CS\CS生产领料申请单.Designer.cs">
+      <DependentUpon>CS生产领料申请单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\CS\HandOver.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -486,6 +504,12 @@
     <Compile Include="Process\Bag\LDPE\LDPE生产退料记录.Designer.cs">
       <DependentUpon>LDPE生产退料记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPE生产领料申请单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\LDPE\LDPE生产领料申请单.Designer.cs">
+      <DependentUpon>LDPE生产领料申请单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\LDPE\产品外观和尺寸检验记录.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -612,6 +636,12 @@
     <Compile Include="Process\Bag\PTV\PTV生产退料记录.Designer.cs">
       <DependentUpon>PTV生产退料记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\PTV\PTV生产领料申请单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\PTV生产领料申请单.Designer.cs">
+      <DependentUpon>PTV生产领料申请单.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\CleanCut\CleanCutMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -665,6 +695,12 @@
     </Compile>
     <Compile Include="Process\CleanCut\清洁分切标签.Designer.cs">
       <DependentUpon>清洁分切标签.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\CleanCut\清洁分切生产领料申请单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\CleanCut\清洁分切生产领料申请单.Designer.cs">
+      <DependentUpon>清洁分切生产领料申请单.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Extruction\A\HandOver.cs">
       <SubType>Form</SubType>
@@ -777,6 +813,12 @@
     </Compile>
     <Compile Include="Process\Extruction\D\Record_train.Designer.cs">
       <DependentUpon>Record_train.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Extruction\吹膜生产领料申请单.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Extruction\吹膜生产领料申请单.Designer.cs">
+      <DependentUpon>吹膜生产领料申请单.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Order\出库单.cs">
       <SubType>Form</SubType>
@@ -1304,6 +1346,9 @@
     <EmbeddedResource Include="Other\属于工序.resx">
       <DependentUpon>属于工序.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Other\生产领料申请单.resx">
+      <DependentUpon>生产领料申请单.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\BPV产品外包装记录.resx">
       <DependentUpon>BPV产品外包装记录.cs</DependentUpon>
     </EmbeddedResource>
@@ -1542,8 +1587,6 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTV产品外包装记录.resx">
       <DependentUpon>PTV产品外包装记录.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Process\Bag\PTV\PTV产品外观和尺寸检验记录.cs.resx" />
-    <EmbeddedResource Include="Process\Bag\PTV\PTV产品热合强度检验记录.cs.resx" />
     <EmbeddedResource Include="Process\Bag\PTV\PTV洁净区温湿度记录.resx">
       <DependentUpon>PTV洁净区温湿度记录.cs</DependentUpon>
     </EmbeddedResource>
