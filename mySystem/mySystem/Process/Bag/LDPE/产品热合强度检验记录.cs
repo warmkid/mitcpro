@@ -241,7 +241,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["审核日期"] = DateTime.Now;
             string log = "===================================\n";
             log += "时间： " + DateTime.Now.ToLocalTime() + "\n";
-            log += "生产指令： " + mySystem.Parameter.csbagInstruction + "\n";
+            log += "生产指令： " + mySystem.Parameter.ldpebagInstruction + "\n";
             log += mySystem.Parameter.userName + " 开始填写产品热合检验记录";
             dr["日志"] = log;
             return dr;

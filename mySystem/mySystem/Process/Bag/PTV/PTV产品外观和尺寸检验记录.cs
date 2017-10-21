@@ -13,10 +13,8 @@ using System.Text.RegularExpressions;
 namespace mySystem.Process.Bag.PTV
 {
     public partial class PTV产品外观和尺寸检验记录 : BaseForm
-    {        
+    {
         // TODO   需要从Parameter 中读取生产指令ID或编号，这里假装填写当前生产指令编号和ID
-        string CODE;
-        int ID;
         // TODO : 注意处理生产指令的状态
         // TODO： 审核时要调用赵梦的函数
         // TODO: 打印
@@ -43,6 +41,7 @@ namespace mySystem.Process.Bag.PTV
         List<String> ls操作员;
         List<String> ls审核员;
 
+
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/PTV.mdb;Persist Security Info=False";
@@ -53,11 +52,11 @@ namespace mySystem.Process.Bag.PTV
         BindingSource bsOuter, bsInner;
 
 
-        public PTV产品外观和尺寸检验记录(MainForm mainform) 
+        public PTV产品外观和尺寸检验记录(MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
-            fill_printer(); //添加打印机
+            fill_printer();
             variableInit();
             getOtherData();
             getPeople();
@@ -85,13 +84,13 @@ namespace mySystem.Process.Bag.PTV
             addComputerEventHandler();
             addOtherEvenHandler();
         }
-        
-        public PTV产品外观和尺寸检验记录(MainForm mainform, int id) 
+
+        public PTV产品外观和尺寸检验记录(MainForm mainform, int id)
             : base(mainform)
         {
             // 待显示
             InitializeComponent();
-            fill_printer(); //添加打印机
+            fill_printer();
             variableInit(id);
             getOtherData();
             getPeople();
@@ -116,7 +115,7 @@ namespace mySystem.Process.Bag.PTV
             addComputerEventHandler();
             addOtherEvenHandler();
         }
-        
+
         void variableInit()
         {
             conn = new OleDbConnection(strConn);
@@ -125,10 +124,8 @@ namespace mySystem.Process.Bag.PTV
             ls审核员 = new List<string>();
             i生产指令ID = mySystem.Parameter.ptvbagInstruID;
             str生产指令编号 = mySystem.Parameter.ptvbagInstruction;
-            ID = i生产指令ID;
-            CODE = str生产指令编号;
         }
-        
+
         void variableInit(int id)
         {
             conn = new OleDbConnection(strConn);
@@ -144,7 +141,7 @@ namespace mySystem.Process.Bag.PTV
             da.Fill(dt);
             str生产指令编号 = dt.Rows[0]["生产指令编号"].ToString();
         }
-        
+
         void getOtherData()
         {
             // 读取用于显示界面的重要信息
@@ -153,7 +150,6 @@ namespace mySystem.Process.Bag.PTV
             da.Fill(dt);
             str产品代码 = dt.Rows[0]["产品代码"].ToString();
             str产品批号 = dt.Rows[0]["产品批号"].ToString();
-
         }
 
         void setUseState()
@@ -196,33 +192,34 @@ namespace mySystem.Process.Bag.PTV
         // 读取数据，无参数表示从Paramter中读取数据
         void readOuterData()
         {
-            daOuter = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where 生产指令ID=" + ID, conn);
+            daOuter = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where 生产指令ID=" + i生产指令ID, conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("产品外观和尺寸检验记录");
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
         }
-        
+
         DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = i生产指令ID;
+            dr["生产指令编码"] = str生产指令编号;
             dr["产品代码"] = str产品代码;
             dr["产品批号"] = str产品批号;
             dr["生产日期"] = DateTime.Now;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作日期"] = DateTime.Now;
             dr["审核日期"] = DateTime.Now;
-            dr["抽检量合计"] = 0;
+            dr["外观抽检量合计"] = 0;
             dr["游离异物合计"] = 0;
             dr["内含黑点晶点合计"] = 0;
             dr["热封线不良合计"] = 0;
-            dr["尺寸抽检量合计"] = 0;
             dr["其他合计"] = 0;
+            dr["尺寸抽检量合计"] = 0;
             dr["不良合计"] = 0;
             return dr;
         }
-        
+
         void outerBind()
         {
             bsOuter.DataSource = dtOuter;
@@ -251,7 +248,7 @@ namespace mySystem.Process.Bag.PTV
                 }
             }
         }
-        
+
         void readInnerData(int id)
         {
             daInner = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录详细信息 where T产品外观和尺寸检验记录ID=" + dtOuter.Rows[0]["ID"], conn);
@@ -261,7 +258,7 @@ namespace mySystem.Process.Bag.PTV
 
             daInner.Fill(dtInner);
         }
-        
+
         void setDataGridViewColumn()
         {
             dataGridView1.Columns.Clear();
@@ -339,7 +336,7 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns[10].HeaderText = "抽样时间（尺寸）";
             dataGridView1.Columns[14].HeaderText = "判定（尺寸）";
         }
-        
+
         DataRow writeInnerDefault(DataRow dr)
         {
             dr["T产品外观和尺寸检验记录ID"] = dtOuter.Rows[0]["ID"];
@@ -358,7 +355,7 @@ namespace mySystem.Process.Bag.PTV
             dr["判定尺寸检测"] = "合格";
             return dr;
         }
-        
+
         void innerBind()
         {
             bsInner.DataSource = dtInner;
@@ -366,7 +363,7 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
-        
+
         // 获取和显示内容有关的变量
         void setFormVariable(int id)
         {
@@ -444,7 +441,7 @@ namespace mySystem.Process.Bag.PTV
             }
             if (Parameter.UserState.操作员 == _userState)
             {
-                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState) setControlTrue();
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState) setControlTrue();
                 else setControlFalse();
             }
             //if (2 == _userState)
@@ -488,7 +485,6 @@ namespace mySystem.Process.Bag.PTV
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
-
         }
 
         void setControlFalse()
@@ -517,22 +513,21 @@ namespace mySystem.Process.Bag.PTV
         void addComputerEventHandler()
         {
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
-            dataGridView1.DataError += dataGridView1_DataError;
         }
-        
+
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             int sum;
             switch (e.ColumnIndex)
             {
-                // 抽检量合计
+                // 外观抽检量合计
                 case 3:
                     sum = 0;
                     foreach (DataRow dr in dtInner.Rows)
                     {
                         sum += Convert.ToInt32(dr["抽检量外观检查"]);
                     }
-                    dtOuter.Rows[0]["抽检量合计"] = sum;
+                    dtOuter.Rows[0]["外观抽检量合计"] = sum;
                     break;
                 // 游离异物合计
                 case 4:
@@ -579,6 +574,7 @@ namespace mySystem.Process.Bag.PTV
                 //    }
                 //    dtOuter.Rows[0]["不良合计"] = sum;
                 //    break;
+                // 尺寸合计
                 case 11:
                     sum = 0;
                     foreach (DataRow dr in dtInner.Rows)
@@ -587,12 +583,12 @@ namespace mySystem.Process.Bag.PTV
                     }
                     dtOuter.Rows[0]["尺寸抽检量合计"] = sum;
                     break;
-
             }
-            if (e.ColumnIndex >= 3 && e.ColumnIndex <= 7 )
+
+            if (e.ColumnIndex >= 4 && e.ColumnIndex <= 7)
             {
                 sum = 0;
-                for (int i = 3; i <= 7; ++i)
+                for (int i = 4; i <= 7; ++i)
                 {
                     sum += Convert.ToInt32(dtInner.Rows[e.RowIndex][i]);
                 }
@@ -606,15 +602,6 @@ namespace mySystem.Process.Bag.PTV
                 }
                 dtOuter.Rows[0]["不良合计"] = sum;
             }
-        }
-        
-        // 处理DataGridView中数据类型输错的函数
-        private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
-        {
-            // 获取选中的列，然后提示
-            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
-            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
-            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
         void addOtherEvenHandler()
@@ -638,7 +625,7 @@ namespace mySystem.Process.Bag.PTV
         }
 
         private void btn添加_Click(object sender, EventArgs e)
-        {            
+        {
             DataRow dr = dtInner.NewRow();
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
@@ -722,12 +709,11 @@ namespace mySystem.Process.Bag.PTV
                 sum += Convert.ToInt32(dr["不良合计"]);
             }
             dtOuter.Rows[0]["不良合计"] = sum;
-
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-             if (!dataValidate())
+            if (!dataValidate())
             {
                 MessageBox.Show("数据填写不完整，请仔细检查！");
                 return;
@@ -758,14 +744,14 @@ namespace mySystem.Process.Bag.PTV
             setEnableReadOnly();
             btn提交审核.Enabled = false;
         }
-        
+
         bool dataValidate()
         {
             return true;
         }
 
         private void btn查看日志_Click(object sender, EventArgs e)
-        {            
+        {
             try
             {
                 MessageBox.Show(dtOuter.Rows[0]["日志"].ToString());
@@ -777,8 +763,9 @@ namespace mySystem.Process.Bag.PTV
         }
 
         private void btn审核_Click(object sender, EventArgs e)
-        {            
-            // TODO 弹出赵梦的窗口            
+        {
+            // TODO 弹出赵梦的窗口
+
             OleDbDataAdapter da;
             OleDbCommandBuilder cb;
             DataTable dt;
@@ -805,7 +792,7 @@ namespace mySystem.Process.Bag.PTV
 
             btn审核.Enabled = false;
         }
-        
+
         //添加打印机
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
@@ -832,14 +819,14 @@ namespace mySystem.Process.Bag.PTV
             print(false);
             GC.Collect();
         }
-        
+
         //打印功能
         public void print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
@@ -926,11 +913,11 @@ namespace mySystem.Process.Bag.PTV
                 mysheet.Cells[6 + i, 5].Value = dtInner.Rows[i]["热封线不良"].ToString();
                 mysheet.Cells[6 + i, 6].Value = dtInner.Rows[i]["其他"].ToString();
                 mysheet.Cells[6 + i, 7].Value = dtInner.Rows[i]["不良合计"].ToString();
-                mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "合格" ? "√" : "×";
+                mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "Yes" ? "√" : "×";
                 mysheet.Cells[6 + i, 9].Value = Convert.ToDateTime(dtInner.Rows[i]["抽检时间尺寸检测"].ToString()).ToString("yyyy/MM/dd HH:mm");
                 mysheet.Cells[6 + i, 10].Value = dtInner.Rows[i]["抽检量尺寸检测"].ToString();
                 mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["宽"].ToString() + " × " + dtInner.Rows[i]["长"].ToString();
-                mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "合格" ? "√" : "×";
+                mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "Yes" ? "√" : "×";
             }
             //需要插入的部分
             if (rownum > 6)
@@ -949,11 +936,11 @@ namespace mySystem.Process.Bag.PTV
                     mysheet.Cells[6 + i, 5].Value = dtInner.Rows[i]["热封线不良"].ToString();
                     mysheet.Cells[6 + i, 6].Value = dtInner.Rows[i]["其他"].ToString();
                     mysheet.Cells[6 + i, 7].Value = dtInner.Rows[i]["不良合计"].ToString();
-                    mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "合格" ? "√" : "×";
+                    mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "Yes" ? "√" : "×";
                     mysheet.Cells[6 + i, 9].Value = Convert.ToDateTime(dtInner.Rows[i]["抽检时间尺寸检测"].ToString()).ToString("yyyy/MM/dd HH:mm");
                     mysheet.Cells[6 + i, 10].Value = dtInner.Rows[i]["抽检量尺寸检测"].ToString();
                     mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["宽"].ToString() + " × " + dtInner.Rows[i]["长"].ToString();
-                    mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "合格" ? "√" : "×";
+                    mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "Yes" ? "√" : "×";
 
                 }
             }
@@ -974,7 +961,6 @@ namespace mySystem.Process.Bag.PTV
             //返回
             return mysheet;
         }
-           
 
     }
 }

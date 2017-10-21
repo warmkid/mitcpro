@@ -357,7 +357,7 @@ namespace mySystem.Process.Bag.PTV
         {
             if (DialogResult.Yes == MessageBox.Show("是否确认结束工序？", "提示", MessageBoxButtons.YesNo))
             {
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.csbagInstruID, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.ptvbagInstruID, mySystem.Parameter.connOle);
                 OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);

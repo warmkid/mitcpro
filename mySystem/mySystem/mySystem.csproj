@@ -612,11 +612,11 @@
     <Compile Include="Process\Bag\PTV\PTV产品外包装记录.Designer.cs">
       <DependentUpon>PTV产品外包装记录.cs</DependentUpon>
     </Compile>
-    <Compile Include="Process\Bag\PTV\PTV产品外观和尺寸检验记录.cs.cs">
+    <Compile Include="Process\Bag\PTV\PTV产品外观和尺寸检验记录.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Process\Bag\PTV\PTV产品外观和尺寸检验记录.cs.Designer.cs">
-      <DependentUpon>PTV产品外观和尺寸检验记录.cs.cs</DependentUpon>
+    <Compile Include="Process\Bag\PTV\PTV产品外观和尺寸检验记录.Designer.cs">
+      <DependentUpon>PTV产品外观和尺寸检验记录.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\Bag\PTV\PTV产品热合强度检验记录.cs.cs">
       <SubType>Form</SubType>
@@ -1586,6 +1586,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTV产品外包装记录.resx">
       <DependentUpon>PTV产品外包装记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTV产品外观和尺寸检验记录.resx">
+      <DependentUpon>PTV产品外观和尺寸检验记录.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTV洁净区温湿度记录.resx">
       <DependentUpon>PTV洁净区温湿度记录.cs</DependentUpon>
