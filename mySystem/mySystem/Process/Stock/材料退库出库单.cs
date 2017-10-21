@@ -940,7 +940,7 @@ namespace mySystem.Process.Stock
             //填写表格1内的审核员
             //for (int i = 0; i < dataGridView1.Rows.Count; i++)
             //    dataGridView1.Rows[i].Cells["审核员"].Value = "__待审核";
-            for (int i = 0; i < dt记录.Rows.Count; i++)
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
                 dt记录详情 .Rows[i]["审核员"] = "__待审核";
 
             DataTable dt_temp = new DataTable("待审核");
