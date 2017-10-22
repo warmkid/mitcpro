@@ -824,7 +824,7 @@ namespace mySystem.Other
 
                 foreach (DataRow dr in dt记录详情.Rows)
                 {
-                    dt出库Inner.Rows.Add(new object[] { DateTime.Now, dr["物料代码"], dr["物料批号"], dr["申请数量辅计量"] });
+                    dt出库Inner.Rows.Add(new object[] { DateTime.Now, dr["物料代码"], dr["物料批号"], dr["申请数量主计量"] });
                 }
 
                 if (mySystem.Process.Stock.材料退库出库单.生成表单(2, dt出库Out, dt出库Inner, _属于工序) == false)
