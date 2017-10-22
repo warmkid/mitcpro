@@ -714,6 +714,7 @@ namespace mySystem.Extruction.Process
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
             if (checkform.ischeckOk)
             {
+                gene出库单();
                 try
                 {
                     (this.Owner as ExtructionMainForm).InitBtn();
@@ -743,6 +744,45 @@ namespace mySystem.Extruction.Process
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
 
             base.CheckResult();
+        }
+
+        //this function main call the static method in  mySystem.Process.Stock.材料退库出库单.生成表单, which write database
+        //to be add in the future, 生产指令编号,产品代码,产品批号,退库日期时间 should be made sure
+        private void gene出库单()
+        {
+            DataTable Outer1 = new DataTable();
+            DataTable Inner1 = new DataTable();
+            Outer1.Columns.Add("生产指令ID", Type.GetType("System.Int32"));
+            Outer1.Columns.Add("生产指令编号",Type.GetType("System.String"));
+            Outer1.Columns.Add("产品代码",Type.GetType("System.String"));
+            Outer1.Columns.Add("产品批号",Type.GetType("System.String"));
+            DataRow dr =Outer1.NewRow();
+            dr["生产指令ID"]=dt_prodinstr.Rows[0]["生产指令ID"];
+            dr["生产指令编号"]="";
+            dr["产品代码"]="";
+            dr["产品批号"]="";
+            
+            Inner1.Columns.Add("退库日期时间", Type.GetType("System.DateTime"));
+            Inner1.Columns.Add("退库数量",Type.GetType("System.Int32"));
+            Inner1.Columns.Add("物料代码",Type.GetType("System.String"));
+            Inner1.Columns.Add("物料批号",Type.GetType("System.String"));
+            DataRow dr1 =Inner1.NewRow();
+            dr1["退库日期时间"] = dt_prodinstr.Rows[0]["领料日期"];
+            dr1["退库数量"]=dt_prodinstr.Rows[0]["退料"];
+            dr1["物料代码"]=dt_prodinstr.Rows[0]["物料代码"];
+            dr1["物料批号"]="";
+
+            Outer1.Rows.Add(dr);
+            Inner1.Rows.Add(dr1);
+            string str工序 = "吹膜";
+            try
+            {
+                mySystem.Process.Stock.材料退库出库单.生成表单(1, Outer1, Inner1, str工序);
+            }
+            catch
+            {
+                MessageBox.Show("error");
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
