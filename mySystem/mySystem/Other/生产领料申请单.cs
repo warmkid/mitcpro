@@ -65,6 +65,7 @@ namespace mySystem.Other
             //新建内表绑定
             readInnerData(_id);
             innerBind();
+            WriteInnerInit();//填写默认行
             setDataGridViewColumns();
             // 其他设置
             addComputerEventHandler();  // 设置自动计算类事件
@@ -486,6 +487,24 @@ namespace mySystem.Other
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
             return dr;
+        }
+
+        // 内表添加默认信息
+        private void WriteInnerInit()
+        {
+            foreach (DataRow dr物料代码数量 in _dt物料代码数量.Rows)
+            {
+                DataRow dr = dt记录详情.NewRow();
+                dr = writeInnerDefault(_id, dr);
+                dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
+                dr["物料代码"] = dr物料代码数量["物料代码"].ToString();
+                dr["物料批号"] = dr物料代码数量["物料代码"].ToString();
+                dr["申请数量主计量"] = dr物料代码数量["数量"].ToString();
+            }
+            setDataGridViewRowNums();
+            if (dataGridView1.Rows.Count > 0)
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
         }
 
         //序号刷新
