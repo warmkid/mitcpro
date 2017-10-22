@@ -10,6 +10,7 @@ using WindowsFormsApplication1;
 using mySystem.Extruction.Process;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using mySystem.Process.Extruction;
 
 namespace mySystem.Query
 {
@@ -228,7 +229,7 @@ namespace mySystem.Query
                         { EachBind(this.dgv, "吹膜机组运行记录", "记录员", "生产日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "吹膜机组运行记录", "记录员", "生产日期", null); }
-                        break;
+                        break;                    
                     case "培训记录表":
                         EachBind(this.dgv, "吹膜机安全培训记录", "培训日期", null, null);
                         
@@ -244,6 +245,12 @@ namespace mySystem.Query
                     case "吹膜机更换过滤网记录":
                         EachBind(this.dgv, "吹膜机更换过滤网记录表", "更换人", "更换日期", null);
                         
+                        break;
+                    case "生产领料申请单":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "生产领料申请单表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "生产领料申请单表", "审核员", null, null); }
                         break;
 
                     default:
@@ -435,7 +442,10 @@ namespace mySystem.Query
                             //Process.Extruction.D.NetExchange detailform20 = new Process.Extruction.D.NetExchange(base.mainform, ID);
                             //detailform20.Show();
                             break;
+                        case "生产领料申请单":
+                            吹膜生产领料申请单 detailform21 = new 吹膜生产领料申请单(base.mainform, ID);
 
+                            break;
                         default:
                             break;
                     }

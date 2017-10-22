@@ -282,6 +282,12 @@ namespace mySystem.Query
                         else
                         { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", null); }
                         break;
+                    case "生产领料申请单":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "生产领料申请单表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "生产领料申请单表", "审核员", null, null); }
+                        break;
 
                     default:
                         break;
@@ -480,6 +486,10 @@ namespace mySystem.Query
                         case "岗位交接班记录":
                             HandOver mydlg27 = new HandOver(mainform, ID);
                             mydlg27.Show();
+                            break;
+                        case "生产领料申请单":
+                            BPV生产领料申请单 mydlg28 = new BPV生产领料申请单(mainform, ID);
+
                             break;
 
                         default:
