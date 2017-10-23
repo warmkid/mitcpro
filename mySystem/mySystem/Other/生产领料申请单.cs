@@ -88,7 +88,6 @@ namespace mySystem.Other
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
             //getOtherData();  //______获取申请单号
-            getProductInfo(dt物料代码数量构造); //______从参数中获取物料代码以及数量
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
@@ -228,7 +227,12 @@ namespace mySystem.Other
         private void getProductInfo(DataTable 物料代码)
         {
             _dt物料代码数量 = new DataTable("物料代码数量");
-            _dt物料代码数量 = 物料代码.Copy();
+            _dt物料代码数量 = 物料代码.Clone();
+            foreach (DataRow dr in 物料代码.Rows)
+            {
+                if (dr["物料代码"].ToString() != "")
+                    _dt物料代码数量.Rows.Add(dr.ItemArray);
+            }
         }
 
         //根据状态设置可读写性

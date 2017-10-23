@@ -569,7 +569,8 @@ namespace mySystem.Process.Bag.BTV
 
         private void Btn日报表_Click(object sender, EventArgs e)
         {
-
+            生产日报表 form = new 生产日报表(mainform);
+            form.Show();
         }
 
         private void Btn交接班_Click(object sender, EventArgs e)
@@ -626,6 +627,12 @@ namespace mySystem.Process.Bag.BTV
 
             }
             return b = false;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            产品物料代码查询 form = new 产品物料代码查询();
+            form.Show();
         }
         
         
