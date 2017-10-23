@@ -15,6 +15,7 @@ namespace mySystem.Other
 {
     public partial class 生产领料申请单 : BaseForm
     {
+        bool isSaveClicked = false;
         private DataTable _dt物料代码数量;
         private Int32 _id, _生产指令ID;
         private String _生产指令编号, _申请单号, _属于工序, _产品代码, _产品批号;
@@ -76,6 +77,7 @@ namespace mySystem.Other
         public 生产领料申请单(mySystem.MainForm mainform, Int32 ID, DataTable dt生产指令构造, DataTable dt物料代码数量构造, SqlConnection conn构造, OleDbConnection connOle构造)
             : base(mainform)
         {
+            isSaveClicked = true;
             InitializeComponent();
             //从基类继承各种函数
 
@@ -679,6 +681,7 @@ namespace mySystem.Other
         //保存按钮
         private void btn确认_Click(object sender, EventArgs e)
         {
+            isSaveClicked = true;
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
@@ -1047,6 +1050,32 @@ namespace mySystem.Other
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+        }
+
+        private void 生产领料申请单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (!isSaveClicked)
+            {
+                //if (dt记录详情 != null)
+                //{
+                    //foreach (DataRow dr in dt记录详情.Rows)
+                    //{
+                    //    dr.Delete();
+                    //    da记录详情.Update(dt记录详情);
+                    //}
+                    
+                //}
+                if (dt记录 != null)
+                {
+                    //foreach (DataRow dr in dt记录.Rows)
+                    //{
+                    //    dr.Delete();
+                    //    da记录.Update(dt记录);
+                    //}
+                    dt记录.Rows[0].Delete();
+                    da记录.Update(dt记录);
+                }
+            }
         }
 
 

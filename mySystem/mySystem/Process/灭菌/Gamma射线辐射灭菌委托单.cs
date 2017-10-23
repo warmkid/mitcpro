@@ -101,6 +101,8 @@ namespace mySystem.Process.灭菌
 
         void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
+            TextBox tb1 = e.Control as TextBox;
+            if (tb1 != null) tb1.AutoCompleteCustomSource = null;
             if (dataGridView1.CurrentCell.OwningColumn.Name == "产品代码")
             {
                 TextBox tb = e.Control as TextBox;
@@ -467,7 +469,7 @@ namespace mySystem.Process.灭菌
                                 Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
             OleDbConnection Tconn = new OleDbConnection(strConnect);
             Tconn.Open();
-            da = new OleDbDataAdapter("select * from 设置存货档案 where 属于工序 like '%灭菌%'", Tconn);
+            da = new OleDbDataAdapter("select 规格型号 from 设置存货档案", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
