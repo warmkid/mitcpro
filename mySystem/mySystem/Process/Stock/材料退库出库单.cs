@@ -624,10 +624,21 @@ namespace mySystem.Process.Stock
                     {
                         List<string> li_外 = parse_二维码(code_外);
                         List<string> li_内 = parse_二维码(code);
-                        if(li_内[0]!=li_外[0]||li_内[1]!=li_外[1])
+                        if (dt记录.Rows[0]["属于工序"].ToString() != "吹膜")
                         {
-                            MessageBox.Show("第 "+(i+1).ToString()+" 行二维码有误");
-                            continue;
+                            if (li_内[0] != li_外[0] || li_内[1] != li_外[1])
+                            {
+                                MessageBox.Show("第 " + (i + 1).ToString() + " 行二维码有误");
+                                continue;
+                            }
+                        }
+                        else//吹膜的情况下只比较代码
+                        {
+                            if (li_内[0] != li_外[0])
+                            {
+                                MessageBox.Show("第 " + (i + 1).ToString() + " 行二维码有误");
+                                continue;
+                            }
                         }
                     }
                     //以二维码外为准
@@ -716,6 +727,13 @@ namespace mySystem.Process.Stock
             dataGridView1.Columns["审核员"].ReadOnly = true;
             //HeaderText
             dataGridView1.Columns["审核员"].HeaderText = "复核人";
+
+            if (dt记录.Rows[0]["属于工序"].ToString() == "吹膜")
+            {
+                dataGridView1.Columns["物料批号"].Visible = false;
+                dataGridView3.Columns[2].Visible = false;
+
+            }
 
         }
 
@@ -900,23 +918,45 @@ namespace mySystem.Process.Stock
                 MessageBox.Show("物料代码 种类个数 不匹配");
                 return false;
             }
-                
-            for (int i = 0; i < dataGridView3.Rows.Count; i++)
+            if (dt记录.Rows[0]["属于工序"].ToString() != "吹膜")
             {
-                DataRow[] dr = dt记录详情.Select(string.Format("物料代码='{0}' and 物料批号='{1}'", dataGridView3.Rows[i].Cells["物料代码"].Value.ToString(), dataGridView3.Rows[i].Cells["物料批号"].Value.ToString()));
-                if (dr.Length == 0)
+                for (int i = 0; i < dataGridView3.Rows.Count; i++)
                 {
-                    MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString()+"不匹配");
-                    return false;
+                    DataRow[] dr = dt记录详情.Select(string.Format("物料代码='{0}' and 物料批号='{1}'", dataGridView3.Rows[i].Cells["物料代码"].Value.ToString(), dataGridView3.Rows[i].Cells["物料批号"].Value.ToString()));
+                    if (dr.Length == 0)
+                    {
+                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
+                        return false;
+                    }
+                    else if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库或出库数量
+                    {
+                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
+                        return false;
+                    }
+                    else { }
+
                 }
-                else if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库或出库数量
-                {
-                    MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
-                    return false;
-                }
-                else { }
-                    
             }
+            else
+            {
+                for (int i = 0; i < dataGridView3.Rows.Count; i++)
+                {
+                    DataRow[] dr = dt记录详情.Select(string.Format("物料代码='{0}'", dataGridView3.Rows[i].Cells["物料代码"].Value.ToString()));
+                    if (dr.Length == 0)
+                    {
+                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
+                        return false;
+                    }
+                    else if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库或出库数量
+                    {
+                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
+                        return false;
+                    }
+                    else { }
+
+                }
+            }
+
             return true;
         }
         //保存功能
