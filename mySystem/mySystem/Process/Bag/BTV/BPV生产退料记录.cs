@@ -814,10 +814,15 @@ namespace mySystem.Process.Bag.BTV
         {
             DataTable Outer1 = new DataTable();
             DataTable Inner1 = new DataTable();
+			DateTime 退库日期时间 = DateTime.Now;
             Outer1 = dt记录.Copy();
             Inner1 = dt记录详情.Copy();
             Inner1.Columns["领料日期"].ColumnName = "退库日期时间";
-            string str工序 = "BPV";
+            for (int i = 0; i < Outer1.Rows.Count; i++)
+            {
+                Inner1.Rows[0]["退库日期时间"] = 退库日期时间;
+            }
+			string str工序 = "BPV";
             try
             {
                 mySystem.Process.Stock.材料退库出库单.生成表单(1, Outer1, Inner1, str工序);
@@ -904,7 +909,7 @@ namespace mySystem.Process.Bag.BTV
             else
             { _formState = Parameter.FormState.审核未通过; }//审核未通过              
             setEnableReadOnly();
-            gene出库单();
+            //gene出库单();
         }
 
         //添加打印机

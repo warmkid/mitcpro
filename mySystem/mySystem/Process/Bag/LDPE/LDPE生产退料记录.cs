@@ -893,10 +893,15 @@ namespace mySystem.Process.Bag.LDPE
         {
             DataTable Outer1 = new DataTable();
             DataTable Inner1 = new DataTable();
+			DateTime 退库日期时间 = DateTime.Now;
             Outer1 = dt记录.Copy();
             Inner1 = dt记录详情.Copy();
             Inner1.Columns["领料日期"].ColumnName = "退库日期时间";
-            string str工序 = "LDPE";
+            for (int i = 0; i < Outer1.Rows.Count; i++)
+            {
+                Outer1.Rows[0]["退库日期时间"] = 退库日期时间;
+            }
+			string str工序 = "LDPE";
             try
             {
                 mySystem.Process.Stock.材料退库出库单.生成表单(1, Outer1, Inner1, str工序);

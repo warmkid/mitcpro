@@ -758,7 +758,7 @@ namespace mySystem.Extruction.Process
             Outer1.Columns.Add("产品批号",Type.GetType("System.String"));
             DataRow dr =Outer1.NewRow();
             dr["生产指令ID"]=dt_prodinstr.Rows[0]["生产指令ID"];
-            dr["生产指令编号"]="";
+            dr["生产指令编号"]=getInsFromID(Convert.ToInt32(dr["生产指令ID"]));
             dr["产品代码"]="";
             dr["产品批号"]="";
             
@@ -767,7 +767,7 @@ namespace mySystem.Extruction.Process
             Inner1.Columns.Add("物料代码",Type.GetType("System.String"));
             Inner1.Columns.Add("物料批号",Type.GetType("System.String"));
             DataRow dr1 =Inner1.NewRow();
-            dr1["退库日期时间"] = dt_prodinstr.Rows[0]["领料日期"];
+            dr1["退库日期时间"] = DateTime.Now;
             dr1["退库数量"]=dt_prodinstr.Rows[0]["退料"];
             dr1["物料代码"]=dt_prodinstr.Rows[0]["物料代码"];
             dr1["物料批号"]="";
@@ -783,6 +783,23 @@ namespace mySystem.Extruction.Process
             {
                 MessageBox.Show("error");
             }
+        }
+		
+		private string getInsFromID(int ID)
+        {
+            string rtn;
+            string sqlCmd = "SELECT 生产指令编号 FROM 生产指令信息表 WHERE ID =" + ID.ToString();
+            OleDbCommand cmd = new OleDbCommand(sqlCmd, Parameter.connOle);
+            try
+            {
+                rtn = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch
+            {
+                MessageBox.Show("未找到对应生产指令编码!");
+                rtn = "";
+            }
+            return rtn;
         }
 
         private void button2_Click(object sender, EventArgs e)
