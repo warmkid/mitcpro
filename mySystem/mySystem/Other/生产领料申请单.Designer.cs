@@ -319,6 +319,7 @@
             this.Controls.Add(this.label2);
             this.Name = "生产领料申请单";
             this.Text = "生产领料申请单";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.生产领料申请单_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
