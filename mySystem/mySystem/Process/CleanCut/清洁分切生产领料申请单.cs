@@ -108,7 +108,7 @@ namespace mySystem.Process.CleanCut
                     if (dt生产指令制袋.Rows.Count > 0)
                     {
                         for (int i = 0; i < dt生产指令制袋.Rows.Count; i++)
-                        { dt物料代码数量.Rows.Add(new object[] { dt生产指令制袋.Rows[i]["清洁前产品代码"], dt生产指令制袋.Rows[i]["清洁前批号"], (Double.TryParse(dt生产指令制袋.Rows[0]["数量米"].ToString(), out outTemp) == true ? outTemp : -1) }); }
+                        { dt物料代码数量.Rows.Add(new object[] { dt生产指令制袋.Rows[i]["清洁前产品代码"], dt生产指令制袋.Rows[i]["清洁前批号"], (Double.TryParse(dt生产指令制袋.Rows[i]["数量米"].ToString(), out outTemp) == true ? outTemp : -1) }); }
                         dt生产指令信息.Rows.Add(new object[] { InstruID, Instruction, "清洁分切", dt生产指令制袋.Rows[0]["清洁前产品代码"], dt生产指令制袋.Rows[0]["清洁前批号"], isSqlOk });
                     }
                     else

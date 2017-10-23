@@ -504,7 +504,7 @@ namespace mySystem.Other
                 dr = writeInnerDefault(_id, dr);
                 dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
                 dr["物料代码"] = dr物料代码数量["物料代码"].ToString();
-                dr["物料批号"] = dr物料代码数量["物料代码"].ToString();
+                dr["物料批号"] = dr物料代码数量["物料批号"].ToString();
                 dr["申请数量主计量"] = dr物料代码数量["数量"].ToString();
             }
             setDataGridViewRowNums();
