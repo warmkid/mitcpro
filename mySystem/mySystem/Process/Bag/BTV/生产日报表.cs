@@ -11,14 +11,13 @@ using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Collections;
 
-namespace mySystem.Process.Bag.PTV
+namespace mySystem.Process.Bag.BTV
 {
-    public partial class PTVBag_dailyreport : BaseForm
+    public partial class 生产日报表 : BaseForm
     {
-
         DataTable dtShow;
 
-        public PTVBag_dailyreport(MainForm mainform)
+        public 生产日报表(MainForm mainform)
             : base(mainform)
         {
             InitializeComponent();
@@ -36,7 +35,7 @@ namespace mySystem.Process.Bag.PTV
             end = end.Date.AddDays(1).AddSeconds(-1);
             DataTable dt;
   
-            DataTable ret = new DataTable("PTV制袋台账");
+            DataTable ret = new DataTable("BPV制袋台账");
 
             ret.Columns.Add("生产指令号", Type.GetType("System.String"));
             ret.Columns.Add("生产日期", Type.GetType("System.DateTime"));
@@ -49,8 +48,8 @@ namespace mySystem.Process.Bag.PTV
             //ret.Columns.Add("产品数量（平米）", Type.GetType("System.Double"));
             ret.Columns.Add("生产指令ID", Type.GetType("System.Int32"));
 
-            sql = "select * from 产品内包装记录 where 生产日期>='{0}' and 生产日期<='{1}'";
-            da = new OleDbDataAdapter(string.Format(sql, start.ToString("yyyy/MM/dd"), end.ToString("yyyy/MM/dd")), mySystem.Parameter.connOle);
+            sql = "select * from 产品内包装记录 where 生产日期 between #{0}# and #{1}#";
+            da = new OleDbDataAdapter(string.Format(sql, start, end), mySystem.Parameter.connOle);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -382,8 +381,5 @@ namespace mySystem.Process.Bag.PTV
             //GC.Collect();
         }
 
-      
-       
     }
 }
-

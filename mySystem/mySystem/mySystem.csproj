@@ -318,6 +318,12 @@
     <Compile Include="Process\Bag\BTV\产品物料代码查询.Designer.cs">
       <DependentUpon>产品物料代码查询.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\BTV\生产日报表.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\生产日报表.Designer.cs">
+      <DependentUpon>生产日报表.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\CS\Bagprocess_prod_instru.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1457,6 +1463,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\BTV\产品物料代码查询.resx">
       <DependentUpon>产品物料代码查询.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\生产日报表.resx">
+      <DependentUpon>生产日报表.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
