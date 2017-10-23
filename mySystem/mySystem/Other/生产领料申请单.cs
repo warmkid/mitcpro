@@ -511,6 +511,8 @@ namespace mySystem.Other
             if (dataGridView1.Rows.Count > 0)
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
             da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(_id);
+            innerBind();
         }
 
         //序号刷新
@@ -594,7 +596,7 @@ namespace mySystem.Other
             dataGridView1.Columns["物料批号"].Visible = false;
             //不可用
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.Columns["申请数量主计量"].ReadOnly = true;
+            //dataGridView1.Columns["申请数量主计量"].ReadOnly = true;
             //dataGridView1.Columns["物料简称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //HeaderText
             dataGridView1.Columns["申请数量主计量"].HeaderText = "申请数量\r（主计量）";
