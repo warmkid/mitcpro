@@ -74,7 +74,8 @@
             "产品外包装记录",
             "生产退料记录",
             "洁净区温湿度记录",
-            "岗位交接班记录"});
+            "岗位交接班记录",
+            "生产领料申请单"});
             this.comboBox2.Location = new System.Drawing.Point(612, 20);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(255, 24);
@@ -120,7 +121,6 @@
             this.dgv.Size = new System.Drawing.Size(1089, 460);
             this.dgv.TabIndex = 64;
             this.dgv.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DataBindingComplete);
-           // this.dgv.DoubleClick += new System.EventHandler(this.dgv_DoubleClick);
             // 
             // SearchBtn
             // 

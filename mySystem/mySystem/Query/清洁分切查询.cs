@@ -168,7 +168,13 @@ namespace mySystem.Query
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", null); }
-                        break;                    
+                        break;
+                    case "生产领料申请单":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "生产领料申请单表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "生产领料申请单表", "审核员", null, null); }
+                        break;
 
                     default:
                         break;
@@ -286,6 +292,10 @@ namespace mySystem.Query
                         case "清洁分切批生产记录":
                             //CleanCut_Cover form6= new CleanCut_Cover(mainform, ID);
                             //form6.Show();
+                            break;
+                        case "生产领料申请单":
+                            清洁分切生产领料申请单 form7 = new 清洁分切生产领料申请单(mainform, ID);
+
                             break;
 
                         default:

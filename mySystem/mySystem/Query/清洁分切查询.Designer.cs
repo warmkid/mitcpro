@@ -53,7 +53,8 @@
             "清洁分切开机前确认表",
             "清洁分切运行记录",
             "清场记录",
-            "清洁分切批生产记录"});
+            "清洁分切批生产记录",
+            "生产领料申请单"});
             this.comboBox2.Location = new System.Drawing.Point(612, 20);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(255, 24);
@@ -99,7 +100,6 @@
             this.dgv.Size = new System.Drawing.Size(1089, 460);
             this.dgv.TabIndex = 28;
             this.dgv.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgv_DataBindingComplete);
-          //  this.dgv.DoubleClick += new System.EventHandler(this.dgv_DoubleClick);
             // 
             // SearchBtn
             // 
