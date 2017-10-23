@@ -868,6 +868,21 @@ namespace mySystem.Process.Stock
         //检查表三和表一是否相同
         private bool isOk_Table()
         {
+            //检查表二
+            if(label!=1)//出库
+            {
+                for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                {
+                    if (dataGridView2.Rows[i].Cells["二维码外"].Value.ToString() == "" || dataGridView2.Rows[i].Cells["二维码内"].Value.ToString() == "")
+                    {
+                        MessageBox.Show("二维码表第 " + (i+1).ToString() + " 行有未扫描的二维码");
+                        return false;
+                    }
+                }
+
+            }
+
+            //检查表三
             if (dataGridView1.Rows.Count != dataGridView3.Rows.Count)
             {
                 MessageBox.Show("物料代码 种类个数 不匹配");
@@ -1100,7 +1115,7 @@ namespace mySystem.Process.Stock
                         name.Add("操作");
                         name.Add("备注");
 
-                        value.Add(DateTime.Now);
+                        value.Add(DateTime.Now.ToString());
                         value.Add(strname);
                         value.Add("入库");
                         value.Add("");
@@ -1195,7 +1210,7 @@ namespace mySystem.Process.Stock
                         name1.Add("备注");
 
                         //TODO：时间插入datatime.now有问题
-                        value1.Add(DateTime.Now.ToLongTimeString());
+                        value1.Add(DateTime.Now.ToString());
                         value1.Add(strname);
                         value1.Add("出库");
                         value1.Add(id_库存.ToString());
@@ -1396,7 +1411,7 @@ namespace mySystem.Process.Stock
         {
             //测试
             List<object> ret = new List<object>();
-            if (code == "123" || code == "77" || code == "88")
+            if (code == "77")
             {
                 ret.Add("物料代码2");//物料代码
                 ret.Add("物料批号2");//物料批号
@@ -1613,7 +1628,7 @@ namespace mySystem.Process.Stock
                     reader = cmd.ExecuteReader();
                     if(reader.Read())//只有一行
                     {
-                         num_int = int.Parse(reader[3].ToString());//数量
+                         //num_int = int.Parse(reader[3].ToString());//数量
                     }
                     else
                     {
@@ -1624,16 +1639,49 @@ namespace mySystem.Process.Stock
                             dataGridView2.Rows[row].Cells["二维码外"].Value = "";
                         return;
                     }
-                    dataGridView2.Rows[row].Cells["数量"].Value = num_int;
+                    //dataGridView2.Rows[row].Cells["数量"].Value = num_int;
                     reader.Close();
                 }
                 else 
                 {
                     //扫描的是内部的二维码
+                    if (dataGridView2.Rows[row].Cells["二维码外"].Value.ToString() == "")
+                    {
+                        MessageBox.Show("先扫描外面的二维码");
+                        return;
+                    }
+                    else
+                    {
+                        if (dataGridView2.Rows[row].Cells["二维码外"].Value.ToString() == code)
+                        {
+                            OleDbCommand cmd = new OleDbCommand();
+                            cmd.Connection = connOle;
+                            string strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", code);
+                            cmd.CommandText = strcmd;
+                            OleDbDataReader reader = null;
+                            reader = cmd.ExecuteReader();
+                            if (reader.Read())//只有一行
+                            {
+                                num_int = int.Parse(reader[3].ToString());//数量
+                            }
+                            else
+                            {
+                                MessageBox.Show("数据库中未找到对应二维码");
+                                if (label == 1)//退库
+                                    dataGridView2.Rows[row].Cells["二维码"].Value = "";
+                                else
+                                    dataGridView2.Rows[row].Cells["二维码外"].Value = "";
+                                return;
+                            }
+                            dataGridView2.Rows[row].Cells["数量"].Value = num_int;
+                            reader.Close();
+                        }
+                    }
 
                 }
                     
                 addrow(code, num_int);
+                dataGridView3.Rows[dic_材料代码[dic_二维码[code]]].Cells["数量"].Value = int.Parse(dataGridView3.Rows[dic_材料代码[dic_二维码[code]]].Cells["数量"].Value.ToString()) + num_int;
             }
             else if (dataGridView2.CurrentCell.OwningColumn.Name == "数量")
             {
