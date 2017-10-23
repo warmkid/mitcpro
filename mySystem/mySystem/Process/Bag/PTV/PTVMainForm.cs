@@ -455,6 +455,12 @@ namespace mySystem.Process.Bag.PTV
             } 
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            产品物料代码查询 form = new 产品物料代码查询();
+            form.Show();
+        }
+
        
 
     }

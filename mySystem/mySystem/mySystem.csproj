@@ -312,6 +312,12 @@
     <Compile Include="Process\Bag\BTV\产品热合强度检验记录.Designer.cs">
       <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
     </Compile>
+    <Compile Include="Process\Bag\BTV\产品物料代码查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\BTV\产品物料代码查询.Designer.cs">
+      <DependentUpon>产品物料代码查询.cs</DependentUpon>
+    </Compile>
     <Compile Include="Process\Bag\CS\Bagprocess_prod_instru.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -641,6 +647,12 @@
     </Compile>
     <Compile Include="Process\Bag\PTV\PTV生产领料申请单.Designer.cs">
       <DependentUpon>PTV生产领料申请单.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\产品物料代码查询.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Process\Bag\PTV\产品物料代码查询.Designer.cs">
+      <DependentUpon>产品物料代码查询.cs</DependentUpon>
     </Compile>
     <Compile Include="Process\CleanCut\CleanCutMainForm.cs">
       <SubType>Form</SubType>
@@ -1443,6 +1455,9 @@
     <EmbeddedResource Include="Process\Bag\BTV\产品热合强度检验记录.resx">
       <DependentUpon>产品热合强度检验记录.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\BTV\产品物料代码查询.resx">
+      <DependentUpon>产品物料代码查询.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\CS\Bagprocess_prod_instru.resx">
       <DependentUpon>Bagprocess_prod_instru.cs</DependentUpon>
     </EmbeddedResource>
@@ -1595,6 +1610,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTV生产退料记录.resx">
       <DependentUpon>PTV生产退料记录.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\产品物料代码查询.resx">
+      <DependentUpon>产品物料代码查询.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Process\CleanCut\CleanCutMainForm.resx">
       <DependentUpon>CleanCutMainForm.cs</DependentUpon>

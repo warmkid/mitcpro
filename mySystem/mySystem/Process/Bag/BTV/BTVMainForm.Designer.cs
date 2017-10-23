@@ -60,6 +60,7 @@
             this.Btn日报表 = new System.Windows.Forms.Button();
             this.Btn交接班 = new System.Windows.Forms.Button();
             this.btn生产领料申请单 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // comboBox1
@@ -412,11 +413,23 @@
             this.btn生产领料申请单.UseVisualStyleBackColor = true;
             this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(547, 21);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(200, 38);
+            this.button1.TabIndex = 49;
+            this.button1.Text = "产品物料代码查询";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // BTVMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 615);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btn生产领料申请单);
             this.Controls.Add(this.Btn交接班);
             this.Controls.Add(this.Btn日报表);
@@ -493,5 +506,6 @@
         private System.Windows.Forms.Button Btn日报表;
         private System.Windows.Forms.Button Btn交接班;
         private System.Windows.Forms.Button btn生产领料申请单;
+        private System.Windows.Forms.Button button1;
     }
 }

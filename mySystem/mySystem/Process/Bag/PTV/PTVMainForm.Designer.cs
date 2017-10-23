@@ -36,6 +36,7 @@
             this.Btn产品内包装 = new System.Windows.Forms.Button();
             this.Btn瓶口焊接机 = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.Btn产品外观 = new System.Windows.Forms.Button();
             this.Btn产品热合 = new System.Windows.Forms.Button();
             this.Btn生产日报表 = new System.Windows.Forms.Button();
@@ -52,7 +53,7 @@
             this.Btn清场记录 = new System.Windows.Forms.Button();
             this.Btn超声波 = new System.Windows.Forms.Button();
             this.Btn圆口焊接机 = new System.Windows.Forms.Button();
-            this.btn生产领料申请单 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -149,6 +150,17 @@
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "物料流转";
+            // 
+            // btn生产领料申请单
+            // 
+            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn生产领料申请单.Location = new System.Drawing.Point(21, 389);
+            this.btn生产领料申请单.Name = "btn生产领料申请单";
+            this.btn生产领料申请单.Size = new System.Drawing.Size(226, 38);
+            this.btn生产领料申请单.TabIndex = 34;
+            this.btn生产领料申请单.Text = "生产领料申请单";
+            this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
             // 
             // Btn产品外观
             // 
@@ -340,22 +352,23 @@
             this.Btn圆口焊接机.UseVisualStyleBackColor = true;
             this.Btn圆口焊接机.Click += new System.EventHandler(this.B4Btn_Click);
             // 
-            // btn生产领料申请单
+            // button1
             // 
-            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn生产领料申请单.Location = new System.Drawing.Point(21, 389);
-            this.btn生产领料申请单.Name = "btn生产领料申请单";
-            this.btn生产领料申请单.Size = new System.Drawing.Size(226, 38);
-            this.btn生产领料申请单.TabIndex = 34;
-            this.btn生产领料申请单.Text = "生产领料申请单";
-            this.btn生产领料申请单.UseVisualStyleBackColor = true;
-            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
+            this.button1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(479, 16);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(200, 38);
+            this.button1.TabIndex = 20;
+            this.button1.Text = "PTV生产指令";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // PTVMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1170, 623);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.groupBox2);
@@ -402,5 +415,6 @@
         private System.Windows.Forms.Button Btn产品外观;
         private System.Windows.Forms.Button Btn产品热合;
         private System.Windows.Forms.Button btn生产领料申请单;
+        private System.Windows.Forms.Button button1;
     }
 }
