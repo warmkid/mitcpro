@@ -703,6 +703,16 @@ namespace mySystem.Process.灭菌
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
 
+            if (checkform.ischeckOk)
+            {
+                da_temp = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单 where ID="+dt_out.Rows[0]["灭菌委托单ID"], mySystem.Parameter.connOle);
+                cb_temp = new OleDbCommandBuilder(da_temp);
+                dt_temp = new DataTable();
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0]["状态"] = 4;
+                da_temp.Update(dt_temp);
+            }
+
             //写日志
             string log = "\n=====================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n审核员：" + mySystem.Parameter.userName + " 完成审核\n";
