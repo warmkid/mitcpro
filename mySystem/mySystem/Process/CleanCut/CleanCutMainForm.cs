@@ -272,7 +272,7 @@ namespace mySystem.Process.CleanCut
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "生产领料申请单表");
             if (b)
             {
-                清洁分切生产领料申请单 form生产领料申请单 = new 清洁分切生产领料申请单(mainform,7);
+                清洁分切生产领料申请单 form生产领料申请单 = new 清洁分切生产领料申请单(mainform);
             }
             else
             {

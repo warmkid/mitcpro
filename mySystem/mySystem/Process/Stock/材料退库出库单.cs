@@ -75,6 +75,7 @@ namespace mySystem.Process.Stock
         //dtInner中应包含对应退库单或出库单内表的信息
         static public bool 生成表单(int label,DataTable dtOut,DataTable dtInner,string str工序)
         {
+            Int32 外表ID = 0;
             string temptable,temptable2;
             if (1 == label)
             {
@@ -117,8 +118,11 @@ namespace mySystem.Process.Stock
                 dr["属于工序"] = str工序;
                 dt_temp.Rows.Add(dr);
                 daout.Update(dt_temp);
-
-                daout_reader = new OleDbDataAdapter("select * from " + temptable + " where 生产指令ID = "+ Convert.ToInt32(dtOut.Rows[0]["生产指令ID"].ToString())+" and 属于工序='"+str工序+"'", connOle_材料退库出库);
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = connOle_材料退库出库;
+                comm.CommandText = "select @@identity";
+                外表ID = (Int32)comm.ExecuteScalar();
+                daout_reader = new OleDbDataAdapter("select * from " + temptable + " where ID="+外表ID, connOle_材料退库出库);
                 cb_reader = new OleDbCommandBuilder(daout_reader);
                 daout_reader.Fill(dt_reader);
                 if (dt_reader.Rows.Count <= 0)
@@ -698,6 +702,7 @@ namespace mySystem.Process.Stock
             dataGridView1.ColumnHeadersHeight = 40;
             //隐藏
             dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["班次"].Visible = false;
             dataGridView2.Columns["ID"].Visible = false;
             if (1 == label)//材料退库单
             {

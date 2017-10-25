@@ -159,9 +159,9 @@ namespace mySystem.Query
                         break;
                     case "清场记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "清场记录", "清场人", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "清场记录", "确认人", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "清场记录", "清场人", "生产日期", null); }   
+                        { EachBind(this.dgv, "清场记录", "确认人", "生产日期", null); }   
                         break;
                     case "清洁分切批生产记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -326,6 +326,10 @@ namespace mySystem.Query
             { }
             try
             { setDataGridViewBackColor("审核人"); }
+            catch
+            { }
+            try
+            { setDataGridViewBackColor("审核员"); }
             catch
             { }
 
