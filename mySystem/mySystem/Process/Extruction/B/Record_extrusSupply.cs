@@ -1213,7 +1213,7 @@ namespace WindowsFormsApplication1
             dir += "./../../xls/Extrusion/B/SOP-MFG-301-R06 吹膜供料记录.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
