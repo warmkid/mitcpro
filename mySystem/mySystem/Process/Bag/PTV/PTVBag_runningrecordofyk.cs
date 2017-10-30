@@ -774,11 +774,11 @@ namespace mySystem.Process.Bag.PTV
 
             //外表信息
             mysheet.Cells[3, 1].Value = "产品代码/规格：" + dt记录.Rows[0]["产品代码"].ToString();
-            mysheet.Cells[3, 9].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
-            mysheet.Cells[3, 15].Value = "生产指令编码：" + dt记录.Rows[0]["生产指令编码"].ToString();
+            mysheet.Cells[3, 8].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[3, 14].Value = "生产指令编码：" + dt记录.Rows[0]["生产指令编码"].ToString();
             //mysheet.Cells[3, 15].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
-            mysheet.Cells[4, 15].Value = "电压 voltage:            " + dt记录.Rows[0]["电压"] + "V";
+            mysheet.Cells[4, 15].Value = "电压 voltage: " + dt记录.Rows[0]["电压"] + "V";
 
             mysheet.Cells[8, 3].Value = dt记录.Rows[0]["焊线1参数1"];
             mysheet.Cells[8, 4].Value = dt记录.Rows[0]["焊线1参数2"];
@@ -796,7 +796,7 @@ namespace mySystem.Process.Bag.PTV
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 mysheet.Cells[9 + i, 1] = i + 1;
-                mysheet.Cells[9 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString("yyyy年MM月dd日");
+                mysheet.Cells[9 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString());
                 mysheet.Cells[9 + i, 3] = dt记录详情.Rows[i]["焊线1参数1"].ToString();
                 mysheet.Cells[9 + i, 4] = dt记录详情.Rows[i]["焊线1参数2"].ToString();
                 mysheet.Cells[9 + i, 5] = dt记录详情.Rows[i]["焊线1参数3"].ToString();
