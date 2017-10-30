@@ -1280,12 +1280,12 @@ namespace mySystem.Process.Bag.CS
             my.Cells[8 + ind, 10].Value = "白班：\n" + dtOuter.Rows[0]["制袋内包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["制袋内包夜班负责人"].ToString(); 
             my.Cells[13 + ind, 10].Value = "白班：\n" + dtOuter.Rows[0]["外包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["外包夜班负责人"].ToString(); 
 
-            my.Cells[17 + ind, 2].Value = dtOuter.Rows[0]["备注"].ToString();
-            my.Cells[18 + ind, 1].Value = String.Format("编制人：{0}   {1}",
+            my.Cells[16 + ind, 2].Value = dtOuter.Rows[0]["备注"].ToString();
+            my.Cells[17 + ind, 1].Value = String.Format("编制人：{0}   {1}",
                 dtOuter.Rows[0]["操作员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["操作时间"]).ToString("yyyy年MM月dd日")); 
-            my.Cells[18 + ind, 3].Value = String.Format("审批人：{0}   {1}",
+            my.Cells[17 + ind, 3].Value = String.Format("审批人：{0}   {1}",
                 dtOuter.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日")); 
-            my.Cells[18 + ind, 7].Value = String.Format("接收人：{0}   {1}",
+            my.Cells[17 + ind, 7].Value = String.Format("接收人：{0}   {1}",
                 dtOuter.Rows[0]["接收人"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["接收时间"]).ToString("yyyy年MM月dd日"));
 
         }

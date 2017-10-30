@@ -996,7 +996,7 @@ namespace mySystem.Process.Bag.CS
             mysheet.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
             mysheet.Cells[3, 9].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
             mysheet.Cells[15, 1].Value = "备注：" + dt记录.Rows[0]["备注"].ToString();
-            mysheet.Cells[16, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
+            //mysheet.Cells[16, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分

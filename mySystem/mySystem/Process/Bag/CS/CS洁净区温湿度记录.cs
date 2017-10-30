@@ -833,7 +833,7 @@ namespace mySystem.Process.Bag.CS
             //外表信息
             mysheet.Cells[3, 1].Value = "生产工序：" + dt记录.Rows[0]["生产工序"].ToString();
             mysheet.Cells[3, 5].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
-            mysheet.Cells[34, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
+            //mysheet.Cells[34, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分
@@ -846,8 +846,8 @@ namespace mySystem.Process.Bag.CS
                 mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["相对湿度"].ToString();
                 mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["判定"].ToString();
                 mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
-                mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["审核员"].ToString();
+                //mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
             //需要插入的部分
             if (rownum > 28)
@@ -866,8 +866,8 @@ namespace mySystem.Process.Bag.CS
                     mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["相对湿度"].ToString();
                     mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["判定"].ToString();
                     mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
-                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["审核员"].ToString();
+                    //mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["审核员"].ToString();
                 }
 
             }
