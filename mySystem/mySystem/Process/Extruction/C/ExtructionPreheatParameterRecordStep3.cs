@@ -864,11 +864,12 @@ namespace mySystem.Extruction.Process
             //外表信息
             String stringtemp = "";
             stringtemp = "日期： " + Convert.ToDateTime(dt记录.Rows[0]["日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[3, 1].Value = stringtemp;
-            mysheet.Cells[3, 5].Value = "操作员：   " + dt记录.Rows[0]["操作员"].ToString();
-            mysheet.Cells[3, 8].Value = "审核员：   " + dt记录.Rows[0]["审核人"].ToString();
+            mysheet.Cells[3, 4].Value = stringtemp;
+            mysheet.Cells[3, 7].Value = "操作员：   " + dt记录.Rows[0]["操作员"].ToString();
+            mysheet.Cells[3, 9].Value = "审核员：   " + dt记录.Rows[0]["审核人"].ToString();
             mysheet.Cells[4, 1].Value = "模芯规格：（Φ  " + dt记录.Rows[0]["模芯规格参数1"].ToString() + "  × Gap   " + dt记录.Rows[0]["模芯规格参数2"].ToString() + "   ）";
             mysheet.Cells[17, 2].Value = "备注： " + dt记录.Rows[0]["备注"].ToString();
+            mysheet.Cells[3, 2].Value = dt记录.Rows[0]["生产指令编号"].ToString();
             //各种温度
             mysheet.Cells[6, 6].Value = dt记录.Rows[0]["换网预热参数设定1"].ToString();
             mysheet.Cells[6, 7].Value = dt记录.Rows[0]["流道预热参数设定1"].ToString();

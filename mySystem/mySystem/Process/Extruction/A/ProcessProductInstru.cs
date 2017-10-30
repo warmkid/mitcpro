@@ -2163,6 +2163,7 @@ namespace BatchProductRecord
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
+                my.Cells[7 + i, 1] = dataGridView1.Rows[i].Cells[2].Value.ToString();
                 my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
                 my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[6].Value.ToString();
                 my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[7].Value.ToString();

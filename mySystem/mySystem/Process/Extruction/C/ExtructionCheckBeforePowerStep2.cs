@@ -927,7 +927,12 @@ namespace mySystem.Extruction.Process
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
-            my = printValue(my, wb);
+            OleDbDataAdapter da = new OleDbDataAdapter("select 生产指令信息表.生产指令编号 as 生产指令编号 from 吹膜机组开机前确认表,生产指令信息表 where 生产指令信息表.ID=吹膜机组开机前确认表.生产指令ID", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            string zhiling = "";
+            if (dt.Rows.Count > 0) zhiling = dt.Rows[0]["生产指令编号"].ToString();
+            my = printValue(my, wb, zhiling);
 
             if (isShow)
             {
@@ -980,7 +985,7 @@ namespace mySystem.Extruction.Process
         }
 
         //打印功能
-        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook, string zhiling)
         {
             //外表信息
             String stringtemp = "";
@@ -988,15 +993,16 @@ namespace mySystem.Extruction.Process
             stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Day.ToString() + "日";
             stringtemp = stringtemp + "      审核人：" + dt记录.Rows[0]["审核人"].ToString();
             stringtemp = stringtemp + "       审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[19, 1].Value = stringtemp;
+            mysheet.Cells[20, 1].Value = stringtemp;
+            mysheet.Cells[3, 3].Value = "生产指令编号： " + zhiling;
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             for (int i = 0; i < (rownum > 14 ? 14 : rownum); i++)
             {
-                mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
-                mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                mysheet.Cells[4 + i, 4].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
+                mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
+                mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
             }
             //需要插入的部分
             if (rownum > 14)
@@ -1008,10 +1014,10 @@ namespace mySystem.Extruction.Process
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
-                    mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
-                    mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                    mysheet.Cells[4 + i, 4].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                    mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
+                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
+                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
                 }
             }
             //加页脚

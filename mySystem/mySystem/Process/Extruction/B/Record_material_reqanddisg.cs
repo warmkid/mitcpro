@@ -1155,9 +1155,14 @@ namespace mySystem.Extruction.Process
             dir += "./../../xls/Extrusion/B/SOP-MFG-301-R14 吹膜工序领料退料记录.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
             // 修改Sheet中某行某列的值
-            fill_excel(my);
+            OleDbDataAdapter da = new OleDbDataAdapter("select 生产指令信息表.生产指令编号 as 生产指令编号 from 吹膜机组开机前确认表,生产指令信息表 where 生产指令信息表.ID=吹膜机组开机前确认表.生产指令ID", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            string zhiling = "";
+            if (dt.Rows.Count > 0) zhiling = dt.Rows[0]["生产指令编号"].ToString();
+            fill_excel(my, zhiling);
             //"生产指令-步骤序号- 表序号 /&P"
             string str_instruction = idtocode(instrid);
             my.PageSetup.RightFooter = str_instruction + "-13-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
@@ -1201,7 +1206,7 @@ namespace mySystem.Extruction.Process
             }
         }
 
-        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my, String zhiling)
         {
             int ind = 0;//偏移
             if (dataGridView1.Rows.Count > 24)
@@ -1217,25 +1222,27 @@ namespace mySystem.Extruction.Process
             }
 
             my.Cells[3, 1].Value = "物料代码："+dt_prodinstr.Rows[0]["物料代码"].ToString();
+            my.Cells[3, 9].Value = zhiling;
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 DateTime tempdt = DateTime.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString());
-                my.Cells[5 + i, 1] = tempdt.ToString("yyyy年MM月dd日");
-                my.Cells[5 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
-                my.Cells[5 + i, 3] = dataGridView1.Rows[i].Cells[4].Value.ToString();
-                my.Cells[5 + i, 4] = dataGridView1.Rows[i].Cells[5].Value.ToString();
-                my.Cells[5 + i, 5] = dataGridView1.Rows[i].Cells[6].Value.ToString();
-                my.Cells[5 + i, 6] = dataGridView1.Rows[i].Cells[7].Value.ToString();
-                my.Cells[5 + i, 7] = dataGridView1.Rows[i].Cells[8].Value.ToString();
-                my.Cells[5 + i, 8] = dataGridView1.Rows[i].Cells[9].Value.ToString();
+                my.Cells[5 + i, 2] = tempdt.ToString("yyyy年MM月dd日 HH:mm:ss");
+                // 3 是批号；TODO，在数据库中加入列：批号
+                my.Cells[5 + i, 4] = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                my.Cells[5 + i, 5] = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                my.Cells[5 + i, 6] = dataGridView1.Rows[i].Cells[5].Value.ToString();
+                my.Cells[5 + i, 7] = dataGridView1.Rows[i].Cells[6].Value.ToString();
+                my.Cells[5 + i, 8] = dataGridView1.Rows[i].Cells[7].Value.ToString();
+                my.Cells[5 + i, 9] = dataGridView1.Rows[i].Cells[8].Value.ToString();
+                my.Cells[5 + i, 10] = dataGridView1.Rows[i].Cells[9].Value.ToString();
             }
 
-            my.Cells[29+ind, 2].Value = tb数量.Text;
-            my.Cells[29+ind, 4].Value = tb重量.Text;
-            my.Cells[29+ind, 5].Value = "退料："+tb退料量.Text;
-            my.Cells[29+ind, 7].Value = tb退料操作人.Text;
-            my.Cells[29+ind, 8].Value = tb退料审核人.Text;
+            my.Cells[20 +ind, 4].Value = tb数量.Text;
+            my.Cells[20+ind, 6].Value = tb重量.Text;
+            my.Cells[20+ind, 7].Value = "退料："+tb退料量.Text+" KG";
+            //my.Cells[23+ind, 7].Value = tb退料操作人.Text;
+            //my.Cells[23+ind, 8].Value = tb退料审核人.Text;
         }
 
         private void bt删除_Click(object sender, EventArgs e)
