@@ -789,7 +789,7 @@ namespace mySystem.Process.Bag.PTV
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 mysheet.Cells[7 + i, 1] = i + 1;
-                mysheet.Cells[7 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["检测时间"].ToString()).ToString("yyyy年MM月dd日");
+                mysheet.Cells[7 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["检测时间"].ToString());
                 mysheet.Cells[7 + i, 3] = dt记录详情.Rows[i]["prefill"].ToString();
                 mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["charde"].ToString();
                 mysheet.Cells[7 + i, 5] = dt记录详情.Rows[i]["settle"].ToString();

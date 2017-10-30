@@ -55,6 +55,7 @@ namespace mySystem.Process.Bag.PTV
         {
             InitializeComponent();
             variableInit();
+            fill_printer();
             getOuterOtherData();
             getPeople();
             setUseState();
@@ -69,6 +70,7 @@ namespace mySystem.Process.Bag.PTV
         {
             // 显示前的准备工作
             InitializeComponent();
+            fill_printer();
             variableInit();
             getOuterOtherData();
             getPeople();
@@ -1369,8 +1371,180 @@ namespace mySystem.Process.Bag.PTV
             print(false);
             GC.Collect();
         }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            int ind = 0;
+            int i插入行数 = 0;
+            my.Cells[3, 1].Value = "产品名称：" + dtOuter.Rows[0]["产品名称"].ToString();
+            my.Cells[3, 7].Value = dtOuter.Rows[0]["生产指令编号"].ToString();
+            my.Cells[5, 1].Value = "生产工艺：" + dtOuter.Rows[0]["生产工艺"].ToString();
+            my.Cells[5, 3].Value = "生产设备：" + dtOuter.Rows[0]["生产设备"].ToString();
+            my.Cells[4, 7].Value = Convert.ToDateTime(dtOuter.Rows[0]["计划生产日期"]).ToString("yyyy年MM月dd日");
+
+
+            //写内表数据
+            for (int i = 0; i < dtInner.Rows.Count; i++)
+            {
+                my.Cells[7 + i, 1].Value = i + 1;
+                my.Cells[7 + i, 2].Value = dtInner.Rows[i]["产品代码"].ToString();
+                my.Cells[7 + i, 3].Value = dtInner.Rows[i]["计划产量只"].ToString();               
+                my.Cells[7 + i, 4].Value = dtInner.Rows[i]["产品批号"].ToString();
+                my.Cells[7 + i, 5].Value = dtInner.Rows[i]["内包装规格每包只数"].ToString();
+                my.Cells[7 + i, 6].Value = dtInner.Rows[i]["内标签"].ToString();//TODO:标签指的是 内标签？
+                //my.Cells[6 + i, 7].Value = dtInner.Rows[i]["封边"].ToString();
+                my.Cells[7 + i, 7].Value = dtInner.Rows[i]["外包规格"].ToString();
+                //my.Cells[6 + i, 9].Value = dtInner.Rows[i]["生产系数"].ToString();
+                my.Cells[7 + i, 9].Value = dtInner.Rows[i]["订单号"].ToString();
+            }
+
+            //写制袋内表
+            //插入新行
+            if (dtInner_制袋.Rows.Count > 4)
+            {
+                i插入行数 = dtInner.Rows.Count - 4;
+                for (int i = 0; i < i插入行数; i++)
+                {
+                    //在第9行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[9 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = i插入行数;
+            }
+            for (int i = 0; i < dtInner_制袋.Rows.Count; i++)
+            {
+                my.Cells[9 + i, 2].Value = dtInner_制袋.Rows[i]["制袋物料名称"].ToString();
+                my.Cells[9 + i, 3].Value = dtInner_制袋.Rows[i]["制袋物料代码"].ToString();
+                my.Cells[9 + i, 5].Value = dtInner_制袋.Rows[i]["制袋物料批号"].ToString();
+                my.Cells[9 + i, 7].Value = dtInner_制袋.Rows[i]["制袋物料领料量"].ToString();
+
+            }
+
+            //内包
+            my.Cells[13 + ind, 2].Value = dtOuter.Rows[0]["内包物料名称1"].ToString();
+            my.Cells[13 + ind, 3].Value = dtOuter.Rows[0]["内包物料代码1"].ToString();
+            my.Cells[13 + ind, 5].Value = dtOuter.Rows[0]["内包物料批号1"].ToString();
+            my.Cells[13 + ind, 7].Value = dtOuter.Rows[0]["内包物料领料量1"].ToString();
+
+            my.Cells[14 + ind, 2].Value = dtOuter.Rows[0]["内包物料名称2"].ToString();
+            my.Cells[14 + ind, 3].Value = dtOuter.Rows[0]["内包物料代码2"].ToString();
+            my.Cells[14 + ind, 5].Value = dtOuter.Rows[0]["内包物料批号2"].ToString();
+            my.Cells[14 + ind, 7].Value = dtOuter.Rows[0]["内包物料领料量2"].ToString();
+
+            my.Cells[15 + ind, 2].Value = dtOuter.Rows[0]["内包物料名称3"].ToString();
+            my.Cells[15 + ind, 3].Value = dtOuter.Rows[0]["内包物料代码3"].ToString();
+            my.Cells[15 + ind, 5].Value = dtOuter.Rows[0]["内包物料批号3"].ToString();
+            my.Cells[15 + ind, 7].Value = dtOuter.Rows[0]["内包物料领料量3"].ToString();
+
+            my.Cells[16 + ind, 2].Value = dtOuter.Rows[0]["内包物料名称4"].ToString();
+            my.Cells[16 + ind, 3].Value = dtOuter.Rows[0]["内包物料代码4"].ToString();
+            my.Cells[16 + ind, 5].Value = dtOuter.Rows[0]["内包物料批号4"].ToString();
+            my.Cells[16 + ind, 7].Value = dtOuter.Rows[0]["内包物料领料量4"].ToString();
+
+
+            //外包
+            my.Cells[17 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称1"].ToString();
+            my.Cells[17 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码1"].ToString();
+            my.Cells[17 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号1"].ToString();
+            my.Cells[17 + ind, 7].Value = dtOuter.Rows[0]["外包物料领料量1"].ToString();
+
+            my.Cells[18 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称2"].ToString();
+            my.Cells[18 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码2"].ToString();
+            my.Cells[18 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号2"].ToString();
+            my.Cells[18 + ind, 7].Value = dtOuter.Rows[0]["外包物料领料量2"].ToString();
+
+            my.Cells[19 + ind, 2].Value = dtOuter.Rows[0]["外包物料名称3"].ToString();
+            my.Cells[19 + ind, 3].Value = dtOuter.Rows[0]["外包物料代码3"].ToString();
+            my.Cells[19 + ind, 5].Value = dtOuter.Rows[0]["外包物料批号3"].ToString();
+            my.Cells[19 + ind, 7].Value = dtOuter.Rows[0]["外包物料领料量3"].ToString();
+
+
+            //记录
+            my.Cells[20 + ind, 3].Value = dtOuter.Rows[0]["记录"].ToString();
+
+            //备注
+            my.Cells[21 + ind, 1].Value = "备注： "+dtOuter.Rows[0]["记录"].ToString();
+
+            //负责人
+            my.Cells[9, 9].Value = "白班：\n" + dtOuter.Rows[0]["制袋内包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["制袋内包夜班负责人"].ToString();
+            my.Cells[17 + ind, 9].Value = "白班：\n" + dtOuter.Rows[0]["外包白班负责人"].ToString() + "\n" + "夜班：\n" + dtOuter.Rows[0]["外包夜班负责人"].ToString();
+
+            //编制人，审批人，接收人
+            my.Cells[22 + ind, 1].Value = String.Format("编制人：{0}\n日期： {1}",
+                dtOuter.Rows[0]["操作员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["操作时间"]).ToString("yyyy年MM月dd日"));
+            my.Cells[22 + ind, 3].Value = String.Format("审批人：{0}\n日期： {1}",
+                dtOuter.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日"));
+            my.Cells[22 + ind, 5].Value = String.Format("接收人：{0}\n日期： {1}",
+                dtOuter.Rows[0]["接收人"].ToString(), Convert.ToDateTime(dtOuter.Rows[0]["接收时间"]).ToString("yyyy年MM月dd日"));
+
+        }
+
         public void print(bool b)
-        { }
+        {
+            int label_打印成功 = 1;
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            dir += "./../../xls/PTV/1 SOP-MFG-305-R01A PTV生产指令.xlsx";
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+
+            //"生产指令-步骤序号- 表序号 /&P"
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 生产指令" + " where 生产指令编号= '" + dtOuter.Rows[0]["生产指令编号"].ToString() + "'", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            my.PageSetup.RightFooter = dtOuter.Rows[0]["生产指令编号"].ToString() + "-" + sheetnum.ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                {
+                    label_打印成功 = 0;
+                }
+                finally
+                {
+                    if (1 == label_打印成功)
+                    {
+                        string log = "\n=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
 
         private void btn制袋添加_Click(object sender, EventArgs e)
         {

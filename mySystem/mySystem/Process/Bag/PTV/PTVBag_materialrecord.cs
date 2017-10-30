@@ -958,8 +958,8 @@ namespace mySystem.Process.Bag.PTV
             
             //外表信息
             mysheet.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
-            mysheet.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
-            mysheet.Cells[3, 9].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
+            mysheet.Cells[3, 5].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[3, 8].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
 
             //内表信息
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
@@ -998,7 +998,7 @@ namespace mySystem.Process.Bag.PTV
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\SOP-MFG-102-R01A 生产领料记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\3 SOP-MFG-102-R01A 生产领料记录.xlsx");
 
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];

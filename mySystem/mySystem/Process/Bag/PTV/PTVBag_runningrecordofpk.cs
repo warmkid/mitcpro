@@ -842,20 +842,20 @@ namespace mySystem.Process.Bag.PTV
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             int ind = 0;
-            if (dataGridView1.Rows.Count > 11)
+            if (dataGridView1.Rows.Count > 10)
             {
                 //在第9行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 11; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 10; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[9, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 11;
+                ind = dataGridView1.Rows.Count - 10;
             }
 
             //外表信息
-            mysheet.Cells[3, 1].Value = "生产指令编码：" + dt记录.Rows[0]["生产指令编码"].ToString();
+            mysheet.Cells[3, 1].Value = "膜代码：" + dt记录.Rows[0]["生产指令编码"].ToString();
             mysheet.Cells[3, 8].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
             mysheet.Cells[3, 15].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
             //mysheet.Cells[3, 21].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
@@ -889,7 +889,7 @@ namespace mySystem.Process.Bag.PTV
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 mysheet.Cells[8 + i, 1] = i + 1;
-                mysheet.Cells[8 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString("yyyy年MM月dd日");
+                mysheet.Cells[8 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString();
                 mysheet.Cells[8 + i, 3] = dt记录详情.Rows[i]["控制器1参数1"].ToString();
                 mysheet.Cells[8 + i, 4] = dt记录详情.Rows[i]["控制器1参数2"].ToString();
                 mysheet.Cells[8 + i, 5] = dt记录详情.Rows[i]["控制器1参数3"].ToString();
@@ -919,8 +919,8 @@ namespace mySystem.Process.Bag.PTV
             }
 
 
-            mysheet.Cells[19 + ind, 18].Value = string.Format("合格品数量：    {0}只\n不良品数量：    {1}只", dt记录.Rows[0]["合格品数量"], dt记录.Rows[0]["不良品数量"]);
-            mysheet.Cells[19 + ind, 23].Value = string.Format("复核人： {0}\n日期：{1}", dt记录.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
+            mysheet.Cells[18 + ind, 18].Value = string.Format("合格品数量：    {0}只\n不良品数量：    {1}只", dt记录.Rows[0]["合格品数量"], dt记录.Rows[0]["不良品数量"]);
+            mysheet.Cells[18 + ind, 23].Value = string.Format("复核人： {0}\n日期：{1}", dt记录.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
         }
 
         //查找打印的表序号

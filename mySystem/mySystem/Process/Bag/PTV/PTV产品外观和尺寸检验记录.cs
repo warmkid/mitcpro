@@ -886,7 +886,7 @@ namespace mySystem.Process.Bag.PTV
             mysheet.Cells[3, 3].Value = dtOuter.Rows[0]["产品代码"].ToString();
             mysheet.Cells[3, 9].Value = dtOuter.Rows[0]["产品批号"].ToString();
             mysheet.Cells[3, 10].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[12, 2].Value = dtOuter.Rows[0]["抽检量合计"].ToString();
+            mysheet.Cells[12, 2].Value = dtOuter.Rows[0]["外观抽检量合计"].ToString();
             mysheet.Cells[12, 3].Value = dtOuter.Rows[0]["游离异物合计"].ToString();
             mysheet.Cells[12, 4].Value = dtOuter.Rows[0]["内含黑点晶点合计"].ToString();
             mysheet.Cells[12, 5].Value = dtOuter.Rows[0]["热封线不良合计"].ToString();

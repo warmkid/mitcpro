@@ -1038,7 +1038,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1039, 827);
+            this.ClientSize = new System.Drawing.Size(1039, 824);
             this.Controls.Add(this.tb内包物料名称4);
             this.Controls.Add(this.tb内包物料名称3);
             this.Controls.Add(this.label18);

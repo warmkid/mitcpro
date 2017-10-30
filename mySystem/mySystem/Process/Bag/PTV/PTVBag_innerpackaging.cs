@@ -1054,7 +1054,7 @@ namespace mySystem.Process.Bag.PTV
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录-1.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\5 SOP-MFG-109-R01A 产品内包装记录.xlsx");
             
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
@@ -1128,27 +1128,28 @@ namespace mySystem.Process.Bag.PTV
             }
             
             //外表信息
-            mysheet.Cells[3, 14].Value = dt记录.Rows[0]["生产指令编号"].ToString();
-            mysheet.Cells[4, 1].Value =  dt记录.Rows[0]["产品代码"].ToString();
-            mysheet.Cells[4, 4].Value = dt记录.Rows[0]["生产批号"].ToString();
+            mysheet.Cells[3, 11].Value = "生产指令编号："+dt记录.Rows[0]["生产指令编号"].ToString();
+            mysheet.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[3, 4].Value = "生产批号：" + dt记录.Rows[0]["生产批号"].ToString();
             mysheet.Cells[4, 9].Value = Convert.ToBoolean(dt记录.Rows[0]["标签语言中文"]) ? "中文" : "英文";
             mysheet.Cells[4, 6].Value = Convert.ToDouble(dt记录.Rows[0]["内包装规格"]);
-            mysheet.Cells[4, 15].Value = dt记录.Rows[0]["班次"].ToString();
+            mysheet.Cells[4, 16].Value = dt记录.Rows[0]["班次"].ToString();
                 //"标签：" + "中文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言中文"]) == true ? "☑" : "□") + "  英文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言英文"]) == true ? "☑" : "□");
             mysheet.Cells[4, 14].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy/MM/dd");
             //mysheet.Cells[18 + ind, 5].Value = dt记录.Rows[0]["产品数量包数合计A"].ToString(); 
             //mysheet.Cells[18 + ind, 6].Value = dt记录.Rows[0]["产品数量只数合计B"].ToString(); 
             //mysheet.Cells[18 + ind, 7].Value = "理论产量： " + dt记录.Rows[0]["理论产量C"].ToString(); 
             //mysheet.Cells[19 + ind, 7].Value = "成品率 = " + dt记录.Rows[0]["成品率"].ToString();
-            mysheet.Cells[19, 2].Value = Convert.ToDouble(dt记录.Rows[0]["工时"]);
-            mysheet.Cells[19, 4].Value = Convert.ToDouble(dt记录.Rows[0]["产品数量包数合计A"]);
-            mysheet.Cells[19, 5].Value = Convert.ToDouble(dt记录.Rows[0]["产品数量只数合计B"]);
-            mysheet.Cells[19, 6].Value = Convert.ToDouble(dt记录.Rows[0]["热封线不合格合计"]);
-            mysheet.Cells[19, 7].Value = Convert.ToDouble(dt记录.Rows[0]["黑点晶点合计"]);
-            mysheet.Cells[19, 8].Value = Convert.ToDouble(dt记录.Rows[0]["指示剂不良合计"]);
-            mysheet.Cells[19, 9].Value = Convert.ToDouble(dt记录.Rows[0]["其他合计"]);
-            mysheet.Cells[19, 10].Value = Convert.ToDouble(dt记录.Rows[0]["不良总合计"]);
-            mysheet.Cells[19, 13].Value = Convert.ToDouble(dt记录.Rows[0]["废品重量"]);
+
+            mysheet.Cells[19 + ind, 2].Value = Convert.ToDouble(dt记录.Rows[0]["工时"]);
+            mysheet.Cells[19 + ind, 4].Value = Convert.ToDouble(dt记录.Rows[0]["产品数量包数合计A"]);
+            mysheet.Cells[19 + ind, 5].Value = Convert.ToDouble(dt记录.Rows[0]["产品数量只数合计B"]);
+            mysheet.Cells[19 + ind, 6].Value = Convert.ToDouble(dt记录.Rows[0]["热封线不合格合计"]);
+            mysheet.Cells[19 + ind, 7].Value = Convert.ToDouble(dt记录.Rows[0]["黑点晶点合计"]);
+            mysheet.Cells[19 + ind, 8].Value = Convert.ToDouble(dt记录.Rows[0]["指示剂不良合计"]);
+            mysheet.Cells[19 + ind, 9].Value = Convert.ToDouble(dt记录.Rows[0]["其他合计"]);
+            mysheet.Cells[19 + ind, 10].Value = Convert.ToDouble(dt记录.Rows[0]["不良总合计"]);
+            mysheet.Cells[19 + ind, 13].Value = Convert.ToDouble(dt记录.Rows[0]["废品重量"])+" KG";
 
             //内表信息
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
@@ -1167,8 +1168,8 @@ namespace mySystem.Process.Bag.PTV
                 mysheet.Cells[7 + i, 11] = dt记录详情.Rows[i]["包装袋热封线"].ToString().Equals("Yes") ? "√" : "×";
                 mysheet.Cells[7 + i, 12] = dt记录详情.Rows[i]["内标签"].ToString().Equals("Yes") ? "√" : "×";
                 mysheet.Cells[7 + i, 13] = dt记录详情.Rows[i]["内包装外观"].ToString().Equals("Yes") ? "√" : "×";
-                mysheet.Cells[7 + i, 14] = dt记录详情.Rows[i]["操作员"].ToString(); 
-                mysheet.Cells[7 + i, 15] = dt记录详情.Rows[i]["审核员"].ToString(); 
+                mysheet.Cells[7 + i, 15] = dt记录详情.Rows[i]["操作员"].ToString(); 
+                mysheet.Cells[7 + i, 16] = dt记录详情.Rows[i]["审核员"].ToString(); 
 
             }
         }
