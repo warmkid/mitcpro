@@ -11,6 +11,7 @@ using System.Collections;
 using System.Text.RegularExpressions;
 using mySystem;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices;
 
 namespace BatchProductRecord
 {
@@ -40,6 +41,8 @@ namespace BatchProductRecord
 
         mySystem.CheckForm ckform;
 
+        Hashtable htRow2Page = new Hashtable();
+
         public BatchProductRecord(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
@@ -67,7 +70,7 @@ namespace BatchProductRecord
             checkInner2Data();
             init();
             initly();
-
+            addOtherEventHandler();
         }
 
         public BatchProductRecord(mySystem.MainForm mainform, int id)
@@ -131,7 +134,7 @@ namespace BatchProductRecord
                 initly();
 
             }
-
+            addOtherEventHandler();
         }
 
         void setKeyInfo(int pid, int mid, string code)
@@ -478,7 +481,7 @@ namespace BatchProductRecord
                 int temp;
                 int idx = 0;
                 int tempid;
-                da = new OleDbDataAdapter("select * from 生产指令信息表 where  生产指令编号='" + _code + "'", mySystem.Parameter.connOle);
+                da = new OleDbDataAdapter("select * from 生产指令信息表 where  ID=" + _instrctID, mySystem.Parameter.connOle);
                 dt = new DataTable("生产指令信息表");
                 da.Fill(dt);
                 temp = dt.Rows.Count;
@@ -1290,6 +1293,7 @@ namespace BatchProductRecord
 
         private void btn打印_Click(object sender, EventArgs e)
         {
+            htRow2Page = new Hashtable();
             // TODO GC.Collect()
             List<Int32> checkedRows = new List<int>();
             for (int i = 0; i < dataGridView1.Rows.Count; ++i)
@@ -1299,15 +1303,17 @@ namespace BatchProductRecord
                     checkedRows.Add(i);
                 }
             }
-
+            
             if (!mySystem.Parameter.isSqlOk)
             {
                 foreach (Int32 r in checkedRows)
                 {
+                    
                     OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + _instrctID, mySystem.Parameter.connOle);
                     DataTable dt = new DataTable("生产指令信息表");
                     int id;
                     List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
+                    
                     switch (r)
                     {
                         case 0: // 生产指令
@@ -1320,6 +1326,7 @@ namespace BatchProductRecord
                                 (new ProcessProductInstru(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 1: // 日报表
                             da = new OleDbDataAdapter("select * from 吹膜生产日报表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1331,7 +1338,7 @@ namespace BatchProductRecord
                                 (new mySystem.ProdctDaily_extrus(mainform, id)).print(false);
                                 GC.Collect();
                             }
-
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 2: // 清洁记录表
                             da = new OleDbDataAdapter("select * from 吹膜机组清洁记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1343,7 +1350,7 @@ namespace BatchProductRecord
                                 (new WindowsFormsApplication1.Record_extrusClean(mainform, id)).print(false);
                                 GC.Collect();
                             }
-
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 3://吹膜机组开机前确认表
                             da = new OleDbDataAdapter("select * from 吹膜机组开机前确认表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1355,6 +1362,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 4:// 预热参数记录表                                    
                             da = new OleDbDataAdapter("select * from 吹膜机组预热参数记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1368,6 +1376,7 @@ namespace BatchProductRecord
                                 GC.Collect();
 
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 5://供料记录
                             da = new OleDbDataAdapter("select * from 吹膜供料记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1379,6 +1388,7 @@ namespace BatchProductRecord
                                 (new WindowsFormsApplication1.Record_extrusSupply(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 6://供料系统运行记录
                             da = new OleDbDataAdapter("select * from 吹膜供料系统运行记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1390,6 +1400,7 @@ namespace BatchProductRecord
                                 (new mySystem.Process.Extruction.C.Feed(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 7:// 吹膜机组运行记录
 
@@ -1402,6 +1413,7 @@ namespace BatchProductRecord
                                 (new mySystem.Process.Extruction.B.Running(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 8:// 吹膜工序生产和检验记录
                             da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1413,6 +1425,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 9:// 废品记录
 
@@ -1425,6 +1438,7 @@ namespace BatchProductRecord
                                 (new mySystem.Process.Extruction.B.Waste(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 10:
                             // 清场记录
@@ -1437,6 +1451,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.Record_extrusSiteClean(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 11:// 物料平衡记录
                             da = new OleDbDataAdapter("select * from 吹膜工序物料平衡记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1448,6 +1463,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 12:// 领料退料记录
                             da = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1459,6 +1475,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.Record_material_reqanddisg(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 13: // 岗位交接班
                             da = new OleDbDataAdapter("select * from 吹膜岗位交接班记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1470,6 +1487,7 @@ namespace BatchProductRecord
                                 (new mySystem.Process.Extruction.A.HandOver(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 14:// 内包装
                             da = new OleDbDataAdapter("select * from 产品内包装记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1481,6 +1499,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.ProductInnerPackagingRecord(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 15:// 外包装
                             da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
@@ -1492,6 +1511,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                     }
                 }
@@ -1516,6 +1536,7 @@ namespace BatchProductRecord
                                 (new ProcessProductInstru(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 1: // 日报表
                             da = new SqlDataAdapter("select * from 吹膜生产日报表 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1527,7 +1548,7 @@ namespace BatchProductRecord
                                 (new mySystem.ProdctDaily_extrus(mainform, id)).print(false);
                                 GC.Collect();
                             }
-
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 2: // 清洁记录表
                             da = new SqlDataAdapter("select * from 吹膜机组清洁记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1539,7 +1560,7 @@ namespace BatchProductRecord
                                 (new WindowsFormsApplication1.Record_extrusClean(mainform, id)).print(false);
                                 GC.Collect();
                             }
-
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 3://吹膜机组开机前确认表
                             da = new SqlDataAdapter("select * from 吹膜机组开机前确认表 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1551,6 +1572,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.ExtructionCheckBeforePowerStep2(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 4:// 预热参数记录表                                    
                             da = new SqlDataAdapter("select * from 吹膜机组预热参数记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1564,6 +1586,7 @@ namespace BatchProductRecord
                                 GC.Collect();
 
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 5://供料记录
                             da = new SqlDataAdapter("select * from 吹膜供料记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1575,6 +1598,7 @@ namespace BatchProductRecord
                                 (new WindowsFormsApplication1.Record_extrusSupply(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 6://供料系统运行记录
                             da = new SqlDataAdapter("select * from 吹膜供料系统运行记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1586,6 +1610,7 @@ namespace BatchProductRecord
                                 (new mySystem.Process.Extruction.C.Feed(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 7:// 吹膜机组运行记录
 
@@ -1598,6 +1623,7 @@ namespace BatchProductRecord
                                 (new mySystem.Process.Extruction.B.Running(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 8:// 吹膜工序生产和检验记录
                             da = new SqlDataAdapter("select * from 吹膜工序生产和检验记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1609,6 +1635,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 9:// 废品记录
 
@@ -1621,6 +1648,7 @@ namespace BatchProductRecord
                                 (new mySystem.Process.Extruction.B.Waste(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 10:
                             // 清场记录
@@ -1633,6 +1661,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.Record_extrusSiteClean(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 11:// 物料平衡记录
                             da = new SqlDataAdapter("select * from 吹膜工序物料平衡记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1644,6 +1673,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.MaterialBalenceofExtrusionProcess(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 12:// 领料退料记录
                             da = new SqlDataAdapter("select * from 吹膜工序领料退料记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1655,6 +1685,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.Record_material_reqanddisg(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 13: // 岗位交接班
                             da = new SqlDataAdapter("select * from 吹膜岗位交接班记录 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1666,6 +1697,7 @@ namespace BatchProductRecord
                                 (new mySystem.Process.Extruction.A.HandOver(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 14:// 内包装
                             da = new SqlDataAdapter("select * from 产品内包装记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1677,6 +1709,7 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Process.ProductInnerPackagingRecord(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                         case 15:// 外包装
                             da = new SqlDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
@@ -1688,11 +1721,12 @@ namespace BatchProductRecord
                                 (new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
                                 GC.Collect();
                             }
+                            htRow2Page[r] = pages.Count;
                             break;
                     }
                 }
             }
-
+            printSelf();
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -1976,5 +2010,90 @@ namespace BatchProductRecord
             MessageBox.Show(str人员信息);
         }
 
+        void addOtherEventHandler()
+        {
+            dataGridView2.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView2_DataBindingComplete);
+        }
+
+        void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView2.Columns["ID"].Visible = false;
+            dataGridView2.Columns["T批生产记录封面ID"].Visible = false;
+        }
+
+
+        void printSelf()
+        {
+            print(false);
+            GC.Collect();
+        }
+
+        void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            string dir = System.IO.Directory.GetCurrentDirectory();
+            dir += "./../../xls/Extrusion/A/SOP-MFG-105-R02A 吹膜工序批生产记录封面.xlsx";
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
+            // 修改Sheet中某行某列的值
+            fill_excel(my);
+            my.PageSetup.RightFooter = tb生产指令.Text + "-00-001 &P/" + wb.ActiveSheet.PageSetup.Pages.Count;
+            if (b)
+            {
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch
+                { }
+                finally
+                {
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
+        {
+            my.Cells[4, 5].Value = dtOuter.Rows[0]["生产指令编号"];
+            my.Cells[5, 5].Value = dtOuter.Rows[0]["使用物料"];
+            my.Cells[6, 5].Value = Convert.ToDateTime(dtOuter.Rows[0]["开始生产时间"]).ToString("yyy/MM/dd") + "--" + Convert.ToDateTime(dtOuter.Rows[0]["结束生产时间"]).ToString("yyy/MM/dd");
+            for (int i = 0; i < dtInner2.Rows.Count; ++i)
+            {
+                my.Cells[8 + i, 4].Value = dtInner2.Rows[i]["产品代码"];
+                my.Cells[8 + i, 5].Value = dtInner2.Rows[i]["产品批号"];
+                my.Cells[8 + i, 6].Value = dtInner2.Rows[i]["生产数量"];
+            }
+            my.Cells[22, 2].Value = dtOuter.Rows[0]["备注"];
+            my.Cells[22, 5].Value = dtOuter.Rows[0]["汇总人"].ToString() + "   " + dtOuter.Rows[0]["汇总时间"];
+            my.Cells[24, 5].Value = dtOuter.Rows[0]["审核人"].ToString() + "   " + dtOuter.Rows[0]["审核时间"];
+            my.Cells[26, 5].Value = dtOuter.Rows[0]["批准人"].ToString() + "   " + dtOuter.Rows[0]["批准时间"];
+
+
+            for (int i = 5; i <= 20; ++i)
+            {
+                my.Cells[i, 3] = 0;
+                if (htRow2Page.ContainsKey(i-5))    my.Cells[i, 3]=htRow2Page[i - 5];
+            }
+        }
     }
 }

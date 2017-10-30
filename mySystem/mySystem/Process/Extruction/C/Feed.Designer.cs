@@ -68,7 +68,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(151, 406);
+            this.btn打印.Location = new System.Drawing.Point(360, 414);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(91, 30);
             this.btn打印.TabIndex = 75;
@@ -113,6 +113,7 @@
             this.dtp生产日期.Name = "dtp生产日期";
             this.dtp生产日期.Size = new System.Drawing.Size(110, 26);
             this.dtp生产日期.TabIndex = 43;
+            this.dtp生产日期.Visible = false;
             // 
             // btnSave
             // 
@@ -143,6 +144,7 @@
             this.label2.Size = new System.Drawing.Size(72, 16);
             this.label2.TabIndex = 3;
             this.label2.Text = "生产日期";
+            this.label2.Visible = false;
             // 
             // label1
             // 
@@ -157,7 +159,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.Location = new System.Drawing.Point(424, 40);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
@@ -214,7 +216,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(672, 42);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -233,7 +235,7 @@
             // cmb打印机选择
             // 
             this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(260, 412);
+            this.cmb打印机选择.Location = new System.Drawing.Point(151, 414);
             this.cmb打印机选择.Name = "cmb打印机选择";
             this.cmb打印机选择.Size = new System.Drawing.Size(181, 24);
             this.cmb打印机选择.TabIndex = 158;
@@ -270,7 +272,7 @@
             // 
             // bt查看人员信息
             // 
-            this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看人员信息.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt查看人员信息.Location = new System.Drawing.Point(573, 406);
             this.bt查看人员信息.Name = "bt查看人员信息";
             this.bt查看人员信息.Size = new System.Drawing.Size(123, 32);
@@ -307,7 +309,7 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btn审核);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Feed";
             this.Text = "吹膜供料系统运行记录";

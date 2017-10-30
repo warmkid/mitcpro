@@ -186,12 +186,12 @@ namespace mySystem.Extruction.Process
         }
         private void setFormState(bool newForm = false)
         {
-            if (newForm)
-            {
+            //if (newForm)
+            //{
 
-                _formState = Parameter.FormState.无数据;
-                return;
-            }
+            //    _formState = Parameter.FormState.无数据;
+            //    return;
+            //}
             string s = dtOuter.Rows[0]["审核员"].ToString();
             bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核是否通过"]);
             if (s == "") _formState = 0;
@@ -250,8 +250,6 @@ namespace mySystem.Extruction.Process
                     cmb打印机选择.Enabled = true;
                     break;
                 case Parameter.UserState.管理员: //2--管理员
-                    btn打印.Enabled = false;
-                    cmb打印机选择.Enabled = false;
                     break;
                 default:
                     break;
@@ -312,7 +310,7 @@ namespace mySystem.Extruction.Process
             //this.panel1.Enabled = true;
             btn查看日志.Enabled = true;
             //only checkman can print
-            //btn打印.Enabled = true;
+            btn打印.Enabled = true;
             bt查看人员信息.Enabled = true;
         }
 

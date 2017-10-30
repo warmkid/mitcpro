@@ -520,16 +520,16 @@ namespace mySystem
                 my.Cells[5 + i, 17] = dataGridView1.Rows[i].Cells[19].Value.ToString();
 
             }
-            my.Cells[17 + ind, 3].Value = Math.Round(Convert.ToDouble(tb加料B1C.Text) / (Convert.ToDouble(tb加料A.Text) + Convert.ToDouble(tb加料B1C.Text)) * 100, 2);
-            my.Cells[17+ind, 7].Value = tb生产数量.Text;
-            my.Cells[17+ind, 8].Value = tb生产重量.Text;
-            my.Cells[17+ind, 9].Value = tb废品重量.Text;
-            my.Cells[17+ind, 10].Value = tb加料A.Text;
-            my.Cells[17+ind, 11].Value = tb加料B1C.Text;
-            my.Cells[17+ind, 13].Value = tb工时.Text;
-            my.Cells[18 + ind, 3].Value = tb成品率.Text;
-            my.Cells[19+ind, 3].Value = tb工时效率.Text;
-            my.Cells[18+ind, 6].Value = "备注: "+tb备注.Text;
+            my.Cells[17 + ind, 3].Value = Math.Round(Convert.ToDouble(dt_prodinstr.Rows[0]["加料B1C合计"]) / (Convert.ToDouble(dt_prodinstr.Rows[0]["加料A合计"]) + Convert.ToDouble(dt_prodinstr.Rows[0]["加料B1C合计"])) * 100, 2);
+            my.Cells[17+ind, 7].Value = dt_prodinstr.Rows[0]["生产数量合计"];
+            my.Cells[17 + ind, 8].Value = dt_prodinstr.Rows[0]["生产重量合计"];
+            my.Cells[17 + ind, 9].Value = dt_prodinstr.Rows[0]["废品重量合计"];
+            my.Cells[17 + ind, 10].Value = dt_prodinstr.Rows[0]["加料A合计"];
+            my.Cells[17 + ind, 11].Value = dt_prodinstr.Rows[0]["加料B1C合计"];
+            my.Cells[17 + ind, 12].Value = dt_prodinstr.Rows[0]["工时合计"];
+            my.Cells[18 + ind, 3].Value = dt_prodinstr.Rows[0]["成品率"];
+            my.Cells[19 + ind, 3].Value = dt_prodinstr.Rows[0]["工时效率"];
+            my.Cells[18 + ind, 6].Value = "备注: " + dt_prodinstr.Rows[0]["备注"];
 
             
         }

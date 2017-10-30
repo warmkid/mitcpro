@@ -1079,12 +1079,27 @@ namespace mySystem.Process.Extruction.B
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
+            int idx = 0;
+
             my.Cells[3, 1].Value = "生产指令：" + dtOuter.Rows[0]["生产指令"];
-            my.Cells[3, 5].Value = "生产时段：" + dtOuter.Rows[0]["生产开始时间"] + "--" + Convert.ToDateTime(dtOuter.Rows[0]["生产结束时间"]).ToString("yyyy年MM月dd日");
-            my.Cells[23, 5].Value = dtOuter.Rows[0]["合计不良品数量"];
-            my.Cells[23, 7].Value = dtOuter.Rows[0]["审核员"];
+            my.Cells[3, 6].Value = "生产时段：" + dtOuter.Rows[0]["生产开始时间"] + "--" + Convert.ToDateTime(dtOuter.Rows[0]["生产结束时间"]).ToString("yyyy年MM月dd日");
+            
 
             // TODO 没有考虑行数过多的情况
+            int ind = 0;//偏移
+            if (dataGridView1.Rows.Count > 18)
+            {
+                //在第10行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 18; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[10, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 18;
+            }
+            my.Cells[23+ind, 5].Value = dtOuter.Rows[0]["合计不良品数量"];
+            // my.Cells[23, 7].Value = dtOuter.Rows[0]["审核员"];
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
                 my.Cells[i + 5, 1].Value = dtInner.Rows[i]["序号"];

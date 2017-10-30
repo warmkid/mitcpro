@@ -1213,7 +1213,7 @@ namespace WindowsFormsApplication1
             dir += "./../../xls/Extrusion/B/SOP-MFG-301-R06 吹膜供料记录.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
             // 修改Sheet中某行某列的值
             fill_excel(my);
             //"生产指令-步骤序号- 表序号 /&P"
@@ -1262,61 +1262,80 @@ namespace WindowsFormsApplication1
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             int ind = 0;//偏移
-            if (dataGridView1.Rows.Count > 4)
+            if (dataGridView1.Rows.Count > 15)
             {
                 //在第10行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 4; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 15; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[10, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 4;
+                ind = dataGridView1.Rows.Count - 15;
             }
 
-            my.Cells[3, 1].Value = "产品代码: "+cb产品代码.Text;
-            my.Cells[3, 5].Value = "产品批号: " + tb产品批号.Text ;
+            my.Cells[3, 1].Value = "生产指令编号： " + dt_prodinstr.Rows[0]["生产指令编号"].ToString();
+            //my.Cells[3, 1].Value = "产品代码: "+cb产品代码.Text;
+            //my.Cells[3, 5].Value = "产品批号: " + tb产品批号.Text ;
             //my.Cells[3, 7].Value = "生产指令编号: " + tb生产指令.Text ;
-            my.Cells[3, 7].Value = "生产指令编号: " + dt_prodinstr.Rows[0]["生产指令编号"];
+            //my.Cells[3, 7].Value = "生产指令编号: " + dt_prodinstr.Rows[0]["生产指令编号"];
 
-            my.Cells[5, 6].Value = cb原料代码ab1c.Text;
-            my.Cells[5, 8].Value = tb原料批号ab1c.Text;
-            my.Cells[6, 6].Value = cb原料代码b2.Text;
-            my.Cells[6, 8].Value = tb原料批号b2.Text;
+            //my.Cells[5, 6].Value = cb原料代码ab1c.Text;
+            //my.Cells[5, 8].Value = tb原料批号ab1c.Text;
+            //my.Cells[6, 6].Value = cb原料代码b2.Text;
+            //my.Cells[6, 8].Value = tb原料批号b2.Text;
 
-            my.Cells[7, 1].Value = "供料日期时间: "+dtp供料日期.Value.ToString("yyyy年MM月dd日");
+            //my.Cells[7, 1].Value = "供料日期时间: "+dtp供料日期.Value.ToString("yyyy年MM月dd日");
+            OleDbDataAdapter da = new OleDbDataAdapter("select 生产指令信息表.内外层物料代码 as 内外层物料代码, 生产指令信息表.内外层物料批号 as 内外层物料批号,  生产指令信息表.中层物料代码 as 中层物料代码, 生产指令信息表.中层物料批号 as 中层物料批号 from 生产指令信息表, 吹膜供料记录 where 吹膜供料记录.生产指令ID=生产指令信息表.ID", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            string daima1 = "", daima2 = "", pihao1 = "", pihao2 = "";
+            if (dt.Rows.Count > 0)
+            {
+                daima1 = dt.Rows[0]["内外层物料代码"].ToString();
+                pihao1 = dt.Rows[0]["内外层物料批号"].ToString();
+                daima2 = dt.Rows[0]["中层物料代码"].ToString();
+                pihao2 = dt.Rows[0]["中层物料批号"].ToString();
+            }
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
+                my.Cells[6 + i, 1].Value = i + 1;
                 DateTime tempdt=DateTime.Parse(dataGridView1.Rows[i].Cells[2].Value.ToString());
-                string time = string.Format("{0}:{1}:{2}", tempdt.Hour.ToString(), tempdt.Minute.ToString(), tempdt.Second.ToString());
-                my.Cells[9 + i, 1] = time;
-                my.Cells[9 + i, 2] = dataGridView1.Rows[i].Cells["外层供料量"].Value.ToString();
-                my.Cells[9 + i, 4] = dataGridView1.Rows[i].Cells["中内层供料量"].Value.ToString();
-                my.Cells[9 + i, 5] = dataGridView1.Rows[i].Cells["原料抽查结果"].Value.ToString();
-                my.Cells[9 + i, 6] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
+                //string time = string.Format("{0}:{1}:{2}", tempdt.Hour.ToString(), tempdt.Minute.ToString(), tempdt.Second.ToString());
+                my.Cells[6 + i, 2] = tempdt.ToString("yyyy/MM/dd HH:mm:ss");
+                my.Cells[6 + i, 3] = daima1;
+                my.Cells[6 + i, 4] = pihao1;
+                my.Cells[6 + i, 5] = dataGridView1.Rows[i].Cells["外层供料量"].Value.ToString();
+                my.Cells[6 + i, 6] = daima2;
+                my.Cells[6 + i, 7] = pihao2;
+                my.Cells[6 + i, 8] = dataGridView1.Rows[i].Cells["中内层供料量"].Value.ToString();
+                my.Cells[6 + i, 9] = dataGridView1.Rows[i].Cells["原料抽查结果"].Value.ToString();
+                my.Cells[6 + i, 10] = dataGridView1.Rows[i].Cells["供料人"].Value.ToString();
+                my.Cells[6 + i, 11] = dataGridView1.Rows[i].Cells["审核员"].Value.ToString();
+
             }
 
             //my.Cells[9, 8].Value = tb余料ab1c.Text;
-            my.Cells[9, 8].Value = dt_prodinstr.Rows[0]["外中内层原料用量"];
+            //my.Cells[9, 8].Value = dt_prodinstr.Rows[0]["外中内层原料用量"];
 
-            //my.Cells[9, 9].Value = tb用料ab1c.Text;
-            my.Cells[9, 9].Value = dt_prodinstr.Rows[0]["外中内层原料余量"];
+            ////my.Cells[9, 9].Value = tb用料ab1c.Text;
+            //my.Cells[9, 9].Value = dt_prodinstr.Rows[0]["外中内层原料余量"];
 
 
-            //my.Cells[10+ind, 8].Value = tb余料b2.Text;
-            my.Cells[10 + ind, 8].Value = dt_prodinstr.Rows[0]["中层原料用量"];
+            ////my.Cells[10+ind, 8].Value = tb余料b2.Text;
+            //my.Cells[10 + ind, 8].Value = dt_prodinstr.Rows[0]["中层原料用量"];
 
-            //my.Cells[10+ind, 9].Value = tb用料b2.Text;
-            my.Cells[10 + ind, 9].Value = dt_prodinstr.Rows[0]["中层原料余量"];
+            ////my.Cells[10+ind, 9].Value = tb用料b2.Text;
+            //my.Cells[10 + ind, 9].Value = dt_prodinstr.Rows[0]["中层原料余量"];
 
-            //my.Cells[9, 10].Value = tb复核人.Text;
-            my.Cells[9, 10].Value = dt_prodinstr.Rows[0]["审核人"];
+            ////my.Cells[9, 10].Value = tb复核人.Text;
+            //my.Cells[9, 10].Value = dt_prodinstr.Rows[0]["审核人"];
             
             //my.Cells[13+ind, 2].Value = tb外层合计.Text ;
-            my.Cells[13 + ind, 2].Value = dt_prodinstr.Rows[0]["外层供料量合计a"];
+            my.Cells[21 + ind, 3].Value = dt_prodinstr.Rows[0]["外层供料量合计a"];
 
             //my.Cells[13+ind, 4].Value = tb中内层合计.Text;
-            my.Cells[13 + ind, 4].Value = dt_prodinstr.Rows[0]["中内层供料量合计b"];
+            my.Cells[21 + ind, 6].Value = dt_prodinstr.Rows[0]["中内层供料量合计b"];
 
         }
 

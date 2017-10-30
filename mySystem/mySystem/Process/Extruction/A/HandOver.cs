@@ -870,7 +870,7 @@ namespace mySystem.Process.Extruction.A
             // 修改Sheet中某行某列的值
 
             my.Cells[3, 1].Value = "生产指令编号：" + dtOuter.Rows[0]["生产指令编号"];   // lbl生产指令编号.Text;
-            my.Cells[3, 5].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"); //dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[3, 6].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"); //dtp生产日期.Value.ToString("yyyy年MM月dd日");
 
 
             for (int i = 0; i < dtInner.Rows.Count; i++)
@@ -881,10 +881,12 @@ namespace mySystem.Process.Extruction.A
                 my.Cells[i + 6, 5].Value = dtInner.Rows[i]["确认结果夜班"];
 
             }
-            my.Cells[12, 6].Value = "交班人：" + dtOuter.Rows[0]["白班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");
-            my.Cells[21, 6].Value = "交班人：" + dtOuter.Rows[0]["夜班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["白班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["夜班交接班时间"]).ToString("yyyy年MM月dd日");
-            my.Cells[5, 6].Value = dtOuter.Rows[0]["白班异常情况处理"]; //txb白班异常情况处理.Text;
-            my.Cells[15, 6].Value = dtOuter.Rows[0]["夜班异常情况处理"]; //txb夜班异常情况处理.Text;
+            my.Cells[10, 6].Value = "白班交班人：" + dtOuter.Rows[0]["白班交班员"].ToString();
+            my.Cells[11, 6].Value = "夜班接班员：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   交接时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[18, 6].Value = "夜班交班员：" + dtOuter.Rows[0]["夜班交班员"].ToString();
+            my.Cells[19, 6].Value = "白班接班员：" + dtOuter.Rows[0]["白班接班员"].ToString() + "   交接时间：" + Convert.ToDateTime(dtOuter.Rows[0]["夜班交接班时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[6, 6].Value = dtOuter.Rows[0]["白班异常情况处理"]; //txb白班异常情况处理.Text;
+            my.Cells[13, 6].Value = dtOuter.Rows[0]["夜班异常情况处理"]; //txb夜班异常情况处理.Text;
             my.PageSetup.RightFooter = __生产指令编号 + "-" + "14" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (preview)

@@ -742,24 +742,39 @@ namespace mySystem.Process.Extruction.C
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
-            my.Cells[3, 6].Value = "生产指令：" + __生产指令编号;
-            my.Cells[5, 1].Value = __生产日期.ToString("yyyy年MM月dd日") + "   " + __班次;
-            my.Cells[5, 9].Value = "";
-            
+            my.Cells[3, 1].Value = "生产指令：" + __生产指令编号;
+            //my.Cells[5, 1].Value = __生产日期.ToString("yyyy年MM月dd日") + "   " + __班次;
+            //my.Cells[5, 9].Value = "";
 
+            int ind = 0;//偏移
+            if (dataGridView1.Rows.Count > 15)
+            {
+                //在第10行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 15; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[10, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dataGridView1.Rows.Count - 15;
+            }
 
 
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
-                my.Cells[5 + i, 2].Value = Convert.ToDateTime(dtInner.Rows[i]["检查时间"]).ToShortTimeString();
-                my.Cells[5 + i, 3].Value = dtInner.Rows[i]["电机工作是否正常"];
-                my.Cells[5 + i, 4].Value = dtInner.Rows[i]["气动阀工作是否正常"];
-                my.Cells[5 + i, 5].Value = dtInner.Rows[i]["供料运行是否正常"];
-                my.Cells[5 + i, 6].Value = dtInner.Rows[i]["有无警报显示"];
-                my.Cells[5 + i, 7].Value = dtInner.Rows[i]["是否解除警报"];
-                my.Cells[5 + i, 8].Value = dtInner.Rows[i]["检查员"];
+                my.Cells[5 + i, 1].Value = Convert.ToDateTime(dtInner.Rows[i]["检查时间"]).ToString("yyyy/MM/dd");
+                my.Cells[5 + i, 2].Value = Convert.ToDateTime(dtInner.Rows[i]["检查时间"]).ToString("HH:mm:ss");
+                my.Cells[5 + i, 3].Value = dtInner.Rows[i]["班次"].ToString();
+                my.Cells[5 + i, 4].Value = dtInner.Rows[i]["电机工作是否正常"];
+                my.Cells[5 + i, 5].Value = dtInner.Rows[i]["气动阀工作是否正常"];
+                my.Cells[5 + i, 6].Value = dtInner.Rows[i]["供料运行是否正常"];
+                my.Cells[5 + i, 7].Value = dtInner.Rows[i]["有无警报显示"];
+                my.Cells[5 + i, 8].Value = dtInner.Rows[i]["是否解除警报"];
+                my.Cells[5 + i, 9].Value = dtInner.Rows[i]["检查员备注"];
+                my.Cells[5 + i, 10].Value = dtInner.Rows[i]["检查员"];
+                my.Cells[5 + i, 11].Value = dtInner.Rows[i]["审核员"];
             }
-            my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"];
+            //my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"];
             // 让这个Sheet为被选中状态
 
             my.PageSetup.RightFooter = __生产指令编号 + "-07-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
