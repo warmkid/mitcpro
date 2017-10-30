@@ -109,7 +109,7 @@ namespace mySystem.Process.CleanCut
             string path = Directory.GetCurrentDirectory();
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             Microsoft.Office.Interop.Excel._Workbook wb = null;
-            wb = oXL.Workbooks.Open(path + @"/../../xls/cleancut/标签-清洁分切.xlsx");
+            wb = oXL.Workbooks.Open(path + @"/../../xls/cleancut/7 标签-清洁分切.xlsx");
             _Worksheet my = wb.Worksheets[wb.Worksheets.Count];
 
             my.Select();

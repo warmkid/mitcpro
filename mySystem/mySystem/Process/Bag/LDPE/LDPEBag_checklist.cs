@@ -474,6 +474,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns["确认项目"].ReadOnly = true;
             dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //设置datagridview背景颜色
@@ -679,7 +680,7 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\2 SOP-MFG-304-R02A 1#制袋机开机前确认表.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
@@ -743,7 +744,13 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
                 mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                //mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                if (dt记录详情.Rows[0]["确认结果"].ToString() == "Yes")
+                    mysheet.Cells[4 + i, 4].Value = "符合☑  不符合□  不适用□";
+                else if (dt记录详情.Rows[0]["确认结果"].ToString() == "No")
+                    mysheet.Cells[4 + i, 4].Value = "符合□  不符合☑  不适用□";
+                else
+                    mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";
             }
             //需要插入的部分
             if (rownum > 9)
@@ -758,7 +765,13 @@ namespace mySystem.Process.Bag.LDPE
                     mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                     mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
                     mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                    mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                    //mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                    if (dt记录详情.Rows[0]["确认结果"].ToString() == "Yes")
+                        mysheet.Cells[4 + i, 4].Value = "符合☑  不符合□  不适用□";
+                    else if (dt记录详情.Rows[0]["确认结果"].ToString() == "No")
+                        mysheet.Cells[4 + i, 4].Value = "符合□  不符合☑  不适用□";
+                    else
+                        mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";
                 }
                 ind = rownum - 9;
             }
@@ -766,12 +779,12 @@ namespace mySystem.Process.Bag.LDPE
             //外表信息
             mysheet.Cells[14 + ind, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
             String stringtemp = "";
-            stringtemp = "确认人：" + dt记录.Rows[0]["操作员"].ToString();
-            stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
+            stringtemp = "确认人/日期：" + dt记录.Rows[0]["操作员"].ToString();
+            stringtemp = stringtemp + "       " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
             mysheet.Cells[15 + ind, 1].Value = stringtemp;
-            stringtemp = "复核人：" + dt记录.Rows[0]["审核员"].ToString();
-            stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[15 + ind, 5].Value = stringtemp;
+            stringtemp = "复核人/日期：" + dt记录.Rows[0]["审核员"].ToString();
+            stringtemp = stringtemp + "       " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
+            mysheet.Cells[15 + ind, 3].Value = stringtemp;
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);

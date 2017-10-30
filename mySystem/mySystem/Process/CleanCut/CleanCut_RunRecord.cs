@@ -744,7 +744,7 @@ namespace mySystem.Process.CleanCut
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\cleancut\SOP-MFG-302-R02A 清洁分切机运行记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\cleancut\4 SOP-MFG-302-R04A 清洁分切机运行记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
@@ -801,17 +801,17 @@ namespace mySystem.Process.CleanCut
         {
             //外表信息
             mysheet.Cells[3, 1].Value = "生产指令编号： " + dt记录.Rows[0]["生产指令编号"].ToString();
-            mysheet.Cells[3, 5].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
+            //mysheet.Cells[3, 5].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
             String flighttemp = Convert.ToBoolean(dt记录.Rows[0]["生产班次"].ToString()) == true ? "白班" : "夜班";
-            mysheet.Cells[3, 7].Value = "生产班次：" + flighttemp;
-            mysheet.Cells[15, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
+            //mysheet.Cells[3, 7].Value = "生产班次：" + flighttemp;
+            //mysheet.Cells[15, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
             String stringtemp = "";
             stringtemp = "确认人：" + dt记录.Rows[0]["确认人"].ToString();
             stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[16, 1].Value = stringtemp;
+            //mysheet.Cells[16, 1].Value = stringtemp;
             stringtemp = "复核人：" + dt记录.Rows[0]["审核人"].ToString();
             stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[16, 5].Value = stringtemp;
+            //mysheet.Cells[16, 5].Value = stringtemp;
 
             //内表信息
             int rownum = dt记录详情.Rows.Count;
@@ -819,12 +819,12 @@ namespace mySystem.Process.CleanCut
             for (int i = 0; i < (rownum > 10 ? 10 : rownum); i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["生产时间"].ToString();
-                mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["分切速度"].ToString();
-                mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["自动张力设定"].ToString();
-                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["自动张力显示"].ToString();
-                mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["张力输出显示"].ToString();
-                mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["操作人"].ToString();
+                mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["生产时间"].ToString();
+                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["分切速度"].ToString();
+                mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["自动张力设定"].ToString();
+                mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["自动张力显示"].ToString();
+                mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["张力输出显示"].ToString();
+                mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作人"].ToString();
             }
             //需要插入的部分
             if (rownum > 10)
@@ -837,12 +837,12 @@ namespace mySystem.Process.CleanCut
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
                     mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["生产时间"].ToString();
-                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["分切速度"].ToString();
-                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["自动张力设定"].ToString();
-                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["自动张力显示"].ToString();
-                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["张力输出显示"].ToString();
-                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["操作人"].ToString();
+                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["生产时间"].ToString();
+                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["分切速度"].ToString();
+                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["自动张力设定"].ToString();
+                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["自动张力显示"].ToString();
+                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["张力输出显示"].ToString();
+                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作人"].ToString();
                 }
             }
             //加页脚
