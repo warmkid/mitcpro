@@ -864,7 +864,7 @@ namespace mySystem.Process.Extruction.A
             //System.IO.Directory.GetCurrentDirectory;
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\Extrusion\A\SOP-MFG-301-R13 吹膜岗位交接班记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 设置该进程是否可见
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
