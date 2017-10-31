@@ -831,7 +831,7 @@ namespace mySystem.Process.Bag.CS
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             //外表信息
-            mysheet.Cells[3, 1].Value = "生产工序：" + dt记录.Rows[0]["生产工序"].ToString();
+            mysheet.Cells[3, 2].Value = dt记录.Rows[0]["生产工序"].ToString();
             mysheet.Cells[3, 5].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
             //mysheet.Cells[34, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
             //内表信息
