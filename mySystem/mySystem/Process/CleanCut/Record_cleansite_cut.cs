@@ -185,7 +185,8 @@ namespace mySystem.Process.CleanCut
                 return;
             if (e.ColumnIndex == 4)
             {
-                if (dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString() == "合格")
+                //if (dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString() == "合格")
+                if (dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString() == "完成")
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 else
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
@@ -277,7 +278,9 @@ namespace mySystem.Process.CleanCut
                 return false;
             for (int i = 0; i < dt_清场设置.Rows.Count; i++)
             {
-                if (dt_清场设置.Rows[i]["清场内容"].ToString() != dt_prodlist.Rows[i]["清场内容"].ToString())
+                if (dt_清场设置.Rows[i]["清场项目"].ToString() != dt_prodlist.Rows[i]["清场项目"].ToString())
+                    return false;
+                if (dt_清场设置.Rows[i]["清场要点"].ToString() != dt_prodlist.Rows[i]["清场要点"].ToString())
                     return false;
             }
             return true;
@@ -309,7 +312,8 @@ namespace mySystem.Process.CleanCut
                             ndr[i + 2] = dr[i];
                         }
                         // 这里添加检查是否合格、检查人、审核人等默认信息
-                        ndr["清洁操作"] = "合格";
+                        ndr["清洁操作"] = "完成";
+                        //ndr["清洁操作"] = "合格";
 
                         dt_prodlist.Rows.Add(ndr);
                     }
@@ -458,9 +462,10 @@ namespace mySystem.Process.CleanCut
                     DataRow ndr = dt_prodlist.NewRow();
                     ndr[1] = (int)dt_prodinstr.Rows[0]["ID"];
                     ndr["序号"] = index++;
-                    ndr["清场内容"] = dr["清场内容"];
-                    //ndr["清场要点"] = dr["清场要点"];
-                    ndr["清洁操作"] = "合格";
+                    ndr["清场项目"] = dr["清场项目"];
+                    ndr["清场要点"] = dr["清场要点"];
+                    //ndr["清洁操作"] = "合格";
+                    ndr["清洁操作"] = "完成";
                     dt_prodlist.Rows.Add(ndr);
                 }
             }
@@ -532,8 +537,10 @@ namespace mySystem.Process.CleanCut
                         c1.ValueType = dc.DataType;
                         // 如果换了名字会报错，把当前值也加上就好了
                         // 加序号，按序号显示
-                        c1.Items.Add("合格");
-                        c1.Items.Add("不合格");
+                        //c1.Items.Add("合格");
+                        //c1.Items.Add("不合格");
+                        c1.Items.Add("完成");
+                        c1.Items.Add("不适用");
                         dataGridView1.Columns.Add(c1);
                         // 重写cell value changed 事件，自动填写id
                         break;
@@ -599,9 +606,11 @@ namespace mySystem.Process.CleanCut
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
+                //if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "合格")
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "完成")
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                //if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不适用")
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
             }
         }
@@ -717,7 +726,8 @@ namespace mySystem.Process.CleanCut
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                //if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不合格")
+                if (dataGridView1.Rows[i].Cells[4].Value.ToString() == "不适用")
                 {
                     MessageBox.Show("有条目待确认");
                     return;
@@ -850,72 +860,97 @@ namespace mySystem.Process.CleanCut
 
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
-
             int ind = 0;
             int i插入行数 = 0;
             my.Cells[3, 1].Value = "生产指令编号：" + dt_prodinstr.Rows[0]["生产指令编码"].ToString();
-           // my.Cells[3, 4].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            //my.Cells[3, 4].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
             if (ckb白班.Checked)
-                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□",Convert.ToDateTime(dt_prodinstr.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
+                my.Cells[3, 4].Value = String.Format("生产日期：{0}    生产班次： 白班☑   夜班□", Convert.ToDateTime(dt_prodinstr.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
             else
-                my.Cells[3, 3].Value = String.Format("生产日期：{0}    生产班次： 白班□   夜班☑", Convert.ToDateTime(dt_prodinstr.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
-            int i内表序号判断=0;
-            //插入新行
-            if (dt_prodlist.Rows.Count > 8)
+                my.Cells[3, 4].Value = String.Format("生产日期：{0}    生产班次： 白班□   夜班☑", Convert.ToDateTime(dt_prodinstr.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
+            //int i内表序号判断=0;
+            ////插入新行
+            //if (dt_prodlist.Rows.Count > 8)
+            //{
+            //    if ((dt_prodlist.Rows.Count - 8) % 2 == 0)
+            //        i插入行数 = (dt_prodlist.Rows.Count - 8) / 2;
+            //    if ((dt_prodlist.Rows.Count - 8) % 2 == 1)
+            //        i插入行数 = (dt_prodlist.Rows.Count - 8) / 2 + 1;
+            //    for (int i = 0; i < i插入行数; i++)
+            //    {
+            //        Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[9 + i, Type.Missing];
+            //        range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+            //        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+            //    }
+            //    ind = i插入行数;
+            //}
+           
+            ////写内表数据
+            //for (int i = 0; i < dt_prodlist.Rows.Count; i++)
+            //{
+            //    if (dt_prodlist.Rows.Count % 2 == 1)
+            //        i内表序号判断 = dt_prodlist.Rows.Count + 1;
+            //    else
+            //        i内表序号判断 = dt_prodlist.Rows.Count;
+            //    if (i < (i内表序号判断 / 2) || i < 4)
+            //    {
+            //        my.Cells[5 + i, 1].Value = i + 1;
+            //        my.Cells[5 + i, 2].Value = dt_prodlist.Rows[i]["清场内容"].ToString();
+            //        if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "合格")
+            //            my.Cells[5 + i, 3].Value = "√";
+            //        else if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "不合格")
+            //            my.Cells[5 + i, 3].Value = "×";
+            //    }
+            //    else
+            //    {
+            //        my.Cells[5 + i - i内表序号判断 / 2, 4].Value = i + 1;
+            //        my.Cells[5 + i - i内表序号判断 / 2, 5].Value = dt_prodlist.Rows[i]["清场内容"].ToString();
+            //        if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "合格")
+            //            my.Cells[5 + i - i内表序号判断 / 2, 6].Value = "√";
+            //        else if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "不合格")
+            //            my.Cells[5 + i - i内表序号判断 / 2, 6].Value = "×";
+            //    }
+            //}
+
+            my.Cells[5, 5].Value = tb清场人.Text;
+            if (ckb合格.Checked && !ckb不合格.Checked)
+                my.Cells[5, 6].Value = "合格☑\n不合格□";
+            else if (ckb不合格.Checked && !ckb合格.Checked)
+                my.Cells[5, 6].Value = "合格□\n不合格☑";
+            else
+                my.Cells[5, 6].Value = "合格□\n不合格□";
+            my.Cells[5, 7].Value = tb检查人.Text;
+
+            //TODO:读取确认日期和审核日期
+            my.Cells[17, 1].Value = "备注：清场打“√”，没清洁打“×”。" +dt_prodinstr.Rows[0]["备注"].ToString();
+            //my.Cells[10 + ind, 1].Value = String.Format("确认人/日期：{0}      {1}", dt_prodinstr.Rows[0]["确认人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["确认日期"]).ToString("yyyy年MM月dd日"));
+            //my.Cells[10 + ind, 4].Value = String.Format("复核人/日期：{0}      {1}", dt_prodinstr.Rows[0]["审核人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
+            
+            //内表信息
+            int rownum = dt_prodlist.Rows.Count;
+            if (rownum > 11)
             {
-                if ((dt_prodlist.Rows.Count - 8) % 2 == 0)
-                    i插入行数 = (dt_prodlist.Rows.Count - 8) / 2;
-                if ((dt_prodlist.Rows.Count - 8) % 2 == 1)
-                    i插入行数 = (dt_prodlist.Rows.Count - 8) / 2 + 1;
-                for (int i = 0; i < i插入行数; i++)
+                for (int i = 11; i < rownum; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[9 + i, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = i插入行数;
             }
-           
-            //写内表数据
-            for (int i = 0; i < dt_prodlist.Rows.Count; i++)
-            {
-                if (dt_prodlist.Rows.Count % 2 == 1)
-                    i内表序号判断 = dt_prodlist.Rows.Count + 1;
-                else
-                    i内表序号判断 = dt_prodlist.Rows.Count;
-                if (i < (i内表序号判断 / 2)||i<4)
-                {
-                    my.Cells[5 + i, 1].Value = i + 1;
-                    my.Cells[5 + i, 2].Value = dt_prodlist.Rows[i]["清场内容"].ToString();
-                    if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "合格")
-                        my.Cells[5 + i, 3].Value = "√";
-                    else if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "不合格")
-                        my.Cells[5 + i, 3].Value = "×";
-                }
-                else
-                {
-                    my.Cells[5 + i - i内表序号判断 / 2, 4].Value = i + 1;
-                    my.Cells[5 + i - i内表序号判断 / 2, 5].Value = dt_prodlist.Rows[i]["清场内容"].ToString();
-                    if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "合格")
-                        my.Cells[5 + i - i内表序号判断 / 2, 6].Value = "√";
-                    else if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "不合格")
-                        my.Cells[5 + i - i内表序号判断 / 2, 6].Value = "×";
-                }
-            }
-            //my.Cells[5, 7].Value = tb清场人.Text;
-            //if(ckb合格.Checked && !ckb不合格.Checked)
-            //    my.Cells[5,8].Value = "合格☑\n不合格□";
-            //else if(ckb不合格.Checked && !ckb合格.Checked)
-            //    my.Cells[5, 8].Value = "合格□\n不合格☑";
-            //else
-            //    my.Cells[5, 8].Value = "合格□\n不合格□";
             
-            //TODO:读取确认日期和审核日期
-            my.Cells[9 + ind, 1].Value = "备注：清场打“√”，没清洁打“×”。";
-            my.Cells[10 + ind, 1].Value = String.Format("确认人/日期：{0}      {1}", dt_prodinstr.Rows[0]["确认人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["确认日期"]).ToString("yyyy年MM月dd日"));
-            my.Cells[10 + ind, 4].Value = String.Format("复核人/日期：{0}      {1}", dt_prodinstr.Rows[0]["审核人"].ToString(), Convert.ToDateTime(dt_prodinstr.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
+            for (int i = 0; i < rownum; i++)
+            {
+                my.Cells[5 + i, 1].Value = (i + 1).ToString();
+                my.Cells[5 + i, 2].Value = dt_prodlist.Rows[i]["清场项目"].ToString();
+                my.Cells[5 + i, 3].Value = dt_prodlist.Rows[i]["清场要点"].ToString();
+                if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "完成")
+                    my.Cells[5 + i, 4].Value = "完成☑  不适用□";
+                else if (dt_prodlist.Rows[i]["清洁操作"].ToString() == "不适用")
+                    my.Cells[5 + i, 4].Value = "完成□  不适用☑";
+            }
 
         }
+
         public void print(bool isShow)
         {
             // 打开一个Excel进程
@@ -936,7 +971,7 @@ namespace mySystem.Process.CleanCut
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"])) + 1;
-            my.PageSetup.RightFooter = instrcode + "-07-" + sheetnum.ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+            my.PageSetup.RightFooter = instrcode + "-05-" + sheetnum.ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
             if (isShow)
             {
@@ -989,11 +1024,13 @@ namespace mySystem.Process.CleanCut
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "合格")
+                //if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "合格")
+                if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "完成")
                 {
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
                 }
-                if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "不合格")
+                //if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "不合格")
+                if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "不适用")
                 {
                     //dataGridView1.Rows[i].Cells["确认结果"].Style.BackColor = Color.Red;
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
