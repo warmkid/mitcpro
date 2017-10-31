@@ -535,7 +535,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["退库数量"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
-            dr["操作员备注"] = "";
+            //dr["操作员备注"] = "";
             //dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             return dr;
         }
@@ -1006,7 +1006,7 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
             mysheet.Cells[3, 9].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
             mysheet.Cells[15, 1].Value = "备注：" + dt记录.Rows[0]["备注"].ToString();
-            mysheet.Cells[16, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
+            //mysheet.Cells[16, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分
@@ -1022,7 +1022,7 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["退库数量"].ToString();
                 mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作员"].ToString();
                 mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
-                mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                //mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
             }
             //需要插入的部分
             if (rownum > 9)
@@ -1044,7 +1044,7 @@ namespace mySystem.Process.Bag.LDPE
                     mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["退库数量"].ToString();
                     mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作员"].ToString();
                     mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
-                    mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                    //mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
                 }
             }
             //加页脚

@@ -547,7 +547,9 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns["焊线2参数5"].HeaderText = "焊线2#\rTCR";
 
             dataGridView1.Columns["生产合格品数量"].HeaderText = "合格品\r数量\r(只)";
+            dataGridView1.Columns["生产合格品数量"].Visible = false;
             dataGridView1.Columns["不良品数量"].HeaderText = "不良品\r数量\r(只)";
+            dataGridView1.Columns["不良品数量"].Visible = false;
         }
 
         //修改单个控件的值

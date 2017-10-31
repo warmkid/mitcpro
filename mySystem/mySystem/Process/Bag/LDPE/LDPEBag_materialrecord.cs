@@ -890,7 +890,7 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPEBag\SOP-MFG-102-R01A 生产领料记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPEBag\3 SOP-MFG-102-R01A 生产领料记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
@@ -957,7 +957,7 @@ namespace mySystem.Process.Bag.LDPE
             //stringtemp = stringtemp + "       领料日期：" + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
             //stringtemp = stringtemp + "              复核人：" + dt记录.Rows[0]["审核员"].ToString();
             //stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
-            mysheet.Cells[16, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString() + "     审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).ToString("yyyy/MM/dd");
+           // mysheet.Cells[16, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString() + "     审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).ToString("yyyy/MM/dd");
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分
@@ -972,8 +972,8 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["物料批号"].ToString();
                 mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["领取数量"].ToString();
                 mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
-                mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
+                //mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
             //需要插入的部分
             if (rownum > 9)

@@ -841,9 +841,9 @@ namespace mySystem.Process.CleanCut
             mysheet.Cells[3, 4].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
             String flighttemp = Convert.ToBoolean(dt记录.Rows[0]["生产班次"].ToString()) == true ? "白班" : "夜班";
             mysheet.Cells[3, 5].Value = "生产班次：" + flighttemp;
-            mysheet.Cells[14, 1].Value = (dt记录详情.Rows.Count + 1).ToString();
-            mysheet.Cells[14, 2].Value = " 车间：   温度：" + dt记录.Rows[0]["车间温度"].ToString() + "℃， 湿度：" + dt记录.Rows[0]["车间湿度"].ToString() + "﹪。";
-            mysheet.Cells[15, 4].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
+            //mysheet.Cells[14, 1].Value = (dt记录详情.Rows.Count + 1).ToString();
+            //mysheet.Cells[14, 2].Value = " 车间：   温度：" + dt记录.Rows[0]["车间温度"].ToString() + "℃， 湿度：" + dt记录.Rows[0]["车间湿度"].ToString() + "﹪。";
+            //mysheet.Cells[16, 4].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
             String stringtemp = "";
             stringtemp = "确认人：" + dt记录.Rows[0]["确认人"].ToString();
             stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Day.ToString() + "日";

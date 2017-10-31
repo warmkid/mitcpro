@@ -402,7 +402,7 @@
             // btn打印
             // 
             this.btn打印.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn打印.Location = new System.Drawing.Point(182, 577);
+            this.btn打印.Location = new System.Drawing.Point(422, 581);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(105, 23);
             this.btn打印.TabIndex = 20;
@@ -447,9 +447,9 @@
             // 
             this.cmb打印.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cmb打印.FormattingEnabled = true;
-            this.cmb打印.Location = new System.Drawing.Point(319, 578);
+            this.cmb打印.Location = new System.Drawing.Point(133, 578);
             this.cmb打印.Name = "cmb打印";
-            this.cmb打印.Size = new System.Drawing.Size(191, 24);
+            this.cmb打印.Size = new System.Drawing.Size(266, 24);
             this.cmb打印.TabIndex = 24;
             // 
             // label角色

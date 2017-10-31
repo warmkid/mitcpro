@@ -1049,7 +1049,7 @@ namespace mySystem.Process.Bag.PTV
                     mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["退库数量"].ToString();
                     mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作员"].ToString();
                     mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
-                    mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
+                    //mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
                 }
             }
             //加页脚

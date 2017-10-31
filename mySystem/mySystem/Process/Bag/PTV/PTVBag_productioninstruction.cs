@@ -531,6 +531,7 @@ namespace mySystem.Process.Bag.PTV
 
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns["生产系数"].Visible = false;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
         }
@@ -591,6 +592,9 @@ namespace mySystem.Process.Bag.PTV
                         cbc.Items.Add(s);
                     }
                     dataGridView1.Columns.Add(cbc);
+                    
+                    //this line invisible the column
+                    dataGridView1.Columns[cbc.Name].Visible = false;
                     continue;
                 }
                 if (dc.ColumnName == "内标签")
@@ -645,6 +649,8 @@ namespace mySystem.Process.Bag.PTV
                         dataGridView1.Columns.Add(ckbc);
                         break;
                 }
+
+                
             }
         }
 

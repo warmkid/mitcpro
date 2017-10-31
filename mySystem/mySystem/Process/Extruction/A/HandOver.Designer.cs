@@ -94,7 +94,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Location = new System.Drawing.Point(134, 679);
+            this.btn打印.Location = new System.Drawing.Point(375, 678);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(81, 26);
             this.btn打印.TabIndex = 81;
@@ -183,7 +183,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label7.Location = new System.Drawing.Point(421, 21);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
@@ -202,7 +202,7 @@
             // 
             // dtp生产日期
             // 
-            this.dtp生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.dtp生产日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtp生产日期.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtp生产日期.Location = new System.Drawing.Point(481, 85);
             this.dtp生产日期.Margin = new System.Windows.Forms.Padding(4);
@@ -221,7 +221,7 @@
             // lb生产日期
             // 
             this.lb生产日期.AutoSize = true;
-            this.lb生产日期.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb生产日期.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lb生产日期.Location = new System.Drawing.Point(403, 92);
             this.lb生产日期.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb生产日期.Name = "lb生产日期";
@@ -248,7 +248,7 @@
             // lb生产指令编号
             // 
             this.lb生产指令编号.AutoSize = true;
-            this.lb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb生产指令编号.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lb生产指令编号.Location = new System.Drawing.Point(83, 92);
             this.lb生产指令编号.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lb生产指令编号.Name = "lb生产指令编号";
@@ -301,9 +301,9 @@
             // cmb打印机选择
             // 
             this.cmb打印机选择.FormattingEnabled = true;
-            this.cmb打印机选择.Location = new System.Drawing.Point(235, 678);
+            this.cmb打印机选择.Location = new System.Drawing.Point(143, 678);
             this.cmb打印机选择.Name = "cmb打印机选择";
-            this.cmb打印机选择.Size = new System.Drawing.Size(121, 24);
+            this.cmb打印机选择.Size = new System.Drawing.Size(211, 24);
             this.cmb打印机选择.TabIndex = 160;
             // 
             // pictureBox1
@@ -319,7 +319,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(654, 23);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -381,7 +381,7 @@
             this.Controls.Add(this.txb白班交班员);
             this.Controls.Add(this.txb白班异常情况处理);
             this.Controls.Add(this.lb白班交班人);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HandOver";
             this.Text = "吹膜岗位交接班记录";

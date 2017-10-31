@@ -2163,6 +2163,7 @@ namespace BatchProductRecord
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
+                my.Cells[7 + i, 1] = dataGridView1.Rows[i].Cells[2].Value.ToString();
                 my.Cells[7 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
                 my.Cells[7 + i, 6] = dataGridView1.Rows[i].Cells[6].Value.ToString();
                 my.Cells[7 + i, 7] = dataGridView1.Rows[i].Cells[7].Value.ToString();
@@ -2171,7 +2172,7 @@ namespace BatchProductRecord
                 my.Cells[7 + i, 10] = dataGridView1.Rows[i].Cells[10].Value.ToString();
                 my.Cells[7 + i, 11] = dataGridView1.Rows[i].Cells[11].Value.ToString();
                 my.Cells[7 + i, 12] = dataGridView1.Rows[i].Cells[13].Value.ToString();
-                my.Cells[7 + i, 13] = dataGridView1.Rows[i].Cells[12].Value.ToString();
+                my.Cells[7 + i, 13] = dataGridView1.Rows[i].Cells[12].Value.ToString(); 
             }
 
             //my.Cells[14 + ind, 6].Value = textBox6.Text;//计划产量米

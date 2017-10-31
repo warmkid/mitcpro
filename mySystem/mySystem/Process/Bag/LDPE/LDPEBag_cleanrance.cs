@@ -693,7 +693,7 @@ namespace mySystem.Process.Bag.LDPE
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             string dir = System.IO.Directory.GetCurrentDirectory();
-            dir += "./../../xls/LDPEBag/SOP-MFG-110-R01A 清场记录.xlsx";
+            dir += "./../../xls/LDPEBag/8 SOP-MFG-110-R01A 清场记录.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
@@ -764,8 +764,9 @@ namespace mySystem.Process.Bag.LDPE
         {
             int ind = 0;
             int i插入行数 = 0;
-            my.Cells[3, 1].Value = "产品代码/规格：" + dtOuter.Rows[0]["产品代码"].ToString();
-            my.Cells[3, 5].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"].ToString();
+            my.Cells[3, 1].Value = "生产指令编号：" + CODE;
+            my.Cells[3, 4].Value = "产品代码：" + dtOuter.Rows[0]["产品代码"].ToString();
+            my.Cells[3, 6].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"].ToString();
             DateTime.Parse(DateTime.Now.ToString("yyyy年MM月dd日"));
             if (dtOuter.Rows[0]["生产班次"].ToString().Equals("白班"))
                 my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
@@ -778,7 +779,7 @@ namespace mySystem.Process.Bag.LDPE
                 for (int i = 0; i < i插入行数; i++)
                 {
                     //在第6行插入
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6 + i, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[18 + i, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
@@ -790,21 +791,26 @@ namespace mySystem.Process.Bag.LDPE
             {
                 my.Cells[5 + i, 1].Value = i + 1;
                 my.Cells[5 + i, 2].Value = dtInner.Rows[i]["清场项目"].ToString(); 
-                my.Cells[5 + i, 3].Value = dtInner.Rows[i]["清场要点"].ToString(); 
-                my.Cells[5 + i, 6].Value = dtInner.Rows[i]["清洁操作"].ToString(); 
-            }
-            my.Cells[5, 7].Value = dtOuter.Rows[0]["清场员"].ToString(); 
-            my.Cells[5, 8].Value = dtOuter.Rows[0]["检查结果"].ToString(); 
+                my.Cells[5 + i, 3].Value = dtInner.Rows[i]["清场要点"].ToString();
+                if (dtInner.Rows[0]["清洁操作"].ToString() == "完成")
+                    my.Cells[5 + i, 4].Value = "完成☑  不适用□";
+                else if (dtOuter.Rows[0]["清洁操作"].ToString() == "不适用")
+                    my.Cells[5 + i, 4].Value = "完成□  不适用☑";
+                else
+                    my.Cells[5 + i, 4].Value = "完成□  不适用□";
+               // my.Cells[5 + i, 6].Value = dtInner.Rows[i]["清洁操作"].ToString(); 
+            }      
+            //my.Cells[5, 7].Value = dtOuter.Rows[0]["检查结果"].ToString();
 
-            //if (cmb检查结果.Text == "合格")
-            //    my.Cells[5, 8].Value = "合格☑\n不合格□";
-            //else if (cmb检查结果.Text == "不合格")
-            //    my.Cells[5, 8].Value = "合格□\n不合格☑";
-            //else
-            //    my.Cells[5, 8].Value = "合格□\n不合格□";
-
-            my.Cells[5, 9].Value = dtOuter.Rows[0]["检查员"].ToString();
-            my.Cells[19 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
+            if (dtOuter.Rows[0]["检查结果"].ToString() == "合格")
+                my.Cells[5, 5].Value = "合格☑\n不合格□";
+            else if (dtOuter.Rows[0]["检查结果"].ToString() == "不合格")
+                my.Cells[5, 5].Value = "合格□\n不合格☑";
+            else
+                my.Cells[5, 5].Value = "合格□\n不合格□";
+            my.Cells[5, 6].Value = dtOuter.Rows[0]["清场员"].ToString(); 
+            my.Cells[5, 7].Value = dtOuter.Rows[0]["检查员"].ToString();
+            my.Cells[20 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
 
         }
 

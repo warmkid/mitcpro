@@ -1023,7 +1023,7 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.Cells[5, 12].Value = dt记录.Rows[0]["包装规格每箱只数"].ToString() + " 只/箱";
             mysheet.Cells[21, 6].Value = dt记录.Rows[0]["包装数量箱数合计"].ToString();
             mysheet.Cells[21, 7].Value = dt记录.Rows[0]["产品数量只数合计"].ToString();
-            mysheet.Cells[22, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
+           // mysheet.Cells[22, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分
