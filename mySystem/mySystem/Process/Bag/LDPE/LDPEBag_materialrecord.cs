@@ -960,8 +960,21 @@ namespace mySystem.Process.Bag.LDPE
            // mysheet.Cells[16, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString() + "     审核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).ToString("yyyy/MM/dd");
             //内表信息
             int rownum = dt记录详情.Rows.Count;
+            int ind = 0;
+            //插入新行
+            if (dt记录详情.Rows.Count > 10)
+            {
+                ind = dt记录详情.Rows.Count - 10;
+                for (int i = 0; i < ind; i++)
+                {
+                    //在第6行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
             //无需插入的部分
-            for (int i = 0; i < (rownum > 9 ? 9 : rownum); i++)
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("yyyy/MM/dd");
@@ -975,29 +988,8 @@ namespace mySystem.Process.Bag.LDPE
                 //mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
                 mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
-            //需要插入的部分
-            if (rownum > 9)
-            {
-                for (int i = 9; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
-
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("yyyy/MM/dd");
-                    mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("HH:mm:ss");
-                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
-                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料简称"].ToString();
-                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料代码"].ToString();
-                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["物料批号"].ToString();
-                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["领取数量"].ToString();
-                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                    mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
-                    mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
-                }
-            }
+            
+            
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
@@ -1007,7 +999,7 @@ namespace mySystem.Process.Bag.LDPE
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = Instruction + "-16-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = Instruction + "-03-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }

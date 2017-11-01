@@ -1016,13 +1016,26 @@ namespace mySystem.Process.Bag.PTV
             mysheet.Cells[5, 8].Value = " " + dt记录.Rows[0]["退库数量"].ToString();
             mysheet.Cells[5, 9].Value = "标签领用数量：" + dt记录.Rows[0]["标签领用数量"].ToString();
             mysheet.Cells[5, 12].Value = dt记录.Rows[0]["包装规格每箱只数"].ToString() + " 只/箱";
-            mysheet.Cells[21, 6].Value = dt记录.Rows[0]["包装数量箱数合计"].ToString();
-            mysheet.Cells[21, 7].Value = dt记录.Rows[0]["产品数量只数合计"].ToString();
-            mysheet.Cells[22, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
-            //内表信息
+            
+            //mysheet.Cells[22, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
+
             int rownum = dt记录详情.Rows.Count;
-            //无需插入的部分
-            for (int i = 0; i < (rownum > 13 ? 13 : rownum); i++)
+            int ind = 0;
+            //插入新行
+            if (dt记录详情.Rows.Count > 16)
+            {
+                ind = dt记录详情.Rows.Count - 16;
+                for (int i = 0; i < ind; i++)
+                {
+                    //在第8行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+
+            //内表数据
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[7 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[7 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["包装日期"].ToString()).ToString("yyyy/MM/dd");
@@ -1037,31 +1050,10 @@ namespace mySystem.Process.Bag.PTV
                 mysheet.Cells[7 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
                 mysheet.Cells[7 + i, 12].Value = dt记录详情.Rows[i]["备注"].ToString();
             }
-            //需要插入的部分
-            if (rownum > 13)
-            {
-                for (int i = 13; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7 + i, Type.Missing];
-
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    mysheet.Cells[7 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[7 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["包装日期"].ToString()).ToString("yyyy/MM/dd");
-                    mysheet.Cells[7 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["时间"].ToString()).ToString("HH:mm:ss");
-                    mysheet.Cells[7 + i, 4].Value = dt记录详情.Rows[i]["包装箱号"].ToString();
-                    mysheet.Cells[7 + i, 5].Value = dt记录详情.Rows[i]["包装明细"].ToString();
-                    mysheet.Cells[7 + i, 6].Value = dt记录详情.Rows[i]["包装数量箱数"].ToString();
-                    mysheet.Cells[7 + i, 7].Value = dt记录详情.Rows[i]["产品数量只数"].ToString();
-                    mysheet.Cells[7 + i, 8].Value = dt记录详情.Rows[i]["是否贴标签"].ToString() == "Yes" ? "√" : "×";
-                    mysheet.Cells[7 + i, 9].Value = dt记录详情.Rows[i]["是否打包封箱"].ToString() == "Yes" ? "√" : "×";
-                    mysheet.Cells[7 + i, 10].Value = dt记录详情.Rows[i]["操作员"].ToString();
-                    mysheet.Cells[7 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
-                    mysheet.Cells[7 + i, 12].Value = dt记录详情.Rows[i]["备注"].ToString();
-                }
-
-            }
+            
+                mysheet.Cells[23 + ind, 6].Value = dt记录.Rows[0]["包装数量箱数合计"].ToString();
+                mysheet.Cells[23 + ind, 7].Value = dt记录.Rows[0]["产品数量只数合计"].ToString();
+            
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
@@ -1071,7 +1063,7 @@ namespace mySystem.Process.Bag.PTV
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = Instruction + "-09-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = Instruction + "-06-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }

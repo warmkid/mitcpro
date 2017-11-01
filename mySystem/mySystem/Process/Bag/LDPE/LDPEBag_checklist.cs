@@ -745,9 +745,9 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
                 mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
                 //mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-                if (dt记录详情.Rows[0]["确认结果"].ToString() == "Yes")
+                if (dt记录详情.Rows[i]["确认结果"].ToString() == "Yes")
                     mysheet.Cells[4 + i, 4].Value = "符合☑  不符合□  不适用□";
-                else if (dt记录详情.Rows[0]["确认结果"].ToString() == "No")
+                else if (dt记录详情.Rows[i]["确认结果"].ToString() == "No")
                     mysheet.Cells[4 + i, 4].Value = "符合□  不符合☑  不适用□";
                 else
                     mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";
@@ -766,9 +766,9 @@ namespace mySystem.Process.Bag.LDPE
                     mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
                     mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
                     //mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-                    if (dt记录详情.Rows[0]["确认结果"].ToString() == "Yes")
+                    if (dt记录详情.Rows[i]["确认结果"].ToString() == "Yes")
                         mysheet.Cells[4 + i, 4].Value = "符合☑  不符合□  不适用□";
-                    else if (dt记录详情.Rows[0]["确认结果"].ToString() == "No")
+                    else if (dt记录详情.Rows[i]["确认结果"].ToString() == "No")
                         mysheet.Cells[4 + i, 4].Value = "符合□  不符合☑  不适用□";
                     else
                         mysheet.Cells[4 + i, 4].Value = "符合□  不符合□  不适用☑";

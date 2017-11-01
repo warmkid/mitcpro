@@ -1002,6 +1002,7 @@ namespace mySystem.Process.Bag.CS
         //打印功能
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
+            int ind=0;
             //外表信息
             mysheet.Cells[3, 1].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
             mysheet.Cells[3, 5].Value = "纸箱代码：" + dt记录.Rows[0]["纸箱代码"].ToString();
@@ -1016,9 +1017,7 @@ namespace mySystem.Process.Bag.CS
             mysheet.Cells[5, 8].Value = " " + dt记录.Rows[0]["退库数量"].ToString();
             mysheet.Cells[5, 9].Value = "标签领用数量：" + dt记录.Rows[0]["标签领用数量"].ToString();
             mysheet.Cells[5, 12].Value = dt记录.Rows[0]["包装规格每箱只数"].ToString() + " 只/箱";
-            mysheet.Cells[21, 6].Value = dt记录.Rows[0]["包装数量箱数合计"].ToString();
-            mysheet.Cells[21, 7].Value = dt记录.Rows[0]["产品数量只数合计"].ToString();
-            mysheet.Cells[22, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
+            
             //内表信息
             int rownum = dt记录详情.Rows.Count;
             //无需插入的部分
@@ -1060,8 +1059,11 @@ namespace mySystem.Process.Bag.CS
                     mysheet.Cells[7 + i, 11].Value = dt记录详情.Rows[i]["审核员"].ToString();
                     mysheet.Cells[7 + i, 12].Value = dt记录详情.Rows[i]["备注"].ToString();
                 }
-
+                ind = rownum - 13;
             }
+            mysheet.Cells[21+ind, 6].Value = dt记录.Rows[0]["包装数量箱数合计"].ToString();
+            mysheet.Cells[21+ind, 7].Value = dt记录.Rows[0]["产品数量只数合计"].ToString();
+            //mysheet.Cells[22+ind, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);

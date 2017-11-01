@@ -839,7 +839,7 @@ namespace mySystem.Process.Bag.LDPE
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\QB-PA-PP-03-R01A 产品外观和尺寸检验记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\13 QB-PA-PP-03-R01A 产品外观和尺寸检验记.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
@@ -907,17 +907,9 @@ namespace mySystem.Process.Bag.LDPE
             da.Fill(dt);
             String Instruction = dt.Rows[0]["生产指令编号"].ToString();
             //外表信息
-            mysheet.Cells[3, 3].Value = Instruction.ToString();
-            mysheet.Cells[3, 9].Value = dtOuter.Rows[0]["产品代码"].ToString();
-            mysheet.Cells[3, 10].Value = dtOuter.Rows[0]["产品批号"].ToString(); 
-            mysheet.Cells[12, 2].Value = dtOuter.Rows[0]["抽检量合计"].ToString();
-            mysheet.Cells[12, 3].Value = dtOuter.Rows[0]["游离异物合计"].ToString();
-            mysheet.Cells[12, 4].Value = dtOuter.Rows[0]["内含黑点晶点合计"].ToString();
-            mysheet.Cells[12, 5].Value = dtOuter.Rows[0]["热封线不良合计"].ToString();
-            mysheet.Cells[12, 6].Value = dtOuter.Rows[0]["其他合计"].ToString();
-            mysheet.Cells[12, 7].Value = dtOuter.Rows[0]["不良合计"].ToString();
-            mysheet.Cells[12, 8].Value = dtOuter.Rows[0]["判定"].ToString() == "Yes" ? "√" : "×";
-            mysheet.Cells[13, 9].Value = "尺寸规格： 宽 " + dtOuter.Rows[0]["尺寸规格宽"].ToString() + " mm × 长 " + dtOuter.Rows[0]["尺寸规格长"].ToString() + " mm（标示±5mm）";
+            mysheet.Cells[3, 1].Value = "生产指令编号：" + Instruction.ToString();
+            mysheet.Cells[3, 6].Value = "产品代码：" + dtOuter.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[3, 12].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"].ToString(); 
             //String stringtemp = "";
             //stringtemp = "检测人：" + dtOuter.Rows[0]["操作员"].ToString();
             //stringtemp = stringtemp + "       检测日期：" + Convert.ToDateTime(dtOuter.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
@@ -927,8 +919,21 @@ namespace mySystem.Process.Bag.LDPE
             //mysheet.Cells[16, 9].Value = stringtemp;
             //内表信息
             int rownum = dtInner.Rows.Count;
-            //无需插入的部分
-            for (int i = 0; i < (rownum > 6 ? 6 : rownum); i++)
+            int ind = 0;
+            //插入新行
+            if (dtInner.Rows.Count > 9)
+            {
+                ind = dtInner.Rows.Count - 9;
+                for (int i = 0; i < ind; i++)
+                {
+                    //在第7行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[6 + i, 1].Value = Convert.ToDateTime(dtInner.Rows[i]["抽样时间外观检查"].ToString()).ToString("yyyy/MM/dd");
                 mysheet.Cells[6 + i, 2].Value = Convert.ToDateTime(dtInner.Rows[i]["抽样时间外观检查"].ToString()).ToString("HH:mm");
@@ -944,31 +949,16 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["宽"].ToString() + " × " + dtInner.Rows[i]["长"].ToString();
                 mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "合格" ? "√" : "×";
             }
-            //需要插入的部分
-            if (rownum > 6)
-            {
-                for (int i = 6; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
 
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    mysheet.Cells[6 + i, 1].Value = Convert.ToDateTime(dtInner.Rows[i]["抽样时间外观检查"].ToString()).ToString("yyyy/MM/dd HH:mm");
-                    mysheet.Cells[6 + i, 2].Value = dtInner.Rows[i]["抽检量外观检查"].ToString();
-                    mysheet.Cells[6 + i, 3].Value = dtInner.Rows[i]["游离异物"].ToString();
-                    mysheet.Cells[6 + i, 4].Value = dtInner.Rows[i]["内含黑点晶点"].ToString();
-                    mysheet.Cells[6 + i, 5].Value = dtInner.Rows[i]["热封线不良"].ToString();
-                    mysheet.Cells[6 + i, 6].Value = dtInner.Rows[i]["其他"].ToString();
-                    mysheet.Cells[6 + i, 7].Value = dtInner.Rows[i]["不良合计"].ToString();
-                    mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["判定外观检查"].ToString() == "合格" ? "√" : "×";
-                    mysheet.Cells[6 + i, 9].Value = Convert.ToDateTime(dtInner.Rows[i]["抽检时间尺寸检测"].ToString()).ToString("yyyy/MM/dd HH:mm");
-                    mysheet.Cells[6 + i, 10].Value = dtInner.Rows[i]["抽检量尺寸检测"].ToString();
-                    mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["宽"].ToString() + " × " + dtInner.Rows[i]["长"].ToString();
-                    mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["判定尺寸检测"].ToString() == "合格" ? "√" : "×";
-
-                }
-            }
+            mysheet.Cells[15 + ind, 3].Value = dtOuter.Rows[0]["抽检量合计"].ToString();
+            mysheet.Cells[15 + ind, 4].Value = dtOuter.Rows[0]["游离异物合计"].ToString();
+            mysheet.Cells[15 + ind, 5].Value = dtOuter.Rows[0]["内含黑点晶点合计"].ToString();
+            mysheet.Cells[15 + ind, 6].Value = dtOuter.Rows[0]["热封线不良合计"].ToString();
+            mysheet.Cells[15 + ind, 7].Value = dtOuter.Rows[0]["其他合计"].ToString();
+            mysheet.Cells[15 + ind, 8].Value = dtOuter.Rows[0]["不良合计"].ToString();
+            mysheet.Cells[15 + ind, 10].Value = dtOuter.Rows[0]["尺寸抽检量合计"].ToString();
+            //mysheet.Cells[13 + ind, 9].Value = "尺寸规格： 宽 " + dtOuter.Rows[0]["尺寸规格宽"].ToString() + " mm × 长 " + dtOuter.Rows[0]["尺寸规格长"].ToString() + " mm（标示±5mm）";            
+            
             //加页脚
             int sheetnum;
             //OleDbDataAdapter da = new OleDbDataAdapter("select ID from 产品外观和尺寸检验记录 where 生产指令ID=" + dtOuter.Rows[0]["ID"].ToString(), conn);
@@ -983,7 +973,7 @@ namespace mySystem.Process.Bag.LDPE
             //da.Fill(dt);
             //String Instruction = dt.Rows[0]["生产指令编号"].ToString();
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = Instruction + "-16-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = Instruction + "-13-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }

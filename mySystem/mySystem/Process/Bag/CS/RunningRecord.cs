@@ -764,33 +764,33 @@ namespace mySystem.Process.Bag
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
-                    mysheet.Cells[7 + i, 1].Value = Convert.ToDateTime(dt_in.Rows[i]["检查时间"]).ToString("yyyy/MM/dd");
-                    mysheet.Cells[7 + i, 2].Value = Convert.ToDateTime(dt_in.Rows[i]["检查时间"]).ToString("HH:mm:ss");
-                    mysheet.Cells[7 + i, 3].Value = dt_in.Rows[i]["上切刀"].ToString();
-                    mysheet.Cells[7 + i, 4].Value = dt_in.Rows[i]["下切刀"].ToString();
-                    mysheet.Cells[7 + i, 5].Value = dt_in.Rows[i]["冷却"].ToString();
-                    mysheet.Cells[7 + i, 6].Value = dt_in.Rows[i]["横封温度1"].ToString();
-                    mysheet.Cells[7 + i, 7].Value = dt_in.Rows[i]["横封温度2"].ToString();
-                    mysheet.Cells[7 + i, 8].Value = dt_in.Rows[i]["纵封温度3"].ToString();
-                    mysheet.Cells[7 + i, 9].Value = dt_in.Rows[i]["纵封温度4"].ToString();
-                    mysheet.Cells[7 + i, 10].Value = dt_in.Rows[i]["纵封温度5"].ToString();
-                    mysheet.Cells[7 + i, 11].Value = dt_in.Rows[i]["热封时间横封"].ToString();
-                    mysheet.Cells[7 + i, 12].Value = dt_in.Rows[i]["热封时间纵封"].ToString();
-                    mysheet.Cells[7 + i, 13].Value = dt_in.Rows[i]["传输速度"].ToString();
-                    mysheet.Cells[7 + i, 14].Value = dt_in.Rows[i]["流量计"].ToString();
-                    mysheet.Cells[7 + i, 15].Value = dt_in.Rows[i]["产品质量"].ToString();
-                    mysheet.Cells[7 + i, 16].Value = dt_in.Rows[i]["张力均匀"].ToString();
-                    mysheet.Cells[7 + i, 17].Value = dt_in.Rows[i]["膜材运转"].ToString();
-                    mysheet.Cells[7 + i, 18].Value = dt_in.Rows[i]["纠偏控制器"].ToString();
-                    mysheet.Cells[7 + i, 19].Value = dt_in.Rows[i]["切刀运行"].ToString();
-                    mysheet.Cells[7 + i, 20].Value = dt_in.Rows[i]["操作员"].ToString();
-                    mysheet.Cells[7 + i, 20].Value = dt_in.Rows[i]["审核员"].ToString();
+                    mysheet.Cells[6 + i, 1].Value = Convert.ToDateTime(dt_in.Rows[i]["检查时间"]).ToString("yyyy/MM/dd");
+                    mysheet.Cells[6 + i, 2].Value = Convert.ToDateTime(dt_in.Rows[i]["检查时间"]).ToString("HH:mm:ss");
+                    mysheet.Cells[6 + i, 3].Value = dt_in.Rows[i]["上切刀"].ToString();
+                    mysheet.Cells[6 + i, 4].Value = dt_in.Rows[i]["下切刀"].ToString();
+                    mysheet.Cells[6 + i, 5].Value = dt_in.Rows[i]["冷却"].ToString();
+                    mysheet.Cells[6 + i, 6].Value = dt_in.Rows[i]["横封温度1"].ToString();
+                    mysheet.Cells[6 + i, 7].Value = dt_in.Rows[i]["横封温度2"].ToString();
+                    mysheet.Cells[6 + i, 8].Value = dt_in.Rows[i]["纵封温度3"].ToString();
+                    mysheet.Cells[6 + i, 9].Value = dt_in.Rows[i]["纵封温度4"].ToString();
+                    mysheet.Cells[6 + i, 10].Value = dt_in.Rows[i]["纵封温度5"].ToString();
+                    mysheet.Cells[6 + i, 11].Value = dt_in.Rows[i]["热封时间横封"].ToString();
+                    mysheet.Cells[6 + i, 12].Value = dt_in.Rows[i]["热封时间纵封"].ToString();
+                    mysheet.Cells[6 + i, 13].Value = dt_in.Rows[i]["传输速度"].ToString();
+                    mysheet.Cells[6 + i, 14].Value = dt_in.Rows[i]["流量计"].ToString();
+                    mysheet.Cells[6 + i, 15].Value = dt_in.Rows[i]["产品质量"].ToString();
+                    mysheet.Cells[6 + i, 16].Value = dt_in.Rows[i]["张力均匀"].ToString();
+                    mysheet.Cells[6 + i, 17].Value = dt_in.Rows[i]["膜材运转"].ToString();
+                    mysheet.Cells[6 + i, 18].Value = dt_in.Rows[i]["纠偏控制器"].ToString();
+                    mysheet.Cells[6 + i, 19].Value = dt_in.Rows[i]["切刀运行"].ToString();
+                    mysheet.Cells[6 + i, 20].Value = dt_in.Rows[i]["操作员"].ToString();
+                    mysheet.Cells[6 + i, 20].Value = dt_in.Rows[i]["审核员"].ToString();
                 }
                 ind = rownum - 10;
             }
             //mysheet.Cells[7, 17].Value = dt_out.Rows[0]["审核员"].ToString() + "\n" + Convert.ToDateTime(dt_out.Rows[0]["审核日期"]).ToString("D");
-            
-            //mysheet.Cells[18 + ind, 1].Value = " 备注：填写方式：正常或合格划“√”，异常写明原因。 ";
+
+            mysheet.Cells[18 + ind, 1].Value = " 备注：填写方式：正常或合格划“√”，异常写明原因。 ";
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + instrid.ToString(), mySystem.Parameter.connOle);
