@@ -160,6 +160,11 @@ namespace mySystem.Process.CleanCut
                 ckb合格.Checked = (bool)dt_prodinstr.Rows[0]["审核是否通过"];
                 ckb不合格.Checked = !ckb合格.Checked;
             }
+            else
+            {
+                ckb合格.Checked = false;
+                ckb不合格.Checked = false;
+            }
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
@@ -928,11 +933,11 @@ namespace mySystem.Process.CleanCut
             
             //内表信息
             int rownum = dt_prodlist.Rows.Count;
-            if (rownum > 11)
+            if (rownum > 12)
             {
-                for (int i = 11; i < rownum; i++)
+                for (int i = 12; i < rownum; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[8, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }

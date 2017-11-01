@@ -581,6 +581,7 @@ namespace mySystem.Process.CleanCut
                 outerBind();
 
                 setDataGridViewBackColor();
+                setDataGridViewFormat();
                 return true;
             }
         }
@@ -856,30 +857,26 @@ namespace mySystem.Process.CleanCut
 
             //内表信息
             int rownum = dt记录详情.Rows.Count;
-            //无需插入的部分
-            for (int i = 0; i < (rownum > 9 ? 9 : rownum); i++)
+            //插入的部分
+            if (rownum > 10)
+            {
+                for (int i = 10; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
                 mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "合格☑ 不合格□" : "合格□ 不合格☑";
             }
-            //需要插入的部分
-            if (rownum > 9)
-            {
-                for (int i = 9; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
-
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
-                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-                }
-            }
+            
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);

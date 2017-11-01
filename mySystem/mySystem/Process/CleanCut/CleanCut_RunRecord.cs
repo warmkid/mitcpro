@@ -74,6 +74,9 @@ namespace mySystem.Process.CleanCut
             btn打印.Enabled = false;
             btn查看日志.Enabled = false;
             cb打印机.Enabled = false;
+
+            btn查询新建.Visible = false;
+            DataShow(InstruID);
         }
 
         public CleanCut_RunRecord(mySystem.MainForm mainform, Int32 ID) : base(mainform)
@@ -205,7 +208,7 @@ namespace mySystem.Process.CleanCut
                 {
                     //发送审核不可点，其他都可点
                     setControlTrue();
-                    //btn审核.Enabled = true;
+                    btn审核.Enabled = true;
                     btn数据审核.Enabled = true;
                     //遍历datagridview，如果有一行为待审核，则该行可以修改
                     dataGridView1.ReadOnly = false;
@@ -279,7 +282,7 @@ namespace mySystem.Process.CleanCut
                 }
             }
             // 保证这两个按钮、审核人姓名框一直是false
-            //btn审核.Enabled = false;
+            btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             btn数据审核.Enabled = false;
             btn提交数据审核.Enabled = false;
@@ -690,7 +693,7 @@ namespace mySystem.Process.CleanCut
         }
         
         //发送审核按钮
-        private void bt发送审核_Click(object sender, EventArgs e)
+        private void btn审核_Click(object sender, EventArgs e)
         {
             //保存
             bool isSaved = Save();
@@ -942,8 +945,19 @@ namespace mySystem.Process.CleanCut
 
             //内表信息
             int rownum = dt记录详情.Rows.Count;
-            //无需插入的部分
-            for (int i = 0; i < (rownum > 10 ? 10 : rownum); i++)
+            // 插入行的部分
+            if (rownum>11)
+            {
+                for (int i = 11; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[10, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }                
+            }
+
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString("yyyy/MM/dd");
@@ -956,28 +970,7 @@ namespace mySystem.Process.CleanCut
                 mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作人"].ToString();
                 mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
-            //需要插入的部分
-            if (rownum > 10)
-            {
-                for (int i = 10; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
 
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString("yyyy/MM/dd");
-                    mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString("HH:mm:ss");
-                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
-                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["分切速度"].ToString();
-                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["自动张力设定"].ToString();
-                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["自动张力显示"].ToString();
-                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["张力输出显示"].ToString();
-                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作人"].ToString();
-                    mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
-                }
-            }
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
@@ -1041,6 +1034,7 @@ namespace mySystem.Process.CleanCut
             setEnableReadOnly();
             setDataGridViewFormat();
         }
+
         
     }
 }

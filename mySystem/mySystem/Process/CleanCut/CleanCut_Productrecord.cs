@@ -979,7 +979,9 @@ namespace mySystem.Process.CleanCut
             stringtemp = stringtemp + " mm。\r  判定： " + (dt记录.Rows[0]["判定是否合格"].ToString() == "Yes" ? "合格" : "不合格") + "。";
             mysheet.Cells[15, 2].Value = stringtemp;
             mysheet.Cells[13, 9].Value = "废品重量： " + dt记录.Rows[0]["废品重量"].ToString() + " kg";
-            mysheet.Cells[16, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();            
+
+            mysheet.Cells[16, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString() + "\n 其他操作员：" + dt记录.Rows[0]["操作员备注"].ToString();
+           
             stringtemp = "操作人：" + dt记录.Rows[0]["操作人"].ToString();
             stringtemp = stringtemp + "       操作日期：" + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
             mysheet.Cells[17, 1].Value = stringtemp;
@@ -989,8 +991,19 @@ namespace mySystem.Process.CleanCut
 
             //内表信息
             int rownum = dt记录详情.Rows.Count;
-            //无需插入的部分
-            for (int i = 0; i < (rownum > 7 ? 7 : rownum); i++)
+            //插入行的部分
+            if (rownum > 8)
+            {
+                for (int i = 8; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString(); 
                 //mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["工时"].ToString();
@@ -1003,28 +1016,7 @@ namespace mySystem.Process.CleanCut
                 mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["收率"].ToString();
                 mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["外观检查"].ToString() == "Yes" ? "合格" : "不合格";
             }
-            //需要插入的部分
-            if (rownum > 7)
-            {
-                for (int i = 7; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
-
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    //mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["工时"].ToString();
-                    mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["物料代码"].ToString();
-                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["膜卷批号"].ToString() + " - " + dt记录详情.Rows[i]["膜卷卷号"].ToString();
-                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["长度A"].ToString();
-                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["重量"].ToString();
-                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["清洁分切后代码"].ToString();
-                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["长度B"].ToString();
-                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["收率"].ToString();
-                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["外观检查"].ToString() == "Yes" ? "合格" : "不合格";
-                }
-            }
+            
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
