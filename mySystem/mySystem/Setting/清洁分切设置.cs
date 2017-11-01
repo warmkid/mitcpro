@@ -103,10 +103,11 @@ namespace mySystem.Setting
             //显示序号
             setDataGridViewRowNums(this.dgv清场);
             //this.dgv清场.Columns["清场项目"].MinimumWidth = 200;
-            this.dgv清场.Columns["清场内容"].MinimumWidth = 250;
-            this.dgv清场.Columns["清场内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            this.dgv清场.Columns["清场项目"].MinimumWidth = 200;
+            this.dgv清场.Columns["清场要点"].MinimumWidth = 250;
+            this.dgv清场.Columns["清场要点"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             Utility.setDataGridViewAutoSizeMode(dgv清场);
-            this.dgv清场.Columns["清场内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            this.dgv清场.Columns["清场要点"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             this.dgv清场.Columns["ID"].Visible = false;
             
 

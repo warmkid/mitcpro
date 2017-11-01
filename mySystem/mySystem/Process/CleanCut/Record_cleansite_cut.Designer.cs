@@ -377,7 +377,7 @@
             // 
             // bt插入查询
             // 
-            this.bt插入查询.Location = new System.Drawing.Point(300, 62);
+            this.bt插入查询.Location = new System.Drawing.Point(368, 65);
             this.bt插入查询.Name = "bt插入查询";
             this.bt插入查询.Size = new System.Drawing.Size(88, 23);
             this.bt插入查询.TabIndex = 31;

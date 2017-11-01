@@ -57,8 +57,8 @@ namespace mySystem.Process.CleanCut
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.cleancutInstruID;
             Instruction = Parameter.cleancutInstruction;
-            cb白班.Checked = Parameter.userflight == "白班" ? true : false; //生产班次的初始化？？？？？
-            cb夜班.Checked = !cb白班.Checked;
+            //cb白班.Checked = Parameter.userflight == "白班" ? true : false; //生产班次的初始化？？？？？
+            //cb夜班.Checked = !cb白班.Checked;
 
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
@@ -68,12 +68,15 @@ namespace mySystem.Process.CleanCut
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             setControlFalse();
-            dtp生产日期.Enabled = true;
+            //dtp生产日期.Enabled = true;
             btn查询新建.Enabled = true;
             //打印、查看日志按钮不可用
             btn打印.Enabled = false;
             btn查看日志.Enabled = false;
             cb打印机.Enabled = false;
+
+            btn查询新建.Visible = false;
+            DataShow(InstruID);
         }
 
         public CleanCut_RunRecord(mySystem.MainForm mainform, Int32 ID) : base(mainform)
@@ -173,54 +176,95 @@ namespace mySystem.Process.CleanCut
 
         //根据状态设置可读写性
         private void setEnableReadOnly()
-        {            
-            //if (stat_user == 2)//管理员
-            if (_userState == Parameter.UserState.管理员)
+        {
+            if (_userState == Parameter.UserState.管理员)//管理员
             {
                 //控件都能点
                 setControlTrue();
             }
-            //else if (stat_user == 1)//审核人
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                //if (stat_form == 0 || stat_form == 3 || stat_form == 2)  //0未保存||2审核通过||3审核未通过
-                if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
+                }
+                else if (_formState == Parameter.FormState.未保存)//0未保存
+                {
+                    //控件都不能点，只有打印,日志可点
+                    setControlFalse();
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
                 else //1待审核
                 {
                     //发送审核不可点，其他都可点
                     setControlTrue();
                     btn审核.Enabled = true;
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
             }
             else//操作员
             {
-                //if (stat_form == 1 || stat_form == 2) //1待审核||2审核通过
                 if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
                 {
                     //控件都不能点
                     setControlFalse();
                 }
-                else //0未保存||3审核未通过
+                else if (_formState == Parameter.FormState.未保存) //0未保存
                 {
                     //发送审核，审核不能点
                     setControlTrue();
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
+                }
+                else //3审核未通过
+                {
+                    //发送审核，审核不能点
+                    setControlTrue();
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
                 }
             }
             //datagridview格式，包含序号不可编辑
             setDataGridViewFormat();
         }
-
-        /// <summary>
-        /// 设置所有控件可用；
-        /// btn审核、btn提交审核两个按钮一直是false；
-        /// 部分控件防作弊，不可改；
-        /// 查询条件始终不可编辑
-        /// </summary>
-        void setControlTrue()
+        
+        // 设置所有控件可用
+        private void setControlTrue()
         {
             foreach (Control c in this.Controls)
             {
@@ -240,21 +284,20 @@ namespace mySystem.Process.CleanCut
             // 保证这两个按钮、审核人姓名框一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
-            tb审核人.Enabled = false;
-            //部分控件防作弊，不可改
+            btn数据审核.Enabled = false;
+            btn提交数据审核.Enabled = false;
+            //tb审核人.Enabled = false;
+            //部分空间防作弊，不可改
             tb生产指令编号.Enabled = false;
-            cb白班.Enabled = false;
-            cb夜班.Enabled = false;
+            //cb白班.Enabled = false;
+            //cb夜班.Enabled = false;
             //查询条件始终不可编辑
-            dtp生产日期.Enabled = false;
+            //dtp生产日期.Enabled = false;
             btn查询新建.Enabled = false;
         }
 
-        /// <summary>
-        /// 设置所有控件不可用；
-        /// 查看日志、打印始终可用
-        /// </summary>
-        void setControlFalse()
+        // 设置所有控件不可用
+        private void setControlFalse()
         {
             foreach (Control c in this.Controls)
             {
@@ -292,11 +335,10 @@ namespace mySystem.Process.CleanCut
         
         //******************************显示数据******************************//
 
-        //根据信息查找显示
-        private void DataShow(Int32 InstruID, DateTime searchTime, Boolean flight)
+        private void DataShow(Int32 InstruID)
         {
             //******************************外表 根据条件绑定******************************// 
-            readOuterData(InstruID, searchTime, flight);
+            readOuterData(InstruID);
             outerBind();
 
             if (dt记录.Rows.Count <= 0)
@@ -310,7 +352,7 @@ namespace mySystem.Process.CleanCut
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
                 //外表重新绑定
-                readOuterData(InstruID, searchTime, flight);
+                readOuterData(InstruID);
                 outerBind();
 
                 //********* 内表新建、保存 *********//
@@ -323,7 +365,7 @@ namespace mySystem.Process.CleanCut
                 dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
                 setDataGridViewRowNums();
                 //立马保存内表
-                da记录详情.Update((DataTable)bs记录详情.DataSource);                               
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
             }
             dataGridView1.Columns.Clear();
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
@@ -335,6 +377,52 @@ namespace mySystem.Process.CleanCut
             setEnableReadOnly();  //根据状态设置可读写性
         }
 
+        /// <summary>
+        /// //根据信息查找显示
+        //private void DataShow(Int32 InstruID, DateTime searchTime, Boolean flight)
+        //{
+        //    //******************************外表 根据条件绑定******************************// 
+        //    readOuterData(InstruID, searchTime, flight);
+        //    outerBind();
+
+        //    if (dt记录.Rows.Count <= 0)
+        //    {
+        //        //********* 外表新建、保存、重新绑定 *********//                
+        //        //初始化外表这一行
+        //        DataRow dr1 = dt记录.NewRow();
+        //        dr1 = writeOuterDefault(dr1);
+        //        dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
+        //        //立马保存这一行
+        //        bs记录.EndEdit();
+        //        da记录.Update((DataTable)bs记录.DataSource);
+        //        //外表重新绑定
+        //        readOuterData(InstruID, searchTime, flight);
+        //        outerBind();
+
+        //        //********* 内表新建、保存 *********//
+        //        //内表绑定
+        //        readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+        //        innerBind();
+        //        dt记录详情.Rows.Clear();
+        //        DataRow dr2 = dt记录详情.NewRow();
+        //        dr2 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr2);
+        //        dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
+        //        setDataGridViewRowNums();
+        //        //立马保存内表
+        //        da记录详情.Update((DataTable)bs记录详情.DataSource);
+        //    }
+        //    dataGridView1.Columns.Clear();
+        //    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+        //    setDataGridViewColumns();
+        //    innerBind();
+
+        //    addComputerEventHandler();  // 设置自动计算类事件
+        //    setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
+        //    setEnableReadOnly();  //根据状态设置可读写性
+        //}
+        /// </summary>
+        
+
         //根据主键显示
         public void IDShow(Int32 ID)
         {
@@ -343,22 +431,34 @@ namespace mySystem.Process.CleanCut
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
             {
-                cb白班.Checked = Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString());
-                cb夜班.Checked = !cb白班.Checked;
+                //cb白班.Checked = Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString());
+                //cb夜班.Checked = !cb白班.Checked;
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
-                Instruction = dt1.Rows[0]["生产指令编号"].ToString(); 
-                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()), Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString()));
-            }     
+                Instruction = dt1.Rows[0]["生产指令编号"].ToString();
+                //DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()), Convert.ToBoolean(dt1.Rows[0]["生产班次"].ToString()));         
+                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()));
+            }
         }
         
         //****************************** 嵌套 ******************************//
 
-        //外表读数据，填datatable
-        private void readOuterData(Int32 InstruID, DateTime searchTime, Boolean flight)
+        /// <summary>
+        ///// private void readOuterData(Int32 InstruID, DateTime searchTime, Boolean flight)
+        //{
+        //    bs记录 = new BindingSource();
+        //    dt记录 = new DataTable(table);
+        //    da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# and 生产班次 = " + flight.ToString(), connOle);
+        //    cb记录 = new OleDbCommandBuilder(da记录);
+        //    da记录.Fill(dt记录);
+        //}
+        /// 
+        /// </summary>
+
+        private void readOuterData(Int32 InstruID)
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# and 生产班次 = " + flight.ToString(), connOle);
+            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), connOle);
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -370,24 +470,24 @@ namespace mySystem.Process.CleanCut
             //控件绑定（先解除，再绑定）
             tb生产指令编号.DataBindings.Clear();
             tb生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
-            dtp生产日期.DataBindings.Clear();
-            dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
-            cb白班.DataBindings.Clear();
-            cb白班.DataBindings.Add("Checked", bs记录.DataSource, "生产班次");
+            //dtp生产日期.DataBindings.Clear();
+            //dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
+            //cb白班.DataBindings.Clear();
+            //cb白班.DataBindings.Add("Checked", bs记录.DataSource, "生产班次");
 
             tb备注.DataBindings.Clear();
             tb备注.DataBindings.Add("Text", bs记录.DataSource, "备注");
 
-            tb确认人.DataBindings.Clear();
-            tb确认人.DataBindings.Add("Text", bs记录.DataSource, "确认人");
-            tb审核人.DataBindings.Clear();
-            tb审核人.DataBindings.Add("Text", bs记录.DataSource, "审核人");
-            tb操作员备注.DataBindings.Clear();
-            tb操作员备注.DataBindings.Add("Text", bs记录.DataSource, "操作员备注");
-            dtp确认日期.DataBindings.Clear();
-            dtp确认日期.DataBindings.Add("Text", bs记录.DataSource, "确认日期");
-            dtp审核日期.DataBindings.Clear();
-            dtp审核日期.DataBindings.Add("Text", bs记录.DataSource, "审核日期");
+            //tb确认人.DataBindings.Clear();
+            //tb确认人.DataBindings.Add("Text", bs记录.DataSource, "确认人");
+            //tb审核人.DataBindings.Clear();
+            //tb审核人.DataBindings.Add("Text", bs记录.DataSource, "审核人");
+            //tb操作员备注.DataBindings.Clear();
+            //tb操作员备注.DataBindings.Add("Text", bs记录.DataSource, "操作员备注");
+            //dtp确认日期.DataBindings.Clear();
+            //dtp确认日期.DataBindings.Add("Text", bs记录.DataSource, "确认日期");
+            //dtp审核日期.DataBindings.Clear();
+            //dtp审核日期.DataBindings.Add("Text", bs记录.DataSource, "审核日期");
         }
 
         //添加外表默认信息        
@@ -395,8 +495,8 @@ namespace mySystem.Process.CleanCut
         {
             dr["生产指令ID"] = InstruID;
             dr["生产指令编号"] = Instruction;
-            dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
-            dr["生产班次"] = cb白班.Checked;
+            dr["生产日期"] = DateTime.Now; //实际无用
+            dr["生产班次"] = true; //实际无用
             dr["确认人"] = mySystem.Parameter.userName;
             dr["确认日期"] = Convert.ToDateTime(DateTime.Now.ToString("yyyy/MM/dd"));
             dr["审核人"] = "";
@@ -414,7 +514,7 @@ namespace mySystem.Process.CleanCut
             //读取记录表里的记录
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T清洁分切运行记录ID = " + ID.ToString(), connOle);
+            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T清洁分切运行记录ID = " + ID.ToString() + " order by id ASC", connOle);
             cb记录详情 = new OleDbCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
@@ -434,12 +534,14 @@ namespace mySystem.Process.CleanCut
             //DataRow dr = dt记录详情.NewRow();
             dr["序号"] = 0;
             dr["T清洁分切运行记录ID"] = dt记录.Rows[0]["ID"];
-            dr["生产时间"] = Convert.ToDateTime(DateTime.Now.ToString("HH:mm"));
+            dr["生产时间"] = DateTime.Now;
+            dr["班次"] = Parameter.userflight;
             dr["分切速度"] = 0;
             dr["自动张力设定"] = 0;
             dr["自动张力显示"] = 0;
             dr["张力输出显示"] = 0;
             dr["操作人"] = mySystem.Parameter.userName;
+            dr["审核员"] = "";
             //dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             return dr;
         }
@@ -455,10 +557,24 @@ namespace mySystem.Process.CleanCut
         private void setDataGridViewColumns()
         {
             DataGridViewTextBoxColumn tbc;
+            DataGridViewComboBoxColumn cbc;
             foreach (DataColumn dc in dt记录详情.Columns)
             {
                 switch (dc.ColumnName)
-                {                    
+                {
+                    case "班次":
+                        cbc = new DataGridViewComboBoxColumn();
+                        cbc.DataPropertyName = dc.ColumnName;
+                        cbc.HeaderText = dc.ColumnName;
+                        cbc.Name = dc.ColumnName;
+                        cbc.ValueType = dc.DataType;
+                        cbc.Items.Add("白班");
+                        cbc.Items.Add("夜班");
+                        dataGridView1.Columns.Add(cbc);
+                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 120;
+                        break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
                         tbc.DataPropertyName = dc.ColumnName;
@@ -487,11 +603,12 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T清洁分切运行记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.Columns["生产时间"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["生产时间"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns["分切速度"].HeaderText = "分切速度\r(m/min)";
             dataGridView1.Columns["自动张力设定"].HeaderText = "自动张力\r设定(kg)";
             dataGridView1.Columns["自动张力显示"].HeaderText = "自动张力\r显示(kg)";
             dataGridView1.Columns["张力输出显示"].HeaderText = "张力输出\r显示(%)";
+            dataGridView1.Columns["审核员"].HeaderText = "复核人";
         }
 
         //******************************按钮功能******************************//
@@ -528,7 +645,8 @@ namespace mySystem.Process.CleanCut
         //用于显示/新建数据
         private void bt查询新建_Click(object sender, EventArgs e)
         {
-            DataShow(InstruID, dtp生产日期.Value, cb白班.Checked);
+            //DataShow(InstruID, dtp生产日期.Value, cb白班.Checked);
+            DataShow(InstruID);
         }
 
         //保存按钮
@@ -543,13 +661,13 @@ namespace mySystem.Process.CleanCut
         //保存功能
         private bool Save()
         {
-            if (mySystem.Parameter.NametoID(tb确认人.Text.ToString()) == 0)
-            {
-                /*操作人不合格*/
-                MessageBox.Show("请重新输入『操作员』信息", "ERROR");
-                return false;
-            }
-            else if (Name_check1() == false)
+            //if (mySystem.Parameter.NametoID(tb确认人.Text.ToString()) == 0)
+            //{
+            //    /*操作人不合格*/
+            //    MessageBox.Show("请重新输入『操作员』信息", "ERROR");
+            //    return false;
+            //}
+            if (Name_check1() == false)
             {
                 /*操作人信息有误*/
                 return false;
@@ -564,15 +682,18 @@ namespace mySystem.Process.CleanCut
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID, dtp生产日期.Value, cb白班.Checked);
+                //readOuterData(InstruID, dtp生产日期.Value, cb白班.Checked);
                 outerBind();
+
+                setEnableReadOnly();
+                setDataGridViewFormat();
 
                 return true;
             }
         }
         
         //发送审核按钮
-        private void bt发送审核_Click(object sender, EventArgs e)
+        private void btn审核_Click(object sender, EventArgs e)
         {
             //保存
             bool isSaved = Save();
@@ -606,6 +727,7 @@ namespace mySystem.Process.CleanCut
             Save();
             _formState = Parameter.FormState.待审核;
             setEnableReadOnly();
+            setDataGridViewFormat();
         }
 
         //日志按钮
@@ -664,7 +786,8 @@ namespace mySystem.Process.CleanCut
             { _formState = Parameter.FormState.审核通过; }//审核通过
             else
             { _formState = Parameter.FormState.审核未通过; }//审核未通过              
-            setEnableReadOnly();            
+            setEnableReadOnly();
+            setDataGridViewFormat();         
         }
         
         //添加打印机
@@ -721,6 +844,13 @@ namespace mySystem.Process.CleanCut
                     MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作人』信息", "ERROR");
                 }
             }
+        }
+
+        //数据绑定结束，设置表格格式
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            setDataGridViewFormat();
+            setEnableReadOnly();
         }
 
         //打印按钮
@@ -802,49 +932,45 @@ namespace mySystem.Process.CleanCut
             //外表信息
             mysheet.Cells[3, 1].Value = "生产指令编号： " + dt记录.Rows[0]["生产指令编号"].ToString();
             //mysheet.Cells[3, 5].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Day.ToString() + "日";
-            String flighttemp = Convert.ToBoolean(dt记录.Rows[0]["生产班次"].ToString()) == true ? "白班" : "夜班";
+            //String flighttemp = Convert.ToBoolean(dt记录.Rows[0]["生产班次"].ToString()) == true ? "白班" : "夜班";
             //mysheet.Cells[3, 7].Value = "生产班次：" + flighttemp;
             //mysheet.Cells[15, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
-            String stringtemp = "";
-            stringtemp = "确认人：" + dt记录.Rows[0]["确认人"].ToString();
-            stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Day.ToString() + "日";
+            //String stringtemp = "";
+            //stringtemp = "确认人：" + dt记录.Rows[0]["确认人"].ToString();
+            //stringtemp = stringtemp + "       确认日期：" + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["确认日期"].ToString()).Day.ToString() + "日";
             //mysheet.Cells[16, 1].Value = stringtemp;
-            stringtemp = "复核人：" + dt记录.Rows[0]["审核人"].ToString();
-            stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
+            //stringtemp = "复核人：" + dt记录.Rows[0]["审核人"].ToString();
+            //stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
             //mysheet.Cells[16, 5].Value = stringtemp;
 
             //内表信息
             int rownum = dt记录详情.Rows.Count;
-            //无需插入的部分
-            for (int i = 0; i < (rownum > 10 ? 10 : rownum); i++)
+            // 插入行的部分
+            if (rownum>11)
+            {
+                for (int i = 11; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[10, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }                
+            }
+
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["生产时间"].ToString();
+                mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString("yyyy/MM/dd");
+                mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"].ToString()).ToString("HH:mm:ss");
+                mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
                 mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["分切速度"].ToString();
                 mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["自动张力设定"].ToString();
                 mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["自动张力显示"].ToString();
                 mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["张力输出显示"].ToString();
                 mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作人"].ToString();
+                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
             }
-            //需要插入的部分
-            if (rownum > 10)
-            {
-                for (int i = 10; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
 
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["生产时间"].ToString();
-                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["分切速度"].ToString();
-                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["自动张力设定"].ToString();
-                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["自动张力显示"].ToString();
-                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["张力输出显示"].ToString();
-                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作人"].ToString();
-                }
-            }
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
@@ -854,14 +980,61 @@ namespace mySystem.Process.CleanCut
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            mysheet.PageSetup.RightFooter = Instruction + "-03-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = Instruction + "-04-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }
-           
 
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if ("__待审核" == Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dt记录详情.Rows[i]["操作人"].ToString())
+                    {
+                        dt记录详情.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("记录员,审核员相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
+        }
 
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dt记录详情.Rows[i]["审核员"] = "__待审核";
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
 
+            setEnableReadOnly();
+            setDataGridViewFormat();
+        }
 
+        
     }
 }

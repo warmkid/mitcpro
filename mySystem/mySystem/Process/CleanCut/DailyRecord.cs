@@ -919,8 +919,21 @@ namespace mySystem.Process.CleanCut
             //内表信息
             int i内表行数 = dtInner.Rows.Count;
             int i超出行数 = 0;
-            //行数不超过模板行数的部分
-            for (int i = 0; i < (i内表行数 > 8 ? 8 : i内表行数); i++)
+
+            //插入新行
+            if (dtInner.Rows.Count > 8)
+            {
+                i超出行数 = dtInner.Rows.Count - 8;
+                for (int i = 0; i < i超出行数; i++)
+                {
+                    //在第6行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+
+            for (int i = 0; i < i内表行数; i++)
             {
                 mysheet.Cells[5 + i, 1].Value = i + 1;
                 mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["生产指令"].ToString();
@@ -937,32 +950,7 @@ namespace mySystem.Process.CleanCut
                 mysheet.Cells[5 + i, 13].Value = dtInner.Rows[i]["操作人"].ToString();
                 mysheet.Cells[5 + i, 14].Value = dtInner.Rows[i]["审核人"].ToString();
             }
-            //超过模板行数的部分，插入
-            if (i内表行数 > 8)
-            {
-                i超出行数 = i内表行数 - 8;
-                for (int i = 8; i < i内表行数; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
-
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-                    mysheet.Cells[5 + i, 1].Value = i + 1;
-                    mysheet.Cells[5 + i, 2].Value = dtInner.Rows[i]["生产指令"].ToString();
-                    mysheet.Cells[5 + i, 3].Value = dtInner.Rows[i]["生产日期"].ToString();
-                    mysheet.Cells[5 + i, 4].Value = dtInner.Rows[i]["使用物料代码"].ToString();
-                    mysheet.Cells[5 + i, 5].Value = dtInner.Rows[i]["规格a1"].ToString();
-                    mysheet.Cells[5 + i, 6].Value = dtInner.Rows[i]["用量b1"].ToString();
-                    mysheet.Cells[5 + i, 7].Value = dtInner.Rows[i]["使用量"].ToString();
-                    mysheet.Cells[5 + i, 8].Value = dtInner.Rows[i]["清洁分切后代码"].ToString();
-                    mysheet.Cells[5 + i, 9].Value = dtInner.Rows[i]["规格a2"].ToString();
-                    mysheet.Cells[5 + i, 10].Value = dtInner.Rows[i]["数量b2"].ToString();
-                    mysheet.Cells[5 + i, 11].Value = dtInner.Rows[i]["数量"].ToString();
-                    mysheet.Cells[5 + i, 12].Value = dtInner.Rows[i]["工时"].ToString();
-                    mysheet.Cells[5 + i, 13].Value = dtInner.Rows[i]["操作人"].ToString();
-                    mysheet.Cells[5 + i, 14].Value = dtInner.Rows[i]["审核人"].ToString();
-                }
-            }
+            
             mysheet.Cells[13 + i超出行数, 6].Value = txb清洁前合计A1.Text;
             mysheet.Cells[13 + i超出行数, 7].Value = txb清洁前合计A2.Text;
             mysheet.Cells[13 + i超出行数, 10].Value = txb清洁后合计B1.Text;
@@ -975,7 +963,7 @@ namespace mySystem.Process.CleanCut
                 mysheet.Cells[14 + i超出行数, 9].Value = Convert.ToDouble(txb清洁前合计A1.Text) / Convert.ToDouble(txb清洁后合计C.Text);
             else
                 mysheet.Cells[14 + i超出行数, 9].Value = 0;
-            mysheet.Cells[15 + i超出行数, 11].Value = txb清洁后合计C.Text;
+            mysheet.Cells[15 + i超出行数, 12].Value = txb清洁后合计C.Text;
             mysheet.Cells[15 + i超出行数, 2].Value = txb备注.Text;
             mysheet.Cells[16 + i超出行数, 1].Value = String.Format("操作人/日期：{0}      {1}", txb操作员.Text, dtp操作日期.Value.ToString("yyyy年MM月dd日"));
             mysheet.Cells[16 + i超出行数, 8].Value = String.Format("复核人/日期：{0}      {1}", txb审核人.Text, dtp审核日期.Value.ToString("yyyy年MM月dd日"));
@@ -1005,7 +993,7 @@ namespace mySystem.Process.CleanCut
 
             myReader生产指令编码.Close();
             comm生产指令编码.Dispose();  
-            mysheet.PageSetup.RightFooter = __生产指令 + "-05-"  + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            mysheet.PageSetup.RightFooter = __生产指令 + "-06-"  + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
         }

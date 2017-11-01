@@ -903,7 +903,7 @@ namespace mySystem.Process.Bag.CS
                 for (int i = 0; i < i插入行数; i++)
                 {
                     //在第6行插入
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6 + i, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[14 + i, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
@@ -929,14 +929,14 @@ namespace mySystem.Process.Bag.CS
                 mysheet.Cells[6 + i, 14].Value = dtOuter.Rows[0]["审核员"].ToString();
             }
             
-            mysheet.Cells[15 + ind, 3].Value = dtOuter.Rows[0]["外观抽检量合计"].ToString();
-            mysheet.Cells[15 + ind, 4].Value = dtOuter.Rows[0]["游离异物合计"].ToString();
-            mysheet.Cells[15 + ind, 5].Value = dtOuter.Rows[0]["内含黑点晶点合计"].ToString();
-            mysheet.Cells[15 + ind, 6].Value = dtOuter.Rows[0]["热封线不良合计"].ToString();
-            mysheet.Cells[15 + ind, 7].Value = dtOuter.Rows[0]["其他合计"].ToString();
-            mysheet.Cells[15 + ind, 8].Value = dtOuter.Rows[0]["不良合计"].ToString();
-            mysheet.Cells[15 + ind, 10].Value = dtOuter.Rows[0]["尺寸抽检量合计"].ToString();
-            mysheet.Cells[16 + ind, 10].Value = "尺寸规格： 宽 " + dtOuter.Rows[0]["尺寸规格宽"].ToString() + " mm × 长 " + dtOuter.Rows[0]["尺寸规格长"].ToString() + " mm（标示±5mm）"
+            mysheet.Cells[16 + ind, 3].Value = dtOuter.Rows[0]["外观抽检量合计"].ToString();
+            mysheet.Cells[16 + ind, 4].Value = dtOuter.Rows[0]["游离异物合计"].ToString();
+            mysheet.Cells[16 + ind, 5].Value = dtOuter.Rows[0]["内含黑点晶点合计"].ToString();
+            mysheet.Cells[16 + ind, 6].Value = dtOuter.Rows[0]["热封线不良合计"].ToString();
+            mysheet.Cells[16 + ind, 7].Value = dtOuter.Rows[0]["其他合计"].ToString();
+            mysheet.Cells[16 + ind, 8].Value = dtOuter.Rows[0]["不良合计"].ToString();
+            mysheet.Cells[16 + ind, 10].Value = dtOuter.Rows[0]["尺寸抽检量合计"].ToString();
+            mysheet.Cells[17 + ind, 10].Value = "尺寸规格： 宽 " + dtOuter.Rows[0]["尺寸规格宽"].ToString() + " mm × 长 " + dtOuter.Rows[0]["尺寸规格长"].ToString() + " mm（标示±5mm）"
                 + "\n尺寸检测规则：\n每2小时1次，每次测量3只产品，长和宽均应符合标准；记录第一个样品的实际测量值，其他样品确认是否在标准范围内。每批不少于8只,均应合格。 Roll bag只确认宽度。";
             //String stringtemp = "";
             //stringtemp = "检测人：" + dtOuter.Rows[0]["操作员"].ToString();

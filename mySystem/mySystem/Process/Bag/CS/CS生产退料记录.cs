@@ -991,11 +991,12 @@ namespace mySystem.Process.Bag.CS
         //打印功能
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
+            int ind = 0;
             //外表信息
             mysheet.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
             mysheet.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
             mysheet.Cells[3, 9].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
-            mysheet.Cells[15, 1].Value = "备注：" + dt记录.Rows[0]["备注"].ToString();
+           
             //mysheet.Cells[16, 1].Value = "审核员：" + dt记录.Rows[0]["审核员"].ToString();
             //内表信息
             int rownum = dt记录详情.Rows.Count;
@@ -1036,7 +1037,9 @@ namespace mySystem.Process.Bag.CS
                     mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
                     mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员备注"].ToString();
                 }
+                ind = rownum - 9;
             }
+            mysheet.Cells[15+ind, 1].Value = "备注：" + dt记录.Rows[0]["备注"].ToString();
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);

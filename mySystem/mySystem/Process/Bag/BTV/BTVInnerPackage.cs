@@ -623,8 +623,10 @@ namespace mySystem.Process.Bag.BTV
             dr["包装袋热封线"] = "Yes";
             dr["内标签"] = "Yes";
             dr["内包装外观"] = "Yes";
+            dr["生产工时"] = 0;
+
             dr["操作员"] = mySystem.Parameter.userName;
-            dr["操作员备注"] = "";
+            //dr["操作员备注"] = "";
             dr["审核员"] = "";
             return dr;
 
@@ -714,6 +716,7 @@ namespace mySystem.Process.Bag.BTV
             //隐藏
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T产品内包装记录ID"].Visible = false;
+            dataGridView1.Columns["生产日期时间"].Visible = false;
             //不可用
             dataGridView1.Columns["产品数量只"].ReadOnly = true;
             dataGridView1.Columns["序号"].ReadOnly = true;
@@ -729,6 +732,8 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["不良合计"].HeaderText = "不良\r合计\r(只)";
             dataGridView1.Columns["包装袋热封线"].HeaderText = "包装袋\r热封线";
             dataGridView1.Columns["内包装外观"].HeaderText = "内包装\r外观";
+            dataGridView1.Columns["生产工时"].HeaderText = "生产工时\r(h)";
+
         }
 
         //******************************按钮功能******************************//
@@ -997,7 +1002,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(combox打印机.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
         public void print(bool preview)
@@ -1006,88 +1011,88 @@ namespace mySystem.Process.Bag.BTV
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
+            //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\5 SOP-MFG-109-R01A 产品内包装记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[5];
             // 设置该进程是否可见
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
-
-            int rowStartAt = 6;
-            my.Cells[3, 1].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"];
-            my.Cells[3, 5].Value = "产品代码：" + dt记录.Rows[0]["产品代码"];
-            my.Cells[3, 10].Value = "生产批号：" + dt记录.Rows[0]["生产批号"];
-            my.Cells[3, 15].Value = fill标签();
-            //my.Cells[3, 21].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
-
             
+            my.Cells[3, 11].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
+            my.Cells[4, 1].Value = dt记录.Rows[0]["产品代码"].ToString();
+            my.Cells[4, 4].Value = dt记录.Rows[0]["生产批号"].ToString();
+            my.Cells[4, 6].Value = Convert.ToDouble(dt记录.Rows[0]["内包装规格"]);
+            //mysheet.Cells[3, 15].Value = "标签：" + "中文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]) == true ? "☑" : "□") + "  英文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否英文"]) == true ? "☑" : "□");
+            //my.Cells[4, 9].Value = Convert.ToBoolean(dt记录.Rows[0]["标签语言中文"]) ? "中文" : "英文";
+            my.Cells[4, 9].Value = fill标签();
+            my.Cells[4, 14].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[4, 16].Value = dt记录.Rows[0]["班次"].ToString();
+
+
+            my.Cells[19, 1].Value = "工时：" + dt记录.Rows[0]["工时"].ToString();
+            my.Cells[19, 4].Value = dt记录.Rows[0]["产品数量包数合计A"].ToString();
+            my.Cells[19, 5].Value = dt记录.Rows[0]["产品数量只数合计B"].ToString();
+            my.Cells[19, 6].Value = dt记录.Rows[0]["热封线不合格合计"].ToString();
+            my.Cells[19, 7].Value = dt记录.Rows[0]["黑点晶点合计"].ToString();
+            my.Cells[19, 8].Value = dt记录.Rows[0]["指示剂不良合计"].ToString();
+            my.Cells[19, 9].Value = dt记录.Rows[0]["其他合计"].ToString();
+            my.Cells[19, 10].Value = dt记录.Rows[0]["不良总合计"].ToString();
+            my.Cells[19, 12].Value = dt记录.Rows[0]["废品重量"].ToString();
+
+            my.Cells[20, 6].Value = "其他操作人员：" + dt记录.Rows[0]["操作员备注"].ToString();
+            
+
             //EVERY SHEET CONTAINS 12 RECORDS
-            int rowNumPerSheet = 11;
+
+            if (dt记录详情.Rows.Count > 12)
+            {
+                //在第8行插入
+                for (int i = 0; i < dt记录详情.Rows.Count - 12; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[12, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+
+            int rowStartAt = 7;
             int rowNumTotal = dt记录详情.Rows.Count;
-            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
+            for (int i = 0; i < rowNumTotal ; i++)
             {
 
                 my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
+                //my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
+                my.Cells[i + rowStartAt, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["生产开始时间"].ToString()).ToString("HH:mm:ss") + "~" + Convert.ToDateTime(dt记录详情.Rows[i]["生产结束时间"].ToString()).ToString("HH:mm:ss");
                 my.Cells[i + rowStartAt, 2].Font.Size = 11;
                 my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["内包序号"];
-                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["包装规格每包只数"];
-                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["产品数量包"];
-                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["产品数量只"];
-                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["热封线不合格数量"];
-                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["黑点晶点数量"];
-                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["指示剂不良数量"];
-                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["其他数量"];
-                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良合计"];
-                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["包装袋热封线"];
-                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["内标签"];
-                my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["内包装外观"];
+                //my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["包装规格每包只数"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["产品数量包"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["产品数量只"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["热封线不合格数量"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["黑点晶点数量"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["指示剂不良数量"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["其他数量"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["不良合计"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["包装袋热封线"];
+                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["内标签"];
+                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["内包装外观"];
+                my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["生产工时"];
                 my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["操作员"];
                 my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["审核员"];
                 
             }
 
-            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
-            if (rowNumTotal > rowNumPerSheet)
-            {
-                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
-
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-
-                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
-                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
-                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["内包序号"];
-                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["包装规格每包只数"];
-                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["产品数量包"];
-                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["产品数量只"];
-                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["热封线不合格数量"];
-                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["黑点晶点数量"];
-                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["指示剂不良数量"];
-                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["其他数量"];
-                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良合计"];
-                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["包装袋热封线"];
-                    my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["内标签"];
-                    my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["内包装外观"];
-                    my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["操作员"];
-                    my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["审核员"];
-                
-                }
-            }
-
-            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
-            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+            //Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
+            //range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
 
             //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
-            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
-            my.Cells[18 + varOffset, 5].Value = dt记录.Rows[0]["产品数量包合计A"];
-            my.Cells[18 + varOffset, 6].Value = dt记录.Rows[0]["产品数量只合计B"];
-            my.Cells[18 + varOffset, 7].Value = dt记录.Rows[0]["理论产量C"];
-            my.Cells[19 + varOffset, 7].Value = Convert.ToDouble(dt记录.Rows[0]["成品率"]).ToString("0.00") + "%";
+            //int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
+            //my.Cells[18 + varOffset, 5].Value = dt记录.Rows[0]["产品数量包数合计A"];
+            //my.Cells[18 + varOffset, 6].Value = dt记录.Rows[0]["产品数量只数合计B"];
+            ////my.Cells[18 + varOffset, 7].Value = dt记录.Rows[0]["理论产量C"];
+            //my.Cells[19 + varOffset, 7].Value = Convert.ToDouble(dt记录.Rows[0]["成品率"]).ToString("0.00") + "%";
+
             if (preview)
             {
                 my.Select();
@@ -1096,7 +1101,7 @@ namespace mySystem.Process.Bag.BTV
             else
             {
                 //add footer
-                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+                my.PageSetup.RightFooter = Instruction + "-05-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
                 // 直接用默认打印机打印该Sheet
                 try
@@ -1198,87 +1203,120 @@ namespace mySystem.Process.Bag.BTV
         {
             if (e.ColumnIndex >= 0)
             {
+                //if (dataGridView1.Columns[e.ColumnIndex].Name == "产品数量包")
+                //{
+                //    int sumA = 0;
+                //    int numtemp;
+                //    for (int i = 0; i < dt记录详情.Rows.Count; i++)
+                //    {
+                //        if (Int32.TryParse(dt记录详情.Rows[i]["产品数量包"].ToString(), out numtemp) == true)
+                //        { sumA += numtemp; }
+                //    }
+                //    dt记录详情.Rows[e.RowIndex]["产品数量只"] = Convert.ToInt32(dt记录.Rows[0]["内包装规格"]) * Convert.ToInt32(dt记录详情.Rows[e.RowIndex]["产品数量包"]);
+                //    //dataGridView1.Rows[e.RowIndex].Cells["产品数量只"].Value = (Convert.ToInt32(dt记录.Rows[0]["内包装规格"]) * Convert.ToInt32(dt记录详情.Rows[e.RowIndex]["产品数量包"])).ToString();
+                //    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
+                //    //da记录详情.Update((DataTable)bs记录详情.DataSource);
+                //    //readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                //    //innerBind();
+                //    outerDataSync("tb产品数量包数合计A", sumA.ToString());
+                //    int sumB= sumA * Convert.ToInt32(dt记录.Rows[0]["内包装规格"]);
+                //    outerDataSync("tb产品数量只数合计B", sumB.ToString());
+                //}
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "黑点晶点数量")
+                //{
+                //    int sumA = 0;
+                //    int numtemp;
+                //    for (int i = 0; i < dt记录详情.Rows.Count; i++)
+                //    {
+                //        if (Int32.TryParse(dt记录详情.Rows[i]["黑点晶点数量"].ToString(), out numtemp) == true)
+                //        { sumA += numtemp; }
+                //    }
+                //    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
+                //    dataGridView1.Rows[e.RowIndex].Cells["产品数量只"].Value = (Convert.ToInt32(dt记录.Rows[0]["内包装规格"]) * Convert.ToInt32(dt记录详情.Rows[e.RowIndex]["产品数量包"])).ToString();                    
+                //    outerDataSync("lbl黑点晶点合计", sumA.ToString());
+                //}
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格数量")
+                //{
+                //    int sumA = 0;
+                //    int numtemp;
+                //    for (int i = 0; i < dt记录详情.Rows.Count; i++)
+                //    {
+                //        if (Int32.TryParse(dt记录详情.Rows[i]["热封线不合格数量"].ToString(), out numtemp) == true)
+                //        { sumA += numtemp; }
+                //    }
+                //    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
+                //    outerDataSync("lbl热封线不合格合计", sumA.ToString());
+                    
+                //}
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "指示剂不良数量")
+                //{
+                //    int sumA = 0;
+                //    int numtemp;
+                //    for (int i = 0; i < dt记录详情.Rows.Count; i++)
+                //    {
+                //        if (Int32.TryParse(dt记录详情.Rows[i]["指示剂不良数量"].ToString(), out numtemp) == true)
+                //        { sumA += numtemp; }
+                //    }
+                //    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
+                //    outerDataSync("lbl指示剂不良合计", sumA.ToString());
+
+                //}
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "不良合计")
+                //{
+                //    int sumA = 0;
+                //    int numtemp;
+                //    for (int i = 0; i < dt记录详情.Rows.Count; i++)
+                //    {
+                //        if (Int32.TryParse(dt记录详情.Rows[i]["不良合计"].ToString(), out numtemp) == true)
+                //        { sumA += numtemp; }
+                //    }
+                //    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
+                //    outerDataSync("lbl不良总合计", sumA.ToString());
+
+                //}
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "其他数量")
+                //{
+                //    int sumA = 0;
+                //    int numtemp;
+                //    for (int i = 0; i < dt记录详情.Rows.Count; i++)
+                //    {
+                //        if (Int32.TryParse(dt记录详情.Rows[i]["其他数量"].ToString(), out numtemp) == true)
+                //        { sumA += numtemp; }
+                //    }
+                //    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
+                //    outerDataSync("lbl其他合计", sumA.ToString());
+
+                //}
+
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "产品数量包")
                 {
-                    int sumA = 0;
-                    int numtemp;
-                    for (int i = 0; i < dt记录详情.Rows.Count; i++)
-                    {
-                        if (Int32.TryParse(dt记录详情.Rows[i]["产品数量包"].ToString(), out numtemp) == true)
-                        { sumA += numtemp; }
-                    }
-                    dt记录详情.Rows[e.RowIndex]["产品数量只"] = Convert.ToInt32(dt记录.Rows[0]["内包装规格"]) * Convert.ToInt32(dt记录详情.Rows[e.RowIndex]["产品数量包"]);
-                    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    da记录详情.Update((DataTable)bs记录详情.DataSource);
-                    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-                    //innerBind();
-                    outerDataSync("tb产品数量包数合计A", sumA.ToString());
-                    int sumB= sumA * Convert.ToInt32(dt记录.Rows[0]["内包装规格"]);
-                    outerDataSync("tb产品数量只数合计B", sumB.ToString());
+                    getTotalCol("产品数量包", "tb产品数量包数合计A");
+                    getNum(e.RowIndex);
+                    /*getPercent();*/
+                }
+                //else if (dataGridView1.Columns[e.ColumnIndex].Name == "产品数量只")
+                //{
+                //    getTotalCol("产品数量只", "tb产品数量只数合计A"); 
+                //}
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格数量")
+                {
+                    getTotalCol("热封线不合格数量", "lbl热封线不合格合计");
+                    getTotalRow(e.RowIndex);
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "黑点晶点数量")
                 {
-                    int sumA = 0;
-                    int numtemp;
-                    for (int i = 0; i < dt记录详情.Rows.Count; i++)
-                    {
-                        if (Int32.TryParse(dt记录详情.Rows[i]["黑点晶点数量"].ToString(), out numtemp) == true)
-                        { sumA += numtemp; }
-                    }
-                    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("lbl黑点晶点合计", sumA.ToString());
-                }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "热封线不合格数量")
-                {
-                    int sumA = 0;
-                    int numtemp;
-                    for (int i = 0; i < dt记录详情.Rows.Count; i++)
-                    {
-                        if (Int32.TryParse(dt记录详情.Rows[i]["热封线不合格数量"].ToString(), out numtemp) == true)
-                        { sumA += numtemp; }
-                    }
-                    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("lbl热封线不合格合计", sumA.ToString());
-                    
+                    getTotalCol("黑点晶点数量", "lbl黑点晶点合计");
+                    getTotalRow(e.RowIndex);
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "指示剂不良数量")
                 {
-                    int sumA = 0;
-                    int numtemp;
-                    for (int i = 0; i < dt记录详情.Rows.Count; i++)
-                    {
-                        if (Int32.TryParse(dt记录详情.Rows[i]["指示剂不良数量"].ToString(), out numtemp) == true)
-                        { sumA += numtemp; }
-                    }
-                    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("lbl指示剂不良合计", sumA.ToString());
-
-                }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "不良合计")
-                {
-                    int sumA = 0;
-                    int numtemp;
-                    for (int i = 0; i < dt记录详情.Rows.Count; i++)
-                    {
-                        if (Int32.TryParse(dt记录详情.Rows[i]["不良合计"].ToString(), out numtemp) == true)
-                        { sumA += numtemp; }
-                    }
-                    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("lbl不良总合计", sumA.ToString());
-
+                    getTotalCol("指示剂不良数量", "lbl指示剂不良合计");
+                    getTotalRow(e.RowIndex);
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "其他数量")
                 {
-                    int sumA = 0;
-                    int numtemp;
-                    for (int i = 0; i < dt记录详情.Rows.Count; i++)
-                    {
-                        if (Int32.TryParse(dt记录详情.Rows[i]["其他数量"].ToString(), out numtemp) == true)
-                        { sumA += numtemp; }
-                    }
-                    //dt记录.Rows[0]["产品数量包数合计A"] = sum;
-                    outerDataSync("lbl其他合计", sumA.ToString());
-
+                    getTotalCol("其他数量", "lbl其他合计");
+                    getTotalRow(e.RowIndex);
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
                 {
@@ -1292,11 +1330,54 @@ namespace mySystem.Process.Bag.BTV
                 { }
             }
         }
+
+        //求合计：行求合计，并对“不良合计”求和
+        private void getTotalRow(Int32 RowCount)
+        {
+            //求合计
+            int sum = 0;
+            int numtemp;
+            String[] ColName = { "热封线不合格数量", "黑点晶点数量", "指示剂不良数量", "其他数量" };
+            for (int i = 0; i < 4; i++)
+            {
+                if (Int32.TryParse(dt记录详情.Rows[RowCount][(ColName[i])].ToString(), out numtemp) == true)
+                { sum += numtemp; }
+            }
+            //dt记录.Rows[0]["产品数量只数合计B"] = sum;
+            dt记录详情.Rows[RowCount]["不良合计"] = sum;
+            getTotalCol("不良合计", "lbl不良总合计");
+        }
+
+        //求合计：列求合计
+        private void getTotalCol(String ColName, String SumName)
+        {
+            //求合计
+            int sum = 0;
+            int numtemp;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (Int32.TryParse(dt记录详情.Rows[i][ColName].ToString(), out numtemp) == true)
+                { sum += numtemp; }
+            }
+            //dt记录.Rows[0]["产品数量只数合计B"] = sum;
+            outerDataSync(SumName, sum.ToString());
+        }
+
+        //求“产品数量只”，并且求只数合计
+        private void getNum(Int32 RowCount)
+        {
+            int numBao, numPerBao;
+            Int32.TryParse(tb内包装规格.Text, out numPerBao);
+            if (Int32.TryParse(dt记录详情.Rows[RowCount]["产品数量包"].ToString(), out numBao) == true)
+                dt记录详情.Rows[RowCount]["产品数量只"] = numPerBao * numBao;
+            getTotalCol("产品数量只", "tb产品数量只数合计B");
+        }
+
         private string fill标签()
         {
             string rtn = "";
-            rtn +="标签：中文";
-            if (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]))
+            rtn +="中文";
+            if (Convert.ToBoolean(dt记录.Rows[0]["标签语言中文"]))
             {
                 rtn += "☑";
             }
@@ -1305,7 +1386,7 @@ namespace mySystem.Process.Bag.BTV
                 rtn += "□";
             }
             rtn += "英文";
-            if (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否英文"]))
+            if (Convert.ToBoolean(dt记录.Rows[0]["标签语言英文"]))
             {
                 rtn += "☑";
             }
@@ -1317,5 +1398,3 @@ namespace mySystem.Process.Bag.BTV
         }
     }
 }
-
-
