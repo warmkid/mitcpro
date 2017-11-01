@@ -201,6 +201,7 @@ namespace mySystem.Process.Bag.PTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         void getOtherData()
@@ -807,7 +808,7 @@ namespace mySystem.Process.Bag.PTV
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\SOP-MFG-110-R01A 清场记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\12 SOP-MFG-110-R01A 清场记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 设置该进程是否可见
@@ -822,7 +823,7 @@ namespace mySystem.Process.Bag.PTV
             da.Fill(dt);
             string instruction = dt.Rows[0]["生产指令编号"].ToString();
 
-            my.PageSetup.RightFooter = instruction + "-" + "2" + "-" + find_indexofprint(instrid).ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+            my.PageSetup.RightFooter = instruction + "-" + "12" + "-" + find_indexofprint(instrid).ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (b)
             {
@@ -886,25 +887,31 @@ namespace mySystem.Process.Bag.PTV
             int ind = 0;//偏移
             if (dataGridView1.Rows.Count > 14)
             {
-                //在第10行插入
+                //在第6行插入
                 for (int i = 0; i < dataGridView1.Rows.Count - 14; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6 + i, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
                 ind = dataGridView1.Rows.Count - 14;
             }
 
-            my.Cells[3, 1].Value = "产品代码/规格：" + dtOuter.Rows[0]["产品代码"];
-            my.Cells[3, 5].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"];
+            OleDbDataAdapter da = new OleDbDataAdapter("select 生产指令编号 from 生产指令 where ID = " + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            string instru = dt.Rows[0]["生产指令编号"].ToString();
+
+            my.Cells[3, 3].Value = instru;
+            my.Cells[3, 5].Value = dtOuter.Rows[0]["产品代码"];
+            my.Cells[3, 6].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"];
 
             string temp = dtOuter.Rows[0]["生产班次"].ToString() == "白班" ? "生产班次： 白班☑   夜班□" : "生产班次： 白班□   夜班☑";
             my.Cells[3, 7].Value = String.Format("生产日期：   {0}\n{1}", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"), temp); 
 
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
-                my.Cells[i + 5, 1].Value = dtInner.Rows[i]["序号"];
+                my.Cells[i + 5, 1].Value = i + 1;
                 my.Cells[i + 5, 2].Value = dtInner.Rows[i]["清场项目"];
                 my.Cells[i + 5, 3].Value = dtInner.Rows[i]["清场要点"];
                 if (dtInner.Rows[i]["清洁操作"].ToString() == "完成")
@@ -914,11 +921,11 @@ namespace mySystem.Process.Bag.PTV
 
             }
 
-            my.Cells[5, 7].Value = dtOuter.Rows[0]["操作员"].ToString();
+            my.Cells[5, 8].Value = dtOuter.Rows[0]["操作员"].ToString();
             if (Convert.ToBoolean(dtOuter.Rows[0]["审核是否通过"]))
-                my.Cells[5, 8].Value = "合格☑\n不合格□ ";
+                my.Cells[5, 7].Value = "合格☑\n不合格□ ";
             else
-                my.Cells[5, 8].Value = "合格□\n不合格☑ ";
+                my.Cells[5, 7].Value = "合格□\n不合格☑ ";
             my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"].ToString();
             my.Cells[19 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
         }

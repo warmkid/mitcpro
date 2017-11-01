@@ -821,6 +821,7 @@ namespace mySystem.Process.Bag.PTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮
@@ -858,7 +859,7 @@ namespace mySystem.Process.Bag.PTV
             mysheet.Cells[3, 1].Value = "膜代码：" + dt记录.Rows[0]["生产指令编码"].ToString();
             mysheet.Cells[3, 8].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
             mysheet.Cells[3, 15].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
-            //mysheet.Cells[3, 21].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            mysheet.Cells[3, 20].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编码"].ToString();
 
             mysheet.Cells[7, 3].Value = dt记录.Rows[0]["控制器1参数1"];
             mysheet.Cells[7, 4].Value = dt记录.Rows[0]["控制器1参数2"];
@@ -911,16 +912,15 @@ namespace mySystem.Process.Bag.PTV
                 mysheet.Cells[8 + i, 21] = dt记录详情.Rows[i]["控制器4参数4"].ToString();
                 mysheet.Cells[8 + i, 22] = dt记录详情.Rows[i]["控制器4参数5"].ToString();
                 mysheet.Cells[8 + i, 23] = dt记录详情.Rows[i]["外观"].ToString();
-                mysheet.Cells[8 + i, 24] = dt记录详情.Rows[i]["合格品数量"];
-                mysheet.Cells[8 + i, 25] = dt记录详情.Rows[i]["不良品数量"];
-                mysheet.Cells[8 + i, 26] = dt记录详情.Rows[i]["操作员"].ToString();
-                mysheet.Cells[8 + i, 27] = dt记录详情.Rows[i]["操作员备注"].ToString();
+                mysheet.Cells[8 + i, 24] = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[8 + i, 25] = dt记录.Rows[0]["审核员"].ToString();
+
 
             }
 
 
-            mysheet.Cells[18 + ind, 18].Value = string.Format("合格品数量：    {0}只\n不良品数量：    {1}只", dt记录.Rows[0]["合格品数量"], dt记录.Rows[0]["不良品数量"]);
-            mysheet.Cells[18 + ind, 23].Value = string.Format("复核人： {0}\n日期：{1}", dt记录.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
+            //mysheet.Cells[18 + ind, 18].Value = string.Format("合格品数量：    {0}只\n不良品数量：    {1}只", dt记录.Rows[0]["合格品数量"], dt记录.Rows[0]["不良品数量"]);
+            //mysheet.Cells[18 + ind, 23].Value = string.Format("复核人： {0}\n日期：{1}", dt记录.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
         }
 
         //查找打印的表序号
@@ -945,14 +945,14 @@ namespace mySystem.Process.Bag.PTV
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\SOP-MFG-418-R01A  瓶口焊接机运行记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\7 SOP-MFG-418-R01A 瓶口焊接机运行记录.xlsx");
 
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
             fill_excel(my, wb);
             //"生产指令-步骤序号- 表序号 /&P"
-            my.PageSetup.RightFooter = Instruction + "-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+            my.PageSetup.RightFooter = Instruction + "-07-" + find_indexofprint().ToString("D3") + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
 
 
             if (b)
