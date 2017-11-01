@@ -1092,7 +1092,7 @@ namespace mySystem.Process.Bag
                 //在第7行插入
                 for (int i = 0; i < dt记录详情.Rows.Count - 12; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[18+i, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
@@ -1112,15 +1112,15 @@ namespace mySystem.Process.Bag
             //mysheet.Cells[18 + ind, 6].Value = dt记录.Rows[0]["产品数量只数合计B"].ToString(); 
             //mysheet.Cells[18 + ind, 7].Value = "理论产量： " + dt记录.Rows[0]["理论产量C"].ToString(); 
             //mysheet.Cells[19 + ind, 7].Value = "成品率 = " + dt记录.Rows[0]["成品率"].ToString();
-            mysheet.Cells[19, 2].Value = Convert.ToDouble(dt记录.Rows[0]["工时"]);
-            mysheet.Cells[19, 4].Value = Convert.ToDouble(dt记录.Rows[0]["产品数量包数合计A"]);
-            mysheet.Cells[19, 5].Value = Convert.ToDouble(dt记录.Rows[0]["产品数量只数合计B"]);
-            mysheet.Cells[19, 6].Value = Convert.ToDouble(dt记录.Rows[0]["热封线不合格合计"]);
-            mysheet.Cells[19, 7].Value = Convert.ToDouble(dt记录.Rows[0]["黑点晶点合计"]);
-            mysheet.Cells[19, 8].Value = Convert.ToDouble(dt记录.Rows[0]["指示剂不良合计"]);
-            mysheet.Cells[19, 9].Value = Convert.ToDouble(dt记录.Rows[0]["其他合计"]);
-            mysheet.Cells[19, 10].Value = Convert.ToDouble(dt记录.Rows[0]["不良总合计"]);
-            mysheet.Cells[19, 13].Value = Convert.ToDouble(dt记录.Rows[0]["废品重量"]);
+            mysheet.Cells[19+ind, 2].Value = Convert.ToDouble(dt记录.Rows[0]["工时"]);
+            mysheet.Cells[19+ind, 4].Value = Convert.ToDouble(dt记录.Rows[0]["产品数量包数合计A"]);
+            mysheet.Cells[19+ind, 5].Value = Convert.ToDouble(dt记录.Rows[0]["产品数量只数合计B"]);
+            mysheet.Cells[19+ind, 6].Value = Convert.ToDouble(dt记录.Rows[0]["热封线不合格合计"]);
+            mysheet.Cells[19+ind, 7].Value = Convert.ToDouble(dt记录.Rows[0]["黑点晶点合计"]);
+            mysheet.Cells[19+ind, 8].Value = Convert.ToDouble(dt记录.Rows[0]["指示剂不良合计"]);
+            mysheet.Cells[19+ind, 9].Value = Convert.ToDouble(dt记录.Rows[0]["其他合计"]);
+            mysheet.Cells[19+ind, 10].Value = Convert.ToDouble(dt记录.Rows[0]["不良总合计"]);
+            mysheet.Cells[19+ind, 13].Value = Convert.ToDouble(dt记录.Rows[0]["废品重量"]).ToString()+"  KG";
 
             //内表信息
             for (int i = 0; i < dt记录详情.Rows.Count; i++)

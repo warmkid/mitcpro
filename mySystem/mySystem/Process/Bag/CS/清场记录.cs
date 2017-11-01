@@ -752,12 +752,13 @@ namespace mySystem.Process.Bag.CS
         {
             int ind = 0;
             int i插入行数 = 0;
-            my.Cells[3, 1].Value = "产品代码/规格：" + dtOuter.Rows[0]["产品代码"].ToString();
-            my.Cells[3, 5].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"].ToString(); 
+            my.Cells[3, 2].Value = CODE.ToString();
+            my.Cells[3, 3].Value = "产品代码：" + dtOuter.Rows[0]["产品代码"].ToString();
+            my.Cells[3, 4].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"].ToString(); 
             if (dtOuter.Rows[0]["生产班次"].ToString().Equals("白班"))
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
+                my.Cells[3, 5].Value = String.Format("生产日期：{0}\n生产班次： 白班☑   夜班□", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
             else
-                my.Cells[3, 7].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
+                my.Cells[3, 5].Value = String.Format("生产日期：{0}\n生产班次： 白班□   夜班☑", Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"));
             //插入新行
             if (dtInner.Rows.Count > 14)
             {
@@ -777,11 +778,11 @@ namespace mySystem.Process.Bag.CS
             {
                 my.Cells[5 + i, 1].Value = i + 1;
                 my.Cells[5 + i, 2].Value = dtInner.Rows[i]["清场项目"].ToString();
-                my.Cells[5 + i, 3].Value = dtInner.Rows[i]["清场要点"].ToString(); 
-                my.Cells[5 + i, 6].Value = dtInner.Rows[i]["清洁操作"].ToString(); 
+                my.Cells[5 + i, 3].Value = dtInner.Rows[i]["清场要点"].ToString();
+                my.Cells[5 + i, 4].Value = dtInner.Rows[i]["清洁操作"].ToString() == "完成" ? "完成☑   不适用□" : "完成□   不适用☑"; 
             }
-            my.Cells[5, 7].Value = dtOuter.Rows[0]["操作员"].ToString();
-            my.Cells[5, 8].Value = dtOuter.Rows[0]["检查结果"].ToString(); 
+            my.Cells[5, 6].Value = dtOuter.Rows[0]["操作员"].ToString();
+            my.Cells[5, 5].Value = dtOuter.Rows[0]["检查结果"].ToString() == "合格" ? "合格☑ \n不合格□" : "合格□ \n不合格☑"; 
 
             //if (cmb检查结果.Text == "合格")
             //    my.Cells[5, 8].Value = "合格☑\n不合格□";
@@ -790,7 +791,7 @@ namespace mySystem.Process.Bag.CS
             //else
             //    my.Cells[5, 8].Value = "合格□\n不合格□";
 
-            my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"].ToString(); 
+            my.Cells[5, 7].Value = dtOuter.Rows[0]["审核员"].ToString(); 
             my.Cells[19 + ind, 1].Value = "备注：";
 
         }

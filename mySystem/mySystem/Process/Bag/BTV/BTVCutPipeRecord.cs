@@ -886,7 +886,7 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
         public void print(bool preview)
@@ -895,18 +895,18 @@ namespace mySystem.Process.Bag.BTV
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R04A  BPV切管记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\16 SOP-MFG-306-R04A  BPV切管记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 设置该进程是否可见
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
             int rowStartAt = 6;
-            my.Cells[3, 1].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"];
-            my.Cells[3, 4].Value = "成品代码：" + dt记录.Rows[0]["成品代码"];
-            my.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];           
-            my.Cells[3, 9].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[3, 10].Value = dt记录.Rows[0]["生产指令编号"];
+            my.Cells[3, 2].Value =  dt记录.Rows[0]["成品代码"];
+            my.Cells[3, 5].Value =  dt记录.Rows[0]["产品批号"];           
+            //my.Cells[3, 9].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
 
             //EVERY SHEET CONTAINS 12 RECORDS
@@ -916,18 +916,20 @@ namespace mySystem.Process.Bag.BTV
             {
 
                 my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + rowStartAt, 2].Valie = dt记录详情.Rows[i]["使用管代码"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).ToString("yyyy/MM/dd HH:mm");
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["使用管代码"];
                 //my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
                 //my.Cells[i + rowStartAt, 2].Font.Size = 11;
-                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["领取管数量米"];
+                //my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["领取管数量米"];
                 my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["图纸要求尺寸毫米"];
                 my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["切管数量个"];
-                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["产品数量只"];
-                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["质量检查外观"];
-                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["质量检查尺寸"];
-                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["质量检查判定"];
-                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["操作员"];
-                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["审核员"];
+                //my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["产品数量只"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["质量检查外观"] == "Yes" ? "Y☑   N□" : "Y□   N☑";
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["质量检查尺寸"] == "Yes" ? "Y☑   N□" : "Y□   N☑";
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["质量检查判定"] == "Yes" ? "Y☑   N□" : "Y□   N☑";
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["审核员"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["备注"];
                 
             }
 
@@ -943,19 +945,20 @@ namespace mySystem.Process.Bag.BTV
 
 
                     my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                    my.Cells[i + rowStartAt, 2].Valie = dt记录详情.Rows[i]["使用管代码"];
-                    //my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产日期时间"]).ToString("MM/dd HH:mm");
+                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).ToString("yyyy/MM/dd HH:mm");
+                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["使用管代码"];
+                    //my.Cells[i + rowStartAt, 3].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("MM/dd HH:mm");
                     //my.Cells[i + rowStartAt, 2].Font.Size = 11;
-                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["领取管数量米"];
+                    //my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["领取管数量米"];
                     my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["图纸要求尺寸毫米"];
                     my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["切管数量个"];
-                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["产品数量只"];
-                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["质量检查外观"];
-                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["质量检查尺寸"];
-                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["质量检查判定"];
-                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["操作员"];
-                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["审核员"];
-                
+                    //my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["产品数量只"];
+                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["质量检查外观"] == "Yes" ? "Y☑   N□" : "Y□   N☑";
+                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["质量检查尺寸"] == "Yes" ? "Y☑   N□" : "Y□   N☑";
+                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["质量检查判定"] == "Yes" ? "Y☑   N□" : "Y□   N☑";
+                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["操作员"];
+                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["审核员"];
+                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["备注"];
                 }
             }
 
@@ -963,8 +966,8 @@ namespace mySystem.Process.Bag.BTV
             range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
 
             //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
-            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
-            my.Cells[19 + varOffset, 1].Value = "备注：\n" + dt记录.Rows[0]["备注"];
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet + 1 : 0;
+            //my.Cells[19 + varOffset, 1].Value = "备注：\n" + dt记录.Rows[0]["备注"];
             if (preview)
             {
                 my.Select();
