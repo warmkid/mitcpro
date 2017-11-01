@@ -72,6 +72,9 @@ namespace mySystem.Process.CleanCut
             readInnerData((int)dtOuter.Rows[0]["ID"]);
             innerBind();
 
+            readInnerData2((int)dtOuter.Rows[0]["ID"]);
+            innerBind2();
+
             setFormState();
             setEnableReadOnly();
 
@@ -456,10 +459,12 @@ namespace mySystem.Process.CleanCut
             readOuterData(mySystem.Parameter.cleancutInstruID);
             outerBind();
 
-            //内表保存
+            //内表保存，目录
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
+            
+            //内表2保存，记录,不用保存，因为是只读的
 
             return true;
         }
@@ -649,9 +654,120 @@ namespace mySystem.Process.CleanCut
         void addDateEventHandler()
         { }
 
+
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            //外表信息
+            mysheet.Cells[4, 5].Value = dtOuter.Rows[0]["生产指令编号"].ToString();
+
+            //计算插入行的数量
+            int ind = 0, temp = Math.Max(dt_prodlist.Rows.Count, dt_prodlist2.Rows.Count+1);
+            if (temp > 11)
+            {
+                //在第6行插入
+                for (int i = 0; i < temp - 11; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = temp - 11;
+            }
+
+            //内表2，代码、批号、生产数量
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            {
+                mysheet.Cells[6 + i, 5].Value = dt_prodlist2.Rows[i]["产品代码"].ToString();
+                mysheet.Cells[6 + i, 6].Value = dt_prodlist2.Rows[i]["产品批号"].ToString();
+                mysheet.Cells[6 + i, 7].Value = dt_prodlist2.Rows[i]["生产数量"].ToString();             
+            }
+
+            //内表1，目录
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                mysheet.Cells[5 + i, 1].Value = dt_prodlist.Rows[i]["序号"].ToString();
+                mysheet.Cells[5 + i, 2].Value = dt_prodlist2.Rows[i]["记录"].ToString();
+                mysheet.Cells[5 + i, 3].Value = dt_prodlist2.Rows[i]["页数"].ToString();
+            }
+
+            //备注，汇总人，审核人，批准人
+            mysheet.Cells[16 + ind, 1].Value = "备注：\n"+dtOuter.Rows[0]["备注"].ToString();
+            mysheet.Cells[16 + ind, 5].Value = dtOuter.Rows[0]["汇总人"].ToString()+"  "+DateTime.Parse(dtOuter.Rows[0]["汇总时间"].ToString()).ToShortDateString();
+            mysheet.Cells[18 + ind, 5].Value = dtOuter.Rows[0]["审核人"].ToString() + "  " + DateTime.Parse(dtOuter.Rows[0]["审核时间"].ToString()).ToShortDateString();
+            mysheet.Cells[20 + ind, 5].Value = dtOuter.Rows[0]["批准人"].ToString() + "  " + DateTime.Parse(dtOuter.Rows[0]["批准时间"].ToString()).ToShortDateString();
+
+            //加页脚
+            int sheetnum;
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + "批生产记录表" + " where 生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable("temp");
+            da.Fill(dt);
+            List<Int32> sheetList = new List<Int32>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
+            sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+            mysheet.PageSetup.RightFooter = _code + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            //返回
+            return mysheet;
+        }
+
         // 打印函数
-        void print(bool label)
-        { }
+        void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\cleancut\0 SOP-MFG-105-R03A 清洁分切批生产记录封面.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
         // 获取其他需要的数据 记录和页数
         void getOtherData()
         {
@@ -896,7 +1012,16 @@ namespace mySystem.Process.CleanCut
         }
         private void bt打印_Click(object sender, EventArgs e)
         {
-
+            if (cmb打印.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(cmb打印.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
         }
     }
 }

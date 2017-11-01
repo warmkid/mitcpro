@@ -774,30 +774,31 @@ namespace mySystem.Process.Bag
             int ind = 0;
             //内表信息
             int rownum = dt记录详情.Rows.Count;
-            //无需插入的部分
-            for (int i = 0; i < (rownum > 14 ? 14 : rownum); i++)
+
+            if (rownum > 14)
+            {
+                //在第6行插入
+                for (int i = 0; i < rownum - 14; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[19, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    Microsoft.Office.Interop.Excel.Range range1 = mysheet.get_Range("C19");
+                    range1.Merge(mysheet.get_Range("D19"));
+                    range1.Merge(mysheet.get_Range("E19"));
+                    //mysheet.Cells[19, 3].HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;//水平居中
+                    //mysheet.Cells[19, 3].Font.Name = "宋体";//字体大小
+                    //mysheet.Cells[19, 3].Font.Size = 10.5;//字体大小
+                }
+                ind = rownum - 14;
+            }
+            for (int i = 0; i < rownum; i++)
             {
                 mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
                 mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
                 mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
                 mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-            }
-            //需要插入的部分
-            if (rownum > 14)
-            {
-                for (int i = 14; i < rownum; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
-
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[5+ i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
-                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
-                }
-                ind = rownum - 14;
             }
            
             //外表信息

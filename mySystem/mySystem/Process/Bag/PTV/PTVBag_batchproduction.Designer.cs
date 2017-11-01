@@ -67,6 +67,7 @@
             this.comboBox打印机选择 = new System.Windows.Forms.ComboBox();
             this.btn打印 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
+            this.btn打印本页 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -381,7 +382,7 @@
             // 
             this.comboBox打印机选择.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBox打印机选择.FormattingEnabled = true;
-            this.comboBox打印机选择.Location = new System.Drawing.Point(204, 548);
+            this.comboBox打印机选择.Location = new System.Drawing.Point(221, 548);
             this.comboBox打印机选择.Name = "comboBox打印机选择";
             this.comboBox打印机选择.Size = new System.Drawing.Size(274, 24);
             this.comboBox打印机选择.TabIndex = 155;
@@ -391,16 +392,16 @@
             this.btn打印.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn打印.Location = new System.Drawing.Point(98, 545);
             this.btn打印.Name = "btn打印";
-            this.btn打印.Size = new System.Drawing.Size(75, 28);
+            this.btn打印.Size = new System.Drawing.Size(107, 28);
             this.btn打印.TabIndex = 154;
-            this.btn打印.Text = "打印";
+            this.btn打印.Text = "打印选中项";
             this.btn打印.UseVisualStyleBackColor = true;
             this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn审核
             // 
             this.btn审核.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn审核.Location = new System.Drawing.Point(17, 546);
+            this.btn审核.Location = new System.Drawing.Point(12, 545);
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(75, 27);
             this.btn审核.TabIndex = 153;
@@ -408,11 +409,23 @@
             this.btn审核.UseVisualStyleBackColor = true;
             this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 
+            // btn打印本页
+            // 
+            this.btn打印本页.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印本页.Location = new System.Drawing.Point(513, 545);
+            this.btn打印本页.Name = "btn打印本页";
+            this.btn打印本页.Size = new System.Drawing.Size(90, 27);
+            this.btn打印本页.TabIndex = 156;
+            this.btn打印本页.Text = "打印本页";
+            this.btn打印本页.UseVisualStyleBackColor = true;
+            this.btn打印本页.Click += new System.EventHandler(this.btn打印本页_Click);
+            // 
             // PTVBag_batchproduction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(905, 585);
+            this.Controls.Add(this.btn打印本页);
             this.Controls.Add(this.comboBox打印机选择);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.btn审核);
@@ -490,5 +503,6 @@
         private System.Windows.Forms.ComboBox comboBox打印机选择;
         private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button btn审核;
+        private System.Windows.Forms.Button btn打印本页;
     }
 }

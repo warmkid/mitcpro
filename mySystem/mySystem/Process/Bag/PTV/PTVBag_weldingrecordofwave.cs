@@ -45,7 +45,7 @@ namespace mySystem.Process.Bag.PTV
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ptvbagInstruID;
             Instruction = Parameter.ptvbagInstruction;
-
+            
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
@@ -54,12 +54,22 @@ namespace mySystem.Process.Bag.PTV
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
             setControlFalse();
-            dtp生产日期.Enabled = true;
             btn查询新建.Enabled = true;
             //打印、查看日志按钮不可用
             btn打印.Enabled = false;
             btn查看日志.Enabled = false;
             cb打印机.Enabled = false;
+
+            if (tb产品代码.Text == "")
+            {
+                MessageBox.Show("生产指令信息不完善");
+                return;
+            }
+            else
+            {
+                prodCode = tb产品代码.Text;
+                DataShow(InstruID, prodCode);
+            }
         }
 
         public PTVBag_weldingrecordofwave(MainForm mainform, Int32 ID)
@@ -160,6 +170,7 @@ namespace mySystem.Process.Bag.PTV
         //读取设置内容  //GetProductInfo //产品名称、产品批号列表获取+产品工艺、设备、班次填写
         private void getOtherData()
         {
+            tb生产指令编号.Text = Instruction;
             //*********产品名称、产品批号、产品工艺、设备 -----> 数据获取*********//
             if (!isSqlOk)
             {
@@ -194,29 +205,102 @@ namespace mySystem.Process.Bag.PTV
             }
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
+                //if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
+                //{
+                //    //控件都不能点，只有打印,日志可点
+                //    setControlFalse();
+                //}
+                //else //1待审核
+                //{
+                //    //发送审核不可点，其他都可点
+                //    setControlTrue();
+                //    btn审核.Enabled = true;
+                //}
+
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
+                }
+                else if (_formState == Parameter.FormState.未保存)//0未保存
+                {
+                    //控件都不能点，只有打印,日志可点
+                    setControlFalse();
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
                 else //1待审核
                 {
                     //发送审核不可点，其他都可点
                     setControlTrue();
                     btn审核.Enabled = true;
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
             }
             else//操作员
             {
+                //if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
+                //{
+                //    //控件都不能点
+                //    setControlFalse();
+                //}
+                //else //0未保存||3审核未通过
+                //{
+                //    //发送审核，审核不能点
+                //    setControlTrue();
+                //}
+
                 if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
                 {
                     //控件都不能点
                     setControlFalse();
                 }
-                else //0未保存||3审核未通过
+                else if (_formState == Parameter.FormState.未保存) //0未保存
                 {
                     //发送审核，审核不能点
                     setControlTrue();
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
+                }
+                else //3审核未通过
+                {
+                    //发送审核，审核不能点
+                    setControlTrue();
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
                 }
             }
             //datagridview格式，包含序号不可编辑
@@ -250,13 +334,14 @@ namespace mySystem.Process.Bag.PTV
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             tb审核员.Enabled = false;
+
+            btn提交数据审核.Enabled = false;
+            btn数据审核.Enabled = false;
             //部分空间防作弊，不可改
             tb产品批号.ReadOnly = true;
             tb产品代码.ReadOnly = true;
-            tb合计.ReadOnly = true;
-            tb合格品数量.ReadOnly = true;//会随不合格品数量和合计改变而改变
+
             //查询条件始终不可编辑
-            dtp生产日期.Enabled = false;
             btn查询新建.Enabled = false;
         }
 
@@ -303,27 +388,27 @@ namespace mySystem.Process.Bag.PTV
 
         void tb不良品数量_TextChanged(object sender, EventArgs e)
         {
-            int numtemp;
-            // 合计
-            if(!int.TryParse(tb不良品数量.Text,out numtemp))
-                return;
-            int tempsum = int.Parse(tb合计.Text);
-            outerDataSync("tb合格品数量", (tempsum-numtemp).ToString());
+            //int numtemp;
+            //// 合计
+            //if(!int.TryParse(tb不良品数量.Text,out numtemp))
+            //    return;
+            //int tempsum = int.Parse(tb合计.Text);
+            //outerDataSync("tb合格品数量", (tempsum-numtemp).ToString());
         }
 
         // 设置自动计算类事件
         private void addComputerEventHandler()
         {
-            tb不良品数量.TextChanged += new EventHandler(tb不良品数量_TextChanged);
+            //tb不良品数量.TextChanged += new EventHandler(tb不良品数量_TextChanged);
         }
 
         //******************************显示数据******************************//
 
         //显示根据信息查找
-        private void DataShow(Int32 InstruID, String ProductCode, DateTime searchTime)
+        private void DataShow(Int32 InstruID, String ProductCode)
         {
             //******************************外表 根据条件绑定******************************//  
-            readOuterData(InstruID, ProductCode, searchTime);
+            readOuterData(InstruID, ProductCode);
             outerBind();
             //MessageBox.Show("记录数目：" + dt记录.Rows.Count.ToString());
 
@@ -339,7 +424,7 @@ namespace mySystem.Process.Bag.PTV
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
                 //外表重新绑定
-                readOuterData(InstruID, ProductCode, searchTime);
+                readOuterData(InstruID, ProductCode);
                 outerBind();
 
                 //********* 内表新建、保存、重新绑定 *********//
@@ -376,18 +461,18 @@ namespace mySystem.Process.Bag.PTV
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
                 prodCode = dt1.Rows[0]["产品代码"].ToString();
-                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString());
             }
         }
 
         //****************************** 嵌套 ******************************//
 
         //外表读数据，填datatable
-        private void readOuterData(Int32 InstruID, String ProductCode, DateTime searchTime)
+        private void readOuterData(Int32 InstruID, String ProductCode)
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID + " and 产品代码 = '" + ProductCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID + " and 产品代码 = '" + ProductCode + "'", connOle);
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -401,8 +486,9 @@ namespace mySystem.Process.Bag.PTV
             tb产品代码.DataBindings.Add("Text", bs记录.DataSource, "产品代码");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
-            dtp生产日期.DataBindings.Clear();
-            dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
+            tb生产指令编号.DataBindings.Clear();
+            tb生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
+
             //各种参数设定
             tb参数1.DataBindings.Clear();
             tb参数1.DataBindings.Add("Text", bs记录.DataSource, "压力");
@@ -413,14 +499,6 @@ namespace mySystem.Process.Bag.PTV
             tb参数4.DataBindings.Clear();
             tb参数4.DataBindings.Add("Text", bs记录.DataSource, "硬化熔接时间");
 
-            tb不良描述.DataBindings.Clear();
-            tb不良描述.DataBindings.Add("Text", bs记录.DataSource, "不良描述");
-            tb合计.DataBindings.Clear();
-            tb合计.DataBindings.Add("Text", bs记录.DataSource, "合计");
-            tb合格品数量.DataBindings.Clear();
-            tb合格品数量.DataBindings.Add("Text", bs记录.DataSource, "合格品数量");
-            tb不良品数量.DataBindings.Clear();
-            tb不良品数量.DataBindings.Add("Text", bs记录.DataSource, "不合格品数量");
             tb审核员.DataBindings.Clear();
             tb审核员.DataBindings.Add("Text", bs记录.DataSource, "审核员");
             dtp审核日期.DataBindings.Clear();
@@ -431,16 +509,17 @@ namespace mySystem.Process.Bag.PTV
         private DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = InstruID;
+            dr["生产指令编号"] = Instruction;
+
             dr["产品代码"] = tb产品代码.Text;
             dr["产品批号"] = tb产品批号.Text;
-            dr["生产日期"] = Convert.ToDateTime(dtp生产日期.Value.ToString("yyyy/MM/dd"));
+
             dr["压力"] = 0;
             dr["延迟时间"] = 0;
             dr["熔接时间"] = 0;
             dr["硬化熔接时间"] = 0;
-            dr["合计"] = 0;
-            dr["合格品数量"] = 0;
-            dr["不合格品数量"] = 0;
+
+            dr["不良描述"] = "";
 
             dr["审核员"] = "";
             dr["审核是否通过"] = false;
@@ -474,12 +553,14 @@ namespace mySystem.Process.Bag.PTV
         {
             //DataRow dr = dt记录详情.NewRow();
             dr["T超声波焊接记录ID"] = ID;
-            dr["焊接时间"] = DateTime.Now;
-            dr["焊接产品数量"] = 0;
+            dr["焊接日期时间"] = DateTime.Now;
             dr["压力"] = "√";
             dr["延迟时间"] = "√";
             dr["熔接时间"] = "√";
             dr["硬化熔接时间"] = "√";
+            dr["外观检查"] = "√";
+            dr["备注"] = "";
+            dr["复核人"] = "";
 
             dr["操作员"] = mySystem.Parameter.userName;
             return dr;
@@ -488,8 +569,8 @@ namespace mySystem.Process.Bag.PTV
         //序号刷新
         private void setDataGridViewRowNums()
         {
-            //for (int i = 0; i < dt记录详情.Rows.Count; i++)
-            //{ dt记录详情.Rows[i]["序号"] = (i + 1); }
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            { dt记录详情.Rows[i]["序号"] = (i + 1); }
         }
 
         //设置DataGridView中各列的格式+设置datagridview基本属性
@@ -527,7 +608,10 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T超声波焊接记录ID"].Visible = false;
 
-            dataGridView1.Columns["焊接产品数量"].HeaderText = "焊接产品\r数量";
+            dataGridView1.Columns["复核人"].ReadOnly = true;
+
+
+            //dataGridView1.Columns["焊接产品数量"].HeaderText = "焊接产品\r数量";
             dataGridView1.Columns["压力"].HeaderText = "压力\r(bar)";
             dataGridView1.Columns["延迟时间"].HeaderText = "延迟时间\r(s)";
             dataGridView1.Columns["熔接时间"].HeaderText = "熔接时间\r(s)";
@@ -560,7 +644,7 @@ namespace mySystem.Process.Bag.PTV
             else
             {
                 prodCode = tb产品代码.Text;
-                DataShow(InstruID, prodCode, dtp生产日期.Value); 
+                DataShow(InstruID, prodCode); 
             }
         }
         
@@ -570,8 +654,14 @@ namespace mySystem.Process.Bag.PTV
             DataRow dr = dt记录详情.NewRow();
             dr = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr);
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
-            setDataGridViewRowNums();
+            
+            // 保存
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
 
+            setDataGridViewRowNums();
+          
             if (dataGridView1.Rows.Count > 0)
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
         }
@@ -586,21 +676,15 @@ namespace mySystem.Process.Bag.PTV
                 int deletenum = dataGridView1.CurrentRow.Index;
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
+                
                 // 保存
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
-                //求合计
-                getTotal();
-
-                int numtemp;
-                // 合计
-                if (!int.TryParse(tb不良品数量.Text, out numtemp))
-                    return;
-                int tempsum = int.Parse(tb合计.Text);
-                outerDataSync("tb合格品数量", (tempsum - numtemp).ToString());
 
                 setDataGridViewRowNums();
+
+                
             }
         }
 
@@ -636,7 +720,7 @@ namespace mySystem.Process.Bag.PTV
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID, prodCode, dtp生产日期.Value);
+                readOuterData(InstruID, prodCode);
                 outerBind();
 
                 return true;
@@ -650,6 +734,16 @@ namespace mySystem.Process.Bag.PTV
             bool isSaved = Save();
             if (isSaved == false)
                 return;
+
+            //检查是否可以提交最后审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "")
+                {
+                    MessageBox.Show("第『" + (i + 1).ToString() + "』行数据尚未审核，不能提交最后审核！");
+                    return;
+                }
+            }
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -730,10 +824,21 @@ namespace mySystem.Process.Bag.PTV
         //审核按钮
         private void btn审核_Click(object sender, EventArgs e)
         {
+            //外表没有操作人，这里默认选择内表第一个操作员名字
             if (mySystem.Parameter.userName == dt记录详情.Rows[0]["操作员"].ToString())
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
+            }
+
+            //先进行内表审核，再进行外表审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                {
+                    MessageBox.Show("第" + (i + 1).ToString() + "行数据没有审核，请先审核表内数据！");
+                    return;
+                }
             }
             checkform = new CheckForm(this);
             checkform.Show();
@@ -770,45 +875,45 @@ namespace mySystem.Process.Bag.PTV
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             int ind = 0;
-            if (dataGridView1.Rows.Count > 6)
+            if (dataGridView1.Rows.Count > 18)
             {
-                //在第9行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 6; i++)
+                //在第18行插入
+                for (int i = 0; i < dataGridView1.Rows.Count - 18; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[9, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[18, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 6;
+                ind = dataGridView1.Rows.Count - 18;
             }
 
             //外表信息
             mysheet.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
-            mysheet.Cells[3, 8].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
-            mysheet.Cells[3, 11].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            mysheet.Cells[3, 5].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[3, 8].Value = "生产指令：" + dt记录.Rows[0]["生产指令编号"].ToString();
 
-            mysheet.Cells[6, 3].Value = dt记录.Rows[0]["压力"];
-            mysheet.Cells[6, 4].Value = dt记录.Rows[0]["延迟时间"];
-            mysheet.Cells[6, 5].Value = dt记录.Rows[0]["熔接时间"];
-            mysheet.Cells[6, 6].Value = dt记录.Rows[0]["硬化熔接时间"];
+            mysheet.Cells[5, 3].Value = dt记录.Rows[0]["压力"];
+            mysheet.Cells[5, 4].Value = dt记录.Rows[0]["延迟时间"];
+            mysheet.Cells[5, 5].Value = dt记录.Rows[0]["熔接时间"];
+            mysheet.Cells[5, 6].Value = dt记录.Rows[0]["硬化熔接时间"];
 
 
             //内表信息
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
-                mysheet.Cells[7 + i, 1] = Convert.ToDateTime(dt记录详情.Rows[i]["焊接时间"].ToString()).ToString("yyyy年MM月dd日");
-                mysheet.Cells[7 + i, 2] = dt记录详情.Rows[i]["焊接产品数量"];
-                mysheet.Cells[7 + i, 3] = dt记录详情.Rows[i]["压力"].ToString();
-                mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["延迟时间"].ToString();
-                mysheet.Cells[7 + i, 5] = dt记录详情.Rows[i]["熔接时间"].ToString();
-                mysheet.Cells[7 + i, 6] = dt记录详情.Rows[i]["硬化熔接时间"].ToString();
-                mysheet.Cells[7 + i, 7] = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[6 + i, 1] = dt记录详情.Rows[i]["序号"];
+                mysheet.Cells[6 + i, 2] = Convert.ToDateTime(dt记录详情.Rows[i]["焊接日期时间"].ToString());
+                
+                mysheet.Cells[6 + i, 3] = dt记录详情.Rows[i]["压力"].ToString();
+                mysheet.Cells[6 + i, 4] = dt记录详情.Rows[i]["延迟时间"].ToString();
+                mysheet.Cells[6 + i, 5] = dt记录详情.Rows[i]["熔接时间"].ToString();
+                mysheet.Cells[6 + i, 6] = dt记录详情.Rows[i]["硬化熔接时间"].ToString();
+                mysheet.Cells[6 + i, 7] = dt记录详情.Rows[i]["外观检查"].ToString();
+                mysheet.Cells[6 + i, 8] = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[6 + i, 9] = dt记录详情.Rows[i]["复核人"].ToString();
+                mysheet.Cells[6 + i, 10] = dt记录详情.Rows[i]["备注"].ToString();
 
             }
-
-            mysheet.Cells[13 + ind, 2].Value = dt记录.Rows[0]["合计"];
-            mysheet.Cells[14 + ind, 1].Value = string.Format("备注：\n合格品数量：    {0}只,不合格品数量：    {1}只,不良描述：{2}", dt记录.Rows[0]["合格品数量"], dt记录.Rows[0]["不合格品数量"], dt记录.Rows[0]["不良描述"]);
-            mysheet.Cells[14 + ind, 10].Value = string.Format("复核人： {0}\n日期：{1}", dt记录.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
         }
 
         //查找打印的表序号
@@ -833,7 +938,7 @@ namespace mySystem.Process.Bag.PTV
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\SOP-MFG-416-R01A 超声波焊接记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\10 SOP-MFG-416-R01A 超声波焊接记录");
 
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
@@ -893,16 +998,16 @@ namespace mySystem.Process.Bag.PTV
         //求合计
         private void getTotal()
         {
-            int numtemp;
-            // 合计
-            sum[0] = 0;
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
-            {
-                if (Int32.TryParse(dt记录详情.Rows[i]["焊接产品数量"].ToString(), out numtemp) == true)
-                { sum[0] += numtemp; }
-            }
-            //dt记录.Rows[0]["累计同规格膜卷长度R"] = sum[0];
-            outerDataSync("tb合计", sum[0].ToString());
+            //int numtemp;
+            //// 合计
+            //sum[0] = 0;
+            //for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            //{
+            //    if (Int32.TryParse(dt记录详情.Rows[i]["焊接产品数量"].ToString(), out numtemp) == true)
+            //    { sum[0] += numtemp; }
+            //}
+            ////dt记录.Rows[0]["累计同规格膜卷长度R"] = sum[0];
+            //outerDataSync("tb合计", sum[0].ToString());
 
         }
 
@@ -910,14 +1015,14 @@ namespace mySystem.Process.Bag.PTV
         private bool TextBox_check()
         {
             bool TypeCheck = true;
-            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb不良品数量, tb合格品数量,
+            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] {
                 tb参数1,tb参数2,tb参数3,tb参数4});
-            List<String> StringList = new List<String>(new String[] { "不合格品数量", "合格品数量",
+            List<String> StringList = new List<String>(new String[] {
                 "压力\r(bar)","延迟时间\r(s)","熔接时间\r(s)","硬化熔接时间\r(s)"});
-            int numtemp = 0;
+            double numtemp = 0;
             for (int i = 0; i < TextBoxList.Count; i++)
             {
-                if (Int32.TryParse(TextBoxList[i].Text.ToString(), out numtemp) == false)
+                if (double.TryParse(TextBoxList[i].Text.ToString(), out numtemp) == false)
                 {
                     MessageBox.Show("『" + StringList[i] + "』框内应填数字，请重新填入！");
                     TypeCheck = false;
@@ -962,14 +1067,6 @@ namespace mySystem.Process.Bag.PTV
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "焊接产品数量")
                 {
                     getTotal();
-
-                    int numtemp;
-                    // 合计
-                    if (!int.TryParse(tb不良品数量.Text, out numtemp))
-                        return;
-                    int tempsum = int.Parse(tb合计.Text);
-                    outerDataSync("tb合格品数量", (tempsum - numtemp).ToString());
-
                 }
                 else if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
                 {
@@ -988,6 +1085,45 @@ namespace mySystem.Process.Bag.PTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+        }
+
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["复核人"].ToString() == "")
+                {
+                    dt记录详情.Rows[i]["复核人"] = "__待审核";
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+            }
+            bs记录详情.DataSource = dt记录详情;
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            innerBind();
+            setEnableReadOnly();
+        }
+
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+
+            foreach (int i in hi待审核行号)
+            {
+                if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                {
+                    dt记录详情.Rows[i]["复核人"] = mySystem.Parameter.userName;
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+            }
+
+            bs记录详情.DataSource = dt记录详情;
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            innerBind();
+            setEnableReadOnly();
         }       
     }
 }

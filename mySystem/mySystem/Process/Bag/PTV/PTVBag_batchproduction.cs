@@ -496,8 +496,11 @@ namespace mySystem.Process.Bag.PTV
             dr["结束生产时间"] = DateTime.Now;
             dr["汇总人"] = mySystem.Parameter.userName;
             dr["汇总时间"] = DateTime.Now;
+            dr["审核人"] = "";
             dr["审核时间"] = DateTime.Now;
             dr["批准时间"] = DateTime.Now;
+            dr["批准人"] = "";
+            dr["备注"] = "";
             return dr;
         }
 
@@ -905,6 +908,138 @@ namespace mySystem.Process.Bag.PTV
 
                 }
             }
+        }
+
+        private void btn打印本页_Click(object sender, EventArgs e)
+        {
+            if (comboBox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(comboBox打印机选择.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
+
+        public void print(bool b)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\0 SOP-MFG-105-R01A 制袋工序批生产记录封面-PTV.xlsx");
+
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            fill_excel(my, wb);
+            //"生产指令-步骤序号- 表序号 /&P"
+            my.PageSetup.RightFooter = _生产指令 + "-" + " &P/" + wb.ActiveSheet.PageSetup.Pages.Count;  // &P 是页码
+
+
+            if (b)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                        bsOuter.EndEdit();
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+        //打印填数据
+        private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            int ind = 0;
+            if (dataGridView2.Rows.Count > 12)
+            {
+                //在第6行插入
+                for (int i = 0; i < dataGridView2.Rows.Count - 12; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[6, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    Microsoft.Office.Interop.Excel.Range range1 = mysheet.get_Range("F6");
+                    range1.Merge(mysheet.get_Range("G6"));
+                }
+                ind = dataGridView1.Rows.Count - 12;
+            }
+
+            //外表信息
+            mysheet.Cells[3, 8].Value = dtOuter.Rows[0]["生产指令编号"].ToString();
+            mysheet.Cells[4, 8].Value = dtp开始生产时间.Value.ToShortDateString() + "--" + dtp结束生产时间.Value.ToShortDateString();
+
+            //内表2信息,生产记录
+            for (int i = 0; i < dataGridView2.Rows.Count; i++)
+            {
+                mysheet.Cells[6 + i, 6] = dataGridView2.Rows[i].Cells["产品代码"].Value.ToString();
+                mysheet.Cells[6 + i, 8] = dataGridView2.Rows[i].Cells["生产数量"].Value.ToString();
+                mysheet.Cells[6 + i, 9] = dataGridView2.Rows[i].Cells["生产批号"].Value.ToString();
+
+            }
+
+            //内表1，目录
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                string s;
+                if (dataGridView1.Rows[i].Cells[4].Value != null)
+                    s = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                else
+                    s = "0";
+                mysheet.Cells[5 + i, 1] = dataGridView1.Rows[i].Cells[2].Value.ToString();
+                mysheet.Cells[5 + i, 2] = dataGridView1.Rows[i].Cells[3].Value.ToString();
+                mysheet.Cells[5 + i, 3] = s;
+
+            }
+
+            //外表，汇总，审核，批准
+            mysheet.Cells[18 + ind, 7] = dtOuter.Rows[0]["汇总人"].ToString();
+            mysheet.Cells[18 + ind, 9] = DateTime.Parse(dtOuter.Rows[0]["汇总时间"].ToString()).ToString("D") ;
+
+            mysheet.Cells[20 + ind, 7] = dtOuter.Rows[0]["审核人"].ToString();
+            mysheet.Cells[20 + ind, 9] = DateTime.Parse(dtOuter.Rows[0]["审核时间"].ToString()).ToString("D");
+
+            mysheet.Cells[22 + ind, 7] = dtOuter.Rows[0]["批准人"].ToString();
+            mysheet.Cells[22 + ind, 9] = DateTime.Parse(dtOuter.Rows[0]["批准时间"].ToString()).ToString("D");
         }
 
     }

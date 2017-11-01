@@ -345,6 +345,7 @@ namespace mySystem.Process.Bag.PTV
             tb生产批号.ReadOnly = true;
             tb产品数量包数合计A.ReadOnly = true;
             tb产品数量只数合计B.ReadOnly = true;
+            tb工时.ReadOnly = true;
             //tb成品率.ReadOnly = true;
             //查询条件始终不可编辑
             cb产品代码.Enabled = false;
@@ -628,6 +629,7 @@ namespace mySystem.Process.Bag.PTV
             dr["包装袋热封线"] = "Yes";
             dr["内标签"] = "Yes";
             dr["内包装外观"] = "Yes";
+            dr["生产工时"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
             return dr;
@@ -719,6 +721,7 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["审核员"].ReadOnly = true;
             dataGridView1.Columns["不良合计"].ReadOnly = true;
+            dataGridView1.Columns["生产工时"].ReadOnly = true;
             //HeaderText
             dataGridView1.Columns["产品数量包数"].HeaderText = "产品数量\r(包)";
             dataGridView1.Columns["产品数量只数"].HeaderText = "产品数量\r(只)";
@@ -763,6 +766,10 @@ namespace mySystem.Process.Bag.PTV
                 {
                     //dt记录详情.Rows.RemoveAt(deletenum);
                     dt记录详情.Rows[deletenum].Delete();
+
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                    readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                    innerBind();
 
                     //合计包数
                     int sumA = 0;
@@ -811,9 +818,14 @@ namespace mySystem.Process.Bag.PTV
         //内表审核按钮
         private void btn数据审核_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
             {
-                if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int i in hi待审核行号)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
                 {
                     dt记录详情.Rows[i]["审核员"] = mySystem.Parameter.userName;
                     dataGridView1.Rows[i].ReadOnly = true;
@@ -850,6 +862,7 @@ namespace mySystem.Process.Bag.PTV
             else
             {
                 // 内表保存
+
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
@@ -878,7 +891,7 @@ namespace mySystem.Process.Bag.PTV
             {
                 if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "")
                 {
-                    MessageBox.Show("第『" + i + 1 + "』行数据尚未审核，不能提交最后审核！");
+                    MessageBox.Show("第『" + (i + 1).ToString() + "』行数据尚未审核，不能提交最后审核！");
                     return;
                 }
             }
@@ -933,7 +946,7 @@ namespace mySystem.Process.Bag.PTV
             {
                 if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
                 {
-                    MessageBox.Show("第" + i + 1 + "行数据没有审核，请先审核表内数据！");
+                    MessageBox.Show("第" + (i + 1).ToString() + "行数据没有审核，请先审核表内数据！");
                     return;
                 }
             }
@@ -1155,7 +1168,7 @@ namespace mySystem.Process.Bag.PTV
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
                 mysheet.Cells[7 + i, 1] = i + 1;
-                mysheet.Cells[7 + i, 2] = dt记录详情.Rows[i]["生产开始时间"].ToString(); 
+                mysheet.Cells[7 + i, 2] = dt记录详情.Rows[i]["生产开始时间"].ToString() + "--" + dt记录详情.Rows[i]["生产结束时间"].ToString(); 
                 mysheet.Cells[7 + i, 3] = dt记录详情.Rows[i]["内包序号"].ToString(); 
                 //mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["包装规格每包只数"].ToString(); 
                 mysheet.Cells[7 + i, 4] = dt记录详情.Rows[i]["产品数量包数"].ToString(); 
@@ -1168,6 +1181,7 @@ namespace mySystem.Process.Bag.PTV
                 mysheet.Cells[7 + i, 11] = dt记录详情.Rows[i]["包装袋热封线"].ToString().Equals("Yes") ? "√" : "×";
                 mysheet.Cells[7 + i, 12] = dt记录详情.Rows[i]["内标签"].ToString().Equals("Yes") ? "√" : "×";
                 mysheet.Cells[7 + i, 13] = dt记录详情.Rows[i]["内包装外观"].ToString().Equals("Yes") ? "√" : "×";
+                mysheet.Cells[7 + i, 14] = dt记录详情.Rows[i]["生产工时"];
                 mysheet.Cells[7 + i, 15] = dt记录详情.Rows[i]["操作员"].ToString(); 
                 mysheet.Cells[7 + i, 16] = dt记录详情.Rows[i]["审核员"].ToString(); 
 
@@ -1296,6 +1310,23 @@ namespace mySystem.Process.Bag.PTV
             double sumd;
             if (e.ColumnIndex >= 0)
             {
+                if (dataGridView1.Columns[e.ColumnIndex].Name == "生产开始时间" || dataGridView1.Columns[e.ColumnIndex].Name == "生产结束时间")
+                {
+                    DateTime dt1 = DateTime.Parse(dataGridView1.Rows[e.RowIndex].Cells["生产开始时间"].Value.ToString());
+                    DateTime dt2 = DateTime.Parse(dataGridView1.Rows[e.RowIndex].Cells["生产结束时间"].Value.ToString());
+                    TimeSpan t = dt2 - dt1;
+                    dataGridView1.Rows[e.RowIndex].Cells["生产工时"].Value = Math.Round(t.TotalHours,3);
+
+                    //合计工时
+                    double sumtime = 0;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        sumtime += double.Parse(dataGridView1.Rows[i].Cells["生产工时"].Value.ToString());
+                    }
+                    sumtime = Math.Round(sumtime, 3);
+                    //dt记录.Rows[0]["工时"] = sumtime;
+                    outerDataSync("tb工时", sumtime.ToString());
+                }
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "产品数量包数")
                 {
                     int sumA = 0;
@@ -1397,7 +1428,7 @@ namespace mySystem.Process.Bag.PTV
 
         void sumCol()
         {
-            double sum = 0, sum其他 = 0, sum指示剂不良 = 0, sum黑点晶点 = 0, sum热封线不合格 = 0;
+            double sum = 0, sum其他 = 0, sum指示剂不良 = 0, sum黑点晶点 = 0, sum热封线不合格 = 0,sum工时=0;
             foreach (DataGridViewRow dgvr in dataGridView1.Rows)
             {
                 sum += Convert.ToDouble(dgvr.Cells["不良合计"].Value);
@@ -1405,6 +1436,8 @@ namespace mySystem.Process.Bag.PTV
                 sum指示剂不良 += Convert.ToDouble(dgvr.Cells["指示剂不良"].Value);
                 sum黑点晶点 += Convert.ToDouble(dgvr.Cells["黑点晶点"].Value);
                 sum热封线不合格 += Convert.ToDouble(dgvr.Cells["热封线不合格"].Value);
+                sum工时 += Convert.ToDouble(dgvr.Cells["生产工时"].Value);
+
             }
 
             dt记录.Rows[0]["不良总合计"] = sum;
@@ -1412,12 +1445,15 @@ namespace mySystem.Process.Bag.PTV
             dt记录.Rows[0]["指示剂不良合计"] = sum指示剂不良;
             dt记录.Rows[0]["黑点晶点合计"] = sum黑点晶点;
             dt记录.Rows[0]["热封线不合格合计"] = sum热封线不合格;
+            dt记录.Rows[0]["工时"] = sum工时;
+
 
             lbl不良总合计.DataBindings[0].ReadValue();
             lbl其他合计.DataBindings[0].ReadValue();
             lbl指示剂不良合计.DataBindings[0].ReadValue();
             lbl黑点晶点合计.DataBindings[0].ReadValue();
             lbl热封线不合格合计.DataBindings[0].ReadValue();
+            tb工时.DataBindings[0].ReadValue();
         }
 
     }

@@ -1203,10 +1203,16 @@ namespace mySystem.Process.Bag.CS
 
         private void btn数据审核_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < dtInner.Rows.Count; i++)
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
             {
-                if (dtInner.Rows[i]["复核人"].ToString() == "__待审核")
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            foreach (int i in hi待审核行号)
+            {
+                if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
                 {
+                    //dataGridView1.Rows[i].Cells["审核人"].Value = person_审核员;
                     dtInner.Rows[i]["复核人"] = mySystem.Parameter.userName;
                     dataGridView1.Rows[i].ReadOnly = true;
                 }

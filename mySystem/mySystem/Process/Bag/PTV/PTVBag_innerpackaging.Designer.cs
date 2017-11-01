@@ -372,18 +372,18 @@
             // btn提交审核
             // 
             this.btn提交审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交审核.Location = new System.Drawing.Point(987, 461);
+            this.btn提交审核.Location = new System.Drawing.Point(927, 461);
             this.btn提交审核.Name = "btn提交审核";
-            this.btn提交审核.Size = new System.Drawing.Size(80, 30);
+            this.btn提交审核.Size = new System.Drawing.Size(140, 30);
             this.btn提交审核.TabIndex = 235;
-            this.btn提交审核.Text = "最后审核";
+            this.btn提交审核.Text = "提交最后审核";
             this.btn提交审核.UseVisualStyleBackColor = true;
             this.btn提交审核.Click += new System.EventHandler(this.btn提交审核_Click);
             // 
             // btn确认
             // 
             this.btn确认.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn确认.Location = new System.Drawing.Point(893, 462);
+            this.btn确认.Location = new System.Drawing.Point(828, 462);
             this.btn确认.Name = "btn确认";
             this.btn确认.Size = new System.Drawing.Size(80, 30);
             this.btn确认.TabIndex = 234;
