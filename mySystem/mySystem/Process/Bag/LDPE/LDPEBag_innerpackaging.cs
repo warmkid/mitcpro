@@ -1062,7 +1062,8 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.Cells[4, 4].Value = dt记录.Rows[0]["生产批号"].ToString();
             mysheet.Cells[4, 6].Value = Convert.ToDouble(dt记录.Rows[0]["包装规格每包只数"]);
             //mysheet.Cells[3, 15].Value = "标签：" + "中文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]) == true ? "☑" : "□") + "  英文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否英文"]) == true ? "☑" : "□");
-            mysheet.Cells[4, 9].Value = Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]) ? "中文" : "英文";
+            //mysheet.Cells[4, 9].Value = Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]) ? "中文" : "英文";
+            mysheet.Cells[4, 9].Value = fill标签();
             mysheet.Cells[4, 14].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
             mysheet.Cells[4, 16].Value = dt记录.Rows[0]["班次"].ToString();
 
@@ -1104,6 +1105,30 @@ namespace mySystem.Process.Bag.LDPE
             }
         }
 
+        private string fill标签()
+        {
+            string rtn = "";
+            rtn += "中文";
+            if (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]))
+            {
+                rtn += "☑";
+            }
+            else
+            {
+                rtn += "□";
+            }
+            rtn += "英文";
+            if (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否英文"]))
+            {
+                rtn += "☑";
+            }
+            else
+            {
+                rtn += "□";
+            }
+            return rtn;
+        }
+    
         //查找打印的表序号
         private int find_indexofprint()
         {
