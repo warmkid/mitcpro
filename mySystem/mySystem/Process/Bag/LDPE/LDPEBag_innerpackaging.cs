@@ -563,7 +563,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString(), connOle);
+            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString() +" order by id ASC", connOle);
             cb记录详情 = new OleDbCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
@@ -596,6 +596,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["包装袋热封线"] = "Yes";
             dr["内标签"] = "Yes";
             dr["内包装外观"] = "Yes";
+            dr["生产工时"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
             return dr;
@@ -698,6 +699,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns["不良合计"].HeaderText = "不良\r合计\r(只)";
             dataGridView1.Columns["包装袋热封线"].HeaderText = "包装袋\r热封线";
             dataGridView1.Columns["内包装外观"].HeaderText = "内包装\r外观";
+            dataGridView1.Columns["生产工时"].HeaderText = "生产工时\r(h)";
         }
 
         //******************************按钮功能******************************//
@@ -1042,16 +1044,16 @@ namespace mySystem.Process.Bag.LDPE
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             int ind = 0;
-            if (dt记录详情.Rows.Count > 12)
+            if (dt记录详情.Rows.Count > 13)
             {
                 //在第8行插入
-                for (int i = 0; i < dt记录详情.Rows.Count - 12; i++)
+                for (int i = 0; i < dt记录详情.Rows.Count - 13; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[8, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[12, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dt记录详情.Rows.Count - 12;
+                ind = dt记录详情.Rows.Count - 13;
             }
 
             //外表信息
@@ -1061,8 +1063,8 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.Cells[4, 6].Value = Convert.ToDouble(dt记录.Rows[0]["包装规格每包只数"]);
             //mysheet.Cells[3, 15].Value = "标签：" + "中文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]) == true ? "☑" : "□") + "  英文" + (Convert.ToBoolean(dt记录.Rows[0]["标签语言是否英文"]) == true ? "☑" : "□");
             mysheet.Cells[4, 9].Value = Convert.ToBoolean(dt记录.Rows[0]["标签语言是否中文"]) ? "中文" : "英文";
-            mysheet.Cells[4, 14].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy/MM/dd");
-            mysheet.Cells[4, 15].Value = dt记录.Rows[0]["班次"].ToString();
+            mysheet.Cells[4, 14].Value = Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            mysheet.Cells[4, 16].Value = dt记录.Rows[0]["班次"].ToString();
 
             mysheet.Cells[20 + ind, 1].Value = "工时：" + dt记录.Rows[0]["工时"].ToString();
             mysheet.Cells[20 + ind, 4].Value = dt记录.Rows[0]["产品数量包合计A"].ToString();
@@ -1095,7 +1097,7 @@ namespace mySystem.Process.Bag.LDPE
                 mysheet.Cells[7 + i, 11] = dt记录详情.Rows[i]["包装袋热封线"].ToString().Equals("Yes") ? "√" : "×";
                 mysheet.Cells[7 + i, 12] = dt记录详情.Rows[i]["内标签"].ToString().Equals("Yes") ? "√" : "×";
                 mysheet.Cells[7 + i, 13] = dt记录详情.Rows[i]["内包装外观"].ToString().Equals("Yes") ? "√" : "×";
-                mysheet.Cells[7 + i, 14] = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[7 + i, 14] = dt记录详情.Rows[i]["生产工时"].ToString();
                 mysheet.Cells[7 + i, 15] = dt记录详情.Rows[i]["操作员"].ToString();
                 mysheet.Cells[7 + i, 16] = dt记录详情.Rows[i]["审核员"].ToString(); 
 
