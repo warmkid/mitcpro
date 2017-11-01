@@ -239,6 +239,12 @@ namespace mySystem.Process.Bag
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             tb审核员.Enabled = false;
+
+            //永远不可变编辑
+            tb生产指令编号.ReadOnly = true;
+            dtp生产日期.Enabled = false;
+            cb白班.Enabled = false;
+            cb夜班.Enabled = false;
         }
 
         /// <summary>
@@ -318,6 +324,11 @@ namespace mySystem.Process.Bag
                 //立马保存内表
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
             }
+            else
+            {
+                cb白班.Checked = dt记录.Rows[0]["班次"].ToString() == "白班";
+                cb夜班.Checked = !cb白班.Checked;
+            }
             dataGridView1.Columns.Clear();
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             setDataGridViewColumns();
@@ -358,6 +369,13 @@ namespace mySystem.Process.Bag
         private void outerBind()
         {
             bs记录.DataSource = dt记录;
+            tb生产指令编号.DataBindings.Clear();
+            tb生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
+
+            dtp生产日期.DataBindings.Clear();
+            dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
+
+            //白班和夜班不用绑定，因为不可能更改
 
             tb操作员.DataBindings.Clear();
             tb操作员.DataBindings.Add("Text", bs记录.DataSource, "操作员");
@@ -369,12 +387,24 @@ namespace mySystem.Process.Bag
             dtp操作日期.DataBindings.Add("Text", bs记录.DataSource, "操作日期");
             dtp审核日期.DataBindings.Clear();
             dtp审核日期.DataBindings.Add("Text", bs记录.DataSource, "审核日期");
+
+
         }
 
         //添加外表默认信息        
         private DataRow writeOuterDefault(DataRow dr)
         {
             dr["生产指令ID"] = InstruID;
+            dr["生产指令编号"] = mySystem.Parameter.csbagInstruction;
+            dr["生产日期"] = DateTime.Now;
+            dr["班次"] = mySystem.Parameter.userflight;
+            if (mySystem.Parameter.userflight == "白班")
+                cb白班.Checked = true;
+            else
+                cb白班.Checked = false;
+            cb夜班.Checked = !cb白班.Checked;
+
+            dr["备注"] = "";
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作日期"] = Convert.ToDateTime(dtp操作日期.Value.ToString("yyyy/MM/dd"));
             dr["操作员备注"] = "";
@@ -747,30 +777,35 @@ namespace mySystem.Process.Bag
             //无需插入的部分
             for (int i = 0; i < (rownum > 14 ? 14 : rownum); i++)
             {
-                mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
-                mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                mysheet.Cells[5 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
+                mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
+                mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
             }
             //需要插入的部分
             if (rownum > 14)
             {
                 for (int i = 14; i < rownum; i++)
                 {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[4 + i, Type.Missing];
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                         Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
-                    mysheet.Cells[4 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-                    mysheet.Cells[4 + i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
-                    mysheet.Cells[4 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
-                    mysheet.Cells[4 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
+                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                    mysheet.Cells[5+ i, 2].Value = dt记录详情.Rows[i]["确认项目"].ToString();
+                    mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["确认内容"].ToString();
+                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["确认结果"].ToString() == "Yes" ? "√" : "×";
                 }
                 ind = rownum - 14;
             }
            
             //外表信息
+            mysheet.Cells[3, 1].Value = " 生产指令编号： " + mySystem.Parameter.csbagInstruction;
+            mysheet.Cells[3, 5].Value = " 生产日期： " + mySystem.Parameter.csbagInstruction;
+            string temp = dt记录.Rows[0]["班次"].ToString() == "白班" ? "生产班次： 白班☑   夜班□" : "生产班次： 白班□   夜班☑";
+            mysheet.Cells[3, 6].Value = temp; 
+
             mysheet.Cells[19 + ind, 1].Value = " 备注： " + dt记录.Rows[0]["备注"].ToString();
             String stringtemp = "";
             stringtemp = "确认人：" + dt记录.Rows[0]["操作员"].ToString();

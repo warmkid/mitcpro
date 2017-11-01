@@ -730,6 +730,19 @@ namespace mySystem.Process.Bag.CS
             my.Cells[3, 1].Value = "生产指令编号：" + dtOuter.Rows[0]["生产指令编号"];   // lbl生产指令编号.Text;
             my.Cells[3, 4].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"); //dtp生产日期.Value.ToString("yyyy年MM月dd日");
 
+            //插入新行
+            int ind = 0;
+            if (dtInner.Rows.Count > 9)
+            {
+                for (int i = 0; i < dtInner.Rows.Count - 9; i++)
+                {
+                    //在第9行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[9 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+                ind = dtInner.Rows.Count - 9;
+            }
 
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
@@ -739,10 +752,16 @@ namespace mySystem.Process.Bag.CS
                 my.Cells[i + 6, 5].Value = dtInner.Rows[i]["确认结果夜班"];
 
             }
-            my.Cells[8, 6].Value = "交班人：" + dtOuter.Rows[0]["白班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");
-            my.Cells[14, 6].Value = "交班人：" + dtOuter.Rows[0]["夜班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["白班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["夜班交接班时间"]).ToString("yyyy年MM月dd日");
-            my.Cells[6, 6].Value = dtOuter.Rows[0]["白班异常情况处理"]; //txb白班异常情况处理.Text;
-            my.Cells[10, 6].Value = dtOuter.Rows[0]["夜班异常情况处理"]; //txb夜班异常情况处理.Text;
+            my.Cells[4, 6].Value = "白班异常情况处理："; //txb白班异常情况处理.Text;
+            my.Cells[5, 6].Value = dtOuter.Rows[0]["白班异常情况处理"]; //txb白班异常情况处理.Text;
+            int mid = 3 + (11 + ind) / 2;
+
+            my.Cells[mid, 6].Value = "交班人：" + dtOuter.Rows[0]["白班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");
+
+            my.Cells[mid + 1, 6].Value = "夜班异常情况处理："; //txb夜班异常情况处理.Text;
+            my.Cells[mid+2, 6].Value = dtOuter.Rows[0]["夜班异常情况处理"]; //txb夜班异常情况处理.Text;
+            my.Cells[14+ind, 6].Value = "交班人：" + dtOuter.Rows[0]["夜班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["白班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["夜班交接班时间"]).ToString("yyyy年MM月dd日");
+            
             my.PageSetup.RightFooter = __生产指令编号 + "-" + "14" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (preview)
