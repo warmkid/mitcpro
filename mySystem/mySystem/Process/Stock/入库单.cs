@@ -730,5 +730,12 @@ namespace mySystem.Process.Stock
             dtInner.Rows.Add(dr);
         }
 
+        private void btn生成二维码_Click(object sender, EventArgs e)
+        {
+            mySystem.Other.二维码打印 form = mySystem.Other.二维码打印.create(dtOuter.Rows[0]["产品代码"].ToString(),
+                dtOuter.Rows[0]["批号"].ToString());
+            form.Show();
+        }
+
     }
 }

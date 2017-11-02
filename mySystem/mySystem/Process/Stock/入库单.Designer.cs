@@ -68,6 +68,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn删除 = new System.Windows.Forms.Button();
             this.btn添加 = new System.Windows.Forms.Button();
+            this.btn生成二维码 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -452,11 +453,23 @@
             this.btn添加.UseVisualStyleBackColor = true;
             this.btn添加.Click += new System.EventHandler(this.btn添加_Click);
             // 
+            // btn生成二维码
+            // 
+            this.btn生成二维码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn生成二维码.Location = new System.Drawing.Point(169, 459);
+            this.btn生成二维码.Name = "btn生成二维码";
+            this.btn生成二维码.Size = new System.Drawing.Size(109, 23);
+            this.btn生成二维码.TabIndex = 87;
+            this.btn生成二维码.Text = "生成二维码";
+            this.btn生成二维码.UseVisualStyleBackColor = true;
+            this.btn生成二维码.Click += new System.EventHandler(this.btn生成二维码_Click);
+            // 
             // 入库单
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1117, 514);
+            this.Controls.Add(this.btn生成二维码);
             this.Controls.Add(this.btn添加);
             this.Controls.Add(this.btn删除);
             this.Controls.Add(this.dataGridView1);
@@ -547,5 +560,6 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btn删除;
         private System.Windows.Forms.Button btn添加;
+        private System.Windows.Forms.Button btn生成二维码;
     }
 }
