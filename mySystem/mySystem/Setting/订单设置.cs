@@ -55,14 +55,38 @@ namespace mySystem.Setting
         private BindingSource bs付款条件;
         private OleDbCommandBuilder cb付款条件;
 
+        string copied工序 = "", copied类型 = "";
+
         public 订单设置()
         {
             InitializeComponent();
             Initdgv();
             Bind();
             dgv存货档案.CellDoubleClick += new DataGridViewCellEventHandler(dgv存货档案_CellDoubleClick);
+            dgv存货档案.CellEndEdit += new DataGridViewCellEventHandler(dgv存货档案_CellEndEdit);
             tb代码q.PreviewKeyDown += new PreviewKeyDownEventHandler(tb代码q_PreviewKeyDown);
             tb名称q.PreviewKeyDown += new PreviewKeyDownEventHandler(tb名称q_PreviewKeyDown);
+        }
+
+        void dgv存货档案_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv存货档案.CurrentCell != null)
+            {
+                if (dgv存货档案.CurrentCell.OwningColumn.Name == "存货代码" && dgv存货档案["ID",dgv存货档案.CurrentCell.RowIndex].Value==DBNull.Value)
+                {
+                    string currDaima = dgv存货档案.CurrentCell.Value.ToString();
+                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + currDaima + "'", mySystem.Parameter.connOle);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+                    if (dt.Rows.Count > 0)
+                    {
+                        MessageBox.Show("存货代码：" + currDaima + " 重复出现，以将其加入剪贴板");
+                        Clipboard.SetDataObject(dgv存货档案.CurrentCell.Value.ToString(), false);
+                        dgv存货档案.CurrentCell.Value = "";
+                    }
+                }
+            }
+
         }
 
         void tb名称q_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -189,6 +213,12 @@ namespace mySystem.Setting
             this.dgv存货档案.Columns["类型"].ReadOnly = true;
             //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
             setDGV存货档案Column();
+            dgv存货档案.RowHeadersVisible = true;
+            foreach (DataGridViewColumn dgvc in dgv存货档案.Columns)
+            {
+                dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
+            }
+
 
 
             //**************************   人员设置    ***********************************
@@ -387,6 +417,12 @@ namespace mySystem.Setting
                 { }
                 else
                 {
+                    //// 检查是否有重复的
+                    //if (isDaimaDup)
+                    //{
+                    //    MessageBox.Show("存货代码有重复，请检查");
+                    //    return;
+                    //}
                     da存货档案.Update((DataTable)bs存货档案.DataSource);
                     dt存货档案.Clear();
                     da存货档案.Fill(dt存货档案);
@@ -732,6 +768,12 @@ namespace mySystem.Setting
             this.dgv存货档案.Columns["类型"].ReadOnly = true;
             //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
             setDGV存货档案Column();
+            dgv存货档案.RowHeadersVisible = true;
+            foreach (DataGridViewColumn dgvc in dgv存货档案.Columns)
+            {
+                dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
+            }
+
         }
 
 
@@ -763,5 +805,51 @@ namespace mySystem.Setting
             dgv存货档案.Columns["规格型号"].Width = 300;
             dgv存货档案.Columns["BOM列表"].Width = 100;
         }
+
+        private void btn复制类型_Click(object sender, EventArgs e)
+        {
+            if (dgv存货档案.SelectedCells.Count == 0)
+            {
+                return;
+            }
+            if (dgv存货档案.SelectedCells.Count > 1)
+            {
+                MessageBox.Show("复制时请勿选择多行");
+                return;
+            }
+            copied类型 = dgv存货档案.SelectedCells[0].OwningRow.Cells["类型"].Value.ToString();
+        }
+
+        private void btn复制工序_Click(object sender, EventArgs e)
+        {
+            if (dgv存货档案.SelectedCells.Count == 0)
+            {
+                return;
+            }
+            if (dgv存货档案.SelectedCells.Count > 1)
+            {
+                MessageBox.Show("复制时请勿选择多行");
+                return;
+            }
+            copied工序 = dgv存货档案.SelectedCells[0].OwningRow.Cells["属于工序"].Value.ToString();
+        }
+
+        private void btn粘贴类型_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewCell dgvc in dgv存货档案.SelectedCells)
+            {
+                dgvc.OwningRow.Cells["类型"].Value = copied类型;
+            }
+        }
+
+        private void btn粘贴工序_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewCell dgvc in dgv存货档案.SelectedCells)
+            {
+                dgvc.OwningRow.Cells["属于工序"].Value = copied工序;
+            }
+        }
+
+       
     }
 }
