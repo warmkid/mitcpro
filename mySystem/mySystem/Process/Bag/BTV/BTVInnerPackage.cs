@@ -61,6 +61,7 @@ namespace mySystem.Process.Bag.BTV
 
             setControlFalse();
             cmb产品代码.Enabled = true;
+            dtp生产日期.Enabled = true;
             btn查询新建.Enabled = true;
             //打印、查看日志按钮不可用
             btn打印.Enabled = false;
@@ -1074,9 +1075,11 @@ namespace mySystem.Process.Bag.BTV
                 my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["指示剂不良数量"];
                 my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["其他数量"];
                 my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["不良合计"];
-                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["包装袋热封线"];
-                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["内标签"];
-                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["内包装外观"];
+
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["包装袋热封线"].ToString().Equals("Yes") ? "√" : "×";
+                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["内标签"].ToString().Equals("Yes") ? "√" : "×";
+                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["内包装外观"].ToString().Equals("Yes") ? "√" : "×";
+
                 my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["生产工时"];
                 my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["操作员"];
                 my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["审核员"];

@@ -356,6 +356,7 @@ namespace mySystem.Process.Bag.CS
             dr["宽"] = 0;
             dr["长"] = 0;
             dr["判定尺寸检测"] = "合格";
+            dr["操作人"] = mySystem.Parameter.userName;
             return dr;
         }
 
