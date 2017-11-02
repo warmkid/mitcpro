@@ -533,7 +533,10 @@ namespace mySystem.Process.Bag.BTV
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
             dtp生产日期.DataBindings.Clear();
             dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
-
+            tb合格品数量.DataBindings.Clear();
+            tb合格品数量.DataBindings.Add("Text", bs记录.DataSource, "合格品数量");
+            tb不良品数量.DataBindings.Clear();
+            tb不良品数量.DataBindings.Add("Text", bs记录.DataSource, "不良品数量");
             tb审核员.DataBindings.Clear();
             tb审核员.DataBindings.Add("Text", bs记录.DataSource, "审核员");
             //dtp审核日期.DataBindings.Clear();
@@ -944,72 +947,60 @@ namespace mySystem.Process.Bag.BTV
             print(true);
             GC.Collect();
         }
+        /// <summary>
+        /// this print function has been updated by pool on 2017-11-01
+        /// but hasn't been tested on printer
+        /// this edition of function automacally insert new rows according to settings
+        /// </summary>
+        /// <param name="preview"></param>
         public void print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R06A  2D袋体生产记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\14 SOP-MFG-502-R01A  BPV袋体生产记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[5];
             // 设置该进程是否可见
-            //oXL.Visible = true;
+            oXL.Visible = true;
             // 修改Sheet中某行某列的值
+            int rowStartAt = 6;
+            my.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 4].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
+            my.Cells[3, 9].Value = "生产指令：" + getInsFromID(Convert.ToInt32(dt记录.Rows[0]["生产指令ID"]));
 
-            int rowStartAt = 5;
-            my.Cells[3, 1].Value = "产品代码/规格："+dt记录.Rows[0]["产品代码"];
-            my.Cells[3, 5].Value = "产品批号："+dt记录.Rows[0]["产品批号"];
-            my.Cells[3, 8].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
-
-            //EVERY SHEET CONTAINS 12 RECORDS
-            int rowNumPerSheet = 11;
+            int rowNumPerSheet = 15;
             int rowNumTotal = dt记录详情.Rows.Count;
-            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
-            {
-                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
-                my.Cells[i + rowStartAt, 2].Font.Size = 11;
-                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["切片尺寸长"];
-                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["切片尺寸宽"];
-                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
-                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
-                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["袋体外观检查"];
-                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
-                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["热封线检查"];
-                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["合格品数量"];
-                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良品数量"];
-                my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["操作员"];
-                my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["审核员"];     
-
-            }
-             //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
             if (rowNumTotal > rowNumPerSheet)
             {
-                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                for (int i = 0; i < rowNumTotal - rowNumPerSheet; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
-                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
-                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["切片尺寸长"];
-                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["切片尺寸宽"];
-                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["单管口打孔"];
-                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["多管口打孔"];
-                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["袋体外观检查"];
-                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
-                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["热封线检查"];
-                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["合格品数量"];
-                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["不良品数量"];
-                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["操作员"];
-                    my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["审核员"];
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
             }
-            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
-            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
+            for (int i = 0; i < rowNumTotal; i++)
+            {
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("MM/dd HH:mm");
+                my.Cells[i + rowStartAt, 2].Font.Size = 11;
+                my.Cells[i + rowStartAt, 3].Value = "";
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["切片尺寸长"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["切片尺寸宽"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["袋体外观检查"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["袋体尺寸确认"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["热封线检查"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["合格品数量"];
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["不良品数量"];
+                my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["审核员"];
+            }
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet : 0;
+            my.Cells[21 + varOffset, 8].Value = dt记录.Rows[0]["合格品数量"];
+            my.Cells[21 + varOffset, 9].Value = dt记录.Rows[0]["不良品数量"];
 
             if (preview)
             {
@@ -1193,7 +1184,22 @@ namespace mySystem.Process.Bag.BTV
         {
             setDataGridViewFormat();
         }
-        
+        private string getInsFromID(int ID)
+        {
+            string rtn;
+            string sqlCmd = "SELECT 生产指令编号 FROM 生产指令 WHERE ID =" + ID.ToString();
+            OleDbCommand cmd = new OleDbCommand(sqlCmd, Parameter.connOle);
+            try
+            {
+                rtn = Convert.ToString(cmd.ExecuteScalar());
+            }
+            catch
+            {
+                MessageBox.Show("未找到对应生产指令编码!");
+                rtn = "";
+            }
+            return rtn;
+        }
 
         
     }

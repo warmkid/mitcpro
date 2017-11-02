@@ -611,7 +611,7 @@ namespace mySystem.Process.Bag.BTV
         {
             dr["序号"] = 0;
             dr["TBPV装配确认记录ID"] = ID;
-            //dr["领料日期时间"] = DateTime.Now;
+            dr["生产日期"] = Convert.ToDateTime(DateTime.Now.ToString());
             dr["产品代码"] = dt代码批号.Rows[0]["产品代码"];
             dr["组件数量"] = 0;
             dr["合格数量只"] = 0;
@@ -621,6 +621,7 @@ namespace mySystem.Process.Bag.BTV
             dr["完成时间"] = Convert.ToDateTime(DateTime.Now.ToString());
             dr["QC人员"] = "";
             dr["确认时间"]=Convert.ToDateTime(DateTime.Now.ToString());
+            dr["备注"] = "";
             return dr;
         }
 
@@ -641,6 +642,19 @@ namespace mySystem.Process.Bag.BTV
                 switch (dc.ColumnName)
                 {
                     case "产品代码":
+                        if (null == dt代码批号)
+                        {
+                            tbc = new DataGridViewTextBoxColumn();
+                            tbc.DataPropertyName = dc.ColumnName;
+                            tbc.HeaderText = dc.ColumnName;
+                            tbc.Name = dc.ColumnName;
+                            tbc.ValueType = dc.DataType;
+                            dataGridView1.Columns.Add(tbc);
+                            tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                            tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                            tbc.MinimumWidth = 120;
+                            break;
+                        }
                         cbc = new DataGridViewComboBoxColumn();
                         cbc.DataPropertyName = dc.ColumnName;
                         cbc.HeaderText = dc.ColumnName;
@@ -942,65 +956,63 @@ namespace mySystem.Process.Bag.BTV
             print(true);
             GC.Collect();
         }
+
+        /// <summary>
+        /// this function has been updated to the latest documents by pool on 2017-11-01 
+        /// in this edition, 生产操作员 in database acts as 生产人员,with no check button added;
+        /// </summary>
+        /// <param name="preview"></param>
         public void print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R05A  BPV装配确认记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\17 SOP-MFG-306-R05A  BPV装配确认记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[5];
             // 设置该进程是否可见
-            //oXL.Visible = true;
+            oXL.Visible = true;
 
             int rowStartAt = 5;
             // 修改Sheet中某行某列的值
             my.Cells[3, 1].Value = "生产指令编号：\n" + dt记录.Rows[0]["生产指令编号"];
-            my.Cells[3, 3].Value = "产品代码/规格：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 3].Value = "产品代码/规格：" + dt记录.Rows[0]["成品代码"];
             my.Cells[3, 7].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
             my.Cells[3, 9].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
-            //EVERY SHEET CONTAINS 6 RECORDS
-            int rowNumPerSheet = 5;
+            //EVERY SHEET CONTAINS 14 RECORDS
+            int rowNumPerSheet = 14;
             int rowNumTotal = dt记录详情.Rows.Count;
-            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
-            {
-                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[i + rowStartAt, 2].Value = dt记录详情.Rows[i]["产品代码"];
-                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["组件数量"];
-                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["合格数量只"];
-                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["不良品数量只"];
-                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["质量检查判定"];
-                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["生产操作员"].ToString() + dt记录详情.Rows[i]["完成时间"].ToString();
-                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["QC人员"].ToString() + dt记录详情.Rows[i]["确认时间"].ToString();
-                
-            }
-            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
             if (rowNumTotal > rowNumPerSheet)
             {
-                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
+                for (int i = 0; i < rowNumTotal - rowNumPerSheet; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                    my.Cells[i + rowStartAt, 2].Value = dt记录详情.Rows[i]["产品代码"];
-                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["组件数量"];
-                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["合格数量只"];
-                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["不良品数量只"];
-                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["质量检查判定"];
-                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["生产操作员"].ToString() + dt记录详情.Rows[i]["完成时间"].ToString();
-                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["QC人员"].ToString() + dt记录详情.Rows[i]["确认时间"].ToString();
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
             }
-            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
-            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
-
+            for (int i = 0; i <  rowNumTotal; i++)
+            {
+                my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
+                //this line cannot find a cloumn responsible to inner table, and 完成时间 is borrowd for temporaty
+                my.Cells[i + rowStartAt, 2].Value = dt记录详情.Rows[i]["完成时间"];
+                my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["产品代码"];
+                //my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["组件数量"];
+                my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["合格数量只"];
+                my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["不良品数量只"];
+                my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["质量检查判定"];
+                my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["备注"];
+                my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["生产操作员"].ToString();// +dt记录详情.Rows[i]["完成时间"].ToString();
+                my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["QC人员"].ToString();// +dt记录详情.Rows[i]["确认时间"].ToString();
+                
+            }
+            
             //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
-            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
-            my.Cells[12 + varOffset, 1].Value = "备注： " + dt记录.Rows[0]["备注"];
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet  : 0;
+            //my.Cells[12 + varOffset, 1].Value = "备注： " + dt记录.Rows[0]["备注"];
             
             if (preview)
             {

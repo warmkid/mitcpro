@@ -714,6 +714,13 @@ namespace mySystem.Process.Bag.BTV
             print(false);
             GC.Collect();
         }
+
+        /// <summary>
+        /// this print function has been updated by pool on 2017-11-01
+        /// but hasn't been tested on printer
+        /// this edition of function automacally insert new rows according to settings
+        /// </summary>
+        /// <param name="preview"></param>
         public void print(bool preview)
         {
             // 打开一个Excel进程
@@ -727,9 +734,36 @@ namespace mySystem.Process.Bag.BTV
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
+            string text1 = "白班异常情况处理：";
+            string text2 = "夜班异常情况处理：";
+            int rowStartAt = 6;
+            int rowNumPerSheet = 9;
+            int rowNumTotal = dtInner.Rows.Count;
             my.Cells[3, 1].Value = "生产指令编号：" + dtOuter.Rows[0]["生产指令编号"];   // lbl生产指令编号.Text;
             my.Cells[3, 4].Value = "生产日期：" + Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日"); //dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            
+            //clear the used items
+            
+            int[] columnIndex= {1,2,4,5,6};
+            for (int i = 0; i < rowNumPerSheet; i++)
+            {
+                for (int j = 0; j < columnIndex.Length; j++)
+                {
+                    my.Cells[i + rowStartAt, columnIndex[i]].Value = "";
+                }
+            }
+            
+            //judge whether new rows should be inserted
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = 0; i < rowNumTotal - rowNumPerSheet; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
 
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
+                }
+            }
 
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
@@ -739,10 +773,15 @@ namespace mySystem.Process.Bag.BTV
                 my.Cells[i + 6, 5].Value = dtInner.Rows[i]["确认结果夜班"];
 
             }
-            my.Cells[8, 6].Value = "交班人：" + dtOuter.Rows[0]["白班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");
-            my.Cells[14, 6].Value = "交班人：" + dtOuter.Rows[0]["夜班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["白班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["夜班交接班时间"]).ToString("yyyy年MM月dd日");
-            my.Cells[6, 6].Value = dtOuter.Rows[0]["白班异常情况处理"]; //txb白班异常情况处理.Text;
-            my.Cells[10, 6].Value = dtOuter.Rows[0]["夜班异常情况处理"]; //txb夜班异常情况处理.Text;
+            
+            int iterMidFlag = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(Math.Max(rowNumPerSheet, rowNumTotal) / 2))+rowStartAt-1);
+            my.Cells[4, 6].Value = text1;
+            my.Cells[rowStartAt, 6].Value = dtOuter.Rows[0]["白班异常情况处理"]; //txb白班异常情况处理.Text;
+            my.Cells[iterMidFlag-1, 6].Value = "交班人：" + dtOuter.Rows[0]["白班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["夜班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["白班交接班时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[iterMidFlag, 6].Value = text2;
+            my.Cells[iterMidFlag+1, 6].Value = dtOuter.Rows[0]["夜班异常情况处理"]; //txb夜班异常情况处理.Text;
+            my.Cells[Math.Max(rowNumPerSheet, rowNumTotal), 6].Value = "交班人：" + dtOuter.Rows[0]["夜班交班员"].ToString() + "   接班人：" + dtOuter.Rows[0]["白班接班员"].ToString() + "   时间：" + Convert.ToDateTime(dtOuter.Rows[0]["夜班交接班时间"]).ToString("yyyy年MM月dd日");
+            
             my.PageSetup.RightFooter = __生产指令编号 + "-" + "14" + "-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
             if (preview)

@@ -260,6 +260,7 @@ namespace mySystem.Process.Bag.BTV
                     //发送审核不可点，其他都可点
                     setControlTrue();
                     btn审核.Enabled = true;
+                    btn数据审核.Enabled = true;
                 }
             }
             else//操作员
@@ -306,6 +307,8 @@ namespace mySystem.Process.Bag.BTV
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             tb审核员.Enabled = false;
+            btn数据审核.Enabled = false;
+            btn提交数据审核.Enabled = false;
             //部分空间防作弊，不可改
             tb产品批号.ReadOnly = true;
             tb产品代码.ReadOnly = true;
@@ -655,6 +658,13 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["合格品数量"].HeaderText = "合格品\r数量\r(只)";
             dataGridView1.Columns["不良品数量"].HeaderText = "不良品\r数量\r(只)";
 
+            dataGridView1.Columns["合格品数量"].HeaderText = "合格品\r数量\r(只)";
+            dataGridView1.Columns["合格品数量"].ReadOnly = true;
+            dataGridView1.Columns["合格品数量"].Visible = false;
+            dataGridView1.Columns["不良品数量"].HeaderText = "不良品\r数量\r(只)";
+            dataGridView1.Columns["不良品数量"].ReadOnly = true;
+            dataGridView1.Columns["不良品数量"].Visible = false;
+		
             try
             {
                 this.dataGridView1.FirstDisplayedScrollingRowIndex = this.dataGridView1.Rows.Count - 1;
@@ -713,7 +723,10 @@ namespace mySystem.Process.Bag.BTV
             bool isSaved = Save();
             //控件可见性
             if (_userState == Parameter.UserState.操作员 && isSaved == true)
+            {
                 btn提交审核.Enabled = true;
+                btn提交数据审核.Enabled = true;
+            }
         }
 
         //保存功能
@@ -752,7 +765,14 @@ namespace mySystem.Process.Bag.BTV
             //保存
             bool isSaved = Save();
             if (isSaved == false)
+            { return; }
+
+            else if (need提交数据审核())
+            {
+                MessageBox.Show("需要提交数据审核");
                 return;
+            }
+		
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -838,6 +858,14 @@ namespace mySystem.Process.Bag.BTV
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
             }
+
+            else if (need数据审核())
+            {
+                MessageBox.Show("需要数据审核");
+                return;
+            }
+			
+			
             checkform = new CheckForm(this);
             checkform.Show();
         }
@@ -868,24 +896,31 @@ namespace mySystem.Process.Bag.BTV
 
             GC.Collect();
         }
+
+        /// <summary>
+        /// this functio has been updated by pool on 2017-11-02
+        /// we don't deal with 膜或袋体代码：
+        /// </summary>
+        /// <param name="preview"></param>
         public void print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-506-R01A  封口热合机运行记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\13 SOP-MFG-506-R01A  封口热合机运行记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[2];
             // 设置该进程是否可见
-            //oXL.Visible = true;
+            oXL.Visible = true;
             // 修改Sheet中某行某列的值
 
             int rowStartAt = 8;
-            my.Cells[3, 1].Value = "袋体代码：" + dt记录.Rows[0]["袋体代码"];
-            my.Cells[3, 5].Value = "产品代码：" + dt记录.Rows[0]["产品代码"];
-            my.Cells[3, 11].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
-            my.Cells[3, 15].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"];
+            my.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"];
+            my.Cells[3, 15].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"];
+            //my.Cells[3, 1].Value = "袋体代码：" + dt记录.Rows[0]["袋体代码"];
+            //my.Cells[3, 15].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日");
 
             my.Cells[rowStartAt - 1, 3].Value = dt记录.Rows[0]["焊线1参数1"];
             my.Cells[rowStartAt - 1, 4].Value = dt记录.Rows[0]["焊线1参数2"];
@@ -899,10 +934,21 @@ namespace mySystem.Process.Bag.BTV
             my.Cells[rowStartAt - 1, 11].Value = dt记录.Rows[0]["焊线2参数4"];
             my.Cells[rowStartAt - 1, 12].Value = dt记录.Rows[0]["焊线2参数5"];
 
-            //EVERY SHEET CONTAINS 12 RECORDS
-            int rowNumPerSheet = 11;
+            //EVERY SHEET CONTAINS 15 RECORDS
+            int rowNumPerSheet = 15;
             int rowNumTotal = dt记录详情.Rows.Count;
-            for (int i = 0; i < (rowNumTotal > rowNumPerSheet ? rowNumPerSheet : rowNumTotal); i++)
+
+            if (rowNumTotal > rowNumPerSheet)
+            {
+                for (int i = 0; i < rowNumTotal - rowNumPerSheet; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
+                }
+            }
+            for (int i = 0; i <rowNumTotal; i++)
             {
 
                 my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
@@ -921,52 +967,16 @@ namespace mySystem.Process.Bag.BTV
                 my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["焊线2参数5"];
 
                 my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["外观"];
-                my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["合格品数量"];
-                my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["不良品数量"];
-                my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["操作员"];
-                my.Cells[i + rowStartAt, 17].Value = dt记录详情.Rows[i]["备注"];
+                my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["操作员"];
+                my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["审核员"];
+                my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["备注"];
+                //my.Cells[i + rowStartAt, 17].Value = dt记录详情.Rows[i]["备注"];
             }
-
-            //THIS PART HAVE TO INSERT NOEW BETWEEN THE HEAD AND BOTTM
-            if (rowNumTotal > rowNumPerSheet)
-            {
-                for (int i = rowNumPerSheet; i < rowNumTotal; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
-
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-
-                    my.Cells[i + rowStartAt, 1].Value = dt记录详情.Rows[i]["序号"];
-                    my.Cells[i + rowStartAt, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["生产时间"]).ToString("HH:mm");
-                    my.Cells[i + rowStartAt, 2].Font.Size = 11;
-                    my.Cells[i + rowStartAt, 3].Value = dt记录详情.Rows[i]["焊线1参数1"];
-                    my.Cells[i + rowStartAt, 4].Value = dt记录详情.Rows[i]["焊线1参数2"];
-                    my.Cells[i + rowStartAt, 5].Value = dt记录详情.Rows[i]["焊线1参数3"];
-                    my.Cells[i + rowStartAt, 6].Value = dt记录详情.Rows[i]["焊线1参数4"];
-                    my.Cells[i + rowStartAt, 7].Value = dt记录详情.Rows[i]["焊线1参数5"];
-
-                    my.Cells[i + rowStartAt, 8].Value = dt记录详情.Rows[i]["焊线2参数1"];
-                    my.Cells[i + rowStartAt, 9].Value = dt记录详情.Rows[i]["焊线2参数2"];
-                    my.Cells[i + rowStartAt, 10].Value = dt记录详情.Rows[i]["焊线2参数3"];
-                    my.Cells[i + rowStartAt, 11].Value = dt记录详情.Rows[i]["焊线2参数4"];
-                    my.Cells[i + rowStartAt, 12].Value = dt记录详情.Rows[i]["焊线2参数5"];
-
-                    my.Cells[i + rowStartAt, 13].Value = dt记录详情.Rows[i]["外观"];
-                    my.Cells[i + rowStartAt, 14].Value = dt记录详情.Rows[i]["合格品数量"];
-                    my.Cells[i + rowStartAt, 15].Value = dt记录详情.Rows[i]["不良品数量"];
-                    my.Cells[i + rowStartAt, 16].Value = dt记录详情.Rows[i]["操作员"];
-                    my.Cells[i + rowStartAt, 17].Value = dt记录详情.Rows[i]["备注"];
-                }
-            }
-
-            Microsoft.Office.Interop.Excel.Range range1 = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + rowNumTotal, Type.Missing];
-            range1.EntireRow.Delete(Microsoft.Office.Interop.Excel.XlDirection.xlUp);
 
             //THE BOTTOM HAVE TO CHANGE LOCATE ACCORDING TO THE ROWS NUMBER IN DT.
-            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet - 1 : 0;
-            my.Cells[20 + varOffset, 12].Value = "合格品数量： " + dt记录.Rows[0]["合格品数量"] + " 个，\n不良品数量： " + dt记录.Rows[0]["不良品数量"] + " 个。";
-            my.Cells[20 + varOffset, 16].Value = "审核员： " + dt记录.Rows[0]["审核员"] + "\n日期： " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
+            int varOffset = (rowNumTotal > rowNumPerSheet) ? rowNumTotal - rowNumPerSheet : 0;
+            //my.Cells[20 + varOffset, 12].Value = "合格品数量： " + dt记录.Rows[0]["合格品数量"] + " 个，\n不良品数量： " + dt记录.Rows[0]["不良品数量"] + " 个。";
+            //my.Cells[20 + varOffset, 16].Value = "审核员： " + dt记录.Rows[0]["审核员"] + "\n日期： " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日");
             if (preview)
             {
                 my.Select();
@@ -975,7 +985,7 @@ namespace mySystem.Process.Bag.BTV
             else
             {
                 //add footer
-                my.PageSetup.RightFooter = Instruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
+                my.PageSetup.RightFooter = Instruction + "-13-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 
                 // 直接用默认打印机打印该Sheet
                 try
@@ -1118,7 +1128,85 @@ namespace mySystem.Process.Bag.BTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
-        } 
+        }
+
+        //内表提交审核按钮
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dt记录详情.Rows[i]["审核员"] = "__待审核";
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
+            setEnableReadOnly();
+        }
+
+        //内标审核按钮 //this function just fill the name but dooesn't catch the opinion
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if ("__待审核" == Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dt记录详情.Rows[i]["操作员"].ToString())
+                    {
+                        dt记录详情.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("记录员,审核员相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
+        }
+        //need提交数据审核
+        private bool need提交数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
+
+        //
+        private bool need数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
+		
         
     }
 }

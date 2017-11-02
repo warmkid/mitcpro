@@ -1319,7 +1319,7 @@ namespace mySystem.Process.Bag.BTV
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R01A  BPV 制袋生产指令.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\1 SOP-MFG-306-R01A  BPV 制袋生产指令.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 设置该进程是否可见
@@ -1373,9 +1373,9 @@ namespace mySystem.Process.Bag.BTV
             my.Cells[12, 14].Value = dtOuter.Rows[0]["外包需求2"];
             my.Cells[13, 14].Value = dtOuter.Rows[0]["外包需求3"];
 
-            my.Cells[15, 8].Value = "负责人：" + dtOuter.Rows[0]["负责人"];
+            my.Cells[15, 9].Value = "负责人：" + dtOuter.Rows[0]["负责人"];
 
-            my.Cells[17, 8].Value = dtOuter.Rows[0]["备注"];
+            my.Cells[17, 9].Value = dtOuter.Rows[0]["备注"];
 
             my.Cells[22, 1].Value = "操作员：" + dtOuter.Rows[0]["操作员"] + "\t" + Convert.ToDateTime(dtOuter.Rows[0]["操作时间"]).ToString("yyyy年MM月dd日");
             my.Cells[22, 6].Value = "审核员：" + dtOuter.Rows[0]["审核员"] + "\t" + Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日");

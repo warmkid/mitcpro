@@ -126,6 +126,8 @@
             this.label51 = new System.Windows.Forms.Label();
             this.label52 = new System.Windows.Forms.Label();
             this.label53 = new System.Windows.Forms.Label();
+            this.btn数据审核 = new System.Windows.Forms.Button();
+            this.btn提交数据审核 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -290,6 +292,7 @@
             this.label25.Size = new System.Drawing.Size(25, 16);
             this.label25.TabIndex = 25;
             this.label25.Text = "只";
+            this.label25.Visible = false;
             // 
             // label29
             // 
@@ -328,6 +331,7 @@
             this.label26.Size = new System.Drawing.Size(25, 16);
             this.label26.TabIndex = 24;
             this.label26.Text = "只";
+            this.label26.Visible = false;
             // 
             // label30
             // 
@@ -470,6 +474,7 @@
             this.tb不良品数量.Name = "tb不良品数量";
             this.tb不良品数量.Size = new System.Drawing.Size(50, 26);
             this.tb不良品数量.TabIndex = 23;
+            this.tb不良品数量.Visible = false;
             // 
             // groupBox5
             // 
@@ -602,6 +607,7 @@
             this.tb合格品数量.Name = "tb合格品数量";
             this.tb合格品数量.Size = new System.Drawing.Size(50, 26);
             this.tb合格品数量.TabIndex = 22;
+            this.tb合格品数量.Visible = false;
             // 
             // label27
             // 
@@ -612,6 +618,7 @@
             this.label27.Size = new System.Drawing.Size(110, 16);
             this.label27.TabIndex = 21;
             this.label27.Text = "不良品数量：";
+            this.label27.Visible = false;
             // 
             // label28
             // 
@@ -622,6 +629,7 @@
             this.label28.Size = new System.Drawing.Size(110, 16);
             this.label28.TabIndex = 20;
             this.label28.Text = "合格品数量：";
+            this.label28.Visible = false;
             // 
             // groupBox6
             // 
@@ -1065,11 +1073,35 @@
             this.label53.TabIndex = 3;
             this.label53.Text = "序号";
             // 
+            // btn数据审核
+            // 
+            this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn数据审核.Location = new System.Drawing.Point(977, 411);
+            this.btn数据审核.Name = "btn数据审核";
+            this.btn数据审核.Size = new System.Drawing.Size(90, 30);
+            this.btn数据审核.TabIndex = 282;
+            this.btn数据审核.Text = "数据审核";
+            this.btn数据审核.UseVisualStyleBackColor = true;
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
+            // 
+            // btn提交数据审核
+            // 
+            this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn提交数据审核.Location = new System.Drawing.Point(851, 412);
+            this.btn提交数据审核.Name = "btn提交数据审核";
+            this.btn提交数据审核.Size = new System.Drawing.Size(120, 30);
+            this.btn提交数据审核.TabIndex = 281;
+            this.btn提交数据审核.Text = "提交数据审核";
+            this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
+            // 
             // BTVRunningRecordDF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1315, 561);
+            this.Controls.Add(this.btn数据审核);
+            this.Controls.Add(this.btn提交数据审核);
             this.Controls.Add(this.lbl生产指令编号);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.label32);
@@ -1225,5 +1257,7 @@
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label lbl生产指令编号;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button btn数据审核;
+        private System.Windows.Forms.Button btn提交数据审核;
     }
 }

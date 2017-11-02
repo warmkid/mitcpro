@@ -84,6 +84,8 @@
             this.label角色 = new System.Windows.Forms.Label();
             this.lbl生产指令编号 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
+            this.btn数据审核 = new System.Windows.Forms.Button();
+            this.btn提交数据审核 = new System.Windows.Forms.Button();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -471,6 +473,7 @@
             this.tb不良品数量.Name = "tb不良品数量";
             this.tb不良品数量.Size = new System.Drawing.Size(50, 26);
             this.tb不良品数量.TabIndex = 262;
+            this.tb不良品数量.Visible = false;
             // 
             // tb合格品数量
             // 
@@ -479,6 +482,7 @@
             this.tb合格品数量.Name = "tb合格品数量";
             this.tb合格品数量.Size = new System.Drawing.Size(50, 26);
             this.tb合格品数量.TabIndex = 261;
+            this.tb合格品数量.Visible = false;
             // 
             // label42
             // 
@@ -489,6 +493,7 @@
             this.label42.Size = new System.Drawing.Size(25, 16);
             this.label42.TabIndex = 260;
             this.label42.Text = "只";
+            this.label42.Visible = false;
             // 
             // label40
             // 
@@ -499,6 +504,7 @@
             this.label40.Size = new System.Drawing.Size(110, 16);
             this.label40.TabIndex = 257;
             this.label40.Text = "不良品数量：";
+            this.label40.Visible = false;
             // 
             // label39
             // 
@@ -509,6 +515,7 @@
             this.label39.Size = new System.Drawing.Size(110, 16);
             this.label39.TabIndex = 256;
             this.label39.Text = "合格品数量：";
+            this.label39.Visible = false;
             // 
             // label41
             // 
@@ -519,6 +526,7 @@
             this.label41.Size = new System.Drawing.Size(25, 16);
             this.label41.TabIndex = 258;
             this.label41.Text = "只";
+            this.label41.Visible = false;
             // 
             // btn查看日志
             // 
@@ -653,11 +661,35 @@
             this.label33.TabIndex = 283;
             this.label33.Text = "生产指令编号：";
             // 
+            // btn数据审核
+            // 
+            this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn数据审核.Location = new System.Drawing.Point(923, 176);
+            this.btn数据审核.Name = "btn数据审核";
+            this.btn数据审核.Size = new System.Drawing.Size(90, 30);
+            this.btn数据审核.TabIndex = 286;
+            this.btn数据审核.Text = "数据审核";
+            this.btn数据审核.UseVisualStyleBackColor = true;
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
+            // 
+            // btn提交数据审核
+            // 
+            this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
+            this.btn提交数据审核.Location = new System.Drawing.Point(797, 177);
+            this.btn提交数据审核.Name = "btn提交数据审核";
+            this.btn提交数据审核.Size = new System.Drawing.Size(120, 30);
+            this.btn提交数据审核.TabIndex = 285;
+            this.btn提交数据审核.Text = "提交数据审核";
+            this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
+            // 
             // BTVRunningRecordRHJseal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1051, 570);
+            this.Controls.Add(this.btn数据审核);
+            this.Controls.Add(this.btn提交数据审核);
             this.Controls.Add(this.lbl生产指令编号);
             this.Controls.Add(this.label33);
             this.Controls.Add(this.label30);
@@ -762,5 +794,7 @@
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label lbl生产指令编号;
         private System.Windows.Forms.Label label33;
+        private System.Windows.Forms.Button btn数据审核;
+        private System.Windows.Forms.Button btn提交数据审核;
     }
 }
