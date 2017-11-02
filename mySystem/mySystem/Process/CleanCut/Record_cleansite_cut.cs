@@ -688,7 +688,7 @@ namespace mySystem.Process.CleanCut
         {
             dt_prodinstr.Rows[0]["审核人"] = mySystem.Parameter.userName;
 
-            dt_prodinstr.Rows[0]["检查结果"] = checkform.ischeckOk==true?"合格":"不合格" ;
+            //dt_prodinstr.Rows[0]["检查结果"] = checkform.ischeckOk==true?"合格":"不合格" ;
             dt_prodinstr.Rows[0]["审核是否通过"] = checkform.ischeckOk;
 
             dt_prodinstr.Rows[0]["审核意见"] = checkform.opinion;

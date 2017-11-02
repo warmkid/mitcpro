@@ -94,6 +94,7 @@ namespace mySystem.Process.CleanCut
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
 
+            btn查询新建.Visible = false;
             IDShow(ID);
         }           
 
