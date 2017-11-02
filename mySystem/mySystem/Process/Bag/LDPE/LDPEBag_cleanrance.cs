@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Bag.LDPE
 {
@@ -25,11 +26,12 @@ namespace mySystem.Process.Bag.LDPE
         /// <summary>
         /// 0:操作员，1：审核员，2：管理员
         /// </summary>
-        int _userState;
+        Parameter.UserState _userState;
+        
         /// <summary>
         /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
         /// </summary>
-        int _formState;
+        Parameter.FormState _formState;
         // 当前数据在自己表中的id
         int _id;
         String _code;
@@ -57,11 +59,10 @@ namespace mySystem.Process.Bag.LDPE
 
         public LDPEBag_cleanrance(MainForm mainform):base(mainform)
         {           
-            // 判断设置是否变化
             InitializeComponent();
             fill_printer();
             variableInit();
-            // 若为未保存状态，则判断设置是否变化
+
             getOtherData();
             getPeople();
 
@@ -93,6 +94,7 @@ namespace mySystem.Process.Bag.LDPE
                 setDataGridViewColumn();
                 innerBind();
             }
+            //判断设置有没有变化
             matchInnerData();
 
             // 获取和显示内容有关的变量
@@ -146,6 +148,7 @@ namespace mySystem.Process.Bag.LDPE
             ID = mySystem.Parameter.ldpebagInstruID;
             i生产指令ID = ID;
             CODE = mySystem.Parameter.ldpebagInstruction;
+            lb生产指令编号.Text = CODE;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
@@ -169,6 +172,7 @@ namespace mySystem.Process.Bag.LDPE
             DataTable dt1 = new DataTable("temp");
             da1.Fill(dt1);
             CODE = dt1.Rows[0]["生产指令编号"].ToString();
+            lb生产指令编号.Text = CODE;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
@@ -201,9 +205,28 @@ namespace mySystem.Process.Bag.LDPE
 
         void setUseState()
         {
-            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 0;
-            else if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 1;
-            else _userState = 2;
+            //if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 0;
+            //else if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState = 1;
+            //else _userState = 2;
+
+            _userState = Parameter.UserState.NoBody;
+            if (ls操作员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.操作员;
+            if (ls审核员.IndexOf(mySystem.Parameter.userName) >= 0) _userState |= Parameter.UserState.审核员;
+            // 如果即不是操作员也不是审核员，则是管理员
+            if (Parameter.UserState.NoBody == _userState)
+            {
+                _userState = Parameter.UserState.管理员;
+                label角色.Text = "管理员";
+            }
+            // 让用户选择操作员还是审核员，选“是”表示操作员
+            if (Parameter.UserState.Both == _userState)
+            {
+                if (DialogResult.Yes == MessageBox.Show("您是否要以操作员身份进入", "提示", MessageBoxButtons.YesNo)) _userState = Parameter.UserState.操作员;
+                else _userState = Parameter.UserState.审核员;
+
+            }
+            if (Parameter.UserState.操作员 == _userState) label角色.Text = "操作员";
+            if (Parameter.UserState.审核员 == _userState) label角色.Text = "审核员";
         }
 
         // 读取数据，根据自己表的ID
@@ -220,9 +243,11 @@ namespace mySystem.Process.Bag.LDPE
         // 读取数据，无参数表示从Paramter中读取数据
         void readOuterData()
         {
-            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期=#{1}# and 生产班次='{2}'";
-            DateTime date = DateTime.Parse(DateTime.Now.ToString("yyyy/MM/dd"));
-            daOuter = new OleDbDataAdapter(String.Format(sql, i生产指令ID, date, mySystem.Parameter.userflight), conn);
+            //String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期=#{1}# and 生产班次='{2}'";
+            //DateTime date = DateTime.Parse(DateTime.Now.ToString("yyyy/MM/dd"));
+            //daOuter = new OleDbDataAdapter(String.Format(sql, i生产指令ID, date, mySystem.Parameter.userflight), conn);
+            String sql = "select * from 清场记录 where 生产指令ID={0}";
+            daOuter = new OleDbDataAdapter(String.Format(sql, i生产指令ID), conn);
             cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("清场记录");
             bsOuter = new BindingSource();
@@ -237,8 +262,12 @@ namespace mySystem.Process.Bag.LDPE
             dr["产品批号"] = str产品批号;
             dr["生产日期"] = DateTime.Parse( DateTime.Now.ToString("yyyy/MM/dd"));
             dr["生产班次"] = mySystem.Parameter.userflight;
-            dr["清场员"] = mySystem.Parameter.userName;
+            dr["操作员"] = mySystem.Parameter.userName;
             dr["检查结果"] = "合格";
+
+            string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
+            log += "生产指令编码：" + lb生产指令编号.Text + "\n";
+            dr["日志"] = log;
             return dr;
         }
 
@@ -426,44 +455,76 @@ namespace mySystem.Process.Bag.LDPE
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
-
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            if (dt.Rows.Count > 0)
+            {
+                string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        ls操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        ls审核员.Add(s1[i]);
+                }
+            }
 
         }
 
-        void setFormState()
+        void setFormState(bool newForm = false)
         {
-            string s = dtOuter.Rows[0]["检查员"].ToString();
+
+            if (newForm)
+            {
+                _formState = Parameter.FormState.无数据;
+                return;
+            }
+            string s = dtOuter.Rows[0]["审核员"].ToString();
             bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核是否通过"]);
-            if (s == "") _formState = 0;
-            else if (s == "__待审核") _formState = 1;
+            if (s == "") _formState = Parameter.FormState.未保存;
+            else if (s == "__待审核") _formState = Parameter.FormState.待审核;
             else
             {
-                if (b) _formState = 2;
-                else _formState = 3;
+                if (b) _formState = Parameter.FormState.审核通过;
+                else _formState = Parameter.FormState.审核未通过;
             }
         }
         void setEnableReadOnly()
         {
 
-            if (2 == _userState)
+            if (_userState == Parameter.UserState.管理员)
             {
+                //控件都能点
                 setControlTrue();
             }
-            if (1 == _userState)
+            else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                if (1 == _formState)
+                if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
                 {
+                    //控件都不能点，只有打印,日志可点
+                    setControlFalse();
+                }
+                else //1待审核
+                {
+                    //发送审核不可点，其他都可点
                     setControlTrue();
                     btn审核.Enabled = true;
                 }
-                else setControlFalse();
             }
-            if (0 == _userState)
+            else//操作员
             {
-                if (0 == _formState || 3 == _formState) setControlTrue();
-                else setControlFalse();
+                if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
+                {
+                    //控件都不能点
+                    setControlFalse();
+                }
+                else //0未保存||3审核未通过
+                {
+                    //发送审核，审核不能点
+                    setControlTrue();
+                }
             }
         }
 
@@ -488,6 +549,10 @@ namespace mySystem.Process.Bag.LDPE
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+
+            tb产品代码.ReadOnly = true;
+            tb产品批号.ReadOnly = true;
+            dtp生产日期.Enabled = false;
         }
 
         void setControlFalse()
@@ -547,19 +612,52 @@ namespace mySystem.Process.Bag.LDPE
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
+        //检查内表中是否每条记录都 完成
+        private bool datagridview_check()
+        {
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["清洁操作"].Value.ToString() == "不适用")
+                {
+                    MessageBox.Show("有带确认项目未完成");
+                    return false;
+                }
+            }
+            return true;
+        }
+        //保存功能
+        private bool Save()
+        {
+            if (mySystem.Parameter.NametoID(tb操作员.Text) == 0)
+            {
+                MessageBox.Show("操作员ID不存在");
+                return false;
+            }
+            else if (datagridview_check() == false)
+            {
+                return false;
+            }
+            else
+            {
+                bsOuter.EndEdit();
+                daOuter.Update((DataTable)bsOuter.DataSource);
+                readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                outerBind();
+
+
+                daInner.Update((DataTable)bsInner.DataSource);
+                readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+                innerBind();
+
+                return true;
+            }
+        }
+
         private void btn保存_Click(object sender, EventArgs e)
         {
-            bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
-            readOuterData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            outerBind();
-
-
-            daInner.Update((DataTable)bsInner.DataSource);
-            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            innerBind();
-
-            if (_userState == 0) btn提交审核.Enabled = true;
+            bool isSaved = Save();
+            if (_userState == Parameter.UserState.操作员 && isSaved == true)
+                btn提交审核.Enabled = true;
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)
@@ -585,7 +683,7 @@ namespace mySystem.Process.Bag.LDPE
             dt.Rows.Add(dr);
             da.Update(dt);
 
-            dtOuter.Rows[0]["检查员"] = "__待审核";
+            dtOuter.Rows[0]["审核员"] = "__待审核";
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n操作员：" + mySystem.Parameter.userName + " 提交审核\n";
@@ -605,7 +703,9 @@ namespace mySystem.Process.Bag.LDPE
         {
             try
             {
-                MessageBox.Show(dtOuter.Rows[0]["日志"].ToString());
+                //MessageBox.Show(dtOuter.Rows[0]["日志"].ToString());
+                mySystem.Other.LogForm logform = new mySystem.Other.LogForm();
+                logform.setLog(dtOuter.Rows[0]["日志"].ToString()).Show();
             }
             catch (Exception exp)
             {
@@ -615,7 +715,7 @@ namespace mySystem.Process.Bag.LDPE
 
         private void btn审核_Click(object sender, EventArgs e)
         {
-            if (dtOuter.Rows[0]["清场员"].ToString() == mySystem.Parameter.userName)
+            if (dtOuter.Rows[0]["操作员"].ToString() == mySystem.Parameter.userName)
             {
                 MessageBox.Show("操作员和审核员不能是同一个人！");
                 return;
@@ -638,7 +738,7 @@ namespace mySystem.Process.Bag.LDPE
             dt.Rows[0].Delete();
             da.Update(dt);
 
-            dtOuter.Rows[0]["检查员"] = mySystem.Parameter.userName;
+            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核是否通过"] = true;
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
@@ -693,7 +793,7 @@ namespace mySystem.Process.Bag.LDPE
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             string dir = System.IO.Directory.GetCurrentDirectory();
-            dir += "./../../xls/LDPEBag/8 SOP-MFG-110-R01A 清场记录.xlsx";
+            dir += "./../../xls/LDPE/8 SOP-MFG-110-R01A 清场记录.xlsx";
             Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(dir);
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
@@ -733,15 +833,8 @@ namespace mySystem.Process.Bag.LDPE
                 {
                     if (1 == label_打印成功)
                     {
-                        string str角色;
-                        if (_userState == 0)
-                            str角色 = "操作员";
-                        else if (_userState == 1)
-                            str角色 = "审核员";
-                        else
-                            str角色 = "管理员";
                         string log = "\n=====================================\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + str角色 + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色 + ":" + mySystem.Parameter.userName + " 完成打印\n";
                         dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
                         bsOuter.EndEdit();
                         daOuter.Update((DataTable)bsOuter.DataSource);
@@ -793,24 +886,24 @@ namespace mySystem.Process.Bag.LDPE
                 my.Cells[5 + i, 2].Value = dtInner.Rows[i]["清场项目"].ToString(); 
                 my.Cells[5 + i, 3].Value = dtInner.Rows[i]["清场要点"].ToString();
                 if (dtInner.Rows[0]["清洁操作"].ToString() == "完成")
-                    my.Cells[5 + i, 4].Value = "完成☑  不适用□";
+                    my.Cells[5 + i, 6].Value = "完成☑  不适用□";
                 else if (dtOuter.Rows[0]["清洁操作"].ToString() == "不适用")
-                    my.Cells[5 + i, 4].Value = "完成□  不适用☑";
+                    my.Cells[5 + i, 6].Value = "完成□  不适用☑";
                 else
-                    my.Cells[5 + i, 4].Value = "完成□  不适用□";
+                    my.Cells[5 + i, 6].Value = "完成□  不适用□";
                // my.Cells[5 + i, 6].Value = dtInner.Rows[i]["清洁操作"].ToString(); 
             }      
             //my.Cells[5, 7].Value = dtOuter.Rows[0]["检查结果"].ToString();
 
             if (dtOuter.Rows[0]["检查结果"].ToString() == "合格")
-                my.Cells[5, 5].Value = "合格☑\n不合格□";
+                my.Cells[5, 7].Value = "合格☑\n不合格□";
             else if (dtOuter.Rows[0]["检查结果"].ToString() == "不合格")
-                my.Cells[5, 5].Value = "合格□\n不合格☑";
+                my.Cells[5, 7].Value = "合格□\n不合格☑";
             else
-                my.Cells[5, 5].Value = "合格□\n不合格□";
-            my.Cells[5, 6].Value = dtOuter.Rows[0]["清场员"].ToString(); 
-            my.Cells[5, 7].Value = dtOuter.Rows[0]["检查员"].ToString();
-            my.Cells[20 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
+                my.Cells[5, 7].Value = "合格□\n不合格□";
+            my.Cells[5, 8].Value = dtOuter.Rows[0]["操作员"].ToString(); 
+            my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"].ToString();
+            my.Cells[19 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
 
         }
 

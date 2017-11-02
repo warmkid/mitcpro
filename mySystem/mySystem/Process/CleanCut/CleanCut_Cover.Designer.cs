@@ -46,9 +46,6 @@
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
-            this.dtp结束时间 = new System.Windows.Forms.DateTimePicker();
-            this.label11 = new System.Windows.Forms.Label();
-            this.dtp开始时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp批准时间 = new System.Windows.Forms.DateTimePicker();
             this.tb批准 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -62,9 +59,6 @@
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label6 = new System.Windows.Forms.Label();
-            this.tb使用物料 = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.tb生产指令 = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -111,9 +105,6 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.dtp结束时间);
-            this.splitContainer1.Panel2.Controls.Add(this.label11);
-            this.splitContainer1.Panel2.Controls.Add(this.dtp开始时间);
             this.splitContainer1.Panel2.Controls.Add(this.dtp批准时间);
             this.splitContainer1.Panel2.Controls.Add(this.tb批准);
             this.splitContainer1.Panel2.Controls.Add(this.label9);
@@ -124,9 +115,6 @@
             this.splitContainer1.Panel2.Controls.Add(this.tb汇总);
             this.splitContainer1.Panel2.Controls.Add(this.label7);
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView2);
-            this.splitContainer1.Panel2.Controls.Add(this.label6);
-            this.splitContainer1.Panel2.Controls.Add(this.tb使用物料);
-            this.splitContainer1.Panel2.Controls.Add(this.label5);
             this.splitContainer1.Panel2.Controls.Add(this.tb生产指令);
             this.splitContainer1.Panel2.Controls.Add(this.label4);
             this.splitContainer1.Panel2.Controls.Add(this.label3);
@@ -227,29 +215,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "清洁分切工序记录 目录";
             // 
-            // dtp结束时间
-            // 
-            this.dtp结束时间.Location = new System.Drawing.Point(291, 118);
-            this.dtp结束时间.Name = "dtp结束时间";
-            this.dtp结束时间.Size = new System.Drawing.Size(153, 26);
-            this.dtp结束时间.TabIndex = 22;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(261, 125);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(24, 16);
-            this.label11.TabIndex = 21;
-            this.label11.Text = "到";
-            // 
-            // dtp开始时间
-            // 
-            this.dtp开始时间.Location = new System.Drawing.Point(101, 118);
-            this.dtp开始时间.Name = "dtp开始时间";
-            this.dtp开始时间.Size = new System.Drawing.Size(154, 26);
-            this.dtp开始时间.TabIndex = 20;
-            // 
             // dtp批准时间
             // 
             this.dtp批准时间.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -338,11 +303,11 @@
             this.Column5,
             this.Column6,
             this.Column7});
-            this.dataGridView2.Location = new System.Drawing.Point(4, 165);
+            this.dataGridView2.Location = new System.Drawing.Point(4, 92);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowTemplate.Height = 23;
-            this.dataGridView2.Size = new System.Drawing.Size(463, 215);
+            this.dataGridView2.Size = new System.Drawing.Size(463, 288);
             this.dataGridView2.TabIndex = 7;
             // 
             // Column5
@@ -368,34 +333,6 @@
             this.Column7.HeaderText = "生产数量（米）";
             this.Column7.Name = "Column7";
             this.Column7.Width = 150;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(27, 130);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 14);
-            this.label6.TabIndex = 5;
-            this.label6.Text = "生产时段";
-            // 
-            // tb使用物料
-            // 
-            this.tb使用物料.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb使用物料.Location = new System.Drawing.Point(101, 85);
-            this.tb使用物料.Name = "tb使用物料";
-            this.tb使用物料.Size = new System.Drawing.Size(170, 23);
-            this.tb使用物料.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(27, 94);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 14);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "使用物料";
             // 
             // tb生产指令
             // 
@@ -448,12 +385,13 @@
             // 
             // bt打印
             // 
-            this.bt打印.Location = new System.Drawing.Point(402, 586);
+            this.bt打印.Location = new System.Drawing.Point(536, 585);
             this.bt打印.Name = "bt打印";
             this.bt打印.Size = new System.Drawing.Size(88, 23);
             this.bt打印.TabIndex = 51;
             this.bt打印.Text = "打印本页";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Visible = false;
             this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // bt审核
@@ -506,12 +444,13 @@
             // 
             // btn打印选中项
             // 
-            this.btn打印选中项.Location = new System.Drawing.Point(511, 586);
+            this.btn打印选中项.Location = new System.Drawing.Point(426, 585);
             this.btn打印选中项.Name = "btn打印选中项";
             this.btn打印选中项.Size = new System.Drawing.Size(86, 23);
             this.btn打印选中项.TabIndex = 57;
             this.btn打印选中项.Text = "打印选中项";
             this.btn打印选中项.UseVisualStyleBackColor = true;
+            this.btn打印选中项.Click += new System.EventHandler(this.btn打印选中项_Click);
             // 
             // CleanCut_Cover
             // 
@@ -562,9 +501,6 @@
         private System.Windows.Forms.TextBox tb汇总;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox tb使用物料;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox tb生产指令;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
@@ -573,9 +509,6 @@
         private System.Windows.Forms.Button bt打印;
         private System.Windows.Forms.Button bt审核;
         private System.Windows.Forms.Button bt确认;
-        private System.Windows.Forms.DateTimePicker dtp结束时间;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.DateTimePicker dtp开始时间;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;

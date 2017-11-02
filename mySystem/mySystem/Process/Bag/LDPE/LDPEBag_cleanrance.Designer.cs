@@ -46,14 +46,16 @@
             this.label10 = new System.Windows.Forms.Label();
             this.tb备注 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
-            this.tb检查员 = new System.Windows.Forms.TextBox();
-            this.tb清场员 = new System.Windows.Forms.TextBox();
+            this.tb审核员 = new System.Windows.Forms.TextBox();
+            this.tb操作员 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.lbl生产班次 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.tb生产指令编号 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.lb生产指令编号 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label角色 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -231,21 +233,21 @@
             this.label11.TabIndex = 110;
             this.label11.Text = "备注：";
             // 
-            // tb检查员
+            // tb审核员
             // 
-            this.tb检查员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb检查员.Location = new System.Drawing.Point(688, 400);
-            this.tb检查员.Name = "tb检查员";
-            this.tb检查员.Size = new System.Drawing.Size(175, 26);
-            this.tb检查员.TabIndex = 109;
+            this.tb审核员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb审核员.Location = new System.Drawing.Point(688, 400);
+            this.tb审核员.Name = "tb审核员";
+            this.tb审核员.Size = new System.Drawing.Size(175, 26);
+            this.tb审核员.TabIndex = 109;
             // 
-            // tb清场员
+            // tb操作员
             // 
-            this.tb清场员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb清场员.Location = new System.Drawing.Point(87, 400);
-            this.tb清场员.Name = "tb清场员";
-            this.tb清场员.Size = new System.Drawing.Size(175, 26);
-            this.tb清场员.TabIndex = 108;
+            this.tb操作员.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb操作员.Location = new System.Drawing.Point(87, 400);
+            this.tb操作员.Name = "tb操作员";
+            this.tb操作员.Size = new System.Drawing.Size(175, 26);
+            this.tb操作员.TabIndex = 108;
             // 
             // label12
             // 
@@ -287,14 +289,6 @@
             this.label5.TabIndex = 112;
             this.label5.Text = "班次：";
             // 
-            // tb生产指令编号
-            // 
-            this.tb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb生产指令编号.Location = new System.Drawing.Point(141, 43);
-            this.tb生产指令编号.Name = "tb生产指令编号";
-            this.tb生产指令编号.Size = new System.Drawing.Size(241, 26);
-            this.tb生产指令编号.TabIndex = 269;
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -305,19 +299,51 @@
             this.label6.TabIndex = 268;
             this.label6.Text = "生产指令编号:";
             // 
+            // lb生产指令编号
+            // 
+            this.lb生产指令编号.AutoSize = true;
+            this.lb生产指令编号.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lb生产指令编号.Location = new System.Drawing.Point(168, 46);
+            this.lb生产指令编号.Name = "lb生产指令编号";
+            this.lb生产指令编号.Size = new System.Drawing.Size(112, 16);
+            this.lb生产指令编号.TabIndex = 269;
+            this.lb生产指令编号.Text = "生产指令编号:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(721, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(93, 16);
+            this.label7.TabIndex = 271;
+            this.label7.Text = "登录角色：";
+            // 
+            // label角色
+            // 
+            this.label角色.AutoSize = true;
+            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Location = new System.Drawing.Point(826, 46);
+            this.label角色.Name = "label角色";
+            this.label角色.Size = new System.Drawing.Size(42, 16);
+            this.label角色.TabIndex = 270;
+            this.label角色.Text = "角色";
+            // 
             // LDPEBag_cleanrance
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(903, 511);
-            this.Controls.Add(this.tb生产指令编号);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label角色);
+            this.Controls.Add(this.lb生产指令编号);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.lbl生产班次);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.tb备注);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.tb检查员);
-            this.Controls.Add(this.tb清场员);
+            this.Controls.Add(this.tb审核员);
+            this.Controls.Add(this.tb操作员);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label13);
             this.Controls.Add(this.cmb检查结果);
@@ -364,13 +390,15 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox tb备注;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox tb检查员;
-        private System.Windows.Forms.TextBox tb清场员;
+        private System.Windows.Forms.TextBox tb审核员;
+        private System.Windows.Forms.TextBox tb操作员;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label lbl生产班次;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tb生产指令编号;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label lb生产指令编号;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label角色;
     }
 }

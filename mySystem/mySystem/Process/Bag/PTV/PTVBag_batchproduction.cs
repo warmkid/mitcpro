@@ -97,20 +97,30 @@ namespace mySystem.Process.Bag.PTV
         private void init()
         {
             record = new List<string>();
-            //record.Add("SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx");
-            record.Add("SOP-MFG-305-R01A PTV生产指令.xlsx");
-            record.Add("SOP-MFG-305-R03A PTV生产开机确认表.xlsx");
-            record.Add("SOP-MFG-102-R01A 生产领料记录.xlsx");
-            //record.Add("SOP-MFG-303-R03A 2# 制袋机运行记录.xlsx");
-            record.Add("SOP-MFG-109-R01A 产品内包装记录.xlsx");
-            record.Add("SOP-MFG-111-R01A 产品外包装记录.xlsx");
-            record.Add("SOP-MFG-110-R01A 清场记录.xlsx");
-            //record.Add("SOP-MFG-303-R04A PTV生产台帐.xlsx");  //需要？
-            record.Add("SOP-MFG-108-R01A 制袋岗位交接班记录.xlsx");
-            record.Add("内标签");
-            record.Add("外标签");
-            //record.Add("QB-PA-PP-03-R01A 产品外观和尺寸检验记录");
-            //record.Add("QB-PA-PP-03-R02A 产品热合强度检验记录");
+            record.Add("SOP-MFG-105-R01 制袋工序批生产记录封面");
+            record.Add("SOP-MFG-303-R01A 2#制袋工序生产指令");
+            record.Add("SOP-MFG-303-R02A  2# 制袋机开机前确认表");
+            record.Add("SOP-MFG-102-R01A  生产领料记录");
+            record.Add("SOP-MFG-102-R02A  生产退料记录");
+
+            record.Add("SOP-MFG-109-R01A  产品内包装记录");
+            record.Add("SOP-MFG-111-R01A  产品外包装记录");
+
+            record.Add("SOP-MFG-418-R01A 瓶口焊接机运行记录");
+            record.Add("SOP-MFG-412-R01A 底封机运行记录");
+            record.Add("SOP-MFG-413-R01A 圆口焊接机运行记录");
+            record.Add("SOP-MFG-415-R01A 泄漏测试记录");
+            record.Add("SOP-MFG-416-R01A 超声波焊接记录");
+
+
+            record.Add("SOP-MFG-110-R01A 清场记录");
+            record.Add("SOP-MFG-305-R04A PTV生产台帐");  //默认页数为1
+
+            record.Add("SOP-MFG-108-R01A 制袋岗位交接班记录");
+            record.Add("PTV 内标签");
+            record.Add("PTV 外标签");
+            record.Add("QB-PA-PP-03-R01A 产品外观和尺寸检验记录");
+            record.Add("QB-PA-PP-03-R02A 产品热合强度检验记录");
 
             initrecord();
             initly();
@@ -126,19 +136,21 @@ namespace mySystem.Process.Bag.PTV
 
             foreach (DataGridViewRow dgvr in dataGridView1.Rows)
             {
-                dgvr.Cells[0].Value = false;
+                dgvr.Cells[0].Value = false;//未勾选
             }
 
             dataGridView1.Columns[totalPage].ReadOnly = true;
            
             //dataGridView1.CellDoubleClick += dataGridView1_CellDoubleClick;
             //dataGridView1.CellValueChanged += dataGridView1_CellValueChanged;
-            // 生产指令
+
+            //封面
             int temp;
             int idx = 0;
-            int tempid;
+            dataGridView1.Rows[idx].Cells[totalPage].Value = 1;//封面页数默认为1
 
-            //生产指令
+            // 生产指令
+            idx++;
             da = new OleDbDataAdapter("select * from 生产指令 where  生产指令编号='" + _生产指令 + "'", mySystem.Parameter.connOle);
             dt = new DataTable("生产指令");
             da.Fill(dt);
@@ -163,10 +175,10 @@ namespace mySystem.Process.Bag.PTV
             }
             else
             {
-                for (int i = 0; i < temp; ++i)
-                {
-                    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-                }
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
                 dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
             }
             // 生产领料使用记录
@@ -181,30 +193,31 @@ namespace mySystem.Process.Bag.PTV
             }
             else
             {
-                for (int i = 0; i < temp; ++i)
-                {
-                    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-                }
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
                 dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
             }
-            // 制袋机运行记录
-            //idx++;
-            //da = new OleDbDataAdapter("select * from 制袋机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-            //dt = new DataTable("制袋机组运行记录制袋机组运行记录");
-            //da.Fill(dt);
-            //temp = dt.Rows.Count;
-            //if (temp <= 0)
-            //{
-            //    disableRow(idx);
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < temp; ++i)
-            //    {
-            //        dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-            //    }
-            //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-            //}
+
+            //生产退料使用记录
+            idx++;
+            da = new OleDbDataAdapter("select * from 生产退料记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable("生产退料记录表");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
             
             //  产品内包装记录
             idx++;
@@ -218,10 +231,10 @@ namespace mySystem.Process.Bag.PTV
             }
             else
             {
-                for (int i = 0; i < temp; ++i)
-                {
-                    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-                }
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
                 dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
             }
 
@@ -237,10 +250,106 @@ namespace mySystem.Process.Bag.PTV
             }
             else
             {
-                for (int i = 0; i < temp; ++i)
-                {
-                    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-                }
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
+
+            //  瓶口焊接机运行记录
+            idx++;
+            da = new OleDbDataAdapter("select * from 瓶口焊接机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable("瓶口焊接机运行记录");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
+
+            //底封机运行记录
+            idx++;
+            da = new OleDbDataAdapter("select * from 底封机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable("底封机运行记录");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
+
+            //  圆口焊接机运行记录
+            idx++;
+            da = new OleDbDataAdapter("select * from 圆口焊接机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable("圆口焊接机运行记录");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
+
+            //泄漏测试记录
+            idx++;
+            da = new OleDbDataAdapter("select * from 泄漏测试记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable("泄漏测试记录");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
+
+
+            //超声波焊接记录
+            idx++;
+            da = new OleDbDataAdapter("select * from 超声波焊接记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable("超声波焊接记录");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
                 dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
             }
 
@@ -256,36 +365,19 @@ namespace mySystem.Process.Bag.PTV
             }
             else
             {
-                for (int i = 0; i < temp; ++i)
-                {
-                    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-                }
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
                 dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
             }
-            //  PTV制袋日报表  TODO：是否需要，日报表不存数据库？
-            //idx++;
-            //da = new OleDbDataAdapter("select * from CS制袋日报表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-            //dt = new DataTable("CS制袋日报表");
-            //da.Fill(dt);
-            //temp = dt.Rows.Count;
-            //if (temp <= 0)
-            //{
-            //    disableRow(idx);
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < temp; ++i)
-            //    {
-            //        dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-            //    }
-            //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-            //}
 
-            //日报表台账，先不打印
+            //  PTV生产台帐
             idx++;
-            disableRow(idx);
+            dataGridView1.Rows[idx].Cells[totalPage].Value = 1;
+            disableRow(idx);//默认不能打印
 
-            //  交接班
+            //  制袋岗位交接班记录
             idx++;
             da = new OleDbDataAdapter("select * from 岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
             dt = new DataTable("岗位交接班记录");
@@ -297,50 +389,60 @@ namespace mySystem.Process.Bag.PTV
             }
             else
             {
-                for (int i = 0; i < temp; ++i)
-                {
-                    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-                }
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
                 dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
             }
 
+            //PTV 内标签
+            idx++;
+            dataGridView1.Rows[idx].Cells[totalPage].Value = 1;
+            disableRow(idx);//先不打印
+
+            //PTV 外标签
+            idx++;
+            dataGridView1.Rows[idx].Cells[totalPage].Value = 1;
+            disableRow(idx);//先不打印
+
             //  产品外观和尺寸检验记录
-            //idx++;
-            //da = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-            //dt = new DataTable("产品外观和尺寸检验记录");
-            //da.Fill(dt);
-            //temp = dt.Rows.Count;
-            //if (temp <= 0)
-            //{
-            //    disableRow(idx);
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < temp; ++i)
-            //    {
-            //        dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-            //    }
-            //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-            //}
+            idx++;
+            da = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable("产品外观和尺寸检验记录");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
 
             // 产品热合强度检验记录
-            //idx++;
-            //da = new OleDbDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-            //dt = new DataTable("产品热合强度检验记录");
-            //da.Fill(dt);
-            //temp = dt.Rows.Count;
-            //if (temp <= 0)
-            //{
-            //    disableRow(idx);
-            //}
-            //else
-            //{
-            //    for (int i = 0; i < temp; ++i)
-            //    {
-            //        dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-            //    }
-            //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
-            //}
+            idx++;
+            da = new OleDbDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            dt = new DataTable("产品热合强度检验记录");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                //for (int i = 0; i < temp; ++i)
+                //{
+                //    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                //}
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
 
 
             // 另外一个datagridview
@@ -353,8 +455,8 @@ namespace mySystem.Process.Bag.PTV
             {
                 int sum = 0;
                 for (int i = 0; i < dt.Rows.Count; i++)
-                    sum += Convert.ToInt32(dt.Rows[i]["产品数量只数合计B"].ToString());
-                dt.Rows[0]["产品数量只数合计B"] = sum;
+                    sum += Convert.ToInt32(dt.Rows[i]["生产数量"].ToString());
+                dt.Rows[0]["生产数量"] = sum;
                 while (1 != dt.Rows.Count)
                     dt.Rows.RemoveAt(dt.Rows.Count - 1);                                     
             }
@@ -372,8 +474,8 @@ namespace mySystem.Process.Bag.PTV
                 {
                     dr.Cells.Add(c.CellTemplate.Clone() as DataGridViewCell);//给行添加单元格
                 }
-                dr.Cells[2].Value = i + 1;
-                dr.Cells[3].Value = record[i];
+                dr.Cells[2].Value = i + 1;//序号
+                dr.Cells[3].Value = record[i];//记录
                 dataGridView1.Rows.Add(dr);
             }
         }
@@ -777,7 +879,11 @@ namespace mySystem.Process.Bag.PTV
                 List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
                 switch (r)
                 {
-                    case 0: // 生产指令
+                    case 0:// 制袋工序批生产记录封面
+                        perform打印本页();
+                        break;
+
+                    case 1: // 生产指令
                         da = new OleDbDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         dt = new DataTable("生产指令");
                         da.Fill(dt);
@@ -788,7 +894,7 @@ namespace mySystem.Process.Bag.PTV
                             GC.Collect();
                         }
                         break;
-                    case 1: // 开机确认
+                    case 2: // 开机确认
                         da = new OleDbDataAdapter("select * from 制袋机组开机前确认表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         dt = new DataTable("制袋机组开机前确认表");
                         da.Fill(dt);
@@ -800,7 +906,7 @@ namespace mySystem.Process.Bag.PTV
                         }
 
                         break;
-                    case 2: // 制袋领料记录
+                    case 3: // 制袋领料记录
                         da = new OleDbDataAdapter("select * from 生产领料使用记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         dt = new DataTable("制袋领料记录");
                         da.Fill(dt);
@@ -812,18 +918,18 @@ namespace mySystem.Process.Bag.PTV
                         }
 
                         break;
-                    //case 3://制袋机组运行记录
-                    //    da = new OleDbDataAdapter("select * from 制袋机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-                    //    dt = new DataTable("制袋机组运行记录");
-                    //    da.Fill(dt);
-                    //    foreach (int page in pages)
-                    //    {
-                    //        id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                    //        (new mySystem.Process.Bag.RunningRecord(mainform, id)).print(false);
-                    //        GC.Collect();
-                    //    }
-                    //    break;
-                    case 3:// 内包                                    
+                    case 4://生产退料记录
+                        da = new OleDbDataAdapter("select * from 生产退料记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("生产退料记录表");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.RunningRecord(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+                    case 5:// 内包                                    
                         da = new OleDbDataAdapter("select * from 产品内包装记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         dt = new DataTable("产品内包装记录");
                         da.Fill(dt);
@@ -836,7 +942,8 @@ namespace mySystem.Process.Bag.PTV
 
                         }
                         break;
-                    case 4://外包
+
+                    case 6://外包
                         da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         dt = new DataTable("产品外包装记录");
                         da.Fill(dt);
@@ -847,7 +954,80 @@ namespace mySystem.Process.Bag.PTV
                             GC.Collect();
                         }
                         break;
-                    case 5://清场
+
+                    case 7://瓶口焊接机运行记录
+                        da = new OleDbDataAdapter("select * from 瓶口焊接机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("瓶口焊接机运行记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTV产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 8://底封机运行记录
+                        da = new OleDbDataAdapter("select * from 底封机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("底封机运行记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTV产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 9://圆口焊接机运行记录
+                        da = new OleDbDataAdapter("select * from 圆口焊接机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("圆口焊接机运行记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTV产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 10://圆口焊接机运行记录
+                        da = new OleDbDataAdapter("select * from 圆口焊接机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("圆口焊接机运行记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTV产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 11://泄漏测试记录
+                        da = new OleDbDataAdapter("select * from 泄漏测试记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("泄漏测试记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTVBag_clearance(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 12://超声波焊接记录
+                        da = new OleDbDataAdapter("select * from 超声波焊接记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("超声波焊接记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTVBag_clearance(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 13://清场记录
                         da = new OleDbDataAdapter("select * from 清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         dt = new DataTable("清场记录");
                         da.Fill(dt);
@@ -858,19 +1038,11 @@ namespace mySystem.Process.Bag.PTV
                             GC.Collect();
                         }
                         break;
-                    case 6:// 日报
 
-                        //da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-                        //dt = new DataTable("吹膜机组运行记录");
-                        //da.Fill(dt);
-                        //foreach (int page in pages)
-                        //{
-                        //    id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                        //    (new mySystem.Process.Extruction.B.Running(mainform, id)).print(false);
-                        //    GC.Collect();
-                        //}
+                    case 14:// PTV生产台帐
                         break;
-                    case 7:// 交接
+
+                    case 15:// 制袋岗位交接班记录
                         da = new OleDbDataAdapter("select * from 岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
                         dt = new DataTable("岗位交接班记录");
                         da.Fill(dt);
@@ -881,35 +1053,53 @@ namespace mySystem.Process.Bag.PTV
                             GC.Collect();
                         }
                         break;
-                    case 8:// 内标签
 
-                        //da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-                        //dt = new DataTable("吹膜工序废品记录");
-                        //da.Fill(dt);
-                        //foreach (int page in pages)
-                        //{
-                        //    id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                        //    (new mySystem.Process.Extruction.B.Waste(mainform, id)).print(false);
-                        //    GC.Collect();
-                        //}
-                        break;
-                    case 9:
-                        // 外标签
-                        //da = new OleDbDataAdapter("select * from 吹膜工序清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-                        //dt = new DataTable("吹膜工序清场记录");
-                        //da.Fill(dt);
-                        //foreach (int page in pages)
-                        //{
-                        //    id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                        //    (new mySystem.Extruction.Process.Record_extrusSiteClean(mainform, id)).print(false);
-                        //    GC.Collect();
-                        //}
+                    case 16:// 内标签
                         break;
 
+                    case 17://外标签
+                        break;
+
+                    case 18:// 产品外观和尺寸检验记录
+                        da = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("产品外观和尺寸检验记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.HandOver(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 19:// 产品热合强度检验记录
+                        da = new OleDbDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        dt = new DataTable("产品热合强度检验记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.HandOver(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
                 }
             }
         }
 
+        public void perform打印本页()
+        {
+            if (comboBox打印机选择.Text == "")
+            {
+                MessageBox.Show("选择一台打印机");
+                return;
+            }
+            SetDefaultPrinter(comboBox打印机选择.Text);
+            //true->预览
+            //false->打印
+            print(false);
+            GC.Collect();
+        }
         private void btn打印本页_Click(object sender, EventArgs e)
         {
             if (comboBox打印机选择.Text == "")

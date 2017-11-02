@@ -241,7 +241,7 @@
             // btn查询新建
             // 
             this.btn查询新建.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn查询新建.Location = new System.Drawing.Point(856, 58);
+            this.btn查询新建.Location = new System.Drawing.Point(919, 58);
             this.btn查询新建.Name = "btn查询新建";
             this.btn查询新建.Size = new System.Drawing.Size(96, 30);
             this.btn查询新建.TabIndex = 220;

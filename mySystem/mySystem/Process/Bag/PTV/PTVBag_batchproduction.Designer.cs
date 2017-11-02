@@ -418,6 +418,7 @@
             this.btn打印本页.TabIndex = 156;
             this.btn打印本页.Text = "打印本页";
             this.btn打印本页.UseVisualStyleBackColor = true;
+            this.btn打印本页.Visible = false;
             this.btn打印本页.Click += new System.EventHandler(this.btn打印本页_Click);
             // 
             // PTVBag_batchproduction
