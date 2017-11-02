@@ -448,7 +448,7 @@ namespace mySystem.Process.Bag.PTV
             // 另外一个datagridview
             // 读内包装
             da = new OleDbDataAdapter("select 产品代码,生产批号,产品数量只数合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
-            dt = new DataTable();
+            dt = new DataTable();           
             da.Fill(dt);
 
             if (dt.Rows.Count > 1)
@@ -462,7 +462,11 @@ namespace mySystem.Process.Bag.PTV
             }
 
             dataGridView2.AllowUserToAddRows = false;
-            dataGridView2.DataSource = dt;
+            int index = this.dataGridView2.Rows.Add();
+            this.dataGridView2.Rows[index].Cells[0].Value = dt.Rows[0]["产品代码"].ToString();//产品代码
+            this.dataGridView2.Rows[index].Cells[1].Value = dt.Rows[0]["生产批号"].ToString();
+            this.dataGridView2.Rows[index].Cells[2].Value = dt.Rows[0]["生产数量"].ToString(); //生产数量
+            //dataGridView2.DataSource = dt;
             dataGridView2.ReadOnly = true;
         }
         private void initrecord()

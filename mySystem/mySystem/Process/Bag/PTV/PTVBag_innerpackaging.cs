@@ -69,6 +69,7 @@ namespace mySystem.Process.Bag.PTV
             setControlFalse();
             cb产品代码.Enabled = true;
             btn查询新建.Enabled = true;
+            dtp生产日期.Enabled = true;
             //打印、查看日志按钮不可用
             btn打印.Enabled = false;
             btn查看日志.Enabled = false;
@@ -199,7 +200,7 @@ namespace mySystem.Process.Bag.PTV
                         }
                         cb产品代码.SelectedIndex = 0;
                         tb生产指令编号.Text = Instruction;
-                        tb生产日期.Text = DateTime.Now.ToString("yyyy/MM/dd");
+                        dtp生产日期.Text = DateTime.Now.ToString("yyyy/MM/dd");
                         OleDbDataAdapter da = new OleDbDataAdapter("select * from 用户 where 用户名='" + mySystem.Parameter.userName + "'", mySystem.Parameter.connOle);
                         DataTable dt = new DataTable();
                         da.Fill(dt);
@@ -350,6 +351,8 @@ namespace mySystem.Process.Bag.PTV
             //查询条件始终不可编辑
             cb产品代码.Enabled = false;
             btn查询新建.Enabled = false;
+            dtp生产日期.Enabled = false;
+            tb班次.ReadOnly = true;
         }
 
         /// <summary>
@@ -424,7 +427,7 @@ namespace mySystem.Process.Bag.PTV
         //******************************显示数据******************************//
 
         //显示根据信息查找
-        private void DataShow(Int32 InstruID, String productCode, string datetime, string flight)
+        private void DataShow(Int32 InstruID, String productCode, DateTime datetime, string flight)
         {
             //******************************外表 根据条件绑定******************************//  
             readOuterData(InstruID, productCode, datetime, flight);
@@ -479,7 +482,7 @@ namespace mySystem.Process.Bag.PTV
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
                 Instruction = dt1.Rows[0]["生产指令编号"].ToString();
-                string datetime = dt1.Rows[0]["生产日期"].ToString();
+                DateTime datetime = DateTime.Parse( dt1.Rows[0]["生产日期"].ToString());
                 string flight = dt1.Rows[0]["班次"].ToString();
                 DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), datetime, flight);
             }
@@ -488,12 +491,12 @@ namespace mySystem.Process.Bag.PTV
         //****************************** 嵌套 ******************************//
 
         //外表读数据，填datatable
-        private void readOuterData(Int32 InstruID, String productCode, string datetime, string flight)
+        private void readOuterData(Int32 InstruID, String productCode, DateTime datetime, string flight)
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
             string sql = "select * from " + table + " where 生产指令ID = {0} and 产品代码 = '{1}' and 生产日期='{2}' and 班次='{3}'";
-            da记录 = new OleDbDataAdapter(string.Format(sql, InstruID, productCode, datetime, flight), connOle);
+            da记录 = new OleDbDataAdapter(string.Format(sql, InstruID, productCode, datetime.ToString("yyyy/MM/dd"), flight), connOle);
             cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -543,8 +546,8 @@ namespace mySystem.Process.Bag.PTV
             tb审核员.DataBindings.Clear();
             tb审核员.DataBindings.Add("Text", bs记录.DataSource, "审核员");
 
-            tb生产日期.DataBindings.Clear();
-            tb生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
+            dtp生产日期.DataBindings.Clear();
+            dtp生产日期.DataBindings.Add("Text", bs记录.DataSource, "生产日期");
 
             tb班次.DataBindings.Clear();
             tb班次.DataBindings.Add("Text", bs记录.DataSource, "班次");
@@ -563,7 +566,7 @@ namespace mySystem.Process.Bag.PTV
             else
                 dr["内包装规格"] = 0;
 
-            dr["生产日期"] = tb生产日期.Text;
+            dr["生产日期"] = dtp生产日期.Value.ToString("yyyy/MM/dd");
             dr["班次"] = tb班次.Text;
             dr["标签语言中文"] = b标签;
             dr["标签语言英文"] = !b标签;
@@ -740,7 +743,7 @@ namespace mySystem.Process.Bag.PTV
         private void btn查询新建_Click(object sender, EventArgs e)
         {
             if (cb产品代码.SelectedIndex >= 0)
-            { DataShow(InstruID, cb产品代码.Text.ToString(), tb生产日期.Text, tb班次.Text); }
+            { DataShow(InstruID, cb产品代码.Text.ToString(), dtp生产日期.Value, tb班次.Text); }
         }
 
         //添加按钮
@@ -870,7 +873,7 @@ namespace mySystem.Process.Bag.PTV
                 //外表保存
                 bs记录.EndEdit();
                 da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(InstruID, cb产品代码.Text, tb生产日期.Text, tb班次.Text);
+                readOuterData(InstruID, cb产品代码.Text, dtp生产日期.Value, tb班次.Text);
                 outerBind();
 
                 setEnableReadOnly();
