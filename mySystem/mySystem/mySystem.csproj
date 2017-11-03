@@ -1626,6 +1626,9 @@
     <EmbeddedResource Include="Process\Bag\PTV\PTV产品外观和尺寸检验记录.resx">
       <DependentUpon>PTV产品外观和尺寸检验记录.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\Bag\PTV\PTV产品热合强度检验记录.cs.resx">
+      <DependentUpon>PTV产品热合强度检验记录.cs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Bag\PTV\PTV洁净区温湿度记录.resx">
       <DependentUpon>PTV洁净区温湿度记录.cs</DependentUpon>
     </EmbeddedResource>

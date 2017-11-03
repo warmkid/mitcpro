@@ -135,6 +135,7 @@
             this.bt打印.TabIndex = 49;
             this.bt打印.Text = "打印";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // PTVBag_dailyreport
             // 

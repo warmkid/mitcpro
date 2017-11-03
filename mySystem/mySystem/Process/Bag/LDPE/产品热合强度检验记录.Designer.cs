@@ -45,6 +45,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tb标准 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -216,11 +218,35 @@
             this.label2.TabIndex = 126;
             this.label2.Text = "标准:";
             // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button1.Location = new System.Drawing.Point(786, 540);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(116, 30);
+            this.button1.TabIndex = 332;
+            this.button1.Text = "提交数据审核";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Font = new System.Drawing.Font("SimSun", 12F);
+            this.button2.Location = new System.Drawing.Point(683, 540);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(97, 30);
+            this.button2.TabIndex = 331;
+            this.button2.Text = "数据审核";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // 产品热合强度检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1133, 641);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.tb标准);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btn添加);
@@ -265,5 +291,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tb标准;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }

@@ -990,36 +990,60 @@ namespace mySystem.Process.Bag.CS
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
                 {
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
-                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值1"].Value.ToString()) > DoubleStandard)
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值1"].Value.ToString()) < DoubleStandard)
                     {
                         dataGridView1.Rows[i].Cells["检测值1"].Style.BackColor = Color.Red;
                         //dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                         ColorReturn = false;
                     }
-                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值2"].Value.ToString()) > DoubleStandard)
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值1"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值2"].Value.ToString()) < DoubleStandard)
                     {
                         dataGridView1.Rows[i].Cells["检测值2"].Style.BackColor = Color.Red;
                         ColorReturn = false;
                     }
-                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值3"].Value.ToString()) > DoubleStandard)
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值2"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值3"].Value.ToString()) < DoubleStandard)
                     {
                         dataGridView1.Rows[i].Cells["检测值3"].Style.BackColor = Color.Red;
                         ColorReturn = false;
                     }
-                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值4"].Value.ToString()) > DoubleStandard)
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值3"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值4"].Value.ToString()) < DoubleStandard)
                     {
                         dataGridView1.Rows[i].Cells["检测值4"].Style.BackColor = Color.Red;
                         ColorReturn = false;
                     }
-                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值5"].Value.ToString()) > DoubleStandard)
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值4"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值5"].Value.ToString()) < DoubleStandard)
                     {
                         dataGridView1.Rows[i].Cells["检测值5"].Style.BackColor = Color.Red;
                         ColorReturn = false;
                     }
-                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值6"].Value.ToString()) > DoubleStandard)
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值5"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值6"].Value.ToString()) < DoubleStandard)
                     {
                         dataGridView1.Rows[i].Cells["检测值6"].Style.BackColor = Color.Red;
                         ColorReturn = false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值6"].Style.BackColor = Color.White;
                     }
                 }
             }
@@ -1065,7 +1089,7 @@ namespace mySystem.Process.Bag.CS
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\18 QB-PA-PP-03-R02A 产品热合强度检验记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
@@ -1118,33 +1142,26 @@ namespace mySystem.Process.Bag.CS
             }
         }
 
-        //打印功能
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
             //外表信息
-            mysheet.Cells[3, 1].Value = "生产指令："+dtOuter.Rows[0]["生产指令编号"].ToString();
-            mysheet.Cells[3, 6].Value = "产品代码：" + dtOuter.Rows[0]["产品代码"].ToString();
-            mysheet.Cells[3, 16].Value = "产品批号：" + dtOuter.Rows[0]["产品批号"].ToString();
             //mysheet.Cells[16, 16].Value = dtOuter.Rows[0]["平均值"].ToString();
-
-            int ind = 0;
-            if (dataGridView1.Rows.Count > 17)
-            {
-                //在第9行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 17; i++)
-                {
-                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[17, Type.Missing];
-                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
-                }
-                ind = dataGridView1.Rows.Count - 17;
-            }
+            //String stringtemp = "";
+            //stringtemp = "整理人：" + dtOuter.Rows[0]["整理人"].ToString();
+            //stringtemp = stringtemp + "       整理日期：" + Convert.ToDateTime(dtOuter.Rows[0]["整理时间"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["整理时间"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["整理时间"].ToString()).Day.ToString() + "日";
+            //mysheet.Cells[17, 1].Value = stringtemp;
+            //stringtemp = "复核人：" + dtOuter.Rows[0]["审核员"].ToString();
+            //stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dtOuter.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
+            //mysheet.Cells[17, 7].Value = stringtemp;
+            mysheet.Cells[4, 1].Value = String.Format("标准：≥{0}N/15mm,合格划√，不合格划×。", dtOuter.Rows[0]["标准"]);
             //内表信息
-            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            int rownum = dtInner.Rows.Count;
+            //无需插入的部分
+            for (int i = 0; i < (rownum > 15 ? 15 : rownum); i++)
             {
-                mysheet.Cells[6 + i, 1].Value = dtInner.Rows[i]["序号"].ToString();
-                mysheet.Cells[6 + i, 2].Value = dtInner.Rows[i]["生产日期"].ToString();
-                mysheet.Cells[6 + i, 3].Value = dtInner.Rows[i]["生产时间"].ToString();
+                mysheet.Cells[6 + i, 1].Value = i + 1;
+                mysheet.Cells[6 + i, 2].Value = Convert.ToDateTime(dtInner.Rows[i]["生产日期"]).ToString("yyyy/MM/dd");
+                mysheet.Cells[6 + i, 3].Value = Convert.ToDateTime(dtInner.Rows[i]["生产日期"]).ToString("HH:mm:ss");
                 mysheet.Cells[6 + i, 4].Value = dtInner.Rows[i]["位置1"].ToString();
                 mysheet.Cells[6 + i, 5].Value = dtInner.Rows[i]["位置2"].ToString();
                 mysheet.Cells[6 + i, 6].Value = dtInner.Rows[i]["检测值1"].ToString();
@@ -1153,20 +1170,42 @@ namespace mySystem.Process.Bag.CS
                 mysheet.Cells[6 + i, 9].Value = dtInner.Rows[i]["检测值4"].ToString();
                 mysheet.Cells[6 + i, 10].Value = dtInner.Rows[i]["检测值5"].ToString();
                 mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["检测值6"].ToString();
-                mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["检测值7"].ToString();
-                mysheet.Cells[6 + i, 13].Value = dtInner.Rows[i]["检测值8"].ToString();
-                mysheet.Cells[6 + i, 14].Value = dtInner.Rows[i]["检测值9"].ToString();
-                mysheet.Cells[6 + i, 15].Value = dtInner.Rows[i]["检测值10"].ToString();
-                mysheet.Cells[6 + i, 16].Value = dtInner.Rows[i]["最小"].ToString();
-                mysheet.Cells[6 + i, 17].Value = dtInner.Rows[i]["最大"].ToString();
-                mysheet.Cells[6 + i, 18].Value = dtInner.Rows[i]["平均"].ToString();
-                mysheet.Cells[6 + i, 19].Value = dtInner.Rows[i]["判定"].ToString() == "Y" ? "√" : "×";
-                mysheet.Cells[6 + i, 20].Value = dtInner.Rows[i]["检测人"].ToString();
-                mysheet.Cells[6 + i, 21].Value = dtInner.Rows[i]["复核人"].ToString();
+                mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["最小"].ToString();
+                mysheet.Cells[6 + i, 13].Value = dtInner.Rows[i]["最大"].ToString();
+                mysheet.Cells[6 + i, 14].Value = dtInner.Rows[i]["平均"].ToString();
+                mysheet.Cells[6 + i, 15].Value = dtInner.Rows[i]["判定"].ToString() == "Y" ? "√" : "×";
+                mysheet.Cells[6 + i, 16].Value = dtInner.Rows[i]["检测人"].ToString();
+                mysheet.Cells[6 + i, 17].Value = dtInner.Rows[i]["审核员"].ToString();
             }
+            //需要插入的部分
+            if (rownum > 15)
+            {
+                for (int i = 15; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[7 + i, Type.Missing];
 
-            mysheet.Cells[23+ind, 16].Value = "平均值："+dtOuter.Rows[0]["平均值"].ToString();
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
 
+                    mysheet.Cells[6 + i, 1].Value = i + 1;
+                    mysheet.Cells[6 + i, 2].Value = Convert.ToDateTime(dtInner.Rows[i]["生产日期"]).ToString("yyyy/MM/dd");
+                    mysheet.Cells[6 + i, 3].Value = Convert.ToDateTime(dtInner.Rows[i]["生产日期"]).ToString("HH:mm:ss");
+                    mysheet.Cells[6 + i, 4].Value = dtInner.Rows[i]["位置1"].ToString();
+                    mysheet.Cells[6 + i, 5].Value = dtInner.Rows[i]["位置2"].ToString();
+                    mysheet.Cells[6 + i, 6].Value = dtInner.Rows[i]["检测值1"].ToString();
+                    mysheet.Cells[6 + i, 7].Value = dtInner.Rows[i]["检测值2"].ToString();
+                    mysheet.Cells[6 + i, 8].Value = dtInner.Rows[i]["检测值3"].ToString();
+                    mysheet.Cells[6 + i, 9].Value = dtInner.Rows[i]["检测值4"].ToString();
+                    mysheet.Cells[6 + i, 10].Value = dtInner.Rows[i]["检测值5"].ToString();
+                    mysheet.Cells[6 + i, 11].Value = dtInner.Rows[i]["检测值6"].ToString();
+                    mysheet.Cells[6 + i, 12].Value = dtInner.Rows[i]["最小"].ToString();
+                    mysheet.Cells[6 + i, 13].Value = dtInner.Rows[i]["最大"].ToString();
+                    mysheet.Cells[6 + i, 14].Value = dtInner.Rows[i]["平均"].ToString();
+                    mysheet.Cells[6 + i, 15].Value = dtInner.Rows[i]["判定"].ToString() == "Y" ? "√" : "×";
+                    mysheet.Cells[6 + i, 16].Value = dtInner.Rows[i]["检测人"].ToString();
+                    mysheet.Cells[6 + i, 17].Value = dtInner.Rows[i]["审核员"].ToString();
+                }
+            }
             //加页脚
             int sheetnum;
             OleDbDataAdapter da = new OleDbDataAdapter("select ID from 产品热合强度检验记录 where 生产指令ID=" + dtOuter.Rows[0]["ID"].ToString(), conn);
@@ -1180,6 +1219,15 @@ namespace mySystem.Process.Bag.CS
             dt.Clear();
             da.Fill(dt);
             String Instruction = dt.Rows[0]["生产指令编号"].ToString();
+
+            da = new OleDbDataAdapter("select 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID=" + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
+            dt.Clear();
+            da.Fill(dt);
+            String daima = dt.Rows[0]["产品代码"].ToString();
+            string pihao = dt.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[3, 1].Value = "产品批号：" + pihao;
+            mysheet.Cells[3, 6].Value = "产品代码：" + daima;
+            mysheet.Cells[3, 14].Value = "生产指令：" + Instruction;
             mysheet.PageSetup.RightFooter = Instruction + "-16-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
@@ -1189,9 +1237,9 @@ namespace mySystem.Process.Bag.CS
         {
             for (int i = 0; i < dtInner.Rows.Count; i++)
             {
-                if (dtInner.Rows[i]["复核人"].ToString() == "")
+                if (dtInner.Rows[i]["审核员"].ToString() == "")
                 {
-                    dtInner.Rows[i]["复核人"] = "__待审核";
+                    dtInner.Rows[i]["审核员"] = "__待审核";
                     dataGridView1.Rows[i].ReadOnly = true;
                 }
             }
@@ -1210,10 +1258,10 @@ namespace mySystem.Process.Bag.CS
             }
             foreach (int i in hi待审核行号)
             {
-                if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
                 {
                     //dataGridView1.Rows[i].Cells["审核人"].Value = person_审核员;
-                    dtInner.Rows[i]["复核人"] = mySystem.Parameter.userName;
+                    dtInner.Rows[i]["审核员"] = mySystem.Parameter.userName;
                     dataGridView1.Rows[i].ReadOnly = true;
                 }
             }

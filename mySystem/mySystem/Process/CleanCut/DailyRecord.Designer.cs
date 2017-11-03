@@ -73,6 +73,10 @@
             this.datetimepicker开始时间 = new System.Windows.Forms.DateTimePicker();
             this.label18 = new System.Windows.Forms.Label();
             this.label40 = new System.Windows.Forms.Label();
+            this.tb成品率 = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.tb工时效率 = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -80,7 +84,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label1.Location = new System.Drawing.Point(510, 21);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -326,7 +330,7 @@
             // 
             // btn打印
             // 
-            this.btn打印.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn打印.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn打印.Location = new System.Drawing.Point(430, 544);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(63, 25);
@@ -337,7 +341,7 @@
             // 
             // bt保存
             // 
-            this.bt保存.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt保存.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt保存.Location = new System.Drawing.Point(829, 546);
             this.bt保存.Name = "bt保存";
             this.bt保存.Size = new System.Drawing.Size(63, 25);
@@ -350,7 +354,7 @@
             // label角色
             // 
             this.label角色.AutoSize = true;
-            this.label角色.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label角色.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label角色.Location = new System.Drawing.Point(970, 24);
             this.label角色.Name = "label角色";
             this.label角色.Size = new System.Drawing.Size(42, 16);
@@ -443,7 +447,7 @@
             // 
             // btn查询
             // 
-            this.btn查询.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn查询.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn查询.Location = new System.Drawing.Point(930, 59);
             this.btn查询.Name = "btn查询";
             this.btn查询.Size = new System.Drawing.Size(63, 25);
@@ -471,18 +475,56 @@
             // label40
             // 
             this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label40.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label40.Location = new System.Drawing.Point(131, 550);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(91, 14);
             this.label40.TabIndex = 169;
             this.label40.Text = "选择打印机：";
             // 
+            // tb成品率
+            // 
+            this.tb成品率.Location = new System.Drawing.Point(585, 309);
+            this.tb成品率.Margin = new System.Windows.Forms.Padding(4);
+            this.tb成品率.Name = "tb成品率";
+            this.tb成品率.Size = new System.Drawing.Size(87, 26);
+            this.tb成品率.TabIndex = 171;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(525, 312);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(56, 16);
+            this.label20.TabIndex = 170;
+            this.label20.Text = "成品率";
+            // 
+            // tb工时效率
+            // 
+            this.tb工时效率.Location = new System.Drawing.Point(778, 309);
+            this.tb工时效率.Margin = new System.Windows.Forms.Padding(4);
+            this.tb工时效率.Name = "tb工时效率";
+            this.tb工时效率.Size = new System.Drawing.Size(87, 26);
+            this.tb工时效率.TabIndex = 173;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(699, 312);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(72, 16);
+            this.label21.TabIndex = 172;
+            this.label21.Text = "工时效率";
+            // 
             // DailyRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1098, 581);
+            this.Controls.Add(this.tb工时效率);
+            this.Controls.Add(this.label21);
+            this.Controls.Add(this.tb成品率);
+            this.Controls.Add(this.label20);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.label18);
             this.Controls.Add(this.datetimepicker开始时间);
@@ -527,7 +569,7 @@
             this.Controls.Add(this.dtp审核日期);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "DailyRecord";
             this.Text = "清洁分切日报表";
@@ -584,5 +626,9 @@
         private System.Windows.Forms.DateTimePicker datetimepicker开始时间;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox tb成品率;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.TextBox tb工时效率;
+        private System.Windows.Forms.Label label21;
     }
 }

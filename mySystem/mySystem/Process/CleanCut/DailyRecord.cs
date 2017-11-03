@@ -809,6 +809,8 @@ namespace mySystem.Process.CleanCut
             txb清洁后合计B1.Text = b1.ToString();
             txb清洁后合计B2.Text = b2.ToString();
             txb清洁后合计C.Text = c.ToString();
+            tb成品率.Text = Math.Round(b2 / a2 * 100, 2).ToString() + "%";
+            tb工时效率.Text = Math.Round(a1 / c, 2).ToString();
         }
 
         private void bt保存_Click(object sender, EventArgs e)

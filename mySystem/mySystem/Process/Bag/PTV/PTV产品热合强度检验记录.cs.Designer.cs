@@ -45,6 +45,8 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label角色 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btn提交数据审核 = new System.Windows.Forms.Button();
+            this.btn数据审核 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -216,11 +218,35 @@
             this.label1.TabIndex = 113;
             this.label1.Text = "产品热合强度检验记录";
             // 
+            // btn提交数据审核
+            // 
+            this.btn提交数据审核.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn提交数据审核.Location = new System.Drawing.Point(797, 540);
+            this.btn提交数据审核.Name = "btn提交数据审核";
+            this.btn提交数据审核.Size = new System.Drawing.Size(116, 30);
+            this.btn提交数据审核.TabIndex = 328;
+            this.btn提交数据审核.Text = "提交数据审核";
+            this.btn提交数据审核.UseVisualStyleBackColor = true;
+            this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
+            // 
+            // btn数据审核
+            // 
+            this.btn数据审核.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn数据审核.Location = new System.Drawing.Point(694, 540);
+            this.btn数据审核.Name = "btn数据审核";
+            this.btn数据审核.Size = new System.Drawing.Size(97, 30);
+            this.btn数据审核.TabIndex = 327;
+            this.btn数据审核.Text = "数据审核";
+            this.btn数据审核.UseVisualStyleBackColor = true;
+            this.btn数据审核.Click += new System.EventHandler(this.btn数据审核_Click);
+            // 
             // PTV产品热合强度检验记录
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1152, 655);
+            this.Controls.Add(this.btn提交数据审核);
+            this.Controls.Add(this.btn数据审核);
             this.Controls.Add(this.tb标准);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.btn添加);
@@ -265,5 +291,7 @@
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label角色;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btn提交数据审核;
+        private System.Windows.Forms.Button btn数据审核;
     }
 }

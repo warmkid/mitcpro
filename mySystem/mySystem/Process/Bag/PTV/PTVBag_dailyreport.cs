@@ -26,6 +26,7 @@ namespace mySystem.Process.Bag.PTV
             dateTimePickerEnd.Value = DateTime.Now;
             dtShow = query(dateTimePickerStart.Value, dateTimePickerEnd.Value);
             setDGV(dtShow);
+            fill_printer();
         }
 
         DataTable query(DateTime start, DateTime end)
@@ -370,6 +371,20 @@ namespace mySystem.Process.Bag.PTV
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
 
+        
+        //添加打印机
+        private void fill_printer()
+        {
+
+            System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
+            foreach (string sPrint in System.Drawing.Printing.PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                cb打印机.Items.Add(sPrint);
+            }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
+        }
+
+
         private void bt打印_Click(object sender, EventArgs e)
         {
             if (cb打印机.Text == "")
@@ -378,12 +393,111 @@ namespace mySystem.Process.Bag.PTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            //print(false);
-            //GC.Collect();
+            print(false);
+            GC.Collect();
         }
 
-      
+        public void print(bool isShow)
+        {
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\13 SOP-MFG-305-R04A PTV生产台帐.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
+
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        //string log = "=====================================\n";
+                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        //dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+
+                        //bsOuter.EndEdit();
+                        //daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
+        }
+
+
+        //打印功能
+        private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
+        {
+            
+
+            //内表信息
+            int i内表行数 = dtShow.Rows.Count;
+            int i超出行数 = 0;
+
+            //插入新行
+            if (dtShow.Rows.Count > 2)
+            {
+                i超出行数 = dtShow.Rows.Count - 2;
+                for (int i = 0; i < i超出行数; i++)
+                {
+                    //在第6行插入
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[4 + i, Type.Missing];
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                    Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+                }
+            }
+
+
+
+
+            for (int i = 0; i < i内表行数; i++)
+            {
+                mysheet.Cells[4 + i, 1].Value = dtShow.Rows[i]["生产日期"];
+                mysheet.Cells[4 + i, 2].Value = dtShow.Rows[i]["班次"];
+                mysheet.Cells[4 + i, 3].Value = dtShow.Rows[i]["生产指令号"];
+                mysheet.Cells[4 + i, 4].Value = dtShow.Rows[i]["客户或订单号"];
+                mysheet.Cells[4 + i, 5].Value = dtShow.Rows[i]["产品代码"];
+                mysheet.Cells[4 + i, 6].Value = dtShow.Rows[i]["产品数量（只）"];
+                mysheet.Cells[4 + i, 7].Value = dtShow.Rows[i]["批号"];
+                
+            }
+
+           
+            return mysheet;
+        }
+
        
+
     }
 }
 
