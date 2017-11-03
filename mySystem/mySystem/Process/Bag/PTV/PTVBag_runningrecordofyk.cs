@@ -434,7 +434,7 @@ namespace mySystem.Process.Bag.PTV
             dr["焊线2参数3"] = 0;
             dr["焊线2参数4"] = 0;
             dr["焊线2参数5"] = 0;
-
+            dr["电压"] = 0;
             dr["合格品数量"] = 0;
             dr["不良品数量"] = 0;
 
@@ -483,7 +483,7 @@ namespace mySystem.Process.Bag.PTV
             dr["焊线2参数3"] = "√";
             dr["焊线2参数4"] = "√";
             dr["焊线2参数5"] = "√";
-
+            dr["电压"] = "√";
             dr["外观检查"] = "√";
             dr["生产合格品数量"] = 0;
             dr["不良品数量"] = 0;
@@ -548,8 +548,10 @@ namespace mySystem.Process.Bag.PTV
 
             dataGridView1.Columns["生产合格品数量"].HeaderText = "合格品\r数量\r(只)";
             dataGridView1.Columns["生产合格品数量"].Visible = false;
+            dataGridView1.Columns["生产合格品数量"].ReadOnly = true;
             dataGridView1.Columns["不良品数量"].HeaderText = "不良品\r数量\r(只)";
             dataGridView1.Columns["不良品数量"].Visible = false;
+            dataGridView1.Columns["不良品数量"].ReadOnly = true;
         }
 
         //修改单个控件的值
@@ -641,7 +643,12 @@ namespace mySystem.Process.Bag.PTV
             //保存
             bool isSaved = Save();
             if (isSaved == false)
+            { return; }
+            else if (need提交数据审核())
+            {
+                MessageBox.Show("需要提交数据审核");
                 return;
+            }
 
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
@@ -727,6 +734,11 @@ namespace mySystem.Process.Bag.PTV
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
             }
+            else if (need数据审核())
+            {
+                MessageBox.Show("需要数据审核");
+                return;
+            }
             checkform = new CheckForm(this);
             checkform.Show();
         }
@@ -741,6 +753,7 @@ namespace mySystem.Process.Bag.PTV
             {
                 cb打印机.Items.Add(sPrint);
             }
+            cb打印机.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
         //打印按钮
@@ -793,7 +806,7 @@ namespace mySystem.Process.Bag.PTV
             mysheet.Cells[8, 10].Value = dt记录.Rows[0]["焊线2参数3"];
             mysheet.Cells[8, 11].Value = dt记录.Rows[0]["焊线2参数4"];
             mysheet.Cells[8, 12].Value = dt记录.Rows[0]["焊线2参数5"];
-
+            mysheet.Cells[8, 13].Value = dt记录.Rows[0]["电压"];
             //内表信息
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
@@ -809,18 +822,18 @@ namespace mySystem.Process.Bag.PTV
                 mysheet.Cells[9 + i, 10] = dt记录详情.Rows[i]["焊线2参数3"].ToString();
                 mysheet.Cells[9 + i, 11] = dt记录详情.Rows[i]["焊线2参数4"].ToString();
                 mysheet.Cells[9 + i, 12] = dt记录详情.Rows[i]["焊线2参数5"].ToString();
-
-                mysheet.Cells[9 + i, 13] = dt记录详情.Rows[i]["外观检查"].ToString();
-                mysheet.Cells[9 + i, 14] = dt记录详情.Rows[i]["生产合格品数量"];
-                mysheet.Cells[9 + i, 15] = dt记录详情.Rows[i]["不良品数量"];
-                mysheet.Cells[9 + i, 16] = dt记录详情.Rows[i]["操作员"].ToString();
-                mysheet.Cells[9 + i, 17] = dt记录详情.Rows[i]["操作员备注"].ToString();
+                mysheet.Cells[9 + i, 13] = dt记录详情.Rows[i]["电压"].ToString();
+                mysheet.Cells[9 + i, 14] = dt记录详情.Rows[i]["外观检查"].ToString();
+                mysheet.Cells[9 + i, 15] = dt记录详情.Rows[i]["操作员"];
+                mysheet.Cells[9 + i, 16] = dt记录详情.Rows[i]["审核员"];
+                
+                //mysheet.Cells[9 + i, 17] = dt记录详情.Rows[i]["操作员备注"].ToString();
 
             }
 
 
-            mysheet.Cells[19 + ind, 13].Value = string.Format("合格品数量：    {0}只\n不良品数量：    {1}只", dt记录.Rows[0]["合格品数量"], dt记录.Rows[0]["不良品数量"]);
-            mysheet.Cells[19 + ind, 16].Value = string.Format("复核人： {0}\n日期：{1}", dt记录.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
+            //mysheet.Cells[19 + ind, 13].Value = string.Format("合格品数量：    {0}只\n不良品数量：    {1}只", dt记录.Rows[0]["合格品数量"], dt记录.Rows[0]["不良品数量"]);
+            //mysheet.Cells[19 + ind, 16].Value = string.Format("复核人： {0}\n日期：{1}", dt记录.Rows[0]["审核员"].ToString(), Convert.ToDateTime(dt记录.Rows[0]["审核日期"]).ToString("yyyy年MM月dd日"));
         }
 
         //查找打印的表序号
@@ -839,13 +852,17 @@ namespace mySystem.Process.Bag.PTV
 
         }
 
+        /// <summary>
+        /// this function is responsbily  by pool 2017-11-03
+        /// </summary>
+        /// <param name="b"></param>
         public void print(bool b)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-109-R01A 产品内包装记录.xlsx");
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\SOP-MFG-413-R01A 圆口焊接机运行记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\PTV\9 SOP-MFG-413-R01A 圆口焊接机运行记录.xlsx");
 
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
@@ -1006,6 +1023,83 @@ namespace mySystem.Process.Bag.PTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+        }
+
+        //内表提交审核按钮
+        private void btn提交数据审核_Click(object sender, EventArgs e)
+        {
+            //find the uncheck item in inner list and tag the revoewer __待审核
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim() == "")
+                {
+                    dt记录详情.Rows[i]["审核员"] = "__待审核";
+                    dataGridView1.Rows[i].ReadOnly = true;
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
+            setEnableReadOnly();
+        }
+
+        //内标审核按钮 //this function just fill the name but dooesn't catch the opinion
+        private void btn数据审核_Click(object sender, EventArgs e)
+        {
+            HashSet<Int32> hi待审核行号 = new HashSet<int>();
+            foreach (DataGridViewCell dgvc in dataGridView1.SelectedCells)
+            {
+                hi待审核行号.Add(dgvc.RowIndex);
+            }
+            //find the item in inner tagged the reviewer __待审核 and replace the content his name
+            foreach (int i in hi待审核行号)
+            {
+                if ("__待审核" == Convert.ToString(dt记录详情.Rows[i]["审核员"]).ToString().Trim())
+                {
+                    if (Parameter.userName != dt记录详情.Rows[i]["操作员"].ToString())
+                    {
+                        dt记录详情.Rows[i]["审核员"] = Parameter.userName;
+                    }
+                    else
+                    {
+                        MessageBox.Show("记录员,审核员相同");
+                    }
+                }
+                continue;
+            }
+            // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
+            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            innerBind();
+        }
+        //need提交数据审核
+        private bool need提交数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
+        }
+
+        //
+        private bool need数据审核()
+        {
+            bool rtn = false;
+            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            {
+                if (dt记录详情.Rows[i]["审核员"].ToString() == "__待审核")
+                {
+                    rtn = true;
+                }
+            }
+            return rtn;
         }
         
     }

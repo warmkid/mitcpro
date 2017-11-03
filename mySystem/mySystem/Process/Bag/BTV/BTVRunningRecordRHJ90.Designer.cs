@@ -153,7 +153,7 @@
             // 
             this.cb打印机.Font = new System.Drawing.Font("宋体", 12F);
             this.cb打印机.FormattingEnabled = true;
-            this.cb打印机.Location = new System.Drawing.Point(317, 486);
+            this.cb打印机.Location = new System.Drawing.Point(204, 488);
             this.cb打印机.Name = "cb打印机";
             this.cb打印机.Size = new System.Drawing.Size(279, 24);
             this.cb打印机.TabIndex = 262;
@@ -173,7 +173,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F);
-            this.label1.Location = new System.Drawing.Point(221, 491);
+            this.label1.Location = new System.Drawing.Point(108, 493);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(104, 16);
             this.label1.TabIndex = 263;
@@ -204,7 +204,7 @@
             // btn打印
             // 
             this.btn打印.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn打印.Location = new System.Drawing.Point(116, 484);
+            this.btn打印.Location = new System.Drawing.Point(492, 484);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(80, 30);
             this.btn打印.TabIndex = 259;
@@ -219,7 +219,7 @@
             this.btn审核.Name = "btn审核";
             this.btn审核.Size = new System.Drawing.Size(80, 30);
             this.btn审核.TabIndex = 258;
-            this.btn审核.Text = "审核";
+            this.btn审核.Text = "最后审核";
             this.btn审核.UseVisualStyleBackColor = true;
             this.btn审核.Click += new System.EventHandler(this.btn审核_Click);
             // 

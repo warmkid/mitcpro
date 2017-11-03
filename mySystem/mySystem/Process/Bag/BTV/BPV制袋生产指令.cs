@@ -1414,7 +1414,7 @@ namespace mySystem.Process.Bag.BTV
 
         int find_indexofprint()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + _id, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where ID=" + _id, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();
