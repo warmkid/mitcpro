@@ -36,6 +36,7 @@
             this.Btn外包装 = new System.Windows.Forms.Button();
             this.Btn批生产记录 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.Btn外观及检验 = new System.Windows.Forms.Button();
             this.Btn生产指令 = new System.Windows.Forms.Button();
             this.Btn开机前确认 = new System.Windows.Forms.Button();
@@ -50,7 +51,6 @@
             this.Btn产品内包装 = new System.Windows.Forms.Button();
             this.Btn内标签 = new System.Windows.Forms.Button();
             this.Btn日报表 = new System.Windows.Forms.Button();
-            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -155,6 +155,17 @@
             this.groupBox1.TabIndex = 26;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "管理类";
+            // 
+            // btn生产领料申请单
+            // 
+            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn生产领料申请单.Location = new System.Drawing.Point(31, 374);
+            this.btn生产领料申请单.Name = "btn生产领料申请单";
+            this.btn生产领料申请单.Size = new System.Drawing.Size(200, 38);
+            this.btn生产领料申请单.TabIndex = 29;
+            this.btn生产领料申请单.Text = "生产领料申请单";
+            this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
             // 
             // Btn外观及检验
             // 
@@ -262,7 +273,7 @@
             // Btn外标签
             // 
             this.Btn外标签.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn外标签.Location = new System.Drawing.Point(28, 374);
+            this.Btn外标签.Location = new System.Drawing.Point(28, 310);
             this.Btn外标签.Name = "Btn外标签";
             this.Btn外标签.Size = new System.Drawing.Size(200, 38);
             this.Btn外标签.TabIndex = 20;
@@ -273,7 +284,7 @@
             // Btn热合强度
             // 
             this.Btn热合强度.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn热合强度.Location = new System.Drawing.Point(28, 250);
+            this.Btn热合强度.Location = new System.Drawing.Point(28, 186);
             this.Btn热合强度.Name = "Btn热合强度";
             this.Btn热合强度.Size = new System.Drawing.Size(200, 38);
             this.Btn热合强度.TabIndex = 19;
@@ -295,7 +306,7 @@
             // Btn内标签
             // 
             this.Btn内标签.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn内标签.Location = new System.Drawing.Point(28, 310);
+            this.Btn内标签.Location = new System.Drawing.Point(28, 246);
             this.Btn内标签.Name = "Btn内标签";
             this.Btn内标签.Size = new System.Drawing.Size(200, 38);
             this.Btn内标签.TabIndex = 15;
@@ -306,24 +317,14 @@
             // Btn日报表
             // 
             this.Btn日报表.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn日报表.Location = new System.Drawing.Point(28, 180);
+            this.Btn日报表.Location = new System.Drawing.Point(28, 374);
             this.Btn日报表.Name = "Btn日报表";
             this.Btn日报表.Size = new System.Drawing.Size(200, 38);
             this.Btn日报表.TabIndex = 11;
             this.Btn日报表.Text = "LDPE生产日报表";
             this.Btn日报表.UseVisualStyleBackColor = true;
+            this.Btn日报表.Visible = false;
             this.Btn日报表.Click += new System.EventHandler(this.A3Btn_Click);
-            // 
-            // btn生产领料申请单
-            // 
-            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn生产领料申请单.Location = new System.Drawing.Point(31, 374);
-            this.btn生产领料申请单.Name = "btn生产领料申请单";
-            this.btn生产领料申请单.Size = new System.Drawing.Size(200, 38);
-            this.btn生产领料申请单.TabIndex = 29;
-            this.btn生产领料申请单.Text = "生产领料申请单";
-            this.btn生产领料申请单.UseVisualStyleBackColor = true;
-            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
             // 
             // LDPEMainForm
             // 

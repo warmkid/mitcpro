@@ -70,6 +70,7 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Title = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.btn新建 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -137,11 +138,11 @@
             // btn查询新建
             // 
             this.btn查询新建.Font = new System.Drawing.Font("SimSun", 12F);
-            this.btn查询新建.Location = new System.Drawing.Point(1117, 93);
+            this.btn查询新建.Location = new System.Drawing.Point(1068, 93);
             this.btn查询新建.Name = "btn查询新建";
-            this.btn查询新建.Size = new System.Drawing.Size(96, 30);
+            this.btn查询新建.Size = new System.Drawing.Size(66, 30);
             this.btn查询新建.TabIndex = 129;
-            this.btn查询新建.Text = "查询/新建";
+            this.btn查询新建.Text = "查询";
             this.btn查询新建.UseVisualStyleBackColor = true;
             this.btn查询新建.Click += new System.EventHandler(this.btn查询新建_Click);
             // 
@@ -477,11 +478,23 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "班次：";
             // 
+            // btn新建
+            // 
+            this.btn新建.Font = new System.Drawing.Font("SimSun", 12F);
+            this.btn新建.Location = new System.Drawing.Point(1151, 93);
+            this.btn新建.Name = "btn新建";
+            this.btn新建.Size = new System.Drawing.Size(62, 30);
+            this.btn新建.TabIndex = 176;
+            this.btn新建.Text = "新建";
+            this.btn新建.UseVisualStyleBackColor = true;
+            this.btn新建.Click += new System.EventHandler(this.btn新建_Click);
+            // 
             // ExtructionpRoductionAndRestRecordStep6
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1248, 554);
+            this.Controls.Add(this.btn新建);
             this.Controls.Add(this.bt查看人员信息);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.label40);
@@ -527,6 +540,7 @@
             this.Name = "ExtructionpRoductionAndRestRecordStep6";
             this.Text = "吹膜工序生产和检验记录";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExtructionpRoductionAndRestRecordStep6_FormClosing);
+            this.Load += new System.EventHandler(this.ExtructionpRoductionAndRestRecordStep6_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -577,5 +591,6 @@
         private System.Windows.Forms.ComboBox cb打印机;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.Button bt查看人员信息;
+        private System.Windows.Forms.Button btn新建;
     }
 }

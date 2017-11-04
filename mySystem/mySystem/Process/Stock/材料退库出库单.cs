@@ -457,6 +457,7 @@ namespace mySystem.Process.Stock
             dataGridView2.DataError += dataGridView2_DataError;
             dataGridView2.CellBeginEdit += new DataGridViewCellCancelEventHandler(dataGridView2_CellBeginEdit);
             dataGridView2.CellEndEdit += dataGridView2_CellEndEdit;
+            dataGridView2.AlternatingRowsDefaultCellStyle.BackColor = Color.Yellow;
         }
 
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
