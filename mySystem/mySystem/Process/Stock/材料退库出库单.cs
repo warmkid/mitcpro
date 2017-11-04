@@ -46,9 +46,6 @@ namespace mySystem.Process.Stock
         Int32 InstruID;
         String Instruction;
 
-        //仅供测试
-        private System.Collections.Queue queue;
-        private string qs;//出队元素
 
         public 材料退库出库单(MainForm mainform)
             : base(mainform)
@@ -211,11 +208,6 @@ namespace mySystem.Process.Stock
             dataGridView3.Columns[4].Name = "库存ID";//用于写入二维码信息表
 
             dataGridView3.Columns[4].Visible = false;
-
-            queue = new System.Collections.Queue();
-            queue.Enqueue("12312321");
-            queue.Enqueue("88888");
-            queue.Enqueue("77");
 
         }
 
@@ -457,7 +449,8 @@ namespace mySystem.Process.Stock
             dataGridView2.DataError += dataGridView2_DataError;
             dataGridView2.CellBeginEdit += new DataGridViewCellCancelEventHandler(dataGridView2_CellBeginEdit);
             dataGridView2.CellEndEdit += dataGridView2_CellEndEdit;
-            dataGridView2.AlternatingRowsDefaultCellStyle.BackColor = Color.Yellow;
+            if(label!=1)//出库
+                dataGridView2.AlternatingRowsDefaultCellStyle.BackColor = Color.Yellow;//设置奇数行颜色，从0开始，即：设置小包行的背景颜色为黄色
         }
 
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
@@ -615,16 +608,26 @@ namespace mySystem.Process.Stock
                     
                 else//出库
                 {
-                    code = dataGridView2.Rows[i].Cells["二维码内"].Value.ToString();
-                    code_外=dataGridView2.Rows[i].Cells["二维码外"].Value.ToString();
-                    num = dataGridView2.Rows[i].Cells["数量"].Value.ToString();
+                    //code = dataGridView2.Rows[i].Cells["二维码内"].Value.ToString();
+                    //code_外=dataGridView2.Rows[i].Cells["二维码外"].Value.ToString();
+
+                    if (i == dataGridView2.Rows.Count - 1 && 0==i%2)//二维码外是最后一行
+                        break;
+                    code_外 = dataGridView2.Rows[i].Cells["二维码"].Value.ToString();//二维码外
+                    code = dataGridView2.Rows[i + 1].Cells["二维码"].Value.ToString();//二维码内
+                       
+                    num = dataGridView2.Rows[i+1].Cells["数量"].Value.ToString();
                     if (num == "")
                         num_int = 0;
                     else
                         num_int = int.Parse(num);
 
-                    if(code_外=="")
+                    if (code_外 == "")
+                    {
+                        i++;
                         continue;
+                    }
+                        
                     if(code!="")//判断内外二维码对应的产品代码和批号是否相同
                     {
                         List<string> li_外 = parse_二维码(code_外);
@@ -646,8 +649,9 @@ namespace mySystem.Process.Stock
                             }
                         }
                     }
-                    //以二维码外为准
-                    addrow(code_外,num_int,code);                 
+                    //以二维码内为准
+                    addrow(code_外,num_int,code);
+                    i++;
                     
                 }                   
             }
@@ -721,8 +725,8 @@ namespace mySystem.Process.Stock
                 dataGridView1.Columns["发料数量"].ReadOnly = true;
 
                 dataGridView2.Columns["T材料出库单ID"].Visible = false;
-                dataGridView2.Columns["二维码外"].HeaderText = "二维码";
-                dataGridView2.Columns["二维码内"].HeaderText = "二维码(内)";
+                //dataGridView2.Columns["二维码外"].HeaderText = "二维码";
+                //dataGridView2.Columns["二维码内"].HeaderText = "二维码(内)";
             }
                 
             //不可用
@@ -814,41 +818,35 @@ namespace mySystem.Process.Stock
             //        setEnableReadOnly();
             //    }
             //}
-            if (dataGridView3.Rows.Count > 0)
+            if (dataGridView2.Rows.Count > 0)
             {
                 int delnum = dataGridView2.CurrentCell.RowIndex;
                 if (delnum < 0)
                     return;
-                dataGridView2.Rows.RemoveAt(delnum);
-
-                fill_datagridview3();
-                //string code;
-                //if (1 == label)//退库
-                //    code = dataGridView2.Rows[delnum].Cells["二维码"].Value.ToString();//二维码
-                //else
-                //    code = dataGridView2.Rows[delnum].Cells["二维码内"].Value.ToString();//二维码内
-                //string matcode= dic_二维码[code];
-                //int num = int.Parse(dataGridView2.Rows[delnum].Cells["数量"].Value.ToString());
-
-                ////从二维码列表中删除
-                //dataGridView2.Rows.RemoveAt(delnum);
-                //dic_二维码.Remove(code);
-
-                ////更新表2，如有必要删除行
-                //int oldnum = int.Parse(dataGridView3.Rows[dic_材料代码[matcode]].Cells["数量"].Value.ToString());
-                //if (oldnum > num)//更新
-                //    dataGridView3.Rows[dic_材料代码[matcode]].Cells["数量"].Value = oldnum - num;
-                //else
-                //{
-                //    dataGridView3.Rows.RemoveAt(dic_材料代码[matcode]);
-
-                //    for (int i = dic_材料代码[matcode]; i < dataGridView3.Rows.Count; i++)
-                //    {
-                //        dataGridView3.Rows[i].Cells["序号"].Value = int.Parse(dataGridView3.Rows[i].Cells["序号"].Value.ToString()) - 1;
-                //    }
-
-                //    dic_材料代码.Remove(matcode);
-                //}                        
+                if (1 != label)//退库
+                {
+                    if (delnum % 2 == 0)//删的是白色行，大包
+                    {
+                        if (delnum != dataGridView2.Rows.Count - 1)//不是最后一行
+                        {
+                            dataGridView2.Rows.RemoveAt(delnum);
+                            dataGridView2.Rows.RemoveAt(delnum);
+                        }
+                        else//删的是最后一行白色
+                            dataGridView2.Rows.RemoveAt(delnum);
+                    }
+                    else //删的是黄色行，小包
+                    {
+                        dataGridView2.Rows.RemoveAt(delnum - 1);//删掉上一行
+                        dataGridView2.Rows.RemoveAt(delnum - 1);
+                    }
+                }
+                else
+                {
+                    dataGridView2.Rows.RemoveAt(delnum);
+                }
+              
+                fill_datagridview3();                      
        
             }
         }
@@ -909,13 +907,18 @@ namespace mySystem.Process.Stock
             {
                 for (int i = 0; i < dataGridView2.Rows.Count; i++)
                 {
-                    if (dataGridView2.Rows[i].Cells["二维码外"].Value.ToString() == "" || dataGridView2.Rows[i].Cells["二维码内"].Value.ToString() == "")
+                    if (dataGridView2.Rows[i].Cells["二维码"].Value.ToString() == "")
                     {
-                        MessageBox.Show("二维码表第 " + (i+1).ToString() + " 行有未扫描的二维码");
+                        MessageBox.Show("二维码表第 " + (i + 1).ToString() + " 行有未扫描的二维码");
                         return false;
                     }
-                }
 
+                }
+                if (0 != dataGridView2.Rows.Count % 2)
+                {
+                    MessageBox.Show("需再添加一行进行扫描！");
+                    return false;
+                }
             }
 
             //检查表三
@@ -1186,15 +1189,15 @@ namespace mySystem.Process.Stock
                 }
                 else//出库
                 {
-                    for (int i = 0; i < dataGridView2.Rows.Count; i++)
+                    for (int i = 0; i < dataGridView2.Rows.Count; i=i+2)
                     {
                         //更新二维码信息表
-                        string strname = dataGridView2.Rows[i].Cells["二维码内"].Value.ToString();//二维码
-                        int num = int.Parse(dataGridView2.Rows[i].Cells["数量"].Value.ToString());//数量
+                        string strname = dataGridView2.Rows[i+1].Cells["二维码"].Value.ToString();//二维码内
+                        int num = int.Parse(dataGridView2.Rows[i+1].Cells["数量"].Value.ToString());//数量
                         int id_库存 = 0;
 
                         //先获得库存id
-                        strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", dataGridView2.Rows[i].Cells["二维码外"].Value.ToString());
+                        strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", dataGridView2.Rows[i].Cells["二维码"].Value.ToString());
                         cmd.CommandText = strcmd;
                         List<List<Object>> ret = new List<List<Object>>();
                         OleDbDataReader reader = null;
@@ -1206,7 +1209,7 @@ namespace mySystem.Process.Stock
                         }
                         reader.Close();
 
-                        if (strname == dataGridView2.Rows[i].Cells["二维码外"].Value.ToString())//update操作
+                        if (strname == dataGridView2.Rows[i].Cells["二维码"].Value.ToString())//update操作
                         {
                             strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, strname);
                             cmd.CommandText = strcmd;
@@ -1237,7 +1240,7 @@ namespace mySystem.Process.Stock
                             }
 
                             //更新大包二维码对应数量
-                            strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, dataGridView2.Rows[i].Cells["二维码外"].Value.ToString());
+                            strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, dataGridView2.Rows[i].Cells["二维码"].Value.ToString());
                             cmd.CommandText = strcmd;
                             int n = cmd.ExecuteNonQuery();
                             if (n <= 0)
@@ -1316,138 +1319,139 @@ namespace mySystem.Process.Stock
         //打印功能
         public void print(bool isShow)
         {
-            //// 打开一个Excel进程
-            //Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
-            //// 利用这个进程打开一个Excel文件
-            ////Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-102-R01A  生产领料使用记录.xlsx");
-            //Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\CSBag\SOP-MFG-102-R01A 生产领料记录.xlsx");
-            
-            //// 选择一个Sheet，注意Sheet的序号是从1开始的
-            //Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
-            //// 修改Sheet中某行某列的值
-            //my = printValue(my, wb);
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            Microsoft.Office.Interop.Excel._Workbook wb;
+            if(1==label)//退库
+                wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\库存\SOP-WH-003-R04A 材料退库单.xlsx");
+            else
+                wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\库存\SOP-WH-003-R03A 材料出库单.xlsx");
 
-            //if (isShow)
-            //{
-            //    //true->预览
-            //    // 设置该进程是否可见
-            //    oXL.Visible = true;
-            //    // 让这个Sheet为被选中状态
-            //    my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
-            //}
-            //else
-            //{
-            //    bool isPrint = true;
-            //    //false->打印
-            //    try
-            //    {
-            //        // 设置该进程是否可见
-            //        //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
-            //        // 直接用默认打印机打印该Sheet
-            //        my.PrintOut();
-            //    }
-            //    catch
-            //    { isPrint = false; }
-            //    finally
-            //    {
-            //        if (isPrint)
-            //        {
-            //            //写日志
-            //            string log = "=====================================\n";
-            //            //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
-            //            log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒 打印文档\n");
-            //            dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 修改Sheet中某行某列的值
+            my = printValue(my, wb);
 
-            //            bs记录.EndEdit();
-            //            da记录.Update((DataTable)bs记录.DataSource);
-            //        }
-            //        // 关闭文件，false表示不保存
-            //        wb.Close(false);
-            //        // 关闭Excel进程
-            //        oXL.Quit();
-            //        // 释放COM资源
-            //        Marshal.ReleaseComObject(wb);
-            //        Marshal.ReleaseComObject(oXL);
-            //        wb = null;
-            //        oXL = null;
-            //    }
-            //}
+            if (isShow)
+            {
+                //true->预览
+                // 设置该进程是否可见
+                oXL.Visible = true;
+                // 让这个Sheet为被选中状态
+                my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+            }
+            else
+            {
+                bool isPrint = true;
+                //false->打印
+                try
+                {
+                    // 设置该进程是否可见
+                    //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
+                    // 直接用默认打印机打印该Sheet
+                    my.PrintOut();
+                }
+                catch
+                { isPrint = false; }
+                finally
+                {
+                    if (isPrint)
+                    {
+                        //写日志
+                        string log = "=====================================\n";
+                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒 打印文档\n");
+                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+                        bs记录.EndEdit();
+                        da记录.Update((DataTable)bs记录.DataSource);
+                    }
+                    // 关闭文件，false表示不保存
+                    wb.Close(false);
+                    // 关闭Excel进程
+                    oXL.Quit();
+                    // 释放COM资源
+                    Marshal.ReleaseComObject(wb);
+                    Marshal.ReleaseComObject(oXL);
+                    wb = null;
+                    oXL = null;
+                }
+            }
         }
 
         //打印功能
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
         {
-            ////外表信息
-            //mysheet.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
-            //mysheet.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
-            //mysheet.Cells[3, 10].Value = "生产指令编号：" + dt记录.Rows[0]["生产指令编号"].ToString();
-            ////mysheet.Cells[16, 5].Value = "成品率 = " + dt记录.Rows[0]["成品率"].ToString() + " % \n 成品率%=产品数量平米/膜材用量平米X100% （人工计算：产品数量计算成面积/用上面膜材规格和长度计算面积）";
-            ////mysheet.Cells[16, 11].Value = "废品重量：" + dt记录.Rows[0]["废品重量"].ToString() + " kg";
-            ////String stringtemp = "";
-            ////stringtemp = "领料人：" + dt记录.Rows[0]["操作员"].ToString();
-            ////stringtemp = stringtemp + "       领料日期：" + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["操作日期"].ToString()).Day.ToString() + "日";
-            ////stringtemp = stringtemp + "              复核人：" + dt记录.Rows[0]["审核员"].ToString();
-            ////stringtemp = stringtemp + "       复核日期：" + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Year.ToString() + "年 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Month.ToString() + "月 " + Convert.ToDateTime(dt记录.Rows[0]["审核日期"].ToString()).Day.ToString() + "日";
-            ////mysheet.Cells[17, 1].Value = stringtemp;
-            ////内表信息
-            //int rownum = dt记录详情.Rows.Count;
-            ////无需插入的部分
-            //for (int i = 0; i < (rownum > 11 ? 11 : rownum); i++)
-            //{
-            //    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-            //    mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("yyyy/MM/dd");
-            //    mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("HH:mm:ss");
-            //    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
-            //    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料简称"].ToString();
-            //    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料代码"].ToString();
-            //    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["物料批号"].ToString();
-            //    //mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["接上班数量A"].ToString();
-            //    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["领取数量B"].ToString();
-            //    //mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["使用数量C"].ToString();
-            //    //mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["退库数量D"].ToString();
-            //    //mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["物料平衡"].ToString();
-            //    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作员"].ToString();
-            //    mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
-            //}
-            ////需要插入的部分
-            //if (rownum > 11)
-            //{
-            //    for (int i = 11; i < rownum; i++)
-            //    {
-            //        Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
+            //外表信息
+            mysheet.Cells[3, 1].Value = "产品代码：" + dt记录.Rows[0]["产品代码"].ToString();
+            mysheet.Cells[3, 6].Value = "产品批号：" + dt记录.Rows[0]["产品批号"].ToString();
+            mysheet.Cells[3, 9].Value = "生产指令编号：" +tb生产指令编号.Text;
 
-            //        range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
-            //            Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+            //内表信息
+            int rownum = dt记录详情.Rows.Count;
+            //无需插入的部分
+            for (int i = 0; i < (rownum > 9 ? 9 : rownum); i++)
+            {
+                mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                if (1 == label)//退库
+                {
+                    mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["退库日期时间"].ToString()).ToString("yyyy/MM/dd");
+                    mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["退库日期时间"].ToString()).ToShortTimeString();
+                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["退库数量"].ToString();
+                }
+                else
+                {
+                    mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["出库日期时间"].ToString()).ToString("yyyy/MM/dd");
+                    mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["出库日期时间"].ToString()).ToShortTimeString();
+                    mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["发料数量"].ToString();
+ 
+                }
+                mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
+                mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料代码"].ToString();
+                mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料批号"].ToString();
 
-            //        //mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-            //        //mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("yyyy/MM/dd HH:mm:ss");
-            //        //mysheet.Cells[5 + i, 3].Value = dt记录详情.Rows[i]["物料简称"].ToString();
-            //        //mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["物料代码"].ToString();
-            //        //mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料批号"].ToString();
-            //        //mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["接上班数量A"].ToString();
-            //        //mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["领取数量B"].ToString();
-            //        //mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["使用数量C"].ToString();
-            //        //mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["退库数量D"].ToString();
-            //        //mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["物料平衡"].ToString();
-            //        //mysheet.Cells[5 + i, 11].Value = dt记录详情.Rows[i]["操作员"].ToString();
-            //        //mysheet.Cells[5 + i, 12].Value = dt记录详情.Rows[i]["审核员"].ToString();
-            //        mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
-            //        mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("yyyy/MM/dd");
-            //        mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["领料日期时间"].ToString()).ToString("HH:mm:ss");
-            //        mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
-            //        mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料简称"].ToString();
-            //        mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料代码"].ToString();
-            //        mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["物料批号"].ToString();
-            //        //mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["接上班数量A"].ToString();
-            //        mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["领取数量B"].ToString();
-            //        //mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["使用数量C"].ToString();
-            //        //mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["退库数量D"].ToString();
-            //        //mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["物料平衡"].ToString();
-            //        mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["操作员"].ToString();
-            //        mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
-            //    }
-            //}
-            ////加页脚
+                mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["是否合格"].ToString();
+                mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["备注"].ToString();
+                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
+
+            }
+            //需要插入的部分
+            if (rownum > 9)
+            {
+                for (int i = 9; i < rownum; i++)
+                {
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)mysheet.Rows[5 + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
+
+                    mysheet.Cells[5 + i, 1].Value = dt记录详情.Rows[i]["序号"].ToString();
+                    if (1 == label)//退库
+                    {
+                        mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["退库日期时间"].ToString()).ToString("yyyy/MM/dd");
+                        mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["退库日期时间"].ToString()).ToShortTimeString();
+                        mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["退库数量"].ToString();
+                    }
+                    else
+                    {
+                        mysheet.Cells[5 + i, 2].Value = Convert.ToDateTime(dt记录详情.Rows[i]["出库日期时间"].ToString()).ToString("yyyy/MM/dd");
+                        mysheet.Cells[5 + i, 3].Value = Convert.ToDateTime(dt记录详情.Rows[i]["出库日期时间"].ToString()).ToShortTimeString();
+                        mysheet.Cells[5 + i, 7].Value = dt记录详情.Rows[i]["发料数量"].ToString();
+
+                    }
+                    mysheet.Cells[5 + i, 4].Value = dt记录详情.Rows[i]["班次"].ToString();
+                    mysheet.Cells[5 + i, 5].Value = dt记录详情.Rows[i]["物料代码"].ToString();
+                    mysheet.Cells[5 + i, 6].Value = dt记录详情.Rows[i]["物料批号"].ToString();
+
+                    mysheet.Cells[5 + i, 8].Value = dt记录详情.Rows[i]["是否合格"].ToString();
+                    mysheet.Cells[5 + i, 9].Value = dt记录详情.Rows[i]["备注"].ToString();
+                    mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["操作员"].ToString();
+                    mysheet.Cells[5 + i, 10].Value = dt记录详情.Rows[i]["审核员"].ToString();
+                }
+            }
+            //加页脚
             //int sheetnum;
             //OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
             //DataTable dt = new DataTable("temp");
@@ -1456,8 +1460,10 @@ namespace mySystem.Process.Stock
             //for (int i = 0; i < dt.Rows.Count; i++)
             //{ sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             //sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
-            //mysheet.PageSetup.RightFooter = Instruction + "-16-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+            //mysheet.PageSetup.RightFooter = Instruction + "-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
+            mysheet.PageSetup.RightFooter = tb生产指令编号.Text + "-" + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
+
             return mysheet;
         }
                
@@ -1668,6 +1674,34 @@ namespace mySystem.Process.Stock
         }
         private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            if (1 != label)//出库
+            {
+                if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
+                {
+                    if (e.RowIndex % 2 == 0 && dataGridView2.Columns[e.ColumnIndex].Name == "二维码")
+                    {
+                        //杜数据库填数量
+                        //先获得库存id
+                        if (dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value.ToString() != "")
+                        {
+                            OleDbCommand cmd = new OleDbCommand();
+                            cmd.Connection = connOle;
+                            string strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value.ToString());
+                            cmd.CommandText = strcmd;
+                            List<List<Object>> ret = new List<List<Object>>();
+                            OleDbDataReader reader = null;
+                            reader = cmd.ExecuteReader();
+
+                            while (reader.Read())//只有一行
+                            {
+                                dataGridView2.Rows[e.RowIndex].Cells["数量"].Value = int.Parse(reader[3].ToString());
+                            }
+                            reader.Close();
+                        }
+
+                    }
+                }
+            }
 
             fill_datagridview3();
 
