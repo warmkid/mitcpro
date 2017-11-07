@@ -32,6 +32,8 @@ namespace mySystem.Process.CleanCut
         private List<string> list_操作员;
         private List<string> list_审核员;
 
+        private HashSet<string> hs产品代码;
+
         //private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
         //private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
 
@@ -99,6 +101,7 @@ namespace mySystem.Process.CleanCut
             outerBind();
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            getInnerOtherData();
             innerBind();
 
             setFormState();
@@ -110,40 +113,90 @@ namespace mySystem.Process.CleanCut
 
         }
 
+        void getInnerOtherData()
+        {
+            OleDbDataAdapter da;
+            DataTable dt;
+            hs产品代码 = new HashSet<string>();
+            //　产品代码
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            Tconn.Open();
+            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '组件' and 属于工序 like '%清洁分切%'", Tconn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            foreach (DataRow dr in dt.Rows)
+            {
+                hs产品代码.Add(dr["存货代码"].ToString());
+            }
+
+            // 自定义数据
+            foreach (DataRow dr in dt_prodlist.Rows)
+            {
+                hs产品代码.Add(dr["清洁前产品代码"].ToString());
+            }
+        }
+
         // 设置读取数据的事件
         void addDataEventHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataError += dataGridView1_DataError;
 
-            dataGridView1.EditingControlShowing +=new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
-            dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
+            //dataGridView1.EditingControlShowing +=new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            //dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (e.ColumnIndex == 3)
-            {
-                object eFV = e.FormattedValue;
-                DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;
-                if (!cbc.Items.Contains(eFV))
-                {
-                    cbc.Items.Add(eFV);
-                    dataGridView1.SelectedCells[0].Value = eFV;
-                }
-            }
+            //if (e.ColumnIndex == 3)
+            //{
+            //    object eFV = e.FormattedValue;
+            //    DataGridViewComboBoxColumn cbc = dataGridView1.Columns[e.ColumnIndex] as DataGridViewComboBoxColumn;
+            //    if (!cbc.Items.Contains(eFV))
+            //    {
+            //        cbc.Items.Add(eFV);
+            //        dataGridView1.SelectedCells[0].Value = eFV;
+            //    }
+            //}
         }
 
-        private void dataGridView1_EditingControlShowing(object sender,
-        DataGridViewEditingControlShowingEventArgs e)
+        private void dataGridView1_EditingControlShowing(object sender,DataGridViewEditingControlShowingEventArgs e)
         {
-            if (((DataGridView)sender).SelectedCells.Count <= 0)
-                return;
-            if (((DataGridView)sender).SelectedCells[0].ColumnIndex == 3)
+            DataGridView dgv = (sender as DataGridView);
+            if (dgv.SelectedCells.Count == 0) return;
+            int colIdx = dgv.SelectedCells[0].ColumnIndex;
+
+            if (colIdx == 3)//分切前产品代码
             {
-                ComboBox c = e.Control as ComboBox;
-                if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+                TextBox tb = (e.Control as TextBox);
+                tb.AutoCompleteCustomSource = null;
+                AutoCompleteStringCollection acsc;
+                if (tb == null) return;
+                acsc = new AutoCompleteStringCollection();
+                acsc.AddRange(hs产品代码.ToArray());
+                tb.AutoCompleteCustomSource = acsc;
+                tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             }
+
+            //if (((DataGridView)sender).SelectedCells.Count <= 0)
+            //    return;
+            //if (((DataGridView)sender).SelectedCells[0].ColumnIndex == 3)
+            //{
+            //    //ComboBox c = e.Control as ComboBox;
+            //    //if (c != null) c.DropDownStyle = ComboBoxStyle.DropDown;
+            //    TextBox tb = (e.Control as TextBox);
+            //    tb.AutoCompleteCustomSource = null;
+            //    AutoCompleteStringCollection acsc;
+            //    if (tb == null) return;
+            //    acsc = new AutoCompleteStringCollection();
+            //    acsc.AddRange(hs产品代码.ToArray());
+            //    tb.AutoCompleteCustomSource = acsc;
+            //    tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            //    tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            //}
         }
 
         void setUserState()
@@ -270,19 +323,18 @@ namespace mySystem.Process.CleanCut
         //确认按钮
         private void button1_Click(object sender, EventArgs e)
         {
-            bool rt=save();
+            //bool rt=save();
 
-            //控件可见性
-            if (rt && _userState == Parameter.UserState.操作员)
+            ////控件可见性
+            //if (rt && _userState == Parameter.UserState.操作员)
+            //    bt发送审核.Enabled = true;
+            save();
+            if (_userState == Parameter.UserState.操作员)
                 bt发送审核.Enabled = true;
         }
 
         private bool save()
         {
-            //判断合法性
-            if (!input_Judge())
-                return false;
-
             //外表保存
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
@@ -321,6 +373,7 @@ namespace mySystem.Process.CleanCut
 
             instrcode = tb指令编号.Text;
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
+            getInnerOtherData();
             innerBind();
 
             setFormState();
@@ -363,7 +416,10 @@ namespace mySystem.Process.CleanCut
         // 其他事件，比如按钮的点击，数据有效性判断
         void addOtherEvnetHandler()
         {
-            
+            dataGridView1.EditingControlShowing += new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
+            dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
+
+            setDataGridViewCombox();
         }
 
         private void setControlFalse()
@@ -550,73 +606,19 @@ namespace mySystem.Process.CleanCut
             //移除所有列
             while (dataGridView1.Columns.Count > 0)
                 dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
-            setDataGridViewCombox();
+            //setDataGridViewCombox();
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
-            setDataGridViewColumns();
+            
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            setDataGridViewColumns();
         }
 
         //设置DataGridView中下拉框
         void setDataGridViewCombox()
         {
-            foreach (DataColumn dc in dt_prodlist.Columns)
-            {
-                switch (dc.ColumnName)
-                {
-                    case "清洁前产品代码":
-                        DataGridViewComboBoxColumn c1 = new DataGridViewComboBoxColumn();
-                        c1.DataPropertyName = dc.ColumnName;
-                        c1.HeaderText = "清洁前产品代码(规格型号)";
-                        c1.Name = dc.ColumnName;
-                        c1.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c1.ValueType = dc.DataType;
-                        HashSet<string> hs_temp = new HashSet<string>();
-                        foreach (string temp in hs_产品代码)
-                            hs_temp.Add(temp);
-                        for (int i = 0; i < dt_prodlist.Rows.Count; i++)
-                        {
-                            hs_temp.Add(dt_prodlist.Rows[i][3].ToString());
-                        }
-                        foreach (string hstr in hs_temp)
-                        {
-                            c1.Items.Add(hstr);
-                        }
-                        dataGridView1.Columns.Add(c1);
-                        // 重写cell value changed 事件，自动填写id
-                        break;
-
-                    case "数量卷":
-                        DataGridViewTextBoxColumn c3 = new DataGridViewTextBoxColumn();
-                        c3.DataPropertyName = dc.ColumnName;
-                        c3.HeaderText = "数量(卷)";
-                        c3.Name = dc.ColumnName;
-                        c3.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c3.ValueType = dc.DataType;
-                        dataGridView1.Columns.Add(c3);
-                        break;
-
-                    case "数量米":
-                        DataGridViewTextBoxColumn c4 = new DataGridViewTextBoxColumn();
-                        c4.DataPropertyName = dc.ColumnName;
-                        c4.HeaderText = "数量(米)";
-                        c4.Name = dc.ColumnName;
-                        c4.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c4.ValueType = dc.DataType;
-                        dataGridView1.Columns.Add(c4);
-                        break;
-
-                    default:
-                        DataGridViewTextBoxColumn c2 = new DataGridViewTextBoxColumn();
-                        c2.DataPropertyName = dc.ColumnName;
-                        c2.HeaderText = dc.ColumnName;
-                        c2.Name = dc.ColumnName;
-                        c2.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c2.ValueType = dc.DataType;
-                        dataGridView1.Columns.Add(c2);
-                        break;
-                }
-            }          
+            dataGridView1.Columns["数量卷"].HeaderText = "数量（卷）";
+            dataGridView1.Columns["数量米"].HeaderText = "数量（米）"; 
         }
         // 设置DataGridView中各列的格式
         void setDataGridViewColumns()
@@ -624,7 +626,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
             dataGridView1.Columns[6].ReadOnly = true;//数量米
-            dataGridView1.Columns[7].ReadOnly = true;//分切后产品代码
+
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
                 dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
@@ -663,6 +665,7 @@ namespace mySystem.Process.CleanCut
             da_prodlist.Update((DataTable)bs_prodlist.DataSource);
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
+
             //刷新序号
             setDataGridViewRowNums();
         }
@@ -790,6 +793,12 @@ namespace mySystem.Process.CleanCut
 
         private void bt发送审核_Click(object sender, EventArgs e)
         {
+            //判断合法性
+            if (!input_Judge())
+            {
+                bt发送审核.Enabled = false;
+                return;
+            }
             //写待审核表
             DataTable dt_temp= new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();

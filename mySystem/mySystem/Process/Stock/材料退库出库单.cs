@@ -937,12 +937,22 @@ namespace mySystem.Process.Stock
                         MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
                         return false;
                     }
-                    else if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库或出库数量
+                    if (label != 1)//出库
                     {
-                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
-                        return false;
+                        if (int.Parse(dr[0][7].ToString()) > int.Parse(dataGridView3.Rows[i].Cells["数量"].Value.ToString()))//应该出库量>实际出库量
+                        {
+                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "出库量应该大于" + dr[0][7].ToString());
+                            return false;
+                        }
                     }
-                    else { }
+                    else//退库
+                    {
+                        if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库数量不等
+                        {
+                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
+                            return false;
+                        }
+                    }
 
                 }
             }
@@ -956,12 +966,22 @@ namespace mySystem.Process.Stock
                         MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
                         return false;
                     }
-                    else if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库或出库数量
+                    if (label != 1)//出库
                     {
-                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
-                        return false;
+                        if (int.Parse(dr[0][7].ToString()) > int.Parse(dataGridView3.Rows[i].Cells["数量"].Value.ToString()))//应该出库量>实际出库量
+                        {
+                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "出库量应该大于" + dr[0][7].ToString());
+                            return false;
+                        }
                     }
-                    else { }
+                    else//退库
+                    {
+                        if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库数量不等
+                        {
+                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
+                            return false;
+                        }
+                    }
 
                 }
             }
@@ -1211,38 +1231,48 @@ namespace mySystem.Process.Stock
 
                         if (strname == dataGridView2.Rows[i].Cells["二维码"].Value.ToString())//update操作
                         {
-                            strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, strname);
+                            //strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, strname);
+                            //cmd.CommandText = strcmd;
+                            //int n = cmd.ExecuteNonQuery();
+                            //if (n <= 0)
+                            //{
+                            //    MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息表 有误", i + 1));
+                            //    return;
+                            //}
+                        }
+                        else//
+                        {
+                            ////插入小包二维码
+                            //List<string> name = new List<string>();
+                            //List<object> value = new List<object>();
+                            //name.Add("二维码");
+                            //name.Add("库存ID");
+                            //name.Add("数量");
+
+                            //value.Add(strname);
+                            //value.Add(id_库存);
+                            //value.Add(0);
+
+                            //if (!Utility.insertAccess(connOle, "二维码信息", name, value))
+                            //{
+                            //    MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息 有误", i + 1));
+                            //    return;
+                            //}
+
+                            //更新小包二维码对应数量
+                            strcmd = string.Format("UPDATE {0} SET {1}={2}+{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, strname);
                             cmd.CommandText = strcmd;
                             int n = cmd.ExecuteNonQuery();
                             if (n <= 0)
                             {
-                                MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息表 有误", i + 1));
-                                return;
-                            }
-                        }
-                        else//insert操作
-                        {
-                            //插入小包二维码
-                            List<string> name = new List<string>();
-                            List<object> value = new List<object>();
-                            name.Add("二维码");
-                            name.Add("库存ID");
-                            name.Add("数量");
-
-                            value.Add(strname);
-                            value.Add(id_库存);
-                            value.Add(0);
-
-                            if (!Utility.insertAccess(connOle, "二维码信息", name, value))
-                            {
-                                MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息 有误", i + 1));
+                                MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息表 有误", i + 2));
                                 return;
                             }
 
                             //更新大包二维码对应数量
                             strcmd = string.Format("UPDATE {0} SET {1}={2}-{3} WHERE 二维码='{4}'", "二维码信息", "数量", "数量", num, dataGridView2.Rows[i].Cells["二维码"].Value.ToString());
                             cmd.CommandText = strcmd;
-                            int n = cmd.ExecuteNonQuery();
+                            n = cmd.ExecuteNonQuery();
                             if (n <= 0)
                             {
                                 MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息表 有误", i + 1));
