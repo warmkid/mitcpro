@@ -588,6 +588,7 @@ namespace mySystem.Process.Bag.BTV
             dr["领取数量"] = 0;
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
+            dr["二维码"] = "";
             return dr;
         }
 
@@ -1233,7 +1234,7 @@ namespace mySystem.Process.Bag.BTV
                 //    DataRow[] drs = dt物料.Select("物料代码='" + dataGridView1["物料代码", e.RowIndex].Value.ToString() + "'");
                 //    dataGridView1.Rows[e.RowIndex].Cells["物料简称"].Value = drs[0]["物料简称"].ToString();
                 //    dataGridView1.Rows[e.RowIndex].Cells["物料批号"].Value = drs[0]["物料批号"].ToString();
-                //}
+                //}二维码
                 if (dataGridView1.Columns[e.ColumnIndex].Name == "操作员")
                 {
                     if (mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString()) == 0)
@@ -1242,7 +1243,23 @@ namespace mySystem.Process.Bag.BTV
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
                     }
                 }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "二维码")
+                {
+                    try
+                    {
+                        string[] info = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
+                        dt记录详情.Rows[e.RowIndex]["物料代码"] = info[0];
+                        dt记录详情.Rows[e.RowIndex]["物料批号"] = info[1];
+                        dt记录详情.Rows[e.RowIndex]["领取数量"] = getMaterialAmountFromQRcode(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                        //MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
+                    }
+                    catch
+                    {
+                        //MessageBox.Show("ERROR");
+                    }
+                }
                 else
+                
                 { }
             }
             String curStr;
@@ -1297,6 +1314,21 @@ namespace mySystem.Process.Bag.BTV
                 //    break;
 
             }
+        }
+
+        int getMaterialAmountFromQRcode(string QRcode)
+        {
+            int rtn;
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection connToOrder = new OleDbConnection(strConnect);
+            OleDbDataAdapter da;
+            DataTable dt = new DataTable();
+            da = new OleDbDataAdapter("select 数量 from 二维码信息 where 二维码 ='"+ QRcode+"'", connToOrder);
+            da.Fill(dt);
+            rtn = Convert.ToInt32(dt.Rows[0]["数量"].ToString());
+            da.Dispose();
+            return rtn;
         }
 
         private void dataGridView1_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
