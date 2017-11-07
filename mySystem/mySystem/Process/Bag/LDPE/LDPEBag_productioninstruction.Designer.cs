@@ -216,22 +216,26 @@
             // label22
             // 
             this.label22.AutoSize = true;
+            this.label22.Enabled = false;
             this.label22.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label22.Location = new System.Drawing.Point(778, 255);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(24, 16);
             this.label22.TabIndex = 238;
             this.label22.Text = "个";
+            this.label22.Visible = false;
             // 
             // label21
             // 
             this.label21.AutoSize = true;
+            this.label21.Enabled = false;
             this.label21.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label21.Location = new System.Drawing.Point(778, 228);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(24, 16);
             this.label21.TabIndex = 237;
             this.label21.Text = "米";
+            this.label21.Visible = false;
             // 
             // label20
             // 
@@ -457,19 +461,23 @@
             // 
             // tb制袋物料名称3
             // 
+            this.tb制袋物料名称3.Enabled = false;
             this.tb制袋物料名称3.Location = new System.Drawing.Point(151, 253);
             this.tb制袋物料名称3.Name = "tb制袋物料名称3";
             this.tb制袋物料名称3.ReadOnly = true;
             this.tb制袋物料名称3.Size = new System.Drawing.Size(152, 21);
             this.tb制袋物料名称3.TabIndex = 211;
+            this.tb制袋物料名称3.Visible = false;
             // 
             // tb制袋物料名称2
             // 
+            this.tb制袋物料名称2.Enabled = false;
             this.tb制袋物料名称2.Location = new System.Drawing.Point(151, 226);
             this.tb制袋物料名称2.Name = "tb制袋物料名称2";
             this.tb制袋物料名称2.ReadOnly = true;
             this.tb制袋物料名称2.Size = new System.Drawing.Size(152, 21);
             this.tb制袋物料名称2.TabIndex = 210;
+            this.tb制袋物料名称2.Visible = false;
             // 
             // tb制袋物料名称1
             // 
@@ -745,17 +753,21 @@
             // 
             // tb制袋物料领料量3
             // 
+            this.tb制袋物料领料量3.Enabled = false;
             this.tb制袋物料领料量3.Location = new System.Drawing.Point(684, 253);
             this.tb制袋物料领料量3.Name = "tb制袋物料领料量3";
             this.tb制袋物料领料量3.Size = new System.Drawing.Size(88, 21);
             this.tb制袋物料领料量3.TabIndex = 176;
+            this.tb制袋物料领料量3.Visible = false;
             // 
             // tb制袋物料领料量2
             // 
+            this.tb制袋物料领料量2.Enabled = false;
             this.tb制袋物料领料量2.Location = new System.Drawing.Point(684, 226);
             this.tb制袋物料领料量2.Name = "tb制袋物料领料量2";
             this.tb制袋物料领料量2.Size = new System.Drawing.Size(88, 21);
             this.tb制袋物料领料量2.TabIndex = 175;
+            this.tb制袋物料领料量2.Visible = false;
             // 
             // tb内包物料批号2
             // 
@@ -773,17 +785,21 @@
             // 
             // tb制袋物料批号3
             // 
+            this.tb制袋物料批号3.Enabled = false;
             this.tb制袋物料批号3.Location = new System.Drawing.Point(520, 253);
             this.tb制袋物料批号3.Name = "tb制袋物料批号3";
             this.tb制袋物料批号3.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料批号3.TabIndex = 172;
+            this.tb制袋物料批号3.Visible = false;
             // 
             // tb制袋物料批号2
             // 
+            this.tb制袋物料批号2.Enabled = false;
             this.tb制袋物料批号2.Location = new System.Drawing.Point(520, 226);
             this.tb制袋物料批号2.Name = "tb制袋物料批号2";
             this.tb制袋物料批号2.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料批号2.TabIndex = 171;
+            this.tb制袋物料批号2.Visible = false;
             // 
             // tb内包物料代码2
             // 
@@ -801,17 +817,21 @@
             // 
             // tb制袋物料代码3
             // 
+            this.tb制袋物料代码3.Enabled = false;
             this.tb制袋物料代码3.Location = new System.Drawing.Point(333, 253);
             this.tb制袋物料代码3.Name = "tb制袋物料代码3";
             this.tb制袋物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料代码3.TabIndex = 168;
+            this.tb制袋物料代码3.Visible = false;
             // 
             // tb制袋物料代码2
             // 
+            this.tb制袋物料代码2.Enabled = false;
             this.tb制袋物料代码2.Location = new System.Drawing.Point(333, 226);
             this.tb制袋物料代码2.Name = "tb制袋物料代码2";
             this.tb制袋物料代码2.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料代码2.TabIndex = 167;
+            this.tb制袋物料代码2.Visible = false;
             // 
             // tb制袋物料领料量1
             // 
@@ -833,6 +853,8 @@
             this.tb制袋物料代码1.Name = "tb制袋物料代码1";
             this.tb制袋物料代码1.Size = new System.Drawing.Size(124, 21);
             this.tb制袋物料代码1.TabIndex = 164;
+            this.tb制袋物料代码1.TextChanged += new System.EventHandler(this.tb制袋物料代码1_TextChanged);
+            this.tb制袋物料代码1.Enter += new System.EventHandler(this.tb制袋物料代码1_Enter);
             // 
             // label17
             // 
@@ -1000,7 +1022,7 @@
             this.label23.Size = new System.Drawing.Size(791, 14);
             this.label23.TabIndex = 200;
             this.label23.Text = "---------------------------------------------------------------------------------" +
-    "-------------------------------";
+                "-------------------------------";
             // 
             // label33
             // 
@@ -1012,19 +1034,20 @@
             this.label33.Size = new System.Drawing.Size(1092, 14);
             this.label33.TabIndex = 201;
             this.label33.Text = "---------------------------------------------------------------------------------" +
-    "--------------------------------------------------------------------------";
+                "--------------------------------------------------------------------------";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.BackColor = System.Drawing.Color.Transparent;
+            this.label15.Enabled = false;
             this.label15.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label15.Location = new System.Drawing.Point(18, 411);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(791, 14);
             this.label15.TabIndex = 222;
             this.label15.Text = "---------------------------------------------------------------------------------" +
-    "-------------------------------";
+                "-------------------------------";
             // 
             // dataGridView1
             // 
@@ -1055,81 +1078,101 @@
             // 
             // tb内包物料名称4
             // 
+            this.tb内包物料名称4.Enabled = false;
             this.tb内包物料名称4.Location = new System.Drawing.Point(151, 382);
             this.tb内包物料名称4.Name = "tb内包物料名称4";
             this.tb内包物料名称4.ReadOnly = true;
             this.tb内包物料名称4.Size = new System.Drawing.Size(152, 21);
             this.tb内包物料名称4.TabIndex = 255;
+            this.tb内包物料名称4.Visible = false;
             // 
             // tb内包物料名称3
             // 
+            this.tb内包物料名称3.Enabled = false;
             this.tb内包物料名称3.Location = new System.Drawing.Point(151, 354);
             this.tb内包物料名称3.Name = "tb内包物料名称3";
             this.tb内包物料名称3.ReadOnly = true;
             this.tb内包物料名称3.Size = new System.Drawing.Size(152, 21);
             this.tb内包物料名称3.TabIndex = 254;
+            this.tb内包物料名称3.Visible = false;
             // 
             // tb内包物料领料量4
             // 
+            this.tb内包物料领料量4.Enabled = false;
             this.tb内包物料领料量4.Location = new System.Drawing.Point(684, 382);
             this.tb内包物料领料量4.Name = "tb内包物料领料量4";
             this.tb内包物料领料量4.Size = new System.Drawing.Size(88, 21);
             this.tb内包物料领料量4.TabIndex = 253;
+            this.tb内包物料领料量4.Visible = false;
             // 
             // tb内包物料领料量3
             // 
+            this.tb内包物料领料量3.Enabled = false;
             this.tb内包物料领料量3.Location = new System.Drawing.Point(684, 354);
             this.tb内包物料领料量3.Name = "tb内包物料领料量3";
             this.tb内包物料领料量3.Size = new System.Drawing.Size(88, 21);
             this.tb内包物料领料量3.TabIndex = 252;
+            this.tb内包物料领料量3.Visible = false;
             // 
             // tb内包物料批号4
             // 
+            this.tb内包物料批号4.Enabled = false;
             this.tb内包物料批号4.Location = new System.Drawing.Point(520, 382);
             this.tb内包物料批号4.Name = "tb内包物料批号4";
             this.tb内包物料批号4.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料批号4.TabIndex = 251;
+            this.tb内包物料批号4.Visible = false;
             // 
             // tb内包物料批号3
             // 
+            this.tb内包物料批号3.Enabled = false;
             this.tb内包物料批号3.Location = new System.Drawing.Point(520, 354);
             this.tb内包物料批号3.Name = "tb内包物料批号3";
             this.tb内包物料批号3.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料批号3.TabIndex = 250;
+            this.tb内包物料批号3.Visible = false;
             // 
             // tb内包物料代码4
             // 
+            this.tb内包物料代码4.Enabled = false;
             this.tb内包物料代码4.Location = new System.Drawing.Point(333, 382);
             this.tb内包物料代码4.Name = "tb内包物料代码4";
             this.tb内包物料代码4.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码4.TabIndex = 249;
+            this.tb内包物料代码4.Visible = false;
             // 
             // tb内包物料代码3
             // 
+            this.tb内包物料代码3.Enabled = false;
             this.tb内包物料代码3.Location = new System.Drawing.Point(333, 354);
             this.tb内包物料代码3.Name = "tb内包物料代码3";
             this.tb内包物料代码3.Size = new System.Drawing.Size(124, 21);
             this.tb内包物料代码3.TabIndex = 248;
+            this.tb内包物料代码3.Visible = false;
             // 
             // label32
             // 
             this.label32.AutoSize = true;
+            this.label32.Enabled = false;
             this.label32.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label32.Location = new System.Drawing.Point(778, 388);
             this.label32.Name = "label32";
             this.label32.Size = new System.Drawing.Size(24, 16);
             this.label32.TabIndex = 257;
             this.label32.Text = "张";
+            this.label32.Visible = false;
             // 
             // label40
             // 
             this.label40.AutoSize = true;
+            this.label40.Enabled = false;
             this.label40.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label40.Location = new System.Drawing.Point(778, 359);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(24, 16);
             this.label40.TabIndex = 256;
             this.label40.Text = "只";
+            this.label40.Visible = false;
             // 
             // LDPEBag_productioninstruction
             // 
