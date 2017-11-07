@@ -937,12 +937,22 @@ namespace mySystem.Process.Stock
                         MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
                         return false;
                     }
-                    else if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库或出库数量
+                    if (label != 1)//出库
                     {
-                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
-                        return false;
+                        if (int.Parse(dr[0][7].ToString()) > int.Parse(dataGridView3.Rows[i].Cells["数量"].Value.ToString()))//应该出库量>实际出库量
+                        {
+                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "出库量应该大于" + dr[0][7].ToString());
+                            return false;
+                        }
                     }
-                    else { }
+                    else//退库
+                    {
+                        if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库数量不等
+                        {
+                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
+                            return false;
+                        }
+                    }
 
                 }
             }
@@ -956,12 +966,22 @@ namespace mySystem.Process.Stock
                         MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "不匹配");
                         return false;
                     }
-                    else if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库或出库数量
+                    if (label != 1)//出库
                     {
-                        MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
-                        return false;
+                        if (int.Parse(dr[0][7].ToString()) > int.Parse(dataGridView3.Rows[i].Cells["数量"].Value.ToString()))//应该出库量>实际出库量
+                        {
+                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "出库量应该大于" + dr[0][7].ToString());
+                            return false;
+                        }
                     }
-                    else { }
+                    else//退库
+                    {
+                        if (dr[0][7].ToString() != dataGridView3.Rows[i].Cells["数量"].Value.ToString())//退库数量不等
+                        {
+                            MessageBox.Show("物料代码" + dataGridView3.Rows[i].Cells["物料代码"].Value.ToString() + "对应数量不匹配");
+                            return false;
+                        }
+                    }
 
                 }
             }
