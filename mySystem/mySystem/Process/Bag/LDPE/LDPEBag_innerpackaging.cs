@@ -56,7 +56,7 @@ namespace mySystem.Process.Bag.LDPE
 
             setControlFalse();
             cb产品代码.Enabled = true;
-            dtp生产日期.Enabled = true;
+            //dtp生产日期.Enabled = true;
             btn查询新建.Enabled = true;
             //打印、查看日志按钮不可用
             btn打印.Enabled = false;
@@ -200,6 +200,7 @@ namespace mySystem.Process.Bag.LDPE
             //*********数据填写*********//
             cb产品代码.SelectedIndex = -1;
             tb生产批号.Text = "";
+            tb生产指令编号.Text = Instruction;
         }
 
         //根据状态设置可读写性
@@ -336,6 +337,7 @@ namespace mySystem.Process.Bag.LDPE
             //tb成品率.ReadOnly = true;
             //查询条件始终不可编辑
             cb产品代码.Enabled = false;
+            dtp生产日期.Enabled = false;
             btn查询新建.Enabled = false;
         }
 
@@ -563,7 +565,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString() +" order by id ASC", connOle);
+            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString() + " order by id ASC", connOle);
             cb记录详情 = new OleDbCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
@@ -582,7 +584,15 @@ namespace mySystem.Process.Bag.LDPE
         {
             dr["序号"] = 0;
             dr["T产品内包装记录ID"] = ID;
-            dr["生产开始时间"] = DateTime.Now;
+            //dr["生产开始时间"] = DateTime.Now;
+            if (dt记录详情.Rows.Count >= 1)
+            {
+                dr["生产开始时间"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["生产结束时间"];  //根据上一行填写
+            }
+            else
+            {
+                dr["生产开始时间"] = DateTime.Now; //新建第一行
+            }    
             dr["生产结束时间"] = DateTime.Now;
             dr["内包序号"] = 0;
             //dr["包装规格每包只数"] = 0;

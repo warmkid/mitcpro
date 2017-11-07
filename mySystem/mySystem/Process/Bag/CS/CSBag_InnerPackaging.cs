@@ -348,6 +348,7 @@ namespace mySystem.Process.Bag
             tb产品数量只数合计B.ReadOnly = true;
             //tb成品率.ReadOnly = true;
             //查询条件始终不可编辑
+            tb生产日期.Enabled = false;
             cb产品代码.Enabled = false;
             btn查询新建.Enabled = false;
         }
@@ -586,7 +587,7 @@ namespace mySystem.Process.Bag
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString(), connOle);
+            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString() + " order by id ASC", connOle);
             cb记录详情 = new OleDbCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
@@ -605,7 +606,15 @@ namespace mySystem.Process.Bag
         {
             dr["序号"] = 0;
             dr["T产品内包装记录ID"] = ID;
-            dr["生产开始时间"] = DateTime.Now;
+            //dr["生产开始时间"] = DateTime.Now;
+            if (dt记录详情.Rows.Count >= 1)
+            {
+                dr["生产开始时间"] = dt记录详情.Rows[dt记录详情.Rows.Count - 1]["生产结束时间"];  //根据上一行填写
+            }
+            else
+            {
+                dr["生产开始时间"] = DateTime.Now; //新建第一行
+            }    
             dr["生产结束时间"] = DateTime.Now;
             dr["内包序号"] = 0;
             dr["产品数量包数"] = 0;
