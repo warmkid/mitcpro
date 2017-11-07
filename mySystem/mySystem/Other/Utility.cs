@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 using System.Data.OleDb;
 using System.Collections;
 using System.Windows.Forms;
@@ -513,6 +514,36 @@ namespace mySystem
             }
         }
 
+
+        /// <summary>
+        /// this function return the material amounts according to the QRcode;
+        /// it frequently consults database
+        /// desigeed by pool, 2017-11-07
+        /// input: a full string
+        /// output: amount
+        /// </summary>
+        /// <param name="QRcode"></param>
+        /// <returns></returns>
+        public static int getMaterialAmountFromQRcode(string QRcode)
+        {
+            int rtn;
+            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            OleDbConnection connToOrder = new OleDbConnection(strConnect);
+            OleDbDataAdapter da;
+            DataTable dt = new DataTable();
+            da = new OleDbDataAdapter("select 数量 from 二维码信息 where 二维码 ='" + QRcode + "'", connToOrder);
+            da.Fill(dt);
+            if (dt.Rows.Count < 1)
+            {
+                rtn = 0;
+                da.Dispose();
+                return rtn;
+            }
+            rtn = Convert.ToInt32(dt.Rows[0]["数量"].ToString());
+            da.Dispose();
+            return rtn;
+        }
     
 
     }

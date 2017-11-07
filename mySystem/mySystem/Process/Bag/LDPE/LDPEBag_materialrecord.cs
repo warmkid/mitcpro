@@ -542,6 +542,7 @@ namespace mySystem.Process.Bag.LDPE
             dr["操作员"] = mySystem.Parameter.userName;
             dr["操作员备注"] = "";
             dr["审核员"] = "";
+            dr["二维码"] = "";
             return dr;
         }
 
@@ -1144,6 +1145,23 @@ namespace mySystem.Process.Bag.LDPE
                 //        dataGridView1["物料批号", e.RowIndex].Value = drs[0]["物料批号"];
                 //    }
                 //}
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "二维码")
+                {
+                    try
+                    {
+                        string[] info = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
+                        dt记录详情.Rows[e.RowIndex]["物料代码"] = info[0];
+                        dt记录详情.Rows[e.RowIndex]["物料批号"] = info[1];
+                        dt记录详情.Rows[e.RowIndex]["领取数量"] = mySystem.Utility.getMaterialAmountFromQRcode(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                        //MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
+                    }
+                    catch
+                    {
+                        //MessageBox.Show("ERROR");
+                    }
+                }
+                else
+                { }
             }
         }
         

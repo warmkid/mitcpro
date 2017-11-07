@@ -618,6 +618,21 @@ namespace mySystem.Extruction.Process
         }
         private void dataGridView1_Endedit(object sender, DataGridViewCellEventArgs e)
         {
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "二维码")
+            {
+                try
+                {
+                    string[] info = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
+                    //dt_prodlist.Rows[e.RowIndex]["物料代码"] = info[0];
+                    dt_prodlist.Rows[e.RowIndex]["物料批号"] = info[1];
+                    dt_prodlist.Rows[e.RowIndex]["数量"] = mySystem.Utility.getMaterialAmountFromQRcode(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    //MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
+                }
+                catch
+                {
+                    //MessageBox.Show("ERROR");
+                }
+            }
             //重量计算
             if (e.ColumnIndex == 3)
             {
@@ -856,6 +871,7 @@ namespace mySystem.Extruction.Process
             dr["清洁合格"] = "合格";
             dr["操作人"] = mySystem.Parameter.userName;
             dr["操作员备注"] = "无";
+            dr["二维码"] = "";
             return dr;
         }
         // 根据条件从数据库中读取一行外表的数据
