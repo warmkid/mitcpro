@@ -607,20 +607,20 @@ namespace mySystem.Process.Bag.PTV
                 switch (dc.ColumnName)
                 {
                     case "物料代码":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        if(dt物料!=null)
-                        {
-                            for (int i = 0; i < dt物料.Rows.Count; i++)
-                            { cbc.Items.Add(dt物料.Rows[i]["物料代码"].ToString()); }
-                            dataGridView1.Columns.Add(cbc);
-                        }
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc = new DataGridViewComboBoxColumn();
+                        //cbc.DataPropertyName = dc.ColumnName;
+                        //cbc.HeaderText = dc.ColumnName;
+                        //cbc.Name = dc.ColumnName;
+                        //cbc.ValueType = dc.DataType;
+                        //if(dt物料!=null)
+                        //{
+                        //    for (int i = 0; i < dt物料.Rows.Count; i++)
+                        //    { cbc.Items.Add(dt物料.Rows[i]["物料代码"].ToString()); }
+                        //    dataGridView1.Columns.Add(cbc);
+                        //}
+                        //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
 
                     default:

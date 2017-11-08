@@ -610,30 +610,30 @@ namespace mySystem.Process.Bag.BTV
                 {
                     case "物料代码":
                         //IF READ ACCORDING TO ID, LET IT BE TEXTBOX
-                        if (dt物料 == null)
-                        {
-                            tbc = new DataGridViewTextBoxColumn();
-                            tbc.DataPropertyName = dc.ColumnName;
-                            tbc.HeaderText = dc.ColumnName;
-                            tbc.Name = dc.ColumnName;
-                            tbc.ValueType = dc.DataType;
-                            dataGridView1.Columns.Add(tbc);
-                            tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                            tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                            tbc.MinimumWidth = 120;
-                            break;
-                        }
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        for (int i = 0; i < dt物料.Rows.Count; i++)
-                        { cbc.Items.Add(dt物料.Rows[i]["物料代码"].ToString()); }
-                        dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //if (dt物料 == null)
+                        //{
+                        //    tbc = new DataGridViewTextBoxColumn();
+                        //    tbc.DataPropertyName = dc.ColumnName;
+                        //    tbc.HeaderText = dc.ColumnName;
+                        //    tbc.Name = dc.ColumnName;
+                        //    tbc.ValueType = dc.DataType;
+                        //    dataGridView1.Columns.Add(tbc);
+                        //    tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //    tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //    tbc.MinimumWidth = 120;
+                        //    break;
+                        //}
+                        //cbc = new DataGridViewComboBoxColumn();
+                        //cbc.DataPropertyName = dc.ColumnName;
+                        //cbc.HeaderText = dc.ColumnName;
+                        //cbc.Name = dc.ColumnName;
+                        //cbc.ValueType = dc.DataType;
+                        //for (int i = 0; i < dt物料.Rows.Count; i++)
+                        //{ cbc.Items.Add(dt物料.Rows[i]["物料代码"].ToString()); }
+                        //dataGridView1.Columns.Add(cbc);
+                        //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();

@@ -30,7 +30,7 @@ namespace mySystem.Extruction.Process
         //用于带id参数构造函数，存储已存在记录的相关信息
         int instrid;
         string matcode;
-
+        string current物料代码;
         // 需要保存的状态
         /// <summary>
         /// 1:操作员，2：审核员，4：管理员
@@ -623,7 +623,7 @@ namespace mySystem.Extruction.Process
                 try
                 {
                     string[] info = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
-                    //dt_prodlist.Rows[e.RowIndex]["物料代码"] = info[0];
+                    current物料代码 = info[0];
                     dt_prodlist.Rows[e.RowIndex]["物料批号"] = info[1];
                     dt_prodlist.Rows[e.RowIndex]["数量"] = mySystem.Utility.getMaterialAmountFromQRcode(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
                     //MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
@@ -634,7 +634,7 @@ namespace mySystem.Extruction.Process
                 }
             }
             //重量计算
-            if (e.ColumnIndex == 3)
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "二维码")
             {
 
                 float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
@@ -666,10 +666,10 @@ namespace mySystem.Extruction.Process
             float sum_num = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")
-                    sum_num += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
-                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells["数量"].Value.ToString() != "")
+                    sum_num += float.Parse(dataGridView1.Rows[i].Cells["数量"].Value.ToString());
+                if (dataGridView1.Rows[i].Cells["重量"].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells["重量"].Value.ToString());
             }
             //tb重量.Text = sum_num.ToString();
             //tb数量.Text = sum_weight.ToString();
