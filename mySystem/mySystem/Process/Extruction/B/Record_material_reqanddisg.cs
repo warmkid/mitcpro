@@ -201,7 +201,7 @@ namespace mySystem.Extruction.Process
                     if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
                     {
                         dataGridView1.Rows[i].ReadOnly = false;
-                        dataGridView1.Rows[i].Cells[5].ReadOnly = true;//重量
+                        dataGridView1.Rows[i].Cells["重量"].ReadOnly = true;//重量
                     }
                         
                     else
@@ -231,7 +231,7 @@ namespace mySystem.Extruction.Process
                     else
                     {
                         dataGridView1.Rows[i].ReadOnly = false;
-                        dataGridView1.Rows[i].Cells[5].ReadOnly = true;//重量
+                        dataGridView1.Rows[i].Cells["重量"].ReadOnly = true;//重量
 
                     }
                         
@@ -624,9 +624,16 @@ namespace mySystem.Extruction.Process
                 {
                     string[] info = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
                     current物料代码 = info[0];
-                    dt_prodlist.Rows[e.RowIndex]["物料批号"] = info[1];
-                    dt_prodlist.Rows[e.RowIndex]["数量"] = mySystem.Utility.getMaterialAmountFromQRcode(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-                    //MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
+                    if (current物料代码 == matcode)
+                    {
+                        dt_prodlist.Rows[e.RowIndex]["物料批号"] = info[1];
+                        dt_prodlist.Rows[e.RowIndex]["数量"] = mySystem.Utility.getMaterialAmountFromQRcode(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    }
+                    else
+                    {
+                        MessageBox.Show("物料代码不匹配!");
+                        dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "";
+                    }//MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
                 }
                 catch
                 {
@@ -634,30 +641,30 @@ namespace mySystem.Extruction.Process
                 }
             }
             //重量计算
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "二维码")
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "数量")
             {
 
-                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
-                float b = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-                dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * b;
+                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells["重量每件"].Value.ToString());
+                float b = float.Parse(dataGridView1.Rows[e.RowIndex].Cells["数量"].Value.ToString());
+                dataGridView1.Rows[e.RowIndex].Cells["重量"].Value = a * b;
             }
-            if (e.ColumnIndex == 4)
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "重量")
             {
 
-                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString());
-                float b = float.Parse(dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString());
-                dataGridView1.Rows[e.RowIndex].Cells[5].Value = a * b;
+                float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells["重量每件"].Value.ToString());
+                float b = float.Parse(dataGridView1.Rows[e.RowIndex].Cells["数量"].Value.ToString());
+                dataGridView1.Rows[e.RowIndex].Cells["重量"].Value = a * b;
             }
             //操作人
-            if (e.ColumnIndex == 8)
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "操作人")
             {
-                if (dataGridView1.Rows[e.RowIndex].Cells[8].Value == null || dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString() == "")
+                if (dataGridView1.Rows[e.RowIndex].Cells["操作人"].Value == null || dataGridView1.Rows[e.RowIndex].Cells["操作人"].Value.ToString() == "")
                     return;
-                int rt = mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells[8].Value.ToString());
+                int rt = mySystem.Parameter.NametoID(dataGridView1.Rows[e.RowIndex].Cells["操作人"].Value.ToString());
                 if (rt <= 0)
                 {
                     MessageBox.Show("操作人ID不存在，请重新输入");
-                    dataGridView1.Rows[e.RowIndex].Cells[8].Value = "";
+                    dataGridView1.Rows[e.RowIndex].Cells["操作人"].Value = "";
                 }
                 return;
             }
@@ -679,17 +686,17 @@ namespace mySystem.Extruction.Process
             bs_prodinstr.EndEdit();
             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
 
-            if (e.ColumnIndex == 6)
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "包装完好")
             {
-                if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString() == "是" && dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString() == "合格")
+                if (dataGridView1.Rows[e.RowIndex].Cells["包装完好"].Value.ToString() == "是" && dataGridView1.Rows[e.RowIndex].Cells["清洁合格"].Value.ToString() == "合格")
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 else
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
             }
 
-            if (e.ColumnIndex == 7)
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "清洁合格")
             {
-                if (dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString() == "是" && dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString() == "合格")
+                if (dataGridView1.Rows[e.RowIndex].Cells["包装完好"].Value.ToString() == "是" && dataGridView1.Rows[e.RowIndex].Cells["清洁合格"].Value.ToString() == "合格")
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.White;
                 else
                     dataGridView1.Rows[e.RowIndex].DefaultCellStyle.BackColor = Color.Red;
@@ -1044,7 +1051,7 @@ namespace mySystem.Extruction.Process
             //判断合法性
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[8].Value == null || dataGridView1.Rows[i].Cells[8].Value.ToString() == "")
+                if (dataGridView1.Rows[i].Cells["操作人"].Value == null || dataGridView1.Rows[i].Cells["操作人"].Value.ToString() == "")
                 {
                     MessageBox.Show("操作人不能为空");
                     return false;
@@ -1279,10 +1286,10 @@ namespace mySystem.Extruction.Process
             float sum_num = 0, sum_weight = 0;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[3].Value.ToString() != "")
-                    sum_num += float.Parse(dataGridView1.Rows[i].Cells[3].Value.ToString());
-                if (dataGridView1.Rows[i].Cells[5].Value.ToString() != "")
-                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells[5].Value.ToString());
+                if (dataGridView1.Rows[i].Cells["数量"].Value.ToString() != "")
+                    sum_num += float.Parse(dataGridView1.Rows[i].Cells["数量"].Value.ToString());
+                if (dataGridView1.Rows[i].Cells["重量"].Value.ToString() != "")
+                    sum_weight += float.Parse(dataGridView1.Rows[i].Cells["重量"].Value.ToString());
             }
             //tb重量.Text = sum_num.ToString();
             //tb数量.Text = sum_weight.ToString();
@@ -1380,7 +1387,7 @@ namespace mySystem.Extruction.Process
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "是" && dataGridView1.Rows[i].Cells[7].Value.ToString() == "合格")
+                if (dataGridView1.Rows[i].Cells["包装完好"].Value.ToString() == "是" && dataGridView1.Rows[i].Cells["清洁合格"].Value.ToString() == "合格")
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.White;
                 else
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
@@ -1398,7 +1405,7 @@ namespace mySystem.Extruction.Process
         {
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[6].Value.ToString() == "否" || dataGridView1.Rows[i].Cells[7].Value.ToString() == "不合格")
+                if (dataGridView1.Rows[i].Cells["包装完好"].Value.ToString() == "否" || dataGridView1.Rows[i].Cells["清洁合格"].Value.ToString() == "不合格")
                 {
                     MessageBox.Show("有条目待确认");
                     return;
@@ -1408,7 +1415,7 @@ namespace mySystem.Extruction.Process
             //判断内表审核人是否有空值
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
-                if (dataGridView1.Rows[i].Cells[9].Value.ToString() == "" || dataGridView1.Rows[i].Cells[9].Value.ToString()=="__待审核")
+                if (dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "" || dataGridView1.Rows[i].Cells["审核人"].Value.ToString() == "__待审核")
                 {
                     MessageBox.Show("未完成领料审核");
                     return;
