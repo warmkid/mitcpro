@@ -1736,6 +1736,15 @@ namespace mySystem.Process.Stock
             fill_datagridview3();
 
         }
+
+        private void btn打印二维码_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count == 0) return;
+            string daima = dataGridView1["物料代码", dataGridView1.SelectedCells[0].RowIndex].Value.ToString();
+            string pihao = dataGridView1["物料批号", dataGridView1.SelectedCells[0].RowIndex].Value.ToString();
+            mySystem.Other.二维码打印 form = mySystem.Other.二维码打印.create(daima, pihao);
+            form.Show();
+        }
         
     }
 }
