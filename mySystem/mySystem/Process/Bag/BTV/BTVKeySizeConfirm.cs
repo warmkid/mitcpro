@@ -830,51 +830,61 @@ namespace mySystem.Process.Bag.BTV
             print(true);
             GC.Collect();
         }
+
+        /// <summary>
+        /// thsi function has been updated by pool on 2017-11-07
+        /// </summary>
+        /// <param name="preview"></param>
         public void print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R08A  关键尺寸确认记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\18 SOP-MFG-306-R08A  关键尺寸确认记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
             // 设置该进程是否可见
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
-            my.Cells[3, 1].Value = "生产指令编号：\n" + lbl生产指令编号.Text;
-            my.Cells[4, 1].Value = "产品代码/规格：" + tb产品代码.Text;
-            my.Cells[3, 6].Value = "产品批号：" + tb产品批号.Text;
-            my.Cells[4, 6].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[5, 1].Value = "判定依据：关键尺寸要求v "+ tb关键尺寸1.Text+" ± "+tb关键尺寸2.Text+ " mm";
-            //EVERY SHEET CONTAINS 15 RECORDS
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            my.Cells[3, 11].Value = "生产指令：\n" + lbl生产指令编号.Text;
+            my.Cells[3, 1].Value = "产品代码：" + tb产品代码.Text;
+            my.Cells[3, 5].Value = "产品批号：" + tb产品批号.Text;
+            my.Cells[3, 8].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[4, 1].Value = "判定依据：关键尺寸要求v " + dt记录.Rows[0]["关键尺寸要求1"].ToString() + " ± " + dt记录.Rows[0]["关键尺寸要求2"].ToString() + " mm";
+            my.Cells[4, 8].Value = "合格产品数量：" + dt记录.Rows[0]["合格产品数量"].ToString() + " 个，不良品数量：" + dt记录.Rows[0]["不良品数量"].ToString() + " 个。";
+
+            int rowStartAt = 6;
+            int  rowNumPerSheet=20;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            int line = Convert.ToInt32(System.Math.Ceiling(Convert.ToDouble(rowNumTotal / 4)));
+
+            if (line > rowNumPerSheet)
             {
-                int u, v;
-                if (i < 25)
+                for (int i = 0; i < line - rowNumPerSheet; i++)
                 {
-                    u = 0;
-                    v = i % 25;
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
-                else if (i < 50)
-                {
-                    u = 1;
-                    v = i % 25;
-                }
-                else
-                {
-                    u = 2;
-                    v = i % 25;
-                }
-                my.Cells[v + 7, 3u+1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[v + 7, 3u+2].Value = dt记录详情.Rows[i]["实测值"];
-                my.Cells[v + 7, 3u+3].Value = dt记录详情.Rows[i]["判定"];              
             }
 
-            my.Cells[32, 1].Value = "合格产品数量： " + tb合格产品数量.Text + " 个，不良品数量： " + tb不良品数量.Text + " 个。";
-            my.Cells[33, 1].Value = "备注：\n" + tb备注.Text;
-            my.Cells[34, 1].Value = "操作人/日期： " + tb操作员.Text + dtp操作日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[34, 6].Value = "QC复核/日期： " + tb审核员.Text + dtp审核日期.Value.ToString("yyyy年MM月dd日");
+            //EVERY SHEET CONTAINS 15 RECORDS
+            for (int i = 0; i < line; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    my.Cells[i + rowStartAt, 3 * j + 1].Value = dt记录详情.Rows[4 * i + j]["序号"];
+                    my.Cells[i + rowStartAt, 3 * j + 2].Value = dt记录详情.Rows[4 * i + j]["实测值"];
+                    my.Cells[i + rowStartAt, 3 * j + 3].Value = dt记录详情.Rows[4 * i + j]["判定"];
+                }
+            }
+            //my.Cells[32, 1].Value = "合格产品数量： " + tb合格产品数量.Text + " 个，不良品数量： " + tb不良品数量.Text + " 个。";
+            int varOffset = (line > rowNumPerSheet) ? line - rowNumPerSheet : 0;
+            my.Cells[26+varOffset, 1].Value = "备注：\n" + tb备注.Text;
+            my.Cells[27+varOffset, 1].Value = "操作人/日期： " + tb操作员.Text + dtp操作日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[27+varOffset, 8].Value = "QC复核/日期： " + tb审核员.Text + dtp审核日期.Value.ToString("yyyy年MM月dd日");
             if (preview)
             {
                 my.Select();
