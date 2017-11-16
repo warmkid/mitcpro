@@ -142,8 +142,6 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = checkUser(Parameter.userName, Parameter.userRole, "制袋工序批生产记录");
             if (b)
             {
-                BTVBatchProduction mydlg = new BTVBatchProduction();
-                mydlg.ShowDialog();
                 BPV批生产记录 bb = new BPV批生产记录(mainform);
                 bb.ShowDialog();
             }
