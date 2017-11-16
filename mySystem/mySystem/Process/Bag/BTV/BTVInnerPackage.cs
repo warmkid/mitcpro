@@ -461,9 +461,9 @@ namespace mySystem.Process.Bag.BTV
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
                 Instruction = dt1.Rows[0]["生产指令编号"].ToString();
-                PdDate = Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Date;
+                PdDate = Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()).Date;
                 Flight = dt1.Rows[0]["班次"].ToString();
-                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(),Convert.ToDateTime(dt记录.Rows[0]["生产日期"].ToString()).Date, dt1.Rows[0]["班次"].ToString());
+                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), dt1.Rows[0]["产品代码"].ToString(), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()).Date, dt1.Rows[0]["班次"].ToString());
             }
         }
 

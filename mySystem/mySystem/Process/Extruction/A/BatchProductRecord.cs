@@ -2088,11 +2088,22 @@ namespace BatchProductRecord
             my.Cells[24, 5].Value = dtOuter.Rows[0]["审核人"].ToString() + "   " + dtOuter.Rows[0]["审核时间"];
             my.Cells[26, 5].Value = dtOuter.Rows[0]["批准人"].ToString() + "   " + dtOuter.Rows[0]["批准时间"];
 
-
+            //int prePage = 0;
+            //int curPage = 0;
             for (int i = 5; i <= 20; ++i)
             {
                 my.Cells[i, 3] = 0;
-                if (htRow2Page.ContainsKey(i-5))    my.Cells[i, 3]=htRow2Page[i - 5];
+                if (htRow2Page.ContainsKey(i - 5))
+                {
+                    //curPage += Convert.ToInt32(htRow2Page[i - 5]);
+                    my.Cells[i, 3] = htRow2Page[i - 5];
+                }
+                //else
+                //{
+                //    my.Cells[i, 3] = "/";
+                //}
+                
+                //prePage += Convert.ToInt32(htRow2Page[i - 5]);
             }
         }
     }

@@ -547,11 +547,22 @@ namespace mySystem.Process.CleanCut
             //内表1，目录
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
+                
                 string s;
-                if (dataGridView1.Rows[i].Cells[4].Value != null)
-                    s = dataGridView1.Rows[i].Cells[4].Value.ToString();
+                if (i == 0)
+                    s = "1";
                 else
-                    s = "0";
+                {
+                    if (dataGridView1.Rows[i].Cells[1].Value != null)
+                    {
+
+                        //s = dataGridView1.Rows[i].Cells[1].Value.ToString();
+                        List<Int32> pages = getIntList(dataGridView1.Rows[i].Cells[1].Value.ToString());
+                        s = pages.Count.ToString();
+                    }
+                    else
+                        s = "0";
+                }
 
                 mysheet.Cells[5 + i, 1].Value = dataGridView1.Rows[i].Cells[2].Value.ToString();
                 mysheet.Cells[5 + i, 2].Value = dataGridView1.Rows[i].Cells[3].Value.ToString();
@@ -1035,6 +1046,7 @@ namespace mySystem.Process.CleanCut
 
                 }
             }
+            perform打印本页();
         }
     }
 }
