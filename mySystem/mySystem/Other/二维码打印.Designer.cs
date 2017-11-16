@@ -39,6 +39,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btn打印 = new System.Windows.Forms.Button();
             this.btn关闭 = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tb原二维码 = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -74,7 +77,7 @@
             // 
             this.cmb打印机.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cmb打印机.FormattingEnabled = true;
-            this.cmb打印机.Location = new System.Drawing.Point(100, 156);
+            this.cmb打印机.Location = new System.Drawing.Point(100, 192);
             this.cmb打印机.Name = "cmb打印机";
             this.cmb打印机.Size = new System.Drawing.Size(365, 24);
             this.cmb打印机.TabIndex = 3;
@@ -100,7 +103,7 @@
             // tb二维码
             // 
             this.tb二维码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb二维码.Location = new System.Drawing.Point(100, 109);
+            this.tb二维码.Location = new System.Drawing.Point(100, 145);
             this.tb二维码.Name = "tb二维码";
             this.tb二维码.Size = new System.Drawing.Size(365, 26);
             this.tb二维码.TabIndex = 6;
@@ -109,7 +112,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(22, 112);
+            this.label3.Location = new System.Drawing.Point(22, 148);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(56, 16);
             this.label3.TabIndex = 7;
@@ -119,7 +122,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label4.Location = new System.Drawing.Point(22, 164);
+            this.label4.Location = new System.Drawing.Point(22, 200);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(56, 16);
             this.label4.TabIndex = 8;
@@ -128,7 +131,7 @@
             // btn打印
             // 
             this.btn打印.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn打印.Location = new System.Drawing.Point(507, 156);
+            this.btn打印.Location = new System.Drawing.Point(507, 192);
             this.btn打印.Name = "btn打印";
             this.btn打印.Size = new System.Drawing.Size(75, 23);
             this.btn打印.TabIndex = 9;
@@ -139,7 +142,7 @@
             // btn关闭
             // 
             this.btn关闭.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn关闭.Location = new System.Drawing.Point(507, 112);
+            this.btn关闭.Location = new System.Drawing.Point(507, 148);
             this.btn关闭.Name = "btn关闭";
             this.btn关闭.Size = new System.Drawing.Size(75, 23);
             this.btn关闭.TabIndex = 10;
@@ -147,11 +150,43 @@
             this.btn关闭.UseVisualStyleBackColor = true;
             this.btn关闭.Click += new System.EventHandler(this.btn关闭_Click);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(22, 100);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 16);
+            this.label5.TabIndex = 12;
+            this.label5.Text = "原二维码";
+            // 
+            // tb原二维码
+            // 
+            this.tb原二维码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tb原二维码.Location = new System.Drawing.Point(100, 97);
+            this.tb原二维码.Name = "tb原二维码";
+            this.tb原二维码.Size = new System.Drawing.Size(365, 26);
+            this.tb原二维码.TabIndex = 11;
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(507, 100);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 13;
+            this.button1.Text = "测试";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // 二维码打印
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(620, 244);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.tb原二维码);
             this.Controls.Add(this.btn关闭);
             this.Controls.Add(this.btn打印);
             this.Controls.Add(this.label4);
@@ -185,5 +220,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn打印;
         private System.Windows.Forms.Button btn关闭;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox tb原二维码;
+        private System.Windows.Forms.Button button1;
     }
 }
