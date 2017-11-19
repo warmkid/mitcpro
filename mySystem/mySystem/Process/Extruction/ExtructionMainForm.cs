@@ -1364,7 +1364,12 @@ namespace mySystem
 
         private void LabelBtn_Click(object sender, EventArgs e)
         {
-            LabelPrint label = new LabelPrint();
+            if (comboBox1.SelectedItem.ToString().Trim() == "")
+            {
+                MessageBox.Show("请选择一个生产指令");
+                return;
+            }
+            LabelPrint label = new LabelPrint(comboBox1.SelectedItem.ToString());
             label.ShowDialog();
         }
 

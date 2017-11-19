@@ -426,6 +426,7 @@ namespace BatchProductRecord
             record.Add("SOP-MFG-301-R14 吹膜岗位交接班记录");
             record.Add("SOP-MFG-109-R01A 产品内包装记录");
             record.Add("SOP-MFG-111-R01A 产品外包装记录");
+            record.Add("吹膜标签");
             initrecord();
         }
 
@@ -722,6 +723,20 @@ namespace BatchProductRecord
                 idx++;
                 da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
                 dt = new DataTable("产品外包装记录表");
+                da.Fill(dt);
+                temp = dt.Rows.Count;
+                if (temp <= 0)
+                {
+                    disableRow(idx);
+                }
+                else
+                {
+                    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                }
+                // 吹膜标签
+                idx++;
+                da = new OleDbDataAdapter("select * from 标签 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
+                dt = new DataTable("标签");
                 da.Fill(dt);
                 temp = dt.Rows.Count;
                 if (temp <= 0)
@@ -1509,6 +1524,19 @@ namespace BatchProductRecord
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                                 (new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
+                                GC.Collect();
+                            }
+                            htRow2Page[r] = pages.Count;
+                            break;
+                        case 16:// 标签
+                            da = new OleDbDataAdapter("select * from 标签 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
+                            dt = new DataTable("标签");
+                            da.Fill(dt);
+                            foreach (int page in pages)
+                            {
+                                id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                                mySystem.Process.Extruction.LabelPrint.printLable(id);
+                                //(new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
