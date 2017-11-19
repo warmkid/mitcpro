@@ -346,8 +346,8 @@ namespace mySystem.Query
                     switch (tableName)
                     {
                         case "00 批生产记录（吹膜）":
-                            //BatchProductRecord.BatchProductRecord detailform1 = new BatchProductRecord.BatchProductRecord(base.mainform, ID);
-                            //detailform1.Show();
+                            BatchProductRecord.BatchProductRecord detailform1 = new BatchProductRecord.BatchProductRecord(base.mainform, ID);
+                            detailform1.Show();
                             break;
                         case "03 吹膜机组清洁记录":
                             Record_extrusClean detailform2 = new Record_extrusClean(base.mainform, ID);
