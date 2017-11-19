@@ -60,6 +60,27 @@ namespace mySystem.Process.CleanCut
         }
         private void BtnPrint_Click(object sender, EventArgs e)
         {
+            String sql = "select * from 标签 where 生产指令ID={0}";
+            OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.cleancutInstruID), mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            System.Data.DataTable dt = new System.Data.DataTable();
+            da.Fill(dt);
+            
+            if (dt.Rows.Count == 0)
+            {
+                DataRow dr = dt.NewRow();
+                dr["生产指令"] = mySystem.Parameter.cleancutInstruction;
+                dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
+                dr["膜代码"] = cb膜代码.Text;
+                dr["批号_卷号"] = tb批号.Text;
+                dr["合格数量米"] = tb米.Text;
+                dr["合格数量千克"] = tbKg.Text;
+                dr["原膜代码"] = cb原膜代码.Text;
+                dr["分切日期"] = dtp分切日期.Value.ToString("yyyy/MM/dd");
+                dr["分切班次"] = cb白班.Checked?"白班":"夜班";
+                dt.Rows.Add(dr);
+                da.Update(dt);
+            }
             printLable();
             GC.Collect();
         }
@@ -102,6 +123,58 @@ namespace mySystem.Process.CleanCut
             {
                 cb膜代码.Items.Add(s);
             }
+        }
+
+        public static void printLable(int id)
+        {
+            String sql = "select * from 标签 where ID={0}";
+            OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, id), mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            System.Data.DataTable dt = new System.Data.DataTable();
+            da.Fill(dt);
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("无法找到标签信息");
+                return;
+            }
+            DataRow dr = dt.Rows[0];
+            string path = Directory.GetCurrentDirectory();
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            wb = oXL.Workbooks.Open(path + @"/../../xls/cleancut/7 标签-清洁分切.xlsx");
+            _Worksheet my = wb.Worksheets[wb.Worksheets.Count];
+
+            //dr["生产指令"] = mySystem.Parameter.cleancutInstruction;
+            //dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
+            //dr["膜代码"] = cb膜代码.Text;
+            //dr["批号-卷号 "] = tb批号.Text;
+            //dr["合格数量米"] = tb米.Text;
+            //dr["合格数量千克"] = tbKg.Text;
+            //dr["原膜代码"] = cb原膜代码.Text;
+            //dr["分切日期"] = dtp分切日期.Value.ToString("yyyy/MM/dd");
+            //dr["分切班次"] = cb白班.Checked ? "白班" : "夜班";
+
+            my.Select();
+            my.Cells[2, 2].Value = dr["膜代码"];
+            my.Cells[3, 2].Value = dr["批号_卷号"];
+            my.Cells[4, 2].Value = dr["合格数量米"] + "米；  " + dr["合格数量千克"] + "Kg";
+            my.Cells[5, 2].Value = dr["原膜代码"];
+            my.Cells[6, 2].Value = String.Format("{0} {1}", Convert.ToDateTime(dr["分切日期"]).ToString("yyyy/MM/dd"),
+                dr["分切班次"].ToString() == "白班" ? "白班☑ 夜班□" : "白班□ 夜班☑");
+
+            my = wb.Worksheets[1];
+            my.Select();
+            oXL.Visible = false;
+            my.PrintOut();
+            // 关闭文件，false表示不保存
+            wb.Close(false);
+            // 关闭Excel进程
+            oXL.Quit();
+            // 释放COM资源
+            Marshal.ReleaseComObject(wb);
+            Marshal.ReleaseComObject(oXL);
+            wb = null;
+            oXL = null;
         }
 
         void printLable()

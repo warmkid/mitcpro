@@ -206,6 +206,7 @@ namespace mySystem.Process.CleanCut
             }
 
             // 清场记录
+            idx++;
             da = new OleDbDataAdapter("select * from 清场记录 where  生产指令ID=" + _instrctID , mySystem.Parameter.connOle);
             dt = new DataTable("清场记录");
             da.Fill(dt);
@@ -237,7 +238,19 @@ namespace mySystem.Process.CleanCut
 
             //清洁分切标签
             idx++;
-            disableRow(idx);
+            //disableRow(idx);
+            da = new OleDbDataAdapter("select * from 标签 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
+            dt = new DataTable("标签");
+            da.Fill(dt);
+            temp = dt.Rows.Count;
+            if (temp <= 0)
+            {
+                disableRow(idx);
+            }
+            else
+            {
+                dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+            }
 
             //*********************************************************************
 
@@ -974,7 +987,7 @@ namespace mySystem.Process.CleanCut
                 switch (r)
                 {
                     case 0:// 清洁分切批生产记录
-                        perform打印本页();
+                        //perform打印本页();
                         break;
 
                     case 1: // 清洁分切生产指令
@@ -1042,7 +1055,18 @@ namespace mySystem.Process.CleanCut
                         break;
 
                     case 7://标签
+                        da = new OleDbDataAdapter("select * from 标签 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
+                        dt = new DataTable("标签");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            // TODO
+                            mySystem.Process.CleanCut.清洁分切标签.printLable(id);
+                            GC.Collect();
+                        }
                         break;
+                        
 
                 }
             }
