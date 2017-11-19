@@ -1311,9 +1311,9 @@ namespace WindowsFormsApplication1
                 }
             }
 
-            my.Cells[3, 2].Value = dtp清洁日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[3, 7].Value = ckb白班.Checked==true?"白班":"夜班";
-            my.Cells[3, 11].Value = tb复核人.Text + "  " + dtp复核日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[3, 2].Value = Convert.ToDateTime(dt_out.Rows[0]["清洁日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[3, 7].Value = (Convert.ToBoolean(dt_out.Rows[0]["班次"]) == true) ? "白班" : "夜班";
+            my.Cells[3, 11].Value = dt_out.Rows[0]["审核人"].ToString() + "  " + Convert.ToDateTime(dt_out.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1] = dataGridView1.Rows[i].Cells[2].Value.ToString();

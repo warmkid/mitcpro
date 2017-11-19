@@ -2040,6 +2040,9 @@ namespace BatchProductRecord
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
             // 修改Sheet中某行某列的值
             fill_excel(my);
+            // 拿到打印后的页数
+            int ccc = wb.ActiveSheet.PageSetup.Pages.Count;
+            //
             my.PageSetup.RightFooter = tb生产指令.Text + "-00-001 &P/" + wb.ActiveSheet.PageSetup.Pages.Count;
             if (b)
             {

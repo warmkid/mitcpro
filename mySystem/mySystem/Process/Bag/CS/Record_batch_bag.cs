@@ -35,6 +35,9 @@ namespace mySystem.Process.Bag
         public Record_batch_bag(mySystem.MainForm mainform)
             : base(mainform)
         {
+            //
+            
+            //
             InitializeComponent();
             fillPrinter();
             _生产指令ID = mySystem.Parameter.csbagInstruID;
