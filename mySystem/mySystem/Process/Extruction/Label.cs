@@ -198,7 +198,13 @@ namespace mySystem.Process.Extruction
             my = wb.Worksheets[Convert.ToInt32( dr["标签类型"]) + 1];
             my.Select();
             oXL.Visible = true;
-            my.PrintOut();
+            try
+            {
+                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+            }
+            catch
+            {
+            }
 
             wb.Close(false);
             oXL.Quit();

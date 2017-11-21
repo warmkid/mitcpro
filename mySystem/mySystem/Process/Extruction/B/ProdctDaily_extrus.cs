@@ -452,7 +452,7 @@ namespace mySystem
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
             fill_excel(my);
-            my.PageSetup.RightFooter = tb生产指令.Text + "-02-001 &P/" + wb.ActiveSheet.PageSetup.Pages.Count;
+            my.PageSetup.RightFooter = dt_prodinstr.Rows[0]["生产指令"] + "-02-001 &P/" + wb.ActiveSheet.PageSetup.Pages.Count;
             if (b)
             {
                 // 设置该进程是否可见
@@ -487,18 +487,18 @@ namespace mySystem
         private void fill_excel(Microsoft.Office.Interop.Excel._Worksheet my)
         {
             int ind = 0;
-            if (dataGridView1.Rows.Count > 12)
+            if (dataGridView1.Rows.Count > 11)
             {
                 //在第6行插入
-                for (int i = 0; i < dataGridView1.Rows.Count - 12; i++)
+                for (int i = 0; i < dataGridView1.Rows.Count - 11; i++)
                 {
                     Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[6, Type.Missing];
                     range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
                     Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromLeftOrAbove);
                 }
-                ind = dataGridView1.Rows.Count - 12;
+                ind = dataGridView1.Rows.Count - 11;
             }
-
+            double 生产数量合计平米 = 0;
             my.Cells[3, 10].Value = "生产指令: "+mySystem.Parameter.proInstruction;
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -518,18 +518,20 @@ namespace mySystem
                 my.Cells[5 + i, 15] = dataGridView1.Rows[i].Cells[17].Value.ToString();
                 my.Cells[5 + i, 16] = dataGridView1.Rows[i].Cells[18].Value.ToString();
                 my.Cells[5 + i, 17] = dataGridView1.Rows[i].Cells[19].Value.ToString();
+                生产数量合计平米 += Convert.ToDouble(dataGridView1.Rows[i].Cells[19].Value);
 
             }
-            my.Cells[17 + ind, 3].Value = Math.Round(Convert.ToDouble(dt_prodinstr.Rows[0]["加料B1C合计"]) / (Convert.ToDouble(dt_prodinstr.Rows[0]["加料A合计"]) + Convert.ToDouble(dt_prodinstr.Rows[0]["加料B1C合计"])) * 100, 2);
-            my.Cells[17+ind, 7].Value = dt_prodinstr.Rows[0]["生产数量合计"];
-            my.Cells[17 + ind, 8].Value = dt_prodinstr.Rows[0]["生产重量合计"];
-            my.Cells[17 + ind, 9].Value = dt_prodinstr.Rows[0]["废品重量合计"];
-            my.Cells[17 + ind, 10].Value = dt_prodinstr.Rows[0]["加料A合计"];
-            my.Cells[17 + ind, 11].Value = dt_prodinstr.Rows[0]["加料B1C合计"];
-            my.Cells[17 + ind, 12].Value = dt_prodinstr.Rows[0]["工时合计"];
-            my.Cells[18 + ind, 3].Value = dt_prodinstr.Rows[0]["成品率"];
-            my.Cells[19 + ind, 3].Value = dt_prodinstr.Rows[0]["工时效率"];
-            my.Cells[18 + ind, 6].Value = "备注: " + dt_prodinstr.Rows[0]["备注"];
+            my.Cells[16 + ind, 3].Value = Math.Round(Convert.ToDouble(dt_prodinstr.Rows[0]["加料B1C合计"]) / (Convert.ToDouble(dt_prodinstr.Rows[0]["加料A合计"]) + Convert.ToDouble(dt_prodinstr.Rows[0]["加料B1C合计"])) * 100, 2);
+            my.Cells[16+ind, 7].Value = dt_prodinstr.Rows[0]["生产数量合计"];
+            my.Cells[16 + ind, 8].Value = dt_prodinstr.Rows[0]["生产重量合计"];
+            my.Cells[16 + ind, 9].Value = dt_prodinstr.Rows[0]["废品重量合计"];
+            my.Cells[16 + ind, 10].Value = dt_prodinstr.Rows[0]["加料A合计"];
+            my.Cells[16 + ind, 11].Value = dt_prodinstr.Rows[0]["加料B1C合计"];
+            my.Cells[16 + ind, 12].Value = dt_prodinstr.Rows[0]["工时合计"];
+            my.Cells[16 + ind, 17].Value = 生产数量合计平米;
+            my.Cells[17 + ind, 3].Value = dt_prodinstr.Rows[0]["成品率"];
+            my.Cells[18 + ind, 3].Value = dt_prodinstr.Rows[0]["工时效率"];
+            my.Cells[17 + ind, 6].Value = "备注: " + dt_prodinstr.Rows[0]["备注"];
 
             
         }

@@ -2228,7 +2228,7 @@ namespace BatchProductRecord
             my.Cells[20 + ind, 10].Value = dt_prodinstr.Rows[0]["双层洁净包装领料量"];
 
 
-            my.Cells[16 + ind, 12].Value = "白班：" + tb白班.Text + "\n" + "夜班：" + tb夜班.Text;
+            my.Cells[16 + ind, 12].Value = "白班：" + dt_prodinstr.Rows[0]["白班负责人"] + "\n" + "夜班：" + dt_prodinstr.Rows[0]["夜班负责人"];
             //my.Cells[21 + ind, 2].Value = tb备注.Text;
             my.Cells[21 + ind, 2].Value = dt_prodinstr.Rows[0]["备注"];
 

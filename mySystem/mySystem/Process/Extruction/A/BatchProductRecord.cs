@@ -1751,6 +1751,19 @@ namespace BatchProductRecord
                             }
                             htRow2Page[r] = pages.Count;
                             break;
+                        case 16:// 标签
+                            da = new SqlDataAdapter("select * from 标签 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
+                            dt = new DataTable("标签");
+                            da.Fill(dt);
+                            foreach (int page in pages)
+                            {
+                                id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                                mySystem.Process.Extruction.LabelPrint.printLable(id);
+                                //(new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
+                                GC.Collect();
+                            }
+                            htRow2Page[r] = pages.Count;
+                            break;
                     }
                 }
             }
@@ -2121,7 +2134,7 @@ namespace BatchProductRecord
 
             //int prePage = 0;
             //int curPage = 0;
-            for (int i = 5; i <= 20; ++i)
+            for (int i = 5; i <= 21; ++i)
             {
                 my.Cells[i, 3] = 0;
                 if (htRow2Page.ContainsKey(i - 5))
