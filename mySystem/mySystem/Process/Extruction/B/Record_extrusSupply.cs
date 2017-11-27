@@ -260,7 +260,15 @@ namespace WindowsFormsApplication1
                 DataRow dr = dt_prodinstr.NewRow();
                 dr = writeOuterDefault(dr);
                 dt_prodinstr.Rows.Add(dr);
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                }
+                else
+                {
+                    da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                }
+                
                 readOuterData(instrid);
                 removeOuterBinding();
                 outerBind();
@@ -330,7 +338,15 @@ namespace WindowsFormsApplication1
             ckb夜班.Checked = !ckb白班.Checked;
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
 
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
@@ -371,8 +387,15 @@ namespace WindowsFormsApplication1
 
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
-
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
 
@@ -432,7 +455,15 @@ namespace WindowsFormsApplication1
             }
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
         }
 
         //审核信息
@@ -459,11 +490,23 @@ namespace WindowsFormsApplication1
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜供料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜供料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='吹膜供料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            
 
             //写日志
             string log = "\n=====================================\n";
@@ -473,7 +516,15 @@ namespace WindowsFormsApplication1
             dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
 
             base.CheckResult();
 
@@ -1067,14 +1118,30 @@ namespace WindowsFormsApplication1
 
             //外表保存
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
             readOuterData(instrid);
             
             removeOuterBinding();
             outerBind();
 
             //内表保存
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
 
@@ -1169,7 +1236,15 @@ namespace WindowsFormsApplication1
             }
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
 
             if (e.ColumnIndex == 6)
             {
@@ -1228,7 +1303,15 @@ namespace WindowsFormsApplication1
                 tcurrRow.Delete();
                 dt_prodlist.Rows.Add(tdesRow);
             }
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             dt_prodlist.Clear();
             da_prodlist.Fill(dt_prodlist);
             dataGridView1.ClearSelection();
@@ -1279,7 +1362,15 @@ namespace WindowsFormsApplication1
                 tcurrRow.Delete();
                 dt_prodlist.Rows.Add(tdesRow);
             }
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             dt_prodlist.Clear();
             da_prodlist.Fill(dt_prodlist);
             dataGridView1.ClearSelection();
@@ -1373,7 +1464,15 @@ namespace WindowsFormsApplication1
                         log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
                         dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
                         bs_prodinstr.EndEdit();
-                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                        }
+                        else
+                        {
+                            da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                        }
+                        
                     }
 
                     // 关闭文件，false表示不保存
@@ -1521,19 +1620,39 @@ namespace WindowsFormsApplication1
                 //写待审核表
                 DataTable dt_temp = new DataTable("待审核");
                 BindingSource bs_temp = new BindingSource();
-                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜供料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-                da_temp.Fill(dt_temp);
-
-                if (dt_temp.Rows.Count == 0)
+                if (!mySystem.Parameter.isSqlOk)
                 {
-                    DataRow dr = dt_temp.NewRow();
-                    dr["表名"] = "吹膜供料记录";
-                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
-                    dt_temp.Rows.Add(dr);
+                    OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='吹膜供料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                    OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                    da_temp.Fill(dt_temp);
+
+                    if (dt_temp.Rows.Count == 0)
+                    {
+                        DataRow dr = dt_temp.NewRow();
+                        dr["表名"] = "吹膜供料记录";
+                        dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                        dt_temp.Rows.Add(dr);
+                    }
+                    bs_temp.DataSource = dt_temp;
+                    da_temp.Update((DataTable)bs_temp.DataSource);
                 }
-                bs_temp.DataSource = dt_temp;
-                da_temp.Update((DataTable)bs_temp.DataSource);
+                else
+                {
+                    SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='吹膜供料记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                    SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                    da_temp.Fill(dt_temp);
+
+                    if (dt_temp.Rows.Count == 0)
+                    {
+                        DataRow dr = dt_temp.NewRow();
+                        dr["表名"] = "吹膜供料记录";
+                        dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                        dt_temp.Rows.Add(dr);
+                    }
+                    bs_temp.DataSource = dt_temp;
+                    da_temp.Update((DataTable)bs_temp.DataSource);
+                }
+                
 
                 //写日志 
                 //格式： 
@@ -1626,7 +1745,15 @@ namespace WindowsFormsApplication1
                 DataRow dr = dt_prodinstr.NewRow();
                 dr = writeOuterDefault(dr);
                 dt_prodinstr.Rows.Add(dr);
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                }
+                else
+                {
+                    da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                }
+                
                 readOuterData(mySystem.Parameter.proInstruID, cb产品代码.Text, DateTime.Parse(dtp供料日期.Value.ToShortDateString()), mySystem.Parameter.userflight == "白班");
                 removeOuterBinding();
                 outerBind();
@@ -1664,7 +1791,15 @@ namespace WindowsFormsApplication1
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
         }
@@ -1693,23 +1828,46 @@ namespace WindowsFormsApplication1
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
         }
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
-
-            OleDbDataAdapter da;
-            DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜供料记录'", mySystem.Parameter.connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            String str操作员 = dt.Rows[0]["操作员"].ToString();
-            String str审核员 = dt.Rows[0]["审核员"].ToString();
-            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-            MessageBox.Show(str人员信息);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                DataTable dt;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜供料记录'", mySystem.Parameter.connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜供料记录'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            
         }
     }
 }

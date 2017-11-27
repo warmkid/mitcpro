@@ -58,7 +58,15 @@ namespace BatchProductRecord
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOuter_sql.Update((DataTable)bsOuter.DataSource);
+                }
+                
                 readOuterData(mySystem.Parameter.proInstruction);
                 outerBind();
             }
@@ -94,7 +102,15 @@ namespace BatchProductRecord
                     DataRow dr = dtOuter.NewRow();
                     dr = writeOuterDefault(dr);
                     dtOuter.Rows.Add(dr);
-                    daOuter.Update((DataTable)bsOuter.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    else
+                    {
+                        daOuter_sql.Update((DataTable)bsOuter.DataSource);
+                    }
+                    
                     readOuterData(_code);
                     outerBind();
                 }
@@ -123,7 +139,15 @@ namespace BatchProductRecord
                     DataRow dr = dtOuter.NewRow();
                     dr = writeOuterDefault(dr);
                     dtOuter.Rows.Add(dr);
-                    daOuter.Update((DataTable)bsOuter.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    else
+                    {
+                        daOuter_sql.Update((DataTable)bsOuter.DataSource);
+                    }
+                    
                     readOuterData(_code);
                     outerBind();
                 }
@@ -2039,16 +2063,31 @@ namespace BatchProductRecord
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                DataTable dt;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='批生产记录表'", mySystem.Parameter.connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='批生产记录表'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
             
-            OleDbDataAdapter da;
-            DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='批生产记录表'", mySystem.Parameter.connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            String str操作员 = dt.Rows[0]["操作员"].ToString();
-            String str审核员 = dt.Rows[0]["审核员"].ToString();
-            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-            MessageBox.Show(str人员信息);
         }
 
         void addOtherEventHandler()

@@ -82,7 +82,15 @@ namespace mySystem.Extruction.Process
                 DataRow newrow = dtOuter.NewRow();
                 newrow = writeOuterDefault(newrow);
                 dtOuter.Rows.Add(newrow);
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOutersql.Update((DataTable)bsOuter.DataSource);
+                }
+                
                 readOuterData(__生产指令);
                 removeOuterBind();
                 outerBind();
@@ -129,8 +137,15 @@ namespace mySystem.Extruction.Process
             getOtherData();
 
             重新读取并计算();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter.Update((DataTable)bsOuter.DataSource);
+            }
+            else
+            {
+                daOutersql.Update((DataTable)bsOuter.DataSource);
+            }
             
-            daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterBind(searchId);
             removeOuterBind();
             outerBind();
@@ -548,7 +563,15 @@ namespace mySystem.Extruction.Process
              log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 保存\n";
              dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
              bsOuter.EndEdit();
-             daOuter.Update((DataTable)bsOuter.DataSource);
+             if (!mySystem.Parameter.isSqlOk)
+             {
+                 daOuter.Update((DataTable)bsOuter.DataSource);
+             }
+             else
+             {
+                 daOutersql.Update((DataTable)bsOuter.DataSource);
+             }
+             
              readOuterData(__生产指令);
              removeOuterBind();
              outerBind();
@@ -641,15 +664,31 @@ namespace mySystem.Extruction.Process
 
          private void bt查看人员信息_Click(object sender, EventArgs e)
          {
-             OleDbDataAdapter da;
-             DataTable dt;
-             da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序物料平衡记录'", mySystem.Parameter.connOle);
-             dt = new DataTable("temp");
-             da.Fill(dt);
-             String str操作员 = dt.Rows[0]["操作员"].ToString();
-             String str审核员 = dt.Rows[0]["审核员"].ToString();
-             String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-             MessageBox.Show(str人员信息);
+             if (!mySystem.Parameter.isSqlOk)
+             {
+                 OleDbDataAdapter da;
+                 DataTable dt;
+                 da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序物料平衡记录'", mySystem.Parameter.connOle);
+                 dt = new DataTable("temp");
+                 da.Fill(dt);
+                 String str操作员 = dt.Rows[0]["操作员"].ToString();
+                 String str审核员 = dt.Rows[0]["审核员"].ToString();
+                 String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                 MessageBox.Show(str人员信息);
+             }
+             else
+             {
+                 SqlDataAdapter da;
+                 DataTable dt;
+                 da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜工序物料平衡记录'", mySystem.Parameter.conn);
+                 dt = new DataTable("temp");
+                 da.Fill(dt);
+                 String str操作员 = dt.Rows[0]["操作员"].ToString();
+                 String str审核员 = dt.Rows[0]["审核员"].ToString();
+                 String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                 MessageBox.Show(str人员信息);
+             }
+             
          }
 
         

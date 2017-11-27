@@ -90,7 +90,15 @@ namespace mySystem.Process.Extruction.B
                 DataRow newrow = dtOuter.NewRow();
                 newrow = writeOuterDefault(newrow);
                 dtOuter.Rows.Add(newrow);
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOuterSQL.Update((DataTable)bsOuter.DataSource);
+                }
+                
                 readOuterData(lbl生产指令.Text);    
                 removeOuterBinding();
                 outerBind();
@@ -141,7 +149,15 @@ namespace mySystem.Process.Extruction.B
                 DataRow newrow = dtOuter.NewRow();
                 newrow = writeOuterDefault(newrow);
                 dtOuter.Rows.Add(newrow);
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOuterSQL.Update((DataTable)bsOuter.DataSource);
+                }
+                
                 readOuterData(lbl生产指令.Text);
                 removeOuterBinding();
                 outerBind();
@@ -453,7 +469,15 @@ namespace mySystem.Process.Extruction.B
 
 
                 bsOuter.EndEdit();
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOuterSQL.Update((DataTable)bsOuter.DataSource);
+                }
+                
 
                 readOuterData(searchId);
 
@@ -464,23 +488,47 @@ namespace mySystem.Process.Extruction.B
                 //read from database table and find current record
                 string checkName = "待审核";
                 DataTable dtCheck = new DataTable(checkName);
-                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
-                BindingSource bsCheck = new BindingSource();
-                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
-                daCheck.Fill(dtCheck);
-
-                //this part will never be run, for there must be a unchecked recird before this button becomes enable
-                if (0 == dtCheck.Rows.Count)
+                if (!mySystem.Parameter.isSqlOk)
                 {
-                    DataRow newrow = dtCheck.NewRow();
-                    newrow["表名"] = tablename1;
-                    newrow["对应ID"] = dtOuter.Rows[0]["ID"];
-                    dtCheck.Rows.Add(newrow);
+                    OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                    BindingSource bsCheck = new BindingSource();
+                    OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                    daCheck.Fill(dtCheck);
+
+                    //this part will never be run, for there must be a unchecked recird before this button becomes enable
+                    if (0 == dtCheck.Rows.Count)
+                    {
+                        DataRow newrow = dtCheck.NewRow();
+                        newrow["表名"] = tablename1;
+                        newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                        dtCheck.Rows.Add(newrow);
+                    }
+                    //remove the record
+                    dtCheck.Rows[0].Delete();
+                    bsCheck.DataSource = dtCheck;
+                    daCheck.Update((DataTable)bsCheck.DataSource);
                 }
-                //remove the record
-                dtCheck.Rows[0].Delete();
-                bsCheck.DataSource = dtCheck;
-                daCheck.Update((DataTable)bsCheck.DataSource);
+                else
+                {
+                    SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", mySystem.Parameter.conn);
+                    BindingSource bsCheck = new BindingSource();
+                    SqlCommandBuilder cbCheck = new SqlCommandBuilder(daCheck);
+                    daCheck.Fill(dtCheck);
+
+                    //this part will never be run, for there must be a unchecked recird before this button becomes enable
+                    if (0 == dtCheck.Rows.Count)
+                    {
+                        DataRow newrow = dtCheck.NewRow();
+                        newrow["表名"] = tablename1;
+                        newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                        dtCheck.Rows.Add(newrow);
+                    }
+                    //remove the record
+                    dtCheck.Rows[0].Delete();
+                    bsCheck.DataSource = dtCheck;
+                    daCheck.Update((DataTable)bsCheck.DataSource);
+                }
+                
                 setFormState();
                 setEnableReadOnly();
             }
@@ -821,13 +869,29 @@ namespace mySystem.Process.Extruction.B
             }
 
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            daInner.Update((DataTable)bsInner.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner.Update((DataTable)bsInner.DataSource);
+            }
+            else
+            {
+                daInnerSQL.Update((DataTable)bsInner.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             setRowNums();
 
             bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter.Update((DataTable)bsOuter.DataSource);
+            }
+            else
+            {
+                daOuterSQL.Update((DataTable)bsOuter.DataSource);
+            }
+            
             readOuterData(lbl生产指令.Text);
             removeOuterBinding();
             outerBind();
@@ -853,7 +917,15 @@ namespace mySystem.Process.Extruction.B
                     }
                 }
                 //after saving, inner item haven't changed but we update once more here
-                daInner.Update((DataTable)bsInner.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daInner.Update((DataTable)bsInner.DataSource);
+                }
+                else
+                {
+                    daInnerSQL.Update((DataTable)bsInner.DataSource);
+                }
+                
                 readInnerData(searchId);
                 innerBind();
                 setRowNums();
@@ -861,21 +933,43 @@ namespace mySystem.Process.Extruction.B
                 //read from database table and find current record
                 string checkName = "待审核";
                 DataTable dtCheck = new DataTable(checkName);
-                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
-                BindingSource bsCheck = new BindingSource();
-                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
-                daCheck.Fill(dtCheck);
-
-                //if current hasn't been stored, insert a record in table
-                if (0 == dtCheck.Rows.Count)
+                if (!mySystem.Parameter.isSqlOk)
                 {
-                    DataRow newrow = dtCheck.NewRow();
-                    newrow["表名"] = tablename1;
-                    newrow["对应ID"] = dtOuter.Rows[0]["ID"];
-                    dtCheck.Rows.Add(newrow);
+                    OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                    BindingSource bsCheck = new BindingSource();
+                    OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                    daCheck.Fill(dtCheck);
+
+                    //if current hasn't been stored, insert a record in table
+                    if (0 == dtCheck.Rows.Count)
+                    {
+                        DataRow newrow = dtCheck.NewRow();
+                        newrow["表名"] = tablename1;
+                        newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                        dtCheck.Rows.Add(newrow);
+                    }
+                    bsCheck.DataSource = dtCheck;
+                    daCheck.Update((DataTable)bsCheck.DataSource);
                 }
-                bsCheck.DataSource = dtCheck;
-                daCheck.Update((DataTable)bsCheck.DataSource);
+                else
+                {
+                    SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", mySystem.Parameter.conn);
+                    BindingSource bsCheck = new BindingSource();
+                    SqlCommandBuilder cbCheck = new SqlCommandBuilder(daCheck);
+                    daCheck.Fill(dtCheck);
+
+                    //if current hasn't been stored, insert a record in table
+                    if (0 == dtCheck.Rows.Count)
+                    {
+                        DataRow newrow = dtCheck.NewRow();
+                        newrow["表名"] = tablename1;
+                        newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                        dtCheck.Rows.Add(newrow);
+                    }
+                    bsCheck.DataSource = dtCheck;
+                    daCheck.Update((DataTable)bsCheck.DataSource);
+                }
+                
 
                 //this part to add log 
                 //格式： 
@@ -887,9 +981,19 @@ namespace mySystem.Process.Extruction.B
 
                 //fill reviwer information
                 dtOuter.Rows[0]["审核员"] = __待审核;
+
                 //update log into table
+
                 bsOuter.EndEdit();
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOuterSQL.Update((DataTable)bsOuter.DataSource);
+                }
+                
 
                 readOuterData(searchId);
                 removeOuterBinding();
@@ -914,7 +1018,15 @@ namespace mySystem.Process.Extruction.B
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            daInner.Update((DataTable)bsInner.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner.Update((DataTable)bsInner.DataSource);
+            }
+            else
+            {
+                daInnerSQL.Update((DataTable)bsInner.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             setRowNums();
@@ -985,7 +1097,15 @@ namespace mySystem.Process.Extruction.B
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            daInner.Update((DataTable)bsInner.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner.Update((DataTable)bsInner.DataSource);
+            }
+            else
+            {
+                daInnerSQL.Update((DataTable)bsInner.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             setRowNums();
@@ -997,7 +1117,15 @@ namespace mySystem.Process.Extruction.B
             dr = writeInnerDefault(dr);
             dtInner.Rows.Add(dr);
             setRowNums();
-            daInner.Update((DataTable)bsInner.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner.Update((DataTable)bsInner.DataSource);
+            }
+            else
+            {
+                daInnerSQL.Update((DataTable)bsInner.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             计算不良品数量合计();
@@ -1102,7 +1230,15 @@ namespace mySystem.Process.Extruction.B
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
                 //.Rows[dataGridView1.SelectedCells[0].RowIndex].Delete();
                 //this line disable
-                daInner.Update((DataTable)bsInner.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daInner.Update((DataTable)bsInner.DataSource);
+                }
+                else
+                {
+                    daInnerSQL.Update((DataTable)bsInner.DataSource);
+                }
+                
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
                 计算不良品数量合计();
@@ -1252,15 +1388,31 @@ namespace mySystem.Process.Extruction.B
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da;
-            DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序废品记录'", mySystem.Parameter.connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            String str操作员 = dt.Rows[0]["操作员"].ToString();
-            String str审核员 = dt.Rows[0]["审核员"].ToString();
-            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-            MessageBox.Show(str人员信息);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                DataTable dt;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序废品记录'", mySystem.Parameter.connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜工序废品记录'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            
         }
     }
 }
