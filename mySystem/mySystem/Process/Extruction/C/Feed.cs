@@ -331,10 +331,21 @@ namespace mySystem.Process.Extruction.C
         {
             string tabName = "用户权限";
             DataTable dtUser = new DataTable(tabName);
-            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", conOle);
-            BindingSource bsUser = new BindingSource();
-            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
-            daUser.Fill(dtUser);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", conOle);
+                BindingSource bsUser = new BindingSource();
+                OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+                daUser.Fill(dtUser);
+            }
+            else
+            {
+                SqlDataAdapter daUser = new SqlDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", mySystem.Parameter.conn);
+                BindingSource bsUser = new BindingSource();
+                SqlCommandBuilder cbUser = new SqlCommandBuilder(daUser);
+                daUser.Fill(dtUser);
+            }
+            
             if (dtUser.Rows.Count != 1)
             {
                 MessageBox.Show("请确认表单权限信息");
@@ -521,10 +532,21 @@ namespace mySystem.Process.Extruction.C
 
         private int getId()
         {
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = conOle;
-            comm.CommandText = "select ID from " + tablename1 + " where 生产指令编号 ='" + lbl生产指令编号.Text + "';";
-            return (int)comm.ExecuteScalar();           
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = conOle;
+                comm.CommandText = "select ID from " + tablename1 + " where 生产指令编号 ='" + lbl生产指令编号.Text + "';";
+                return (int)comm.ExecuteScalar();   
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = mySystem.Parameter.conn;
+                comm.CommandText = "select ID from " + tablename1 + " where 生产指令编号 ='" + lbl生产指令编号.Text + "';";
+                return (int)comm.ExecuteScalar();   
+            }
+                  
         }
         
         public override void CheckResult()

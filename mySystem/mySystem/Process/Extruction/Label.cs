@@ -12,6 +12,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Collections;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 
 namespace mySystem.Process.Extruction
@@ -80,14 +81,29 @@ namespace mySystem.Process.Extruction
 
         private void getCodeAndBatch()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
-            System.Data.DataTable dt = new System.Data.DataTable("temp");
-            da.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                codeToBatch.Add(dr["产品编码"].ToString(), dr["产品批号"].ToString());
-                codeToLabel.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["标签"]));
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
+                System.Data.DataTable dt = new System.Data.DataTable("temp");
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    codeToBatch.Add(dr["产品编码"].ToString(), dr["产品批号"].ToString());
+                    codeToLabel.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["标签"]));
+                }
             }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.conn);
+                System.Data.DataTable dt = new System.Data.DataTable("temp");
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    codeToBatch.Add(dr["产品编码"].ToString(), dr["产品批号"].ToString());
+                    codeToLabel.Add(dr["产品编码"].ToString(), Convert.ToInt32(dr["标签"]));
+                }
+            }
+            
         }
 
         private void BtnPrint_Click(object sender, EventArgs e)

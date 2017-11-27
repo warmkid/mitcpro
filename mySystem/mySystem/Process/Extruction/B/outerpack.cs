@@ -102,14 +102,26 @@ namespace mySystem.Extruction.Chart
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜生产和检验记录表'", connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜生产和检验记录表'", connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜生产和检验记录表'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            
 
             if (dt.Rows.Count > 0)
             {
@@ -210,7 +222,39 @@ namespace mySystem.Extruction.Chart
                 reader1.Dispose();
             }
             else
-            { }
+            {
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = Parameter.conn;
+                comm1.CommandText = "select * from 生产指令信息表 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
+                SqlDataReader reader1 = comm1.ExecuteReader();
+                if (reader1.Read())
+                {
+                    SqlCommand comm2 = new SqlCommand();
+                    comm2.Connection = Parameter.conn;
+                    comm2.CommandText = "select ID, 产品编码, 产品批号 from 生产指令产品列表 where 生产指令ID = " + reader1["ID"].ToString();
+
+                    SqlDataAdapter datemp = new SqlDataAdapter(comm2);
+                    datemp.Fill(dt代码批号);
+                    if (dt代码批号.Rows.Count == 0)
+                    {
+                        MessageBox.Show("该生产指令编码下的『生产指令产品列表』尚未生成！");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < dt代码批号.Rows.Count; i++)
+                        {
+                            cb产品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
+                        }
+                    }
+                    datemp.Dispose();
+                }
+                else
+                {
+                    //dt代码批号为空
+                    MessageBox.Show("该生产指令编码下的『生产指令信息表』尚未生成！");
+                }
+                reader1.Dispose();
+            }
 
             //*********数据填写*********//
             cb产品代码.SelectedIndex = -1;
@@ -356,7 +400,15 @@ namespace mySystem.Extruction.Chart
                 dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
                 //立马保存这一行
                 bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录.Update((DataTable)bs记录.DataSource);
+                }
+                else
+                {
+                    da记录sql.Update((DataTable)bs记录.DataSource);
+                }
+                
                 //外表重新绑定
                 readOuterData(InstruID, productCode, searchTime);
                 outerBind();
@@ -371,7 +423,15 @@ namespace mySystem.Extruction.Chart
                 dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
                 setDataGridViewRowNums();
                 //立马保存内表
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                }
+                
             }
             //内表绑定
             dataGridView1.Columns.Clear();
@@ -410,9 +470,19 @@ namespace mySystem.Extruction.Chart
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + productCode + "' and 包装日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
-            da记录.Fill(dt记录);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + productCode + "' and 包装日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
+            else
+            {
+                da记录sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + productCode + "' and 包装日期 = '" + searchTime.ToString("yyyy/MM/dd") + "' ", mySystem.Parameter.conn);
+                cb记录sql = new SqlCommandBuilder(da记录sql);
+                da记录sql.Fill(dt记录);
+            }
+            
         }
 
         //外表控件绑定

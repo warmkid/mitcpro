@@ -875,7 +875,7 @@ namespace mySystem
                                 //mySql += Parameter.userflight + "', ";
                                 //mySql += "'');";
                                 //commInsert.CommandText = mySql;
-                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ");";
+                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员, 审核是否通过) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ",0 );";
                                 commInsert.ExecuteNonQuery();
                                 //获取ID
                                 commInsert.CommandText = "SELECT @@IDENTITY";
@@ -940,7 +940,7 @@ namespace mySystem
                                 //若大表当日无记录则新建一条
                                 SqlCommand commInsert = new SqlCommand();
                                 commInsert.Connection = Parameter.conn;
-                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";
+                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员,审核是否通过) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ", 0 );";
                                 commInsert.ExecuteNonQuery();
                                 //获取ID
                                 commInsert.CommandText = "SELECT @@IDENTITY";
@@ -1003,7 +1003,7 @@ namespace mySystem
                                 //若大表当日无记录则新建一条
                                 SqlCommand commInsert = new SqlCommand();
                                 commInsert.Connection = Parameter.conn;
-                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ");";
+                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员,审核是否通过) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ", 0 );";
                                 commInsert.ExecuteNonQuery();
                                 //获取ID
                                 commInsert.CommandText = "SELECT @@IDENTITY";

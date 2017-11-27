@@ -452,7 +452,7 @@ namespace mySystem.Process.Extruction.A
             }
             else
             {
-                daOuter_sql = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期 like '#" + 生产日期.ToString() + "#';", mySystem.Parameter.conn);
+                daOuter_sql = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期='" + 生产日期.ToString() + "';", mySystem.Parameter.conn);
                 cbOuter_sql = new SqlCommandBuilder(daOuter_sql);
                 dtOuter = new DataTable(tablename1);
                 bsOuter = new BindingSource();

@@ -84,7 +84,15 @@ namespace WindowsFormsApplication1
                     dt_prodinstr.Rows[0]["中层原料余量"] = a;
                     dt_prodinstr.Rows[0]["中层原料用量"] = float.Parse(dt_prodinstr.Rows[0]["中内层供料量合计b"].ToString()) - a;
                     bs_prodinstr.EndEdit();
-                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                    }
+                    else
+                    {
+                        da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                    }
+                    
                     label_prodcode = 1;
                 }
 
@@ -111,7 +119,15 @@ namespace WindowsFormsApplication1
                     dt_prodinstr.Rows[0]["外中内层原料余量"] = a;
                     dt_prodinstr.Rows[0]["外中内层原料用量"] = float.Parse(dt_prodinstr.Rows[0]["外层供料量合计a"].ToString()) - a;
                     bs_prodinstr.EndEdit();
-                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                    }
+                    else
+                    {
+                        da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                    }
+                    
                     label_prodcode = 1;
                 }
 
@@ -153,8 +169,17 @@ namespace WindowsFormsApplication1
             list_操作员 = new List<string>();
             list_审核员 = new List<string>();
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜供料记录'", mySystem.Parameter.connOle);
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜供料记录'", mySystem.Parameter.connOle);
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='吹膜供料记录'", mySystem.Parameter.conn);
+                da.Fill(dt);
+            }
+            
 
             if (dt.Rows.Count > 0)
             {
@@ -465,24 +490,49 @@ namespace WindowsFormsApplication1
         private void addprodcode(int instrid)
         {
             dict_procode_batch = new Dictionary<string, string>();
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
-            comm.CommandText = "select 产品编码,产品批号 from 生产指令产品列表 where 生产指令ID=" + instrid ;
-
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
-            for (int i = 0; i < tempdt.Rows.Count; i++)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                if (tempdt.Rows[i]["产品编码"] != null && tempdt.Rows[i]["产品批号"] != null)
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = mySystem.Parameter.connOle;
+                comm.CommandText = "select 产品编码,产品批号 from 生产指令产品列表 where 生产指令ID=" + instrid;
+
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                for (int i = 0; i < tempdt.Rows.Count; i++)
                 {
-                    cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
-                    dict_procode_batch.Add((string)tempdt.Rows[i]["产品编码"], (string)tempdt.Rows[i]["产品批号"]);
+                    if (tempdt.Rows[i]["产品编码"] != null && tempdt.Rows[i]["产品批号"] != null)
+                    {
+                        cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
+                        dict_procode_batch.Add((string)tempdt.Rows[i]["产品编码"], (string)tempdt.Rows[i]["产品批号"]);
+                    }
                 }
+                da.Dispose();
+                tempdt.Dispose();
+                comm.Dispose();
             }
-            da.Dispose();
-            tempdt.Dispose();
-            comm.Dispose();
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = mySystem.Parameter.conn;
+                comm.CommandText = "select 产品编码,产品批号 from 生产指令产品列表 where 生产指令ID=" + instrid;
+
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    if (tempdt.Rows[i]["产品编码"] != null && tempdt.Rows[i]["产品批号"] != null)
+                    {
+                        cb产品代码.Items.Add((string)tempdt.Rows[i]["产品编码"]);
+                        dict_procode_batch.Add((string)tempdt.Rows[i]["产品编码"], (string)tempdt.Rows[i]["产品批号"]);
+                    }
+                }
+                da.Dispose();
+                tempdt.Dispose();
+                comm.Dispose();
+            }
+            
         }
 
         //读取生产指令下物料代码，并保存
@@ -490,40 +540,81 @@ namespace WindowsFormsApplication1
         {
             dict_midmatcode_batch = new Dictionary<string, string>();
             dict_inoutmatcode_batch = new Dictionary<string, string>();
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
-            comm.CommandText = "select 内外层物料代码,内外层物料批号,中层物料代码,中层物料批号 from 生产指令信息表 where ID=" + instrid;
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = mySystem.Parameter.connOle;
+                comm.CommandText = "select 内外层物料代码,内外层物料批号,中层物料代码,中层物料批号 from 生产指令信息表 where ID=" + instrid;
 
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
-            for (int i = 0; i < tempdt.Rows.Count; i++)
-            {
-                if (tempdt.Rows[i]["内外层物料代码"] != null && tempdt.Rows[i]["内外层物料批号"] != null)
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                for (int i = 0; i < tempdt.Rows.Count; i++)
                 {
-                    cb原料代码ab1c.Items.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]));        
-                    dict_inoutmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]), Convert.ToString(tempdt.Rows[i]["内外层物料批号"]));
-                    label9.Text = tempdt.Rows[i]["内外层物料代码"].ToString();
-                    tb原料批号ab1c.Text = tempdt.Rows[i]["内外层物料批号"].ToString();
+                    if (tempdt.Rows[i]["内外层物料代码"] != null && tempdt.Rows[i]["内外层物料批号"] != null)
+                    {
+                        cb原料代码ab1c.Items.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]));
+                        dict_inoutmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]), Convert.ToString(tempdt.Rows[i]["内外层物料批号"]));
+                        label9.Text = tempdt.Rows[i]["内外层物料代码"].ToString();
+                        tb原料批号ab1c.Text = tempdt.Rows[i]["内外层物料批号"].ToString();
+                    }
+                    if (tempdt.Rows[i]["中层物料代码"] != null && tempdt.Rows[i]["中层物料批号"] != null)
+                    {
+                        cb原料代码b2.Items.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]));
+                        dict_midmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]), Convert.ToString(tempdt.Rows[i]["中层物料批号"]));
+                        label11.Text = Convert.ToString(tempdt.Rows[i]["中层物料代码"]);
+                        tb原料批号b2.Text = tempdt.Rows[i]["中层物料批号"].ToString();
+                    }
                 }
-                if (tempdt.Rows[i]["中层物料代码"] != null && tempdt.Rows[i]["中层物料批号"] != null)
+                if (tempdt.Rows.Count > 0)
                 {
-                    cb原料代码b2.Items.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]));
-                    dict_midmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]), Convert.ToString(tempdt.Rows[i]["中层物料批号"]));
-                    label11.Text = Convert.ToString(tempdt.Rows[i]["中层物料代码"]);
-                    tb原料批号b2.Text = tempdt.Rows[i]["中层物料批号"].ToString();
-                }                     
+                    dt_prodinstr = new DataTable();
+                    cb原料代码ab1c.Text = Convert.ToString(tempdt.Rows[0]["内外层物料代码"]);
+                    cb原料代码b2.Text = Convert.ToString(tempdt.Rows[0]["中层物料代码"]);
+                }
+
+                da.Dispose();
+                tempdt.Dispose();
+                comm.Dispose();
             }
-            if(tempdt.Rows.Count>0)
+            else
             {
-                dt_prodinstr = new DataTable();
-                cb原料代码ab1c.Text = Convert.ToString(tempdt.Rows[0]["内外层物料代码"]);
-                cb原料代码b2.Text=Convert.ToString(tempdt.Rows[0]["中层物料代码"]);
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = mySystem.Parameter.conn;
+                comm.CommandText = "select 内外层物料代码,内外层物料批号,中层物料代码,中层物料批号 from 生产指令信息表 where ID=" + instrid;
+
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    if (tempdt.Rows[i]["内外层物料代码"] != null && tempdt.Rows[i]["内外层物料批号"] != null)
+                    {
+                        cb原料代码ab1c.Items.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]));
+                        dict_inoutmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["内外层物料代码"]), Convert.ToString(tempdt.Rows[i]["内外层物料批号"]));
+                        label9.Text = tempdt.Rows[i]["内外层物料代码"].ToString();
+                        tb原料批号ab1c.Text = tempdt.Rows[i]["内外层物料批号"].ToString();
+                    }
+                    if (tempdt.Rows[i]["中层物料代码"] != null && tempdt.Rows[i]["中层物料批号"] != null)
+                    {
+                        cb原料代码b2.Items.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]));
+                        dict_midmatcode_batch.Add(Convert.ToString(tempdt.Rows[i]["中层物料代码"]), Convert.ToString(tempdt.Rows[i]["中层物料批号"]));
+                        label11.Text = Convert.ToString(tempdt.Rows[i]["中层物料代码"]);
+                        tb原料批号b2.Text = tempdt.Rows[i]["中层物料批号"].ToString();
+                    }
+                }
+                if (tempdt.Rows.Count > 0)
+                {
+                    dt_prodinstr = new DataTable();
+                    cb原料代码ab1c.Text = Convert.ToString(tempdt.Rows[0]["内外层物料代码"]);
+                    cb原料代码b2.Text = Convert.ToString(tempdt.Rows[0]["中层物料代码"]);
+                }
+
+                da.Dispose();
+                tempdt.Dispose();
+                comm.Dispose();
             }
-                
-            da.Dispose();
-            tempdt.Dispose();
-            comm.Dispose();
+            
         }
 
 

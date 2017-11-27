@@ -349,8 +349,17 @@ namespace mySystem.Extruction.Process
             list_操作员 = new List<string>();
             list_审核员 = new List<string>();
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序领料退料记录'", mySystem.Parameter.connOle);
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序领料退料记录'", mySystem.Parameter.connOle);
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='吹膜工序领料退料记录'", mySystem.Parameter.conn);
+                da.Fill(dt);
+            }
+
 
             if (dt.Rows.Count > 0)
             {
@@ -422,21 +431,43 @@ namespace mySystem.Extruction.Process
         //向combox中添加物料代码
         private void addmatcode()
         {
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
-            comm.CommandText = "select * from 生产指令信息表 where ID="+mySystem.Parameter.proInstruID;
-
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-            DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
-            for (int i = 0; i < tempdt.Rows.Count; i++)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                cB物料代码.Items.Add(tempdt.Rows[i]["内外层物料代码"].ToString());
-                cB物料代码.Items.Add(tempdt.Rows[i]["中层物料代码"].ToString());
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = mySystem.Parameter.connOle;
+                comm.CommandText = "select * from 生产指令信息表 where ID=" + mySystem.Parameter.proInstruID;
+
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    cB物料代码.Items.Add(tempdt.Rows[i]["内外层物料代码"].ToString());
+                    cB物料代码.Items.Add(tempdt.Rows[i]["中层物料代码"].ToString());
+                }
+                da.Dispose();
+                tempdt.Dispose();
+                comm.Dispose();
             }
-            da.Dispose();
-            tempdt.Dispose();
-            comm.Dispose();
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = mySystem.Parameter.conn;
+                comm.CommandText = "select * from 生产指令信息表 where ID=" + mySystem.Parameter.proInstruID;
+
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                DataTable tempdt = new DataTable();
+                da.Fill(tempdt);
+                for (int i = 0; i < tempdt.Rows.Count; i++)
+                {
+                    cB物料代码.Items.Add(tempdt.Rows[i]["内外层物料代码"].ToString());
+                    cB物料代码.Items.Add(tempdt.Rows[i]["中层物料代码"].ToString());
+                }
+                da.Dispose();
+                tempdt.Dispose();
+                comm.Dispose();
+            }
+           
         }
 
         private void init()

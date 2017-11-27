@@ -552,7 +552,7 @@ namespace mySystem.Extruction.Process
                 bs记录 = new BindingSource();
                 dt记录 = new DataTable(table);
                 //da记录_sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + " and 生产日期 like '#" + searchTime.ToString("yyyy/MM/dd") + "#' ", conn);
-                da记录_sql = new SqlDataAdapter("select top 1 * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + " order by ID DESC", conn);
+                da记录_sql = new SqlDataAdapter("select top 1 * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + (flight?1:0) + " order by ID DESC", conn);
                 cb记录_sql = new SqlCommandBuilder(da记录_sql);
                 da记录_sql.Fill(dt记录);
             }

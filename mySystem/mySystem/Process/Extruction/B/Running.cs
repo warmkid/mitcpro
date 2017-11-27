@@ -182,14 +182,32 @@ namespace mySystem.Process.Extruction.B
         }
         private void getSetting()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM 设置吹膜机组预热参数记录表",conOle);
-            da.Fill(dtSetting);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM 设置吹膜机组预热参数记录表", conOle);
+                da.Fill(dtSetting);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM 设置吹膜机组预热参数记录表", mySystem.Parameter.conn);
+                da.Fill(dtSetting);
+            }
+            
         }
         private void getProductCode()
         {
             DataTable DtproductCode = new DataTable("生产指令产品列表");
-            OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM 生产指令产品列表 WHERE 生产指令ID = "+Parameter.proInstruID , conOle);
-            da.Fill(DtproductCode);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM 生产指令产品列表 WHERE 生产指令ID = " + Parameter.proInstruID, conOle);
+                da.Fill(DtproductCode);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM 生产指令产品列表 WHERE 生产指令ID = " + Parameter.proInstruID, mySystem.Parameter.conn);
+                da.Fill(DtproductCode);
+            }
+           
             productCode = new Hashtable();
             foreach (DataRow dr in DtproductCode.Rows)
             {
@@ -889,11 +907,23 @@ namespace mySystem.Process.Extruction.B
 
         void readOuterData(int instructionId, string productCode, DateTime date, DateTime time)
         {
-            dtOuter = new DataTable("吹膜机组运行记录");
-            daOuter=new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID ="+instructionId+" AND 产品代码= '"+productCode+"' AND 生产日期=#"+date.ToString()+"# AND 记录时间=#"+time.ToString()+"#;",conOle);
-            bsOuter = new BindingSource();
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            daOuter.Fill(dtOuter);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dtOuter = new DataTable("吹膜机组运行记录");
+                daOuter = new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID =" + instructionId + " AND 产品代码= '" + productCode + "' AND 生产日期=#" + date.ToString() + "# AND 记录时间=#" + time.ToString() + "#;", conOle);
+                bsOuter = new BindingSource();
+                cbOuter = new OleDbCommandBuilder(daOuter);
+                daOuter.Fill(dtOuter);
+            }
+            else
+            {
+                dtOuter = new DataTable("吹膜机组运行记录");
+                daOutersql = new SqlDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID =" + instructionId + " AND 产品代码= '" + productCode + "' AND 生产日期='" + date.ToString() + "' AND 记录时间='" + time.ToString() + "';", mySystem.Parameter.conn);
+                bsOuter = new BindingSource();
+                cbOutersql = new SqlCommandBuilder(daOutersql);
+                daOutersql.Fill(dtOuter);
+            }
+            
         }
         void readOuterData(int ID)
         {
@@ -1495,10 +1525,21 @@ namespace mySystem.Process.Extruction.B
         {
             string tabName = "用户权限";
             DataTable dtUser = new DataTable(tabName);
-            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", conOle);
-            BindingSource bsUser = new BindingSource();
-            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
-            daUser.Fill(dtUser);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", conOle);
+                BindingSource bsUser = new BindingSource();
+                OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+                daUser.Fill(dtUser);
+            }
+            else
+            {
+                SqlDataAdapter daUser = new SqlDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", mySystem.Parameter.conn);
+                BindingSource bsUser = new BindingSource();
+                SqlCommandBuilder cbUser = new SqlCommandBuilder(daUser);
+                daUser.Fill(dtUser);
+            }
+            
             if (dtUser.Rows.Count != 1)
             {
                 MessageBox.Show("请确认表单权限信息");
@@ -1569,15 +1610,33 @@ namespace mySystem.Process.Extruction.B
                 DataRow newrow = dtOuter.NewRow();
                 newrow = writeOuterDefault(newrow);
                 dtOuter.Rows.Add(newrow);
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
+                    daOutersql.Update((DataTable)bsOuter.DataSource);
+                }
+                
                 readOuterData(_生产指令ID, _产品代码, _Date, _Time);
                 removeOuterBinding();
                 outerBind();
 
                 string sql = "SELECT * FROM 吹膜机组运行记录 WHERE 生产指令ID={0} AND 产品代码='{1}' order by ID";
-                OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _生产指令ID, _产品代码), conOle);
                 DataTable dt = new DataTable();
-                da.Fill(dt);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, _生产指令ID, _产品代码), conOle);
+                    da.Fill(dt);
+                }
+                else
+                {
+                    SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, _生产指令ID, _产品代码), mySystem.Parameter.conn);
+                    da.Fill(dt);
+                }
+                
                 if (dt.Rows.Count == 1)
                 {
                     array1[1][1].Text = dtSetting.Rows[0]["一区预热参数设定2"].ToString();

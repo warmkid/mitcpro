@@ -51,6 +51,7 @@
             this.B2Btn = new System.Windows.Forms.Button();
             this.B3Btn = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.C4Btn = new System.Windows.Forms.Button();
             this.C3Btn = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -59,7 +60,6 @@
             this.D4Btn = new System.Windows.Forms.Button();
             this.D3Btn = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.btn生产领料申请单 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -344,6 +344,17 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "设备运行";
             // 
+            // btn生产领料申请单
+            // 
+            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn生产领料申请单.Location = new System.Drawing.Point(6, 140);
+            this.btn生产领料申请单.Name = "btn生产领料申请单";
+            this.btn生产领料申请单.Size = new System.Drawing.Size(223, 38);
+            this.btn生产领料申请单.TabIndex = 22;
+            this.btn生产领料申请单.Text = "生产领料申请单";
+            this.btn生产领料申请单.UseVisualStyleBackColor = true;
+            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
+            // 
             // C4Btn
             // 
             this.C4Btn.Font = new System.Drawing.Font("SimSun", 12F);
@@ -382,6 +393,7 @@
             this.groupBox4.TabIndex = 21;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "设备维护与培训";
+            this.groupBox4.Visible = false;
             // 
             // D1Btn
             // 
@@ -431,17 +443,6 @@
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // btn生产领料申请单
-            // 
-            this.btn生产领料申请单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btn生产领料申请单.Location = new System.Drawing.Point(6, 140);
-            this.btn生产领料申请单.Name = "btn生产领料申请单";
-            this.btn生产领料申请单.Size = new System.Drawing.Size(223, 38);
-            this.btn生产领料申请单.TabIndex = 22;
-            this.btn生产领料申请单.Text = "生产领料申请单";
-            this.btn生产领料申请单.UseVisualStyleBackColor = true;
-            this.btn生产领料申请单.Click += new System.EventHandler(this.btn生产领料申请单_Click);
             // 
             // ExtructionMainForm
             // 
