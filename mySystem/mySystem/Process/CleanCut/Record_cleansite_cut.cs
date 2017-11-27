@@ -34,6 +34,9 @@ namespace mySystem.Process.CleanCut
         private List<string> list_操作员;
         private List<string> list_审核员;
 
+        private SqlDataAdapter da_prodinstrsql, da_prodlistsql;
+        private SqlCommandBuilder cb_prodinstrsql, cb_prodlistsql;
+
         //private int stat_user;//登录人状态，0 操作员， 1 审核员， 2管理员
         //private int stat_form;//窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
 
@@ -232,8 +235,17 @@ namespace mySystem.Process.CleanCut
             list_操作员 = new List<string>();
             list_审核员 = new List<string>();
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='全部'", mySystem.Parameter.connOle);
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='全部'", mySystem.Parameter.connOle);
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='全部'", mySystem.Parameter.conn);
+                da.Fill(dt);
+            }
+            
 
             if (dt.Rows.Count > 0)
             {
@@ -263,9 +275,19 @@ namespace mySystem.Process.CleanCut
 
             //获取该生产指令下的产品代码 
             dict_prod = new Dictionary<string, string>();
-            OleDbDataAdapter tda = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID="+mySystem.Parameter.cleancutInstruID, mySystem.Parameter.connOle);
-            DataTable tdt = new DataTable("清洁分切工序生产指令详细信息");
-            tda.Fill(tdt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter tda = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID=" + mySystem.Parameter.cleancutInstruID, mySystem.Parameter.connOle);
+                DataTable tdt = new DataTable("清洁分切工序生产指令详细信息");
+                tda.Fill(tdt);
+            }
+            else
+            {
+                SqlDataAdapter tda = new SqlDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID=" + mySystem.Parameter.cleancutInstruID, mySystem.Parameter.conn);
+                DataTable tdt = new DataTable("清洁分切工序生产指令详细信息");
+                tda.Fill(tdt);
+            }
+           
             //foreach (DataRow tdr in tdt.Rows)
             //{
             //    cb产品代码.Items.Add(tdr["清洁前产品代码"].ToString());
@@ -304,7 +326,15 @@ namespace mySystem.Process.CleanCut
                 {
                     while (dataGridView1.Rows.Count > 0)
                         dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-                    da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+                    }
+                    else
+                    {
+                        da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+                    }
+                    
                     int tempi = 1;
                     foreach (DataRow dr in dt_清场设置.Rows)
                     {
@@ -411,9 +441,19 @@ namespace mySystem.Process.CleanCut
         {
             dt_清场设置 = new DataTable("设置清场项目");
             string asql = "select * from 设置清场项目";
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-            da.Fill(dt_清场设置);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(dt_清场设置);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(dt_清场设置);
+            }
+            
         }
 
         // 给外表的一行写入默认值
@@ -446,18 +486,38 @@ namespace mySystem.Process.CleanCut
             dt_prodinstr = new DataTable("清场记录");
             bs_prodinstr = new BindingSource();
             //da_prodinstr = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid + " and 产品代码='" + prodcode + "'", mySystem.Parameter.connOle);
-            da_prodinstr = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid , mySystem.Parameter.connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+                cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+                da_prodinstr.Fill(dt_prodinstr);
+            }
+            else
+            {
+                da_prodinstrsql = new SqlDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid, mySystem.Parameter.conn);
+                cb_prodinstrsql = new SqlCommandBuilder(da_prodinstrsql);
+                da_prodinstrsql.Fill(dt_prodinstr);
+            }
+            
         }
         // 根据条件从数据库中读取多行内表数据,datagridview1,对应供料清场项目
         void readInnerData(int id)
         {
             dt_prodlist = new DataTable("清场记录详细信息");
             bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from 清场记录详细信息 where T清场记录ID=" + id, mySystem.Parameter.connOle);
-            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
-            da_prodlist.Fill(dt_prodlist);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist = new OleDbDataAdapter("select * from 清场记录详细信息 where T清场记录ID=" + id, mySystem.Parameter.connOle);
+                cb_prodlist = new OleDbCommandBuilder(da_prodlist);
+                da_prodlist.Fill(dt_prodlist);
+            }
+            else
+            {
+                da_prodlistsql = new SqlDataAdapter("select * from 清场记录详细信息 where T清场记录ID=" + id, mySystem.Parameter.conn);
+                cb_prodlistsql = new SqlCommandBuilder(da_prodlistsql);
+                da_prodlistsql.Fill(dt_prodlist);
+            }
+            
 
             if (dt_prodlist.Rows.Count <= 0)//空表，按照设置表内容进行插入
             {
@@ -592,13 +652,29 @@ namespace mySystem.Process.CleanCut
 
             //外表保存
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
             readOuterData(instrid,prodcode);
             removeOuterBinding();
             outerBind();
 
             //内表保存
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
 
@@ -673,12 +749,25 @@ namespace mySystem.Process.CleanCut
                 if (true)
                 {
                     DataTable dt_tempdt = new DataTable("清洁分切工序生产指令");
-                    OleDbDataAdapter da_tempdt = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID=" + instrid, mySystem.Parameter.connOle);
-                    OleDbCommandBuilder cb_prodinstr = new OleDbCommandBuilder(da_tempdt);
-                    da_tempdt.Fill(dt_tempdt);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        OleDbDataAdapter da_tempdt = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID=" + instrid, mySystem.Parameter.connOle);
+                        OleDbCommandBuilder cb_prodinstr = new OleDbCommandBuilder(da_tempdt);
+                        da_tempdt.Fill(dt_tempdt);
 
-                    dt_tempdt.Rows[0]["状态"] = 4;
-                    da_tempdt.Update(dt_tempdt);
+                        dt_tempdt.Rows[0]["状态"] = 4;
+                        da_tempdt.Update(dt_tempdt);
+                    }
+                    else
+                    {
+                        SqlDataAdapter da_tempdt = new SqlDataAdapter("select * from 清洁分切工序生产指令 where ID=" + instrid, mySystem.Parameter.conn);
+                        SqlCommandBuilder cb_prodinstr = new SqlCommandBuilder(da_tempdt);
+                        da_tempdt.Fill(dt_tempdt);
+
+                        dt_tempdt.Rows[0]["状态"] = 4;
+                        da_tempdt.Update(dt_tempdt);
+                    }
+                   
                 }
             }
         }
@@ -708,11 +797,23 @@ namespace mySystem.Process.CleanCut
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='清场记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='清场记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='清场记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            
 
             //写日志
             string log = "=====================================\n";
@@ -722,7 +823,15 @@ namespace mySystem.Process.CleanCut
             dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
 
             base.CheckResult();
         }
@@ -742,19 +851,39 @@ namespace mySystem.Process.CleanCut
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='清场记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-
-            if (dt_temp.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "清场记录";
-                dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
-                dt_temp.Rows.Add(dr);
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='清场记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "清场记录";
+                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                bs_temp.DataSource = dt_temp;
+                da_temp.Update((DataTable)bs_temp.DataSource);
             }
-            bs_temp.DataSource = dt_temp;
-            da_temp.Update((DataTable)bs_temp.DataSource);
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='清场记录' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "清场记录";
+                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                bs_temp.DataSource = dt_temp;
+                da_temp.Update((DataTable)bs_temp.DataSource);
+            }
+            
 
             //写日志 
             //格式： 
@@ -805,7 +934,15 @@ namespace mySystem.Process.CleanCut
                 DataRow dr = dt_prodinstr.NewRow();
                 dr = writeOuterDefault(dr);
                 dt_prodinstr.Rows.Add(dr);
-                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                }
+                else
+                {
+                    da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                }
+                
                 readOuterData(instrid,prodcode);
                 removeOuterBinding();
                 outerBind();
@@ -1009,7 +1146,15 @@ namespace mySystem.Process.CleanCut
                         dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
                         bs_prodinstr.EndEdit();
-                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                        }
+                        else
+                        {
+                            da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                        }
+                        
                     }
                     // 关闭文件，false表示不保存
                     wb.Close(false);

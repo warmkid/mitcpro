@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using Microsoft.Office.Interop.Excel;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.CleanCut
 {
@@ -61,26 +62,53 @@ namespace mySystem.Process.CleanCut
         private void BtnPrint_Click(object sender, EventArgs e)
         {
             String sql = "select * from 标签 where 生产指令ID={0}";
-            OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.cleancutInstruID), mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
-            System.Data.DataTable dt = new System.Data.DataTable();
-            da.Fill(dt);
-            
-            if (dt.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt.NewRow();
-                dr["生产指令"] = mySystem.Parameter.cleancutInstruction;
-                dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
-                dr["膜代码"] = cb膜代码.Text;
-                dr["批号_卷号"] = tb批号.Text;
-                dr["合格数量米"] = tb米.Text;
-                dr["合格数量千克"] = tbKg.Text;
-                dr["原膜代码"] = cb原膜代码.Text;
-                dr["分切日期"] = dtp分切日期.Value.ToString("yyyy/MM/dd");
-                dr["分切班次"] = cb白班.Checked?"白班":"夜班";
-                dt.Rows.Add(dr);
-                da.Update(dt);
+                OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.cleancutInstruID), mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                System.Data.DataTable dt = new System.Data.DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count == 0)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["生产指令"] = mySystem.Parameter.cleancutInstruction;
+                    dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
+                    dr["膜代码"] = cb膜代码.Text;
+                    dr["批号_卷号"] = tb批号.Text;
+                    dr["合格数量米"] = tb米.Text;
+                    dr["合格数量千克"] = tbKg.Text;
+                    dr["原膜代码"] = cb原膜代码.Text;
+                    dr["分切日期"] = dtp分切日期.Value.ToString("yyyy/MM/dd");
+                    dr["分切班次"] = cb白班.Checked ? "白班" : "夜班";
+                    dt.Rows.Add(dr);
+                    da.Update(dt);
+                }
             }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, mySystem.Parameter.cleancutInstruID), mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                System.Data.DataTable dt = new System.Data.DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count == 0)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["生产指令"] = mySystem.Parameter.cleancutInstruction;
+                    dr["生产指令ID"] = mySystem.Parameter.cleancutInstruID;
+                    dr["膜代码"] = cb膜代码.Text;
+                    dr["批号_卷号"] = tb批号.Text;
+                    dr["合格数量米"] = tb米.Text;
+                    dr["合格数量千克"] = tbKg.Text;
+                    dr["原膜代码"] = cb原膜代码.Text;
+                    dr["分切日期"] = dtp分切日期.Value.ToString("yyyy/MM/dd");
+                    dr["分切班次"] = cb白班.Checked ? "白班" : "夜班";
+                    dt.Rows.Add(dr);
+                    da.Update(dt);
+                }
+            }
+           
             printLable();
             GC.Collect();
         }
@@ -88,11 +116,25 @@ namespace mySystem.Process.CleanCut
         HashSet<String> hs原膜代码, hs膜代码;
         void getData()
         {
-            OleDbDataAdapter da;
             System.Data.DataTable dt;
-            da = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + mySystem.Parameter.cleancutInstruID, mySystem.Parameter.connOle);
             dt = new System.Data.DataTable();
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+
+                da = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + mySystem.Parameter.cleancutInstruID, mySystem.Parameter.connOle);
+
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da;
+
+                da = new SqlDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + mySystem.Parameter.cleancutInstruID, mySystem.Parameter.conn);
+
+                da.Fill(dt);
+            }
+            
             hs原膜代码 = new HashSet<string>();
             foreach (DataRow dr in dt.Rows)
             {
@@ -107,11 +149,24 @@ namespace mySystem.Process.CleanCut
         private void cb原膜代码_SelectedIndexChanged(object sender, EventArgs e)
         {
             string str原膜代码 = cb原膜代码.SelectedItem.ToString();
-            OleDbDataAdapter da;
             System.Data.DataTable dt;
-            da = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + mySystem.Parameter.cleancutInstruID + " and 清洁前产品代码 = '" + str原膜代码 + "'", mySystem.Parameter.connOle);
-            dt = new System.Data.DataTable();
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+
+                da = new OleDbDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + mySystem.Parameter.cleancutInstruID + " and 清洁前产品代码 = '" + str原膜代码 + "'", mySystem.Parameter.connOle);
+                dt = new System.Data.DataTable();
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da;
+
+                da = new SqlDataAdapter("select * from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + mySystem.Parameter.cleancutInstruID + " and 清洁前产品代码 = '" + str原膜代码 + "'", mySystem.Parameter.conn);
+                dt = new System.Data.DataTable();
+                da.Fill(dt);
+            }
+            
             cb膜代码.Text = "";
             cb膜代码.Items.Clear();
             hs膜代码 = new HashSet<string>();
@@ -128,10 +183,22 @@ namespace mySystem.Process.CleanCut
         public static void printLable(int id)
         {
             String sql = "select * from 标签 where ID={0}";
-            OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, id), mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             System.Data.DataTable dt = new System.Data.DataTable();
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, id), mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, id), mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+
+                da.Fill(dt);
+            }
+           
             if (dt.Rows.Count == 0)
             {
                 MessageBox.Show("无法找到标签信息");

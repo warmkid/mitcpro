@@ -35,6 +35,9 @@ namespace mySystem.Process.CleanCut
         BindingSource bsInner;
         OleDbCommandBuilder cbInner;
 
+        SqlDataAdapter daOutersql, daInnersql;
+        SqlCommandBuilder cbOutersql, cbInnersql;
+
         List<string> productCode;
         List<string> productCodeLst;
         List<String> matCodes = new List<string>(new String[] {"全部", "T", "PEF", "UP1", "XP1" });
@@ -69,12 +72,24 @@ namespace mySystem.Process.CleanCut
 
         void cmb物料种类_SelectedIndexChanged(object sender, EventArgs e)
         {
-            OleDbDataAdapter da;
             DataTable dt;
             // 看生产指令状态
-            da = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID="+__生产指令ID,mySystem.Parameter.connOle);
-            dt = new DataTable();
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                da = new OleDbDataAdapter("select * from 清洁分切工序生产指令 where ID=" + __生产指令ID, mySystem.Parameter.connOle);
+                dt = new DataTable();
+                da.Fill(dt);
+
+            }
+            else
+            {
+                SqlDataAdapter da;
+                da = new SqlDataAdapter("select * from 清洁分切工序生产指令 where ID=" + __生产指令ID, mySystem.Parameter.conn);
+                dt = new DataTable();
+                da.Fill(dt);
+            }
+            
             int statue = Convert.ToInt32(dt.Rows[0]["状态"]);
             if (4 == statue)
             {
@@ -100,7 +115,15 @@ namespace mySystem.Process.CleanCut
                     DataRow dr = dtOuter.NewRow();
                     dr = writeOuterDefault(dr);
                     dtOuter.Rows.Add(dr);
-                    daOuter.Update((DataTable)bsOuter.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    else
+                    {
+                        daOutersql.Update((DataTable)bsOuter.DataSource);
+                    }
+                   
                     readOuterData(__生产指令ID, cmb物料种类.SelectedItem.ToString());
                     outerBind();
                 }
@@ -113,54 +136,126 @@ namespace mySystem.Process.CleanCut
                 {
                     dr.Delete();
                 }
-                daInner.Update((DataTable)bsInner.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daInner.Update((DataTable)bsInner.DataSource);
+                }
+                else
+                {
+                    daInnersql.Update((DataTable)bsInner.DataSource);
+                }
+                
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
 
                 // 读取生产记录
-
-                da = new OleDbDataAdapter("select * from 清洁分切生产记录 where 生产指令ID=" + __生产指令ID, mySystem.Parameter.connOle);
-                dt = new DataTable();
-                da.Fill(dt);
-                OleDbDataAdapter dain;
-                int xuhao = 1;
-                foreach (DataRow r in dt.Rows)
+                if (!mySystem.Parameter.isSqlOk)
                 {
-                    int id = Convert.ToInt32(r["ID"]);
-                    string sql = "select * from 清洁分切生产记录详细信息 where T清洁分切生产记录ID={0} and 物料代码 like '%{1}%'";
-                    dain = new OleDbDataAdapter(string.Format(sql, id, cmb物料种类.SelectedItem.ToString()), mySystem.Parameter.connOle);
-                    DataTable tmp = new DataTable();
-                    dain.Fill(tmp);
-                    foreach (DataRow dr in tmp.Rows)
-                    {
-                        DataRow ndr = dtInner.NewRow();
-                        ndr["T清洁分切日报表ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
-                        ndr["序号"] = xuhao++;
-                        ndr["生产指令"] = __生产指令;
-                        ndr["生产日期"] = r["生产日期"];
-                        ndr["使用物料代码"] = dr["物料代码"];
-                        // TODO 能自动填吗？
-                        string temp = ndr["使用物料代码"].ToString().TrimStart('X').Split('X')[0];
-                        string[] tmps = temp.Split('-');
-                        temp = tmps[tmps.Length - 1];
-                        ndr["规格a1"] = Convert.ToInt32(temp);
-                        ndr["用量b1"] = dr["长度A"];
-                        ndr["使用量"] = Convert.ToDouble(ndr["规格a1"]) * Convert.ToDouble(ndr["用量b1"])/1000;
-                        ndr["清洁分切后代码"] = dr["清洁分切后代码"];
-                        temp = ndr["清洁分切后代码"].ToString().TrimStart('X').Split('X')[0];
-                        tmps = temp.Split('-');
-                        temp = tmps[tmps.Length - 1];
-                        ndr["规格a2"] = Convert.ToInt32(temp.TrimEnd('C')); ;
-                        ndr["数量b2"] = dr["长度B"];
-                        ndr["数量"] = Convert.ToDouble(ndr["规格a2"]) * Convert.ToDouble(ndr["数量b2"]) / 1000;
-                        ndr["工时"] = Convert.ToDouble(dr["工时"]);
-                        ndr["操作人"] = mySystem.Parameter.userName;
-                        ndr["审核人"] = "";
-                        dtInner.Rows.Add(ndr);
-                    }
-
+                    OleDbDataAdapter da;
+                    da = new OleDbDataAdapter("select * from 清洁分切生产记录 where 生产指令ID=" + __生产指令ID, mySystem.Parameter.connOle);
+                    dt = new DataTable();
+                    da.Fill(dt);
                 }
-                daInner.Update((DataTable)bsInner.DataSource);
+                else
+                {
+                    SqlDataAdapter da;
+                    da = new SqlDataAdapter("select * from 清洁分切生产记录 where 生产指令ID=" + __生产指令ID, mySystem.Parameter.conn);
+                    dt = new DataTable();
+                    da.Fill(dt);
+                }
+
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    OleDbDataAdapter dain;
+                    int xuhao = 1;
+                    foreach (DataRow r in dt.Rows)
+                    {
+                        int id = Convert.ToInt32(r["ID"]);
+                        string sql = "select * from 清洁分切生产记录详细信息 where T清洁分切生产记录ID={0} and 物料代码 like '%{1}%'";
+                        dain = new OleDbDataAdapter(string.Format(sql, id, cmb物料种类.SelectedItem.ToString()), mySystem.Parameter.connOle);
+                        DataTable tmp = new DataTable();
+                        dain.Fill(tmp);
+                        foreach (DataRow dr in tmp.Rows)
+                        {
+                            DataRow ndr = dtInner.NewRow();
+                            ndr["T清洁分切日报表ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+                            ndr["序号"] = xuhao++;
+                            ndr["生产指令"] = __生产指令;
+                            ndr["生产日期"] = r["生产日期"];
+                            ndr["使用物料代码"] = dr["物料代码"];
+                            // TODO 能自动填吗？
+                            string temp = ndr["使用物料代码"].ToString().TrimStart('X').Split('X')[0];
+                            string[] tmps = temp.Split('-');
+                            temp = tmps[tmps.Length - 1];
+                            ndr["规格a1"] = Convert.ToInt32(temp);
+                            ndr["用量b1"] = dr["长度A"];
+                            ndr["使用量"] = Convert.ToDouble(ndr["规格a1"]) * Convert.ToDouble(ndr["用量b1"]) / 1000;
+                            ndr["清洁分切后代码"] = dr["清洁分切后代码"];
+                            temp = ndr["清洁分切后代码"].ToString().TrimStart('X').Split('X')[0];
+                            tmps = temp.Split('-');
+                            temp = tmps[tmps.Length - 1];
+                            ndr["规格a2"] = Convert.ToInt32(temp.TrimEnd('C')); ;
+                            ndr["数量b2"] = dr["长度B"];
+                            ndr["数量"] = Convert.ToDouble(ndr["规格a2"]) * Convert.ToDouble(ndr["数量b2"]) / 1000;
+                            ndr["工时"] = Convert.ToDouble(dr["工时"]);
+                            ndr["操作人"] = mySystem.Parameter.userName;
+                            ndr["审核人"] = "";
+                            dtInner.Rows.Add(ndr);
+                        }
+
+                    }
+                }
+                else
+                {
+                    SqlDataAdapter dain;
+                    int xuhao = 1;
+                    foreach (DataRow r in dt.Rows)
+                    {
+                        int id = Convert.ToInt32(r["ID"]);
+                        string sql = "select * from 清洁分切生产记录详细信息 where T清洁分切生产记录ID={0} and 物料代码 like '%{1}%'";
+                        dain = new SqlDataAdapter(string.Format(sql, id, cmb物料种类.SelectedItem.ToString()), mySystem.Parameter.conn);
+                        DataTable tmp = new DataTable();
+                        dain.Fill(tmp);
+                        foreach (DataRow dr in tmp.Rows)
+                        {
+                            DataRow ndr = dtInner.NewRow();
+                            ndr["T清洁分切日报表ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+                            ndr["序号"] = xuhao++;
+                            ndr["生产指令"] = __生产指令;
+                            ndr["生产日期"] = r["生产日期"];
+                            ndr["使用物料代码"] = dr["物料代码"];
+                            // TODO 能自动填吗？
+                            string temp = ndr["使用物料代码"].ToString().TrimStart('X').Split('X')[0];
+                            string[] tmps = temp.Split('-');
+                            temp = tmps[tmps.Length - 1];
+                            ndr["规格a1"] = Convert.ToInt32(temp);
+                            ndr["用量b1"] = dr["长度A"];
+                            ndr["使用量"] = Convert.ToDouble(ndr["规格a1"]) * Convert.ToDouble(ndr["用量b1"]) / 1000;
+                            ndr["清洁分切后代码"] = dr["清洁分切后代码"];
+                            temp = ndr["清洁分切后代码"].ToString().TrimStart('X').Split('X')[0];
+                            tmps = temp.Split('-');
+                            temp = tmps[tmps.Length - 1];
+                            ndr["规格a2"] = Convert.ToInt32(temp.TrimEnd('C')); ;
+                            ndr["数量b2"] = dr["长度B"];
+                            ndr["数量"] = Convert.ToDouble(ndr["规格a2"]) * Convert.ToDouble(ndr["数量b2"]) / 1000;
+                            ndr["工时"] = Convert.ToDouble(dr["工时"]);
+                            ndr["操作人"] = mySystem.Parameter.userName;
+                            ndr["审核人"] = "";
+                            dtInner.Rows.Add(ndr);
+                        }
+
+                    }
+                }
+
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daInner.Update((DataTable)bsInner.DataSource);
+                }
+                else
+                {
+                    daInnersql.Update((DataTable)bsInner.DataSource);
+                }
+                
                 readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind();
             }
@@ -199,12 +294,23 @@ namespace mySystem.Process.CleanCut
             {
                 btn打印.Enabled = false;
             }
-
-            daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE 0=1", conOle);
-            //cbInner = new OleDbCommandBuilder(daInner);
-            dtInner = new DataTable(tablename2);
-            bsInner = new BindingSource();
-            daInner.Fill(dtInner);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE 0=1", conOle);
+                //cbInner = new OleDbCommandBuilder(daInner);
+                dtInner = new DataTable(tablename2);
+                bsInner = new BindingSource();
+                daInner.Fill(dtInner);
+            }
+            else
+            {
+                daInnersql = new SqlDataAdapter("SELECT * FROM " + tablename2 + " WHERE 0=1", Parameter.conn);
+                //cbInner = new OleDbCommandBuilder(daInner);
+                dtInner = new DataTable(tablename2);
+                bsInner = new BindingSource();
+                daInnersql.Fill(dtInner);
+            }
+            
 
         }
 
@@ -250,20 +356,42 @@ namespace mySystem.Process.CleanCut
         {
             dtOuter = new DataTable(tablename1);
             string sql = "select * from 清洁分切日报表 where 生产指令ID={0} and 物料种类='{1}'";
-            daOuter = new OleDbDataAdapter(string.Format(sql, pid, matcode), conOle);
-            bsOuter = new BindingSource();
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            daOuter.Fill(dtOuter);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter = new OleDbDataAdapter(string.Format(sql, pid, matcode), conOle);
+                bsOuter = new BindingSource();
+                cbOuter = new OleDbCommandBuilder(daOuter);
+                daOuter.Fill(dtOuter);
+            }
+            else
+            {
+                daOutersql = new SqlDataAdapter(string.Format(sql, pid, matcode), Parameter.conn);
+                bsOuter = new BindingSource();
+                cbOutersql = new SqlCommandBuilder(daOutersql);
+                daOuter.Fill(dtOuter);
+            }
+            
         }
 
         private void getPeople()
         {
             string tabName = "用户权限";
             DataTable dtUser = new DataTable(tabName);
-            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + "全部" + "';", conOle);
-            BindingSource bsUser = new BindingSource();
-            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
-            daUser.Fill(dtUser);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + "全部" + "';", conOle);
+                BindingSource bsUser = new BindingSource();
+                OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+                daUser.Fill(dtUser);
+            }
+            else
+            {
+                SqlDataAdapter daUser = new SqlDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + "全部" + "';", Parameter.conn);
+                BindingSource bsUser = new BindingSource();
+                SqlCommandBuilder cbUser = new SqlCommandBuilder(daUser);
+                daUser.Fill(dtUser);
+            }
+            
             if (dtUser.Rows.Count != 1)
             {
                 MessageBox.Show("请确认表单权限信息");
@@ -442,7 +570,15 @@ namespace mySystem.Process.CleanCut
 
 
                 bsOuter.EndEdit();
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOutersql.Update((DataTable)bsOuter.DataSource);
+                }
+                
 
                 //readOuterData(searchId);
 
@@ -453,23 +589,49 @@ namespace mySystem.Process.CleanCut
                 //read from database table and find current record
                 string checkName = "待审核";
                 DataTable dtCheck = new DataTable(checkName);
-                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
-                BindingSource bsCheck = new BindingSource();
-                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
-                daCheck.Fill(dtCheck);
-
-                //this part will never be run, for there must be a unchecked recird before this button becomes enable
-                if (0 == dtCheck.Rows.Count)
+                if (!mySystem.Parameter.isSqlOk)
                 {
-                    DataRow newrow = dtCheck.NewRow();
-                    newrow["表名"] = tablename1;
-                    newrow["对应ID"] = dtOuter.Rows[0]["ID"];
-                    dtCheck.Rows.Add(newrow);
+                    OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                    BindingSource bsCheck = new BindingSource();
+                    OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                    daCheck.Fill(dtCheck);
+
+                    //this part will never be run, for there must be a unchecked recird before this button becomes enable
+                    if (0 == dtCheck.Rows.Count)
+                    {
+                        DataRow newrow = dtCheck.NewRow();
+                        newrow["表名"] = tablename1;
+                        newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                        dtCheck.Rows.Add(newrow);
+                    }
+                    //remove the record
+                    dtCheck.Rows[0].Delete();
+                    bsCheck.DataSource = dtCheck;
+
+                    daCheck.Update((DataTable)bsCheck.DataSource);
                 }
-                //remove the record
-                dtCheck.Rows[0].Delete();
-                bsCheck.DataSource = dtCheck;
-                daCheck.Update((DataTable)bsCheck.DataSource);
+                else
+                {
+                    SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", Parameter.conn);
+                    BindingSource bsCheck = new BindingSource();
+                    SqlCommandBuilder cbCheck = new SqlCommandBuilder(daCheck);
+                    daCheck.Fill(dtCheck);
+
+                    //this part will never be run, for there must be a unchecked recird before this button becomes enable
+                    if (0 == dtCheck.Rows.Count)
+                    {
+                        DataRow newrow = dtCheck.NewRow();
+                        newrow["表名"] = tablename1;
+                        newrow["对应ID"] = dtOuter.Rows[0]["ID"];
+                        dtCheck.Rows.Add(newrow);
+                    }
+                    //remove the record
+                    dtCheck.Rows[0].Delete();
+                    bsCheck.DataSource = dtCheck;
+
+                    daCheck.Update((DataTable)bsCheck.DataSource);
+                }
+                
                 setFormState();
                 setEnableReadOnly();
             }
@@ -493,7 +655,15 @@ namespace mySystem.Process.CleanCut
 
 
                 bsOuter.EndEdit();
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOutersql.Update((DataTable)bsOuter.DataSource);
+                }
+                
 
                 //readOuterData(searchId);
 
@@ -531,11 +701,23 @@ namespace mySystem.Process.CleanCut
         //void setDataGridViewRowNums();
         private void readOuterData(String name)
         {
-            daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令='" + name + "';", conOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable(tablename1);
-            bsOuter = new BindingSource();
-            daOuter.Fill(dtOuter);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令='" + name + "';", conOle);
+                cbOuter = new OleDbCommandBuilder(daOuter);
+                dtOuter = new DataTable(tablename1);
+                bsOuter = new BindingSource();
+                daOuter.Fill(dtOuter);
+            }
+            else
+            {
+                daOutersql = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令='" + name + "';", Parameter.conn);
+                cbOutersql = new SqlCommandBuilder(daOutersql);
+                dtOuter = new DataTable(tablename1);
+                bsOuter = new BindingSource();
+                daOutersql.Fill(dtOuter);
+            }
+            
         }
 
         private DataRow writeOuterDefault(DataRow dr)
@@ -564,8 +746,16 @@ namespace mySystem.Process.CleanCut
         private void getProductCode()
         {
             DataTable DtproductCode = new DataTable("设置清洁分切产品");
-            OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM 设置清洁分切产品", conOle);
-            da.Fill(DtproductCode);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("SELECT * FROM 设置清洁分切产品", conOle);
+                da.Fill(DtproductCode);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter("SELECT * FROM 设置清洁分切产品", Parameter.conn);
+                da.Fill(DtproductCode);
+            }
             productCode = new List<string>();
             foreach (DataRow dr in DtproductCode.Rows)
             {
@@ -632,11 +822,23 @@ namespace mySystem.Process.CleanCut
 
         private void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE T清洁分切日报表ID=" + id, conOle);
-            cbInner = new OleDbCommandBuilder(daInner);
-            dtInner = new DataTable(tablename2);
-            bsInner = new BindingSource();
-            daInner.Fill(dtInner);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE T清洁分切日报表ID=" + id, conOle);
+                cbInner = new OleDbCommandBuilder(daInner);
+                dtInner = new DataTable(tablename2);
+                bsInner = new BindingSource();
+                daInner.Fill(dtInner);
+            }
+            else
+            {
+                daInnersql = new SqlDataAdapter("SELECT * FROM " + tablename2 + " WHERE T清洁分切日报表ID=" + id, Parameter.conn);
+                cbInnersql = new SqlCommandBuilder(daInnersql);
+                dtInner = new DataTable(tablename2);
+                bsInner = new BindingSource();
+                daInnersql.Fill(dtInner);
+            }
+           
         }
 
         private void innerBind()
@@ -665,12 +867,28 @@ namespace mySystem.Process.CleanCut
             }
 
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            daInner.Update((DataTable)bsInner.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner.Update((DataTable)bsInner.DataSource);
+            }
+            else
+            {
+                daInnersql.Update((DataTable)bsInner.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
 
             bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter.Update((DataTable)bsOuter.DataSource);
+            }
+            else
+            {
+                daOutersql.Update((DataTable)bsOuter.DataSource);
+            }
+            
             //readOuterData(lbl生产指令.Text);
             removeOuterBind();
             outerBind();
@@ -816,12 +1034,27 @@ namespace mySystem.Process.CleanCut
         private void bt保存_Click(object sender, EventArgs e)
         {
             bsOuter.EndEdit();
-            daOuter.Update((DataTable)bsOuter.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter.Update((DataTable)bsOuter.DataSource);
+            }
+            else
+            {
+                daOutersql.Update((DataTable)bsOuter.DataSource);
+            }
             readOuterData(__生产指令ID, cmb物料种类.SelectedItem.ToString());
             outerBind();
 
             //内表保存
-            daInner.Update((DataTable)bsInner.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner.Update((DataTable)bsInner.DataSource);
+            }
+            else
+            {
+                daInnersql.Update((DataTable)bsInner.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
         }
@@ -1023,31 +1256,62 @@ namespace mySystem.Process.CleanCut
 
         void query(DateTime start,DateTime end, String matcode)
         {
-            OleDbDataAdapter da;
             DataTable tmp;
-            string sql;
-            // 拿到这个日期下的所有ID
-            sql = "select * from 清洁分切生产记录 where 生产日期 between #{0}# and #{1}#";
-            da = new OleDbDataAdapter(string.Format(sql, start.Date,end.Date), mySystem.Parameter.connOle);
-            tmp = new DataTable();
-            da.Fill(tmp);
-            List<int> ids = new List<int>();
             Hashtable ht生产指令 = new Hashtable();
-            foreach (DataRow dr in tmp.Rows)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                ids.Add(Convert.ToInt32(dr["ID"]));
-                ht生产指令.Add(Convert.ToInt32(dr["ID"]),dr["生产指令编号"].ToString());
+                OleDbDataAdapter da;
+                string sql;
+                // 拿到这个日期下的所有ID
+                sql = "select * from 清洁分切生产记录 where 生产日期 between #{0}# and #{1}#";
+                da = new OleDbDataAdapter(string.Format(sql, start.Date, end.Date), mySystem.Parameter.connOle);
+                tmp = new DataTable();
+                da.Fill(tmp);
+                List<int> ids = new List<int>();
+                
+                foreach (DataRow dr in tmp.Rows)
+                {
+                    ids.Add(Convert.ToInt32(dr["ID"]));
+                    ht生产指令.Add(Convert.ToInt32(dr["ID"]), dr["生产指令编号"].ToString());
+                }
+
+                // 从这些ID中读取符合条件的记录
+                //ret = new DataTable("日报表");
+                tmp = new DataTable();
+                foreach (int id in ids)
+                {
+                    sql = "select * from 清洁分切生产记录详细信息 where T清洁分切生产记录ID={0} and 物料代码 like '%{1}%'";
+                    da = new OleDbDataAdapter(string.Format(sql, id, matcode), mySystem.Parameter.connOle);
+                    da.Fill(tmp);
+                }
+            }
+            else
+            {
+                SqlDataAdapter da;
+                string sql;
+                // 拿到这个日期下的所有ID
+                sql = "select * from 清洁分切生产记录 where 生产日期 between '{0}' and '{1}'";
+                da = new SqlDataAdapter(string.Format(sql, start.Date, end.Date), mySystem.Parameter.conn);
+                tmp = new DataTable();
+                da.Fill(tmp);
+                List<int> ids = new List<int>();
+                foreach (DataRow dr in tmp.Rows)
+                {
+                    ids.Add(Convert.ToInt32(dr["ID"]));
+                    ht生产指令.Add(Convert.ToInt32(dr["ID"]), dr["生产指令编号"].ToString());
+                }
+
+                // 从这些ID中读取符合条件的记录
+                //ret = new DataTable("日报表");
+                tmp = new DataTable();
+                foreach (int id in ids)
+                {
+                    sql = "select * from 清洁分切生产记录详细信息 where T清洁分切生产记录ID={0} and 物料代码 like '%{1}%'";
+                    da = new SqlDataAdapter(string.Format(sql, id, matcode), mySystem.Parameter.conn);
+                    da.Fill(tmp);
+                }
             }
             
-            // 从这些ID中读取符合条件的记录
-            //ret = new DataTable("日报表");
-            tmp = new DataTable();
-            foreach (int id in ids)
-            {
-                sql = "select * from 清洁分切生产记录详细信息 where T清洁分切生产记录ID={0} and 物料代码 like '%{1}%'";
-                da = new OleDbDataAdapter(string.Format(sql, id, matcode), mySystem.Parameter.connOle);
-                da.Fill(tmp);
-            }
             int xuhao = 1;
             //string sql = "select * from 清洁分切生产记录详细信息 where ";
             //OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, id, cmb物料种类.SelectedItem.ToString()), mySystem.Parameter.connOle);

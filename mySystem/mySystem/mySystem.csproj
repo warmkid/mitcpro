@@ -1666,6 +1666,9 @@
     <EmbeddedResource Include="Process\CleanCut\清洁分切标签.resx">
       <DependentUpon>清洁分切标签.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Process\CleanCut\清洁分切生产领料申请单.resx">
+      <DependentUpon>清洁分切生产领料申请单.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Process\Extruction\A\HandOver.resx">
       <DependentUpon>HandOver.cs</DependentUpon>
     </EmbeddedResource>
