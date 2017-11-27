@@ -619,7 +619,7 @@ namespace mySystem.Process.Extruction.C
                 }
                 else
                 {
-                    SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conn);
+                    SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", mySystem.Parameter.conn);
                     BindingSource bsCheck = new BindingSource();
                     SqlCommandBuilder cbCheck = new SqlCommandBuilder(daCheck);
                     daCheck.Fill(dtCheck);
