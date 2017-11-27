@@ -80,7 +80,15 @@ namespace mySystem.Setting
             List<String> queryCols = new List<String>(new String[] { "密码" });
             List<String> whereCols = new List<String>(new String[] { "用户ID" });
             List<Object> whereVals = new List<Object>(new Object[] { userid });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOleUser, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res;
+            if (mySystem.Parameter.isSqlOk)
+            {
+                res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
+            else
+            {
+                res = Utility.selectAccess(Parameter.connOleUser, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
             userpw = res[0][0].ToString(); //用户原始密码
             if(pw == userpw)
             {

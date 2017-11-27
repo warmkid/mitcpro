@@ -27,7 +27,7 @@ namespace mySystem
 
         public MainForm()
         {
-
+            readSQLConfig();
             Parameter.InitConnUser(); //初始化连接到有用户表的数据库
             //Parameter.ConnUserInit();
             LoginForm login = new LoginForm(this);
@@ -50,6 +50,7 @@ namespace mySystem
             //
             string file = System.Windows.Forms.Application.ExecutablePath;
             Configuration config = ConfigurationManager.OpenExeConfiguration(file);
+            
 
             ConfigurationManager.RefreshSection("appSettings");
             string name;
@@ -72,6 +73,48 @@ namespace mySystem
                 this.Close();
             }
 
+        }
+
+        void readSQLConfig()
+        {
+            string file = System.Windows.Forms.Application.ExecutablePath;
+            Configuration config = ConfigurationManager.OpenExeConfiguration(file);
+
+            ConfigurationManager.RefreshSection("appSettings");
+            string ip, port, user, password, isSQL;
+            try
+            {
+                ip = config.AppSettings.Settings["ip"].Value;
+                port = config.AppSettings.Settings["port"].Value;
+                user = config.AppSettings.Settings["user"].Value;
+                password = config.AppSettings.Settings["password"].Value;
+                isSQL = config.AppSettings.Settings["isSQL"].Value;
+                Parameter.IP_port = ip + "," + port;
+                Parameter.sql_user = user;
+                Parameter.sql_pwd = password;
+                Parameter.isSqlOk = (isSQL == "no" ? false : true);
+
+            }
+            catch (Exception ee)
+            {
+                
+                ip = "127.0.0.1";
+                port = "3306";
+                user = "sa";
+                password = "";
+                isSQL = "no";
+                Parameter.IP_port = ip + "," + port;
+                Parameter.sql_user = user;
+                Parameter.sql_pwd = password;
+                Parameter.isSqlOk = (isSQL == "no" ? false : true);
+                config.AppSettings.Settings.Add("ip", ip);
+                config.AppSettings.Settings.Add("port", port);
+                config.AppSettings.Settings.Add("user", user);
+                config.AppSettings.Settings.Add("password", password);
+                config.AppSettings.Settings.Add("isSQL", isSQL);
+                config.Save(ConfigurationSaveMode.Modified);
+                ConfigurationManager.RefreshSection("appSettings");
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -113,17 +156,17 @@ namespace mySystem
             else
             {
                 //********************改为sql数据库*********************************
-                String strCon吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strCon吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid="+Parameter.sql_user+";Pwd="+Parameter.sql_pwd;
                 list吹膜 = EachSearchUnchecked(strCon吹膜);
-                String strCon清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strCon清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 list清洁分切 = EachSearchUnchecked(strCon清洁分切);
-                String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 listCS制袋 = EachSearchUnchecked(strConCS制袋);
-                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 listPE制袋 = EachSearchUnchecked(strConPE制袋);
-                String strConBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 listBPV制袋 = EachSearchUnchecked(strConBPV制袋);
-                String strConPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 listPTV制袋 = EachSearchUnchecked(strConPTV制袋);
             }
 
@@ -474,7 +517,7 @@ namespace mySystem
                 {
                     ls.Add(my.Cells[i, 2].Value);
                 }
-                string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection conn;
                 conn = new SqlConnection(strConnect);
                 conn.Open();
@@ -561,7 +604,7 @@ namespace mySystem
             }
             else
             {
-                string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection conn;
                 conn = new SqlConnection(strConnect);
                 conn.Open();

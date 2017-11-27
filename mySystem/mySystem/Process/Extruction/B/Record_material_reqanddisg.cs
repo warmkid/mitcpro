@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -21,6 +22,9 @@ namespace mySystem.Extruction.Process
         private BindingSource bs_prodinstr, bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
         CheckForm checkform;
+
+        private SqlDataAdapter da_prodinstrsql, da_prodlistsql;
+        private SqlCommandBuilder cb_prodinstrsql, cb_prodlistsql;
 
         private string person_操作员;
         private string person_审核员;
@@ -884,20 +888,44 @@ namespace mySystem.Extruction.Process
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(int instrid,string matcode)
         {
-            dt_prodinstr = new DataTable("吹膜工序领料退料记录");
-            bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where 生产指令ID=" + instrid+" and 物料代码='"+ matcode +"'", mySystem.Parameter.connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_prodinstr = new DataTable("吹膜工序领料退料记录");
+                bs_prodinstr = new BindingSource();
+                da_prodinstr = new OleDbDataAdapter("select * from 吹膜工序领料退料记录 where 生产指令ID=" + instrid + " and 物料代码='" + matcode + "'", mySystem.Parameter.connOle);
+                cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+                da_prodinstr.Fill(dt_prodinstr);
+            }
+            else
+            {
+                dt_prodinstr = new DataTable("吹膜工序领料退料记录");
+                bs_prodinstr = new BindingSource();
+                da_prodinstrsql = new SqlDataAdapter("select * from 吹膜工序领料退料记录 where 生产指令ID=" + instrid + " and 物料代码='" + matcode + "'", mySystem.Parameter.conn);
+                cb_prodinstrsql = new SqlCommandBuilder(da_prodinstrsql);
+                da_prodinstrsql.Fill(dt_prodinstr);
+            }
+           
         }
         // 根据条件从数据库中读取多行内表数据
         void readInnerData(int id)
         {
-            dt_prodlist = new DataTable("吹膜工序领料详细记录");
-            bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from 吹膜工序领料详细记录 where T吹膜工序领料退料记录ID=" + id, mySystem.Parameter.connOle);
-            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
-            da_prodlist.Fill(dt_prodlist);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_prodlist = new DataTable("吹膜工序领料详细记录");
+                bs_prodlist = new BindingSource();
+                da_prodlist = new OleDbDataAdapter("select * from 吹膜工序领料详细记录 where T吹膜工序领料退料记录ID=" + id, mySystem.Parameter.connOle);
+                cb_prodlist = new OleDbCommandBuilder(da_prodlist);
+                da_prodlist.Fill(dt_prodlist);
+            }
+            else
+            {
+                dt_prodlist = new DataTable("吹膜工序领料详细记录");
+                bs_prodlist = new BindingSource();
+                da_prodlistsql = new SqlDataAdapter("select * from 吹膜工序领料详细记录 where T吹膜工序领料退料记录ID=" + id, mySystem.Parameter.conn);
+                cb_prodlistsql = new SqlCommandBuilder(da_prodlistsql);
+                da_prodlistsql.Fill(dt_prodlist);
+            }
+           
         }
         // 移除外表和控件的绑定，建议使用Control.DataBinds.RemoveAt(0)
         void removeOuterBinding()

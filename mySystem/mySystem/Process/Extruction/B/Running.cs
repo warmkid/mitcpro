@@ -26,6 +26,10 @@ namespace mySystem.Process.Extruction.B
         OleDbDataAdapter daOuter;
         BindingSource bsOuter;
         OleDbCommandBuilder cbOuter;
+
+        SqlDataAdapter daOutersql;
+        SqlCommandBuilder cbOutersql;
+
         List<List<String>> array2 = new List<List<String>>();
         List<List<TextBox>> array1 = new List<List<TextBox>>();
         List<string> colname = new List<string>(new string[] { "产品代码", "产品批号", "生产日期", "记录时间", "记录员", "记录员备注", "审核员", "审核意见", "审核是否通过", "A层一区实际温度", "A层二区实际温度", "A层三区实际温度", "A层四区实际温度", "A层换网实际温度", "A层流道实际温度", "B层一区实际温度", "B层二区实际温度", "B层三区实际温度", "B层四区实际温度", "B层换网实际温度", "B层流道实际温度", "C层一区实际温度", "C层二区实际温度", "C层三区实际温度", "C层四区实际温度", "C层换网实际温度", "C层流道实际温度", "模头模颈实际温度", "模头一区实际温度", "模头二区实际温度", "模头口模实际温度", "模头线速度", "第一牵引设置频率", "第一牵引实际频率", "第一牵引电流", "第二牵引设置频率", "第二牵引实际频率", "第二牵引设定张力", "第二牵引实际张力", "第二牵引电流", "外表面电机设置频率", "外表面电机实际频率", "外表面电机设定张力", "外表面电机实际张力", "外表面电机电流", "外冷进风机设置频率", "外冷进风机实际频率", "外冷进风机电流", "A层下料口温度", "B层下料口温度", "C层下料口温度", "挤出机A层实际频率", "挤出机A层电流", "挤出机A层熔体温度", "挤出机A层前熔体", "挤出机A层后熔压", "挤出机A层螺杆转速", "挤出机B层实际频率", "挤出机B层电流", "挤出机B层熔体温度", "挤出机B层前熔体", "挤出机B层后熔压", "挤出机B层螺杆转速", "挤出机C层实际频率", "挤出机C层电流", "挤出机C层熔体温度", "挤出机C层前熔体", "挤出机C层后熔压", "挤出机C层螺杆转速" });
@@ -893,11 +897,23 @@ namespace mySystem.Process.Extruction.B
         }
         void readOuterData(int ID)
         {
-            dtOuter = new DataTable("吹膜机组运行记录");
-            daOuter = new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID =" +ID+";", conOle);
-            bsOuter = new BindingSource();
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            daOuter.Fill(dtOuter);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dtOuter = new DataTable("吹膜机组运行记录");
+                daOuter = new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID =" + ID + ";", conOle);
+                bsOuter = new BindingSource();
+                cbOuter = new OleDbCommandBuilder(daOuter);
+                daOuter.Fill(dtOuter);
+            }
+            else
+            {
+                dtOuter = new DataTable("吹膜机组运行记录");
+                daOutersql = new SqlDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID =" + ID + ";", mySystem.Parameter.conn);
+                bsOuter = new BindingSource();
+                cbOutersql = new SqlCommandBuilder(daOutersql);
+                daOutersql.Fill(dtOuter);
+            }
+            
         }
         DataRow writeOuterDefault(DataRow dr)
         {

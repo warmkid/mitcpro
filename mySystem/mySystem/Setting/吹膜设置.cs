@@ -564,7 +564,15 @@ namespace mySystem.Setting
                     "三区预热参数设定2", "四区预热参数设定2", "加热保温时间3" ,"温度公差"});
             List<String> whereCols = new List<String>(new String[] { "ID" });
             List<Object> whereVals = new List<Object>(new Object[] { 1 });
-            List<List<Object>> queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> queryValsList;
+            if (mySystem.Parameter.isSqlOk)
+            {
+                queryValsList = Utility.selectAccess(Parameter.conn, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
+            }
+            else
+            {
+                queryValsList = Utility.selectAccess(Parameter.connOle, tblName, readqueryCols, whereCols, whereVals, null, null, null, null, null);
+            }
 
             List<String> data = new List<String> { };
             for (int i = 0; i < queryValsList[0].Count; i++)
@@ -581,7 +589,15 @@ namespace mySystem.Setting
             List<String> readqueryCols2 = new List<String>(new String[] { "面", "密度", "系数1", "系数2" });
             List<String> whereCols2 = new List<String>(new String[] { "ID" });
             List<Object> whereVals2 = new List<Object>(new Object[] { 1 });
-            List<List<Object>> queryValsList2 = Utility.selectAccess(Parameter.connOle, tblName2, readqueryCols2, whereCols2, whereVals2, null, null, null, null, null);
+            List<List<Object>> queryValsList2;
+            if (mySystem.Parameter.isSqlOk)
+            {
+                queryValsList2 = Utility.selectAccess(Parameter.conn, tblName2, readqueryCols2, whereCols2, whereVals2, null, null, null, null, null);
+            }
+            else
+            {
+                queryValsList2 = Utility.selectAccess(Parameter.connOle, tblName2, readqueryCols2, whereCols2, whereVals2, null, null, null, null, null);
+            }
 
             List<String> data2 = new List<String> { };
             for (int i = 0; i < queryValsList2[0].Count; i++)

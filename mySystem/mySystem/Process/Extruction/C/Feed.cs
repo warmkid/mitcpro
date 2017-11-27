@@ -24,11 +24,17 @@ namespace mySystem.Process.Extruction.C
         BindingSource bsOuter;
         OleDbCommandBuilder cbOuter;
 
+        SqlDataAdapter daOutersql;
+        SqlCommandBuilder cbOutersql;
+
         string tablename2 = "吹膜供料系统运行记录详细信息";
         DataTable dtInner;
         OleDbDataAdapter daInner;
         BindingSource bsInner;
         OleDbCommandBuilder cbInner;
+
+        SqlDataAdapter daInnersql;
+        SqlCommandBuilder cbInnersql;
 
         List<string> flight = new List<string>(new string[] { "白班", "夜班" });
         List<string> ls操作员;// = new List<string>(new string[] { dtUser.Rows[0]["操作员"].ToString() });
@@ -153,29 +159,65 @@ namespace mySystem.Process.Extruction.C
 
         void readOuterData(string __生产指令编号, DateTime __生产日期, string __班次)
         {
-            daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' AND 生产日期=#" + __生产日期 + "# AND 班次='" + __班次 + "';", conOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable(tablename1);
-            bsOuter = new BindingSource();
-            daOuter.Fill(dtOuter);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' AND 生产日期=#" + __生产日期 + "# AND 班次='" + __班次 + "';", conOle);
+                cbOuter = new OleDbCommandBuilder(daOuter);
+                dtOuter = new DataTable(tablename1);
+                bsOuter = new BindingSource();
+                daOuter.Fill(dtOuter);
+            }
+            else
+            {
+                daOutersql = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' AND 生产日期=#" + __生产日期 + "# AND 班次='" + __班次 + "';", mySystem.Parameter.conn);
+                cbOutersql = new SqlCommandBuilder(daOutersql);
+                dtOuter = new DataTable(tablename1);
+                bsOuter = new BindingSource();
+                daOutersql.Fill(dtOuter);
+            }
+            
         }
 
         void readOuterData(string __生产指令编号)
         {
-            daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "'", conOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable(tablename1);
-            bsOuter = new BindingSource();
-            daOuter.Fill(dtOuter);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "'", conOle);
+                cbOuter = new OleDbCommandBuilder(daOuter);
+                dtOuter = new DataTable(tablename1);
+                bsOuter = new BindingSource();
+                daOuter.Fill(dtOuter);
+            }
+            else
+            {
+                daOutersql = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "'", mySystem.Parameter.conn);
+                cbOutersql = new SqlCommandBuilder(daOutersql);
+                dtOuter = new DataTable(tablename1);
+                bsOuter = new BindingSource();
+                daOutersql.Fill(dtOuter);
+            }
+            
         }
 
         void readOuterData(int Id)
         {
-            daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID="+Id+";", conOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            dtOuter = new DataTable(tablename1);
-            bsOuter = new BindingSource();
-            daOuter.Fill(dtOuter);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID=" + Id + ";", conOle);
+                cbOuter = new OleDbCommandBuilder(daOuter);
+                dtOuter = new DataTable(tablename1);
+                bsOuter = new BindingSource();
+                daOuter.Fill(dtOuter);
+            }
+            else
+            {
+                daOutersql = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID=" + Id + ";", mySystem.Parameter.conn);
+                cbOutersql = new SqlCommandBuilder(daOutersql);
+                dtOuter = new DataTable(tablename1);
+                bsOuter = new BindingSource();
+                daOutersql.Fill(dtOuter);
+            }
+            
         }
         private void setEnableReadOnly()
         {
@@ -349,11 +391,23 @@ namespace mySystem.Process.Extruction.C
 
         private void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE T吹膜供料系统运行记录ID=" + id, conOle);
-            cbInner = new OleDbCommandBuilder(daInner);
-            dtInner = new DataTable(tablename2);
-            bsInner = new BindingSource();
-            daInner.Fill(dtInner);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE T吹膜供料系统运行记录ID=" + id, conOle);
+                cbInner = new OleDbCommandBuilder(daInner);
+                dtInner = new DataTable(tablename2);
+                bsInner = new BindingSource();
+                daInner.Fill(dtInner);
+            }
+            else
+            {
+                daInnersql = new SqlDataAdapter("SELECT * FROM " + tablename2 + " WHERE T吹膜供料系统运行记录ID=" + id, mySystem.Parameter.conn);
+                cbInnersql = new SqlCommandBuilder(daInnersql);
+                dtInner = new DataTable(tablename2);
+                bsInner = new BindingSource();
+                daInnersql.Fill(dtInner);
+            }
+            
         }
         private void removeInnerData(int id)
         {

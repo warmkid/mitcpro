@@ -60,7 +60,15 @@ namespace mySystem.Process.Bag.PTV
                 List<String> queryCols = new List<String>(new String[] { "ID" });
                 List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
                 List<Object> whereVals = new List<Object>(new Object[] { instruction });
-                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                List<List<Object>> res;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
+                else
+                {
+                    res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
                 Parameter.ptvbagInstruID = Convert.ToInt32(res[0][0]);
             }
         }
@@ -73,7 +81,15 @@ namespace mySystem.Process.Bag.PTV
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res;
+            if (mySystem.Parameter.isSqlOk)
+            {
+                res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
+            else
+            {
+                res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.ptvbagInstruID = instruID;
             InitBtn();

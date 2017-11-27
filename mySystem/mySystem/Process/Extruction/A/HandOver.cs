@@ -117,10 +117,10 @@ namespace mySystem.Process.Extruction.A
             填写交班员();
 
             //update Outer
-            if (!mySystem.Parameter.isSqlOk)
-                daOuter.Update((DataTable)bsOuter.DataSource);
-            else
-                daOuter_sql.Update((DataTable)bsOuter.DataSource);
+            //if (!mySystem.Parameter.isSqlOk)
+            //    daOuter.Update((DataTable)bsOuter.DataSource);
+            //else
+            //    daOuter_sql.Update((DataTable)bsOuter.DataSource);
             readOuterData(__生产指令编号, __生产日期);
             removeOuterBind();
             outerBind();

@@ -60,7 +60,15 @@ namespace mySystem.Process.灭菌
                 List<String> queryCols = new List<String>(new String[] { "ID" });
                 List<String> whereCols = new List<String>(new String[] { "委托单号" });
                 List<Object> whereVals = new List<Object>(new Object[] { instruction });
-                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                List<List<Object>> res;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
+                else
+                {
+                    res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
                 Parameter.miejunInstruID = Convert.ToInt32(res[0][0]);
             }
         }
@@ -73,7 +81,15 @@ namespace mySystem.Process.灭菌
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "委托单号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res;
+            if (mySystem.Parameter.isSqlOk)
+            {
+                res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
+            else
+            {
+                res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.miejunInstruID = instruID;
         }

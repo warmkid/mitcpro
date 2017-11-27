@@ -36,6 +36,8 @@ namespace mySystem.Extruction.Process
         DataTable dtOuter;
         OleDbDataAdapter daOuter;
         OleDbCommandBuilder cbOuter;
+        SqlDataAdapter daOutersql;
+        SqlCommandBuilder cbOutersql;
         OleDbConnection connOle;
         DateTime 生产日期;
         private CheckForm check = null;
@@ -411,12 +413,25 @@ namespace mySystem.Extruction.Process
 
          private void readOuterBind(int searchId)
          {
-             string tablename1 = "吹膜工序物料平衡记录";
-             bsOuter = new BindingSource();
-             dtOuter = new DataTable(tablename1);
-             daOuter = new OleDbDataAdapter("select * from " + tablename1 + " where ID =" +searchId + ";", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
-             cbOuter = new OleDbCommandBuilder(daOuter);
-             daOuter.Fill(dtOuter);
+             if (!mySystem.Parameter.isSqlOk)
+             {
+                 string tablename1 = "吹膜工序物料平衡记录";
+                 bsOuter = new BindingSource();
+                 dtOuter = new DataTable(tablename1);
+                 daOuter = new OleDbDataAdapter("select * from " + tablename1 + " where ID =" + searchId + ";", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
+                 cbOuter = new OleDbCommandBuilder(daOuter);
+                 daOuter.Fill(dtOuter);
+             }
+             else
+             {
+                 string tablename1 = "吹膜工序物料平衡记录";
+                 bsOuter = new BindingSource();
+                 dtOuter = new DataTable(tablename1);
+                 daOutersql = new SqlDataAdapter("select * from " + tablename1 + " where ID =" + searchId + ";", mySystem.Parameter.conn);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
+                 cbOutersql = new SqlCommandBuilder(daOutersql);
+                 daOutersql.Fill(dtOuter);
+             }
+             
          }
          private void outerBind()
          {

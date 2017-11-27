@@ -36,6 +36,8 @@ namespace mySystem
         public static string userflight; //登录人班次
 
         public static string IP_port="10.105.223.19,56625";//sql服务器IP和端口
+        public static string sql_user = "";
+        public static string sql_pwd = "";
         public static SqlConnection conn;
         public static OleDbConnection connOle;
         public static SqlConnection connUser;
@@ -98,7 +100,7 @@ namespace mySystem
             }
             else
             {
-                strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection myConn = new SqlConnection(strCon);
                 myConn.Open();
                 SqlCommand comm = new SqlCommand();
@@ -153,7 +155,7 @@ namespace mySystem
             }
             else
             {
-                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection myConn = new SqlConnection(strCon);
                 myConn.Open();
                 String tblName = "users";
@@ -202,7 +204,7 @@ namespace mySystem
             }
             else
             {
-                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection myConn = new SqlConnection(strCon);
                 myConn.Open();
                 String tblName = "users";
@@ -237,7 +239,7 @@ namespace mySystem
             }
             else
             {
-                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection myConn = new SqlConnection(strCon);
                 myConn.Open();
                 String tblName = "users";
@@ -275,7 +277,7 @@ namespace mySystem
             else  //sql
             {
                 //要改数据库！！！
-                strConn = @"server="+mySystem.Parameter.IP_port+";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                strConn = @"server=" + mySystem.Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 isOk = false;
                 ConnUser = connToServer(strConn);
                 while (!isOk)
@@ -367,7 +369,7 @@ namespace mySystem
             {
                 //connUser = Init(connUser);
 
-                strConn = "server="+IP_port+";database=user;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 isOk = false;
                 connUser = connToServer(strConn);
                 while (!isOk)
@@ -439,35 +441,35 @@ namespace mySystem
                 switch (selectCon)
                 {
                     case 1:  //吹膜
-                        strConn = "server=" + IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        strConn = "server=" + IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                         conn = Init(strConn);
                         break;
                     case 2:  //清洁分切
-                        strConn = "server=" + IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        strConn = "server=" + IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                         conn = Init(strConn);
                         break;
                     case 3:  //CS制袋
-                        strConn = "server=" + IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        strConn = "server=" + IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                         conn = Init(strConn);
                         break;
                     case 4: //订单、库存
-                        strConn = "server=" + IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        strConn = "server=" + IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                         conn = Init(strConn);
                         break;
                     case 5: //灭菌
-                        strConn = "server=" + IP_port + ";database=miejun;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        strConn = "server=" + IP_port + ";database=miejun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                         conn = Init(strConn);
                         break;
                     case 6: //BPV制袋
-                        strConn = "server=" + IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        strConn = "server=" + IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                         conn = Init(strConn);
                         break;
                     case 7: //LDPE制袋
-                        strConn = "server=" + IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        strConn = "server=" + IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                         conn = Init(strConn);
                         break;
                     case 8: //PTV制袋
-                        strConn = "server=" + IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                        strConn = "server=" + IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                         conn = Init(strConn);
                         break;
                 }

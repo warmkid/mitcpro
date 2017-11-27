@@ -30,6 +30,9 @@ namespace mySystem.Extruction.Process
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
 
+        private SqlDataAdapter da记录sql, da记录详情sql;
+        private SqlCommandBuilder cb记录sql, cb记录详情sql;
+
         #region
         //private string person_操作员;
         //private string person_审核员;
@@ -422,11 +425,23 @@ namespace mySystem.Extruction.Process
         //外表读数据，填datatable
         private void readOuterData(Int32 InstruID, String productCode, DateTime searchTime)
         {
-            bs记录 = new BindingSource();
-            dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + productCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
-            da记录.Fill(dt记录);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + productCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
+            else
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                da记录sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + productCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", mySystem.Parameter.conn);
+                cb记录sql = new SqlCommandBuilder(da记录sql);
+                da记录sql.Fill(dt记录);
+            }
+           
         }
 
         //外表控件绑定
@@ -522,11 +537,23 @@ namespace mySystem.Extruction.Process
         //内表读数据，填datatable
         private void readInnerData(Int32 ID)
         {
-            bs记录详情 = new BindingSource();
-            dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString(), connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
-            da记录详情.Fill(dt记录详情);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString(), connOle);
+                cb记录详情 = new OleDbCommandBuilder(da记录详情);
+                da记录详情.Fill(dt记录详情);
+            }
+            else
+            {
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情sql = new SqlDataAdapter("select * from " + tableInfo + " where T产品内包装记录ID = " + ID.ToString(), mySystem.Parameter.conn);
+                cb记录详情sql = new SqlCommandBuilder(da记录详情sql);
+                da记录详情sql.Fill(dt记录详情);
+            }
+            
         }
         
         //内表控件绑定

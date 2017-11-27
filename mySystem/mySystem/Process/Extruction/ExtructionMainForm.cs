@@ -75,7 +75,15 @@ namespace mySystem
                 List<String> queryCols3 = new List<String>(new String[] { "审核人" });
                 List<String> whereCols3 = new List<String>(new String[] { "生产指令id" });
                 List<Object> whereVals3 = new List<Object>(new Object[] { Parameter.proInstruID });
-                List<List<Object>> res3 = Utility.selectAccess(Parameter.connOle, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
+                List<List<Object>> res3;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res3 = Utility.selectAccess(Parameter.conn, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
+                }
+                else
+                {
+                    res3 = Utility.selectAccess(Parameter.connOle, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
+                }
                 if (res3.Count != 0)
                 {
                     preheat = true;
@@ -461,7 +469,17 @@ namespace mySystem
                 List<String> queryCols = new List<String>(new String[] { "ID" });
                 List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
                 List<Object> whereVals = new List<Object>(new Object[] { instruction });
-                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                List<List<Object>> res;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res = Utility.selectAccess(Parameter.conn, tblName
+                    , queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
+                else
+                {
+                    res = Utility.selectAccess(Parameter.connOle, tblName
+                    , queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
                 Parameter.proInstruID = Convert.ToInt32(res[0][0]);
             }
         }
@@ -476,7 +494,15 @@ namespace mySystem
                 List<String> queryCols = new List<String>(new String[] { "ID" });
                 List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
                 List<Object> whereVals = new List<Object>(new Object[] { instruction });
-                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                List<List<Object>> res;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
+                else
+                {
+                    res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
                 instruID = Convert.ToInt32(res[0][0]);
                 //instruID = Convert.ToInt32(res[res.Count-1][0]);
                 Parameter.proInstruID = instruID;

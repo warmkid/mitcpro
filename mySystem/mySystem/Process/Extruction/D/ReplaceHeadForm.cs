@@ -28,6 +28,9 @@ namespace mySystem
         private OleDbCommandBuilder cb记录, cb记录详情;
         private Int32 KeyID;
 
+        private SqlDataAdapter da记录sql, da记录详情sql;
+        private SqlCommandBuilder cb记录sql, cb记录详情sql;
+
         public ReplaceHeadForm(MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -170,14 +173,29 @@ namespace mySystem
         //isNew==true：新建一行  isNew==false：依据主键选择行
         private void readOuterData(Int32 ID, Boolean isNew)
         {
-            bs记录 = new BindingSource();
-            dt记录 = new DataTable(table);
-            if (isNew)
-            { da记录 = new OleDbDataAdapter("select * from " + table + " where  0 = 1 ", connOle); }
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                if (isNew)
+                { da记录 = new OleDbDataAdapter("select * from " + table + " where  0 = 1 ", connOle); }
+                else
+                { da记录 = new OleDbDataAdapter("select * from " + table + " where  ID = " + ID.ToString(), connOle); }
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
             else
-            { da记录 = new OleDbDataAdapter("select * from " + table + " where  ID = " + ID.ToString(), connOle); }
-            cb记录 = new OleDbCommandBuilder(da记录);
-            da记录.Fill(dt记录);
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                if (isNew)
+                { da记录sql = new SqlDataAdapter("select * from " + table + " where  0 = 1 ", mySystem.Parameter.conn); }
+                else
+                { da记录sql = new SqlDataAdapter("select * from " + table + " where  ID = " + ID.ToString(), mySystem.Parameter.conn); }
+                cb记录sql = new SqlCommandBuilder(da记录sql);
+                da记录sql.Fill(dt记录);
+            }
+            
         }
 
         //外表控件绑定
@@ -219,12 +237,25 @@ namespace mySystem
         //内表读数据，填datatable
         private void readInnerData(Int32 ID)
         {
-            //读取记录表里的记录
-            bs记录详情 = new BindingSource();
-            dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where 换模头ID = " + ID.ToString(), connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
-            da记录详情.Fill(dt记录详情);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                //读取记录表里的记录
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where 换模头ID = " + ID.ToString(), connOle);
+                cb记录详情 = new OleDbCommandBuilder(da记录详情);
+                da记录详情.Fill(dt记录详情);
+            }
+            else
+            {
+                //读取记录表里的记录
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情sql = new SqlDataAdapter("select * from " + tableInfo + " where 换模头ID = " + ID.ToString(), mySystem.Parameter.conn);
+                cb记录详情sql = new SqlCommandBuilder(da记录详情sql);
+                da记录详情sql.Fill(dt记录详情);
+            }
+            
         }
 
         //内表控件绑定

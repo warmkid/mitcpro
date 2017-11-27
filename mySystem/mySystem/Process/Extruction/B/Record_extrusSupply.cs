@@ -31,6 +31,9 @@ namespace WindowsFormsApplication1
         private Dictionary<string, string> dict_inoutmatcode_batch;
         private Dictionary<string, string> dict_midmatcode_batch;
 
+        private SqlDataAdapter da_prodinstrsql, da_prodlistsql;
+        private SqlCommandBuilder cb_prodinstrsql, cb_prodlistsql;
+
         private string person_操作员;
         private string person_审核员;
         private List<string> list_操作员;
@@ -574,28 +577,64 @@ namespace WindowsFormsApplication1
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(int instrid, string prodcode,DateTime time,bool flight)
         {
-            dt_prodinstr = new DataTable("吹膜供料记录");
-            bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 吹膜供料记录 where 生产指令ID=" + instrid + " and 产品代码='" + prodcode + "' and 供料日期=#"+time+"# and 班次="+flight, mySystem.Parameter.connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_prodinstr = new DataTable("吹膜供料记录");
+                bs_prodinstr = new BindingSource();
+                da_prodinstr = new OleDbDataAdapter("select * from 吹膜供料记录 where 生产指令ID=" + instrid + " and 产品代码='" + prodcode + "' and 供料日期=#" + time + "# and 班次=" + flight, mySystem.Parameter.connOle);
+                cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+                da_prodinstr.Fill(dt_prodinstr);
+            }
+            else
+            {
+                dt_prodinstr = new DataTable("吹膜供料记录");
+                bs_prodinstr = new BindingSource();
+                da_prodinstrsql = new SqlDataAdapter("select * from 吹膜供料记录 where 生产指令ID=" + instrid + " and 产品代码='" + prodcode + "' and 供料日期=#" + time + "# and 班次=" + flight, mySystem.Parameter.conn);
+                cb_prodinstrsql = new SqlCommandBuilder(da_prodinstrsql);
+                da_prodinstrsql.Fill(dt_prodinstr);
+            }
+           
         }
         void readOuterData(int instrid)
         {
-            dt_prodinstr = new DataTable("吹膜供料记录");
-            bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter("select * from 吹膜供料记录 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_prodinstr = new DataTable("吹膜供料记录");
+                bs_prodinstr = new BindingSource();
+                da_prodinstr = new OleDbDataAdapter("select * from 吹膜供料记录 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+                cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+                da_prodinstr.Fill(dt_prodinstr);
+            }
+            else
+            {
+                dt_prodinstr = new DataTable("吹膜供料记录");
+                bs_prodinstr = new BindingSource();
+                da_prodinstrsql = new SqlDataAdapter("select * from 吹膜供料记录 where 生产指令ID=" + instrid, mySystem.Parameter.conn);
+                cb_prodinstrsql = new SqlCommandBuilder(da_prodinstrsql);
+                da_prodinstrsql.Fill(dt_prodinstr);
+            }
+            
         }
         // 根据条件从数据库中读取多行内表数据
         void readInnerData(int id)
         {
-            dt_prodlist = new DataTable("吹膜供料记录详细信息");
-            bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from 吹膜供料记录详细信息 where T吹膜供料记录ID=" + id, mySystem.Parameter.connOle);
-            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
-            da_prodlist.Fill(dt_prodlist);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_prodlist = new DataTable("吹膜供料记录详细信息");
+                bs_prodlist = new BindingSource();
+                da_prodlist = new OleDbDataAdapter("select * from 吹膜供料记录详细信息 where T吹膜供料记录ID=" + id, mySystem.Parameter.connOle);
+                cb_prodlist = new OleDbCommandBuilder(da_prodlist);
+                da_prodlist.Fill(dt_prodlist);
+            }
+            else
+            {
+                dt_prodlist = new DataTable("吹膜供料记录详细信息");
+                bs_prodlist = new BindingSource();
+                da_prodlistsql = new SqlDataAdapter("select * from 吹膜供料记录详细信息 where T吹膜供料记录ID=" + id, mySystem.Parameter.conn);
+                cb_prodlistsql = new SqlCommandBuilder(da_prodlistsql);
+                da_prodlistsql.Fill(dt_prodlist);
+            }
+            
         }
         // 移除外表和控件的绑定，建议使用Control.DataBinds.RemoveAt(0)
         void removeOuterBinding()

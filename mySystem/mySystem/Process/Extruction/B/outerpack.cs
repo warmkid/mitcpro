@@ -27,8 +27,10 @@ namespace mySystem.Extruction.Chart
 
         private DataTable dt记录, dt记录详情, dt代码批号;
         private OleDbDataAdapter da记录, da记录详情;
+        private SqlDataAdapter da记录sql, da记录详情sql;
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
+        private SqlCommandBuilder cb记录sql, cb记录详情sql;
 
         #region
         //private string person_操作员;
@@ -478,11 +480,23 @@ namespace mySystem.Extruction.Chart
         //内表读数据，填datatable
         private void readInnerData(Int32 ID)
         {
-            bs记录详情 = new BindingSource();
-            dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品外包装记录ID = " + ID.ToString(), connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
-            da记录详情.Fill(dt记录详情);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T产品外包装记录ID = " + ID.ToString(), connOle);
+                cb记录详情 = new OleDbCommandBuilder(da记录详情);
+                da记录详情.Fill(dt记录详情);
+            }
+            else
+            {
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情sql = new SqlDataAdapter("select * from " + tableInfo + " where T产品外包装记录ID = " + ID.ToString(), mySystem.Parameter.conn);
+                cb记录详情sql = new SqlCommandBuilder(da记录详情sql);
+                da记录详情sql.Fill(dt记录详情);
+            }
+            
         }
         
         //内表控件绑定
