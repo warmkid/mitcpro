@@ -1155,7 +1155,15 @@ namespace mySystem.Other
                     //    da记录.Update(dt记录);
                     //}
                     dt记录.Rows[0].Delete();
-                    da记录.Update(dt记录);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        da记录.Update(dt记录);
+                    }
+                    else
+                    {
+                        da记录sql.Update(dt记录);
+                    }
+                    
                 }
             }
         }

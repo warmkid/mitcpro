@@ -290,41 +290,64 @@ namespace BatchProductRecord
             }
             label = 1;
             ht代码面数 = new Hashtable();
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection conn;
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
-
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            //if (!mySystem.Parameter.isSqlOk)
-            //{
-            //    OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);                
-            //    da.Fill(dt);
-            //}
-            //else
-            //{
-            //    SqlDataAdapter da = new SqlDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.conn);
-            //    da.Fill(dt);
-            //}
-
-            foreach (DataRow dr in dt.Rows)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                string code = dr["存货代码"].ToString();
-                int mian = 0;
-                if (code.Split('-')[1].StartsWith("S"))
+                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                OleDbConnection conn;
+                conn = new OleDbConnection(strConnect);
+                conn.Open();
+                OleDbDataAdapter da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+
+
+                foreach (DataRow dr in dt.Rows)
                 {
-                    mian = 1;
+                    string code = dr["存货代码"].ToString();
+                    int mian = 0;
+                    if (code.Split('-')[1].StartsWith("S"))
+                    {
+                        mian = 1;
+                    }
+                    else
+                    {
+                        mian = 2;
+                    }
+                    ht代码面数.Add(code, mian);
                 }
-                else
-                {
-                    mian = 2;
-                }
-                ht代码面数.Add(code, mian);
             }
+            else
+            {
+                string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + mySystem.Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection conn;
+                conn = new SqlConnection(strConnect);
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string code = dr["存货代码"].ToString();
+                    int mian = 0;
+                    if (code.Split('-')[1].StartsWith("S"))
+                    {
+                        mian = 1;
+                    }
+                    else
+                    {
+                        mian = 2;
+                    }
+                    ht代码面数.Add(code, mian);
+                }
+            }
+            
         }
 
 
@@ -1713,10 +1736,13 @@ namespace BatchProductRecord
                 dt_prodinstr.Rows[0]["比例"] = a;
 
                 bs_prodinstr.EndEdit();
-                if(!mySystem.Parameter.isSqlOk)
+                if (!mySystem.Parameter.isSqlOk)
                     da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                 else
+                {
+                    ((DataTable)bs_prodinstr.DataSource).Rows[0]["审核是否通过"] = 0;
                     da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
+                }
             }
 
         }

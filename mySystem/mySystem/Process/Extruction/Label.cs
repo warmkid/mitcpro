@@ -116,47 +116,95 @@ namespace mySystem.Process.Extruction
             
             // 判断，如果数据库有存过一张标签，则不管，否则保存一张标签
             string sql = "select * from 标签 where 生产指令='{0}'";
-            OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, _s), mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
             System.Data.DataTable dt = new System.Data.DataTable();
-            da.Fill(dt);
-            if (dt.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt.NewRow();
-                dr["生产指令ID"] = mySystem.Parameter.proInstruID;
-                dr["生产指令"] = _s;
-                dr["标签类型"] = c标签模板.SelectedIndex;
-                dr["膜代码"] = cmb膜代码.SelectedItem;
-                dr["批号中文"] = tc批号.Text;
-                dr["数量米"] = tc数量米.Text;
-                dr["数量千克"] = tc数量KG.Text;
-                dr["日期中文"] = dc日期.Value;
-                dr["班次中文"] = (cc班次.SelectedItem.ToString() == "白班" ? "白班" : "夜班");
-                dr["产品名称中文"] = tc产品名称.Text;
-                dr["产品编码中文"] = tc产品编码.Text;
-                dr["产品规格中文"] = tc产品规格.Text;
-                dr["产品批号中文"] = tc产品批号.Text;
-                dr["生产日期中文"] = dc生产日期.Value;
-                dr["有效期至中文"] = dc有效期至.Value;
-                dr["数量中文"] = tc数量.Text;
-                dr["包装序号中文"] = tc包装序号.Text;
-                dr["注册证号中文"] = tc注册证号.Text;
-                dr["毛重中文"] = tc毛重.Text;
-                dr["箱体规格中文"] = tc箱体规格.Text;
-                dr["Name_E"] = teName.Text;
-                dr["Code_E"] = teCode.Text;
-                dr["Size_E"] = teSize.Text;
-                dr["Batch_E"] = teBatch.Text;
-                dr["Mfg_E"] = deMfg.Value;
-                dr["Expiry_E"] = deExpiry.Value;
-                dr["Quantity_E"] = teQuantity.Text;
-                dr["Pack_E"] = tePack.Text;
-                dr["CFDA_E"] = teCFDA.Text;
-                dr["Gross_E"] = teGross.Text;
-                dr["Carton_E"] = teCarton.Text;
-                dt.Rows.Add(dr);
-                da.Update(dt);
+                OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, _s), mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                da.Fill(dt);
+                if (dt.Rows.Count == 0)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["生产指令ID"] = mySystem.Parameter.proInstruID;
+                    dr["生产指令"] = _s;
+                    dr["标签类型"] = c标签模板.SelectedIndex;
+                    dr["膜代码"] = cmb膜代码.SelectedItem;
+                    dr["批号中文"] = tc批号.Text;
+                    dr["数量米"] = tc数量米.Text;
+                    dr["数量千克"] = tc数量KG.Text;
+                    dr["日期中文"] = dc日期.Value;
+                    dr["班次中文"] = (cc班次.SelectedItem.ToString() == "白班" ? "白班" : "夜班");
+                    dr["产品名称中文"] = tc产品名称.Text;
+                    dr["产品编码中文"] = tc产品编码.Text;
+                    dr["产品规格中文"] = tc产品规格.Text;
+                    dr["产品批号中文"] = tc产品批号.Text;
+                    dr["生产日期中文"] = dc生产日期.Value;
+                    dr["有效期至中文"] = dc有效期至.Value;
+                    dr["数量中文"] = tc数量.Text;
+                    dr["包装序号中文"] = tc包装序号.Text;
+                    dr["注册证号中文"] = tc注册证号.Text;
+                    dr["毛重中文"] = tc毛重.Text;
+                    dr["箱体规格中文"] = tc箱体规格.Text;
+                    dr["Name_E"] = teName.Text;
+                    dr["Code_E"] = teCode.Text;
+                    dr["Size_E"] = teSize.Text;
+                    dr["Batch_E"] = teBatch.Text;
+                    dr["Mfg_E"] = deMfg.Value;
+                    dr["Expiry_E"] = deExpiry.Value;
+                    dr["Quantity_E"] = teQuantity.Text;
+                    dr["Pack_E"] = tePack.Text;
+                    dr["CFDA_E"] = teCFDA.Text;
+                    dr["Gross_E"] = teGross.Text;
+                    dr["Carton_E"] = teCarton.Text;
+                    dt.Rows.Add(dr);
+                    da.Update(dt);
+                }
             }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, _s), mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                da.Fill(dt);
+                if (dt.Rows.Count == 0)
+                {
+                    DataRow dr = dt.NewRow();
+                    dr["生产指令ID"] = mySystem.Parameter.proInstruID;
+                    dr["生产指令"] = _s;
+                    dr["标签类型"] = c标签模板.SelectedIndex;
+                    dr["膜代码"] = cmb膜代码.SelectedItem;
+                    dr["批号中文"] = tc批号.Text;
+                    dr["数量米"] = tc数量米.Text;
+                    dr["数量千克"] = tc数量KG.Text;
+                    dr["日期中文"] = dc日期.Value;
+                    dr["班次中文"] = (cc班次.SelectedItem.ToString() == "白班" ? "白班" : "夜班");
+                    dr["产品名称中文"] = tc产品名称.Text;
+                    dr["产品编码中文"] = tc产品编码.Text;
+                    dr["产品规格中文"] = tc产品规格.Text;
+                    dr["产品批号中文"] = tc产品批号.Text;
+                    dr["生产日期中文"] = dc生产日期.Value;
+                    dr["有效期至中文"] = dc有效期至.Value;
+                    dr["数量中文"] = tc数量.Text;
+                    dr["包装序号中文"] = tc包装序号.Text;
+                    dr["注册证号中文"] = tc注册证号.Text;
+                    dr["毛重中文"] = tc毛重.Text;
+                    dr["箱体规格中文"] = tc箱体规格.Text;
+                    dr["Name_E"] = teName.Text;
+                    dr["Code_E"] = teCode.Text;
+                    dr["Size_E"] = teSize.Text;
+                    dr["Batch_E"] = teBatch.Text;
+                    dr["Mfg_E"] = deMfg.Value;
+                    dr["Expiry_E"] = deExpiry.Value;
+                    dr["Quantity_E"] = teQuantity.Text;
+                    dr["Pack_E"] = tePack.Text;
+                    dr["CFDA_E"] = teCFDA.Text;
+                    dr["Gross_E"] = teGross.Text;
+                    dr["Carton_E"] = teCarton.Text;
+                    dt.Rows.Add(dr);
+                    da.Update(dt);
+                }
+            }
+            
+           
             
 
             printLable();
