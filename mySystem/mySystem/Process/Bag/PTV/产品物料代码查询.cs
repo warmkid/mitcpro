@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Collections;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Bag.PTV
 {
@@ -44,11 +45,11 @@ namespace mySystem.Process.Bag.PTV
 
         DataTable queryProdct(DateTime start, DateTime end, String code)
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             String sql;
             sql = "select 生产指令ID, 生产指令编号, 生产日期,班次,产品代码,生产批号,产品数量包数合计A,产品数量只数合计B from 产品内包装记录 where 生产日期 between #{0}# and #{1}# and 产品代码 like '%{2}%'";
-            da = new OleDbDataAdapter(String.Format(sql, start, end, code), mySystem.Parameter.connOle);
+            da = new SqlDataAdapter(String.Format(sql, start, end, code), mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             return dt;
@@ -56,14 +57,14 @@ namespace mySystem.Process.Bag.PTV
 
         DataTable queryMaterail(DateTime start, DateTime end, String code)
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             String sql;
             // 产品内包装记录  生产领料使用记录  生产领料使用记录详细信息
 
             sql = "select 产品内包装记录.生产指令ID as 生产指令ID, 产品内包装记录.生产指令编号 as 生产指令编号, 产品内包装记录.生产日期 as 生产日期, 产品内包装记录.班次 as 班次,产品内包装记录.产品代码 as 产品代码, 产品内包装记录.生产批号 as 生产批号,产品内包装记录.产品数量包数合计A as 产品数量包数合计A,产品内包装记录.产品数量只数合计B as 产品数量只数合计B from 产品内包装记录,生产领料使用记录,生产领料使用记录详细信息 " +
                 "where 生产领料使用记录详细信息.物料代码 like '%{2}%' and  生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID=产品内包装记录.生产指令ID  and 产品内包装记录.生产日期 between #{0}# and #{1}#";
-            da = new OleDbDataAdapter(String.Format(sql, start, end, code), mySystem.Parameter.connOle);
+            da = new SqlDataAdapter(String.Format(sql, start, end, code), mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             return dt;
@@ -85,14 +86,14 @@ namespace mySystem.Process.Bag.PTV
             HashSet<String> hs所有物料代码 = new HashSet<String>();
             foreach (DataRow dr in dt产品信息.Rows)
             {
-                OleDbDataAdapter da;
+                SqlDataAdapter da;
                 DataTable dt;
                 String sql;
                 DateTime st, ed;
                 st = Convert.ToDateTime(dr["生产日期"]).Date;
                 ed = Convert.ToDateTime(dr["生产日期"]).AddDays(1).Date.AddMilliseconds(-1);
                 sql = "select 生产领料使用记录详细信息.物料代码 as 物料代码, 生产领料使用记录详细信息.领取数量 as 数量 from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录详细信息.领料日期时间 between #{1}# and #{2}# and 生产领料使用记录详细信息.班次='{3}'";
-                da = new OleDbDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.connOle);
+                da = new SqlDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.conn);
                 dt = new DataTable();
                 da.Fill(dt);
                 foreach (DataRow tdr in dt.Rows)
@@ -118,26 +119,26 @@ namespace mySystem.Process.Bag.PTV
                 row["生产批号"] = dr["生产批号"];
                 row["生产数量（包）"] = dr["产品数量包数合计A"];
                 row["生产数量（只）"] = dr["产品数量只数合计B"];
-                OleDbDataAdapter daL;
+                SqlDataAdapter daL;
                 DataTable dtL;
                 String sql;
                 DateTime st, ed;
                 st = Convert.ToDateTime(dr["生产日期"]).Date;
                 ed = Convert.ToDateTime(dr["生产日期"]).AddDays(1).Date.AddMilliseconds(-1);
                 sql = "select 生产领料使用记录详细信息.物料代码 as 物料代码, 生产领料使用记录详细信息.领取数量 as 数量 from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录详细信息.领料日期时间 between #{1}# and #{2}# and 生产领料使用记录详细信息.班次='{3}'";
-                daL = new OleDbDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.connOle);
+                daL = new SqlDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.conn);
                 dtL = new DataTable();
                 daL.Fill(dtL);
                 foreach (DataRow tdr in dtL.Rows)
                 {
                     row[tdr["物料代码"].ToString() + "用量"] = tdr["数量"];
                 }
-                OleDbDataAdapter daT;
+                SqlDataAdapter daT;
                 DataTable dtT;
                 st = Convert.ToDateTime(dr["生产日期"]).Date;
                 ed = Convert.ToDateTime(dr["生产日期"]).AddDays(1).Date.AddMilliseconds(-1);
                 sql = "select 生产退料记录详细信息.物料代码 as 物料代码, 生产退料记录详细信息.退库数量 as 数量 from 生产退料记录表,生产退料记录详细信息 where 生产退料记录表.生产指令ID={0} and 生产退料记录详细信息.T生产退料记录ID=生产退料记录表.ID and 生产退料记录详细信息.领料日期 between #{1}# and #{2}# and 生产退料记录详细信息.班次='{3}'";
-                daT = new OleDbDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.connOle);
+                daT = new SqlDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.conn);
                 dtT = new DataTable();
                 daT.Fill(dtT);
                 foreach (DataRow tdr in dtL.Rows)

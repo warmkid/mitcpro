@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Bag.BTV
 {
@@ -47,9 +48,9 @@ namespace mySystem.Process.Bag.BTV
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/csbag.mdb;Persist Security Info=False";
-        OleDbConnection conn;
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+        SqlConnection conn;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
@@ -118,7 +119,7 @@ namespace mySystem.Process.Bag.BTV
 
         void variableInit()
         {
-            conn = Parameter.connOle ;
+            conn = mySystem.Parameter.conn ;
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
             i生产指令ID = mySystem.Parameter.bpvbagInstruID;
@@ -129,14 +130,14 @@ namespace mySystem.Process.Bag.BTV
 
         void variableInit(int id)
         {
-            conn = Parameter.connOle; 
+            conn = mySystem.Parameter.conn; 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where ID=" + id, conn);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 产品外观和尺寸检验记录 where ID=" + id, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             i生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
-             da = new OleDbDataAdapter("select * from 生产指令 where ID=" + i生产指令ID, conn);
+             da = new SqlDataAdapter("select * from 生产指令 where ID=" + i生产指令ID, conn);
              dt = new DataTable("temp");
             da.Fill(dt);
             str生产指令编号 = dt.Rows[0]["生产指令编号"].ToString();
@@ -145,7 +146,7 @@ namespace mySystem.Process.Bag.BTV
         void getOtherData()
         {
             // 读取用于显示界面的重要信息
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令ID, conn);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令ID, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             str产品代码 = dt.Rows[0]["产品代码"].ToString();
@@ -182,8 +183,8 @@ namespace mySystem.Process.Bag.BTV
         // 读取数据，根据自己表的ID
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where ID=" + id, conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 产品外观和尺寸检验记录 where ID=" + id, conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("产品外观和尺寸检验记录");
             bsOuter = new BindingSource();
 
@@ -193,8 +194,8 @@ namespace mySystem.Process.Bag.BTV
         // 读取数据，无参数表示从Paramter中读取数据
         void readOuterData()
         {
-            daOuter = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where 生产指令ID=" + ID, conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 产品外观和尺寸检验记录 where 生产指令ID=" + ID, conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("产品外观和尺寸检验记录");
             bsOuter = new BindingSource();
 
@@ -255,9 +256,9 @@ namespace mySystem.Process.Bag.BTV
         
         void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录详细信息 where T产品外观和尺寸检验记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            daInner = new SqlDataAdapter("select * from 产品外观和尺寸检验记录详细信息 where T产品外观和尺寸检验记录ID=" + dtOuter.Rows[0]["ID"], conn);
             dtInner = new DataTable("产品外观和尺寸检验记录详细信息");
-            cbInner = new OleDbCommandBuilder(daInner);
+            cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
 
             daInner.Fill(dtInner);
@@ -375,12 +376,12 @@ namespace mySystem.Process.Bag.BTV
 
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='产品外观和尺寸检验记录';", conn);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='产品外观和尺寸检验记录';", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -712,12 +713,12 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品外观和尺寸检验记录' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='产品外观和尺寸检验记录' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -759,12 +760,12 @@ namespace mySystem.Process.Bag.BTV
         {
             // TODO 弹出赵梦的窗口
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品外观和尺寸检验记录' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='产品外观和尺寸检验记录' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -939,14 +940,14 @@ namespace mySystem.Process.Bag.BTV
             }
             //加页脚
             int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 产品外观和尺寸检验记录 where 生产指令ID=" + dtOuter.Rows[0]["ID"].ToString(), conn);
+            SqlDataAdapter da = new SqlDataAdapter("select ID from 产品外观和尺寸检验记录 where 生产指令ID=" + dtOuter.Rows[0]["ID"].ToString(), conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
-            da = new OleDbDataAdapter("select ID, 生产指令编号 from 生产指令 where ID=" + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
+            da = new SqlDataAdapter("select ID, 生产指令编号 from 生产指令 where ID=" + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
             da.Fill(dt);
             String Instruction = dt.Rows[0]["生产指令编号"].ToString();
             mysheet.PageSetup.RightFooter = Instruction + "-16-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码

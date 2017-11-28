@@ -19,14 +19,14 @@ namespace mySystem.Process.Bag.PTV
         private String tableInfo = "瓶口焊接机运行记录详细信息";
 
         private SqlConnection conn = null;
-        private OleDbConnection connOle = null;
+        //private OleDbConnection mySystem.Parameter.conn = null;
         private bool isSqlOk;
         private CheckForm checkform = null;
 
         private DataTable dt记录, dt记录详情, dt代码批号;
-        private OleDbDataAdapter da记录, da记录详情;
+        private SqlDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
-        private OleDbCommandBuilder cb记录, cb记录详情;
+        private SqlCommandBuilder cb记录, cb记录详情;
         private int[] sum = { 0, 0 };
 
         List<String> ls操作员, ls审核员;
@@ -40,7 +40,7 @@ namespace mySystem.Process.Bag.PTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ptvbagInstruID;
             Instruction = Parameter.ptvbagInstruction;
@@ -62,7 +62,7 @@ namespace mySystem.Process.Bag.PTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             fill_printer(); //添加打印机
@@ -80,12 +80,12 @@ namespace mySystem.Process.Bag.PTV
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='瓶口焊接机运行记录'", connOle);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='瓶口焊接机运行记录'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -160,10 +160,10 @@ namespace mySystem.Process.Bag.PTV
             if (!isSqlOk)
             {
                 //从 “生产指令信息表” 中找 “生产指令编号” 下的信息
-                OleDbCommand comm1 = new OleDbCommand();
-                comm1.Connection = Parameter.connOle;
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = mySystem.Parameter.conn;
                 comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
-                OleDbDataReader reader1 = comm1.ExecuteReader();
+                SqlDataReader reader1 = comm1.ExecuteReader();
                 if (reader1.Read())
                 {
                     //dt膜代码.Columns.Add("膜代码", typeof(String));  
@@ -175,10 +175,10 @@ namespace mySystem.Process.Bag.PTV
                     //{ cmb膜代码.Items.Add(dt膜代码.Rows[i]["膜代码"].ToString()); }
 
                     //查找该生产ID下的产品编码、产品批号
-                    OleDbCommand comm2 = new OleDbCommand();
-                    comm2.Connection = Parameter.connOle;
+                    SqlCommand comm2 = new SqlCommand();
+                    comm2.Connection = mySystem.Parameter.conn;
                     comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
-                    OleDbDataAdapter datemp = new OleDbDataAdapter(comm2);
+                    SqlDataAdapter datemp = new SqlDataAdapter(comm2);
                     datemp.Fill(dt代码批号);
                     if (dt代码批号.Rows.Count == 0)
                     {
@@ -372,7 +372,7 @@ namespace mySystem.Process.Bag.PTV
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID, connOle);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID, mySystem.Parameter.conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
@@ -389,8 +389,8 @@ namespace mySystem.Process.Bag.PTV
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID, connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID, mySystem.Parameter.conn);
+            cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
 
@@ -510,8 +510,8 @@ namespace mySystem.Process.Bag.PTV
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T瓶口焊接机运行记录ID = " + ID.ToString(), connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
+            da记录详情 = new SqlDataAdapter("select * from " + tableInfo + " where T瓶口焊接机运行记录ID = " + ID.ToString(), mySystem.Parameter.conn);
+            cb记录详情 = new SqlCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
 
@@ -726,8 +726,8 @@ namespace mySystem.Process.Bag.PTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='瓶口焊接机运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='瓶口焊接机运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
             {
@@ -776,8 +776,8 @@ namespace mySystem.Process.Bag.PTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='瓶口焊接机运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='瓶口焊接机运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -928,8 +928,8 @@ namespace mySystem.Process.Bag.PTV
         {
             List<int> list_id = new List<int>();
             string asql = "select * from " + table + " where 生产指令ID=" + InstruID;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
 

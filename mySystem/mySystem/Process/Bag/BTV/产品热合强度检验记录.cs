@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Collections;
 using System.Runtime.InteropServices;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Bag.BTV
@@ -39,9 +40,9 @@ namespace mySystem.Process.Bag.BTV
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/csbag.mdb;Persist Security Info=False";
-        OleDbConnection conn;
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+        SqlConnection conn;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
@@ -110,7 +111,7 @@ namespace mySystem.Process.Bag.BTV
         /// </summary>
         void variableInit()
         {
-            conn = Parameter.connOle;
+            conn = mySystem.Parameter.conn;
         }
 
         /// <summary>
@@ -119,9 +120,9 @@ namespace mySystem.Process.Bag.BTV
         /// <param name="id"></param>
         void setKeyInfoFromDataTable(int id)
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 产品热合强度检验记录 where ID=" + id + "", conn);
+            da = new SqlDataAdapter("select * from 产品热合强度检验记录 where ID=" + id + "", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             _instrId = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
@@ -141,12 +142,12 @@ namespace mySystem.Process.Bag.BTV
         /// </summary>
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='产品热合强度检验记录';", conn);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='产品热合强度检验记录';", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -184,9 +185,9 @@ namespace mySystem.Process.Bag.BTV
         /// </summary>
         void getInnerOtherData()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + _instrId + "", conn);
+            da = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + _instrId + "", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -200,8 +201,8 @@ namespace mySystem.Process.Bag.BTV
         /// <param name="id"></param>
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 产品热合强度检验记录 where ID=" + id + "", conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 产品热合强度检验记录 where ID=" + id + "", conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("产品热合强度检验记录");
             bsOuter = new BindingSource();
 
@@ -215,8 +216,8 @@ namespace mySystem.Process.Bag.BTV
         void readOuterData()
         {
             string sql = "select * from 产品热合强度检验记录 where 生产指令ID={0} and 整理时间=#{1}#";
-            daOuter = new OleDbDataAdapter(String.Format(sql, mySystem.Parameter.bpvbagInstruID, nowString), conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter(String.Format(sql, mySystem.Parameter.bpvbagInstruID, nowString), conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("产品热合强度检验记录");
             bsOuter = new BindingSource();
 
@@ -289,9 +290,9 @@ namespace mySystem.Process.Bag.BTV
         /// <param name="outerID"></param>
         void readInnerData(int outerID)
         {
-            daInner = new OleDbDataAdapter("select * from 产品热合强度检验记录详细记录 where T产品热合强度检验记录ID=" + outerID, conn);
+            daInner = new SqlDataAdapter("select * from 产品热合强度检验记录详细记录 where T产品热合强度检验记录ID=" + outerID, conn);
             dtInner = new DataTable("产品热合强度检验记录详细记录");
-            cbInner = new OleDbCommandBuilder(daInner);
+            cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
 
             daInner.Fill(dtInner);
@@ -735,12 +736,12 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -779,12 +780,12 @@ namespace mySystem.Process.Bag.BTV
 
 
             
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品热合强度检验记录' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='产品热合强度检验记录' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -1045,19 +1046,19 @@ namespace mySystem.Process.Bag.BTV
             }
             //加页脚
             int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 产品热合强度检验记录 where 生产指令ID=" + dtOuter.Rows[0]["ID"].ToString(), conn);
+            SqlDataAdapter da = new SqlDataAdapter("select ID from 产品热合强度检验记录 where 生产指令ID=" + dtOuter.Rows[0]["ID"].ToString(), conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
             for (int i = 0; i < dt.Rows.Count; i++)
             { sheetList.Add(Convert.ToInt32(dt.Rows[i]["ID"].ToString())); }
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
-            da = new OleDbDataAdapter("select ID, 生产指令编号 from 生产指令 where ID=" + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
+            da = new SqlDataAdapter("select ID, 生产指令编号 from 生产指令 where ID=" + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
             dt.Clear();
             da.Fill(dt);
             String Instruction = dt.Rows[0]["生产指令编号"].ToString();
 
-            da = new OleDbDataAdapter("select 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID=" + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
+            da = new SqlDataAdapter("select 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID=" + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
             dt.Clear();
             da.Fill(dt);
             String daima = dt.Rows[0]["产品代码"].ToString();

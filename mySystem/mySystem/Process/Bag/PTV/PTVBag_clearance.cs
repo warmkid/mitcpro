@@ -50,9 +50,9 @@ namespace mySystem.Process.Bag.PTV
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/PTV.mdb;Persist Security Info=False";
-        OleDbConnection conn;
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+        SqlConnection conn;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
@@ -84,6 +84,7 @@ namespace mySystem.Process.Bag.PTV
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
+                ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData();
                 outerBind();
@@ -161,8 +162,8 @@ namespace mySystem.Process.Bag.PTV
 
         void variableInit()
         {
-            conn = new OleDbConnection(strConn);
-            conn.Open();
+            conn = mySystem.Parameter.conn;
+
             ID = mySystem.Parameter.ptvbagInstruID;
             i生产指令ID = ID;
             CODE = mySystem.Parameter.ptvbagInstruction;
@@ -176,10 +177,10 @@ namespace mySystem.Process.Bag.PTV
 
         void variableInit(int id)
         {
-            conn = new OleDbConnection(strConn);
-            conn.Open();
+            conn = mySystem.Parameter.conn;
+            //conn.Open();
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清场记录 where ID=" + id, conn);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 清场记录 where ID=" + id, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             
@@ -209,13 +210,13 @@ namespace mySystem.Process.Bag.PTV
             fill_printer(); //添加打印机
 
             // 读取用于显示界面的重要信息
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令ID, conn);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令ID, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             str产品代码 = dt.Rows[0]["产品代码"].ToString();
             str产品批号 = dt.Rows[0]["产品批号"].ToString();
 
-            da = new OleDbDataAdapter("select * from 设置清场项目", conn);
+            da = new SqlDataAdapter("select * from 设置清场项目", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -251,8 +252,8 @@ namespace mySystem.Process.Bag.PTV
         // 读取数据，根据自己表的ID
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 清场记录 where ID=" + id, conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 清场记录 where ID=" + id, conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("清场记录");
             bsOuter = new BindingSource();
 
@@ -262,10 +263,10 @@ namespace mySystem.Process.Bag.PTV
         // 读取数据，无参数表示从Paramter中读取数据
         void readOuterData()
         {
-            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期=#{1}#";
+            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期='{1}'";
             DateTime date = DateTime.Parse(dtp生产日期.Value.ToString("yyyy/MM/dd"));
-            daOuter = new OleDbDataAdapter(String.Format(sql, i生产指令ID, date), conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter(String.Format(sql, i生产指令ID, date), conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("清场记录");
             bsOuter = new BindingSource();
 
@@ -337,9 +338,9 @@ namespace mySystem.Process.Bag.PTV
         }
         void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 清场记录详细信息 where T清场记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            daInner = new SqlDataAdapter("select * from 清场记录详细信息 where T清场记录ID=" + dtOuter.Rows[0]["ID"], conn);
             dtInner = new DataTable("清场记录详细信息");
-            cbInner = new OleDbCommandBuilder(daInner);
+            cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
 
             daInner.Fill(dtInner);
@@ -482,12 +483,12 @@ namespace mySystem.Process.Bag.PTV
 
         void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='清场记录'", conn);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='清场记录'", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -696,12 +697,12 @@ namespace mySystem.Process.Bag.PTV
                 return;
             }
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -737,12 +738,12 @@ namespace mySystem.Process.Bag.PTV
         {
             base.CheckResult();
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -758,8 +759,8 @@ namespace mySystem.Process.Bag.PTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -818,7 +819,7 @@ namespace mySystem.Process.Bag.PTV
 
             //通过_id查找生产指令id，从而查找生产指令编码
             int instrid = Convert.ToInt32(dtOuter.Rows[0]["生产指令ID"].ToString());
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + instrid, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + instrid, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             string instruction = dt.Rows[0]["生产指令编号"].ToString();
@@ -871,7 +872,7 @@ namespace mySystem.Process.Bag.PTV
         }
         int find_indexofprint(int instrid)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 清场记录 where 生产指令ID=" + instrid, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();
@@ -897,7 +898,7 @@ namespace mySystem.Process.Bag.PTV
                 ind = dataGridView1.Rows.Count - 14;
             }
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select 生产指令编号 from 生产指令 where ID = " + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
+            SqlDataAdapter da = new SqlDataAdapter("select 生产指令编号 from 生产指令 where ID = " + dtOuter.Rows[0]["生产指令ID"].ToString(), conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             string instru = dt.Rows[0]["生产指令编号"].ToString();

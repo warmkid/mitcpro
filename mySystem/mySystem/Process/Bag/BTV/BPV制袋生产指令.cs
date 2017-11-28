@@ -45,9 +45,9 @@ namespace mySystem.Process.Bag.BTV
 
         // 数据库连接
         
-        OleDbConnection conn;
-        OleDbDataAdapter daOuter, daInner,daMaterial;
-        OleDbCommandBuilder cbOuter, cbInner,cbMaterial;
+        SqlConnection conn;
+        SqlDataAdapter daOuter, daInner,daMaterial;
+        SqlCommandBuilder cbOuter, cbInner,cbMaterial;
         DataTable dtOuter, dtInner,dtMaterial;
         BindingSource bsOuter, bsInner,bsMaterial;
 
@@ -149,7 +149,7 @@ namespace mySystem.Process.Bag.BTV
         /// </summary>
         void variableInit()
         {
-            conn = Parameter.connOle;
+            conn = mySystem.Parameter.conn;
 
             ls产品名称 = new List<string>();
             ls负责人 = new List<string>();
@@ -182,12 +182,12 @@ namespace mySystem.Process.Bag.BTV
         /// </summary>
         void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='BPV制袋生产指令'", conn);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='BPV制袋生产指令'", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -216,10 +216,10 @@ namespace mySystem.Process.Bag.BTV
         /// </summary>
         void getOuterOtherData()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             
-            da = new OleDbDataAdapter("select * from 用户", conn);
+            da = new SqlDataAdapter("select * from 用户", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -228,7 +228,7 @@ namespace mySystem.Process.Bag.BTV
                 cmb负责人.Items.Add(dr["用户名"].ToString());
             }
             //　产品名称
-            da = new OleDbDataAdapter("select * from 设置BPV产品", conn);
+            da = new SqlDataAdapter("select * from 设置BPV产品", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach(DataRow dr in dt.Rows){
@@ -238,7 +238,7 @@ namespace mySystem.Process.Bag.BTV
             
             
             // 工艺
-            da = new OleDbDataAdapter("select * from 设置BPV制袋工艺", conn);
+            da = new SqlDataAdapter("select * from 设置BPV制袋工艺", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -256,16 +256,15 @@ namespace mySystem.Process.Bag.BTV
         /// </summary>
         void getInnerOtherData()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             hs产品代码 = new HashSet<string>();
             hs封边 = new HashSet<string>();
             //　产品代码
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection Tconn = new SqlConnection(strConnect);
             Tconn.Open();
-            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%BPV制袋%'", Tconn);
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%BPV制袋%'", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -276,7 +275,7 @@ namespace mySystem.Process.Bag.BTV
 
 
             // 封边
-            da = new OleDbDataAdapter("select * from 设置BPV制袋封边", conn);
+            da = new SqlDataAdapter("select * from 设置BPV制袋封边", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -297,12 +296,11 @@ namespace mySystem.Process.Bag.BTV
             ls物料代码 = new List<string>();
             ls物料名称 = new List<string>();
             ls单位 = new List<string>();
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection connToOrder = new OleDbConnection(strConnect);
-            OleDbDataAdapter da;
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection connToOrder = new SqlConnection(strConnect);
+            SqlDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '组件' and 属于工序 like '%BPV制袋%'", connToOrder);
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '组件' and 属于工序 like '%BPV制袋%'", connToOrder);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -320,8 +318,8 @@ namespace mySystem.Process.Bag.BTV
         /// <param name="id"></param>
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 生产指令 where ID=" + id + "", conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 生产指令 where ID=" + id + "", conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("生产指令");
             bsOuter = new BindingSource();
 
@@ -335,8 +333,8 @@ namespace mySystem.Process.Bag.BTV
         void readOuterData(String code)
         {
             
-            daOuter = new OleDbDataAdapter("select * from 生产指令 where 生产指令编号='" + code + "'", conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 生产指令 where 生产指令编号='" + code + "'", conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("生产指令");
             bsOuter = new BindingSource();
 
@@ -421,18 +419,18 @@ namespace mySystem.Process.Bag.BTV
         /// <param name="outerID"></param>
         void readInnerData(int outerID)
         {
-            daInner = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + outerID, conn);
+            daInner = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + outerID, conn);
             dtInner = new DataTable("生产指令详细信息");
-            cbInner = new OleDbCommandBuilder(daInner);
+            cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
 
             daInner.Fill(dtInner);
         }
         void readMaterialData(int outerID)
         {
-            daMaterial = new OleDbDataAdapter("select * from "+tablePartialMaterial +" where T生产指令ID=" + outerID, conn);
+            daMaterial = new SqlDataAdapter("select * from "+tablePartialMaterial +" where T生产指令ID=" + outerID, conn);
             dtMaterial = new DataTable(tablePartialMaterial);
-            cbMaterial = new OleDbCommandBuilder(daMaterial);
+            cbMaterial = new SqlCommandBuilder(daMaterial);
             bsMaterial = new BindingSource();
 
             daMaterial.Fill(dtMaterial);
@@ -1158,12 +1156,12 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             btn保存.PerformClick();
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
             
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
             
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -1214,12 +1212,12 @@ namespace mySystem.Process.Bag.BTV
         public override void CheckResult()
         {
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -1414,7 +1412,7 @@ namespace mySystem.Process.Bag.BTV
 
         int find_indexofprint()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where ID=" + _id, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from " + table + " where ID=" + _id, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();

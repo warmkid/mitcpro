@@ -27,12 +27,12 @@ namespace mySystem.Process.Bag.BTV
         public void comboInit()
         {
             HashSet<String> hash = new HashSet<String>();
-            if (!Parameter.isSqlOk)
+            if (Parameter.isSqlOk)
             {
-                OleDbCommand comm = new OleDbCommand();
-                comm.Connection = Parameter.connOle;
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = mySystem.Parameter.conn;
                 comm.CommandText = "select * from 生产指令 where 状态 = 2 ";
-                OleDbDataReader reader = comm.ExecuteReader();//执行查询
+                SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
                     comboBox1.Items.Clear();
@@ -68,7 +68,7 @@ namespace mySystem.Process.Bag.BTV
                 }
                 else
                 {
-                    res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                    res = Utility.selectAccess(mySystem.Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
                 }
                 Parameter.bpvbagInstruID = Convert.ToInt32(res[0][0]);
             }
@@ -89,7 +89,7 @@ namespace mySystem.Process.Bag.BTV
             }
             else
             {
-                res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                res = Utility.selectAccess(mySystem.Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             }
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.bpvbagInstruID = instruID;
@@ -526,8 +526,8 @@ namespace mySystem.Process.Bag.BTV
         {
             if (DialogResult.Yes == MessageBox.Show("是否确认结束工序？", "提示", MessageBoxButtons.YesNo))
             {
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.bpvbagInstruID, mySystem.Parameter.connOle);
-                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.bpvbagInstruID, mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dt.Rows[0]["状态"] = 4;
@@ -612,10 +612,10 @@ namespace mySystem.Process.Bag.BTV
             Boolean b = false;
             String[] name操作员 = null;
             String[] name审核员 = null;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = mySystem.Parameter.conn;
             comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
-            OleDbDataReader reader = comm.ExecuteReader();
+            SqlDataReader reader = comm.ExecuteReader();
             while (reader.Read())
             {
                 name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());

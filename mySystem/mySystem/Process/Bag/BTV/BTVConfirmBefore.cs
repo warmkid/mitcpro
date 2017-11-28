@@ -20,14 +20,14 @@ namespace mySystem.Process.Bag.BTV
         private String tableSet = "设置生产前确认项目";
 
         private SqlConnection conn = null;
-        private OleDbConnection connOle = null;
+        //private OleDbConnection mySystem.Parameter.conn = null;
         private bool isSqlOk;
         private CheckForm checkform = null;
 
         private DataTable dt设置, dt记录, dt记录详情;
-        private OleDbDataAdapter da记录, da记录详情;
+        private SqlDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
-        private OleDbCommandBuilder cb记录, cb记录详情;
+        private SqlCommandBuilder cb记录, cb记录详情;
 
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
@@ -41,7 +41,7 @@ namespace mySystem.Process.Bag.BTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.bpvbagInstruID;
             Instruction = Parameter.bpvbagInstruction;
@@ -63,7 +63,7 @@ namespace mySystem.Process.Bag.BTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             fill_printer(); //添加打印机
@@ -81,12 +81,12 @@ namespace mySystem.Process.Bag.BTV
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='BPV生产前确认记录'", connOle);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='BPV生产前确认记录'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -154,7 +154,7 @@ namespace mySystem.Process.Bag.BTV
         {
             //连数据库
             dt设置 = new DataTable("设置");
-            OleDbDataAdapter datemp = new OleDbDataAdapter("select * from " + tableSet, connOle);
+            SqlDataAdapter datemp = new SqlDataAdapter("select * from " + tableSet, mySystem.Parameter.conn);
             datemp.Fill(dt设置);
             datemp.Dispose();
         }
@@ -345,10 +345,10 @@ namespace mySystem.Process.Bag.BTV
         //根据主键显示
         private void IDShow(Int32 ID)
         {
-            OleDbCommand comm1 = new OleDbCommand();
-            comm1.Connection = Parameter.connOle;
+            SqlCommand comm1 = new SqlCommand();
+            comm1.Connection = mySystem.Parameter.conn;
             comm1.CommandText = "select * from " + table + " where ID = " + ID.ToString();
-            OleDbDataReader reader1 = comm1.ExecuteReader();
+            SqlDataReader reader1 = comm1.ExecuteReader();
             if (reader1.Read())
             {
                 InstruID = Convert.ToInt32(reader1["生产指令ID"].ToString());
@@ -363,8 +363,8 @@ namespace mySystem.Process.Bag.BTV
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID, connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID, mySystem.Parameter.conn);
+            cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
 
@@ -424,8 +424,8 @@ namespace mySystem.Process.Bag.BTV
             //读取记录表里的记录
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T制袋机组开机前确认表ID = " + ID, connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
+            da记录详情 = new SqlDataAdapter("select * from " + tableInfo + " where T制袋机组开机前确认表ID = " + ID, mySystem.Parameter.conn);
+            cb记录详情 = new SqlCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
 
@@ -594,8 +594,8 @@ namespace mySystem.Process.Bag.BTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='制袋机开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='制袋机开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
             {
@@ -664,8 +664,8 @@ namespace mySystem.Process.Bag.BTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='制袋机开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='制袋机开机前确认表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -817,7 +817,7 @@ namespace mySystem.Process.Bag.BTV
 
         int find_indexofprint()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();

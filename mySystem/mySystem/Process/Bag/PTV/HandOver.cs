@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using mySystem.Extruction.Process;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -20,24 +21,24 @@ namespace mySystem.Process.Bag.PTV
 {
     public partial class HandOver : BaseForm
     {
-        OleDbConnection conOle;
+        SqlConnection conn;
         string tablename1 = "岗位交接班记录";
         DataTable dtOuter;
-        OleDbDataAdapter daOuter;
+        SqlDataAdapter daOuter;
         BindingSource bsOuter;
-        OleDbCommandBuilder cbOuter;
+        SqlCommandBuilder cbOuter;
 
         string tablename2 = "岗位交接班项目记录";
         DataTable dtInner;
-        OleDbDataAdapter daInner;
+        SqlDataAdapter daInner;
         BindingSource bsInner;
-        OleDbCommandBuilder cbInner;
+        SqlCommandBuilder cbInner;
 
         string tablename3 = "设置岗位交接班项目";
         DataTable dtSettingHandOver;
-        OleDbDataAdapter daSettingHandOver;
+        SqlDataAdapter daSettingHandOver;
         BindingSource bsSettingHandOver;
-        OleDbCommandBuilder cbSettingHandOver;
+        SqlCommandBuilder cbSettingHandOver;
 
         List<string> settingItem;
         List<string> flight = new List<string>(new string[] { "是","否" });
@@ -61,7 +62,7 @@ namespace mySystem.Process.Bag.PTV
             : base(mainform)
         {
             InitializeComponent();
-            conOle = Parameter.connOle;
+            conn = mySystem.Parameter.conn;
             fill_printer();
             getPeople();
             setUserState();
@@ -112,7 +113,7 @@ namespace mySystem.Process.Bag.PTV
             : base(mainform)
         {
             InitializeComponent();
-            conOle = Parameter.connOle;
+            conn = mySystem.Parameter.conn;
             fill_printer();
             searchId=Id;
             
@@ -168,9 +169,9 @@ namespace mySystem.Process.Bag.PTV
         {
             string tabName = "用户权限";
             DataTable dtUser = new DataTable(tabName);
-            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", conOle);
+            SqlDataAdapter daUser = new SqlDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", mySystem.Parameter.conn);
             BindingSource bsUser = new BindingSource();
-            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+            SqlCommandBuilder cbUser = new SqlCommandBuilder(daUser);
             daUser.Fill(dtUser);
             if (dtUser.Rows.Count != 1)
             {
@@ -398,24 +399,24 @@ namespace mySystem.Process.Bag.PTV
         }
         void readOuterData(string 生产指令编号, DateTime 生产日期)
         {
-            daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期=#" + 生产日期.ToString() + "#;", conOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期='" + 生产日期.ToString() + "';", mySystem.Parameter.conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable(tablename1);
             bsOuter = new BindingSource();
             daOuter.Fill(dtOuter);
         }
         void readOuterData(int searchId)
         {
-            daOuter = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID=" +searchId+ ";", conOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE ID=" + searchId + ";", mySystem.Parameter.conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable(tablename1);
             bsOuter = new BindingSource();
             daOuter.Fill(dtOuter);
         }
         private void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("SELECT * FROM " + tablename2 + " WHERE T岗位交接班记录ID=" + id, conOle);
-            cbInner = new OleDbCommandBuilder(daInner);
+            daInner = new SqlDataAdapter("SELECT * FROM " + tablename2 + " WHERE T岗位交接班记录ID=" + id, mySystem.Parameter.conn);
+            cbInner = new SqlCommandBuilder(daInner);
             dtInner = new DataTable(tablename2);
             bsInner = new BindingSource();
             daInner.Fill(dtInner);
@@ -553,8 +554,8 @@ namespace mySystem.Process.Bag.PTV
             List<string> settingList = new List<string>();
             bsSettingHandOver = new BindingSource();
             dtSettingHandOver = new DataTable(tablename3);
-            daSettingHandOver = new OleDbDataAdapter("SELECT * FROM 设置岗位交接班项目", conOle);
-            cbSettingHandOver = new OleDbCommandBuilder(daSettingHandOver);
+            daSettingHandOver = new SqlDataAdapter("SELECT * FROM 设置岗位交接班项目", mySystem.Parameter.conn);
+            cbSettingHandOver = new SqlCommandBuilder(daSettingHandOver);
             daSettingHandOver.Fill(dtSettingHandOver);
             bsSettingHandOver.DataSource = dtSettingHandOver;
 
@@ -646,9 +647,9 @@ namespace mySystem.Process.Bag.PTV
                 //read from database table and find current record
                 string checkName = "待审核";
                 DataTable dtCheck = new DataTable(checkName);
-                OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+                SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", mySystem.Parameter.conn);
                 BindingSource bsCheck = new BindingSource();
-                OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+                SqlCommandBuilder cbCheck = new SqlCommandBuilder(daCheck);
                 daCheck.Fill(dtCheck);
 
                 //this part will never be run, for there must be a unchecked recird before this button becomes enable
@@ -804,7 +805,7 @@ namespace mySystem.Process.Bag.PTV
 
         int find_indexofprint()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 岗位交接班记录 where 生产指令ID="+__生产指令ID,mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 岗位交接班记录 where 生产指令ID="+__生产指令ID,mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();
@@ -833,9 +834,9 @@ namespace mySystem.Process.Bag.PTV
             //read from database table and find current record
             string checkName = "待审核";
             DataTable dtCheck = new DataTable(checkName);
-            OleDbDataAdapter daCheck = new OleDbDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", conOle);
+            SqlDataAdapter daCheck = new SqlDataAdapter("SELECT * FROM " + checkName + " WHERE 表名='" + tablename1 + "' AND 对应ID = " + searchId + ";", mySystem.Parameter.conn);
             BindingSource bsCheck = new BindingSource();
-            OleDbCommandBuilder cbCheck = new OleDbCommandBuilder(daCheck);
+            SqlCommandBuilder cbCheck = new SqlCommandBuilder(daCheck);
             daCheck.Fill(dtCheck);
 
             //if current hasn't been stored, insert a record in table
@@ -890,12 +891,12 @@ namespace mySystem.Process.Bag.PTV
         private void btn上一条记录_Click(object sender, EventArgs e)
         {
             DataTable dtOuter1;
-            OleDbDataAdapter daOuter1;
+            SqlDataAdapter daOuter1;
             BindingSource bsOuter1;
-            OleDbCommandBuilder cbOuter1;
+            SqlCommandBuilder cbOuter1;
             List<int> idList = new List<int>();
-            daOuter1 = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' ORDER BY ID ASC;", conOle);
-            cbOuter1 = new OleDbCommandBuilder(daOuter);
+            daOuter1 = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' ORDER BY ID ASC;", mySystem.Parameter.conn);
+            cbOuter1 = new SqlCommandBuilder(daOuter);
             dtOuter1 = new DataTable(tablename1);
             bsOuter1 = new BindingSource();
             daOuter1.Fill(dtOuter1);
