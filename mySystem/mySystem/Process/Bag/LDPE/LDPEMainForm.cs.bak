@@ -28,12 +28,12 @@ namespace mySystem.Process.Bag.LDPE
         public void comboInit()
         {
             HashSet<String> hash = new HashSet<String>();
-            if (Parameter.isSqlOk)
+            if (!Parameter.isSqlOk)
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = mySystem.Parameter.conn;
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
                 comm.CommandText = "select * from 生产指令 where 状态 = 2 ";
-                SqlDataReader reader = comm.ExecuteReader();
+                OleDbDataReader reader = comm.ExecuteReader();
                 if (reader.HasRows)
                 {
                     comboBox1.Items.Clear();
@@ -69,7 +69,7 @@ namespace mySystem.Process.Bag.LDPE
                 }
                 else
                 {
-                    res = Utility.selectAccess(mySystem.Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                    res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
                 }
                 Parameter.ldpebagInstruID = Convert.ToInt32(res[0][0]);
             }
@@ -90,7 +90,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             else
             {
-                res = Utility.selectAccess(mySystem.Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             }
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.ldpebagInstruID = instruID;
@@ -328,8 +328,8 @@ namespace mySystem.Process.Bag.LDPE
         {
             if (DialogResult.Yes == MessageBox.Show("是否确认结束工序？", "提示", MessageBoxButtons.YesNo))
             {
-                SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.ldpebagInstruID, mySystem.Parameter.conn);
-                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.ldpebagInstruID, mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dt.Rows[0]["状态"] = 4;
@@ -372,10 +372,10 @@ namespace mySystem.Process.Bag.LDPE
             Boolean b = false;
             String[] name操作员 = null;
             String[] name审核员 = null;
-            SqlCommand comm = new SqlCommand();
-            comm.Connection = mySystem.Parameter.conn;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = Parameter.connOle;
             comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
-            SqlDataReader reader = comm.ExecuteReader();
+            OleDbDataReader reader = comm.ExecuteReader();
             while (reader.Read())
             {
                 name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());

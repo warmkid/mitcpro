@@ -16,14 +16,14 @@ namespace mySystem.Process.Bag.LDPE
     public partial class LDPEBag_runningrecord : BaseForm
     {
         private SqlConnection conn = null;
-        //private OleDbConnection mySystem.Parameter.conn = null;
+        private OleDbConnection connOle = null;
         private bool isSqlOk;
         private CheckForm checkform = null;
 
         private DataTable dt记录, dt记录详情; 
-        private SqlDataAdapter da记录, da记录详情;
+        private OleDbDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
-        private SqlCommandBuilder cb记录, cb记录详情;
+        private OleDbCommandBuilder cb记录, cb记录详情;
         
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
@@ -61,8 +61,8 @@ namespace mySystem.Process.Bag.LDPE
             addDataEventHandler();
 
             string asql = "select * from 制袋机组运行记录 where ID=" + ID;
-            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
-            SqlDataAdapter da = new SqlDataAdapter(comm);
+            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+            OleDbDataAdapter da = new OleDbDataAdapter(comm);
 
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
@@ -85,12 +85,12 @@ namespace mySystem.Process.Bag.LDPE
         // 获取操作员和审核员
         private void getPeople()
         {
-            SqlDataAdapter da;
+            OleDbDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new SqlDataAdapter("select * from 用户权限 where 步骤='制袋机运行记录'", mySystem.Parameter.conn);
+            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='制袋机运行记录'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -357,8 +357,8 @@ namespace mySystem.Process.Bag.LDPE
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable("制袋机组运行记录");
-            da记录 = new SqlDataAdapter("select * from 制袋机组运行记录 where 生产指令ID = " + InstruID , mySystem.Parameter.conn);
-            cb记录 = new SqlCommandBuilder(da记录);
+            da记录 = new OleDbDataAdapter("select * from 制袋机组运行记录 where 生产指令ID = " + InstruID , mySystem.Parameter.connOle);
+            cb记录 = new OleDbCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
         
@@ -394,8 +394,8 @@ namespace mySystem.Process.Bag.LDPE
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable("制袋机组运行记录详细信息");
-            da记录详情 = new SqlDataAdapter("select * from 制袋机组运行记录详细信息 where T制袋机组运行记录ID = " + ID, mySystem.Parameter.conn);
-            cb记录详情 = new SqlCommandBuilder(da记录详情);
+            da记录详情 = new OleDbDataAdapter("select * from 制袋机组运行记录详细信息 where T制袋机组运行记录ID = " + ID, mySystem.Parameter.connOle);
+            cb记录详情 = new OleDbCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
 
@@ -618,8 +618,8 @@ namespace mySystem.Process.Bag.LDPE
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='制袋机组运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
-            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='制袋机组运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
             {
@@ -678,8 +678,8 @@ namespace mySystem.Process.Bag.LDPE
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='制袋机组运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
-            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='制袋机组运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -859,7 +859,7 @@ namespace mySystem.Process.Bag.LDPE
             }           
             //加页脚
             int sheetnum;
-            SqlDataAdapter da = new SqlDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 制袋机组运行记录  where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.connOle);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
@@ -868,12 +868,12 @@ namespace mySystem.Process.Bag.LDPE
             sheetnum = sheetList.IndexOf(Convert.ToInt32(dt记录.Rows[0]["ID"])) + 1;
             //instrcode怎样获取？
             //读取ID对应的生产指令编码
-            SqlCommand comm生产指令编码 = new SqlCommand();
-            comm生产指令编码.Connection = mySystem.Parameter.conn;
+            OleDbCommand comm生产指令编码 = new OleDbCommand();
+            comm生产指令编码.Connection = mySystem.Parameter.connOle;
             comm生产指令编码.CommandText = "select * from 生产指令 where ID= @name";
             comm生产指令编码.Parameters.AddWithValue("@name", InstruID);
 
-            SqlDataReader myReader生产指令编码 = comm生产指令编码.ExecuteReader();
+            OleDbDataReader myReader生产指令编码 = comm生产指令编码.ExecuteReader();
             while (myReader生产指令编码.Read())
             {
                 str生产指令 = myReader生产指令编码["生产指令编号"].ToString();
