@@ -49,7 +49,7 @@ namespace mySystem.Process.Bag.BTV
             //ret.Columns.Add("产品数量（平米）", Type.GetType("System.Double"));
             ret.Columns.Add("生产指令ID", Type.GetType("System.Int32"));
 
-            sql = "select * from 产品内包装记录 where 生产日期 between #{0}# and #{1}#";
+            sql = "select * from 产品内包装记录 where 生产日期 between '{0}' and '{1}'";
             da = new SqlDataAdapter(string.Format(sql, start, end), mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);

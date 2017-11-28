@@ -63,6 +63,7 @@ namespace mySystem.Process.Bag.BTV
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
+                ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData();
                 outerBind();
@@ -215,7 +216,7 @@ namespace mySystem.Process.Bag.BTV
         /// <param name="code"></param>
         void readOuterData()
         {
-            string sql = "select * from 产品热合强度检验记录 where 生产指令ID={0} and 整理时间=#{1}#";
+            string sql = "select * from 产品热合强度检验记录 where 生产指令ID={0} and 整理时间='{1}'";
             daOuter = new SqlDataAdapter(String.Format(sql, mySystem.Parameter.bpvbagInstruID, nowString), conn);
             cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("产品热合强度检验记录");

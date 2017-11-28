@@ -398,7 +398,7 @@ namespace mySystem.Process.Bag.BTV
         }
         void readOuterData(string 生产指令编号, DateTime 生产日期)
         {
-            daOuter = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期=#" + 生产日期.ToString() + "#;", conn);
+            daOuter = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期='" + 生产日期.ToString() + "';", conn);
             cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable(tablename1);
             bsOuter = new BindingSource();

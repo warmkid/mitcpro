@@ -69,6 +69,7 @@ namespace mySystem.Process.Bag.BTV
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
+                ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData();
                 outerBind();
