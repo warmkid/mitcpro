@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Stock
@@ -16,8 +17,8 @@ namespace mySystem.Process.Stock
 //        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
-        OleDbDataAdapter daOuter;
-        OleDbCommandBuilder cbOute;
+        SqlDataAdapter daOuter;
+        SqlCommandBuilder cbOute;
         DataTable dtOuter;
         BindingSource bsOuter;
 
@@ -91,7 +92,7 @@ namespace mySystem.Process.Stock
 
         string get退货申请单编号(int id)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品退货申请单 where ID=" + id, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 产品退货申请单 where ID=" + id, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             return dt.Rows[0]["退货申请单编号"].ToString();
@@ -102,12 +103,12 @@ namespace mySystem.Process.Stock
 
         void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货接收单'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='产品退货接收单'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -246,9 +247,9 @@ namespace mySystem.Process.Stock
 
         void readOuterData(String code)
         {
-            daOuter = new OleDbDataAdapter("select * from 产品退货接收单 where 退货申请单编号='" + code + "'", mySystem.Parameter.connOle);
+            daOuter = new SqlDataAdapter("select * from 产品退货接收单 where 退货申请单编号='" + code + "'", mySystem.Parameter.conn);
             dtOuter = new DataTable("产品退货接收单");
-            cbOute = new OleDbCommandBuilder(daOuter);
+            cbOute = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -262,7 +263,7 @@ namespace mySystem.Process.Stock
             dr["接收人"] = mySystem.Parameter.userName;
             dr["接收日期"] = DateTime.Now;
             dr["审核日期"] = DateTime.Now;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品退货申请单 where 退货申请单编号='" + _code + "'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 产品退货申请单 where 退货申请单编号='" + _code + "'", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             dr["拟退货产品销售订单编号"] = dt.Rows[0]["拟退货产品销售订单编号"];
@@ -326,12 +327,12 @@ namespace mySystem.Process.Stock
         private void btn提交审核_Click(object sender, EventArgs e)
         {
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货接收单' and 对应ID=" + _id, mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='产品退货接收单' and 对应ID=" + _id, mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -356,12 +357,12 @@ namespace mySystem.Process.Stock
 
         public override void CheckResult()
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货接收单' and 对应ID=" + _id, mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='产品退货接收单' and 对应ID=" + _id, mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -375,8 +376,8 @@ namespace mySystem.Process.Stock
             if (ckform.ischeckOk)
             {
                 // 自动生产请验单
-                da = new OleDbDataAdapter("select * from 产品退货请验单 where 退货申请单编号='" + dtOuter.Rows[0]["退货申请单编号"].ToString() + "'", mySystem.Parameter.connOle);
-                cb = new OleDbCommandBuilder(da);
+                da = new SqlDataAdapter("select * from 产品退货请验单 where 退货申请单编号='" + dtOuter.Rows[0]["退货申请单编号"].ToString() + "'", mySystem.Parameter.conn);
+                cb = new SqlCommandBuilder(da);
                 dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count >= 1)

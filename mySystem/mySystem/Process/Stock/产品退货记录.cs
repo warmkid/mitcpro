@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Stock
@@ -17,8 +18,8 @@ namespace mySystem.Process.Stock
 //        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
-        OleDbDataAdapter daOuter;
-        OleDbCommandBuilder cbOute;
+        SqlDataAdapter daOuter;
+        SqlCommandBuilder cbOute;
         DataTable dtOuter;
         BindingSource bsOuter;
 
@@ -55,12 +56,12 @@ namespace mySystem.Process.Stock
 
         void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货记录'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='产品退货记录'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -184,9 +185,9 @@ namespace mySystem.Process.Stock
 
         void readOuterData(String code)
         {
-            daOuter = new OleDbDataAdapter("select * from 产品退货记录 where 退货申请单编号='" + code + "'", mySystem.Parameter.connOle);
+            daOuter = new SqlDataAdapter("select * from 产品退货记录 where 退货申请单编号='" + code + "'", mySystem.Parameter.conn);
             dtOuter = new DataTable("产品退货记录");
-            cbOute = new OleDbCommandBuilder(daOuter);
+            cbOute = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);

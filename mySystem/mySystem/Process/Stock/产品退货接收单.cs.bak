@@ -7,18 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
-using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Stock
 {
-    public partial class 产品退货请验单 : BaseForm
+    public partial class 产品退货接收单 : BaseForm
     {
 //        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
-        SqlDataAdapter daOuter;
-        SqlCommandBuilder cbOute;
+        OleDbDataAdapter daOuter;
+        OleDbCommandBuilder cbOute;
         DataTable dtOuter;
         BindingSource bsOuter;
 
@@ -33,8 +32,42 @@ namespace mySystem.Process.Stock
 
         CheckForm ckform;
 
-        public 产品退货请验单(MainForm mainform, string code):base(mainform)
+        public 产品退货接收单(MainForm mainform, int id):base(mainform)
         {
+            // id是退货申请单ID
+            //conn = new OleDbConnection(strConnect);
+            //conn.Open();
+            InitializeComponent();
+            _code = get退货申请单编号(id);
+            fillPrinter();
+            getPeople();
+            setUseState();
+
+            // 读取数据
+
+            readOuterData(_code);
+            if (dtOuter.Rows.Count == 0)
+            {
+                DataRow dr = dtOuter.NewRow();
+                dr = writeOuterDefault(dr);
+                dtOuter.Rows.Add(dr);
+                daOuter.Update(dtOuter);
+                readOuterData(_code);
+            }
+            _id = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            outerBind();
+            setFormState();
+            setEnableReadOnly();
+
+            // 事件部分
+            //addComputerEventHandler();
+            addOtherEvenHandler();
+        }
+
+        public 产品退货接收单(MainForm mainform, string code)
+            : base(mainform)
+        {
+            // id是退货申请单ID
             //conn = new OleDbConnection(strConnect);
             //conn.Open();
             InitializeComponent();
@@ -56,14 +89,25 @@ namespace mySystem.Process.Stock
             addOtherEvenHandler();
         }
 
+        string get退货申请单编号(int id)
+        {
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品退货申请单 where ID=" + id, mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            return dt.Rows[0]["退货申请单编号"].ToString();
+        }
+
+
+
+
         void getPeople()
         {
-            SqlDataAdapter da;
+            OleDbDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='产品退货请验单'", mySystem.Parameter.conn);
+            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='产品退货接收单'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -202,9 +246,9 @@ namespace mySystem.Process.Stock
 
         void readOuterData(String code)
         {
-            daOuter = new SqlDataAdapter("select * from 产品退货请验单 where 退货申请单编号='" + code + "'", mySystem.Parameter.conn);
-            dtOuter = new DataTable("产品退货请验单");
-            cbOute = new SqlCommandBuilder(daOuter);
+            daOuter = new OleDbDataAdapter("select * from 产品退货接收单 where 退货申请单编号='" + code + "'", mySystem.Parameter.connOle);
+            dtOuter = new DataTable("产品退货接收单");
+            cbOute = new OleDbCommandBuilder(daOuter);
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -212,24 +256,24 @@ namespace mySystem.Process.Stock
 
 
 
-        //DataRow writeOuterDefault(DataRow dr)
-        //{
-        //    dr["退货申请单编号"] = _code;
-        //    dr["接收人"] = mySystem.Parameter.userName;
-        //    dr["接收日期"] = DateTime.Now;
-        //    dr["审核日期"] = DateTime.Now;
-        //    SqlDataAdapter da = new SqlDataAdapter("select * from 产品退货申请单 where 退货申请单编号='" + _code + "'", conn);
-        //    DataTable dt = new DataTable();
-        //    da.Fill(dt);
-        //    dr["拟退货产品销售订单编号"] = dt.Rows[0]["拟退货产品销售订单编号"];
-        //    dr["客户名称"] = dt.Rows[0]["客户名称"];
-        //    dr["产品名称"] = dt.Rows[0]["产品名称"];
-        //    dr["产品代码"] = dt.Rows[0]["产品代码"];
-        //    dr["产品批号"] = dt.Rows[0]["产品批号"];
-        //    dr["拟退货数量"] = dt.Rows[0]["拟退货数量"];
-        //    dr["辅计量单位"] = dt.Rows[0]["辅计量单位"];
-        //    return dr;
-        //}
+        DataRow writeOuterDefault(DataRow dr)
+        {
+            dr["退货申请单编号"] = _code;
+            dr["接收人"] = mySystem.Parameter.userName;
+            dr["接收日期"] = DateTime.Now;
+            dr["审核日期"] = DateTime.Now;
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品退货申请单 where 退货申请单编号='" + _code + "'", mySystem.Parameter.connOle);
+            DataTable dt = new DataTable();
+            da.Fill(dt);
+            dr["拟退货产品销售订单编号"] = dt.Rows[0]["拟退货产品销售订单编号"];
+            dr["客户名称"] = dt.Rows[0]["客户名称"];
+            dr["产品名称"] = dt.Rows[0]["产品名称"];
+            dr["产品代码"] = dt.Rows[0]["产品代码"];
+            dr["产品批号"] = dt.Rows[0]["产品批号"];
+            dr["拟退货数量"] = dt.Rows[0]["拟退货数量"];
+            dr["辅计量单位"] = dt.Rows[0]["辅计量单位"];
+            return dr;
+        }
 
         void outerBind()
         {
@@ -282,17 +326,17 @@ namespace mySystem.Process.Stock
         private void btn提交审核_Click(object sender, EventArgs e)
         {
 
-            SqlDataAdapter da;
-            SqlCommandBuilder cb;
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new SqlDataAdapter("select * from 待审核 where 表名='产品退货请验单' and 对应ID=" + _id, mySystem.Parameter.conn);
-            cb = new SqlCommandBuilder(da);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货接收单' and 对应ID=" + _id, mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
             DataRow dr = dt.NewRow();
-            dr["表名"] = "产品退货请验单";
+            dr["表名"] = "产品退货接收单";
             dr["对应ID"] = _id;
             dt.Rows.Add(dr);
             da.Update(dt);
@@ -312,12 +356,12 @@ namespace mySystem.Process.Stock
 
         public override void CheckResult()
         {
-            SqlDataAdapter da;
-            SqlCommandBuilder cb;
+            OleDbDataAdapter da;
+            OleDbCommandBuilder cb;
             DataTable dt;
 
-            da = new SqlDataAdapter("select * from 待审核 where 表名='产品退货请验单' and 对应ID=" + _id, mySystem.Parameter.conn);
-            cb = new SqlCommandBuilder(da);
+            da = new OleDbDataAdapter("select * from 待审核 where 表名='产品退货接收单' and 对应ID=" + _id, mySystem.Parameter.connOle);
+            cb = new OleDbCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -330,21 +374,22 @@ namespace mySystem.Process.Stock
 
             if (ckform.ischeckOk)
             {
-                // 自动生产评审单1
-                da = new SqlDataAdapter("select * from 产品退货评审单1 where 退货申请单编号='" + _code + "'", mySystem.Parameter.conn);
-                cb = new SqlCommandBuilder(da);
+                // 自动生产请验单
+                da = new OleDbDataAdapter("select * from 产品退货请验单 where 退货申请单编号='" + dtOuter.Rows[0]["退货申请单编号"].ToString() + "'", mySystem.Parameter.connOle);
+                cb = new OleDbCommandBuilder(da);
                 dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count >= 1)
                 {
-                    MessageBox.Show("产品退货评审单（1）已存在!");
+                    MessageBox.Show("退货请验单已存在！");
+
                 }
                 else
                 {
                     DataRow dr = dt.NewRow();
                     dr["退货申请单编号"] = dtOuter.Rows[0]["退货申请单编号"];
-                    dr["PAQA经理"] = "";
-                    dr["评审日期"] = DateTime.Now;
+                    dr["请验人"] = mySystem.Parameter.userName;
+                    dr["请验日期"] = DateTime.Now;
                     dr["审核日期"] = DateTime.Now;
                     for (int i = 4; i <= 10; ++i)
                     {
@@ -352,9 +397,8 @@ namespace mySystem.Process.Stock
                     }
                     dt.Rows.Add(dr);
                     da.Update(dt);
-                    MessageBox.Show("产品退货评审单（1）已生成！");
+                    MessageBox.Show("退货请验单已生成！");
                 }
-                
             }
 
             //String log = "===================================\n";
@@ -389,7 +433,7 @@ namespace mySystem.Process.Stock
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\库存\表5产品退货接请验单.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\库存\表4产品退货接收单.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
             // 修改Sheet中某行某列的值
@@ -442,8 +486,8 @@ namespace mySystem.Process.Stock
         {
             //外表信息
             mysheet.Cells[2, 2].Value = dtOuter.Rows[0]["退货申请单编号"].ToString();
-            mysheet.Cells[3, 2].Value = dtOuter.Rows[0]["请验人"].ToString();
-            mysheet.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["请验日期"]).ToString("D");
+            mysheet.Cells[3, 2].Value = dtOuter.Rows[0]["接收人"].ToString();
+            mysheet.Cells[3, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["接收日期"]).ToString("D");
             mysheet.Cells[4, 2].Value = dtOuter.Rows[0]["拟退货产品销售订单编号"].ToString();
             mysheet.Cells[4, 4].Value = dtOuter.Rows[0]["客户名称"].ToString();
             mysheet.Cells[5, 2].Value = dtOuter.Rows[0]["产品名称"].ToString();
@@ -451,9 +495,10 @@ namespace mySystem.Process.Stock
             mysheet.Cells[6, 2].Value = dtOuter.Rows[0]["产品批号"].ToString();
             mysheet.Cells[6, 4].Value = dtOuter.Rows[0]["拟退货数量"].ToString();
             mysheet.Cells[6, 5].Value = dtOuter.Rows[0]["辅计量单位"].ToString();
-            mysheet.Cells[7, 2].Value = dtOuter.Rows[0]["审核人"].ToString();
-            mysheet.Cells[7, 4].Value = Convert.ToDateTime(dtOuter.Rows[0]["审核日期"]).ToString("D");
-
+            mysheet.Cells[7, 2].Value = dtOuter.Rows[0]["外包装单据验收情况"].ToString();
+            mysheet.Cells[8, 3].Value = dtOuter.Rows[0]["审核人"].ToString();
+            mysheet.Cells[8, 5].Value = Convert.ToDateTime(dtOuter.Rows[0]["审核日期"]).ToString("D");
+            
             ///
             /// TODO:加页脚
             ///
