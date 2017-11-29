@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
-using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using System.Collections;
 
@@ -27,8 +26,8 @@ namespace mySystem.Process.Order
 
         Int32 _id;
 
-        SqlDataAdapter daOuter, daInner,da库存信息;
-        SqlCommandBuilder cbOuter, cbInner, cb库存信息;
+        OleDbDataAdapter daOuter, daInner,da库存信息;
+        OleDbCommandBuilder cbOuter, cbInner, cb库存信息;
         DataTable dtOuter, dtInner,dt未发货信息, dt库存信息;
         BindingSource bsOuter, bsInner,bs库存信息;
 
@@ -69,7 +68,7 @@ namespace mySystem.Process.Order
             innerBind();
 
 
-            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + dtOuter.Rows[0]["销售订单号"].ToString() + "'", mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dtOuter.Rows[0]["销售订单号"].ToString() + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -100,7 +99,7 @@ namespace mySystem.Process.Order
 
         private void addOtherEventHandler()
         {
-            SqlDataAdapter da = new SqlDataAdapter("select 订单号 from 销售订单 where 状态='审核完成' OR 状态='已生成采购需求单'", mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select 订单号 from 销售订单 where 状态='审核完成' OR 状态='已生成采购需求单'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<string> 销售订单号 = new List<string>();
@@ -168,12 +167,12 @@ namespace mySystem.Process.Order
 
         private void getPeople()
         {
-            SqlDataAdapter da;
+            OleDbDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new SqlDataAdapter("select * from 订单用户权限 where 步骤='出库单'", mySystem.Parameter.conn);
+            da = new OleDbDataAdapter("select * from 订单用户权限 where 步骤='出库单'", mySystem.Parameter.connOle);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -313,7 +312,7 @@ namespace mySystem.Process.Order
             string prefix = "XSCK";
             string yymmdd = DateTime.Now.ToString("yyyyMM");
             string sql = "select * from 出库单 where 出库单号 like '{0}%' order by ID";
-            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, prefix + yymmdd), mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, prefix + yymmdd), mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -330,7 +329,7 @@ namespace mySystem.Process.Order
 
         private void btn查询_Click(object sender, EventArgs e)
         {
-            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -374,8 +373,8 @@ namespace mySystem.Process.Order
 
         void readOuterData(string p)
         {
-            daOuter = new SqlDataAdapter("select * from 出库单 where 出库单号='" + p + "'", mySystem.Parameter.conn);
-            cbOuter = new SqlCommandBuilder(daOuter);
+            daOuter = new OleDbDataAdapter("select * from 出库单 where 出库单号='" + p + "'", mySystem.Parameter.connOle);
+            cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("出库单");
             bsOuter = new BindingSource();
 
@@ -384,8 +383,8 @@ namespace mySystem.Process.Order
 
         void readOuterData(int id)
         {
-            daOuter = new SqlDataAdapter("select * from 出库单 where ID=" + id, mySystem.Parameter.conn);
-            cbOuter = new SqlCommandBuilder(daOuter);
+            daOuter = new OleDbDataAdapter("select * from 出库单 where ID=" + id, mySystem.Parameter.connOle);
+            cbOuter = new OleDbCommandBuilder(daOuter);
             dtOuter = new DataTable("出库单");
             bsOuter = new BindingSource();
 
@@ -427,7 +426,7 @@ namespace mySystem.Process.Order
 
         DataRow writeOuterDefault(DataRow dr)
         {
-            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -447,10 +446,10 @@ namespace mySystem.Process.Order
 
         void readInnerData(int id)
         {
-            daInner = new SqlDataAdapter("select * from 出库单详细信息 where 出库单ID=" + id, mySystem.Parameter.conn);
+            daInner = new OleDbDataAdapter("select * from 出库单详细信息 where 出库单ID=" + id, mySystem.Parameter.connOle);
             dtInner = new DataTable("出库单详细信息");
             bsInner = new BindingSource();
-            cbInner = new SqlCommandBuilder(daInner);
+            cbInner = new OleDbCommandBuilder(daInner);
 
             daInner.Fill(dtInner);
         }
@@ -470,7 +469,7 @@ namespace mySystem.Process.Order
             // 拿到本订单下的存货代码和数量
             
             Hashtable ht存货代码2剩余数量 = new Hashtable();
-            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -484,7 +483,7 @@ namespace mySystem.Process.Order
 
             // 拿到对本订单的出库单详细信息
             // 计算剩余未出库量
-            da = new SqlDataAdapter("select * from 出库单详细信息 where 用途='" + dingdanhao + "' and 状态='已出库'", mySystem.Parameter.conn);
+            da = new OleDbDataAdapter("select * from 出库单详细信息 where 用途='" + dingdanhao + "' and 状态='已出库'", mySystem.Parameter.connOle);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -512,8 +511,8 @@ namespace mySystem.Process.Order
 
         void read库存信息(int id)
         {
-            //da库存信息 = new SqlDataAdapter("select ID,仓库名称,产品代码,产品批号,现存数量,用途,冻结状态 from 库存台帐 where 用途='" + dingdanhao + "' and 状态='合格'", conn);
-            //cb库存信息 = new SqlCommandBuilder(da库存信息);
+            //da库存信息 = new OleDbDataAdapter("select ID,仓库名称,产品代码,产品批号,现存数量,用途,冻结状态 from 库存台帐 where 用途='" + dingdanhao + "' and 状态='合格'", conn);
+            //cb库存信息 = new OleDbCommandBuilder(da库存信息);
             //dt库存信息 = new DataTable("库存台帐");
             //bs库存信息 = new BindingSource();
 
@@ -522,7 +521,7 @@ namespace mySystem.Process.Order
             //dataGridView3.DataSource = dt库存信息;
 
             Hashtable ht存货代码2剩余数量 = new Hashtable();
-            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单详细信息 where 销售订单ID=" + id, mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -534,7 +533,7 @@ namespace mySystem.Process.Order
 
             }
             List<String> DaiMaS = ht存货代码2剩余数量.Keys.OfType<String>().ToList<String>();
-            string 库存sql = @"select ID, 仓库名称,产品代码,产品名称,产品规格,产品批号,现存数量,用途,冻结状态 from (select * from 库存台帐 where 状态='合格') t where 产品代码='{0}'";
+            string 库存sql = @"select ID, 仓库名称,产品代码,产品名称,产品规格,产品批号,现存数量,用途,冻结状态 from (select * from 库存台帐 where 状态='合格') where 产品代码='{0}'";
             库存sql = string.Format(库存sql, DaiMaS[0]);
             List<String> whereS = new List<string>();
             if (DaiMaS.Count > 1) 库存sql += " or ";
@@ -544,9 +543,9 @@ namespace mySystem.Process.Order
             }
             库存sql += String.Join(" or ", whereS.ToArray());
             库存sql += " order by 产品代码";
-            da库存信息 = new SqlDataAdapter(库存sql, mySystem.Parameter.conn);
+            da库存信息 = new OleDbDataAdapter(库存sql, mySystem.Parameter.connOle);
             dt库存信息 = new DataTable("关联库存信息");
-            cb库存信息 = new SqlCommandBuilder(da库存信息);
+            cb库存信息 = new OleDbCommandBuilder(da库存信息);
             bs库存信息 = new BindingSource();
             da库存信息.Fill(dt库存信息);
             List<int> inv = new List<int>();
@@ -589,7 +588,7 @@ namespace mySystem.Process.Order
             dr["出库单ID"] = dtOuter.Rows[0]["ID"];
             dr["出库单号"] = dtOuter.Rows[0]["出库单号"];
             dr["出库日期"] = DateTime.Now;
-            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -630,7 +629,7 @@ namespace mySystem.Process.Order
 
             da库存信息.Update((DataTable)bs库存信息.DataSource);
 
-            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.conn);
+            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + tb销售订单号.Text + "'", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
@@ -649,8 +648,8 @@ namespace mySystem.Process.Order
 
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
-            SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='出库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
-            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='出库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
 
             if (dt_temp.Rows.Count == 0)
@@ -744,8 +743,8 @@ namespace mySystem.Process.Order
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='出库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
-            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='出库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -758,8 +757,8 @@ namespace mySystem.Process.Order
             if (check订单是否完成())
             {
                 MessageBox.Show("本订单已全部发货完毕，已关闭订单");
-                SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + dtOuter.Rows[0]["销售订单号"].ToString() + "'", mySystem.Parameter.conn);
-                SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + dtOuter.Rows[0]["销售订单号"].ToString() + "'", mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 dt.Rows[0]["状态"] = "已关闭";
