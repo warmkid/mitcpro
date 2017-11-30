@@ -336,10 +336,14 @@ namespace mySystem.Process.Bag.BTV
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             setDataGridViewColumns();
             innerBind();
-
+            
+            
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
             setEnableReadOnly();  //根据状态设置可读写性  
+
+
+           
         }
 
         //根据主键显示
@@ -478,8 +482,8 @@ namespace mySystem.Process.Bag.BTV
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -489,8 +493,8 @@ namespace mySystem.Process.Bag.BTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -510,7 +514,7 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["确认内容"].ReadOnly = true;
             dataGridView1.Columns["确认项目"].ReadOnly = true;
-            dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
         }
 
@@ -851,6 +855,7 @@ namespace mySystem.Process.Bag.BTV
             //throw new NotImplementedException();
             setDataGridViewBackColor();
             setDataGridViewFormat();
+            readDGVWidthFromSettingAndSet(dataGridView1);
         }
         private string fill生产班次()
         {
@@ -897,6 +902,12 @@ namespace mySystem.Process.Bag.BTV
                 rtn += "□";
             }
             return rtn;
+        }
+
+        private void BTVConfirmBefore_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

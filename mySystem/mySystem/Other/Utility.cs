@@ -510,7 +510,8 @@ namespace mySystem
             dgv.RowHeadersVisible = false;
             foreach(DataGridViewColumn dgvc in dgv.Columns)
             {
-                dgvc.AutoSizeMode = mode;
+                //dgvc.AutoSizeMode = mode;
+                dgvc.Resizable = DataGridViewTriState.True;
                 dgvc.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
