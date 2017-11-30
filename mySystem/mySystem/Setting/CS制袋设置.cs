@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Setting
 {
@@ -19,50 +20,50 @@ namespace mySystem.Setting
             Bind();
         }
 
-        private OleDbDataAdapter da开机;
+        private SqlDataAdapter da开机;
         private DataTable dt开机;
         private BindingSource bs开机;
-        private OleDbCommandBuilder cb开机;
-        private OleDbDataAdapter da清场;
+        private SqlCommandBuilder cb开机;
+        private SqlDataAdapter da清场;
         private DataTable dt清场;
         private BindingSource bs清场;
-        private OleDbCommandBuilder cb清场;
-        private OleDbDataAdapter da交接班;
+        private SqlCommandBuilder cb清场;
+        private SqlDataAdapter da交接班;
         private DataTable dt交接班;
         private BindingSource bs交接班;
-        private OleDbCommandBuilder cb交接班;
-        private OleDbDataAdapter da产品;
+        private SqlCommandBuilder cb交接班;
+        private SqlDataAdapter da产品;
         private DataTable dt产品;
         private BindingSource bs产品;
-        private OleDbCommandBuilder cb产品;
-        private OleDbDataAdapter da产品编码;
+        private SqlCommandBuilder cb产品;
+        private SqlDataAdapter da产品编码;
         private DataTable dt产品编码;
         private BindingSource bs产品编码;
-        private OleDbCommandBuilder cb产品编码;
-        private OleDbDataAdapter da产品规格;
+        private SqlCommandBuilder cb产品编码;
+        private SqlDataAdapter da产品规格;
         private DataTable dt产品规格;
         private BindingSource bs产品规格;
-        private OleDbCommandBuilder cb产品规格;
-        private OleDbDataAdapter da封边;
+        private SqlCommandBuilder cb产品规格;
+        private SqlDataAdapter da封边;
         private DataTable dt封边;
         private BindingSource bs封边;
-        private OleDbCommandBuilder cb封边;
-        private OleDbDataAdapter da工艺;
+        private SqlCommandBuilder cb封边;
+        private SqlDataAdapter da工艺;
         private DataTable dt工艺;
         private BindingSource bs工艺;
-        private OleDbCommandBuilder cb工艺;
-        private OleDbDataAdapter da物料代码;
+        private SqlCommandBuilder cb工艺;
+        private SqlDataAdapter da物料代码;
         private DataTable dt物料代码;
         private BindingSource bs物料代码;
-        private OleDbCommandBuilder cb物料代码;
-        private OleDbDataAdapter da人员;
+        private SqlCommandBuilder cb物料代码;
+        private SqlDataAdapter da人员;
         private DataTable dt人员;
         private BindingSource bs人员;
-        private OleDbCommandBuilder cb人员;
-        private OleDbDataAdapter da权限;
+        private SqlCommandBuilder cb人员;
+        private SqlDataAdapter da权限;
         private DataTable dt权限;
         private BindingSource bs权限;
-        private OleDbCommandBuilder cb权限;
+        private SqlCommandBuilder cb权限;
 
 
         //dgv样式初始化
@@ -106,8 +107,8 @@ namespace mySystem.Setting
         {
             //**************************   开机    ***********************************
             dt开机 = new DataTable("设置制袋机组开机前确认项目"); //""中的是表名
-            da开机 = new OleDbDataAdapter("select * from 设置制袋机组开机前确认项目", mySystem.Parameter.connOle);
-            cb开机 = new OleDbCommandBuilder(da开机);
+            da开机 = new SqlDataAdapter("select * from 设置制袋机组开机前确认项目", mySystem.Parameter.conn);
+            cb开机 = new SqlCommandBuilder(da开机);
             dt开机.Columns.Add("序号", System.Type.GetType("System.String"));
             da开机.Fill(dt开机);
             bs开机.DataSource = dt开机;
@@ -123,8 +124,8 @@ namespace mySystem.Setting
 
             //**************************   清场    ***********************************
             dt清场 = new DataTable("设置清场记录"); //""中的是表名
-            da清场 = new OleDbDataAdapter("select * from 设置清场记录", mySystem.Parameter.connOle);
-            cb清场 = new OleDbCommandBuilder(da清场);
+            da清场 = new SqlDataAdapter("select * from 设置清场记录", mySystem.Parameter.conn);
+            cb清场 = new SqlCommandBuilder(da清场);
             dt清场.Columns.Add("序号", System.Type.GetType("System.String"));
             da清场.Fill(dt清场);
             bs清场.DataSource = dt清场;
@@ -140,8 +141,8 @@ namespace mySystem.Setting
 
             //**************************   岗位交接班    ***********************************
             dt交接班 = new DataTable("设置岗位交接班项目"); //""中的是表名
-            da交接班 = new OleDbDataAdapter("select * from 设置岗位交接班项目", mySystem.Parameter.connOle);
-            cb交接班 = new OleDbCommandBuilder(da交接班);
+            da交接班 = new SqlDataAdapter("select * from 设置岗位交接班项目", mySystem.Parameter.conn);
+            cb交接班 = new SqlCommandBuilder(da交接班);
             dt交接班.Columns.Add("序号", System.Type.GetType("System.String"));
             da交接班.Fill(dt交接班);
             bs交接班.DataSource = dt交接班;
@@ -155,8 +156,8 @@ namespace mySystem.Setting
 
             //************************    产品     *******************************************
             dt产品 = new DataTable("设置CS制袋产品"); //""中的是表名
-            da产品 = new OleDbDataAdapter("select * from 设置CS制袋产品", mySystem.Parameter.connOle);
-            cb产品 = new OleDbCommandBuilder(da产品);
+            da产品 = new SqlDataAdapter("select * from 设置CS制袋产品", mySystem.Parameter.conn);
+            cb产品 = new SqlCommandBuilder(da产品);
             dt产品.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品.Fill(dt产品);
             bs产品.DataSource = dt产品;
@@ -171,8 +172,8 @@ namespace mySystem.Setting
 
             //**************************   产品编码    ***********************************
             dt产品编码 = new DataTable("设置CS制袋产品代码"); //""中的是表名
-            da产品编码 = new OleDbDataAdapter("select * from 设置CS制袋产品代码", mySystem.Parameter.connOle);
-            cb产品编码 = new OleDbCommandBuilder(da产品编码);
+            da产品编码 = new SqlDataAdapter("select * from 设置CS制袋产品代码", mySystem.Parameter.conn);
+            cb产品编码 = new SqlCommandBuilder(da产品编码);
             dt产品编码.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品编码.Fill(dt产品编码);
             bs产品编码.DataSource = dt产品编码;
@@ -187,8 +188,8 @@ namespace mySystem.Setting
 
             //**************************   产品规格    ***********************************
             dt产品规格 = new DataTable("设置CS制袋产品规格"); //""中的是表名
-            da产品规格 = new OleDbDataAdapter("select * from 设置CS制袋产品规格", mySystem.Parameter.connOle);
-            cb产品规格 = new OleDbCommandBuilder(da产品规格);
+            da产品规格 = new SqlDataAdapter("select * from 设置CS制袋产品规格", mySystem.Parameter.conn);
+            cb产品规格 = new SqlCommandBuilder(da产品规格);
             dt产品规格.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品规格.Fill(dt产品规格);
             bs产品规格.DataSource = dt产品规格;
@@ -204,8 +205,8 @@ namespace mySystem.Setting
 
             //**************************   封边    ***********************************
             dt封边 = new DataTable("设置CS制袋封边"); //""中的是表名
-            da封边 = new OleDbDataAdapter("select * from 设置CS制袋封边", mySystem.Parameter.connOle);
-            cb封边 = new OleDbCommandBuilder(da封边);
+            da封边 = new SqlDataAdapter("select * from 设置CS制袋封边", mySystem.Parameter.conn);
+            cb封边 = new SqlCommandBuilder(da封边);
             dt封边.Columns.Add("序号", System.Type.GetType("System.String"));
             da封边.Fill(dt封边);
             bs封边.DataSource = dt封边;
@@ -220,8 +221,8 @@ namespace mySystem.Setting
 
             //**************************   工艺    ***********************************
             dt工艺 = new DataTable("设置CS制袋工艺"); //""中的是表名
-            da工艺 = new OleDbDataAdapter("select * from 设置CS制袋工艺", mySystem.Parameter.connOle);
-            cb工艺 = new OleDbCommandBuilder(da工艺);
+            da工艺 = new SqlDataAdapter("select * from 设置CS制袋工艺", mySystem.Parameter.conn);
+            cb工艺 = new SqlCommandBuilder(da工艺);
             dt工艺.Columns.Add("序号", System.Type.GetType("System.String"));
             da工艺.Fill(dt工艺);
             bs工艺.DataSource = dt工艺;
@@ -236,8 +237,8 @@ namespace mySystem.Setting
 
             //************************    物料代码     *******************************************
             dt物料代码 = new DataTable("设置物料代码"); //""中的是表名
-            da物料代码 = new OleDbDataAdapter("select * from 设置物料代码", mySystem.Parameter.connOle);
-            cb物料代码 = new OleDbCommandBuilder(da物料代码);
+            da物料代码 = new SqlDataAdapter("select * from 设置物料代码", mySystem.Parameter.conn);
+            cb物料代码 = new SqlCommandBuilder(da物料代码);
             dt物料代码.Columns.Add("序号", System.Type.GetType("System.String"));
             da物料代码.Fill(dt物料代码);
             bs物料代码.DataSource = dt物料代码;
@@ -252,8 +253,8 @@ namespace mySystem.Setting
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("用户"); //""中的是表名
-            da人员 = new OleDbDataAdapter("select * from 用户", mySystem.Parameter.connOle);
-            cb人员 = new OleDbCommandBuilder(da人员);
+            da人员 = new SqlDataAdapter("select * from 用户", mySystem.Parameter.conn);
+            cb人员 = new SqlCommandBuilder(da人员);
             dt人员.Columns.Add("序号", System.Type.GetType("System.String"));
             da人员.Fill(dt人员);
             bs人员.DataSource = dt人员;
@@ -269,8 +270,8 @@ namespace mySystem.Setting
 
             //************************    人员权限     *******************************************
             dt权限 = new DataTable("用户权限"); //""中的是表名
-            da权限 = new OleDbDataAdapter("select * from 用户权限", mySystem.Parameter.connOle);
-            cb权限 = new OleDbCommandBuilder(da权限);
+            da权限 = new SqlDataAdapter("select * from 用户权限", mySystem.Parameter.conn);
+            cb权限 = new SqlCommandBuilder(da权限);
             dt权限.Columns.Add("序号", System.Type.GetType("System.String"));
             da权限.Fill(dt权限);
             bs权限.DataSource = dt权限;
@@ -625,11 +626,10 @@ namespace mySystem.Setting
         private Boolean checkPeopleExist()
         {
             Boolean b = true;
-            string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/user.mdb;Persist Security Info=False";
-            OleDbConnection conn = new OleDbConnection(strCon);
+            string strCon = "server=" + Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(strCon);
             conn.Open();
-            OleDbCommand comm = new OleDbCommand();
+            SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
 
             foreach (DataRow dr in dt人员.Rows)
@@ -642,7 +642,7 @@ namespace mySystem.Setting
                 {
                     String name = dr["用户名"].ToString();
                     comm.CommandText = "select * from [users] where 姓名 = " + "'" + name + "'";
-                    OleDbDataReader reader = comm.ExecuteReader();
+                    SqlDataReader reader = comm.ExecuteReader();
                     if (!reader.HasRows)
                     {
                         b = false;
@@ -687,10 +687,10 @@ namespace mySystem.Setting
         private Boolean EachPeopleRightCheck(String name)
         {
             Boolean b;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = mySystem.Parameter.conn;
             comm.CommandText = "select * from 用户 where 用户名 = " + "'" + name + "' ";
-            OleDbDataReader reader = comm.ExecuteReader();
+            SqlDataReader reader = comm.ExecuteReader();
             if (reader.HasRows)
             { b = true; }
             else
