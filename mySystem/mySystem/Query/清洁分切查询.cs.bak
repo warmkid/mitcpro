@@ -8,13 +8,11 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
-using mySystem.Process.Bag;
 using mySystem.Process.CleanCut;
-using mySystem.Process.Bag.CS;
 
 namespace mySystem.Query
 {
-    public partial class CS制袋查询 : BaseForm
+    public partial class 清洁分切查询 : BaseForm
     {
         DateTime date1;//起始时间
         DateTime date2;//结束时间
@@ -22,12 +20,12 @@ namespace mySystem.Query
         String Instruction = null;//下拉框获取的生产指令
         int InstruID;//下拉框获取的生产指令ID
         String tableName = null;
-        private SqlDataAdapter da;
+        private OleDbDataAdapter da;
         private DataTable dt;
         private BindingSource bs;
-        private SqlCommandBuilder cb;  
+        private OleDbCommandBuilder cb;  
 
-        public CS制袋查询()
+        public 清洁分切查询()
         {
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
@@ -62,10 +60,10 @@ namespace mySystem.Query
         {
             if (!Parameter.isSqlOk)
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = mySystem.Parameter.conn;
-                comm.CommandText = "select * from 生产指令";
-                SqlDataReader reader = comm.ExecuteReader();
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
+                comm.CommandText = "select * from 清洁分切工序生产指令 ";
+                OleDbDataReader reader = comm.ExecuteReader();
                 if (reader.HasRows)
                 {
                     comboBox1.Items.Clear();
@@ -77,17 +75,29 @@ namespace mySystem.Query
                 comm.Dispose();
             }
             else
-            { }
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = Parameter.conn;
+                comm.CommandText = "select * from 清洁分切工序生产指令 ";
+                SqlDataReader reader = comm.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader["生产指令编号"]);
+                    }
+                }
+                comm.Dispose();
+            }
         }
-
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Instruction = comboBox1.SelectedItem.ToString();
-            SqlCommand comm = new SqlCommand();
-            comm.Connection = mySystem.Parameter.conn;
-            comm.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "'";
-            SqlDataReader reader = comm.ExecuteReader();
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
+            comm.CommandText = "select * from 清洁分切工序生产指令 where 生产指令编号 = '" + Instruction + "'";
+            OleDbDataReader reader = comm.ExecuteReader();
             if (reader.Read())
             {
                 InstruID = Convert.ToInt32(reader["ID"]);
@@ -114,7 +124,7 @@ namespace mySystem.Query
             dgv.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dgv.Font = new Font("宋体", 12);
-
+         
         }
 
         private void Bind()
@@ -123,83 +133,41 @@ namespace mySystem.Query
             {
                 switch (tableName)
                 {
-                    case "制袋生产领料记录":
+                    case "清洁分切生产记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "CS制袋领料记录", "操作员", "操作日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "清洁分切生产记录", "操作人", "操作日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "CS制袋领料记录", "操作员", "操作日期", null); }
+                        { EachBind(this.dgv, "清洁分切生产记录", "操作人", "操作日期", null); }
                         break;
-                    case "产品内包装记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品内包装记录", "审核员", null, "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "产品内包装记录", "审核员", null, null); }
+                    case "清洁分切日报表":
+                        //if (comboBox1.SelectedIndex != -1)
+                        //{ EachBind(this.dgv, "清洁分切日报表", "操作人", "操作日期", "生产指令ID"); }
+                        //else
+                        //{ EachBind(this.dgv, "清洁分切日报表", "操作人", "操作日期", null); }
                         break;
-                    case "CS制袋日报表":
+                    case "清洁分切开机前确认表":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "CS制袋日报表", "审核员", null, "生产指令ID"); }
+                        { EachBind(this.dgv, "清洁分切开机确认", "确认人", "确认日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "CS制袋日报表", "审核员", null, null); }
+                        { EachBind(this.dgv, "清洁分切开机确认", "确认人", "确认日期", null); }
                         break;
-                    case "产品外观和尺寸检验记录":
+                    case "清洁分切运行记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "操作日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "清洁分切运行记录", "确认人", "确认日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "操作日期", null); }
-                        break;
-                    case "产品热合强度检验记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", null); }
-                        break;
-                    case "2#制袋机开机前确认表":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "制袋机组开机前确认表", "操作员", "操作日期", "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "制袋机组开机前确认表", "操作员", "操作日期", null); }
-                        break;
-                    case "2#制袋机运行记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "制袋机组运行记录", "审核员", "生产日期", "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "制袋机组运行记录", "审核员", "生产日期", null); }
+                        { EachBind(this.dgv, "清洁分切运行记录", "确认人", "确认日期", null); }
                         break;
                     case "清场记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "清场记录", "操作员", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "清场记录", "确认人", "生产日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "清场记录", "操作员", "生产日期", null); }
+                        { EachBind(this.dgv, "清场记录", "确认人", "生产日期", null); }   
                         break;
-                    case "制袋工序批生产记录":
+                    case "清洁分切批生产记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "批生产记录表", "汇总人", "开始生产时间", null); }
-                        break;
-                    case "产品外包装记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品外包装记录表", "审核员", null, "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "产品外包装记录表", "审核员", null, null); }
-                        break;
-                    case "生产退料记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "生产退料记录表", "审核员", null, "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "生产退料记录表", "审核员", null, null); }
-                        break;
-                    case "洁净区温湿度记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "洁净区温湿度记录表", "审核员", null, "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "洁净区温湿度记录表", "审核员", null, null); }
-                        break;
-                    case "岗位交接班记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "岗位交接班记录", null, "生产日期", null); }
                         break;
                     case "生产领料申请单":
                         if (comboBox1.SelectedIndex != -1)
@@ -207,17 +175,20 @@ namespace mySystem.Query
                         else
                         { EachBind(this.dgv, "生产领料申请单表", "审核员", null, null); }
                         break;
+
                     default:
                         break;
                 }
+               
             }
 
-            catch(Exception ee)
+            catch (Exception ee)
             {
-                MessageBox.Show("输入有误，请重新输入"+ee.Message+"\n"+ee.StackTrace, "错误");
+                MessageBox.Show("输入有误，请重新输入" + ee.Message + "\n" + ee.StackTrace, "错误");
                 return;
             }
             Utility.setDataGridViewAutoSizeMode(dgv);
+         
         }
 
         // 各表查询
@@ -225,23 +196,23 @@ namespace mySystem.Query
         {
             dt = new DataTable(tblName); //""中的是表名
             if (person != null && startDate != null && instruID == null) // 人 + 日期
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
             else if (person == null && startDate != null && instruID != null) // 日期 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person != null && startDate == null && instruID != null) // 人 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person != null && startDate == null && instruID == null) // 人 
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.connOle);
             else if (person == null && startDate != null && instruID == null) // 日期
-                da = new SqlDataAdapter("select * from " + tblName + " where " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
             else if (person == null && startDate == null && instruID != null) // 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person == null && startDate == null && instruID == null) // 只有表名
-                da = new SqlDataAdapter("select * from " + tblName, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
             else if (person != null && startDate != null && instruID != null) // 人 + 日期 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
 
-            cb = new SqlCommandBuilder(da);
+            cb = new OleDbCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
             bs.DataSource = dt;
@@ -249,8 +220,8 @@ namespace mySystem.Query
             dgv.DataSource = bs.DataSource; //绑定
             //显示序号
             setDataGridViewRowNums();
-        }        
-
+        }
+       
 
         //填序号列的值
         private void setDataGridViewRowNums()
@@ -282,12 +253,14 @@ namespace mySystem.Query
             }
 
             Bind();
+            if (dgv.Rows.Count > 0)
+                dgv.FirstDisplayedScrollingRowIndex = dgv.Rows.Count - 1;
         }
-
 
         //双击弹出界面
         private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
+            
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
                 try
@@ -296,62 +269,35 @@ namespace mySystem.Query
                     int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
                     switch (tableName)
                     {
-                        case "制袋生产领料记录":
-                            MaterialRecord form1 = new MaterialRecord(mainform, ID);
+                        case "清洁分切生产记录":
+                            CleanCut_Productrecord form1 = new CleanCut_Productrecord(mainform, ID);
                             form1.Show();
                             break;
-                        case "产品内包装记录":
-                            CSBag_InnerPackaging form2 = new CSBag_InnerPackaging(mainform, ID);
-                            form2.Show();
+                        case "清洁分切日报表":
+                            //DailyRecord form2 = new DailyRecord(mainform, ID);
+                            //form2.Show();
                             break;
-                        case "CS制袋日报表":
-                            //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
-                            //form3.Show();
+                        case "清洁分切开机前确认表":
+                            CleanCut_CheckBeforePower form3 = new CleanCut_CheckBeforePower(mainform, ID);
+                            form3.Show();
                             break;
-                        case "产品外观和尺寸检验记录":
-                            产品外观和尺寸检验记录 form4 = new 产品外观和尺寸检验记录(mainform, ID);
+                        case "清洁分切运行记录":
+                            CleanCut_RunRecord form4 = new CleanCut_RunRecord(mainform, ID);
                             form4.Show();
                             break;
-                        case "产品热合强度检验记录":
-                            产品热合强度检验记录 form5 = new 产品热合强度检验记录(mainform, ID);
+                        case "清场记录":
+                            Record_cleansite_cut form5 = new Record_cleansite_cut(mainform, ID);
                             form5.Show();
                             break;
-                        case "2#制袋机开机前确认表":
-                            CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform, ID);
-                            form6.Show();
-                            break;
-                        case "2#制袋机运行记录":
-                            RunningRecord form7 = new RunningRecord(mainform, ID);
-                            form7.Show();
-                            break;
-                        case "清场记录":
-                            清场记录 myform = new 清场记录(mainform, ID);
-                            myform.Show();
-                            break;
-                        case "制袋工序批生产记录":
-                            Record_batch_bag form8 = new Record_batch_bag(mainform, ID);
-                            form8.Show();
-                            break;
-                        case "产品外包装记录":
-                            CS产品外包装记录 form9 = new CS产品外包装记录(mainform, ID);
-                            form9.ShowDialog();
-                            break;
-                        case "生产退料记录":
-                            CS生产退料记录 form10 = new CS生产退料记录(mainform, ID);
-                            form10.ShowDialog();
-                            break;
-                        case "洁净区温湿度记录":
-                            CS洁净区温湿度记录 form11 = new CS洁净区温湿度记录(mainform, ID);
-                            form11.ShowDialog();
-                            break;
-                        case "岗位交接班记录":
-                            HandOver form12 = new HandOver(mainform, ID);
-                            form12.ShowDialog();
+                        case "清洁分切批生产记录":
+                            //CleanCut_Cover form6= new CleanCut_Cover(mainform, ID);
+                            //form6.Show();
                             break;
                         case "生产领料申请单":
-                            CS生产领料申请单 form13 = new CS生产领料申请单(mainform, ID);
+                            清洁分切生产领料申请单 form7 = new 清洁分切生产领料申请单(mainform, ID);
 
                             break;
+
                         default:
                             break;
                     }
@@ -379,6 +325,10 @@ namespace mySystem.Query
             catch
             { }
             try
+            { setDataGridViewBackColor("审核人"); }
+            catch
+            { }
+            try
             { setDataGridViewBackColor("审核员"); }
             catch
             { }
@@ -400,11 +350,6 @@ namespace mySystem.Query
                 }
             }
         }
-
-
-
-
-
 
 
     }

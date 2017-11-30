@@ -528,12 +528,11 @@ namespace mySystem
         public static int getMaterialAmountFromQRcode(string QRcode)
         {
             int rtn;
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection connToOrder = new OleDbConnection(strConnect);
-            OleDbDataAdapter da;
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection connToOrder = new SqlConnection(strConnect);
+            SqlDataAdapter da;
             DataTable dt = new DataTable();
-            da = new OleDbDataAdapter("select 数量 from 二维码信息 where 二维码 ='" + QRcode + "'", connToOrder);
+            da = new SqlDataAdapter("select 数量 from 二维码信息 where 二维码 ='" + QRcode + "'", connToOrder);
             da.Fill(dt);
             if (dt.Rows.Count < 1)
             {

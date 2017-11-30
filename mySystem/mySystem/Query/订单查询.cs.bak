@@ -7,16 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
-using System.Data.SqlClient;
 
 namespace mySystem.Query
 {
     public partial class 订单查询 : BaseForm
     {
 
-        SqlDataAdapter da销售订单,da采购订单;
+        OleDbDataAdapter da销售订单,da采购订单;
         DataTable dt销售订单,dt采购订单;
-        SqlCommandBuilder cb采购订单;
+        OleDbCommandBuilder cb采购订单;
 
         public 订单查询(MainForm mainform):base(mainform)
         {
@@ -86,7 +85,7 @@ namespace mySystem.Query
                 if (dgv采购订单.Columns[e.ColumnIndex].Name == "用途")
                 {
                     string 销售订单号 = dgv采购订单["用途", e.RowIndex].Value.ToString();
-                    SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 订单号='" + 销售订单号 + "'", mySystem.Parameter.conn);
+                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 订单号='" + 销售订单号 + "'", mySystem.Parameter.connOle);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     if (dt.Rows.Count > 0)
@@ -133,7 +132,7 @@ namespace mySystem.Query
             string 产品代码 =tb销售订单产品代码.Text;
             string 产品名称 = tb销售订单产品名称.Text;
             string sql = "select 销售订单.订单号,销售订单.订单日期,销售订单.客户简称,销售订单详细信息.存货代码,销售订单详细信息.存货名称,销售订单详细信息.规格型号 from 销售订单,销售订单详细信息 where 销售订单详细信息.存货代码 like '%{0}%' and 销售订单详细信息.存货名称 like '%{1}%' and 销售订单详细信息.销售订单ID=销售订单.ID";
-            da销售订单 = new SqlDataAdapter(string.Format(sql, 产品代码, 产品名称),mySystem.Parameter.conn);
+            da销售订单 = new OleDbDataAdapter(string.Format(sql, 产品代码, 产品名称),mySystem.Parameter.connOle);
             dt销售订单 = new DataTable("销售订单详细信息");
             da销售订单.Fill(dt销售订单);
             dgv销售订单.DataSource = dt销售订单;
@@ -145,9 +144,9 @@ namespace mySystem.Query
             string 用途 = tb采购订单销售订单.Text;
             string 供应商= tb采购订单供应商.Text;
             string sql = "select * from 采购订单详细信息 where 存货代码 like '%{0}%' and 用途 like '%{1}%' and 供应商 like '%{2}%'";
-            da采购订单 = new SqlDataAdapter(string.Format(sql, 产品代码, 用途, 供应商), mySystem.Parameter.conn);
+            da采购订单 = new OleDbDataAdapter(string.Format(sql, 产品代码, 用途, 供应商), mySystem.Parameter.connOle);
             dt采购订单 = new DataTable("采购订单详细信息");
-            cb采购订单 = new SqlCommandBuilder(da采购订单);
+            cb采购订单 = new OleDbCommandBuilder(da采购订单);
             da采购订单.Fill(dt采购订单);
             dgv采购订单.DataSource = dt采购订单;
 

@@ -475,7 +475,7 @@ namespace mySystem.Process.Extruction.A
                 cbOuter_sql = new SqlCommandBuilder(daOuter_sql);
                 dtOuter = new DataTable(tablename1);
                 bsOuter = new BindingSource();
-                daOuter.Fill(dtOuter);
+                daOuter_sql.Fill(dtOuter);
             }
         }
         private void readInnerData(int id)

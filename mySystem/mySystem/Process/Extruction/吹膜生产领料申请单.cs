@@ -55,7 +55,7 @@ namespace mySystem.Process.Extruction
 
         void variableInit(int id)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产领料申请单表 where ID=" + id, connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产领料申请单表 where ID=" + id, mySystem.Parameter.conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);

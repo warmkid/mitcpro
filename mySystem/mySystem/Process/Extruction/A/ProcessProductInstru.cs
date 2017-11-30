@@ -292,12 +292,11 @@ namespace BatchProductRecord
             ht代码面数 = new Hashtable();
             if (!mySystem.Parameter.isSqlOk)
             {
-                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-                OleDbConnection conn;
-                conn = new OleDbConnection(strConnect);
+                string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection conn;
+                conn = new SqlConnection(strConnect);
                 conn.Open();
-                OleDbDataAdapter da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+                SqlDataAdapter da = new SqlDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
 
                 DataTable dt = new DataTable();
                 da.Fill(dt);
@@ -446,12 +445,11 @@ namespace BatchProductRecord
             //    }
             //}
 
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection conn;
-            conn = new OleDbConnection(strConnect);
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn;
+            conn = new SqlConnection(strConnect);
             conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+            SqlDataAdapter da = new SqlDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
              for (int i = 0; i < dt.Rows.Count; i++)

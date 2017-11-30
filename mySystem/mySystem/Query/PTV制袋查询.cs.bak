@@ -7,14 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
-using System.Data.SqlClient;
-using mySystem.Process.Bag;
-using mySystem.Process.CleanCut;
-using mySystem.Process.Bag.CS;
+using mySystem.Process.Bag.PTV;
 
 namespace mySystem.Query
 {
-    public partial class CS制袋查询 : BaseForm
+    public partial class PTV制袋查询 : BaseForm
     {
         DateTime date1;//起始时间
         DateTime date2;//结束时间
@@ -22,12 +19,12 @@ namespace mySystem.Query
         String Instruction = null;//下拉框获取的生产指令
         int InstruID;//下拉框获取的生产指令ID
         String tableName = null;
-        private SqlDataAdapter da;
+        private OleDbDataAdapter da;
         private DataTable dt;
         private BindingSource bs;
-        private SqlCommandBuilder cb;  
+        private OleDbCommandBuilder cb;  
 
-        public CS制袋查询()
+        public PTV制袋查询()
         {
             InitializeComponent();
             comboInit(); //从数据库中读取生产指令
@@ -62,10 +59,10 @@ namespace mySystem.Query
         {
             if (!Parameter.isSqlOk)
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = mySystem.Parameter.conn;
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
                 comm.CommandText = "select * from 生产指令";
-                SqlDataReader reader = comm.ExecuteReader();
+                OleDbDataReader reader = comm.ExecuteReader();
                 if (reader.HasRows)
                 {
                     comboBox1.Items.Clear();
@@ -80,14 +77,13 @@ namespace mySystem.Query
             { }
         }
 
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Instruction = comboBox1.SelectedItem.ToString();
-            SqlCommand comm = new SqlCommand();
-            comm.Connection = mySystem.Parameter.conn;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
             comm.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "'";
-            SqlDataReader reader = comm.ExecuteReader();
+            OleDbDataReader reader = comm.ExecuteReader();
             if (reader.Read())
             {
                 InstruID = Convert.ToInt32(reader["ID"]);
@@ -99,6 +95,7 @@ namespace mySystem.Query
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             tableName = comboBox2.SelectedItem.ToString();
+
         }
 
         //dgv样式初始化
@@ -123,48 +120,60 @@ namespace mySystem.Query
             {
                 switch (tableName)
                 {
-                    case "制袋生产领料记录":
+                    case "生产领料使用记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "CS制袋领料记录", "操作员", "操作日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "生产领料使用记录", "操作员", "操作日期", "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "CS制袋领料记录", "操作员", "操作日期", null); }
-                        break;
+                        { EachBind(this.dgv, "生产领料使用记录", "操作员", "操作日期", null); }
+                        break;                    
                     case "产品内包装记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "产品内包装记录", "审核员", null, "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "产品内包装记录", "审核员", null, null); }
                         break;
-                    case "CS制袋日报表":
+                    case "PTV生产日报表":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "CS制袋日报表", "审核员", null, "生产指令ID"); }
+                        { EachBind(this.dgv, "PTV生产日报表详细信息", null, "月份", null); }
                         else
-                        { EachBind(this.dgv, "CS制袋日报表", "审核员", null, null); }
+                        { EachBind(this.dgv, "PTV生产日报表详细信息", null, "月份", null); }
                         break;
-                    case "产品外观和尺寸检验记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "操作日期", "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "操作日期", null); }
-                        break;
-                    case "产品热合强度检验记录":
-                        if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", "生产指令ID"); }
-                        else
-                        { EachBind(this.dgv, "产品热合强度检验记录", "整理人", "整理时间", null); }
-                        break;
-                    case "2#制袋机开机前确认表":
+                    case "PTV生产开机确认表":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "制袋机组开机前确认表", "操作员", "操作日期", "生产指令ID"); }
                         else
                         { EachBind(this.dgv, "制袋机组开机前确认表", "操作员", "操作日期", null); }
                         break;
-                    case "2#制袋机运行记录":
+                    case "底封机运行记录":
                         if (comboBox1.SelectedIndex != -1)
-                        { EachBind(this.dgv, "制袋机组运行记录", "审核员", "生产日期", "生产指令ID"); }
+                        { EachBind(this.dgv, "底封机运行记录", "审核员", null, "生产指令ID"); }
                         else
-                        { EachBind(this.dgv, "制袋机组运行记录", "审核员", "生产日期", null); }
+                        { EachBind(this.dgv, "底封机运行记录", "审核员", null, null); }
                         break;
+                    case "圆口焊接机运行记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "圆口焊接机运行记录", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "圆口焊接机运行记录", "审核员", null, null); }
+                        break;
+                    case "泄漏测试记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "泄漏测试记录", "审核员", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "泄漏测试记录", "审核员", "生产日期", null); }
+                        break;
+                    case "超声波焊接记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "超声波焊接记录", "审核员", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "超声波焊接记录", "审核员", "生产日期", null); }
+                        break;
+                    case "瓶口焊接机运行记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "瓶口焊接机运行记录", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "瓶口焊接机运行记录", "审核员", null, null); }
+                        break;                   
                     case "清场记录":
                         if (comboBox1.SelectedIndex != -1)
                         { EachBind(this.dgv, "清场记录", "操作员", "生产日期", "生产指令ID"); }
@@ -207,14 +216,15 @@ namespace mySystem.Query
                         else
                         { EachBind(this.dgv, "生产领料申请单表", "审核员", null, null); }
                         break;
+
                     default:
                         break;
                 }
             }
 
-            catch(Exception ee)
+            catch (Exception ee)
             {
-                MessageBox.Show("输入有误，请重新输入"+ee.Message+"\n"+ee.StackTrace, "错误");
+                MessageBox.Show("输入有误，请重新输入" + ee.Message + "\n" + ee.StackTrace, "错误");
                 return;
             }
             Utility.setDataGridViewAutoSizeMode(dgv);
@@ -225,23 +235,23 @@ namespace mySystem.Query
         {
             dt = new DataTable(tblName); //""中的是表名
             if (person != null && startDate != null && instruID == null) // 人 + 日期
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
             else if (person == null && startDate != null && instruID != null) // 日期 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person != null && startDate == null && instruID != null) // 人 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person != null && startDate == null && instruID == null) // 人 
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.connOle);
             else if (person == null && startDate != null && instruID == null) // 日期
-                da = new SqlDataAdapter("select * from " + tblName + " where " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
             else if (person == null && startDate == null && instruID != null) // 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person == null && startDate == null && instruID == null) // 只有表名
-                da = new SqlDataAdapter("select * from " + tblName, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
             else if (person != null && startDate != null && instruID != null) // 人 + 日期 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
 
-            cb = new SqlCommandBuilder(da);
+            cb = new OleDbCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
             bs.DataSource = dt;
@@ -249,7 +259,7 @@ namespace mySystem.Query
             dgv.DataSource = bs.DataSource; //绑定
             //显示序号
             setDataGridViewRowNums();
-        }        
+        }
 
 
         //填序号列的值
@@ -261,6 +271,7 @@ namespace mySystem.Query
                 this.dgv.Rows[i].Cells["序号"].Value = (i + 1).ToString();
             }
         }
+
 
         private void SearchBtn_Click(object sender, EventArgs e)
         {
@@ -284,7 +295,6 @@ namespace mySystem.Query
             Bind();
         }
 
-
         //双击弹出界面
         private void dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -296,65 +306,75 @@ namespace mySystem.Query
                     int ID = Convert.ToInt32(this.dgv.Rows[selectIndex].Cells["ID"].Value);
                     switch (tableName)
                     {
-                        case "制袋生产领料记录":
-                            MaterialRecord form1 = new MaterialRecord(mainform, ID);
-                            form1.Show();
+                        case "生产领料使用记录":
+                            PTVBag_materialrecord material = new PTVBag_materialrecord(mainform, ID);
+                            material.Show();
                             break;
                         case "产品内包装记录":
-                            CSBag_InnerPackaging form2 = new CSBag_InnerPackaging(mainform, ID);
-                            form2.Show();
+                            PTVBag_innerpackaging inner = new PTVBag_innerpackaging(mainform, ID);
+                            inner.Show();
                             break;
-                        case "CS制袋日报表":
-                            //Chart_daily_cs form3 = new Chart_daily_cs(mainform, ID);
-                            //form3.Show();
+                        case "PTV生产日报表":
+                            //PTVBag_dailyreport daily = new PTVBag_dailyreport(mainform, ID);
+                            //daily.Show();
                             break;
-                        case "产品外观和尺寸检验记录":
-                            产品外观和尺寸检验记录 form4 = new 产品外观和尺寸检验记录(mainform, ID);
-                            form4.Show();
+                        case "PTV生产开机确认表":
+                            PTVBag_checklist check = new PTVBag_checklist(mainform, ID);
+                            check.Show();
                             break;
-                        case "产品热合强度检验记录":
-                            产品热合强度检验记录 form5 = new 产品热合强度检验记录(mainform, ID);
-                            form5.Show();
+                        case "底封机运行记录":
+                            PTVBag_runningrecordofdf df = new PTVBag_runningrecordofdf(mainform, ID);
+                            df.Show();
                             break;
-                        case "2#制袋机开机前确认表":
-                            CSBag_CheckBeforePower form6 = new CSBag_CheckBeforePower(mainform, ID);
-                            form6.Show();
+                        case "圆口焊接机运行记录":
+                            PTVBag_runningrecordofyk yk = new PTVBag_runningrecordofyk(mainform, ID);
+                            yk.Show();
                             break;
-                        case "2#制袋机运行记录":
-                            RunningRecord form7 = new RunningRecord(mainform, ID);
-                            form7.Show();
+                        case "泄漏测试记录":
+                            PTVBag_testrecordofdisclose xlDlg = new PTVBag_testrecordofdisclose(mainform, ID);
+                            xlDlg.Show();
+                            break;
+                        case "超声波焊接记录":
+                            PTVBag_weldingrecordofwave wave = new PTVBag_weldingrecordofwave(mainform, ID);
+                            wave.Show();
+                            break;
+                        case "瓶口焊接机运行记录":
+                            PTVBag_runningrecordofpk pk = new PTVBag_runningrecordofpk(mainform, ID);
+                            pk.Show();
                             break;
                         case "清场记录":
-                            清场记录 myform = new 清场记录(mainform, ID);
-                            myform.Show();
+                            PTVBag_clearance clearance = new PTVBag_clearance(mainform, ID);
+                            clearance.Show();
                             break;
                         case "制袋工序批生产记录":
-                            Record_batch_bag form8 = new Record_batch_bag(mainform, ID);
-                            form8.Show();
+                            PTVBag_batchproduction batch = new PTVBag_batchproduction(mainform, ID);
+                            batch.Show();
                             break;
                         case "产品外包装记录":
-                            CS产品外包装记录 form9 = new CS产品外包装记录(mainform, ID);
-                            form9.ShowDialog();
+                            PTV产品外包装记录 outer = new PTV产品外包装记录(mainform, ID);
+                            outer.Show();
                             break;
                         case "生产退料记录":
-                            CS生产退料记录 form10 = new CS生产退料记录(mainform, ID);
-                            form10.ShowDialog();
+                            PTV生产退料记录 tuiliaoform = new PTV生产退料记录(mainform, ID);
+                            tuiliaoform.Show();
                             break;
                         case "洁净区温湿度记录":
-                            CS洁净区温湿度记录 form11 = new CS洁净区温湿度记录(mainform, ID);
-                            form11.ShowDialog();
+                            PTV洁净区温湿度记录 wenshiduform = new PTV洁净区温湿度记录(mainform, ID);
+                            wenshiduform.Show();
                             break;
                         case "岗位交接班记录":
-                            HandOver form12 = new HandOver(mainform, ID);
-                            form12.ShowDialog();
+                            HandOver ho = new HandOver(mainform, ID);
+                            ho.Show();
                             break;
                         case "生产领料申请单":
-                            CS生产领料申请单 form13 = new CS生产领料申请单(mainform, ID);
+                            PTV生产领料申请单 shenqing = new PTV生产领料申请单(mainform, ID);
 
                             break;
+
                         default:
                             break;
                     }
+
                 }
                 catch (Exception ee)
                 {
@@ -382,7 +402,6 @@ namespace mySystem.Query
             { setDataGridViewBackColor("审核员"); }
             catch
             { }
-
         }
 
         //设置datagridview背景颜色，待审核标红
@@ -400,11 +419,6 @@ namespace mySystem.Query
                 }
             }
         }
-
-
-
-
-
 
 
     }

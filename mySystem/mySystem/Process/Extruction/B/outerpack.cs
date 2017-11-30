@@ -447,14 +447,14 @@ namespace mySystem.Extruction.Chart
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), mySystem.Parameter.conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
 
-                OleDbDataAdapter da2 = new OleDbDataAdapter("select ID, 生产指令编号 from 生产指令信息表 where ID=" + InstruID.ToString(), connOle);
+                SqlDataAdapter da2 = new SqlDataAdapter("select ID, 生产指令编号 from 生产指令信息表 where ID=" + InstruID.ToString(), mySystem.Parameter.conn);
                 DataTable dt2 = new DataTable("临时");
                 da2.Fill(dt2);
                 Instruction = dt2.Rows[0]["生产指令编号"].ToString();

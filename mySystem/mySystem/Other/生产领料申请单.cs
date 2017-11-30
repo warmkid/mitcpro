@@ -1094,9 +1094,13 @@ namespace mySystem.Other
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
-            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
-            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
-            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+            DataGridView dgv = ((DataGridView)sender);
+            if (dgv.CurrentCell != null)
+            {
+                String Columnsname = dgv.CurrentCell.OwningColumn.Name;
+                String rowsname = dgv.CurrentCell.OwningRow.Index.ToString();
+                MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+            }
         }
 
         //实时求合计、检查人名合法性

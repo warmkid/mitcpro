@@ -453,7 +453,7 @@ namespace mySystem.Process.Bag.BTV
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), mySystem.Parameter.conn);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from [" + table + "] where ID = " + ID.ToString(), mySystem.Parameter.conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)

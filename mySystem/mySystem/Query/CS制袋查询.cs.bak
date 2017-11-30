@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
-using System.Data.SqlClient;
 using mySystem.Process.Bag;
 using mySystem.Process.CleanCut;
 using mySystem.Process.Bag.CS;
@@ -22,10 +21,10 @@ namespace mySystem.Query
         String Instruction = null;//下拉框获取的生产指令
         int InstruID;//下拉框获取的生产指令ID
         String tableName = null;
-        private SqlDataAdapter da;
+        private OleDbDataAdapter da;
         private DataTable dt;
         private BindingSource bs;
-        private SqlCommandBuilder cb;  
+        private OleDbCommandBuilder cb;  
 
         public CS制袋查询()
         {
@@ -62,10 +61,10 @@ namespace mySystem.Query
         {
             if (!Parameter.isSqlOk)
             {
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = mySystem.Parameter.conn;
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
                 comm.CommandText = "select * from 生产指令";
-                SqlDataReader reader = comm.ExecuteReader();
+                OleDbDataReader reader = comm.ExecuteReader();
                 if (reader.HasRows)
                 {
                     comboBox1.Items.Clear();
@@ -84,10 +83,10 @@ namespace mySystem.Query
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Instruction = comboBox1.SelectedItem.ToString();
-            SqlCommand comm = new SqlCommand();
-            comm.Connection = mySystem.Parameter.conn;
+            OleDbCommand comm = new OleDbCommand();
+            comm.Connection = mySystem.Parameter.connOle;
             comm.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "'";
-            SqlDataReader reader = comm.ExecuteReader();
+            OleDbDataReader reader = comm.ExecuteReader();
             if (reader.Read())
             {
                 InstruID = Convert.ToInt32(reader["ID"]);
@@ -225,23 +224,23 @@ namespace mySystem.Query
         {
             dt = new DataTable(tblName); //""中的是表名
             if (person != null && startDate != null && instruID == null) // 人 + 日期
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
             else if (person == null && startDate != null && instruID != null) // 日期 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person != null && startDate == null && instruID != null) // 人 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person != null && startDate == null && instruID == null) // 人 
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.connOle);
             else if (person == null && startDate != null && instruID == null) // 日期
-                da = new SqlDataAdapter("select * from " + tblName + " where " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'", mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
             else if (person == null && startDate == null && instruID != null) // 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
             else if (person == null && startDate == null && instruID == null) // 只有表名
-                da = new SqlDataAdapter("select * from " + tblName, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
             else if (person != null && startDate != null && instruID != null) // 人 + 日期 + 生产指令
-                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
+                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
 
-            cb = new SqlCommandBuilder(da);
+            cb = new OleDbCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
             bs.DataSource = dt;

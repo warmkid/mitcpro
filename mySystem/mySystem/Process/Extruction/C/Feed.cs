@@ -113,10 +113,10 @@ namespace mySystem.Process.Extruction.C
             setUserState();
             fill_printer();
             dtOuter = new DataTable(tablename1);
-            daOuter = new OleDbDataAdapter("SELECT * FROM 吹膜供料系统运行记录 WHERE ID =" + Id, conOle);
+            daOutersql = new SqlDataAdapter("SELECT * FROM 吹膜供料系统运行记录 WHERE ID =" + Id, mySystem.Parameter.conn);
             bsOuter = new BindingSource();
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            daOuter.Fill(dtOuter);
+            cbOutersql = new SqlCommandBuilder(daOutersql);
+            daOutersql.Fill(dtOuter);
             removeOuterBind();
             outerBind();
             __生产指令编号 = Convert.ToString(dtOuter.Rows[0]["生产指令编号"]);

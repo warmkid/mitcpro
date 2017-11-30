@@ -88,7 +88,7 @@ namespace mySystem.Process.CleanCut
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清洁分切生产记录 where ID="+ID,connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 清洁分切生产记录 where ID=" + ID, conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
@@ -478,7 +478,7 @@ namespace mySystem.Process.CleanCut
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)

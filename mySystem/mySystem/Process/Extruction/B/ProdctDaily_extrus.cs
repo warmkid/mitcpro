@@ -922,7 +922,7 @@ namespace mySystem
             dt_prodinstr.Rows[0]["加料B2合计"] = sum_加料B2;
             dt_prodinstr.Rows[0]["工时合计"] = Math.Round((float)sum_工时, 2);
 
-            float temp = (sum_生产重量 + sum_废品重量) / sum_工时;
+            float temp = (sum_生产重量 + sum_废品重量) / (sum_工时+0.0001f);
             dt_prodinstr.Rows[0]["工时效率"] =Math.Round((float)temp, 2) ;
             dt_prodinstr.Rows[0]["成品率"] = Math.Round(sum_生产重量 / (sum_加料A + sum_加料B1C + sum_加料B2) * 100);
             if (!mySystem.Parameter.isSqlOk)

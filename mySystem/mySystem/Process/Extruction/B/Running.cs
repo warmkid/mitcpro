@@ -161,10 +161,10 @@ namespace mySystem.Process.Extruction.B
             addDataEventHandler();
             //btn提交审核.PerformClick();
             dtOuter = new DataTable(tablename1);
-            daOuter = new OleDbDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID =" + Id, conOle);
+            daOutersql = new SqlDataAdapter("SELECT * FROM 吹膜机组运行记录 WHERE ID =" + Id, mySystem.Parameter.conn);
             bsOuter = new BindingSource();
-            cbOuter = new OleDbCommandBuilder(daOuter);
-            daOuter.Fill(dtOuter);
+            cbOutersql = new SqlCommandBuilder(daOutersql);
+            daOutersql.Fill(dtOuter);
             removeOuterBinding();
 
 

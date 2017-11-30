@@ -392,8 +392,8 @@ namespace mySystem.Extruction.Process
             setControlFalse();
 
             string asql = "select * from 吹膜工序领料退料记录 where ID=" + id;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
 
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);

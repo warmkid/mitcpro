@@ -101,6 +101,57 @@ namespace mySystem.Process.CleanCut
             dataGridView2.AllowUserToAddRows = false;
         }
 
+        public CleanCut_Cover(mySystem.MainForm mainform, int id)
+            : base(mainform)
+        {
+            InitializeComponent();
+            getPeople();
+            setUserState();
+            getOtherData();
+            addDataEventHandler();
+            fill_printer();
+            readOuterData(0, id);
+            outerBind();
+
+            if (dtOuter.Rows.Count <= 0)
+            {
+                DataRow dr = dtOuter.NewRow();
+                dr = writeOuterDefault(dr);
+                dtOuter.Rows.Add(dr);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOutersql.Update((DataTable)bsOuter.DataSource);
+                }
+
+                readOuterData(mySystem.Parameter.cleancutInstruID);
+                outerBind();
+            }
+
+            //readInnerData((int)dtOuter.Rows[0]["ID"]);
+            //innerBind();
+
+            //readInnerData2((int)dtOuter.Rows[0]["ID"]);
+            //innerBind2();
+
+            setFormState();
+            setEnableReadOnly();
+
+            setKeyInfo(mySystem.Parameter.cleancutInstruID, Convert.ToInt32(dtOuter.Rows[0]["ID"]), mySystem.Parameter.cleancutInstruction);
+            //readInner2Data(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            //inner2Bind();
+            // TODO 获取生产数据
+            //checkInner2Data();
+            init();
+            initly();
+
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToAddRows = false;
+        }
+
         void setKeyInfo(int pid, int mid, string code)
         {
             _instrctID = pid;
@@ -538,6 +589,24 @@ namespace mySystem.Process.CleanCut
                 daOutersql.Fill(dtOuter);
             }
             
+        }
+        void readOuterData(int instrid, int thisid)
+        {
+            dtOuter = new DataTable("批生产记录表");
+            bsOuter = new BindingSource();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter = new OleDbDataAdapter(@"select * from 批生产记录表 where ID=" + thisid, mySystem.Parameter.connOle);
+                cbOuter = new OleDbCommandBuilder(daOuter);
+                daOuter.Fill(dtOuter);
+            }
+            else
+            {
+                daOutersql = new SqlDataAdapter(@"select * from 批生产记录表 where ID=" + thisid, mySystem.Parameter.conn);
+                cbOutersql = new SqlCommandBuilder(daOutersql);
+                daOutersql.Fill(dtOuter);
+            }
+
         }
         // 给外表的一行写入默认值    TODO:*******************************
         DataRow writeOuterDefault(DataRow dr)

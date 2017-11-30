@@ -89,6 +89,7 @@ namespace mySystem.Process.Bag.BTV
             fill_printer(); //添加打印机
             getPeople();  // 获取操作员和审核员
             setUserState();  // 根据登录人，设置stat_user
+            getOtherData();  
             //getOtherDataLocal();  //读取设置内容
             addOtherEvnetHandler();  // 其他事件，datagridview：DataError、CellEndEdit、DataBindingComplete
             addDataEventHandler();  // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
@@ -558,14 +559,14 @@ namespace mySystem.Process.Bag.BTV
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), mySystem.Parameter.conn);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from [" + table + "] where ID = " + ID.ToString(), mySystem.Parameter.conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
             {
                 InstruID = Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString());
                 //DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()));
-                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), Convert.ToDateTime(dt1.Rows[0]["生产日期"].ToString()));
+                DataShow(Convert.ToInt32(dt1.Rows[0]["生产指令ID"].ToString()), Convert.ToDateTime(dt1.Rows[0]["开始生产日期"].ToString()));
             }
         }
 
