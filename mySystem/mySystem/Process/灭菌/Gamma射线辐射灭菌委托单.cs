@@ -38,6 +38,8 @@ namespace mySystem.Process.灭菌
         private List<string> list_操作员;
         private List<string> list_审核员;
 
+        string 最近委托单号;
+
         private string str_委托单;
         // 需要保存的状态
         /// <summary>
@@ -62,6 +64,7 @@ namespace mySystem.Process.灭菌
                 c.Enabled = false;
             tb委托单号.Enabled = true;
             bt查询插入.Enabled = true;
+            tb委托单号.Text = 最近委托单号;
         }
 
         public Gamma射线辐射灭菌委托单(mySystem.MainForm mainform,int id)
@@ -513,7 +516,25 @@ namespace mySystem.Process.灭菌
             get_运输商();
             get_产品代码();
             get_纸箱规格();
+            get_recent_danhao();
             fill_printer();
+        }
+
+        void get_recent_danhao()
+        {
+            SqlDataAdapter da;
+            DataTable dt;
+            da = new SqlDataAdapter("select top 1 * from [Gamma射线辐射灭菌委托单] order by ID DESC", mySystem.Parameter.conn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {
+                最近委托单号 = dt.Rows[0]["委托单号"].ToString();
+            }
+            else
+            {
+                最近委托单号 = "";
+            }
         }
 
         private void get_纸箱规格()

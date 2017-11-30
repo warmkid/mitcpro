@@ -16,8 +16,11 @@ namespace mySystem.Setting
         public 清洁分切设置()
         {
             InitializeComponent();
+            
             Initdgv();
             Bind();
+            TabPage tb = tabControl1.TabPages[1];
+            tabControl1.TabPages.Remove(tb);
         }
 
         private SqlDataAdapter da开机;

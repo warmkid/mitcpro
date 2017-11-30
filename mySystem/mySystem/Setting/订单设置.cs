@@ -396,6 +396,7 @@ namespace mySystem.Setting
             //setDataGridViewRowNums(this.dgv存货档案);
             if (dgv存货档案.Rows.Count > 0)
                 dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
+            refresh序号();
         }
 
         private void del存货档案_Click(object sender, EventArgs e)
@@ -406,6 +407,7 @@ namespace mySystem.Setting
             dt存货档案.Clear();
             da存货档案.Fill(dt存货档案);
             //setDataGridViewRowNums(this.dgv存货档案);
+            refresh序号();
         }
 
         
@@ -745,7 +747,7 @@ namespace mySystem.Setting
             //bs存货档案.DataSource = dt存货档案Show;
             //dgv存货档案.DataSource = bs存货档案.DataSource;
             //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
-
+            dgv存货档案.Columns.Clear();
             string sql = "select * from 设置存货档案 where  存货代码 like '%{0}%' and 存货名称 like '%{1}%'";
             dt存货档案 = new DataTable("设置存货档案"); //""中的是表名
             da存货档案 = new SqlDataAdapter(string.Format(sql, tb代码q.Text, tb名称q.Text), mySystem.Parameter.conn);
@@ -773,7 +775,8 @@ namespace mySystem.Setting
             {
                 dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
             }
-
+           
+            dgv存货档案.Columns["存货代码"].Frozen = true;
         }
 
 
@@ -848,7 +851,25 @@ namespace mySystem.Setting
             {
                 dgvc.OwningRow.Cells["属于工序"].Value = copied工序;
             }
+            
         }
+
+        private void dgv存货档案_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            e.Row.HeaderCell.Value = String.Format("{0}", e.Row.Index + 1);
+        }
+
+        void refresh序号()
+        {
+            for (int i = 0; i < dgv存货档案.Rows.Count; ++i)
+            {
+                dgv存货档案.Rows[i].HeaderCell.Value = String.Format("{0}", i + 1);
+            }
+        }
+
+       
+
+       
 
        
     }

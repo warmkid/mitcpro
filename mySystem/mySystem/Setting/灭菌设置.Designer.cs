@@ -34,6 +34,7 @@
             this.dgv产品名称 = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.Btn保存产品 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.dgv辐照单位 = new System.Windows.Forms.DataGridView();
@@ -73,7 +74,6 @@
             this.del人员 = new System.Windows.Forms.Button();
             this.add人员 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.Btn保存产品 = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage产品设置.SuspendLayout();
             this.groupBox8.SuspendLayout();
@@ -135,11 +135,12 @@
             this.groupBox8.Controls.Add(this.dgv产品名称);
             this.groupBox8.Controls.Add(this.button1);
             this.groupBox8.Controls.Add(this.button2);
-            this.groupBox8.Location = new System.Drawing.Point(572, 539);
+            this.groupBox8.Location = new System.Drawing.Point(551, 460);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(534, 219);
+            this.groupBox8.Size = new System.Drawing.Size(100, 10);
             this.groupBox8.TabIndex = 77;
             this.groupBox8.TabStop = false;
+            this.groupBox8.Visible = false;
             // 
             // dgv产品名称
             // 
@@ -173,22 +174,34 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.add产品名称_Click);
             // 
+            // Btn保存产品
+            // 
+            this.Btn保存产品.Font = new System.Drawing.Font("SimSun", 12F);
+            this.Btn保存产品.Location = new System.Drawing.Point(1012, 6);
+            this.Btn保存产品.Name = "Btn保存产品";
+            this.Btn保存产品.Size = new System.Drawing.Size(90, 25);
+            this.Btn保存产品.TabIndex = 68;
+            this.Btn保存产品.Text = "保存设置";
+            this.Btn保存产品.UseVisualStyleBackColor = true;
+            this.Btn保存产品.Click += new System.EventHandler(this.Btn保存产品_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(572, 516);
+            this.label5.Location = new System.Drawing.Point(551, 437);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(135, 20);
             this.label5.TabIndex = 76;
             this.label5.Text = "产品名称设置";
+            this.label5.Visible = false;
             // 
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this.dgv辐照单位);
             this.groupBox6.Controls.Add(this.del辐照单位);
             this.groupBox6.Controls.Add(this.add辐照单位);
-            this.groupBox6.Location = new System.Drawing.Point(19, 535);
+            this.groupBox6.Location = new System.Drawing.Point(32, 114);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(534, 225);
             this.groupBox6.TabIndex = 75;
@@ -230,7 +243,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(19, 512);
+            this.label6.Location = new System.Drawing.Point(32, 91);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(135, 20);
             this.label6.TabIndex = 74;
@@ -241,7 +254,7 @@
             this.groupBox2.Controls.Add(this.dgv运输商);
             this.groupBox2.Controls.Add(this.del运输商);
             this.groupBox2.Controls.Add(this.add运输商);
-            this.groupBox2.Location = new System.Drawing.Point(572, 277);
+            this.groupBox2.Location = new System.Drawing.Point(589, 114);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 225);
             this.groupBox2.TabIndex = 73;
@@ -283,7 +296,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(572, 258);
+            this.label2.Location = new System.Drawing.Point(589, 95);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(114, 20);
             this.label2.TabIndex = 72;
@@ -294,9 +307,9 @@
             this.groupBox1.Controls.Add(this.dgv产品规格);
             this.groupBox1.Controls.Add(this.del产品规格);
             this.groupBox1.Controls.Add(this.add产品规格);
-            this.groupBox1.Location = new System.Drawing.Point(19, 277);
+            this.groupBox1.Location = new System.Drawing.Point(26, 143);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(534, 225);
+            this.groupBox1.Size = new System.Drawing.Size(126, 10);
             this.groupBox1.TabIndex = 70;
             this.groupBox1.TabStop = false;
             // 
@@ -336,22 +349,24 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(19, 258);
+            this.label1.Location = new System.Drawing.Point(325, 427);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(177, 20);
             this.label1.TabIndex = 69;
             this.label1.Text = "灭菌产品规格设置";
+            this.label1.Visible = false;
             // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.dgv产品编码);
             this.groupBox3.Controls.Add(this.del产品编码);
             this.groupBox3.Controls.Add(this.add产品编码);
-            this.groupBox3.Location = new System.Drawing.Point(572, 26);
+            this.groupBox3.Location = new System.Drawing.Point(571, 419);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(530, 225);
+            this.groupBox3.Size = new System.Drawing.Size(56, 10);
             this.groupBox3.TabIndex = 67;
             this.groupBox3.TabStop = false;
+            this.groupBox3.Visible = false;
             // 
             // dgv产品编码
             // 
@@ -390,11 +405,12 @@
             this.groupBox4.Controls.Add(this.dgv产品);
             this.groupBox4.Controls.Add(this.del产品);
             this.groupBox4.Controls.Add(this.add产品);
-            this.groupBox4.Location = new System.Drawing.Point(19, 26);
+            this.groupBox4.Location = new System.Drawing.Point(317, 386);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(534, 225);
+            this.groupBox4.Size = new System.Drawing.Size(149, 10);
             this.groupBox4.TabIndex = 66;
             this.groupBox4.TabStop = false;
+            this.groupBox4.Visible = false;
             // 
             // dgv产品
             // 
@@ -432,21 +448,23 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label12.Location = new System.Drawing.Point(578, 7);
+            this.label12.Location = new System.Drawing.Point(551, 386);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(177, 20);
             this.label12.TabIndex = 65;
             this.label12.Text = "灭菌产品代码设置";
+            this.label12.Visible = false;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label11.Location = new System.Drawing.Point(19, 7);
+            this.label11.Location = new System.Drawing.Point(317, 367);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(135, 20);
             this.label11.TabIndex = 64;
             this.label11.Text = "灭菌产品设置";
+            this.label11.Visible = false;
             // 
             // tabPage人员设置
             // 
@@ -458,7 +476,7 @@
             this.tabPage人员设置.Location = new System.Drawing.Point(4, 29);
             this.tabPage人员设置.Name = "tabPage人员设置";
             this.tabPage人员设置.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage人员设置.Size = new System.Drawing.Size(1147, 598);
+            this.tabPage人员设置.Size = new System.Drawing.Size(1147, 577);
             this.tabPage人员设置.TabIndex = 1;
             this.tabPage人员设置.Text = "人员设置";
             this.tabPage人员设置.UseVisualStyleBackColor = true;
@@ -585,17 +603,6 @@
             this.label4.Size = new System.Drawing.Size(135, 20);
             this.label4.TabIndex = 58;
             this.label4.Text = "灭菌人员设置";
-            // 
-            // Btn保存产品
-            // 
-            this.Btn保存产品.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存产品.Location = new System.Drawing.Point(1012, 6);
-            this.Btn保存产品.Name = "Btn保存产品";
-            this.Btn保存产品.Size = new System.Drawing.Size(90, 25);
-            this.Btn保存产品.TabIndex = 68;
-            this.Btn保存产品.Text = "保存设置";
-            this.Btn保存产品.UseVisualStyleBackColor = true;
-            this.Btn保存产品.Click += new System.EventHandler(this.Btn保存产品_Click);
             // 
             // 灭菌设置
             // 
