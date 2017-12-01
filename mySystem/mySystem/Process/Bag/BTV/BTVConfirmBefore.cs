@@ -35,6 +35,8 @@ namespace mySystem.Process.Bag.BTV
         Int32 InstruID;
         String Instruction;
 
+        bool isFirstBind = true;
+
 
         public BTVConfirmBefore(MainForm mainform) : base(mainform)
         {
@@ -860,7 +862,11 @@ namespace mySystem.Process.Bag.BTV
             //throw new NotImplementedException();
             setDataGridViewBackColor();
             setDataGridViewFormat();
-            readDGVWidthFromSettingAndSet(dataGridView1);
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
         private string fill生产班次()
         {
