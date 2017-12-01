@@ -33,7 +33,7 @@ namespace mySystem
         public static int userID; //登录人ID
         public static string userName; //登录用户名
         public static int userRole; //登录用户角色（权限）
-        public static string userflight; //登录人班次
+        public static string userflight; // 登录人班次
 
         public static string IP_port="10.105.223.19,56625";//sql服务器IP和端口
         public static SqlConnection conn;
