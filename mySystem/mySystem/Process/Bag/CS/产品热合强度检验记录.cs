@@ -351,7 +351,7 @@ namespace mySystem.Process.Bag.CS
             dr["最小"] = 0;
             dr["最大"] = 0;
             dr["平均"] = 0;
-            dr["复核人"] = "";
+            dr["审核员"] = "";
             return dr;
         }
 
@@ -1046,6 +1046,42 @@ namespace mySystem.Process.Bag.CS
                     else
                     {
                         dataGridView1.Rows[i].Cells["检测值6"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值7"].Value.ToString()) < DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值7"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值7"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值8"].Value.ToString()) < DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值8"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值8"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值9"].Value.ToString()) < DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值9"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值9"].Style.BackColor = Color.White;
+                    }
+                    if (double.Parse(dataGridView1.Rows[i].Cells["检测值10"].Value.ToString()) < DoubleStandard)
+                    {
+                        dataGridView1.Rows[i].Cells["检测值10"].Style.BackColor = Color.Red;
+                        ColorReturn = false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[i].Cells["检测值10"].Style.BackColor = Color.White;
                     }
                 }
             }

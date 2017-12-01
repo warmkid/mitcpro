@@ -712,10 +712,10 @@ namespace mySystem.Process.Bag.BTV
                 return;
             }
             SetDefaultPrinter(cb打印机.Text);
-            print(true);
+            print(false);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -729,6 +729,7 @@ namespace mySystem.Process.Bag.BTV
             // 修改Sheet中某行某列的值
 
             int rowStartAt = 5;
+            
             
             my.Cells[3, 1].Value = "生产日期：" + Convert.ToDateTime(dt记录.Rows[0]["生产日期"]).ToString("yyyy年MM月dd日")+"\t" + fill生产班次();
             my.Cells[3, 5].Value = fill生产产品() + "生产指令编号：" + dt记录.Rows[0]["生产指令编号"];
@@ -791,7 +792,8 @@ namespace mySystem.Process.Bag.BTV
             if (preview)
             {
                 my.Select();
-                oXL.Visible = true; //加上这一行  就相当于预览功能            
+                oXL.Visible = true; //加上这一行  就相当于预览功能   
+                return 0;
             }
             else
             {
@@ -804,18 +806,21 @@ namespace mySystem.Process.Bag.BTV
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
                 }
                 catch { }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 // 关闭文件，false表示不保存
                 wb.Close(false);
                 // 关闭Excel进程
                 oXL.Quit();
                 // 释放COM资源
-
+                
                 Marshal.ReleaseComObject(wb);
                 Marshal.ReleaseComObject(oXL);
                 oXL = null;
                 my = null;
                 wb = null;
+                return pageCount;
             }
+            
         }
 
 
@@ -861,7 +866,7 @@ namespace mySystem.Process.Bag.BTV
         {
             string rtn = "";
             rtn += "生产班次：白班";
-            if (Convert.ToBoolean(dt记录.Rows[0]["生产班次白班"]))
+            if (dt记录.Rows[0]["班次"].ToString()=="白班")
             {
                 rtn += "☑";
             }
@@ -870,7 +875,7 @@ namespace mySystem.Process.Bag.BTV
                 rtn += "□";
             }
             rtn += "夜班";
-            if (Convert.ToBoolean(dt记录.Rows[0]["生产班次夜班"]))
+            if (dt记录.Rows[0]["班次"].ToString() != "白班")
             {
                 rtn += "☑";
             }
@@ -884,7 +889,7 @@ namespace mySystem.Process.Bag.BTV
         {
             string rtn = "";
             rtn += "生产产品：2D";
-            if (Convert.ToBoolean(dt记录.Rows[0]["生产产品2D"]))
+            if (Convert.ToBoolean(dt记录.Rows[0]["生产产品"]))
             {
                 rtn += "☑";
             }
@@ -893,7 +898,7 @@ namespace mySystem.Process.Bag.BTV
                 rtn += "□";
             }
             rtn += "3D";
-            if (Convert.ToBoolean(dt记录.Rows[0]["生产产品3D"]))
+            if (!Convert.ToBoolean(dt记录.Rows[0]["生产产品"]))
             {
                 rtn += "☑";
             }
@@ -909,6 +914,8 @@ namespace mySystem.Process.Bag.BTV
             //string width = getDGVWidth(dataGridView1);
             writeDGVWidthToSetting(dataGridView1);
         }
+
+        
     }
 }
 
