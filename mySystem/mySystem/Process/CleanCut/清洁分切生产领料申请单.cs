@@ -57,7 +57,7 @@ namespace mySystem.Process.CleanCut
 
         void variableInit(int id)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产领料申请单表 where ID=" + id, connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产领料申请单表 where ID=" + id, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
@@ -126,7 +126,45 @@ namespace mySystem.Process.CleanCut
                 datemp1.Dispose();
             }
             else
-            { }
+            {
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = Parameter.conn;
+                comm1.CommandText = "select * from 清洁分切工序生产指令 where ID = " + InstruID.ToString();//这里应有生产指令编码
+                SqlDataAdapter datemp1 = new SqlDataAdapter(comm1);
+                datemp1.Fill(dt生产指令);
+
+                //OleDbDataReader reader1 = comm1.ExecuteReader();
+                //if (reader1.Read())
+                if (dt生产指令.Rows.Count > 0)
+                {
+                    //读取生产指令物料
+                    SqlCommand comm2 = new SqlCommand();
+                    comm2.Connection = Parameter.conn;
+                    comm2.CommandText = "select * from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + dt生产指令.Rows[0]["ID"].ToString();
+                    SqlDataAdapter datemp2 = new SqlDataAdapter(comm2);
+                    datemp2.Fill(dt生产指令制袋);
+                    datemp2.Dispose();
+                    //添加物料代码、数量
+                    if (dt生产指令制袋.Rows.Count > 0)
+                    {
+                        for (int i = 0; i < dt生产指令制袋.Rows.Count; i++)
+                        { dt物料代码数量.Rows.Add(new object[] { dt生产指令制袋.Rows[i]["清洁前产品代码"], dt生产指令制袋.Rows[i]["清洁前批号"], (Double.TryParse(dt生产指令制袋.Rows[i]["数量米"].ToString(), out outTemp) == true ? outTemp : -1) }); }
+                        dt生产指令信息.Rows.Add(new object[] { InstruID, Instruction, "清洁分切", dt生产指令制袋.Rows[0]["清洁前产品代码"], dt生产指令制袋.Rows[0]["清洁前批号"], isSqlOk });
+                    }
+                    else
+                    {
+                        dt物料代码数量.Rows.Add(new object[] { "暂无", -1,0 });
+                        dt生产指令信息.Rows.Add(new object[] { InstruID, Instruction, "清洁分切", "暂无", "暂无", isSqlOk });
+                    }
+                }
+                else
+                {
+                    //添加物料简称、批号、代码
+                    dt物料代码数量.Rows.Add(new object[] { "暂无", -1 });
+                }
+                //reader1.Dispose();
+                datemp1.Dispose();
+            }
         }
         
     }

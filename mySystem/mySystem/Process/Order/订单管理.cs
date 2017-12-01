@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Collections;
 
 namespace 订单和库存管理
@@ -17,8 +18,8 @@ namespace 订单和库存管理
 //        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
-        OleDbDataAdapter da;
-        OleDbCommandBuilder cb;
+        SqlDataAdapter da;
+        SqlCommandBuilder cb;
         DataTable dt;
         BindingSource bs;
 
@@ -159,9 +160,9 @@ namespace 订单和库存管理
 
         DataTable get销售订单(DateTime start, DateTime end, string code, string status)
         {
-            string sql = "select * from 销售订单 where 订单日期 between #{0}# and #{1}# and 状态 like '%{2}%' and 订单号 like '%{3}%'";
+            string sql = "select * from 销售订单 where 订单日期 between '{0}' and '{1}' and 状态 like '%{2}%' and 订单号 like '%{3}%'";
             
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, status, code), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, status, code), mySystem.Parameter.conn);
             DataTable dt = new DataTable("销售订单");
             da.Fill(dt);
             return dt;
@@ -210,9 +211,9 @@ namespace 订单和库存管理
         private DataTable get采购需求单(DateTime start, DateTime end, string yongtu, string status)
         {
             //string sql = "select * from 采购需求单 where 申请日期 between #{0}# and #{1}# and 状态 like '%{2}%' and 用途 like '%{3}%'";
-            string sql = "select * from 采购需求单 where 申请日期 between #{0}# and #{1}#";
-            //OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, status, yongtu), mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end), mySystem.Parameter.connOle);
+            string sql = "select * from 采购需求单 where 申请日期 between '{0}' and '{1}'";
+            //SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, status, yongtu), mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end), mySystem.Parameter.conn);
             DataTable dt = new DataTable("采购需求单");
             da.Fill(dt);
             string select = "状态 like '%{0}%' and 用途 like '%{1}%'";
@@ -235,7 +236,7 @@ namespace 订单和库存管理
         private void btn添加采购需求单_Click(object sender, EventArgs e)
         {
             // 获取所有审核完成的订单
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 销售订单 where 状态='审核完成'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 销售订单 where 状态='审核完成'", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             try
@@ -270,8 +271,8 @@ namespace 订单和库存管理
 
         private DataTable get采购批准单(DateTime start, DateTime end, string status)
         {
-            string sql = "select * from 采购批准单 where 申请日期 between #{0}# and #{1}# and 状态 like '%{2}%'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, status), mySystem.Parameter.connOle);
+            string sql = "select * from 采购批准单 where 申请日期 between '{0}' and '{1}' and 状态 like '%{2}%'";
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, status), mySystem.Parameter.conn);
             DataTable dt = new DataTable("采购批准单");
             da.Fill(dt);
             return dt;
@@ -302,7 +303,7 @@ namespace 订单和库存管理
             DataTable dt未批准需求单详细信息;
             Hashtable ht未批准需求单号2详细信息条数, ht未批准需求单号ID2详细信息,ht未批准需求单号2ID;
             dt未批准需求单详细信息 = new DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 采购需求单详细信息 where 批准状态='未批准'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 采购需求单详细信息 where 批准状态='未批准'", mySystem.Parameter.conn);
             da.Fill(dt未批准需求单详细信息);
 
             ht未批准需求单号ID2详细信息 = new Hashtable();
@@ -311,7 +312,7 @@ namespace 订单和库存管理
             foreach (DataRow dr in dt未批准需求单详细信息.Rows)
             {
                 int id = Convert.ToInt32(dr["采购需求单ID"]);
-                da = new OleDbDataAdapter("select * from 采购需求单 where ID=" + id, mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from 采购需求单 where ID=" + id, mySystem.Parameter.conn);
                 DataTable tmp=new DataTable();
                 da.Fill(tmp);
                 if (tmp.Rows.Count == 0)
@@ -378,8 +379,8 @@ namespace 订单和库存管理
 
         private DataTable get采购订单(DateTime start, DateTime end, string status, string 采购合同号)
         {
-            string sql = "select * from 采购订单 where 申请日期 between #{0}# and #{1}# and 状态 like '%{2}%' and 采购合同号 like '%{3}%'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, status, 采购合同号), mySystem.Parameter.connOle);
+            string sql = "select * from 采购订单 where 申请日期 between '{0}' and '{1}' and 状态 like '%{2}%' and 采购合同号 like '%{3}%'";
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, status, 采购合同号), mySystem.Parameter.conn);
             DataTable dt = new DataTable("采购批准单");
             da.Fill(dt);
             return dt;
@@ -400,7 +401,7 @@ namespace 订单和库存管理
             DataTable dt未采购批准单详细信息, dt未采购借用单详细信息;
             Hashtable ht供应商2详细信息条数, ht供应商2详细信息;
             dt未采购批准单详细信息 = new DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 采购批准单详细信息 where 状态='未采购'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 采购批准单详细信息 where 状态='未采购'", mySystem.Parameter.conn);
             da.Fill(dt未采购批准单详细信息);
 
             ht供应商2详细信息 = new Hashtable();
@@ -408,7 +409,7 @@ namespace 订单和库存管理
             foreach (DataRow dr in dt未采购批准单详细信息.Rows)
             {
                 int id = Convert.ToInt32(dr["采购批准单ID"]);
-                da = new OleDbDataAdapter("select * from 采购批准单 where ID=" + id, mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from 采购批准单 where ID=" + id, mySystem.Parameter.conn);
                 DataTable tmp = new DataTable();
                 da.Fill(tmp);
                 if (tmp.Rows.Count == 0)
@@ -432,12 +433,12 @@ namespace 订单和库存管理
 
 
             dt未采购借用单详细信息 = new DataTable();
-            da = new OleDbDataAdapter("select * from 采购批准单借用订单详细信息 where 状态='未采购'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 采购批准单借用订单详细信息 where 状态='未采购'", mySystem.Parameter.conn);
             da.Fill(dt未采购借用单详细信息);
             foreach (DataRow dr in dt未采购借用单详细信息.Rows)
             {
                 int id = Convert.ToInt32(dr["采购批准单ID"]);
-                da = new OleDbDataAdapter("select * from 采购批准单 where ID=" + id, mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from 采购批准单 where ID=" + id, mySystem.Parameter.conn);
                 DataTable tmp = new DataTable();
                 da.Fill(tmp);
                 if (tmp.Rows.Count == 0)
@@ -522,8 +523,8 @@ namespace 订单和库存管理
 
         private DataTable get采购出库单(DateTime start, DateTime end, string 销售订单号, string statue)
         {
-            string sql = "select * from 出库单 where 出库日期 between #{0}# and #{1}# and 销售订单号 like '%{2}%' and 状态 like '%{3}%'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, 销售订单号, statue), mySystem.Parameter.connOle);
+            string sql = "select * from 出库单 where 出库日期 between '{0}' and '{1}' and 销售订单号 like '%{2}%' and 状态 like '%{3}%'";
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, 销售订单号, statue), mySystem.Parameter.conn);
             DataTable dt = new DataTable("出库单");
             da.Fill(dt);
             return dt;

@@ -10,6 +10,7 @@ using System.Data.OleDb;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Collections;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.CleanCut
 {
@@ -30,7 +31,7 @@ namespace mySystem.Process.CleanCut
 
         DataTable query(DateTime start, DateTime end)
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             string sql;
             start = start.Date;
             end = end.Date.AddDays(1).AddSeconds(-1);
@@ -65,7 +66,7 @@ namespace mySystem.Process.CleanCut
             ret.Columns.Add("生产指令ID", Type.GetType("System.Int32"));
             // 读取内包装表，确定行数，并把能填的值先填上
             sql = "select * from 产品内包装记录 where 生产日期>='{0}' and 生产日期<='{1}'";
-            da = new OleDbDataAdapter(string.Format(sql, start.ToString("yyyy/MM/dd"), end.ToString("yyyy/MM/dd")), mySystem.Parameter.connOle);
+            da = new SqlDataAdapter(string.Format(sql, start.ToString("yyyy/MM/dd"), end.ToString("yyyy/MM/dd")), mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -88,7 +89,7 @@ namespace mySystem.Process.CleanCut
             {
                 int id = Convert.ToInt32(dr["生产指令ID"]);
                 sql = "select * from 生产指令详细信息 where T生产指令ID={0}";
-                da = new OleDbDataAdapter(string.Format(sql, id), mySystem.Parameter.connOle);
+                da = new SqlDataAdapter(string.Format(sql, id), mySystem.Parameter.conn);
                 dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0) MessageBox.Show("ID为" + id + "的生产指令详细信息读取错误");
@@ -101,7 +102,7 @@ namespace mySystem.Process.CleanCut
                 }
 
                 sql = "select * from 生产指令 where ID={0}";
-                da = new OleDbDataAdapter(string.Format(sql, id), mySystem.Parameter.connOle);
+                da = new SqlDataAdapter(string.Format(sql, id), mySystem.Parameter.conn);
                 dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0) MessageBox.Show("ID为" + id + "的生产指令读取错误");
@@ -124,8 +125,8 @@ namespace mySystem.Process.CleanCut
                 int id = Convert.ToInt32(dr["生产指令ID"]);
                 DateTime currDateTime = Convert.ToDateTime(dr["生产日期"]);
                 string fight = dr["班次"].ToString();
-                sql = "select * from CS制袋领料记录,CS制袋领料记录详细记录 where CS制袋领料记录详细记录.TCS制袋领料记录ID=CS制袋领料记录.ID and CS制袋领料记录.生产指令ID={0} and CS制袋领料记录详细记录.领料日期时间 between #{1}# and #{2}# and CS制袋领料记录详细记录.班次='{3}'";
-                da = new OleDbDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.connOle);
+                sql = "select * from CS制袋领料记录,CS制袋领料记录详细记录 where CS制袋领料记录详细记录.TCS制袋领料记录ID=CS制袋领料记录.ID and CS制袋领料记录.生产指令ID={0} and CS制袋领料记录详细记录.领料日期时间 between '{1}' and '{2}' and CS制袋领料记录详细记录.班次='{3}'";
+                da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.conn);
                 dt = new DataTable();
                 da.Fill(dt);
                 DataRow[] drs;
@@ -183,27 +184,26 @@ namespace mySystem.Process.CleanCut
             double h换算率;
             foreach (DataRow dr in ret.Rows)
             {
-                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-                OleDbConnection Tconn = new OleDbConnection(strConnect);
+                string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection Tconn = new SqlConnection(strConnect);
                 Tconn.Open();
                 // TY膜
                 sql = "select * from 设置存货档案 where 存货代码='{0}'";
-                da = new OleDbDataAdapter(string.Format(sql, ty膜代码), Tconn);
+                da = new SqlDataAdapter(string.Format(sql, ty膜代码), Tconn);
                 dt = new DataTable();
                 da.Fill(dt);
                 h换算率 = Convert.ToDouble(dt.Rows[0]["换算率"]);
                 dr["TY膜用量（平米）"] = Math.Round(Convert.ToDouble(dr["TY膜用量（米）"]) / h换算率, 2);
                 // XP1膜
                 sql = "select * from 设置存货档案 where 存货代码='{0}'";
-                da = new OleDbDataAdapter(string.Format(sql, xp1膜代码), Tconn);
+                da = new SqlDataAdapter(string.Format(sql, xp1膜代码), Tconn);
                 dt = new DataTable();
                 da.Fill(dt);
                 h换算率 = Convert.ToDouble(dt.Rows[0]["换算率"]);
                 dr["XP1膜用量（平米）"] = Math.Round(Convert.ToDouble(dr["XP1膜用量（米）"]) / h换算率, 2);
                 // 产品
                 sql = "select * from 设置存货档案 where 存货代码='{0}'";
-                da = new OleDbDataAdapter(string.Format(sql, dr["产品代码"].ToString()), Tconn);
+                da = new SqlDataAdapter(string.Format(sql, dr["产品代码"].ToString()), Tconn);
                 dt = new DataTable();
                 da.Fill(dt);
                 h换算率 = Convert.ToDouble(dt.Rows[0]["换算率"]);

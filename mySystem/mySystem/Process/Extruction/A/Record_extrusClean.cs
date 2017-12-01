@@ -160,7 +160,15 @@ namespace WindowsFormsApplication1
                     {
                         while (dataGridView1.Rows.Count > 0)
                             dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-                        da_in.Update((DataTable)bs_in.DataSource);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da_in.Update((DataTable)bs_in.DataSource);
+                        }
+                        else
+                        {
+                            da_in_sql.Update((DataTable)bs_in.DataSource);
+                        }
+                        
                         foreach (DataRow dr in dt.Rows)
                         {
                             DataRow ndr = dt_in.NewRow();
@@ -233,7 +241,15 @@ namespace WindowsFormsApplication1
                     {
                         while (dataGridView1.Rows.Count > 0)
                             dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-                        da_in.Update((DataTable)bs_in.DataSource);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da_in.Update((DataTable)bs_in.DataSource);
+                        }
+                        else
+                        {
+                            da_in_sql.Update((DataTable)bs_in.DataSource);
+                        }
+                        
                         foreach (DataRow dr in dt.Rows)
                         {
                             DataRow ndr = dt_in.NewRow();
@@ -498,7 +514,15 @@ namespace WindowsFormsApplication1
                 DataRow dr = dt_out.NewRow();
                 dr = writeOuterDefault(dr);
                 dt_out.Rows.Add(dr);
-                da_out.Update((DataTable)bs_out.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da_out.Update((DataTable)bs_out.DataSource);
+                }
+                else
+                {
+                    da_out_sql.Update((DataTable)bs_out.DataSource);
+                }
+                
                 readOuterData(mySystem.Parameter.proInstruID);
                 removeOuterBinding();
                 outerBind();
@@ -521,7 +545,15 @@ namespace WindowsFormsApplication1
                 {                  
                     while (dataGridView1.Rows.Count > 0)
                         dataGridView1.Rows.RemoveAt(dataGridView1.Rows.Count - 1);
-                    da_in.Update((DataTable)bs_in.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        da_in.Update((DataTable)bs_in.DataSource);
+                    }
+                    else
+                    {
+                        da_in_sql.Update((DataTable)bs_in.DataSource);
+                    }
+                    
                     foreach (DataRow dr in dt.Rows)
                     {
                         DataRow ndr = dt_in.NewRow();
@@ -824,13 +856,19 @@ namespace WindowsFormsApplication1
             {
                 //外表保存
                 bs_out.EndEdit();
+                
                 da_out.Update((DataTable)bs_out.DataSource);
+               
+                
                 readOuterData(instrid);
                 removeOuterBinding();
                 outerBind();
 
                 //内表保存
+                
                 da_in.Update((DataTable)bs_in.DataSource);
+                
+                
                 readInnerData(Convert.ToInt32(dt_out.Rows[0]["ID"]));
                 innerBind();
             }
@@ -1311,9 +1349,9 @@ namespace WindowsFormsApplication1
                 }
             }
 
-            my.Cells[3, 2].Value = dtp清洁日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[3, 7].Value = ckb白班.Checked==true?"白班":"夜班";
-            my.Cells[3, 11].Value = tb复核人.Text + "  " + dtp复核日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[3, 2].Value = Convert.ToDateTime(dt_out.Rows[0]["清洁日期"]).ToString("yyyy年MM月dd日");
+            my.Cells[3, 7].Value = (Convert.ToBoolean(dt_out.Rows[0]["班次"]) == true) ? "白班" : "夜班";
+            my.Cells[3, 11].Value = dt_out.Rows[0]["审核人"].ToString() + "  " + Convert.ToDateTime(dt_out.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日");
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
                 my.Cells[5 + i, 1] = dataGridView1.Rows[i].Cells[2].Value.ToString();
@@ -1473,15 +1511,31 @@ namespace WindowsFormsApplication1
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da;
-            DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            String str操作员 = dt.Rows[0]["操作员"].ToString();
-            String str审核员 = dt.Rows[0]["审核员"].ToString();
-            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-            MessageBox.Show(str人员信息);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                DataTable dt;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜机组清洁记录'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            
         }
     }
 }

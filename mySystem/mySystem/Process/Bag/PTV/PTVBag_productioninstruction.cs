@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Bag.PTV
 {
@@ -41,9 +42,9 @@ namespace mySystem.Process.Bag.PTV
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
                                 Data Source=../../database/PTV.mdb;Persist Security Info=False";
-        OleDbConnection conn;
-        OleDbDataAdapter daOuter, daInner,daInner_制袋;
-        OleDbCommandBuilder cbOuter, cbInner,cbInner_制袋;
+        SqlConnection conn;
+        SqlDataAdapter daOuter, daInner,daInner_制袋;
+        SqlCommandBuilder cbOuter, cbInner,cbInner_制袋;
         DataTable dtOuter, dtInner,dtInner_制袋;
         BindingSource bsOuter, bsInner,bsInner_制袋;
 
@@ -147,7 +148,7 @@ namespace mySystem.Process.Bag.PTV
         /// </summary>
         void variableInit()
         {
-            conn = new OleDbConnection(strConn);
+            conn = mySystem.Parameter.conn;
 
             ls产品名称 = new List<string>();
             ls负责人 = new List<string>();
@@ -178,12 +179,12 @@ namespace mySystem.Process.Bag.PTV
         /// </summary>
         void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='PTV生产指令'", conn);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='PTV生产指令'", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -214,10 +215,10 @@ namespace mySystem.Process.Bag.PTV
         /// </summary>
         void getOuterOtherData()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             
-            da = new OleDbDataAdapter("select * from 用户", conn);
+            da = new SqlDataAdapter("select * from 用户", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -226,7 +227,7 @@ namespace mySystem.Process.Bag.PTV
                 cmb负责人.Items.Add(dr["用户名"].ToString());
             }
             //　产品名称
-            da = new OleDbDataAdapter("select * from 设置PTV产品", conn);
+            da = new SqlDataAdapter("select * from 设置PTV产品", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach(DataRow dr in dt.Rows){
@@ -236,11 +237,10 @@ namespace mySystem.Process.Bag.PTV
 
 
             hs物料代码 = new HashSet<string>();
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection Tconn = new SqlConnection(strConnect);
             Tconn.Open();
-            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%PTV制袋%'", Tconn);
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%PTV制袋%'", Tconn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -255,12 +255,12 @@ namespace mySystem.Process.Bag.PTV
         /// </summary>
         void getInnerOtherData()
         {
-            //OleDbDataAdapter da;
+            //SqlDataAdapter da;
             //DataTable dt;
             //hs产品代码 = new HashSet<string>();
             //hs封边 = new HashSet<string>();
             ////　产品代码
-            //da = new OleDbDataAdapter("select * from 设置PTV产品编码", conn);
+            //da = new SqlDataAdapter("select * from 设置PTV产品编码", conn);
             //dt = new DataTable("temp");
             //da.Fill(dt);
             //foreach (DataRow dr in dt.Rows)
@@ -269,7 +269,7 @@ namespace mySystem.Process.Bag.PTV
             //}
             
             //// 封边
-            //da = new OleDbDataAdapter("select * from 设置PTV制袋封边", conn);
+            //da = new SqlDataAdapter("select * from 设置PTV制袋封边", conn);
             //dt = new DataTable("temp");
             //da.Fill(dt);
             //foreach (DataRow dr in dt.Rows)
@@ -284,16 +284,15 @@ namespace mySystem.Process.Bag.PTV
             //    hs封边.Add(dr["封边"].ToString());
             //}
 
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             hs产品代码 = new HashSet<string>();
             hs封边 = new HashSet<string>();
             //　产品代码
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection Tconn = new OleDbConnection(strConnect);
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection Tconn = new SqlConnection(strConnect);
             Tconn.Open();
-            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%PTV%'", Tconn);
+            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%PTV%'", Tconn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -302,7 +301,7 @@ namespace mySystem.Process.Bag.PTV
             }
 
             // 封边
-            da = new OleDbDataAdapter("select * from 设置PTV制袋封边", conn);
+            da = new SqlDataAdapter("select * from 设置PTV制袋封边", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -320,7 +319,7 @@ namespace mySystem.Process.Bag.PTV
 
         void getInnerOtherData_制袋()
         {
-//            OleDbDataAdapter da;
+//            SqlDataAdapter da;
 //            DataTable dt;
 //            hs产品代码 = new HashSet<string>();
 //            hs封边 = new HashSet<string>();
@@ -329,7 +328,7 @@ namespace mySystem.Process.Bag.PTV
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //            OleDbConnection Tconn = new OleDbConnection(strConnect);
 //            Tconn.Open();
-//            da = new OleDbDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%PTV%'", Tconn);
+//            da = new SqlDataAdapter("select * from 设置存货档案 where 类型 like '成品' and 属于工序 like '%PTV%'", Tconn);
 //            dt = new DataTable("temp");
 //            da.Fill(dt);
 //            foreach (DataRow dr in dt.Rows)
@@ -338,7 +337,7 @@ namespace mySystem.Process.Bag.PTV
 //            }
 
 //            // 封边
-//            da = new OleDbDataAdapter("select * from 设置PTV制袋封边", conn);
+//            da = new SqlDataAdapter("select * from 设置PTV制袋封边", conn);
 //            dt = new DataTable("temp");
 //            da.Fill(dt);
 //            foreach (DataRow dr in dt.Rows)
@@ -367,8 +366,8 @@ namespace mySystem.Process.Bag.PTV
         /// <param name="id"></param>
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 生产指令 where ID=" + id + "", conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 生产指令 where ID=" + id + "", conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("生产指令");
             bsOuter = new BindingSource();
 
@@ -382,8 +381,8 @@ namespace mySystem.Process.Bag.PTV
         void readOuterData(String code)
         {
             
-            daOuter = new OleDbDataAdapter("select * from 生产指令 where 生产指令编号='" + code + "'", conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 生产指令 where 生产指令编号='" + code + "'", conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("生产指令");
             bsOuter = new BindingSource();
 
@@ -475,9 +474,9 @@ namespace mySystem.Process.Bag.PTV
         /// <param name="outerID"></param>
         void readInnerData(int outerID)
         {
-            daInner = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + outerID, conn);
+            daInner = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + outerID, conn);
             dtInner = new DataTable("生产指令详细信息");
-            cbInner = new OleDbCommandBuilder(daInner);
+            cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
 
             daInner.Fill(dtInner);
@@ -485,9 +484,9 @@ namespace mySystem.Process.Bag.PTV
 
         void readInnerData_制袋(int outerID)
         {
-            daInner_制袋 = new OleDbDataAdapter("select * from 生产指令制袋详细信息 where T生产指令ID=" + outerID, conn);
+            daInner_制袋 = new SqlDataAdapter("select * from 生产指令制袋详细信息 where T生产指令ID=" + outerID, conn);
             dtInner_制袋 = new DataTable("生产指令制袋详细信息");
-            cbInner_制袋 = new OleDbCommandBuilder(daInner_制袋);
+            cbInner_制袋 = new SqlCommandBuilder(daInner_制袋);
             bsInner_制袋 = new BindingSource();
 
             daInner_制袋.Fill(dtInner_制袋);
@@ -1212,12 +1211,12 @@ namespace mySystem.Process.Bag.PTV
                 return;
             }
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
             
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
             
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -1271,12 +1270,12 @@ namespace mySystem.Process.Bag.PTV
         public override void CheckResult()
         {
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='生产指令' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -1502,7 +1501,7 @@ namespace mySystem.Process.Bag.PTV
 
             //"生产指令-步骤序号- 表序号 /&P"
             int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 生产指令" + " where 生产指令编号= '" + dtOuter.Rows[0]["生产指令编号"].ToString() + "'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select ID from 生产指令" + " where 生产指令编号= '" + dtOuter.Rows[0]["生产指令编号"].ToString() + "'", mySystem.Parameter.conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();

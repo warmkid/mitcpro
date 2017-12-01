@@ -15,7 +15,7 @@ namespace mySystem.Process.Bag.PTV
     public partial class PTV生产领料申请单 : BaseForm
     {
         private SqlConnection conn = null;
-        private OleDbConnection connOle = null;
+        //private OleDbConnection mySystem.Parameter.conn = null;
         private Boolean isSqlOk;
         private Int32 InstruID;
         private String Instruction;
@@ -27,14 +27,14 @@ namespace mySystem.Process.Bag.PTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ptvbagInstruID;
             Instruction = Parameter.ptvbagInstruction;
 
             getOtherData();//读取该指令下的物料代码，数量
 
-            生产领料申请单 my生产领料申请单 = new mySystem.Other.生产领料申请单(base.mainform, dt生产指令信息, dt物料代码数量, conn, connOle);
+            生产领料申请单 my生产领料申请单 = new mySystem.Other.生产领料申请单(base.mainform, dt生产指令信息, dt物料代码数量, conn, mySystem.Parameter.connOle);
             my生产领料申请单.ShowDialog();
         }
 
@@ -43,19 +43,19 @@ namespace mySystem.Process.Bag.PTV
         {
             InitializeComponent();
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             variableInit(ID);
             getOtherData();//读取该指令下的物料代码，数量
 
-            生产领料申请单 my生产领料申请单 = new mySystem.Other.生产领料申请单(base.mainform, ID, dt生产指令信息, dt物料代码数量, conn, connOle);
+            生产领料申请单 my生产领料申请单 = new mySystem.Other.生产领料申请单(base.mainform, ID, dt生产指令信息, dt物料代码数量, conn, mySystem.Parameter.connOle);
             my生产领料申请单.ShowDialog();
         }
 
         void variableInit(int id)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产领料申请单表 where ID=" + id, connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产领料申请单表 where ID=" + id, mySystem.Parameter.conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
@@ -83,24 +83,23 @@ namespace mySystem.Process.Bag.PTV
             dt生产指令信息.Columns.Add("产品批号", Type.GetType("System.String"));
             dt生产指令信息.Columns.Add("isSqlOk", Type.GetType("System.Boolean"));
 
-            if (!isSqlOk)
-            {
-                OleDbCommand comm1 = new OleDbCommand();
-                comm1.Connection = Parameter.connOle;
+            
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = mySystem.Parameter.conn;
                 comm1.CommandText = "select * from 生产指令 where ID = " + InstruID.ToString();//这里应有生产指令编码
-                OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
+                SqlDataAdapter datemp1 = new SqlDataAdapter(comm1);
                 datemp1.Fill(dt生产指令);
 
-                //OleDbDataReader reader1 = comm1.ExecuteReader();
+                //SqlDataReader reader1 = comm1.ExecuteReader();
                 //if (reader1.Read())
                 if (dt生产指令.Rows.Count > 0)
                 {
                     //读取生产指令物料
-                    OleDbCommand comm2 = new OleDbCommand();
-                    comm2.Connection = Parameter.connOle;
+                    SqlCommand comm2 = new SqlCommand();
+                    comm2.Connection = mySystem.Parameter.conn;
                     //comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
                     comm2.CommandText = "select * from 生产指令制袋详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
-                    OleDbDataAdapter datemp2 = new OleDbDataAdapter(comm2);
+                    SqlDataAdapter datemp2 = new SqlDataAdapter(comm2);
                     datemp2.Fill(dt生产指令制袋);
                     datemp2.Dispose();
                     for (int i = 0; i < dt生产指令制袋.Rows.Count; i++)
@@ -118,10 +117,10 @@ namespace mySystem.Process.Bag.PTV
                     dt物料代码数量.Rows.Add(new object[] { dt生产指令.Rows[0]["外包物料代码3"], dt生产指令.Rows[0]["外包物料批号3"], (Double.TryParse(dt生产指令.Rows[0]["外包物料领料量3"].ToString(), out outTemp) == true ? outTemp : -1) });
 
                     //添加外表：生产指令ID、生产指令编号、属于工序、产品代码、产品批号、isSqlOk
-                    OleDbCommand comm3 = new OleDbCommand();
-                    comm3.Connection = Parameter.connOle;
+                    SqlCommand comm3 = new SqlCommand();
+                    comm3.Connection = mySystem.Parameter.conn;
                     comm3.CommandText = "select * from 生产指令详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
-                    OleDbDataAdapter datemp3 = new OleDbDataAdapter(comm3);
+                    SqlDataAdapter datemp3 = new SqlDataAdapter(comm3);
                     DataTable dttemp3 = new DataTable("dttemp3");
                     datemp3.Fill(dttemp3);
                     datemp3.Dispose();
@@ -139,9 +138,7 @@ namespace mySystem.Process.Bag.PTV
                 }
                 //reader1.Dispose();
                 datemp1.Dispose();
-            }
-            else
-            { }
+            
         }
 
 

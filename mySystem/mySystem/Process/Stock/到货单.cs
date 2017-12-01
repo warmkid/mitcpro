@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Stock
@@ -26,8 +27,8 @@ namespace mySystem.Process.Stock
 
         Int32 _id;
 
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
@@ -72,12 +73,12 @@ namespace mySystem.Process.Stock
 
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='到货单'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='到货单'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -89,11 +90,11 @@ namespace mySystem.Process.Stock
 
         private void getOtherData()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls业务类型 = new List<string>();
-            da = new OleDbDataAdapter("select * from 设置业务类型", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 设置业务类型", mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -109,7 +110,7 @@ namespace mySystem.Process.Stock
            
 
             ls币种 = new List<string>();
-            da = new OleDbDataAdapter("select * from 设置币种", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 设置币种", mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -127,7 +128,7 @@ namespace mySystem.Process.Stock
             ls规格型号 = new List<string>();
             ld数量每件 = new List<double>();
             ls主计量单位 = new List<string>();
-            da = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 设置存货档案", mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -148,7 +149,7 @@ namespace mySystem.Process.Stock
             }
 
             ls采购订单合同号 = new List<string>();
-            da = new OleDbDataAdapter("select * from 采购订单 where 状态='审核完成'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 采购订单 where 状态='审核完成'", mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -157,7 +158,7 @@ namespace mySystem.Process.Stock
             }
 
             ls供应商 = new List<string>();
-            da = new OleDbDataAdapter("select * from 设置供应商信息", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 设置供应商信息", mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -354,9 +355,9 @@ namespace mySystem.Process.Stock
 
         void readOuterData(String code)
         {
-            daOuter = new OleDbDataAdapter("select * from 到货单 where 单据号='" + code + "'", mySystem.Parameter.connOle);
+            daOuter = new SqlDataAdapter("select * from 到货单 where 单据号='" + code + "'", mySystem.Parameter.conn);
             dtOuter = new DataTable("到货单");
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            cbOuter = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -364,9 +365,9 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 到货单 where ID=" + id, mySystem.Parameter.connOle);
+            daOuter = new SqlDataAdapter("select * from 到货单 where ID=" + id, mySystem.Parameter.conn);
             dtOuter = new DataTable("到货单");
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            cbOuter = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -410,7 +411,7 @@ namespace mySystem.Process.Stock
         private void btn新建_Click(object sender, EventArgs e)
         {
             // 先看看订单号是否已经存在
-            OleDbDataAdapter da = new OleDbDataAdapter("select 单据号 from 到货单", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select 单据号 from 到货单", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             DataRow[] drs = dt.Select("单据号='" + tb单据号.Text + "'");
@@ -430,6 +431,7 @@ namespace mySystem.Process.Stock
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
+                dtOuter.Rows[0]["审核结果"] = 0;
                 daOuter.Update(dtOuter);
                 readOuterData(tb单据号.Text);
 
@@ -449,9 +451,9 @@ namespace mySystem.Process.Stock
 
         void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 到货单详细信息 where 到货单ID=" + id, mySystem.Parameter.connOle);
+            daInner = new SqlDataAdapter("select * from 到货单详细信息 where 到货单ID=" + id, mySystem.Parameter.conn);
             dtInner = new DataTable("到货单详细信息");
-            cbInner = new OleDbCommandBuilder(daInner);
+            cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
 
             daInner.Fill(dtInner);
@@ -558,8 +560,8 @@ namespace mySystem.Process.Stock
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='到货单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='到货单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
 
             if (dt_temp.Rows.Count == 0)
@@ -627,8 +629,8 @@ namespace mySystem.Process.Stock
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='到货单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='到货单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -645,12 +647,12 @@ namespace mySystem.Process.Stock
             // TODO 自动生成验收记录
             if (ckform.ischeckOk)
             {
-                OleDbDataAdapter da;
-                OleDbCommandBuilder cb;
+                SqlDataAdapter da;
+                SqlCommandBuilder cb;
                 DataTable dt;
                 string bianhao = 物资验收记录.create验收记录编号();
-                da = new OleDbDataAdapter("select * from 物资验收记录 where 验收记录编号='" + bianhao + "'", mySystem.Parameter.connOle);
-                cb = new OleDbCommandBuilder(da);
+                da = new SqlDataAdapter("select * from 物资验收记录 where 验收记录编号='" + bianhao + "'", mySystem.Parameter.conn);
+                cb = new SqlCommandBuilder(da);
                 dt = new DataTable("物资验收记录");
                 da.Fill(dt);
                 DataRow dr = dt.NewRow();
@@ -664,7 +666,7 @@ namespace mySystem.Process.Stock
                 dt.Rows.Add(dr);
                 da.Update(dt);
 
-                da = new OleDbDataAdapter("select * from 物资验收记录 where 验收记录编号='" + bianhao + "'", mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from 物资验收记录 where 验收记录编号='" + bianhao + "'", mySystem.Parameter.conn);
                 dt = new DataTable();
                 da.Fill(dt);
 
@@ -676,11 +678,11 @@ namespace mySystem.Process.Stock
 
         void create物资验收记录内表(int id)
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 物资验收记录详细信息 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 物资验收记录详细信息 where 物资验收记录ID=" + id, mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
             dt = new DataTable("物资验收记录详细信息");
             da.Fill(dt);
             foreach (DataRow tdr in dtInner.Rows)
@@ -692,7 +694,7 @@ namespace mySystem.Process.Stock
                 ndr["规格型号"] = tdr["规格型号"];
                 ndr["单位"] = tdr["主计量单位"];
                 ndr["数量（主计量）"] = tdr["数量"];
-                OleDbDataAdapter daT = new OleDbDataAdapter("select 换算率 from 设置存货档案 where 存货代码='" + tdr["产品代码"] + "'", mySystem.Parameter.connOle);
+                SqlDataAdapter daT = new SqlDataAdapter("select 换算率 from 设置存货档案 where 存货代码='" + tdr["产品代码"] + "'", mySystem.Parameter.conn);
                 DataTable dtT = new DataTable();
                 daT.Fill(dtT);
                 if (dtT.Rows.Count == 0)

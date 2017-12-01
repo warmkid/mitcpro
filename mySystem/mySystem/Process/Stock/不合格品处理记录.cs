@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Stock
@@ -31,8 +32,8 @@ namespace mySystem.Process.Stock
 
 
 
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         BindingSource bsOuter, bsInner;
         DataTable dtOuter, dtInner;
 
@@ -71,9 +72,9 @@ namespace mySystem.Process.Stock
         {
             ls审核员 = new List<string>();
             ls操作员 = new List<string>();
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "物资验收记录" + "'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='" + "物资验收记录" + "'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -131,8 +132,8 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 不合格品处理记录 where ID=" + id, mySystem.Parameter.connOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 不合格品处理记录 where ID=" + id, mySystem.Parameter.conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("不合格品处理记录");
             bsOuter = new BindingSource();
 
@@ -284,14 +285,14 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
 
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='不合格品处理记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='不合格品处理记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -316,7 +317,7 @@ namespace mySystem.Process.Stock
             // 判断是否要生产请验单等
             int tmpID = Convert.ToInt32(dtOuter.Rows[0]["物资验收记录ID"]);
 
-            da = new OleDbDataAdapter("select * from 不合格品处理记录 where 物资验收记录ID=" + tmpID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 不合格品处理记录 where 物资验收记录ID=" + tmpID, mySystem.Parameter.conn);
             dt = new DataTable("temp");
             foreach (DataRow nndr in dt.Rows)
             {
@@ -341,12 +342,12 @@ namespace mySystem.Process.Stock
 
         public override void CheckResult()
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='不合格品处理记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='不合格品处理记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);

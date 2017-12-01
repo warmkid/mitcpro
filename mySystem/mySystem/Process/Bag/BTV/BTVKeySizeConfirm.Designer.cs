@@ -547,7 +547,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(923, 587);
+            this.ClientSize = new System.Drawing.Size(927, 644);
             this.Controls.Add(this.cb打印机);
             this.Controls.Add(this.label40);
             this.Controls.Add(this.btn查看日志);

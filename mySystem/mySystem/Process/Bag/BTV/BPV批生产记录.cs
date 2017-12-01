@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Bag.BTV
 {
@@ -26,8 +27,8 @@ namespace mySystem.Process.Bag.BTV
         mySystem.Parameter.FormState _formState;
 
 
-        OleDbDataAdapter daOuter;
-        OleDbCommandBuilder cbOuter;
+        SqlDataAdapter daOuter;
+        SqlCommandBuilder cbOuter;
         DataTable dtOuter;
         BindingSource bsOuter;
 
@@ -71,7 +72,7 @@ namespace mySystem.Process.Bag.BTV
             InitializeComponent();
             fillPrinter();
             
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 批生产记录表 where ID=" + id, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 批生产记录表 where ID=" + id, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             _生产指令 = dt.Rows[0]["生产指令编号"].ToString();
@@ -140,7 +141,7 @@ namespace mySystem.Process.Bag.BTV
         {
             // 读取各表格数据，并显示页数
 
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             noid = new List<int>();
 
@@ -160,7 +161,7 @@ namespace mySystem.Process.Bag.BTV
 
             {
                 ///this block, add 批生产记录表 in the list
-                da = new OleDbDataAdapter("select * from 批生产记录表 where  生产指令ID=" + _生产指令ID + "", mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from 批生产记录表 where  生产指令ID=" + _生产指令ID + "", mySystem.Parameter.conn);
                 dt = new DataTable("批生产记录表");
                 da.Fill(dt);
                 temp = dt.Rows.Count;
@@ -181,7 +182,7 @@ namespace mySystem.Process.Bag.BTV
             }
             {
                 ///this block, add 生产指令 in the list
-                da = new OleDbDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID + "", mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID + "", mySystem.Parameter.conn);
                 dt = new DataTable("生产指令");
                 da.Fill(dt);
                 temp = dt.Rows.Count;
@@ -215,7 +216,7 @@ namespace mySystem.Process.Bag.BTV
                     idx++;
                     continue;
                 }
-                da = new OleDbDataAdapter("select * from " + tableName[i] + " where  生产指令ID=" + _生产指令ID + "", mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from [" + tableName[i] + "] where  生产指令ID=" + _生产指令ID + "", mySystem.Parameter.conn);
                 dt = new DataTable("生产指令");
                 da.Fill(dt);
                 temp = dt.Rows.Count;
@@ -240,7 +241,7 @@ namespace mySystem.Process.Bag.BTV
 
             // 另外一个datagridview
             // 读内包装
-            da = new OleDbDataAdapter("select 产品代码,生产批号,产品数量只数合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select 产品代码,生产批号,产品数量只数合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             dtSource = dt.Copy();
@@ -297,12 +298,12 @@ namespace mySystem.Process.Bag.BTV
 
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='制袋工序批生产记录'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='制袋工序批生产记录'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -350,9 +351,9 @@ namespace mySystem.Process.Bag.BTV
 
         void readOuterData(int pid)
         {
-            daOuter = new OleDbDataAdapter("select * from 批生产记录表 where 生产指令ID=" + pid, mySystem.Parameter.connOle);
+            daOuter = new SqlDataAdapter("select * from 批生产记录表 where 生产指令ID=" + pid, mySystem.Parameter.conn);
             dtOuter = new DataTable("批生产记录表");
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            cbOuter = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -547,12 +548,12 @@ namespace mySystem.Process.Bag.BTV
         {
             
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -582,12 +583,12 @@ namespace mySystem.Process.Bag.BTV
 
         public override void CheckResult()
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -671,7 +672,7 @@ namespace mySystem.Process.Bag.BTV
 
             foreach (Int32 r in checkedRows)
             {
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.conn);
                 DataTable dt = new DataTable("生产指令");
                 int id;
                 //List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
@@ -681,7 +682,7 @@ namespace mySystem.Process.Bag.BTV
                         PF0();
                         break;
                     case 1: // 生产指令
-                        da = new OleDbDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("生产指令");
                         da.Fill(dt);                        
                         {
@@ -702,7 +703,7 @@ namespace mySystem.Process.Bag.BTV
                         break;
                     default:
                         List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
-                        da = new OleDbDataAdapter("select * from "+tableName[r-2]+" where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from "+tableName[r-2]+" where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("制袋机组运行记录");
                         da.Fill(dt);
                         foreach (int page in pages)

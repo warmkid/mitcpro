@@ -28,6 +28,9 @@ namespace mySystem.Process.CleanCut
         private OleDbDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
+
+        private SqlDataAdapter da记录sql, da记录详情sql;
+        private SqlCommandBuilder cb记录sql, cb记录详情sql;
         
         #region
         //private string person_操作员;
@@ -104,14 +107,26 @@ namespace mySystem.Process.CleanCut
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='全部'", connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='全部'", connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='全部'", Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            
 
             if (dt.Rows.Count > 0)
             {
@@ -351,7 +366,15 @@ namespace mySystem.Process.CleanCut
                 dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
                 //立马保存这一行
                 bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录.Update((DataTable)bs记录.DataSource);
+                }
+                else
+                {
+                    da记录sql.Update((DataTable)bs记录.DataSource);
+                }
+                
                 //外表重新绑定
                 readOuterData(InstruID);
                 outerBind();
@@ -366,7 +389,14 @@ namespace mySystem.Process.CleanCut
                 dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
                 setDataGridViewRowNums();
                 //立马保存内表
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                }
             }
             dataGridView1.Columns.Clear();
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
@@ -427,7 +457,7 @@ namespace mySystem.Process.CleanCut
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
@@ -459,9 +489,19 @@ namespace mySystem.Process.CleanCut
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
-            da记录.Fill(dt记录);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
+            else
+            {
+                da记录sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString(), Parameter.conn);
+                cb记录sql = new SqlCommandBuilder(da记录sql);
+                da记录sql.Fill(dt记录);
+            }
+           
         }
 
         //外表控件绑定
@@ -515,9 +555,19 @@ namespace mySystem.Process.CleanCut
             //读取记录表里的记录
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T清洁分切运行记录ID = " + ID.ToString() + " order by id ASC", connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
-            da记录详情.Fill(dt记录详情);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T清洁分切运行记录ID = " + ID.ToString() + " order by id ASC", connOle);
+                cb记录详情 = new OleDbCommandBuilder(da记录详情);
+                da记录详情.Fill(dt记录详情);
+            }
+            else
+            {
+                da记录详情sql = new SqlDataAdapter("select * from " + tableInfo + " where T清洁分切运行记录ID = " + ID.ToString() + " order by id ASC", Parameter.conn);
+                cb记录详情sql = new SqlCommandBuilder(da记录详情sql);
+                da记录详情sql.Fill(dt记录详情);
+            }
+            
         }
 
         //内表控件绑定
@@ -635,7 +685,15 @@ namespace mySystem.Process.CleanCut
                 dt记录详情.Rows[deletenum].Delete();
 
                 // 保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                }
+                
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
 
@@ -676,13 +734,28 @@ namespace mySystem.Process.CleanCut
             else
             {
                 // 内表保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                }
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
 
                 //外表保存
                 bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录.Update((DataTable)bs记录.DataSource);
+                }
+                else
+                {
+                    da记录sql.Update((DataTable)bs记录.DataSource);
+                }
+                
                 //readOuterData(InstruID, dtp生产日期.Value, cb白班.Checked);
                 outerBind();
 
@@ -704,17 +777,37 @@ namespace mySystem.Process.CleanCut
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清洁分切运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            if (dt_temp.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "清洁分切运行记录";
-                dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
-                dt_temp.Rows.Add(dr);
+                OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清洁分切运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "清洁分切运行记录";
+                    dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                da_temp.Update(dt_temp);
             }
-            da_temp.Update(dt_temp);
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='清洁分切运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "清洁分切运行记录";
+                    dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                da_temp.Update(dt_temp);
+            }
+
+
+            
 
             //写日志 
             //格式： 
@@ -767,11 +860,25 @@ namespace mySystem.Process.CleanCut
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清洁分切运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清洁分切运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='清洁分切运行记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+
+
+            
 
             //写日志
             string log = "=====================================\n";
@@ -912,7 +1019,15 @@ namespace mySystem.Process.CleanCut
                         dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
 
                         bs记录.EndEdit();
-                        da记录.Update((DataTable)bs记录.DataSource);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da记录.Update((DataTable)bs记录.DataSource);
+                        }
+                        else
+                        {
+                            da记录sql.Update((DataTable)bs记录.DataSource);
+                        }
+                        
                     }
                     // 关闭文件，false表示不保存
                     wb.Close(false);
@@ -1010,7 +1125,15 @@ namespace mySystem.Process.CleanCut
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+            }
+            else
+            {
+                da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+            }
+           
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             innerBind();
         }
@@ -1028,7 +1151,15 @@ namespace mySystem.Process.CleanCut
                 continue;
             }
             // 保存数据的方法，每次保存之后重新读取数据，重新绑定控件
-            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+            }
+            else
+            {
+                da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             innerBind();
 

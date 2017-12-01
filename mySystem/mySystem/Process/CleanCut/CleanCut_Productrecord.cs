@@ -30,6 +30,9 @@ namespace mySystem.Process.CleanCut
         private BindingSource bs记录, bs记录详情;
         private OleDbCommandBuilder cb记录, cb记录详情;
 
+        private SqlDataAdapter da记录sql, da记录详情sql;
+        private SqlCommandBuilder cb记录sql, cb记录详情sql;
+
         #region
         //private string person_操作员;
         //private string person_审核员;
@@ -85,7 +88,7 @@ namespace mySystem.Process.CleanCut
             conn = Parameter.conn;
             connOle = Parameter.connOle;
             isSqlOk = Parameter.isSqlOk;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清洁分切生产记录 where ID="+ID,connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 清洁分切生产记录 where ID=" + ID, conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             InstruID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
@@ -107,14 +110,26 @@ namespace mySystem.Process.CleanCut
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='全部'", connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='全部'", connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='全部'", Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            
 
             if (dt.Rows.Count > 0)
             {
@@ -190,6 +205,7 @@ namespace mySystem.Process.CleanCut
             if (!isSqlOk)
             {
                 //从 “生产指令信息表” 中找 “生产指令编号” 下的信息
+
                 OleDbCommand comm1 = new OleDbCommand();
                 comm1.Connection = Parameter.connOle;
                 comm1.CommandText = "select * from 清洁分切工序生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
@@ -218,6 +234,32 @@ namespace mySystem.Process.CleanCut
             else
             {
                 //从SQL数据库中读取;                
+                //从 “生产指令信息表” 中找 “生产指令编号” 下的信息
+
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = Parameter.conn;
+                comm1.CommandText = "select * from 清洁分切工序生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
+                SqlDataReader reader1 = comm1.ExecuteReader();
+
+                if (reader1.Read())
+                {
+                    //查找该生产ID下的产品编码、产品批号
+                    SqlCommand comm2 = new SqlCommand();
+                    comm2.Connection = Parameter.conn;
+                    comm2.CommandText = "select ID, 清洁前产品代码, 清洁前批号,清洁后产品代码 from 清洁分切工序生产指令详细信息 where T生产指令表ID = " + reader1["ID"].ToString();
+                    SqlDataAdapter datemp = new SqlDataAdapter(comm2);
+                    datemp.Fill(dt物料代码);
+                    //if (dt物料代码.Rows.Count == 0)
+                    //{
+                    //    MessageBox.Show("该生产指令编码下的『清洁分切工序生产指令』尚未生成！");
+                    //}
+                    datemp.Dispose();
+                }
+                else
+                {
+                    //MessageBox.Show("该生产指令编码下的『生产指令信息表』尚未生成！");
+                }
+                reader1.Dispose();
             }
         }
 
@@ -361,7 +403,15 @@ namespace mySystem.Process.CleanCut
                 dt记录.Rows.InsertAt(dr1, dt记录.Rows.Count);
                 //立马保存这一行
                 bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录.Update((DataTable)bs记录.DataSource);
+                }
+                else
+                {
+                    da记录sql.Update((DataTable)bs记录.DataSource);
+                }
+               
                 //外表重新绑定
                 readOuterData(InstruID, flight, searchTime);
                 outerBind();
@@ -376,7 +426,15 @@ namespace mySystem.Process.CleanCut
                 dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
                 setDataGridViewRowNums();
                 //立马保存内表
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                }
+                
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
                 // 添加分切前ID
@@ -388,7 +446,15 @@ namespace mySystem.Process.CleanCut
                     }
                 }
                 //立马保存内表
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                }
+                
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
 
@@ -412,7 +478,7 @@ namespace mySystem.Process.CleanCut
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
@@ -432,9 +498,19 @@ namespace mySystem.Process.CleanCut
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产班次 = " + flight.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
-            da记录.Fill(dt记录);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产班次 = " + flight.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
+            else
+            {
+                da记录sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产班次 = " + (flight?1:0) + " and 生产日期 = '" + searchTime.ToString("yyyy/MM/dd") + "' ", Parameter.conn);
+                cb记录sql = new SqlCommandBuilder(da记录sql);
+                da记录sql.Fill(dt记录);
+            }
+            
         }
 
         //外表控件绑定
@@ -504,9 +580,19 @@ namespace mySystem.Process.CleanCut
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T清洁分切生产记录ID = " + ID.ToString() + " Order by 序号", connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
-            da记录详情.Fill(dt记录详情);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T清洁分切生产记录ID = " + ID.ToString() + " Order by 序号", connOle);
+                cb记录详情 = new OleDbCommandBuilder(da记录详情);
+                da记录详情.Fill(dt记录详情);
+            }
+            else
+            {
+                da记录详情sql = new SqlDataAdapter("select * from " + tableInfo + " where T清洁分切生产记录ID = " + ID.ToString() + " Order by 序号", Parameter.conn);
+                cb记录详情sql = new SqlCommandBuilder(da记录详情sql);
+                da记录详情sql.Fill(dt记录详情);
+            }
+           
         }
 
         //内表控件绑定
@@ -654,7 +740,15 @@ namespace mySystem.Process.CleanCut
             dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             setDataGridViewRowNums();
             // 内表保存
-            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+            }
+            else
+            {
+                da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             innerBind();
             // 添加分切前ID
@@ -665,7 +759,15 @@ namespace mySystem.Process.CleanCut
                     ndr["分切前ID"] = Convert.ToInt32(ndr["ID"]);
                 }
             }
-            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+            }
+            else
+            {
+                da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             innerBind();
             if (dataGridView1.Rows.Count > 0)
@@ -682,7 +784,14 @@ namespace mySystem.Process.CleanCut
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
                 // 保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                }
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
                 setDataGridViewRowNums();
@@ -761,13 +870,29 @@ namespace mySystem.Process.CleanCut
             else
             {
                 // 内表保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                }
+                else
+                {
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                }
+                
                 readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
                 innerBind();
 
                 //外表保存
                 bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录.Update((DataTable)bs记录.DataSource);
+                }
+                else
+                {
+                    da记录sql.Update((DataTable)bs记录.DataSource);
+                }
+                
                 readOuterData(InstruID, cb白班.Checked, dtp生产日期.Value);
                 outerBind();
 
@@ -786,17 +911,35 @@ namespace mySystem.Process.CleanCut
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清洁分切生产记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            if (dt_temp.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "清洁分切生产记录";
-                dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
-                dt_temp.Rows.Add(dr);
+                OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清洁分切生产记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "清洁分切生产记录";
+                    dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                da_temp.Update(dt_temp);
             }
-            da_temp.Update(dt_temp);
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='清洁分切生产记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "清洁分切生产记录";
+                    dr["对应ID"] = (int)dt记录.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                da_temp.Update(dt_temp);
+            }
+           
 
             //写日志 
             //格式： 
@@ -836,11 +979,23 @@ namespace mySystem.Process.CleanCut
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清洁分切生产记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='清洁分切生产记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='清洁分切生产记录' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            
 
             //写日志
             string log = "=====================================\n";
@@ -943,7 +1098,15 @@ namespace mySystem.Process.CleanCut
                         dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
 
                         bs记录.EndEdit();
-                        da记录.Update((DataTable)bs记录.DataSource);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da记录.Update((DataTable)bs记录.DataSource);
+                        }
+                        else
+                        {
+                            da记录sql.Update((DataTable)bs记录.DataSource);
+                        }
+                       
                     }
                     // 关闭文件，false表示不保存
                     wb.Close(false);
@@ -1343,7 +1506,15 @@ namespace mySystem.Process.CleanCut
             if (!isSavedClicked&&dt记录.Rows.Count>0)
             {
                 dt记录.Rows[0].Delete();
-                da记录.Update((DataTable)bs记录.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录.Update((DataTable)bs记录.DataSource);
+                }
+                else
+                {
+                    da记录sql.Update((DataTable)bs记录.DataSource);
+                }
+                
             }
         }
 

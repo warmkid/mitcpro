@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Data.OleDb;
+using ZXing;
 
 namespace mySystem.Other
 {
@@ -55,8 +56,35 @@ namespace mySystem.Other
 
         private void btn打印_Click(object sender, EventArgs e)
         {
-            // TODO
-            // 打印一张二维码，就在右边扫描一次，所以不用保存
+            // TODO 打印
+            
+
+
+            string sql;
+            OleDbDataAdapter da;
+            DataTable dt;
+            int yid = 0;
+            if (tb原二维码.Text.Trim() != "")
+            {
+                sql = "select * from 二维码信息 where 二维码='{0}'";
+                da = new OleDbDataAdapter(String.Format(sql, tb原二维码.Text.Trim()), conn);
+                dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count > 0)
+                {
+                    yid = Convert.ToInt32(dt.Rows[0]["库存ID"]);
+                }
+            }
+            
+            sql = "select * from 二维码信息 where 二维码='{0}'";
+            da = new OleDbDataAdapter(String.Format(sql, tb二维码.Text), conn);
+            dt = new DataTable();
+            da.Fill(dt);
+            DataRow dr = dt.NewRow();
+            dr["二维码"] = tb二维码.Text;
+            dr["库存ID"] = yid;
+            dt.Rows.Add(dr);
+            da.Update(dt);
         }
 
         private void btn生成二维码_Click(object sender, EventArgs e)
@@ -74,6 +102,16 @@ namespace mySystem.Other
                 num++;
             }
             tb二维码.Text = prefix + num.ToString("D3");
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (tb二维码.Text == "") return;
+            ZXing.BarcodeWriter bw = new BarcodeWriter();
+
+            bw.Format = BarcodeFormat.QR_CODE;
+            Bitmap b = bw.Write(tb二维码.Text);
+            b.Save("code.bmp");
         }
     }
 }

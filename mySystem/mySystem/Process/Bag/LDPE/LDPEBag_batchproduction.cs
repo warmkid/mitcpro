@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Bag.LDPE
@@ -23,8 +24,8 @@ namespace mySystem.Process.Bag.LDPE
         mySystem.Parameter.FormState _formState;
 
 
-        OleDbDataAdapter daOuter;
-        OleDbCommandBuilder cbOuter;
+        SqlDataAdapter daOuter;
+        SqlCommandBuilder cbOuter;
         DataTable dtOuter;
         BindingSource bsOuter;
 
@@ -71,7 +72,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.DataError += dataGridView1_DataError;
             dataGridView2.DataError += dataGridView2_DataError;
             _生产指令ID = id;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + id, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + id, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             _生产指令 = dt.Rows[0]["生产指令编号"].ToString();
@@ -87,6 +88,7 @@ namespace mySystem.Process.Bag.LDPE
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
+                ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(_生产指令ID);
                 outerBind();
@@ -119,7 +121,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             // 读取各表格数据，并显示页数
 
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             noid = new List<int>();
 
@@ -136,7 +138,7 @@ namespace mySystem.Process.Bag.LDPE
             int temp;
             int idx = 0;
             int tempid;
-            da = new OleDbDataAdapter("select * from 生产指令 where  生产指令编号='" + _生产指令 + "'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 生产指令 where  生产指令编号='" + _生产指令 + "'", mySystem.Parameter.conn);
             dt = new DataTable("生产指令");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -150,7 +152,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             //开机前确认
             idx++;
-            da = new OleDbDataAdapter("select * from 制袋机组开机前确认表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 制袋机组开机前确认表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("制袋机组开机前确认表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -168,7 +170,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             // 生产领料使用记录
             idx++;
-            da = new OleDbDataAdapter("select * from 生产领料使用记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 生产领料使用记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("生产领料使用记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -186,7 +188,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             // 制袋机运行记录
             idx++;
-            da = new OleDbDataAdapter("select * from 制袋机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 制袋机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("制袋机组运行记录制袋机组运行记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -205,7 +207,7 @@ namespace mySystem.Process.Bag.LDPE
             
             //  产品内包装记录
             idx++;
-            da = new OleDbDataAdapter("select * from 产品内包装记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 产品内包装记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("产品内包装记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -223,7 +225,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             // 清场记录
             idx++;
-            da = new OleDbDataAdapter("select * from 清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("清场记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -241,7 +243,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             //  CS制袋日报表
             idx++;
-            da = new OleDbDataAdapter("select * from LDPE制袋日报表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from LDPE制袋日报表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("CS制袋日报表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -259,7 +261,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             //  产品外观和尺寸检验记录
             idx++;
-            da = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("产品外观和尺寸检验记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -277,7 +279,7 @@ namespace mySystem.Process.Bag.LDPE
             }
             // 产品热合强度检验记录
             idx++;
-            da = new OleDbDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("产品热合强度检验记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -297,7 +299,7 @@ namespace mySystem.Process.Bag.LDPE
 
             // 另外一个datagridview
             // 读内包装
-            da = new OleDbDataAdapter("select 产品代码,生产批号,产品数量只合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select 产品代码,生产批号,产品数量只合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
 
@@ -342,12 +344,12 @@ namespace mySystem.Process.Bag.LDPE
 
         void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='制袋工序批生产记录'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='制袋工序批生产记录'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -382,9 +384,9 @@ namespace mySystem.Process.Bag.LDPE
 
         void readOuterData(int pid)
         {
-            daOuter = new OleDbDataAdapter("select * from 批生产记录表 where 生产指令ID=" + pid, mySystem.Parameter.connOle);
+            daOuter = new SqlDataAdapter("select * from 批生产记录表 where 生产指令ID=" + pid, mySystem.Parameter.conn);
             dtOuter = new DataTable("批生产记录表");
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            cbOuter = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -579,12 +581,12 @@ namespace mySystem.Process.Bag.LDPE
         {
             
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -614,12 +616,12 @@ namespace mySystem.Process.Bag.LDPE
 
         public override void CheckResult()
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);

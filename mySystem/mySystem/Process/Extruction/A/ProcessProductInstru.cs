@@ -290,41 +290,63 @@ namespace BatchProductRecord
             }
             label = 1;
             ht代码面数 = new Hashtable();
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection conn;
-            conn = new OleDbConnection(strConnect);
-            conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
-
-            DataTable dt = new DataTable();
-            da.Fill(dt);
-
-            //if (!mySystem.Parameter.isSqlOk)
-            //{
-            //    OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.connOle);                
-            //    da.Fill(dt);
-            //}
-            //else
-            //{
-            //    SqlDataAdapter da = new SqlDataAdapter("select * from 设置吹膜产品编码", mySystem.Parameter.conn);
-            //    da.Fill(dt);
-            //}
-
-            foreach (DataRow dr in dt.Rows)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                string code = dr["存货代码"].ToString();
-                int mian = 0;
-                if (code.Split('-')[1].StartsWith("S"))
+                string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection conn;
+                conn = new SqlConnection(strConnect);
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+
+
+                foreach (DataRow dr in dt.Rows)
                 {
-                    mian = 1;
+                    string code = dr["存货代码"].ToString();
+                    int mian = 0;
+                    if (code.Split('-')[1].StartsWith("S"))
+                    {
+                        mian = 1;
+                    }
+                    else
+                    {
+                        mian = 2;
+                    }
+                    ht代码面数.Add(code, mian);
                 }
-                else
-                {
-                    mian = 2;
-                }
-                ht代码面数.Add(code, mian);
             }
+            else
+            {
+                string strConnect = "server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + mySystem.Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection conn;
+                conn = new SqlConnection(strConnect);
+                conn.Open();
+                SqlDataAdapter da = new SqlDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%成品%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    string code = dr["存货代码"].ToString();
+                    int mian = 0;
+                    if (code.Split('-')[1].StartsWith("S"))
+                    {
+                        mian = 1;
+                    }
+                    else
+                    {
+                        mian = 2;
+                    }
+                    ht代码面数.Add(code, mian);
+                }
+            }
+            
         }
 
 
@@ -423,12 +445,11 @@ namespace BatchProductRecord
             //    }
             //}
 
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection conn;
-            conn = new OleDbConnection(strConnect);
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn;
+            conn = new SqlConnection(strConnect);
             conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
+            SqlDataAdapter da = new SqlDataAdapter("select 存货代码 from 设置存货档案 where 类型 like '%组件%' and 属于工序 like '%吹膜%' order by 存货代码", conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
              for (int i = 0; i < dt.Rows.Count; i++)
@@ -1713,10 +1734,13 @@ namespace BatchProductRecord
                 dt_prodinstr.Rows[0]["比例"] = a;
 
                 bs_prodinstr.EndEdit();
-                if(!mySystem.Parameter.isSqlOk)
+                if (!mySystem.Parameter.isSqlOk)
                     da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                 else
+                {
+                    ((DataTable)bs_prodinstr.DataSource).Rows[0]["审核是否通过"] = 0;
                     da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
+                }
             }
 
         }
@@ -1922,6 +1946,7 @@ namespace BatchProductRecord
             dt_prodinstr.Rows[0]["计划产量合计卷"] = sum_juan;
         }
 
+        // 导入生产指令的函数，暂时未改成SQL
         private void button1_Click(object sender, System.EventArgs e)
         {
 
@@ -2228,7 +2253,7 @@ namespace BatchProductRecord
             my.Cells[20 + ind, 10].Value = dt_prodinstr.Rows[0]["双层洁净包装领料量"];
 
 
-            my.Cells[16 + ind, 12].Value = "白班：" + tb白班.Text + "\n" + "夜班：" + tb夜班.Text;
+            my.Cells[16 + ind, 12].Value = "白班：" + dt_prodinstr.Rows[0]["白班负责人"] + "\n" + "夜班：" + dt_prodinstr.Rows[0]["夜班负责人"];
             //my.Cells[21 + ind, 2].Value = tb备注.Text;
             my.Cells[21 + ind, 2].Value = dt_prodinstr.Rows[0]["备注"];
 
@@ -2407,15 +2432,31 @@ namespace BatchProductRecord
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da;
-            DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            String str操作员 = dt.Rows[0]["操作员"].ToString();
-            String str审核员 = dt.Rows[0]["审核员"].ToString();
-            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-            MessageBox.Show(str人员信息);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                DataTable dt;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜工序生产指令'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            
         }
     }
 }

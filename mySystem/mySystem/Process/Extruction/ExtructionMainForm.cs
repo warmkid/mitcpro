@@ -75,7 +75,15 @@ namespace mySystem
                 List<String> queryCols3 = new List<String>(new String[] { "审核人" });
                 List<String> whereCols3 = new List<String>(new String[] { "生产指令id" });
                 List<Object> whereVals3 = new List<Object>(new Object[] { Parameter.proInstruID });
-                List<List<Object>> res3 = Utility.selectAccess(Parameter.connOle, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
+                List<List<Object>> res3;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res3 = Utility.selectAccess(Parameter.conn, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
+                }
+                else
+                {
+                    res3 = Utility.selectAccess(Parameter.connOle, tblName3, queryCols3, whereCols3, whereVals3, null, null, null, null, null);
+                }
                 if (res3.Count != 0)
                 {
                     preheat = true;
@@ -461,7 +469,17 @@ namespace mySystem
                 List<String> queryCols = new List<String>(new String[] { "ID" });
                 List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
                 List<Object> whereVals = new List<Object>(new Object[] { instruction });
-                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                List<List<Object>> res;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res = Utility.selectAccess(Parameter.conn, tblName
+                    , queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
+                else
+                {
+                    res = Utility.selectAccess(Parameter.connOle, tblName
+                    , queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
                 Parameter.proInstruID = Convert.ToInt32(res[0][0]);
             }
         }
@@ -476,7 +494,15 @@ namespace mySystem
                 List<String> queryCols = new List<String>(new String[] { "ID" });
                 List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
                 List<Object> whereVals = new List<Object>(new Object[] { instruction });
-                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                List<List<Object>> res;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
+                else
+                {
+                    res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
                 instruID = Convert.ToInt32(res[0][0]);
                 //instruID = Convert.ToInt32(res[res.Count-1][0]);
                 Parameter.proInstruID = instruID;
@@ -849,7 +875,7 @@ namespace mySystem
                                 //mySql += Parameter.userflight + "', ";
                                 //mySql += "'');";
                                 //commInsert.CommandText = mySql;
-                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ");";
+                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员, 审核是否通过) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ",0 );";
                                 commInsert.ExecuteNonQuery();
                                 //获取ID
                                 commInsert.CommandText = "SELECT @@IDENTITY";
@@ -914,7 +940,7 @@ namespace mySystem
                                 //若大表当日无记录则新建一条
                                 SqlCommand commInsert = new SqlCommand();
                                 commInsert.Connection = Parameter.conn;
-                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ");";
+                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员,审核是否通过) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ", 0 );";
                                 commInsert.ExecuteNonQuery();
                                 //获取ID
                                 commInsert.CommandText = "SELECT @@IDENTITY";
@@ -977,7 +1003,7 @@ namespace mySystem
                                 //若大表当日无记录则新建一条
                                 SqlCommand commInsert = new SqlCommand();
                                 commInsert.Connection = Parameter.conn;
-                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ");";
+                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员,审核是否通过) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ", 0 );";
                                 commInsert.ExecuteNonQuery();
                                 //获取ID
                                 commInsert.CommandText = "SELECT @@IDENTITY";
@@ -1364,7 +1390,12 @@ namespace mySystem
 
         private void LabelBtn_Click(object sender, EventArgs e)
         {
-            LabelPrint label = new LabelPrint();
+            if (comboBox1.SelectedItem.ToString().Trim() == "")
+            {
+                MessageBox.Show("请选择一个生产指令");
+                return;
+            }
+            LabelPrint label = new LabelPrint(comboBox1.SelectedItem.ToString());
             label.ShowDialog();
         }
 

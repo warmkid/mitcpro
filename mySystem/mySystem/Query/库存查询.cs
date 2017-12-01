@@ -7,14 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Query
 {
     public partial class 库存查询 : Form
     {
-         OleDbDataAdapter da退货台账,da出库单,da库存台账,da检验台账;
+         SqlDataAdapter da退货台账,da出库单,da库存台账,da检验台账;
         DataTable dt退货台账,dt出库单,dt库存台账,dt检验台账;
-        OleDbCommandBuilder cb库存台账;
+        SqlCommandBuilder cb库存台账;
 
         public 库存查询()
         {
@@ -193,14 +194,14 @@ namespace mySystem.Query
 
         private void btn退货台账查询_Click(object sender, EventArgs e)
         {
-            string sql = "select * from 产品退货记录 where 申请日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%' and 产品名称 like '%{4}%' and 产品批号 like '%{5}%'";
+            string sql = "select * from 产品退货记录 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%' and 产品名称 like '%{4}%' and 产品批号 like '%{5}%'";
             DateTime start = dtp退货台账申请开始时间.Value;
             DateTime end = dtp退货台账申请结束时间.Value;
             string 订单号 = tb退货台账销售合同号.Text;
             string 客户 = tb退货台账客户名称.Text;
             string 产品名称 = tb退货台账产品名称.Text;
             string 产品批号 = tb退货台账产品批号.Text;
-            da退货台账 = new OleDbDataAdapter(string.Format(sql, start, end, 订单号, 客户, 产品名称, 产品批号), mySystem.Parameter.connOle);
+            da退货台账 = new SqlDataAdapter(string.Format(sql, start, end, 订单号, 客户, 产品名称, 产品批号), mySystem.Parameter.conn);
             dt退货台账 = new DataTable("产品退货记录");
             da退货台账.Fill(dt退货台账);
             dgv退货台账.DataSource = dt退货台账;
@@ -208,14 +209,14 @@ namespace mySystem.Query
 
         private void btn查询出库单_Click(object sender, EventArgs e)
         {
-            string sql = "select * from 出库单详细信息 where 出库日期 between #{0}# and #{1}# and 发货公司 like '%{2}%' and 客户 like '%{3}%' and 存货名称 like '%{4}%' and 批号 like '%{5}%'";
+            string sql = "select * from 出库单详细信息 where 出库日期 between '{0}' and '{1}' and 发货公司 like '%{2}%' and 客户 like '%{3}%' and 存货名称 like '%{4}%' and 批号 like '%{5}%'";
             DateTime start = dtp出库单出库开始时间.Value;
             DateTime end = dtp出库单出库结束时间.Value;
             string 发货公司 = tb出库单发货公司.Text;
             string 客户 = tb退货台账客户名称.Text;
             string 产品名称 = tb退货台账产品名称.Text;
             string 产品批号 = tb退货台账产品批号.Text;
-            da出库单 = new OleDbDataAdapter(string.Format(sql, start, end, 发货公司, 客户, 产品名称, 产品批号), mySystem.Parameter.connOle);
+            da出库单 = new SqlDataAdapter(string.Format(sql, start, end, 发货公司, 客户, 产品名称, 产品批号), mySystem.Parameter.conn);
             dt出库单 = new DataTable("出库单详细信息");
             da出库单.Fill(dt出库单);
             dgv出库单.DataSource = dt出库单;
@@ -228,9 +229,9 @@ namespace mySystem.Query
             string 供应商名称 = tb存货台账厂家名称.Text;
             string 产品代码 = tb库存台账存货代码.Text;
             string 状态 = cmb库存台账状态.Text;
-            da库存台账 = new OleDbDataAdapter(string.Format(sql, 供应商名称, 产品代码, 状态), mySystem.Parameter.connOle);
+            da库存台账 = new SqlDataAdapter(string.Format(sql, 供应商名称, 产品代码, 状态), mySystem.Parameter.conn);
             dt库存台账 = new DataTable("库存台帐");
-            cb库存台账 = new OleDbCommandBuilder(da库存台账);
+            cb库存台账 = new SqlCommandBuilder(da库存台账);
             da库存台账.Fill(dt库存台账);
             dgv库存台账.DataSource = dt库存台账;
         }
@@ -242,7 +243,7 @@ namespace mySystem.Query
 
             string 供应商名称 = tb检验台账厂家名称.Text;
             string 产品代码 = tb检验台账存货代码.Text;
-            da检验台账 = new OleDbDataAdapter(string.Format(sql, 供应商名称, 产品代码), mySystem.Parameter.connOle);
+            da检验台账 = new SqlDataAdapter(string.Format(sql, 供应商名称, 产品代码), mySystem.Parameter.conn);
             dt检验台账 = new DataTable("检验台账");
             da检验台账.Fill(dt检验台账);
             dgv检验台账.DataSource = dt检验台账;

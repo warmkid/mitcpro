@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Stock
 {
@@ -16,8 +17,8 @@ namespace mySystem.Process.Stock
 //        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
-        OleDbDataAdapter da;
-        OleDbCommandBuilder cb;
+        SqlDataAdapter da;
+        SqlCommandBuilder cb;
         DataTable dt;
         BindingSource bs;
 
@@ -174,9 +175,9 @@ namespace mySystem.Process.Stock
 
         DataTable get产品退货申请单(DateTime start, DateTime end, string oderNO, string name)
         {
-            string sql = "select * from 产品退货申请单 where 申请日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+            string sql = "select * from 产品退货申请单 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货申请单");
             da.Fill(dt);
             return dt;
@@ -203,8 +204,8 @@ namespace mySystem.Process.Stock
         void init产品退货审批单1()
         {
             dtp产品退货审批单1开始时间.Value = DateTime.Now.AddDays(-7).Date;
-            dtp产品退货审批单2结束时间.Value = DateTime.Now;
-            dt = get产品退货审批单1(dtp产品退货审批单1开始时间.Value, dtp产品退货审批单2结束时间.Value, tb审批单1订单号.Text, tb审批单1客户名称.Text);
+            dtp产品退货审批单1结束时间.Value = DateTime.Now;
+            dt = get产品退货审批单1(dtp产品退货审批单1开始时间.Value, dtp产品退货审批单1结束时间.Value, tb审批单1订单号.Text, tb审批单1客户名称.Text);
             dgv审批单1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv审批单1_DataBindingComplete);
             dgv审批单1.DataSource = dt;
             
@@ -222,9 +223,9 @@ namespace mySystem.Process.Stock
 
         DataTable get产品退货审批单1(DateTime start, DateTime end, string oderNO, string name)
         {
-            string sql = "select * from 产品退货审批单1 where 申请日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+            string sql = "select * from 产品退货审批单1 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货审批单1");
             da.Fill(dt);
             return dt;
@@ -238,7 +239,7 @@ namespace mySystem.Process.Stock
 
         private void btn查询退货审批单1_Click(object sender, EventArgs e)
         {
-            dt = get产品退货审批单1(dtp退货申请单开始时间.Value, dtp退货申请单结束时间.Value, tb退货申请单订单号.Text, tb退货申请单客户名称.Text);
+            dt = get产品退货审批单1(dtp产品退货审批单1开始时间.Value, dtp产品退货审批单1结束时间.Value, tb审批单1订单号.Text, tb审批单1客户名称.Text);
             dgv审批单1.DataSource = dt;
         }
         #endregion
@@ -247,9 +248,9 @@ namespace mySystem.Process.Stock
 
         void init产品退货审批单2()
         {
-            dtp审批单2开始时间.Value = DateTime.Now.AddDays(-7).Date;
-            dtp审批单2结束时间.Value = DateTime.Now;
-            dt = get产品退货审批单2(dtp审批单2开始时间.Value, dtp审批单2结束时间.Value, tb审批单2订单号.Text, tb审批单2客户名称.Text);
+            dtp退货审批单2开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp退货审批单2结束时间.Value = DateTime.Now;
+            dt = get产品退货审批单2(dtp退货审批单2开始时间.Value, dtp退货审批单2结束时间.Value, tb审批单2订单号.Text, tb审批单2客户名称.Text);
             dgv审批单2.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv审批单2_DataBindingComplete);
             dgv审批单2.DataSource = dt;
             dgv审批单2.ReadOnly = true;
@@ -265,9 +266,9 @@ namespace mySystem.Process.Stock
 
         DataTable get产品退货审批单2(DateTime start, DateTime end, string oderNO, string name)
         {
-            string sql = "select * from 产品退货审批单2 where 申请日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+            string sql = "select * from 产品退货审批单2 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货审批单2");
             da.Fill(dt);
             return dt;
@@ -281,7 +282,7 @@ namespace mySystem.Process.Stock
 
         private void btn查询退货审批单2_Click(object sender, EventArgs e)
         {
-            dt = get产品退货审批单2(dtp审批单2开始时间.Value, dtp审批单2结束时间.Value, tb审批单2订单号.Text, tb审批单2客户名称.Text);
+            dt = get产品退货审批单2(dtp退货审批单2开始时间.Value, dtp退货审批单2结束时间.Value, tb审批单2订单号.Text, tb审批单2客户名称.Text);
             dgv审批单2.DataSource = dt;
         }
         #endregion
@@ -309,9 +310,9 @@ namespace mySystem.Process.Stock
 
         DataTable get产品退货接收单(DateTime start, DateTime end, string oderNO, string name)
         {
-            string sql = "select * from 产品退货接收单 where 接收日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+            string sql = "select * from 产品退货接收单 where 接收日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货接收单");
             da.Fill(dt);
             return dt;
@@ -319,7 +320,7 @@ namespace mySystem.Process.Stock
 
         private void btn添加退货接收单_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 产品退货审批单2 where 批准结果=true and 状态='已批准'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 产品退货审批单2 where 批准结果=true and 状态='已批准'", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             try
@@ -369,9 +370,9 @@ namespace mySystem.Process.Stock
 
         DataTable get产品退货请验单(DateTime start, DateTime end, string oderNO, string name)
         {
-            string sql = "select * from 产品退货请验单 where 请验日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+            string sql = "select * from 产品退货请验单 where 请验日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货请验单");
             da.Fill(dt);
             return dt;
@@ -393,9 +394,9 @@ namespace mySystem.Process.Stock
 
         void init产品退货评审单1()
         {
-            dtp评审单1开始时间.Value = DateTime.Now.AddDays(-7).Date;
-            dtp评审单1结束时间.Value = DateTime.Now;
-            dt = get产品退货评审单1(dtp评审单1开始时间.Value, dtp评审单1结束时间.Value, tb评审单1销售订单.Text, tb评审单1客户名称.Text);
+            dtp退货评审单1开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp退货评审单1结束时间.Value = DateTime.Now;
+            dt = get产品退货评审单1(dtp退货评审单1开始时间.Value, dtp退货评审单1结束时间.Value, tb评审单1销售订单.Text, tb评审单1客户名称.Text);
             dgv评审单1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv评审单1_DataBindingComplete);
             dgv评审单1.DataSource = dt;
             dgv评审单1.ReadOnly = true;
@@ -411,9 +412,9 @@ namespace mySystem.Process.Stock
 
         DataTable get产品退货评审单1(DateTime start, DateTime end, string oderNO, string name)
         {
-            string sql = "select * from 产品退货评审单1 where 评审日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+            string sql = "select * from 产品退货评审单1 where 评审日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货评审单1");
             da.Fill(dt);
             return dt;
@@ -426,7 +427,7 @@ namespace mySystem.Process.Stock
 
         private void btn查询退货评审单1_Click(object sender, EventArgs e)
         {
-            dt = get产品退货评审单1(dtp评审单1开始时间.Value, dtp评审单1结束时间.Value, tb评审单1销售订单.Text, tb评审单1客户名称.Text);
+            dt = get产品退货评审单1(dtp退货评审单1开始时间.Value, dtp退货评审单1结束时间.Value, tb评审单1销售订单.Text, tb评审单1客户名称.Text);
             dgv评审单1.DataSource = dt;
         }
         #endregion
@@ -435,9 +436,9 @@ namespace mySystem.Process.Stock
 
         void init产品退货评审单2()
         {
-            dtp评审单2开始时间.Value = DateTime.Now.AddDays(-7).Date;
-            dtp评审单2结束时间.Value = DateTime.Now;
-            dt = get产品退货评审单2(dtp评审单2开始时间.Value, dtp评审单2结束时间.Value, tb评审单2销售订单.Text, tb评审单2客户名称.Text);
+            dtp退货评审单2开始时间.Value = DateTime.Now.AddDays(-7).Date;
+            dtp退货评审单2结束时间.Value = DateTime.Now;
+            dt = get产品退货评审单2(dtp退货评审单2开始时间.Value, dtp退货评审单2结束时间.Value, tb评审单2销售订单.Text, tb评审单2客户名称.Text);
             dgv评审单2.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dgv评审单2_DataBindingComplete);
             dgv评审单2.DataSource = dt;
             dgv评审单2.ReadOnly = true;
@@ -453,9 +454,9 @@ namespace mySystem.Process.Stock
 
         DataTable get产品退货评审单2(DateTime start, DateTime end, string oderNO, string name)
         {
-            string sql = "select * from 产品退货评审单2 where 评审日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+            string sql = "select * from 产品退货评审单2 where 评审日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货评审单2");
             da.Fill(dt);
             return dt;
@@ -468,7 +469,7 @@ namespace mySystem.Process.Stock
 
         private void btn查询退货评审单2_Click(object sender, EventArgs e)
         {
-            dt = get产品退货评审单2(dtp评审单2开始时间.Value, dtp评审单2结束时间.Value, tb评审单2销售订单.Text, tb评审单2客户名称.Text); 
+            dt = get产品退货评审单2(dtp退货评审单2开始时间.Value, dtp退货评审单2结束时间.Value, tb评审单2销售订单.Text, tb评审单2客户名称.Text); 
             dgv评审单2.DataSource = dt;
         }
         #endregion
@@ -496,9 +497,9 @@ namespace mySystem.Process.Stock
 
         DataTable get产品退货记录(DateTime start, DateTime end, string oderNO, string name)
         {
-            string sql = "select * from 产品退货记录 where 申请日期 between #{0}# and #{1}# and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
+            string sql = "select * from 产品退货记录 where 申请日期 between '{0}' and '{1}' and 拟退货产品销售订单编号 like '%{2}%' and 客户名称 like '%{3}%'";
 
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, start, end, oderNO, name), mySystem.Parameter.conn);
             DataTable dt = new DataTable("产品退货记录2");
             da.Fill(dt);
             return dt;
@@ -515,6 +516,9 @@ namespace mySystem.Process.Stock
             dgv退货记录.DataSource = dt;
         }
         #endregion
+
+
+        
 
     }
 }

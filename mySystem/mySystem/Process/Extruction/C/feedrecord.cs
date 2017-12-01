@@ -516,28 +516,60 @@ namespace mySystem.Extruction.Chart
             List<Object> queryVals = new List<Object>(new Object[] { typeof(Int32), typeof(DateTime), typeof(DateTime), typeof(System.String), typeof(DateTime), typeof(Int32), typeof(DateTime), typeof(Int32), typeof(Int32), typeof(Int32), typeof(Int32), typeof(Int32), typeof(Int32), typeof(Int32) });
             if (datasel.Rows[0][2].ToString() == "" && datasel.Rows[0][3].ToString() == "")
             {
-                rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, null, null, null, null, betweenCol, left, right);
+                
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    rlt = Utility.selectAccess(mainform.conn, tablename, queryCols, null, null, null, null, betweenCol, left, right);
+                }
+                else
+                {
+                    rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, null, null, null, null, betweenCol, left, right);
+                }
 
             }
             else if (datasel.Rows[0][2].ToString() == "")
             {
                 List<String> whereCols = new List<String>(new String[] { "reviewer_id" });
                 List<Object> whereVals = new List<Object>(new Object[] { Convert.ToInt32(datasel.Rows[0][3].ToString()) });
-                rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    rlt = Utility.selectAccess(mainform.conn, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
+                else
+                {
+                    rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
 
             }
             else if (datasel.Rows[0][3].ToString() == "")
             {
                 List<String> whereCols = new List<String>(new String[] { "production_instruction" });
                 List<Object> whereVals = new List<Object>(new Object[] { datasel.Rows[0][2].ToString() });
-                rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    rlt = Utility.selectAccess(mainform.conn, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
+                else
+                {
+                    rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
 
             }
             else //bug here
             {
                 List<String> whereCols = new List<String>(new String[] { "production_instruction", "reviewer_id" });
                 List<Object> whereVals = new List<Object>(new Object[] { datasel.Rows[0][2].ToString(), Convert.ToInt32(datasel.Rows[0][3].ToString()) });
-                rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    rlt = Utility.selectAccess(mainform.conn, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
+                else
+                {
+                    rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
             }
 
 

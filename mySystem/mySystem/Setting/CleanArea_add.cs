@@ -8,13 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace WindowsFormsApplication1
 {
     public partial class CleanArea_add : mySystem.BaseForm
     {
         //SqlConnection conn = null;//连接sql
-        //OleDbConnection connOle = null;//连接access
+        //OleDbConnection mySystem.Parameter.conn = null;//连接access
         //bool isSqlOk;//使用sql还是access
 
         public CleanArea_add(mySystem.MainForm mainform):base(mainform)
@@ -36,7 +37,7 @@ namespace WindowsFormsApplication1
             }
             else
             {
-                OleDbCommand comm = new OleDbCommand(sql, mainform.connOle);
+                SqlCommand comm = new SqlCommand(sql, mySystem.Parameter.conn);
                 result = comm.ExecuteNonQuery();
             }
             if (result > 0)

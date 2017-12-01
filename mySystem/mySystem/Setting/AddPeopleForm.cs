@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Setting
 {
@@ -85,7 +86,7 @@ namespace mySystem.Setting
                     List<String> insertCols = new List<String>(new String[] { "角色ID", "姓名", "密码", "角色", "用户ID" });
                     List<Object> insertVals = new List<Object>(new Object[] { role_id, username, password, role, userid });
                     
-                    Boolean b = Utility.insertAccess(Parameter.connOleUser, tblName, insertCols, insertVals);
+                    Boolean b = Utility.insertAccess(mySystem.Parameter.connUser, tblName, insertCols, insertVals);
                     if (b)
                     {
                         MessageBox.Show("用户添加成功", "success");
@@ -112,10 +113,10 @@ namespace mySystem.Setting
         private Boolean isIDExist()
         {
             bool b;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOleUser;
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = mySystem.Parameter.connUser;
             comm.CommandText = "SELECT * FROM users WHERE 用户ID  =" + userid;
-            OleDbDataReader reader = comm.ExecuteReader();
+            SqlDataReader reader = comm.ExecuteReader();
             b = reader.HasRows ? true : false;
 
             return b;

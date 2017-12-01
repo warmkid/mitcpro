@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 using System.Data.OleDb;
 using System.Collections;
 using System.Windows.Forms;
@@ -105,6 +106,7 @@ namespace mySystem
             }
             return ret;
         }
+
 
         public static List<List<Object>> selectAccess(SqlConnection conn, String tblName, List<String> queryCols,
     List<String> whereCols, List<Object> whereVals, String likeCol, String likeVal, String betweenCol,
@@ -508,11 +510,41 @@ namespace mySystem
             dgv.RowHeadersVisible = false;
             foreach(DataGridViewColumn dgvc in dgv.Columns)
             {
-                dgvc.AutoSizeMode = mode;
+                //dgvc.AutoSizeMode = mode;
+                dgvc.Resizable = DataGridViewTriState.True;
                 dgvc.SortMode = DataGridViewColumnSortMode.NotSortable;
             }
         }
 
+
+        /// <summary>
+        /// this function return the material amounts according to the QRcode;
+        /// it frequently consults database
+        /// desigeed by pool, 2017-11-07
+        /// input: a full string
+        /// output: amount
+        /// </summary>
+        /// <param name="QRcode"></param>
+        /// <returns></returns>
+        public static int getMaterialAmountFromQRcode(string QRcode)
+        {
+            int rtn;
+            string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection connToOrder = new SqlConnection(strConnect);
+            SqlDataAdapter da;
+            DataTable dt = new DataTable();
+            da = new SqlDataAdapter("select 数量 from 二维码信息 where 二维码 ='" + QRcode + "'", connToOrder);
+            da.Fill(dt);
+            if (dt.Rows.Count < 1)
+            {
+                rtn = 0;
+                da.Dispose();
+                return rtn;
+            }
+            rtn = Convert.ToInt32(dt.Rows[0]["数量"].ToString());
+            da.Dispose();
+            return rtn;
+        }
     
 
     }

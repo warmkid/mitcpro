@@ -74,7 +74,15 @@ namespace mySystem.Process.CleanCut
                 List<String> queryCols = new List<String>(new String[] { "ID" });
                 List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
                 List<Object> whereVals = new List<Object>(new Object[] { Parameter.cleancutInstruction });
-                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                List<List<Object>> res;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
+                else
+                {
+                    res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
                 Parameter.cleancutInstruID = Convert.ToInt32(res[0][0]);
             }
         }
@@ -87,7 +95,15 @@ namespace mySystem.Process.CleanCut
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "生产指令编号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res;
+            if (mySystem.Parameter.isSqlOk)
+            {
+                res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
+            else
+            {
+                res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.cleancutInstruID = instruID;
             InitBtn();
@@ -214,19 +230,37 @@ namespace mySystem.Process.CleanCut
             Boolean b = false;
             String[] name操作员 = null;
             String[] name审核员 = null;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
+            
             if (tblName != "清洁分切工序生产指令")
             {
                 tblName = "全部";
             }
-            comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
-            OleDbDataReader reader = comm.ExecuteReader();
-            while (reader.Read())
+            
+            if (!mySystem.Parameter.isSqlOk)
             {
-                name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
-                name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
+                comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
+                OleDbDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                {
+                    name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
+                    name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
+                }
             }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = Parameter.conn;
+                comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
+                SqlDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                {
+                    name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
+                    name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
+                }
+            }
+            
 
             if (role == 3)
             {

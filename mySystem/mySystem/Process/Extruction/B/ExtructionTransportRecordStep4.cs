@@ -423,7 +423,72 @@ namespace mySystem.Extruction.Process
             check.ShowDialog();
 
             if (isSqlOk)
-            { }
+            {
+                reviewer_name = checkIDOle(review_id);
+
+                List<String> queryCols = new List<String>(new String[] { "s4_review_opinion" });
+                List<String> whereCols = new List<String>(new String[] { "id" });
+                List<Object> whereVals = new List<Object>(new Object[] { 1 });
+                List<List<Object>> queryValsList = Utility.selectAccess(mySystem.Parameter.conn, table, queryCols, whereCols, whereVals, null, null, null, null, null);
+
+                //解析jason
+                JArray jo = JArray.Parse(queryValsList[0][0].ToString());
+                //填数据
+
+                DataTable dtsave = new DataTable();
+
+                dtsave.Columns.Add("传料日期", typeof(String));
+                dtsave.Columns.Add("时间", typeof(String));
+                dtsave.Columns.Add("物料代码", typeof(String));
+                dtsave.Columns.Add("数量", typeof(String));
+                dtsave.Columns.Add("kgper件", typeof(String));
+                dtsave.Columns.Add("数量Total", typeof(String));
+                dtsave.Columns.Add("包装是否完好", typeof(String));
+                dtsave.Columns.Add("是否清洁合格", typeof(String));
+                dtsave.Columns.Add("操作人", typeof(String));
+                dtsave.Columns.Add("复核人", typeof(String));
+
+                foreach (var ss in jo)  //查找某个字段与值
+                {
+                    DataRow dr = dtsave.NewRow();
+                    dr[0] = ss["s4_raw_material_delivery_date"].ToString();
+                    dr[1] = ss["s4_time"].ToString();
+                    dr[2] = ss["s4_raw_material_id"].ToString();
+                    dr[3] = ss["s4_quantity"].ToString();
+                    dr[4] = ss["s4_kilogram_per_piece"].ToString();
+                    dr[5] = ss["s4_quantity_per_kilogram"].ToString();
+                    dr[6] = ss["s4_is_packed_well"].ToString();
+                    dr[7] = ss["s4_is_cleaned"].ToString();
+                    dr[8] = ss["s4_operator_id"].ToString();
+                    dr[9] = ss["s4_reviewer_id"].ToString();
+
+                    dtsave.Rows.Add(dr);
+                }
+                //添加复核人id
+                dtsave.Rows[dtsave.Rows.Count - 1][9] = review_id.ToString();
+
+                //jason 保存表格
+                JArray jarray = JArray.Parse("[]");
+                for (int i = 0; i < dtsave.Rows.Count; i++)
+                {
+                    string json = @"{}";
+                    JObject j = JObject.Parse(json);
+                    j.Add("s4_raw_material_delivery_date", new JValue(dtsave.Rows[i][0].ToString()));
+                    j.Add("s4_time", new JValue(dtsave.Rows[i][1].ToString()));
+                    j.Add("s4_raw_material_id", new JValue(dtsave.Rows[i][2].ToString()));
+                    j.Add("s4_quantity", new JValue(dtsave.Rows[i][3].ToString()));
+                    j.Add("s4_kilogram_per_piece", new JValue(dtsave.Rows[i][4].ToString()));
+                    j.Add("s4_quantity_per_kilogram", new JValue(dtsave.Rows[i][5].ToString()));
+                    j.Add("s4_is_packed_well", new JValue(dtsave.Rows[i][6].ToString()));
+                    j.Add("s4_is_cleaned", new JValue(dtsave.Rows[i][7].ToString()));
+                    j.Add("s4_operator_id", new JValue(dtsave.Rows[i][8].ToString()));
+                    j.Add("s4_reviewer_id", new JValue(dtsave.Rows[i][9].ToString()));
+                    jarray.Add(j);
+                }
+                List<Object> queryVals = new List<Object>(new Object[] { jarray.ToString() });
+                Boolean b = Utility.updateAccess(connOle, table, queryCols, queryVals, whereCols, whereVals);
+
+            }
             else
             {
                 reviewer_name = checkIDOle(review_id);
@@ -432,6 +497,7 @@ namespace mySystem.Extruction.Process
                 List<String> whereCols = new List<String>(new String[] { "id" });
                 List<Object> whereVals = new List<Object>(new Object[] { 1 });
                 List<List<Object>> queryValsList = Utility.selectAccess(connOle, table, queryCols, whereCols, whereVals, null, null, null, null, null);
+
                 //解析jason
                 JArray jo = JArray.Parse(queryValsList[0][0].ToString());
                 //填数据

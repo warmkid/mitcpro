@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.IO;
 using Microsoft.Office.Interop.Excel;
 
@@ -73,15 +74,15 @@ namespace mySystem.Process.Bag.LDPE
 
         void getData()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             System.Data.DataTable dt;
-            da = new OleDbDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.ldpebagInstruID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 生产指令 where ID=" + mySystem.Parameter.ldpebagInstruID, mySystem.Parameter.conn);
             dt = new System.Data.DataTable();
             da.Fill(dt);
             名称 = dt.Rows[0]["产品名称"].ToString();
             tc产品名称.Text = 名称;
 
-            da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + mySystem.Parameter.ldpebagInstruID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + mySystem.Parameter.ldpebagInstruID, mySystem.Parameter.conn);
             dt = new System.Data.DataTable();
             da.Fill(dt);
             编码 = dt.Rows[0]["产品代码"].ToString();

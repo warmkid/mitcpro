@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.灭菌
 {
@@ -49,7 +50,25 @@ namespace mySystem.Process.灭菌
             }
             else
             {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = Parameter.conn;
+                comm.CommandText = "select * from Gamma射线辐射灭菌委托单 where 状态 = 2";
+                SqlDataReader reader = comm.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    comboBox1.Items.Clear();
+                    while (reader.Read())
+                    {
+                        //comboBox1.Items.Add(reader["委托单号"]);
+                        hash.Add(reader["委托单号"].ToString());
+                    }
+                    foreach (String code in hash)
+                    {
+                        comboBox1.Items.Add(code);
+                    }
 
+                }
+                comm.Dispose();
             }
             //默认下拉框选最后一个
             if (comboBox1.Items.Count > 0)
@@ -60,7 +79,15 @@ namespace mySystem.Process.灭菌
                 List<String> queryCols = new List<String>(new String[] { "ID" });
                 List<String> whereCols = new List<String>(new String[] { "委托单号" });
                 List<Object> whereVals = new List<Object>(new Object[] { instruction });
-                List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                List<List<Object>> res;
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
+                else
+                {
+                    res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                }
                 Parameter.miejunInstruID = Convert.ToInt32(res[0][0]);
             }
         }
@@ -73,7 +100,15 @@ namespace mySystem.Process.灭菌
             List<String> queryCols = new List<String>(new String[] { "ID" });
             List<String> whereCols = new List<String>(new String[] { "委托单号" });
             List<Object> whereVals = new List<Object>(new Object[] { instruction });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res;
+            if (mySystem.Parameter.isSqlOk)
+            {
+                res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
+            else
+            {
+                res = Utility.selectAccess(Parameter.connOle, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
             instruID = Convert.ToInt32(res[0][0]);
             Parameter.miejunInstruID = instruID;
         }
@@ -131,15 +166,31 @@ namespace mySystem.Process.灭菌
             Boolean b = false;
             String[] name操作员 = null;
             String[] name审核员 = null;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
-            comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
-            OleDbDataReader reader = comm.ExecuteReader();
-            while (reader.Read())
+            if (!mySystem.Parameter.isSqlOk)
             {
-                name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
-                name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
+                OleDbCommand comm = new OleDbCommand();
+                comm.Connection = Parameter.connOle;
+                comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
+                OleDbDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                {
+                    name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
+                    name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
+                }
             }
+            else
+            {
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = Parameter.conn;
+                comm.CommandText = "select * from 用户权限 where 步骤 = " + "'" + tblName + "' ";
+                SqlDataReader reader = comm.ExecuteReader();
+                while (reader.Read())
+                {
+                    name操作员 = reader["操作员"].ToString().Split("，,".ToCharArray());
+                    name审核员 = reader["审核员"].ToString().Split("，,".ToCharArray());
+                }
+            }
+            
 
             if (role == 3)
             {

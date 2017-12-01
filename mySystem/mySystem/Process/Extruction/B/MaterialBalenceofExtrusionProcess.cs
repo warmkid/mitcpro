@@ -36,6 +36,8 @@ namespace mySystem.Extruction.Process
         DataTable dtOuter;
         OleDbDataAdapter daOuter;
         OleDbCommandBuilder cbOuter;
+        SqlDataAdapter daOutersql;
+        SqlCommandBuilder cbOutersql;
         OleDbConnection connOle;
         DateTime 生产日期;
         private CheckForm check = null;
@@ -80,7 +82,15 @@ namespace mySystem.Extruction.Process
                 DataRow newrow = dtOuter.NewRow();
                 newrow = writeOuterDefault(newrow);
                 dtOuter.Rows.Add(newrow);
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOutersql.Update((DataTable)bsOuter.DataSource);
+                }
+                
                 readOuterData(__生产指令);
                 removeOuterBind();
                 outerBind();
@@ -90,7 +100,15 @@ namespace mySystem.Extruction.Process
             searchId = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
             getInstructionInfo();
             重新读取并计算();
-            daOuter.Update((DataTable)bsOuter.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter.Update((DataTable)bsOuter.DataSource);
+            }
+            else
+            {
+                daOutersql.Update((DataTable)bsOuter.DataSource);
+            }
+            
             readOuterData(__生产指令);
             removeOuterBind();
             outerBind();
@@ -119,8 +137,15 @@ namespace mySystem.Extruction.Process
             getOtherData();
 
             重新读取并计算();
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter.Update((DataTable)bsOuter.DataSource);
+            }
+            else
+            {
+                daOutersql.Update((DataTable)bsOuter.DataSource);
+            }
             
-            daOuter.Update((DataTable)bsOuter.DataSource);
             readOuterBind(searchId);
             removeOuterBind();
             outerBind();
@@ -144,10 +169,21 @@ namespace mySystem.Extruction.Process
         {
             string tabName = "用户权限";
             DataTable dtUser = new DataTable(tabName);
-            OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", connOle);
-            BindingSource bsUser = new BindingSource();
-            OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
-            daUser.Fill(dtUser);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter daUser = new OleDbDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", connOle);
+                BindingSource bsUser = new BindingSource();
+                OleDbCommandBuilder cbUser = new OleDbCommandBuilder(daUser);
+                daUser.Fill(dtUser);
+            }
+            else
+            {
+                SqlDataAdapter daUser = new SqlDataAdapter("SELECT * FROM " + tabName + " WHERE 步骤 = '" + tablename1 + "';", mySystem.Parameter.conn);
+                BindingSource bsUser = new BindingSource();
+                SqlCommandBuilder cbUser = new SqlCommandBuilder(daUser);
+                daUser.Fill(dtUser);
+            }
+            
             if (dtUser.Rows.Count != 1)
             {
                 MessageBox.Show("请确认表单权限信息");
@@ -325,8 +361,17 @@ namespace mySystem.Extruction.Process
         private void getStartTime()
         {
             string sqlStr = "SELECT 开始生产日期 FROM 生产指令信息表 WHERE ID = " + __生产指令ID.ToString();
-            OleDbCommand sqlCmd = new OleDbCommand(sqlStr, connOle);
-            __生产开始时间 = Convert.ToDateTime(sqlCmd.ExecuteScalar().ToString()).ToString("yyyy年MM月dd日");
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand sqlCmd = new OleDbCommand(sqlStr, connOle);
+                __生产开始时间 = Convert.ToDateTime(sqlCmd.ExecuteScalar().ToString()).ToString("yyyy年MM月dd日");
+            }
+            else
+            {
+                SqlCommand sqlCmd = new SqlCommand(sqlStr, mySystem.Parameter.conn);
+                __生产开始时间 = Convert.ToDateTime(sqlCmd.ExecuteScalar().ToString()).ToString("yyyy年MM月dd日");
+            }
+            
             lbl生产开始时间.Text = __生产开始时间;
         }
 
@@ -368,32 +413,65 @@ namespace mySystem.Extruction.Process
              string Asqlcmd2 = "SELECT " + Acol2 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
              string Asqlcmd3 = "SELECT " + Acol3 + " FROM " + Aname + " WHERE " + where + " = " + __生产指令ID + ";";
              string Usqlcmd = "SELECT " + Ucol + " FROM " + Uname + " WHERE " + where + " = " + __生产指令ID + ";";
-             OleDbCommand Tcmd = new OleDbCommand(Tsqlcmd, connOle);
-             OleDbCommand Acmd1 = new OleDbCommand(Asqlcmd1, connOle);
-             OleDbCommand Acmd2 = new OleDbCommand(Asqlcmd2, connOle);
-             OleDbCommand Acmd3 = new OleDbCommand(Asqlcmd3, connOle);
-             OleDbCommand Ucmd = new OleDbCommand(Usqlcmd, connOle);
-
-             double t = Convert.ToDouble(Tcmd.ExecuteScalar());
-             double a1 = Convert.ToDouble(Acmd1.ExecuteScalar());
-             double a2 = Convert.ToDouble(Acmd2.ExecuteScalar());
-             double a3 = Convert.ToDouble(Acmd3.ExecuteScalar());
-             double a = a1 + a2 + a3;
-             double u = Convert.ToDouble(Ucmd.ExecuteScalar());
-             double rate = t / (t + u) * 100;
-             rate = Convert.ToDouble(rate.ToString("0.00"));
-             double balance = (t + u) / a * 100;
-             balance = Convert.ToDouble(balance.ToString("0.00"));
-
-             if (Math.Abs(balance - 100) > 2)
+             if (!mySystem.Parameter.isSqlOk)
              {
-                 MessageBox.Show("物料平衡超出98%--102%!");
+                 OleDbCommand Tcmd = new OleDbCommand(Tsqlcmd, connOle);
+                 OleDbCommand Acmd1 = new OleDbCommand(Asqlcmd1, connOle);
+                 OleDbCommand Acmd2 = new OleDbCommand(Asqlcmd2, connOle);
+                 OleDbCommand Acmd3 = new OleDbCommand(Asqlcmd3, connOle);
+                 OleDbCommand Ucmd = new OleDbCommand(Usqlcmd, connOle);
+                 double t = Convert.ToDouble(Tcmd.ExecuteScalar());
+                 double a1 = Convert.ToDouble(Acmd1.ExecuteScalar());
+                 double a2 = Convert.ToDouble(Acmd2.ExecuteScalar());
+                 double a3 = Convert.ToDouble(Acmd3.ExecuteScalar());
+                 double a = a1 + a2 + a3;
+                 double u = Convert.ToDouble(Ucmd.ExecuteScalar());
+                 double rate = t / (t + u) * 100;
+                 rate = Convert.ToDouble(rate.ToString("0.00"));
+                 double balance = (t + u) / a * 100;
+                 balance = Convert.ToDouble(balance.ToString("0.00"));
+
+                 if (Math.Abs(balance - 100) > 2)
+                 {
+                     MessageBox.Show("物料平衡超出98%--102%!");
+                 }
+                 dtOuter.Rows[0]["成品重量合计"] = t;
+                 dtOuter.Rows[0]["废品量合计"] = u;
+                 dtOuter.Rows[0]["领料量"] = a;
+                 dtOuter.Rows[0]["重量比成品率"] = rate;
+                 dtOuter.Rows[0]["物料平衡"] = balance;
              }
-             dtOuter.Rows[0]["成品重量合计"] = t;
-             dtOuter.Rows[0]["废品量合计"] = u;
-             dtOuter.Rows[0]["领料量"] = a;
-             dtOuter.Rows[0]["重量比成品率"] = rate;
-             dtOuter.Rows[0]["物料平衡"] = balance;
+             else
+             {
+                 SqlCommand Tcmd = new SqlCommand(Tsqlcmd, mySystem.Parameter.conn);
+                 SqlCommand Acmd1 = new SqlCommand(Asqlcmd1, mySystem.Parameter.conn);
+                 SqlCommand Acmd2 = new SqlCommand(Asqlcmd2, mySystem.Parameter.conn);
+                 SqlCommand Acmd3 = new SqlCommand(Asqlcmd3, mySystem.Parameter.conn);
+                 SqlCommand Ucmd = new SqlCommand(Usqlcmd, mySystem.Parameter.conn);
+                 double t = Convert.ToDouble(Tcmd.ExecuteScalar());
+                 double a1 = Convert.ToDouble(Acmd1.ExecuteScalar());
+                 double a2 = Convert.ToDouble(Acmd2.ExecuteScalar());
+                 double a3 = Convert.ToDouble(Acmd3.ExecuteScalar());
+                 double a = a1 + a2 + a3;
+                 double u = Convert.ToDouble(Ucmd.ExecuteScalar());
+                 double rate = t / (t + u) * 100;
+                 rate = Convert.ToDouble(rate.ToString("0.00"));
+                 double balance = (t + u) / a * 100;
+                 balance = Convert.ToDouble(balance.ToString("0.00"));
+
+                 if (Math.Abs(balance - 100) > 2)
+                 {
+                     MessageBox.Show("物料平衡超出98%--102%!");
+                 }
+                 dtOuter.Rows[0]["成品重量合计"] = t;
+                 dtOuter.Rows[0]["废品量合计"] = u;
+                 dtOuter.Rows[0]["领料量"] = a;
+                 dtOuter.Rows[0]["重量比成品率"] = rate;
+                 dtOuter.Rows[0]["物料平衡"] = balance;
+             }
+             
+
+             
 
          }
 
@@ -403,20 +481,43 @@ namespace mySystem.Extruction.Process
              string tablename1 = "吹膜工序物料平衡记录";
              bsOuter = new BindingSource();
              dtOuter = new DataTable(tablename1);
-             daOuter = new OleDbDataAdapter("select * from " + tablename1 + " where 生产指令 ='" + instruc + "';", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
-             cbOuter = new OleDbCommandBuilder(daOuter);
-             daOuter.Fill(dtOuter);
+             if (!mySystem.Parameter.isSqlOk)
+             {
+                 daOuter = new OleDbDataAdapter("select * from " + tablename1 + " where 生产指令 ='" + instruc + "';", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
+                 cbOuter = new OleDbCommandBuilder(daOuter);
+                 daOuter.Fill(dtOuter);
+             }
+             else
+             {
+                 daOutersql = new SqlDataAdapter("select * from " + tablename1 + " where 生产指令 ='" + instruc + "';", mySystem.Parameter.conn);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
+                 cbOutersql = new SqlCommandBuilder(daOutersql);
+                 daOutersql.Fill(dtOuter);
+             }
+             
          }
 
 
          private void readOuterBind(int searchId)
          {
-             string tablename1 = "吹膜工序物料平衡记录";
-             bsOuter = new BindingSource();
-             dtOuter = new DataTable(tablename1);
-             daOuter = new OleDbDataAdapter("select * from " + tablename1 + " where ID =" +searchId + ";", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
-             cbOuter = new OleDbCommandBuilder(daOuter);
-             daOuter.Fill(dtOuter);
+             if (!mySystem.Parameter.isSqlOk)
+             {
+                 string tablename1 = "吹膜工序物料平衡记录";
+                 bsOuter = new BindingSource();
+                 dtOuter = new DataTable(tablename1);
+                 daOuter = new OleDbDataAdapter("select * from " + tablename1 + " where ID =" + searchId + ";", connOle);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
+                 cbOuter = new OleDbCommandBuilder(daOuter);
+                 daOuter.Fill(dtOuter);
+             }
+             else
+             {
+                 string tablename1 = "吹膜工序物料平衡记录";
+                 bsOuter = new BindingSource();
+                 dtOuter = new DataTable(tablename1);
+                 daOutersql = new SqlDataAdapter("select * from " + tablename1 + " where ID =" + searchId + ";", mySystem.Parameter.conn);// + " where 生产日期 = '" + dtp生产日期.Value.Date+"'", conOle);
+                 cbOutersql = new SqlCommandBuilder(daOutersql);
+                 daOutersql.Fill(dtOuter);
+             }
+             
          }
          private void outerBind()
          {
@@ -462,7 +563,15 @@ namespace mySystem.Extruction.Process
              log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 保存\n";
              dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
              bsOuter.EndEdit();
-             daOuter.Update((DataTable)bsOuter.DataSource);
+             if (!mySystem.Parameter.isSqlOk)
+             {
+                 daOuter.Update((DataTable)bsOuter.DataSource);
+             }
+             else
+             {
+                 daOutersql.Update((DataTable)bsOuter.DataSource);
+             }
+             
              readOuterData(__生产指令);
              removeOuterBind();
              outerBind();
@@ -555,15 +664,31 @@ namespace mySystem.Extruction.Process
 
          private void bt查看人员信息_Click(object sender, EventArgs e)
          {
-             OleDbDataAdapter da;
-             DataTable dt;
-             da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序物料平衡记录'", mySystem.Parameter.connOle);
-             dt = new DataTable("temp");
-             da.Fill(dt);
-             String str操作员 = dt.Rows[0]["操作员"].ToString();
-             String str审核员 = dt.Rows[0]["审核员"].ToString();
-             String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-             MessageBox.Show(str人员信息);
+             if (!mySystem.Parameter.isSqlOk)
+             {
+                 OleDbDataAdapter da;
+                 DataTable dt;
+                 da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜工序物料平衡记录'", mySystem.Parameter.connOle);
+                 dt = new DataTable("temp");
+                 da.Fill(dt);
+                 String str操作员 = dt.Rows[0]["操作员"].ToString();
+                 String str审核员 = dt.Rows[0]["审核员"].ToString();
+                 String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                 MessageBox.Show(str人员信息);
+             }
+             else
+             {
+                 SqlDataAdapter da;
+                 DataTable dt;
+                 da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜工序物料平衡记录'", mySystem.Parameter.conn);
+                 dt = new DataTable("temp");
+                 da.Fill(dt);
+                 String str操作员 = dt.Rows[0]["操作员"].ToString();
+                 String str审核员 = dt.Rows[0]["审核员"].ToString();
+                 String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                 MessageBox.Show(str人员信息);
+             }
+             
          }
 
         

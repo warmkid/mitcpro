@@ -28,12 +28,17 @@ namespace mySystem.Process.灭菌
         private BindingSource bs_prodinstr, bs_prodlist;
         private OleDbCommandBuilder cb_prodinstr, cb_prodlist;
 
+        private SqlDataAdapter da_prodinstrsql, da_prodlistsql;
+        private SqlCommandBuilder cb_prodinstrsql, cb_prodlistsql;
+
         private HashSet<string> hs产品代码, hs纸箱规格;           
         private Dictionary<string, string> dic代码_名称;
         private string person_操作员;
         private string person_审核员;
         private List<string> list_操作员;
         private List<string> list_审核员;
+
+        string 最近委托单号;
 
         private string str_委托单;
         // 需要保存的状态
@@ -59,6 +64,7 @@ namespace mySystem.Process.灭菌
                 c.Enabled = false;
             tb委托单号.Enabled = true;
             bt查询插入.Enabled = true;
+            tb委托单号.Text = 最近委托单号;
         }
 
         public Gamma射线辐射灭菌委托单(mySystem.MainForm mainform,int id)
@@ -71,11 +77,20 @@ namespace mySystem.Process.灭菌
             addDataEventHandler();
 
             string asql = "select * from Gamma射线辐射灭菌委托单 where ID=" + id;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
-
             DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+                da.Fill(tempdt);
+            }
+            
             str_委托单 = tempdt.Rows[0]["委托单号"].ToString();
 
             readOuterData(str_委托单);
@@ -142,11 +157,23 @@ namespace mySystem.Process.灭菌
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(string str_委托单号)
         {
-            dt_prodinstr = new DataTable("Gamma射线辐射灭菌委托单");
-            bs_prodinstr = new BindingSource();
-            da_prodinstr = new OleDbDataAdapter(@"select * from Gamma射线辐射灭菌委托单 where 委托单号='" + str_委托单号 + "'", mySystem.Parameter.connOle);
-            cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
-            da_prodinstr.Fill(dt_prodinstr);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_prodinstr = new DataTable("Gamma射线辐射灭菌委托单");
+                bs_prodinstr = new BindingSource();
+                da_prodinstr = new OleDbDataAdapter(@"select * from Gamma射线辐射灭菌委托单 where 委托单号='" + str_委托单号 + "'", mySystem.Parameter.connOle);
+                cb_prodinstr = new OleDbCommandBuilder(da_prodinstr);
+                da_prodinstr.Fill(dt_prodinstr);
+            }
+            else
+            {
+                dt_prodinstr = new DataTable("Gamma射线辐射灭菌委托单");
+                bs_prodinstr = new BindingSource();
+                da_prodinstrsql = new SqlDataAdapter(@"select * from Gamma射线辐射灭菌委托单 where 委托单号='" + str_委托单号 + "'", mySystem.Parameter.conn);
+                cb_prodinstrsql = new SqlCommandBuilder(da_prodinstrsql);
+                da_prodinstrsql.Fill(dt_prodinstr);
+            }
+            
         }
 
         // 给外表的一行写入默认值
@@ -212,11 +239,23 @@ namespace mySystem.Process.灭菌
         // 根据条件从数据库中读取内表数据
         void readInnerData(int 外表行ID)
         {
-            dt_prodlist = new DataTable("Gamma射线辐射灭菌委托单详细信息");
-            bs_prodlist = new BindingSource();
-            da_prodlist = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单详细信息 where TGamma射线辐射灭菌委托单详细信息ID=" + 外表行ID, mySystem.Parameter.connOle);
-            cb_prodlist = new OleDbCommandBuilder(da_prodlist);
-            da_prodlist.Fill(dt_prodlist);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_prodlist = new DataTable("Gamma射线辐射灭菌委托单详细信息");
+                bs_prodlist = new BindingSource();
+                da_prodlist = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单详细信息 where TGamma射线辐射灭菌委托单详细信息ID=" + 外表行ID, mySystem.Parameter.connOle);
+                cb_prodlist = new OleDbCommandBuilder(da_prodlist);
+                da_prodlist.Fill(dt_prodlist);
+            }
+            else
+            {
+                dt_prodlist = new DataTable("Gamma射线辐射灭菌委托单详细信息");
+                bs_prodlist = new BindingSource();
+                da_prodlistsql = new SqlDataAdapter("select * from Gamma射线辐射灭菌委托单详细信息 where TGamma射线辐射灭菌委托单详细信息ID=" + 外表行ID, mySystem.Parameter.conn);
+                cb_prodlistsql = new SqlCommandBuilder(da_prodlistsql);
+                da_prodlistsql.Fill(dt_prodlist);
+            }
+            
         }
 
         // 给内表的一行写入默认值，包括操作人，时间，Y/N等
@@ -375,7 +414,15 @@ namespace mySystem.Process.灭菌
                         log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
                         dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
                         bs_prodinstr.EndEdit();
-                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                        if (!mySystem.Parameter.isSqlOk)
+                        {
+                            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+                        }
+                        else
+                        {
+                            da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                        }
+                        
                     }
 
                     // 关闭文件，false表示不保存
@@ -396,10 +443,22 @@ namespace mySystem.Process.灭菌
         {
             List<int> list_id = new List<int>();
             string asql = "select * from Gamma射线辐射灭菌委托单 where 委托单号 = '" + str_委托单 + "'";
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
             DataTable tempdt = new DataTable();
-            da.Fill(tempdt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
+                OleDbDataAdapter da = new OleDbDataAdapter(comm);
+
+                da.Fill(tempdt);
+            }
+            else
+            {
+                SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+                SqlDataAdapter da = new SqlDataAdapter(comm);
+
+                da.Fill(tempdt);
+            }
+           
 
             for (int i = 0; i < tempdt.Rows.Count; i++)
                 list_id.Add((int)tempdt.Rows[i]["ID"]);
@@ -457,46 +516,110 @@ namespace mySystem.Process.灭菌
             get_运输商();
             get_产品代码();
             get_纸箱规格();
+            get_recent_danhao();
             fill_printer();
+        }
+
+        void get_recent_danhao()
+        {
+            SqlDataAdapter da;
+            DataTable dt;
+            da = new SqlDataAdapter("select top 1 * from [Gamma射线辐射灭菌委托单] order by ID DESC", mySystem.Parameter.conn);
+            dt = new DataTable("temp");
+            da.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {
+                最近委托单号 = dt.Rows[0]["委托单号"].ToString();
+            }
+            else
+            {
+                最近委托单号 = "";
+            }
         }
 
         private void get_纸箱规格()
         {
-            OleDbDataAdapter da;
-            DataTable dt;
-            hs纸箱规格= new HashSet<string>();
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection Tconn = new OleDbConnection(strConnect);
-            Tconn.Open();
-            da = new OleDbDataAdapter("select 规格型号 from 设置存货档案", Tconn);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                hs纸箱规格.Add(dr["规格型号"].ToString());
+                OleDbDataAdapter da;
+                DataTable dt;
+                hs纸箱规格 = new HashSet<string>();
+                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                OleDbConnection Tconn = new OleDbConnection(strConnect);
+                Tconn.Open();
+                da = new OleDbDataAdapter("select 规格型号 from 设置存货档案", Tconn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    hs纸箱规格.Add(dr["规格型号"].ToString());
+                }
             }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                hs纸箱规格 = new HashSet<string>();
+                string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection Tconn = new SqlConnection(strConnect);
+                Tconn.Open();
+                da = new SqlDataAdapter("select 规格型号 from 设置存货档案", Tconn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    hs纸箱规格.Add(dr["规格型号"].ToString());
+                }
+            }
+            
         }
 
         private void get_辐照单位()
         {
             DataTable dt = new DataTable("设置辐照单位");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置辐照单位", mySystem.Parameter.connOle);
-            da.Fill(dt);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                cb辐照单位.Items.Add(dt.Rows[i][1].ToString());
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置辐照单位", mySystem.Parameter.connOle);
+                da.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cb辐照单位.Items.Add(dt.Rows[i][1].ToString());
+                }
             }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 设置辐照单位", mySystem.Parameter.conn);
+                da.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cb辐照单位.Items.Add(dt.Rows[i][1].ToString());
+                }
+            }
+            
         }
         private void get_运输商()
         {
             DataTable dt = new DataTable("设置运输商");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置运输商", mySystem.Parameter.connOle);
-            da.Fill(dt);
-            for (int i = 0; i < dt.Rows.Count; i++)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                cb运输商.Items.Add(dt.Rows[i][1].ToString());
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 设置运输商", mySystem.Parameter.connOle);
+                da.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cb运输商.Items.Add(dt.Rows[i][1].ToString());
+                }
             }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 设置运输商", mySystem.Parameter.conn);
+                da.Fill(dt);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    cb运输商.Items.Add(dt.Rows[i][1].ToString());
+                }
+            }
+            
         }
         private void get_产品代码()
         {
@@ -509,23 +632,44 @@ namespace mySystem.Process.灭菌
             //    list_产品代码.Add(dt.Rows[i][1].ToString());
             //}
 
-
-            OleDbDataAdapter da;
-            DataTable dt;
-            hs产品代码 = new HashSet<string>();
-            dic代码_名称 = new Dictionary<string, string>();
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection Tconn = new OleDbConnection(strConnect);
-            Tconn.Open();
-            da = new OleDbDataAdapter("select * from 设置存货档案 where 属于工序 like '%灭菌%'", Tconn);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            foreach (DataRow dr in dt.Rows)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                hs产品代码.Add(dr["存货代码"].ToString());
-                dic代码_名称.Add(dr["存货代码"].ToString(), dr["存货名称"].ToString());
+                OleDbDataAdapter da;
+                DataTable dt;
+                hs产品代码 = new HashSet<string>();
+                dic代码_名称 = new Dictionary<string, string>();
+                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+                OleDbConnection Tconn = new OleDbConnection(strConnect);
+                Tconn.Open();
+                da = new OleDbDataAdapter("select * from 设置存货档案 where 属于工序 like '%灭菌%'", Tconn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    hs产品代码.Add(dr["存货代码"].ToString());
+                    dic代码_名称.Add(dr["存货代码"].ToString(), dr["存货名称"].ToString());
+                }
             }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                hs产品代码 = new HashSet<string>();
+                dic代码_名称 = new Dictionary<string, string>();
+                string strConnect = "server=" + Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+                SqlConnection Tconn = new SqlConnection(strConnect);
+                Tconn.Open();
+                da = new SqlDataAdapter("select * from 设置存货档案 where 属于工序 like '%灭菌%'", Tconn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    hs产品代码.Add(dr["存货代码"].ToString());
+                    dic代码_名称.Add(dr["存货代码"].ToString(), dr["存货名称"].ToString());
+                }
+            }
+            
         }
         // 获取操作员和审核员
         void getPeople()
@@ -533,8 +677,17 @@ namespace mySystem.Process.灭菌
             list_操作员 = new List<string>();
             list_审核员 = new List<string>();
             DataTable dt = new DataTable("用户权限");
-            OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='Gamma射线辐射灭菌委托单'", mySystem.Parameter.connOle);
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter(@"select * from 用户权限 where 步骤='Gamma射线辐射灭菌委托单'", mySystem.Parameter.connOle);
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter(@"select * from 用户权限 where 步骤='Gamma射线辐射灭菌委托单'", mySystem.Parameter.conn);
+                da.Fill(dt);
+            }
+            
 
             if (dt.Rows.Count > 0)
             {
@@ -672,12 +825,28 @@ namespace mySystem.Process.灭菌
 
             //外表保存
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
             readOuterData(str_委托单);
             outerBind();
 
             //内表保存
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             readInnerData(Convert.ToInt32(dt_prodinstr.Rows[0]["ID"]));
             innerBind();
 
@@ -704,19 +873,39 @@ namespace mySystem.Process.灭菌
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='Gamma射线辐射灭菌委托单' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-
-            if (dt_temp.Rows.Count == 0)
+            if (!mySystem.Parameter.isSqlOk)
             {
-                DataRow dr = dt_temp.NewRow();
-                dr["表名"] = "Gamma射线辐射灭菌委托单";
-                dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
-                dt_temp.Rows.Add(dr);
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='Gamma射线辐射灭菌委托单' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "Gamma射线辐射灭菌委托单";
+                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                bs_temp.DataSource = dt_temp;
+                da_temp.Update((DataTable)bs_temp.DataSource);
             }
-            bs_temp.DataSource = dt_temp;
-            da_temp.Update((DataTable)bs_temp.DataSource);
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='Gamma射线辐射灭菌委托单' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+
+                if (dt_temp.Rows.Count == 0)
+                {
+                    DataRow dr = dt_temp.NewRow();
+                    dr["表名"] = "Gamma射线辐射灭菌委托单";
+                    dr["对应ID"] = (int)dt_prodinstr.Rows[0]["ID"];
+                    dt_temp.Rows.Add(dr);
+                }
+                bs_temp.DataSource = dt_temp;
+                da_temp.Update((DataTable)bs_temp.DataSource);
+            }
+           
 
             //写日志 
             //格式： 
@@ -763,11 +952,23 @@ namespace mySystem.Process.灭菌
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='Gamma射线辐射灭菌委托单' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
-            da_temp.Fill(dt_temp);
-            dt_temp.Rows[0].Delete();
-            da_temp.Update(dt_temp);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='Gamma射线辐射灭菌委托单' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            else
+            {
+                SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='Gamma射线辐射灭菌委托单' and 对应ID=" + (int)dt_prodinstr.Rows[0]["ID"], mySystem.Parameter.conn);
+                SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
+                da_temp.Fill(dt_temp);
+                dt_temp.Rows[0].Delete();
+                da_temp.Update(dt_temp);
+            }
+            
 
             //写日志
             string log = "=====================================\n";
@@ -777,7 +978,15 @@ namespace mySystem.Process.灭菌
             dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
             readOuterData(str_委托单);
             outerBind();
         }
@@ -876,8 +1085,15 @@ namespace mySystem.Process.灭菌
                     return;
                 dataGridView1.Rows.RemoveAt(dataGridView1.SelectedCells[0].RowIndex);
             }
-
-            da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            }
+            else
+            {
+                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            }
+            
             readInnerData((int)dt_prodinstr.Rows[0]["ID"]);
             innerBind();
             //刷新序号
@@ -994,7 +1210,15 @@ namespace mySystem.Process.灭菌
                 dt_prodinstr.Rows[0]["合计托数"] = list_托.Max();
 
             bs_prodinstr.EndEdit();
-            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            else
+            {
+                da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+            }
+            
 
         }
     }

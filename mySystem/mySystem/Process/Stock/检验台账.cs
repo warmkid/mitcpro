@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Stock
@@ -17,8 +18,8 @@ namespace mySystem.Process.Stock
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
 
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
@@ -52,8 +53,8 @@ namespace mySystem.Process.Stock
 
         private void readInnerData()
         {
-            daInner = new OleDbDataAdapter("select * from 检验台账 order by ID", mySystem.Parameter.connOle);
-            cbInner = new OleDbCommandBuilder(daInner);
+            daInner = new SqlDataAdapter("select * from 检验台账 order by ID", mySystem.Parameter.conn);
+            cbInner = new SqlCommandBuilder(daInner);
             dtInner = new DataTable("检验台账");
             bsInner = new BindingSource();
 
@@ -202,9 +203,9 @@ namespace mySystem.Process.Stock
         void getPeople() {
             ls审核员 = new List<string>();
             ls操作员 = new List<string>();
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "检验台帐" + "'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='" + "检验台帐" + "'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -338,8 +339,8 @@ namespace mySystem.Process.Stock
             if (e.ColumnIndex == 14)
             {
                 int itemID = Convert.ToInt32( dataGridView1.Rows[ dataGridView1.SelectedCells[0].RowIndex].Cells["物资验收记录详细信息ID"].Value);
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 库存台帐 where 物资验收记录详细信息ID=" + itemID, mySystem.Parameter.connOle);
-                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                SqlDataAdapter da = new SqlDataAdapter("select * from 库存台帐 where 物资验收记录详细信息ID=" + itemID, mySystem.Parameter.conn);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dataGridView1[e.ColumnIndex,e.RowIndex].Value.ToString() == "Yes")
@@ -443,9 +444,9 @@ namespace mySystem.Process.Stock
         void getOtherData()
         {
             hs检验标准 = new HashSet<String>();
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 设置检验标准", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 设置检验标准", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)

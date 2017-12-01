@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Stock
 {
@@ -24,8 +25,8 @@ namespace mySystem.Process.Stock
         /// </summary>
         mySystem.Parameter.FormState _formState;
 
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         BindingSource bsOuter, bsInner;
         DataTable dtOuter, dtInner;
 
@@ -58,8 +59,8 @@ namespace mySystem.Process.Stock
             
             dtInner = new DataTable("入库单详细信息");
             bsInner = new BindingSource();
-            daInner = new OleDbDataAdapter("select * from 入库单详细信息 where 入库单ID=" + id, mySystem.Parameter.connOle);
-            cbInner = new OleDbCommandBuilder(daInner);
+            daInner = new SqlDataAdapter("select * from 入库单详细信息 where 入库单ID=" + id, mySystem.Parameter.conn);
+            cbInner = new SqlCommandBuilder(daInner);
             daInner.Fill(dtInner);
         }
 
@@ -105,7 +106,7 @@ namespace mySystem.Process.Stock
         }
         public static string create入库单号()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 入库单号 from 入库单 order by ID DESC", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select top 1 入库单号 from 入库单 order by ID DESC", mySystem.Parameter.conn);
             DataTable dt = new DataTable("入库单");
             da.Fill(dt);
             int yearNow = DateTime.Now.Year;
@@ -133,12 +134,12 @@ namespace mySystem.Process.Stock
 
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='入库单'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='入库单'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -189,8 +190,8 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 入库单 where ID=" + id, mySystem.Parameter.connOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 入库单 where ID=" + id, mySystem.Parameter.conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("入库单");
             bsOuter = new BindingSource();
 
@@ -324,8 +325,8 @@ namespace mySystem.Process.Stock
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='入库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='入库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
 
             if (dt_temp.Rows.Count == 0)
@@ -372,9 +373,9 @@ namespace mySystem.Process.Stock
             dtOuter.Rows[0]["审核日期"] = ckform.time;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
 
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
-            OleDbCommandBuilder cb;
+            SqlCommandBuilder cb;
 
             if (ckform.ischeckOk)//审核通过
             {
@@ -399,8 +400,8 @@ namespace mySystem.Process.Stock
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 待审核 where 表名='入库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 待审核 where 表名='入库单' and 对应ID=" + (int)dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -416,13 +417,13 @@ namespace mySystem.Process.Stock
 
         void save二维码信息(DataTable dt, int id)
         {
-            OleDbDataAdapter daLishi, daXinxi;
-            OleDbCommandBuilder cbLishi, cbXinxi;
+            SqlDataAdapter daLishi, daXinxi;
+            SqlCommandBuilder cbLishi, cbXinxi;
             DataTable dtLishi, dtXinxi;
-            daLishi = new OleDbDataAdapter("select * from 二维码历史记录 where 0=1",mySystem.Parameter.connOle);
-            daXinxi = new OleDbDataAdapter("select * from 二维码信息 where 0=1", mySystem.Parameter.connOle);
-            cbLishi = new OleDbCommandBuilder(daLishi);
-            cbXinxi = new OleDbCommandBuilder(daXinxi);
+            daLishi = new SqlDataAdapter("select * from 二维码历史记录 where 0=1",mySystem.Parameter.conn);
+            daXinxi = new SqlDataAdapter("select * from 二维码信息 where 0=1", mySystem.Parameter.conn);
+            cbLishi = new SqlCommandBuilder(daLishi);
+            cbXinxi = new SqlCommandBuilder(daXinxi);
             dtLishi = new DataTable("二维码历史记录");
             dtXinxi = new DataTable("二维码信息");
             daLishi.Fill(dtLishi);
@@ -450,9 +451,9 @@ namespace mySystem.Process.Stock
 
         public int insert库存台帐()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 库存台帐 where " + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 库存台帐 where " + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
             DataTable dt = new DataTable("库存台帐");
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
             BindingSource bs = new BindingSource();
             da.Fill(dt);
 
@@ -489,8 +490,8 @@ namespace mySystem.Process.Stock
 
             da.Update(dt);
 
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = mySystem.Parameter.conn;
             comm.CommandText = "select @@identity";
             Int32 idd1 = (Int32)comm.ExecuteScalar();
 
@@ -502,9 +503,9 @@ namespace mySystem.Process.Stock
         public void create请验单()
         {
             string haoma = create请验编号();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 物资请验单 where 请验编号='" + haoma + "'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 物资请验单 where 请验编号='" + haoma + "'", mySystem.Parameter.conn);
             DataTable dt = new DataTable("物资请验单");
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
             BindingSource bs = new BindingSource();
             da.Fill(dt);
 
@@ -521,14 +522,14 @@ namespace mySystem.Process.Stock
             dt.Rows.Add(ndr);
 
             da.Update(dt);
-            da = new OleDbDataAdapter("select * from 物资请验单 where 请验编号='" + haoma + "'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 物资请验单 where 请验编号='" + haoma + "'", mySystem.Parameter.conn);
 
             dt = new DataTable("物资请验单");
             da.Fill(dt);
             // Inner
-            da = new OleDbDataAdapter("select * from 物资请验单详细信息 where 物资请验单ID=" + dt.Rows[0]["ID"], mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 物资请验单详细信息 where 物资请验单ID=" + dt.Rows[0]["ID"], mySystem.Parameter.conn);
             DataTable dtMore = new DataTable("物资请验单详细信息");
-            cb = new OleDbCommandBuilder(da);
+            cb = new SqlCommandBuilder(da);
             da.Fill(dtMore);
 
             ndr = dtMore.NewRow();
@@ -549,7 +550,7 @@ namespace mySystem.Process.Stock
 
         private string create请验编号()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 请验编号 from 物资请验单 order by ID DESC", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select top 1 请验编号 from 物资请验单 order by ID DESC", mySystem.Parameter.conn);
             DataTable dt = new DataTable("物资请验单");
             da.Fill(dt);
             int yearNow = DateTime.Now.Year;
@@ -576,7 +577,7 @@ namespace mySystem.Process.Stock
 
         private string create取样单号()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 取样单号 from 取样记录 order by ID DESC", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select top 1 取样单号 from 取样记录 order by ID DESC", mySystem.Parameter.conn);
             DataTable dt = new DataTable("取样记录");
             da.Fill(dt);
             int yearNow = DateTime.Now.Year;
@@ -603,9 +604,9 @@ namespace mySystem.Process.Stock
         public void create取样记录()
         {
             string haoma = create取样单号();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样记录 where 取样单号='" + haoma + "'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 取样记录 where 取样单号='" + haoma + "'", mySystem.Parameter.conn);
             DataTable dt = new DataTable("取样记录");
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
             BindingSource bs = new BindingSource();
             da.Fill(dt);
 
@@ -621,14 +622,14 @@ namespace mySystem.Process.Stock
             dt.Rows.Add(ndr);
 
             da.Update(dt);
-            da = new OleDbDataAdapter("select * from 取样记录 where 取样单号='" + haoma + "'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 取样记录 where 取样单号='" + haoma + "'", mySystem.Parameter.conn);
 
             dt = new DataTable("取样记录");
             da.Fill(dt);
             // Inner
-            da = new OleDbDataAdapter("select * from 取样记录详细信息 where 取样记录ID=" + dt.Rows[0]["ID"], mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 取样记录详细信息 where 取样记录ID=" + dt.Rows[0]["ID"], mySystem.Parameter.conn);
             DataTable dtMore = new DataTable("取样记录详细信息");
-            cb = new OleDbCommandBuilder(da);
+            cb = new SqlCommandBuilder(da);
             da.Fill(dtMore);
 
 
@@ -652,7 +653,7 @@ namespace mySystem.Process.Stock
 
         private string create检验单号()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select top 1 检验单号 from 检验记录 order by ID DESC", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select top 1 检验单号 from 检验记录 order by ID DESC", mySystem.Parameter.conn);
             DataTable dt = new DataTable("检验记录");
             da.Fill(dt);
             int yearNow = DateTime.Now.Year;
@@ -679,9 +680,9 @@ namespace mySystem.Process.Stock
         public void create检验记录()
         {
             string haoma = create检验单号();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 检验记录 where 检验单号='" + haoma + "'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 检验记录 where 检验单号='" + haoma + "'", mySystem.Parameter.conn);
             DataTable dt = new DataTable("检验记录");
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
             BindingSource bs = new BindingSource();
             da.Fill(dt);
 

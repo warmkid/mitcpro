@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Stock
 {
@@ -33,7 +34,7 @@ namespace mySystem.Process.Stock
 
         void refresh()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 文件上传记录", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 文件上传记录", mySystem.Parameter.conn);
             DataTable dt = new DataTable("文件上传记录");
             da.Fill(dt);
             dataGridView1.DataSource = dt;
@@ -51,9 +52,9 @@ namespace mySystem.Process.Stock
                 DateTime now = DateTime.Now;
                 String path = System.Environment.CurrentDirectory + @"/../../物料入场检验报告/";
                 System.IO.File.Copy(fullName, path + name, true);
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 文件上传记录 where 0=1", mySystem.Parameter.connOle);
+                SqlDataAdapter da = new SqlDataAdapter("select * from 文件上传记录 where 0=1", mySystem.Parameter.conn);
                 DataTable dt = new DataTable("文件上传记录");
-                OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+                SqlCommandBuilder cb = new SqlCommandBuilder(da);
                 da.Fill(dt);
                 DataRow dr = dt.NewRow();
                 dr["文件名"] = name;

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using Newtonsoft.Json.Linq;
 
 namespace mySystem.Setting
@@ -15,45 +16,45 @@ namespace mySystem.Setting
     {
 
        
-        private OleDbDataAdapter da存货档案;
+        private SqlDataAdapter da存货档案;
         private DataTable dt存货档案, dt存货档案Show;
         private BindingSource bs存货档案;
-        private OleDbCommandBuilder cb存货档案;
+        private SqlCommandBuilder cb存货档案;
 
 
-        private OleDbDataAdapter da人员;
+        private SqlDataAdapter da人员;
         private DataTable dt人员;
         private BindingSource bs人员;
-        private OleDbCommandBuilder cb人员;
-        private OleDbDataAdapter da权限;
+        private SqlCommandBuilder cb人员;
+        private SqlDataAdapter da权限;
         private DataTable dt权限;
         private BindingSource bs权限;
-        private OleDbCommandBuilder cb权限;
+        private SqlCommandBuilder cb权限;
 
-        private OleDbDataAdapter da业务类型;
+        private SqlDataAdapter da业务类型;
         private DataTable dt业务类型;
         private BindingSource bs业务类型;
-        private OleDbCommandBuilder cb业务类型;
-        private OleDbDataAdapter da销售类型;
+        private SqlCommandBuilder cb业务类型;
+        private SqlDataAdapter da销售类型;
         private DataTable dt销售类型;
         private BindingSource bs销售类型;
-        private OleDbCommandBuilder cb销售类型;
-        private OleDbDataAdapter da客户简称;
+        private SqlCommandBuilder cb销售类型;
+        private SqlDataAdapter da客户简称;
         private DataTable dt客户简称;
         private BindingSource bs客户简称;
-        private OleDbCommandBuilder cb客户简称;
-        private OleDbDataAdapter da销售部门;
+        private SqlCommandBuilder cb客户简称;
+        private SqlDataAdapter da销售部门;
         private DataTable dt销售部门;
         private BindingSource bs销售部门;
-        private OleDbCommandBuilder cb销售部门;
-        private OleDbDataAdapter da币种;
+        private SqlCommandBuilder cb销售部门;
+        private SqlDataAdapter da币种;
         private DataTable dt币种;
         private BindingSource bs币种;
-        private OleDbCommandBuilder cb币种;
-        private OleDbDataAdapter da付款条件;
+        private SqlCommandBuilder cb币种;
+        private SqlDataAdapter da付款条件;
         private DataTable dt付款条件;
         private BindingSource bs付款条件;
-        private OleDbCommandBuilder cb付款条件;
+        private SqlCommandBuilder cb付款条件;
 
         string copied工序 = "", copied类型 = "";
 
@@ -75,7 +76,7 @@ namespace mySystem.Setting
                 if (dgv存货档案.CurrentCell.OwningColumn.Name == "存货代码" && dgv存货档案["ID",dgv存货档案.CurrentCell.RowIndex].Value==DBNull.Value)
                 {
                     string currDaima = dgv存货档案.CurrentCell.Value.ToString();
-                    OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案 where 存货代码='" + currDaima + "'", mySystem.Parameter.connOle);
+                    SqlDataAdapter da = new SqlDataAdapter("select * from 设置存货档案 where 存货代码='" + currDaima + "'", mySystem.Parameter.conn);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     if (dt.Rows.Count > 0)
@@ -125,7 +126,7 @@ namespace mySystem.Setting
                 {
                     // 弹出对话框，选择组件
                     //MessageBox.Show("dian");
-                    //OleDbDataAdapter da = new OleDbDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.connOle);
+                    //SqlDataAdapter da = new SqlDataAdapter("select ID, 存货编码,存货名称,规格型号 from 设置组件存货档案", mySystem.Parameter.conn);
                     //DataTable dt = new DataTable();
                     //da.Fill(dt);
                     try
@@ -193,8 +194,8 @@ namespace mySystem.Setting
         {
             //**************************   设置存货档案    ***********************************
             dt存货档案 = new DataTable("设置存货档案"); //""中的是表名
-            da存货档案 = new OleDbDataAdapter("select * from 设置存货档案 where 0=1", mySystem.Parameter.connOle);
-            cb存货档案 = new OleDbCommandBuilder(da存货档案);
+            da存货档案 = new SqlDataAdapter("select * from 设置存货档案 where 0=1", mySystem.Parameter.conn);
+            cb存货档案 = new SqlCommandBuilder(da存货档案);
             //dt存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
             da存货档案.Fill(dt存货档案);
             //dt存货档案Show = topN(dt存货档案,20);
@@ -223,8 +224,8 @@ namespace mySystem.Setting
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("订单用户"); //""中的是表名
-            da人员 = new OleDbDataAdapter("select * from 订单用户", mySystem.Parameter.connOle);
-            cb人员 = new OleDbCommandBuilder(da人员);
+            da人员 = new SqlDataAdapter("select * from 订单用户", mySystem.Parameter.conn);
+            cb人员 = new SqlCommandBuilder(da人员);
             dt人员.Columns.Add("序号", System.Type.GetType("System.String"));
             da人员.Fill(dt人员);
             bs人员.DataSource = dt人员;
@@ -240,8 +241,8 @@ namespace mySystem.Setting
 
             //************************    人员权限     *******************************************
             dt权限 = new DataTable("订单用户权限"); //""中的是表名
-            da权限 = new OleDbDataAdapter("select * from 订单用户权限", mySystem.Parameter.connOle);
-            cb权限 = new OleDbCommandBuilder(da权限);
+            da权限 = new SqlDataAdapter("select * from 订单用户权限", mySystem.Parameter.conn);
+            cb权限 = new SqlCommandBuilder(da权限);
             dt权限.Columns.Add("序号", System.Type.GetType("System.String"));
             da权限.Fill(dt权限);
             bs权限.DataSource = dt权限;
@@ -259,8 +260,8 @@ namespace mySystem.Setting
 
             //**************************   业务类型    ***********************************
             dt业务类型 = new DataTable("设置业务类型"); //""中的是表名
-            da业务类型 = new OleDbDataAdapter("select * from 设置业务类型", mySystem.Parameter.connOle);
-            cb业务类型 = new OleDbCommandBuilder(da业务类型);
+            da业务类型 = new SqlDataAdapter("select * from 设置业务类型", mySystem.Parameter.conn);
+            cb业务类型 = new SqlCommandBuilder(da业务类型);
             dt业务类型.Columns.Add("序号", System.Type.GetType("System.String"));
             da业务类型.Fill(dt业务类型);
             bs业务类型.DataSource = dt业务类型;
@@ -277,8 +278,8 @@ namespace mySystem.Setting
 
             //**************************   销售类型    ***********************************
             dt销售类型 = new DataTable("设置销售类型"); //""中的是表名
-            da销售类型 = new OleDbDataAdapter("select * from 设置销售类型", mySystem.Parameter.connOle);
-            cb销售类型 = new OleDbCommandBuilder(da销售类型);
+            da销售类型 = new SqlDataAdapter("select * from 设置销售类型", mySystem.Parameter.conn);
+            cb销售类型 = new SqlCommandBuilder(da销售类型);
             dt销售类型.Columns.Add("序号", System.Type.GetType("System.String"));
             da销售类型.Fill(dt销售类型);
             bs销售类型.DataSource = dt销售类型;
@@ -295,8 +296,8 @@ namespace mySystem.Setting
 
             //**************************   客户简称    ***********************************
             dt客户简称 = new DataTable("设置客户简称"); //""中的是表名
-            da客户简称 = new OleDbDataAdapter("select * from 设置客户简称", mySystem.Parameter.connOle);
-            cb客户简称 = new OleDbCommandBuilder(da客户简称);
+            da客户简称 = new SqlDataAdapter("select * from 设置客户简称", mySystem.Parameter.conn);
+            cb客户简称 = new SqlCommandBuilder(da客户简称);
             dt客户简称.Columns.Add("序号", System.Type.GetType("System.String"));
             da客户简称.Fill(dt客户简称);
             bs客户简称.DataSource = dt客户简称;
@@ -313,8 +314,8 @@ namespace mySystem.Setting
 
             //**************************   销售部门    ***********************************
             dt销售部门 = new DataTable("设置销售部门"); //""中的是表名
-            da销售部门 = new OleDbDataAdapter("select * from 设置销售部门", mySystem.Parameter.connOle);
-            cb销售部门 = new OleDbCommandBuilder(da销售部门);
+            da销售部门 = new SqlDataAdapter("select * from 设置销售部门", mySystem.Parameter.conn);
+            cb销售部门 = new SqlCommandBuilder(da销售部门);
             dt销售部门.Columns.Add("序号", System.Type.GetType("System.String"));
             da销售部门.Fill(dt销售部门);
             bs销售部门.DataSource = dt销售部门;
@@ -331,8 +332,8 @@ namespace mySystem.Setting
 
             //**************************   币种    ***********************************
             dt币种 = new DataTable("设置币种"); //""中的是表名
-            da币种 = new OleDbDataAdapter("select * from 设置币种", mySystem.Parameter.connOle);
-            cb币种 = new OleDbCommandBuilder(da币种);
+            da币种 = new SqlDataAdapter("select * from 设置币种", mySystem.Parameter.conn);
+            cb币种 = new SqlCommandBuilder(da币种);
             dt币种.Columns.Add("序号", System.Type.GetType("System.String"));
             da币种.Fill(dt币种);
             bs币种.DataSource = dt币种;
@@ -349,8 +350,8 @@ namespace mySystem.Setting
 
             //**************************   付款条件    ***********************************
             dt付款条件 = new DataTable("设置付款条件"); //""中的是表名
-            da付款条件 = new OleDbDataAdapter("select * from 设置付款条件", mySystem.Parameter.connOle);
-            cb付款条件 = new OleDbCommandBuilder(da付款条件);
+            da付款条件 = new SqlDataAdapter("select * from 设置付款条件", mySystem.Parameter.conn);
+            cb付款条件 = new SqlCommandBuilder(da付款条件);
             dt付款条件.Columns.Add("序号", System.Type.GetType("System.String"));
             da付款条件.Fill(dt付款条件);
             bs付款条件.DataSource = dt付款条件;
@@ -395,6 +396,7 @@ namespace mySystem.Setting
             //setDataGridViewRowNums(this.dgv存货档案);
             if (dgv存货档案.Rows.Count > 0)
                 dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;
+            refresh序号();
         }
 
         private void del存货档案_Click(object sender, EventArgs e)
@@ -405,6 +407,7 @@ namespace mySystem.Setting
             dt存货档案.Clear();
             da存货档案.Fill(dt存货档案);
             //setDataGridViewRowNums(this.dgv存货档案);
+            refresh序号();
         }
 
         
@@ -493,11 +496,10 @@ namespace mySystem.Setting
         private Boolean checkPeopleExist()
         {
             Boolean b = true;
-            string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/user.mdb;Persist Security Info=False";
-            OleDbConnection conn = new OleDbConnection(strCon);
+            string strCon = "server=" + Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(strCon);
             conn.Open();
-            OleDbCommand comm = new OleDbCommand();
+            SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
 
             foreach (DataRow dr in dt人员.Rows)
@@ -510,7 +512,7 @@ namespace mySystem.Setting
                 {
                     String name = dr["用户名"].ToString();
                     comm.CommandText = "select * from [users] where 姓名 = " + "'" + name + "'";
-                    OleDbDataReader reader = comm.ExecuteReader();
+                    SqlDataReader reader = comm.ExecuteReader();
                     if (!reader.HasRows)
                     {
                         b = false;
@@ -556,10 +558,10 @@ namespace mySystem.Setting
         private Boolean EachPeopleRightCheck(String name)
         {
             Boolean b;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = mySystem.Parameter.conn;
             comm.CommandText = "select * from 订单用户 where 用户名 = " + "'" + name + "' ";
-            OleDbDataReader reader = comm.ExecuteReader();
+            SqlDataReader reader = comm.ExecuteReader();
             if (reader.HasRows)
             { b = true; }
             else
@@ -745,11 +747,11 @@ namespace mySystem.Setting
             //bs存货档案.DataSource = dt存货档案Show;
             //dgv存货档案.DataSource = bs存货档案.DataSource;
             //Utility.setDataGridViewAutoSizeMode(dgv存货档案);
-
+            dgv存货档案.Columns.Clear();
             string sql = "select * from 设置存货档案 where  存货代码 like '%{0}%' and 存货名称 like '%{1}%'";
             dt存货档案 = new DataTable("设置存货档案"); //""中的是表名
-            da存货档案 = new OleDbDataAdapter(string.Format(sql, tb代码q.Text, tb名称q.Text), mySystem.Parameter.connOle);
-            cb存货档案 = new OleDbCommandBuilder(da存货档案);
+            da存货档案 = new SqlDataAdapter(string.Format(sql, tb代码q.Text, tb名称q.Text), mySystem.Parameter.conn);
+            cb存货档案 = new SqlCommandBuilder(da存货档案);
             //dt存货档案.Columns.Add("序号", System.Type.GetType("System.String"));
             da存货档案.Fill(dt存货档案);
             //dt存货档案Show = topN(dt存货档案,20);
@@ -773,7 +775,8 @@ namespace mySystem.Setting
             {
                 dgvc.SortMode = DataGridViewColumnSortMode.Automatic;
             }
-
+           
+            dgv存货档案.Columns["存货代码"].Frozen = true;
         }
 
 
@@ -848,7 +851,25 @@ namespace mySystem.Setting
             {
                 dgvc.OwningRow.Cells["属于工序"].Value = copied工序;
             }
+            
         }
+
+        private void dgv存货档案_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            e.Row.HeaderCell.Value = String.Format("{0}", e.Row.Index + 1);
+        }
+
+        void refresh序号()
+        {
+            for (int i = 0; i < dgv存货档案.Rows.Count; ++i)
+            {
+                dgv存货档案.Rows[i].HeaderCell.Value = String.Format("{0}", i + 1);
+            }
+        }
+
+       
+
+       
 
        
     }

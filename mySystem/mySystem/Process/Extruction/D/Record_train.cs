@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Extruction.Process
 {
@@ -19,6 +20,9 @@ namespace mySystem.Extruction.Process
         private OleDbDataAdapter da_out,da_in;
         private BindingSource bs_out,bs_in;
         private OleDbCommandBuilder cb_out,cb_in;
+
+        private SqlDataAdapter da_outsql, da_insql;
+        private SqlCommandBuilder cb_outsql, cb_insql;
 
         List<string> pro=null;
         List<string> cont = null;
@@ -125,21 +129,44 @@ namespace mySystem.Extruction.Process
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(string tcher,string loc,DateTime time)//注意日期具体到天
         {
-
-            dt_out = new DataTable("吹膜机安全培训记录");
-            bs_out = new BindingSource();
-            da_out = new OleDbDataAdapter("select * from 吹膜机安全培训记录 where 讲师='" + tcher + "' and 培训地点='" + loc + "' and 培训日期=#" + time + "#", connOle);
-            cb_out = new OleDbCommandBuilder(da_out);
-            da_out.Fill(dt_out);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_out = new DataTable("吹膜机安全培训记录");
+                bs_out = new BindingSource();
+                da_out = new OleDbDataAdapter("select * from 吹膜机安全培训记录 where 讲师='" + tcher + "' and 培训地点='" + loc + "' and 培训日期=#" + time + "#", connOle);
+                cb_out = new OleDbCommandBuilder(da_out);
+                da_out.Fill(dt_out);
+            }
+            else
+            {
+                dt_out = new DataTable("吹膜机安全培训记录");
+                bs_out = new BindingSource();
+                da_outsql = new SqlDataAdapter("select * from 吹膜机安全培训记录 where 讲师='" + tcher + "' and 培训地点='" + loc + "' and 培训日期=#" + time + "#", mySystem.Parameter.conn);
+                cb_outsql = new SqlCommandBuilder(da_outsql);
+                da_outsql.Fill(dt_out);
+            }
+            
         }
         // 根据条件从数据库中读取多行内表数据
         void readInnerData(int id)
         {
-            dt_in = new DataTable("吹膜机安全培训记录人员情况");
-            bs_in = new BindingSource();
-            da_in = new OleDbDataAdapter("select * from 吹膜机安全培训记录人员情况 where T吹膜机安全培训记录ID=" + id, connOle);
-            cb_in = new OleDbCommandBuilder(da_in);
-            da_in.Fill(dt_in);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                dt_in = new DataTable("吹膜机安全培训记录人员情况");
+                bs_in = new BindingSource();
+                da_in = new OleDbDataAdapter("select * from 吹膜机安全培训记录人员情况 where T吹膜机安全培训记录ID=" + id, connOle);
+                cb_in = new OleDbCommandBuilder(da_in);
+                da_in.Fill(dt_in);
+            }
+            else
+            {
+                dt_in = new DataTable("吹膜机安全培训记录人员情况");
+                bs_in = new BindingSource();
+                da_insql = new SqlDataAdapter("select * from 吹膜机安全培训记录人员情况 where T吹膜机安全培训记录ID=" + id, mySystem.Parameter.conn);
+                cb_insql = new SqlCommandBuilder(da_insql);
+                da_insql.Fill(dt_in);
+            }
+
         }
         // 移除外表和控件的绑定，建议使用Control.DataBinds.RemoveAt(0)
         void removeOuterBinding()

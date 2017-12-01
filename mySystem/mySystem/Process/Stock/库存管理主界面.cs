@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using 订单和库存管理;
 
 namespace mySystem.Process.Stock
@@ -58,7 +59,7 @@ namespace mySystem.Process.Stock
 
         private void btn退货记录_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 退货申请 where 状态='未申请'",mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 退货申请 where 状态='未申请'",mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             string ids = mySystem.Other.InputDataGridView.getIDs("", dt, false);
@@ -114,7 +115,7 @@ namespace mySystem.Process.Stock
         private void btn查询退货申请_Click(object sender, EventArgs e)
         {
             string sql = @"select * from 退货申请 where 退货编号 like '%{0}%' and 客户名称 like '%{1}%' and 退货产品代码 like '%{2}%'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, tb退货编号.Text, tb客户名称.Text, tb产品代码.Text),mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, tb退货编号.Text, tb客户名称.Text, tb产品代码.Text),mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
 
@@ -125,7 +126,7 @@ namespace mySystem.Process.Stock
         private void btn查询退货记录_Click(object sender, EventArgs e)
         {
             string sql = @"select * from 退货记录 where  退货编号 like '%{0}%' and 客户名称 like '%{1}%' and 退货产品代码 like '%{2}%'";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, tb退货编号.Text, tb客户名称.Text, tb产品代码.Text), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, tb退货编号.Text, tb客户名称.Text, tb产品代码.Text), mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
 
@@ -136,8 +137,8 @@ namespace mySystem.Process.Stock
 
         private void btn退货台账查询_Click(object sender, EventArgs e)
         {
-            string sql = @"select * from 退货台账 where 退货编号 like '%{0}%' and 客户简称 like '%{1}%' and 产品编码 like '%{2}%' and 退货日期 between #{3}# and #{4}#";
-            OleDbDataAdapter da = new OleDbDataAdapter(string.Format(sql, tb退货编号.Text, tb客户名称.Text, tb产品代码.Text, dtp开始时间.Value, dtp结束时间.Value), mySystem.Parameter.connOle);
+            string sql = @"select * from 退货台账 where 退货编号 like '%{0}%' and 客户简称 like '%{1}%' and 产品编码 like '%{2}%' and 退货日期 between '{3}' and '{4}'";
+            SqlDataAdapter da = new SqlDataAdapter(string.Format(sql, tb退货编号.Text, tb客户名称.Text, tb产品代码.Text, dtp开始时间.Value, dtp结束时间.Value), mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
 

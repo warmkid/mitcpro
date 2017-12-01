@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Bag
@@ -23,8 +24,8 @@ namespace mySystem.Process.Bag
         mySystem.Parameter.FormState _formState;
 
 
-        OleDbDataAdapter daOuter;
-        OleDbCommandBuilder cbOuter;
+        SqlDataAdapter daOuter;
+        SqlCommandBuilder cbOuter;
         DataTable dtOuter;
         BindingSource bsOuter;
 
@@ -35,6 +36,9 @@ namespace mySystem.Process.Bag
         public Record_batch_bag(mySystem.MainForm mainform)
             : base(mainform)
         {
+            //
+            
+            //
             InitializeComponent();
             fillPrinter();
             _生产指令ID = mySystem.Parameter.csbagInstruID;
@@ -67,7 +71,7 @@ namespace mySystem.Process.Bag
             InitializeComponent();
             fillPrinter();
             
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 批生产记录表 where ID=" + id, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 批生产记录表 where ID=" + id, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             _生产指令 = dt.Rows[0]["生产指令编号"].ToString();
@@ -120,7 +124,7 @@ namespace mySystem.Process.Bag
         {
             // 读取各表格数据，并显示页数
 
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             noid = new List<int>();
 
@@ -137,7 +141,7 @@ namespace mySystem.Process.Bag
             int temp;
             int idx = 0;
             int tempid;
-            da = new OleDbDataAdapter("select * from 生产指令 where  生产指令编号='" + _生产指令 + "'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 生产指令 where  生产指令编号='" + _生产指令 + "'", mySystem.Parameter.conn);
             dt = new DataTable("生产指令");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -151,7 +155,7 @@ namespace mySystem.Process.Bag
             }
             //开机前确认
             idx++;
-            da = new OleDbDataAdapter("select * from 制袋机组开机前确认表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 制袋机组开机前确认表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("制袋机组开机前确认表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -169,7 +173,7 @@ namespace mySystem.Process.Bag
             }
             // 生产领料使用记录
             idx++;
-            da = new OleDbDataAdapter("select * from CS制袋领料记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from CS制袋领料记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("CS制袋领料记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -187,7 +191,7 @@ namespace mySystem.Process.Bag
             }
             // 制袋机运行记录
             idx++;
-            da = new OleDbDataAdapter("select * from 制袋机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 制袋机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("制袋机组运行记录制袋机组运行记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -206,7 +210,7 @@ namespace mySystem.Process.Bag
             
             //  产品内包装记录
             idx++;
-            da = new OleDbDataAdapter("select * from 产品内包装记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 产品内包装记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("产品内包装记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -225,7 +229,7 @@ namespace mySystem.Process.Bag
 
             //  产品外包装记录
             idx++;
-            da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("产品外包装记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -244,7 +248,7 @@ namespace mySystem.Process.Bag
 
             // 清场记录
             idx++;
-            da = new OleDbDataAdapter("select * from 清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("清场记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -262,7 +266,7 @@ namespace mySystem.Process.Bag
             }
             //  CS制袋日报表
             idx++;
-            da = new OleDbDataAdapter("select * from CS制袋日报表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from CS制袋日报表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("CS制袋日报表");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -282,7 +286,7 @@ namespace mySystem.Process.Bag
 
             //  交接班
             idx++;
-            da = new OleDbDataAdapter("select * from 岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("岗位交接班记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -301,7 +305,7 @@ namespace mySystem.Process.Bag
 
             //  产品外观和尺寸检验记录
             idx++;
-            da = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("产品外观和尺寸检验记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -319,7 +323,7 @@ namespace mySystem.Process.Bag
             }
             // 产品热合强度检验记录
             idx++;
-            da = new OleDbDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable("产品热合强度检验记录");
             da.Fill(dt);
             temp = dt.Rows.Count;
@@ -339,7 +343,7 @@ namespace mySystem.Process.Bag
 
             // 另外一个datagridview
             // 读内包装
-            da = new OleDbDataAdapter("select 产品代码,生产批号,产品数量只数合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select 产品代码,生产批号,产品数量只数合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
 
@@ -385,12 +389,12 @@ namespace mySystem.Process.Bag
 
         void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='制袋工序批生产记录'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='制袋工序批生产记录'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -425,9 +429,9 @@ namespace mySystem.Process.Bag
 
         void readOuterData(int pid)
         {
-            daOuter = new OleDbDataAdapter("select * from 批生产记录表 where 生产指令ID=" + pid, mySystem.Parameter.connOle);
+            daOuter = new SqlDataAdapter("select * from 批生产记录表 where 生产指令ID=" + pid, mySystem.Parameter.conn);
             dtOuter = new DataTable("批生产记录表");
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            cbOuter = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
 
             daOuter.Fill(dtOuter);
@@ -622,12 +626,12 @@ namespace mySystem.Process.Bag
         {
             
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -657,12 +661,12 @@ namespace mySystem.Process.Bag
 
         public override void CheckResult()
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='批生产记录表' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -746,14 +750,14 @@ namespace mySystem.Process.Bag
 
             foreach (Int32 r in checkedRows)
             {
-                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.conn);
                 DataTable dt = new DataTable("生产指令");
                 int id;
                 List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
                 switch (r)
                 {
                     case 0: // 生产指令
-                        da = new OleDbDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("生产指令");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -764,7 +768,7 @@ namespace mySystem.Process.Bag
                         }
                         break;
                     case 1: // 开机确认
-                        da = new OleDbDataAdapter("select * from 制袋机组开机前确认表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 制袋机组开机前确认表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("制袋机组开机前确认表");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -776,7 +780,7 @@ namespace mySystem.Process.Bag
 
                         break;
                     case 2: // CS制袋领料记录
-                        da = new OleDbDataAdapter("select * from CS制袋领料记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from CS制袋领料记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("CS制袋领料记录");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -788,7 +792,7 @@ namespace mySystem.Process.Bag
 
                         break;
                     case 3://制袋机组运行记录
-                        da = new OleDbDataAdapter("select * from 制袋机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 制袋机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("制袋机组运行记录");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -799,7 +803,7 @@ namespace mySystem.Process.Bag
                         }
                         break;
                     case 4:// 内包                                    
-                        da = new OleDbDataAdapter("select * from 产品内包装记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 产品内包装记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("产品内包装记录");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -812,7 +816,7 @@ namespace mySystem.Process.Bag
                         }
                         break;
                     case 5://外包
-                        da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("产品外包装记录");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -823,7 +827,7 @@ namespace mySystem.Process.Bag
                         }
                         break;
                     case 6://清场
-                        da = new OleDbDataAdapter("select * from 清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("清场记录");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -835,7 +839,7 @@ namespace mySystem.Process.Bag
                         break;
                     case 7:// 日报
 
-                        //da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        //da = new SqlDataAdapter("select * from 吹膜机组运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         //dt = new DataTable("吹膜机组运行记录");
                         //da.Fill(dt);
                         //foreach (int page in pages)
@@ -846,7 +850,7 @@ namespace mySystem.Process.Bag
                         //}
                         break;
                     case 8:// 交接
-                        da = new OleDbDataAdapter("select * from 岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("岗位交接班记录");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -858,7 +862,7 @@ namespace mySystem.Process.Bag
                         break;
                     case 9:// 内标签
 
-                        //da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        //da = new SqlDataAdapter("select * from 吹膜工序废品记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         //dt = new DataTable("吹膜工序废品记录");
                         //da.Fill(dt);
                         //foreach (int page in pages)
@@ -870,7 +874,7 @@ namespace mySystem.Process.Bag
                         break;
                     case 10:
                         // 外标签
-                        //da = new OleDbDataAdapter("select * from 吹膜工序清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        //da = new SqlDataAdapter("select * from 吹膜工序清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         //dt = new DataTable("吹膜工序清场记录");
                         //da.Fill(dt);
                         //foreach (int page in pages)
@@ -881,7 +885,7 @@ namespace mySystem.Process.Bag
                         //}
                         break;
                     case 11:// 尺寸检验
-                        da = new OleDbDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("产品外观和尺寸检验记录");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -892,7 +896,7 @@ namespace mySystem.Process.Bag
                         }
                         break;
                     case 12:// 热合产品热合强度检验记录
-                        da = new OleDbDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                         dt = new DataTable("产品热合强度检验记录");
                         da.Fill(dt);
                         foreach (int page in pages)
@@ -903,7 +907,7 @@ namespace mySystem.Process.Bag
                         }
                         break;
                     //case 13: // 岗位交接班
-                    //    da = new OleDbDataAdapter("select * from 吹膜岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                    //    da = new SqlDataAdapter("select * from 吹膜岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                     //    dt = new DataTable("吹膜岗位交接班记录");
                     //    da.Fill(dt);
                     //    foreach (int page in pages)
@@ -914,7 +918,7 @@ namespace mySystem.Process.Bag
                     //    }
                     //    break;
                     //case 14:// 内包装
-                    //    da = new OleDbDataAdapter("select * from 产品内包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                    //    da = new SqlDataAdapter("select * from 产品内包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                     //    dt = new DataTable("产品内包装记录表");
                     //    da.Fill(dt);
                     //    foreach (int page in pages)
@@ -925,7 +929,7 @@ namespace mySystem.Process.Bag
                     //    }
                     //    break;
                     //case 15:// 外包装
-                    //    da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+                    //    da = new SqlDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
                     //    dt = new DataTable("产品外包装记录表");
                     //    da.Fill(dt);
                     //    foreach (int page in pages)

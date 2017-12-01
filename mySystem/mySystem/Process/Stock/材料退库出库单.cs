@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 
@@ -29,14 +30,14 @@ namespace mySystem.Process.Stock
         private int NUM;//当鼠标刚进入单元格时，获取二维码对应出库或退库数量，用于更新
 
         private SqlConnection conn = null;
-        private OleDbConnection connOle = null;
+        //private OleDbConnection mySystem.Parameter.conn = null;
         private bool isSqlOk;
         private CheckForm checkform = null;
 
         private DataTable dt记录, dt记录详情,dt二维码信息;
-        private OleDbDataAdapter da记录, da记录详情, da二维码信息;
+        private SqlDataAdapter da记录, da记录详情, da二维码信息;
         private BindingSource bs记录, bs记录详情, bs二维码信息;
-        private OleDbCommandBuilder cb记录, cb记录详情, cb二维码信息;
+        private SqlCommandBuilder cb记录, cb记录详情, cb二维码信息;
         
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
@@ -86,24 +87,21 @@ namespace mySystem.Process.Stock
                 temptable2 = "材料出库单详细信息";
             }
                 
-            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            OleDbConnection connOle_材料退库出库 = new OleDbConnection(strConnect);
+//            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            SqlConnection conn = mySystem.Parameter.conn;
 
-            try
-            { connOle_材料退库出库.Open(); }
-            catch
-            { MessageBox.Show("未能连接订单库存数据库！"); return false; }
+            
 
             //写入外表
-            OleDbDataAdapter daout_reader;
+            SqlDataAdapter daout_reader;
             DataTable dt_reader = new DataTable();
-            OleDbCommandBuilder cb_reader;
+            SqlCommandBuilder cb_reader;
 
             DataTable dt_temp = new DataTable("外表");
             BindingSource bsout = new BindingSource();
-            OleDbDataAdapter daout = new OleDbDataAdapter("select * from " + temptable + " where 1 = 2", connOle_材料退库出库);
-            OleDbCommandBuilder cbout = new OleDbCommandBuilder(daout);
+            SqlDataAdapter daout = new SqlDataAdapter("select * from " + temptable + " where 1 = 2", mySystem.Parameter.conn);
+            SqlCommandBuilder cbout = new SqlCommandBuilder(daout);
             daout.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
             {
@@ -115,12 +113,12 @@ namespace mySystem.Process.Stock
                 dr["属于工序"] = str工序;
                 dt_temp.Rows.Add(dr);
                 daout.Update(dt_temp);
-                OleDbCommand comm = new OleDbCommand();
-                comm.Connection = connOle_材料退库出库;
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = conn;
                 comm.CommandText = "select @@identity";
                 外表ID = (Int32)comm.ExecuteScalar();
-                daout_reader = new OleDbDataAdapter("select * from " + temptable + " where ID="+外表ID, connOle_材料退库出库);
-                cb_reader = new OleDbCommandBuilder(daout_reader);
+                daout_reader = new SqlDataAdapter("select * from " + temptable + " where ID=" + 外表ID, conn);
+                cb_reader = new SqlCommandBuilder(daout_reader);
                 daout_reader.Fill(dt_reader);
                 if (dt_reader.Rows.Count <= 0)
                     return false;
@@ -130,8 +128,8 @@ namespace mySystem.Process.Stock
                 //写入内表
                 DataTable dt_temp2 = new DataTable("内表");
                 BindingSource bsin = new BindingSource();
-                OleDbDataAdapter dain = new OleDbDataAdapter("select * from " + temptable2 + " where 1 = 2", connOle_材料退库出库);
-                OleDbCommandBuilder cbin = new OleDbCommandBuilder(dain);
+                SqlDataAdapter dain = new SqlDataAdapter("select * from " + temptable2 + " where 1 = 2", conn);
+                SqlCommandBuilder cbin = new SqlCommandBuilder(dain);
                 dain.Fill(dt_temp2);
                 if (dt_temp2.Rows.Count == 0)
                 {
@@ -169,7 +167,7 @@ namespace mySystem.Process.Stock
         void variableInit(int label)
         {
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             this.label = label;
 
@@ -216,12 +214,12 @@ namespace mySystem.Process.Stock
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='"+table+"'", connOle);
+            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='"+table+"'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -479,8 +477,8 @@ namespace mySystem.Process.Stock
             //******************************外表******************************//  
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID, connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
+            da记录 = new SqlDataAdapter("select * from " + table + " where ID = " + ID, mySystem.Parameter.conn);
+            cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
 
             outerBind();
@@ -545,11 +543,11 @@ namespace mySystem.Process.Stock
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
             if(1==label)//材料退库单
-                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T材料退库单ID = " + ID, connOle);
+                da记录详情 = new SqlDataAdapter("select * from " + tableInfo + " where T材料退库单ID = " + ID, mySystem.Parameter.conn);
             else//材料出库单
-                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T材料出库单ID = " + ID, connOle);
+                da记录详情 = new SqlDataAdapter("select * from " + tableInfo + " where T材料出库单ID = " + ID, mySystem.Parameter.conn);
 
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
+            cb记录详情 = new SqlCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
         //内表控件绑定
@@ -568,11 +566,11 @@ namespace mySystem.Process.Stock
             bs二维码信息= new BindingSource();
             dt二维码信息 = new DataTable(tableInfo_二维码);
             if (1 == label)//材料退库单
-                da二维码信息 = new OleDbDataAdapter("select * from " + tableInfo_二维码 + " where T材料退库单ID = " + ID, connOle);
+                da二维码信息 = new SqlDataAdapter("select * from " + tableInfo_二维码 + " where T材料退库单ID = " + ID, mySystem.Parameter.conn);
             else//材料出库单
-                da二维码信息 = new OleDbDataAdapter("select * from " + tableInfo_二维码 + " where T材料出库单ID = " + ID, connOle);
+                da二维码信息 = new SqlDataAdapter("select * from " + tableInfo_二维码 + " where T材料出库单ID = " + ID, mySystem.Parameter.conn);
 
-            cb二维码信息 = new OleDbCommandBuilder(da二维码信息);
+            cb二维码信息 = new SqlCommandBuilder(da二维码信息);
             da二维码信息.Fill(dt二维码信息);
         }
         //控件绑定
@@ -1055,8 +1053,8 @@ namespace mySystem.Process.Stock
                 dt记录详情 .Rows[i]["审核员"] = "__待审核";
 
             DataTable dt_temp = new DataTable("待审核");
-            OleDbDataAdapter da_temp=new OleDbDataAdapter("select * from 待审核 where 表名='"+ table +"' and 对应ID=" + dt记录.Rows[0]["ID"], connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp=new SqlDataAdapter("select * from 待审核 where 表名='"+ table +"' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
             {
@@ -1123,8 +1121,8 @@ namespace mySystem.Process.Stock
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='"+ table +"' and 对应ID=" + dt记录.Rows[0]["ID"], connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='"+ table +"' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -1144,8 +1142,8 @@ namespace mySystem.Process.Stock
                 _formState = Parameter.FormState.审核通过; 
 
                 //更新二维码记录，二维码信息，库存台账
-                OleDbCommand cmd = new OleDbCommand();
-                cmd.Connection = connOle;
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = mySystem.Parameter.conn;
                 string strcmd;
 
                 if (1 == label)//退库
@@ -1169,7 +1167,7 @@ namespace mySystem.Process.Stock
                         strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", strname);
                         cmd.CommandText = strcmd;
                         List<List<Object>> ret = new List<List<Object>>();
-                        OleDbDataReader reader = null;
+                        SqlDataReader reader = null;
                         reader = cmd.ExecuteReader();
                         int id_库存 = 0;
                         while (reader.Read())//只有一行
@@ -1199,7 +1197,7 @@ namespace mySystem.Process.Stock
                         value.Add("入库");
                         value.Add("");
 
-                        if (!Utility.insertAccess(connOle, "二维码历史记录", name, value))
+                        if (!Utility.insertAccess(mySystem.Parameter.conn, "二维码历史记录", name, value))
                         {
                             MessageBox.Show(string.Format("表格第 {0} 行更新 二维码历史记录表 有误", i + 1));
                             return;
@@ -1220,7 +1218,7 @@ namespace mySystem.Process.Stock
                         strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", dataGridView2.Rows[i].Cells["二维码"].Value.ToString());
                         cmd.CommandText = strcmd;
                         List<List<Object>> ret = new List<List<Object>>();
-                        OleDbDataReader reader = null;
+                        SqlDataReader reader = null;
                         reader = cmd.ExecuteReader();
 
                         while (reader.Read())//只有一行
@@ -1253,7 +1251,7 @@ namespace mySystem.Process.Stock
                             //value.Add(id_库存);
                             //value.Add(0);
 
-                            //if (!Utility.insertAccess(connOle, "二维码信息", name, value))
+                            //if (!Utility.insertAccess(mySystem.Parameter.conn, "二维码信息", name, value))
                             //{
                             //    MessageBox.Show(string.Format("表格第 {0} 行更新 二维码信息 有误", i + 1));
                             //    return;
@@ -1304,7 +1302,7 @@ namespace mySystem.Process.Stock
                         value1.Add("出库");
                         value1.Add(id_库存.ToString());
 
-                        if (!Utility.insertAccess(connOle, "二维码历史记录", name1, value1))
+                        if (!Utility.insertAccess(mySystem.Parameter.conn, "二维码历史记录", name1, value1))
                         {
                             MessageBox.Show(string.Format("表格第 {0} 行更新 二维码历史记录表 有误", i + 1));
                             return;
@@ -1483,7 +1481,7 @@ namespace mySystem.Process.Stock
             }
             //加页脚
             //int sheetnum;
-            //OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
+            //SqlDataAdapter da = new SqlDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.conn);
             //DataTable dt = new DataTable("temp");
             //da.Fill(dt);
             //List<Int32> sheetList = new List<Int32>();
@@ -1714,12 +1712,12 @@ namespace mySystem.Process.Stock
                         //先获得库存id
                         if (dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value.ToString() != "")
                         {
-                            OleDbCommand cmd = new OleDbCommand();
-                            cmd.Connection = connOle;
+                            SqlCommand cmd = new SqlCommand();
+                            cmd.Connection = mySystem.Parameter.conn;
                             string strcmd = string.Format("SELECT * from 二维码信息 where 二维码='{0}'", dataGridView2.Rows[e.RowIndex].Cells["二维码"].Value.ToString());
                             cmd.CommandText = strcmd;
                             List<List<Object>> ret = new List<List<Object>>();
-                            OleDbDataReader reader = null;
+                            SqlDataReader reader = null;
                             reader = cmd.ExecuteReader();
 
                             while (reader.Read())//只有一行
@@ -1735,6 +1733,15 @@ namespace mySystem.Process.Stock
 
             fill_datagridview3();
 
+        }
+
+        private void btn打印二维码_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedCells.Count == 0) return;
+            string daima = dataGridView1["物料代码", dataGridView1.SelectedCells[0].RowIndex].Value.ToString();
+            string pihao = dataGridView1["物料批号", dataGridView1.SelectedCells[0].RowIndex].Value.ToString();
+            mySystem.Other.二维码打印 form = mySystem.Other.二维码打印.create(daima, pihao);
+            form.Show();
         }
         
     }

@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dgv产品 = new System.Windows.Forms.DataGridView();
-            this.del产品编码 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage项目 = new System.Windows.Forms.TabPage();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.dgv交接班 = new System.Windows.Forms.DataGridView();
+            this.del交接班 = new System.Windows.Forms.Button();
+            this.add交接班 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.dgv清场 = new System.Windows.Forms.DataGridView();
@@ -66,8 +70,10 @@
             this.Btn保存产品 = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.dgv产品编码 = new System.Windows.Forms.DataGridView();
+            this.del产品编码 = new System.Windows.Forms.Button();
             this.add产品编码 = new System.Windows.Forms.Button();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.dgv产品 = new System.Windows.Forms.DataGridView();
             this.del产品 = new System.Windows.Forms.Button();
             this.add产品 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
@@ -90,15 +96,10 @@
             this.del人员 = new System.Windows.Forms.Button();
             this.add人员 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.groupBox11 = new System.Windows.Forms.GroupBox();
-            this.dgv交接班 = new System.Windows.Forms.DataGridView();
-            this.del交接班 = new System.Windows.Forms.Button();
-            this.add交接班 = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage项目.SuspendLayout();
+            this.groupBox11.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv交接班)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv清场)).BeginInit();
             this.groupBox6.SuspendLayout();
@@ -113,6 +114,7 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品编码)).BeginInit();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv工艺)).BeginInit();
             this.tabPage人员.SuspendLayout();
@@ -120,29 +122,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).BeginInit();
             this.groupBox7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).BeginInit();
-            this.groupBox11.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv交接班)).BeginInit();
             this.SuspendLayout();
-            // 
-            // dgv产品
-            // 
-            this.dgv产品.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv产品.Location = new System.Drawing.Point(12, 51);
-            this.dgv产品.Name = "dgv产品";
-            this.dgv产品.RowTemplate.Height = 23;
-            this.dgv产品.Size = new System.Drawing.Size(490, 165);
-            this.dgv产品.TabIndex = 2;
-            // 
-            // del产品编码
-            // 
-            this.del产品编码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.del产品编码.Location = new System.Drawing.Point(100, 14);
-            this.del产品编码.Name = "del产品编码";
-            this.del产品编码.Size = new System.Drawing.Size(70, 30);
-            this.del产品编码.TabIndex = 1;
-            this.del产品编码.Text = "删除";
-            this.del产品编码.UseVisualStyleBackColor = true;
-            this.del产品编码.Click += new System.EventHandler(this.del产品编码_Click);
             // 
             // tabControl1
             // 
@@ -174,6 +154,65 @@
             this.tabPage项目.TabIndex = 0;
             this.tabPage项目.Text = "项目设置";
             this.tabPage项目.UseVisualStyleBackColor = true;
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.dgv交接班);
+            this.groupBox11.Controls.Add(this.del交接班);
+            this.groupBox11.Controls.Add(this.add交接班);
+            this.groupBox11.Location = new System.Drawing.Point(17, 309);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(846, 225);
+            this.groupBox11.TabIndex = 73;
+            this.groupBox11.TabStop = false;
+            // 
+            // dgv交接班
+            // 
+            this.dgv交接班.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv交接班.Location = new System.Drawing.Point(12, 51);
+            this.dgv交接班.Name = "dgv交接班";
+            this.dgv交接班.RowTemplate.Height = 23;
+            this.dgv交接班.Size = new System.Drawing.Size(813, 165);
+            this.dgv交接班.TabIndex = 2;
+            // 
+            // del交接班
+            // 
+            this.del交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del交接班.Location = new System.Drawing.Point(100, 14);
+            this.del交接班.Name = "del交接班";
+            this.del交接班.Size = new System.Drawing.Size(70, 30);
+            this.del交接班.TabIndex = 1;
+            this.del交接班.Text = "删除";
+            this.del交接班.UseVisualStyleBackColor = true;
+            this.del交接班.Click += new System.EventHandler(this.del交接班_Click);
+            // 
+            // add交接班
+            // 
+            this.add交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.add交接班.Location = new System.Drawing.Point(12, 14);
+            this.add交接班.Name = "add交接班";
+            this.add交接班.Size = new System.Drawing.Size(70, 30);
+            this.add交接班.TabIndex = 0;
+            this.add交接班.Text = "添加";
+            this.add交接班.UseVisualStyleBackColor = true;
+            this.add交接班.Click += new System.EventHandler(this.add交接班_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
+            this.label2.Location = new System.Drawing.Point(17, 290);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(240, 20);
+            this.label2.TabIndex = 72;
+            this.label2.Text = "岗位交接班确认项目设置";
+            // 
+            // panel4
+            // 
+            this.panel4.Location = new System.Drawing.Point(894, 841);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(200, 10);
+            this.panel4.TabIndex = 71;
             // 
             // groupBox1
             // 
@@ -350,11 +389,12 @@
             this.groupBox10.Controls.Add(this.dgv物料代码);
             this.groupBox10.Controls.Add(this.del物料代码);
             this.groupBox10.Controls.Add(this.add物料代码);
-            this.groupBox10.Location = new System.Drawing.Point(568, 599);
+            this.groupBox10.Location = new System.Drawing.Point(423, 371);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(534, 225);
+            this.groupBox10.Size = new System.Drawing.Size(101, 13);
             this.groupBox10.TabIndex = 61;
             this.groupBox10.TabStop = false;
+            this.groupBox10.Visible = false;
             // 
             // dgv物料代码
             // 
@@ -391,25 +431,27 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(568, 578);
+            this.label7.Location = new System.Drawing.Point(423, 350);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(135, 20);
             this.label7.TabIndex = 60;
             this.label7.Text = "物料代码设置";
+            this.label7.Visible = false;
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(930, 880);
+            this.panel3.Location = new System.Drawing.Point(142, 300);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 10);
             this.panel3.TabIndex = 69;
+            this.panel3.Visible = false;
             // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.dgv封边);
             this.groupBox8.Controls.Add(this.del封边);
             this.groupBox8.Controls.Add(this.add封边);
-            this.groupBox8.Location = new System.Drawing.Point(568, 317);
+            this.groupBox8.Location = new System.Drawing.Point(559, 41);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(530, 225);
             this.groupBox8.TabIndex = 68;
@@ -451,11 +493,12 @@
             this.groupBox9.Controls.Add(this.dgv产品规格);
             this.groupBox9.Controls.Add(this.del产品规格);
             this.groupBox9.Controls.Add(this.add产品规格);
-            this.groupBox9.Location = new System.Drawing.Point(17, 317);
+            this.groupBox9.Location = new System.Drawing.Point(386, 437);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(534, 225);
+            this.groupBox9.Size = new System.Drawing.Size(250, 44);
             this.groupBox9.TabIndex = 67;
             this.groupBox9.TabStop = false;
+            this.groupBox9.Visible = false;
             // 
             // dgv产品规格
             // 
@@ -492,7 +535,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(574, 298);
+            this.label5.Location = new System.Drawing.Point(565, 22);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(168, 20);
             this.label5.TabIndex = 66;
@@ -502,16 +545,17 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(17, 298);
+            this.label6.Location = new System.Drawing.Point(386, 418);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(210, 20);
             this.label6.TabIndex = 65;
             this.label6.Text = "BPV制袋产品规格设置";
+            this.label6.Visible = false;
             // 
             // Btn保存产品
             // 
             this.Btn保存产品.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存产品.Location = new System.Drawing.Point(936, 846);
+            this.Btn保存产品.Location = new System.Drawing.Point(971, 317);
             this.Btn保存产品.Name = "Btn保存产品";
             this.Btn保存产品.Size = new System.Drawing.Size(90, 33);
             this.Btn保存产品.TabIndex = 64;
@@ -524,11 +568,12 @@
             this.groupBox3.Controls.Add(this.dgv产品编码);
             this.groupBox3.Controls.Add(this.del产品编码);
             this.groupBox3.Controls.Add(this.add产品编码);
-            this.groupBox3.Location = new System.Drawing.Point(568, 34);
+            this.groupBox3.Location = new System.Drawing.Point(617, 386);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(530, 225);
+            this.groupBox3.Size = new System.Drawing.Size(215, 75);
             this.groupBox3.TabIndex = 63;
             this.groupBox3.TabStop = false;
+            this.groupBox3.Visible = false;
             // 
             // dgv产品编码
             // 
@@ -538,6 +583,17 @@
             this.dgv产品编码.RowTemplate.Height = 23;
             this.dgv产品编码.Size = new System.Drawing.Size(490, 165);
             this.dgv产品编码.TabIndex = 2;
+            // 
+            // del产品编码
+            // 
+            this.del产品编码.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.del产品编码.Location = new System.Drawing.Point(100, 14);
+            this.del产品编码.Name = "del产品编码";
+            this.del产品编码.Size = new System.Drawing.Size(70, 30);
+            this.del产品编码.TabIndex = 1;
+            this.del产品编码.Text = "删除";
+            this.del产品编码.UseVisualStyleBackColor = true;
+            this.del产品编码.Click += new System.EventHandler(this.del产品编码_Click);
             // 
             // add产品编码
             // 
@@ -555,11 +611,21 @@
             this.groupBox4.Controls.Add(this.dgv产品);
             this.groupBox4.Controls.Add(this.del产品);
             this.groupBox4.Controls.Add(this.add产品);
-            this.groupBox4.Location = new System.Drawing.Point(17, 34);
+            this.groupBox4.Location = new System.Drawing.Point(66, 386);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(534, 225);
+            this.groupBox4.Size = new System.Drawing.Size(250, 88);
             this.groupBox4.TabIndex = 62;
             this.groupBox4.TabStop = false;
+            this.groupBox4.Visible = false;
+            // 
+            // dgv产品
+            // 
+            this.dgv产品.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv产品.Location = new System.Drawing.Point(12, 51);
+            this.dgv产品.Name = "dgv产品";
+            this.dgv产品.RowTemplate.Height = 23;
+            this.dgv产品.Size = new System.Drawing.Size(490, 165);
+            this.dgv产品.TabIndex = 2;
             // 
             // del产品
             // 
@@ -587,28 +653,30 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label12.Location = new System.Drawing.Point(574, 15);
+            this.label12.Location = new System.Drawing.Point(623, 367);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(210, 20);
             this.label12.TabIndex = 61;
             this.label12.Text = "BPV制袋产品代码设置";
+            this.label12.Visible = false;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label11.Location = new System.Drawing.Point(17, 15);
+            this.label11.Location = new System.Drawing.Point(66, 367);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(168, 20);
             this.label11.TabIndex = 60;
             this.label11.Text = "BPV制袋产品设置";
+            this.label11.Visible = false;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgv工艺);
             this.groupBox2.Controls.Add(this.del工艺);
             this.groupBox2.Controls.Add(this.add工艺);
-            this.groupBox2.Location = new System.Drawing.Point(17, 599);
+            this.groupBox2.Location = new System.Drawing.Point(19, 41);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 225);
             this.groupBox2.TabIndex = 59;
@@ -649,7 +717,7 @@
             // 
             this.CS制袋工艺设置.AutoSize = true;
             this.CS制袋工艺设置.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.CS制袋工艺设置.Location = new System.Drawing.Point(17, 578);
+            this.CS制袋工艺设置.Location = new System.Drawing.Point(19, 20);
             this.CS制袋工艺设置.Name = "CS制袋工艺设置";
             this.CS制袋工艺设置.Size = new System.Drawing.Size(168, 20);
             this.CS制袋工艺设置.TabIndex = 58;
@@ -791,65 +859,6 @@
             this.label4.TabIndex = 53;
             this.label4.Text = "BPV制袋人员设置";
             // 
-            // panel4
-            // 
-            this.panel4.Location = new System.Drawing.Point(894, 841);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(200, 10);
-            this.panel4.TabIndex = 71;
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.Controls.Add(this.dgv交接班);
-            this.groupBox11.Controls.Add(this.del交接班);
-            this.groupBox11.Controls.Add(this.add交接班);
-            this.groupBox11.Location = new System.Drawing.Point(17, 309);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(846, 225);
-            this.groupBox11.TabIndex = 73;
-            this.groupBox11.TabStop = false;
-            // 
-            // dgv交接班
-            // 
-            this.dgv交接班.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv交接班.Location = new System.Drawing.Point(12, 51);
-            this.dgv交接班.Name = "dgv交接班";
-            this.dgv交接班.RowTemplate.Height = 23;
-            this.dgv交接班.Size = new System.Drawing.Size(813, 165);
-            this.dgv交接班.TabIndex = 2;
-            // 
-            // del交接班
-            // 
-            this.del交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.del交接班.Location = new System.Drawing.Point(100, 14);
-            this.del交接班.Name = "del交接班";
-            this.del交接班.Size = new System.Drawing.Size(70, 30);
-            this.del交接班.TabIndex = 1;
-            this.del交接班.Text = "删除";
-            this.del交接班.UseVisualStyleBackColor = true;
-            this.del交接班.Click += new System.EventHandler(this.del交接班_Click);
-            // 
-            // add交接班
-            // 
-            this.add交接班.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.add交接班.Location = new System.Drawing.Point(12, 14);
-            this.add交接班.Name = "add交接班";
-            this.add交接班.Size = new System.Drawing.Size(70, 30);
-            this.add交接班.TabIndex = 0;
-            this.add交接班.Text = "添加";
-            this.add交接班.UseVisualStyleBackColor = true;
-            this.add交接班.Click += new System.EventHandler(this.add交接班_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label2.Location = new System.Drawing.Point(17, 290);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(240, 20);
-            this.label2.TabIndex = 72;
-            this.label2.Text = "岗位交接班确认项目设置";
-            // 
             // BPV制袋设置
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -861,10 +870,11 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "BPV制袋设置";
             this.Text = "BPV制袋设置";
-            ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage项目.ResumeLayout(false);
             this.tabPage项目.PerformLayout();
+            this.groupBox11.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv交接班)).EndInit();
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv清场)).EndInit();
             this.groupBox6.ResumeLayout(false);
@@ -880,6 +890,7 @@
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品编码)).EndInit();
             this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgv产品)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv工艺)).EndInit();
             this.tabPage人员.ResumeLayout(false);
@@ -888,8 +899,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv权限)).EndInit();
             this.groupBox7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgv人员)).EndInit();
-            this.groupBox11.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgv交接班)).EndInit();
             this.ResumeLayout(false);
 
         }

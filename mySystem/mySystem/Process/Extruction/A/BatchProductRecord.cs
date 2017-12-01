@@ -58,7 +58,15 @@ namespace BatchProductRecord
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
-                daOuter.Update((DataTable)bsOuter.DataSource);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    daOuter.Update((DataTable)bsOuter.DataSource);
+                }
+                else
+                {
+                    daOuter_sql.Update((DataTable)bsOuter.DataSource);
+                }
+                
                 readOuterData(mySystem.Parameter.proInstruction);
                 outerBind();
             }
@@ -94,7 +102,15 @@ namespace BatchProductRecord
                     DataRow dr = dtOuter.NewRow();
                     dr = writeOuterDefault(dr);
                     dtOuter.Rows.Add(dr);
-                    daOuter.Update((DataTable)bsOuter.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    else
+                    {
+                        daOuter_sql.Update((DataTable)bsOuter.DataSource);
+                    }
+                    
                     readOuterData(_code);
                     outerBind();
                 }
@@ -123,7 +139,15 @@ namespace BatchProductRecord
                     DataRow dr = dtOuter.NewRow();
                     dr = writeOuterDefault(dr);
                     dtOuter.Rows.Add(dr);
-                    daOuter.Update((DataTable)bsOuter.DataSource);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        daOuter.Update((DataTable)bsOuter.DataSource);
+                    }
+                    else
+                    {
+                        daOuter_sql.Update((DataTable)bsOuter.DataSource);
+                    }
+                    
                     readOuterData(_code);
                     outerBind();
                 }
@@ -426,6 +450,7 @@ namespace BatchProductRecord
             record.Add("SOP-MFG-301-R14 吹膜岗位交接班记录");
             record.Add("SOP-MFG-109-R01A 产品内包装记录");
             record.Add("SOP-MFG-111-R01A 产品外包装记录");
+            record.Add("吹膜标签");
             initrecord();
         }
 
@@ -722,6 +747,20 @@ namespace BatchProductRecord
                 idx++;
                 da = new OleDbDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
                 dt = new DataTable("产品外包装记录表");
+                da.Fill(dt);
+                temp = dt.Rows.Count;
+                if (temp <= 0)
+                {
+                    disableRow(idx);
+                }
+                else
+                {
+                    dataGridView1.Rows[idx].Cells[totalPage].Value = temp;
+                }
+                // 吹膜标签
+                idx++;
+                da = new OleDbDataAdapter("select * from 标签 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
+                dt = new DataTable("标签");
                 da.Fill(dt);
                 temp = dt.Rows.Count;
                 if (temp <= 0)
@@ -1513,6 +1552,19 @@ namespace BatchProductRecord
                             }
                             htRow2Page[r] = pages.Count;
                             break;
+                        case 16:// 标签
+                            da = new OleDbDataAdapter("select * from 标签 where  生产指令ID=" + _instrctID, mySystem.Parameter.connOle);
+                            dt = new DataTable("标签");
+                            da.Fill(dt);
+                            foreach (int page in pages)
+                            {
+                                id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                                mySystem.Process.Extruction.LabelPrint.printLable(id);
+                                //(new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
+                                GC.Collect();
+                            }
+                            htRow2Page[r] = pages.Count;
+                            break;
                     }
                 }
             }
@@ -1719,6 +1771,19 @@ namespace BatchProductRecord
                             {
                                 id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
                                 (new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
+                                GC.Collect();
+                            }
+                            htRow2Page[r] = pages.Count;
+                            break;
+                        case 16:// 标签
+                            da = new SqlDataAdapter("select * from 标签 where  生产指令ID=" + _instrctID, mySystem.Parameter.conn);
+                            dt = new DataTable("标签");
+                            da.Fill(dt);
+                            foreach (int page in pages)
+                            {
+                                id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                                mySystem.Process.Extruction.LabelPrint.printLable(id);
+                                //(new mySystem.Extruction.Chart.outerpack(mainform, id)).print(false);
                                 GC.Collect();
                             }
                             htRow2Page[r] = pages.Count;
@@ -1998,16 +2063,31 @@ namespace BatchProductRecord
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                DataTable dt;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='批生产记录表'", mySystem.Parameter.connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='批生产记录表'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
             
-            OleDbDataAdapter da;
-            DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='批生产记录表'", mySystem.Parameter.connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            String str操作员 = dt.Rows[0]["操作员"].ToString();
-            String str审核员 = dt.Rows[0]["审核员"].ToString();
-            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-            MessageBox.Show(str人员信息);
         }
 
         void addOtherEventHandler()
@@ -2040,6 +2120,9 @@ namespace BatchProductRecord
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
             // 修改Sheet中某行某列的值
             fill_excel(my);
+            // 拿到打印后的页数
+            int ccc = wb.ActiveSheet.PageSetup.Pages.Count;
+            //
             my.PageSetup.RightFooter = tb生产指令.Text + "-00-001 &P/" + wb.ActiveSheet.PageSetup.Pages.Count;
             if (b)
             {
@@ -2088,11 +2171,22 @@ namespace BatchProductRecord
             my.Cells[24, 5].Value = dtOuter.Rows[0]["审核人"].ToString() + "   " + dtOuter.Rows[0]["审核时间"];
             my.Cells[26, 5].Value = dtOuter.Rows[0]["批准人"].ToString() + "   " + dtOuter.Rows[0]["批准时间"];
 
-
-            for (int i = 5; i <= 20; ++i)
+            //int prePage = 0;
+            //int curPage = 0;
+            for (int i = 5; i <= 21; ++i)
             {
                 my.Cells[i, 3] = 0;
-                if (htRow2Page.ContainsKey(i-5))    my.Cells[i, 3]=htRow2Page[i - 5];
+                if (htRow2Page.ContainsKey(i - 5))
+                {
+                    //curPage += Convert.ToInt32(htRow2Page[i - 5]);
+                    my.Cells[i, 3] = htRow2Page[i - 5];
+                }
+                //else
+                //{
+                //    my.Cells[i, 3] = "/";
+                //}
+                
+                //prePage += Convert.ToInt32(htRow2Page[i - 5]);
             }
         }
     }

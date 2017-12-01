@@ -117,10 +117,10 @@ namespace mySystem.Process.Extruction.A
             填写交班员();
 
             //update Outer
-            if (!mySystem.Parameter.isSqlOk)
-                daOuter.Update((DataTable)bsOuter.DataSource);
-            else
-                daOuter_sql.Update((DataTable)bsOuter.DataSource);
+            //if (!mySystem.Parameter.isSqlOk)
+            //    daOuter.Update((DataTable)bsOuter.DataSource);
+            //else
+            //    daOuter_sql.Update((DataTable)bsOuter.DataSource);
             readOuterData(__生产指令编号, __生产日期);
             removeOuterBind();
             outerBind();
@@ -452,7 +452,7 @@ namespace mySystem.Process.Extruction.A
             }
             else
             {
-                daOuter_sql = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期 like '#" + 生产日期.ToString() + "#';", mySystem.Parameter.conn);
+                daOuter_sql = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + 生产指令编号 + "' AND 生产日期='" + 生产日期.ToString() + "';", mySystem.Parameter.conn);
                 cbOuter_sql = new SqlCommandBuilder(daOuter_sql);
                 dtOuter = new DataTable(tablename1);
                 bsOuter = new BindingSource();
@@ -475,7 +475,7 @@ namespace mySystem.Process.Extruction.A
                 cbOuter_sql = new SqlCommandBuilder(daOuter_sql);
                 dtOuter = new DataTable(tablename1);
                 bsOuter = new BindingSource();
-                daOuter.Fill(dtOuter);
+                daOuter_sql.Fill(dtOuter);
             }
         }
         private void readInnerData(int id)

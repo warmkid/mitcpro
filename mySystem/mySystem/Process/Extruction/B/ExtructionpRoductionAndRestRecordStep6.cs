@@ -552,7 +552,7 @@ namespace mySystem.Extruction.Process
                 bs记录 = new BindingSource();
                 dt记录 = new DataTable(table);
                 //da记录_sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + " and 生产日期 like '#" + searchTime.ToString("yyyy/MM/dd") + "#' ", conn);
-                da记录_sql = new SqlDataAdapter("select top 1 * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + " order by ID DESC", conn);
+                da记录_sql = new SqlDataAdapter("select top 1 * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + (flight?1:0) + " order by ID DESC", conn);
                 cb记录_sql = new SqlCommandBuilder(da记录_sql);
                 da记录_sql.Fill(dt记录);
             }
@@ -1313,15 +1313,31 @@ namespace mySystem.Extruction.Process
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da;
-            DataTable dt;
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜生产和检验记录表'", mySystem.Parameter.connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
-            String str操作员 = dt.Rows[0]["操作员"].ToString();
-            String str审核员 = dt.Rows[0]["审核员"].ToString();
-            String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
-            MessageBox.Show(str人员信息);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                DataTable dt;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='吹膜生产和检验记录表'", mySystem.Parameter.connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                DataTable dt;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='吹膜生产和检验记录表'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+                String str操作员 = dt.Rows[0]["操作员"].ToString();
+                String str审核员 = dt.Rows[0]["审核员"].ToString();
+                String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
+                MessageBox.Show(str人员信息);
+            }
+            
         }
 
         private void btn新建_Click(object sender, EventArgs e)
@@ -1330,14 +1346,29 @@ namespace mySystem.Extruction.Process
             {
                 bs记录 = new BindingSource();
                 dt记录 = new DataTable(table);
-                
-                da记录 = new OleDbDataAdapter("select * from " + table + " where 0=1", connOle);
-                cb记录 = new OleDbCommandBuilder(da记录);
-                da记录.Fill(dt记录);
-                DataRow dr = dt记录.NewRow();
-                dr = writeOuterDefault(dr);
-                dt记录.Rows.Add(dr);
-                da记录.Update(dt记录);
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    da记录 = new OleDbDataAdapter("select * from " + table + " where 0=1", connOle);
+                    cb记录 = new OleDbCommandBuilder(da记录);
+                    da记录.Fill(dt记录);
+                    DataRow dr = dt记录.NewRow();
+                    dr = writeOuterDefault(dr);
+                    dt记录.Rows.Add(dr);
+
+                    da记录.Update(dt记录);
+                }
+                else
+                {
+                    da记录_sql = new SqlDataAdapter("select * from " + table + " where 0=1", mySystem.Parameter.conn);
+                    cb记录_sql = new SqlCommandBuilder(da记录_sql);
+                    da记录_sql.Fill(dt记录);
+                    DataRow dr = dt记录.NewRow();
+                    dr = writeOuterDefault(dr);
+                    dt记录.Rows.Add(dr);
+
+                    da记录_sql.Update(dt记录);
+                }
+               
                 //da记录 = new OleDbDataAdapter("select top 1 * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品名称 = '" + productName + "' and 班次 = " + flight.ToString() + "order by ID DESC", connOle);
                 DataShow(InstruID, cb产品名称.Text, cb白班.Checked, dtp生产日期.Value);
             }

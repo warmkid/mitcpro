@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Collections;
 
 namespace mySystem.Process.Stock
@@ -108,20 +109,20 @@ namespace mySystem.Process.Stock
             String shr = comboBox审核状态.Text;
             DateTime startT = dateTimePicker开始.Value.Date;
             DateTime endT = dateTimePicker结束.Value;
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             String sql;
             switch (tabControl1.SelectedIndex)
             {
                 case 0:// 退库单
                      if (shr != "")
                     {
-                        sql = @"SELECT * FROM 材料退库单 where ID in (select T材料退库单ID from 材料退库单详细信息 where 审核员 like '%{0}%' and 退库日期时间 between #{1}# and #{2}#)";
-                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.connOle);
+                        sql = @"SELECT * FROM 材料退库单 where ID in (select T材料退库单ID from 材料退库单详细信息 where 审核员 like '%{0}%' and 退库日期时间 between '{1}' and '{2}')";
+                        da = new SqlDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.conn);
                     }
                     else
                     {
-                        sql = @"SELECT * FROM 材料退库单 where ID in (select T材料退库单ID from 材料退库单详细信息 where 审核员 is null and 退库日期时间 between #{0}# and #{1}#)";
-                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.connOle);
+                        sql = @"SELECT * FROM 材料退库单 where ID in (select T材料退库单ID from 材料退库单详细信息 where 审核员 is null and 退库日期时间 between '{0}' and '{1}')";
+                        da = new SqlDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.conn);
                     }
                      dt退库单 = new DataTable("退库单");
                     da.Fill(dt退库单);
@@ -130,13 +131,13 @@ namespace mySystem.Process.Stock
                 case 1: // 出库单
                     if (shr != "")
                     {
-                        sql = @"select * from 材料出库单详细信息 where 审核员 like '%{0}%' and 出库日期时间 between #{1}# and #{2}#";
-                        da = new OleDbDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.connOle);
+                        sql = @"select * from 材料出库单详细信息 where 审核员 like '%{0}%' and 出库日期时间 between '{1}' and '{2}'";
+                        da = new SqlDataAdapter(string.Format(sql, shr, startT, endT), mySystem.Parameter.conn);
                     }
                     else
                     {
-                        sql = @"select * from 材料出库单详细信息 where 审核员 is null and 出库日期时间 between #{0}# and #{1}#";
-                        da = new OleDbDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.connOle);
+                        sql = @"select * from 材料出库单详细信息 where 审核员 is null and 出库日期时间 between '{0}' and '{1}'";
+                        da = new SqlDataAdapter(string.Format(sql, startT, endT), mySystem.Parameter.conn);
                     }
                     dt出库单 = new DataTable("出库单");
                     da.Fill(dt出库单);
@@ -153,8 +154,8 @@ namespace mySystem.Process.Stock
         //read history in recent 7 days defaultly
         void read退库单Data()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 材料退库单详细信息 where 退库日期时间 between #" +
-                DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "# and  审核员='__待审核'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 材料退库单详细信息 where 退库日期时间 between '" +
+                DateTime.Now.AddDays(-7).Date + "' and '" + DateTime.Now + "' and  审核员='__待审核'", mySystem.Parameter.conn);
             dt退库单 = new DataTable("材料退库单详细信息");
             da.Fill(dt退库单);
         }
@@ -169,8 +170,8 @@ namespace mySystem.Process.Stock
         private void read出库单Date()
         {
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 材料出库单详细信息 where 出库日期时间 between #" +
-                DateTime.Now.AddDays(-7).Date + "# and #" + DateTime.Now + "# and  审核员='__待审核'", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 材料出库单详细信息 where 出库日期时间 between '" +
+                DateTime.Now.AddDays(-7).Date + "' and '" + DateTime.Now + "' and  审核员='__待审核'", mySystem.Parameter.conn);
             dt出库单 = new DataTable("材料出库单详细信息");
             da.Fill(dt出库单);
         }

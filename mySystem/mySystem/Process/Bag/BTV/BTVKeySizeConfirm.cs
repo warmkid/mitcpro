@@ -25,14 +25,14 @@ namespace mySystem.Process.Bag.BTV
         private String tableInfo = "BPV关键尺寸确认记录详细信息";
 
         private SqlConnection conn = null;
-        private OleDbConnection connOle = null;
+        //private OleDbConnection mySystem.Parameter.conn = null;
         private bool isSqlOk;
         private CheckForm checkform = null;
 
         private DataTable dt记录, dt记录详情, dt代码批号, dt膜代码;
-        private OleDbDataAdapter da记录, da记录详情;
+        private SqlDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
-        private OleDbCommandBuilder cb记录, cb记录详情;
+        private SqlCommandBuilder cb记录, cb记录详情;
         private double[] sum = { 0, 0 };
         private double[] keySize = { 0, 0 };
 
@@ -49,7 +49,7 @@ namespace mySystem.Process.Bag.BTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.bpvbagInstruID;
             Instruction = Parameter.bpvbagInstruction;
@@ -78,7 +78,7 @@ namespace mySystem.Process.Bag.BTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             fill_printer(); //添加打印机
@@ -97,12 +97,12 @@ namespace mySystem.Process.Bag.BTV
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='关键尺寸确认记录';", connOle);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='关键尺寸确认记录';", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -175,12 +175,12 @@ namespace mySystem.Process.Bag.BTV
             dt代码批号 = new DataTable("代码批号");
 
             //*********产品名称、产品批号、产品工艺、设备 -----> 数据获取*********//
-            if (!isSqlOk)
+            if (isSqlOk)
             {
                 //查找该生产ID下的生产时间
                 DateTime 计划生产日期;
                 string sqlStr = "SELECT 计划生产日期 FROM 生产指令 WHERE ID = " + InstruID + ";";
-                OleDbCommand get生产指令详细信息 = new OleDbCommand(sqlStr, connOle);
+                SqlCommand get生产指令详细信息 = new SqlCommand(sqlStr, mySystem.Parameter.conn);
                 try
                 {
                     计划生产日期 = Convert.ToDateTime(get生产指令详细信息.ExecuteScalar());
@@ -191,10 +191,10 @@ namespace mySystem.Process.Bag.BTV
                     MessageBox.Show("该生产指令编码下的『计划生产日期』尚未填写");
                 }
                 //查找该生产ID下的产品编码、产品批号
-                OleDbCommand comm2 = new OleDbCommand();
-                comm2.Connection = Parameter.connOle;
+                SqlCommand comm2 = new SqlCommand();
+                comm2.Connection = mySystem.Parameter.conn;
                 comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + InstruID;
-                OleDbDataAdapter datemp = new OleDbDataAdapter(comm2);
+                SqlDataAdapter datemp = new SqlDataAdapter(comm2);
                 datemp.Fill(dt代码批号);
                 if (dt代码批号.Rows.Count == 0)
                 {
@@ -442,7 +442,7 @@ namespace mySystem.Process.Bag.BTV
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), mySystem.Parameter.conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
@@ -460,8 +460,8 @@ namespace mySystem.Process.Bag.BTV
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + ";", connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + ";", mySystem.Parameter.conn);
+            cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
 
@@ -471,8 +471,8 @@ namespace mySystem.Process.Bag.BTV
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产日期 = '" + searchTime.ToString("yyyy/MM/dd") + "' ", mySystem.Parameter.conn);
+            cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
 
@@ -544,8 +544,8 @@ namespace mySystem.Process.Bag.BTV
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T" + table + "ID = " + ID.ToString(), connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
+            da记录详情 = new SqlDataAdapter("select * from " + tableInfo + " where T" + table + "ID = " + ID.ToString(), mySystem.Parameter.conn);
+            cb记录详情 = new SqlCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
 
@@ -720,8 +720,8 @@ namespace mySystem.Process.Bag.BTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='" + table + "' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='" + table + "' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
             {
@@ -770,8 +770,8 @@ namespace mySystem.Process.Bag.BTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='" + table + "' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='" + table + "' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -830,51 +830,61 @@ namespace mySystem.Process.Bag.BTV
             print(true);
             GC.Collect();
         }
+
+        /// <summary>
+        /// thsi function has been updated by pool on 2017-11-07
+        /// </summary>
+        /// <param name="preview"></param>
         public void print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
             //System.IO.Directory.GetCurrentDirectory;
-            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\SOP-MFG-306-R08A  关键尺寸确认记录.xlsx");
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\BPVBag\18 SOP-MFG-306-R08A  关键尺寸确认记录.xlsx");
             // 选择一个Sheet，注意Sheet的序号是从1开始的
-            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[3];
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
             // 设置该进程是否可见
             //oXL.Visible = true;
             // 修改Sheet中某行某列的值
-            my.Cells[3, 1].Value = "生产指令编号：\n" + lbl生产指令编号.Text;
-            my.Cells[4, 1].Value = "产品代码/规格：" + tb产品代码.Text;
-            my.Cells[3, 6].Value = "产品批号：" + tb产品批号.Text;
-            my.Cells[4, 6].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[5, 1].Value = "判定依据：关键尺寸要求v "+ tb关键尺寸1.Text+" ± "+tb关键尺寸2.Text+ " mm";
-            //EVERY SHEET CONTAINS 15 RECORDS
-            for (int i = 0; i < dt记录详情.Rows.Count; i++)
+            my.Cells[3, 11].Value = "生产指令：\n" + lbl生产指令编号.Text;
+            my.Cells[3, 1].Value = "产品代码：" + tb产品代码.Text;
+            my.Cells[3, 5].Value = "产品批号：" + tb产品批号.Text;
+            my.Cells[3, 8].Value = "生产日期：" + dtp生产日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[4, 1].Value = "判定依据：关键尺寸要求v " + dt记录.Rows[0]["关键尺寸要求1"].ToString() + " ± " + dt记录.Rows[0]["关键尺寸要求2"].ToString() + " mm";
+            my.Cells[4, 8].Value = "合格产品数量：" + dt记录.Rows[0]["合格产品数量"].ToString() + " 个，不良品数量：" + dt记录.Rows[0]["不良品数量"].ToString() + " 个。";
+
+            int rowStartAt = 6;
+            int  rowNumPerSheet=20;
+            int rowNumTotal = dt记录详情.Rows.Count;
+            int line = Convert.ToInt32(System.Math.Ceiling(Convert.ToDouble(rowNumTotal / 4)));
+
+            if (line > rowNumPerSheet)
             {
-                int u, v;
-                if (i < 25)
+                for (int i = 0; i < line - rowNumPerSheet; i++)
                 {
-                    u = 0;
-                    v = i % 25;
+                    Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)my.Rows[rowStartAt + i, Type.Missing];
+
+                    range.EntireRow.Insert(Microsoft.Office.Interop.Excel.XlDirection.xlDown,
+                        Microsoft.Office.Interop.Excel.XlInsertFormatOrigin.xlFormatFromRightOrBelow);
                 }
-                else if (i < 50)
-                {
-                    u = 1;
-                    v = i % 25;
-                }
-                else
-                {
-                    u = 2;
-                    v = i % 25;
-                }
-                my.Cells[v + 7, 3u+1].Value = dt记录详情.Rows[i]["序号"];
-                my.Cells[v + 7, 3u+2].Value = dt记录详情.Rows[i]["实测值"];
-                my.Cells[v + 7, 3u+3].Value = dt记录详情.Rows[i]["判定"];              
             }
 
-            my.Cells[32, 1].Value = "合格产品数量： " + tb合格产品数量.Text + " 个，不良品数量： " + tb不良品数量.Text + " 个。";
-            my.Cells[33, 1].Value = "备注：\n" + tb备注.Text;
-            my.Cells[34, 1].Value = "操作人/日期： " + tb操作员.Text + dtp操作日期.Value.ToString("yyyy年MM月dd日");
-            my.Cells[34, 6].Value = "QC复核/日期： " + tb审核员.Text + dtp审核日期.Value.ToString("yyyy年MM月dd日");
+            //EVERY SHEET CONTAINS 15 RECORDS
+            for (int i = 0; i < line; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    my.Cells[i + rowStartAt, 3 * j + 1].Value = dt记录详情.Rows[4 * i + j]["序号"];
+                    my.Cells[i + rowStartAt, 3 * j + 2].Value = dt记录详情.Rows[4 * i + j]["实测值"];
+                    my.Cells[i + rowStartAt, 3 * j + 3].Value = dt记录详情.Rows[4 * i + j]["判定"];
+                }
+            }
+            //my.Cells[32, 1].Value = "合格产品数量： " + tb合格产品数量.Text + " 个，不良品数量： " + tb不良品数量.Text + " 个。";
+            int varOffset = (line > rowNumPerSheet) ? line - rowNumPerSheet : 0;
+            my.Cells[26+varOffset, 1].Value = "备注：\n" + tb备注.Text;
+            my.Cells[27+varOffset, 1].Value = "操作人/日期： " + tb操作员.Text + dtp操作日期.Value.ToString("yyyy年MM月dd日");
+            my.Cells[27+varOffset, 8].Value = "QC复核/日期： " + tb审核员.Text + dtp审核日期.Value.ToString("yyyy年MM月dd日");
             if (preview)
             {
                 my.Select();
@@ -908,7 +918,7 @@ namespace mySystem.Process.Bag.BTV
 
         int find_indexofprint()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from " + table + " where 生产指令ID=" + InstruID, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Stock
 {
@@ -16,9 +17,9 @@ namespace mySystem.Process.Stock
 //        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
-        OleDbDataAdapter daOuter;
+        SqlDataAdapter daOuter;
         DataTable dtOuter;
-        OleDbCommandBuilder cbOuter;
+        SqlCommandBuilder cbOuter;
         BindingSource bsOuter;
         public 取样证(int id)
         {
@@ -34,7 +35,7 @@ namespace mySystem.Process.Stock
             if (dtOuter.Rows.Count == 0)
             {
 
-                OleDbDataAdapter daT = new OleDbDataAdapter("select * from 取样记录详细信息 where ID=" + id, mySystem.Parameter.connOle);
+                SqlDataAdapter daT = new SqlDataAdapter("select * from 取样记录详细信息 where ID=" + id, mySystem.Parameter.conn);
                 DataTable dtT = new DataTable("取样记录详细信息");
 
                 daT.Fill(dtT);
@@ -80,8 +81,8 @@ namespace mySystem.Process.Stock
             // TODO 完成打印
 
             // TODO 记录
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 取样证打印记录 where 0=1", mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb = new OleDbCommandBuilder(da);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 取样证打印记录 where 0=1", mySystem.Parameter.conn);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
             DataTable dt = new DataTable("取样证打印记录");
             da.Fill(dt);
             DataRow dr = dt.NewRow();
@@ -98,10 +99,10 @@ namespace mySystem.Process.Stock
 
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 取样证 where 取样记录详细信息ID=" + id, mySystem.Parameter.connOle);
+            daOuter = new SqlDataAdapter("select * from 取样证 where 取样记录详细信息ID=" + id, mySystem.Parameter.conn);
             dtOuter = new DataTable("取样证");
             daOuter.Fill(dtOuter);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            cbOuter = new SqlCommandBuilder(daOuter);
             bsOuter = new BindingSource();
         }
 

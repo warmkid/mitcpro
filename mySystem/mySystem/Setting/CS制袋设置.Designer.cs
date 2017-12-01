@@ -366,16 +366,16 @@
             this.tabPage产品.Controls.Add(this.groupBox10);
             this.tabPage产品.Controls.Add(this.label7);
             this.tabPage产品.Controls.Add(this.panel3);
+            this.tabPage产品.Controls.Add(this.groupBox3);
             this.tabPage产品.Controls.Add(this.groupBox8);
             this.tabPage产品.Controls.Add(this.groupBox9);
-            this.tabPage产品.Controls.Add(this.label5);
-            this.tabPage产品.Controls.Add(this.label6);
-            this.tabPage产品.Controls.Add(this.Btn保存产品);
-            this.tabPage产品.Controls.Add(this.groupBox3);
-            this.tabPage产品.Controls.Add(this.groupBox4);
-            this.tabPage产品.Controls.Add(this.label12);
             this.tabPage产品.Controls.Add(this.label11);
+            this.tabPage产品.Controls.Add(this.label5);
+            this.tabPage产品.Controls.Add(this.label12);
+            this.tabPage产品.Controls.Add(this.Btn保存产品);
+            this.tabPage产品.Controls.Add(this.label6);
             this.tabPage产品.Controls.Add(this.groupBox2);
+            this.tabPage产品.Controls.Add(this.groupBox4);
             this.tabPage产品.Controls.Add(this.CS制袋工艺设置);
             this.tabPage产品.Location = new System.Drawing.Point(4, 29);
             this.tabPage产品.Name = "tabPage产品";
@@ -390,11 +390,12 @@
             this.groupBox10.Controls.Add(this.dgv物料代码);
             this.groupBox10.Controls.Add(this.del物料代码);
             this.groupBox10.Controls.Add(this.add物料代码);
-            this.groupBox10.Location = new System.Drawing.Point(568, 599);
+            this.groupBox10.Location = new System.Drawing.Point(40, 331);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(534, 225);
+            this.groupBox10.Size = new System.Drawing.Size(254, 44);
             this.groupBox10.TabIndex = 61;
             this.groupBox10.TabStop = false;
+            this.groupBox10.Visible = false;
             // 
             // dgv物料代码
             // 
@@ -431,25 +432,27 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label7.Location = new System.Drawing.Point(568, 578);
+            this.label7.Location = new System.Drawing.Point(40, 310);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(135, 20);
             this.label7.TabIndex = 60;
             this.label7.Text = "物料代码设置";
+            this.label7.Visible = false;
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(930, 880);
+            this.panel3.Location = new System.Drawing.Point(775, 455);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 10);
             this.panel3.TabIndex = 69;
+            this.panel3.Visible = false;
             // 
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.dgv封边);
             this.groupBox8.Controls.Add(this.del封边);
             this.groupBox8.Controls.Add(this.add封边);
-            this.groupBox8.Location = new System.Drawing.Point(568, 317);
+            this.groupBox8.Location = new System.Drawing.Point(568, 34);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(530, 225);
             this.groupBox8.TabIndex = 68;
@@ -491,11 +494,12 @@
             this.groupBox9.Controls.Add(this.dgv产品规格);
             this.groupBox9.Controls.Add(this.del产品规格);
             this.groupBox9.Controls.Add(this.add产品规格);
-            this.groupBox9.Location = new System.Drawing.Point(17, 317);
+            this.groupBox9.Location = new System.Drawing.Point(336, 432);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(534, 225);
+            this.groupBox9.Size = new System.Drawing.Size(201, 30);
             this.groupBox9.TabIndex = 67;
             this.groupBox9.TabStop = false;
+            this.groupBox9.Visible = false;
             // 
             // dgv产品规格
             // 
@@ -532,7 +536,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label5.Location = new System.Drawing.Point(574, 298);
+            this.label5.Location = new System.Drawing.Point(574, 15);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(157, 20);
             this.label5.TabIndex = 66;
@@ -542,16 +546,17 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label6.Location = new System.Drawing.Point(17, 298);
+            this.label6.Location = new System.Drawing.Point(336, 413);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(199, 20);
             this.label6.TabIndex = 65;
             this.label6.Text = "CS制袋产品规格设置";
+            this.label6.Visible = false;
             // 
             // Btn保存产品
             // 
             this.Btn保存产品.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn保存产品.Location = new System.Drawing.Point(936, 846);
+            this.Btn保存产品.Location = new System.Drawing.Point(971, 342);
             this.Btn保存产品.Name = "Btn保存产品";
             this.Btn保存产品.Size = new System.Drawing.Size(90, 33);
             this.Btn保存产品.TabIndex = 64;
@@ -564,11 +569,12 @@
             this.groupBox3.Controls.Add(this.dgv产品编码);
             this.groupBox3.Controls.Add(this.del产品编码);
             this.groupBox3.Controls.Add(this.add产品编码);
-            this.groupBox3.Location = new System.Drawing.Point(568, 34);
+            this.groupBox3.Location = new System.Drawing.Point(635, 432);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(530, 225);
+            this.groupBox3.Size = new System.Drawing.Size(135, 17);
             this.groupBox3.TabIndex = 63;
             this.groupBox3.TabStop = false;
+            this.groupBox3.Visible = false;
             // 
             // dgv产品编码
             // 
@@ -606,11 +612,12 @@
             this.groupBox4.Controls.Add(this.dgv产品);
             this.groupBox4.Controls.Add(this.del产品);
             this.groupBox4.Controls.Add(this.add产品);
-            this.groupBox4.Location = new System.Drawing.Point(17, 34);
+            this.groupBox4.Location = new System.Drawing.Point(84, 432);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(534, 225);
+            this.groupBox4.Size = new System.Drawing.Size(139, 17);
             this.groupBox4.TabIndex = 62;
             this.groupBox4.TabStop = false;
+            this.groupBox4.Visible = false;
             // 
             // dgv产品
             // 
@@ -647,28 +654,30 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label12.Location = new System.Drawing.Point(574, 15);
+            this.label12.Location = new System.Drawing.Point(641, 413);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(199, 20);
             this.label12.TabIndex = 61;
             this.label12.Text = "CS制袋产品代码设置";
+            this.label12.Visible = false;
             // 
             // label11
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.label11.Location = new System.Drawing.Point(17, 15);
+            this.label11.Location = new System.Drawing.Point(84, 413);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(157, 20);
             this.label11.TabIndex = 60;
             this.label11.Text = "CS制袋产品设置";
+            this.label11.Visible = false;
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.dgv工艺);
             this.groupBox2.Controls.Add(this.del工艺);
             this.groupBox2.Controls.Add(this.add工艺);
-            this.groupBox2.Location = new System.Drawing.Point(17, 599);
+            this.groupBox2.Location = new System.Drawing.Point(17, 34);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 225);
             this.groupBox2.TabIndex = 59;
@@ -709,7 +718,7 @@
             // 
             this.CS制袋工艺设置.AutoSize = true;
             this.CS制袋工艺设置.Font = new System.Drawing.Font("SimSun", 15F, System.Drawing.FontStyle.Bold);
-            this.CS制袋工艺设置.Location = new System.Drawing.Point(17, 578);
+            this.CS制袋工艺设置.Location = new System.Drawing.Point(17, 13);
             this.CS制袋工艺设置.Name = "CS制袋工艺设置";
             this.CS制袋工艺设置.Size = new System.Drawing.Size(157, 20);
             this.CS制袋工艺设置.TabIndex = 58;

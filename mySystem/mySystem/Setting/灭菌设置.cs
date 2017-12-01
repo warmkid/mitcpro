@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Setting
 {
@@ -19,38 +20,38 @@ namespace mySystem.Setting
             Bind();
         }
 
-        private OleDbDataAdapter da产品;
+        private SqlDataAdapter da产品;
         private DataTable dt产品;
         private BindingSource bs产品;
-        private OleDbCommandBuilder cb产品;
-        private OleDbDataAdapter da产品编码;
+        private SqlCommandBuilder cb产品;
+        private SqlDataAdapter da产品编码;
         private DataTable dt产品编码;
         private BindingSource bs产品编码;
-        private OleDbCommandBuilder cb产品编码;
-        private OleDbDataAdapter da产品规格;
+        private SqlCommandBuilder cb产品编码;
+        private SqlDataAdapter da产品规格;
         private DataTable dt产品规格;
         private BindingSource bs产品规格;
-        private OleDbCommandBuilder cb产品规格;
-        private OleDbDataAdapter da运输商;
+        private SqlCommandBuilder cb产品规格;
+        private SqlDataAdapter da运输商;
         private DataTable dt运输商;
         private BindingSource bs运输商;
-        private OleDbCommandBuilder cb运输商;
-        private OleDbDataAdapter da辐照单位;
+        private SqlCommandBuilder cb运输商;
+        private SqlDataAdapter da辐照单位;
         private DataTable dt辐照单位;
         private BindingSource bs辐照单位;
-        private OleDbCommandBuilder cb辐照单位;
-        private OleDbDataAdapter da产品名称;
+        private SqlCommandBuilder cb辐照单位;
+        private SqlDataAdapter da产品名称;
         private DataTable dt产品名称;
         private BindingSource bs产品名称;
-        private OleDbCommandBuilder cb产品名称;
-        private OleDbDataAdapter da人员;
+        private SqlCommandBuilder cb产品名称;
+        private SqlDataAdapter da人员;
         private DataTable dt人员;
         private BindingSource bs人员;
-        private OleDbCommandBuilder cb人员;
-        private OleDbDataAdapter da权限;
+        private SqlCommandBuilder cb人员;
+        private SqlDataAdapter da权限;
         private DataTable dt权限;
         private BindingSource bs权限;
-        private OleDbCommandBuilder cb权限;
+        private SqlCommandBuilder cb权限;
 
         //dgv样式初始化
         private void Initdgv()
@@ -84,8 +85,8 @@ namespace mySystem.Setting
         {
             //************************    运输商     *******************************************
             dt运输商 = new DataTable("设置运输商"); //""中的是表名
-            da运输商 = new OleDbDataAdapter("select * from 设置运输商", mySystem.Parameter.connOle);
-            cb运输商 = new OleDbCommandBuilder(da运输商);
+            da运输商 = new SqlDataAdapter("select * from 设置运输商", mySystem.Parameter.conn);
+            cb运输商 = new SqlCommandBuilder(da运输商);
             dt运输商.Columns.Add("序号", System.Type.GetType("System.String"));
             da运输商.Fill(dt运输商);
             bs运输商.DataSource = dt运输商;
@@ -98,8 +99,8 @@ namespace mySystem.Setting
             this.dgv运输商.Columns["运输商"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
             //************************    产品     *******************************************
             dt产品 = new DataTable("设置灭菌产品"); //""中的是表名
-            da产品 = new OleDbDataAdapter("select * from 设置灭菌产品", mySystem.Parameter.connOle);
-            cb产品 = new OleDbCommandBuilder(da产品);
+            da产品 = new SqlDataAdapter("select * from 设置灭菌产品", mySystem.Parameter.conn);
+            cb产品 = new SqlCommandBuilder(da产品);
             dt产品.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品.Fill(dt产品);
             bs产品.DataSource = dt产品;
@@ -112,8 +113,8 @@ namespace mySystem.Setting
 
             //**************************   产品编码    ***********************************
             dt产品编码 = new DataTable("设置灭菌产品代码"); //""中的是表名
-            da产品编码 = new OleDbDataAdapter("select * from 设置灭菌产品代码", mySystem.Parameter.connOle);
-            cb产品编码 = new OleDbCommandBuilder(da产品编码);
+            da产品编码 = new SqlDataAdapter("select * from 设置灭菌产品代码", mySystem.Parameter.conn);
+            cb产品编码 = new SqlCommandBuilder(da产品编码);
             dt产品编码.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品编码.Fill(dt产品编码);
             bs产品编码.DataSource = dt产品编码;
@@ -126,8 +127,8 @@ namespace mySystem.Setting
 
             //************************    产品规格     *******************************************
             dt产品规格 = new DataTable("设置灭菌产品规格"); //""中的是表名
-            da产品规格 = new OleDbDataAdapter("select * from 设置灭菌产品规格", mySystem.Parameter.connOle);
-            cb产品规格 = new OleDbCommandBuilder(da产品规格);
+            da产品规格 = new SqlDataAdapter("select * from 设置灭菌产品规格", mySystem.Parameter.conn);
+            cb产品规格 = new SqlCommandBuilder(da产品规格);
             dt产品规格.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品规格.Fill(dt产品规格);
             bs产品规格.DataSource = dt产品规格;
@@ -141,8 +142,8 @@ namespace mySystem.Setting
 
             //************************    辐照单位     *******************************************
             dt辐照单位 = new DataTable("设置辐照单位"); //""中的是表名
-            da辐照单位 = new OleDbDataAdapter("select * from 设置辐照单位", mySystem.Parameter.connOle);
-            cb辐照单位 = new OleDbCommandBuilder(da辐照单位);
+            da辐照单位 = new SqlDataAdapter("select * from 设置辐照单位", mySystem.Parameter.conn);
+            cb辐照单位 = new SqlCommandBuilder(da辐照单位);
             dt辐照单位.Columns.Add("序号", System.Type.GetType("System.String"));
             da辐照单位.Fill(dt辐照单位);
             bs辐照单位.DataSource = dt辐照单位;
@@ -155,8 +156,8 @@ namespace mySystem.Setting
 
             //************************   产品名称     *******************************************
             dt产品名称 = new DataTable("设置产品名称"); //""中的是表名
-            da产品名称 = new OleDbDataAdapter("select * from 设置产品名称", mySystem.Parameter.connOle);
-            cb产品名称 = new OleDbCommandBuilder(da产品名称);
+            da产品名称 = new SqlDataAdapter("select * from 设置产品名称", mySystem.Parameter.conn);
+            cb产品名称 = new SqlCommandBuilder(da产品名称);
             dt产品名称.Columns.Add("序号", System.Type.GetType("System.String"));
             da产品名称.Fill(dt产品名称);
             bs产品名称.DataSource = dt产品名称;
@@ -169,8 +170,8 @@ namespace mySystem.Setting
 
             //**************************   人员设置    ***********************************
             dt人员 = new DataTable("用户"); //""中的是表名
-            da人员 = new OleDbDataAdapter("select * from 用户", mySystem.Parameter.connOle);
-            cb人员 = new OleDbCommandBuilder(da人员);
+            da人员 = new SqlDataAdapter("select * from 用户", mySystem.Parameter.conn);
+            cb人员 = new SqlCommandBuilder(da人员);
             dt人员.Columns.Add("序号", System.Type.GetType("System.String"));
             da人员.Fill(dt人员);
             bs人员.DataSource = dt人员;
@@ -185,8 +186,8 @@ namespace mySystem.Setting
             
             //************************    人员权限     *******************************************
             dt权限 = new DataTable("用户权限"); //""中的是表名
-            da权限 = new OleDbDataAdapter("select * from 用户权限", mySystem.Parameter.connOle);
-            cb权限 = new OleDbCommandBuilder(da权限);
+            da权限 = new SqlDataAdapter("select * from 用户权限", mySystem.Parameter.conn);
+            cb权限 = new SqlCommandBuilder(da权限);
             dt权限.Columns.Add("序号", System.Type.GetType("System.String"));
             da权限.Fill(dt权限);
             bs权限.DataSource = dt权限;
@@ -424,11 +425,10 @@ namespace mySystem.Setting
         private Boolean checkPeopleExist()
         {
             Boolean b = true;
-            string strCon = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/user.mdb;Persist Security Info=False";
-            OleDbConnection conn = new OleDbConnection(strCon);
+            string strCon = "server=" + Parameter.IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(strCon);
             conn.Open();
-            OleDbCommand comm = new OleDbCommand();
+            SqlCommand comm = new SqlCommand();
             comm.Connection = conn;
 
             foreach (DataRow dr in dt人员.Rows)
@@ -441,7 +441,7 @@ namespace mySystem.Setting
                 {
                     String name = dr["用户名"].ToString();
                     comm.CommandText = "select * from [users] where 姓名 = " + "'" + name + "'";
-                    OleDbDataReader reader = comm.ExecuteReader();
+                    SqlDataReader reader = comm.ExecuteReader();
                     if (!reader.HasRows)
                     {
                         b = false;
@@ -486,10 +486,10 @@ namespace mySystem.Setting
         private Boolean EachPeopleRightCheck(String name)
         {
             Boolean b;
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = Parameter.connOle;
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = mySystem.Parameter.conn;
             comm.CommandText = "select * from 用户 where 用户名 = " + "'" + name + "' ";
-            OleDbDataReader reader = comm.ExecuteReader();
+            SqlDataReader reader = comm.ExecuteReader();
             if (reader.HasRows)
             { b = true; }
             else

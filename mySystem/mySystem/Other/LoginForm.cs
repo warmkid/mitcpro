@@ -219,35 +219,35 @@ namespace mySystem
             }
             else
             {
-                String strConn吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConn吹膜 = "server=" + mySystem.Parameter.IP_port + ";database=extrusionnew;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection conn吹膜 = new SqlConnection(strConn吹膜);
                 conn吹膜.Open();
                 InstruStateChange(conn吹膜, "生产指令信息表");
 
 
-                String strConn清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConn清洁分切 = "server=" + mySystem.Parameter.IP_port + ";database=welding;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection conn清洁分切 = new SqlConnection(strConn清洁分切);
                 conn清洁分切.Open();
                 InstruStateChange(conn清洁分切, "清洁分切工序生产指令");
 
 
-                String strConnCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConnCS制袋 = "server=" + mySystem.Parameter.IP_port + ";database=csbag;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection connCS制袋 = new SqlConnection(strConnCS制袋);
                 connCS制袋.Open();
                 InstruStateChange(connCS制袋, "生产指令");
 
 
-                String strConnPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConnPE制袋 = "server=" + mySystem.Parameter.IP_port + ";database=LDPE;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection connPE制袋 = new SqlConnection(strConnPE制袋);
                 connPE制袋.Open();
                 InstruStateChange(connPE制袋, "生产指令");
 
-                String strConnBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConnBPV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=BPV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection connBPV制袋 = new SqlConnection(strConnBPV制袋);
                 connBPV制袋.Open();
                 InstruStateChange(connBPV制袋, "生产指令");
 
-                String strConnPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+                String strConnPTV制袋 = "server=" + mySystem.Parameter.IP_port + ";database=PTV;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 SqlConnection connPTV制袋 = new SqlConnection(strConnPTV制袋);
                 connPTV制袋.Open();
                 InstruStateChange(connPTV制袋, "生产指令");

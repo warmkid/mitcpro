@@ -17,10 +17,10 @@ namespace mySystem
         DateTime date2;//结束时间
         string writer;//编制人
         string processName;//工序名
-        private OleDbDataAdapter da;
+        private SqlDataAdapter da;
         private DataTable dt;
         private BindingSource bs;
-        private OleDbCommandBuilder cb;      
+        private SqlCommandBuilder cb;      
         
         public QueryInstruForm(MainForm mainform):base(mainform)
         {
@@ -105,13 +105,13 @@ namespace mySystem
             dt = new DataTable(tblName); //""中的是表名
             //if (writer != "")
             //{
-            da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + time + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "# order by ID", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + time + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "' order by ID", mySystem.Parameter.conn);
             //}
             //else
             //{
-            //    da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " is null and " + time + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "# order by ID", mySystem.Parameter.connOle);
+            //    da = new SqlDataAdapter("select * from " + tblName + " where " + person + " is null and " + time + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "# order by ID", mySystem.Parameter.conn);
             //}
-            cb = new OleDbCommandBuilder(da);
+            cb = new SqlCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
             bs.DataSource = dt;
@@ -284,9 +284,9 @@ namespace mySystem
 
             if (dgv.SelectedCells.Count == 0) return;
             DataRow dr;
-            OleDbDataAdapter daT;
+            SqlDataAdapter daT;
             DataTable dtT;
-            OleDbCommandBuilder cbT;
+            SqlCommandBuilder cbT;
             
            
             
@@ -309,8 +309,8 @@ namespace mySystem
                     dr["日志"] = log;
                     dt.Rows.Add(dr);
                     da.Update((DataTable)bs.DataSource);
-                    da = new OleDbDataAdapter(da.SelectCommand);
-                    cb = new OleDbCommandBuilder(da);
+                    da = new SqlDataAdapter(da.SelectCommand);
+                    cb = new SqlCommandBuilder(da);
                     dt = new DataTable(dt.TableName);
                     bs = new BindingSource();
                     dt.Columns.Add("序号", System.Type.GetType("System.String"));
@@ -318,8 +318,8 @@ namespace mySystem
                     bs.DataSource = dt;
                     dgv.DataSource = bs.DataSource;
                     setDataGridViewRowNums();
-                    daT = new OleDbDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + pid, mySystem.Parameter.connOle);
-                    cbT = new OleDbCommandBuilder(daT);
+                    daT = new SqlDataAdapter("select * from 生产指令产品列表 where 生产指令ID=" + pid, mySystem.Parameter.conn);
+                    cbT = new SqlCommandBuilder(daT);
                     dtT = new DataTable();
                     daT.Fill(dtT);
                     List<DataRow> ndrs = new List<DataRow>();

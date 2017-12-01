@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Stock
@@ -17,8 +18,8 @@ namespace mySystem.Process.Stock
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
 
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
@@ -55,8 +56,8 @@ namespace mySystem.Process.Stock
 
         private void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 取样记录 where ID=" + id, mySystem.Parameter.connOle);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 取样记录 where ID=" + id, mySystem.Parameter.conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("取样记录");
             bsOuter = new BindingSource();
             daOuter.Fill(dtOuter);
@@ -101,8 +102,8 @@ namespace mySystem.Process.Stock
 
         private void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 取样记录详细信息 where 取样记录ID=" + id, mySystem.Parameter.connOle);
-            cbInner = new OleDbCommandBuilder(daInner);
+            daInner = new SqlDataAdapter("select * from 取样记录详细信息 where 取样记录ID=" + id, mySystem.Parameter.conn);
+            cbInner = new SqlCommandBuilder(daInner);
             dtInner = new DataTable("取样记录详细信息");
             bsInner = new BindingSource();
 
@@ -224,9 +225,9 @@ namespace mySystem.Process.Stock
         {
             ls审核员 = new List<string>();
             ls操作员 = new List<string>();
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
-            da = new OleDbDataAdapter("select * from 库存用户权限 where 步骤='" + "取样记录" + "'", mySystem.Parameter.connOle);
+            da = new SqlDataAdapter("select * from 库存用户权限 where 步骤='" + "取样记录" + "'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             if (dt.Rows.Count == 0)
@@ -356,14 +357,14 @@ namespace mySystem.Process.Stock
 
         private void btn提交审核_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
 
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='取样记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='取样记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -394,12 +395,12 @@ namespace mySystem.Process.Stock
 
         public override void CheckResult()
         {
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='取样记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='取样记录' and 对应ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -447,7 +448,7 @@ namespace mySystem.Process.Stock
 
         void tsi_Click(object sender, EventArgs e)
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             if (this.Name == sender.ToString())
             {
@@ -471,14 +472,14 @@ namespace mySystem.Process.Stock
                         form1.Show();
                         break;
                     case "物资请验单":
-                        da = new OleDbDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 物资请验单 where 物资验收记录ID=" + id, mySystem.Parameter.conn);
                         dt = new DataTable();
                         da.Fill(dt);
                         物资请验单 form2 = new 物资请验单(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));
                         form2.Show();
                         break;
                     case "检验记录":
-                        da = new OleDbDataAdapter("select * from 检验记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 检验记录 where 物资验收记录ID=" + id, mySystem.Parameter.conn);
                         dt = new DataTable();
                         da.Fill(dt);
                         if (dt.Rows.Count == 0) MessageBox.Show("没有关联的检验记录");
@@ -488,7 +489,7 @@ namespace mySystem.Process.Stock
                         }
                         break;
                     case "取样记录":
-                        da = new OleDbDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, mySystem.Parameter.connOle);
+                        da = new SqlDataAdapter("select * from 取样记录 where 物资验收记录ID=" + id, mySystem.Parameter.conn);
                         dt = new DataTable();
                         da.Fill(dt);
                         取样记录 form4 = new 取样记录(mainform, Convert.ToInt32(dt.Rows[0]["ID"]));

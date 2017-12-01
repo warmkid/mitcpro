@@ -10,6 +10,7 @@ using WindowsFormsApplication1;
 using mySystem.Extruction.Process;
 using System.Data.SqlClient;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using mySystem.Process.Extruction;
 
 namespace mySystem.Query
@@ -22,10 +23,10 @@ namespace mySystem.Query
         String Instruction = null;//下拉框获取的生产指令
         int InstruID;//下拉框获取的生产指令ID
         String tableName = null;
-        private OleDbDataAdapter da;
+        private SqlDataAdapter da;
         private DataTable dt;
         private BindingSource bs;
-        private OleDbCommandBuilder cb;  
+        private SqlCommandBuilder cb;  
 
         public QueryExtruForm(MainForm mainform):base(mainform)
         {
@@ -62,10 +63,10 @@ namespace mySystem.Query
         {
             if (!Parameter.isSqlOk)
             {
-                OleDbCommand comm = new OleDbCommand();
-                comm.Connection = Parameter.connOle;
+                SqlCommand comm = new SqlCommand();
+                comm.Connection = mySystem.Parameter.conn;
                 comm.CommandText = "select * from 生产指令信息表 ";
-                OleDbDataReader reader = comm.ExecuteReader();//执行查询
+                SqlDataReader reader = comm.ExecuteReader();//执行查询
                 if (reader.HasRows)
                 {
                     comboBox1.Items.Clear();
@@ -96,10 +97,10 @@ namespace mySystem.Query
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Instruction = comboBox1.SelectedItem.ToString();
-            OleDbCommand comm = new OleDbCommand();
-            comm.Connection = mySystem.Parameter.connOle;
+            SqlCommand comm = new SqlCommand();
+            comm.Connection = mySystem.Parameter.conn;
             comm.CommandText = "select * from 生产指令信息表 where 生产指令编号 = '" + Instruction + "'";
-            OleDbDataReader reader = comm.ExecuteReader();
+            SqlDataReader reader = comm.ExecuteReader();
             if (reader.Read())
             {
                 InstruID = Convert.ToInt32(reader["ID"]);
@@ -271,23 +272,23 @@ namespace mySystem.Query
         {
             dt = new DataTable(tblName); //""中的是表名
             if (person != null && startDate != null && instruID == null) // 人 + 日期
-                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'", mySystem.Parameter.conn);
             else if (person == null && startDate != null && instruID != null) // 日期 + 生产指令
-                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from " + tblName + " where " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
             else if (person != null && startDate == null && instruID != null) // 人 + 生产指令
-                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
             else if (person != null && startDate == null && instruID == null) // 人 
-                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'", mySystem.Parameter.conn);
             else if (person == null && startDate != null && instruID == null) // 日期
-                da = new OleDbDataAdapter("select * from " + tblName + " where " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#", mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from " + tblName + " where " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'", mySystem.Parameter.conn);
             else if (person == null && startDate == null && instruID != null) // 生产指令
-                da = new OleDbDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from " + tblName + " where " + instruID + " = " + InstruID, mySystem.Parameter.conn);
             else if (person == null && startDate == null && instruID == null) // 只有表名
-                da = new OleDbDataAdapter("select * from " + tblName, mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from " + tblName, mySystem.Parameter.conn);
             else if (person != null && startDate != null && instruID != null) // 人 + 日期 + 生产指令
-                da = new OleDbDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "#" + date1 + "#" + " and " + "#" + date2.AddDays(1) + "#" + " and " + instruID + " = " + InstruID, mySystem.Parameter.connOle);
+                da = new SqlDataAdapter("select * from " + tblName + " where " + person + " like " + "'%" + writer + "%'" + " and " + startDate + " between " + "'" + date1 + "'" + " and " + "'" + date2.AddDays(1) + "'" + " and " + instruID + " = " + InstruID, mySystem.Parameter.conn);
 
-            cb = new OleDbCommandBuilder(da);
+            cb = new SqlCommandBuilder(da);
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);
             bs.DataSource = dt;
@@ -346,8 +347,8 @@ namespace mySystem.Query
                     switch (tableName)
                     {
                         case "00 批生产记录（吹膜）":
-                            //BatchProductRecord.BatchProductRecord detailform1 = new BatchProductRecord.BatchProductRecord(base.mainform, ID);
-                            //detailform1.Show();
+                            BatchProductRecord.BatchProductRecord detailform1 = new BatchProductRecord.BatchProductRecord(base.mainform, ID);
+                            detailform1.Show();
                             break;
                         case "03 吹膜机组清洁记录":
                             Record_extrusClean detailform2 = new Record_extrusClean(base.mainform, ID);

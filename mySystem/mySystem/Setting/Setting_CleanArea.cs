@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace WindowsFormsApplication1
 {
@@ -15,17 +16,17 @@ namespace WindowsFormsApplication1
     public partial class Setting_CleanArea : mySystem.BaseForm
     {
         private SqlConnection conn = null;
-        private OleDbConnection connOle = null;
+        //private OleDbConnection mySystem.Parameter.conn = null;
         private bool isSqlOk;
-        private OleDbDataAdapter da;
+        private SqlDataAdapter da;
         private DataTable dt;
         private BindingSource bs;
-        private OleDbCommandBuilder cb;        
+        private SqlCommandBuilder cb;        
         
         public Setting_CleanArea(mySystem.MainForm mainform):base(mainform)
         {
             conn = mySystem.Parameter.conn;
-            connOle = mySystem.Parameter.connOle;
+            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = mySystem.Parameter.isSqlOk;
 
             InitializeComponent();
@@ -61,8 +62,8 @@ namespace WindowsFormsApplication1
         private void Bind()
         {
             dt = new DataTable("设置吹膜机组清洁项目"); //""中的是表名
-            da = new OleDbDataAdapter("select * from 设置吹膜机组清洁项目", connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 设置吹膜机组清洁项目", mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
 
             dt.Columns.Add("序号", System.Type.GetType("System.String"));
             da.Fill(dt);

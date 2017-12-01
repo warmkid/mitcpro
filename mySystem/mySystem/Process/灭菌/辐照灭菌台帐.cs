@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -26,6 +27,8 @@ namespace mySystem.Process.灭菌
         Int32 index;//datagridview列数
         Int32 ID委托单号;
 
+        private SqlDataAdapter da台帐sql, da委托单sql, da台帐外表sql;
+        private SqlCommandBuilder cb台帐sql, cb委托单sql, cb台帐外表sql;
 
         public 辐照灭菌台帐(mySystem.MainForm mainform): base(mainform)
         {
@@ -62,26 +65,52 @@ namespace mySystem.Process.灭菌
         private void getOtherData()
         {
             //weituodanhao = new List<string>();
-            OleDbDataAdapter da单号查询 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单",mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb单号查询 = new OleDbCommandBuilder(da单号查询);
-            DataTable dt委托单数据源 = new DataTable("委托单号查询");
-            BindingSource bs单号查询 = new BindingSource();
-            da单号查询.Fill(dt委托单数据源);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da单号查询 = new OleDbDataAdapter("select * from Gamma射线辐射灭菌委托单", mySystem.Parameter.connOle);
+                OleDbCommandBuilder cb单号查询 = new OleDbCommandBuilder(da单号查询);
+                DataTable dt委托单数据源 = new DataTable("委托单号查询");
+                BindingSource bs单号查询 = new BindingSource();
+                da单号查询.Fill(dt委托单数据源);
+                dt委托单 = dt委托单数据源.DefaultView.ToTable(false, new string[] { "委托单号", "委托日期" });
+            }
+            else
+            {
+                SqlDataAdapter da单号查询 = new SqlDataAdapter("select * from Gamma射线辐射灭菌委托单", mySystem.Parameter.conn);
+                SqlCommandBuilder cb单号查询 = new SqlCommandBuilder(da单号查询);
+                DataTable dt委托单数据源 = new DataTable("委托单号查询");
+                BindingSource bs单号查询 = new BindingSource();
+                da单号查询.Fill(dt委托单数据源);
+                dt委托单 = dt委托单数据源.DefaultView.ToTable(false, new string[] { "委托单号", "委托日期" });
+            }
+            
             //foreach (DataRow tdr in dt委托单数据源.Rows)
             //{
             //    weituodanhao.Add(tdr["委托单号"].ToString());
             //}
-            dt委托单 = dt委托单数据源.DefaultView.ToTable(false,new string[]{"委托单号","委托日期"});
+            
             fill_printer();
         }
         // 根据条件从数据库中读取一行外表的数据
         private void readOuterData()
         {
-            da台帐外表 = new OleDbDataAdapter("select * from 辐照灭菌台帐",mySystem.Parameter.connOle);
-            cb台帐外表 = new OleDbCommandBuilder(da台帐外表);
-            dt台帐外表 = new DataTable("辐照灭菌台帐外表");
-            bs台帐外表 = new BindingSource();
-            da台帐外表.Fill(dt台帐外表);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da台帐外表 = new OleDbDataAdapter("select * from 辐照灭菌台帐", mySystem.Parameter.connOle);
+                cb台帐外表 = new OleDbCommandBuilder(da台帐外表);
+                dt台帐外表 = new DataTable("辐照灭菌台帐外表");
+                bs台帐外表 = new BindingSource();
+                da台帐外表.Fill(dt台帐外表);
+            }
+            else
+            {
+                da台帐外表sql = new SqlDataAdapter("select * from 辐照灭菌台帐", mySystem.Parameter.conn);
+                cb台帐外表sql = new SqlCommandBuilder(da台帐外表sql);
+                dt台帐外表 = new DataTable("辐照灭菌台帐外表");
+                bs台帐外表 = new BindingSource();
+                da台帐外表sql.Fill(dt台帐外表);
+            }
+            
         }
         // 外表和控件的绑定
         private void outerBind()
@@ -98,9 +127,19 @@ namespace mySystem.Process.灭菌
 //            connOle.Open();
             dt台帐 = new DataTable("辐照灭菌台帐详细信息");
             bs台帐 = new BindingSource();
-            da台帐 = new OleDbDataAdapter(@"select * from 辐照灭菌台帐详细信息", mySystem.Parameter.connOle);
-            cb台帐 = new OleDbCommandBuilder(da台帐);
-            da台帐.Fill(dt台帐);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da台帐 = new OleDbDataAdapter(@"select * from 辐照灭菌台帐详细信息", mySystem.Parameter.connOle);
+                cb台帐 = new OleDbCommandBuilder(da台帐);
+                da台帐.Fill(dt台帐);
+            }
+            else
+            {
+                da台帐sql = new SqlDataAdapter(@"select * from 辐照灭菌台帐详细信息", mySystem.Parameter.conn);
+                cb台帐sql = new SqlCommandBuilder(da台帐sql);
+                da台帐sql.Fill(dt台帐);
+            }
+           
             index = dt台帐.Rows.Count;
         }
         // 内表和控件的绑定
@@ -487,7 +526,15 @@ namespace mySystem.Process.灭菌
             dt台帐外表.Rows[0]["日志"] = dt台帐外表.Rows[0]["日志"].ToString() + log;
 
             bs台帐外表.EndEdit();
-            da台帐外表.Update((DataTable)bs台帐外表.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da台帐外表.Update((DataTable)bs台帐外表.DataSource);
+            }
+            else
+            {
+                da台帐外表sql.Update((DataTable)bs台帐外表.DataSource);
+            }
+            
         }
 
         [DllImport("winspool.drv")]
@@ -548,14 +595,26 @@ namespace mySystem.Process.灭菌
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='辐照灭菌台帐'", connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da;
+                da = new OleDbDataAdapter("select * from 用户权限 where 步骤='辐照灭菌台帐'", connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da;
+                da = new SqlDataAdapter("select * from 用户权限 where 步骤='辐照灭菌台帐'", Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            
 
             if (dt.Rows.Count > 0)
             {
@@ -605,12 +664,24 @@ namespace mySystem.Process.灭菌
 
         private void btn查询_Click(object sender, EventArgs e)
         {
-            string sql = @"select * from 辐照灭菌台帐详细信息 where 委托单号 like '%{0}%' and 产品代码 like '%{1}%' and 委托日期 between #{2}# and #{3}#";
+            
             dt台帐 = new DataTable("辐照灭菌台帐详细信息");
             bs台帐 = new BindingSource();
-            da台帐 = new OleDbDataAdapter(string.Format(sql, textBox委托单号.Text, textBox产品代码.Text, dateTimePicker委托日期开始.Value, dateTimePicker委托日期结束.Value), mySystem.Parameter.connOle);
-            cb台帐 = new OleDbCommandBuilder(da台帐);
-            da台帐.Fill(dt台帐);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                string sql = @"select * from 辐照灭菌台帐详细信息 where 委托单号 like '%{0}%' and 产品代码 like '%{1}%' and 委托日期 between #{2}# and #{3}#";
+                da台帐 = new OleDbDataAdapter(string.Format(sql, textBox委托单号.Text, textBox产品代码.Text, dateTimePicker委托日期开始.Value, dateTimePicker委托日期结束.Value), mySystem.Parameter.connOle);
+                cb台帐 = new OleDbCommandBuilder(da台帐);
+                da台帐.Fill(dt台帐);
+            }
+            else
+            {
+                string sql = @"select * from 辐照灭菌台帐详细信息 where 委托单号 like '%{0}%' and 产品代码 like '%{1}%' and 委托日期 between '{2}' and '{3}'";
+                da台帐sql = new SqlDataAdapter(string.Format(sql, textBox委托单号.Text, textBox产品代码.Text, dateTimePicker委托日期开始.Value, dateTimePicker委托日期结束.Value), mySystem.Parameter.conn);
+                cb台帐sql = new SqlCommandBuilder(da台帐sql);
+                da台帐sql.Fill(dt台帐);
+            }
+           
 
             innerBind();
             

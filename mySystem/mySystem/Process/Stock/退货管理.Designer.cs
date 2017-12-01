@@ -49,7 +49,7 @@
             this.btn添加审批单1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.btn查询审批单1 = new System.Windows.Forms.Button();
-            this.dtp产品退货审批单2结束时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp产品退货审批单1结束时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp产品退货审批单1开始时间 = new System.Windows.Forms.DateTimePicker();
             this.tabPage产品退货审批单2 = new System.Windows.Forms.TabPage();
             this.tb审批单2客户名称 = new System.Windows.Forms.TextBox();
@@ -60,9 +60,13 @@
             this.btn审批单添加 = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.btn审批单2查询 = new System.Windows.Forms.Button();
-            this.dtp审批单2结束时间 = new System.Windows.Forms.DateTimePicker();
-            this.dtp审批单2开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp退货审批单2结束时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp退货审批单2开始时间 = new System.Windows.Forms.DateTimePicker();
             this.tabPage产品退货接收单 = new System.Windows.Forms.TabPage();
+            this.tb接收单客户名称 = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.tb退货接收单订单号 = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.dgv产品退货接收单 = new System.Windows.Forms.DataGridView();
             this.btn接收单添加 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
@@ -70,13 +74,6 @@
             this.dtp退货接收单结束时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp退货接收单开始时间 = new System.Windows.Forms.DateTimePicker();
             this.tabPage产品退货请验单 = new System.Windows.Forms.TabPage();
-            this.tabPage退货产品评审单1 = new System.Windows.Forms.TabPage();
-            this.tabPage退货产品评审单2 = new System.Windows.Forms.TabPage();
-            this.tabPage退货记录表 = new System.Windows.Forms.TabPage();
-            this.tb接收单客户名称 = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.tb退货接收单订单号 = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.tb退货请验单客户名称 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.tb退货请验单销售订单 = new System.Windows.Forms.TextBox();
@@ -87,6 +84,7 @@
             this.btn请验单查询 = new System.Windows.Forms.Button();
             this.dtp退货请验单结束时间 = new System.Windows.Forms.DateTimePicker();
             this.dtp退货请验单开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.tabPage退货产品评审单1 = new System.Windows.Forms.TabPage();
             this.tb评审单1客户名称 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.tb评审单1销售订单 = new System.Windows.Forms.TextBox();
@@ -95,8 +93,9 @@
             this.btn评审单1添加 = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
             this.btn评审单1查询 = new System.Windows.Forms.Button();
-            this.dtp评审单1结束时间 = new System.Windows.Forms.DateTimePicker();
-            this.dtp评审单1开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp退货评审单1结束时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp退货评审单1开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.tabPage退货产品评审单2 = new System.Windows.Forms.TabPage();
             this.tb评审单2客户名称 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.tb评审单2销售订单 = new System.Windows.Forms.TextBox();
@@ -105,8 +104,9 @@
             this.btn评审单2添加 = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.btn评审单2查询 = new System.Windows.Forms.Button();
-            this.dtp评审单2结束时间 = new System.Windows.Forms.DateTimePicker();
-            this.dtp评审单2开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp退货评审单2结束时间 = new System.Windows.Forms.DateTimePicker();
+            this.dtp退货评审单2开始时间 = new System.Windows.Forms.DateTimePicker();
+            this.tabPage退货记录表 = new System.Windows.Forms.TabPage();
             this.tb退货记录客户名称 = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.tb退货记录销售订单 = new System.Windows.Forms.TextBox();
@@ -127,12 +127,12 @@
             this.tabPage产品退货接收单.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品退货接收单)).BeginInit();
             this.tabPage产品退货请验单.SuspendLayout();
-            this.tabPage退货产品评审单1.SuspendLayout();
-            this.tabPage退货产品评审单2.SuspendLayout();
-            this.tabPage退货记录表.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv退货请验单)).BeginInit();
+            this.tabPage退货产品评审单1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv评审单1)).BeginInit();
+            this.tabPage退货产品评审单2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv评审单2)).BeginInit();
+            this.tabPage退货记录表.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv退货记录)).BeginInit();
             this.SuspendLayout();
             // 
@@ -268,7 +268,7 @@
             this.tabPage产品退货审批单1.Controls.Add(this.btn添加审批单1);
             this.tabPage产品退货审批单1.Controls.Add(this.label4);
             this.tabPage产品退货审批单1.Controls.Add(this.btn查询审批单1);
-            this.tabPage产品退货审批单1.Controls.Add(this.dtp产品退货审批单2结束时间);
+            this.tabPage产品退货审批单1.Controls.Add(this.dtp产品退货审批单1结束时间);
             this.tabPage产品退货审批单1.Controls.Add(this.dtp产品退货审批单1开始时间);
             this.tabPage产品退货审批单1.Location = new System.Drawing.Point(4, 29);
             this.tabPage产品退货审批单1.Name = "tabPage产品退货审批单1";
@@ -347,12 +347,12 @@
             this.btn查询审批单1.UseVisualStyleBackColor = true;
             this.btn查询审批单1.Click += new System.EventHandler(this.btn查询退货审批单1_Click);
             // 
-            // dtp产品退货审批单2结束时间
+            // dtp产品退货审批单1结束时间
             // 
-            this.dtp产品退货审批单2结束时间.Location = new System.Drawing.Point(296, 17);
-            this.dtp产品退货审批单2结束时间.Name = "dtp产品退货审批单2结束时间";
-            this.dtp产品退货审批单2结束时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp产品退货审批单2结束时间.TabIndex = 11;
+            this.dtp产品退货审批单1结束时间.Location = new System.Drawing.Point(296, 17);
+            this.dtp产品退货审批单1结束时间.Name = "dtp产品退货审批单1结束时间";
+            this.dtp产品退货审批单1结束时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp产品退货审批单1结束时间.TabIndex = 11;
             // 
             // dtp产品退货审批单1开始时间
             // 
@@ -371,8 +371,8 @@
             this.tabPage产品退货审批单2.Controls.Add(this.btn审批单添加);
             this.tabPage产品退货审批单2.Controls.Add(this.label7);
             this.tabPage产品退货审批单2.Controls.Add(this.btn审批单2查询);
-            this.tabPage产品退货审批单2.Controls.Add(this.dtp审批单2结束时间);
-            this.tabPage产品退货审批单2.Controls.Add(this.dtp审批单2开始时间);
+            this.tabPage产品退货审批单2.Controls.Add(this.dtp退货审批单2结束时间);
+            this.tabPage产品退货审批单2.Controls.Add(this.dtp退货审批单2开始时间);
             this.tabPage产品退货审批单2.Location = new System.Drawing.Point(4, 29);
             this.tabPage产品退货审批单2.Name = "tabPage产品退货审批单2";
             this.tabPage产品退货审批单2.Padding = new System.Windows.Forms.Padding(3);
@@ -450,19 +450,19 @@
             this.btn审批单2查询.UseVisualStyleBackColor = true;
             this.btn审批单2查询.Click += new System.EventHandler(this.btn查询退货审批单2_Click);
             // 
-            // dtp审批单2结束时间
+            // dtp退货审批单2结束时间
             // 
-            this.dtp审批单2结束时间.Location = new System.Drawing.Point(290, 19);
-            this.dtp审批单2结束时间.Name = "dtp审批单2结束时间";
-            this.dtp审批单2结束时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp审批单2结束时间.TabIndex = 20;
+            this.dtp退货审批单2结束时间.Location = new System.Drawing.Point(290, 19);
+            this.dtp退货审批单2结束时间.Name = "dtp退货审批单2结束时间";
+            this.dtp退货审批单2结束时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp退货审批单2结束时间.TabIndex = 20;
             // 
-            // dtp审批单2开始时间
+            // dtp退货审批单2开始时间
             // 
-            this.dtp审批单2开始时间.Location = new System.Drawing.Point(13, 19);
-            this.dtp审批单2开始时间.Name = "dtp审批单2开始时间";
-            this.dtp审批单2开始时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp审批单2开始时间.TabIndex = 19;
+            this.dtp退货审批单2开始时间.Location = new System.Drawing.Point(13, 19);
+            this.dtp退货审批单2开始时间.Name = "dtp退货审批单2开始时间";
+            this.dtp退货审批单2开始时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp退货审批单2开始时间.TabIndex = 19;
             // 
             // tabPage产品退货接收单
             // 
@@ -483,6 +483,38 @@
             this.tabPage产品退货接收单.TabIndex = 4;
             this.tabPage产品退货接收单.Text = "产品退货接收单";
             this.tabPage产品退货接收单.UseVisualStyleBackColor = true;
+            // 
+            // tb接收单客户名称
+            // 
+            this.tb接收单客户名称.Location = new System.Drawing.Point(922, 24);
+            this.tb接收单客户名称.Name = "tb接收单客户名称";
+            this.tb接收单客户名称.Size = new System.Drawing.Size(127, 26);
+            this.tb接收单客户名称.TabIndex = 41;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(846, 31);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(72, 16);
+            this.label13.TabIndex = 40;
+            this.label13.Text = "客户名称";
+            // 
+            // tb退货接收单订单号
+            // 
+            this.tb退货接收单订单号.Location = new System.Drawing.Point(653, 24);
+            this.tb退货接收单订单号.Name = "tb退货接收单订单号";
+            this.tb退货接收单订单号.Size = new System.Drawing.Size(127, 26);
+            this.tb退货接收单订单号.TabIndex = 39;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(578, 31);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(72, 16);
+            this.label14.TabIndex = 38;
+            this.label14.Text = "销售订单";
             // 
             // dgv产品退货接收单
             // 
@@ -555,99 +587,6 @@
             this.tabPage产品退货请验单.TabIndex = 5;
             this.tabPage产品退货请验单.Text = "产品退货请验单";
             this.tabPage产品退货请验单.UseVisualStyleBackColor = true;
-            // 
-            // tabPage退货产品评审单1
-            // 
-            this.tabPage退货产品评审单1.Controls.Add(this.tb评审单1客户名称);
-            this.tabPage退货产品评审单1.Controls.Add(this.label16);
-            this.tabPage退货产品评审单1.Controls.Add(this.tb评审单1销售订单);
-            this.tabPage退货产品评审单1.Controls.Add(this.label17);
-            this.tabPage退货产品评审单1.Controls.Add(this.dgv评审单1);
-            this.tabPage退货产品评审单1.Controls.Add(this.btn评审单1添加);
-            this.tabPage退货产品评审单1.Controls.Add(this.label18);
-            this.tabPage退货产品评审单1.Controls.Add(this.btn评审单1查询);
-            this.tabPage退货产品评审单1.Controls.Add(this.dtp评审单1结束时间);
-            this.tabPage退货产品评审单1.Controls.Add(this.dtp评审单1开始时间);
-            this.tabPage退货产品评审单1.Location = new System.Drawing.Point(4, 29);
-            this.tabPage退货产品评审单1.Name = "tabPage退货产品评审单1";
-            this.tabPage退货产品评审单1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage退货产品评审单1.Size = new System.Drawing.Size(1064, 480);
-            this.tabPage退货产品评审单1.TabIndex = 6;
-            this.tabPage退货产品评审单1.Text = "退货产品评审单(1)";
-            this.tabPage退货产品评审单1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage退货产品评审单2
-            // 
-            this.tabPage退货产品评审单2.Controls.Add(this.tb评审单2客户名称);
-            this.tabPage退货产品评审单2.Controls.Add(this.label19);
-            this.tabPage退货产品评审单2.Controls.Add(this.tb评审单2销售订单);
-            this.tabPage退货产品评审单2.Controls.Add(this.label20);
-            this.tabPage退货产品评审单2.Controls.Add(this.dgv评审单2);
-            this.tabPage退货产品评审单2.Controls.Add(this.btn评审单2添加);
-            this.tabPage退货产品评审单2.Controls.Add(this.label21);
-            this.tabPage退货产品评审单2.Controls.Add(this.btn评审单2查询);
-            this.tabPage退货产品评审单2.Controls.Add(this.dtp评审单2结束时间);
-            this.tabPage退货产品评审单2.Controls.Add(this.dtp评审单2开始时间);
-            this.tabPage退货产品评审单2.Location = new System.Drawing.Point(4, 29);
-            this.tabPage退货产品评审单2.Name = "tabPage退货产品评审单2";
-            this.tabPage退货产品评审单2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage退货产品评审单2.Size = new System.Drawing.Size(1064, 480);
-            this.tabPage退货产品评审单2.TabIndex = 7;
-            this.tabPage退货产品评审单2.Text = "退货产品评审单(2)";
-            this.tabPage退货产品评审单2.UseVisualStyleBackColor = true;
-            // 
-            // tabPage退货记录表
-            // 
-            this.tabPage退货记录表.Controls.Add(this.tb退货记录客户名称);
-            this.tabPage退货记录表.Controls.Add(this.label22);
-            this.tabPage退货记录表.Controls.Add(this.tb退货记录销售订单);
-            this.tabPage退货记录表.Controls.Add(this.label23);
-            this.tabPage退货记录表.Controls.Add(this.dgv退货记录);
-            this.tabPage退货记录表.Controls.Add(this.btn退货记录添加);
-            this.tabPage退货记录表.Controls.Add(this.label24);
-            this.tabPage退货记录表.Controls.Add(this.btn退货记录查询);
-            this.tabPage退货记录表.Controls.Add(this.dtp退货记录结束时间);
-            this.tabPage退货记录表.Controls.Add(this.dtp退货记录开始时间);
-            this.tabPage退货记录表.Location = new System.Drawing.Point(4, 29);
-            this.tabPage退货记录表.Name = "tabPage退货记录表";
-            this.tabPage退货记录表.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage退货记录表.Size = new System.Drawing.Size(1064, 480);
-            this.tabPage退货记录表.TabIndex = 8;
-            this.tabPage退货记录表.Text = "退货记录表";
-            this.tabPage退货记录表.UseVisualStyleBackColor = true;
-            this.tabPage退货记录表.Click += new System.EventHandler(this.btn查询退货记录_Click);
-            // 
-            // tb接收单客户名称
-            // 
-            this.tb接收单客户名称.Location = new System.Drawing.Point(922, 24);
-            this.tb接收单客户名称.Name = "tb接收单客户名称";
-            this.tb接收单客户名称.Size = new System.Drawing.Size(127, 26);
-            this.tb接收单客户名称.TabIndex = 41;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(846, 31);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(72, 16);
-            this.label13.TabIndex = 40;
-            this.label13.Text = "客户名称";
-            // 
-            // tb退货接收单订单号
-            // 
-            this.tb退货接收单订单号.Location = new System.Drawing.Point(653, 24);
-            this.tb退货接收单订单号.Name = "tb退货接收单订单号";
-            this.tb退货接收单订单号.Size = new System.Drawing.Size(127, 26);
-            this.tb退货接收单订单号.TabIndex = 39;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(578, 31);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(72, 16);
-            this.label14.TabIndex = 38;
-            this.label14.Text = "销售订单";
             // 
             // tb退货请验单客户名称
             // 
@@ -732,6 +671,26 @@
             this.dtp退货请验单开始时间.Size = new System.Drawing.Size(200, 26);
             this.dtp退货请验单开始时间.TabIndex = 42;
             // 
+            // tabPage退货产品评审单1
+            // 
+            this.tabPage退货产品评审单1.Controls.Add(this.tb评审单1客户名称);
+            this.tabPage退货产品评审单1.Controls.Add(this.label16);
+            this.tabPage退货产品评审单1.Controls.Add(this.tb评审单1销售订单);
+            this.tabPage退货产品评审单1.Controls.Add(this.label17);
+            this.tabPage退货产品评审单1.Controls.Add(this.dgv评审单1);
+            this.tabPage退货产品评审单1.Controls.Add(this.btn评审单1添加);
+            this.tabPage退货产品评审单1.Controls.Add(this.label18);
+            this.tabPage退货产品评审单1.Controls.Add(this.btn评审单1查询);
+            this.tabPage退货产品评审单1.Controls.Add(this.dtp退货评审单1结束时间);
+            this.tabPage退货产品评审单1.Controls.Add(this.dtp退货评审单1开始时间);
+            this.tabPage退货产品评审单1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage退货产品评审单1.Name = "tabPage退货产品评审单1";
+            this.tabPage退货产品评审单1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage退货产品评审单1.Size = new System.Drawing.Size(1064, 480);
+            this.tabPage退货产品评审单1.TabIndex = 6;
+            this.tabPage退货产品评审单1.Text = "退货产品评审单(1)";
+            this.tabPage退货产品评审单1.UseVisualStyleBackColor = true;
+            // 
             // tb评审单1客户名称
             // 
             this.tb评审单1客户名称.Location = new System.Drawing.Point(926, 29);
@@ -799,20 +758,41 @@
             this.btn评审单1查询.TabIndex = 54;
             this.btn评审单1查询.Text = "查询";
             this.btn评审单1查询.UseVisualStyleBackColor = true;
+            this.btn评审单1查询.Click += new System.EventHandler(this.btn查询退货评审单1_Click);
             // 
-            // dtp评审单1结束时间
+            // dtp退货评审单1结束时间
             // 
-            this.dtp评审单1结束时间.Location = new System.Drawing.Point(303, 25);
-            this.dtp评审单1结束时间.Name = "dtp评审单1结束时间";
-            this.dtp评审单1结束时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp评审单1结束时间.TabIndex = 53;
+            this.dtp退货评审单1结束时间.Location = new System.Drawing.Point(303, 25);
+            this.dtp退货评审单1结束时间.Name = "dtp退货评审单1结束时间";
+            this.dtp退货评审单1结束时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp退货评审单1结束时间.TabIndex = 53;
             // 
-            // dtp评审单1开始时间
+            // dtp退货评审单1开始时间
             // 
-            this.dtp评审单1开始时间.Location = new System.Drawing.Point(26, 25);
-            this.dtp评审单1开始时间.Name = "dtp评审单1开始时间";
-            this.dtp评审单1开始时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp评审单1开始时间.TabIndex = 52;
+            this.dtp退货评审单1开始时间.Location = new System.Drawing.Point(26, 25);
+            this.dtp退货评审单1开始时间.Name = "dtp退货评审单1开始时间";
+            this.dtp退货评审单1开始时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp退货评审单1开始时间.TabIndex = 52;
+            // 
+            // tabPage退货产品评审单2
+            // 
+            this.tabPage退货产品评审单2.Controls.Add(this.tb评审单2客户名称);
+            this.tabPage退货产品评审单2.Controls.Add(this.label19);
+            this.tabPage退货产品评审单2.Controls.Add(this.tb评审单2销售订单);
+            this.tabPage退货产品评审单2.Controls.Add(this.label20);
+            this.tabPage退货产品评审单2.Controls.Add(this.dgv评审单2);
+            this.tabPage退货产品评审单2.Controls.Add(this.btn评审单2添加);
+            this.tabPage退货产品评审单2.Controls.Add(this.label21);
+            this.tabPage退货产品评审单2.Controls.Add(this.btn评审单2查询);
+            this.tabPage退货产品评审单2.Controls.Add(this.dtp退货评审单2结束时间);
+            this.tabPage退货产品评审单2.Controls.Add(this.dtp退货评审单2开始时间);
+            this.tabPage退货产品评审单2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage退货产品评审单2.Name = "tabPage退货产品评审单2";
+            this.tabPage退货产品评审单2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage退货产品评审单2.Size = new System.Drawing.Size(1064, 480);
+            this.tabPage退货产品评审单2.TabIndex = 7;
+            this.tabPage退货产品评审单2.Text = "退货产品评审单(2)";
+            this.tabPage退货产品评审单2.UseVisualStyleBackColor = true;
             // 
             // tb评审单2客户名称
             // 
@@ -883,19 +863,40 @@
             this.btn评审单2查询.UseVisualStyleBackColor = true;
             this.btn评审单2查询.Click += new System.EventHandler(this.btn查询退货评审单2_Click);
             // 
-            // dtp评审单2结束时间
+            // dtp退货评审单2结束时间
             // 
-            this.dtp评审单2结束时间.Location = new System.Drawing.Point(303, 25);
-            this.dtp评审单2结束时间.Name = "dtp评审单2结束时间";
-            this.dtp评审单2结束时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp评审单2结束时间.TabIndex = 63;
+            this.dtp退货评审单2结束时间.Location = new System.Drawing.Point(303, 25);
+            this.dtp退货评审单2结束时间.Name = "dtp退货评审单2结束时间";
+            this.dtp退货评审单2结束时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp退货评审单2结束时间.TabIndex = 63;
             // 
-            // dtp评审单2开始时间
+            // dtp退货评审单2开始时间
             // 
-            this.dtp评审单2开始时间.Location = new System.Drawing.Point(26, 25);
-            this.dtp评审单2开始时间.Name = "dtp评审单2开始时间";
-            this.dtp评审单2开始时间.Size = new System.Drawing.Size(200, 26);
-            this.dtp评审单2开始时间.TabIndex = 62;
+            this.dtp退货评审单2开始时间.Location = new System.Drawing.Point(26, 25);
+            this.dtp退货评审单2开始时间.Name = "dtp退货评审单2开始时间";
+            this.dtp退货评审单2开始时间.Size = new System.Drawing.Size(200, 26);
+            this.dtp退货评审单2开始时间.TabIndex = 62;
+            // 
+            // tabPage退货记录表
+            // 
+            this.tabPage退货记录表.Controls.Add(this.tb退货记录客户名称);
+            this.tabPage退货记录表.Controls.Add(this.label22);
+            this.tabPage退货记录表.Controls.Add(this.tb退货记录销售订单);
+            this.tabPage退货记录表.Controls.Add(this.label23);
+            this.tabPage退货记录表.Controls.Add(this.dgv退货记录);
+            this.tabPage退货记录表.Controls.Add(this.btn退货记录添加);
+            this.tabPage退货记录表.Controls.Add(this.label24);
+            this.tabPage退货记录表.Controls.Add(this.btn退货记录查询);
+            this.tabPage退货记录表.Controls.Add(this.dtp退货记录结束时间);
+            this.tabPage退货记录表.Controls.Add(this.dtp退货记录开始时间);
+            this.tabPage退货记录表.Location = new System.Drawing.Point(4, 29);
+            this.tabPage退货记录表.Name = "tabPage退货记录表";
+            this.tabPage退货记录表.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage退货记录表.Size = new System.Drawing.Size(1064, 480);
+            this.tabPage退货记录表.TabIndex = 8;
+            this.tabPage退货记录表.Text = "退货记录表";
+            this.tabPage退货记录表.UseVisualStyleBackColor = true;
+            this.tabPage退货记录表.Click += new System.EventHandler(this.btn查询退货记录_Click);
             // 
             // tb退货记录客户名称
             // 
@@ -964,6 +965,7 @@
             this.btn退货记录查询.TabIndex = 74;
             this.btn退货记录查询.Text = "查询";
             this.btn退货记录查询.UseVisualStyleBackColor = true;
+            this.btn退货记录查询.Click += new System.EventHandler(this.btn查询退货记录_Click);
             // 
             // dtp退货记录结束时间
             // 
@@ -1002,15 +1004,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv产品退货接收单)).EndInit();
             this.tabPage产品退货请验单.ResumeLayout(false);
             this.tabPage产品退货请验单.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv退货请验单)).EndInit();
             this.tabPage退货产品评审单1.ResumeLayout(false);
             this.tabPage退货产品评审单1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv评审单1)).EndInit();
             this.tabPage退货产品评审单2.ResumeLayout(false);
             this.tabPage退货产品评审单2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv评审单2)).EndInit();
             this.tabPage退货记录表.ResumeLayout(false);
             this.tabPage退货记录表.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv退货请验单)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv评审单1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv评审单2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgv退货记录)).EndInit();
             this.ResumeLayout(false);
 
@@ -1033,15 +1035,15 @@
         private System.Windows.Forms.Button btn添加审批单1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn查询审批单1;
-        private System.Windows.Forms.DateTimePicker dtp产品退货审批单2结束时间;
+        private System.Windows.Forms.DateTimePicker dtp产品退货审批单1结束时间;
         private System.Windows.Forms.DateTimePicker dtp产品退货审批单1开始时间;
         private System.Windows.Forms.TabPage tabPage产品退货审批单2;
         private System.Windows.Forms.DataGridView dgv审批单2;
         private System.Windows.Forms.Button btn审批单添加;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button btn审批单2查询;
-        private System.Windows.Forms.DateTimePicker dtp审批单2结束时间;
-        private System.Windows.Forms.DateTimePicker dtp审批单2开始时间;
+        private System.Windows.Forms.DateTimePicker dtp退货审批单2结束时间;
+        private System.Windows.Forms.DateTimePicker dtp退货审批单2开始时间;
         private System.Windows.Forms.TabPage tabPage产品退货接收单;
         private System.Windows.Forms.DataGridView dgv产品退货接收单;
         private System.Windows.Forms.Button btn接收单添加;
@@ -1085,8 +1087,8 @@
         private System.Windows.Forms.Button btn评审单1添加;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Button btn评审单1查询;
-        private System.Windows.Forms.DateTimePicker dtp评审单1结束时间;
-        private System.Windows.Forms.DateTimePicker dtp评审单1开始时间;
+        private System.Windows.Forms.DateTimePicker dtp退货评审单1结束时间;
+        private System.Windows.Forms.DateTimePicker dtp退货评审单1开始时间;
         private System.Windows.Forms.TextBox tb评审单2客户名称;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox tb评审单2销售订单;
@@ -1095,8 +1097,8 @@
         private System.Windows.Forms.Button btn评审单2添加;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Button btn评审单2查询;
-        private System.Windows.Forms.DateTimePicker dtp评审单2结束时间;
-        private System.Windows.Forms.DateTimePicker dtp评审单2开始时间;
+        private System.Windows.Forms.DateTimePicker dtp退货评审单2结束时间;
+        private System.Windows.Forms.DateTimePicker dtp退货评审单2开始时间;
         private System.Windows.Forms.TextBox tb退货记录客户名称;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.TextBox tb退货记录销售订单;

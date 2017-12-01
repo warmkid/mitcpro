@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 
 namespace mySystem.Process.Bag.CS
@@ -45,11 +46,11 @@ namespace mySystem.Process.Bag.CS
 
 
         // 数据库连接
-        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
-        OleDbConnection conn;
-        OleDbDataAdapter daOuter, daInner;
-        OleDbCommandBuilder cbOuter, cbInner;
+//        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
+//                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
+        SqlConnection conn;
+        SqlDataAdapter daOuter, daInner;
+        SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
@@ -74,6 +75,7 @@ namespace mySystem.Process.Bag.CS
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
+                ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData();
                 outerBind();
@@ -141,8 +143,8 @@ namespace mySystem.Process.Bag.CS
 
         void variableInit()
         {
-            conn = new OleDbConnection(strConn);
-            conn.Open();
+            conn = mySystem.Parameter.conn;
+            //conn.Open();
             ID = mySystem.Parameter.csbagInstruID;
             i生产指令ID = ID;
             CODE = mySystem.Parameter.csbagInstruction;
@@ -157,17 +159,17 @@ namespace mySystem.Process.Bag.CS
 
         void variableInit(int id)
         {
-            conn = new OleDbConnection(strConn);
-            conn.Open();
+            conn = mySystem.Parameter.conn;
+            //conn.Open();
 
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 清场记录 where ID=" + id, conn);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 清场记录 where ID=" + id, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
 
             i生产指令ID = Convert.ToInt32(dt.Rows[0]["生产指令ID"]);
             ID = i生产指令ID;
 
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from 生产指令 where ID=" + ID, conn);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from 生产指令 where ID=" + ID, conn);
             DataTable dt1 = new DataTable("temp");
             da1.Fill(dt1);
             CODE = dt1.Rows[0]["生产指令编号"].ToString();
@@ -181,13 +183,13 @@ namespace mySystem.Process.Bag.CS
         void getOtherData()
         {
             // 读取用于显示界面的重要信息
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令ID, conn);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令ID, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             str产品代码 = dt.Rows[0]["产品代码"].ToString();
             str产品批号 = dt.Rows[0]["产品批号"].ToString();
 
-            da = new OleDbDataAdapter("select * from 设置清场记录", conn);
+            da = new SqlDataAdapter("select * from 设置清场记录", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -210,8 +212,8 @@ namespace mySystem.Process.Bag.CS
         // 读取数据，根据自己表的ID
         void readOuterData(int id)
         {
-            daOuter = new OleDbDataAdapter("select * from 清场记录 where ID=" + id, conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter("select * from 清场记录 where ID=" + id, conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("清场记录");
             bsOuter = new BindingSource();
 
@@ -221,10 +223,10 @@ namespace mySystem.Process.Bag.CS
         // 读取数据，无参数表示从Paramter中读取数据
         void readOuterData()
         {
-            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期=#{1}# and 生产班次='{2}'";
+            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期='{1}' and 生产班次='{2}'";
             DateTime date = DateTime.Parse(DateTime.Now.ToString("yyyy/MM/dd"));
-            daOuter = new OleDbDataAdapter(String.Format(sql, i生产指令ID, date, mySystem.Parameter.userflight), conn);
-            cbOuter = new OleDbCommandBuilder(daOuter);
+            daOuter = new SqlDataAdapter(String.Format(sql, i生产指令ID, date, mySystem.Parameter.userflight), conn);
+            cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("清场记录");
             bsOuter = new BindingSource();
 
@@ -273,9 +275,9 @@ namespace mySystem.Process.Bag.CS
         }
         void readInnerData(int id)
         {
-            daInner = new OleDbDataAdapter("select * from 清场记录详细信息 where T清场记录ID=" + dtOuter.Rows[0]["ID"], conn);
+            daInner = new SqlDataAdapter("select * from 清场记录详细信息 where T清场记录ID=" + dtOuter.Rows[0]["ID"], conn);
             dtInner = new DataTable("清场记录详细信息");
-            cbInner = new OleDbCommandBuilder(daInner);
+            cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
 
             daInner.Fill(dtInner);
@@ -419,12 +421,12 @@ namespace mySystem.Process.Bag.CS
 
         void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='清场记录'", conn);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='清场记录'", conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -562,12 +564,12 @@ namespace mySystem.Process.Bag.CS
                 return;
             }
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -620,12 +622,12 @@ namespace mySystem.Process.Bag.CS
         public override void CheckResult()
         {
 
-            OleDbDataAdapter da;
-            OleDbCommandBuilder cb;
+            SqlDataAdapter da;
+            SqlCommandBuilder cb;
             DataTable dt;
 
-            da = new OleDbDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 待审核 where 表名='清场记录' and 对应ID=" + _id, conn);
+            cb = new SqlCommandBuilder(da);
 
             dt = new DataTable("temp");
             da.Fill(dt);
@@ -690,7 +692,7 @@ namespace mySystem.Process.Bag.CS
 
             //"生产指令-步骤序号- 表序号 /&P"
             int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from 清场记录" + " where 生产指令ID=" + ID.ToString(), mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select ID from 清场记录" + " where 生产指令ID=" + ID.ToString(), mySystem.Parameter.conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();

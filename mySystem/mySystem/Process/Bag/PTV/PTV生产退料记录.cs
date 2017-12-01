@@ -19,14 +19,14 @@ namespace mySystem.Process.Bag.PTV
         private String tableInfo = "生产退料记录详细信息";
 
         private SqlConnection conn = null;
-        private OleDbConnection connOle = null;
+        //private OleDbConnection mySystem.Parameter.conn = null;
         private Boolean isSqlOk;
         private CheckForm checkform = null;
 
         private DataTable dt记录, dt记录详情, dt生产指令, dt生产指令详情, dt生产指令制袋, dt物料简称批号代码;
-        private OleDbDataAdapter da记录, da记录详情;
+        private SqlDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
-        private OleDbCommandBuilder cb记录, cb记录详情;
+        private SqlCommandBuilder cb记录, cb记录详情;
 
         List<String> ls操作员, ls审核员;
         Parameter.UserState _userState;
@@ -41,7 +41,7 @@ namespace mySystem.Process.Bag.PTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystekm.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             InstruID = Parameter.ptvbagInstruID;
             Instruction = Parameter.ptvbagInstruction;
@@ -70,7 +70,7 @@ namespace mySystem.Process.Bag.PTV
             InitializeComponent();
 
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             fill_printer(); //添加打印机
@@ -88,12 +88,12 @@ namespace mySystem.Process.Bag.PTV
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='生产退料记录表'", connOle);
+            da = new SqlDataAdapter("select * from 用户权限 where 步骤='生产退料记录表'", mySystem.Parameter.conn);
             dt = new DataTable("temp");
             da.Fill(dt);
 
@@ -188,15 +188,14 @@ namespace mySystem.Process.Bag.PTV
             dt物料简称批号代码.Columns.Add("物料代码", Type.GetType("System.String"));
             dt物料简称批号代码.Columns.Add("物料批号", Type.GetType("System.String"));
 
-            if (!isSqlOk)
-            {
-                OleDbCommand comm1 = new OleDbCommand();
-                comm1.Connection = Parameter.connOle;
+            
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = mySystem.Parameter.conn;
                 comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + InsCode + "' ";//这里应有生产指令编码
-                OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
+                SqlDataAdapter datemp1 = new SqlDataAdapter(comm1);
                 datemp1.Fill(dt生产指令);
 
-                //OleDbDataReader reader1 = comm1.ExecuteReader();
+                //SqlDataReader reader1 = comm1.ExecuteReader();
                 //if (reader1.Read())
                 if (dt生产指令.Rows.Count > 0)
                 {
@@ -214,20 +213,20 @@ namespace mySystem.Process.Bag.PTV
                     dt物料简称批号代码.Rows.Add(new object[] { dt生产指令.Rows[0]["外包物料名称3"], dt生产指令.Rows[0]["外包物料代码3"], dt生产指令.Rows[0]["外包物料批号3"] });
 
                     //读取详细信息
-                    OleDbCommand comm2 = new OleDbCommand();
-                    comm2.Connection = Parameter.connOle;
+                    SqlCommand comm2 = new SqlCommand();
+                    comm2.Connection = mySystem.Parameter.conn;
                     //comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
                     comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
-                    OleDbDataAdapter datemp2 = new OleDbDataAdapter(comm2);
+                    SqlDataAdapter datemp2 = new SqlDataAdapter(comm2);
                     datemp2.Fill(dt生产指令详情);
                     datemp2.Dispose();
 
                     //读取生产指令物料
-                    OleDbCommand comm3 = new OleDbCommand();
-                    comm3.Connection = Parameter.connOle;
+                    SqlCommand comm3 = new SqlCommand();
+                    comm3.Connection = mySystem.Parameter.conn;
                     //comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
                     comm3.CommandText = "select * from 生产指令制袋详细信息 where T生产指令ID = " + dt生产指令.Rows[0]["ID"].ToString();
-                    OleDbDataAdapter datemp3 = new OleDbDataAdapter(comm3);
+                    SqlDataAdapter datemp3 = new SqlDataAdapter(comm3);
                     datemp3.Fill(dt生产指令制袋);
                     datemp3.Dispose();
                     for (int i = 0; i < dt生产指令制袋.Rows.Count; i++)
@@ -243,9 +242,8 @@ namespace mySystem.Process.Bag.PTV
                 }
                 //reader1.Dispose();
                 datemp1.Dispose();
-            }
-            else
-            { }
+           
+           
         }
 
         //根据状态设置可读写性
@@ -456,7 +454,7 @@ namespace mySystem.Process.Bag.PTV
         //根据主键显示
         public void IDShow(Int32 ID)
         {
-            OleDbDataAdapter da1 = new OleDbDataAdapter("select * from " + table + " where ID = " + ID.ToString(), connOle);
+            SqlDataAdapter da1 = new SqlDataAdapter("select * from " + table + " where ID = " + ID.ToString(), mySystem.Parameter.conn);
             DataTable dt1 = new DataTable(table);
             da1.Fill(dt1);
             if (dt1.Rows.Count > 0)
@@ -476,8 +474,8 @@ namespace mySystem.Process.Bag.PTV
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + productCode + "' ", connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 产品代码 = '" + productCode + "' ", mySystem.Parameter.conn);
+            cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
 
@@ -520,8 +518,8 @@ namespace mySystem.Process.Bag.PTV
         {
             bs记录详情 = new BindingSource();
             dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where T生产退料记录ID = " + ID.ToString(), connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
+            da记录详情 = new SqlDataAdapter("select * from " + tableInfo + " where T生产退料记录ID = " + ID.ToString(), mySystem.Parameter.conn);
+            cb记录详情 = new SqlCommandBuilder(da记录详情);
             da记录详情.Fill(dt记录详情);
         }
 
@@ -550,6 +548,7 @@ namespace mySystem.Process.Bag.PTV
             dr["操作员"] = mySystem.Parameter.userName;
             dr["审核员"] = "";
             dr["操作员备注"] = "";
+            dr["二维码"] = "";
             //dt记录详情.Rows.InsertAt(dr, dt记录详情.Rows.Count);
             return dr;
         }
@@ -571,20 +570,20 @@ namespace mySystem.Process.Bag.PTV
                 switch (dc.ColumnName)
                 {
                     case "物料代码":
-                        cbc = new DataGridViewComboBoxColumn();
-                        cbc.DataPropertyName = dc.ColumnName;
-                        cbc.HeaderText = dc.ColumnName;
-                        cbc.Name = dc.ColumnName;
-                        cbc.ValueType = dc.DataType;
-                        if (dt物料简称批号代码 != null)
-                        {
-                            for (int i = 0; i < dt物料简称批号代码.Rows.Count; i++)
-                            { cbc.Items.Add(dt物料简称批号代码.Rows[i]["物料代码"]); }
-                        }
-                        dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc = new DataGridViewComboBoxColumn();
+                        //cbc.DataPropertyName = dc.ColumnName;
+                        //cbc.HeaderText = dc.ColumnName;
+                        //cbc.Name = dc.ColumnName;
+                        //cbc.ValueType = dc.DataType;
+                        //if (dt物料简称批号代码 != null)
+                        //{
+                        //    for (int i = 0; i < dt物料简称批号代码.Rows.Count; i++)
+                        //    { cbc.Items.Add(dt物料简称批号代码.Rows[i]["物料代码"]); }
+                        //}
+                        //dataGridView1.Columns.Add(cbc);
+                        //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     case "班次":
                         cbc = new DataGridViewComboBoxColumn();
@@ -769,8 +768,8 @@ namespace mySystem.Process.Bag.PTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='生产退料记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='生产退料记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
             {
@@ -831,8 +830,8 @@ namespace mySystem.Process.Bag.PTV
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter("select * from 待审核 where 表名='生产退料记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter("select * from 待审核 where 表名='生产退料记录表' and 对应ID=" + dt记录.Rows[0]["ID"], mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
             dt_temp.Rows[0].Delete();
             da_temp.Update(dt_temp);
@@ -851,9 +850,9 @@ namespace mySystem.Process.Bag.PTV
             {
 //old version
 // 退料入库
-//                OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + Convert.ToInt32(dt记录.Rows[0]["生产指令ID"]), mySystem.Parameter.connOle);
+//                SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + Convert.ToInt32(dt记录.Rows[0]["生产指令ID"]), mySystem.Parameter.conn);
 //                DataTable dt = new DataTable();
-//                OleDbCommandBuilder cb;
+//                SqlCommandBuilder cb;
 //                da.Fill(dt);
 //                string 订单号 = dt.Rows[0]["客户或订单号"].ToString();
 //                string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
@@ -867,8 +866,8 @@ namespace mySystem.Process.Bag.PTV
 //                    string 批号 = dr["物料批号"].ToString();
 //                    double 退库数量 = Convert.ToDouble(dr["退库数量"]);
 //                    string sql = "select * from 库存台帐 where 产品代码='{0}' and 产品批号='{1}' and 用途='{2}' and 状态='合格'";
-//                    da = new OleDbDataAdapter(string.Format(sql, 代码, 批号, 订单号), Tconn);
-//                    cb = new OleDbCommandBuilder(da);
+//                    da = new SqlDataAdapter(string.Format(sql, 代码, 批号, 订单号), Tconn);
+//                    cb = new SqlCommandBuilder(da);
 //                    dt = new DataTable();
 //                    da.Fill(dt);
 //                    if (dt.Rows.Count == 0)
@@ -1045,7 +1044,7 @@ namespace mySystem.Process.Bag.PTV
            
             //加页脚
             int sheetnum;
-            OleDbDataAdapter da = new OleDbDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select ID from " + table + " where 生产指令ID=" + InstruID.ToString(), mySystem.Parameter.conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
             List<Int32> sheetList = new List<Int32>();
@@ -1108,6 +1107,21 @@ namespace mySystem.Process.Bag.PTV
                     {
                         dt记录详情.Rows[e.RowIndex]["操作员"] = mySystem.Parameter.userName;
                         MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
+                    }
+                }
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "二维码")
+                {
+                    try
+                    {
+                        string[] info = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
+                        dt记录详情.Rows[e.RowIndex]["物料代码"] = info[0];
+                        dt记录详情.Rows[e.RowIndex]["物料批号"] = info[1];
+                        dt记录详情.Rows[e.RowIndex]["退库数量"] = mySystem.Utility.getMaterialAmountFromQRcode(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                        //MessageBox.Show("请重新输入" + (e.RowIndex + 1).ToString() + "行的『操作员』信息", "ERROR");
+                    }
+                    catch
+                    {
+                        //MessageBox.Show("ERROR");
                     }
                 }
                 else

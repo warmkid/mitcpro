@@ -516,40 +516,62 @@ namespace mySystem.Extruction.Chart
             List<Object> whereVals;
             if (Convert.ToInt32(datasel.Rows[0][2]) == 0 && Convert.ToInt32(datasel.Rows[0][3]) == 0)
             {
-                rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, null, null, null, null, betweenCol, left, right);
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    rlt = Utility.selectAccess(mainform.conn, tablename, queryCols, null, null, null, null, betweenCol, left, right);
+                }
+                else
+                {
+                    rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, null, null, null, null, betweenCol, left, right);
+                }
 
             }
             if (Convert.ToInt32(datasel.Rows[0][2]) == 0 && Convert.ToInt32(datasel.Rows[0][3]) != 0)
             {
                 whereCols = new List<String>(new String[] { "reviewer_id" });
                 whereVals = new List<Object>(new Object[] { Convert.ToInt32(datasel.Rows[0][3]) });
-                rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    rlt = Utility.selectAccess(mainform.conn, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
+                else
+                {
+                    rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
             }
             if (Convert.ToInt32(datasel.Rows[0][2]) != 0 && Convert.ToInt32(datasel.Rows[0][3]) == 0)
             {
                 whereCols = new List<String>(new String[] { "production_instruction_id" });
                 whereVals = new List<Object>(new Object[] { Convert.ToInt32(datasel.Rows[0][2]) });
-                rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    rlt = Utility.selectAccess(mainform.conn, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
+                else
+                {
+                    rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
             }
 
             if (Convert.ToInt32(datasel.Rows[0][2]) != 0 && Convert.ToInt32(datasel.Rows[0][3]) != 0)
             {
                 whereCols = new List<String>(new String[] { "production_instruction_id", "reviewer_id" });
                 whereVals = new List<Object>(new Object[] { Convert.ToInt32(datasel.Rows[0][2]), Convert.ToInt32(datasel.Rows[0][3].ToString()) });
-                rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                if (mySystem.Parameter.isSqlOk)
+                {
+                    rlt = Utility.selectAccess(mainform.conn, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
+                else
+                {
+                    rlt = Utility.selectAccess(mainform.connOle, tablename, queryCols, whereCols, whereVals, null, null, betweenCol, left, right);
+                }
             }
 
 
             Utility.fillDataGridView(showx, rlt);
-            //datasel.Rows.Add(Convert.ToDateTime("2017-01-01"), DateTime.Now, null, null);
-
+            //public static List<List<Object>> selectAccess(OleDbConnection conn, String tblName, List<String> queryCols, List<String> whereCols, List<Object> whereVals)
 
         }
-
-        //exploring how to use select sql
-        //public static List<List<Object>> selectAccess(OleDbConnection conn, String tblName, List<String> queryCols, List<String> whereCols, List<Object> whereVals)
-
-
     }
 }
 

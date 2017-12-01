@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Setting
 {
@@ -15,19 +16,19 @@ namespace mySystem.Setting
         private int userid = 0;
         private string username = null;
         private string userpw = null;
-        private OleDbConnection connuser;
-        private OleDbDataAdapter dauser;
+        private SqlConnection connuser;
+        private SqlDataAdapter dauser;
         private DataTable dtuser;
         private BindingSource bsuser;
-        private OleDbCommandBuilder cbuser;
+        private SqlCommandBuilder cbuser;
 
         public SetPeopleForm(MainForm mainform):base(mainform)
         {
             InitializeComponent();
             if (!Parameter.isSqlOk)
-            { connuser = Parameter.connOleUser; }
+            { connuser = mySystem.Parameter.connUser; }
             else
-            { }
+            { connuser = mySystem.Parameter.connUser; }
             
             RoleInit();
             Init();
@@ -80,7 +81,15 @@ namespace mySystem.Setting
             List<String> queryCols = new List<String>(new String[] { "密码" });
             List<String> whereCols = new List<String>(new String[] { "用户ID" });
             List<Object> whereVals = new List<Object>(new Object[] { userid });
-            List<List<Object>> res = Utility.selectAccess(Parameter.connOleUser, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            List<List<Object>> res;
+            if (mySystem.Parameter.isSqlOk)
+            {
+                res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
+            else
+            {
+                res = Utility.selectAccess(mySystem.Parameter.connUser, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+            }
             userpw = res[0][0].ToString(); //用户原始密码
             if(pw == userpw)
             {
@@ -124,7 +133,7 @@ namespace mySystem.Setting
             List<Object> updateVals = new List<Object>(new Object[] { username });
             List<String> whereCols = new List<String>(new String[] { "用户ID" });
             List<Object> whereVals = new List<Object>(new Object[] { userid });
-            Boolean b = Utility.updateAccess(Parameter.connOleUser, tblName, updateCols, updateVals, whereCols, whereVals);
+            Boolean b = Utility.updateAccess(mySystem.Parameter.connUser, tblName, updateCols, updateVals, whereCols, whereVals);
             
             //修改密码
             string pw1 = pw1TextBox.Text.Trim();
@@ -141,7 +150,7 @@ namespace mySystem.Setting
                         //保存密码至数据库
                         List<String> updateCols2 = new List<String>(new String[] { "密码" });
                         List<Object> updateVals2 = new List<Object>(new Object[] { pw3 });
-                        Boolean b2 = Utility.updateAccess(Parameter.connOleUser, tblName, updateCols2, updateVals2, whereCols, whereVals);
+                        Boolean b2 = Utility.updateAccess(mySystem.Parameter.connUser, tblName, updateCols2, updateVals2, whereCols, whereVals);
                         pw1TextBox.Text = null;
                         pw2TextBox.Text = null;
                         pw3TextBox.Text = null;
@@ -187,8 +196,8 @@ namespace mySystem.Setting
             { this.dgvUser.Columns.RemoveAt(i - 1); }  
 
             dtuser = new DataTable("users"); //""中的是表名
-            dauser = new OleDbDataAdapter("select * from users ", connuser);
-            cbuser = new OleDbCommandBuilder(dauser);
+            dauser = new SqlDataAdapter("select * from users ", connuser);
+            cbuser = new SqlCommandBuilder(dauser);
 
             dtuser.Columns.Add("序号", System.Type.GetType("System.String"));
             dauser.Fill(dtuser);

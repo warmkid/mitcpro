@@ -14,16 +14,16 @@ namespace mySystem.Setting
     public partial class Setting_CleanSite : mySystem.BaseForm
     {
         private SqlConnection conn = null;
-        private OleDbConnection connOle = null;
+        //private OleDbConnection mySystem.Parameter.conn = null;
         private bool isSqlOk;
-        private OleDbDataAdapter da1;
+        private SqlDataAdapter da1;
         private DataTable dt1;
         private BindingSource bs1;
-        private OleDbCommandBuilder cb1;
-        private OleDbDataAdapter da2;
+        private SqlCommandBuilder cb1;
+        private SqlDataAdapter da2;
         private DataTable dt2;
         private BindingSource bs2;
-        private OleDbCommandBuilder cb2;
+        private SqlCommandBuilder cb2;
 
 
         public Setting_CleanSite(mySystem.MainForm mainform)
@@ -31,7 +31,7 @@ namespace mySystem.Setting
         {
             InitializeComponent();
             conn = Parameter.conn;
-            connOle = Parameter.connOle;
+            mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             Init();
@@ -87,8 +87,8 @@ namespace mySystem.Setting
         {
             //****************供料******************
             dt1 = new DataTable("设置供料工序清场项目"); //""中的是表名
-            da1 = new OleDbDataAdapter("select * from 设置供料工序清场项目", connOle);
-            cb1 = new OleDbCommandBuilder(da1);
+            da1 = new SqlDataAdapter("select * from 设置供料工序清场项目", mySystem.Parameter.conn);
+            cb1 = new SqlCommandBuilder(da1);
 
             dt1.Columns.Add("序号", System.Type.GetType("System.String"));
             da1.Fill(dt1);
@@ -107,8 +107,8 @@ namespace mySystem.Setting
 
             //****************吹膜******************
             dt2 = new DataTable("设置吹膜工序清场项目"); //""中的是表名
-            da2 = new OleDbDataAdapter("select * from 设置吹膜工序清场项目", connOle);
-            cb2 = new OleDbCommandBuilder(da2);
+            da2 = new SqlDataAdapter("select * from 设置吹膜工序清场项目", mySystem.Parameter.conn);
+            cb2 = new SqlCommandBuilder(da2);
 
             dt2.Columns.Add("序号", System.Type.GetType("System.String"));
             da2.Fill(dt2);

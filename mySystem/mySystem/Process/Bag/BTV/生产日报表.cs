@@ -10,6 +10,7 @@ using System.Data.OleDb;
 using System.Text.RegularExpressions;
 using System.Runtime.InteropServices;
 using System.Collections;
+using System.Data.SqlClient;
 
 namespace mySystem.Process.Bag.BTV
 {
@@ -29,7 +30,7 @@ namespace mySystem.Process.Bag.BTV
 
         DataTable query(DateTime start, DateTime end)
         {
-            OleDbDataAdapter da;
+            SqlDataAdapter da;
             string sql;
             start = start.Date;
             end = end.Date.AddDays(1).AddSeconds(-1);
@@ -48,8 +49,8 @@ namespace mySystem.Process.Bag.BTV
             //ret.Columns.Add("产品数量（平米）", Type.GetType("System.Double"));
             ret.Columns.Add("生产指令ID", Type.GetType("System.Int32"));
 
-            sql = "select * from 产品内包装记录 where 生产日期 between #{0}# and #{1}#";
-            da = new OleDbDataAdapter(string.Format(sql, start, end), mySystem.Parameter.connOle);
+            sql = "select * from 产品内包装记录 where 生产日期 between '{0}' and '{1}'";
+            da = new SqlDataAdapter(string.Format(sql, start, end), mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -72,7 +73,7 @@ namespace mySystem.Process.Bag.BTV
             {
                 int id = Convert.ToInt32(dr["生产指令ID"]);
                 sql = "select * from 生产指令详细信息 where T生产指令ID={0}";
-                da = new OleDbDataAdapter(string.Format(sql, id), mySystem.Parameter.connOle);
+                da = new SqlDataAdapter(string.Format(sql, id), mySystem.Parameter.conn);
                 dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0) MessageBox.Show("ID为" + id + "的生产指令详细信息读取错误");
@@ -84,7 +85,7 @@ namespace mySystem.Process.Bag.BTV
             }
 
             return ret;
-//            OleDbDataAdapter da;
+//            SqlDataAdapter da;
 //            string sql;
 //            start = start.Date;
 //            end = end.Date.AddDays(1).AddSeconds(-1);
@@ -138,7 +139,7 @@ namespace mySystem.Process.Bag.BTV
 
 //            // 读取内包装表，确定行数，并把能填的值先填上
 //            sql = "select * from 产品内包装记录 where 生产日期>='{0}' and 生产日期<='{1}'";
-//            da = new OleDbDataAdapter(string.Format(sql, start.ToString("yyyy/MM/dd"), end.ToString("yyyy/MM/dd")), mySystem.Parameter.connOle);
+//            da = new SqlDataAdapter(string.Format(sql, start.ToString("yyyy/MM/dd"), end.ToString("yyyy/MM/dd")), mySystem.Parameter.conn);
 //            dt = new DataTable();
 //            da.Fill(dt);
 //            foreach (DataRow dr in dt.Rows)
@@ -165,7 +166,7 @@ namespace mySystem.Process.Bag.BTV
 //            {
 //                int id = Convert.ToInt32(dr["生产指令ID"]);
 //                sql = "select * from 生产指令详细信息 where T生产指令ID={0}";
-//                da = new OleDbDataAdapter(string.Format(sql, id), mySystem.Parameter.connOle);
+//                da = new SqlDataAdapter(string.Format(sql, id), mySystem.Parameter.conn);
 //                dt = new DataTable();
 //                da.Fill(dt);
 //                if (dt.Rows.Count == 0) MessageBox.Show("ID为" + id + "的生产指令详细信息读取错误");
@@ -179,7 +180,7 @@ namespace mySystem.Process.Bag.BTV
 //                }
 
 //                sql = "select * from 生产指令 where ID={0}";
-//                da = new OleDbDataAdapter(string.Format(sql, id), mySystem.Parameter.connOle);
+//                da = new SqlDataAdapter(string.Format(sql, id), mySystem.Parameter.conn);
 //                dt = new DataTable();
 //                da.Fill(dt);
 //                if (dt.Rows.Count == 0) MessageBox.Show("ID为" + id + "的生产指令读取错误");
@@ -219,7 +220,7 @@ namespace mySystem.Process.Bag.BTV
 //                double sum_外包退料 = 0;
 
 //                sql = "select * from 生产退料记录表,生产退料记录详细信息 where 生产退料记录详细信息.T生产退料记录ID=生产退料记录表.ID and 生产退料记录表.生产指令ID={0} and 生产退料记录详细信息.领料日期时间 between #{1}# and #{2}# and 生产退料记录详细信息.班次='{3}'";
-//                da = new OleDbDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.connOle);
+//                da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.conn);
 //                dt = new DataTable();
 //                da.Fill(dt);
 //                if (dt.Rows.Count>0)
@@ -259,7 +260,7 @@ namespace mySystem.Process.Bag.BTV
 //                }
 
 //                sql = "select * from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.领料日期时间 between #{1}# and #{2}# and 生产领料使用记录详细信息.班次='{3}'";
-//                da = new OleDbDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.connOle);
+//                da = new SqlDataAdapter(string.Format(sql, id, currDateTime.Date, currDateTime.AddDays(1).Date, fight), mySystem.Parameter.conn);
 //                dt = new DataTable();
 //                da.Fill(dt);
 //                DataRow[] drs;
@@ -323,21 +324,21 @@ namespace mySystem.Process.Bag.BTV
 //                Tconn.Open();
 //                // TY膜
 //                sql = "select * from 设置存货档案 where 存货代码='{0}'";
-//                da = new OleDbDataAdapter(string.Format(sql, ty膜代码), Tconn);
+//                da = new SqlDataAdapter(string.Format(sql, ty膜代码), Tconn);
 //                dt = new DataTable();
 //                da.Fill(dt);
 //                h换算率 = Convert.ToDouble(dt.Rows[0]["换算率"]);
 //                dr["TY膜用量（平米）"] = Math.Round(Convert.ToDouble(dr["TY膜用量（米）"]) / h换算率, 2);
 //                // XP1膜
 //                sql = "select * from 设置存货档案 where 存货代码='{0}'";
-//                da = new OleDbDataAdapter(string.Format(sql, xp1膜代码), Tconn);
+//                da = new SqlDataAdapter(string.Format(sql, xp1膜代码), Tconn);
 //                dt = new DataTable();
 //                da.Fill(dt);
 //                h换算率 = Convert.ToDouble(dt.Rows[0]["换算率"]);
 //                dr["XP1膜用量（平米）"] = Math.Round(Convert.ToDouble(dr["XP1膜用量（米）"]) / h换算率, 2);
 //                // 产品
 //                sql = "select * from 设置存货档案 where 存货代码='{0}'";
-//                da = new OleDbDataAdapter(string.Format(sql, dr["产品代码"].ToString()), Tconn);
+//                da = new SqlDataAdapter(string.Format(sql, dr["产品代码"].ToString()), Tconn);
 //                dt = new DataTable();
 //                da.Fill(dt);
 //                h换算率 = Convert.ToDouble(dt.Rows[0]["换算率"]);

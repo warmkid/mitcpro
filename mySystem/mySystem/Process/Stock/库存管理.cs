@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace 订单和库存管理
 {
@@ -16,8 +17,8 @@ namespace 订单和库存管理
 //        string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
-        OleDbDataAdapter da;
-        OleDbCommandBuilder cb;
+        SqlDataAdapter da;
+        SqlCommandBuilder cb;
         DataTable dt;
         BindingSource bs;
 
@@ -47,8 +48,8 @@ namespace 订单和库存管理
 
         private void readFromDatabase()
         {
-            da = new OleDbDataAdapter("select * from 库存台帐", mySystem.Parameter.connOle);
-            cb = new OleDbCommandBuilder(da);
+            da = new SqlDataAdapter("select * from 库存台帐", mySystem.Parameter.conn);
+            cb = new SqlCommandBuilder(da);
             dt = new DataTable("库存台帐");
             bs = new BindingSource();
             da.Fill(dt);

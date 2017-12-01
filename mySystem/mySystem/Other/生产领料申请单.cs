@@ -37,6 +37,9 @@ namespace mySystem.Other
         private Parameter.UserState _userState;
         private Parameter.FormState _formState;
 
+        private SqlDataAdapter da记录sql, da记录详情sql;
+        private SqlCommandBuilder cb记录sql, cb记录详情sql;
+
         public 生产领料申请单(mySystem.MainForm mainform, DataTable dt生产指令构造, DataTable dt物料代码数量构造, SqlConnection conn构造, OleDbConnection connOle构造)
             : base(mainform)
         {
@@ -59,7 +62,15 @@ namespace mySystem.Other
             DataRow dr = dt记录.NewRow();
             dr = writeOuterDefault(dr);
             dt记录.Rows.Add(dr);
-            da记录.Update((DataTable)bs记录.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录.Update((DataTable)bs记录.DataSource);
+            }
+            else
+            {
+                da记录sql.Update((DataTable)bs记录.DataSource);
+            }
+            
             readOuterData(_生产指令ID, _申请单号);
             outerBind();
             _id = Convert.ToInt32(dt记录.Rows[0]["ID"].ToString());
@@ -125,14 +136,23 @@ namespace mySystem.Other
         // 获取操作员和审核员
         private void getPeople()
         {
-            OleDbDataAdapter da;
             DataTable dt;
 
             ls操作员 = new List<string>();
             ls审核员 = new List<string>();
-            da = new OleDbDataAdapter("select * from 用户权限 where 步骤='生产领料申请单表'", connOle);
-            dt = new DataTable("temp");
-            da.Fill(dt);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbDataAdapter da = new OleDbDataAdapter("select * from 用户权限 where 步骤='生产领料申请单表'", connOle);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            else
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from 用户权限 where 步骤='生产领料申请单表'", mySystem.Parameter.conn);
+                dt = new DataTable("temp");
+                da.Fill(dt);
+            }
+            
 
             if (dt.Rows.Count > 0)
             {
@@ -197,11 +217,23 @@ namespace mySystem.Other
         {
             DataTable dttemp = new DataTable("dttemp");
 
-            OleDbCommand comm1 = new OleDbCommand();
-            comm1.Connection = Parameter.connOle;
-            comm1.CommandText = "select * from " + table + " where 生产指令ID = " + _生产指令ID;//这里应有生产指令编码
-            OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
-            datemp1.Fill(dttemp);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                OleDbCommand comm1 = new OleDbCommand();
+                comm1.Connection = Parameter.connOle;
+                comm1.CommandText = "select * from " + table + " where 生产指令ID = " + _生产指令ID;//这里应有生产指令编码
+                OleDbDataAdapter datemp1 = new OleDbDataAdapter(comm1);
+                datemp1.Fill(dttemp);
+            }
+            else
+            {
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = Parameter.conn;
+                comm1.CommandText = "select * from " + table + " where 生产指令ID = " + _生产指令ID;//这里应有生产指令编码
+                SqlDataAdapter datemp1 = new SqlDataAdapter(comm1);
+                datemp1.Fill(dttemp);
+            }
+            
 
             if (dttemp.Rows.Count <= 0)
             { _申请单号 = _生产指令编号 + "-1"; }
@@ -398,21 +430,45 @@ namespace mySystem.Other
         //读取外表
         private void readOuterData(Int32 InstruID, String RequestNum)
         {
-            bs记录 = new BindingSource();
-            dt记录 = new DataTable(table);
-            da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and  申请单编号 ='" + RequestNum + "'", connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
-            da记录.Fill(dt记录);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                da记录 = new OleDbDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and  申请单编号 ='" + RequestNum + "'", connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
+            else
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable(table);
+                da记录sql = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and  申请单编号 ='" + RequestNum + "'", mySystem.Parameter.conn);
+                cb记录sql = new SqlCommandBuilder(da记录sql);
+                da记录sql.Fill(dt记录);
+            }
+            
         }
 
         // 读取数据，根据自己表的ID
         private void readOuterData(int id)
         {
-            bs记录 = new BindingSource();
-            dt记录 = new DataTable("table");
-            da记录 = new OleDbDataAdapter("select * from " + table + " where ID= " + id.ToString(), connOle);
-            cb记录 = new OleDbCommandBuilder(da记录);
-            da记录.Fill(dt记录);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable("table");
+                da记录 = new OleDbDataAdapter("select * from " + table + " where ID= " + id.ToString(), connOle);
+                cb记录 = new OleDbCommandBuilder(da记录);
+                da记录.Fill(dt记录);
+            }
+            else
+            {
+                bs记录 = new BindingSource();
+                dt记录 = new DataTable("table");
+                da记录sql = new SqlDataAdapter ("select * from " + table + " where ID= " + id.ToString(), mySystem.Parameter.conn);
+                cb记录sql = new SqlCommandBuilder(da记录sql);
+                da记录sql.Fill(dt记录);
+            }
+           
         }
 
         //外表控件绑定
@@ -464,11 +520,23 @@ namespace mySystem.Other
         //内表读数据，填datatable
         private void readInnerData(Int32 ID)
         {
-            bs记录详情 = new BindingSource();
-            dt记录详情 = new DataTable(tableInfo);
-            da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where 生产领料申请表单ID = " + ID.ToString(), connOle);
-            cb记录详情 = new OleDbCommandBuilder(da记录详情);
-            da记录详情.Fill(dt记录详情);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情 = new OleDbDataAdapter("select * from " + tableInfo + " where 生产领料申请表单ID = " + ID.ToString(), connOle);
+                cb记录详情 = new OleDbCommandBuilder(da记录详情);
+                da记录详情.Fill(dt记录详情);
+            }
+            else
+            {
+                bs记录详情 = new BindingSource();
+                dt记录详情 = new DataTable(tableInfo);
+                da记录详情sql = new SqlDataAdapter("select * from " + tableInfo + " where 生产领料申请表单ID = " + ID.ToString(), mySystem.Parameter.conn);
+                cb记录详情sql = new SqlCommandBuilder(da记录详情sql);
+                da记录详情sql.Fill(dt记录详情);
+            }
+           
         }
 
         //内表控件绑定
@@ -510,7 +578,15 @@ namespace mySystem.Other
             setDataGridViewRowNums();
             if (dataGridView1.Rows.Count > 0)
                 dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.Rows.Count - 1;
-            da记录详情.Update((DataTable)bs记录详情.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                da记录详情.Update((DataTable)bs记录详情.DataSource);
+            }
+            else
+            {
+                da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+            }
+            
             readInnerData(_id);
             innerBind();
         }
@@ -1018,9 +1094,13 @@ namespace mySystem.Other
         private void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
-            String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
-            String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
-            MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+            DataGridView dgv = ((DataGridView)sender);
+            if (dgv.CurrentCell != null)
+            {
+                String Columnsname = dgv.CurrentCell.OwningColumn.Name;
+                String rowsname = dgv.CurrentCell.OwningRow.Index.ToString();
+                MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+            }
         }
 
         //实时求合计、检查人名合法性
@@ -1079,7 +1159,15 @@ namespace mySystem.Other
                     //    da记录.Update(dt记录);
                     //}
                     dt记录.Rows[0].Delete();
-                    da记录.Update(dt记录);
+                    if (!mySystem.Parameter.isSqlOk)
+                    {
+                        da记录.Update(dt记录);
+                    }
+                    else
+                    {
+                        da记录sql.Update(dt记录);
+                    }
+                    
                 }
             }
         }
