@@ -33,7 +33,9 @@ namespace mySystem.Process.Bag.PTV
         Parameter.UserState _userState;
         Parameter.FormState _formState;
         Int32 InstruID;
-        String Instruction;     
+        String Instruction;
+
+        bool isFirstBind = true;
 
         public PTVBag_checklist(MainForm mainform) : base(mainform)
         {
@@ -440,7 +442,7 @@ namespace mySystem.Process.Bag.PTV
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         cbc.MinimumWidth = 120;
                         break;
                     default:
@@ -451,7 +453,7 @@ namespace mySystem.Process.Bag.PTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         tbc.MinimumWidth = 120;
                         break;
                 }
@@ -668,8 +670,9 @@ namespace mySystem.Process.Bag.PTV
             print(false);
             GC.Collect();
         }
-        public void print(bool b)
+        public int print(bool b)
         {
+            int pageCount = 0;
             int label_打印成功 = 1;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -688,7 +691,8 @@ namespace mySystem.Process.Bag.PTV
             if (b)
             {
                 my.Select();
-                oXL.Visible = true; //加上这一行  就相当于预览功能            
+                oXL.Visible = true; //加上这一行  就相当于预览功能        
+                return pageCount;
             }
             else
             {
@@ -713,7 +717,7 @@ namespace mySystem.Process.Bag.PTV
                         bs记录.EndEdit();
                         da记录.Update((DataTable)bs记录.DataSource);
                     }
-
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -726,7 +730,7 @@ namespace mySystem.Process.Bag.PTV
                     my = null;
                     wb = null;
                 }
-
+                return pageCount;
             }
         }
 
@@ -798,6 +802,18 @@ namespace mySystem.Process.Bag.PTV
             //throw new NotImplementedException();
             setDataGridViewBackColor();
             setDataGridViewFormat();
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void PTVBag_checklist_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

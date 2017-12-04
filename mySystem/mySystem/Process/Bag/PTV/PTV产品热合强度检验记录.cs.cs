@@ -46,6 +46,8 @@ namespace mySystem.Process.Bag.PTV
 
         CheckForm ckForm = null;
 
+        bool isFirstBind = true;
+
         public PTV产品热合强度检验记录(MainForm mainform) 
             : base(mainform)
         {
@@ -580,6 +582,12 @@ namespace mySystem.Process.Bag.PTV
             {
                 dataGridView1.Columns[i].ReadOnly = true;
             }
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         /// <summary>
@@ -926,7 +934,7 @@ namespace mySystem.Process.Bag.PTV
         }
         
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -944,9 +952,11 @@ namespace mySystem.Process.Bag.PTV
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -971,6 +981,8 @@ namespace mySystem.Process.Bag.PTV
                         bsOuter.EndEdit();
                         daOuter.Update((DataTable)bsOuter.DataSource);
                     }
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -981,6 +993,7 @@ namespace mySystem.Process.Bag.PTV
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1122,6 +1135,12 @@ namespace mySystem.Process.Bag.PTV
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             setEnableReadOnly();
+        }
+
+        private void PTV产品热合强度检验记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
 
     }

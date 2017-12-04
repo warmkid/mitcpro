@@ -49,7 +49,8 @@ namespace mySystem.Process.Bag.PTV
         BindingSource bsOuter, bsInner,bsInner_制袋;
 
         CheckForm ckform;
-
+        bool isFirstBind = true;
+        bool isFirstBind2 = true;
 
         public PTVBag_productioninstruction(mySystem.MainForm mainform)
             : base(mainform)
@@ -425,6 +426,7 @@ namespace mySystem.Process.Bag.PTV
             dr["操作时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
             dr["接收时间"] = DateTime.Now;
+            dr["审核是否通过"] = false;
             dr["状态"] = 0;
             return dr;
         }
@@ -531,7 +533,7 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
             dataGridView1.Columns["生产系数"].Visible = false;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
 
         }
         void innerBind_制袋()
@@ -542,7 +544,13 @@ namespace mySystem.Process.Bag.PTV
 
             dataGridView2.Columns[0].Visible = false;
             dataGridView2.Columns[1].Visible = false;
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
 
         }
 
@@ -945,6 +953,14 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns[3].HeaderText = "计划产量（只）";
             dataGridView1.Columns[5].HeaderText = "内包装规格（只/包）";
             dataGridView1.Columns[9].HeaderText = "外包装规格（只/箱）";
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+
+
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -1485,7 +1501,7 @@ namespace mySystem.Process.Bag.PTV
 
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -1516,9 +1532,11 @@ namespace mySystem.Process.Bag.PTV
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 // 直接用默认打印机打印该Sheet
                 try
                 {
@@ -1539,6 +1557,7 @@ namespace mySystem.Process.Bag.PTV
                         daOuter.Update((DataTable)bsOuter.DataSource);
                     }
                     // 关闭文件，false表示不保存
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     wb.Close(false);
                     // 关闭Excel进程
                     oXL.Quit();
@@ -1548,6 +1567,7 @@ namespace mySystem.Process.Bag.PTV
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1569,6 +1589,14 @@ namespace mySystem.Process.Bag.PTV
                 readInnerData_制袋(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
                 innerBind_制袋();
             }
+        }
+
+        private void PTVBag_productioninstruction_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView2.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView2);
         }
 
     }

@@ -632,6 +632,7 @@
             this.Name = "PTVBag_testrecordofdisclose";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "泄漏测试记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_testrecordofdisclose_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox6.ResumeLayout(false);

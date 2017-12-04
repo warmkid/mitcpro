@@ -382,6 +382,7 @@
             this.Controls.Add(this.label1);
             this.Name = "PTVBag_clearance";
             this.Text = "PTVBag_clearance";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_clearance_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

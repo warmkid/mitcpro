@@ -318,6 +318,7 @@
             this.Controls.Add(this.label1);
             this.Name = "PTVBag_checklist";
             this.Text = "PTVBag_checklist";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_checklist_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

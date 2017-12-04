@@ -48,6 +48,8 @@ namespace mySystem.Process.Bag.PTV
         String Instruction;
         bool b标签;
 
+        bool isFirstBind = true;
+
         public PTVBag_innerpackaging(MainForm mainform)
             : base(mainform)
         {
@@ -614,7 +616,7 @@ namespace mySystem.Process.Bag.PTV
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码
@@ -675,8 +677,8 @@ namespace mySystem.Process.Bag.PTV
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     case "内标签":
                         cbc = new DataGridViewComboBoxColumn();
@@ -688,8 +690,8 @@ namespace mySystem.Process.Bag.PTV
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     case "内包装外观":
                         cbc = new DataGridViewComboBoxColumn();
@@ -701,8 +703,8 @@ namespace mySystem.Process.Bag.PTV
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -712,8 +714,8 @@ namespace mySystem.Process.Bag.PTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -1074,7 +1076,7 @@ namespace mySystem.Process.Bag.PTV
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -1097,10 +1099,12 @@ namespace mySystem.Process.Bag.PTV
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
                 bool isPrint = true;
+                int pageCount = 0;
                 //false->打印
                 try
                 {
@@ -1124,6 +1128,7 @@ namespace mySystem.Process.Bag.PTV
                         da记录.Update((DataTable)bs记录.DataSource);
                     }
                     // 关闭文件，false表示不保存
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     wb.Close(false);
                     // 关闭Excel进程
                     oXL.Quit();
@@ -1133,6 +1138,7 @@ namespace mySystem.Process.Bag.PTV
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1315,6 +1321,11 @@ namespace mySystem.Process.Bag.PTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         //实时求合计、检查人名合法性
@@ -1467,6 +1478,12 @@ namespace mySystem.Process.Bag.PTV
             lbl黑点晶点合计.DataBindings[0].ReadValue();
             lbl热封线不合格合计.DataBindings[0].ReadValue();
             tb工时.DataBindings[0].ReadValue();
+        }
+
+        private void PTVBag_innerpackaging_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
 
     }

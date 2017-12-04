@@ -60,7 +60,7 @@ namespace mySystem
             }
             catch (Exception ee)
             {
-                DateTime dt = new DateTime(2018, 11, 11);
+                DateTime dt = new DateTime(2017, 11, 11);
                 name = dt.ToString("yyyy/MM/dd");
                 config.AppSettings.Settings.Add("sy", name);
                 config.Save(ConfigurationSaveMode.Modified);

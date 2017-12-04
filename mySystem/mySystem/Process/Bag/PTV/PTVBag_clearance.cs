@@ -56,6 +56,7 @@ namespace mySystem.Process.Bag.PTV
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
 
+        bool isFirstBind = true;
 
         public PTVBag_clearance(MainForm mainform)
             : base(mainform)
@@ -213,6 +214,8 @@ namespace mySystem.Process.Bag.PTV
             SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令详细信息 where T生产指令ID=" + i生产指令ID, conn);
             DataTable dt = new DataTable("temp");
             da.Fill(dt);
+            if (dt.Rows.Count <= 0)
+                return;
             str产品代码 = dt.Rows[0]["产品代码"].ToString();
             str产品批号 = dt.Rows[0]["产品批号"].ToString();
 
@@ -639,6 +642,11 @@ namespace mySystem.Process.Bag.PTV
             {
                 dataGridView1.Columns[i].ReadOnly = true;
             }
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
                 
         }
 
@@ -802,8 +810,9 @@ namespace mySystem.Process.Bag.PTV
             print(false);
             GC.Collect();
         }
-        public void print(bool b)
+        public int print(bool b)
         {
+            int pageCount = 0;
             int label_打印成功 = 1;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -829,7 +838,8 @@ namespace mySystem.Process.Bag.PTV
             if (b)
             {
                 my.Select();
-                oXL.Visible = true; //加上这一行  就相当于预览功能            
+                oXL.Visible = true; //加上这一行  就相当于预览功能  
+                return 0;
             }
             else
             {
@@ -854,7 +864,7 @@ namespace mySystem.Process.Bag.PTV
                         bsOuter.EndEdit();
                         daOuter.Update((DataTable)bsOuter.DataSource);
                     }
-
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -867,6 +877,7 @@ namespace mySystem.Process.Bag.PTV
                     my = null;
                     wb = null;
                 }
+                return pageCount;
 
             }
         }
@@ -929,6 +940,12 @@ namespace mySystem.Process.Bag.PTV
                 my.Cells[5, 7].Value = "合格□\n不合格☑ ";
             my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"].ToString();
             my.Cells[19 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
+        }
+
+        private void PTVBag_clearance_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
        
 

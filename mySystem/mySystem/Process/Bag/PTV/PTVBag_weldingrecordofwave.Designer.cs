@@ -451,6 +451,7 @@
             this.Name = "PTVBag_weldingrecordofwave";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "超声波焊接记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_weldingrecordofwave_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

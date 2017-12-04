@@ -35,6 +35,7 @@ namespace mySystem.Process.Bag.PTV
         Int32 InstruID;
         String Instruction;
         String prodCode;
+        bool isFirstBind = true;
 
         public PTVBag_testrecordofdisclose(MainForm mainform) : base(mainform)
         {
@@ -594,7 +595,7 @@ namespace mySystem.Process.Bag.PTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                         tbc.MinimumWidth = 80;
                         break;
                 }
@@ -949,7 +950,7 @@ namespace mySystem.Process.Bag.PTV
 
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -972,9 +973,11 @@ namespace mySystem.Process.Bag.PTV
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -999,6 +1002,7 @@ namespace mySystem.Process.Bag.PTV
                         da记录.Update((DataTable)bs记录.DataSource);
                     }
                     // 关闭文件，false表示不保存
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     wb.Close(false);
                     // 关闭Excel进程
                     oXL.Quit();
@@ -1008,6 +1012,7 @@ namespace mySystem.Process.Bag.PTV
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
         //******************************小功能******************************//  
@@ -1115,6 +1120,11 @@ namespace mySystem.Process.Bag.PTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         private void btn提交数据审核_Click(object sender, EventArgs e)
@@ -1154,6 +1164,12 @@ namespace mySystem.Process.Bag.PTV
             da记录详情.Update((DataTable)bs记录详情.DataSource);
             innerBind();
             setEnableReadOnly();
+        }
+
+        private void PTVBag_testrecordofdisclose_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
         
     }

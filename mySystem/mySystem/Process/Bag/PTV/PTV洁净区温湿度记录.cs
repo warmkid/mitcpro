@@ -35,6 +35,8 @@ namespace mySystem.Process.Bag.PTV
         String Instruction;
         String Flight = "";
 
+        bool isFirstBind = true;
+
         public PTV洁净区温湿度记录(mySystem.MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -473,8 +475,8 @@ namespace mySystem.Process.Bag.PTV
                         cbc.Items.Add("夜班");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 80;
                         break;
                     case "判定":
                         cbc = new DataGridViewComboBoxColumn();
@@ -486,8 +488,8 @@ namespace mySystem.Process.Bag.PTV
                         cbc.Items.Add("不合格");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 80;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -497,8 +499,8 @@ namespace mySystem.Process.Bag.PTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        tbc.MinimumWidth = 80;
                         break;
                 }
             }
@@ -769,7 +771,7 @@ namespace mySystem.Process.Bag.PTV
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -787,9 +789,12 @@ namespace mySystem.Process.Bag.PTV
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
+
                 bool isPrint = true;
                 //false->打印
                 try
@@ -813,6 +818,8 @@ namespace mySystem.Process.Bag.PTV
                         bs记录.EndEdit();
                         da记录.Update((DataTable)bs记录.DataSource);
                     }
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -823,6 +830,7 @@ namespace mySystem.Process.Bag.PTV
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -935,6 +943,17 @@ namespace mySystem.Process.Bag.PTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void PTV洁净区温湿度记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
 
 

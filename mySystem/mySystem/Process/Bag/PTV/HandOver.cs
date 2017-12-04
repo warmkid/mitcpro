@@ -58,6 +58,9 @@ namespace mySystem.Process.Bag.PTV
        
         Parameter.UserState _userState;      
         Parameter.FormState _formState;
+
+        bool isFirstBind = true;
+
         public HandOver(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -106,6 +109,12 @@ namespace mySystem.Process.Bag.PTV
             removeOuterBind();
             outerBind();
             setEnableReadOnly(true);
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
           
         }
 
@@ -142,7 +151,13 @@ namespace mySystem.Process.Bag.PTV
             readOuterData(searchId);
             removeOuterBind();
             outerBind();
-            setEnableReadOnly(true);            
+            setEnableReadOnly(true);
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         /// <summary>
@@ -715,7 +730,7 @@ namespace mySystem.Process.Bag.PTV
             print(false);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -776,7 +791,8 @@ namespace mySystem.Process.Bag.PTV
             if (preview)
             {
                 my.Select();
-                oXL.Visible = true; //加上这一行  就相当于预览功能            
+                oXL.Visible = true; //加上这一行  就相当于预览功能       
+                return 0;
             }
             else
             {
@@ -788,6 +804,7 @@ namespace mySystem.Process.Bag.PTV
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
                 }
                 catch { }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 // 关闭文件，false表示不保存
                 wb.Close(false);
                 // 关闭Excel进程
@@ -799,6 +816,7 @@ namespace mySystem.Process.Bag.PTV
                 oXL = null;
                 my = null;
                 wb = null;
+                return pageCount;
             }
         }
 
@@ -1071,6 +1089,12 @@ namespace mySystem.Process.Bag.PTV
             //this act as the same in function upper
             
             btn查看日志.Enabled = true;
+        }
+
+        private void HandOver_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
 
         //leave datagridview check the right things

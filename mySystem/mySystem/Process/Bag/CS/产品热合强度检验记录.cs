@@ -363,7 +363,7 @@ namespace mySystem.Process.Bag.CS
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
         ///<summary>
         ///设置DataGridView序号

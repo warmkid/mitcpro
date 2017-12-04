@@ -869,6 +869,7 @@
             this.Controls.Add(this.label1);
             this.Name = "PTVBag_runningrecordofdf";
             this.Text = "PTVBag_runningrecordofdf";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_runningrecordofdf_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();

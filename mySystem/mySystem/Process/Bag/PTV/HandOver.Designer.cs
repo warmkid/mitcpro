@@ -385,6 +385,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HandOver";
             this.Text = "岗位交接班记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandOver_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

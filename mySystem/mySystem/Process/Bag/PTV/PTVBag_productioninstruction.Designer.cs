@@ -1128,6 +1128,7 @@
             this.Controls.Add(this.label1);
             this.Name = "PTVBag_productioninstruction";
             this.Text = "PTVBag_productioninstruction";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_productioninstruction_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

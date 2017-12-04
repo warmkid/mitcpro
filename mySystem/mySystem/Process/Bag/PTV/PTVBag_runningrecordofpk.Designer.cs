@@ -964,6 +964,7 @@
             this.Controls.Add(this.label30);
             this.Name = "PTVBag_runningrecordofpk";
             this.Text = "PTVBag_runningrecordofpk";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_runningrecordofpk_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
