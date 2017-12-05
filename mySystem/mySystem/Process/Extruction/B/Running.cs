@@ -1309,7 +1309,7 @@ namespace mySystem.Process.Extruction.B
             print(false);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
 		{
            
 			// 打开一个Excel进程
@@ -1386,30 +1386,32 @@ namespace mySystem.Process.Extruction.B
             my.PageSetup.RightFooter = dt.Rows[0]["生产指令编号"].ToString() + "-08-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
 			if(preview)
 			{
-            // 让这个Sheet为被选中状态
-            my.Select();  
-			 oXL.Visible=true; //加上这一行  就相当于预览功能
+                // 让这个Sheet为被选中状态
+                my.Select();  
+                oXL.Visible=true; //加上这一行  就相当于预览功能
+                return 0;
             }
 			else
-			{	
-			// 直接用默认打印机打印该Sheet
+            {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 直接用默认打印机打印该Sheet
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
                 }
                 catch { }
-            // 关闭文件，false表示不保存
-            wb.Close(false);
-            // 关闭Excel进程
-            oXL.Quit();
-            // 释放COM资源
-            Marshal.ReleaseComObject(wb);
-            Marshal.ReleaseComObject(oXL);
-            oXL = null;
-            wb = null;
-            my = null;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                oXL = null;
+                wb = null;
+                my = null;
+                return pageCount;
 			}
-
 		}
 
         int find_indexofprint()

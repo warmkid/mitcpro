@@ -35,6 +35,9 @@ namespace mySystem.Process.Order
         CheckForm ckform;
 
         bool isSaved = false;
+        bool isFirstBind1 = true;
+        bool isFirstBind2 = true;
+        bool isFirstBind3 = true; 
 
         public 出库单(MainForm mainform):base(mainform)
         {
@@ -152,6 +155,11 @@ namespace mySystem.Process.Order
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["出库单ID"].Visible = false;
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
         }
 
         private void fillPrinter()
@@ -571,6 +579,11 @@ namespace mySystem.Process.Order
         void dataGridView3_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView3.Columns["ID"].Visible = false;
+            if (isFirstBind3)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind3 = false;
+            }
         }
 
         private void btn出库_Click(object sender, EventArgs e)
@@ -808,6 +821,10 @@ namespace mySystem.Process.Order
                     }
                 }
             }
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
+            writeDGVWidthToSetting(dataGridView3);
         }
 
         private void btn删除_Click(object sender, EventArgs e)
@@ -837,6 +854,20 @@ namespace mySystem.Process.Order
             dataGridView3.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             dataGridView3.Columns["产品规格"].Width = 300;
+
+        }
+
+        private void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind2 = false;
+            }
+        }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
 
         }
 

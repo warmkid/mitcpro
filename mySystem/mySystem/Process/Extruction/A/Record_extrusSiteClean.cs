@@ -56,6 +56,8 @@ namespace mySystem.Extruction.Process
         /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
         /// </summary>
         Parameter.FormState _formState;
+        bool isFirstBind1 = true;
+        bool isFirstBind2 = true; 
 
         private void readsetting()
         {
@@ -1066,7 +1068,7 @@ namespace mySystem.Extruction.Process
             return ret;
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -1089,9 +1091,11 @@ namespace mySystem.Extruction.Process
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 // 直接用默认打印机打印该Sheet
                 try
                 {
@@ -1113,9 +1117,9 @@ namespace mySystem.Extruction.Process
                             da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                         else
                             da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
-                        
-                    }
 
+                    }
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -1126,6 +1130,7 @@ namespace mySystem.Extruction.Process
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1359,6 +1364,31 @@ namespace mySystem.Extruction.Process
                 MessageBox.Show(str人员信息);
             }
             
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
+        }
+
+        private void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
+        }
+
+        private void Record_extrusSiteClean_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
     }
 }

@@ -291,6 +291,7 @@
             this.btn打印.TabIndex = 156;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn确认
             // 
@@ -473,6 +474,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(802, 124);
             this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete_1);
             // 
             // dataGridView4
             // 
@@ -482,6 +484,7 @@
             this.dataGridView4.RowTemplate.Height = 23;
             this.dataGridView4.Size = new System.Drawing.Size(802, 142);
             this.dataGridView4.TabIndex = 175;
+            this.dataGridView4.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView4_DataBindingComplete_1);
             // 
             // label15
             // 

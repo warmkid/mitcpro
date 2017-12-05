@@ -63,6 +63,8 @@ namespace mySystem.Process.Extruction.B
         /// 0：未保存；1：待审核；2：审核通过；3：审核未通过
         /// </summary>
         Parameter.FormState _formState;
+        bool isFirstBind = true; 
+
         public Waste(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -1257,7 +1259,11 @@ namespace mySystem.Process.Extruction.B
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns[0].Visible = false;
             setDataGridViewColumnReadOnly();
-
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         
@@ -1287,7 +1293,7 @@ namespace mySystem.Process.Extruction.B
             print(false);
             GC.Collect();
         }
-		public void print(bool preview)
+		public int print(bool preview)
 		{
 			// 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -1339,32 +1345,33 @@ namespace mySystem.Process.Extruction.B
 
 			if(preview)
 			{
-            // 让这个Sheet为被选中状态
-                my.Select();  
-				 oXL.Visible=true; //加上这一行  就相当于预览功能
-			}else
-			{
-                
+                // 让这个Sheet为被选中状态
+                my.Select();
+                oXL.Visible = true; //加上这一行  就相当于预览功能
+                return 0;
+			}
+            else
+			{                
                 //add footer
                 my.PageSetup.RightFooter = mySystem.Parameter.proInstruction + "-10-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
-                
-
-            // 直接用默认打印机打印该Sheet
+                // 直接用默认打印机打印该Sheet
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
                 }
                 catch { }
-            // 关闭文件，false表示不保存
-            wb.Close(false);
-            // 关闭Excel进程
-            oXL.Quit();
-            // 释放COM资源
-            Marshal.ReleaseComObject(wb);
-            Marshal.ReleaseComObject(oXL);
-            my = null;
-            oXL = null;
-            wb = null;
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                my = null;
+                oXL = null;
+                wb = null;
+                return pageCount;
 			}
 		}
 
@@ -1413,6 +1420,12 @@ namespace mySystem.Process.Extruction.B
                 MessageBox.Show(str人员信息);
             }
             
+        }
+
+        private void Waste_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

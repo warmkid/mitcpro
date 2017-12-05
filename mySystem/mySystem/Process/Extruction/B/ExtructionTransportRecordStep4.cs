@@ -37,6 +37,7 @@ namespace mySystem.Extruction.Process
         //private DateTimePicker dtp = new DateTimePicker();
 
         private int checknum = 0;
+        bool isFirstBind = true;
                 
         public ExtructionTransportRecordStep4(MainForm mainform): base(mainform)
         {
@@ -85,10 +86,10 @@ namespace mySystem.Extruction.Process
             for (int i = 0; i < this.TransportRecordView.Columns.Count; i++)
             {
                 this.TransportRecordView.Columns[i].SortMode = DataGridViewColumnSortMode.NotSortable;
-                this.TransportRecordView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                //this.TransportRecordView.Columns[i].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
                 this.TransportRecordView.Columns[i].MinimumWidth = 90;
             }
-            this.TransportRecordView.Columns["物料代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //this.TransportRecordView.Columns["物料代码"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             this.TransportRecordView.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.TransportRecordView.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             this.TransportRecordView.ColumnHeadersHeight = 40;
@@ -565,6 +566,21 @@ namespace mySystem.Extruction.Process
         private void bt查看人员信息_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void ExtructionTransportRecordStep4_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(TransportRecordView);
+        }
+
+        private void TransportRecordView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(TransportRecordView);
+                isFirstBind = false;
+            }
         }
     }
 }

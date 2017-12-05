@@ -19,6 +19,7 @@ namespace mySystem.Extruction.Process
         private DataTable datatab = new DataTable();
         public int id = 0;
         SqlConnection conn = null;
+        
         public RunningRecordofFeedingUnit(SqlConnection myConnection)
         {
             InitializeComponent();
@@ -113,6 +114,11 @@ namespace mySystem.Extruction.Process
 			//check.ExitButton.Text = "取消";
             //check.ShowDialog();
             
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+
         }
         
        

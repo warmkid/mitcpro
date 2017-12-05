@@ -49,7 +49,8 @@ namespace mySystem.Extruction.Chart
         Parameter.UserState _userState;
         Parameter.FormState _formState;
         Int32 InstruID;
-        String Instruction;  
+        String Instruction;
+        bool isFirstBind = true;
 
         public outerpack(mySystem.MainForm mainform) : base(mainform)
         {
@@ -618,8 +619,8 @@ namespace mySystem.Extruction.Chart
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     case "是否打包封箱":
                         cbc = new DataGridViewComboBoxColumn();
@@ -631,8 +632,8 @@ namespace mySystem.Extruction.Chart
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -642,8 +643,8 @@ namespace mySystem.Extruction.Chart
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -661,7 +662,7 @@ namespace mySystem.Extruction.Chart
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T产品外包装记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.Columns["包装明细"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["包装明细"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
 
         //******************************按钮功能******************************//
@@ -921,7 +922,7 @@ namespace mySystem.Extruction.Chart
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -939,9 +940,11 @@ namespace mySystem.Extruction.Chart
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -971,8 +974,9 @@ namespace mySystem.Extruction.Chart
                         {
                             da记录sql.Update((DataTable)bs记录.DataSource);
                         }
-                        
+
                     }
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -983,6 +987,7 @@ namespace mySystem.Extruction.Chart
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
         
@@ -1118,6 +1123,11 @@ namespace mySystem.Extruction.Chart
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         private void bt查看人员信息_Click(object sender, EventArgs e)
@@ -1147,6 +1157,12 @@ namespace mySystem.Extruction.Chart
                 MessageBox.Show(str人员信息);
             }
             
+        }
+
+        private void outerpack_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
         }
     
     }

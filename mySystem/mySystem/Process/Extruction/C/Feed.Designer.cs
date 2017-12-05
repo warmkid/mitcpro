@@ -313,6 +313,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Feed";
             this.Text = "吹膜供料系统运行记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Feed_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

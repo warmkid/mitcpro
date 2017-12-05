@@ -52,7 +52,7 @@ namespace mySystem.Extruction.Process
         Parameter.UserState _userState;
         Parameter.FormState _formState;
         Int32 InstruID;
-        String Instruction;  
+        String Instruction;
 
         public ExtructionPreheatParameterRecordStep3(MainForm mainform): base(mainform)
         {
@@ -796,7 +796,7 @@ namespace mySystem.Extruction.Process
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -815,9 +815,11 @@ namespace mySystem.Extruction.Process
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -845,6 +847,7 @@ namespace mySystem.Extruction.Process
                             da记录_sql.Update((DataTable)bs记录.DataSource);
 
                     }
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -855,6 +858,7 @@ namespace mySystem.Extruction.Process
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 

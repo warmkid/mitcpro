@@ -30,6 +30,7 @@ namespace mySystem.Extruction.Process
 
         private SqlDataAdapter da记录sql, da记录详情sql;
         private SqlCommandBuilder cb记录sql, cb记录详情sql;
+        bool isFirstBind = true; 
 
         public ExtructionReplaceCore(MainForm mainform) : base(mainform)
         {
@@ -296,8 +297,8 @@ namespace mySystem.Extruction.Process
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -307,8 +308,8 @@ namespace mySystem.Extruction.Process
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -328,7 +329,7 @@ namespace mySystem.Extruction.Process
             dataGridView1.Columns["换模芯ID"].Visible = false;
             dataGridView1.Columns["检查项目"].ReadOnly = true;
             dataGridView1.Columns["检查标准"].ReadOnly = true;
-            dataGridView1.Columns["检查标准"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["检查标准"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dataGridView1.Columns["检查标准"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
         }
 
@@ -472,6 +473,22 @@ namespace mySystem.Extruction.Process
             //String str审核员 = dt.Rows[0]["审核员"].ToString();
             //String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
             //MessageBox.Show(str人员信息);
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void ExtructionReplaceCore_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
         }
        
     }

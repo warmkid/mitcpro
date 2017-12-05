@@ -55,6 +55,7 @@ namespace WindowsFormsApplication1
         /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
         /// </summary>
         Parameter.FormState _formState;
+        bool isFirstBind = true; 
 
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
         void addDataEventHandler()
@@ -1424,7 +1425,7 @@ namespace WindowsFormsApplication1
             GC.Collect();
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -1446,9 +1447,11 @@ namespace WindowsFormsApplication1
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 // 直接用默认打印机打印该Sheet
                 try
                 {
@@ -1474,7 +1477,7 @@ namespace WindowsFormsApplication1
                         }
                         
                     }
-
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -1485,6 +1488,7 @@ namespace WindowsFormsApplication1
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1868,6 +1872,21 @@ namespace WindowsFormsApplication1
                 MessageBox.Show(str人员信息);
             }
             
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void Record_extrusSupply_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

@@ -42,6 +42,8 @@ namespace BatchProductRecord
         mySystem.CheckForm ckform;
 
         Hashtable htRow2Page = new Hashtable();
+        bool isFirstBind1 = true;
+        bool isFirstBind2 = true; 
 
         public BatchProductRecord(mySystem.MainForm mainform):base(mainform)
         {
@@ -1162,7 +1164,7 @@ namespace BatchProductRecord
                 //                     (new mySystem.Process.Extruction.C.Feed(mainform, id)).Show();
                 //                     break;
                 //                case 7:// 吹膜机组运行记录
-                                     
+
                 //                     da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
                 //                     dt = new DataTable("吹膜机组运行记录");
                                                                          
@@ -1171,7 +1173,7 @@ namespace BatchProductRecord
                 //                     (new mySystem.Process.Extruction.B.Running(mainform, id)).Show();
                 //                     break;
                 //                case 8:// 吹膜工序生产和检验记录
-                                     
+
                 //                     da = new OleDbDataAdapter("select * from 吹膜工序生产和检验记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
                 //                     dt = new DataTable("吹膜工序生产和检验记录");
                 //                     da.Fill(dt);
@@ -1179,7 +1181,7 @@ namespace BatchProductRecord
                 //                     (new mySystem.Extruction.Process.ExtructionpRoductionAndRestRecordStep6(mainform, id)).Show();
                 //                     break;
                 //                case 9:// 废品记录
-                                     
+
                 //                     da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where  生产指令ID=" + mySystem.Parameter.proInstruID, mySystem.Parameter.connOle);
                 //                     dt = new DataTable("吹膜工序废品记录");
                 //                     da.Fill(dt);
@@ -1239,7 +1241,7 @@ namespace BatchProductRecord
                 //    }
                 //}
             }
-            catch(Exception exp)
+            catch (Exception exp)
             {
                 MessageBox.Show(exp.Message);
             }
@@ -2099,6 +2101,11 @@ namespace BatchProductRecord
         {
             dataGridView2.Columns["ID"].Visible = false;
             dataGridView2.Columns["T批生产记录封面ID"].Visible = false;
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
         }
 
 
@@ -2188,6 +2195,22 @@ namespace BatchProductRecord
                 
                 //prePage += Convert.ToInt32(htRow2Page[i - 5]);
             }
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
+        }
+        
+        private void BatchProductRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
     }
 }
