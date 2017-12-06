@@ -203,7 +203,45 @@ namespace mySystem.Process.Bag.PTV
             }
             else
             {
-                //从SQL数据库中读取;                
+                //从SQL数据库中读取;
+                //从 “生产指令信息表” 中找 “生产指令编号” 下的信息
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = mySystem.Parameter.conn;
+                comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
+                SqlDataReader reader1 = comm1.ExecuteReader();
+                if (reader1.Read())
+                {
+                    //dt膜代码.Columns.Add("膜代码", typeof(String));  
+                    ////填入膜代码
+                    //dt膜代码.Rows.Add(reader1["制袋物料代码1"].ToString());
+                    //dt膜代码.Rows.Add(reader1["制袋物料代码2"].ToString());
+                    //dt膜代码.Rows.Add(reader1["制袋物料代码3"].ToString());
+                    //for (int i = 0; i < dt膜代码.Rows.Count; i++)
+                    //{ cmb膜代码.Items.Add(dt膜代码.Rows[i]["膜代码"].ToString()); }
+
+                    //查找该生产ID下的产品编码、产品批号
+                    SqlCommand comm2 = new SqlCommand();
+                    comm2.Connection = mySystem.Parameter.conn;
+                    comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
+                    SqlDataAdapter datemp = new SqlDataAdapter(comm2);
+                    datemp.Fill(dt代码批号);
+                    if (dt代码批号.Rows.Count == 0)
+                    {
+                        MessageBox.Show("该生产指令编码下的『生产指令产品列表』尚未生成！");
+                    }
+                    else
+                    {
+                        tb产品代码.Text = dt代码批号.Rows[0]["产品代码"].ToString();
+                        tb产品批号.Text = dt代码批号.Rows[0]["产品批号"].ToString();
+                    }
+                    datemp.Dispose();
+                }
+                else
+                {
+                    MessageBox.Show("该生产指令编码下的『生产指令信息表』尚未生成！");
+                    this.Close();
+                }
+                reader1.Dispose();
             }
 
             //*********数据填写*********//

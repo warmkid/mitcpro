@@ -58,7 +58,7 @@ namespace mySystem.Query
         //下拉框获取生产指令
         public void comboInit()
         {
-            if (!Parameter.isSqlOk)
+            if (Parameter.isSqlOk)
             {
                 SqlCommand comm = new SqlCommand();
                 comm.Connection = mySystem.Parameter.conn;
