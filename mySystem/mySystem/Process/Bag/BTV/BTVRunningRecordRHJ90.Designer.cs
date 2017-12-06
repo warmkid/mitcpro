@@ -1000,6 +1000,7 @@
             this.Controls.Add(this.groupBox4);
             this.Name = "BTVRunningRecordRHJ90";
             this.Text = "BTVRunningRecordRHJ90";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVRunningRecordRHJ90_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();

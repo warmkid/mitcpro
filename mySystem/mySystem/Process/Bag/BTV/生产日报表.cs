@@ -17,7 +17,7 @@ namespace mySystem.Process.Bag.BTV
     public partial class 生产日报表 : BaseForm
     {
         DataTable dtShow;
-
+        Boolean isFirstBind = true;
         public 生产日报表(MainForm mainform)
             : base(mainform)
         {
@@ -359,6 +359,11 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.AllowUserToAddRows = false;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
             dataGridView1.Columns["生产指令ID"].Visible = false;
+            if (isFirstBind)
+            {
+                readDGVWidthFromSetting(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         private void btn查询_Click(object sender, EventArgs e)
@@ -380,6 +385,11 @@ namespace mySystem.Process.Bag.BTV
             SetDefaultPrinter(cb打印机.Text);
             //print(false);
             //GC.Collect();
+        }
+
+        private void 生产日报表_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
     }

@@ -711,6 +711,7 @@
             this.Controls.Add(this.label1);
             this.Name = "BTV3DProRecord";
             this.Text = "BTV3DProRecord";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTV3DProRecord_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.groupBox1.ResumeLayout(false);

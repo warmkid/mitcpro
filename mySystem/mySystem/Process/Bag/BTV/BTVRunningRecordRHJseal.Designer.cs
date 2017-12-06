@@ -724,6 +724,7 @@
             this.Controls.Add(this.label1);
             this.Name = "BTVRunningRecordRHJseal";
             this.Text = "BTVRunningRecordRHJseal";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVRunningRecordRHJseal_FormClosing);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);

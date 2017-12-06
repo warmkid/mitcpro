@@ -36,7 +36,7 @@ namespace mySystem.Process.Bag.BTV
         // 当前数据在自己表中的id
         int _id;
         String _code;
-
+        Boolean isFirstBind = true;
         // 显示界面需要的信息
         String str产品代码;
         String str产品批号;
@@ -48,8 +48,7 @@ namespace mySystem.Process.Bag.BTV
 
 
         // 数据库连接
-        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/BPV.mdb;Persist Security Info=False";
+        
         SqlConnection conn;
         SqlDataAdapter daOuter, daInner;
         SqlCommandBuilder cbOuter, cbInner;
@@ -251,7 +250,7 @@ namespace mySystem.Process.Bag.BTV
         // 读取数据，无参数表示从Paramter中读取数据
         void readOuterData()
         {
-            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期=#{1}#";
+            String sql = "select * from 清场记录 where 生产指令ID={0} and 生产日期='{1}'";
             DateTime date = DateTime.Parse(dtp生产日期.Value.ToString("yyyy/MM/dd"));
             daOuter = new SqlDataAdapter(String.Format(sql, i生产指令ID, date), conn);
             cbOuter = new SqlCommandBuilder(daOuter);
@@ -275,7 +274,7 @@ namespace mySystem.Process.Bag.BTV
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + CODE + "\n";
             dr["日志"] = log;
-
+            dr["审核是否通过"] = false;
             cb白班.Checked = mySystem.Parameter.userflight == "白班";
             cb夜班.Checked = !cb白班.Checked;
             return dr;
@@ -625,7 +624,11 @@ namespace mySystem.Process.Bag.BTV
             {
                 dataGridView1.Columns[i].ReadOnly = true;
             }
-                
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -801,8 +804,9 @@ namespace mySystem.Process.Bag.BTV
             print(true);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -879,6 +883,7 @@ namespace mySystem.Process.Bag.BTV
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch { }
                 // 关闭文件，false表示不保存
@@ -893,6 +898,7 @@ namespace mySystem.Process.Bag.BTV
                 my = null;
                 wb = null;
             }
+            return pageCount;
         }
 
 
@@ -907,6 +913,11 @@ namespace mySystem.Process.Bag.BTV
                 ids.Add(Convert.ToInt32(dr["ID"]));
             }
             return ids.IndexOf(Convert.ToInt32(dtOuter.Rows[0]["ID"])) + 1;
+        }
+
+        private void BTVClearanceRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
        
