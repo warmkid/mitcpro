@@ -24,7 +24,12 @@ namespace 订单和库存管理
         BindingSource bs;
 
         HashSet<String> hs业务类型, hs销售类型, hs客户简称, hs销售部门, hs币种;
-
+        bool isFirstBind销售订单 = true;
+        bool isFirstBind采购需求单 = true;
+        bool isFirstBind采购批准单 = true;
+        bool isFirstBind采购订单 = true;
+        bool isFirstBind出库单 = true;
+        
         public 订单管理(mySystem.MainForm mainform):base(mainform)
         {
             InitializeComponent();
@@ -150,6 +155,11 @@ namespace 订单和库存管理
         {
             setDGV销售订单格式();
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv销售订单);
+            if (isFirstBind销售订单)
+            {
+                readDGVWidthFromSettingAndSet(dgv销售订单);
+                isFirstBind销售订单 = false;
+            }
         }
 
         private void setDGV销售订单格式()
@@ -198,6 +208,11 @@ namespace 订单和库存管理
         {
             setDGV采购需求单格式();
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购需求单);
+            if (isFirstBind采购需求单)
+            {
+                readDGVWidthFromSettingAndSet(dgv采购需求单);
+                isFirstBind采购需求单 = false;
+            }
         }
 
         private void setDGV采购需求单格式()
@@ -282,6 +297,11 @@ namespace 订单和库存管理
         {
             setDGV采购批准单格式();
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购批准单);
+            if (isFirstBind采购批准单)
+            {
+                readDGVWidthFromSettingAndSet(dgv采购批准单);
+                isFirstBind采购批准单 = false;
+            }
             
         }
 
@@ -391,6 +411,11 @@ namespace 订单和库存管理
             dgv采购订单.AllowUserToAddRows = false;
             dgv采购订单.Columns["ID"].Visible = false;
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv采购订单);
+            if (isFirstBind采购订单)
+            {
+                readDGVWidthFromSettingAndSet(dgv采购订单);
+                isFirstBind采购订单 = false;
+            }
         }
 
         private void btn采购订单添加_Click(object sender, EventArgs e)
@@ -519,6 +544,11 @@ namespace 订单和库存管理
             dgv出库单.AllowUserToAddRows = false;
             dgv出库单.Columns["ID"].Visible = false;
             mySystem.Utility.setDataGridViewAutoSizeMode(dgv出库单);
+            if (isFirstBind出库单)
+            {
+                readDGVWidthFromSettingAndSet(dgv出库单);
+                isFirstBind出库单 = false;
+            }
         }
 
         private DataTable get采购出库单(DateTime start, DateTime end, string 销售订单号, string statue)
@@ -544,5 +574,15 @@ namespace 订单和库存管理
             dgv出库单.DataSource = dt;
         }
         #endregion
+
+        private void 订单管理_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dgv采购订单);
+            writeDGVWidthToSetting(dgv采购批准单);
+            writeDGVWidthToSetting(dgv采购需求单);
+            writeDGVWidthToSetting(dgv出库单);
+            writeDGVWidthToSetting(dgv销售订单);
+        }
     }
 }

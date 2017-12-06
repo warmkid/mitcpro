@@ -338,6 +338,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Waste";
             this.Text = "吹膜工序废品记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Waste_FormClosing);
             this.Load += new System.EventHandler(this.Waste_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -36,7 +36,8 @@ namespace mySystem.Process.Order
         BindingSource bsOuter, bsInner;
 
         CheckForm ckform;
-
+        bool isFirstBind = true; 
+        
         public 销售订单(MainForm mainform)
             : base(mainform)
         {
@@ -900,6 +901,11 @@ namespace mySystem.Process.Order
             dataGridView1.Columns["存货名称"].ReadOnly = true;
             dataGridView1.Columns["规格型号"].ReadOnly = true;
             dataGridView1.Columns["价税合计"].ReadOnly = true;
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         void calc合计()
@@ -990,6 +996,17 @@ namespace mySystem.Process.Order
             dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             dataGridView1.Columns["规格型号"].Width = 300;
+
+        }
+
+        private void 销售订单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
 
         }
 

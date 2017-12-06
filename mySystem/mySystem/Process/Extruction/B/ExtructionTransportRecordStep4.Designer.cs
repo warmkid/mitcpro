@@ -52,7 +52,7 @@
             // Title
             // 
             this.Title.AutoSize = true;
-            this.Title.Font = new System.Drawing.Font("宋体", 14.25F, System.Drawing.FontStyle.Bold);
+            this.Title.Font = new System.Drawing.Font("SimSun", 14.25F, System.Drawing.FontStyle.Bold);
             this.Title.Location = new System.Drawing.Point(511, 8);
             this.Title.Name = "Title";
             this.Title.Size = new System.Drawing.Size(169, 19);
@@ -80,6 +80,7 @@
             this.TransportRecordView.TabIndex = 4;
             this.TransportRecordView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TransportRecordView_CellContentClick);
             this.TransportRecordView.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.TransportRecordView_CellEndEdit);
+            this.TransportRecordView.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.TransportRecordView_DataBindingComplete);
             // 
             // 传料日期
             // 
@@ -133,7 +134,7 @@
             // 
             // AddLineBtn
             // 
-            this.AddLineBtn.Font = new System.Drawing.Font("宋体", 12F);
+            this.AddLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.AddLineBtn.Location = new System.Drawing.Point(973, 428);
             this.AddLineBtn.Name = "AddLineBtn";
             this.AddLineBtn.Size = new System.Drawing.Size(80, 30);
@@ -144,7 +145,7 @@
             // 
             // CheckBtn
             // 
-            this.CheckBtn.Font = new System.Drawing.Font("宋体", 12F);
+            this.CheckBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.CheckBtn.Location = new System.Drawing.Point(1065, 467);
             this.CheckBtn.Name = "CheckBtn";
             this.CheckBtn.Size = new System.Drawing.Size(80, 30);
@@ -155,7 +156,7 @@
             // 
             // SaveBtn
             // 
-            this.SaveBtn.Font = new System.Drawing.Font("宋体", 12F);
+            this.SaveBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.SaveBtn.Location = new System.Drawing.Point(973, 467);
             this.SaveBtn.Name = "SaveBtn";
             this.SaveBtn.Size = new System.Drawing.Size(80, 30);
@@ -166,7 +167,7 @@
             // 
             // DelLineBtn
             // 
-            this.DelLineBtn.Font = new System.Drawing.Font("宋体", 12F);
+            this.DelLineBtn.Font = new System.Drawing.Font("SimSun", 12F);
             this.DelLineBtn.Location = new System.Drawing.Point(1065, 428);
             this.DelLineBtn.Name = "DelLineBtn";
             this.DelLineBtn.Size = new System.Drawing.Size(80, 30);
@@ -177,7 +178,7 @@
             // 
             // label1
             // 
-            this.label1.Font = new System.Drawing.Font("宋体", 12F);
+            this.label1.Font = new System.Drawing.Font("SimSun", 12F);
             this.label1.Location = new System.Drawing.Point(22, 428);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(924, 39);
@@ -187,7 +188,7 @@
             // 
             // bt查看人员信息
             // 
-            this.bt查看人员信息.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.bt查看人员信息.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.bt查看人员信息.Location = new System.Drawing.Point(798, 467);
             this.bt查看人员信息.Name = "bt查看人员信息";
             this.bt查看人员信息.Size = new System.Drawing.Size(123, 30);
@@ -212,6 +213,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ExtructionTransportRecordStep4";
             this.Text = "ExtructionTransportRecordStep4";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ExtructionTransportRecordStep4_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.TransportRecordView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

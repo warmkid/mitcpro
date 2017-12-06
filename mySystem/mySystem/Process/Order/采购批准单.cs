@@ -43,6 +43,8 @@ namespace mySystem.Process.Order
         string _ids;
         string 库存sql;
         string __自由 = "__自由";
+        bool isFirstBind1 = true;
+        bool isFirstBind2 = true; 
 
         public 采购批准单(MainForm mainform, string ids):base(mainform)
         {
@@ -1958,6 +1960,9 @@ namespace mySystem.Process.Order
                     daInner借用订单.Update(dtInner借用订单);
                 }
             }
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
 
         void setDGV本订单采购信息Column()
@@ -1977,6 +1982,29 @@ namespace mySystem.Process.Order
             dataGridView4.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
             dataGridView4.Columns["规格型号"].Width = 300;
+
+        }
+
+        private void dataGridView1_DataBindingComplete_1(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
+        }
+
+        private void dataGridView4_DataBindingComplete_1(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
+        }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
 
         }
 

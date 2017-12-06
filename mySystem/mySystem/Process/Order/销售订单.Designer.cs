@@ -140,6 +140,7 @@
             this.btn打印.TabIndex = 112;
             this.btn打印.Text = "打印";
             this.btn打印.UseVisualStyleBackColor = true;
+            this.btn打印.Click += new System.EventHandler(this.btn打印_Click);
             // 
             // btn下移
             // 
@@ -680,6 +681,7 @@
             this.Controls.Add(this.label1);
             this.Name = "销售订单";
             this.Text = "销售订单";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.销售订单_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

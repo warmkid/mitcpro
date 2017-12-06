@@ -675,6 +675,7 @@
             this.Controls.Add(this.tabControl1);
             this.Name = "订单管理";
             this.Text = "订单管理";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.订单管理_FormClosing);
             this.tabControl1.ResumeLayout(false);
             this.tabPage销售订单.ResumeLayout(false);
             this.tabPage销售订单.PerformLayout();

@@ -860,6 +860,7 @@
             this.Controls.Add(this.label1);
             this.Name = "ProductInnerPackagingRecord";
             this.Text = "产品内包装记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ProductInnerPackagingRecord_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

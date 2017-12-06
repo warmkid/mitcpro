@@ -605,7 +605,7 @@ namespace mySystem.Extruction.Process
              print(false);
              GC.Collect();
          }
-		 public void print(bool preview)
+		 public int print(bool preview)
          {
 		 // 打开一个Excel进程
              Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -635,29 +635,30 @@ namespace mySystem.Extruction.Process
              // 让这个Sheet为被选中状态
                  my.Select();  
 				 oXL.Visible=true; //加上这一行  就相当于预览功能
-             
+                 return 0;
 			}
 			else
 			{
                 //footprint
                 my.PageSetup.RightFooter = __生产指令 + "-12-001 &P/" + wb.ActiveSheet.PageSetup.Pages.Count;
-
-			// 直接用默认打印机打印该Sheet
-            try
-            {
-                my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
-            }
-            catch { }
-             // 关闭文件，false表示不保存
-             wb.Close(false);
-             // 关闭Excel进程
-             oXL.Quit();
-             // 释放COM资源
-             Marshal.ReleaseComObject(wb);
-             Marshal.ReleaseComObject(oXL);
-             oXL = null;
-             wb = null;
-             my = null;
+                // 直接用默认打印机打印该Sheet
+                try
+                {
+                    my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                }
+                catch { }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                 // 关闭文件，false表示不保存
+                 wb.Close(false);
+                 // 关闭Excel进程
+                 oXL.Quit();
+                 // 释放COM资源
+                 Marshal.ReleaseComObject(wb);
+                 Marshal.ReleaseComObject(oXL);
+                 oXL = null;
+                 wb = null;
+                 my = null;
+                 return pageCount;
 			}
 
          }

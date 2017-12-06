@@ -26,6 +26,9 @@ namespace mySystem.Extruction.Process
 
         List<string> pro=null;
         List<string> cont = null;
+        bool isFirstBind1 = true;
+        bool isFirstBind2 = true; 
+
         public Record_train(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -416,6 +419,31 @@ namespace mySystem.Extruction.Process
             //String str审核员 = dt.Rows[0]["审核员"].ToString();
             //String str人员信息 = "人员信息：\n\n操作员：" + str操作员 + "\n\n审核员：" + str审核员;
             //MessageBox.Show(str人员信息);
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
+        }
+
+        private void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
+        }
+
+        private void Record_train_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
     }
 }

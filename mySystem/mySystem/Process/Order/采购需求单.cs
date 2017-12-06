@@ -35,6 +35,8 @@ namespace mySystem.Process.Order
 
         SqlDataAdapter daCH;
         DataTable dtCH;
+        bool isFirstBind1 = true;
+        bool isFirstBind2 = true; 
 
         public 采购需求单(MainForm mainform, string 订单号):base(mainform)
         {
@@ -113,6 +115,11 @@ namespace mySystem.Process.Order
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["采购需求单ID"].Visible = false;
             dataGridView1.Columns["批准状态"].Visible = false;
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
         }
 
         private void getOtherData()
@@ -784,6 +791,9 @@ namespace mySystem.Process.Order
                     daInner.Update(dtInner);
                 }
             }
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
 
         private void btn打印_Click(object sender, EventArgs e)
@@ -799,7 +809,7 @@ namespace mySystem.Process.Order
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -817,9 +827,11 @@ namespace mySystem.Process.Order
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -843,6 +855,7 @@ namespace mySystem.Process.Order
                         bsOuter.EndEdit();
                         daOuter.Update((DataTable)bsOuter.DataSource);
                     }
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -853,6 +866,7 @@ namespace mySystem.Process.Order
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -934,6 +948,16 @@ namespace mySystem.Process.Order
 
             dataGridView1.Columns["规格型号"].Width = 300;
 
+        }
+
+        private void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
         }
     }
 }

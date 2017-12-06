@@ -31,6 +31,7 @@ namespace mySystem.Process.Order
         
         CheckForm ckform;
         string _供应商;
+        bool isFirstBind = true; 
         
 
         public 采购订单(MainForm mainform, string 供应商)
@@ -782,6 +783,8 @@ namespace mySystem.Process.Order
                     daInner.Update(dtInner);
                 }
             }
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
         }
 
         private void btn打印_Click(object sender, EventArgs e)
@@ -799,7 +802,7 @@ namespace mySystem.Process.Order
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -820,9 +823,11 @@ namespace mySystem.Process.Order
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -841,6 +846,7 @@ namespace mySystem.Process.Order
                         bsOuter.EndEdit();
                         daOuter.Update((DataTable)bsOuter.DataSource);
                     }
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -851,6 +857,7 @@ namespace mySystem.Process.Order
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1066,6 +1073,15 @@ namespace mySystem.Process.Order
                 {
                     continue;
                 }
+            }
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
             }
         }
     }
