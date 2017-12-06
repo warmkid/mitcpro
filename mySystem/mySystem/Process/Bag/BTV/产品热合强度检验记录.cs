@@ -38,14 +38,13 @@ namespace mySystem.Process.Bag.BTV
 
 
         // 数据库连接
-        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/csbag.mdb;Persist Security Info=False";
+        
         SqlConnection conn;
         SqlDataAdapter daOuter, daInner;
         SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
-
+        Boolean isFirstBind = true;
         CheckForm ckForm = null;
 
         public 产品热合强度检验记录(MainForm mainform):base(mainform)
@@ -579,6 +578,11 @@ namespace mySystem.Process.Bag.BTV
             {
                 dataGridView1.Columns[i].ReadOnly = true;
             }
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         /// <summary>
@@ -923,8 +927,9 @@ namespace mySystem.Process.Bag.BTV
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -952,6 +957,7 @@ namespace mySystem.Process.Bag.BTV
                     //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
                     // 直接用默认打印机打印该Sheet
                     my.PrintOut();
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch
                 { isPrint = false; }
@@ -979,6 +985,7 @@ namespace mySystem.Process.Bag.BTV
                     oXL = null;
                 }
             }
+            return pageCount;
         }
 
         private Microsoft.Office.Interop.Excel._Worksheet printValue(Microsoft.Office.Interop.Excel._Worksheet mysheet, Microsoft.Office.Interop.Excel._Workbook mybook)
@@ -1118,6 +1125,11 @@ namespace mySystem.Process.Bag.BTV
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             setEnableReadOnly();
+        }
+
+        private void 产品热合强度检验记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
           
     }

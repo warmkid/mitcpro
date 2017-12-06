@@ -41,7 +41,7 @@ namespace mySystem.Process.Bag.BTV
         Int32 InstruID;
         String Instruction;
         String MoCode;
-
+        Boolean isFirstBind = true;
         public BTV2DShipHeat(MainForm mainform)
             : base(mainform)
         {
@@ -561,6 +561,7 @@ namespace mySystem.Process.Bag.BTV
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
+            dr["审核是否通过"] = false;
             return dr;
         }
 
@@ -629,8 +630,8 @@ namespace mySystem.Process.Bag.BTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 80;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 80;
                         break;
                 }
             }
@@ -648,7 +649,7 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T"+table+"ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
-            dataGridView1.Columns["序号"].Width = 40;
+            //dataGridView1.Columns["序号"].Width = 40;
 
 
             //dataGridView1.Columns["合格产品数量"].HeaderText = "合格品\r数量\r(只)";
@@ -870,8 +871,9 @@ namespace mySystem.Process.Bag.BTV
         /// this edition of function automacally insert new rows according to settings
         /// </summary>
         /// <param name="preview"></param>
-        public void print(bool preview)
+        public int print(bool preview)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -942,6 +944,7 @@ namespace mySystem.Process.Bag.BTV
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch { }
                 // 关闭文件，false表示不保存
@@ -956,6 +959,7 @@ namespace mySystem.Process.Bag.BTV
                 my = null;
                 wb = null;
             }
+            return pageCount;
         }
 
 
@@ -1081,6 +1085,16 @@ namespace mySystem.Process.Bag.BTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void BTV2DShipHeat_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
         
     }

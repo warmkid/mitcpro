@@ -500,6 +500,7 @@
             this.Controls.Add(this.label1);
             this.Name = "BTVAssemblyConfirm";
             this.Text = "BTVAssemblyConfirm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVAssemblyConfirm_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

@@ -1000,6 +1000,7 @@
             this.Controls.Add(this.btn添加记录);
             this.Name = "BTVRunningRecordPK";
             this.Text = "瓶口焊接机运行记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVRunningRecordPK_FormClosing);
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
             this.groupBox5.ResumeLayout(false);

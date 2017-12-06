@@ -483,6 +483,7 @@
             this.Controls.Add(this.label1);
             this.Name = "BTVMaterialRecord";
             this.Text = "BTVMaterialRecord";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVMaterialRecord_FormClosing);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);

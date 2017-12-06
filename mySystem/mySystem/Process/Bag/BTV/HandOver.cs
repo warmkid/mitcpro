@@ -54,7 +54,7 @@ namespace mySystem.Process.Bag.BTV
         int searchId;
         int status;
         int outerId;
-       
+        Boolean isFirstBind = true;
         Parameter.UserState _userState;      
         Parameter.FormState _formState;
         public HandOver(mySystem.MainForm mainform)
@@ -514,7 +514,7 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns[2].ReadOnly=true;  //序号
             dataGridView1.Columns[3].ReadOnly = true; 
             // setting width in confirm items
-            dataGridView1.Columns[3].Width=300;
+            //dataGridView1.Columns[3].Width=300;
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
         }
 
@@ -721,8 +721,9 @@ namespace mySystem.Process.Bag.BTV
         /// this edition of function automacally insert new rows according to settings
         /// </summary>
         /// <param name="preview"></param>
-        public void print(bool preview)
+        public int print(bool preview)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -797,6 +798,7 @@ namespace mySystem.Process.Bag.BTV
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch { }
                 // 关闭文件，false表示不保存
@@ -811,6 +813,7 @@ namespace mySystem.Process.Bag.BTV
                 my = null;
                 wb = null;
             }
+            return pageCount;
         }
 
 
@@ -1084,6 +1087,20 @@ namespace mySystem.Process.Bag.BTV
             }
             catch
             { }
+        }
+
+        private void HandOver_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            readDGVWidthFromSettingAndSet(dataGridView1);
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         //leave datagridview check the right things

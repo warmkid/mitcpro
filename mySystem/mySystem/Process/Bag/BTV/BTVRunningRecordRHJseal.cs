@@ -37,7 +37,7 @@ namespace mySystem.Process.Bag.BTV
         Parameter.FormState _formState;
         Int32 InstruID;
         String Instruction;
-
+        Boolean isFirstbind = true;
         public BTVRunningRecordRHJseal(MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -472,7 +472,7 @@ namespace mySystem.Process.Bag.BTV
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", mySystem.Parameter.conn);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 生产日期 = '" + searchTime.ToString("yyyy/MM/dd") + "' ", mySystem.Parameter.conn);
             cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -623,8 +623,8 @@ namespace mySystem.Process.Bag.BTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 80;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 80;
                         break;
                 }
             }
@@ -902,8 +902,9 @@ namespace mySystem.Process.Bag.BTV
         /// we don't deal with 膜或袋体代码：
         /// </summary>
         /// <param name="preview"></param>
-        public void print(bool preview)
+        public int print(bool preview)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -991,6 +992,7 @@ namespace mySystem.Process.Bag.BTV
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch { }
                 // 关闭文件，false表示不保存
@@ -1005,6 +1007,7 @@ namespace mySystem.Process.Bag.BTV
                 my = null;
                 wb = null;
             }
+            return pageCount;
         }
 
 
@@ -1128,6 +1131,11 @@ namespace mySystem.Process.Bag.BTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstbind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstbind = false;
+            }
         }
 
         //内表提交审核按钮
@@ -1205,6 +1213,11 @@ namespace mySystem.Process.Bag.BTV
                 }
             }
             return rtn;
+        }
+
+        private void BTVRunningRecordRHJseal_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 		
         

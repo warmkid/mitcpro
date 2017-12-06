@@ -36,6 +36,7 @@ namespace mySystem.Process.Bag.BTV
         List<String> tableName;
         CheckForm ckform;
         DataTable dtSource = null;
+        Boolean isFirstBind = true;
         public BPV批生产记录(mySystem.MainForm mainform)
             : base(mainform)
         {

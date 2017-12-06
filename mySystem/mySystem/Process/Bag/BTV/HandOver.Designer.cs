@@ -171,6 +171,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(707, 474);
             this.dataGridView1.TabIndex = 56;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // txb夜班异常情况处理
             // 
@@ -385,6 +386,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "HandOver";
             this.Text = "岗位交接班记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HandOver_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

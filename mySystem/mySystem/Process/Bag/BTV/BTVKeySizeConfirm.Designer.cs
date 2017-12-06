@@ -597,6 +597,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "BTVKeySizeConfirm";
             this.Text = "BTVKeySizeConfirm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVKeySizeConfirm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

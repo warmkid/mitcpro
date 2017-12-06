@@ -34,7 +34,7 @@ namespace mySystem.Process.Bag.BTV
         Int32 InstruID;
         String Instruction;
         String Flight = "";
-
+        Boolean isFirstBind = true;
         public BPV生产退料记录(mySystem.MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -592,8 +592,8 @@ namespace mySystem.Process.Bag.BTV
                         cbc.Items.Add("夜班"); 
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -603,8 +603,8 @@ namespace mySystem.Process.Bag.BTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -942,8 +942,9 @@ namespace mySystem.Process.Bag.BTV
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -971,6 +972,7 @@ namespace mySystem.Process.Bag.BTV
                     //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
                     // 直接用默认打印机打印该Sheet
                     my.PrintOut();
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch
                 { isPrint = false; }
@@ -986,6 +988,7 @@ namespace mySystem.Process.Bag.BTV
                         bs记录.EndEdit();
                         da记录.Update((DataTable)bs记录.DataSource);
                     }
+                    
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -997,6 +1000,7 @@ namespace mySystem.Process.Bag.BTV
                     oXL = null;
                 }
             }
+            return pageCount;
         }
 
         //打印功能
@@ -1144,6 +1148,16 @@ namespace mySystem.Process.Bag.BTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void BPV生产退料记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
            
     }

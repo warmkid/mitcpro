@@ -16,9 +16,7 @@ namespace mySystem.Process.Bag.BTV
     public partial class BTV3DProRecord : BaseForm
     { 
         /*
-         * BECAUSE THE DATABASE HAS NOT BENN UPDATE, YOU HAVE TO MODIFY THE DATABASE
-         * 1. ADD THE "检测时间" COLUMN 
-         * 2. FOR BETTER 
+         *
         */
         /// <summary>
         /// 3D袋体生产记录
@@ -48,7 +46,8 @@ namespace mySystem.Process.Bag.BTV
         Int32 InstruID;
         String Instruction;
         String MoCode;
-
+        Boolean isFirstBind1 = true;
+        Boolean isFirstBind2 = true;
         public BTV3DProRecord(MainForm mainform)
             : base(mainform)
         {
@@ -643,6 +642,7 @@ namespace mySystem.Process.Bag.BTV
             dr["生产时间"] = 0;
             dr["合格品数量"] = 0;
             dr["不良品数量"] = 0;
+            dr["审核是否通过"] = false;
             return dr;
         }
 
@@ -758,8 +758,8 @@ namespace mySystem.Process.Bag.BTV
                         tbc.ValueType = dc.DataType;
                         dataGridView2.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = Convert.ToInt32(setWidth.Rows[0][tbc.Name]);
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = Convert.ToInt32(setWidth.Rows[0][tbc.Name]);
                         break;
                 }
             }
@@ -776,8 +776,8 @@ namespace mySystem.Process.Bag.BTV
                         c1.HeaderText = "膜材代码";
                         c1.Name = dc.ColumnName;
                         c1.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        c1.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        c1.MinimumWidth = 100;
+                        //c1.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //c1.MinimumWidth = 100;
                         c1.ValueType = dc.DataType;
                         foreach (var sdr in dic膜材)
                         {
@@ -793,8 +793,8 @@ namespace mySystem.Process.Bag.BTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 100;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 100;
                         break;
                 }
             }
@@ -1113,8 +1113,9 @@ namespace mySystem.Process.Bag.BTV
             print(false);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -1237,6 +1238,7 @@ namespace mySystem.Process.Bag.BTV
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch { }
                 // 关闭文件，false表示不保存
@@ -1251,8 +1253,8 @@ namespace mySystem.Process.Bag.BTV
                 my = null;
                 wb = null;
             }
+            return pageCount;
         }
-
 
         int find_indexofprint()
         {
@@ -1429,10 +1431,20 @@ namespace mySystem.Process.Bag.BTV
         private void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
         }
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat1();
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
         }
 
         private void btn添加领料记录_Click(object sender, EventArgs e)
@@ -1459,6 +1471,12 @@ namespace mySystem.Process.Bag.BTV
                 //求合计
                 //getTotal();
             }
+        }
+
+        private void BTV3DProRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
 
         
