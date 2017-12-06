@@ -61,6 +61,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(1128, 393);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // bt打印
             // 
@@ -152,6 +153,7 @@
             this.Font = new System.Drawing.Font("SimSun", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "Chart_daily_cs";
             this.Text = "Chart_daily_cut";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Chart_daily_cs_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

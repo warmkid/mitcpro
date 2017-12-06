@@ -274,7 +274,57 @@ namespace mySystem.Process.Bag.PTV
         private void addComputerEventHandler() { }
         
         //******************************显示数据******************************//
+        //检查是否和设置中个相同
+        void matchInnerData()
+        {
+            if (0 != _formState)
+            {
+                setDataGridViewColumns();
+                innerBind();
+                return;
+            }
+            bool isChanged = false;
+            if (dt设置.Rows.Count != dt记录详情.Rows.Count) isChanged = true;
+            else
+            {
+                for (int i = 0; i < dt设置.Rows.Count; ++i)
+                {
+                    if (dt记录详情.Rows[i]["确认项目"].ToString() != dt设置.Rows[i]["确认项目"].ToString() ||
+                        dt记录详情.Rows[i]["确认内容"].ToString() != dt设置.Rows[i]["确认内容"].ToString())
+                    {
+                        isChanged = true;
+                    }
+                }
+            }
 
+            if (isChanged)
+            {
+                if (DialogResult.OK == MessageBox.Show("检测到清场设置项已被修改，是否使用最新的设置?",
+                    "提示", MessageBoxButtons.OKCancel))
+                {
+                    bs记录详情.DataSource = dt记录详情;
+                    foreach (DataRow dr in dt记录详情.Rows) dr.Delete();
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                    dt记录详情 = null;
+
+                    readInnerData((int)dt记录.Rows[0]["ID"]);
+                    dt记录详情 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dt记录详情);
+                    setDataGridViewRowNums();
+                    //立马保存内表
+                    bs记录详情.DataSource = dt记录详情;
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                    readInnerData((int)dt记录.Rows[0]["ID"]);
+                    setDataGridViewColumns();
+                    innerBind();
+                    return;
+                }
+            }
+            setDataGridViewColumns();
+            innerBind();
+
+
+
+        }
         //显示根据信息查找
         private void DataShow(Int32 InstruID)
         {
@@ -309,10 +359,15 @@ namespace mySystem.Process.Bag.PTV
                 //立马保存内表
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
             }
-            dataGridView1.Columns.Clear();
-            readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-            setDataGridViewColumns();
-            innerBind();
+            else
+            {
+                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                matchInnerData();
+            }
+            //dataGridView1.Columns.Clear();
+            //readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+            //setDataGridViewColumns();
+            //innerBind();
 
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过

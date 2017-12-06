@@ -142,7 +142,7 @@
             // Btn热合强度
             // 
             this.Btn热合强度.Font = new System.Drawing.Font("SimSun", 12F);
-            this.Btn热合强度.Location = new System.Drawing.Point(28, 324);
+            this.Btn热合强度.Location = new System.Drawing.Point(28, 314);
             this.Btn热合强度.Name = "Btn热合强度";
             this.Btn热合强度.Size = new System.Drawing.Size(200, 38);
             this.Btn热合强度.TabIndex = 17;

@@ -279,6 +279,7 @@
             this.Controls.Add(this.label1);
             this.Name = "辐照灭菌台帐";
             this.Text = "辐照灭菌台帐";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.辐照灭菌台帐_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

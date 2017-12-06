@@ -40,6 +40,8 @@ namespace mySystem.Process.灭菌
 
         string 最近委托单号;
 
+        bool isFirstBind = true;
+
         private string str_委托单;
         // 需要保存的状态
         /// <summary>
@@ -373,7 +375,7 @@ namespace mySystem.Process.灭菌
             //dataGridView1.EditingControlShowing +=new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
         }
         // 打印函数
-        void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
 
@@ -396,6 +398,7 @@ namespace mySystem.Process.灭菌
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
@@ -406,35 +409,34 @@ namespace mySystem.Process.灭菌
                 }
                 catch
                 { label_打印成功 = 0; }
-                finally
+                
+                if (1 == label_打印成功)
                 {
-                    if (1 == label_打印成功)
+                    string log = "\n=====================================\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                    dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
+                    bs_prodinstr.EndEdit();
+                    if (!mySystem.Parameter.isSqlOk)
                     {
-                        string log = "\n=====================================\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
-                        dt_prodinstr.Rows[0]["日志"] = dt_prodinstr.Rows[0]["日志"].ToString() + log;
-                        bs_prodinstr.EndEdit();
-                        if (!mySystem.Parameter.isSqlOk)
-                        {
-                            da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
-                        }
-                        else
-                        {
-                            da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
-                        }
-                        
+                        da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                     }
-
-                    // 关闭文件，false表示不保存
-                    wb.Close(false);
-                    // 关闭Excel进程
-                    oXL.Quit();
-                    // 释放COM资源
-                    Marshal.ReleaseComObject(wb);
-                    Marshal.ReleaseComObject(oXL);
-                    wb = null;
-                    oXL = null;
+                    else
+                    {
+                        da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
+                    }
+                        
                 }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                wb = null;
+                oXL = null;
+                return pageCount;
             }
         }
 
@@ -1220,6 +1222,20 @@ namespace mySystem.Process.灭菌
             }
             
 
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void Gamma射线辐射灭菌委托单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

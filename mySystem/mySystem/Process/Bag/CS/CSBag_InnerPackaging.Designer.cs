@@ -694,6 +694,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Name = "CSBag_InnerPackaging";
             this.Text = "产品内包装记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CSBag_InnerPackaging_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
