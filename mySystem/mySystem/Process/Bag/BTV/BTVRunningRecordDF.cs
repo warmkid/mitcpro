@@ -1119,11 +1119,11 @@ namespace mySystem.Process.Bag.BTV
         private bool TextBox_check()
         {
             bool TypeCheck = true;
-            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb不良品数量, tb合格品数量,
+            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { //tb不良品数量, tb合格品数量,
                 tb焊线1参数1,tb焊线1参数2,tb焊线1参数3,tb焊线1参数4,tb焊线1参数5,
                 tb焊线2参数1,tb焊线2参数2,tb焊线2参数3,tb焊线2参数4,tb焊线2参数5,
                 tb焊线3参数1,tb焊线3参数2,tb焊线3参数3,tb焊线3参数4,tb焊线3参数5});
-            List<String> StringList = new List<String>(new String[] { "不良品数量", "合格品数量",
+            List<String> StringList = new List<String>(new String[] { //"不良品数量", "合格品数量",
                 "焊线1#  WELDING PRESSURE(bar)","焊线1#  SEALING TEMP(°C)","焊线1#  SEALING TIME(s)","焊线1#  COOLING TEMP(°C)","焊线1#  TCR",
                 "焊线2#  WELDING PRESSURE(bar)","焊线2#  SEALING TEMP(°C)","焊线2#  SEALING TIME(s)","焊线2#  COOLING TEMP(°C)","焊线2#  TCR",
                 "焊线3#  WELDING PRESSURE(bar)","焊线3#  SEALING TEMP(°C)","焊线3#  SEALING TIME(s)","焊线3#  COOLING TEMP(°C)","焊线3#  TCR"});
