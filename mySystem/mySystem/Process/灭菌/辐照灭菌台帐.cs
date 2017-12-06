@@ -27,6 +27,8 @@ namespace mySystem.Process.灭菌
         Int32 index;//datagridview列数
         Int32 ID委托单号;
 
+        bool isFirstBind = true;
+
         private SqlDataAdapter da台帐sql, da委托单sql, da台帐外表sql;
         private SqlCommandBuilder cb台帐sql, cb委托单sql, cb台帐外表sql;
 
@@ -432,7 +434,7 @@ namespace mySystem.Process.灭菌
         //}
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -451,6 +453,7 @@ namespace mySystem.Process.灭菌
                 my = printValue(my,wb);
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
@@ -466,16 +469,17 @@ namespace mySystem.Process.灭菌
                 }
                 catch
                 { }
-                finally
-                {
-                    // 关闭文件，false表示不保存
-                    wb.Close(false);
-                    // 关闭Excel进程
-                    oXL.Quit();
-                    // 释放COM资源
-                    Marshal.ReleaseComObject(wb);
-                    Marshal.ReleaseComObject(oXL);
-                }
+                
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                return pageCount;
+                
             }
         }
 
@@ -555,7 +559,13 @@ namespace mySystem.Process.灭菌
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
-           
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+
             //for (int i = 0; i < index; i++)
             //{
             //    string str审核员 = dt台帐.Rows[i]["审核员"].ToString();
@@ -686,6 +696,11 @@ namespace mySystem.Process.灭菌
             innerBind();
             
             setDataGridViewRowNums();
+        }
+
+        private void 辐照灭菌台帐_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
 

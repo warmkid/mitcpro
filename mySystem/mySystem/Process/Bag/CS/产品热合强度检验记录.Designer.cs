@@ -346,6 +346,7 @@
             this.Controls.Add(this.label1);
             this.Name = "产品热合强度检验记录";
             this.Text = "产品热合强度检验记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.产品热合强度检验记录_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

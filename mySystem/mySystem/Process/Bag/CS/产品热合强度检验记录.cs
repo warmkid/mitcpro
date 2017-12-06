@@ -47,6 +47,7 @@ namespace mySystem.Process.Bag.CS
         BindingSource bsOuter, bsInner;
 
         CheckForm ckForm = null;
+        bool isFirstBind = true;
 
         public 产品热合强度检验记录(MainForm mainform):base(mainform)
         {
@@ -698,6 +699,12 @@ namespace mySystem.Process.Bag.CS
             {
                 dataGridView1.Columns[i].ReadOnly = true;
             }
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         /// <summary>
@@ -1122,7 +1129,7 @@ namespace mySystem.Process.Bag.CS
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -1140,6 +1147,7 @@ namespace mySystem.Process.Bag.CS
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
@@ -1154,29 +1162,29 @@ namespace mySystem.Process.Bag.CS
                 }
                 catch
                 { isPrint = false; }
-                finally
+                
+                if (isPrint)
                 {
-                    if (isPrint)
-                    {
-                        //写日志
-                        string log = "=====================================\n";
-                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒 打印文档\n");
-                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                    //写日志
+                    string log = "=====================================\n";
+                    //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒 打印文档\n");
+                    dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
 
-                        bsOuter.EndEdit();
-                        daOuter.Update((DataTable)bsOuter.DataSource);
-                    }
-                    // 关闭文件，false表示不保存
-                    wb.Close(false);
-                    // 关闭Excel进程
-                    oXL.Quit();
-                    // 释放COM资源
-                    Marshal.ReleaseComObject(wb);
-                    Marshal.ReleaseComObject(oXL);
-                    wb = null;
-                    oXL = null;
+                    bsOuter.EndEdit();
+                    daOuter.Update((DataTable)bsOuter.DataSource);
                 }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                wb = null;
+                oXL = null;
+                return pageCount;
             }
         }
 
@@ -1307,6 +1315,11 @@ namespace mySystem.Process.Bag.CS
             daInner.Update((DataTable)bsInner.DataSource);
             innerBind();
             setEnableReadOnly();
+        }
+
+        private void 产品热合强度检验记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
           
     }

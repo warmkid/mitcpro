@@ -18,6 +18,7 @@ namespace mySystem.Process.CleanCut
     {
 
         DataTable dtShow;
+        bool isFirstBind = true;
 
         public Chart_daily_cs(MainForm mainform)
             : base(mainform)
@@ -244,6 +245,20 @@ namespace mySystem.Process.CleanCut
             SetDefaultPrinter(cb打印机.Text);
             //print(false);
             //GC.Collect();
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void Chart_daily_cs_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
        

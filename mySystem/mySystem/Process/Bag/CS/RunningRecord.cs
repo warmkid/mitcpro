@@ -45,6 +45,7 @@ namespace mySystem.Process.Bag
         Parameter.FormState _formState;
 
         int _id;
+        bool isFirstBind = true;
 
         public RunningRecord(mySystem.MainForm mainform)
             : base(mainform)
@@ -361,7 +362,7 @@ namespace mySystem.Process.Bag
             bs_in.DataSource = dt_in;
             dataGridView1.DataSource = bs_in.DataSource;
             setDataGridViewColumns();
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //设置DataGridView中下拉框
@@ -657,7 +658,7 @@ namespace mySystem.Process.Bag
             GC.Collect();
         }
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -677,6 +678,7 @@ namespace mySystem.Process.Bag
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
@@ -691,28 +693,28 @@ namespace mySystem.Process.Bag
                 }
                 catch
                 { isPrint = false; }
-                finally
+                
+                if (isPrint)
                 {
-                    if (isPrint)
-                    {
-                        //写日志
-                        string log = "=====================================\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
-                        dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
+                    //写日志
+                    string log = "=====================================\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                    dt_out.Rows[0]["日志"] = dt_out.Rows[0]["日志"].ToString() + log;
 
-                        bs_out.EndEdit();
-                        da_out.Update((DataTable)bs_out.DataSource);
-                    }
-                    // 关闭文件，false表示不保存
-                    wb.Close(false);
-                    // 关闭Excel进程
-                    oXL.Quit();
-                    // 释放COM资源
-                    Marshal.ReleaseComObject(wb);
-                    Marshal.ReleaseComObject(oXL);
-                    wb = null;
-                    oXL = null;
+                    bs_out.EndEdit();
+                    da_out.Update((DataTable)bs_out.DataSource);
                 }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                wb = null;
+                oXL = null;
+                return pageCount;
             }
         }
 
@@ -899,6 +901,20 @@ namespace mySystem.Process.Bag
             da_in.Update((DataTable)bs_in.DataSource);
             readInnerData(_id);
             innerBind();
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void RunningRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

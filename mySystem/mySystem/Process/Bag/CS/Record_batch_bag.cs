@@ -32,6 +32,8 @@ namespace mySystem.Process.Bag
         List<String> ls操作员, ls审核员;
 
         CheckForm ckform;
+        bool isFirstBind1 = true;
+        bool isFirstBind2 = true;
 
         public Record_batch_bag(mySystem.MainForm mainform)
             : base(mainform)
@@ -750,6 +752,19 @@ namespace mySystem.Process.Bag
 
             foreach (Int32 r in checkedRows)
             {
+                try
+                {
+                    Int32.Parse(dataGridView1.Rows[r].Cells[1].Value.ToString());
+                }
+                catch
+                {
+                    MessageBox.Show("打印页数需填入数字！");
+                    return;
+                }
+            }
+            #region  打印
+            foreach (Int32 r in checkedRows)
+            {
                 SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.conn);
                 DataTable dt = new DataTable("生产指令");
                 int id;
@@ -941,6 +956,32 @@ namespace mySystem.Process.Bag
                     //    break;
                 }
             }
+
+#endregion
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
+        }
+
+        private void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
+        }
+
+        private void Record_batch_bag_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
     }
 }
