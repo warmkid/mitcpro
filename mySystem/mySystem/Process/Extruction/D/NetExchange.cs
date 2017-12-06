@@ -21,6 +21,8 @@ namespace mySystem.Process.Extruction.D
         OleDbDataAdapter daNetExchange;
         BindingSource bsNetExchange;
         OleDbCommandBuilder cbNetExchange;
+        bool isFirstBind = true; 
+
         public NetExchange(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -32,19 +34,22 @@ namespace mySystem.Process.Extruction.D
 
         private void init()
         {
-
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
             // 处理DataGridView中数据类型输错的情况
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.NetExchange_FormClosing);
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
 
         }
+
         void dataGridView1_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
             // 获取选中的列，然后提示
             String name = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             MessageBox.Show(name + "填写错误");
         }
+
         private void binding()
         {
             dtNetExchange = new DataTable(tablename1);
@@ -68,5 +73,21 @@ namespace mySystem.Process.Extruction.D
             DataRow newDataRow = dtNetExchange.NewRow();
             dtNetExchange.Rows.Add(newDataRow);
         }
+        
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void NetExchange_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
     }
 }

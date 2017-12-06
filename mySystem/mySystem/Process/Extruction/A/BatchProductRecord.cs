@@ -1344,7 +1344,23 @@ namespace BatchProductRecord
                     checkedRows.Add(i);
                 }
             }
-            
+
+            foreach (Int32 r in checkedRows)
+            {
+                try
+                {
+                    Int32.Parse(dataGridView1.Rows[r].Cells[1].Value.ToString());
+                }
+                catch 
+                {
+                    MessageBox.Show("打印页数需填入数字！");
+                    return;
+                }
+            }
+
+
+            #region
+
             if (!mySystem.Parameter.isSqlOk)
             {
                 foreach (Int32 r in checkedRows)
@@ -1793,7 +1809,10 @@ namespace BatchProductRecord
                     }
                 }
             }
+
             printSelf();
+            # endregion
+
         }
 
         private void btn保存_Click(object sender, EventArgs e)
@@ -2115,7 +2134,7 @@ namespace BatchProductRecord
             GC.Collect();
         }
 
-        void print(bool b)
+        int print(bool b)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -2137,9 +2156,11 @@ namespace BatchProductRecord
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 // 直接用默认打印机打印该Sheet
                 try
                 {
@@ -2149,6 +2170,7 @@ namespace BatchProductRecord
                 { }
                 finally
                 {
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -2159,6 +2181,7 @@ namespace BatchProductRecord
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
