@@ -58,6 +58,9 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tb备注 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.dtp开始生产时间 = new System.Windows.Forms.DateTimePicker();
@@ -68,9 +71,6 @@
             this.btn打印 = new System.Windows.Forms.Button();
             this.btn审核 = new System.Windows.Forms.Button();
             this.btn打印本页 = new System.Windows.Forms.Button();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
@@ -328,6 +328,21 @@
             this.dataGridView2.Size = new System.Drawing.Size(428, 183);
             this.dataGridView2.TabIndex = 31;
             // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "产品代码";
+            this.Column3.Name = "Column3";
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "产品批号";
+            this.Column5.Name = "Column5";
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "生产数量";
+            this.Column6.Name = "Column6";
+            // 
             // tb备注
             // 
             this.tb备注.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -428,21 +443,6 @@
             this.btn打印本页.Visible = false;
             this.btn打印本页.Click += new System.EventHandler(this.btn打印本页_Click);
             // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "产品代码";
-            this.Column3.Name = "Column3";
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "产品批号";
-            this.Column5.Name = "Column5";
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "生产数量";
-            this.Column6.Name = "Column6";
-            // 
             // PTVBag_batchproduction
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -481,6 +481,7 @@
             this.Controls.Add(this.label1);
             this.Name = "PTVBag_batchproduction";
             this.Text = "PTVBag_batchproduction";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PTVBag_batchproduction_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);

@@ -39,6 +39,7 @@ namespace mySystem.Process.Stock
 
 //        OleDbConnection conn;
 
+        bool isFirstBind = true;
         public 物资请验单(MainForm mainform, int id):base(mainform)
         {
             InitializeComponent();
@@ -234,6 +235,12 @@ namespace mySystem.Process.Stock
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["物资请验单ID"].Visible = false;
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         void tsi_Click(object sender, EventArgs e)
@@ -471,6 +478,12 @@ namespace mySystem.Process.Stock
                         break;
                 }
             }
+        }
+
+        private void 物资请验单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
 
 

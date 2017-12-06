@@ -33,6 +33,7 @@ namespace mySystem.Process.Stock
         int _id;
        
         CheckForm ckform;
+        bool isFirstBind = true;
 
         public 入库单(MainForm mainform, int id):base(mainform)
         {
@@ -91,7 +92,13 @@ namespace mySystem.Process.Stock
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView1.Columns["ID"].Visible = false;
-            dataGridView1.Columns["入库单ID"].Visible = false;   
+            dataGridView1.Columns["入库单ID"].Visible = false;
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         void readFromBinding()
@@ -736,6 +743,12 @@ namespace mySystem.Process.Stock
             mySystem.Other.二维码打印 form = mySystem.Other.二维码打印.create(dtOuter.Rows[0]["产品代码"].ToString(),
                 dtOuter.Rows[0]["批号"].ToString());
             form.Show();
+        }
+
+        private void 入库单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
 
     }

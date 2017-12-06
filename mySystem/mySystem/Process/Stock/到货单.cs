@@ -34,6 +34,8 @@ namespace mySystem.Process.Stock
 
         CheckForm ckform;
 
+        bool isFirstBind = true;
+
         public 到货单(MainForm mainform):base(mainform)
         {
             InitializeComponent();
@@ -867,6 +869,12 @@ namespace mySystem.Process.Stock
             dataGridView1.Columns["规格型号"].ReadOnly = true;
             dataGridView1.Columns["主计量单位"].ReadOnly = true;
             dataGridView1.Columns["原币价税合计"].ReadOnly = true;
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         private void btn添加_Click(object sender, EventArgs e)
@@ -894,6 +902,9 @@ namespace mySystem.Process.Stock
                     daOuter.Update(dtOuter);
                 }
             }
+
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
 
      

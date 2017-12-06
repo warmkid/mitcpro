@@ -31,6 +31,8 @@ namespace mySystem.Process.Stock
 
         CheckForm ckform;
 
+        bool isFirstBind = true;
+
         public 取样记录(MainForm mainform, int id):base(mainform)
         {
             _id = id;
@@ -444,6 +446,12 @@ namespace mySystem.Process.Stock
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["取样记录ID"].Visible = false;
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         void tsi_Click(object sender, EventArgs e)
@@ -501,6 +509,12 @@ namespace mySystem.Process.Stock
             {
                 MessageBox.Show("关联失败，请检查是否有相应数据");
             }
+        }
+
+        private void 取样记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

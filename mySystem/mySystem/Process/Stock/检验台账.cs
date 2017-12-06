@@ -29,6 +29,8 @@ namespace mySystem.Process.Stock
         mySystem.Parameter.FormState _formState;
         mySystem.Parameter.UserState _userState;
 
+        bool isFirstBind = true;
+
         public 检验台账()
         {
             InitializeComponent();
@@ -405,6 +407,12 @@ namespace mySystem.Process.Stock
             }
 
             dataGridView1.Columns["ID"].Visible = false;
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         private void btn提交审核_Click(object sender, EventArgs e)
@@ -467,6 +475,12 @@ namespace mySystem.Process.Stock
         public void addRow(List<Object> objs)
         {
 
+        }
+
+        private void 检验台账_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

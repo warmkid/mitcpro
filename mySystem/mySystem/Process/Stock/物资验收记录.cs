@@ -41,6 +41,8 @@ namespace mySystem.Process.Stock
 //        OleDbConnection conn;
         CheckForm ckform;
 
+        bool isFirstBind = true;
+
         public 物资验收记录(MainForm mainform):base(mainform)
         {
             // TODO 审核人不走这条路
@@ -552,6 +554,12 @@ namespace mySystem.Process.Stock
             dataGridView1.Columns["物料名称"].ReadOnly = true;
             dataGridView1.Columns["物料代码"].ReadOnly = true;
             dataGridView1.Columns["单位"].ReadOnly = true;
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         void tsi_Click(object sender, EventArgs e)
@@ -1326,6 +1334,9 @@ namespace mySystem.Process.Stock
                     daInner.Update(dtInner);
                 }
             }
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
+
         }
 
 

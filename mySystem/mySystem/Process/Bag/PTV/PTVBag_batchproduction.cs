@@ -33,6 +33,8 @@ namespace mySystem.Process.Bag.PTV
 
         CheckForm ckform;
 
+        bool isFirstBind = true;
+
         public PTVBag_batchproduction(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -470,6 +472,13 @@ namespace mySystem.Process.Bag.PTV
             this.dataGridView2.Rows[index].Cells[2].Value = dt.Rows[0]["生产数量"].ToString(); //生产数量
             //dataGridView2.DataSource = dt;
             dataGridView2.ReadOnly = true;
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind = false;
+            }
         }
         private void initrecord()
         {
@@ -1120,7 +1129,7 @@ namespace mySystem.Process.Bag.PTV
             GC.Collect();
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -1142,9 +1151,12 @@ namespace mySystem.Process.Bag.PTV
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
+
                 bool isPrint = true;
                 //false->打印
                 try
@@ -1158,6 +1170,8 @@ namespace mySystem.Process.Bag.PTV
                 { isPrint = false; }
                 finally
                 {
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+
                     if (isPrint)
                     {
                         //写日志
@@ -1178,6 +1192,7 @@ namespace mySystem.Process.Bag.PTV
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1236,6 +1251,14 @@ namespace mySystem.Process.Bag.PTV
 
             mysheet.Cells[22 + ind, 7] = dtOuter.Rows[0]["批准人"].ToString();
             mysheet.Cells[22 + ind, 9] = DateTime.Parse(dtOuter.Rows[0]["批准时间"].ToString()).ToString("D");
+        }
+
+        private void PTVBag_batchproduction_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView2.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView2);
         }
 
     }
