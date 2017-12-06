@@ -17,6 +17,8 @@ namespace mySystem.Process.Stock
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
 //        OleDbConnection conn;
 
+        bool isFirstBind = true;
+
         public 文件上传()
         {
             InitializeComponent();
@@ -30,6 +32,11 @@ namespace mySystem.Process.Stock
         {
             dataGridView1.Columns["ID"].Visible = false;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         void refresh()
@@ -79,6 +86,12 @@ namespace mySystem.Process.Stock
                     MessageBox.Show("找不到文件！");
                 }
             }
+        }
+
+        private void 文件上传_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

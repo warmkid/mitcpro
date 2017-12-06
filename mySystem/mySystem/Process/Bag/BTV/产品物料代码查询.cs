@@ -12,7 +12,7 @@ using System.Data.SqlClient;
 
 namespace mySystem.Process.Bag.BTV
 {
-    public partial class 产品物料代码查询 : Form
+    public partial class 产品物料代码查询 : BaseForm
     {
         DataTable dtShow;
         public 产品物料代码查询()
@@ -48,7 +48,7 @@ namespace mySystem.Process.Bag.BTV
             SqlDataAdapter da;
             DataTable dt;
             String sql;
-            sql = "select 生产指令ID, 生产指令编号, 生产日期,班次,产品代码,生产批号,产品数量包数合计A,产品数量只数合计B from 产品内包装记录 where 生产日期 between #{0}# and #{1}# and 产品代码 like '%{2}%'";
+            sql = "select 生产指令ID, 生产指令编号, 生产日期,班次,产品代码,生产批号,产品数量包数合计A,产品数量只数合计B from 产品内包装记录 where 生产日期 between '{0}' and '{1}' and 产品代码 like '%{2}%'";
             da = new SqlDataAdapter(String.Format(sql, start, end, code), mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
@@ -63,7 +63,7 @@ namespace mySystem.Process.Bag.BTV
             // 产品内包装记录  生产领料使用记录  生产领料使用记录详细信息
 
             sql = "select 产品内包装记录.生产指令ID as 生产指令ID, 产品内包装记录.生产指令编号 as 生产指令编号, 产品内包装记录.生产日期 as 生产日期, 产品内包装记录.班次 as 班次,产品内包装记录.产品代码 as 产品代码, 产品内包装记录.生产批号 as 生产批号,产品内包装记录.产品数量包数合计A as 产品数量包数合计A,产品内包装记录.产品数量只数合计B as 产品数量只数合计B from 产品内包装记录,生产领料使用记录,生产领料使用记录详细信息 " +
-                "where 生产领料使用记录详细信息.物料代码 like '%{2}%' and  生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID=产品内包装记录.生产指令ID  and 产品内包装记录.生产日期 between #{0}# and #{1}#";
+                "where 生产领料使用记录详细信息.物料代码 like '%{2}%' and  生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录.生产指令ID=产品内包装记录.生产指令ID  and 产品内包装记录.生产日期 between '{0}' and '{1}'";
             da = new SqlDataAdapter(String.Format(sql, start, end, code), mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
@@ -92,7 +92,7 @@ namespace mySystem.Process.Bag.BTV
                 DateTime st, ed;
                 st = Convert.ToDateTime(dr["生产日期"]).Date;
                 ed = Convert.ToDateTime(dr["生产日期"]).AddDays(1).Date.AddMilliseconds(-1) ;
-                sql = "select 生产领料使用记录详细信息.物料代码 as 物料代码, 生产领料使用记录详细信息.领取数量 as 数量 from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录详细信息.领料日期时间 between #{1}# and #{2}# and 生产领料使用记录详细信息.班次='{3}'";
+                sql = "select 生产领料使用记录详细信息.物料代码 as 物料代码, 生产领料使用记录详细信息.领取数量 as 数量 from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录详细信息.领料日期时间 between '{1}' and '{2}' and 生产领料使用记录详细信息.班次='{3}'";
                 da = new SqlDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.conn);
                 dt = new DataTable();
                 da.Fill(dt);
@@ -125,7 +125,7 @@ namespace mySystem.Process.Bag.BTV
                 DateTime st, ed;
                 st = Convert.ToDateTime(dr["生产日期"]).Date;
                 ed = Convert.ToDateTime(dr["生产日期"]).AddDays(1).Date.AddMilliseconds(-1);
-                sql = "select 生产领料使用记录详细信息.物料代码 as 物料代码, 生产领料使用记录详细信息.领取数量 as 数量 from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录详细信息.领料日期时间 between #{1}# and #{2}# and 生产领料使用记录详细信息.班次='{3}'";
+                sql = "select 生产领料使用记录详细信息.物料代码 as 物料代码, 生产领料使用记录详细信息.领取数量 as 数量 from 生产领料使用记录,生产领料使用记录详细信息 where 生产领料使用记录.生产指令ID={0} and 生产领料使用记录详细信息.T生产领料使用记录ID=生产领料使用记录.ID and 生产领料使用记录详细信息.领料日期时间 between '{1}' and '{2}' and 生产领料使用记录详细信息.班次='{3}'";
                 daL = new SqlDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.conn);
                 dtL = new DataTable();
                 daL.Fill(dtL);
@@ -137,7 +137,7 @@ namespace mySystem.Process.Bag.BTV
                 DataTable dtT;
                 st = Convert.ToDateTime(dr["生产日期"]).Date;
                 ed = Convert.ToDateTime(dr["生产日期"]).AddDays(1).Date.AddMilliseconds(-1);
-                sql = "select 生产退料记录详细信息.物料代码 as 物料代码, 生产退料记录详细信息.退库数量 as 数量 from 生产退料记录表,生产退料记录详细信息 where 生产退料记录表.生产指令ID={0} and 生产退料记录详细信息.T生产退料记录ID=生产退料记录表.ID and 生产退料记录详细信息.领料日期 between #{1}# and #{2}# and 生产退料记录详细信息.班次='{3}'";
+                sql = "select 生产退料记录详细信息.物料代码 as 物料代码, 生产退料记录详细信息.退库数量 as 数量 from 生产退料记录表,生产退料记录详细信息 where 生产退料记录表.生产指令ID={0} and 生产退料记录详细信息.T生产退料记录ID=生产退料记录表.ID and 生产退料记录详细信息.领料日期 between '{1}' and '{2}' and 生产退料记录详细信息.班次='{3}'";
                 daT = new SqlDataAdapter(String.Format(sql, dr["生产指令ID"], st, ed, dr["班次"]), mySystem.Parameter.conn);
                 dtT = new DataTable();
                 daT.Fill(dtT);
@@ -147,6 +147,11 @@ namespace mySystem.Process.Bag.BTV
                 }
                 dtShow.Rows.Add(row); 
             }
+        }
+
+        private void 产品物料代码查询_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1) ;
         }
 
     }

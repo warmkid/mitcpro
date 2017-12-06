@@ -52,7 +52,8 @@ namespace mySystem.Process.Bag.BTV
         BindingSource bsOuter, bsInner,bsMaterial;
 
         CheckForm ckform;
-
+        Boolean isFirstBind1 = true;
+        Boolean isFirstBind2 = true;
 
         public BPV制袋生产指令(MainForm mainform):base(mainform)
         {
@@ -469,13 +470,13 @@ namespace mySystem.Process.Bag.BTV
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
         void materialBind()
         {
             bsMaterial.DataSource = dtMaterial;
             dataGridView2.DataSource = bsMaterial.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
         /// <summary>
         /// 设置DataGridView的列
@@ -508,6 +509,7 @@ namespace mySystem.Process.Bag.BTV
                 //    dataGridView1.Columns.Add(cbc);
                 //    continue;
                 //}
+                
                 if (dc.ColumnName == "封边")
                 {
                     cbc = new DataGridViewComboBoxColumn();
@@ -515,7 +517,7 @@ namespace mySystem.Process.Bag.BTV
                     cbc.Name = dc.ColumnName;
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                     foreach (String s in hs封边)
                     {
                         cbc.Items.Add(s);
@@ -530,7 +532,7 @@ namespace mySystem.Process.Bag.BTV
                     cbc.Name = dc.ColumnName;
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                     cbc.Items.Add("中文");
                     cbc.Items.Add("英文");
                     dataGridView1.Columns.Add(cbc);
@@ -543,13 +545,15 @@ namespace mySystem.Process.Bag.BTV
                     cbc.Name = dc.ColumnName;
                     cbc.ValueType = dc.DataType;
                     cbc.DataPropertyName = dc.ColumnName;
-                    cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                    //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                     cbc.Items.Add("中文");
                     cbc.Items.Add("英文");
                     dataGridView1.Columns.Add(cbc);
                     continue;
                 }
+                 
                 // 根据数据类型自动生成列的关键信息
+                
                 switch (dc.DataType.ToString())
                 {
                         
@@ -562,7 +566,7 @@ namespace mySystem.Process.Bag.BTV
                         tbc.Name = dc.ColumnName;
                         tbc.ValueType = dc.DataType;
                         tbc.DataPropertyName = dc.ColumnName;
-                        tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         dataGridView1.Columns.Add(tbc);
                         break;
                     case "System.Boolean":
@@ -571,10 +575,11 @@ namespace mySystem.Process.Bag.BTV
                         ckbc.Name = dc.ColumnName;
                         ckbc.ValueType = dc.DataType;
                         ckbc.DataPropertyName = dc.ColumnName;
-                        ckbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //ckbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         dataGridView1.Columns.Add(ckbc);
                         break;
                 }
+                  
             }
         }
 
@@ -735,11 +740,10 @@ namespace mySystem.Process.Bag.BTV
             // TODO 其他无法分类的代码放在这里
             dataGridView1.AllowUserToAddRows = false;
             // 实现下拉框可选可输
-            dataGridView1.EditingControlShowing += dataGridView1_EditingControlShowing;
-            dataGridView1.CellValidating += dataGridView1_CellValidating;
+            
 
             // 设置DataGridVew的可见性和只读属性等都放在绑定结束之后
-            dataGridView1.DataBindingComplete += dataGridView1_DataBindingComplete;
+            
         }
 
         /// <summary>
@@ -747,7 +751,7 @@ namespace mySystem.Process.Bag.BTV
         /// </summary>
         void addComputerEventHandler()
         {
-            dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
+            
         }
 
 
@@ -798,6 +802,11 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns[7].HeaderText = "外包装规格（只/箱）";
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
         }
 
         void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -806,6 +815,11 @@ namespace mySystem.Process.Bag.BTV
             dataGridView2.Columns[1].Visible = false;
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.RowHeadersVisible = false;
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -1311,8 +1325,9 @@ namespace mySystem.Process.Bag.BTV
             print(true);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -1393,9 +1408,11 @@ namespace mySystem.Process.Bag.BTV
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch { }
                 // 关闭文件，false表示不保存
+                
                 wb.Close(false);
                 // 关闭Excel进程
                 oXL.Quit();
@@ -1407,6 +1424,7 @@ namespace mySystem.Process.Bag.BTV
                 my = null;
                 wb = null;
             }
+            return pageCount;
         }
 
 
@@ -1679,6 +1697,12 @@ namespace mySystem.Process.Bag.BTV
             tb.AutoCompleteCustomSource = acsc;
             tb.AutoCompleteSource = AutoCompleteSource.CustomSource;
             tb.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+        }
+
+        private void BPV制袋生产指令_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
         
     }

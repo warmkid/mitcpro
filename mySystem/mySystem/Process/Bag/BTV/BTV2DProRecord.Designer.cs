@@ -419,6 +419,7 @@
             this.Controls.Add(this.label1);
             this.Name = "BTV2DProRecord";
             this.Text = "BTV2DProRecord";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTV2DProRecord_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -34,7 +34,7 @@ namespace mySystem.Process.Bag.BTV
         Int32 InstruID;
         String Instruction;
         String Flight = "";
-
+        Boolean isFirstBind = true;
         public BPV洁净区温湿度记录(mySystem.MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -411,6 +411,7 @@ namespace mySystem.Process.Bag.BTV
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
+            dr["审核是否通过"] = false;
             return dr;
         }
 
@@ -472,9 +473,9 @@ namespace mySystem.Process.Bag.BTV
                         cbc.Items.Add("白班");
                         cbc.Items.Add("夜班");
                         dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     case "判定":
                         cbc = new DataGridViewComboBoxColumn();
@@ -485,9 +486,9 @@ namespace mySystem.Process.Bag.BTV
                         cbc.Items.Add("合格");
                         cbc.Items.Add("不合格");
                         dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -496,9 +497,9 @@ namespace mySystem.Process.Bag.BTV
                         tbc.Name = dc.ColumnName;
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
-                        tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -769,8 +770,14 @@ namespace mySystem.Process.Bag.BTV
         }
 
         //打印功能
-        public void print(bool isShow)
+        /// <summary>
+        /// add the printed pages sum
+        /// </summary>
+        /// <param name="isShow"></param>
+        /// <returns></returns>
+        public int print(bool isShow)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -798,6 +805,7 @@ namespace mySystem.Process.Bag.BTV
                     //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
                     // 直接用默认打印机打印该Sheet
                     my.PrintOut();
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch
                 { isPrint = false; }
@@ -813,6 +821,7 @@ namespace mySystem.Process.Bag.BTV
                         bs记录.EndEdit();
                         da记录.Update((DataTable)bs记录.DataSource);
                     }
+                    
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -822,8 +831,10 @@ namespace mySystem.Process.Bag.BTV
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    
                 }
             }
+            return pageCount;
         }
 
         //打印功能
@@ -935,6 +946,16 @@ namespace mySystem.Process.Bag.BTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void BPV洁净区温湿度记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
     }

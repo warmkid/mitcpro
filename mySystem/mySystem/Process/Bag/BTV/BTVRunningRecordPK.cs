@@ -38,7 +38,7 @@ namespace mySystem.Process.Bag.BTV
         Int32 InstruID;
         String Instruction;
         String MoCode;
-
+        Boolean isFirstBind = true;
         public BTVRunningRecordPK(MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -479,7 +479,7 @@ namespace mySystem.Process.Bag.BTV
         {
             bs记录 = new BindingSource();
             dt记录 = new DataTable(table);
-            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 膜代码 = '" + MoProductCode + "' and 生产日期 = #" + searchTime.ToString("yyyy/MM/dd") + "# ", mySystem.Parameter.conn);
+            da记录 = new SqlDataAdapter("select * from " + table + " where 生产指令ID = " + InstruID.ToString() + " and 膜代码 = '" + MoProductCode + "' and 生产日期 = '" + searchTime.ToString("yyyy/MM/dd") + "' ", mySystem.Parameter.conn);
             cb记录 = new SqlCommandBuilder(da记录);
             da记录.Fill(dt记录);
         }
@@ -679,8 +679,8 @@ namespace mySystem.Process.Bag.BTV
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 80;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 80;
                         break;
                 }
             }
@@ -698,7 +698,7 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T瓶口焊接机运行记录ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
-
+            
             dataGridView1.Columns["控制器1参数1"].HeaderText = "控制器1#\rWELDING\rPRESSURE\r(bar)";
             dataGridView1.Columns["控制器1参数2"].HeaderText = "控制器1#\rSEALING\rTEMP\r(℃)";
             dataGridView1.Columns["控制器1参数3"].HeaderText = "控制器1#\rSEALING\rTIME\r(s)";
@@ -956,8 +956,9 @@ namespace mySystem.Process.Bag.BTV
             print(true);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -1061,6 +1062,7 @@ namespace mySystem.Process.Bag.BTV
                 try
                 {
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch { }
                 // 关闭文件，false表示不保存
@@ -1075,6 +1077,7 @@ namespace mySystem.Process.Bag.BTV
                 my = null;
                 wb = null;
             }
+            return pageCount;
         }
 
 
@@ -1202,6 +1205,11 @@ namespace mySystem.Process.Bag.BTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         //内表提交审核按钮
@@ -1279,6 +1287,11 @@ namespace mySystem.Process.Bag.BTV
                 }
             }
             return rtn;
+        }
+
+        private void BTVRunningRecordPK_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 		
         

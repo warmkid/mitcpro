@@ -1087,6 +1087,7 @@
             this.Controls.Add(this.groupBox5);
             this.Name = "BTVRunningRecordRHJMulti";
             this.Text = "BTVRunningRecordRHJMulti";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVRunningRecordRHJMulti_FormClosing);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.groupBox2.ResumeLayout(false);

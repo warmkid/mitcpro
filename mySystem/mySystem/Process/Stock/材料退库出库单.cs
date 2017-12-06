@@ -47,6 +47,9 @@ namespace mySystem.Process.Stock
         Int32 InstruID;
         String Instruction;
 
+        bool isFirstBind = true;
+        bool isFirstBind2 = true;
+        bool isFirstBind3 = true;
 
         public 材料退库出库单(MainForm mainform)
             : base(mainform)
@@ -206,6 +209,12 @@ namespace mySystem.Process.Stock
             dataGridView3.Columns[4].Name = "库存ID";//用于写入二维码信息表
 
             dataGridView3.Columns[4].Visible = false;
+
+            if (isFirstBind3)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView3);
+                isFirstBind3 = false;
+            }
 
         }
 
@@ -581,6 +590,12 @@ namespace mySystem.Process.Stock
             dataGridView2.DataSource = bs二维码信息.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView2);
 
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
+
         }
         private void fill_datagridview3()
         {
@@ -676,8 +691,8 @@ namespace mySystem.Process.Stock
 
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        cbc.MinimumWidth = 80;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -687,8 +702,8 @@ namespace mySystem.Process.Stock
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        tbc.MinimumWidth = 80;
                         break;
                 }
             }
@@ -1345,7 +1360,7 @@ namespace mySystem.Process.Stock
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -1368,9 +1383,11 @@ namespace mySystem.Process.Stock
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -1396,6 +1413,8 @@ namespace mySystem.Process.Stock
                         da记录.Update((DataTable)bs记录.DataSource);
                     }
                     // 关闭文件，false表示不保存
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+
                     wb.Close(false);
                     // 关闭Excel进程
                     oXL.Quit();
@@ -1405,6 +1424,7 @@ namespace mySystem.Process.Stock
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1661,6 +1681,12 @@ namespace mySystem.Process.Stock
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         //实时求合计、检查人名合法性
@@ -1742,6 +1768,16 @@ namespace mySystem.Process.Stock
             string pihao = dataGridView1["物料批号", dataGridView1.SelectedCells[0].RowIndex].Value.ToString();
             mySystem.Other.二维码打印 form = mySystem.Other.二维码打印.create(daima, pihao);
             form.Show();
+        }
+
+        private void 材料退库出库单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView2.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView2);
+            if (dataGridView3.Columns.Count > 0)
+                writeDGVWidthToSetting(dataGridView3);
         }
         
     }

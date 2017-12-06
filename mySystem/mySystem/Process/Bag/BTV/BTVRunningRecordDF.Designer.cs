@@ -663,7 +663,7 @@
             // 
             // dataGridView1
             // 
-            this.dataGridView1.AllowUserToResizeColumns = false;
+            
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -1139,6 +1139,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "BTVRunningRecordDF";
             this.Text = "BTVRunningRecordDF";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVRunningRecordDF_FormClosing);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox5.ResumeLayout(false);

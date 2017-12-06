@@ -440,6 +440,7 @@
             this.Controls.Add(this.label1);
             this.Name = "BTVPunchDrawingConfirm";
             this.Text = "BTVPunchDrawingConfirm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTVPunchDrawingConfirm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();

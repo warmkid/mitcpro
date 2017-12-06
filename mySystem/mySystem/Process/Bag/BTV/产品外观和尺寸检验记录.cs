@@ -43,7 +43,7 @@ namespace mySystem.Process.Bag.BTV
         Int32 i生产指令ID;
         List<String> ls操作员;
         List<String> ls审核员;
-
+        Boolean isFirstBind = true;
 
         // 数据库连接
         String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
@@ -816,8 +816,9 @@ namespace mySystem.Process.Bag.BTV
         }
         
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -845,6 +846,7 @@ namespace mySystem.Process.Bag.BTV
                     //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
                     // 直接用默认打印机打印该Sheet
                     my.PrintOut();
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch
                 { isPrint = false; }
@@ -872,6 +874,7 @@ namespace mySystem.Process.Bag.BTV
                     oXL = null;
                 }
             }
+            return pageCount;
         }
 
         //打印功能
@@ -954,6 +957,20 @@ namespace mySystem.Process.Bag.BTV
             mysheet.PageSetup.RightFooter = Instruction + "-16-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
+        }
+
+        private void 产品外观和尺寸检验记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
                 
     }

@@ -418,7 +418,7 @@ namespace mySystem.Process.Bag.BTV
             string log = DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 新建记录\n";
             log += "生产指令编码：" + Instruction + "\n";
             dr["日志"] = log;
-
+            dr["审核是否通过"] = false;
             ckb白班.Checked = mySystem.Parameter.userflight == "白班";
             ckb夜班.Checked = !ckb白班.Checked;
             return dr;

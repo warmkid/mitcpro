@@ -28,17 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.btn出库退库单 = new System.Windows.Forms.Button();
+            this.btn读取 = new System.Windows.Forms.Button();
             this.btn文件上传 = new System.Windows.Forms.Button();
             this.btn检验台账 = new System.Windows.Forms.Button();
             this.btn原料入库 = new System.Windows.Forms.Button();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btn退货 = new System.Windows.Forms.Button();
             this.btn出库 = new System.Windows.Forms.Button();
             this.btn入库 = new System.Windows.Forms.Button();
-            this.btn读取 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btn出库退库单 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // btn出库退库单
+            // 
+            this.btn出库退库单.Location = new System.Drawing.Point(361, 289);
+            this.btn出库退库单.Name = "btn出库退库单";
+            this.btn出库退库单.Size = new System.Drawing.Size(75, 23);
+            this.btn出库退库单.TabIndex = 11;
+            this.btn出库退库单.Text = "出库/退库单";
+            this.btn出库退库单.UseVisualStyleBackColor = true;
+            this.btn出库退库单.Click += new System.EventHandler(this.btn出库退库单_Click);
+            // 
+            // btn读取
+            // 
+            this.btn读取.Location = new System.Drawing.Point(382, 23);
+            this.btn读取.Name = "btn读取";
+            this.btn读取.Size = new System.Drawing.Size(75, 23);
+            this.btn读取.TabIndex = 10;
+            this.btn读取.Text = "读取1";
+            this.btn读取.UseVisualStyleBackColor = true;
+            this.btn读取.Visible = false;
+            this.btn读取.Click += new System.EventHandler(this.btn读取_Click);
             // 
             // btn文件上传
             // 
@@ -71,6 +92,16 @@
             this.btn原料入库.UseVisualStyleBackColor = true;
             this.btn原料入库.Click += new System.EventHandler(this.btn原料入库_Click);
             // 
+            // dataGridView1
+            // 
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(45, 323);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(101, 43);
+            this.dataGridView1.TabIndex = 3;
+            this.dataGridView1.Visible = false;
+            // 
             // btn退货
             // 
             this.btn退货.Location = new System.Drawing.Point(361, 83);
@@ -102,37 +133,6 @@
             this.btn入库.UseVisualStyleBackColor = true;
             this.btn入库.Visible = false;
             this.btn入库.Click += new System.EventHandler(this.btn入库_Click);
-            // 
-            // btn读取
-            // 
-            this.btn读取.Location = new System.Drawing.Point(382, 23);
-            this.btn读取.Name = "btn读取";
-            this.btn读取.Size = new System.Drawing.Size(75, 23);
-            this.btn读取.TabIndex = 10;
-            this.btn读取.Text = "读取1";
-            this.btn读取.UseVisualStyleBackColor = true;
-            this.btn读取.Visible = false;
-            this.btn读取.Click += new System.EventHandler(this.btn读取_Click);
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(45, 323);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(101, 43);
-            this.dataGridView1.TabIndex = 3;
-            this.dataGridView1.Visible = false;
-            // 
-            // btn出库退库单
-            // 
-            this.btn出库退库单.Location = new System.Drawing.Point(361, 289);
-            this.btn出库退库单.Name = "btn出库退库单";
-            this.btn出库退库单.Size = new System.Drawing.Size(75, 23);
-            this.btn出库退库单.TabIndex = 11;
-            this.btn出库退库单.Text = "出库/退库单";
-            this.btn出库退库单.UseVisualStyleBackColor = true;
-            this.btn出库退库单.Click += new System.EventHandler(this.btn出库退库单_Click);
             // 
             // 库存管理
             // 

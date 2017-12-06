@@ -515,6 +515,7 @@
             this.Controls.Add(this.label1);
             this.Name = "BTV2DShipHeat";
             this.Text = "BTV2DShipHeat";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.BTV2DShipHeat_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
