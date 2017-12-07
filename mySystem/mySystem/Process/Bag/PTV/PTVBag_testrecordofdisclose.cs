@@ -202,17 +202,6 @@ namespace mySystem.Process.Bag.PTV
             }
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                //if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
-                //{
-                //    //控件都不能点，只有打印,日志可点
-                //    setControlFalse();
-                //}
-                //else //1待审核
-                //{
-                //    //发送审核不可点，其他都可点
-                //    setControlTrue();
-                //    btn审核.Enabled = true;
-                //}
 
                 if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //2审核通过||3审核未通过
                 {
@@ -228,7 +217,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value!=null && dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
                             dataGridView1.Rows[i].ReadOnly = false;
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
@@ -244,7 +233,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value != null && dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
                             dataGridView1.Rows[i].ReadOnly = false;
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
@@ -253,23 +242,13 @@ namespace mySystem.Process.Bag.PTV
             }
             else//操作员
             {
-                //if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
-                //{
-                //    //控件都不能点
-                //    setControlFalse();
-                //}
-                //else //0未保存||3审核未通过
-                //{
-                //    //发送审核，审核不能点
-                //    setControlTrue();
-                //}
 
                 if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
                 {
                     //控件都不能点
                     setControlFalse();
                 }
-                else if (_formState == Parameter.FormState.未保存) //0未保存
+                else //3审核未通过或未保存
                 {
                     //发送审核，审核不能点
                     setControlTrue();
@@ -278,22 +257,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() != "")
-                            dataGridView1.Rows[i].ReadOnly = true;
-                        else
-                            dataGridView1.Rows[i].ReadOnly = false;
-                    }
-                }
-                else //3审核未通过
-                {
-                    //发送审核，审核不能点
-                    setControlTrue();
-                    btn提交数据审核.Enabled = true;
-                    //遍历datagridview，如果有一行为未审核，则该行可以修改
-                    dataGridView1.ReadOnly = false;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() != "")
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value!=null && dataGridView1.Rows[i].Cells["复核人"].Value.ToString() != "")
                             dataGridView1.Rows[i].ReadOnly = true;
                         else
                             dataGridView1.Rows[i].ReadOnly = false;
@@ -596,7 +560,7 @@ namespace mySystem.Process.Bag.PTV
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 80;
+                        //tbc.MinimumWidth = 80;
                         break;
                 }
             }
@@ -679,6 +643,8 @@ namespace mySystem.Process.Bag.PTV
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
+                if (dt记录详情.Rows[deletenum]["复核人"].ToString() != "" && _userState == Parameter.UserState.操作员)
+                    return;
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
                 // 保存
@@ -1119,6 +1085,7 @@ namespace mySystem.Process.Bag.PTV
         //数据绑定结束，设置表格格式
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setEnableReadOnly();
             setDataGridViewFormat();
             if (isFirstBind)
             {

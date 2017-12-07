@@ -156,7 +156,7 @@ namespace mySystem.Process.Bag.PTV
         private void getOtherData()
         {
             //*********产品代码、产品批号 -----> 数据获取*********//
-            if (!isSqlOk)
+            if (isSqlOk)
             {
                 SqlCommand comm1 = new SqlCommand();
                 comm1.Connection = mySystem.Parameter.conn;
@@ -189,16 +189,41 @@ namespace mySystem.Process.Bag.PTV
             }
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
+                if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
                 {
                     //控件都不能点，只有打印,日志可点
                     setControlFalse();
+                }
+                else if (_formState == Parameter.FormState.未保存)
+                {
+                    //控件都不能点，只有打印,日志可点
+                    setControlFalse();
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value != null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
                 else //1待审核
                 {
                     //发送审核不可点，其他都可点
                     setControlTrue();
                     btn审核.Enabled = true;
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value != null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
             }
             else//操作员
@@ -212,6 +237,16 @@ namespace mySystem.Process.Bag.PTV
                 {
                     //发送审核，审核不能点
                     setControlTrue();
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value != null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
                 }
             }
             //datagridview格式，包含序号不可编辑
@@ -245,6 +280,10 @@ namespace mySystem.Process.Bag.PTV
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             tb审核员.Enabled = false;
+
+            btn提交数据审核.Enabled = false;
+            btn数据审核.Enabled = false;
+
             //部分空间防作弊，不可改
             tb生产指令编码.ReadOnly = true;
             tb产品批号.ReadOnly = true;
@@ -464,6 +503,7 @@ namespace mySystem.Process.Bag.PTV
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
+            dataGridView1.Columns["审核员"].ReadOnly = true;
         }
 
         //添加行代码
@@ -587,6 +627,8 @@ namespace mySystem.Process.Bag.PTV
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
+                if (dt记录详情.Rows[deletenum]["审核员"].ToString() != "" && _userState==Parameter.UserState.操作员)
+                    return;
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
                 // 保存
@@ -941,7 +983,7 @@ namespace mySystem.Process.Bag.PTV
             sum[1] = 0;
             for (int i = 0; i < dt记录详情.Rows.Count; i++)
             {
-                if (Int32.TryParse(dt记录详情.Rows[i]["不良品数量"].ToString(), out numtemp) == true)
+                if (Int32.TryParse(dt记录详情.Rows[i]["外观检查"].ToString(), out numtemp) == true)
                 { sum[1] += numtemp; }
             }
             dt记录.Rows[0]["不良品数量"] = sum[1];
@@ -952,10 +994,10 @@ namespace mySystem.Process.Bag.PTV
         private bool TextBox_check()
         {
             bool TypeCheck = true;
-            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] { tb不良品数量, tb合格品数量,
+            List<TextBox> TextBoxList = new List<TextBox>(new TextBox[] {
                 tb焊线1参数1,tb焊线1参数2,tb焊线1参数3,tb焊线1参数4,tb焊线1参数5,
                 tb焊线2参数1,tb焊线2参数2,tb焊线2参数3,tb焊线2参数4,tb焊线2参数5});
-            List<String> StringList = new List<String>(new String[] { "不良品数量", "合格品数量",
+            List<String> StringList = new List<String>(new String[] {
                 "焊线1#  WELDING PRESSURE(bar)","焊线1#  SEALING TEMP(°C)","焊线1#  SEALING TIME(s)","焊线1#  COOLING TEMP(°C)","焊线1#  TCR",
                 "焊线2#  WELDING PRESSURE(bar)","焊线2#  SEALING TEMP(°C)","焊线2#  SEALING TIME(s)","焊线2#  COOLING TEMP(°C)","焊线2#  TCR"});
             int numtemp = 0;
@@ -1007,7 +1049,7 @@ namespace mySystem.Process.Bag.PTV
                 {
                     getTotal();
                 }
-                else if (dataGridView1.Columns[e.ColumnIndex].Name == "不良品数量")
+                else if (dataGridView1.Columns[e.ColumnIndex].Name == "外观检查")
                 {
                     getTotal();
                 }
@@ -1027,6 +1069,9 @@ namespace mySystem.Process.Bag.PTV
         //数据绑定结束，设置表格格式
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            //审核完成的行不能修改，包括审核员，但审核员可以删除改行
+            setEnableReadOnly();
+
             setDataGridViewFormat();
             if (isFirstBind)
             {
