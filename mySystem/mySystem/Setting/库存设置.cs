@@ -192,7 +192,7 @@ namespace mySystem.Setting
         {
             try
             {
-                if (Parameter.isSqlOk)
+                if (!Parameter.isSqlOk)
                 { }
                 else
                 {
@@ -238,7 +238,7 @@ namespace mySystem.Setting
         {
             try
             {
-                if (Parameter.isSqlOk)
+                if (!Parameter.isSqlOk)
                 { }
                 else
                 {

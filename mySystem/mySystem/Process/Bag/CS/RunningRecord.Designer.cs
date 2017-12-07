@@ -74,6 +74,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(953, 263);
             this.dataGridView1.TabIndex = 5;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // label18
             // 
@@ -299,6 +300,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "RunningRecord";
             this.Text = "RunningRecord";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RunningRecord_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

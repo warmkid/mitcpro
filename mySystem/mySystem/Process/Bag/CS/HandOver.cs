@@ -48,13 +48,13 @@ namespace mySystem.Process.Bag.CS
         DateTime __生产日期;
         private CheckForm check = null;
         string __待审核 = "__待审核";
-
-
        
         int searchId;
         int status;
         int outerId;
-       
+
+        bool isFirstBind = true;
+
         Parameter.UserState _userState;      
         Parameter.FormState _formState;
         public HandOver(mySystem.MainForm mainform)
@@ -714,7 +714,7 @@ namespace mySystem.Process.Bag.CS
             print(false);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -767,7 +767,8 @@ namespace mySystem.Process.Bag.CS
             if (preview)
             {
                 my.Select();
-                oXL.Visible = true; //加上这一行  就相当于预览功能            
+                oXL.Visible = true; //加上这一行  就相当于预览功能  
+                return 0;
             }
             else
             {
@@ -779,6 +780,7 @@ namespace mySystem.Process.Bag.CS
                     my.PrintOut(); // oXL.Visible=false 就会直接打印该Sheet
                 }
                 catch { }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 // 关闭文件，false表示不保存
                 wb.Close(false);
                 // 关闭Excel进程
@@ -790,6 +792,7 @@ namespace mySystem.Process.Bag.CS
                 oXL = null;
                 my = null;
                 wb = null;
+                return pageCount;
             }
         }
 
@@ -1062,6 +1065,20 @@ namespace mySystem.Process.Bag.CS
             //this act as the same in function upper
             
             btn查看日志.Enabled = true;
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void HandOver_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
         //leave datagridview check the right things

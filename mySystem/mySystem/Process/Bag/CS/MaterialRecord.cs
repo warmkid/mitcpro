@@ -32,7 +32,9 @@ namespace mySystem.Process.Bag
         Parameter.UserState _userState;
         Parameter.FormState _formState;
         Int32 InstruID;
-        String Instruction;     
+        String Instruction;
+
+        bool isFirstBind = true;
 
         public MaterialRecord(MainForm mainform) : base(mainform)
         {
@@ -617,8 +619,8 @@ namespace mySystem.Process.Bag
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -949,7 +951,7 @@ namespace mySystem.Process.Bag
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -969,6 +971,7 @@ namespace mySystem.Process.Bag
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
@@ -983,30 +986,31 @@ namespace mySystem.Process.Bag
                 }
                 catch
                 { isPrint = false; }
-                finally
-                {
-                    if (isPrint)
-                    {
-                        //写日志
-                        string log = "=====================================\n";
-                        //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒 打印文档\n");
-                        dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
 
-                        bs记录.EndEdit();
-                        da记录.Update((DataTable)bs记录.DataSource);
-                    }
-                    // 关闭文件，false表示不保存
-                    wb.Close(false);
-                    // 关闭Excel进程
-                    oXL.Quit();
-                    // 释放COM资源
-                    Marshal.ReleaseComObject(wb);
-                    Marshal.ReleaseComObject(oXL);
-                    wb = null;
-                    oXL = null;
+                if (isPrint)
+                {
+                    //写日志
+                    string log = "=====================================\n";
+                    //log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + "：" + mySystem.Parameter.userName + " 打印文档\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒 打印文档\n");
+                    dt记录.Rows[0]["日志"] = dt记录.Rows[0]["日志"].ToString() + log;
+
+                    bs记录.EndEdit();
+                    da记录.Update((DataTable)bs记录.DataSource);
                 }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                wb = null;
+                oXL = null;
+                return pageCount;
             }
+            
         }
 
         //打印功能
@@ -1194,6 +1198,11 @@ namespace mySystem.Process.Bag
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         //实时求合计、检查人名合法性
@@ -1247,6 +1256,11 @@ namespace mySystem.Process.Bag
                 else
                 { }
             }
+        }
+
+        private void MaterialRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
         
     }

@@ -370,6 +370,7 @@
             this.Controls.Add(this.label1);
             this.Name = "CS生产退料记录";
             this.Text = "CS生产退料记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CS生产退料记录_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

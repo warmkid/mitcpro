@@ -397,6 +397,7 @@ namespace mySystem.Process.Bag.BTV
             dr["汇总时间"] = DateTime.Now;
             dr["审核时间"] = DateTime.Now;
             dr["批准时间"] = DateTime.Now;
+            dr["审核是否通过"] = false;
             return dr;
         }
 
@@ -703,16 +704,23 @@ namespace mySystem.Process.Bag.BTV
                         ;
                         break;
                     default:
-                        List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
-                        da = new SqlDataAdapter("select * from "+tableName[r-2]+" where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
-                        dt = new DataTable("制袋机组运行记录");
-                        da.Fill(dt);
-                        foreach (int page in pages)
+                        try
                         {
-                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
-                            //(new mySystem.Process.Bag.RunningRecord(mainform, id)).print(false);
-                            prtBatch[r](id);
-                            GC.Collect();
+                            List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
+                            da = new SqlDataAdapter("select * from " + tableName[r - 2] + " where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                            dt = new DataTable("制袋机组运行记录");
+                            da.Fill(dt);
+                            foreach (int page in pages)
+                            {
+                                id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                                //(new mySystem.Process.Bag.RunningRecord(mainform, id)).print(false);
+                                prtBatch[r](id);
+                                GC.Collect();
+                            }
+                        }
+                        catch
+                        {
+                            MessageBox.Show("请确认打印范围!");
                         }
                         break;
                    

@@ -453,6 +453,7 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(963, 280);
             this.dataGridView1.TabIndex = 42;
+            this.dataGridView1.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dataGridView1_DataBindingComplete);
             // 
             // dtp生产日期
             // 
@@ -607,6 +608,7 @@
             this.Controls.Add(this.label5);
             this.Name = "产品外观和尺寸检验记录";
             this.Text = "产品外观和尺寸检验记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.产品外观和尺寸检验记录_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

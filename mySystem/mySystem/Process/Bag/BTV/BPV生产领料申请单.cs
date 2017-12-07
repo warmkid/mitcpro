@@ -145,5 +145,10 @@ namespace mySystem.Process.Bag.BTV
             { }
         }
 
+        private void BPV生产领料申请单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ;
+        }
+
     }
 }

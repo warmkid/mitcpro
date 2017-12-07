@@ -254,10 +254,10 @@ namespace mySystem.Query
                         { EachBind(this.dgv, "产品外观和尺寸检验记录", "操作员", "生产日期", null); }
                         break;
                     case "BPV制袋日报表":
-                        //if (comboBox1.SelectedIndex != -1)
-                        //{ EachBind(this.dgv, "BPV制袋日报表", "审核员", null, "生产指令ID"); }
-                        //else
-                        //{ EachBind(this.dgv, "BPV制袋日报表", "审核员", null, null); }
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "BPV制袋日报表", "审核员", null, "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "BPV制袋日报表", "审核员", null, null); }
                         break;
                     case "产品外包装记录":
                         if (comboBox1.SelectedIndex != -1)
@@ -386,8 +386,8 @@ namespace mySystem.Query
                             mydlg1.Show();
                             break;
                         case "制袋工序批生产记录":
-                            //BTVBatchProduction mydlg2 = new BTVBatchProduction(mainform, ID);
-                            //mydlg2.Show();
+                            BPV批生产记录 mydlg2 = new BPV批生产记录(mainform, ID);
+                            mydlg2.Show();
                             break;
                         case "产品内包装记录":
                             BTVInnerPackage mydlg3 = new BTVInnerPackage(mainform, ID);
@@ -470,7 +470,8 @@ namespace mySystem.Query
                             mydlg22.Show();
                             break;
                         case "BPV制袋日报表":
-
+                            生产日报表 mydlg23 = new 生产日报表(mainform);
+                            mydlg23.Show();
                             break;
                         case "产品外包装记录":
                             BPV产品外包装记录 mydlg24 = new BPV产品外包装记录(mainform, ID);
