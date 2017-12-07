@@ -455,10 +455,10 @@ namespace mySystem.Extruction.Process
                     da记录详情_sql.Update((DataTable)bs记录详情.DataSource);
                 }
             }
-            dataGridView1.Columns.Clear();
+            dataGridView1.Columns.Clear();            
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-            setDataGridViewColumns();
             innerBind();
+            setDataGridViewColumns();
 
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -1117,7 +1117,10 @@ namespace mySystem.Extruction.Process
         private void ExtructionCheckBeforePowerStep2_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
 
 

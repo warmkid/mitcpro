@@ -39,6 +39,7 @@ namespace mySystem.Other
 
         private SqlDataAdapter da记录sql, da记录详情sql;
         private SqlCommandBuilder cb记录sql, cb记录详情sql;
+        bool isFirstBind = true; 
 
         public 生产领料申请单(mySystem.MainForm mainform, DataTable dt生产指令构造, DataTable dt物料代码数量构造, SqlConnection conn构造, OleDbConnection connOle构造)
             : base(mainform)
@@ -75,10 +76,13 @@ namespace mySystem.Other
             outerBind();
             _id = Convert.ToInt32(dt记录.Rows[0]["ID"].ToString());
             //新建内表绑定
+            dataGridView1.Columns.Clear();
             readInnerData(_id);
-            innerBind();
-            WriteInnerInit();//填写默认行
             setDataGridViewColumns();
+            innerBind();
+            
+            WriteInnerInit();//填写默认行
+
             // 其他设置
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -109,6 +113,7 @@ namespace mySystem.Other
             outerBind();
             _id = Convert.ToInt32(dt记录.Rows[0]["ID"]);
             readInnerData(_id);
+            dataGridView1.Columns.Clear();
             setDataGridViewColumns();
             innerBind();
 
@@ -601,7 +606,6 @@ namespace mySystem.Other
         //设置DataGridView中各列的格式+设置datagridview基本属性
         private void setDataGridViewColumns()
         {
-            dataGridView1.Columns.Clear();
             DataGridViewTextBoxColumn tbc;
             DataGridViewComboBoxColumn cbc;
             DataGridViewCheckBoxColumn ckbc;
@@ -780,16 +784,33 @@ namespace mySystem.Other
             }
             else
             {
-                // 内表保存
-                da记录详情.Update((DataTable)bs记录详情.DataSource);
-                readInnerData(_id);
-                innerBind();
+                if (!mySystem.Parameter.isSqlOk)
+                {
+                    // 内表保存
+                    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                    readInnerData(_id);
+                    innerBind();
 
-                //外表保存
-                bs记录.EndEdit();
-                da记录.Update((DataTable)bs记录.DataSource);
-                readOuterData(_id);
-                outerBind();
+                    //外表保存
+                    bs记录.EndEdit();
+                    da记录.Update((DataTable)bs记录.DataSource);
+                    readOuterData(_id);
+                    outerBind();
+                }
+                else
+                {
+                    // 内表保存
+                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                    readInnerData(_id);
+                    innerBind();
+
+                    //外表保存
+                    bs记录.EndEdit();
+                    da记录sql.Update((DataTable)bs记录.DataSource);
+                    readOuterData(_id);
+                    outerBind();
+                }
+                
 
                 setEnableReadOnly();
 
@@ -975,7 +996,7 @@ namespace mySystem.Other
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -993,9 +1014,11 @@ namespace mySystem.Other
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -1019,6 +1042,7 @@ namespace mySystem.Other
                         bs记录.EndEdit();
                         da记录.Update((DataTable)bs记录.DataSource);
                     }
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                     // 关闭文件，false表示不保存
                     wb.Close(false);
                     // 关闭Excel进程
@@ -1029,6 +1053,7 @@ namespace mySystem.Other
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1136,6 +1161,11 @@ namespace mySystem.Other
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         private void 生产领料申请单_FormClosing(object sender, FormClosingEventArgs e)
@@ -1169,6 +1199,10 @@ namespace mySystem.Other
                     }
                     
                 }
+            }
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
             }
         }
 

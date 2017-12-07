@@ -336,7 +336,7 @@ namespace BatchProductRecord
                 {
                     string code = dr["存货代码"].ToString();
                     int mian = 0;
-                    if (code.Split('-')[1].StartsWith("S"))
+                    if (code.Split('-').Length>1 && code.Split('-')[1].StartsWith("S"))
                     {
                         mian = 1;
                     }
@@ -952,14 +952,14 @@ namespace BatchProductRecord
                         dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
                         return;
                     }
-                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]";//正则表达式
-                    if (!Regex.IsMatch(str, pattern))
-                    {
-                        MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500X100");
-                        dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
-                        leng = 0;
-                        break ;
-                    }
+                    //string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]";//正则表达式
+                    //if (!Regex.IsMatch(str, pattern))
+                    //{
+                    //    MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500X100");
+                    //    dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
+                    //    leng = 0;
+                    //    break ;
+                    //}
                     string[] array = str.Split('X');
                     string[] array2 = array[array.Length-2].Split('-');
                     leng = float.Parse(array2[2]);
@@ -1623,10 +1623,10 @@ namespace BatchProductRecord
             //dataGridView1.Columns[6].ReadOnly = true;//产品批号
             dataGridView1.Columns["计划产量卷"].ReadOnly = true;//计划产量卷
             dataGridView1.Columns["标签领料量"].ReadOnly = true;//标签领料量
-            foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
-            {
-                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
-            }
+            //foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
+            //{
+            //    dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+            //}
 
         }
         //设置datagridview序号
@@ -2476,7 +2476,10 @@ namespace BatchProductRecord
         private void ProcessProductInstru_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
     }
 }

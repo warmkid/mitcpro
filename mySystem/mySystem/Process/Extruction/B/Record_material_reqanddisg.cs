@@ -1720,7 +1720,10 @@ namespace mySystem.Extruction.Process
                 }
             }
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
 
         private void bt查看人员信息_Click(object sender, EventArgs e)

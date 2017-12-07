@@ -856,11 +856,8 @@ namespace WindowsFormsApplication1
             if (!mySystem.Parameter.isSqlOk)
             {
                 //外表保存
-                bs_out.EndEdit();
-                
-                da_out.Update((DataTable)bs_out.DataSource);
-               
-                
+                bs_out.EndEdit();                
+                da_out.Update((DataTable)bs_out.DataSource);    
                 readOuterData(instrid);
                 removeOuterBinding();
                 outerBind();
@@ -868,8 +865,6 @@ namespace WindowsFormsApplication1
                 //内表保存
                 
                 da_in.Update((DataTable)bs_in.DataSource);
-                
-                
                 readInnerData(Convert.ToInt32(dt_out.Rows[0]["ID"]));
                 innerBind();
             }
@@ -1164,10 +1159,16 @@ namespace WindowsFormsApplication1
         // 内表和控件的绑定
         void innerBind()
         {
-            //移除所有列
-            while (dataGridView1.Columns.Count > 0)
-                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
-            setDataGridViewCombox();
+            ////移除所有列
+            //while (dataGridView1.Columns.Count > 0)
+            //    dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+            //setDataGridViewCombox();
+            //bs_in.DataSource = dt_in;
+            //dataGridView1.DataSource = bs_in.DataSource;
+            //setDataGridViewColumns();
+            ////Utility.setDataGridViewAutoSizeMode(dataGridView1);
+
+
             bs_in.DataSource = dt_in;
             dataGridView1.DataSource = bs_in.DataSource;
             setDataGridViewColumns();
@@ -1219,6 +1220,7 @@ namespace WindowsFormsApplication1
             }
         }
         // 设置DataGridView中各列的格式
+       
         void setDataGridViewColumns()
         {
             dataGridView1.Columns[0].Visible = false;
@@ -1226,6 +1228,7 @@ namespace WindowsFormsApplication1
             dataGridView1.Columns[6].Visible = false;
         }
         //设置datagridview序号
+        
         void setDataGridViewRowNums()
         {
             //for (int i = 0; i < dataGridView1.Rows.Count; i++)
@@ -1554,7 +1557,10 @@ namespace WindowsFormsApplication1
         private void Record_extrusClean_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
     }
 }
