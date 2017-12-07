@@ -1347,6 +1347,11 @@ namespace mySystem.Process.CleanCut
 
         }
 
+        private void DailyRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
  
     }
 }

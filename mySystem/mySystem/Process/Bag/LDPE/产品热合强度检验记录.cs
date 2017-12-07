@@ -47,6 +47,7 @@ namespace mySystem.Process.Bag.LDPE
         BindingSource bsOuter, bsInner;
 
         CheckForm ckForm = null;
+        bool isFirstBind = true;
 
         public 产品热合强度检验记录(MainForm mainform)
             : base(mainform)
@@ -339,7 +340,7 @@ namespace mySystem.Process.Bag.LDPE
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         /// <summary>
@@ -580,6 +581,11 @@ namespace mySystem.Process.Bag.LDPE
             foreach (int i in readonlyIdx)
             {
                 dataGridView1.Columns[i].ReadOnly = true;
+            }
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
             }
         }
 
@@ -1123,6 +1129,11 @@ namespace mySystem.Process.Bag.LDPE
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             setEnableReadOnly();
+        }
+
+        private void 产品热合强度检验记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
     }

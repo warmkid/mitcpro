@@ -465,6 +465,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CleanCut_CheckBeforePower";
             this.Text = "清洁分切开机确认";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CleanCut_CheckBeforePower_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

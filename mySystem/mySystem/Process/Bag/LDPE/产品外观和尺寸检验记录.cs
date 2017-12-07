@@ -52,7 +52,7 @@ namespace mySystem.Process.Bag.LDPE
         SqlCommandBuilder cbOuter, cbInner;
         DataTable dtOuter, dtInner;
         BindingSource bsOuter, bsInner;
-
+        bool isFirstBind = true;
 
         public 产品外观和尺寸检验记录(MainForm mainform)
             : base(mainform)
@@ -269,6 +269,7 @@ namespace mySystem.Process.Bag.LDPE
             DataGridViewTextBoxColumn tbc;
             DataGridViewComboBoxColumn cbc;
             DataGridViewCheckBoxColumn ckbc;
+            dataGridView1.RowHeadersVisible = false;
 
             // 先把所有的列都加好，基本属性附上
             foreach (DataColumn dc in dtInner.Columns)
@@ -365,7 +366,7 @@ namespace mySystem.Process.Bag.LDPE
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         // 获取和显示内容有关的变量
@@ -519,6 +520,7 @@ namespace mySystem.Process.Bag.LDPE
         {
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -618,6 +620,15 @@ namespace mySystem.Process.Bag.LDPE
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
         void addOtherEvenHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
@@ -977,6 +988,11 @@ namespace mySystem.Process.Bag.LDPE
             mysheet.PageSetup.RightFooter = Instruction + "-13-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
+        }
+
+        private void 产品外观和尺寸检验记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
            
     }

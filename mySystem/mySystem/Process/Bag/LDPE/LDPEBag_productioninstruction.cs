@@ -46,6 +46,7 @@ namespace mySystem.Process.Bag.LDPE
         BindingSource bsOuter, bsInner;
 
         CheckForm ckform;
+        bool isFirstBind = true;
 
         public LDPEBag_productioninstruction(MainForm mainform):base(mainform)
         {
@@ -390,7 +391,7 @@ namespace mySystem.Process.Bag.LDPE
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+           // Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         /// <summary>
@@ -404,6 +405,7 @@ namespace mySystem.Process.Bag.LDPE
             DataGridViewTextBoxColumn tbc;
             DataGridViewComboBoxColumn cbc;
             DataGridViewCheckBoxColumn ckbc;
+            dataGridView1.RowHeadersVisible = false;
 
             // 先把所有的列都加好，基本属性附上
             foreach (DataColumn dc in dtInner.Columns)
@@ -751,6 +753,11 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns[3].HeaderText = "计划产量（只）";
             dataGridView1.Columns[4].HeaderText = "内包装规格（只/包）";
             dataGridView1.Columns[9].HeaderText = "外包装规格（只/箱）";
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -1432,6 +1439,11 @@ namespace mySystem.Process.Bag.LDPE
             }
             catch
             { }
+        }
+
+        private void LDPEBag_productioninstruction_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
 

@@ -1217,5 +1217,10 @@ namespace mySystem.Process.CleanCut
             setFormState();
             setEnableReadOnly();
         }
+
+        private void Instru_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
     }
 }

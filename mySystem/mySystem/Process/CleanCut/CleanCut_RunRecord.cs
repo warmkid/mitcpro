@@ -1167,6 +1167,11 @@ namespace mySystem.Process.CleanCut
             setDataGridViewFormat();
         }
 
+        private void CleanCut_RunRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
         
     }
 }

@@ -998,6 +998,11 @@ namespace mySystem.Process.CleanCut
             //返回
             return mysheet;
         }
+
+        private void CleanCut_CheckBeforePower_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
             
    
 

@@ -1293,6 +1293,7 @@
             this.Controls.Add(this.label1);
             this.Name = "LDPEBag_productioninstruction";
             this.Text = "LDPEBag_productioninstruction";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPEBag_productioninstruction_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

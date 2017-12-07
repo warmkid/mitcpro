@@ -20,6 +20,7 @@ namespace mySystem.Process.Bag.LDPE
         private Int32 InstruID;
         private String Instruction;
         private DataTable dt物料代码数量, dt生产指令信息;
+      
 
         public LDPE生产领料申请单(mySystem.MainForm mainform)
             : base(mainform)
@@ -133,6 +134,14 @@ namespace mySystem.Process.Bag.LDPE
             }
             else
             { }
+        }
+
+     
+
+
+        private void LDPE生产领料申请单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
         }
 
 

@@ -1188,5 +1188,10 @@ namespace mySystem.Process.CleanCut
             }
         }
 
+        private void Record_cleansite_cut_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
     }
 }

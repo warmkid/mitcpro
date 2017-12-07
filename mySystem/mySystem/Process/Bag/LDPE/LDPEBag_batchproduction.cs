@@ -22,7 +22,7 @@ namespace mySystem.Process.Bag.LDPE
 
         mySystem.Parameter.UserState _userState;
         mySystem.Parameter.FormState _formState;
-
+       
 
         SqlDataAdapter daOuter;
         SqlCommandBuilder cbOuter;
@@ -32,6 +32,7 @@ namespace mySystem.Process.Bag.LDPE
         List<String> ls操作员, ls审核员;
 
         CheckForm ckform;
+        bool isFirstBind = true;
 
         public LDPEBag_batchproduction(mySystem.MainForm mainform)
             : base(mainform)
@@ -39,7 +40,9 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
             fillPrinter();
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             dataGridView2.DataError += dataGridView2_DataError;
+            dataGridView2.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView2_DataBindingComplete);
             _生产指令ID = mySystem.Parameter.ldpebagInstruID;
             _生产指令 = mySystem.Parameter.ldpebagInstruction;
             tb生产指令编号.Text = _生产指令;
@@ -70,7 +73,9 @@ namespace mySystem.Process.Bag.LDPE
             InitializeComponent();
             fillPrinter();
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             dataGridView2.DataError += dataGridView2_DataError;
+            dataGridView2.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView2_DataBindingComplete);
             _生产指令ID = id;
             SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + id, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
@@ -306,7 +311,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.DataSource = dt;
             dataGridView2.ReadOnly = true;
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
         private void initrecord()
         {
@@ -668,6 +673,30 @@ namespace mySystem.Process.Bag.LDPE
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
         }
 
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            //throw new NotImplementedException();
+            //setDataGridViewBackColor();
+            //setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+        void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            //throw new NotImplementedException();
+            //setDataGridViewBackColor();
+            //setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind = false;
+            }
+        }
+
+
         // 处理DataGridView中数据类型输错的函数
         private void dataGridView2_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {            
@@ -675,6 +704,12 @@ namespace mySystem.Process.Bag.LDPE
             String Columnsname = ((DataGridView)sender).Columns[((DataGridView)sender).SelectedCells[0].ColumnIndex].Name;
             String rowsname = (((DataGridView)sender).SelectedCells[0].RowIndex + 1).ToString(); ;
             MessageBox.Show("第" + rowsname + "行的『" + Columnsname + "』填写错误");
+        }
+
+        private void LDPEBag_batchproduction_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+            writeDGVWidthToSetting(dataGridView2);
         }
         
     }

@@ -74,6 +74,7 @@
             this.Controls.Add(this.label1);
             this.Name = "LDPEBag_dailyreport";
             this.Text = "LDPEBag_dailyreport";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPEBag_dailyreport_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

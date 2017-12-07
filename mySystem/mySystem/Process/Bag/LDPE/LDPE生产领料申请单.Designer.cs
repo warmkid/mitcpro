@@ -28,9 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // LDPE生产领料申请单
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(294, 275);
+            this.Name = "LDPE生产领料申请单";
             this.Text = "LDPE生产领料申请单";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LDPE生产领料申请单_FormClosing);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

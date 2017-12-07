@@ -50,7 +50,7 @@ namespace mySystem.Process.Bag.LDPE
         private CheckForm check = null;
         string __待审核 = "__待审核";
 
-
+        bool isFirstBind = true;
        
         int searchId;
         int status;
@@ -293,6 +293,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             txb白班交班员.Enabled = false;
             txb白班接班员.Enabled = false;
             txb夜班交班员.Enabled = false;
@@ -311,7 +312,19 @@ namespace mySystem.Process.Bag.LDPE
             }
             MessageBox.Show(name + "填写错误");
         }
-
+        //数据绑定结束，设置背景颜色
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            //throw new NotImplementedException();
+            //setDataGridViewBackColor();
+            //setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+     
         private void dayNight(bool day)
         {
             if (day)
@@ -515,7 +528,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns[2].ReadOnly=true;  //序号
             dataGridView1.Columns[3].ReadOnly = true; 
             // setting width in confirm items
-            dataGridView1.Columns[3].Width=300;
+          //  dataGridView1.Columns[3].Width=300;
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
         }
 
@@ -1060,6 +1073,13 @@ namespace mySystem.Process.Bag.LDPE
             //this act as the same in function upper
             
             btn查看日志.Enabled = true;
+        }
+
+        private void HandOver_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+                writeDGVWidthToSetting(dataGridView1); 
+            
         }
 
         //leave datagridview check the right things

@@ -32,6 +32,8 @@ namespace mySystem.Process.Bag.LDPE
         String str生产指令;
         DateTime date;
 
+        bool isFirstBind = true;
+
         public LDPEBag_runningrecord(MainForm mainform)
             : base(mainform)
         {
@@ -327,8 +329,13 @@ namespace mySystem.Process.Bag.LDPE
         //数据绑定结束，设置表格格式
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            setDataGridViewFormat();
+            //setDataGridViewFormat();
             setEnableReadOnly();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         // 设置读取数据的事件，比如生产检验记录的 “产品代码”的SelectedIndexChanged
@@ -402,13 +409,14 @@ namespace mySystem.Process.Bag.LDPE
         //内表控件绑定
         private void innerBind()
         {
-            while (dataGridView1.Columns.Count > 0)
-                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
-            setDataGridViewColumns();
-            setDataGridViewFormat();
+            //while (dataGridView1.Columns.Count > 0)
+            //    dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+            //setDataGridViewColumns();
             bs记录详情.DataSource = dt记录详情;
             dataGridView1.DataSource = bs记录详情.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            setDataGridViewFormat();
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
+
         }
 
         //添加行代码
@@ -520,8 +528,8 @@ namespace mySystem.Process.Bag.LDPE
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                       // tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                       // tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -533,9 +541,9 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.ColumnHeadersHeight = 40;
+           // dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+           // dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+           // dataGridView1.ColumnHeadersHeight = 40;
             //隐藏
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T制袋机组运行记录ID"].Visible = false;
@@ -1003,6 +1011,11 @@ namespace mySystem.Process.Bag.LDPE
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
             innerBind();
             setEnableReadOnly();
+        }
+
+        private void LDPEBag_runningrecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }       
     }
 }

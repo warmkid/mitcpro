@@ -1383,5 +1383,10 @@ namespace mySystem.Process.CleanCut
             }
             perform打印本页();
         }
+
+        private void CleanCut_Cover_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
     }
 }
