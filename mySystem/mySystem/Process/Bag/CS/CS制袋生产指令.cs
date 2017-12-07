@@ -43,7 +43,7 @@ namespace mySystem.Process.Bag.CS
         BindingSource bsOuter, bsInner;
 
         CheckForm ckform;
-
+        bool isFirstBind = true;
 
         public CS制袋生产指令(MainForm mainform):base(mainform)
         {
@@ -750,17 +750,6 @@ namespace mySystem.Process.Bag.CS
             return true;
         }
 
-
-        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            dataGridView1.Columns[0].Visible = false;
-            dataGridView1.Columns[1].Visible = false;
-            dataGridView1.Columns[2].HeaderText = "产品代码（规格型号）";
-            dataGridView1.Columns[3].HeaderText = "计划产量（只）";
-            dataGridView1.Columns[4].HeaderText = "内包装规格（只/包）";
-            dataGridView1.Columns[9].HeaderText = "外包装规格（只/箱）";
-        }
-
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             if (li可选可输的列.IndexOf(e.ColumnIndex) >= 0)
@@ -1136,7 +1125,7 @@ namespace mySystem.Process.Bag.CS
             GC.Collect();
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -1167,6 +1156,7 @@ namespace mySystem.Process.Bag.CS
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
@@ -1179,26 +1169,26 @@ namespace mySystem.Process.Bag.CS
                 {
                     label_打印成功 = 0;
                 }
-                finally
-                {
-                    if (1 == label_打印成功)
-                    {                        
-                        string log = "\n=====================================\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
-                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-                        bsOuter.EndEdit();
-                        daOuter.Update((DataTable)bsOuter.DataSource);
-                    }
-                    // 关闭文件，false表示不保存
-                    wb.Close(false);
-                    // 关闭Excel进程
-                    oXL.Quit();
-                    // 释放COM资源
-                    Marshal.ReleaseComObject(wb);
-                    Marshal.ReleaseComObject(oXL);
-                    wb = null;
-                    oXL = null;
+                
+                if (1 == label_打印成功)
+                {                        
+                    string log = "\n=====================================\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + label角色.Text + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                    dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                    bsOuter.EndEdit();
+                    daOuter.Update((DataTable)bsOuter.DataSource);
                 }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                wb = null;
+                oXL = null;
+                return pageCount;
             }
         }
 
@@ -1292,6 +1282,26 @@ namespace mySystem.Process.Bag.CS
         private void tb内包物料领料量1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void CS制袋生产指令_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
+        }
+
+        private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].Visible = false;
+            dataGridView1.Columns[2].HeaderText = "产品代码（规格型号）";
+            dataGridView1.Columns[3].HeaderText = "计划产量（只）";
+            dataGridView1.Columns[4].HeaderText = "内包装规格（只/包）";
+            dataGridView1.Columns[9].HeaderText = "外包装规格（只/箱）";
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
 

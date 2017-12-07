@@ -463,6 +463,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MaterialRecord";
             this.Text = "生产领料使用记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MaterialRecord_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

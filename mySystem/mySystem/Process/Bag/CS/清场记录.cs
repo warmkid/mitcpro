@@ -55,6 +55,7 @@ namespace mySystem.Process.Bag.CS
         BindingSource bsOuter, bsInner;
 
         CheckForm ckform;
+        bool isFirstBind = true;
 
         public 清场记录(MainForm mainform):base(mainform)
         {
@@ -538,6 +539,11 @@ namespace mySystem.Process.Bag.CS
             {
                 dataGridView1.Columns[i].ReadOnly = true;
             }
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
 
         }
 
@@ -676,7 +682,7 @@ namespace mySystem.Process.Bag.CS
         }
 
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -707,6 +713,7 @@ namespace mySystem.Process.Bag.CS
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
@@ -719,33 +726,34 @@ namespace mySystem.Process.Bag.CS
                 {
                     label_打印成功 = 0;
                 }
-                finally
+                
+                if (1 == label_打印成功)
                 {
-                    if (1 == label_打印成功)
-                    {
-                        string str角色;
-                        if (_userState == 0)
-                            str角色 = "操作员";
-                        else if (_userState == 1)
-                            str角色 = "审核员";
-                        else
-                            str角色 = "管理员";
-                        string log = "\n=====================================\n";
-                        log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + str角色 + ":" + mySystem.Parameter.userName + " 完成打印\n";
-                        dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
-                        bsOuter.EndEdit();
-                        daOuter.Update((DataTable)bsOuter.DataSource);
-                    }
-                    // 关闭文件，false表示不保存
-                    wb.Close(false);
-                    // 关闭Excel进程
-                    oXL.Quit();
-                    // 释放COM资源
-                    Marshal.ReleaseComObject(wb);
-                    Marshal.ReleaseComObject(oXL);
-                    wb = null;
-                    oXL = null;
+                    string str角色;
+                    if (_userState == 0)
+                        str角色 = "操作员";
+                    else if (_userState == 1)
+                        str角色 = "审核员";
+                    else
+                        str角色 = "管理员";
+                    string log = "\n=====================================\n";
+                    log += DateTime.Now.ToString("yyyy年MM月dd日 hh时mm分ss秒") + "\n" + str角色 + ":" + mySystem.Parameter.userName + " 完成打印\n";
+                    dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
+                    bsOuter.EndEdit();
+                    daOuter.Update((DataTable)bsOuter.DataSource);
                 }
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+                // 关闭文件，false表示不保存
+                wb.Close(false);
+                // 关闭Excel进程
+                oXL.Quit();
+                // 释放COM资源
+                Marshal.ReleaseComObject(wb);
+                Marshal.ReleaseComObject(oXL);
+                wb = null;
+                oXL = null;
+                return pageCount;
+                
 
             }
         }
@@ -796,6 +804,11 @@ namespace mySystem.Process.Bag.CS
             my.Cells[5, 7].Value = dtOuter.Rows[0]["审核员"].ToString(); 
             my.Cells[19 + ind, 1].Value = "备注：";
 
+        }
+
+        private void 清场记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
 

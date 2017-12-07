@@ -484,16 +484,41 @@ namespace mySystem.Process.Bag.PTV
             }
             if (Parameter.UserState.审核员 == _userState)
             {
-                if (Parameter.FormState.待审核 == _formState)
+                if (Parameter.FormState.待审核 == _formState || Parameter.FormState.未保存==_formState)
                 {
                     setControlTrue();
-                    btn审核.Enabled = true;
+                    if (Parameter.FormState.待审核 == _formState)
+                        btn审核.Enabled = true;
+
+                    btn数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为待审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value != null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                            dataGridView1.Rows[i].ReadOnly = false;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = true;
+                    }
                 }
                 else setControlFalse();
             }
             if (Parameter.UserState.操作员 == _userState)
             {
-                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核通过 == _formState) setControlTrue();
+                if (Parameter.FormState.未保存 == _formState || Parameter.FormState.审核未通过 == _formState)
+                {
+                    setControlTrue();
+                    btn提交数据审核.Enabled = true;
+                    //遍历datagridview，如果有一行为未审核，则该行可以修改
+                    dataGridView1.ReadOnly = false;
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value != null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                            dataGridView1.Rows[i].ReadOnly = true;
+                        else
+                            dataGridView1.Rows[i].ReadOnly = false;
+                    }
+                }
                 else setControlFalse();
             }
 
@@ -526,6 +551,9 @@ namespace mySystem.Process.Bag.PTV
             // 保证这两个按钮一直是false
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
+
+            btn提交数据审核.Enabled = false;
+            btn数据审核.Enabled = false;
 
         }
 
@@ -574,10 +602,11 @@ namespace mySystem.Process.Bag.PTV
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setEnableReadOnly();
             setDataGridViewBackColor();
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
-            int[] readonlyIdx = { 2, 3, 4, 14, 15, 16 };
+            int[] readonlyIdx = { 2, 3, 4, 14, 15, 16,19 };
             foreach (int i in readonlyIdx)
             {
                 dataGridView1.Columns[i].ReadOnly = true;
@@ -687,17 +716,24 @@ namespace mySystem.Process.Bag.PTV
 
         private void btn删除_Click(object sender, EventArgs e)
         {
-            // 一次性删除1行
-            int deletenum = dataGridView1.CurrentRow.Index;
-            //dt记录详情.Rows.RemoveAt(deletenum);
-            dtInner.Rows[deletenum].Delete();
+            if (dtInner.Rows.Count >= 1)
+            {
+                if (dataGridView1.SelectedCells.Count <= 0)
+                    return;
+                int deletenum = dataGridView1.CurrentRow.Index;
+                if (dtInner.Rows[deletenum]["审核员"].ToString() != "" && _userState == Parameter.UserState.操作员)
+                    return;
+                //dt记录详情.Rows.RemoveAt(deletenum);
+                dtInner.Rows[deletenum].Delete();
 
-            // 保存
-            daInner.Update((DataTable)bsInner.DataSource);
-            readInnerData(_id);
-            innerBind();
+                // 保存
+                daInner.Update((DataTable)bsInner.DataSource);
+                readInnerData(_id);
+                innerBind();
 
-            setDataGridViewBackColor();
+                setDataGridViewBackColor();
+
+            }
 
             // 一次性删除6行
             //if (DialogResult.OK == MessageBox.Show("确认要一次性删除六条记录吗？", "提示", MessageBoxButtons.OK))
@@ -748,6 +784,16 @@ namespace mySystem.Process.Bag.PTV
                 return;
             }
 
+            //检查是否可以提交最后审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "")
+                {
+                    MessageBox.Show("第『" + (i + 1).ToString() + "』行数据尚未审核，不能提交最后审核！");
+                    return;
+                }
+            }
+
             SqlDataAdapter da;
             SqlCommandBuilder cb;
             DataTable dt;
@@ -789,9 +835,6 @@ namespace mySystem.Process.Bag.PTV
 
         public override void CheckResult()
         {
-
-
-
             SqlDataAdapter da;
             SqlCommandBuilder cb;
             DataTable dt;
@@ -825,6 +868,23 @@ namespace mySystem.Process.Bag.PTV
 
         private void btn审核_Click(object sender, EventArgs e)
         {
+            //外表没有操作人，这里默认选择内表第一个操作员名字
+            if (mySystem.Parameter.userName == dtInner.Rows[0]["检测人"].ToString())
+            {
+                MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
+                return;
+            }
+
+            //先进行内表审核，再进行外表审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                {
+                    MessageBox.Show("第" + (i + 1).ToString() + "行数据没有审核，请先审核表内数据！");
+                    return;
+                }
+            }
+
             ckForm = new CheckForm(this);
             ckForm.Show();
             

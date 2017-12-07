@@ -361,7 +361,7 @@ namespace mySystem.Process.Bag.BTV
             dataGridView1.Columns["生产指令ID"].Visible = false;
             if (isFirstBind)
             {
-                readDGVWidthFromSetting(dataGridView1);
+                readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
             }
         }

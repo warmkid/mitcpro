@@ -33,7 +33,7 @@ namespace mySystem.Process.Bag.BTV
         Parameter.FormState _formState;
         Int32 InstruID;
         String Instruction;
-
+        Boolean isFirstBind = true;
         public BPV产品外包装记录(mySystem.MainForm mainform) : base(mainform)
         {
             InitializeComponent();
@@ -585,9 +585,9 @@ namespace mySystem.Process.Bag.BTV
                         cbc.Items.Add("Yes");
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     case "是否打包封箱":
                         cbc = new DataGridViewComboBoxColumn();
@@ -598,9 +598,9 @@ namespace mySystem.Process.Bag.BTV
                         cbc.Items.Add("Yes");
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
-                        cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -609,9 +609,9 @@ namespace mySystem.Process.Bag.BTV
                         tbc.Name = dc.ColumnName;
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
-                        tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -944,8 +944,9 @@ namespace mySystem.Process.Bag.BTV
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
+            int pageCount = 0;
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
             // 利用这个进程打开一个Excel文件
@@ -973,6 +974,7 @@ namespace mySystem.Process.Bag.BTV
                     //oXL.Visible = false; // oXL.Visible=false 就会直接打印该Sheet
                     // 直接用默认打印机打印该Sheet
                     my.PrintOut();
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 }
                 catch
                 { isPrint = false; }
@@ -999,6 +1001,7 @@ namespace mySystem.Process.Bag.BTV
                     oXL = null;
                 }
             }
+            return pageCount;
         }
 
         //打印功能
@@ -1162,6 +1165,16 @@ namespace mySystem.Process.Bag.BTV
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void BPV产品外包装记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
 

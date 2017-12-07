@@ -260,7 +260,7 @@
             // btn删除记录
             // 
             this.btn删除记录.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn删除记录.Location = new System.Drawing.Point(499, 137);
+            this.btn删除记录.Location = new System.Drawing.Point(522, 138);
             this.btn删除记录.Name = "btn删除记录";
             this.btn删除记录.Size = new System.Drawing.Size(70, 30);
             this.btn删除记录.TabIndex = 254;
@@ -271,7 +271,7 @@
             // btn添加记录
             // 
             this.btn添加记录.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn添加记录.Location = new System.Drawing.Point(410, 137);
+            this.btn添加记录.Location = new System.Drawing.Point(433, 138);
             this.btn添加记录.Name = "btn添加记录";
             this.btn添加记录.Size = new System.Drawing.Size(70, 30);
             this.btn添加记录.TabIndex = 253;
@@ -383,7 +383,7 @@
             // btn数据审核
             // 
             this.btn数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn数据审核.Location = new System.Drawing.Point(720, 138);
+            this.btn数据审核.Location = new System.Drawing.Point(743, 139);
             this.btn数据审核.Name = "btn数据审核";
             this.btn数据审核.Size = new System.Drawing.Size(90, 30);
             this.btn数据审核.TabIndex = 269;
@@ -394,7 +394,7 @@
             // btn提交数据审核
             // 
             this.btn提交数据审核.Font = new System.Drawing.Font("宋体", 12F);
-            this.btn提交数据审核.Location = new System.Drawing.Point(588, 138);
+            this.btn提交数据审核.Location = new System.Drawing.Point(611, 139);
             this.btn提交数据审核.Name = "btn提交数据审核";
             this.btn提交数据审核.Size = new System.Drawing.Size(120, 30);
             this.btn提交数据审核.TabIndex = 268;

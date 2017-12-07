@@ -24,7 +24,7 @@ namespace mySystem.Process.Bag.BTV
         private bool isSqlOk;
         private CheckForm checkform = null;
 
-        private DataTable dt记录, dt记录详情;
+        private DataTable dt记录, dt记录详情, dt代码批号;
         private SqlDataAdapter da记录, da记录详情;
         private BindingSource bs记录, bs记录详情;
         private SqlCommandBuilder cb记录, cb记录详情;
@@ -58,7 +58,7 @@ namespace mySystem.Process.Bag.BTV
 
             setControlFalse();
 
-            tb成品代码.ReadOnly = false;
+            cmb成品代码.Enabled = true;
             tb产品批号.ReadOnly = false;
             dtp生产日期.Enabled = true;
             btn查询新建.Enabled = true;
@@ -162,46 +162,49 @@ namespace mySystem.Process.Bag.BTV
         //读取设置内容  //GetProductInfo //产品代码、产品批号初始化
         private void getOtherData()
         {
-            //if (!isSqlOk)
-            //{
-            //    SqlCommand comm1 = new SqlCommand();
-            //    comm1.Connection = mySystem.Parameter.conn;
-            //    comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
-            //    SqlDataReader reader1 = comm1.ExecuteReader();
-            //    if (reader1.Read())
-            //    {
-            //        SqlCommand comm2 = new SqlCommand();
-            //        comm2.Connection = mySystem.Parameter.conn;
-            //        comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
+            dt代码批号 = new DataTable("代码批号");
 
-            //        SqlDataAdapter datemp = new SqlDataAdapter(comm2);
-            //        datemp.Fill(dt代码批号);
-            //        if (dt代码批号.Rows.Count == 0)
-            //        {
-            //            MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！");
-            //        }
-            //        else
-            //        {
-            //            for (int i = 0; i < dt代码批号.Rows.Count; i++)
-            //            {
-            //                cb产品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
-            //            }
-            //        }
-            //        datemp.Dispose();
-            //    }
-            //    else
-            //    {
-            //        //dt代码批号为空
-            //        MessageBox.Show("该生产指令编码下的『生产指令』尚未生成！");
-            //    }
-            //    reader1.Dispose();
-            //}
-            //else
-            //{ }
+            if (isSqlOk)
+            {
+                SqlCommand comm1 = new SqlCommand();
+                comm1.Connection = mySystem.Parameter.conn;
+                comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
+                SqlDataReader reader1 = comm1.ExecuteReader();
+                if (reader1.Read())
+                {
+                    SqlCommand comm2 = new SqlCommand();
+                    comm2.Connection = mySystem.Parameter.conn;
+                    comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
 
-            ////*********数据填写*********//
-            //cb产品代码.SelectedIndex = -1;
-            //tb生产批号.Text = "";
+                    SqlDataAdapter datemp = new SqlDataAdapter(comm2);
+                    datemp.Fill(dt代码批号);
+                    if (dt代码批号.Rows.Count == 0)
+                    {
+                        MessageBox.Show("该生产指令编码下的『生产指令详细信息』尚未生成！");
+                    }
+                    else
+                    {
+                        for (int i = 0; i < dt代码批号.Rows.Count; i++)
+                        {
+                            cmb成品代码.Items.Add(dt代码批号.Rows[i][1].ToString());//添加
+                        }
+                        
+                    }
+                    datemp.Dispose();
+                }
+                else
+                {
+                    //dt代码批号为空
+                    MessageBox.Show("该生产指令编码下的『生产指令』尚未生成！");
+                }
+                reader1.Dispose();
+            }
+            else
+            { }
+
+            //*********数据填写*********//
+            cmb成品代码.SelectedIndex = -1;
+            tb产品批号.Text = "";
         }
 
         //根据状态设置可读写性
@@ -326,7 +329,7 @@ namespace mySystem.Process.Bag.BTV
             
             //查询条件始终不可编辑
             tb生产指令编号.Enabled = false;
-            tb成品代码.Enabled = false;
+            cmb成品代码.Enabled = false;
             tb产品批号.Enabled = false;
             dtp生产日期.Enabled = false;
             btn查询新建.Enabled = false;
@@ -472,8 +475,8 @@ namespace mySystem.Process.Bag.BTV
             //解绑->绑定
             tb生产指令编号.DataBindings.Clear();
             tb生产指令编号.DataBindings.Add("Text", bs记录.DataSource, "生产指令编号");
-            tb成品代码.DataBindings.Clear();
-            tb成品代码.DataBindings.Add("Text", bs记录.DataSource, "成品代码");
+            cmb成品代码.DataBindings.Clear();
+            cmb成品代码.DataBindings.Add("Text", bs记录.DataSource, "成品代码");
             tb产品批号.DataBindings.Clear();
             tb产品批号.DataBindings.Add("Text", bs记录.DataSource, "产品批号");
             dtp生产日期.DataBindings.Clear();
@@ -490,7 +493,7 @@ namespace mySystem.Process.Bag.BTV
         {
             dr["生产指令ID"] = InstruID;
             dr["生产指令编号"] = Instruction;
-            dr["成品代码"] = tb成品代码.Text;
+            dr["成品代码"] = cmb成品代码.Text;
             dr["产品批号"] = tb产品批号.Text;
             dr["生产日期"] = DateTime.Now.ToString("yyyy/MM/dd");
             dr["审核员"] = "";
@@ -635,12 +638,12 @@ namespace mySystem.Process.Bag.BTV
         //用于显示/新建数据
         private void btn查询新建_Click(object sender, EventArgs e)
         {
-            if (tb成品代码.Text == "" || tb产品批号.Text == "")
+            if (cmb成品代码.Text == "" || tb产品批号.Text == "")
             {
                 MessageBox.Show("成品代码和产品批号均不能为空");
                 return;
             }
-            Prodcode = tb成品代码.Text;
+            Prodcode = cmb成品代码.Text;
             Prodbatch = tb产品批号.Text ;
             date = dtp生产日期.Value ;
             DataShow(InstruID, Prodcode, Prodbatch, date);
@@ -738,7 +741,7 @@ namespace mySystem.Process.Bag.BTV
             //外表保存
             bs记录.EndEdit();
             da记录.Update((DataTable)bs记录.DataSource);
-            readOuterData(InstruID, tb成品代码.Text,tb产品批号.Text,dtp生产日期.Value);
+            readOuterData(InstruID, cmb成品代码.Text,tb产品批号.Text,dtp生产日期.Value);
             outerBind();
 
             setEnableReadOnly();

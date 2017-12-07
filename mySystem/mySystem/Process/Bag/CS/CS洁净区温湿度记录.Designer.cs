@@ -323,6 +323,7 @@
             this.Controls.Add(this.label1);
             this.Name = "CS洁净区温湿度记录";
             this.Text = "CS洁净区温湿度记录";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CS洁净区温湿度记录_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

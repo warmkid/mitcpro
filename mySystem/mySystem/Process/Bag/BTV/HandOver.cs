@@ -350,7 +350,7 @@ namespace mySystem.Process.Bag.BTV
                 dr["夜班交接班时间"] = Convert.ToDateTime(dtp白班交接班时间.Value.ToString());
                 dr["白班交接班时间"] = Convert.ToDateTime(DateTime.Now.ToString());
             }
-
+            //dr["审核是否通过"] = false;
             //this part to add log 
             //格式： 
             // =================================================
@@ -1091,7 +1091,7 @@ namespace mySystem.Process.Bag.BTV
 
         private void HandOver_FormClosing(object sender, FormClosingEventArgs e)
         {
-            readDGVWidthFromSettingAndSet(dataGridView1);
+            writeDGVWidthToSetting(dataGridView1);
         }
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

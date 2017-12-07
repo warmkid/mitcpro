@@ -634,6 +634,7 @@
             this.Controls.Add(this.label1);
             this.Name = "CS产品外包装记录";
             this.Text = "包装数量合计";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CS产品外包装记录_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

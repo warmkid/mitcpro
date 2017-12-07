@@ -56,6 +56,7 @@
             this.label16 = new System.Windows.Forms.Label();
             this.btn数据审核 = new System.Windows.Forms.Button();
             this.btn提交数据审核 = new System.Windows.Forms.Button();
+            this.cmb成品代码 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -149,7 +150,7 @@
             // tb成品代码
             // 
             this.tb成品代码.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tb成品代码.Location = new System.Drawing.Point(354, 46);
+            this.tb成品代码.Location = new System.Drawing.Point(15, 12);
             this.tb成品代码.Name = "tb成品代码";
             this.tb成品代码.Size = new System.Drawing.Size(100, 26);
             this.tb成品代码.TabIndex = 8;
@@ -337,11 +338,21 @@
             this.btn提交数据审核.UseVisualStyleBackColor = true;
             this.btn提交数据审核.Click += new System.EventHandler(this.btn提交数据审核_Click);
             // 
+            // cmb产品代码
+            // 
+            this.cmb成品代码.Font = new System.Drawing.Font("宋体", 12F);
+            this.cmb成品代码.FormattingEnabled = true;
+            this.cmb成品代码.Location = new System.Drawing.Point(350, 46);
+            this.cmb成品代码.Name = "cmb产品代码";
+            this.cmb成品代码.Size = new System.Drawing.Size(108, 24);
+            this.cmb成品代码.TabIndex = 271;
+            // 
             // BTVCutPipeRecord
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1010, 390);
+            this.Controls.Add(this.cmb成品代码);
             this.Controls.Add(this.btn数据审核);
             this.Controls.Add(this.btn提交数据审核);
             this.Controls.Add(this.tb审核员);
@@ -409,5 +420,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button btn数据审核;
         private System.Windows.Forms.Button btn提交数据审核;
+        private System.Windows.Forms.ComboBox cmb成品代码;
     }
 }
