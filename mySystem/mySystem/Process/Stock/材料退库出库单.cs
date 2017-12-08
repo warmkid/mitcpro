@@ -92,9 +92,10 @@ namespace mySystem.Process.Stock
                 
 //            string strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
 //                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            SqlConnection conn = mySystem.Parameter.conn;
-
-            
+            //SqlConnection conn = mySystem.Parameter.conn;
+            string strCon = @"server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            SqlConnection conn = new SqlConnection(strCon);
+            conn.Open();      
 
             //写入外表
             SqlDataAdapter daout_reader;
@@ -103,7 +104,7 @@ namespace mySystem.Process.Stock
 
             DataTable dt_temp = new DataTable("外表");
             BindingSource bsout = new BindingSource();
-            SqlDataAdapter daout = new SqlDataAdapter("select * from " + temptable + " where 1 = 2", mySystem.Parameter.conn);
+            SqlDataAdapter daout = new SqlDataAdapter("select * from " + temptable + " where 1 = 2", conn);
             SqlCommandBuilder cbout = new SqlCommandBuilder(daout);
             daout.Fill(dt_temp);
             if (dt_temp.Rows.Count == 0)
@@ -114,13 +115,25 @@ namespace mySystem.Process.Stock
                 dr["产品代码"] = dtOut.Rows[0]["产品代码"];
                 dr["产品批号"] = dtOut.Rows[0]["产品批号"];
                 dr["属于工序"] = str工序;
+
+                //无关项，但是需要给出默认值
+                dr["审核是否通过"] = false;
+                dr["审核日期"] = DateTime.Now;
                 dt_temp.Rows.Add(dr);
                 daout.Update(dt_temp);
-                SqlCommand comm = new SqlCommand();
-                comm.Connection = conn;
-                comm.CommandText = "select @@identity";
-                外表ID = (Int32)comm.ExecuteScalar();
-                daout_reader = new SqlDataAdapter("select * from " + temptable + " where ID=" + 外表ID, conn);
+
+                ////获得外表ID
+                //DataTable dt_temp2 = new DataTable();
+                //BindingSource bsout2 = new BindingSource();
+                //SqlDataAdapter daout2 = new SqlDataAdapter("select ID from " + temptable + " where 生产指令ID=" + dtOut.Rows[0]["生产指令ID"].ToString() + " and 属于工序=" + str工序, conn);
+                //SqlCommandBuilder cbout2 = new SqlCommandBuilder(daout2);
+                //daout2.Fill(dt_temp2);
+
+                //if (dt_temp2.Rows.Count <= 1)
+                //    return false;
+                //外表ID = int.Parse(dt_temp2.Rows[0]["ID"].ToString());
+
+                daout_reader = new SqlDataAdapter("select * from " + temptable + " where 生产指令ID=" + dtOut.Rows[0]["生产指令ID"].ToString() + " and 属于工序='" + str工序+"'", conn);
                 cb_reader = new SqlCommandBuilder(daout_reader);
                 daout_reader.Fill(dt_reader);
                 if (dt_reader.Rows.Count <= 0)
@@ -163,14 +176,14 @@ namespace mySystem.Process.Stock
                     dain.Update(dt_temp2);                  
                 }
             }
-
+            conn.Close();
             return true ;
         }
 
         void variableInit(int label)
         {
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
             this.label = label;
 

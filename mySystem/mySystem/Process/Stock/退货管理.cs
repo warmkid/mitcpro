@@ -320,7 +320,7 @@ namespace mySystem.Process.Stock
 
         private void btn添加退货接收单_Click(object sender, EventArgs e)
         {
-            SqlDataAdapter da = new SqlDataAdapter("select * from 产品退货审批单2 where 批准结果=true and 状态='已批准'", mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 产品退货审批单2 where 批准结果=1 and 状态='已批准'", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             try
