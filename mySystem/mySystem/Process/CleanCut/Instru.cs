@@ -55,6 +55,7 @@ namespace mySystem.Process.CleanCut
         int instrid;
 
         HashSet<string> hs_产品代码;//存储内表产品代码下拉框内容
+        bool isFirstBind = true;
 
         public Instru(mySystem.MainForm mainform)
             : base(mainform)
@@ -163,11 +164,19 @@ namespace mySystem.Process.CleanCut
         {
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.DataError += dataGridView1_DataError;
-
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             //dataGridView1.EditingControlShowing +=new DataGridViewEditingControlShowingEventHandler(dataGridView1_EditingControlShowing);
             //dataGridView1.CellValidating += new DataGridViewCellValidatingEventHandler(dataGridView1_CellValidating);
         }
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
 
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             //if (e.ColumnIndex == 3)
@@ -686,13 +695,13 @@ namespace mySystem.Process.CleanCut
         void innerBind()
         {
             //移除所有列
-            while (dataGridView1.Columns.Count > 0)
-                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+            //while (dataGridView1.Columns.Count > 0)
+            //    dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
             //setDataGridViewCombox();
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
             setDataGridViewColumns();
         }
 
@@ -705,13 +714,14 @@ namespace mySystem.Process.CleanCut
         // 设置DataGridView中各列的格式
         void setDataGridViewColumns()
         {
+            dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
             dataGridView1.Columns[6].ReadOnly = true;//数量米
 
             foreach (DataGridViewColumn dgvc in dataGridView1.Columns)
             {
-                dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                //dgvc.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
         }
         //设置datagridview序号
@@ -1097,7 +1107,7 @@ namespace mySystem.Process.CleanCut
 
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -1119,9 +1129,11 @@ namespace mySystem.Process.CleanCut
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 // 直接用默认打印机打印该Sheet
                 try
                 {
@@ -1158,7 +1170,9 @@ namespace mySystem.Process.CleanCut
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }  
         }
 
@@ -1220,7 +1234,7 @@ namespace mySystem.Process.CleanCut
 
         private void Instru_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            writeDGVWidthToSetting(dataGridView1);
         }
     }
 }

@@ -793,7 +793,7 @@ namespace mySystem.Process.Bag.LDPE
             GC.Collect();
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -824,9 +824,11 @@ namespace mySystem.Process.Bag.LDPE
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 // 直接用默认打印机打印该Sheet
                 try
                 {
@@ -855,8 +857,9 @@ namespace mySystem.Process.Bag.LDPE
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
-
+                return pageCount;
             }
         }
 

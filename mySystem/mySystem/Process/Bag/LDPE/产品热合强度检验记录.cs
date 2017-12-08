@@ -933,7 +933,7 @@ namespace mySystem.Process.Bag.LDPE
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -951,9 +951,11 @@ namespace mySystem.Process.Bag.LDPE
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -987,7 +989,9 @@ namespace mySystem.Process.Bag.LDPE
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
 

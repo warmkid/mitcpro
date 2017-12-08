@@ -49,6 +49,7 @@ namespace mySystem.Process.CleanCut
 
         int _instrctID, _myID;
         string _code;
+        bool isFirstBind = true;
 
         public CleanCut_Cover(mySystem.MainForm mainform)
             : base(mainform)
@@ -855,7 +856,7 @@ namespace mySystem.Process.CleanCut
         }
 
         // 打印函数
-        void print(bool isShow)
+        int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -873,9 +874,11 @@ namespace mySystem.Process.CleanCut
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -916,7 +919,9 @@ namespace mySystem.Process.CleanCut
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
         // 获取其他需要的数据 记录和页数
