@@ -71,7 +71,7 @@ namespace mySystem.Process.Bag.LDPE
             __生产日期 = DateTime.Now.Date;
             
             dtp生产日期.Value = __生产日期;
-
+            init();
             readOuterData(__生产指令编号, __生产日期);
             removeOuterBind();
             outerBind();
@@ -120,6 +120,8 @@ namespace mySystem.Process.Bag.LDPE
             getPeople();
             setUserState();
             settingItem= 获取交接班项目();
+
+            init();
             readOuterData(searchId);
             __生产指令编号 = Convert.ToString(dtOuter.Rows[0]["生产指令编号"]);
             __生产日期 = Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]);

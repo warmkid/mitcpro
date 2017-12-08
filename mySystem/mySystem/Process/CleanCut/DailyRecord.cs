@@ -1337,14 +1337,14 @@ namespace mySystem.Process.CleanCut
                 string temp = ndr["使用物料代码"].ToString().TrimStart('X').Split('X')[0];
                 string[] tmps = temp.Split('-');
                 temp = tmps[tmps.Length - 1];
-                ndr["规格a1"] = Convert.ToInt32(temp);
+                ndr["规格a1"] = Convert.ToDouble(temp);
                 ndr["用量b1"] = dr["长度A"];
                 ndr["使用量"] = Convert.ToDouble(ndr["规格a1"]) * Convert.ToDouble(ndr["用量b1"]) / 1000;
                 ndr["清洁分切后代码"] = dr["清洁分切后代码"];
                 temp = ndr["清洁分切后代码"].ToString().TrimStart('X').Split('X')[0];
                 tmps = temp.Split('-');
                 temp = tmps[tmps.Length - 1];
-                ndr["规格a2"] = Convert.ToInt32(temp.TrimEnd('C')); ;
+                ndr["规格a2"] = Convert.ToInt32(temp.TrimEnd('C')); 
                 ndr["数量b2"] = dr["长度B"];
                 ndr["数量"] = Convert.ToDouble(ndr["规格a2"]) * Convert.ToDouble(ndr["数量b2"]) / 1000;
                 ndr["工时"] = Convert.ToDouble(dr["工时"]);

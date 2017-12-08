@@ -141,6 +141,7 @@ namespace mySystem.Process.CleanCut
             getPeople();//清场记录权限
             setUserState();
             getOtherData();
+            addDataEventHandler();
 
             string asql = "select * from 清场记录 where ID=" + id;
             SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
@@ -193,7 +194,7 @@ namespace mySystem.Process.CleanCut
             if (isFirstBind)
             {
                 readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind = false;
+                isFirstBind = true;
             }
         }
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
@@ -593,7 +594,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.DataSource = bs_prodlist.DataSource;
             //setDataGridViewColumns();
             setDataGridViewRowNums();
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
         //设置DataGridView中下拉框
         void setDataGridViewCombox()
