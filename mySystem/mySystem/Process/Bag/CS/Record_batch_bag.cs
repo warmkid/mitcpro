@@ -32,7 +32,6 @@ namespace mySystem.Process.Bag
         List<String> ls操作员, ls审核员;
 
         CheckForm ckform;
-        bool isFirstBind1 = true;
         bool isFirstBind2 = true;
 
         public Record_batch_bag(mySystem.MainForm mainform)
@@ -962,11 +961,7 @@ namespace mySystem.Process.Bag
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
-            if (isFirstBind1)
-            {
-                readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind1 = false;
-            }
+            
         }
 
         private void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -980,7 +975,6 @@ namespace mySystem.Process.Bag
 
         private void Record_batch_bag_FormClosing(object sender, FormClosingEventArgs e)
         {
-            writeDGVWidthToSetting(dataGridView1);
             writeDGVWidthToSetting(dataGridView2);
         }
     }
