@@ -402,6 +402,7 @@ namespace mySystem.Process.Bag.LDPE
         void setDataGridViewColumn()
         {
             dataGridView1.Columns.Clear();
+            
             DataGridViewTextBoxColumn tbc;
             DataGridViewComboBoxColumn cbc;
             DataGridViewCheckBoxColumn ckbc;
@@ -972,6 +973,7 @@ namespace mySystem.Process.Bag.LDPE
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
             setDataGridViewColumn();
+            addOtherEvenHandler();
             innerBind();
             setFormState();
             setEnableReadOnly();

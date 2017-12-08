@@ -42,6 +42,7 @@ namespace mySystem.Process.Bag.LDPE
             setUserState();
             getOtherData();
             addDataEventHandler();
+            addOtherEvnetHandler();
 
             setControlFalse();
             btn查看日志.Enabled = false;
@@ -61,6 +62,7 @@ namespace mySystem.Process.Bag.LDPE
             setUserState();
             getOtherData();
             addDataEventHandler();
+            addOtherEvnetHandler();
 
             string asql = "select * from 制袋机组运行记录 where ID=" + ID;
             SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);

@@ -51,6 +51,7 @@ namespace mySystem.Process.CleanCut
         string _code;
         bool isFirstBind = true;
 
+
         public CleanCut_Cover(mySystem.MainForm mainform)
             : base(mainform)
         {
@@ -100,6 +101,11 @@ namespace mySystem.Process.CleanCut
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView2.AllowUserToAddRows = false;
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind = false;
+            }
         }
 
         public CleanCut_Cover(mySystem.MainForm mainform, int id)
@@ -151,6 +157,11 @@ namespace mySystem.Process.CleanCut
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView2.AllowUserToAddRows = false;
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind = false;
+            }
         }
 
         void setKeyInfo(int pid, int mid, string code)
@@ -530,17 +541,17 @@ namespace mySystem.Process.CleanCut
             outerBind();
 
             //内表保存，目录
-            if (!mySystem.Parameter.isSqlOk)
-            {
-                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-            }
-            else
-            {
-                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
-            }
+            //if (!mySystem.Parameter.isSqlOk)
+            //{
+            //    da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            //}
+            //else
+            //{
+            //    da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            //}
             
-            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            innerBind();
+            //readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            //innerBind();
             
             //内表2保存，记录,不用保存，因为是只读的
 
@@ -569,9 +580,17 @@ namespace mySystem.Process.CleanCut
 
         void addDataEventHandler()
         {
-
+            dataGridView2.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView2_DataBindingComplete);
         }
+        void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
 
+            //if (isFirstBind)
+            //{
+            //    readDGVWidthFromSettingAndSet(dataGridView2);
+            //    isFirstBind = false;
+            //}
+        }
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(int instrid)
         {
@@ -698,7 +717,7 @@ namespace mySystem.Process.CleanCut
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView2.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         // 根据条件从数据库中读取内表数据,汇总
@@ -732,7 +751,7 @@ namespace mySystem.Process.CleanCut
             bs_prodlist2.DataSource = dt_prodlist2;
             dataGridView2.DataSource = bs_prodlist2.DataSource;
             setDataGridViewColumns2();
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         void setDataGridViewCombox()
@@ -769,6 +788,12 @@ namespace mySystem.Process.CleanCut
         {
             dataGridView2.Columns[0].Visible = false;
             dataGridView2.Columns[1].Visible = false;
+             if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        
         }
 
         void setDataGridViewColumns2()
@@ -1391,7 +1416,7 @@ namespace mySystem.Process.CleanCut
 
         private void CleanCut_Cover_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            writeDGVWidthToSetting(dataGridView2);
         }
     }
 }
