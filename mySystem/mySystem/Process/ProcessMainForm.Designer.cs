@@ -58,8 +58,8 @@
             this.ProducePanelLeft.Controls.Add(this.Btn制袋);
             this.ProducePanelLeft.Controls.Add(this.Btn清洁分切);
             this.ProducePanelLeft.Controls.Add(this.Btn吹膜);
-            this.ProducePanelLeft.Controls.Add(this.Panel制袋);
             this.ProducePanelLeft.Controls.Add(this.Panel其他按钮);
+            this.ProducePanelLeft.Controls.Add(this.Panel制袋);
             this.ProducePanelLeft.Location = new System.Drawing.Point(4, 2);
             this.ProducePanelLeft.Name = "ProducePanelLeft";
             this.ProducePanelLeft.Size = new System.Drawing.Size(180, 615);

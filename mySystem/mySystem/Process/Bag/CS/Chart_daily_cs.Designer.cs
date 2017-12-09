@@ -72,6 +72,7 @@
             this.bt打印.TabIndex = 2;
             this.bt打印.Text = "打印";
             this.bt打印.UseVisualStyleBackColor = true;
+            this.bt打印.Visible = false;
             this.bt打印.Click += new System.EventHandler(this.bt打印_Click);
             // 
             // label40
@@ -83,6 +84,7 @@
             this.label40.Size = new System.Drawing.Size(104, 16);
             this.label40.TabIndex = 34;
             this.label40.Text = "选择打印机：";
+            this.label40.Visible = false;
             // 
             // cb打印机
             // 
@@ -92,6 +94,7 @@
             this.cb打印机.Name = "cb打印机";
             this.cb打印机.Size = new System.Drawing.Size(205, 24);
             this.cb打印机.TabIndex = 33;
+            this.cb打印机.Visible = false;
             // 
             // dateTimePickerStart
             // 

@@ -22,11 +22,12 @@ namespace mySystem.Process.Bag.LDPE
 
         mySystem.Parameter.UserState _userState;
         mySystem.Parameter.FormState _formState;
-       
+        
+
 
         SqlDataAdapter daOuter;
         SqlCommandBuilder cbOuter;
-        DataTable dtOuter;
+        DataTable dtOuter, dtSource;
         BindingSource bsOuter;
 
         List<String> ls操作员, ls审核员;
@@ -307,7 +308,7 @@ namespace mySystem.Process.Bag.LDPE
             da = new SqlDataAdapter("select 产品代码,生产批号,产品数量只合计B as 生产数量 from 产品内包装记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             dt = new DataTable();
             da.Fill(dt);
-
+            dtSource = dt.Copy();
             dataGridView2.AllowUserToAddRows = false;
             dataGridView2.DataSource = dt;
             dataGridView2.ReadOnly = true;
@@ -658,10 +659,322 @@ namespace mySystem.Process.Bag.LDPE
 
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
+		private List<Int32> getIntList(String str)
+        {
+            try
+            {
+                List<Int32> ret = new List<int>();
+                String[] strs = str.Split('-');
+                if (1 == strs.Length)
+                {
+                    ret.Add(Convert.ToInt32(strs[0]));
+                }
+                else if (2 == strs.Length)
+                {
+                    int a = Convert.ToInt32(strs[0]);
+                    int b = Convert.ToInt32(strs[1]);
+                    if (a > b)
+                    {
+                        throw new Exception("后面数字比前面的大");
+                    }
+                    for (int i = a; i <= b; ++i)
+                    {
+                        ret.Add(i);
+                    }
+                }
+                else
+                {
+                    throw new Exception("打印页码解析失败！");
+                }
+                return ret;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                return new List<int>();
+            }
+
+        }
 
         private void btn打印_Click(object sender, EventArgs e)
         {
+            List<Int32> checkedRows = new List<int>();
+            for (int i = 0; i < dataGridView1.Rows.Count; ++i)
+            {
+                if (Convert.ToBoolean(dataGridView1.Rows[i].Cells[0].Value))
+                {
+                    checkedRows.Add(i);
+                }
+            }
 
+            foreach (Int32 r in checkedRows)
+            {
+                SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.conn);
+                DataTable dt = new DataTable("生产指令");
+                int id;
+                List<Int32> pages = getIntList(dataGridView1.Rows[r].Cells[1].Value.ToString());
+                switch (r)
+                {
+                    case 0:// 制袋工序批生产记录封面
+                        PF0();
+                        break;
+
+                    case 1: // 生产指令
+                        da = new SqlDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("生产指令");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.LDPE.LDPEBag_productioninstruction(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+                    case 2: // 开机确认
+                        da = new SqlDataAdapter("select * from 制袋机组开机前确认表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("制袋机组开机前确认表");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.LDPE.LDPEBag_checklist(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+
+                        break;
+                    case 3: // 制袋领料记录
+                        da = new SqlDataAdapter("select * from 生产领料使用记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("制袋领料记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.LDPE.LDPEBag_materialrecord(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+
+                        break;
+                    case 4://生产退料记录
+                        da = new SqlDataAdapter("select * from 生产退料记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("生产退料记录表");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.LDPE.LDPE生产退料记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+                    case 5:// 内包                                    
+                        da = new SqlDataAdapter("select * from 产品内包装记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("产品内包装记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            // TODO
+                            (new mySystem.Process.Bag.LDPE.LDPEBag_innerpackaging(mainform, id)).print(false);
+                            GC.Collect();
+
+                        }
+                        break;
+
+                    case 6://外包
+                        da = new SqlDataAdapter("select * from 产品外包装记录表 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("产品外包装记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.LDPE.LDPE产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 7://瓶口焊接机运行记录
+                        da = new SqlDataAdapter("select * from 瓶口焊接机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("瓶口焊接机运行记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTV产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 8://底封机运行记录
+                        da = new SqlDataAdapter("select * from 底封机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("底封机运行记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTV产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 9://圆口焊接机运行记录
+                        da = new SqlDataAdapter("select * from 圆口焊接机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("圆口焊接机运行记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTV产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 10://圆口焊接机运行记录
+                        da = new SqlDataAdapter("select * from 圆口焊接机运行记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("圆口焊接机运行记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTV产品外包装记录(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 11://泄漏测试记录
+                        da = new SqlDataAdapter("select * from 泄漏测试记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("泄漏测试记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTVBag_clearance(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 12://超声波焊接记录
+                        da = new SqlDataAdapter("select * from 超声波焊接记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("超声波焊接记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTVBag_clearance(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 13://清场记录
+                        da = new SqlDataAdapter("select * from 清场记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("清场记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.PTVBag_clearance(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 14:// PTV生产台帐
+                        break;
+
+                    case 15:// 制袋岗位交接班记录
+                        da = new SqlDataAdapter("select * from 岗位交接班记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("岗位交接班记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.HandOver(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 16:// 内标签
+                        break;
+
+                    case 17://外标签
+                        break;
+
+                    case 18:// 产品外观和尺寸检验记录
+                        da = new SqlDataAdapter("select * from 产品外观和尺寸检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("产品外观和尺寸检验记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.HandOver(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+
+                    case 19:// 产品热合强度检验记录
+                        da = new SqlDataAdapter("select * from 产品热合强度检验记录 where  生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
+                        dt = new DataTable("产品热合强度检验记录");
+                        da.Fill(dt);
+                        foreach (int page in pages)
+                        {
+                            id = Convert.ToInt32(dt.Rows[page - 1]["ID"]);
+                            (new mySystem.Process.Bag.PTV.HandOver(mainform, id)).print(false);
+                            GC.Collect();
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void PF0()
+        {
+            //dataGridView1.Rows[idx-1].Cells[totalPage].Value
+            var data = dataGridView1.DataSource;
+
+            int[] accumu = new int[dataGridView1.Rows.Count];
+            // 打开一个Excel进程
+            Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
+            // 利用这个进程打开一个Excel文件
+            //System.IO.Directory.GetCurrentDirectory;
+            Microsoft.Office.Interop.Excel._Workbook wb = oXL.Workbooks.Open(System.IO.Directory.GetCurrentDirectory() + @"\..\..\xls\LDPE\0 SOP-MFG-105-R01 制袋工序批生产记录封面.xlsx");
+            // 选择一个Sheet，注意Sheet的序号是从1开始的
+            Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[1];
+            // 设置该进程是否可见
+            //oXL.Visible = true;
+
+            int rowStartAt = 5;
+            // 修改Sheet中某行某列的值
+            my.Cells[3, 8].Value = dtOuter.Rows[0]["生产指令编号"];
+            my.Cells[4, 8].Value = Convert.ToDateTime(dtOuter.Rows[0]["开始生产时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[14, 7].Value = dtOuter.Rows[0]["汇总员"];
+            my.Cells[14, 9].Value = Convert.ToDateTime(dtOuter.Rows[0]["汇总时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[16, 7].Value = dtOuter.Rows[0]["审核员"];
+            my.Cells[16, 9].Value = Convert.ToDateTime(dtOuter.Rows[0]["审核时间"]).ToString("yyyy年MM月dd日");
+            my.Cells[18, 7].Value = dtOuter.Rows[0]["批准员"];
+            my.Cells[18, 9].Value = Convert.ToDateTime(dtOuter.Rows[0]["批准时间"]).ToString("yyyy年MM月dd日");
+
+
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (0 == i)
+                {
+                    accumu[0] = 1;
+
+                }
+                else
+                {
+                    accumu[i] = Convert.ToInt32(dataGridView1.Rows[i].Cells[totalPage].Value) + accumu[i - 1];
+                }
+                my.Cells[i + rowStartAt, 3] = accumu[i];
+            }
+            for (int i = 0; i < dtSource.Rows.Count; i++)
+            {
+                my.Cells[i + 6, 6].Value = dtSource.Rows[i]["产品代码"];
+                my.Cells[i + 6, 8].Value = dtSource.Rows[i]["生产数量"];
+                my.Cells[i + 6, 9].Value = dtSource.Rows[i]["生产批号"];
+                if (i > 22)
+                {
+                    MessageBox.Show("超出最大长度!");
+                    break;
+                }
+            }
         }
 
         // 处理DataGridView中数据类型输错的函数

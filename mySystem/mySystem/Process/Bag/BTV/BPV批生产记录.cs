@@ -671,7 +671,12 @@ namespace mySystem.Process.Bag.BTV
                     checkedRows.Add(i);
                 }
             }
-
+            checkedRows.Sort();
+            if (0 == checkedRows[0])
+            {
+                checkedRows.RemoveAt(0);
+                checkedRows.Add(0);
+            }
             foreach (Int32 r in checkedRows)
             {
                 SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.conn);
@@ -681,7 +686,8 @@ namespace mySystem.Process.Bag.BTV
                 switch (r)
                 {
                     case 0: // 制袋工序批生产记录封面
-                        PF0();
+                        //PF0();
+                        MessageBox.Show("fcvyhdusfhbydukia");
                         break;
                     case 1: // 生产指令
                         da = new SqlDataAdapter("select * from 生产指令 where  ID=" + _生产指令ID, mySystem.Parameter.conn);

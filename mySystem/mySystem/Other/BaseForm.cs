@@ -12,7 +12,7 @@ namespace mySystem
 {
     public partial class BaseForm : Form
     {
-        String DEFAULT_DGV_COLUMN_WIDTH = "20";
+        String DEFAULT_DGV_COLUMN_WIDTH = "100";
 
         public MainForm mainform;
         public BaseForm(MainForm mForm)
