@@ -438,5 +438,10 @@ namespace mySystem.Process.Stock
             btn审核.Enabled = false;
             base.CheckResult();
         }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

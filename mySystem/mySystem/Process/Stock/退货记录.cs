@@ -410,5 +410,10 @@ namespace mySystem.Process.Stock
 
             base.CheckResult();
         }
+
+        private void btn打印_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

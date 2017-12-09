@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Runtime.InteropServices;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Bag.PTV
 {
@@ -537,10 +538,21 @@ namespace mySystem.Process.Bag.PTV
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
-
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
-            //string[] s=Regex.Split("张三，,赵一,赵二", ",|，");
+            if (dt.Rows.Count > 0)
+            {
+                string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        ls操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        ls审核员.Add(s1[i]);
+                }
+            }
 
         }
 
@@ -885,7 +897,14 @@ namespace mySystem.Process.Bag.PTV
                     checkedRows.Add(i);
                 }
             }
-
+            foreach (Int32 r in checkedRows)
+            {
+                if (dataGridView1.Rows[r].Cells[1].Value == null)
+                {
+                    MessageBox.Show("第 " + (r + 1).ToString() + " 行未填写打印页面编号！");
+                    return;
+                }
+            }
             foreach (Int32 r in checkedRows)
             {
                 SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令 where ID=" + _生产指令ID, mySystem.Parameter.conn);
@@ -1222,9 +1241,9 @@ namespace mySystem.Process.Bag.PTV
             //内表2信息,生产记录
             for (int i = 0; i < dataGridView2.Rows.Count; i++)
             {
-                mysheet.Cells[6 + i, 6] = dataGridView2.Rows[i].Cells["产品代码"].Value.ToString();
-                mysheet.Cells[6 + i, 8] = dataGridView2.Rows[i].Cells["生产数量"].Value.ToString();
-                mysheet.Cells[6 + i, 9] = dataGridView2.Rows[i].Cells["生产批号"].Value.ToString();
+                mysheet.Cells[6 + i, 6] = dataGridView2.Rows[i].Cells[0].Value.ToString();
+                mysheet.Cells[6 + i, 8] = dataGridView2.Rows[i].Cells[1].Value.ToString();
+                mysheet.Cells[6 + i, 9] = dataGridView2.Rows[i].Cells[2].Value.ToString();
 
             }
 

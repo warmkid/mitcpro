@@ -510,7 +510,7 @@ namespace mySystem.Process.Stock
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -528,9 +528,11 @@ namespace mySystem.Process.Stock
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = 0;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -555,6 +557,8 @@ namespace mySystem.Process.Stock
                         daOuter.Update((DataTable)bsOuter.DataSource);
                     }
                     // 关闭文件，false表示不保存
+                    pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
+
                     wb.Close(false);
                     // 关闭Excel进程
                     oXL.Quit();
@@ -564,6 +568,7 @@ namespace mySystem.Process.Stock
                     wb = null;
                     oXL = null;
                 }
+                return pageCount;
             }
         }
 
