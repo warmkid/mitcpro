@@ -417,21 +417,21 @@ namespace mySystem.Extruction.Chart
                 //********* 内表新建、保存、重新绑定 *********//
 
                 //内表绑定
-                readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-                innerBind();
-                DataRow dr2 = dt记录详情.NewRow();
-                dr2 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr2);
-                dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
-                setDataGridViewRowNums();
-                //立马保存内表
-                if (!mySystem.Parameter.isSqlOk)
-                {
-                    da记录详情.Update((DataTable)bs记录详情.DataSource);
-                }
-                else
-                {
-                    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
-                }
+                //readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
+                //innerBind();
+                //DataRow dr2 = dt记录详情.NewRow();
+                //dr2 = writeInnerDefault(Convert.ToInt32(dt记录.Rows[0]["ID"]), dr2);
+                //dt记录详情.Rows.InsertAt(dr2, dt记录详情.Rows.Count);
+                //setDataGridViewRowNums();
+                ////立马保存内表
+                //if (!mySystem.Parameter.isSqlOk)
+                //{
+                //    da记录详情.Update((DataTable)bs记录详情.DataSource);
+                //}
+                //else
+                //{
+                //    da记录详情sql.Update((DataTable)bs记录详情.DataSource);
+                //}
                 
             }
             //内表绑定
@@ -1162,7 +1162,10 @@ namespace mySystem.Extruction.Chart
         private void outerpack_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
     
     }

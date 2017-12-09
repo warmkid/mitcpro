@@ -51,7 +51,8 @@ namespace mySystem.Process.CleanCut
         Parameter.UserState _userState;
         Parameter.FormState _formState;
         Int32 InstruID;
-        String Instruction;        
+        String Instruction;
+        bool isFirstBind = true;
         
         public CleanCut_CheckBeforePower(MainForm mainform) : base(mainform)
         {
@@ -499,7 +500,7 @@ namespace mySystem.Process.CleanCut
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码，从设置表里读取
@@ -544,8 +545,8 @@ namespace mySystem.Process.CleanCut
                         cbc.Items.Add("No");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -555,8 +556,8 @@ namespace mySystem.Process.CleanCut
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -568,16 +569,16 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.ColumnHeadersHeight = 40;
+            //dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //dataGridView1.ColumnHeadersHeight = 40;
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T清洁分切开机确认ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["确认内容"].ReadOnly = true;
             dataGridView1.Columns["确认项目"].ReadOnly = true;
-            dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            //dataGridView1.Columns["确认内容"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["确认内容"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
         }
 
         //设置datagridview背景颜色
@@ -867,6 +868,11 @@ namespace mySystem.Process.CleanCut
             //throw new NotImplementedException();
             setDataGridViewBackColor();
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         //打印按钮
@@ -885,7 +891,7 @@ namespace mySystem.Process.CleanCut
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -903,9 +909,11 @@ namespace mySystem.Process.CleanCut
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -938,7 +946,9 @@ namespace mySystem.Process.CleanCut
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
 
@@ -997,6 +1007,11 @@ namespace mySystem.Process.CleanCut
             mysheet.PageSetup.RightFooter = Instruction + "-02-" + sheetnum.ToString("D3") + " &P/" + mybook.ActiveSheet.PageSetup.Pages.Count.ToString(); // "生产指令-步骤序号- 表序号 /&P"; // &P 是页码
             //返回
             return mysheet;
+        }
+
+        private void CleanCut_CheckBeforePower_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
             
    

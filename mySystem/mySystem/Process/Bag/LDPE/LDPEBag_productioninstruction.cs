@@ -46,6 +46,7 @@ namespace mySystem.Process.Bag.LDPE
         BindingSource bsOuter, bsInner;
 
         CheckForm ckform;
+        bool isFirstBind = true;
 
         public LDPEBag_productioninstruction(MainForm mainform):base(mainform)
         {
@@ -390,7 +391,7 @@ namespace mySystem.Process.Bag.LDPE
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+           // Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         /// <summary>
@@ -401,9 +402,11 @@ namespace mySystem.Process.Bag.LDPE
         void setDataGridViewColumn()
         {
             dataGridView1.Columns.Clear();
+            
             DataGridViewTextBoxColumn tbc;
             DataGridViewComboBoxColumn cbc;
             DataGridViewCheckBoxColumn ckbc;
+            dataGridView1.RowHeadersVisible = false;
 
             // 先把所有的列都加好，基本属性附上
             foreach (DataColumn dc in dtInner.Columns)
@@ -751,6 +754,11 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns[3].HeaderText = "计划产量（只）";
             dataGridView1.Columns[4].HeaderText = "内包装规格（只/包）";
             dataGridView1.Columns[9].HeaderText = "外包装规格（只/箱）";
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
         void dataGridView1_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
@@ -965,6 +973,7 @@ namespace mySystem.Process.Bag.LDPE
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             getInnerOtherData();
             setDataGridViewColumn();
+            addOtherEvenHandler();
             innerBind();
             setFormState();
             setEnableReadOnly();
@@ -1226,7 +1235,7 @@ namespace mySystem.Process.Bag.LDPE
             comboBox1.SelectedItem = print.PrinterSettings.PrinterName;
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -1257,9 +1266,11 @@ namespace mySystem.Process.Bag.LDPE
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 // 直接用默认打印机打印该Sheet
                 try
                 {
@@ -1288,7 +1299,9 @@ namespace mySystem.Process.Bag.LDPE
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1432,6 +1445,11 @@ namespace mySystem.Process.Bag.LDPE
             }
             catch
             { }
+        }
+
+        private void LDPEBag_productioninstruction_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
 

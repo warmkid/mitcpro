@@ -679,7 +679,7 @@ namespace mySystem.Process.Bag.PTV
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
                 //仅当审核人为空时，可删除
-                if (dataGridView1.Rows[deletenum].Cells["审核员"].Value.ToString() == "")
+                if (dataGridView1.Rows[deletenum].Cells["审核员"].Value.ToString() == "" || _userState != Parameter.UserState.操作员)
                 {
                     //dt记录详情.Rows.RemoveAt(deletenum);
                     dt记录详情.Rows[deletenum].Delete();

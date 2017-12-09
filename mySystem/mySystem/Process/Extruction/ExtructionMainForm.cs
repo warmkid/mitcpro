@@ -887,13 +887,13 @@ namespace mySystem
                             String table11 = "吹膜供料系统运行记录详细信息";
                             SqlCommand comm11 = new SqlCommand();
                             comm11.Connection = Parameter.conn;
-                            comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                            comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "'" + left11 + "'" + " and " + "'" + right11 + "'";
                             SqlDataReader reader11 = comm11.ExecuteReader();
 
                             String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
                             SqlCommand comm2 = new SqlCommand();
                             comm2.Connection = Parameter.conn;
-                            comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                            comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "'" + left11 + "'" + " and " + "'" + right11 + "'";
                             SqlDataReader reader2 = comm2.ExecuteReader();
 
                             if (reader11.HasRows && reader2.HasRows)
@@ -928,7 +928,7 @@ namespace mySystem
 
                             SqlCommand comm1 = new SqlCommand();
                             comm1.Connection = Parameter.conn;
-                            comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 like " + "%" + now.Date.ToShortDateString() + "%";
+                            comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 like " + "'" + now.Date.ToShortDateString() + "'";
                             SqlDataReader reader1 = comm1.ExecuteReader();//执行查询
                             int instruID = -1;
                             if (reader1.Read())
@@ -940,7 +940,7 @@ namespace mySystem
                                 //若大表当日无记录则新建一条
                                 SqlCommand commInsert = new SqlCommand();
                                 commInsert.Connection = Parameter.conn;
-                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员,审核是否通过) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", #" + now.Date + "#, '" + Parameter.userflight + "', " + "''" + ", 0 );";
+                                commInsert.CommandText = "INSERT INTO 吹膜供料系统运行记录 (生产指令编号, 生产指令ID, 生产日期, 班次, 审核员,审核是否通过) VALUES " + "('" + Parameter.proInstruction + "', " + Parameter.proInstruID + ", '" + now.Date + "', '" + Parameter.userflight + "', " + "''" + ", 0 );";
                                 commInsert.ExecuteNonQuery();
                                 //获取ID
                                 commInsert.CommandText = "SELECT @@IDENTITY";
@@ -951,13 +951,13 @@ namespace mySystem
                             String table11 = "吹膜供料系统运行记录详细信息";
                             SqlCommand comm11 = new SqlCommand();
                             comm11.Connection = Parameter.conn;
-                            comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                            comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "'" + left11 + "'" + " and " + "'" + right11 + "'";
                             SqlDataReader reader11 = comm11.ExecuteReader();
 
                             String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
                             SqlCommand comm2 = new SqlCommand();
                             comm2.Connection = Parameter.conn;
-                            comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                            comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "'" + left11 + "'" + " and " + "'" + right11 + "'";
                             SqlDataReader reader2 = comm2.ExecuteReader();
 
                             if (reader11.HasRows && reader2.HasRows)
@@ -991,7 +991,7 @@ namespace mySystem
                             DateTime left11 = new DateTime(left1.Year, left1.Month, left1.Day, left1.Hour, left1.Minute, left1.Second);
                             SqlCommand comm1 = new SqlCommand();
                             comm1.Connection = Parameter.conn;
-                            comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 like '" + "#" + now.Date.ToShortDateString() + "#'";
+                            comm1.CommandText = "select * from " + table1 + " where 生产指令ID = " + Parameter.proInstruID + " and 生产日期 like '" + "'" + now.Date.ToShortDateString() + "''";
                             SqlDataReader reader1 = comm1.ExecuteReader();//执行查询
                             int instruID = -1;
                             if (reader1.Read())
@@ -1014,13 +1014,13 @@ namespace mySystem
                             String table11 = "吹膜供料系统运行记录详细信息";
                             SqlCommand comm11 = new SqlCommand();
                             comm11.Connection = Parameter.conn;
-                            comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                            comm11.CommandText = "select * from " + table11 + " where T吹膜供料系统运行记录ID = " + instruID + " and 检查时间 between " + "'" + left11 + "'" + " and " + "'" + right11 + "'";
                             SqlDataReader reader11 = comm11.ExecuteReader();
 
                             String table2 = "吹膜机组运行记录"; //吹膜机组运行记录
                             SqlCommand comm2 = new SqlCommand();
                             comm2.Connection = Parameter.conn;
-                            comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "#" + left11 + "#" + " and " + "#" + right11 + "#";
+                            comm2.CommandText = "select * from " + table2 + " where 生产指令ID = " + Parameter.proInstruID + " and 记录时间 between " + "'" + left11 + "'" + " and " + "'" + right11 + "'";
                             SqlDataReader reader2 = comm2.ExecuteReader();
 
                             if (reader11.HasRows && reader2.HasRows)

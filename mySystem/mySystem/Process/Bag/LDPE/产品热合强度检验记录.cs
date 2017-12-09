@@ -47,6 +47,7 @@ namespace mySystem.Process.Bag.LDPE
         BindingSource bsOuter, bsInner;
 
         CheckForm ckForm = null;
+        bool isFirstBind = true;
 
         public 产品热合强度检验记录(MainForm mainform)
             : base(mainform)
@@ -339,7 +340,7 @@ namespace mySystem.Process.Bag.LDPE
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         /// <summary>
@@ -580,6 +581,11 @@ namespace mySystem.Process.Bag.LDPE
             foreach (int i in readonlyIdx)
             {
                 dataGridView1.Columns[i].ReadOnly = true;
+            }
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
             }
         }
 
@@ -927,7 +933,7 @@ namespace mySystem.Process.Bag.LDPE
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -945,9 +951,11 @@ namespace mySystem.Process.Bag.LDPE
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -981,7 +989,9 @@ namespace mySystem.Process.Bag.LDPE
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1123,6 +1133,11 @@ namespace mySystem.Process.Bag.LDPE
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             setEnableReadOnly();
+        }
+
+        private void 产品热合强度检验记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
     }

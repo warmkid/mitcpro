@@ -158,7 +158,7 @@ namespace mySystem.Process.Bag.PTV
             dt代码批号 = new DataTable("代码批号");
 
             //*********产品名称、产品批号、产品工艺、设备 -----> 数据获取*********//
-            if (!isSqlOk)
+            if (isSqlOk)
             {
                 //从 “生产指令信息表” 中找 “生产指令编号” 下的信息
                 SqlCommand comm1 = new SqlCommand();
@@ -665,6 +665,7 @@ namespace mySystem.Process.Bag.PTV
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
+
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
                 // 保存

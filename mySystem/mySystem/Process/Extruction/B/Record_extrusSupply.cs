@@ -830,15 +830,22 @@ namespace WindowsFormsApplication1
         // 内表和控件的绑定
         void innerBind()
         {
-            //移除所有列
-            while (dataGridView1.Columns.Count > 0)
-                dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
+            ////移除所有列
+            //while (dataGridView1.Columns.Count > 0)
+            //    dataGridView1.Columns.RemoveAt(dataGridView1.Columns.Count - 1);
 
-            setDataGridViewCombox();
+            //setDataGridViewCombox();
+            //bs_prodlist.DataSource = dt_prodlist;
+            //dataGridView1.DataSource = bs_prodlist.DataSource;
+            //setDataGridViewColumns();
+            ////Utility.setDataGridViewAutoSizeMode(dataGridView1);
+
+
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView1.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
+
         }
 
         //设置DataGridView中下拉框
@@ -1886,7 +1893,10 @@ namespace WindowsFormsApplication1
         private void Record_extrusSupply_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
     }
 }

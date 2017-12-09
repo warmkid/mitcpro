@@ -49,6 +49,8 @@ namespace mySystem.Process.CleanCut
 
         int _instrctID, _myID;
         string _code;
+        bool isFirstBind = true;
+
 
         public CleanCut_Cover(mySystem.MainForm mainform)
             : base(mainform)
@@ -99,6 +101,11 @@ namespace mySystem.Process.CleanCut
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView2.AllowUserToAddRows = false;
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind = false;
+            }
         }
 
         public CleanCut_Cover(mySystem.MainForm mainform, int id)
@@ -150,6 +157,11 @@ namespace mySystem.Process.CleanCut
 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView2.AllowUserToAddRows = false;
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind = false;
+            }
         }
 
         void setKeyInfo(int pid, int mid, string code)
@@ -529,17 +541,17 @@ namespace mySystem.Process.CleanCut
             outerBind();
 
             //内表保存，目录
-            if (!mySystem.Parameter.isSqlOk)
-            {
-                da_prodlist.Update((DataTable)bs_prodlist.DataSource);
-            }
-            else
-            {
-                da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
-            }
+            //if (!mySystem.Parameter.isSqlOk)
+            //{
+            //    da_prodlist.Update((DataTable)bs_prodlist.DataSource);
+            //}
+            //else
+            //{
+            //    da_prodlistsql.Update((DataTable)bs_prodlist.DataSource);
+            //}
             
-            readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
-            innerBind();
+            //readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
+            //innerBind();
             
             //内表2保存，记录,不用保存，因为是只读的
 
@@ -568,9 +580,17 @@ namespace mySystem.Process.CleanCut
 
         void addDataEventHandler()
         {
-
+            dataGridView2.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView2_DataBindingComplete);
         }
+        void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
 
+            //if (isFirstBind)
+            //{
+            //    readDGVWidthFromSettingAndSet(dataGridView2);
+            //    isFirstBind = false;
+            //}
+        }
         // 根据条件从数据库中读取一行外表的数据
         void readOuterData(int instrid)
         {
@@ -697,7 +717,7 @@ namespace mySystem.Process.CleanCut
             bs_prodlist.DataSource = dt_prodlist;
             dataGridView2.DataSource = bs_prodlist.DataSource;
             setDataGridViewColumns();
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         // 根据条件从数据库中读取内表数据,汇总
@@ -731,7 +751,7 @@ namespace mySystem.Process.CleanCut
             bs_prodlist2.DataSource = dt_prodlist2;
             dataGridView2.DataSource = bs_prodlist2.DataSource;
             setDataGridViewColumns2();
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
         }
 
         void setDataGridViewCombox()
@@ -768,6 +788,12 @@ namespace mySystem.Process.CleanCut
         {
             dataGridView2.Columns[0].Visible = false;
             dataGridView2.Columns[1].Visible = false;
+             if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        
         }
 
         void setDataGridViewColumns2()
@@ -855,7 +881,7 @@ namespace mySystem.Process.CleanCut
         }
 
         // 打印函数
-        void print(bool isShow)
+        int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -873,9 +899,11 @@ namespace mySystem.Process.CleanCut
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -916,7 +944,9 @@ namespace mySystem.Process.CleanCut
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
         // 获取其他需要的数据 记录和页数
@@ -1382,6 +1412,11 @@ namespace mySystem.Process.CleanCut
                 }
             }
             perform打印本页();
+        }
+
+        private void CleanCut_Cover_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView2);
         }
     }
 }

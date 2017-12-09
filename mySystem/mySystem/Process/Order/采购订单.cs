@@ -785,6 +785,7 @@ namespace mySystem.Process.Order
             }
             //string width = getDGVWidth(dataGridView1);
             writeDGVWidthToSetting(dataGridView1);
+            MessageBox.Show("TTT");
         }
 
         private void btn打印_Click(object sender, EventArgs e)

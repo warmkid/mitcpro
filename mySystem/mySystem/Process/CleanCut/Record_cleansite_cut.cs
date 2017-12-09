@@ -49,7 +49,7 @@ namespace mySystem.Process.CleanCut
         /// -1:无数据，0：未保存，1：待审核，2：审核通过，3：审核未通过
         /// </summary>
         Parameter.FormState _formState;
-
+        bool isFirstBind = true;
         private Dictionary<string, string> dict_prod;//产品代码与产品批号对应字典
 
         private int instrid;
@@ -141,6 +141,7 @@ namespace mySystem.Process.CleanCut
             getPeople();//清场记录权限
             setUserState();
             getOtherData();
+            addDataEventHandler();
 
             string asql = "select * from 清场记录 where ID=" + id;
             SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
@@ -185,8 +186,17 @@ namespace mySystem.Process.CleanCut
         {
             //cb产品代码.SelectedIndexChanged += new EventHandler(cb产品代码_SelectedIndexChanged);
             //dataGridView1.CellEndEdit += new DataGridViewCellEventHandler(dataGridView1_CellEndEdit);
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
         }
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
 
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = true;
+            }
+        }
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex < 0)
@@ -584,7 +594,7 @@ namespace mySystem.Process.CleanCut
             dataGridView1.DataSource = bs_prodlist.DataSource;
             //setDataGridViewColumns();
             setDataGridViewRowNums();
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
         //设置DataGridView中下拉框
         void setDataGridViewCombox()
@@ -1093,7 +1103,7 @@ namespace mySystem.Process.CleanCut
 
         }
 
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -1122,9 +1132,11 @@ namespace mySystem.Process.CleanCut
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -1165,7 +1177,9 @@ namespace mySystem.Process.CleanCut
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
         
@@ -1186,6 +1200,11 @@ namespace mySystem.Process.CleanCut
                     dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                 }
             }
+        }
+
+        private void Record_cleansite_cut_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
     }

@@ -43,7 +43,7 @@ namespace mySystem.Process.Bag.PTV
         {
             InitializeComponent();
             conn = Parameter.conn;
-            mySystem.Parameter.conn = mySystem.Parameter.conn;
+            //mySystem.Parameter.conn = mySystem.Parameter.conn;
             isSqlOk = Parameter.isSqlOk;
 
             variableInit(ID);

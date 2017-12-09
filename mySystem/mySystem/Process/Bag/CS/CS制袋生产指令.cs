@@ -166,9 +166,21 @@ namespace mySystem.Process.Bag.CS
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
-
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            if (dt.Rows.Count > 0)
+            {
+                string[] s = Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，");
+                for (int i = 0; i < s.Length; i++)
+                {
+                    if (s[i] != "")
+                        ls操作员.Add(s[i]);
+                }
+                string[] s1 = Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，");
+                for (int i = 0; i < s1.Length; i++)
+                {
+                    if (s1[i] != "")
+                        ls审核员.Add(s1[i]);
+                }
+            }
             //string[] s=Regex.Split("张三，,赵一,赵二", ",|，");
 
         }
@@ -321,6 +333,7 @@ namespace mySystem.Process.Bag.CS
             dr["审核时间"] = DateTime.Now;
             dr["接收时间"] = DateTime.Now;
             dr["状态"] = 0;
+            dr["审核是否通过"] = 0;
             return dr;
         }
 
@@ -1286,7 +1299,8 @@ namespace mySystem.Process.Bag.CS
 
         private void CS制袋生产指令_FormClosing(object sender, FormClosingEventArgs e)
         {
-            writeDGVWidthToSetting(dataGridView1);
+            if(dataGridView1.ColumnCount > 0)
+                writeDGVWidthToSetting(dataGridView1);
         }
 
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

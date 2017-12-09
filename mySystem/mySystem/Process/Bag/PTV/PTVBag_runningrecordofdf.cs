@@ -160,50 +160,8 @@ namespace mySystem.Process.Bag.PTV
             dt代码批号 = new DataTable("代码批号");
 
             //*********产品名称、产品批号、产品工艺、设备 -----> 数据获取*********//
-            if (!isSqlOk)
+            if (isSqlOk)
             {
-                //从 “生产指令信息表” 中找 “生产指令编号” 下的信息
-                SqlCommand comm1 = new SqlCommand();
-                comm1.Connection = mySystem.Parameter.conn;
-                comm1.CommandText = "select * from 生产指令 where 生产指令编号 = '" + Instruction + "' ";//这里应有生产指令编码
-                SqlDataReader reader1 = comm1.ExecuteReader();
-                if (reader1.Read())
-                {
-                    //dt膜代码.Columns.Add("膜代码", typeof(String));  
-                    ////填入膜代码
-                    //dt膜代码.Rows.Add(reader1["制袋物料代码1"].ToString());
-                    //dt膜代码.Rows.Add(reader1["制袋物料代码2"].ToString());
-                    //dt膜代码.Rows.Add(reader1["制袋物料代码3"].ToString());
-                    //for (int i = 0; i < dt膜代码.Rows.Count; i++)
-                    //{ cmb膜代码.Items.Add(dt膜代码.Rows[i]["膜代码"].ToString()); }
-
-                    //查找该生产ID下的产品编码、产品批号
-                    SqlCommand comm2 = new SqlCommand();
-                    comm2.Connection = mySystem.Parameter.conn;
-                    comm2.CommandText = "select ID, 产品代码, 产品批号 from 生产指令详细信息 where T生产指令ID = " + reader1["ID"].ToString();
-                    SqlDataAdapter datemp = new SqlDataAdapter(comm2);
-                    datemp.Fill(dt代码批号);
-                    if (dt代码批号.Rows.Count == 0)
-                    {
-                        MessageBox.Show("该生产指令编码下的『生产指令产品列表』尚未生成！");
-                    }
-                    else
-                    {
-                        tb产品代码.Text = dt代码批号.Rows[0]["产品代码"].ToString();
-                        tb产品批号.Text = dt代码批号.Rows[0]["产品批号"].ToString();
-                    }
-                    datemp.Dispose();
-                }
-                else
-                {
-                    MessageBox.Show("该生产指令编码下的『生产指令信息表』尚未生成！");
-                    this.Close();
-                }
-                reader1.Dispose();
-            }
-            else
-            {
-                //从SQL数据库中读取;
                 //从 “生产指令信息表” 中找 “生产指令编号” 下的信息
                 SqlCommand comm1 = new SqlCommand();
                 comm1.Connection = mySystem.Parameter.conn;
@@ -257,17 +215,6 @@ namespace mySystem.Process.Bag.PTV
             }
             else if (_userState == Parameter.UserState.审核员)//审核人
             {
-                //if (_formState == Parameter.FormState.未保存 || _formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //0未保存||2审核通过||3审核未通过
-                //{
-                //    //控件都不能点，只有打印,日志可点
-                //    setControlFalse();
-                //}
-                //else //1待审核
-                //{
-                //    //发送审核不可点，其他都可点
-                //    setControlTrue();
-                //    btn审核.Enabled = true;
-                //}
 
                 if (_formState == Parameter.FormState.审核通过 || _formState == Parameter.FormState.审核未通过)  //2审核通过||3审核未通过
                 {
@@ -283,7 +230,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value != null && dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
                             dataGridView1.Rows[i].ReadOnly = false;
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
@@ -299,7 +246,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value != null && dataGridView1.Rows[i].Cells["复核人"].Value.ToString() == "__待审核")
                             dataGridView1.Rows[i].ReadOnly = false;
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
@@ -308,23 +255,13 @@ namespace mySystem.Process.Bag.PTV
             }
             else//操作员
             {
-                //if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
-                //{
-                //    //控件都不能点
-                //    setControlFalse();
-                //}
-                //else //0未保存||3审核未通过
-                //{
-                //    //发送审核，审核不能点
-                //    setControlTrue();
-                //}
 
                 if (_formState == Parameter.FormState.待审核 || _formState == Parameter.FormState.审核通过) //1待审核||2审核通过
                 {
                     //控件都不能点
                     setControlFalse();
                 }
-                else if (_formState == Parameter.FormState.未保存) //0未保存
+                else //审核未通过或未保存
                 {
                     //发送审核，审核不能点
                     setControlTrue();
@@ -333,22 +270,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() != "")
-                            dataGridView1.Rows[i].ReadOnly = true;
-                        else
-                            dataGridView1.Rows[i].ReadOnly = false;
-                    }
-                }
-                else //3审核未通过
-                {
-                    //发送审核，审核不能点
-                    setControlTrue();
-                    btn提交数据审核.Enabled = true;
-                    //遍历datagridview，如果有一行为未审核，则该行可以修改
-                    dataGridView1.ReadOnly = false;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells["复核人"].Value.ToString() != "")
+                        if (dataGridView1.Rows[i].Cells["复核人"].Value != null && dataGridView1.Rows[i].Cells["复核人"].Value.ToString() != "")
                             dataGridView1.Rows[i].ReadOnly = true;
                         else
                             dataGridView1.Rows[i].ReadOnly = false;
@@ -386,6 +308,10 @@ namespace mySystem.Process.Bag.PTV
             btn审核.Enabled = false;
             btn提交审核.Enabled = false;
             tb审核员.Enabled = false;
+
+            btn数据审核.Enabled = false;
+            btn提交数据审核.Enabled = false;
+
             //部分空间防作弊，不可改
             tb生产指令编码.ReadOnly = true;
             tb产品批号.ReadOnly = true;
@@ -762,6 +688,8 @@ namespace mySystem.Process.Bag.PTV
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
                 //dt记录详情.Rows.RemoveAt(deletenum);
+                if (dt记录详情.Rows[deletenum]["复核人"].ToString() != "" && _userState==Parameter.UserState.操作员)
+                    return;
                 dt记录详情.Rows[deletenum].Delete();
                 // 保存
                 da记录详情.Update((DataTable)bs记录详情.DataSource);
@@ -1221,6 +1149,7 @@ namespace mySystem.Process.Bag.PTV
         //数据绑定结束，设置表格格式
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setEnableReadOnly();
             setDataGridViewFormat();
             if (isFirstBind)
             {

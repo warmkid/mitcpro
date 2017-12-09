@@ -271,7 +271,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value!=null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
                             dataGridView1.Rows[i].ReadOnly = false;
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
@@ -287,7 +287,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value != null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
                             dataGridView1.Rows[i].ReadOnly = false;
                         else
                             dataGridView1.Rows[i].ReadOnly = true;
@@ -301,7 +301,7 @@ namespace mySystem.Process.Bag.PTV
                     //控件都不能点
                     setControlFalse();
                 }
-                else if (_formState == Parameter.FormState.未保存) //0未保存
+                else //审核未通过或未保存
                 {
                     //发送审核，审核不能点
                     setControlTrue();
@@ -310,22 +310,7 @@ namespace mySystem.Process.Bag.PTV
                     dataGridView1.ReadOnly = false;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
-                            dataGridView1.Rows[i].ReadOnly = true;
-                        else
-                            dataGridView1.Rows[i].ReadOnly = false;
-                    }
-                }
-                else //3审核未通过
-                {
-                    //发送审核，审核不能点
-                    setControlTrue();
-                    btn提交数据审核.Enabled = true;
-                    //遍历datagridview，如果有一行为未审核，则该行可以修改
-                    dataGridView1.ReadOnly = false;
-                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
-                    {
-                        if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
+                        if (dataGridView1.Rows[i].Cells["审核员"].Value != null && dataGridView1.Rows[i].Cells["审核员"].Value.ToString() != "")
                             dataGridView1.Rows[i].ReadOnly = true;
                         else
                             dataGridView1.Rows[i].ReadOnly = false;
@@ -597,7 +582,7 @@ namespace mySystem.Process.Bag.PTV
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 80;
+                        //cbc.MinimumWidth = 80;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -608,7 +593,7 @@ namespace mySystem.Process.Bag.PTV
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 80;
+                        //tbc.MinimumWidth = 80;
                         break;
                 }
             }
@@ -630,6 +615,7 @@ namespace mySystem.Process.Bag.PTV
             dataGridView1.Columns["序号"].ReadOnly = true;
             //dataGridView1.Columns["物料代码"].ReadOnly = true;
             dataGridView1.Columns["物料简称"].ReadOnly = true;
+            dataGridView1.Columns["审核员"].ReadOnly = true;
             //dataGridView1.Columns["物料批号"].ReadOnly = true;
             //dataGridView1.Columns["物料简称"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
         }
@@ -660,6 +646,8 @@ namespace mySystem.Process.Bag.PTV
             if (dt记录详情.Rows.Count >= 2)
             {
                 int deletenum = dataGridView1.CurrentRow.Index;
+                if (dt记录详情.Rows[deletenum]["审核员"].ToString() != "" && _userState == Parameter.UserState.操作员)
+                    return;
                 //dt记录详情.Rows.RemoveAt(deletenum);
                 dt记录详情.Rows[deletenum].Delete();
 
@@ -765,7 +753,15 @@ namespace mySystem.Process.Bag.PTV
             bool isSaved = Save();
             if (isSaved == false)
                 return;
-
+            //检查是否可以提交最后审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "")
+                {
+                    MessageBox.Show("第『" + (i + 1).ToString() + "』行数据尚未审核，不能提交最后审核！");
+                    return;
+                }
+            }
             //写待审核表
             DataTable dt_temp = new DataTable("待审核");
             //BindingSource bs_temp = new BindingSource();
@@ -809,6 +805,15 @@ namespace mySystem.Process.Bag.PTV
             {
                 MessageBox.Show("当前登录的审核员与操作员为同一人，不可进行审核！");
                 return;
+            }
+            //先进行内表审核，再进行外表审核
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                if (dataGridView1.Rows[i].Cells["审核员"].Value.ToString() == "__待审核")
+                {
+                    MessageBox.Show("第" + (i + 1).ToString() + "行数据没有审核，请先审核表内数据！");
+                    return;
+                }
             }
             checkform = new CheckForm(this);
             checkform.Show();
@@ -1139,6 +1144,7 @@ namespace mySystem.Process.Bag.PTV
         //数据绑定结束，设置表格格式
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            setEnableReadOnly();
             setDataGridViewFormat();
             if (isFirstBind)
             {

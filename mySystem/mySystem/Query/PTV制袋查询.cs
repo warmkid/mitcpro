@@ -217,6 +217,18 @@ namespace mySystem.Query
                         else
                         { EachBind(this.dgv, "生产领料申请单表", "审核员", null, null); }
                         break;
+                    case "PTV产品热合强度检验记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品热合强度检验记录", "审核员", "整理时间", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品热合强度检验记录", "审核员", "整理时间", null); }
+                        break;
+                    case "PTV产品外观和尺寸检验记录":
+                        if (comboBox1.SelectedIndex != -1)
+                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "审核员", "生产日期", "生产指令ID"); }
+                        else
+                        { EachBind(this.dgv, "产品外观和尺寸检验记录", "审核员", "生产日期", null); }
+                        break;
 
                     default:
                         break;
@@ -370,6 +382,14 @@ namespace mySystem.Query
                         case "生产领料申请单":
                             PTV生产领料申请单 shenqing = new PTV生产领料申请单(mainform, ID);
 
+                            break;
+                        case "PTV产品热合强度检验记录":
+                            PTV产品热合强度检验记录 reheform = new PTV产品热合强度检验记录(mainform, ID);
+                            reheform.Show();
+                            break;
+                        case "PTV产品外观和尺寸检验记录":
+                            PTV产品外观和尺寸检验记录 waiguanform = new PTV产品外观和尺寸检验记录(mainform, ID);
+                            waiguanform.Show();
                             break;
 
                         default:

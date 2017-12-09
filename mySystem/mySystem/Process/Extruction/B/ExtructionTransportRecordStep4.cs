@@ -571,7 +571,10 @@ namespace mySystem.Extruction.Process
         private void ExtructionTransportRecordStep4_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(TransportRecordView);
+            if (TransportRecordView.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(TransportRecordView);
+            }
         }
 
         private void TransportRecordView_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

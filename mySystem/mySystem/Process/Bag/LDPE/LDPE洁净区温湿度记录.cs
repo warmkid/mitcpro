@@ -34,6 +34,7 @@ namespace mySystem.Process.Bag.LDPE
         Int32 InstruID;
         String Instruction;
         String Flight = "";
+        bool isFirstBind = true;
 
         public LDPE洁净区温湿度记录(mySystem.MainForm mainform) : base(mainform)
         {
@@ -430,7 +431,7 @@ namespace mySystem.Process.Bag.LDPE
             bs记录详情.DataSource = dt记录详情;
             //dataGridView1.DataBindings.Clear();
             dataGridView1.DataSource = bs记录详情.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         //添加行代码
@@ -473,8 +474,8 @@ namespace mySystem.Process.Bag.LDPE
                         cbc.Items.Add("夜班");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     case "判定":
                         cbc = new DataGridViewComboBoxColumn();
@@ -486,8 +487,8 @@ namespace mySystem.Process.Bag.LDPE
                         cbc.Items.Add("不合格");
                         dataGridView1.Columns.Add(cbc);
                         cbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        cbc.MinimumWidth = 120;
+                        //cbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //cbc.MinimumWidth = 120;
                         break;
                     default:
                         tbc = new DataGridViewTextBoxColumn();
@@ -497,8 +498,8 @@ namespace mySystem.Process.Bag.LDPE
                         tbc.ValueType = dc.DataType;
                         dataGridView1.Columns.Add(tbc);
                         tbc.SortMode = DataGridViewColumnSortMode.NotSortable;
-                        tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
-                        tbc.MinimumWidth = 120;
+                        //tbc.AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+                        //tbc.MinimumWidth = 120;
                         break;
                 }
             }
@@ -510,12 +511,12 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Font = new Font("宋体", 12, FontStyle.Regular);
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
-            dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            //dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ColumnHeadersHeight = 40;
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["T洁净区温湿度记录ID"].Visible = false;
-            dataGridView1.Columns["操作员"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            //dataGridView1.Columns["操作员"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             //HeaderText
             dataGridView1.Columns["温度"].HeaderText = "温度\r18℃-26℃";
             dataGridView1.Columns["相对湿度"].HeaderText = "相对湿度\r≤70%";
@@ -779,7 +780,7 @@ namespace mySystem.Process.Bag.LDPE
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -797,9 +798,11 @@ namespace mySystem.Process.Bag.LDPE
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -832,7 +835,9 @@ namespace mySystem.Process.Bag.LDPE
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
 
@@ -945,6 +950,16 @@ namespace mySystem.Process.Bag.LDPE
         private void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+
+        private void LDPE洁净区温湿度记录_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
 

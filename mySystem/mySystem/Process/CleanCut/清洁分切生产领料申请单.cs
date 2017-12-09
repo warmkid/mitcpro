@@ -166,6 +166,11 @@ namespace mySystem.Process.CleanCut
                 datemp1.Dispose();
             }
         }
+
+        private void 清洁分切生产领料申请单_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
         
     }
 }

@@ -45,7 +45,7 @@ namespace mySystem.Process.Bag.LDPE
         List<String> ls审核员;
         List<String> ls清场项目;
         List<String> ls清场要点;
-
+        bool isFirstBind = true;
 
         // 数据库连接
 //        String strConn = @"Provider=Microsoft.Jet.OLEDB.4.0;
@@ -435,7 +435,7 @@ namespace mySystem.Process.Bag.LDPE
             bsInner.DataSource = dtInner;
 
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+           // Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         // 获取和显示内容有关的变量
@@ -594,12 +594,18 @@ namespace mySystem.Process.Bag.LDPE
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             // DataGridView的可见和只读等属性最好在这个事件中处理
+            dataGridView1.RowHeadersVisible = false;
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
             
             for (int i = 0; i < 5; ++i)
             {
                 dataGridView1.Columns[i].ReadOnly = true;
+            }
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
             }
                 
         }
@@ -787,7 +793,7 @@ namespace mySystem.Process.Bag.LDPE
             GC.Collect();
         }
 
-        public void print(bool b)
+        public int print(bool b)
         {
             int label_打印成功 = 1;
             // 打开一个Excel进程
@@ -818,9 +824,11 @@ namespace mySystem.Process.Bag.LDPE
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 // 直接用默认打印机打印该Sheet
                 try
                 {
@@ -849,8 +857,9 @@ namespace mySystem.Process.Bag.LDPE
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
-
+                return pageCount;
             }
         }
 
@@ -906,6 +915,11 @@ namespace mySystem.Process.Bag.LDPE
             my.Cells[5, 9].Value = dtOuter.Rows[0]["审核员"].ToString();
             my.Cells[19 + ind, 1].Value = "备注：" + dtOuter.Rows[0]["备注"].ToString();
 
+        }
+
+        private void LDPEBag_cleanrance_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
 

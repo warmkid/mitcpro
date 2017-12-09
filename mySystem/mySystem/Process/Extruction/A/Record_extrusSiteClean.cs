@@ -1387,8 +1387,14 @@ namespace mySystem.Extruction.Process
         private void Record_extrusSiteClean_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
-            writeDGVWidthToSetting(dataGridView2);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+            if (dataGridView2.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView2);
+            }
         }
     }
 }

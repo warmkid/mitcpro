@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(284, 261);
             this.Name = "清洁分切生产领料申请单";
             this.Text = "清洁分切生产领料申请单";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.清洁分切生产领料申请单_FormClosing);
             this.ResumeLayout(false);
 
         }

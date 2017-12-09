@@ -1287,7 +1287,10 @@ namespace mySystem.Process.Extruction.A
         private void HandOver_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
 
         //leave datagridview check the right things

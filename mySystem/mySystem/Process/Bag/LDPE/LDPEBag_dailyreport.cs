@@ -20,5 +20,10 @@ namespace mySystem.Process.Bag.LDPE
         {
 
         }
+
+        private void LDPEBag_dailyreport_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
     }
 }

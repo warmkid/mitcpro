@@ -50,7 +50,7 @@ namespace mySystem.Process.Bag.LDPE
         private CheckForm check = null;
         string __待审核 = "__待审核";
 
-
+        bool isFirstBind = true;
        
         int searchId;
         int status;
@@ -71,7 +71,7 @@ namespace mySystem.Process.Bag.LDPE
             __生产日期 = DateTime.Now.Date;
             
             dtp生产日期.Value = __生产日期;
-
+            init();
             readOuterData(__生产指令编号, __生产日期);
             removeOuterBind();
             outerBind();
@@ -120,6 +120,8 @@ namespace mySystem.Process.Bag.LDPE
             getPeople();
             setUserState();
             settingItem= 获取交接班项目();
+
+            init();
             readOuterData(searchId);
             __生产指令编号 = Convert.ToString(dtOuter.Rows[0]["生产指令编号"]);
             __生产日期 = Convert.ToDateTime(dtOuter.Rows[0]["生产日期"]);
@@ -293,6 +295,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.DataError += dataGridView1_DataError;
+            dataGridView1.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView1_DataBindingComplete);
             txb白班交班员.Enabled = false;
             txb白班接班员.Enabled = false;
             txb夜班交班员.Enabled = false;
@@ -311,7 +314,19 @@ namespace mySystem.Process.Bag.LDPE
             }
             MessageBox.Show(name + "填写错误");
         }
-
+        //数据绑定结束，设置背景颜色
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            //throw new NotImplementedException();
+            //setDataGridViewBackColor();
+            //setDataGridViewFormat();
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
+        }
+     
         private void dayNight(bool day)
         {
             if (day)
@@ -515,7 +530,7 @@ namespace mySystem.Process.Bag.LDPE
             dataGridView1.Columns[2].ReadOnly=true;  //序号
             dataGridView1.Columns[3].ReadOnly = true; 
             // setting width in confirm items
-            dataGridView1.Columns[3].Width=300;
+          //  dataGridView1.Columns[3].Width=300;
             dataGridView1.CellEndEdit += dataGridView1_CellEndEdit;
         }
 
@@ -715,7 +730,7 @@ namespace mySystem.Process.Bag.LDPE
             print(false);
             GC.Collect();
         }
-        public void print(bool preview)
+        public int print(bool preview)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -765,10 +780,12 @@ namespace mySystem.Process.Bag.LDPE
             if (preview)
             {
                 my.Select();
-                oXL.Visible = true; //加上这一行  就相当于预览功能            
+                oXL.Visible = true; //加上这一行  就相当于预览功能       
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 // 让这个Sheet为被选中状态
                 //my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
                 // 直接用默认打印机打印该Sheet
@@ -788,6 +805,7 @@ namespace mySystem.Process.Bag.LDPE
                 oXL = null;
                 my = null;
                 wb = null;
+                return pageCount;
             }
         }
 
@@ -1060,6 +1078,13 @@ namespace mySystem.Process.Bag.LDPE
             //this act as the same in function upper
             
             btn查看日志.Enabled = true;
+        }
+
+        private void HandOver_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+                writeDGVWidthToSetting(dataGridView1); 
+            
         }
 
         //leave datagridview check the right things

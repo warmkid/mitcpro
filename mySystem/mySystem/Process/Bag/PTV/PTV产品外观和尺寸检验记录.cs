@@ -17,7 +17,7 @@ namespace mySystem.Process.Bag.PTV
     {
         // TODO   需要从Parameter 中读取生产指令ID或编号，这里假装填写当前生产指令编号和ID
         // TODO : 注意处理生产指令的状态
-        // TODO： 审核时要调用赵梦的函数
+        private CheckForm checkform = null;
         // TODO: 打印
         // TODO：要加到mainform中去，现在连按钮都没有
 
@@ -772,11 +772,18 @@ namespace mySystem.Process.Bag.PTV
 
         private void btn审核_Click(object sender, EventArgs e)
         {
-            // TODO 弹出赵梦的窗口
-
+            checkform = new CheckForm(this);
+            checkform.Show();
+        }
+        public override void CheckResult()
+        {
             SqlDataAdapter da;
             SqlCommandBuilder cb;
             DataTable dt;
+
+            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
+            dtOuter.Rows[0]["审核意见"] = checkform.opinion;
+            dtOuter.Rows[0]["审核是否通过"] = checkform.ischeckOk;
 
             da = new SqlDataAdapter("select * from 待审核 where 表名='产品外观和尺寸检验记录' and 对应ID=" + _id, conn);
             cb = new SqlCommandBuilder(da);
@@ -786,13 +793,12 @@ namespace mySystem.Process.Bag.PTV
             dt.Rows[0].Delete();
             da.Update(dt);
 
-            dtOuter.Rows[0]["审核员"] = mySystem.Parameter.userName;
-            dtOuter.Rows[0]["审核是否通过"] = true;
             String log = "===================================\n";
             log += DateTime.Now.ToString("yyyy年MM月dd日 HH:mm:ss");
             log += "\n审核员：" + mySystem.Parameter.userName + " 审核完毕\n";
-            log += "审核结果为：通过\n";
-            log += "审核意见为：无\n";
+            log += "审核结果：" + (checkform.ischeckOk == true ? "通过\n" : "不通过\n");
+            log += "审核意见：" + checkform.opinion + "\n";
+
             dtOuter.Rows[0]["日志"] = dtOuter.Rows[0]["日志"].ToString() + log;
             btn保存.PerformClick();
             setFormState();

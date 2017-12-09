@@ -52,7 +52,7 @@ namespace mySystem.Process.CleanCut
         private CheckForm check = null;
         int outerId;
         int searchId;
-
+        bool isFirstBind = true;
         /// <summary>
         /// 0--操作员，1--审核员，2--管理员
         /// </summary>
@@ -845,7 +845,7 @@ namespace mySystem.Process.CleanCut
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
         }
 
         private void removeInnerBind()
@@ -977,7 +977,11 @@ namespace mySystem.Process.CleanCut
             dataGridView1.Columns[0].Visible = false;
             dataGridView1.Columns[1].Visible = false;
             //setDataGridViewColumnReadOnly();
-
+            if (isFirstBind)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind = false;
+            }
         }
 
 
@@ -1079,7 +1083,7 @@ namespace mySystem.Process.CleanCut
         }
 
         //打印功能
-        public void print(bool isShow)
+        public int print(bool isShow)
         {
             // 打开一个Excel进程
             Microsoft.Office.Interop.Excel.Application oXL = new Microsoft.Office.Interop.Excel.Application();
@@ -1097,9 +1101,11 @@ namespace mySystem.Process.CleanCut
                 oXL.Visible = true;
                 // 让这个Sheet为被选中状态
                 my.Select();  // oXL.Visible=true 加上这一行  就相当于预览功能
+                return 0;
             }
             else
             {
+                int pageCount = wb.ActiveSheet.PageSetup.Pages.Count;
                 bool isPrint = true;
                 //false->打印
                 try
@@ -1132,7 +1138,9 @@ namespace mySystem.Process.CleanCut
                     Marshal.ReleaseComObject(oXL);
                     wb = null;
                     oXL = null;
+                    my = null;
                 }
+                return pageCount;
             }
         }
 
@@ -1329,14 +1337,14 @@ namespace mySystem.Process.CleanCut
                 string temp = ndr["使用物料代码"].ToString().TrimStart('X').Split('X')[0];
                 string[] tmps = temp.Split('-');
                 temp = tmps[tmps.Length - 1];
-                ndr["规格a1"] = Convert.ToInt32(temp);
+                ndr["规格a1"] = Convert.ToDouble(temp);
                 ndr["用量b1"] = dr["长度A"];
                 ndr["使用量"] = Convert.ToDouble(ndr["规格a1"]) * Convert.ToDouble(ndr["用量b1"]) / 1000;
                 ndr["清洁分切后代码"] = dr["清洁分切后代码"];
                 temp = ndr["清洁分切后代码"].ToString().TrimStart('X').Split('X')[0];
                 tmps = temp.Split('-');
                 temp = tmps[tmps.Length - 1];
-                ndr["规格a2"] = Convert.ToInt32(temp.TrimEnd('C')); ;
+                ndr["规格a2"] = Convert.ToInt32(temp.TrimEnd('C')); 
                 ndr["数量b2"] = dr["长度B"];
                 ndr["数量"] = Convert.ToDouble(ndr["规格a2"]) * Convert.ToDouble(ndr["数量b2"]) / 1000;
                 ndr["工时"] = Convert.ToDouble(dr["工时"]);
@@ -1345,6 +1353,11 @@ namespace mySystem.Process.CleanCut
                 dtInner.Rows.Add(ndr);
             }
 
+        }
+
+        private void DailyRecord_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            writeDGVWidthToSetting(dataGridView1);
         }
 
  
