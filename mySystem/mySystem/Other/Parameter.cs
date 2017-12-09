@@ -374,12 +374,13 @@ namespace mySystem
                 connUser = connToServer(strConn);
                 while (!isOk)
                 {
-                    MessageBox.Show("连接数据库失败", "error");
-                    Connect2SqlForm con2sql = new Connect2SqlForm();
-                    con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
-                    con2sql.ShowDialog();
+                    MessageBox.Show("连接数据库失败." + connUser.ConnectionString, "error");
+                    
+                    //Connect2SqlForm con2sql = new Connect2SqlForm();
+                    //con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
+                    //con2sql.ShowDialog();
 
-                    connUser = connToServer(strConn);
+                    //connUser = connToServer(strConn);
                 }
 
             }
