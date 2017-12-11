@@ -259,9 +259,9 @@ namespace mySystem.Query
                 }
             }
 
-            catch
+            catch (Exception ee)
             {
-                MessageBox.Show("输入有误，请重新输入", "错误");
+                MessageBox.Show("输入有误，请重新输入" + ee.Message + "\n" + ee.StackTrace, "错误");
                 return;
             }
             Utility.setDataGridViewAutoSizeMode(dgv);
