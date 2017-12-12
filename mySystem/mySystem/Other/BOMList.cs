@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using System.Data.OleDb;
+using System.Data.SqlClient;
 
 namespace mySystem.Other
 {
@@ -122,7 +123,8 @@ namespace mySystem.Other
             ls存货名称 = new List<string>();
             ls规格型号 = new List<string>();
             lsID = new List<Int32>();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 设置存货档案", mySystem.Parameter.conn);
+            //sq da = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
             DataTable dt = new DataTable();
             da.Fill(dt);
             foreach (DataRow dr in dt.Rows)
@@ -209,7 +211,8 @@ namespace mySystem.Other
         private void btnDone_Click(object sender, EventArgs e)
         {
             _data = JArray.Parse("[]");
-            OleDbDataAdapter da;
+            //OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
             string 存货代码, 存货名称, 规格型号, sql;
             double 数量;
@@ -223,7 +226,9 @@ namespace mySystem.Other
                     规格型号 = dgvr.Cells["规格型号"].Value.ToString();
                     数量 = Convert.ToDouble(dgvr.Cells["数量"].Value);
                     sql = "select * from 设置存货档案 where 存货代码='{0}'";
-                    da = new OleDbDataAdapter(string.Format(sql, 存货代码, 存货名称, 规格型号), mySystem.Parameter.connOle);
+                    //da = new OleDbDataAdapter(string.Format(sql, 存货代码, 存货名称, 规格型号), mySystem.Parameter.connOle);
+                    da = new SqlDataAdapter(string.Format(sql, 存货代码, 存货名称, 规格型号), mySystem.Parameter.conn);
+
                     dt = new DataTable();
                     da.Fill(dt);
                     if (dt.Rows.Count == 0) throw new Exception();
@@ -281,7 +286,10 @@ namespace mySystem.Other
 //            OleDbConnection conn;
             //conn = new OleDbConnection(strConnect);
             //conn.Open();
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
+
+            //OleDbDataAdapter da = new OleDbDataAdapter("select * from 设置存货档案", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 设置存货档案", mySystem.Parameter.conn);
+
             DataTable dt = new DataTable();
             da.Fill(dt);
             for (int i = 1; ; i++)
