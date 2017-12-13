@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using System.Runtime.InteropServices;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Order
 {
@@ -177,6 +178,7 @@ namespace mySystem.Process.Order
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr, 订单号, dt拟交货日期);
                 dtOuter.Rows.Add(dr);
+                ((DataTable)bsOuter.DataSource).Rows[0]["审核结果"] = 0;
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(订单号);
                 outerBind();
@@ -371,9 +373,10 @@ namespace mySystem.Process.Order
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
-
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            //ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
+            //ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            ls操作员 = new List<string>(Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，"));
+            ls审核员 = new List<string>(Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，"));
         }
 
         void setUseState()
@@ -792,8 +795,14 @@ namespace mySystem.Process.Order
                 }
             }
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
-            writeDGVWidthToSetting(dataGridView2);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+            if (dataGridView2.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView2);
+            }
         }
 
         private void btn打印_Click(object sender, EventArgs e)

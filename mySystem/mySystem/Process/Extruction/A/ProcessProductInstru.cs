@@ -952,14 +952,14 @@ namespace BatchProductRecord
                         dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
                         return;
                     }
-                    //string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]";//正则表达式
-                    //if (!Regex.IsMatch(str, pattern))
-                    //{
-                    //    MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500X100");
-                    //    dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
-                    //    leng = 0;
-                    //    break ;
-                    //}
+                    string pattern = @"^[a-zA-Z0-9]+-[a-zA-Z]+-[0-9]+X[0-9]";//正则表达式
+                    if (!Regex.IsMatch(str, pattern))
+                    {
+                        MessageBox.Show("产品代码格式不符合规定，重新输入，例如 PEQ-QE-500X100");
+                        dataGridView1.Rows[e.RowIndex].Cells[3].Value = "";
+                        leng = 0;
+                        break;
+                    }
                     string[] array = str.Split('X');
                     string[] array2 = array[array.Length-2].Split('-');
                     leng = float.Parse(array2[2]);

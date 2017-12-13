@@ -111,6 +111,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1072, 513);
             this.tabControl1.TabIndex = 2;
+            this.tabControl1.Leave += new System.EventHandler(this.tabControl1_Leave);
             // 
             // tabPage销售订单
             // 
