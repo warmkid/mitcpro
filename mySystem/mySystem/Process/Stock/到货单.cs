@@ -680,6 +680,7 @@ namespace mySystem.Process.Stock
                 dr["审核时间"] = DateTime.Now;
                 dr["请验时间"] = DateTime.Now;
                 dr["日志"] = "";
+                dr["审核结果"] = false;//默认值
                 dt.Rows.Add(dr);
                 da.Update(dt);
 

@@ -559,6 +559,7 @@ namespace mySystem.Process.Stock
                         dr["不合格品处理批准时间"] = DateTime.Now;
                         dr["确认日期"] = DateTime.Now;
                         dr["审核日期"] = DateTime.Now;
+                        dr["审核结果"] = false;//默认值
                         dt.Rows.Add(dr);
                         da.Update(dt);
                         MessageBox.Show("已经自动生成不合格品记录");
@@ -621,6 +622,7 @@ namespace mySystem.Process.Stock
             ndr["换算率"] = dr["换算率"];
             ndr["入库人"] = mySystem.Parameter.userName;
             ndr["审核日期"] = DateTime.Now;
+            ndr["审核结果"] = false;//默认值
             dt.Rows.Add(ndr);
             da.Update(dt);
             MessageBox.Show("已为物料：" + dr["物料名称"] + "生成入库单");

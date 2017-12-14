@@ -288,6 +288,7 @@ namespace mySystem.Process.Stock
             dr["产品批号"] = dt.Rows[0]["产品批号"];
             dr["拟退货数量"] = dt.Rows[0]["拟退货数量"];
             dr["辅计量单位"] = dt.Rows[0]["辅计量单位"];
+            dr["审核结果"] = false;
             return dr;
         }
 
@@ -407,6 +408,7 @@ namespace mySystem.Process.Stock
                     dr["请验人"] = mySystem.Parameter.userName;
                     dr["请验日期"] = DateTime.Now;
                     dr["审核日期"] = DateTime.Now;
+                    dr["审核结果"] = false;//默认值
                     for (int i = 4; i <= 10; ++i)
                     {
                         dr[i] = dtOuter.Rows[0][i];

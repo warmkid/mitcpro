@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Data.SqlClient;
 using System.Data.OleDb;
 using ZXing;
 
@@ -24,15 +25,20 @@ namespace mySystem.Other
         }
 
         string strConnect;
-        OleDbConnection conn;
+        //OleDbConnection conn;
+        SqlConnection conn;
+        
 
         public 二维码打印()
         {
             InitializeComponent();
             fill_printer();
-            strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
-                                Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
-            conn = new OleDbConnection(strConnect);
+            //strConnect = @"Provider=Microsoft.Jet.OLEDB.4.0;
+            //                    Data Source=../../database/dingdan_kucun.mdb;Persist Security Info=False";
+            //conn = new OleDbConnection(strConnect);
+
+            strConnect = @"server=" + mySystem.Parameter.IP_port + ";database=dingdan_kucun;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
+            conn = new SqlConnection(strConnect);
         }
 
         [DllImport("winspool.drv")]
@@ -58,16 +64,17 @@ namespace mySystem.Other
         {
             // TODO 打印
             
-
-
             string sql;
-            OleDbDataAdapter da;
+            //OleDbDataAdapter da;
+            SqlDataAdapter da;
             DataTable dt;
+            SqlCommandBuilder cb;
             int yid = 0;
             if (tb原二维码.Text.Trim() != "")
             {
                 sql = "select * from 二维码信息 where 二维码='{0}'";
-                da = new OleDbDataAdapter(String.Format(sql, tb原二维码.Text.Trim()), conn);
+                //da = new OleDbDataAdapter(String.Format(sql, tb原二维码.Text.Trim()), conn);
+                da = new SqlDataAdapter(String.Format(sql, tb原二维码.Text.Trim()), conn);
                 dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count > 0)
@@ -77,7 +84,9 @@ namespace mySystem.Other
             }
             
             sql = "select * from 二维码信息 where 二维码='{0}'";
-            da = new OleDbDataAdapter(String.Format(sql, tb二维码.Text), conn);
+            //da = new OleDbDataAdapter(String.Format(sql, tb二维码.Text), conn);
+            da = new SqlDataAdapter(String.Format(sql, tb二维码.Text), conn);
+            cb = new SqlCommandBuilder(da);
             dt = new DataTable();
             da.Fill(dt);
             DataRow dr = dt.NewRow();
@@ -92,7 +101,8 @@ namespace mySystem.Other
             string prefix = tb产品代码.Text + "@" + tb产品批号.Text + "@";
             int num = 1;
             string sql = "select top 1 二维码 from 二维码信息 where 二维码 like '%{0}%' order by ID DESC";
-            OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, prefix), conn);
+            //OleDbDataAdapter da = new OleDbDataAdapter(String.Format(sql, prefix), conn);
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql, prefix), conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             if (dt.Rows.Count > 0)

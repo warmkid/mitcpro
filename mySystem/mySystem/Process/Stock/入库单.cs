@@ -82,18 +82,43 @@ namespace mySystem.Process.Stock
 
         void dataGridView1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            if (dataGridView1.CurrentCell.OwningColumn.Name == "二维码" && dataGridView1.CurrentCell.RowIndex == dataGridView1.Rows.Count - 1)
+            //if (dataGridView1.CurrentCell.OwningColumn.Name == "二维码" && dataGridView1.CurrentCell.RowIndex == dataGridView1.Rows.Count - 1)
+            //{
+            //    DataRow dr = dtInner.NewRow();
+            //    dr["入库单ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
+            //    string[] str = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
+            //    if (str.Length >= 2)
+            //    {
+            //        dr["产品代码"] = str[0];
+            //        dr["产品批号"] = str[1];
+            //    }
+            //    dtInner.Rows.Add(dr);
+
+            //}
+            if (dataGridView1.CurrentCell.OwningColumn.Name == "二维码")
             {
-                DataRow dr = dtInner.NewRow();
-                dr["入库单ID"] = Convert.ToInt32(dtOuter.Rows[0]["ID"]);
-                dtInner.Rows.Add(dr);
+                if (e.RowIndex >= 0)
+                {
+                     string[] str = Regex.Split(dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), "@");
+                     if (str.Length >= 2)
+                     {
+                         dtInner.Rows[e.RowIndex]["产品代码"] = str[0];
+                         dtInner.Rows[e.RowIndex]["产品批号"] = str[1];
+                     }
+                }
+
+
             }
+
         }
 
         void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView1.Columns["ID"].Visible = false;
             dataGridView1.Columns["入库单ID"].Visible = false;
+
+            dataGridView1.Columns["产品代码"].ReadOnly = true;
+            dataGridView1.Columns["产品批号"].ReadOnly = true;
 
             if (isFirstBind)
             {
@@ -473,52 +498,77 @@ namespace mySystem.Process.Stock
 
         public int insert库存台帐()
         {
-            SqlDataAdapter da = new SqlDataAdapter("select * from 库存台帐 where " + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
-            DataTable dt = new DataTable("库存台帐");
-            SqlCommandBuilder cb = new SqlCommandBuilder(da);
-            BindingSource bs = new BindingSource();
-            da.Fill(dt);
+            ////SqlDataAdapter da = new SqlDataAdapter("select * from 库存台帐 where ID=" + dtOuter.Rows[0]["ID"], mySystem.Parameter.conn);
+            //SqlDataAdapter da = new SqlDataAdapter("select * from 库存台帐 where 1=2", mySystem.Parameter.conn);
+            //DataTable dt = new DataTable("库存台帐");
+            //SqlCommandBuilder cb = new SqlCommandBuilder(da);
+            //BindingSource bs = new BindingSource();
+            //da.Fill(dt);
 
-            // 填写值
-            // Outer
-            DataRow ndr = dt.NewRow();
-            DataRow dr = dtOuter.Rows[0];
-            ndr["仓库名称"] = dr["仓库名"];
-            //ndr["供应商代码"] = dr["供应商"];
-            ndr["供应商名称"] = dr["供应商"];
-            ndr["产品代码"] = dr["产品代码"];
-            ndr["产品名称"] = dr["产品名称"];
-            ndr["产品规格"] = dr["规格型号"];
-            ndr["产品批号"] = dr["批号"];
+            //// 填写值
+            //// Outer
+            //DataRow ndr = dt.NewRow();
+            //DataRow dr = dtOuter.Rows[0];
+            //ndr["仓库名称"] = dr["仓库名"];
+            ////ndr["供应商代码"] = dr["供应商"];
+            //ndr["供应商名称"] = dr["供应商"];
+            //ndr["产品代码"] = dr["产品代码"];
+            //ndr["产品名称"] = dr["产品名称"];
+            //ndr["产品规格"] = dr["规格型号"];
+            //ndr["产品批号"] = dr["批号"];
 
-            ndr["现存数量"] = dr["数量"];
-            ndr["主计量单位"] = dr["主计量单位"];
+            //ndr["现存数量"] = dr["数量"];
+            //ndr["主计量单位"] = dr["主计量单位"];
 
-            ndr["用途"] = dr["采购订单号"];
-            ndr["状态"] = "待验";
-            ndr["借用日志"] = "";
-            ndr["冻结状态"] = true;
-            ndr["物资验收记录详细信息ID"] = dr["关联的验收记录ID"];
-            ndr["换算率"] = dr["换算率"];
-            ndr["现存件数"] = Convert.ToDouble(ndr["现存数量"]) / Convert.ToDouble(ndr["换算率"]);
-            ndr["实盘数量"] = ndr["现存件数"];
+            //ndr["用途"] = dr["采购订单号"];
+            //ndr["状态"] = "待验";
+            //ndr["借用日志"] = "";
+            //ndr["冻结状态"] = true;
+            //ndr["物资验收记录详细信息ID"] = dr["关联的验收记录ID"];
+            //ndr["换算率"] = dr["换算率"];
+            //ndr["现存件数"] = Convert.ToDouble(ndr["现存数量"]) / Convert.ToDouble(ndr["换算率"]);
+            //ndr["实盘数量"] = ndr["现存件数"];
 
-            ndr["是否盘点"] = false;
-            ndr["有效期"] = DateTime.Now;
-            ndr["入库单号"] = dr["入库单号"];
-            dt.Rows.Add(ndr);
+            //ndr["是否盘点"] = false;
+            //ndr["有效期"] = DateTime.Now;
+            //ndr["入库单号"] = dr["入库单号"];
+            //dt.Rows.Add(ndr);
 
+            //da.Update(dt);
 
+            //SqlCommand comm = new SqlCommand();
+            //comm.Connection = mySystem.Parameter.conn;
+            //comm.CommandText = "select @@identity";
 
-            da.Update(dt);
+            //Int32 idd1 = (Int32)comm.ExecuteScalar();
+            //MessageBox.Show("已加入库存台账！");
+            //return idd1;
 
-            SqlCommand comm = new SqlCommand();
-            comm.Connection = mySystem.Parameter.conn;
-            comm.CommandText = "select @@identity";
-            Int32 idd1 = (Int32)comm.ExecuteScalar();
+            //参照Utility中写法插入数据库，并增加select SCOPE_IDENTITY()
+            List<string> insertCols =new List<string>() { "仓库名称", "供应商代码", "供应商名称", "产品代码", "产品名称", "产品规格", "产品批号", "现存数量", "主计量单位", "用途", "状态", "借用日志", "冻结状态", "物资验收记录详细信息ID", "换算率", "现存件数", "实盘数量", "是否盘点", "有效期", "入库单号" };
+            List<Object> insertVals = new List<object>() { dtOuter.Rows[0]["仓库名"], dtOuter.Rows[0]["供应商"],dtOuter.Rows[0]["供应商"], dtOuter.Rows[0]["产品代码"], dtOuter.Rows[0]["产品名称"], dtOuter.Rows[0]["规格型号"], dtOuter.Rows[0]["批号"], dtOuter.Rows[0]["数量"], dtOuter.Rows[0]["主计量单位"], dtOuter.Rows[0]["采购订单号"], 
+                 "待验", "", true, dtOuter.Rows[0]["关联的验收记录ID"], dtOuter.Rows[0]["换算率"], Convert.ToDouble(dtOuter.Rows[0]["数量"]) / Convert.ToDouble(dtOuter.Rows[0]["换算率"]), Convert.ToDouble(dtOuter.Rows[0]["数量"]) / Convert.ToDouble(dtOuter.Rows[0]["换算率"]), 
+                false, DateTime.Now, dtOuter.Rows[0]["入库单号"] };
+            
+            String cols = Utility.joinList(insertCols, ",");
+            List<String> temp = new List<string>();
+            foreach (String s in insertCols)
+            {
+                temp.Add("@" + s);
+            }
+            String vals = Utility.joinList(temp, ",");
+            String strSQL = String.Format("INSERT INTO {0} ({1}) VALUES ({2})select IDENT_CURRENT('库存台帐')", "库存台帐", cols, vals);
+            SqlCommand cmd = new SqlCommand(strSQL, mySystem.Parameter.conn);
+            for (int i = 0; i < insertCols.Count; ++i)
+            {
+                String c = insertCols[i];
+                Object v = insertVals[i];
+                cmd.Parameters.AddWithValue("@" + c, v);
+            }
+            int n = Convert .ToInt32 (cmd.ExecuteScalar ());
 
             MessageBox.Show("已加入库存台账！");
-            return idd1;
+            return n;
         }
 
 
@@ -541,6 +591,7 @@ namespace mySystem.Process.Stock
             ndr["请验人"] = mySystem.Parameter.userName;
             ndr["请验编号"] = haoma;
             ndr["物资验收记录ID"] = dr["关联的验收记录ID"];
+            ndr["审核结果"] = false;//默认值
             dt.Rows.Add(ndr);
 
             da.Update(dt);
@@ -641,6 +692,7 @@ namespace mySystem.Process.Stock
             ndr["取样单号"] = haoma;
             //dr["供应商代码"] = dtOuter.Rows[0]["供应商代码"].ToString();
             ndr["供应商名称"] = dr["供应商"];
+            ndr["审核结果"] = false;//默认值
             dt.Rows.Add(ndr);
 
             da.Update(dt);
@@ -729,6 +781,7 @@ namespace mySystem.Process.Stock
             ndr["检验结论"] = "合格";
             ndr["入库单号"] = dr["入库单号"];
             ndr["采购订单号"] = dr["采购订单号"];
+            ndr["审核结果"] = false;//默认值
             dt.Rows.Add(ndr);
 
             da.Update(dt);

@@ -190,7 +190,7 @@ namespace mySystem.Process.Stock
         void setFormState()
         {
 
-            string s = dtOuter.Rows[0]["审核员"].ToString();
+            string s = dtOuter.Rows[0]["现场应急处理措施审核员"].ToString();
             bool b = Convert.ToBoolean(dtOuter.Rows[0]["审核结果"]);
             if (s == "") _formState = 0;
             else if (s == "__待审核") _formState = Parameter.FormState.待审核;
@@ -304,6 +304,7 @@ namespace mySystem.Process.Stock
 
 
             dtOuter.Rows[0]["现场应急处理措施审核员"] = "__待审核";
+
             _formState = Parameter.FormState.待审核;
             btn提交审核.Enabled = false;
             daOuter.Update((DataTable)bsOuter.DataSource);
@@ -356,7 +357,7 @@ namespace mySystem.Process.Stock
 
             dtOuter.Rows[0]["现场应急处理措施审核员"] = mySystem.Parameter.userName;
             dtOuter.Rows[0]["审核结果"] = ckform.ischeckOk;
-            dtOuter.Rows[0]["审核意见"] = ckform.opinion;
+            //dtOuter.Rows[0]["审核意见"] = ckform.opinion;
            
             btn保存.PerformClick();
             setFormState();

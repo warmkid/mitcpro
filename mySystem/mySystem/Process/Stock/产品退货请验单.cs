@@ -361,6 +361,7 @@ namespace mySystem.Process.Stock
                     dr["PAQA经理"] = "";
                     dr["评审日期"] = DateTime.Now;
                     dr["审核日期"] = DateTime.Now;
+                    dr["审核结果"] = false;//默认值
                     for (int i = 4; i <= 10; ++i)
                     {
                         dr[i] = dtOuter.Rows[0][i];

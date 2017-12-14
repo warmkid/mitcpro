@@ -132,7 +132,13 @@ namespace mySystem.Process.Stock
             }
             if (Parameter.UserState.审核员 == _userState)
             {
-                setControlFalse();
+                if (Parameter.FormState.审核通过 == _formState) setControlFalse();
+                else
+                {
+                    setControlTrue();
+                    btn批准.Enabled = true;
+                    btn不批准.Enabled = true;
+                }
             }
             if (Parameter.UserState.操作员 == _userState)
             {
@@ -165,7 +171,8 @@ namespace mySystem.Process.Stock
                 }
             }
             // 保证这两个按钮一直是false
-
+            btn不批准.Enabled = false;
+            btn批准.Enabled = false;
         }
 
         /// <summary>
@@ -303,6 +310,8 @@ namespace mySystem.Process.Stock
                 dr["状态"] = "审批中";
                 dr["产品退货申请单ID"] = dtOuter.Rows[0]["产品退货申请单ID"];
                 dr["批准日期"] = DateTime.Now;
+
+                dr["批准结果"] = false;//默认值
                 dt.Rows.Add(dr);
                 da.Update(dt);
                 MessageBox.Show("产品退货审批单(2)已生成！");

@@ -1037,6 +1037,7 @@ namespace mySystem.Process.Stock
             ndr["规格型号"] = dr["规格型号"];
             ndr["单位"] = dr["单位"];
             ndr["换算率"] = dr["换算率"];
+            ndr["审核结果"] = false;//默认值
             dt.Rows.Add(ndr);
             da.Update(dt);
             MessageBox.Show("已为物料：" + dr["物料名称"] + "生成复验记录");
@@ -1068,6 +1069,7 @@ namespace mySystem.Process.Stock
             ndr["换算率"] = dr["换算率"];
             ndr["入库人"] = mySystem.Parameter.userName;
             ndr["审核日期"] = DateTime.Now;
+            ndr["审核结果"] = false;//默认值
             dt.Rows.Add(ndr);
             da.Update(dt);
             MessageBox.Show("已为物料：" + dr["物料名称"] + "生成入库单");
