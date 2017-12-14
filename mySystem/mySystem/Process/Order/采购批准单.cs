@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Collections;
 using Newtonsoft.Json.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 
 // TODO 新数据，如果有可借用的东西，借用信息里为空，可用在generateinner时调用change借用信息多次
@@ -44,7 +45,9 @@ namespace mySystem.Process.Order
         string 库存sql;
         string __自由 = "__自由";
         bool isFirstBind1 = true;
-        bool isFirstBind2 = true; 
+        bool isFirstBind2 = true;
+        bool isFirstBind3 = true;
+        bool isFirstBind4 = true; 
 
         public 采购批准单(MainForm mainform, string ids):base(mainform)
         {
@@ -137,9 +140,11 @@ namespace mySystem.Process.Order
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
+            //ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
+            //ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
 
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            ls操作员 = new List<string>(Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，"));
+            ls审核员 = new List<string>(Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，"));
         }
 
 
@@ -447,6 +452,7 @@ namespace mySystem.Process.Order
             dr["申请日期"] = DateTime.Now;
             dr["申请人"] = mySystem.Parameter.userName;
             dr["审核日期"] = DateTime.Now;
+            dr["审核结果"]=0;
             dr["状态"] = "编辑中";
             dr["关联的采购需求单ID"] = _ids;
             //dr["审核结果"] = "未知";
@@ -455,7 +461,8 @@ namespace mySystem.Process.Order
             SqlCommand comm = new SqlCommand();
             comm.Connection = mySystem.Parameter.conn;
             comm.CommandText = "select @@identity";
-            int id  = (Int32)comm.ExecuteScalar();
+            int id = Convert.ToInt32(comm.ExecuteScalar().ToString());
+            //int id  = (Int32)comm.ExecuteScalar(); //id=0？？？？？
             daOuter = new SqlDataAdapter("select * from 采购批准单 where ID=" + id, mySystem.Parameter.conn);
             cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("采购批准单");
@@ -534,7 +541,11 @@ namespace mySystem.Process.Order
                 ndr["状态"] = "未采购";
                 ndr["推荐供应商"] = dr["推荐供应商"];
                 ndr["未借用前需要采购数量"] = dr["采购数量"];
-                ndr["主计量单位每辅计量单位"] = Convert.ToDouble(dr["采购数量"]) / Convert.ToDouble(dr["采购件数"]);
+                if (Convert.ToDouble(dr["采购件数"]) == 0)
+                { ndr["主计量单位每辅计量单位"] = -1; }
+                else
+                { ndr["主计量单位每辅计量单位"] = (Convert.ToDouble(dr["采购数量"]) / Convert.ToDouble(dr["采购件数"])); }
+                //ndr["主计量单位每辅计量单位"] = Convert.ToSingle(dr["采购数量"]) / Convert.ToSingle(dr["采购件数"]);
                 ndr["已借用数量"] = 0;
                 dtInner.Rows.Add(ndr);
             }
@@ -551,7 +562,7 @@ namespace mySystem.Process.Order
 
             // 库存信息
             List<String> DaiMaS = ht库存编码2采购数量.Keys.OfType<String>().ToList<String>();
-            库存sql = @"select ID, 产品代码,现存数量,用途,冻结状态 from (select * from 库存台帐 where 状态='合格') where 产品代码='{0}'";
+            库存sql = @"select ID, 产品代码, 现存数量, 用途, 冻结状态 from ( select * from 库存台帐 where 状态 = '合格' )P where 产品代码 = '{0}'";
             库存sql = string.Format(库存sql, DaiMaS[0]);
             List<String> whereS = new List<string>();
             if (DaiMaS.Count > 1) 库存sql += " or ";
@@ -564,7 +575,7 @@ namespace mySystem.Process.Order
             daInner库存 = new SqlDataAdapter(库存sql, mySystem.Parameter.conn);
             dtInner库存 = new DataTable("关联库存信息");
             cbInner库存 = new SqlCommandBuilder(daInner库存);
-            bsInner库存 =new BindingSource();
+            bsInner库存 =new BindingSource();         
             daInner库存.Fill(dtInner库存);
             List<int> inv = new List<int>();
             for(int i=dtInner库存.Rows.Count-1;i>=0;--i)
@@ -713,7 +724,8 @@ namespace mySystem.Process.Order
             // 库存信息
             List<String> DaiMaS = ht库存编码2采购数量.Keys.OfType<String>().ToList<String>();
             库存sql = @"select ID, 产品代码,现存数量,用途,冻结状态 from (select * from 库存台帐 where 状态='合格') t where 产品代码='{0}'";
-            库存sql = string.Format(库存sql, DaiMaS[0]);
+            if (DaiMaS.Count > 0){ 库存sql = string.Format(库存sql, DaiMaS[0]);}
+            else { 库存sql = string.Format(库存sql, ""); }
             List<String> whereS = new List<string>();
             if (DaiMaS.Count > 1) 库存sql += " or ";
             for (int i = 1; i < DaiMaS.Count; ++i)
@@ -750,7 +762,7 @@ namespace mySystem.Process.Order
             bsInner.DataSource = dtInnerShow;
             dataGridView1.DataSource = bsInner.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView1);
-            setDGV本订单采购信息Column();
+            //setDGV本订单采购信息Column();
 
             bsInner库存.DataSource = dtInner库存Show;
             dataGridView2.DataSource = bsInner库存.DataSource;
@@ -763,10 +775,9 @@ namespace mySystem.Process.Order
             bsInner借用订单.DataSource = dtInner借用订单;
             dataGridView4.DataSource = bsInner借用订单.DataSource;
             Utility.setDataGridViewAutoSizeMode(dataGridView4);
-            setDGV借用订单采购信息Column();
+            //setDGV借用订单采购信息Column();
         }
-
-
+        
         void addOtherEventHandler()
         {
             dataGridView1.AllowUserToAddRows = false;
@@ -856,6 +867,11 @@ namespace mySystem.Process.Order
         {
             dataGridView4.Columns["ID"].Visible = false;
             dataGridView4.Columns["采购批准单ID"].Visible = false;
+            if (isFirstBind4)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView4);
+                isFirstBind4 = false;
+            }
         }
 
         void dataGridView2_CellValueChanged(object sender, DataGridViewCellEventArgs e)
@@ -1240,6 +1256,11 @@ namespace mySystem.Process.Order
                     dgvc.ToolTipText = String.Join("\n", tips);
                 }
             }
+            if (isFirstBind3)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView3);
+                isFirstBind3 = false;
+            }
 
         }
 
@@ -1260,11 +1281,21 @@ namespace mySystem.Process.Order
                     dgvc.ReadOnly = true;
                 }
             }
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
         }
 
         void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             dataGridView2.Columns["ID"].Visible = false;
+            if (isFirstBind2)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView2);
+                isFirstBind2 = false;
+            }
         }
 
         void fillUI()
@@ -1743,6 +1774,11 @@ namespace mySystem.Process.Order
 
         void setDataGridViewColumn()
         {
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+
             dataGridView1.Columns.Clear();
             DataGridViewTextBoxColumn tbc;
             DataGridViewComboBoxColumn cbc;
@@ -1792,9 +1828,15 @@ namespace mySystem.Process.Order
                         ckbc.SortMode = DataGridViewColumnSortMode.NotSortable;
                         dataGridView1.Columns.Add(ckbc);
                         break;
-                }
+                }                
             }
+            readDGVWidthFromSettingAndSet(dataGridView1);
 
+
+            if (dataGridView4.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView4);
+            }
 
 
             dataGridView4.Columns.Clear();
@@ -1845,6 +1887,7 @@ namespace mySystem.Process.Order
                 }
             }
 
+            readDGVWidthFromSettingAndSet(dataGridView4);
         }
 
 
@@ -1961,46 +2004,42 @@ namespace mySystem.Process.Order
                 }
             }
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
-            writeDGVWidthToSetting(dataGridView2);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+            if (dataGridView2.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView2);
+            }
+            if (dataGridView3.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView3);
+            }
+            if (dataGridView4.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView4);
+            }
         }
 
         void setDGV本订单采购信息Column()
         {
-            dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            //dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 
             dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-            dataGridView1.Columns["规格型号"].Width = 300;
+            //dataGridView1.Columns["规格型号"].Width = 300;
 
         }
 
         void setDGV借用订单采购信息Column()
         {
-            dataGridView4.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            //dataGridView4.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 
             dataGridView4.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-            dataGridView4.Columns["规格型号"].Width = 300;
+            //dataGridView4.Columns["规格型号"].Width = 300;
 
-        }
-
-        private void dataGridView1_DataBindingComplete_1(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            if (isFirstBind1)
-            {
-                readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind1 = false;
-            }
-        }
-
-        private void dataGridView4_DataBindingComplete_1(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            if (isFirstBind2)
-            {
-                readDGVWidthFromSettingAndSet(dataGridView2);
-                isFirstBind2 = false;
-            }
         }
 
         private void btn打印_Click(object sender, EventArgs e)

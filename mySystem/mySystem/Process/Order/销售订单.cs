@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Order
 {
@@ -88,9 +89,10 @@ namespace mySystem.Process.Order
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
-
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            //ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
+            //ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            ls操作员 = new List<string>(Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，"));
+            ls审核员 = new List<string>(Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，"));
         }
 
 
@@ -356,6 +358,7 @@ namespace mySystem.Process.Order
             outerBind();
 
             daInner.Update((DataTable)bsInner.DataSource);
+            readInnerData(_id);
             innerBind();
         }
 
@@ -526,7 +529,7 @@ namespace mySystem.Process.Order
             dtInner = new DataTable("销售订单详细信息");
             cbInner = new SqlCommandBuilder(daInner);
             bsInner = new BindingSource();
-
+            
             daInner.Fill(dtInner);
         }
 
@@ -1002,7 +1005,10 @@ namespace mySystem.Process.Order
         private void 销售订单_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
         }
 
         private void btn打印_Click(object sender, EventArgs e)

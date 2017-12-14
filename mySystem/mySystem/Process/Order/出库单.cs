@@ -10,6 +10,7 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Order
 {
@@ -85,7 +86,7 @@ namespace mySystem.Process.Order
             dt未发货信息 = get未发货信息(Convert.ToInt32(dt.Rows[0]["ID"]), dtOuter.Rows[0]["销售订单号"].ToString());
 
             dataGridView2.DataSource = dt未发货信息;
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
 
             // 填写库存信息
             read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
@@ -150,18 +151,7 @@ namespace mySystem.Process.Order
                 }
             }
         }
-
-        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            dataGridView1.Columns["ID"].Visible = false;
-            dataGridView1.Columns["出库单ID"].Visible = false;
-            if (isFirstBind1)
-            {
-                readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind1 = false;
-            }
-        }
-
+        
         private void fillPrinter()
         {
             System.Drawing.Printing.PrintDocument print = new System.Drawing.Printing.PrintDocument();
@@ -171,6 +161,7 @@ namespace mySystem.Process.Order
             }
             combox打印机选择.SelectedItem = print.PrinterSettings.PrinterName;
         }
+        
         [DllImport("winspool.drv")]
         public static extern bool SetDefaultPrinter(string Name);
 
@@ -185,9 +176,10 @@ namespace mySystem.Process.Order
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
-
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            //ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
+            //ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            ls操作员 = new List<string>(Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，"));
+            ls审核员 = new List<string>(Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，"));
         }
 
         void setUseState()
@@ -351,7 +343,7 @@ namespace mySystem.Process.Order
             dt未发货信息 = get未发货信息(Convert.ToInt32(dt.Rows[0]["ID"]),tb销售订单号.Text);
             
             dataGridView2.DataSource = dt未发货信息;
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
 
             // 填写库存信息
             read库存信息(Convert.ToInt32(dt.Rows[0]["ID"]));
@@ -449,6 +441,7 @@ namespace mySystem.Process.Order
             dr["客户名称"] = 客户名称;
             dr["业务员"] = mySystem.Parameter.userName;
             dr["审核日期"] = DateTime.Now;
+            dr["审核结果"] = 0;
             dr["状态"] = "编辑中";
             return dr;
         }
@@ -467,10 +460,10 @@ namespace mySystem.Process.Order
         {
             bsInner.DataSource = dtInner;
             dataGridView1.DataSource = bsInner.DataSource;
-            Utility.setDataGridViewAutoSizeMode(dataGridView1);
-            Utility.setDataGridViewAutoSizeMode(dataGridView2);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView1);
+            //Utility.setDataGridViewAutoSizeMode(dataGridView2);
             //Utility.setDataGridViewAutoSizeMode(dataGridView3);
-            setDGV产品规格Column();
+            //setDGV产品规格Column();
         }
 
         private DataTable get未发货信息(int id, string dingdanhao)
@@ -572,20 +565,10 @@ namespace mySystem.Process.Order
             bs库存信息.DataSource = dt库存信息;
             dataGridView3.DataSource = bs库存信息.DataSource;
             dataGridView3.DataBindingComplete += new DataGridViewBindingCompleteEventHandler(dataGridView3_DataBindingComplete);
-            Utility.setDataGridViewAutoSizeMode(dataGridView3);
-            setDGV库存信息Column();
+            //Utility.setDataGridViewAutoSizeMode(dataGridView3);
+            //setDGV库存信息Column();
         }
-
-        void dataGridView3_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            dataGridView3.Columns["ID"].Visible = false;
-            if (isFirstBind3)
-            {
-                readDGVWidthFromSettingAndSet(dataGridView1);
-                isFirstBind3 = false;
-            }
-        }
-
+        
         private void btn出库_Click(object sender, EventArgs e)
         {
             // 获取当前选中的库存信息，如果是冻结的，则retuern
@@ -822,9 +805,18 @@ namespace mySystem.Process.Order
                 }
             }
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
-            writeDGVWidthToSetting(dataGridView2);
-            writeDGVWidthToSetting(dataGridView3);
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+            if (dataGridView2.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView2);
+            }
+            if (dataGridView3.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView3);
+            }
         }
 
         private void btn删除_Click(object sender, EventArgs e)
@@ -840,29 +832,53 @@ namespace mySystem.Process.Order
 
         void setDGV产品规格Column()
         {
-            dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            //dataGridView1.Columns["规格型号"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 
-            dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            //dataGridView1.Columns["规格型号"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-            dataGridView1.Columns["规格型号"].Width = 300;
+            //dataGridView1.Columns["规格型号"].Width = 300;
 
         }
         void setDGV库存信息Column()
         {
-            dataGridView3.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
+            //dataGridView3.Columns["产品规格"].AutoSizeMode = DataGridViewAutoSizeColumnMode.NotSet;
 
-            dataGridView3.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            //dataGridView3.Columns["产品规格"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft;
 
-            dataGridView3.Columns["产品规格"].Width = 300;
+            //dataGridView3.Columns["产品规格"].Width = 300;
 
+        }
+
+        void dataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["出库单ID"].Visible = false;
+            if (isFirstBind1)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView1);
+                isFirstBind1 = false;
+            }
         }
 
         private void dataGridView2_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
+            dataGridView2.RowHeadersVisible = false;
             if (isFirstBind2)
             {
-                readDGVWidthFromSettingAndSet(dataGridView1);
+                readDGVWidthFromSettingAndSet(dataGridView2);
                 isFirstBind2 = false;
+            }
+        }
+
+        void dataGridView3_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            dataGridView3.RowHeadersVisible = false;
+            dataGridView3.Columns["ID"].Visible = false;
+            if (isFirstBind3)
+            {
+                readDGVWidthFromSettingAndSet(dataGridView3);
+                isFirstBind3 = false;
             }
         }
 

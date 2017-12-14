@@ -220,9 +220,7 @@ namespace 订单和库存管理
             dgv采购需求单.AllowUserToAddRows = false;
             dgv采购需求单.Columns["ID"].Visible = false;
         }
-
         
-
         private DataTable get采购需求单(DateTime start, DateTime end, string yongtu, string status)
         {
             //string sql = "select * from 采购需求单 where 申请日期 between #{0}# and #{1}# and 状态 like '%{2}%' and 用途 like '%{3}%'";
@@ -242,6 +240,7 @@ namespace 订单和库存管理
             }
             //return dt;
         }
+        
         private void btn查询采购需求单_Click(object sender, EventArgs e)
         {
             dt = get采购需求单(dtp采购需求单开始时间.Value, dtp采购需求单结束时间.Value, tb用途.Text, cmb采购需求单审核状态.Text);
@@ -258,19 +257,23 @@ namespace 订单和库存管理
             {
                 String ids = mySystem.Other.InputDataGridView.getIDs("", dt, false);
                 // 把id变成订单号
-                string 订单号 = dt.Select("ID=" + ids)[0]["订单号"].ToString();
-                mySystem.Process.Order.采购需求单 form = new mySystem.Process.Order.采购需求单(mainform, 订单号);
-                form.Show();
+                if (ids != "")
+                {
+                    string 订单号 = dt.Select("ID=" + ids)[0]["订单号"].ToString();
+                    mySystem.Process.Order.采购需求单 form = new mySystem.Process.Order.采购需求单(mainform, 订单号);
+                    form.Show();
+                }                
             }
             catch (Exception ee)
             {
+
+                MessageBox.Show(ee.StackTrace);
             }
             
         }
 
         #endregion
-
-
+        
         #region 采购批准单
         void init采购批准单()
         {
@@ -578,11 +581,51 @@ namespace 订单和库存管理
         private void 订单管理_FormClosing(object sender, FormClosingEventArgs e)
         {
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dgv采购订单);
-            writeDGVWidthToSetting(dgv采购批准单);
-            writeDGVWidthToSetting(dgv采购需求单);
-            writeDGVWidthToSetting(dgv出库单);
-            writeDGVWidthToSetting(dgv销售订单);
+            if (dgv采购订单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv采购订单);
+            }
+            if (dgv采购批准单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv采购批准单);
+            }
+            if (dgv采购需求单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv采购需求单);
+            }
+            if (dgv出库单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv出库单);
+            }
+            if (dgv销售订单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv销售订单);
+            }
+        }
+
+        private void tabControl1_Leave(object sender, EventArgs e)
+        {
+            //string width = getDGVWidth(dataGridView1);
+            if (dgv采购订单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv采购订单);
+            }
+            if (dgv采购批准单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv采购批准单);
+            }
+            if (dgv采购需求单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv采购需求单);
+            }
+            if (dgv出库单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv出库单);
+            }
+            if (dgv销售订单.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dgv销售订单);
+            }
         }
     }
 }

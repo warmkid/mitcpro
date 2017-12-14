@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace mySystem.Process.Order
 {
@@ -167,9 +168,10 @@ namespace mySystem.Process.Order
             dt = new DataTable("temp");
             da.Fill(dt);
 
-            ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
-
-            ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            //ls操作员 = dt.Rows[0]["操作员"].ToString().Split(',').ToList<String>();
+            //ls审核员 = dt.Rows[0]["审核员"].ToString().Split(',').ToList<String>();
+            ls操作员 = new List<string>(Regex.Split(dt.Rows[0]["操作员"].ToString(), ",|，"));
+            ls审核员 = new List<string>(Regex.Split(dt.Rows[0]["审核员"].ToString(), ",|，"));
         }
 
 
@@ -300,6 +302,7 @@ namespace mySystem.Process.Order
             dr["申请日期"] = DateTime.Now;
             dr["申请人"] = mySystem.Parameter.userName;
             dr["审核日期"] = DateTime.Now;
+            dr["审核结果"] = 0;
             dr["状态"] = "编辑中";
             dr["供应商"] = 供应商;
             dr["订单日期"] = DateTime.Now;
@@ -309,7 +312,8 @@ namespace mySystem.Process.Order
             SqlCommand comm = new SqlCommand();
             comm.Connection = mySystem.Parameter.conn;
             comm.CommandText = "select @@identity";
-            int id = (Int32)comm.ExecuteScalar();
+            int id = Convert.ToInt32(comm.ExecuteScalar().ToString());
+            //int id = (Int32)comm.ExecuteScalar();
             daOuter = new SqlDataAdapter("select * from 采购订单 where ID=" + id, mySystem.Parameter.conn);
             cbOuter = new SqlCommandBuilder(daOuter);
             dtOuter = new DataTable("采购订单");
@@ -784,8 +788,11 @@ namespace mySystem.Process.Order
                 }
             }
             //string width = getDGVWidth(dataGridView1);
-            writeDGVWidthToSetting(dataGridView1);
-            MessageBox.Show("TTT");
+            if (dataGridView1.ColumnCount > 0)
+            {
+                writeDGVWidthToSetting(dataGridView1);
+            }
+            //MessageBox.Show("TTT");
         }
 
         private void btn打印_Click(object sender, EventArgs e)

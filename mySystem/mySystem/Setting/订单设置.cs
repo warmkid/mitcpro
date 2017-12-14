@@ -867,6 +867,14 @@ namespace mySystem.Setting
             }
         }
 
+        private void tabControl1_Leave(object sender, EventArgs e)
+        {
+            //if (dgv存货档案.ColumnCount > 0)
+            //{
+            //    writeDGVWidthToSetting(dgv存货档案);
+            //}
+        }
+
        
 
        
