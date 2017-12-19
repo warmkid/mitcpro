@@ -372,15 +372,16 @@ namespace mySystem
                 strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                 isOk = false;
                 connUser = connToServer(strConn);
-                while (!isOk)
+                if (!isOk)
                 {
-                    MessageBox.Show("连接数据库失败." + connUser.ConnectionString, "error");
-                    
-                    //Connect2SqlForm con2sql = new Connect2SqlForm();
-                    //con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
-                    //con2sql.ShowDialog();
+                    MessageBox.Show("连接数据库失败.");
 
+                    Connect2SqlForm con2sql = new Connect2SqlForm();
+                    con2sql.IPChange += new Connect2SqlForm.DelegateIPChange(IPChanged);
+                    con2sql.ShowDialog();
+                    //strConn = "server=" + IP_port + ";database=user;MultipleActiveResultSets=true;Uid=" + Parameter.sql_user + ";Pwd=" + Parameter.sql_pwd;
                     //connUser = connToServer(strConn);
+                    Application.Exit();
                 }
 
             }
@@ -559,6 +560,12 @@ namespace mySystem
         {
             //获取新IP
             strConn = @"server=" + IP + "," + port + ";database=ProductionPlan;MultipleActiveResultSets=true;Uid=sa;Pwd=mitc";
+            IP_port = IP + "," + port;
+            string file = System.Windows.Forms.Application.ExecutablePath;
+            Configuration config = ConfigurationManager.OpenExeConfiguration(file);
+            config.AppSettings.Settings["ip"].Value = IP;
+            config.AppSettings.Settings["port"].Value = port;
+            config.Save(ConfigurationSaveMode.Modified);
         }
 
 
