@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.btnDone = new System.Windows.Forms.Button();
             this.选择 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.工序 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.btnDone = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -52,18 +52,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(246, 211);
             this.dataGridView1.TabIndex = 0;
             // 
-            // 选择
-            // 
-            this.选择.HeaderText = "选择";
-            this.选择.Name = "选择";
-            this.选择.Width = 70;
-            // 
-            // 工序
-            // 
-            this.工序.HeaderText = "工序";
-            this.工序.Name = "工序";
-            this.工序.Width = 170;
-            // 
             // btnDone
             // 
             this.btnDone.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -75,6 +63,20 @@
             this.btnDone.UseVisualStyleBackColor = true;
             this.btnDone.Click += new System.EventHandler(this.benDone_Click);
             // 
+            // 选择
+            // 
+            this.选择.HeaderText = "选择";
+            this.选择.Name = "选择";
+            this.选择.Width = 70;
+            // 
+            // 工序
+            // 
+            this.工序.HeaderText = "工序";
+            this.工序.Name = "工序";
+            this.工序.ReadOnly = true;
+            this.工序.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.工序.Width = 170;
+            // 
             // 属于工序
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -83,6 +85,7 @@
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.dataGridView1);
             this.Name = "属于工序";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "属于工序";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

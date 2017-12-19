@@ -73,6 +73,8 @@
             // 
             this.类型.HeaderText = "类型";
             this.类型.Name = "类型";
+            this.类型.ReadOnly = true;
+            this.类型.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.类型.Width = 170;
             // 
             // 存货编码类型
@@ -83,6 +85,7 @@
             this.Controls.Add(this.btnDone);
             this.Controls.Add(this.dataGridView1);
             this.Name = "存货编码类型";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "存货编码类型";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);

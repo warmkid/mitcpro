@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Data.OleDb;
 using System.Windows.Forms;
 using System.Data.Common;
+using System.Configuration;
 
 namespace mySystem
 {
