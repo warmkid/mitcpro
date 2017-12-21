@@ -17,6 +17,18 @@ namespace mySystem.Other
         {
             InitializeComponent();
             initData();
+            dataGridView1.CellClick += dataGridView1_CellClick;
+        }
+
+        void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView dgv = (DataGridView)sender;
+            if (null != dgv.CurrentCell)
+            {
+                int rowIdx = dgv.CurrentCell.RowIndex;
+                if (0 != rowIdx)
+                    dgv[0, rowIdx].Value = !Convert.ToBoolean(dgv[0, rowIdx].Value);
+            }
         }
 
         void initData()
