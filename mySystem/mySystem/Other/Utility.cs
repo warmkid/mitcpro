@@ -8,6 +8,7 @@ using System.Collections;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
 using System.Data.SqlClient;
+using System.Management;
 
 namespace mySystem
 {
@@ -546,6 +547,20 @@ namespace mySystem
             return rtn;
         }
     
+
+        public static String getUUID(){
+            String uuid = String.Empty;
+            SelectQuery query = new SelectQuery("select * from Win32_ComputerSystemProduct");
+            using (ManagementObjectSearcher search = new ManagementObjectSearcher(query))
+            {
+                foreach (var s in search.Get())
+                {
+                    uuid = s["UUID"].ToString();
+                    System.Console.WriteLine(s["UUID"].ToString());
+                }
+            }
+            return uuid;
+        }
 
     }
 }

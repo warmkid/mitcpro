@@ -42,6 +42,38 @@ namespace mySystem
                         Parameter.userName = Parameter.IDtoName(Parameter.userID);
                         Parameter.userRole = Parameter.IDtoRole(Parameter.userID);
                         Parameter.userflight = Parameter.IDtoFlight(Parameter.userID);
+                        // ID和密码匹配完成，获取本机UUID，获取服务器的UUID
+                        // 如果相同或者服务器的UUID为空，则update
+                        // 否则弹出提示，问是否登陆
+                        String localUUID = Utility.getUUID();
+                        SqlDataAdapter da = new SqlDataAdapter("select * from users where 用户ID='" + myID + "'", Parameter.connUser);
+                        SqlCommandBuilder cb = new SqlCommandBuilder(da);
+                        DataTable dt = new DataTable("user");
+                        da.Fill(dt);
+
+                        if (dt.Rows.Count < 1) return;
+                        String remoteUUID = dt.Rows[0]["token"].ToString();
+                        if (localUUID == remoteUUID || remoteUUID == "")
+                        {
+                            dt.Rows[0]["token"] = localUUID;
+                            da.Update(dt);
+                        }
+                        else
+                        {
+                            if (DialogResult.OK == MessageBox.Show("该账号已在别处登陆，是否继续？"))
+                            {
+                                dt.Rows[0]["token"] = localUUID;
+                                da.Update(dt);
+                            }
+                            else
+                            {
+                                return;
+                            }
+                            
+                        }
+
+
+
                         InstruReceive();
                     }
                 }

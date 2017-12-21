@@ -40,6 +40,10 @@ namespace mySystem
             timer1.Interval = interval;
             timer1.Start();
 
+            // 检查登陆状态的定时器
+            timer2.Interval = 60000; // 一分钟
+            timer2.Start();
+
 
             // 试用
             // 读取配置文件中的  sy   
@@ -339,6 +343,25 @@ namespace mySystem
         //退出登录按钮
         private void ExitBtn_Click(object sender, EventArgs e)
         {
+            // 清空数据库中的token信息
+
+            String localUUID = Utility.getUUID();
+            SqlDataAdapter da = new SqlDataAdapter("select * from users where 用户ID='" + mySystem.Parameter.userID + "'", Parameter.connUser);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
+            DataTable dt = new DataTable("user");
+            da.Fill(dt);
+            if (dt.Rows.Count >= 1)
+            {
+                dt.Rows[0]["token"] = "";
+                da.Update(dt);
+            }
+
+            // ---
+
+            // 停止检查登陆状态
+            timer2.Stop();
+            timer2.Dispose();
+            
             timer1.Stop();
             timer1.Dispose();
             this.Hide();
@@ -630,6 +653,26 @@ namespace mySystem
         private void MainPanel_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            
+            // 检查UUID是否一致
+            String localUUID = Utility.getUUID();
+            SqlDataAdapter da = new SqlDataAdapter("select * from users where 用户ID='" + mySystem.Parameter.userID + "'", Parameter.connUser);
+            SqlCommandBuilder cb = new SqlCommandBuilder(da);
+            DataTable dt = new DataTable("user");
+            da.Fill(dt);
+            if (dt.Rows.Count >= 1)
+            {
+                String remoteUUID = dt.Rows[0]["token"].ToString();
+                if (localUUID != remoteUUID)
+                {
+                    MessageBox.Show("该账号已在别处登陆，您已下线","下线提醒",MessageBoxButtons.OK);
+                    ExitBtn.PerformClick();
+                }
+            }
         }
 
 

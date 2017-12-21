@@ -42,6 +42,7 @@
             this.userLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer2 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -182,6 +183,10 @@
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // timer2
+            // 
+            this.timer2.Tick += new System.EventHandler(this.timer2_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -216,6 +221,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btn导入;
         private System.Windows.Forms.Button btn浏览;
+        private System.Windows.Forms.Timer timer2;
 
 
     }
