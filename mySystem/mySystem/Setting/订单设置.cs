@@ -392,7 +392,10 @@ namespace mySystem.Setting
         private void add存货档案_Click(object sender, EventArgs e)
         {
             //DataRow dr = dt存货档案.NewRow();
+            int idx = dt存货档案.Rows.Count;
             dt存货档案.Rows.InsertAt(dt存货档案.NewRow(), dt存货档案.Rows.Count);
+            dt存货档案.Rows[idx]["存货代码"] = "";
+            dt存货档案.Rows[idx]["存货名称"] = "";
             //setDataGridViewRowNums(this.dgv存货档案);
             if (dgv存货档案.Rows.Count > 0)
                 dgv存货档案.FirstDisplayedScrollingRowIndex = dgv存货档案.Rows.Count - 1;

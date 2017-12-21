@@ -60,14 +60,16 @@ namespace mySystem
                         }
                         else
                         {
-                            if (DialogResult.OK == MessageBox.Show("该账号已在别处登陆，是否继续？"))
+                            if (DialogResult.OK == MessageBox.Show("该账号已在别处登陆，是否继续？", "登陆确认",MessageBoxButtons.OKCancel))
                             {
                                 dt.Rows[0]["token"] = localUUID;
                                 da.Update(dt);
                             }
                             else
                             {
-                                return;
+                                this.Close();
+                                Application.ExitThread();
+                                //return;
                             }
                             
                         }

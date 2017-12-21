@@ -24,6 +24,7 @@ namespace mySystem
         //TODO:时间间隔设置
         int interval = 7200000; //两小时
         TaskbarNotifier taskbarNotifier1; //右下角提示框
+        int timer2Interval = 60000;
 
         public MainForm()
         {
@@ -41,7 +42,7 @@ namespace mySystem
             timer1.Start();
 
             // 检查登陆状态的定时器
-            timer2.Interval = 60000; // 一分钟
+            timer2.Interval = timer2Interval; // 一分钟
             timer2.Start();
 
 
@@ -352,8 +353,12 @@ namespace mySystem
             da.Fill(dt);
             if (dt.Rows.Count >= 1)
             {
-                dt.Rows[0]["token"] = "";
-                da.Update(dt);
+                String remoteUUID = dt.Rows[0]["token"].ToString();
+                if (remoteUUID == localUUID)
+                {
+                    dt.Rows[0]["token"] = "";
+                    da.Update(dt);
+                }
             }
 
             // ---
@@ -370,6 +375,8 @@ namespace mySystem
             MainPanel.Controls.Clear();
             LoginForm login = new LoginForm(this);
             login.ShowDialog();
+
+            
             
             if (Parameter.userName != null)
             {
@@ -381,6 +388,8 @@ namespace mySystem
                 SearchUnchecked();
                 timer1.Interval = interval;
                 timer1.Start();
+                timer2.Interval = timer2Interval;
+                timer2.Start();
             }
             else
             {
@@ -667,7 +676,11 @@ namespace mySystem
             if (dt.Rows.Count >= 1)
             {
                 String remoteUUID = dt.Rows[0]["token"].ToString();
-                if (localUUID != remoteUUID)
+                if (remoteUUID == "")
+                {
+                    dt.Rows[0]["token"] = localUUID;
+                }
+                else if (localUUID != remoteUUID)
                 {
                     MessageBox.Show("该账号已在别处登陆，您已下线","下线提醒",MessageBoxButtons.OK);
                     ExitBtn.PerformClick();
