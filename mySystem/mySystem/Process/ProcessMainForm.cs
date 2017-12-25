@@ -286,7 +286,8 @@ namespace mySystem
             BtnColor();
             Btn库存管理.BackColor = Color.FromArgb(138, 158, 196);
 
-            库存管理主界面 myDlg = new 库存管理主界面(mainform);
+            库存管理 myDlg = new 库存管理(mainform);
+            //库存管理主界面 myDlg = new 库存管理主界面(mainform);
             myDlg.TopLevel = false;
             myDlg.FormBorderStyle = FormBorderStyle.None;
             myDlg.Size = ProducePanelRight.Size;

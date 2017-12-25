@@ -42,9 +42,10 @@
             // 
             // btn出库退库单
             // 
+            this.btn出库退库单.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn出库退库单.Location = new System.Drawing.Point(361, 289);
             this.btn出库退库单.Name = "btn出库退库单";
-            this.btn出库退库单.Size = new System.Drawing.Size(75, 23);
+            this.btn出库退库单.Size = new System.Drawing.Size(109, 32);
             this.btn出库退库单.TabIndex = 11;
             this.btn出库退库单.Text = "出库/退库单";
             this.btn出库退库单.UseVisualStyleBackColor = true;
@@ -63,12 +64,13 @@
             // 
             // btn文件上传
             // 
-            this.btn文件上传.Location = new System.Drawing.Point(361, 227);
+            this.btn文件上传.Location = new System.Drawing.Point(791, 23);
             this.btn文件上传.Name = "btn文件上传";
             this.btn文件上传.Size = new System.Drawing.Size(75, 23);
             this.btn文件上传.TabIndex = 9;
             this.btn文件上传.Text = "文件上传";
             this.btn文件上传.UseVisualStyleBackColor = true;
+            this.btn文件上传.Visible = false;
             this.btn文件上传.Click += new System.EventHandler(this.btn文件上传_Click);
             // 
             // btn检验台账
@@ -84,9 +86,10 @@
             // 
             // btn原料入库
             // 
-            this.btn原料入库.Location = new System.Drawing.Point(361, 158);
+            this.btn原料入库.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btn原料入库.Location = new System.Drawing.Point(361, 186);
             this.btn原料入库.Name = "btn原料入库";
-            this.btn原料入库.Size = new System.Drawing.Size(75, 23);
+            this.btn原料入库.Size = new System.Drawing.Size(109, 32);
             this.btn原料入库.TabIndex = 4;
             this.btn原料入库.Text = "原料入库";
             this.btn原料入库.UseVisualStyleBackColor = true;
@@ -104,9 +107,10 @@
             // 
             // btn退货
             // 
+            this.btn退货.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btn退货.Location = new System.Drawing.Point(361, 83);
             this.btn退货.Name = "btn退货";
-            this.btn退货.Size = new System.Drawing.Size(75, 23);
+            this.btn退货.Size = new System.Drawing.Size(109, 32);
             this.btn退货.TabIndex = 2;
             this.btn退货.Text = "退货";
             this.btn退货.UseVisualStyleBackColor = true;
