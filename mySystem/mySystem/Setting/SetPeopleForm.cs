@@ -84,7 +84,7 @@ namespace mySystem.Setting
             List<List<Object>> res;
             if (mySystem.Parameter.isSqlOk)
             {
-                res = Utility.selectAccess(Parameter.conn, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
+                res = Utility.selectAccess(Parameter.connUser, tblName, queryCols, whereCols, whereVals, null, null, null, null, null);
             }
             else
             {
