@@ -457,8 +457,9 @@ namespace mySystem.Extruction.Process
             }
             dataGridView1.Columns.Clear();            
             readInnerData(Convert.ToInt32(dt记录.Rows[0]["ID"]));
-            innerBind();
             setDataGridViewColumns();
+            innerBind();
+            
 
             addComputerEventHandler();  // 设置自动计算类事件
             setFormState();  // 获取当前窗体状态：窗口状态  0：未保存；1：待审核；2：审核通过；3：审核未通过
@@ -651,7 +652,9 @@ namespace mySystem.Extruction.Process
             dataGridView1.ColumnHeadersDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridView1.ColumnHeadersHeight = 40;
+            dataGridView1.Columns["ID"].Width = 0;
             dataGridView1.Columns["ID"].Visible = false;
+            dataGridView1.Columns["T吹膜机组开机前确认表ID"].Width = 0;
             dataGridView1.Columns["T吹膜机组开机前确认表ID"].Visible = false;
             dataGridView1.Columns["序号"].ReadOnly = true;
             dataGridView1.Columns["确认内容"].ReadOnly = true;
@@ -928,7 +931,7 @@ namespace mySystem.Extruction.Process
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[wb.Worksheets.Count];
             // 修改Sheet中某行某列的值
-            OleDbDataAdapter da = new OleDbDataAdapter("select 生产指令信息表.生产指令编号 as 生产指令编号 from 吹膜机组开机前确认表,生产指令信息表 where 生产指令信息表.ID=吹膜机组开机前确认表.生产指令ID", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select 生产指令信息表.生产指令编号 as 生产指令编号 from 吹膜机组开机前确认表,生产指令信息表 where 生产指令信息表.ID=吹膜机组开机前确认表.生产指令ID", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             string zhiling = "";
@@ -1083,6 +1086,7 @@ namespace mySystem.Extruction.Process
                 readDGVWidthFromSettingAndSet(dataGridView1);
                 isFirstBind = false;
             }
+            
         }
 
         private void bt查看人员信息_Click(object sender, EventArgs e)

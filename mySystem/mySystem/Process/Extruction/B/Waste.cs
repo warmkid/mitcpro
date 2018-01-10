@@ -98,6 +98,7 @@ namespace mySystem.Process.Extruction.B
                 }
                 else
                 {
+                    ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                     daOuterSQL.Update((DataTable)bsOuter.DataSource);
                 }
                 
@@ -1131,7 +1132,15 @@ namespace mySystem.Process.Extruction.B
             readInnerData(Convert.ToInt32(dtOuter.Rows[0]["ID"]));
             innerBind();
             计算不良品数量合计();
-            daOuter.Fill((DataTable)bsOuter.DataSource);
+            if (!mySystem.Parameter.isSqlOk)
+            {
+                daOuter.Fill((DataTable)bsOuter.DataSource);
+            }
+            else
+            {
+                daOuterSQL.Fill((DataTable)bsOuter.DataSource);
+            }
+            
             removeOuterBinding();
             outerBind();
             btn保存.Enabled = true;
@@ -1377,7 +1386,7 @@ namespace mySystem.Process.Extruction.B
 
         int find_indexofprint()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜工序废品记录 where 生产指令ID=" + __生产指令ID, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 吹膜工序废品记录 where 生产指令ID=" + __生产指令ID, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();

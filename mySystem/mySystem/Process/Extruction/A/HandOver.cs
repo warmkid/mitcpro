@@ -1093,12 +1093,12 @@ namespace mySystem.Process.Extruction.A
         private void btn上一条记录_Click(object sender, EventArgs e)
         {
             DataTable dtOuter1;
-            OleDbDataAdapter daOuter1;
+            SqlDataAdapter daOuter1;
             BindingSource bsOuter1;
-            OleDbCommandBuilder cbOuter1;
+            SqlCommandBuilder cbOuter1;
             List<int> idList = new List<int>();
-            daOuter1 = new OleDbDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' ORDER BY ID ASC;", conOle);
-            cbOuter1 = new OleDbCommandBuilder(daOuter);
+            daOuter1 = new SqlDataAdapter("SELECT * FROM " + tablename1 + " WHERE 生产指令编号='" + __生产指令编号 + "' ORDER BY ID ASC;", Parameter.conn);
+            cbOuter1 = new SqlCommandBuilder(daOuter1);
             dtOuter1 = new DataTable(tablename1);
             bsOuter1 = new BindingSource();
             daOuter1.Fill(dtOuter1);

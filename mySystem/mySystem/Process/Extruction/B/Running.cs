@@ -1380,7 +1380,7 @@ namespace mySystem.Process.Extruction.B
             my.Cells[16, 12] = "B层 "+array2[11][11]+"  (℃)";
             my.Cells[16, 14] = "C层 " + array2[13][11] + "  (℃)";
             string instr;
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 生产指令信息表 where ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 生产指令信息表 where ID=" + _生产指令ID, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             my.PageSetup.RightFooter = dt.Rows[0]["生产指令编号"].ToString() + "-08-" + find_indexofprint().ToString("D3") + "  &P/" + wb.ActiveSheet.PageSetup.Pages.Count; ; // &P 是页码
@@ -1416,7 +1416,7 @@ namespace mySystem.Process.Extruction.B
 
         int find_indexofprint()
         {
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜机组运行记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 吹膜机组运行记录 where 生产指令ID=" + _生产指令ID, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();

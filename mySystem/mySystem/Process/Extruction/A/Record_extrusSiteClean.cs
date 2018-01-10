@@ -218,7 +218,10 @@ namespace mySystem.Extruction.Process
                 if (!mySystem.Parameter.isSqlOk)
                     da_prodinstr.Update((DataTable)bs_prodinstr.DataSource);
                 else
+                {
+                    ((DataTable)bs_prodinstr.DataSource).Rows[0]["审核是否通过"] = 0;
                     da_prodinstr_sql.Update((DataTable)bs_prodinstr.DataSource);
+                }
 
                 readOuterData(mySystem.Parameter.proInstruID);
                 removeOuterBinding();

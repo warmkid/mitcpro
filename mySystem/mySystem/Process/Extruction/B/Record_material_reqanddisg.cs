@@ -706,7 +706,7 @@ namespace mySystem.Extruction.Process
                 }
             }
             //重量计算
-            if (dataGridView1.Columns[e.ColumnIndex].Name == "数量")
+            if (dataGridView1.Columns[e.ColumnIndex].Name == "数量" || dataGridView1.Columns[e.ColumnIndex].Name == "重量每件")
             {
 
                 float a = float.Parse(dataGridView1.Rows[e.RowIndex].Cells["重量每件"].Value.ToString());
@@ -904,7 +904,7 @@ namespace mySystem.Extruction.Process
         {
             string rtn;
             string sqlCmd = "SELECT 生产指令编号 FROM 生产指令信息表 WHERE ID =" + ID.ToString();
-            OleDbCommand cmd = new OleDbCommand(sqlCmd, Parameter.connOle);
+            SqlCommand cmd = new SqlCommand(sqlCmd, Parameter.conn);
             try
             {
                 rtn = Convert.ToString(cmd.ExecuteScalar());
@@ -1146,11 +1146,13 @@ namespace mySystem.Extruction.Process
             //{
             //    dataGridView1.Rows[i].Cells["序号"].Value = i + 1;
             //}
-
-            dataGridView1.Columns[0].Visible = false;//ID
-            dataGridView1.Columns[1].Visible = false;//T吹膜工序领料退料记录ID
-            dataGridView1.Columns[5].ReadOnly = true;//重量
-            dataGridView1.Columns[9].ReadOnly = true;//领料审核人
+            if (dataGridView1.Columns.Count > 0)
+            {
+                dataGridView1.Columns["ID"].Visible = false;//ID
+                dataGridView1.Columns["T吹膜工序领料退料记录ID"].Visible = false;//T吹膜工序领料退料记录ID
+                dataGridView1.Columns["重量"].ReadOnly = true;//重量
+                dataGridView1.Columns["审核人"].ReadOnly = true;//领料审核人
+            }
 
             for (int i = 0; i < dataGridView1.Rows.Count; i++)
             {
@@ -1266,8 +1268,8 @@ namespace mySystem.Extruction.Process
         {
             List<int> list_id = new List<int>();
             string asql = "select * from 吹膜工序领料退料记录 where 生产指令ID=" + instrid;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
 
@@ -1283,8 +1285,8 @@ namespace mySystem.Extruction.Process
 
             DataTable dt_temp = new DataTable("生产指令表");
             BindingSource bs_temp = new BindingSource();
-            OleDbDataAdapter da_temp = new OleDbDataAdapter(@"select * from 生产指令信息表 where ID=" + id, mySystem.Parameter.connOle);
-            OleDbCommandBuilder cb_temp = new OleDbCommandBuilder(da_temp);
+            SqlDataAdapter da_temp = new SqlDataAdapter(@"select * from 生产指令信息表 where ID=" + id, mySystem.Parameter.conn);
+            SqlCommandBuilder cb_temp = new SqlCommandBuilder(da_temp);
             da_temp.Fill(dt_temp);
 
             if (dt_temp.Rows.Count>0)
@@ -1305,7 +1307,7 @@ namespace mySystem.Extruction.Process
             // 选择一个Sheet，注意Sheet的序号是从1开始的
             Microsoft.Office.Interop.Excel._Worksheet my = wb.Worksheets[4];
             // 修改Sheet中某行某列的值
-            OleDbDataAdapter da = new OleDbDataAdapter("select 生产指令信息表.生产指令编号 as 生产指令编号 from 吹膜机组开机前确认表,生产指令信息表 where 生产指令信息表.ID=吹膜机组开机前确认表.生产指令ID", mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select 生产指令信息表.生产指令编号 as 生产指令编号 from 吹膜机组开机前确认表,生产指令信息表 where 生产指令信息表.ID=吹膜机组开机前确认表.生产指令ID", mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             string zhiling = "";

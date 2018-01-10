@@ -267,6 +267,7 @@ namespace WindowsFormsApplication1
                 }
                 else
                 {
+                    ((DataTable)bs_prodinstr.DataSource).Rows[0]["审核是否通过"] = 0;
                     da_prodinstrsql.Update((DataTable)bs_prodinstr.DataSource);
                 }
                 
@@ -1526,7 +1527,8 @@ namespace WindowsFormsApplication1
             //my.Cells[6, 8].Value = tb原料批号b2.Text;
 
             //my.Cells[7, 1].Value = "供料日期时间: "+dtp供料日期.Value.ToString("yyyy年MM月dd日");
-            OleDbDataAdapter da = new OleDbDataAdapter("select 生产指令信息表.内外层物料代码 as 内外层物料代码, 生产指令信息表.内外层物料批号 as 内外层物料批号,  生产指令信息表.中层物料代码 as 中层物料代码, 生产指令信息表.中层物料批号 as 中层物料批号 from 生产指令信息表, 吹膜供料记录 where 吹膜供料记录.生产指令ID=生产指令信息表.ID", mySystem.Parameter.connOle);
+            string sql = "select 生产指令信息表.内外层物料代码 as 内外层物料代码, 生产指令信息表.内外层物料批号 as 内外层物料批号,  生产指令信息表.中层物料代码 as 中层物料代码, 生产指令信息表.中层物料批号 as 中层物料批号 from 生产指令信息表, 吹膜供料记录 where 吹膜供料记录.生产指令ID=生产指令信息表.ID and 生产指令信息表.生产指令编号='{0}'";
+            SqlDataAdapter da = new SqlDataAdapter(String.Format(sql,dt_prodinstr.Rows[0]["生产指令编号"].ToString()) , mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             string daima1 = "", daima2 = "", pihao1 = "", pihao2 = "";
@@ -1584,8 +1586,8 @@ namespace WindowsFormsApplication1
         {
             List<int> list_id = new List<int>();
             string asql = "select * from 吹膜供料记录 where 生产指令ID=" + instrid;
-            OleDbCommand comm = new OleDbCommand(asql, mySystem.Parameter.connOle);
-            OleDbDataAdapter da = new OleDbDataAdapter(comm);
+            SqlCommand comm = new SqlCommand(asql, mySystem.Parameter.conn);
+            SqlDataAdapter da = new SqlDataAdapter(comm);
             DataTable tempdt = new DataTable();
             da.Fill(tempdt);
 

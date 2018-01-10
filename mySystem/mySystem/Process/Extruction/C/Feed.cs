@@ -90,6 +90,7 @@ namespace mySystem.Process.Extruction.C
                 }
                 else
                 {
+                    ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                     daOutersql.Update((DataTable)bsOuter.DataSource);
                 }
                 
@@ -1010,11 +1011,11 @@ namespace mySystem.Process.Extruction.C
 
         int find_indexofprint()
         {
-            OleDbDataAdapter dat = new OleDbDataAdapter("select * from 生产指令信息表 where 生产指令编号='" + __生产指令编号+"'", mySystem.Parameter.connOle);
+            SqlDataAdapter dat = new SqlDataAdapter("select * from 生产指令信息表 where 生产指令编号='" + __生产指令编号 + "'", mySystem.Parameter.conn);
             DataTable dtt = new DataTable();
             dat.Fill(dtt);
             int __pid = Convert.ToInt32(dtt.Rows[0]["ID"]);
-            OleDbDataAdapter da = new OleDbDataAdapter("select * from 吹膜供料系统运行记录 where 生产指令ID=" + __pid, mySystem.Parameter.connOle);
+            SqlDataAdapter da = new SqlDataAdapter("select * from 吹膜供料系统运行记录 where 生产指令ID=" + __pid, mySystem.Parameter.conn);
             DataTable dt = new DataTable();
             da.Fill(dt);
             List<int> ids = new List<int>();

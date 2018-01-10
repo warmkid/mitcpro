@@ -88,6 +88,7 @@ namespace mySystem.Extruction.Process
                 }
                 else
                 {
+                    ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                     daOutersql.Update((DataTable)bsOuter.DataSource);
                 }
                 
@@ -384,7 +385,7 @@ namespace mySystem.Extruction.Process
 
              dr["记录员备注"] = "无";
              dr["记录日期"]=Convert.ToDateTime(DateTime.Now.ToString());
-             dr["审核日期"] = Convert.ToDateTime(DateTime.MinValue);
+             dr["审核日期"] = Convert.ToDateTime(DateTime.Now.ToString());
              //this part to add log 
              //格式： 
              // =================================================

@@ -804,13 +804,16 @@ namespace BatchProductRecord
                     OleDbDataAdapter da_用户 = new OleDbDataAdapter(@"select * from 用户", mySystem.Parameter.connOle);
                     OleDbCommandBuilder cb_用户 = new OleDbCommandBuilder(da_用户);
                     da_用户.Fill(dt_用户);
+                    List<String> baibans = new List<string>(tb白班.Text.Split(','));
+                    List<String> yebans = new List<string>(tb夜班.Text.Split(','));
+                    
                     //遍历白班，夜班负责人表
                     for (int i = 0; i < dt_用户.Rows.Count; i++)
                     {
                         string name = dt_用户.Rows[i]["用户名"].ToString();
-                        if(dict_白班.ContainsKey(name))
+                        if (baibans.Contains(name))
                             dt_用户.Rows[i]["班次"]="白班";
-                        else if (dict_夜班.ContainsKey(name))
+                        else if (yebans.Contains(name))
                             dt_用户.Rows[i]["班次"] = "夜班";
                         else { }
                     }
@@ -850,13 +853,16 @@ namespace BatchProductRecord
                     SqlDataAdapter da_用户 = new SqlDataAdapter(@"select * from 用户", mySystem.Parameter.conn);
                     SqlCommandBuilder cb_用户 = new SqlCommandBuilder(da_用户);
                     da_用户.Fill(dt_用户);
+                    List<String> baibans = new List<string>(tb白班.Text.Split(','));
+                    List<String> yebans = new List<string>(tb夜班.Text.Split(','));
+                    
                     //遍历白班，夜班负责人表
                     for (int i = 0; i < dt_用户.Rows.Count; i++)
                     {
                         string name = dt_用户.Rows[i]["用户名"].ToString();
-                        if (dict_白班.ContainsKey(name))
+                        if (baibans.Contains(name))
                             dt_用户.Rows[i]["班次"] = "白班";
-                        else if (dict_夜班.ContainsKey(name))
+                        else if (yebans.Contains(name))
                             dt_用户.Rows[i]["班次"] = "夜班";
                         else { }
                     }
