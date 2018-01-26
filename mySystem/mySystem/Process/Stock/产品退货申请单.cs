@@ -56,7 +56,7 @@ namespace mySystem.Process.Stock
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
-                dtOuter.Rows[0]["审核结果"] = 0;
+                //dtOuter.Rows[0]["审核结果"] = 0;
                 daOuter.Update(dtOuter);
                 readOuterData(_code);
             }
@@ -306,6 +306,7 @@ namespace mySystem.Process.Stock
             dr["申请人"] = mySystem.Parameter.userName;
             dr["申请日期"] = DateTime.Now;
             dr["审核日期"] = DateTime.Now;
+            dr["审核结果"] = 0;
             return dr;
         }
 

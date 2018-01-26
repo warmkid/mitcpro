@@ -55,7 +55,8 @@ namespace mySystem.Process.Bag.PTV
                 DataRow dr = dtOuter.NewRow();
                 dr = writeOuterDefault(dr);
                 dtOuter.Rows.Add(dr);
-                ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
+                //if (((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] == DBNull.Value)
+                //    ((DataTable)bsOuter.DataSource).Rows[0]["审核是否通过"] = 0;
                 daOuter.Update((DataTable)bsOuter.DataSource);
                 readOuterData(_生产指令ID);
                 outerBind();
@@ -630,6 +631,7 @@ namespace mySystem.Process.Bag.PTV
             dr["批准时间"] = DateTime.Now;
             dr["批准人"] = "";
             dr["备注"] = "";
+            dr["审核是否通过"] = 0;
             return dr;
         }
 
